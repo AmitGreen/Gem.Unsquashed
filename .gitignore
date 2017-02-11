@@ -1,4 +1,10 @@
-__pycache__
+*.new
+*.old
+__pycache__/
+*.py[co]
+.*.sw[op]
+*.tmp
+tmp/
 x
 y
 z
