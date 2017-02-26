@@ -13,7 +13,7 @@ GEM_FILES = \
 	../Gem/__init__.py \
     ../Gem/Ascii.py \
 	../Gem/Boot.py \
-	../Gem/Core.py ../Gem/CatchException.py \
+	../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
 	../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/File.py ../Gem/FileOutput.py ../Gem/FileStatus.py \
 	../Gem/Import.py ../Gem/IO.py \
@@ -72,6 +72,7 @@ clean:
 	rm -f de.py di.py dm.py dr.py
 	rm -f ef.py ex.py
 	rm -f files fi.py fo.py fs.py
+	rm -f gd.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f lr.txt
@@ -115,6 +116,7 @@ links:
 	ln -s ../Gem/File.py                        fi.py
 	ln -s ../Gem/FileOutput.py                  fo.py
 	ln -s ../Gem/FileStatus.py                  fs.py
+	ln -s ../Gem/Codec.py                       gd.py
 	ln -s ../Gem/__init__.py                    in.py
 	ln -s ../Gem/Import.py                      im.py
 	ln -s ../Ivory/Main.py                      iv.py
