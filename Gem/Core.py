@@ -56,6 +56,7 @@ def gem():
         #
         #   Types
         #
+        'Bytes',            PythonBuiltIn.bytes,
         'Integer',          PythonBuiltIn.int,
         'FrozenSet',        PythonBuiltIn.frozenset,
         'List',             PythonBuiltIn.list,
