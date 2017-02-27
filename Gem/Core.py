@@ -3,6 +3,13 @@
 #
 @gem('Gem.Core')
 def gem():
+    @export
+    def execute(f):
+        f()
+
+        return execute
+
+
     #
     #   line
     #
@@ -35,23 +42,6 @@ def gem():
             return f
 
 
-    #
-    #   raise_value_error
-    #
-    ValueError = PythonException.ValueError
-
-
-    @export
-    def raise_value_error(format, *arguments):
-        value_error = format % arguments
-
-        #
-        #   Since the next line will appear in stack traces, make it look prettier by using 'value_error'
-        #   (to make the line shorter & more readable)
-        #
-        raise ValueError(value_error)
-
-
     built_in(
         #
         #   Types
@@ -75,7 +65,9 @@ def gem():
         'iterate',          PythonBuiltIn.iter,
         'iterate_range',    PythonBuiltIn.range,
         'ordinal',          PythonBuiltIn.ord,
+        'portray',          PythonBuiltIn.repr,
         'property',         PythonBuiltIn.property,
+        'sorted_list',      PythonBuiltIn.sorted,
         'type',             PythonBuiltIn.type,
 
         #

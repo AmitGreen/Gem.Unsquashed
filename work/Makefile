@@ -18,7 +18,7 @@ GEM_FILES = \
 	../Gem/Import.py ../Gem/IO.py \
 	../Gem/Map.py \
 	../Gem/Path.py \
-	../Gem/RegularExpression.py
+	../Gem/RawString.py ../Gem/RegularExpression.py
 
 DRAVITE_FILES = \
     ../Dravite/Euclid.py \
@@ -31,7 +31,11 @@ IVORY_FILES = ../Ivory/Main.py
 LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
+TOPAZ_FILE = \
+    ../Topaz/Main.py
+
 TREMOLITE_FILES = \
+    ../Tremolite/Build.py \
     ../Tremolite/Compile.py ../Tremolite/Core.py \
     ../Tremolite/Main.py \
     ../Tremolite/Parse.py
@@ -45,6 +49,7 @@ FILES = \
     $(GEM_FILES) \
     $(IVORY_FILES) \
     $(LICENSE_FILES) \
+    $(TOPAZ_FILE) \
     $(TREMOLITE_FILES) \
     $(WORK_FILES)
 
@@ -69,8 +74,9 @@ clean:
 	rm -f lr.txt
 	rm -f m m.py
 	rm -f p.py
-	rm -f r.py rx.py
-	rm -f tc.py tm.py tp.py tx.py
+	rm -f rm.py rs.py rx.py
+	rm -f tc.py tm.py tp.py tu.py tx.py
+	rm -f zm.py
 
 
 files:
@@ -114,12 +120,15 @@ links:
 	ln -s Makefile                              m
 	ln -s ../Gem/Map.py                         m.py
 	ln -s ../Gem/Path.py                        p.py
-	ln -s ../Agate/RUNME.py                     r.py
+	ln -s ../Agate/RUNME.py                     rm.py
+	ln -s ../Gem/RawString.py                   rs.py
 	ln -s ../Gem/RegularExpression.py           rx.py
 	ln -s ../Tremolite/Core.py                  tc.py
 	ln -s ../Tremolite/Main.py                  tm.py
 	ln -s ../Tremolite/Parse.py                 tp.py
+	ln -s ../Tremolite/Build.py                 tu.py
 	ln -s ../Tremolite/Compile.py               tx.py
+	ln -s ../Topaz/Main.py                      zm.py
 
 
 wc:
@@ -130,5 +139,6 @@ wc:
         $(GEM_FILES) \
         $(IVORY_FILES) \
         $(LICENSE_FILES) \
+        $(TOPAZ_FILES) \
         $(TREMOLITE_FILES) \
         $(WORK_FILES)
