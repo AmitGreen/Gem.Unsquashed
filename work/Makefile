@@ -11,6 +11,7 @@ BERYL_FILES = \
 
 GEM_FILES = \
 	../Gem/__init__.py \
+    ../Gem/Ascii.py \
 	../Gem/Boot.py \
 	../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
 	../Gem/Exception.py ../Gem/ExecuteFile.py \
@@ -18,7 +19,7 @@ GEM_FILES = \
 	../Gem/Import.py ../Gem/IO.py \
 	../Gem/Map.py \
 	../Gem/Path.py \
-	../Gem/RawString.py ../Gem/RegularExpression.py
+	../Gem/RawString.py ../Gem/RawString_2.py ../Gem/RegularExpression.py
 
 DRAVITE_FILES = \
     ../Dravite/Euclid.py \
@@ -60,7 +61,7 @@ clean:
 	rm -rf __pycache__
 	rm -f *.old *.new *.pyc
 
-	rm -f a.py
+	rm -f ac.py ag.py
 	rm -f 2re.py 2sf.py 2sp.py 2sc.py
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
@@ -74,7 +75,7 @@ clean:
 	rm -f lr.txt
 	rm -f m m.py
 	rm -f p.py
-	rm -f rm.py rs.py rx.py
+	rm -f rm.py rs.py rs2.py rx.py
 	rm -f tc.py tm.py tp.py tu.py tx.py
 	rm -f zm.py
 
@@ -85,7 +86,8 @@ files:
 
 
 links:
-	ln -s ../Agate/RUNME.py                     a.py
+	ln -s ../Gem/Ascii.py                       ac.py
+	ln -s ../Agate/RUNME.py                     ag.py
 	ln -s /usr/lib/python2.7/re.py              2re.py
 	ln -s /usr/lib/python2.7/sre_compile.py     2sc.py
 	ln -s /usr/lib/python2.7/sre_constants.py   2sf.py
@@ -122,6 +124,7 @@ links:
 	ln -s ../Gem/Path.py                        p.py
 	ln -s ../Agate/RUNME.py                     rm.py
 	ln -s ../Gem/RawString.py                   rs.py
+	ln -s ../Gem/RawString_2.py                 rs2.py
 	ln -s ../Gem/RegularExpression.py           rx.py
 	ln -s ../Tremolite/Core.py                  tc.py
 	ln -s ../Tremolite/Main.py                  tm.py
