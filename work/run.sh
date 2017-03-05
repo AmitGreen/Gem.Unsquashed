@@ -31,6 +31,7 @@ done
 
 Main_py=../Ivory/Main.py
 Main_py=../Beryl/Main.py
+Main_py=../Tremolite/Main.py
 
 command="python $Main_py"
 commandO="python -O $Main_py"

@@ -16,6 +16,7 @@ GEM_FILES = \
 	../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/File.py ../Gem/FileOutput.py ../Gem/FileStatus.py \
 	../Gem/Import.py ../Gem/IO.py \
+	../Gem/Map.py \
 	../Gem/Path.py \
 	../Gem/RegularExpression.py
 
@@ -30,6 +31,11 @@ IVORY_FILES = ../Ivory/Main.py
 LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
+TREMOLITE_FILES = \
+    ../Tremolite/Compile.py ../Tremolite/Core.py \
+    ../Tremolite/Main.py \
+    ../Tremolite/Parse.py
+
 WORK_FILES = Makefile
 
 FILES = \
@@ -39,15 +45,19 @@ FILES = \
     $(GEM_FILES) \
     $(IVORY_FILES) \
     $(LICENSE_FILES) \
+    $(TREMOLITE_FILES) \
     $(WORK_FILES)
 
 all: clean files links
+
 
 clean:
 	rm -rf __pycache__
 	rm -f *.old *.new *.pyc
 
 	rm -f a.py
+	rm -f 2re.py 2sf.py 2sp.py 2sc.py
+	rm -f 3re.py 3sf.py 3sp.py 3sc.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f c.py ce.py
 	rm -f de.py di.py dm.py dr.py
@@ -56,49 +66,67 @@ clean:
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f lr.txt
-	rm -f m
+	rm -f m m.py
 	rm -f p.py
 	rm -f r.py rx.py
+	rm -f tc.py tm.py tp.py tx.py
+
 
 files:
 	echo $(FILES) >files.new
 	mv files.new files
 
+
 links:
-	ln -s ../Agate/RUNME.py             a.py
-	ln -s ../Beryl/BerylAnswer.py       ba.py
-	ln -s ../Beryl/__init__.py          bi.py
-	ln -s ../Beryl/Ask.py               bk.py
-	ln -s ../Beryl/Main.py              bm.py
-	ln -s ../Gem/Boot.py                bo.py
-	ln -s ../Gem/Core.py                c.py
+	ln -s ../Agate/RUNME.py                     a.py
+	ln -s /usr/lib/python2.7/re.py              2re.py
+	ln -s /usr/lib/python2.7/sre_compile.py     2sc.py
+	ln -s /usr/lib/python2.7/sre_constants.py   2sf.py
+	ln -s /usr/lib/python2.7/sre_parse.py       2sp.py
+	ln -s /usr/lib/python3.5/re.py              3re.py
+	ln -s /usr/lib/python3.5/sre_compile.py     3sc.py
+	ln -s /usr/lib/python3.5/sre_constants.py   3sf.py
+	ln -s /usr/lib/python3.5/sre_parse.py       3sp.py
+	ln -s ../Beryl/BerylAnswer.py               ba.py
+	ln -s ../Beryl/__init__.py                  bi.py
+	ln -s ../Beryl/Ask.py                       bk.py
+	ln -s ../Beryl/Main.py                      bm.py
 	ln -s ../Dravite/Euclid.py          de.py
 	ln -s ../Dravite/__init__.py        di.py
 	ln -s ../Dravite/Main.py            dm.py
 	ln -s ../Dravite/RSA_Example.py     dr.py
-	ln -s ../Gem/CatchException.py      ce.py
-	ln -s ../Gem/ExecuteFile.py         ef.py
-	ln -s ../Gem/Exception.py           ex.py
-	ln -s ../Gem/File.py                fi.py
-	ln -s ../Gem/FileOutput.py          fo.py
-	ln -s ../Gem/FileStatus.py          fs.py
-	ln -s ../Gem/__init__.py            in.py
-	ln -s ../Gem/Import.py              im.py
-	ln -s ../Ivory/Main.py              iv.py
-	ln -s ../Gem/IO.py                  io.py
-	ln -s ../Junk/Boot.py               jb.py
-	ln -s ../OtherLicenses/README.txt   lr.txt
-	ln -s Makefile                      m
-	ln -s ../Gem/Path.py                p.py
-	ln -s ../Agate/RUNME.py             r.py
-	ln -s ../Gem/RegularExpression.py   rx.py
+	ln -s ../Gem/Boot.py                        bo.py
+	ln -s ../Gem/Core.py                        c.py
+	ln -s ../Gem/CatchException.py              ce.py
+	ln -s ../Gem/ExecuteFile.py                 ef.py
+	ln -s ../Gem/Exception.py                   ex.py
+	ln -s ../Gem/File.py                        fi.py
+	ln -s ../Gem/FileOutput.py                  fo.py
+	ln -s ../Gem/FileStatus.py                  fs.py
+	ln -s ../Gem/__init__.py                    in.py
+	ln -s ../Gem/Import.py                      im.py
+	ln -s ../Ivory/Main.py                      iv.py
+	ln -s ../Gem/IO.py                          io.py
+	ln -s ../Junk/Boot.py                       jb.py
+	ln -s ../OtherLicenses/README.txt           lr.txt
+	ln -s Makefile                              m
+	ln -s ../Gem/Map.py                         m.py
+	ln -s ../Gem/Path.py                        p.py
+	ln -s ../Agate/RUNME.py                     r.py
+	ln -s ../Gem/RegularExpression.py           rx.py
+	ln -s ../Tremolite/Core.py                  tc.py
+	ln -s ../Tremolite/Main.py                  tm.py
+	ln -s ../Tremolite/Parse.py                 tp.py
+	ln -s ../Tremolite/Compile.py               tx.py
+
 
 wc:
-	#  Excludes $(AGATE_FIELS)
+	#  Excludes $(AGATE_FILES)
 	wc -l \
 		$(BERYL_FILES) \
 		$(DRAVITE_FILES) \
         $(GEM_FILES) \
         $(IVORY_FILES) \
         $(LICENSE_FILES) \
+        $(TREMOLITE_FILES) \
         $(WORK_FILES)
