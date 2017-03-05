@@ -21,14 +21,12 @@ def boot():
 
 @gem('Tremolite.Main')
 def gem():
-    require_gem('Tremolite.Parse')
-
-
-    from Tremolite import parse_regular_expression
+    require_gem('Tremolite.Core')
+    require_gem('Tremolite.CreateMatch')
 
 
     @share
     def main():
-        parse_regular_expression('x\Z')
-        parse_regular_expression('x(?P<abc>y)\Z')
-        parse_regular_expression('x(?P<abc>y)(?P<z>z)\Z')
+        #MATCH('test', 'test' + GROUP('number', '0' | ANY_OF('1-9') + REPEAT(ANY_OF('0-9'), 0, 100)) + END_OF_PATTERN)
+        MATCH('group_name_match', ANY_OF('a-z') + ZERO_OR_MORE(ANY_OF('0-9', '_', 'a-z')) + END_OF_PATTERN)
+        create_match_code('../Tremolite/Match.gpy', '2017 Amit Green', 'Tremolite.Match')
