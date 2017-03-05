@@ -19,7 +19,7 @@ GEM_FILES = \
 	../Gem/Import.py ../Gem/IO.py \
 	../Gem/Map.py \
 	../Gem/Path.py \
-	../Gem/RawString.py ../Gem/RawString_2.py ../Gem/RegularExpression.py
+	../Gem/RawString.py ../Gem/RawString_2.py ../Gem/RawString_3.py ../Gem/RegularExpression.py
 
 DRAVITE_FILES = \
     ../Dravite/Euclid.py \
@@ -74,8 +74,8 @@ clean:
 	rm -f jb.py
 	rm -f lr.txt
 	rm -f m m.py
-	rm -f p.py
-	rm -f rm.py rs.py rs2.py rx.py
+	rm -f pa.py ps.py
+	rm -f rm.py rx.py
 	rm -f tc.py tm.py tp.py tu.py tx.py
 	rm -f zm.py
 
@@ -100,10 +100,10 @@ links:
 	ln -s ../Beryl/__init__.py                  bi.py
 	ln -s ../Beryl/Ask.py                       bk.py
 	ln -s ../Beryl/Main.py                      bm.py
-	ln -s ../Dravite/Euclid.py          de.py
-	ln -s ../Dravite/__init__.py        di.py
-	ln -s ../Dravite/Main.py            dm.py
-	ln -s ../Dravite/RSA_Example.py     dr.py
+	ln -s ../Dravite/Euclid.py                  de.py
+	ln -s ../Dravite/__init__.py                di.py
+	ln -s ../Dravite/Main.py                    dm.py
+	ln -s ../Dravite/RSA_Example.py             dr.py
 	ln -s ../Gem/Boot.py                        bo.py
 	ln -s ../Gem/Core.py                        c.py
 	ln -s ../Gem/CatchException.py              ce.py
@@ -121,10 +121,9 @@ links:
 	ln -s ../OtherLicenses/README.txt           lr.txt
 	ln -s Makefile                              m
 	ln -s ../Gem/Map.py                         m.py
-	ln -s ../Gem/Path.py                        p.py
+	ln -s ../Gem/Path.py                        pa.py
+	ln -s ../Gem/PortrayString.py               ps.py
 	ln -s ../Agate/RUNME.py                     rm.py
-	ln -s ../Gem/RawString.py                   rs.py
-	ln -s ../Gem/RawString_2.py                 rs2.py
 	ln -s ../Gem/RegularExpression.py           rx.py
 	ln -s ../Tremolite/Core.py                  tc.py
 	ln -s ../Tremolite/Main.py                  tm.py
