@@ -77,6 +77,7 @@ def gem():
         #   Functions
         #
         'character',        PythonBuiltIn.chr,
+        'enumerate',        PythonBuiltIn.enumerate,
         'globals',          PythonBuiltIn.globals,
         'introspection',    PythonBuiltIn.dir,
         'iterate',          PythonBuiltIn.iter,
