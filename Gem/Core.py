@@ -54,23 +54,33 @@ def gem():
 
     built_in(
         #
-        #   Functions
-        #
-        'globals',          PythonBuiltIn.globals,
-        'introspection',    PythonBuiltIn.dir,
-        'iterate',          PythonBuiltIn.iter,
-        'iterate_range',    PythonBuiltIn.range,
-        'property',         PythonBuiltIn.property,
-        'type',             PythonBuiltIn.type,
-
-        #
         #   Types
         #
         'Integer',          PythonBuiltIn.int,
         'FrozenSet',        PythonBuiltIn.frozenset,
+        'List',             PythonBuiltIn.list,
         'Map',              PythonBuiltIn.dict,
         'Object',           PythonBuiltIn.object,
         'Tuple',            PythonBuiltIn.tuple,
+
+
+        #
+        #   Functions
+        #
+        'character',        PythonBuiltIn.chr,
+        'enumerate',        PythonBuiltIn.enumerate,
+        'globals',          PythonBuiltIn.globals,
+        'introspection',    PythonBuiltIn.dir,
+        'iterate',          PythonBuiltIn.iter,
+        'iterate_range',    PythonBuiltIn.range,
+        'ordinal',          PythonBuiltIn.ord,
+        'property',         PythonBuiltIn.property,
+        'type',             PythonBuiltIn.type,
+
+        #
+        #   Values
+        #
+        '__debug__',        PythonBuiltIn.__debug__,
     )
 
 

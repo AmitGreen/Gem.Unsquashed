@@ -11,7 +11,16 @@ def gem():
 
 
     share(
+        #
+        #   Imported functions
+        #
         'first_map_item',       first_map_item,
         'raise_value_error',    raise_value_error,
         'view_items',           view_items,
+
+
+        #
+        #   Values
+        #
+        'list_of_single_none',  [none],
     )
