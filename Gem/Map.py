@@ -23,6 +23,14 @@ def gem():
             return iterate(view_items(mapping)).__next__()
 
 
+    @export
+    def iterate_items_sorted_by_key(mapping):
+        value = mapping.__getitem__
+
+        for k in sorted_list(mapping):
+            yield (( k, value(k) ))
+
+
     export(
         'view_items',   view_items,
     )
