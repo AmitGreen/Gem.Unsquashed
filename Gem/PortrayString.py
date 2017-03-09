@@ -63,11 +63,6 @@ def gem():
     A_K    = state('A_K')       #   Has '; ends in \
     A_N    = state('A_N')       #   Has '
 
-    AKS_A  = state('AKS_A')     #   Has ', \, & """; ends in '
-    AKS_B  = state('AKS_B')     #   Has ', \, & """; ends in ''
-    AKS_K  = state('AKS_K')     #   Has ', \, & """; ends in \
-    AKS_M  = state('AKS_M')     #   Has ', \, & """; might end in " or ""
-
     AQ_A   = state('AQ_A')      #   Has ' & "; ends in '
     AQ_B   = state('AQ_b')      #   Has ' & "; ends in ''
     AQ_K   = state('AQ_K')      #   Has ' & "; ends in \
@@ -77,18 +72,13 @@ def gem():
 
     AS_A   = state('AS_A')      #   Has ' & """; ends in '
     AS_B   = state('AS_B')      #   Has ' & """; ends in ''
+    AS_K   = state('AS_K')      #   Has ' & """; ends in \
     AS_M   = state('AS_M')      #   Has ' & """; might end in " or ""
 
+    C_K    = state('C_K')       #   Has '''; ends in \
     C_M    = state('C_M')       #   Has '''; might end in ' or ""
 
-    CK_K   = state('CK_K')      #   Has ''' & \; ends in \
-    CK_M   = state('CK_M')      #   Has ''' & \; might end in ' or ''
-
-    CKQ_K  = state('CKQ_K')     #   Has ''', \, & "; ends in \
-    CKQ_M  = state('CKQ_M')     #   Has ''', \, & "; might end in ' or ''
-    CKQ_Q  = state('CKQ_Q')     #   Has ''', \, & "; ends in "
-    CKQ_R  = state('CKQ_R')     #   Has ''', \, & "; ends in ""
-
+    CQ_K   = state('CQ_K')      #   Has ''' & "; ends in \
     CQ_M   = state('CQ_M')      #   Has ''' & "; might end in ' or ''
     CQ_Q   = state('CQ_Q')      #   Has ''' & "; ends in "
     CQ_R   = state('CQ_R')      #   Has ''' & "; ends in ""
@@ -166,12 +156,6 @@ def gem():
     A_N  .setup(A_A,    A_K,    A_N,    AQ_Q,   _,  Q)
 
     #           '       \       N_N     "       N   O
-    AKS_A.setup(AKS_B,  AKS_K,  AKS_M,  AKS_M,  P,  P)
-    AKS_B.setup(X,      AKS_K,  AKS_M,  AKS_M,  P,  P)
-    AKS_K.setup(AKS_M,  AKS_M,  AKS_M,  AKS_M,  P,  P)
-    AKS_M.setup(AKS_A,  AKS_K,  AKS_M,  AKS_M,  C,  C)
-
-    #           '       \       N_N     "       N   O
     AQ_A .setup(AQ_B,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
     AQ_B .setup(CQ_M,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
     AQ_K .setup(AQ_N,   AQ_N,   AQ_N,   AQ_N,   P,  P)
@@ -180,27 +164,20 @@ def gem():
     AQ_R .setup(AQ_A,   AQ_K,   AQ_N,   AS_M,   C,  C)
 
     #           '       \       N_N     "       N   O
-    AS_A .setup(AS_B,   AKS_K,  AS_M,   AS_M,   P,  P)
-    AS_B .setup(X,      AKS_M,  AS_M,   AS_M,   P,  P)
-    AS_M .setup(AS_A,   AKS_K,  AS_M,   AS_M,   C,  C)
+    AS_A .setup(AS_B,   AS_K,   AS_M,   AS_M,   P,  P)
+    AS_B .setup(X,      AS_K,   AS_M,   AS_M,   P,  P)
+    AS_K .setup(AS_M,   AS_M,   AS_M,   AS_M,   P,  P)
+    AS_M .setup(AS_A,   AS_K,   AS_M,   AS_M,   C,  C)
 
     #           '       \       N_N     "       N   O
-    C_M  .setup(C_M,    CK_K,   C_M,    CQ_Q,   Q,  Q)
+    C_K  .setup(C_M,    C_M,    C_M,    C_M,    P,  P)
+    C_M  .setup(C_M,    C_K,    C_M,    CQ_Q,   Q,  Q)
 
     #           '       \       N_N     "       N   O
-    CK_K .setup(CK_M,   CK_M,   CK_M,   CK_M,   P,  P)
-    CK_M .setup(CK_M,   CK_K,   CK_M,   CKQ_Q,  Q,  Q)
-
-    #           '       \       N_N     "       N   O
-    CKQ_K.setup(CKQ_M,  CKQ_M,  CKQ_M,  CKQ_M,  P,  P)
-    CKQ_M.setup(CKQ_M,  CKQ_K,  CKQ_M,  CKQ_Q,  S,  S)
-    CKQ_Q.setup(CKQ_M,  CKQ_K,  CKQ_M,  CKQ_R,  P,  P)
-    CKQ_R.setup(CKQ_M,  CKQ_K,  CKQ_M,  X,      P,  P)
-
-    #           '       \       N_N     "       N   O
-    CQ_M .setup(CQ_M,   CKQ_K,  CQ_M,   CQ_Q,   S,  S)
-    CQ_Q .setup(CQ_M,   CKQ_K,  CQ_M,   CQ_R,   P,  P)
-    CQ_R .setup(CQ_M,   CKQ_K,  CQ_M,   X,      P,  P)
+    CQ_K .setup(CQ_M,   CQ_M,   CQ_M,   CQ_M,   P,  P)
+    CQ_M .setup(CQ_M,   CQ_K,   CQ_M,   CQ_Q,   S,  S)
+    CQ_Q .setup(CQ_M,   CQ_K,   CQ_M,   CQ_R,   P,  P)
+    CQ_R .setup(CQ_M,   CQ_K,   CQ_M,   X,      P,  P)
 
     #           '       \       N_N     "       N   O
     K_K  .setup(K_N,    K_N,    K_N,    K_N,    P,  P)
@@ -214,7 +191,7 @@ def gem():
 
     #           '       \       N_N     "       N   O
     KS_K .setup(KS_M,   KS_M,   KS_M,   KS_M,   P,  P)
-    KS_M .setup(AKS_A,  KS_K,   KS_M,   KS_M,   A,  A)
+    KS_M .setup(AS_A,   KS_K,   KS_M,   KS_M,   A,  A)
 
     #           '       \       N_N     "       N   O
     N_N  .setup(A_A,    K_K,    N_N,    Q_Q,    A,  _)
