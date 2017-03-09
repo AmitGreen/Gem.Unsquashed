@@ -63,13 +63,6 @@ def gem():
     A_K    = state('A_K')       #   Has '; ends in \
     A_N    = state('A_N')       #   Has '
 
-    AKQ_A  = state('AKQ_A')     #   Has ', \, & "; ends in '
-    AKQ_B  = state('AKQ_B')     #   Has ', \, & "; ends in ''
-    AKQ_K  = state('AKQ_K')     #   Has ', \, & "; ends in \
-    AKQ_N  = state('AKQ_N')     #   Has ', \, & "
-    AKQ_Q  = state('AKQ_Q')     #   Has ', \, & "; ends in "
-    AKQ_R  = state('AKQ_R')     #   Has ', \, & "; ends in ""
-
     AKS_A  = state('AKS_A')     #   Has ', \, & """; ends in '
     AKS_B  = state('AKS_B')     #   Has ', \, & """; ends in ''
     AKS_K  = state('AKS_K')     #   Has ', \, & """; ends in \
@@ -77,6 +70,7 @@ def gem():
 
     AQ_A   = state('AQ_A')      #   Has ' & "; ends in '
     AQ_B   = state('AQ_b')      #   Has ' & "; ends in ''
+    AQ_K   = state('AQ_K')      #   Has ' & "; ends in \
     AQ_N   = state('AQ_N')      #   Has ' & "
     AQ_Q   = state('AQ_Q')      #   Has ' & "; ends in "
     AQ_R   = state('AQ_R')      #   Has ' & "; ends in ""
@@ -168,16 +162,8 @@ def gem():
     #           '       \       N_N     "       N   O
     A_A  .setup(A_B,    A_K,    A_N,    AQ_Q,   _,  Q)
     A_B  .setup(C_M,    A_K,    A_N,    AQ_Q,   _,  Q)
-    A_K  .setup(A_N,    A_N,    A_N,    AKQ_Q,  P,  P)
+    A_K  .setup(A_N,    A_N,    A_N,    AQ_Q,   P,  P)
     A_N  .setup(A_A,    A_K,    A_N,    AQ_Q,   _,  Q)
-
-    #           '       \       N_N     "       N   O
-    AKQ_A.setup(AKQ_B,  AKQ_K,  AKQ_N,  AKQ_Q,  S,  S)
-    AKQ_B.setup(CKQ_M,  AKQ_K,  AKQ_N,  AKQ_Q,  S,  S)
-    AKQ_K.setup(AKQ_N,  AKQ_N,  AKQ_N,  AKQ_N,  P,  P)
-    AKQ_N.setup(AKQ_A,  AKQ_K,  AKQ_N,  AKQ_Q,  C,  S)
-    AKQ_Q.setup(AKQ_A,  AKQ_K,  AKQ_N,  AKQ_R,  C,  C)
-    AKQ_R.setup(AKQ_A,  AKQ_K,  AKQ_N,  AKS_M,  C,  C)
 
     #           '       \       N_N     "       N   O
     AKS_A.setup(AKS_B,  AKS_K,  AKS_M,  AKS_M,  P,  P)
@@ -186,11 +172,12 @@ def gem():
     AKS_M.setup(AKS_A,  AKS_K,  AKS_M,  AKS_M,  C,  C)
 
     #           '       \       N_N     "       N   O
-    AQ_A .setup(AQ_B,   AKQ_K,  AQ_N,   AQ_Q,   S,  S)
-    AQ_B .setup(CQ_M,   AKQ_K,  AQ_N,   AQ_Q,   S,  S)
-    AQ_N .setup(AQ_A,   AKQ_K,  AQ_N,   AQ_Q,   C,  S)
-    AQ_Q .setup(AQ_A,   AKQ_K,  AQ_N,   AQ_R,   C,  C)
-    AQ_R .setup(AQ_A,   AKQ_K,  AQ_N,   AS_M,   C,  C)
+    AQ_A .setup(AQ_B,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
+    AQ_B .setup(CQ_M,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
+    AQ_K .setup(AQ_N,   AQ_N,   AQ_N,   AQ_N,   P,  P)
+    AQ_N .setup(AQ_A,   AQ_K,   AQ_N,   AQ_Q,   C,  S)
+    AQ_Q .setup(AQ_A,   AQ_K,   AQ_N,   AQ_R,   C,  C)
+    AQ_R .setup(AQ_A,   AQ_K,   AQ_N,   AS_M,   C,  C)
 
     #           '       \       N_N     "       N   O
     AS_A .setup(AS_B,   AKS_K,  AS_M,   AS_M,   P,  P)
@@ -221,9 +208,9 @@ def gem():
 
     #           '       \       N_N     "       N   O
     KQ_K .setup(KQ_N,   KQ_N,   KQ_N,   KQ_N,   P,  P)
-    KQ_N .setup(AKQ_A,  KQ_K,   KQ_N,   KQ_Q,   A,  A)
-    KQ_Q .setup(AKQ_A,  KQ_K,   KQ_N,   KQ_R,   A,  A)
-    KQ_R .setup(AKQ_A,  KQ_K,   KQ_N,   KS_M,   A,  A)
+    KQ_N .setup(AQ_A,   KQ_K,   KQ_N,   KQ_Q,   A,  A)
+    KQ_Q .setup(AQ_A,   KQ_K,   KQ_N,   KQ_R,   A,  A)
+    KQ_R .setup(AQ_A,   KQ_K,   KQ_N,   KS_M,   A,  A)
 
     #           '       \       N_N     "       N   O
     KS_K .setup(KS_M,   KS_M,   KS_M,   KS_M,   P,  P)
