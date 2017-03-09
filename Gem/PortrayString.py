@@ -254,6 +254,46 @@ def gem():
 
 
     @export
+    def portray_raw_K_string(favorite, state, iterator, s):
+        for c in iterator:
+            #old = state.name
+            a = lookup_ascii(c, unknown_ascii)
+
+            if a.is_portray_boring:
+                state = state.normal
+                #line('%s: %r, %s, %s', old, c, state.name, last.name)
+                continue
+
+            if a.is_backslash:
+                state = state.backslash
+                #line('%s: %r, %s, %s', old, c, state.name, last.name)
+                continue
+
+            if a.is_double_quote:
+                favorite += 1
+                state = state.quotation_mark
+                #line('%s: %r, %s, %s', old, c, state.name, last.name)
+                continue
+
+            if a.is_single_quote:
+                favorite -= 1
+                state = state.apostrophe
+                #line('%s: %r, %s, %s', old, c, state.name, last.name)
+                continue
+
+            assert not a.is_printable
+
+            return portray_string(s)
+
+        #line('final: %d,%s,%s', favorite, state.name, last.name)
+
+        if favorite >= 0:
+            return state.finish_normal(s)
+
+        return state.finish_other(s)
+
+
+    @export
     def portray_raw_string(s):
         iterator = iterate(s)
 
@@ -272,23 +312,20 @@ def gem():
         #   Complex case
         #
         if a.is_backslash:
-            favorite = favorite_3 = 0
-            state  = K_K
+            return portray_raw_K_string(0, K_K, iterator, s)
 
-        elif a.is_double_quote:
-            ending = favorite = 1
+        if a.is_double_quote:
+            favorite = 1
             state = Q_Q
 
         elif a.is_single_quote:
-            ending = favorite = -1
+            favorite = -1
             state = A_A
 
         else:
             assert not a.is_printable
 
             return portray_string(s)
-
-        ending = 0
 
         for c in iterator:
             #old = state.name
@@ -300,9 +337,8 @@ def gem():
                 continue
 
             if a.is_backslash:
-                state = state.backslash
-                #line('%s: %r, %s, %s', old, c, state.name, last.name)
-                continue
+                return portray_raw_K_string(favorite, state.backslash, iterator, s)
+
 
             if a.is_double_quote:
                 favorite += 1
