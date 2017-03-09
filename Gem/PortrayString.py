@@ -255,11 +255,40 @@ def gem():
 
     @export
     def portray_raw_string(s):
-        favorite = 0
-        state    = start
         iterator = iterate(s)
 
-        #line('s: %r', s)
+        #
+        #   Simple case
+        #
+        for c in iterator:
+            a = lookup_ascii(c, unknown_ascii)
+
+            if not a.is_portray_boring:
+                break
+        else:
+            return "r'" + s + "'"
+
+        #
+        #   Complex case
+        #
+        if a.is_backslash:
+            favorite = favorite_3 = 0
+            state  = K_K
+
+        elif a.is_double_quote:
+            ending = favorite = 1
+            state = Q_Q
+
+        elif a.is_single_quote:
+            ending = favorite = -1
+            state = A_A
+
+        else:
+            assert not a.is_printable
+
+            return portray_string(s)
+
+        ending = 0
 
         for c in iterator:
             #old = state.name
