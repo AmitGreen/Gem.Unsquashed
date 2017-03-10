@@ -83,24 +83,16 @@ def gem():
     CQ_Q   = state('CQ_Q')      #   Has ''' & "; ends in "
     CQ_R   = state('CQ_R')      #   Has ''' & "; ends in ""
 
-    K_K    = state('K_K')       #   Has \; ends in \
-    K_N    = state('K_N')       #   Has \
-
-    KQ_K   = state('KQ_K')      #   Has \ & "; ends in \
-    KQ_N   = state('KQ_N')      #   Has \ & "
-    KQ_Q   = state('KQ_Q')      #   Has \ & "; ends in "
-    KQ_R   = state('KQ_R')      #   Has \ & "; ends in ""
-
-    KS_K   = state('KS_K')      #   Has \ & """: ends in \
-    KS_M   = state('KS_N')      #   Has \ & """; might end in " or ""
-
+    N_K    = state('N_K')       #   normal; ends in \
     N_N    = state('N_N')       #   totally normal, nothing to see here
 
+    Q_K    = state('Q_K')       #   Has "; ends in \
     Q_N    = state('N_N')       #   Has "
     Q_Q    = state('N_N')       #   Has "; ends in "
     Q_R    = state('N_N')       #   Has "; ends in " in ""
 
-    S_M    = state('N_N')       #   Has """; might end in " or ""
+    S_K    = state('S_K')       #   Has """: ends in \
+    S_M    = state('S_M')       #   Has """; might end in " or ""
 
 
     #
@@ -146,7 +138,7 @@ def gem():
 
 
     #           '       \       N_N     "       N   O
-    start.setup(A_A,    K_K,    N_N,    Q_Q,    I,  _)
+    start.setup(A_A,    N_K,    N_N,    Q_Q,    I,  _)
     X    .setup(X,      X,      X,      X,      P,  P)
 
     #           '       \       N_N     "       N   O
@@ -180,29 +172,18 @@ def gem():
     CQ_R .setup(CQ_M,   CQ_K,   CQ_M,   X,      P,  P)
 
     #           '       \       N_N     "       N   O
-    K_K  .setup(K_N,    K_N,    K_N,    K_N,    P,  P)
-    K_N  .setup(A_A,    K_K,    K_N,    KQ_Q,   A,  Q)
+    N_K, .setup(N_N,    N_N,    N_N,    N_N,    P,  P)
+    N_N  .setup(A_A,    N_K,    N_N,    Q_Q,    A,  _)
 
     #           '       \       N_N     "       N   O
-    KQ_K .setup(KQ_N,   KQ_N,   KQ_N,   KQ_N,   P,  P)
-    KQ_N .setup(AQ_A,   KQ_K,   KQ_N,   KQ_Q,   A,  A)
-    KQ_Q .setup(AQ_A,   KQ_K,   KQ_N,   KQ_R,   A,  A)
-    KQ_R .setup(AQ_A,   KQ_K,   KQ_N,   KS_M,   A,  A)
+    Q_K  .setup(Q_N,    Q_N,    Q_N,    Q_N,    P,  P)
+    Q_N  .setup(AQ_A,   Q_K,    Q_N,    Q_Q,    A,  _)
+    Q_Q  .setup(AQ_A,   Q_K,    Q_N,    Q_R,    A,  _)
+    Q_R  .setup(AQ_A,   Q_K,    Q_N,    S_M,    A,  _)
 
     #           '       \       N_N     "       N   O
-    KS_K .setup(KS_M,   KS_M,   KS_M,   KS_M,   P,  P)
-    KS_M .setup(AS_A,   KS_K,   KS_M,   KS_M,   A,  A)
-
-    #           '       \       N_N     "       N   O
-    N_N  .setup(A_A,    K_K,    N_N,    Q_Q,    A,  _)
-
-    #           '       \       N_N     "       N   O
-    Q_N  .setup(AQ_A,   KQ_K,   Q_N,    Q_Q,    A,  _)
-    Q_Q  .setup(AQ_A,   KQ_K,   Q_N,    Q_R,    A,  _)
-    Q_R  .setup(AQ_A,   KQ_K,   Q_N,    S_M,    A,  _)
-
-    #           '       \       N_N     "       N   O
-    S_M  .setup(AS_A,   KS_M,   S_M,    S_M,    A,  _)
+    S_K  .setup(S_M,    S_M,    S_M,    S_M,    P,  P)
+    S_M  .setup(AS_A,   S_M,    S_M,    S_M,    A,  _)
 
 
     del PortrayStringState.__init__, PortrayStringState.setup
@@ -267,7 +248,7 @@ def gem():
         #   Complex case
         #
         if a.is_backslash:
-            return portray_raw_K_string(0, K_K, iterator, s)
+            return portray_raw_K_string(0, N_K, iterator, s)
 
         if a.is_double_quote:
             favorite = 1
