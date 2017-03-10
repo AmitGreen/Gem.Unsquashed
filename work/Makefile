@@ -74,7 +74,7 @@ clean:
 	rm -f jb.py
 	rm -f lr.txt
 	rm -f m m.py
-	rm -f pa.py ps.py
+	rm -f pa.py ps.py ps3.py
 	rm -f rm.py rx.py
 	rm -f tc.py tm.py tp.py tu.py tx.py
 	rm -f zm.py
@@ -123,6 +123,7 @@ links:
 	ln -s ../Gem/Map.py                         m.py
 	ln -s ../Gem/Path.py                        pa.py
 	ln -s ../Gem/PortrayString.py               ps.py
+	ln -s ../Junk/PortrayString_3.py            ps3.py
 	ln -s ../Agate/RUNME.py                     rm.py
 	ln -s ../Gem/RegularExpression.py           rx.py
 	ln -s ../Tremolite/Core.py                  tc.py
