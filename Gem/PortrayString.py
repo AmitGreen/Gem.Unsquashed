@@ -20,57 +20,14 @@ def gem():
             'ZO',                       #   Function -> String
 
             #
-            #   K
-            #
-            'C',                        #   PortrayStringState
-            'S',                        #   PortrayStringState
-
-            #
             #   Y
             #
             'is_3',                     #   Boolean
-            'ZA',                       #   Function -> String
-            'ZQ',                       #   Function -> String
         ))
 
 
         def __init__(t, name):
             t.name = name
-
-
-        def end(t, A, K, Q, is_3, ZA, ZQ):
-            t.A = A
-            t.K = K
-            #
-            #   N         Not applicatble
-            #
-            t.Q = Q
-
-            #
-            #   ZN   Not applicatble
-            #   ZO   Not applicatble
-            #
-            t.is_3 = Boolean(is_3)
-            t.ZA   = ZA
-            t.ZQ   = ZQ
-
-
-        def Ksetup(t, A, C, Q, S, ZN, ZO, ZA, ZQ):
-            t.A = A
-            #
-            #   K   Not applicable
-            #   N   Not applicable
-            #
-            t.Q = Q
-
-            t.C = C
-            t.S = S
-
-            t.ZN = ZN
-            t.ZO = ZO
-
-            t.ZA = ZA
-            t.ZQ = ZQ
 
 
         def setup(t, A, K, N, Q, ZN, ZO):
@@ -81,13 +38,6 @@ def gem():
 
             t.ZN = ZN
             t.ZO = ZO
-
-            #
-            #   C     Not applicable
-            #   S     Not applicable
-            #   ZA    Not applicable
-            #   ZQ    Not applicable
-            #
 
 
     state = PortrayStringState
@@ -109,7 +59,7 @@ def gem():
     #       J = ''' or \'''
     #
     #       K = \
-    #       L = non-ascii (AKA: "Lemon")
+    #       L = (''' and ''') or (unprintable) [AKA: "Lemon"]
     #       N = normal
     #
     #       Q = "
@@ -124,13 +74,13 @@ def gem():
     #       Y = ""  or \""
     #       Z = """ or \"""
     #
-    L_G  = state('L_G')         #   Has unprintinable; ends in '   or \'
-    L_H  = state('L_H')         #   Has unprintinable; ends in ''  or \''
-    L_J  = state('L_J')         #   Has unprintinable; ends in ''' or \'''
-    L_N  = state('L_N')         #   Has unprintable
-    L_W  = state('L_W')         #   Has unprintinable; ends in "   or \"
-    L_Y  = state('L_Y')         #   Has unprintinable; ends in ""  or \""
-    L_Z  = state('L_Z')         #   Has unprintinable; ends in """ or \"""
+    L_G  = state('L_G')         #   Lemon; ends in '   or \'
+    L_H  = state('L_H')         #   Lemon; ends in ''  or \''
+    L_J  = state('L_J')         #   Lemon; ends in ''' or \'''
+    L_N  = state('L_N')         #   Lemon
+    L_W  = state('L_W')         #   Lemon; ends in "   or \"
+    L_Y  = state('L_Y')         #   Lemon; ends in ""  or \""
+    L_Z  = state('L_Z')         #   Lemon; ends in """ or \"""
 
     A_A  = state('A_A')         #   Has '; ends in '
     A_B  = state('A_B')         #   Has '; ends in ''
@@ -184,7 +134,7 @@ def gem():
 
     N_D  = state('N_D')         #   normal; ends in \'
     N_K  = state('N_K')         #   normal; ends in \
-    N_N  = state('N_N')         #   totally normal, nothing to see here
+    N_N  = state('N_N')         #   normal
     N_T  = state('N_T')         #   normal; ends in \"
 
     Q_K  = state('Q_K')         #   Has "; ends in \
@@ -204,21 +154,6 @@ def gem():
 
 
     #
-    #   Backslash States
-    #
-    K   = state('K')         #   Normal
-    KA  = state('KA')        #   Has '
-    KAQ = state('KAQ')       #   Has ' & "
-    KAS = state('KAS')       #   Has ' & """
-    KC  = state('KC')        #   Has '''
-    KCQ = state('KCQ')       #   Has ''' & "
-    KCS = state('KCS')       #   Has ''' & """
-    KQ  = state('KQ')        #   Has "
-    KS  = state('KQ')        #   Has """
-    KX  = state('KX')        #   Has unprintable
-
-
-    #
     #   Results
     #
     def portray_raw_string_empty(s):
@@ -231,9 +166,9 @@ def gem():
         return "r'" + s + "'"
 
 
-    if __debug__:
-        def portray_raw_string_invalid(s):
-            raise_runtime_error('portray_raw_string_invalid called on %r', s)
+    #if __debug__:
+    #    def portray_raw_string_invalid(s):
+    #        raise_runtime_error('portray_raw_string_invalid called on %r', s)
 
 
     def portray_raw_string_with_quotation_mark(s):
@@ -257,7 +192,7 @@ def gem():
     Q = portray_raw_string_with_quotation_mark
     P = portray_string
     S = portray_raw_string_with_triple_quotation_mark
-    _ = (portray_raw_string_invalid  if __debug__ else   portray_string)
+    #_ = (portray_raw_string_invalid  if __debug__ else   portray_string)
 
 
     #           '       \       N       "       N   O
@@ -348,121 +283,45 @@ def gem():
     S_Z  .setup(AS_A,   S_N,    S_N,    S_W,    A,  A)
 
 
-    #
-    #   Backslash States
-    #
-    #          '    '''   "     """   N   O   '   "
-    K  .Ksetup(KA,  KC,   KQ,   KS,   A,  Q,  _,  _)
-    KA .Ksetup(KA,  KC,   KAQ,  KAS,  Q,  Q,  Q,  _)
-    KAQ.Ksetup(KAQ, KCQ,  KAQ,  KAS,  C,  S,  S,  C)
-    KAS.Ksetup(KAS, KCS,  KAS,  KAS,  C,  C,  P,  C)
-    KC .Ksetup(KC,  KC,   KCQ,  KCS,  Q,  Q,  Q,  _)
-    KCQ.Ksetup(KCQ, KCQ,  KCQ,  KCS,  S,  S,  S,  P)
-    KCS.Ksetup(KCS, KCS,  KCS,  KCS,  P,  P,  P,  P)
-    KQ .Ksetup(KAQ, KCQ,  KQ,   KS,   A,  A,  _,  A)
-    KS .Ksetup(KAS, KCS,  KS,   KS,   A,  A,  _,  A)
-    KX .Ksetup(KX,  KX,   KX,   KX,   P,  P,  P,  P)
-
-
-    #
-    #   End states
-    #
-    YA = state('ZA')      #       A = ends in '
-    YB = state('ZB')      #       B = ends in ''
-    YC = state('ZC')      #       C = ends in '''
-    YD = state('ZD')      #       D = ends in \'
-    YE = state('ZE')      #       E = ends in \''
-    YF = state('ZF')      #       F = ends in \'''
-    YG = state('ZG')      #       G = ends in \''''
-
-    YK = state('ZK')      #       Z = ends in \
-    YN = state('ZN')      #       N = normal
-
-    YQ = state('ZQ')      #       Q = ends in "
-    YR = state('ZR')      #       R = ends in ""
-    YS = state('ZS')      #       S = ends in """
-    YT = state('ZT')      #       T = ends in \"
-    YU = state('ZU')      #       U = ends in \""
-    YV = state('ZV')      #       V = ends in \"""
-    YW = state('ZW')      #       V = ends in \""""
-
-
-    def finish_portray(state):
-        return portray_string
-
-
-    ZA = PortrayStringState.ZA.__get__
-    ZN = PortrayStringState.ZN.__get__
-    ZO = PortrayStringState.ZO.__get__
-    ZP = finish_portray
-    ZQ = PortrayStringState.ZQ.__get__
-
-
-    YA.end(YB, YK, YQ, 0, ZA, ZA)
-    YB.end(YC, YK, YQ, 0, ZA, ZA)
-    YC.end(YA, YK, YQ, 1, ZA, ZA)
-    YD.end(YE, YK, YQ, 1, ZN, ZO)
-    YE.end(YF, YK, YQ, 0, ZA, ZA)
-    YF.end(YG, YK, YQ, 0, ZA, ZA)
-    YG.end(YB, YK, YQ, 0, ZA, ZA)
-
-    YK.end(YD, YN, YT, 0, ZP, ZP)
-    YN.end(YA, YK, YQ, 0, ZN, ZO)
-
-    YQ.end(YA, YK, YR, 0, ZQ, ZQ)
-    YR.end(YA, YK, YS, 0, ZQ, ZQ)
-    YS.end(YA, YK, YQ, 1, ZQ, ZQ)
-    YT.end(YA, YK, YU, 1, ZN, ZO)
-    YU.end(YA, YK, YV, 0, ZQ, ZQ)
-    YV.end(YA, YK, YW, 0, ZQ, ZQ)
-    YW.end(YA, YK, YR, 0, ZQ, ZQ)
-
-
     del PortrayStringState.__init__, PortrayStringState.setup
 
 
     @export
     def portray_raw_K_string(favorite, state, iterator, s):
         #line('portray_raw_K_string(%d, %s, %r, %r)', favorite, state, iterator, s)
-        last = YK
 
         for c in iterator:
-            old_state = state.name
-            old_last  = state.name
+            #old_state = state.name
 
             a = lookup_ascii(c, unknown_ascii)
 
             if a.is_portray_boring:
-                last  = YN
                 state = state.N
-                #line('%r: %s => %s; %s => %s', c,  old_state, state.name, old_last, last.name)
+                #line('%r: %s => %s; %s => %s', c,  old_state, state.name)
                 continue
 
             if a.is_backslash:
-                last  = last .K
                 state = state.K
-                line('%r: %s => %s; %s => %s', c,  old_state, state.name, old_last, last.name)
+                #line('%r: %s => %s', c,  old_state, state.name)
                 continue
 
             if a.is_double_quote:
                 favorite += 1
-                last  = last .Q
                 state = state.Q
-                #line('%r: %s => %s; %s => %s', c,  old_state, state.name, old_last, last.name)
+                #line('%r: %s => %s', c,  old_state, state.name)
                 continue
 
             if a.is_single_quote:
                 favorite -= 1
-                last  = last .A
                 state = state.A
-                #line('%r: %s => %s; %s => %s', c,  old_state, state.name, old_last, last.name)
+                #line('%r: %s => %s', c,  old_state, state.name)
                 continue
 
             assert not a.is_printable
 
             return portray_string(s)
 
-        #line('final of %r: %d, %s, %s', s, favorite, state.name, last.name)
+        #line('final of %r: %d, %s', s, favorite, state.name)
 
         if favorite >= 0:
             return state.ZN(s)
