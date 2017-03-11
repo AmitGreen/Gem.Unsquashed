@@ -52,10 +52,6 @@ def gem():
     #       B = ''
     #       C = ''
     #
-    #       D = \'
-    #       E = \''
-    #       F = \'''
-    #
     #       K = \
     #       L = unprintable [AKA: "Lemon"]
     #       N = normal
@@ -78,9 +74,6 @@ def gem():
 
     AS_A = state('AS_A')        #   Has ' & """; ends in '
     AS_B = state('AS_B')        #   Has ' & """; ends in ''
-    AS_D = state('AS_D')        #   Has ' & """; ends in \'
-    AS_E = state('AS_E')        #   Has ' & """; ends in \''
-    AS_F = state('AS_F')        #   Has ' & """; ends in \'''
     AS_K = state('AS_K')        #   Has ' & """; ends in \
     AS_N = state('AS_N')        #   Has ' & """
     AS_Q = state('AS_Q')        #   Has ' & """; ends in "   or \"
@@ -191,10 +184,7 @@ def gem():
     #           '       \       N       "       N   O
     AS_A .setup(AS_B,   AS_K,   AS_N,   AS_Q,   P,  P)                  #   Has ' & """; ends in '
     AS_B .setup(CS_C,   AS_K,   AS_N,   AS_Q,   P,  P)                  #   Has ' & """; ends in ''
-    AS_D .setup(AS_E,   AS_K,   AS_N,   AS_Q,   C,  C)                  #   Has ' & """; ends in \'
-    AS_E .setup(AS_F,   AS_K,   AS_N,   AS_Q,   P,  P)                  #   Has ' & """; ends in \''
-    AS_F .setup(CS_A,   AS_K,   AS_N,   AS_Q,   P,  P, F3 = -1)         #   Has ' & """; ends in \'''
-    AS_K .setup(AS_D,   AS_N,   AS_N,   AS_Q,   P,  P)                  #   Has ' & """; ends in \
+    AS_K .setup(AS_N,   AS_N,   AS_N,   AS_N,   P,  P)                  #   Has ' & """; ends in \
     AS_N .setup(AS_A,   AS_K,   AS_N,   AS_Q,   C,  C)                  #   Has ' & """
     AS_Q .setup(AS_A,   AS_K,   AS_N,   AS_R,   C,  C)                  #   Has ' & """; ends in "   or \"
     AS_R .setup(AS_A,   AS_K,   AS_N,   AS_S,   C,  C)                  #   Has ' & """; ends in ""  or \""
