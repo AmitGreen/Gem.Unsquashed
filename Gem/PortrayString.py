@@ -73,7 +73,7 @@ def gem():
             t.ZQ = ZQ
 
 
-        def setup(t, A, K, N, Q, ZN, ZO, C):
+        def setup(t, A, K, N, Q, ZN, ZO):
             t.A = A
             t.K = K
             t.N = N
@@ -88,8 +88,6 @@ def gem():
             #   ZA    Not applicable
             #   ZQ    Not applicable
             #
-
-            t.C = C
 
 
     state = PortrayStringState
@@ -120,32 +118,63 @@ def gem():
     #
     #       X = non-ascii
     #
-    X    = state('X')
+    X_A  = state('X_A')
+    X_B  = state('X_B')
+    X_C  = state('X_C')
+    X_N  = state('X_N')
+    X_Q  = state('X_Q')
+    X_R  = state('X_R')
+    X_S  = state('X_S')
 
     A_A  = state('A_A')       #   Has '; ends in '
     A_B  = state('A_B')       #   Has '; ends in ''
+    A_D  = state('A_D')       #   Has '; ends in \'
+    A_E  = state('A_E')       #   Has '; ends in \''
+    A_F  = state('A_F')       #   Has '; ends in \'''
     A_K  = state('A_K')       #   Has '; ends in \
     A_N  = state('A_N')       #   Has '
 
     AQ_A = state('AQ_A')      #   Has ' & "; ends in '
     AQ_B = state('AQ_B')      #   Has ' & "; ends in ''
+    AQ_D = state('AQ_D')      #   Has ' & "; ends in \'
+    AQ_E = state('AQ_E')      #   Has ' & "; ends in \''
+    AQ_F = state('AQ_F')      #   Has ' & "; ends in \'''
     AQ_K = state('AQ_K')      #   Has ' & "; ends in \
     AQ_N = state('AQ_N')      #   Has ' & "
     AQ_Q = state('AQ_Q')      #   Has ' & "; ends in "
     AQ_R = state('AQ_R')      #   Has ' & "; ends in ""
+    AQ_T = state('AQ_T')      #   Has ' & "; ends in \"
+    AQ_U = state('AQ_U')      #   Has ' & "; ends in \""
+    AQ_V = state('AQ_V')      #   Has ' & "; ends in \"""
 
     AS_A = state('AS_A')      #   Has ' & """; ends in '
     AS_B = state('AS_B')      #   Has ' & """; ends in ''
+    AS_D = state('AS_D')      #   Has ' & """; ends in \'
+    AS_E = state('AS_E')      #   Has ' & """; ends in \''
+    AS_F = state('AS_F')      #   Has ' & """; ends in \'''
     AS_K = state('AS_K')      #   Has ' & """; ends in \
-    AS_M = state('AS_M')      #   Has ' & """; might end in " or ""
+    AS_N = state('AS_N')      #   Has ' & """
+    AS_Q = state('AS_Q')      #   Has ' & """; ends in "
+    AS_R = state('AS_R')      #   Has ' & """; ends in ""
+    AS_S = state('AS_S')      #   Has ' & """; ends in """
 
+    C_A  = state('C_A')       #   Has '''; ends in '
+    C_B  = state('C_B')       #   Has '''; ends in ''
+    C_C  = state('C_C')       #   Has '''; ends in '''
     C_K  = state('C_K')       #   Has '''; ends in \
-    C_M  = state('C_M')       #   Has '''; might end in ' or ""
+    C_N  = state('C_N')       #   Has '''
+    C_T  = state('C_T')       #   Has '''; ends in \"
 
+    CQ_A = state('CQ_A')      #   Has ''' & "; ends in '
+    CQ_B = state('CQ_B')      #   Has ''' & "; ends in ''
+    CQ_C = state('CQ_C')      #   Has ''' & "; ends in '''
     CQ_K = state('CQ_K')      #   Has ''' & "; ends in \
-    CQ_M = state('CQ_M')      #   Has ''' & "; might end in ' or ''
+    CQ_N = state('CQ_N')      #   Has ''' & "
     CQ_Q = state('CQ_Q')      #   Has ''' & "; ends in "
     CQ_R = state('CQ_R')      #   Has ''' & "; ends in ""
+    CQ_T = state('CQ_R')      #   Has ''' & "; ends in \"
+    CQ_U = state('CQ_R')      #   Has ''' & "; ends in \""
+    CQ_V = state('CQ_R')      #   Has ''' & "; ends in \"""
 
     N_K  = state('N_K')       #   normal; ends in \
     N_N  = state('N_N')       #   totally normal, nothing to see here
@@ -216,52 +245,90 @@ def gem():
     _ = (portray_raw_string_invalid  if __debug__ else   portray_string)
 
 
-    #           '       \       N       "       N   O   \
-    X    .setup(X,      X,      X,      X,      P,  P,  KX)
-
-    #           '       \       N       "       N   O   \
-    A_A  .setup(A_B,    A_K,    A_N,    AQ_Q,   Q,  Q,  KA)
-    A_B  .setup(C_M,    A_K,    A_N,    AQ_Q,   Q,  Q,  KA)
-    A_K  .setup(A_N,    A_N,    A_N,    AQ_Q,   P,  P,  KA)
-    A_N  .setup(A_A,    A_K,    A_N,    AQ_Q,   Q,  Q,  KA)
-
-    #           '       \       N       "       N   O   \
-    AQ_A .setup(AQ_B,   AQ_K,   AQ_N,   AQ_Q,   S,  S,  KAQ)
-    AQ_B .setup(CQ_M,   AQ_K,   AQ_N,   AQ_Q,   S,  S,  KAQ)
-    AQ_K .setup(AQ_N,   AQ_N,   AQ_N,   AQ_N,   P,  P,  KAQ)
-    AQ_N .setup(AQ_A,   AQ_K,   AQ_N,   AQ_Q,   C,  S,  KAQ)
-    AQ_Q .setup(AQ_A,   AQ_K,   AQ_N,   AQ_R,   C,  C,  KAQ)
-    AQ_R .setup(AQ_A,   AQ_K,   AQ_N,   AS_M,   C,  C,  KAQ)
-
-    #           '       \       N       "       N   O   \
-    AS_A .setup(AS_B,   AS_K,   AS_M,   AS_M,   P,  P,  KAS)
-    AS_B .setup(X,      AS_K,   AS_M,   AS_M,   P,  P,  KAS)
-    AS_K .setup(AS_M,   AS_M,   AS_M,   AS_M,   P,  P,  KAS)
-    AS_M .setup(AS_A,   AS_K,   AS_M,   AS_M,   C,  C,  KAS)
-
-    #           '       \       N       "       N   O   \
-    C_K  .setup(C_M,    C_M,    C_M,    C_M,    P,  P,  KC)
-    C_M  .setup(C_M,    C_K,    C_M,    CQ_Q,   Q,  Q,  KC)
-
-    #           '       \       N       "       N   O   \
-    CQ_K .setup(CQ_M,   CQ_M,   CQ_M,   CQ_M,   P,  P,  KCQ)
-    CQ_M .setup(CQ_M,   CQ_K,   CQ_M,   CQ_Q,   S,  S,  KCQ)
-    CQ_Q .setup(CQ_M,   CQ_K,   CQ_M,   CQ_R,   P,  P,  KCQ)
-    CQ_R .setup(CQ_M,   CQ_K,   CQ_M,   X,      P,  P,  KCQ)
-
-    #           '       \       N       "       N   O   \
-    N_K  .setup(N_N,    N_N,    N_N,    N_N,    P,  P,  K)
-    N_N  .setup(A_A,    N_K,    N_N,    Q_Q,    A,  Q,  K)
-
-    #           '       \       N       "       N   O   \
-    Q_K  .setup(Q_N,    Q_N,    Q_N,    Q_N,    P,  P,  KQ)
-    Q_N  .setup(AQ_A,   Q_K,    Q_N,    Q_Q,    A,  A,  KQ)
-    Q_Q  .setup(AQ_A,   Q_K,    Q_N,    Q_R,    A,  A,  KQ)
-    Q_R  .setup(AQ_A,   Q_K,    Q_N,    S_M,    A,  A,  KQ)
+    #           '       \       N       "       N   O
+    X_A  .setup(X_B,    X_N,    X_N,    X_Q,    P,  P)
+    X_B  .setup(X_C,    X_N,    X_N,    X_Q,    P,  P)
+    X_C  .setup(X_A,    X_N,    X_N,    X_Q,    P,  P)
+    X_N  .setup(X_A,    X_N,    X_N,    X_Q,    P,  P)
+    X_Q  .setup(X_A,    X_N,    X_N,    X_R,    P,  P)
+    X_R  .setup(X_A,    X_N,    X_N,    X_S,    P,  P)
+    X_S  .setup(X_A,    X_N,    X_N,    X_Q,    P,  P)
 
     #           '       \       N       "       N   O
-    S_K  .setup(S_M,    S_M,    S_M,    S_M,    P,  P,  KS)
-    S_M  .setup(AS_A,   S_M,    S_M,    S_M,    A,  A,  KS)
+    A_A  .setup(A_B,    A_K,    A_N,    AQ_Q,   Q,  Q)
+    A_B  .setup(C_C,    A_K,    A_N,    AQ_Q,   Q,  Q)
+    A_D  .setup(A_E,    A_K,    A_N,    AQ_Q,   Q,  Q)
+    A_E  .setup(A_F,    A_K,    A_N,    AQ_Q,   Q,  Q)
+    A_F  .setup(C_A,    A_K,    A_N,    AQ_Q,   Q,  Q)
+    A_K  .setup(A_N,    A_N,    A_N,    AQ_Q,   P,  P)
+    A_N  .setup(A_A,    A_K,    A_N,    AQ_Q,   Q,  Q)
+
+    #           '       \       N       "       N   O
+    AQ_A .setup(AQ_B,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
+    AQ_B .setup(CQ_C,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
+    AQ_D .setup(AQ_E,   AQ_K,   AQ_N,   AQ_Q,   C,  S)
+    AQ_E .setup(AQ_F,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
+    AQ_F .setup(CQ_A,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
+    AQ_K .setup(AQ_D,   AQ_N,   AQ_N,   AQ_T,   P,  P)
+    AQ_N .setup(AQ_A,   AQ_K,   AQ_N,   AQ_Q,   C,  S)
+    AQ_Q .setup(AQ_A,   AQ_K,   AQ_N,   AQ_R,   C,  C)
+    AQ_R .setup(AQ_A,   AQ_K,   AQ_N,   AS_S,   C,  C)
+    AQ_T .setup(AQ_A,   AQ_K,   AQ_N,   AQ_U,   C,  S)
+    AQ_U .setup(AQ_A,   AQ_K,   AQ_N,   AQ_V,   C,  C)
+    AQ_V .setup(AQ_A,   AQ_K,   AQ_N,   AS_Q,   C,  C)
+
+    #           '       \       N       "       N   O
+    AS_A .setup(AS_B,   AS_K,   AS_N,   AS_Q,   P,  P)
+    AS_B .setup(X_C,    AS_K,   AS_N,   AS_Q,   P,  P)
+    AS_D .setup(AS_E,   AS_K,   AS_N,   AS_Q,   C,  C)
+    AS_E .setup(AS_F,   AS_K,   AS_N,   AS_Q,   P,  P)
+    AS_F .setup(X_A,    AS_K,   AS_N,   AS_Q,   P,  P)
+    AS_K .setup(AS_D,   AS_N,   AS_N,   AS_Q,   P,  P)
+    AS_N .setup(AS_A,   AS_K,   AS_N,   AS_Q,   C,  C)
+    AS_Q .setup(AS_A,   AS_K,   AS_N,   AS_R,   C,  C)
+    AS_R .setup(AS_A,   AS_K,   AS_N,   AS_S,   C,  C)
+    AS_S .setup(AS_A,   AS_K,   AS_N,   AS_Q,   C,  C)
+
+    #           '       \       N       "       N   O
+    C_A  .setup(C_B,    C_K,    C_N,    CQ_Q,   Q,  Q)
+    C_B  .setup(C_C,    C_K,    C_N,    CQ_Q,   Q,  Q)
+    C_C  .setup(C_A,    C_K,    C_N,    CQ_Q,   Q,  Q)
+    C_K  .setup(C_A,    C_N,    C_N,    C_T,    P,  P)
+    C_N  .setup(C_A,    C_K,    C_N,    CQ_Q,   Q,  Q)
+    C_T  .setup(C_A,    C_K,    C_N,    CQ_U,   Q,  Q)
+
+    #           '       \       N       "       N   O
+    CQ_A .setup(CQ_B,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
+    CQ_B .setup(CQ_C,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
+    CQ_C .setup(CQ_A,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
+    CQ_K .setup(CQ_A,   CQ_N,   CQ_N,   CQ_U,   P,  P)
+    CQ_N .setup(CQ_A,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
+    CQ_Q .setup(CQ_A,   CQ_K,   CQ_N,   CQ_R,   P,  P)
+    CQ_R .setup(CQ_A,   CQ_K,   CQ_N,   X_Q,    P,  P)
+    CQ_T .setup(CQ_A,   CQ_K,   CQ_N,   CQ_U,   S,  S)
+    CQ_U .setup(CQ_A,   CQ_K,   CQ_N,   CQ_V,   P,  P)
+    CQ_V .setup(CQ_A,   CQ_K,   CQ_N,   X_R,    P,  P)
+
+    #           '       \       N       "       N   O
+    N_K  .setup(N_N,    N_N,    N_N,    N_N,    P,  P)
+    N_N  .setup(A_A,    N_K,    N_N,    Q_Q,    A,  Q)
+
+    #           '       \       N       "       N   O
+    Q_K  .setup(Q_N,    Q_N,    Q_N,    Q_N,    P,  P)
+    Q_N  .setup(AQ_A,   Q_K,    Q_N,    Q_Q,    A,  A)
+    Q_Q  .setup(AQ_A,   Q_K,    Q_N,    Q_R,    A,  A)
+    Q_R  .setup(AQ_A,   Q_K,    Q_N,    S_M,    A,  A)
+    #Q_T
+    #Q_U
+    #Q_V
+
+    #           '       \       N       "       N   O
+    #S_A
+    #S_B
+    #S_C
+    S_K  .setup(S_M,    S_M,    S_M,    S_M,    P,  P)
+    S_M  .setup(AS_A,   S_M,    S_M,    S_M,    A,  A)
+    #S_N
 
 
     #
@@ -378,7 +445,7 @@ def gem():
 
             return portray_string(s)
 
-        line('final of %r: %d, %s, %s', s, favorite, state.name, last.name)
+        #line('final of %r: %d, %s, %s', s, favorite, state.name, last.name)
 
         if favorite >= 0:
             return state.ZN(s)
