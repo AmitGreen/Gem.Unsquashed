@@ -31,7 +31,7 @@ def gem():
     @share
     def main():
         for [s, expected] in [
-                [   r'',                            "r''"                               ],
+                [   r'',                            r"r''"                              ],
                 [   r'test',                        r"r'test'"                          ],
                 [   r'double backslash: \\',        r"r'double backslash: \\'"          ],
                 [   r"\'",                          r'''r"\'"'''                        ],
@@ -39,7 +39,7 @@ def gem():
                 [   r"can't",                       r'''r"can't"'''                     ],
                 [   r"'",                           r'''r"'"'''                         ],
                 [   r"quoted: ''",                  r'''r"quoted: ''"'''                ],
-                [   r'''\"'\"''',                   r"""r'''\"'\"'''"""                 ],
+                [   r"\"'\"",                       r'''r"\"'\""'''                     ],
                 [   r'She said "hello"',            r"""r'She said "hello"'"""          ],
                 [   r'"',                           r"""r'"'"""                         ],
                 [   r'double quoted: ""',           r"""r'double quoted: ""'"""         ],
