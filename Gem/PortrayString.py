@@ -23,9 +23,7 @@ def gem():
             #   K
             #
             'C',                        #   PortrayStringState
-            'F',                        #   PortrayStringState
             'S',                        #   PortrayStringState
-            'V',                        #   PortrayStringState
 
             #
             #   Y
@@ -57,7 +55,7 @@ def gem():
             t.ZQ   = ZQ
 
 
-        def Ksetup(t, A, C, F, Q, S, V, ZN, ZO, ZA, ZQ):
+        def Ksetup(t, A, C, Q, S, ZN, ZO, ZA, ZQ):
             t.A = A
             #
             #   K   Not applicable
@@ -66,9 +64,7 @@ def gem():
             t.Q = Q
 
             t.C = C
-            t.F = F
             t.S = S
-            t.V = V
 
             t.ZN = ZN
             t.ZO = ZO
@@ -77,7 +73,7 @@ def gem():
             t.ZQ = ZQ
 
 
-        def setup(t, A, K, N, Q, ZN, ZO, V):
+        def setup(t, A, K, N, Q, ZN, ZO, C):
             t.A = A
             t.K = K
             t.N = N
@@ -88,14 +84,12 @@ def gem():
 
             #
             #   C     Not applicable
-            #   F     Not applicable
             #   S     Not applicable
-            #   V     Not applicable
             #   ZA    Not applicable
             #   ZQ    Not applicable
             #
 
-            t.V = V
+            t.C = C
 
 
     state = PortrayStringState
@@ -172,18 +166,11 @@ def gem():
     KA  = state('KA')        #   Has '
     KAQ = state('KAQ')       #   Has ' & "
     KAS = state('KAS')       #   Has ' & """
-    KAV = state('KAV')       #   Has ' & \"""
     KC  = state('KC')        #   Has '''
     KCQ = state('KCQ')       #   Has ''' & "
     KCS = state('KCS')       #   Has ''' & """
-    KCV = state('KCV')       #   Has ''' & \"""
-    KF  = state('KF')        #   Has \'''
-    KFQ = state('KFQ')       #   Has \''' & "
-    KFS = state('KFS')       #   Has \''' & """
-    KFV = state('KFV')       #   Has \''' & \"""
     KQ  = state('KQ')        #   Has "
     KS  = state('KQ')        #   Has """
-    KV  = state('KV')        #   Has \"""
     KX  = state('KX')        #   Has unprintable
 
 
@@ -228,24 +215,6 @@ def gem():
     S = portray_raw_string_with_triple_quotation_mark
     _ = (portray_raw_string_invalid  if __debug__ else   portray_string)
 
-
-    K   = state('K')         #   Normal
-    KA  = state('KA')        #   Has '
-    KAQ = state('KAQ')       #   Has ' & "
-    KAS = state('KAS')       #   Has ' & """
-    KAV = state('KAV')       #   Has ' & \"""
-    KC  = state('KC')        #   Has '''
-    KCQ = state('KCQ')       #   Has ''' & "
-    KCS = state('KCS')       #   Has ''' & """
-    KCV = state('KCV')       #   Has ''' & \"""
-    KF  = state('KF')        #   Has \'''
-    KFQ = state('KFQ')       #   Has \''' & "
-    KFS = state('KFS')       #   Has \''' & """
-    KFV = state('KFV')       #   Has \''' & \"""
-    KQ  = state('KQ')        #   Has "
-    KS  = state('KQ')        #   Has """
-    KV  = state('KV')        #   Has \"""
-    KX  = state('KX')        #   Has unprintable
 
     #           '       \       N       "       N   O   \
     X    .setup(X,      X,      X,      X,      P,  P,  KX)
@@ -298,24 +267,18 @@ def gem():
     #
     #   Backslash States
     #
-    #          '    '''   \'''  "     """   \"""  N   O   '   "
-    K  .Ksetup(KA,  KC,   KF,   KQ,   KS,   KV,   A,  Q,  _,  _)
-    KA .Ksetup(KA,  KC,   KF,   KAQ,  KAS,  KAV,  Q,  Q,  Q,  _)
-    KAQ.Ksetup(KAQ, KCQ,  KFQ,  KAQ,  KAS,  KAV,  C,  S,  S,  C)
-    KAS.Ksetup(KAS, KCS,  KFS,  KAS,  KAS,  KAS,  C,  C,  P,  C)
-    KAV.Ksetup(KAV, KCV,  KFV,  KAV,  KAS,  KAV,  C,  S,  S,  C)
-    KC .Ksetup(KC,  KC,   KC,   KCQ,  KCS,  KCV,  Q,  Q,  Q,  _)
-    KCQ.Ksetup(KCQ, KCQ,  KCQ,  KCQ,  KCS,  KCV,  S,  S,  S,  P)
-    KCS.Ksetup(KCS, KCS,  KCS,  KCS,  KCS,  KCS,  P,  P,  P,  P)
-    KCV.Ksetup(KCV, KCV,  KCV,  KCV,  KCS,  KCV,  S,  S,  S,  P)
-    KF .Ksetup(KF,  KC,   KF,   KFQ,  KFS,  KFV,  Q,  Q,  Q,  _)
-    KFQ.Ksetup(KFQ, KCQ,  KFQ,  KFQ,  KFS,  KFV,  C,  S,  S,  C)
-    KFS.Ksetup(KFS, KCS,  KFS,  KFS,  KFS,  KFS,  C,  C,  P,  C)
-    KFV.Ksetup(KFV, KCV,  KFV,  KFV,  KFS,  KFV,  C,  S,  S,  C)
-    KQ .Ksetup(KAQ, KCQ,  KFQ,  KQ,   KS,   KV,   A,  A,  _,  A)
-    KS .Ksetup(KAS, KCS,  KFS,  KS,   KS,   KS,   A,  A,  _,  A)
-    KV .Ksetup(KAV, KCV,  KFV,  KV,   KS,   KV,   A,  A,  _,  A)
-    KX .Ksetup(KX,  KX,   KX,   KX,   KX,   KX,   P,  P,  P,  P)
+    #          '    '''   "     """   N   O   '   "
+    K  .Ksetup(KA,  KC,   KQ,   KS,   A,  Q,  _,  _)
+    KA .Ksetup(KA,  KC,   KAQ,  KAS,  Q,  Q,  Q,  _)
+    KAQ.Ksetup(KAQ, KCQ,  KAQ,  KAS,  C,  S,  S,  C)
+    KAS.Ksetup(KAS, KCS,  KAS,  KAS,  C,  C,  P,  C)
+    KC .Ksetup(KC,  KC,   KCQ,  KCS,  Q,  Q,  Q,  _)
+    KCQ.Ksetup(KCQ, KCQ,  KCQ,  KCS,  S,  S,  S,  P)
+    KCS.Ksetup(KCS, KCS,  KCS,  KCS,  P,  P,  P,  P)
+    KQ .Ksetup(KAQ, KCQ,  KQ,   KS,   A,  A,  _,  A)
+    KS .Ksetup(KAS, KCS,  KS,   KS,   A,  A,  _,  A)
+    KX .Ksetup(KX,  KX,   KX,   KX,   P,  P,  P,  P)
+
 
     #
     #   End states
