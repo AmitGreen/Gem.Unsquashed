@@ -109,8 +109,8 @@ def gem():
     #       J = ''' or \'''
     #
     #       K = \
+    #       L = non-ascii (AKA: "Lemon")
     #       N = normal
-    #       M = normal -- might end in ", "", ', or ''
     #
     #       Q = "
     #       R = ""
@@ -121,18 +121,16 @@ def gem():
     #       V = \"""
     #
     #       W = "   or \"
-    #       X = ""  or \""
-    #       Y = """ or \"""
+    #       Y = ""  or \""
+    #       Z = """ or \"""
     #
-    #       Z = non-ascii
-    #
-    Z_A  = state('Z_A')         #   Has unprintinable; ends in '   or \'
-    Z_B  = state('Z_B')         #   Has unprintinable; ends in ''  or \''
-    Z_C  = state('Z_C')         #   Has unprintinable; ends in ''' or \'''
-    Z_N  = state('Z_N')         #   Has unprintable
-    Z_Q  = state('Z_Q')         #   Has unprintinable; ends in "   or \"
-    Z_R  = state('Z_R')         #   Has unprintinable; ends in ""  or \""
-    Z_S  = state('Z_S')         #   Has unprintinable; ends in """ or \"""
+    L_G  = state('L_G')         #   Has unprintinable; ends in '   or \'
+    L_H  = state('L_H')         #   Has unprintinable; ends in ''  or \''
+    L_J  = state('L_J')         #   Has unprintinable; ends in ''' or \'''
+    L_N  = state('L_N')         #   Has unprintable
+    L_W  = state('L_W')         #   Has unprintinable; ends in "   or \"
+    L_Y  = state('L_Y')         #   Has unprintinable; ends in ""  or \""
+    L_Z  = state('L_Z')         #   Has unprintinable; ends in """ or \"""
 
     A_A  = state('A_A')         #   Has '; ends in '
     A_B  = state('A_B')         #   Has '; ends in ''
@@ -162,20 +160,20 @@ def gem():
     AS_F = state('AS_F')        #   Has ' & """; ends in \'''
     AS_K = state('AS_K')        #   Has ' & """; ends in \
     AS_N = state('AS_N')        #   Has ' & """
-    AS_Q = state('AS_Q')        #   Has ' & """; ends in "   or \"
-    AS_R = state('AS_R')        #   Has ' & """; ends in ""  or \""
-    AS_S = state('AS_S')        #   Has ' & """; ends in """ or \"""
+    AS_W = state('AS_W')        #   Has ' & """; ends in "   or \"
+    AS_Y = state('AS_Y')        #   Has ' & """; ends in ""  or \""
+    AS_Z = state('AS_Z')        #   Has ' & """; ends in """ or \"""
 
-    C_A  = state('C_A')         #   Has '''; ends in '   or \'
-    C_B  = state('C_B')         #   Has '''; ends in ''  or \''
-    C_C  = state('C_C')         #   Has '''; ends in ''' or \'''
+    C_G  = state('C_G')         #   Has '''; ends in '   or \'
+    C_H  = state('C_H')         #   Has '''; ends in ''  or \''
+    C_J  = state('C_J')         #   Has '''; ends in ''' or \'''
     C_K  = state('C_K')         #   Has '''; ends in \
     C_N  = state('C_N')         #   Has '''
     C_T  = state('C_T')         #   Has '''; ends in \"
 
-    CQ_A = state('CQ_A')        #   Has ''' & "; ends in '   or \'
-    CQ_B = state('CQ_B')        #   Has ''' & "; ends in ''  or \''
-    CQ_C = state('CQ_C')        #   Has ''' & "; ends in ''' or \'''
+    CQ_G = state('CQ_G')        #   Has ''' & "; ends in '   or \'
+    CQ_H = state('CQ_H')        #   Has ''' & "; ends in ''  or \''
+    CQ_J = state('CQ_J')        #   Has ''' & "; ends in ''' or \'''
     CQ_K = state('CQ_K')        #   Has ''' & "; ends in \
     CQ_N = state('CQ_N')        #   Has ''' & "
     CQ_Q = state('CQ_Q')        #   Has ''' & "; ends in "
@@ -200,9 +198,9 @@ def gem():
     S_D  = state('S_D')         #   Has """: ends in \'
     S_K  = state('S_K')         #   Has """: ends in \
     S_N  = state('S_N')         #   Has """
-    S_Q  = state('S_Q')         #   Has """; ends in "   or \"
-    S_R  = state('S_R')         #   Has """; ends in ""  or \""
-    S_S  = state('S_S')         #   Has """; ends in """ or \"""
+    S_W  = state('S_W')         #   Has """; ends in "   or \"
+    S_Y  = state('S_Y')         #   Has """; ends in ""  or \""
+    S_Z  = state('S_Z')         #   Has """; ends in """ or \"""
 
 
     #
@@ -263,68 +261,68 @@ def gem():
 
 
     #           '       \       N       "       N   O
-    Z_A  .setup(Z_B,    Z_N,    Z_N,    Z_Q,    P,  P)
-    Z_B  .setup(Z_C,    Z_N,    Z_N,    Z_Q,    P,  P)
-    Z_C  .setup(Z_A,    Z_N,    Z_N,    Z_Q,    P,  P)
-    Z_N  .setup(Z_A,    Z_N,    Z_N,    Z_Q,    P,  P)
-    Z_Q  .setup(Z_A,    Z_N,    Z_N,    Z_R,    P,  P)
-    Z_R  .setup(Z_A,    Z_N,    Z_N,    Z_S,    P,  P)
-    Z_S  .setup(Z_A,    Z_N,    Z_N,    Z_Q,    P,  P)
+    L_G  .setup(L_H,    L_N,    L_N,    L_W,    P,  P)
+    L_H  .setup(L_J,    L_N,    L_N,    L_W,    P,  P)
+    L_J  .setup(L_G,    L_N,    L_N,    L_W,    P,  P)
+    L_N  .setup(L_G,    L_N,    L_N,    L_W,    P,  P)
+    L_W  .setup(L_G,    L_N,    L_N,    L_Y,    P,  P)
+    L_Y  .setup(L_G,    L_N,    L_N,    L_Z,    P,  P)
+    L_Z  .setup(L_G,    L_N,    L_N,    L_W,    P,  P)
 
     #           '       \       N       "       N   O
     A_A  .setup(A_B,    A_K,    A_N,    AQ_Q,   Q,  Q)
-    A_B  .setup(C_C,    A_K,    A_N,    AQ_Q,   Q,  Q)
+    A_B  .setup(C_J,    A_K,    A_N,    AQ_Q,   Q,  Q)
     A_D  .setup(A_E,    A_K,    A_N,    AQ_Q,   Q,  Q)
     A_E  .setup(A_F,    A_K,    A_N,    AQ_Q,   Q,  Q)
-    A_F  .setup(C_A,    A_K,    A_N,    AQ_Q,   Q,  Q)
+    A_F  .setup(C_G,    A_K,    A_N,    AQ_Q,   Q,  Q)
     A_K  .setup(A_N,    A_N,    A_N,    AQ_Q,   P,  P)
     A_N  .setup(A_A,    A_K,    A_N,    AQ_Q,   Q,  Q)
 
     #           '       \       N       "       N   O
     AQ_A .setup(AQ_B,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
-    AQ_B .setup(CQ_C,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
+    AQ_B .setup(CQ_J,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
     AQ_D .setup(AQ_E,   AQ_K,   AQ_N,   AQ_Q,   C,  S)
     AQ_E .setup(AQ_F,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
-    AQ_F .setup(CQ_A,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
+    AQ_F .setup(CQ_G,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
     AQ_K .setup(AQ_D,   AQ_N,   AQ_N,   AQ_T,   P,  P)
     AQ_N .setup(AQ_A,   AQ_K,   AQ_N,   AQ_Q,   C,  S)
     AQ_Q .setup(AQ_A,   AQ_K,   AQ_N,   AQ_R,   C,  C)
-    AQ_R .setup(AQ_A,   AQ_K,   AQ_N,   AS_S,   C,  C)
+    AQ_R .setup(AQ_A,   AQ_K,   AQ_N,   AS_Z,   C,  C)
     AQ_T .setup(AQ_A,   AQ_K,   AQ_N,   AQ_U,   C,  S)
     AQ_U .setup(AQ_A,   AQ_K,   AQ_N,   AQ_V,   C,  C)
-    AQ_V .setup(AQ_A,   AQ_K,   AQ_N,   AS_Q,   C,  C)
+    AQ_V .setup(AQ_A,   AQ_K,   AQ_N,   AS_W,   C,  C)
 
     #           '       \       N       "       N   O
-    AS_A .setup(AS_B,   AS_K,   AS_N,   AS_Q,   P,  P)
-    AS_B .setup(Z_C,    AS_K,   AS_N,   AS_Q,   P,  P)
-    AS_D .setup(AS_E,   AS_K,   AS_N,   AS_Q,   C,  C)
-    AS_E .setup(AS_F,   AS_K,   AS_N,   AS_Q,   P,  P)
-    AS_F .setup(Z_A,    AS_K,   AS_N,   AS_Q,   P,  P)
-    AS_K .setup(AS_D,   AS_N,   AS_N,   AS_Q,   P,  P)
-    AS_N .setup(AS_A,   AS_K,   AS_N,   AS_Q,   C,  C)
-    AS_Q .setup(AS_A,   AS_K,   AS_N,   AS_R,   C,  C)
-    AS_R .setup(AS_A,   AS_K,   AS_N,   AS_S,   C,  C)
-    AS_S .setup(AS_A,   AS_K,   AS_N,   AS_Q,   C,  C)
+    AS_A .setup(AS_B,   AS_K,   AS_N,   AS_W,   P,  P)
+    AS_B .setup(L_J,    AS_K,   AS_N,   AS_W,   P,  P)
+    AS_D .setup(AS_E,   AS_K,   AS_N,   AS_W,   C,  C)
+    AS_E .setup(AS_F,   AS_K,   AS_N,   AS_W,   P,  P)
+    AS_F .setup(L_G,    AS_K,   AS_N,   AS_W,   P,  P)
+    AS_K .setup(AS_D,   AS_N,   AS_N,   AS_W,   P,  P)
+    AS_N .setup(AS_A,   AS_K,   AS_N,   AS_W,   C,  C)
+    AS_W .setup(AS_A,   AS_K,   AS_N,   AS_Y,   C,  C)
+    AS_Y .setup(AS_A,   AS_K,   AS_N,   AS_Z,   C,  C)
+    AS_Z .setup(AS_A,   AS_K,   AS_N,   AS_W,   C,  C)
 
     #           '       \       N       "       N   O
-    C_A  .setup(C_B,    C_K,    C_N,    CQ_Q,   Q,  Q)
-    C_B  .setup(C_C,    C_K,    C_N,    CQ_Q,   Q,  Q)
-    C_C  .setup(C_A,    C_K,    C_N,    CQ_Q,   Q,  Q)
-    C_K  .setup(C_A,    C_N,    C_N,    C_T,    P,  P)
-    C_N  .setup(C_A,    C_K,    C_N,    CQ_Q,   Q,  Q)
-    C_T  .setup(C_A,    C_K,    C_N,    CQ_U,   Q,  Q)
+    C_G  .setup(C_H,    C_K,    C_N,    CQ_Q,   Q,  Q)
+    C_H  .setup(C_J,    C_K,    C_N,    CQ_Q,   Q,  Q)
+    C_J  .setup(C_G,    C_K,    C_N,    CQ_Q,   Q,  Q)
+    C_K  .setup(C_G,    C_N,    C_N,    C_T,    P,  P)
+    C_N  .setup(C_G,    C_K,    C_N,    CQ_Q,   Q,  Q)
+    C_T  .setup(C_G,    C_K,    C_N,    CQ_U,   Q,  Q)
 
     #           '       \       N       "       N   O
-    CQ_A .setup(CQ_B,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
-    CQ_B .setup(CQ_C,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
-    CQ_C .setup(CQ_A,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
-    CQ_K .setup(CQ_A,   CQ_N,   CQ_N,   CQ_U,   P,  P)
-    CQ_N .setup(CQ_A,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
-    CQ_Q .setup(CQ_A,   CQ_K,   CQ_N,   CQ_R,   P,  P)
-    CQ_R .setup(CQ_A,   CQ_K,   CQ_N,   Z_Q,    P,  P)
-    CQ_T .setup(CQ_A,   CQ_K,   CQ_N,   CQ_U,   S,  S)
-    CQ_U .setup(CQ_A,   CQ_K,   CQ_N,   CQ_V,   P,  P)
-    CQ_V .setup(CQ_A,   CQ_K,   CQ_N,   Z_R,    P,  P)
+    CQ_G .setup(CQ_H,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
+    CQ_H .setup(CQ_J,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
+    CQ_J .setup(CQ_G,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
+    CQ_K .setup(CQ_G,   CQ_N,   CQ_N,   CQ_U,   P,  P)
+    CQ_N .setup(CQ_G,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
+    CQ_Q .setup(CQ_G,   CQ_K,   CQ_N,   CQ_R,   P,  P)
+    CQ_R .setup(CQ_G,   CQ_K,   CQ_N,   L_W,    P,  P)
+    CQ_T .setup(CQ_G,   CQ_K,   CQ_N,   CQ_U,   S,  S)
+    CQ_U .setup(CQ_G,   CQ_K,   CQ_N,   CQ_V,   P,  P)
+    CQ_V .setup(CQ_G,   CQ_K,   CQ_N,   L_Y,    P,  P)
 
     #           '       \       N       "       N   O
     N_D  .setup(A_E,    N_K,    N_N,    Q_Q,    A,  Q)
@@ -336,18 +334,18 @@ def gem():
     Q_K  .setup(Q_N,    Q_N,    Q_N,    Q_N,    P,  P)
     Q_N  .setup(AQ_A,   Q_K,    Q_N,    Q_Q,    A,  A)
     Q_Q  .setup(AQ_A,   Q_K,    Q_N,    Q_R,    A,  A)
-    Q_R  .setup(AQ_A,   Q_K,    Q_N,    S_S,    A,  A)
+    Q_R  .setup(AQ_A,   Q_K,    Q_N,    S_Z,    A,  A)
     Q_T  .setup(AQ_A,   Q_K,    Q_N,    Q_U,    A,  A)
     Q_U  .setup(AQ_A,   Q_K,    Q_N,    Q_V,    A,  A)
-    Q_V  .setup(AQ_A,   Q_K,    Q_N,    S_Q,    A,  A)
+    Q_V  .setup(AQ_A,   Q_K,    Q_N,    S_W,    A,  A)
 
     #           '       \       N       "       N   O
-    S_D  .setup(AS_E,   S_N,    S_N,    S_Q,    A,  A)
-    S_K  .setup(S_D,    S_N,    S_N,    S_Q,    P,  P)
+    S_D  .setup(AS_E,   S_N,    S_N,    S_W,    A,  A)
+    S_K  .setup(S_D,    S_N,    S_N,    S_W,    P,  P)
     S_N  .setup(AS_A,   S_N,    S_N,    S_N,    A,  A)
-    S_Q  .setup(AS_A,   S_N,    S_N,    S_R,    A,  A)
-    S_R  .setup(AS_A,   S_N,    S_N,    S_S,    A,  A)
-    S_S  .setup(AS_A,   S_N,    S_N,    S_Q,    A,  A)
+    S_W  .setup(AS_A,   S_N,    S_N,    S_Y,    A,  A)
+    S_Y  .setup(AS_A,   S_N,    S_N,    S_Z,    A,  A)
+    S_Z  .setup(AS_A,   S_N,    S_N,    S_W,    A,  A)
 
 
     #
