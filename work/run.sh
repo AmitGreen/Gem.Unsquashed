@@ -48,10 +48,20 @@ y
 y
 END
 
+echo -en '\E[H\E[J'
+
+
 while :
 do
     $command <$tmp1 >&$tmp2
-    mv $tmp2 2
+    if cmp -s $tmp2 2
+    then
+        :
+    else
+        mv $tmp2 2
+        echo -en '\E[H\E[J'
+        cat 2
+    fi
 
     $commandO <$tmp1 >&$tmp2
     mv $tmp2 2o

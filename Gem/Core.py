@@ -46,6 +46,7 @@ def gem():
         #
         #   Types
         #
+        'Boolean',          PythonBuiltIn.bool,
         'Bytes',            PythonBuiltIn.bytes,
         'Integer',          PythonBuiltIn.int,
         'FrozenSet',        PythonBuiltIn.frozenset,

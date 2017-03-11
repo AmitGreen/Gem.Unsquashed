@@ -19,6 +19,10 @@ def gem():
             'finish_normal',            #   Function -> String
             'finish_other',             #   Function -> String
 
+            #
+            #   Z
+            #
+            'is_triple',                #   Boolean
             'finish_apostrope',         #   Function -> String
             'finish_quotation_mark',    #   Function -> String
         ))
@@ -28,7 +32,7 @@ def gem():
             t.name = name
 
 
-        def end(t, apostrophe, backslash, quotation_mark, finish_apostrope, finish_quotation_mark):
+        def end(t, apostrophe, backslash, quotation_mark, is_triple, finish_apostrope, finish_quotation_mark):
             t.apostrophe     = apostrophe
             t.backslash      = backslash
             #
@@ -40,6 +44,7 @@ def gem():
             #   finish_normal   Not applicatble
             #   finish_other    Not applicatble
             #
+            t.is_triple             = Boolean(is_triple)
             t.finish_apostrope      = finish_apostrope
             t.finish_quotation_mark = finish_quotation_mark
 
@@ -127,53 +132,6 @@ def gem():
 
 
     #
-    #   End states
-    #
-    end_A = state('end_A')      #       A = ends in '
-    end_B = state('end_B')      #       B = ends in ''
-    end_C = state('end_C')      #       C = ends in '''
-
-    end_D = state('end_D')      #       D = ends in \'
-    end_E = state('end_E')      #       E = ends in \''
-    end_F = state('end_F')      #       F = ends in \'''
-
-    end_K = state('end_K')      #       K = ends in \
-    end_N = state('end_N')      #       N = normal
-
-    end_Q = state('end_Q')      #       Q = ends in "
-    end_R = state('end_R')      #       R = ends in ""
-    end_S = state('end_S')      #       S = ends in """
-
-    end_T = state('end_T')      #       T = ends in \"
-    end_U = state('end_U')      #       U = ends in \""
-    end_V = state('end_V')      #       V = ends in \"""
-
-
-    finish_apostrope      = PortrayStringState.finish_apostrope     .__get__
-    finish_normal         = PortrayStringState.finish_normal        .__get__
-    finish_other          = PortrayStringState.finish_other         .__get__
-    finish_quotation_mark = PortrayStringState.finish_quotation_mark.__get__
-
-
-    def finish_portray(state):
-        return portray_string
-
-
-    end_A.end(end_B, end_K, end_Q, finish_apostrope,      finish_apostrope)
-    end_B.end(end_C, end_K, end_Q, finish_apostrope,      finish_apostrope)
-    end_C.end(end_C, end_K, end_Q, finish_apostrope,      finish_apostrope)
-    end_D.end(end_A, end_K, end_Q, finish_apostrope,      finish_apostrope)
-
-    end_K.end(end_D, end_N, end_T, finish_portray,        finish_portray)
-    end_N.end(end_A, end_K, end_Q, finish_normal,         finish_other)
-
-    end_Q.end(end_A, end_K, end_R, finish_quotation_mark, finish_quotation_mark)
-    end_R.end(end_A, end_K, end_S, finish_quotation_mark, finish_quotation_mark)
-    end_S.end(end_A, end_K, end_S, finish_quotation_mark, finish_quotation_mark)
-    end_T.end(end_A, end_K, end_Q, finish_quotation_mark, finish_quotation_mark)
-
-
-    #
     #   Results
     #
     def portray_raw_string_empty(s):
@@ -215,16 +173,16 @@ def gem():
     _ = (portray_raw_string_invalid  if __debug__ else   portray_string)
 
 
-    #           '       \       N_N     "       N   O
+    #           '       \       N       "       N   O
     X    .setup(X,      X,      X,      X,      P,  P)
 
-    #           '       \       N_N     "       N   O
+    #           '       \       N       "       N   O
     A_A  .setup(A_B,    A_K,    A_N,    AQ_Q,   Q,  Q)
     A_B  .setup(C_M,    A_K,    A_N,    AQ_Q,   Q,  Q)
     A_K  .setup(A_N,    A_N,    A_N,    AQ_Q,   P,  P)
     A_N  .setup(A_A,    A_K,    A_N,    AQ_Q,   Q,  Q)
 
-    #           '       \       N_N     "       N   O
+    #           '       \       N       "       N   O
     AQ_A .setup(AQ_B,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
     AQ_B .setup(CQ_M,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
     AQ_K .setup(AQ_N,   AQ_N,   AQ_N,   AQ_N,   P,  P)
@@ -232,35 +190,128 @@ def gem():
     AQ_Q .setup(AQ_A,   AQ_K,   AQ_N,   AQ_R,   C,  C)
     AQ_R .setup(AQ_A,   AQ_K,   AQ_N,   AS_M,   C,  C)
 
-    #           '       \       N_N     "       N   O
+    #           '       \       N       "       N   O
     AS_A .setup(AS_B,   AS_K,   AS_M,   AS_M,   P,  P)
     AS_B .setup(X,      AS_K,   AS_M,   AS_M,   P,  P)
     AS_K .setup(AS_M,   AS_M,   AS_M,   AS_M,   P,  P)
     AS_M .setup(AS_A,   AS_K,   AS_M,   AS_M,   C,  C)
 
-    #           '       \       N_N     "       N   O
+    #           '       \       N       "       N   O
     C_K  .setup(C_M,    C_M,    C_M,    C_M,    P,  P)
     C_M  .setup(C_M,    C_K,    C_M,    CQ_Q,   Q,  Q)
 
-    #           '       \       N_N     "       N   O
+    #           '       \       N       "       N   O
     CQ_K .setup(CQ_M,   CQ_M,   CQ_M,   CQ_M,   P,  P)
     CQ_M .setup(CQ_M,   CQ_K,   CQ_M,   CQ_Q,   S,  S)
     CQ_Q .setup(CQ_M,   CQ_K,   CQ_M,   CQ_R,   P,  P)
     CQ_R .setup(CQ_M,   CQ_K,   CQ_M,   X,      P,  P)
 
-    #           '       \       N_N     "       N   O
+    #           '       \       N       "       N   O
     N_K  .setup(N_N,    N_N,    N_N,    N_N,    P,  P)
     N_N  .setup(A_A,    N_K,    N_N,    Q_Q,    A,  Q)
 
-    #           '       \       N_N     "       N   O
+    #           '       \       N       "       N   O
     Q_K  .setup(Q_N,    Q_N,    Q_N,    Q_N,    P,  P)
     Q_N  .setup(AQ_A,   Q_K,    Q_N,    Q_Q,    A,  A)
     Q_Q  .setup(AQ_A,   Q_K,    Q_N,    Q_R,    A,  A)
     Q_R  .setup(AQ_A,   Q_K,    Q_N,    S_M,    A,  A)
 
-    #           '       \       N_N     "       N   O
+    #           '       \       N       "       N   O
     S_K  .setup(S_M,    S_M,    S_M,    S_M,    P,  P)
     S_M  .setup(AS_A,   S_M,    S_M,    S_M,    A,  A)
+
+
+    #
+    #   K States
+    #
+    K      = state('K')         #   Normal
+    KA     = state('KA')        #   Has '
+    KAQ    = state('KAQ')       #   Has ' & "
+    KAS    = state('KAS')       #   Has ' & """
+    KAT    = state('KAT')       #   Has ' & \"""
+    KC     = state('KC')        #   Has '''
+    KCQ    = state('KCQ')       #   Has ''' & "
+    KCS    = state('KCS')       #   Has ''' & """
+    KCT    = state('KCT')       #   Has ''' & \"""
+    KF     = state('KF')        #   Has \'''
+    KFQ    = state('KFQ')       #   Has \''' & "
+    KFS    = state('KFS')       #   Has \''' & """
+    KFT    = state('KFT')       #   Has \''' & \"""
+    KQ     = state('KQ')        #   Has "
+    KS     = state('KQ')        #   Has """
+    KT     = state('KT')        #   Has \"""
+    KX     = state('KX')        #   Has unprintable
+
+    #          '    '''   \'''  "     """   \"""  N   O   '   "
+    K  .Ksetup(KA,  KC,   KF,   KQ,   KS,   KT,   Q,  Q,  _,  _)
+    KA .Ksetup(KA,  KC,   KF,   KAQ,  KAS,  KAT,  Q,  Q,  Q,  _)
+    KAQ.Ksetup(KAQ, KCQ,  KFQ,  KAQ,  KAS,  KAT,  C,  S,  S,  C)
+    KAS.Ksetup(KAS, KCS,  KFS,  KAS,  KAS,  KAS,  C,  C,  P,  C)
+    KAT.Ksetup(KAT, KCT,  KFT,  KAT,  KAS,  KAT,  C,  S,  S,  C)
+    KC .Ksetup(KC,  KC,   KC,   KCQ,  KCS,  KCT,  Q,  Q,  Q,  _)
+    KCQ.Ksetup(KCQ, KCQ,  KCQ,  KCQ,  KCS,  KCT,  S,  S,  S,  P)
+    KCS.Ksetup(KCS, KCS,  KCS,  KCS,  KCS,  KCS,  P,  P,  P,  P)
+    KCT.Ksetup(KCT, KCT,  KCT,  KCT,  KCS,  KCT,  S,  S,  S,  P)
+    KF .Ksetup(KF,  KC,   KF,   KFQ,  KFS,  KFT,  Q,  Q,  Q,  _)
+    KFQ.Ksetup(KFQ, KCQ,  KFQ,  KFQ,  KFS,  KFT,  C,  S,  S,  C)
+    KFS.Ksetup(KFS, KCS,  KFS,  KFS,  KFS,  KFS,  C,  C,  P,  C)
+    KFT.Ksetup(KFT, KCT,  KFT,  KFT,  KFS,  KFT,  C,  S,  S,  C)
+    KQ .Ksetup(KAQ, KCQ,  KFQ,  KQ,   KS,   KT,   A,  A,  _,  A)
+    KS .Ksetup(KAS, KCS,  KFS,  KS,   KS,   KS,   A,  A,  _,  A)
+    KT .Ksetup(KAT, KCT,  KFT,  KT,   KS,   KT,   A,  A,  _,  A)
+    KX .Ksetup(KX,  KX,   KX,   KX,   KX,   KX,   P,  P,  P,  P)
+
+    #
+    #   End states
+    #
+    ZA = state('ZA')      #       A = ends in '
+    ZB = state('ZB')      #       B = ends in ''
+    ZC = state('ZC')      #       C = ends in '''
+    ZD = state('ZD')      #       D = ends in \'
+    ZE = state('ZE')      #       E = ends in \''
+    ZF = state('ZF')      #       F = ends in \'''
+    ZG = state('ZG')      #       G = ends in \''''
+
+    ZK = state('ZK')      #       Z = ends in \
+    ZN = state('ZN')      #       N = normal
+
+    ZQ = state('ZQ')      #       Q = ends in "
+    ZR = state('ZR')      #       R = ends in ""
+    ZS = state('ZS')      #       S = ends in """
+    ZT = state('ZT')      #       T = ends in \"
+    ZU = state('ZU')      #       U = ends in \""
+    ZV = state('ZV')      #       V = ends in \"""
+    ZW = state('ZW')      #       V = ends in \""""
+
+
+    finish_apostrope      = PortrayStringState.finish_apostrope     .__get__
+    finish_normal         = PortrayStringState.finish_normal        .__get__
+    finish_other          = PortrayStringState.finish_other         .__get__
+    finish_quotation_mark = PortrayStringState.finish_quotation_mark.__get__
+
+
+    def finish_portray(state):
+        return portray_string
+
+
+    ZA.end(ZB, ZK, ZQ, 0, finish_apostrope,      finish_apostrope)
+    ZB.end(ZC, ZK, ZQ, 0, finish_apostrope,      finish_apostrope)
+    ZC.end(ZA, ZK, ZQ, 1, finish_apostrope,      finish_apostrope)
+    ZD.end(ZE, ZK, ZQ, 1, finish_normal,         finish_other)
+    ZE.end(ZF, ZK, ZQ, 0, finish_apostrope,      finish_apostrope)
+    ZF.end(ZG, ZK, ZQ, 0, finish_apostrope,      finish_apostrope)
+    ZG.end(ZB, ZK, ZQ, 0, finish_apostrope,      finish_apostrope)
+
+    ZK.end(ZD, ZN, ZT, 0, finish_portray,        finish_portray)
+    ZN.end(ZA, ZK, ZQ, 0, finish_normal,         finish_other)
+
+    ZQ.end(ZA, ZK, ZR, 0, finish_quotation_mark, finish_quotation_mark)
+    ZR.end(ZA, ZK, ZS, 0, finish_quotation_mark, finish_quotation_mark)
+    ZS.end(ZA, ZK, ZQ, 1, finish_quotation_mark, finish_quotation_mark)
+    ZT.end(ZA, ZK, ZU, 1, finish_quotation_mark, finish_quotation_mark)
+    ZU.end(ZA, ZK, ZV, 0, finish_quotation_mark, finish_quotation_mark)
+    ZV.end(ZA, ZK, ZW, 0, finish_quotation_mark, finish_quotation_mark)
+    ZW.end(ZA, ZK, ZR, 0, finish_quotation_mark, finish_quotation_mark)
 
 
     del PortrayStringState.__init__, PortrayStringState.setup
@@ -268,39 +319,46 @@ def gem():
 
     @export
     def portray_raw_K_string(favorite, state, iterator, s):
-        line('portray_raw_K_string(%d, %s, %r, %r)', favorite, state, iterator, s)
+        #line('portray_raw_K_string(%d, %s, %r, %r)', favorite, state, iterator, s)
+        last = ZK
 
         for c in iterator:
-            old = state.name
+            old_state = state.name
+            old_last  = state.name
+
             a = lookup_ascii(c, unknown_ascii)
 
             if a.is_portray_boring:
+                last  = ZN
                 state = state.normal
-                line('%s: %r, %s', old, c, state.name)
+                #line('%r: %s => %s; %s => %s', c,  old_state, state.name, old_last, last.name)
                 continue
 
             if a.is_backslash:
+                last  = last .backslash
                 state = state.backslash
-                line('%s: %r, %s', old, c, state.name)
+                line('%r: %s => %s; %s => %s', c,  old_state, state.name, old_last, last.name)
                 continue
 
             if a.is_double_quote:
                 favorite += 1
+                last  = last .quotation_mark
                 state = state.quotation_mark
-                line('%s: %r, %s', old, c, state.name)
+                #line('%r: %s => %s; %s => %s', c,  old_state, state.name, old_last, last.name)
                 continue
 
             if a.is_single_quote:
                 favorite -= 1
+                last  = last .apostrophe
                 state = state.apostrophe
-                line('%s: %r, %s', old, c, state.name)
+                #line('%r: %s => %s; %s => %s', c,  old_state, state.name, old_last, last.name)
                 continue
 
             assert not a.is_printable
 
             return portray_string(s)
 
-        line('final: %d, %s', favorite, state.name)
+        line('final of %r: %d, %s, %s', s, favorite, state.name, last.name)
 
         if favorite >= 0:
             return state.finish_normal(s)
