@@ -23,6 +23,7 @@ def gem():
             #   Y
             #
             'is_3',                     #   Boolean
+            'is_C',                     #   Boolean
         ))
 
 
@@ -30,7 +31,9 @@ def gem():
             t.name = name
 
 
-        def setup(t, A, K, N, Q, ZN, ZO):
+        def setup(t, A, K, N, Q, ZN, ZO, C, S):
+            assert not ((C) and (S))
+
             t.A = A
             t.K = K
             t.N = N
@@ -38,6 +41,9 @@ def gem():
 
             t.ZN = ZN
             t.ZO = ZO
+
+            t.is_3 = (C) or (S)
+            t.is_C = C
 
 
     state = PortrayStringState
@@ -196,92 +202,91 @@ def gem():
 
 
     #           '       \       N       "       N   O
-    L_G  .setup(L_H,    L_N,    L_N,    L_W,    P,  P)
-    L_H  .setup(L_J,    L_N,    L_N,    L_W,    P,  P)
-    L_J  .setup(L_G,    L_N,    L_N,    L_W,    P,  P)
-    L_N  .setup(L_G,    L_N,    L_N,    L_W,    P,  P)
-    L_W  .setup(L_G,    L_N,    L_N,    L_Y,    P,  P)
-    L_Y  .setup(L_G,    L_N,    L_N,    L_Z,    P,  P)
-    L_Z  .setup(L_G,    L_N,    L_N,    L_W,    P,  P)
+    L_G  .setup(L_H,    L_N,    L_N,    L_W,    P,  P,  0,  0)         #   Lemon; ends in '   or \'
+    L_H  .setup(L_J,    L_N,    L_N,    L_W,    P,  P,  0,  0)         #   Lemon; ends in ''  or \''
+    L_J  .setup(L_G,    L_N,    L_N,    L_W,    P,  P,  0,  0)         #   Lemon; ends in ''' or \'''
+    L_N  .setup(L_G,    L_N,    L_N,    L_W,    P,  P,  0,  0)         #   Lemon
+    L_W  .setup(L_G,    L_N,    L_N,    L_Y,    P,  P,  0,  0)         #   Lemon; ends in "   or \"
+    L_Y  .setup(L_G,    L_N,    L_N,    L_Z,    P,  P,  0,  0)         #   Lemon; ends in ""  or \""
+    L_Z  .setup(L_G,    L_N,    L_N,    L_W,    P,  P,  0,  0)         #   Lemon; ends in """ or \"""
 
     #           '       \       N       "       N   O
-    A_A  .setup(A_B,    A_K,    A_N,    AQ_Q,   Q,  Q)
-    A_B  .setup(C_J,    A_K,    A_N,    AQ_Q,   Q,  Q)
-    A_D  .setup(A_E,    A_K,    A_N,    AQ_Q,   Q,  Q)
-    A_E  .setup(A_F,    A_K,    A_N,    AQ_Q,   Q,  Q)
-    A_F  .setup(C_G,    A_K,    A_N,    AQ_Q,   Q,  Q)
-    A_K  .setup(A_N,    A_N,    A_N,    AQ_Q,   P,  P)
-    A_N  .setup(A_A,    A_K,    A_N,    AQ_Q,   Q,  Q)
+    A_A  .setup(A_B,    A_K,    A_N,    AQ_Q,   Q,  Q,  0,  0)         #   Has '; ends in '
+    A_B  .setup(C_J,    A_K,    A_N,    AQ_Q,   Q,  Q,  0,  0)         #   Has '; ends in ''
+    A_D  .setup(A_E,    A_K,    A_N,    AQ_Q,   Q,  Q,  0,  0)         #   Has '; ends in \'
+    A_E  .setup(A_F,    A_K,    A_N,    AQ_Q,   Q,  Q,  0,  0)         #   Has '; ends in \''
+    A_F  .setup(C_G,    A_K,    A_N,    AQ_Q,   Q,  Q,  0,  0)         #   Has '; ends in \'''
+    A_K  .setup(A_N,    A_N,    A_N,    AQ_Q,   P,  P,  0,  0)         #   Has '; ends in \
+    A_N  .setup(A_A,    A_K,    A_N,    AQ_Q,   Q,  Q,  0,  0)         #   Has '
 
     #           '       \       N       "       N   O
-    AQ_A .setup(AQ_B,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
-    AQ_B .setup(CQ_J,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
-    AQ_D .setup(AQ_E,   AQ_K,   AQ_N,   AQ_Q,   C,  S)
-    AQ_E .setup(AQ_F,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
-    AQ_F .setup(CQ_G,   AQ_K,   AQ_N,   AQ_Q,   S,  S)
-    AQ_K .setup(AQ_D,   AQ_N,   AQ_N,   AQ_T,   P,  P)
-    AQ_N .setup(AQ_A,   AQ_K,   AQ_N,   AQ_Q,   C,  S)
-    AQ_Q .setup(AQ_A,   AQ_K,   AQ_N,   AQ_R,   C,  C)
-    AQ_R .setup(AQ_A,   AQ_K,   AQ_N,   AS_Z,   C,  C)
-    AQ_T .setup(AQ_A,   AQ_K,   AQ_N,   AQ_U,   C,  S)
-    AQ_U .setup(AQ_A,   AQ_K,   AQ_N,   AQ_V,   C,  C)
-    AQ_V .setup(AQ_A,   AQ_K,   AQ_N,   AS_W,   C,  C)
+    AQ_A .setup(AQ_B,   AQ_K,   AQ_N,   AQ_Q,   S,  S,  0,  0)        #   Has ' & "; ends in '
+    AQ_B .setup(CQ_J,   AQ_K,   AQ_N,   AQ_Q,   S,  S,  0,  0)        #   Has ' & "; ends in ''
+    AQ_D .setup(AQ_E,   AQ_K,   AQ_N,   AQ_Q,   C,  S,  0,  0)        #   Has ' & "; ends in \'
+    AQ_E .setup(AQ_F,   AQ_K,   AQ_N,   AQ_Q,   S,  S,  0,  0)        #   Has ' & "; ends in \''
+    AQ_F .setup(CQ_G,   AQ_K,   AQ_N,   AQ_Q,   S,  S,  0,  0)        #   Has ' & "; ends in \'''
+    AQ_K .setup(AQ_D,   AQ_N,   AQ_N,   AQ_T,   P,  P,  0,  0)        #   Has ' & "; ends in \
+    AQ_N .setup(AQ_A,   AQ_K,   AQ_N,   AQ_Q,   C,  S,  0,  0)        #   Has ' & "
+    AQ_Q .setup(AQ_A,   AQ_K,   AQ_N,   AQ_R,   C,  C,  0,  0)        #   Has ' & "; ends in "
+    AQ_R .setup(AQ_A,   AQ_K,   AQ_N,   AS_Z,   C,  C,  0,  0)        #   Has ' & "; ends in ""
+    AQ_T .setup(AQ_A,   AQ_K,   AQ_N,   AQ_U,   C,  S,  0,  0)        #   Has ' & "; ends in \"
+    AQ_U .setup(AQ_A,   AQ_K,   AQ_N,   AQ_V,   C,  C,  0,  0)        #   Has ' & "; ends in \""
+    AQ_V .setup(AQ_A,   AQ_K,   AQ_N,   AS_W,   C,  C,  0,  0)        #   Has ' & "; ends in \"""
 
     #           '       \       N       "       N   O
-    AS_A .setup(AS_B,   AS_K,   AS_N,   AS_W,   P,  P)
-    AS_B .setup(L_J,    AS_K,   AS_N,   AS_W,   P,  P)
-    AS_D .setup(AS_E,   AS_K,   AS_N,   AS_W,   C,  C)
-    AS_E .setup(AS_F,   AS_K,   AS_N,   AS_W,   P,  P)
-    AS_F .setup(L_G,    AS_K,   AS_N,   AS_W,   P,  P)
-    AS_K .setup(AS_D,   AS_N,   AS_N,   AS_W,   P,  P)
-    AS_N .setup(AS_A,   AS_K,   AS_N,   AS_W,   C,  C)
-    AS_W .setup(AS_A,   AS_K,   AS_N,   AS_Y,   C,  C)
-    AS_Y .setup(AS_A,   AS_K,   AS_N,   AS_Z,   C,  C)
-    AS_Z .setup(AS_A,   AS_K,   AS_N,   AS_W,   C,  C)
+    AS_A .setup(AS_B,   AS_K,   AS_N,   AS_W,   P,  P,  0,  0)        #   Has ' & """; ends in '
+    AS_B .setup(L_J,    AS_K,   AS_N,   AS_W,   P,  P,  0,  0)        #   Has ' & """; ends in ''
+    AS_D .setup(AS_E,   AS_K,   AS_N,   AS_W,   C,  C,  0,  0)        #   Has ' & """; ends in \'
+    AS_E .setup(AS_F,   AS_K,   AS_N,   AS_W,   P,  P,  0,  0)        #   Has ' & """; ends in \''
+    AS_F .setup(L_G,    AS_K,   AS_N,   AS_W,   P,  P,  0,  0)        #   Has ' & """; ends in \'''
+    AS_K .setup(AS_D,   AS_N,   AS_N,   AS_W,   P,  P,  0,  0)        #   Has ' & """; ends in \
+    AS_N .setup(AS_A,   AS_K,   AS_N,   AS_W,   C,  C,  0,  0)        #   Has ' & """
+    AS_W .setup(AS_A,   AS_K,   AS_N,   AS_Y,   C,  C,  0,  0)        #   Has ' & """; ends in "   or \"
+    AS_Y .setup(AS_A,   AS_K,   AS_N,   AS_Z,   C,  C,  0,  0)        #   Has ' & """; ends in ""  or \""
+    AS_Z .setup(AS_A,   AS_K,   AS_N,   AS_W,   C,  C,  0,  0)        #   Has ' & """; ends in """ or \"""
 
     #           '       \       N       "       N   O
-    C_G  .setup(C_H,    C_K,    C_N,    CQ_Q,   Q,  Q)
-    C_H  .setup(C_J,    C_K,    C_N,    CQ_Q,   Q,  Q)
-    C_J  .setup(C_G,    C_K,    C_N,    CQ_Q,   Q,  Q)
-    C_K  .setup(C_G,    C_N,    C_N,    C_T,    P,  P)
-    C_N  .setup(C_G,    C_K,    C_N,    CQ_Q,   Q,  Q)
-    C_T  .setup(C_G,    C_K,    C_N,    CQ_U,   Q,  Q)
+    C_G  .setup(C_H,    C_K,    C_N,    CQ_Q,   Q,  Q,  0,  0)         #   Has '''; ends in ''  or \''
+    C_H  .setup(C_J,    C_K,    C_N,    CQ_Q,   Q,  Q,  0,  0)         #   Has '''; ends in ''  or \''
+    C_J  .setup(C_G,    C_K,    C_N,    CQ_Q,   Q,  Q,  0,  0)         #   Has '''; ends in ''' or \'''
+    C_K  .setup(C_G,    C_N,    C_N,    C_T,    P,  P,  0,  0)         #   Has '''; ends in \
+    C_N  .setup(C_G,    C_K,    C_N,    CQ_Q,   Q,  Q,  0,  0)         #   Has '''
+    C_T  .setup(C_G,    C_K,    C_N,    CQ_U,   Q,  Q,  0,  0)         #   Has '''; ends in \"
 
     #           '       \       N       "       N   O
-    CQ_G .setup(CQ_H,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
-    CQ_H .setup(CQ_J,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
-    CQ_J .setup(CQ_G,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
-    CQ_K .setup(CQ_G,   CQ_N,   CQ_N,   CQ_U,   P,  P)
-    CQ_N .setup(CQ_G,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
-    CQ_Q .setup(CQ_G,   CQ_K,   CQ_N,   CQ_R,   P,  P)
-    CQ_R .setup(CQ_G,   CQ_K,   CQ_N,   L_W,    P,  P)
-    CQ_T .setup(CQ_G,   CQ_K,   CQ_N,   CQ_U,   S,  S)
-    CQ_U .setup(CQ_G,   CQ_K,   CQ_N,   CQ_V,   P,  P)
-    CQ_V .setup(CQ_G,   CQ_K,   CQ_N,   L_Y,    P,  P)
+    CQ_G .setup(CQ_H,   CQ_K,   CQ_N,   CQ_Q,   S,  S,  0,  0)        #   Has ''' & "; ends in '   or \'
+    CQ_H .setup(CQ_J,   CQ_K,   CQ_N,   CQ_Q,   S,  S,  0,  0)        #   Has ''' & "; ends in ''  or \''
+    CQ_J .setup(CQ_G,   CQ_K,   CQ_N,   CQ_Q,   S,  S,  0,  0)        #   Has ''' & "; ends in ''' or \'''
+    CQ_K .setup(CQ_G,   CQ_N,   CQ_N,   CQ_U,   P,  P,  0,  0)        #   Has ''' & "; ends in \
+    CQ_N .setup(CQ_G,   CQ_K,   CQ_N,   CQ_Q,   S,  S,  0,  0)        #   Has ''' & "
+    CQ_Q .setup(CQ_G,   CQ_K,   CQ_N,   CQ_R,   P,  P,  0,  0)        #   Has ''' & "; ends in "
+    CQ_R .setup(CQ_G,   CQ_K,   CQ_N,   L_W,    P,  P,  0,  0)        #   Has ''' & "; ends in ""
+    CQ_T .setup(CQ_G,   CQ_K,   CQ_N,   CQ_U,   S,  S,  0,  0)        #   Has ''' & "; ends in \"
+    CQ_U .setup(CQ_G,   CQ_K,   CQ_N,   CQ_V,   P,  P,  0,  0)        #   Has ''' & "; ends in \""
+    CQ_V .setup(CQ_G,   CQ_K,   CQ_N,   L_Y,    P,  P,  0,  0)        #   Has ''' & "; ends in \"""
 
     #           '       \       N       "       N   O
-    N_D  .setup(A_E,    N_K,    N_N,    Q_Q,    A,  Q)
-    N_K  .setup(N_D,    N_N,    N_N,    N_T,    P,  P)
-    N_N  .setup(A_A,    N_K,    N_N,    Q_Q,    A,  Q)
-    N_T  .setup(A_A,    N_K,    N_N,    Q_U,    A,  Q)
+    N_D  .setup(A_E,    N_K,    N_N,    Q_Q,    A,  Q,  0,  0)         #   normal; ends in \'
+    N_K  .setup(N_D,    N_N,    N_N,    N_T,    P,  P,  0,  0)         #   normal; ends in \
+    N_N  .setup(A_A,    N_K,    N_N,    Q_Q,    A,  Q,  0,  0)         #   normal
+    N_T  .setup(A_A,    N_K,    N_N,    Q_U,    A,  Q,  0,  0)         #   normal; ends in \"
 
     #           '       \       N       "       N   O
-    Q_K  .setup(Q_N,    Q_N,    Q_N,    Q_N,    P,  P)
-    Q_N  .setup(AQ_A,   Q_K,    Q_N,    Q_Q,    A,  A)
-    Q_Q  .setup(AQ_A,   Q_K,    Q_N,    Q_R,    A,  A)
-    Q_R  .setup(AQ_A,   Q_K,    Q_N,    S_Z,    A,  A)
-    Q_T  .setup(AQ_A,   Q_K,    Q_N,    Q_U,    A,  A)
-    Q_U  .setup(AQ_A,   Q_K,    Q_N,    Q_V,    A,  A)
-    Q_V  .setup(AQ_A,   Q_K,    Q_N,    S_W,    A,  A)
+    Q_K  .setup(Q_N,    Q_N,    Q_N,    Q_N,    P,  P,  0,  0)         #   Has "; ends in \
+    Q_N  .setup(AQ_A,   Q_K,    Q_N,    Q_Q,    A,  A,  0,  0)         #   Has "
+    Q_Q  .setup(AQ_A,   Q_K,    Q_N,    Q_R,    A,  A,  0,  0)         #   Has "; ends in "
+    Q_R  .setup(AQ_A,   Q_K,    Q_N,    S_Z,    A,  A,  0,  0)         #   Has "; ends in ""
+    Q_T  .setup(AQ_A,   Q_K,    Q_N,    Q_U,    A,  A,  0,  0)         #   Has "; ends in \"
+    Q_U  .setup(AQ_A,   Q_K,    Q_N,    Q_V,    A,  A,  0,  0)         #   Has "; ends in \""
+    Q_V  .setup(AQ_A,   Q_K,    Q_N,    S_W,    A,  A,  0,  0)         #   Has "; ends in \"""
 
     #           '       \       N       "       N   O
-    S_D  .setup(AS_E,   S_N,    S_N,    S_W,    A,  A)
-    S_K  .setup(S_D,    S_N,    S_N,    S_W,    P,  P)
-    S_N  .setup(AS_A,   S_N,    S_N,    S_N,    A,  A)
-    S_W  .setup(AS_A,   S_N,    S_N,    S_Y,    A,  A)
-    S_Y  .setup(AS_A,   S_N,    S_N,    S_Z,    A,  A)
-    S_Z  .setup(AS_A,   S_N,    S_N,    S_W,    A,  A)
-
+    S_D  .setup(AS_E,   S_N,    S_N,    S_W,    A,  A,  0,  0)         #   Has """: ends in \'
+    S_K  .setup(S_D,    S_N,    S_N,    S_W,    P,  P,  0,  0)         #   Has """: ends in \
+    S_N  .setup(AS_A,   S_N,    S_N,    S_N,    A,  A,  0,  0)         #   Has """
+    S_W  .setup(AS_A,   S_N,    S_N,    S_Y,    A,  A,  0,  0)         #   Has """; ends in "   or \"
+    S_Y  .setup(AS_A,   S_N,    S_N,    S_Z,    A,  A,  0,  0)         #   Has """; ends in ""  or \""
+    S_Z  .setup(AS_A,   S_N,    S_N,    S_W,    A,  A,  0,  0)         #   Has """; ends in """ or \"""
 
     del PortrayStringState.__init__, PortrayStringState.setup
 

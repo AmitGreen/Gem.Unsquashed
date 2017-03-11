@@ -23,10 +23,11 @@ fi
 
 tmp1=$tmp_dir/tmp.1.$$.txt
 tmp2=$tmp_dir/tmp.2.$$.txt
+tmp3=$tmp_dir/tmp.3.$$.txt
 
 for i in 1 2 3 15
 do
-    trap "trap $i; rm -f $tmp1 $tmp2; kill -$i $$; exit $i" $i
+    trap "trap $i; rm -f $tmp1 $tmp2 $tmp3; kill -$i $$; exit $i" $i
 done
 
 Main_py=../Ivory/Main.py
@@ -49,7 +50,7 @@ y
 END
 
 echo -en '\E[H\E[J'
-
+cat 2
 
 while :
 do
@@ -63,14 +64,14 @@ do
         cat 2
     fi
 
-    $commandO <$tmp1 >&$tmp2
-    mv $tmp2 2o
+    $commandO <$tmp1 >&$tmp3
+    mv $tmp3 2o
 
-    $command3 <$tmp1 >&$tmp2
-    mv $tmp2 3
+    $command3 <$tmp1 >&$tmp3
+    mv $tmp3 3
 
-    $command3O <$tmp1 >&$tmp2
-    mv $tmp2 3o
+    $command3O <$tmp1 >&$tmp3
+    mv $tmp3 3o
 
     sleep 0.01
 done
