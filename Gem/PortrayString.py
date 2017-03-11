@@ -104,6 +104,10 @@ def gem():
     #       E = \''
     #       F = \'''
     #
+    #       G = '   or \'
+    #       H = ''  or \''
+    #       J = ''' or \'''
+    #
     #       K = \
     #       N = normal
     #       M = normal -- might end in ", "", ', or ''
@@ -116,76 +120,89 @@ def gem():
     #       U = \""
     #       V = \"""
     #
-    #       X = non-ascii
+    #       W = "   or \"
+    #       X = ""  or \""
+    #       Y = """ or \"""
     #
-    X_A  = state('X_A')
-    X_B  = state('X_B')
-    X_C  = state('X_C')
-    X_N  = state('X_N')
-    X_Q  = state('X_Q')
-    X_R  = state('X_R')
-    X_S  = state('X_S')
+    #       Z = non-ascii
+    #
+    Z_A  = state('Z_A')         #   Has unprintinable; ends in '   or \'
+    Z_B  = state('Z_B')         #   Has unprintinable; ends in ''  or \''
+    Z_C  = state('Z_C')         #   Has unprintinable; ends in ''' or \'''
+    Z_N  = state('Z_N')         #   Has unprintable
+    Z_Q  = state('Z_Q')         #   Has unprintinable; ends in "   or \"
+    Z_R  = state('Z_R')         #   Has unprintinable; ends in ""  or \""
+    Z_S  = state('Z_S')         #   Has unprintinable; ends in """ or \"""
 
-    A_A  = state('A_A')       #   Has '; ends in '
-    A_B  = state('A_B')       #   Has '; ends in ''
-    A_D  = state('A_D')       #   Has '; ends in \'
-    A_E  = state('A_E')       #   Has '; ends in \''
-    A_F  = state('A_F')       #   Has '; ends in \'''
-    A_K  = state('A_K')       #   Has '; ends in \
-    A_N  = state('A_N')       #   Has '
+    A_A  = state('A_A')         #   Has '; ends in '
+    A_B  = state('A_B')         #   Has '; ends in ''
+    A_D  = state('A_D')         #   Has '; ends in \'
+    A_E  = state('A_E')         #   Has '; ends in \''
+    A_F  = state('A_F')         #   Has '; ends in \'''
+    A_K  = state('A_K')         #   Has '; ends in \
+    A_N  = state('A_N')         #   Has '
 
-    AQ_A = state('AQ_A')      #   Has ' & "; ends in '
-    AQ_B = state('AQ_B')      #   Has ' & "; ends in ''
-    AQ_D = state('AQ_D')      #   Has ' & "; ends in \'
-    AQ_E = state('AQ_E')      #   Has ' & "; ends in \''
-    AQ_F = state('AQ_F')      #   Has ' & "; ends in \'''
-    AQ_K = state('AQ_K')      #   Has ' & "; ends in \
-    AQ_N = state('AQ_N')      #   Has ' & "
-    AQ_Q = state('AQ_Q')      #   Has ' & "; ends in "
-    AQ_R = state('AQ_R')      #   Has ' & "; ends in ""
-    AQ_T = state('AQ_T')      #   Has ' & "; ends in \"
-    AQ_U = state('AQ_U')      #   Has ' & "; ends in \""
-    AQ_V = state('AQ_V')      #   Has ' & "; ends in \"""
+    AQ_A = state('AQ_A')        #   Has ' & "; ends in '
+    AQ_B = state('AQ_B')        #   Has ' & "; ends in ''
+    AQ_D = state('AQ_D')        #   Has ' & "; ends in \'
+    AQ_E = state('AQ_E')        #   Has ' & "; ends in \''
+    AQ_F = state('AQ_F')        #   Has ' & "; ends in \'''
+    AQ_K = state('AQ_K')        #   Has ' & "; ends in \
+    AQ_N = state('AQ_N')        #   Has ' & "
+    AQ_Q = state('AQ_Q')        #   Has ' & "; ends in "
+    AQ_R = state('AQ_R')        #   Has ' & "; ends in ""
+    AQ_T = state('AQ_T')        #   Has ' & "; ends in \"
+    AQ_U = state('AQ_U')        #   Has ' & "; ends in \""
+    AQ_V = state('AQ_V')        #   Has ' & "; ends in \"""
 
-    AS_A = state('AS_A')      #   Has ' & """; ends in '
-    AS_B = state('AS_B')      #   Has ' & """; ends in ''
-    AS_D = state('AS_D')      #   Has ' & """; ends in \'
-    AS_E = state('AS_E')      #   Has ' & """; ends in \''
-    AS_F = state('AS_F')      #   Has ' & """; ends in \'''
-    AS_K = state('AS_K')      #   Has ' & """; ends in \
-    AS_N = state('AS_N')      #   Has ' & """
-    AS_Q = state('AS_Q')      #   Has ' & """; ends in "
-    AS_R = state('AS_R')      #   Has ' & """; ends in ""
-    AS_S = state('AS_S')      #   Has ' & """; ends in """
+    AS_A = state('AS_A')        #   Has ' & """; ends in '
+    AS_B = state('AS_B')        #   Has ' & """; ends in ''
+    AS_D = state('AS_D')        #   Has ' & """; ends in \'
+    AS_E = state('AS_E')        #   Has ' & """; ends in \''
+    AS_F = state('AS_F')        #   Has ' & """; ends in \'''
+    AS_K = state('AS_K')        #   Has ' & """; ends in \
+    AS_N = state('AS_N')        #   Has ' & """
+    AS_Q = state('AS_Q')        #   Has ' & """; ends in "   or \"
+    AS_R = state('AS_R')        #   Has ' & """; ends in ""  or \""
+    AS_S = state('AS_S')        #   Has ' & """; ends in """ or \"""
 
-    C_A  = state('C_A')       #   Has '''; ends in '
-    C_B  = state('C_B')       #   Has '''; ends in ''
-    C_C  = state('C_C')       #   Has '''; ends in '''
-    C_K  = state('C_K')       #   Has '''; ends in \
-    C_N  = state('C_N')       #   Has '''
-    C_T  = state('C_T')       #   Has '''; ends in \"
+    C_A  = state('C_A')         #   Has '''; ends in '   or \'
+    C_B  = state('C_B')         #   Has '''; ends in ''  or \''
+    C_C  = state('C_C')         #   Has '''; ends in ''' or \'''
+    C_K  = state('C_K')         #   Has '''; ends in \
+    C_N  = state('C_N')         #   Has '''
+    C_T  = state('C_T')         #   Has '''; ends in \"
 
-    CQ_A = state('CQ_A')      #   Has ''' & "; ends in '
-    CQ_B = state('CQ_B')      #   Has ''' & "; ends in ''
-    CQ_C = state('CQ_C')      #   Has ''' & "; ends in '''
-    CQ_K = state('CQ_K')      #   Has ''' & "; ends in \
-    CQ_N = state('CQ_N')      #   Has ''' & "
-    CQ_Q = state('CQ_Q')      #   Has ''' & "; ends in "
-    CQ_R = state('CQ_R')      #   Has ''' & "; ends in ""
-    CQ_T = state('CQ_R')      #   Has ''' & "; ends in \"
-    CQ_U = state('CQ_R')      #   Has ''' & "; ends in \""
-    CQ_V = state('CQ_R')      #   Has ''' & "; ends in \"""
+    CQ_A = state('CQ_A')        #   Has ''' & "; ends in '   or \'
+    CQ_B = state('CQ_B')        #   Has ''' & "; ends in ''  or \''
+    CQ_C = state('CQ_C')        #   Has ''' & "; ends in ''' or \'''
+    CQ_K = state('CQ_K')        #   Has ''' & "; ends in \
+    CQ_N = state('CQ_N')        #   Has ''' & "
+    CQ_Q = state('CQ_Q')        #   Has ''' & "; ends in "
+    CQ_R = state('CQ_R')        #   Has ''' & "; ends in ""
+    CQ_T = state('CQ_R')        #   Has ''' & "; ends in \"
+    CQ_U = state('CQ_R')        #   Has ''' & "; ends in \""
+    CQ_V = state('CQ_R')        #   Has ''' & "; ends in \"""
 
-    N_K  = state('N_K')       #   normal; ends in \
-    N_N  = state('N_N')       #   totally normal, nothing to see here
+    N_D  = state('N_D')         #   normal; ends in \'
+    N_K  = state('N_K')         #   normal; ends in \
+    N_N  = state('N_N')         #   totally normal, nothing to see here
+    N_T  = state('N_T')         #   normal; ends in \"
 
-    Q_K  = state('Q_K')       #   Has "; ends in \
-    Q_N  = state('Q_N')       #   Has "
-    Q_Q  = state('Q_Q')       #   Has "; ends in "
-    Q_R  = state('Q_R')       #   Has "; ends in " in ""
+    Q_K  = state('Q_K')         #   Has "; ends in \
+    Q_N  = state('Q_N')         #   Has "
+    Q_Q  = state('Q_Q')         #   Has "; ends in "
+    Q_R  = state('Q_R')         #   Has "; ends in ""
+    Q_T  = state('Q_T')         #   Has "; ends in \"
+    Q_U  = state('Q_U')         #   Has "; ends in \""
+    Q_V  = state('Q_V')         #   Has "; ends in \"""
 
-    S_K  = state('S_K')       #   Has """: ends in \
-    S_M  = state('S_M')       #   Has """; might end in " or ""
+    S_D  = state('S_D')         #   Has """: ends in \'
+    S_K  = state('S_K')         #   Has """: ends in \
+    S_N  = state('S_N')         #   Has """
+    S_Q  = state('S_Q')         #   Has """; ends in "   or \"
+    S_R  = state('S_R')         #   Has """; ends in ""  or \""
+    S_S  = state('S_S')         #   Has """; ends in """ or \"""
 
 
     #
@@ -246,13 +263,13 @@ def gem():
 
 
     #           '       \       N       "       N   O
-    X_A  .setup(X_B,    X_N,    X_N,    X_Q,    P,  P)
-    X_B  .setup(X_C,    X_N,    X_N,    X_Q,    P,  P)
-    X_C  .setup(X_A,    X_N,    X_N,    X_Q,    P,  P)
-    X_N  .setup(X_A,    X_N,    X_N,    X_Q,    P,  P)
-    X_Q  .setup(X_A,    X_N,    X_N,    X_R,    P,  P)
-    X_R  .setup(X_A,    X_N,    X_N,    X_S,    P,  P)
-    X_S  .setup(X_A,    X_N,    X_N,    X_Q,    P,  P)
+    Z_A  .setup(Z_B,    Z_N,    Z_N,    Z_Q,    P,  P)
+    Z_B  .setup(Z_C,    Z_N,    Z_N,    Z_Q,    P,  P)
+    Z_C  .setup(Z_A,    Z_N,    Z_N,    Z_Q,    P,  P)
+    Z_N  .setup(Z_A,    Z_N,    Z_N,    Z_Q,    P,  P)
+    Z_Q  .setup(Z_A,    Z_N,    Z_N,    Z_R,    P,  P)
+    Z_R  .setup(Z_A,    Z_N,    Z_N,    Z_S,    P,  P)
+    Z_S  .setup(Z_A,    Z_N,    Z_N,    Z_Q,    P,  P)
 
     #           '       \       N       "       N   O
     A_A  .setup(A_B,    A_K,    A_N,    AQ_Q,   Q,  Q)
@@ -279,10 +296,10 @@ def gem():
 
     #           '       \       N       "       N   O
     AS_A .setup(AS_B,   AS_K,   AS_N,   AS_Q,   P,  P)
-    AS_B .setup(X_C,    AS_K,   AS_N,   AS_Q,   P,  P)
+    AS_B .setup(Z_C,    AS_K,   AS_N,   AS_Q,   P,  P)
     AS_D .setup(AS_E,   AS_K,   AS_N,   AS_Q,   C,  C)
     AS_E .setup(AS_F,   AS_K,   AS_N,   AS_Q,   P,  P)
-    AS_F .setup(X_A,    AS_K,   AS_N,   AS_Q,   P,  P)
+    AS_F .setup(Z_A,    AS_K,   AS_N,   AS_Q,   P,  P)
     AS_K .setup(AS_D,   AS_N,   AS_N,   AS_Q,   P,  P)
     AS_N .setup(AS_A,   AS_K,   AS_N,   AS_Q,   C,  C)
     AS_Q .setup(AS_A,   AS_K,   AS_N,   AS_R,   C,  C)
@@ -304,31 +321,33 @@ def gem():
     CQ_K .setup(CQ_A,   CQ_N,   CQ_N,   CQ_U,   P,  P)
     CQ_N .setup(CQ_A,   CQ_K,   CQ_N,   CQ_Q,   S,  S)
     CQ_Q .setup(CQ_A,   CQ_K,   CQ_N,   CQ_R,   P,  P)
-    CQ_R .setup(CQ_A,   CQ_K,   CQ_N,   X_Q,    P,  P)
+    CQ_R .setup(CQ_A,   CQ_K,   CQ_N,   Z_Q,    P,  P)
     CQ_T .setup(CQ_A,   CQ_K,   CQ_N,   CQ_U,   S,  S)
     CQ_U .setup(CQ_A,   CQ_K,   CQ_N,   CQ_V,   P,  P)
-    CQ_V .setup(CQ_A,   CQ_K,   CQ_N,   X_R,    P,  P)
+    CQ_V .setup(CQ_A,   CQ_K,   CQ_N,   Z_R,    P,  P)
 
     #           '       \       N       "       N   O
-    N_K  .setup(N_N,    N_N,    N_N,    N_N,    P,  P)
+    N_D  .setup(A_E,    N_K,    N_N,    Q_Q,    A,  Q)
+    N_K  .setup(N_D,    N_N,    N_N,    N_T,    P,  P)
     N_N  .setup(A_A,    N_K,    N_N,    Q_Q,    A,  Q)
+    N_T  .setup(A_A,    N_K,    N_N,    Q_U,    A,  Q)
 
     #           '       \       N       "       N   O
     Q_K  .setup(Q_N,    Q_N,    Q_N,    Q_N,    P,  P)
     Q_N  .setup(AQ_A,   Q_K,    Q_N,    Q_Q,    A,  A)
     Q_Q  .setup(AQ_A,   Q_K,    Q_N,    Q_R,    A,  A)
-    Q_R  .setup(AQ_A,   Q_K,    Q_N,    S_M,    A,  A)
-    #Q_T
-    #Q_U
-    #Q_V
+    Q_R  .setup(AQ_A,   Q_K,    Q_N,    S_S,    A,  A)
+    Q_T  .setup(AQ_A,   Q_K,    Q_N,    Q_U,    A,  A)
+    Q_U  .setup(AQ_A,   Q_K,    Q_N,    Q_V,    A,  A)
+    Q_V  .setup(AQ_A,   Q_K,    Q_N,    S_Q,    A,  A)
 
     #           '       \       N       "       N   O
-    #S_A
-    #S_B
-    #S_C
-    S_K  .setup(S_M,    S_M,    S_M,    S_M,    P,  P)
-    S_M  .setup(AS_A,   S_M,    S_M,    S_M,    A,  A)
-    #S_N
+    S_D  .setup(AS_E,   S_N,    S_N,    S_Q,    A,  A)
+    S_K  .setup(S_D,    S_N,    S_N,    S_Q,    P,  P)
+    S_N  .setup(AS_A,   S_N,    S_N,    S_N,    A,  A)
+    S_Q  .setup(AS_A,   S_N,    S_N,    S_R,    A,  A)
+    S_R  .setup(AS_A,   S_N,    S_N,    S_S,    A,  A)
+    S_S  .setup(AS_A,   S_N,    S_N,    S_Q,    A,  A)
 
 
     #
