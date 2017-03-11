@@ -20,10 +20,11 @@ def gem():
             'ZO',                       #   Function -> String
 
             #
-            #   Y
+            #   Tracking ''' & """ for normal portray
             #
-            'is_3',                     #   Boolean
-            'is_C',                     #   Boolean
+            #'is_3',                     #   Boolean
+            #'is_C',                     #   Boolean
+            'favorite_3',               #   Integer
         ))
 
 
@@ -31,7 +32,7 @@ def gem():
             t.name = name
 
 
-        def setup(t, A, K, N, Q, ZN, ZO, C, S):
+        def setup(t, A, K, N, Q, ZN, ZO, C = false, S = false):
             assert not ((C) and (S))
 
             t.A = A
@@ -42,8 +43,9 @@ def gem():
             t.ZN = ZN
             t.ZO = ZO
 
-            t.is_3 = (C) or (S)
-            t.is_C = C
+            #t.is_3       = Boolean((C) or (S))
+            #t.is_C       = Boolean(C)
+            t.favorite_3 = (-1   if C else   (1   if S else   0))
 
 
     state = PortrayStringState
@@ -202,97 +204,97 @@ def gem():
 
 
     #           '       \       N       "       N   O
-    L_G  .setup(L_H,    L_N,    L_N,    L_W,    P,  P,  0,  0)         #   Lemon; ends in '   or \'
-    L_H  .setup(L_J,    L_N,    L_N,    L_W,    P,  P,  0,  0)         #   Lemon; ends in ''  or \''
-    L_J  .setup(L_G,    L_N,    L_N,    L_W,    P,  P,  0,  0)         #   Lemon; ends in ''' or \'''
-    L_N  .setup(L_G,    L_N,    L_N,    L_W,    P,  P,  0,  0)         #   Lemon
-    L_W  .setup(L_G,    L_N,    L_N,    L_Y,    P,  P,  0,  0)         #   Lemon; ends in "   or \"
-    L_Y  .setup(L_G,    L_N,    L_N,    L_Z,    P,  P,  0,  0)         #   Lemon; ends in ""  or \""
-    L_Z  .setup(L_G,    L_N,    L_N,    L_W,    P,  P,  0,  0)         #   Lemon; ends in """ or \"""
+    L_G  .setup(L_H,    L_N,    L_N,    L_W,    P,  P)                  #   Lemon; ends in '   or \'
+    L_H  .setup(L_J,    L_N,    L_N,    L_W,    P,  P)                  #   Lemon; ends in ''  or \''
+    L_J  .setup(L_G,    L_N,    L_N,    L_W,    P,  P, C = 7)           #   Lemon; ends in ''' or \'''
+    L_N  .setup(L_G,    L_N,    L_N,    L_W,    P,  P)                  #   Lemon
+    L_W  .setup(L_G,    L_N,    L_N,    L_Y,    P,  P)                  #   Lemon; ends in "   or \"
+    L_Y  .setup(L_G,    L_N,    L_N,    L_Z,    P,  P)                  #   Lemon; ends in ""  or \""
+    L_Z  .setup(L_G,    L_N,    L_N,    L_W,    P,  P, S = 7)           #   Lemon; ends in """ or \"""
 
     #           '       \       N       "       N   O
-    A_A  .setup(A_B,    A_K,    A_N,    AQ_Q,   Q,  Q,  0,  0)         #   Has '; ends in '
-    A_B  .setup(C_J,    A_K,    A_N,    AQ_Q,   Q,  Q,  0,  0)         #   Has '; ends in ''
-    A_D  .setup(A_E,    A_K,    A_N,    AQ_Q,   Q,  Q,  0,  0)         #   Has '; ends in \'
-    A_E  .setup(A_F,    A_K,    A_N,    AQ_Q,   Q,  Q,  0,  0)         #   Has '; ends in \''
-    A_F  .setup(C_G,    A_K,    A_N,    AQ_Q,   Q,  Q,  0,  0)         #   Has '; ends in \'''
-    A_K  .setup(A_N,    A_N,    A_N,    AQ_Q,   P,  P,  0,  0)         #   Has '; ends in \
-    A_N  .setup(A_A,    A_K,    A_N,    AQ_Q,   Q,  Q,  0,  0)         #   Has '
+    A_A  .setup(A_B,    A_K,    A_N,    AQ_Q,   Q,  Q)                  #   Has '; ends in '
+    A_B  .setup(C_J,    A_K,    A_N,    AQ_Q,   Q,  Q)                  #   Has '; ends in ''
+    A_D  .setup(A_E,    A_K,    A_N,    AQ_Q,   Q,  Q)                  #   Has '; ends in \'
+    A_E  .setup(A_F,    A_K,    A_N,    AQ_Q,   Q,  Q)                  #   Has '; ends in \''
+    A_F  .setup(C_G,    A_K,    A_N,    AQ_Q,   Q,  Q, C = 7)           #   Has '; ends in \'''
+    A_K  .setup(A_N,    A_N,    A_N,    AQ_Q,   P,  P)                  #   Has '; ends in \
+    A_N  .setup(A_A,    A_K,    A_N,    AQ_Q,   Q,  Q)                  #   Has '
 
     #           '       \       N       "       N   O
-    AQ_A .setup(AQ_B,   AQ_K,   AQ_N,   AQ_Q,   S,  S,  0,  0)        #   Has ' & "; ends in '
-    AQ_B .setup(CQ_J,   AQ_K,   AQ_N,   AQ_Q,   S,  S,  0,  0)        #   Has ' & "; ends in ''
-    AQ_D .setup(AQ_E,   AQ_K,   AQ_N,   AQ_Q,   C,  S,  0,  0)        #   Has ' & "; ends in \'
-    AQ_E .setup(AQ_F,   AQ_K,   AQ_N,   AQ_Q,   S,  S,  0,  0)        #   Has ' & "; ends in \''
-    AQ_F .setup(CQ_G,   AQ_K,   AQ_N,   AQ_Q,   S,  S,  0,  0)        #   Has ' & "; ends in \'''
-    AQ_K .setup(AQ_D,   AQ_N,   AQ_N,   AQ_T,   P,  P,  0,  0)        #   Has ' & "; ends in \
-    AQ_N .setup(AQ_A,   AQ_K,   AQ_N,   AQ_Q,   C,  S,  0,  0)        #   Has ' & "
-    AQ_Q .setup(AQ_A,   AQ_K,   AQ_N,   AQ_R,   C,  C,  0,  0)        #   Has ' & "; ends in "
-    AQ_R .setup(AQ_A,   AQ_K,   AQ_N,   AS_Z,   C,  C,  0,  0)        #   Has ' & "; ends in ""
-    AQ_T .setup(AQ_A,   AQ_K,   AQ_N,   AQ_U,   C,  S,  0,  0)        #   Has ' & "; ends in \"
-    AQ_U .setup(AQ_A,   AQ_K,   AQ_N,   AQ_V,   C,  C,  0,  0)        #   Has ' & "; ends in \""
-    AQ_V .setup(AQ_A,   AQ_K,   AQ_N,   AS_W,   C,  C,  0,  0)        #   Has ' & "; ends in \"""
+    AQ_A .setup(AQ_B,   AQ_K,   AQ_N,   AQ_Q,   S,  S)                  #   Has ' & "; ends in '
+    AQ_B .setup(CQ_J,   AQ_K,   AQ_N,   AQ_Q,   S,  S)                  #   Has ' & "; ends in ''
+    AQ_D .setup(AQ_E,   AQ_K,   AQ_N,   AQ_Q,   C,  S)                  #   Has ' & "; ends in \'
+    AQ_E .setup(AQ_F,   AQ_K,   AQ_N,   AQ_Q,   S,  S)                  #   Has ' & "; ends in \''
+    AQ_F .setup(CQ_G,   AQ_K,   AQ_N,   AQ_Q,   S,  S, C = 7)           #   Has ' & "; ends in \'''
+    AQ_K .setup(AQ_D,   AQ_N,   AQ_N,   AQ_T,   P,  P)                  #   Has ' & "; ends in \
+    AQ_N .setup(AQ_A,   AQ_K,   AQ_N,   AQ_Q,   C,  S)                  #   Has ' & "
+    AQ_Q .setup(AQ_A,   AQ_K,   AQ_N,   AQ_R,   C,  C)                  #   Has ' & "; ends in "
+    AQ_R .setup(AQ_A,   AQ_K,   AQ_N,   AS_Z,   C,  C)                  #   Has ' & "; ends in ""
+    AQ_T .setup(AQ_A,   AQ_K,   AQ_N,   AQ_U,   C,  S)                  #   Has ' & "; ends in \"
+    AQ_U .setup(AQ_A,   AQ_K,   AQ_N,   AQ_V,   C,  C)                  #   Has ' & "; ends in \""
+    AQ_V .setup(AQ_A,   AQ_K,   AQ_N,   AS_W,   C,  C, S = 7)           #   Has ' & "; ends in \"""
 
     #           '       \       N       "       N   O
-    AS_A .setup(AS_B,   AS_K,   AS_N,   AS_W,   P,  P,  0,  0)        #   Has ' & """; ends in '
-    AS_B .setup(L_J,    AS_K,   AS_N,   AS_W,   P,  P,  0,  0)        #   Has ' & """; ends in ''
-    AS_D .setup(AS_E,   AS_K,   AS_N,   AS_W,   C,  C,  0,  0)        #   Has ' & """; ends in \'
-    AS_E .setup(AS_F,   AS_K,   AS_N,   AS_W,   P,  P,  0,  0)        #   Has ' & """; ends in \''
-    AS_F .setup(L_G,    AS_K,   AS_N,   AS_W,   P,  P,  0,  0)        #   Has ' & """; ends in \'''
-    AS_K .setup(AS_D,   AS_N,   AS_N,   AS_W,   P,  P,  0,  0)        #   Has ' & """; ends in \
-    AS_N .setup(AS_A,   AS_K,   AS_N,   AS_W,   C,  C,  0,  0)        #   Has ' & """
-    AS_W .setup(AS_A,   AS_K,   AS_N,   AS_Y,   C,  C,  0,  0)        #   Has ' & """; ends in "   or \"
-    AS_Y .setup(AS_A,   AS_K,   AS_N,   AS_Z,   C,  C,  0,  0)        #   Has ' & """; ends in ""  or \""
-    AS_Z .setup(AS_A,   AS_K,   AS_N,   AS_W,   C,  C,  0,  0)        #   Has ' & """; ends in """ or \"""
+    AS_A .setup(AS_B,   AS_K,   AS_N,   AS_W,   P,  P)                  #   Has ' & """; ends in '
+    AS_B .setup(L_J,    AS_K,   AS_N,   AS_W,   P,  P)                  #   Has ' & """; ends in ''
+    AS_D .setup(AS_E,   AS_K,   AS_N,   AS_W,   C,  C)                  #   Has ' & """; ends in \'
+    AS_E .setup(AS_F,   AS_K,   AS_N,   AS_W,   P,  P)                  #   Has ' & """; ends in \''
+    AS_F .setup(L_G,    AS_K,   AS_N,   AS_W,   P,  P, C = 7)           #   Has ' & """; ends in \'''
+    AS_K .setup(AS_D,   AS_N,   AS_N,   AS_W,   P,  P)                  #   Has ' & """; ends in \
+    AS_N .setup(AS_A,   AS_K,   AS_N,   AS_W,   C,  C)                  #   Has ' & """
+    AS_W .setup(AS_A,   AS_K,   AS_N,   AS_Y,   C,  C)                  #   Has ' & """; ends in "   or \"
+    AS_Y .setup(AS_A,   AS_K,   AS_N,   AS_Z,   C,  C)                  #   Has ' & """; ends in ""  or \""
+    AS_Z .setup(AS_A,   AS_K,   AS_N,   AS_W,   C,  C, S = 7)           #   Has ' & """; ends in """ or \"""
 
     #           '       \       N       "       N   O
-    C_G  .setup(C_H,    C_K,    C_N,    CQ_Q,   Q,  Q,  0,  0)         #   Has '''; ends in ''  or \''
-    C_H  .setup(C_J,    C_K,    C_N,    CQ_Q,   Q,  Q,  0,  0)         #   Has '''; ends in ''  or \''
-    C_J  .setup(C_G,    C_K,    C_N,    CQ_Q,   Q,  Q,  0,  0)         #   Has '''; ends in ''' or \'''
-    C_K  .setup(C_G,    C_N,    C_N,    C_T,    P,  P,  0,  0)         #   Has '''; ends in \
-    C_N  .setup(C_G,    C_K,    C_N,    CQ_Q,   Q,  Q,  0,  0)         #   Has '''
-    C_T  .setup(C_G,    C_K,    C_N,    CQ_U,   Q,  Q,  0,  0)         #   Has '''; ends in \"
+    C_G  .setup(C_H,    C_K,    C_N,    CQ_Q,   Q,  Q)                  #   Has '''; ends in ''  or \''
+    C_H  .setup(C_J,    C_K,    C_N,    CQ_Q,   Q,  Q)                  #   Has '''; ends in ''  or \''
+    C_J  .setup(C_G,    C_K,    C_N,    CQ_Q,   Q,  Q, C = 7)           #   Has '''; ends in ''' or \'''
+    C_K  .setup(C_G,    C_N,    C_N,    C_T,    P,  P)                  #   Has '''; ends in \
+    C_N  .setup(C_G,    C_K,    C_N,    CQ_Q,   Q,  Q)                  #   Has '''
+    C_T  .setup(C_G,    C_K,    C_N,    CQ_U,   Q,  Q)                  #   Has '''; ends in \"
 
     #           '       \       N       "       N   O
-    CQ_G .setup(CQ_H,   CQ_K,   CQ_N,   CQ_Q,   S,  S,  0,  0)        #   Has ''' & "; ends in '   or \'
-    CQ_H .setup(CQ_J,   CQ_K,   CQ_N,   CQ_Q,   S,  S,  0,  0)        #   Has ''' & "; ends in ''  or \''
-    CQ_J .setup(CQ_G,   CQ_K,   CQ_N,   CQ_Q,   S,  S,  0,  0)        #   Has ''' & "; ends in ''' or \'''
-    CQ_K .setup(CQ_G,   CQ_N,   CQ_N,   CQ_U,   P,  P,  0,  0)        #   Has ''' & "; ends in \
-    CQ_N .setup(CQ_G,   CQ_K,   CQ_N,   CQ_Q,   S,  S,  0,  0)        #   Has ''' & "
-    CQ_Q .setup(CQ_G,   CQ_K,   CQ_N,   CQ_R,   P,  P,  0,  0)        #   Has ''' & "; ends in "
-    CQ_R .setup(CQ_G,   CQ_K,   CQ_N,   L_W,    P,  P,  0,  0)        #   Has ''' & "; ends in ""
-    CQ_T .setup(CQ_G,   CQ_K,   CQ_N,   CQ_U,   S,  S,  0,  0)        #   Has ''' & "; ends in \"
-    CQ_U .setup(CQ_G,   CQ_K,   CQ_N,   CQ_V,   P,  P,  0,  0)        #   Has ''' & "; ends in \""
-    CQ_V .setup(CQ_G,   CQ_K,   CQ_N,   L_Y,    P,  P,  0,  0)        #   Has ''' & "; ends in \"""
+    CQ_G .setup(CQ_H,   CQ_K,   CQ_N,   CQ_Q,   S,  S)                  #   Has ''' & "; ends in '   or \'
+    CQ_H .setup(CQ_J,   CQ_K,   CQ_N,   CQ_Q,   S,  S)                  #   Has ''' & "; ends in ''  or \''
+    CQ_J .setup(CQ_G,   CQ_K,   CQ_N,   CQ_Q,   S,  S, C = 7)           #   Has ''' & "; ends in ''' or \'''
+    CQ_K .setup(CQ_G,   CQ_N,   CQ_N,   CQ_U,   P,  P)                  #   Has ''' & "; ends in \
+    CQ_N .setup(CQ_G,   CQ_K,   CQ_N,   CQ_Q,   S,  S)                  #   Has ''' & "
+    CQ_Q .setup(CQ_G,   CQ_K,   CQ_N,   CQ_R,   P,  P)                  #   Has ''' & "; ends in "
+    CQ_R .setup(CQ_G,   CQ_K,   CQ_N,   L_W,    P,  P)                  #   Has ''' & "; ends in ""
+    CQ_T .setup(CQ_G,   CQ_K,   CQ_N,   CQ_U,   S,  S)                  #   Has ''' & "; ends in \"
+    CQ_U .setup(CQ_G,   CQ_K,   CQ_N,   CQ_V,   P,  P)                  #   Has ''' & "; ends in \""
+    CQ_V .setup(CQ_G,   CQ_K,   CQ_N,   L_Y,    P,  P, S = 7)           #   Has ''' & "; ends in \"""
 
     #           '       \       N       "       N   O
-    N_D  .setup(A_E,    N_K,    N_N,    Q_Q,    A,  Q,  0,  0)         #   normal; ends in \'
-    N_K  .setup(N_D,    N_N,    N_N,    N_T,    P,  P,  0,  0)         #   normal; ends in \
-    N_N  .setup(A_A,    N_K,    N_N,    Q_Q,    A,  Q,  0,  0)         #   normal
-    N_T  .setup(A_A,    N_K,    N_N,    Q_U,    A,  Q,  0,  0)         #   normal; ends in \"
+    N_D  .setup(A_E,    N_K,    N_N,    Q_Q,    A,  Q)                  #   normal; ends in \'
+    N_K  .setup(N_D,    N_N,    N_N,    N_T,    P,  P)                  #   normal; ends in \
+    N_N  .setup(A_A,    N_K,    N_N,    Q_Q,    A,  Q)                  #   normal
+    N_T  .setup(A_A,    N_K,    N_N,    Q_U,    A,  Q)                  #   normal; ends in \"
 
     #           '       \       N       "       N   O
-    Q_K  .setup(Q_N,    Q_N,    Q_N,    Q_N,    P,  P,  0,  0)         #   Has "; ends in \
-    Q_N  .setup(AQ_A,   Q_K,    Q_N,    Q_Q,    A,  A,  0,  0)         #   Has "
-    Q_Q  .setup(AQ_A,   Q_K,    Q_N,    Q_R,    A,  A,  0,  0)         #   Has "; ends in "
-    Q_R  .setup(AQ_A,   Q_K,    Q_N,    S_Z,    A,  A,  0,  0)         #   Has "; ends in ""
-    Q_T  .setup(AQ_A,   Q_K,    Q_N,    Q_U,    A,  A,  0,  0)         #   Has "; ends in \"
-    Q_U  .setup(AQ_A,   Q_K,    Q_N,    Q_V,    A,  A,  0,  0)         #   Has "; ends in \""
-    Q_V  .setup(AQ_A,   Q_K,    Q_N,    S_W,    A,  A,  0,  0)         #   Has "; ends in \"""
+    Q_K  .setup(Q_N,    Q_N,    Q_N,    Q_N,    P,  P)                  #   Has "; ends in \
+    Q_N  .setup(AQ_A,   Q_K,    Q_N,    Q_Q,    A,  A)                  #   Has "
+    Q_Q  .setup(AQ_A,   Q_K,    Q_N,    Q_R,    A,  A)                  #   Has "; ends in "
+    Q_R  .setup(AQ_A,   Q_K,    Q_N,    S_Z,    A,  A)                  #   Has "; ends in ""
+    Q_T  .setup(AQ_A,   Q_K,    Q_N,    Q_U,    A,  A)                  #   Has "; ends in \"
+    Q_U  .setup(AQ_A,   Q_K,    Q_N,    Q_V,    A,  A)                  #   Has "; ends in \""
+    Q_V  .setup(AQ_A,   Q_K,    Q_N,    S_W,    A,  A, S = 7)           #   Has "; ends in \"""
 
     #           '       \       N       "       N   O
-    S_D  .setup(AS_E,   S_N,    S_N,    S_W,    A,  A,  0,  0)         #   Has """: ends in \'
-    S_K  .setup(S_D,    S_N,    S_N,    S_W,    P,  P,  0,  0)         #   Has """: ends in \
-    S_N  .setup(AS_A,   S_N,    S_N,    S_N,    A,  A,  0,  0)         #   Has """
-    S_W  .setup(AS_A,   S_N,    S_N,    S_Y,    A,  A,  0,  0)         #   Has """; ends in "   or \"
-    S_Y  .setup(AS_A,   S_N,    S_N,    S_Z,    A,  A,  0,  0)         #   Has """; ends in ""  or \""
-    S_Z  .setup(AS_A,   S_N,    S_N,    S_W,    A,  A,  0,  0)         #   Has """; ends in """ or \"""
+    S_D  .setup(AS_E,   S_N,    S_N,    S_W,    A,  A)                  #   Has """: ends in \'
+    S_K  .setup(S_D,    S_N,    S_N,    S_W,    P,  P)                  #   Has """: ends in \
+    S_N  .setup(AS_A,   S_N,    S_N,    S_N,    A,  A)                  #   Has """
+    S_W  .setup(AS_A,   S_N,    S_N,    S_Y,    A,  A)                  #   Has """; ends in "   or \"
+    S_Y  .setup(AS_A,   S_N,    S_N,    S_Z,    A,  A)                  #   Has """; ends in ""  or \""
+    S_Z  .setup(AS_A,   S_N,    S_N,    S_W,    A,  A, S = 7)           #   Has """; ends in """ or \"""
 
     del PortrayStringState.__init__, PortrayStringState.setup
 
 
     @export
-    def portray_raw_K_string(favorite, state, iterator, s):
+    def portray_raw_K_string(favorite, favorite_3, state, iterator, s):
         #line('portray_raw_K_string(%d, %s, %r, %r)', favorite, state, iterator, s)
 
         for c in iterator:
@@ -302,23 +304,29 @@ def gem():
 
             if a.is_portray_boring:
                 state = state.N
+
                 #line('%r: %s => %s; %s => %s', c,  old_state, state.name)
                 continue
 
             if a.is_backslash:
                 state = state.K
+
                 #line('%r: %s => %s', c,  old_state, state.name)
                 continue
 
             if a.is_double_quote:
-                favorite += 1
-                state = state.Q
+                state       = state.Q
+                favorite   += 1
+                favorite_3 += state.favorite_3
+
                 #line('%r: %s => %s', c,  old_state, state.name)
                 continue
 
             if a.is_single_quote:
-                favorite -= 1
-                state = state.A
+                state       = state.A
+                favorite   -= 1
+                favorite_3 += state.favorite_3
+
                 #line('%r: %s => %s', c,  old_state, state.name)
                 continue
 
@@ -353,7 +361,7 @@ def gem():
         #   Complex case
         #
         if a.is_backslash:
-            return portray_raw_K_string(0, N_K, iterator, s)
+            return portray_raw_K_string(0, 0, N_K, iterator, s)
 
         if a.is_double_quote:
             favorite = 1
@@ -368,28 +376,35 @@ def gem():
 
             return portray_string(s)
 
+        favorite_3 = 0
+
         for c in iterator:
             #old = state.name
             a = lookup_ascii(c, unknown_ascii)
 
             if a.is_portray_boring:
                 state = state.N
+
                 #line('%s: %r, %s, %s', old, c, state.name, last.name)
                 continue
 
             if a.is_backslash:
-                return portray_raw_K_string(favorite, state.K, iterator, s)
+                return portray_raw_K_string(favorite, favorite_3, state.K, iterator, s)
 
 
             if a.is_double_quote:
-                favorite += 1
-                state = state.Q
+                state       = state.Q
+                favorite   += 1
+                favorite_3 += state.favorite_3
+
                 #line('%s: %r, %s, %s', old, c, state.name, last.name)
                 continue
 
             if a.is_single_quote:
-                favorite -= 1
-                state = state.A
+                state       = state.A
+                favorite   -= 1
+                favorite_3 += state.favorite_3
+
                 #line('%s: %r, %s, %s', old, c, state.name, last.name)
                 continue
 
