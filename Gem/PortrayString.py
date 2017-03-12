@@ -1,10 +1,14 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Gem.RawString_3')
+@gem('Gem.PortrayString')
 def gem():
     require_gem('Gem.Ascii')
     require_gem('Gem.Exception')
+    require_gem('Gem.StringIO')
+
+
+    P = String.__repr__
 
 
     class PortrayStringState(Object):
@@ -16,13 +20,21 @@ def gem():
             'N',                        #   PortrayStringState
             'Q',                        #   PortrayStringState
 
-            'RN',                       #   Function -> String
-            'RO',                       #   Function -> String
+            'kc',                       #   Function -> String
+            'ks',                       #   Function -> String
+
+            'pc',                       #   Function -> String
+            'ps',                       #   Function -> String
+
+            'ra',                       #   Function -> String
+            'rq',                       #   Function -> String
+
 
             #
             #   Tracking ''' & """ for normal portray
             #
             'favorite_3',               #   Integer
+            'portray_inside_triple'     #   None | String
         ))
 
 
@@ -31,11 +43,36 @@ def gem():
 
 
         if __debug__:
-            def setup(t, A, K, N, Q, RN, RO, F3 = 0):
+            def setup(t, A, K, N, Q, ra = 0, rq = 0, kc = 0, ks = 0, pc = 0, ps = 0, F3 = 0):
                 def verify_name(mode, value, expected_prefix, expected_suffix):
                     if value.name != expected_prefix + '_' + expected_suffix:
                         raise_runtime_error('PortrayStringState.setup: %s + %s => %s (expected %s)',
                                             t.name, mode, value.name, expected_prefix + '_' + expected_suffix)
+
+
+                if ra is 0:
+                    assert rq is 0
+
+                    ra = P
+
+                if rq is 0:
+                    rq = ra
+
+                if kc is 0:
+                    assert ks is 0
+
+                    kc = P
+
+                if ks is 0:
+                    ks = kc
+
+                if pc is 0:
+                    assert ps is 0
+
+                    pc = P
+
+                if ps is 0:
+                    ps = P
 
 
                 underscore = t.name.index('_')
@@ -118,7 +155,7 @@ def gem():
                 else:       verify_name('Q', Q, Q_prefix, 'Q')
                 #</Q>
 
-                #<RN>
+                #<ra>
                 if (PL) or (PCS) or (SK):
                     expected_RO = expected_RN = '__repr__'
                 elif (PC):
@@ -166,33 +203,39 @@ def gem():
                 else:
                     expected_RO = expected_RN = '?'
 
-                if RN.__name__ != expected_RN:
-                    raise_runtime_error('PortrayStringState.setup: %s.RN => %s (expected_RN %s)',
-                                        t.name, RN.__name__, expected_RN)
+                if ra.__name__ != expected_RN:
+                    raise_runtime_error('PortrayStringState.setup: %s.ra => %s (expected_RN %s)',
+                                        t.name, ra.__name__, expected_RN)
 
-                if RO.__name__ != expected_RO:
-                    raise_runtime_error('PortrayStringState.setup: %s.RO => %s (expected_RO %s)',
-                                        t.name, RO.__name__, expected_RO)
-                #</RN>
+                if rq.__name__ != expected_RO:
+                    raise_runtime_error('PortrayStringState.setup: %s.rq => %s (expected_RO %s)',
+                                        t.name, rq.__name__, expected_RO)
+                #</ra>
 
                 t.A = A
                 t.K = K
                 t.N = N
                 t.Q = Q
 
-                t.RN = RN
-                t.RO = RO
+                t.kc = (kc) or (P)
+                t.ks = (ks) or (kc) or (P)
+
+                t.pc = pc
+                t.ps = (ps) or (pc)
+
+                t.ra = ra
+                t.rq = (rq) or (ra)
 
                 t.favorite_3 = F3
         else:
-            def setup(t, A, K, N, Q, RN, RO, F3 = 0):
+            def setup(t, A, K, N, Q, ra, rq, F3 = 0):
                 t.A = A
                 t.K = K
                 t.N = N
                 t.Q = Q
 
-                t.RN = RN
-                t.RO = RO
+                t.ra = ra
+                t.rq = (rq) or (ra)
 
                 t.favorite_3 = F3
 
@@ -208,7 +251,6 @@ def gem():
     #       C = ''
     #
     #       K = \
-    #       L = unprintable [AKA: "Lemon"]
     #       N = normal
     #
     #       Q = "
@@ -257,14 +299,6 @@ def gem():
     CS_R = state('CS_R')        #   Has ''' & """; ends in ""
     CS_S = state('CS_S')        #   Has ''' & """; ends in """
 
-    L_A  = state('L_A')         #   Lemon; ends in '
-    L_B  = state('L_B')         #   Lemon; ends in ''
-    L_C  = state('L_C')         #   Lemon; ends in '''
-    L_N  = state('L_N')         #   Lemon
-    L_Q  = state('L_Q')         #   Lemon; ends in "
-    L_R  = state('L_R')         #   Lemon; ends in ""
-    L_S  = state('L_S')         #   Lemon; ends in """
-
     N_K  = state('N_K')         #   normal; ends in \
     N_N  = state('N_N')         #   normal
 
@@ -283,26 +317,105 @@ def gem():
     #
     #   Results
     #
-    def portray_raw_string_empty(s):
-        assert (s == '') and (r"r''" is intern_string(r"r''"))
+    portray_inside_triple = {
+                                C_A : intern_string(r"'"),
+                                C_B : intern_string(r"'"),
+                                C_C : intern_string(r"\'"),
+                                S_Q : intern_string(r'"'),
+                                S_R : intern_string(r'"'),
+                                S_S : intern_string(r'\"'),
+                            }.__getitem__
 
-        return r"r''"
+
+    portray_last_inside_triple = {
+                                     C_A : intern_string(r"\''''"),
+                                     C_B : intern_string(r"\''''"),
+                                     C_C : intern_string(r"\''''"),
+                                     C_N : intern_string(r"'''"),
+                                     S_N : intern_string(r'"""'),
+                                     S_Q : intern_string(r'\""""'),
+                                     S_R : intern_string(r'\""""'),
+                                     S_S : intern_string(r'\""""'),
+                                 }.__getitem__
+
+
+    def portray_backslash_string_with_triple_apostrophe(s):
+        f     = StringIO()
+        w     = f.write
+        state = C_N
+
+        w("'''")
+
+        for c in s:
+            a = lookup_ascii(c)
+
+            if a is none:
+                if state is not C_N:
+                    w(portray_inside_triple(state))
+                    state = C_N
+
+                w(portray(c)[1:-1])
+                continue
+
+            if a.is_single_quote:
+                if state is not C_N:
+                    w(portray_inside_triple(state))
+
+                continue
+
+            if state is not C_N:
+                w(portray_inside_triple(state))
+                state = C_N
+
+            w(a.portray)
+
+        w(portray_last_inside_triple(state))
+
+        return f.getvalue()
+
+
+    def portray_backslash_string_with_triple_quotation_mark(s):
+        f     = StringIO()
+        w     = f.write
+        state = S_N
+
+        w('"""')
+
+        for c in s:
+            a = lookup_ascii(c)
+
+            if a is none:
+                if state is not S_N:
+                    w(portray_inside_triple(state))
+                    state = S_N
+
+                w(portray(c)[1:-1])
+                continue
+
+            if a.is_quotation_mark:
+                if state is not S_N:
+                    w(portray_inside_triple(state))
+
+                state = state.question_mark
+                continue
+
+            if state is not S_N:
+                w(portray_inside_triple(state))
+                state = S_N
+
+            w(a.portray)
+
+        w(portray_last_inside_triple(state))
+
+        return f.getvalue()
 
 
     def portray_raw_string_with_apostrophe(s):
         return "r'" + s + "'"
 
 
-    #if __debug__:
-    #    def portray_raw_string_invalid(s):
-    #        raise_runtime_error('portray_raw_string_invalid called on %r', s)
-
-
     def portray_raw_string_with_quotation_mark(s):
         return 'r"' + s + '"'
-
-
-    portray_string = String.__repr__
 
 
     def portray_raw_string_with_triple_apostrophe(s):
@@ -313,139 +426,95 @@ def gem():
         return 'r"""' + s + '"""'
 
 
-    A = portray_raw_string_with_apostrophe
-    C = portray_raw_string_with_triple_apostrophe
-    I = portray_raw_string_empty
-    Q = portray_raw_string_with_quotation_mark
-    P = portray_string
-    S = portray_raw_string_with_triple_quotation_mark
-    #_ = (portray_raw_string_invalid  if __debug__ else   portray_string)
+    def portray_string_with_triple_apostrophe(s):
+        return "'''" + s + "'''"
 
 
-    #           '       \       N       "       N   O
-    A_A  .setup(A_B,    A_K,    A_N,    AQ_Q,   Q,  Q)                  #   Has '; ends in '
-    A_B  .setup(C_C,    A_K,    A_N,    AQ_Q,   Q,  Q)                  #   Has '; ends in ''
-    A_K  .setup(A_N,    A_N,    A_N,    A_N,    P,  P)                  #   Has '; ends in \
-    A_N  .setup(A_A,    A_K,    A_N,    AQ_Q,   Q,  Q)                  #   Has '
+    def portray_string_with_triple_quotation_mark(s):
+        return '"""' + s + '"""'
 
-    #           '       \       N       "       N   O
-    AQ_A .setup(AQ_B,   AQ_K,   AQ_N,   AQ_Q,   S,  S)                  #   Has ' & "; ends in '
-    AQ_B .setup(CQ_C,   AQ_K,   AQ_N,   AQ_Q,   S,  S)                  #   Has ' & "; ends in ''
-    AQ_K .setup(AQ_N,   AQ_N,   AQ_N,   AQ_N,   P,  P)                  #   Has ' & "; ends in \
-    AQ_N .setup(AQ_A,   AQ_K,   AQ_N,   AQ_Q,   C,  S)                  #   Has ' & "
-    AQ_Q .setup(AQ_A,   AQ_K,   AQ_N,   AQ_R,   C,  C)                  #   Has ' & "; ends in "
-    AQ_R .setup(AQ_A,   AQ_K,   AQ_N,   AS_S,   C,  C)                  #   Has ' & "; ends in ""
 
-    #           '       \       N       "       N   O
-    AS_A .setup(AS_B,   AS_K,   AS_N,   AS_Q,   P,  P)                  #   Has ' & """; ends in '
-    AS_B .setup(CS_C,   AS_K,   AS_N,   AS_Q,   P,  P)                  #   Has ' & """; ends in ''
-    AS_K .setup(AS_N,   AS_N,   AS_N,   AS_N,   P,  P)                  #   Has ' & """; ends in \
-    AS_N .setup(AS_A,   AS_K,   AS_N,   AS_Q,   C,  C)                  #   Has ' & """
-    AS_Q .setup(AS_A,   AS_K,   AS_N,   AS_R,   C,  C)                  #   Has ' & """; ends in "
-    AS_R .setup(AS_A,   AS_K,   AS_N,   AS_S,   C,  C)                  #   Has ' & """; ends in ""
-    AS_S .setup(AS_A,   AS_K,   AS_N,   AS_Q,   C,  C, F3 = 1)          #   Has ' & """; ends in """
+    KC = portray_backslash_string_with_triple_apostrophe
+    KS = portray_backslash_string_with_triple_quotation_mark
 
-    #           '       \       N       "       N   O
-    C_A  .setup(C_B,    C_K,    C_N,    CQ_Q,   Q,  Q)                  #   Has '''; ends in '
-    C_B  .setup(C_C,    C_K,    C_N,    CQ_Q,   Q,  Q)                  #   Has '''; ends in ''
-    C_C  .setup(C_A,    C_K,    C_N,    CQ_Q,   Q,  Q, F3 = -1)         #   Has '''; ends in '''
-    C_K  .setup(C_N,    C_N,    C_N,    C_N,    P,  P)                  #   Has '''; ends in \
-    C_N  .setup(C_A,    C_K,    C_N,    CQ_Q,   Q,  Q)                  #   Has '''
+    PC = portray_string_with_triple_apostrophe
+    PS = portray_string_with_triple_quotation_mark
 
-    #           '       \       N       "       N   O
-    CQ_A .setup(CQ_B,   CQ_K,   CQ_N,   CQ_Q,   S,  S)                  #   Has ''' & "; ends in '
-    CQ_B .setup(CQ_C,   CQ_K,   CQ_N,   CQ_Q,   S,  S)                  #   Has ''' & "; ends in ''
-    CQ_C .setup(CQ_A,   CQ_K,   CQ_N,   CQ_Q,   S,  S, F3 = -1)         #   Has ''' & "; ends in '''
-    CQ_K .setup(CQ_N,   CQ_N,   CQ_N,   CQ_N,   P,  P)                  #   Has ''' & "; ends in \
-    CQ_N .setup(CQ_A,   CQ_K,   CQ_N,   CQ_Q,   S,  S)                  #   Has ''' & "
-    CQ_Q .setup(CQ_A,   CQ_K,   CQ_N,   CQ_R,   P,  P)                  #   Has ''' & "; ends in "
-    CQ_R .setup(CQ_A,   CQ_K,   CQ_N,   CS_S,   P,  P)                  #   Has ''' & "; ends in ""
+    RA = portray_raw_string_with_apostrophe
+    RC = portray_raw_string_with_triple_apostrophe
+    RQ = portray_raw_string_with_quotation_mark
+    RS = portray_raw_string_with_triple_quotation_mark
 
-    #           '       \       N       "       N   O
-    CS_A .setup(CS_B,   CS_N,   CS_N,   CS_Q,   P,  P)                  #   Has ''' & """; ends in '
-    CS_B .setup(CS_C,   CS_N,   CS_N,   CS_Q,   P,  P)                  #   Has ''' & """; ends in ''
-    CS_C .setup(CS_A,   CS_N,   CS_N,   CS_Q,   P,  P, F3 = -1)         #   Has ''' & """; ends in '''
-    CS_N .setup(CS_A,   CS_N,   CS_N,   CS_Q,   P,  P)                  #   Has ''' & """
-    CS_Q .setup(CS_A,   CS_N,   CS_N,   CS_R,   P,  P)                  #   Has ''' & """; ends in "
-    CS_R .setup(CS_A,   CS_N,   CS_N,   CS_S,   P,  P)                  #   Has ''' & """; ends in ""
-    CS_S .setup(CS_A,   CS_N,   CS_N,   CS_Q,   P,  P, F3 = 1)          #   Has ''' & """; ends in """
+    _ = 0
 
-    #           '       \       N       "       N   O
-    L_A  .setup(L_B,    L_N,    L_N,    L_Q,    P,  P)                  #   Lemon; ends in '
-    L_B  .setup(L_C,    L_N,    L_N,    L_Q,    P,  P)                  #   Lemon; ends in ''
-    L_C  .setup(L_A,    L_N,    L_N,    L_Q,    P,  P, F3 = -1)         #   Lemon; ends in '''
-    L_N  .setup(L_A,    L_N,    L_N,    L_Q,    P,  P)                  #   Lemon
-    L_Q  .setup(L_A,    L_N,    L_N,    L_R,    P,  P)                  #   Lemon; ends in "
-    L_R  .setup(L_A,    L_N,    L_N,    L_S,    P,  P)                  #   Lemon; ends in ""
-    L_S  .setup(L_A,    L_N,    L_N,    L_Q,    P,  P, F3 = 1)          #   Lemon; ends in """
 
-    #           '       \       N       "       N   O
-    N_K  .setup(N_N,    N_N,    N_N,    N_N,    P,  P)                  #   normal; ends in \
-    N_N  .setup(A_A,    N_K,    N_N,    Q_Q,    A,  Q)                  #   normal
+    #           '     \     N     "
+    A_A  .setup(A_B,  A_K,  A_N,  AQ_Q, RQ, _)                          #   Has '; ends in '
+    A_B  .setup(C_C,  A_K,  A_N,  AQ_Q, RQ, _)                          #   Has '; ends in ''
+    A_K  .setup(A_N,  A_N,  A_N,  A_N)                                  #   Has '; ends in \
+    A_N  .setup(A_A,  A_K,  A_N,  AQ_Q, RQ, _)                          #   Has '
 
-    #           '       \       N       "       N   O
-    Q_K  .setup(Q_N,    Q_N,    Q_N,    Q_N,    P,  P)                  #   Has "; ends in \
-    Q_N  .setup(AQ_A,   Q_K,    Q_N,    Q_Q,    A,  A)                  #   Has "
-    Q_Q  .setup(AQ_A,   Q_K,    Q_N,    Q_R,    A,  A)                  #   Has "; ends in "
-    Q_R  .setup(AQ_A,   Q_K,    Q_N,    S_S,    A,  A)                  #   Has "; ends in ""
+    #           '     \     N     "
+    AQ_A .setup(AQ_B, AQ_K, AQ_N, AQ_Q, RS, _,  KC, KS, PC, PS)         #   Has ' & "; ends in '
+    AQ_B .setup(CQ_C, AQ_K, AQ_N, AQ_Q, RS, _,  KC, KS, PC, PS)         #   Has ' & "; ends in ''
+    AQ_K .setup(AQ_N, AQ_N, AQ_N, AQ_N, _,  _,  KC, KS, PC, PS)         #   Has ' & "; ends in \
+    AQ_N .setup(AQ_A, AQ_K, AQ_N, AQ_Q, RC, RS, KC, KS, PC, PS)         #   Has ' & "
+    AQ_Q .setup(AQ_A, AQ_K, AQ_N, AQ_R, RC, _,  KC, KS, PC, PS)         #   Has ' & "; ends in "
+    AQ_R .setup(AQ_A, AQ_K, AQ_N, AS_S, RC, _,  KC, KS, PC, PS)         #   Has ' & "; ends in ""
 
-    #           '       \       N       "       N   O
-    S_K  .setup(S_N,    S_N,    S_N,    S_N,    P,  P)                  #   Has """: ends in \
-    S_N  .setup(AS_A,   S_K,    S_N,    S_Q,    A,  A)                  #   Has """
-    S_Q  .setup(AS_A,   S_K,    S_N,    S_R,    A,  A)                  #   Has """; ends in "
-    S_R  .setup(AS_A,   S_K,    S_N,    S_S,    A,  A)                  #   Has """; ends in ""
-    S_S  .setup(AS_A,   S_K,    S_N,    S_Q,    A,  A, F3 = 1)          #   Has """; ends in """
+    #           '     \     N     "
+    AS_A .setup(AS_B, AS_K, AS_N, AS_Q, _,  _,  KC, _,  PC, _)          #   Has ' & """; ends in '
+    AS_B .setup(CS_C, AS_K, AS_N, AS_Q, _,  _,  KC, _,  PC, _)          #   Has ' & """; ends in ''
+    AS_K .setup(AS_N, AS_N, AS_N, AS_N, _,  _,  KC, _,  PC, _)          #   Has ' & """; ends in \
+    AS_N .setup(AS_A, AS_K, AS_N, AS_Q, RC, _,  KC, _,  PC, _)          #   Has ' & """
+    AS_Q .setup(AS_A, AS_K, AS_N, AS_R, RC, _,  KC, _,  PC, _)          #   Has ' & """; ends in "
+    AS_R .setup(AS_A, AS_K, AS_N, AS_S, RC, _,  KC, _,  PC, _)          #   Has ' & """; ends in ""
+    AS_S .setup(AS_A, AS_K, AS_N, AS_Q, RC, _,  KC, _,  PC, _,  F3 = 1) #   Has ' & """; ends in """
+
+    #           '     \     N     "
+    C_A  .setup(C_B,  C_K,  C_N,  CQ_Q, RQ, _)                          #   Has '''; ends in '
+    C_B  .setup(C_C,  C_K,  C_N,  CQ_Q, RQ, _)                          #   Has '''; ends in ''
+    C_C  .setup(C_A,  C_K,  C_N,  CQ_Q, RQ, _,  F3 = -1)                #   Has '''; ends in '''
+    C_K  .setup(C_N,  C_N,  C_N,  C_N)                                  #   Has '''; ends in \
+    C_N  .setup(C_A,  C_K,  C_N,  CQ_Q, RQ, _)                          #   Has '''
+
+    #           '     \     N     "
+    CQ_A .setup(CQ_B, CQ_K, CQ_N, CQ_Q, RS, _,  KS, _,  PS, _)          #   Has ''' & "; ends in '
+    CQ_B .setup(CQ_C, CQ_K, CQ_N, CQ_Q, RS, _,  KS, _,  PS, _)          #   Has ''' & "; ends in ''
+    CQ_C .setup(CQ_A, CQ_K, CQ_N, CQ_Q, RS, _,  KS, _,  PS, _,  F3 = -1)#   Has ''' & "; ends in '''
+    CQ_K .setup(CQ_N, CQ_N, CQ_N, CQ_N, _,  _,  KS, _,  PS, _)          #   Has ''' & "; ends in \
+    CQ_N .setup(CQ_A, CQ_K, CQ_N, CQ_Q, RS, _,  KS, _,  PS, _)          #   Has ''' & "
+    CQ_Q .setup(CQ_A, CQ_K, CQ_N, CQ_R, _,  _,  KS, _,  PS, _)          #   Has ''' & "; ends in "
+    CQ_R .setup(CQ_A, CQ_K, CQ_N, CS_S, _,  _,  KS, _,  PS, _)          #   Has ''' & "; ends in ""
+
+    #           '     \     N     
+    CS_A .setup(CS_B, CS_N, CS_N, CS_Q, _,  _,  KC, KS, PC, PS)         #   Has ''' & """; ends in '
+    CS_B .setup(CS_C, CS_N, CS_N, CS_Q, _,  _,  KC, KS, PC, PS)         #   Has ''' & """; ends in ''
+    CS_C .setup(CS_A, CS_N, CS_N, CS_Q, _,  _,  KC, KS, PC, PS, F3 = -1)#   Has ''' & """; ends in '''
+    CS_N .setup(CS_A, CS_N, CS_N, CS_Q, _,  _,  KC, KS, PC, PS)         #   Has ''' & """
+    CS_Q .setup(CS_A, CS_N, CS_N, CS_R, _,  _,  KC, KS, PC, PS)         #   Has ''' & """; ends in "
+    CS_R .setup(CS_A, CS_N, CS_N, CS_S, _,  _,  KC, KS, PC, PS)         #   Has ''' & """; ends in ""
+    CS_S .setup(CS_A, CS_N, CS_N, CS_Q, _,  _,  KC, KS, PC, PS, F3 = 1) #   Has ''' & """; ends in """
+
+    #           '     \     N     "
+    N_K  .setup(N_N,  N_N,  N_N,  N_N)                                  #   normal; ends in \
+    N_N  .setup(A_A,  N_K,  N_N,  Q_Q,  RA, RQ)                         #   normal
+
+    #           '     \     N     "
+    Q_K  .setup(Q_N,  Q_N,  Q_N,  Q_N)                                  #   Has "; ends in \
+    Q_N  .setup(AQ_A, Q_K,  Q_N,  Q_Q,  RA, _)                          #   Has "
+    Q_Q  .setup(AQ_A, Q_K,  Q_N,  Q_R,  RA, _)                          #   Has "; ends in "
+    Q_R  .setup(AQ_A, Q_K,  Q_N,  S_S,  RA, _)                          #   Has "; ends in ""
+
+    #           '     \     N     "
+    S_K  .setup(S_N,  S_N,  S_N,  S_N,  _,  _,  KC, _,  PC, _)          #   Has """: ends in \
+    S_N  .setup(AS_A, S_K,  S_N,  S_Q,  RA, _,  KC, _,  PC, _)          #   Has """
+    S_Q  .setup(AS_A, S_K,  S_N,  S_R,  RA, _,  KC, _,  PC, _)          #   Has """; ends in "
+    S_R  .setup(AS_A, S_K,  S_N,  S_S,  RA, _,  KC, _,  PC, _)          #   Has """; ends in ""
+    S_S  .setup(AS_A, S_K,  S_N,  S_Q,  RA, _,  KC, _,  PC, _,  F3 = 1) #   Has """; ends in """
+
 
     del PortrayStringState.__init__, PortrayStringState.setup
-
-
-    @export
-    def portray_raw_K_string(favorite, favorite_3, state, iterator, s):
-        #line('portray_raw_K_string(%d, %s, %r, %r)', favorite, state, iterator, s)
-
-        for c in iterator:
-            #old_state = state.name
-
-            a = lookup_ascii(c, unknown_ascii)
-
-            if a.is_portray_boring:
-                state = state.N
-
-                #line('%r: %s => %s; %s => %s', c,  old_state, state.name)
-                continue
-
-            if a.is_backslash:
-                state = state.K
-
-                #line('%r: %s => %s', c,  old_state, state.name)
-                continue
-
-            if a.is_double_quote:
-                state       = state.Q
-                favorite   += 1
-                favorite_3 += state.favorite_3
-
-                #line('%r: %s => %s', c,  old_state, state.name)
-                continue
-
-            if a.is_single_quote:
-                state       = state.A
-                favorite   -= 1
-                favorite_3 += state.favorite_3
-
-                #line('%r: %s => %s', c,  old_state, state.name)
-                continue
-
-            assert not a.is_printable
-
-            state = L_N
-
-        #line('final of %r: %d, %s', s, favorite, state.name)
-
-        if favorite >= 0:
-            return state.RN(s)
-
-        return state.RO(s)
 
 
     @export
@@ -486,7 +555,7 @@ def gem():
                 favorite  = 0
                 raw_state = state = L_N
 
-        favorite_3 = 0
+        lemon = favorite_3 = 0
 
         for c in iterator:
             #old     = state.name
@@ -529,11 +598,14 @@ def gem():
 
             assert not a.is_printable
 
-            state = L_N
+            lemon = 7
 
         #line('  final %r: %d, %s, %s', s, favorite, raw_state.name, state.name)
 
-        if favorite >= 0:
-            return raw_state.RN(s)
+        if lemon is 7:
+            return P(s)
 
-        return raw_state.RO(s)
+        if favorite >= 0:
+            return raw_state.ra(s)
+
+        return raw_state.rq(s)
