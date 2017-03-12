@@ -16,8 +16,8 @@ def gem():
             'N',                        #   PortrayStringState
             'Q',                        #   PortrayStringState
 
-            'ZN',                       #   Function -> String
-            'ZO',                       #   Function -> String
+            'RN',                       #   Function -> String
+            'RO',                       #   Function -> String
 
             #
             #   Tracking ''' & """ for normal portray
@@ -30,14 +30,14 @@ def gem():
             t.name = name
 
 
-        def setup(t, A, K, N, Q, ZN, ZO, F3 = 0):
+        def setup(t, A, K, N, Q, RN, RO, F3 = 0):
             t.A = A
             t.K = K
             t.N = N
             t.Q = Q
 
-            t.ZN = ZN
-            t.ZO = ZO
+            t.RN = RN
+            t.RO = RO
 
             t.favorite_3 = F3
 
@@ -288,9 +288,9 @@ def gem():
         #line('final of %r: %d, %s', s, favorite, state.name)
 
         if favorite >= 0:
-            return state.ZN(s)
+            return state.RN(s)
 
-        return state.ZO(s)
+        return state.RO(s)
 
 
     @export
@@ -379,6 +379,6 @@ def gem():
         #line('  final %r: %d, %s, %s', s, favorite, raw_state.name, state.name)
 
         if favorite >= 0:
-            return raw_state.ZN(s)
+            return raw_state.RN(s)
 
-        return raw_state.ZO(s)
+        return raw_state.RO(s)
