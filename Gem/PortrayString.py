@@ -30,16 +30,171 @@ def gem():
             t.name = name
 
 
-        def setup(t, A, K, N, Q, RN, RO, F3 = 0):
-            t.A = A
-            t.K = K
-            t.N = N
-            t.Q = Q
+        if __debug__:
+            def setup(t, A, K, N, Q, RN, RO, F3 = 0):
+                def verify_name(mode, value, expected_prefix, expected_suffix):
+                    if value.name != expected_prefix + '_' + expected_suffix:
+                        raise_runtime_error('PortrayStringState.setup: %s + %s => %s (expected %s)',
+                                            t.name, mode, value.name, expected_prefix + '_' + expected_suffix)
 
-            t.RN = RN
-            t.RO = RO
 
-            t.favorite_3 = F3
+                underscore = t.name.index('_')
+
+                prefix = t.name[:underscore]
+                suffix = t.name[underscore + 1:]
+
+                PA = PC = PCS = PL = PN = PQ = PS = 0
+                SA = SB = SC = SK = SN = SQ = SR = SS = 0
+
+                if prefix == 'A':           PA = 7
+                elif prefix == 'AQ':        PA = PQ = 7
+                elif prefix == 'AS':        PA = PS = 7
+                elif prefix == 'C':         PC = 7
+                elif prefix == 'CQ':        PC = PQ = 7
+                elif prefix == 'CS':        PC = PCS = PS = 7
+                elif prefix == 'L':         PL = 7
+                elif prefix == 'N':         PN = 7
+                elif prefix == 'Q':         PQ = 7
+                elif prefix == 'S':         PS = 7
+                else:                       raise_runtime_error('incomplete: prefix: %s', prefix)
+
+                if suffix == 'A':           SA = 7
+                elif suffix == 'B':         SB = 7
+                elif suffix == 'C':         SC = 7
+                elif suffix == 'K':         SK = 7
+                elif suffix == 'N':         SN = 7
+                elif suffix == 'Q':         SQ = 7
+                elif suffix == 'R':         SR = 7
+                elif suffix == 'S':         SS = 7
+                else:
+                    raise_runtime_error('incomplete: suffix: %s', suffix)
+
+                #<A>
+                C_prefix = '?'
+
+                if PA:
+                    A_prefix = prefix
+                    C_prefix = 'C' + prefix[1:]
+                elif (PC) or (PL):
+                    A_prefix = C_prefix = prefix
+                elif PN:
+                    A_prefix = 'A'
+                else:
+                    A_prefix = 'A' + prefix
+
+                if SA:      verify_name('A', A, A_prefix, 'B')
+                elif SB:    verify_name('A', A, C_prefix, 'C')
+                elif SK:    verify_name('A', A, prefix,   'N')
+                else:       verify_name('A', A, A_prefix, 'A')
+                #</A>
+
+                #<K>
+                if SK:      verify_name('K', K, prefix, 'N')
+                else:       verify_name('K', K, prefix, ('N'   if (PCS) or (PL) else   'K'))
+                #</K>
+
+                #<N>
+                verify_name('N', N, prefix, 'N')
+                #</N>
+
+                #<Q>
+                S_prefix = '?'
+
+                if PQ:
+                    Q_prefix = prefix
+                    S_prefix = prefix[:-1] + 'S'
+                elif (PL) or (PS):
+                    Q_prefix = S_prefix = prefix
+                elif PN:
+                    Q_prefix = 'Q'
+                else:
+                    Q_prefix = prefix + 'Q'
+
+                #line('%s: SR<%d>, Qp<%s>, Sp<%s>', t.name, SR, Q_prefix, S_prefix)
+
+                if SQ:      verify_name('Q', Q, Q_prefix, 'R')
+                elif SR:    verify_name('Q', Q, S_prefix, 'S')
+                elif SK:    verify_name('Q', Q, prefix,   'N')
+                else:       verify_name('Q', Q, Q_prefix, 'Q')
+                #</Q>
+
+                #<RN>
+                if (PL) or (PCS) or (SK):
+                    expected_RO = expected_RN = '__repr__'
+                elif (PC):
+                    assert not SS
+
+                    if (SQ) or (SR):
+                        expected_RO = expected_RN = '__repr__'
+                    else:
+                        if PQ:
+                            expected_RO = expected_RN = 'portray_raw_string_with_triple_quotation_mark'
+                        else:
+                            expected_RO = expected_RN = 'portray_raw_string_with_quotation_mark'
+                elif (PS):
+                    assert not SC
+
+                    if (SA) or (SB):
+                        expected_RO = expected_RN = '__repr__'
+                    else:
+                        if PA:
+                            expected_RO = expected_RN = 'portray_raw_string_with_triple_apostrophe'
+                        else:
+                            expected_RO = expected_RN = 'portray_raw_string_with_apostrophe'
+                elif PA:
+                    assert not SC
+
+                    if PQ:
+                        if (SA) or (SB):
+                            expected_RO = expected_RN = 'portray_raw_string_with_triple_quotation_mark'
+                        elif (SQ) or (SR):
+                            expected_RO = expected_RN = 'portray_raw_string_with_triple_apostrophe'
+                        else:
+                            expected_RN = 'portray_raw_string_with_triple_apostrophe'
+                            expected_RO = 'portray_raw_string_with_triple_quotation_mark'
+                    else:
+                        expected_RN = expected_RO = 'portray_raw_string_with_quotation_mark'
+                elif PQ:
+                    assert not SS
+
+                    expected_RO = expected_RN = 'portray_raw_string_with_apostrophe'
+                elif PN:
+                    assert (not SA) and (not SB) and (not SC) and (not SQ) and (not SR) and (not SS)
+
+                    expected_RN = 'portray_raw_string_with_apostrophe'
+                    expected_RO = 'portray_raw_string_with_quotation_mark'
+                else:
+                    expected_RO = expected_RN = '?'
+
+                if RN.__name__ != expected_RN:
+                    raise_runtime_error('PortrayStringState.setup: %s.RN => %s (expected_RN %s)',
+                                        t.name, RN.__name__, expected_RN)
+
+                if RO.__name__ != expected_RO:
+                    raise_runtime_error('PortrayStringState.setup: %s.RO => %s (expected_RO %s)',
+                                        t.name, RO.__name__, expected_RO)
+                #</RN>
+
+                t.A = A
+                t.K = K
+                t.N = N
+                t.Q = Q
+
+                t.RN = RN
+                t.RO = RO
+
+                t.favorite_3 = F3
+        else:
+            def setup(t, A, K, N, Q, RN, RO, F3 = 0):
+                t.A = A
+                t.K = K
+                t.N = N
+                t.Q = Q
+
+                t.RN = RN
+                t.RO = RO
+
+                t.favorite_3 = F3
 
 
     state = PortrayStringState
@@ -201,10 +356,10 @@ def gem():
     CQ_A .setup(CQ_B,   CQ_K,   CQ_N,   CQ_Q,   S,  S)                  #   Has ''' & "; ends in '
     CQ_B .setup(CQ_C,   CQ_K,   CQ_N,   CQ_Q,   S,  S)                  #   Has ''' & "; ends in ''
     CQ_C .setup(CQ_A,   CQ_K,   CQ_N,   CQ_Q,   S,  S, F3 = -1)         #   Has ''' & "; ends in '''
-    CQ_K .setup(CQ_A,   CQ_N,   CQ_N,   CQ_N,   P,  P)                  #   Has ''' & "; ends in \
+    CQ_K .setup(CQ_N,   CQ_N,   CQ_N,   CQ_N,   P,  P)                  #   Has ''' & "; ends in \
     CQ_N .setup(CQ_A,   CQ_K,   CQ_N,   CQ_Q,   S,  S)                  #   Has ''' & "
     CQ_Q .setup(CQ_A,   CQ_K,   CQ_N,   CQ_R,   P,  P)                  #   Has ''' & "; ends in "
-    CQ_R .setup(CQ_A,   CQ_K,   CQ_N,   CS_Q,   P,  P)                  #   Has ''' & "; ends in ""
+    CQ_R .setup(CQ_A,   CQ_K,   CQ_N,   CS_S,   P,  P)                  #   Has ''' & "; ends in ""
 
     #           '       \       N       "       N   O
     CS_A .setup(CS_B,   CS_N,   CS_N,   CS_Q,   P,  P)                  #   Has ''' & """; ends in '
@@ -236,7 +391,7 @@ def gem():
 
     #           '       \       N       "       N   O
     S_K  .setup(S_N,    S_N,    S_N,    S_N,    P,  P)                  #   Has """: ends in \
-    S_N  .setup(AS_A,   S_K,    S_N,    S_N,    A,  A)                  #   Has """
+    S_N  .setup(AS_A,   S_K,    S_N,    S_Q,    A,  A)                  #   Has """
     S_Q  .setup(AS_A,   S_K,    S_N,    S_R,    A,  A)                  #   Has """; ends in "
     S_R  .setup(AS_A,   S_K,    S_N,    S_S,    A,  A)                  #   Has """; ends in ""
     S_S  .setup(AS_A,   S_K,    S_N,    S_Q,    A,  A, F3 = 1)          #   Has """; ends in """
