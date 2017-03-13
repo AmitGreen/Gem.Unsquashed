@@ -74,8 +74,7 @@ def gem():
                     pc = P
 
                 if ps is 0:
-                    ps = P
-
+                    ps = pc
 
                 underscore = self.name.index('_')
 
@@ -121,10 +120,10 @@ def gem():
                 else:
                     A_prefix = 'A' + prefix
 
-                if SA:      verify_name('A', A, A_prefix, 'B')
-                elif SB:    verify_name('A', A, C_prefix, 'C')
-                elif SK:    verify_name('A', A, prefix,   'N')
-                else:       verify_name('A', A, A_prefix, 'A')
+                if (SA) or (SC):    verify_name('A', A, A_prefix, 'B')
+                elif SB:            verify_name('A', A, C_prefix, 'C')
+                elif SK:            verify_name('A', A, prefix,   'N')
+                else:               verify_name('A', A, A_prefix, 'A')
                 #</A>
 
                 #<K>
@@ -151,10 +150,10 @@ def gem():
 
                 #line('%s: SR<%d>, Qp<%s>, Sp<%s>', self.name, SR, Q_prefix, S_prefix)
 
-                if SQ:      verify_name('Q', Q, Q_prefix, 'R')
-                elif SR:    verify_name('Q', Q, S_prefix, 'S')
-                elif SK:    verify_name('Q', Q, prefix,   'N')
-                else:       verify_name('Q', Q, Q_prefix, 'Q')
+                if (SQ) or (SS):    verify_name('Q', Q, Q_prefix, 'R')
+                elif SR:            verify_name('Q', Q, S_prefix, 'S')
+                elif SK:            verify_name('Q', Q, prefix,   'N')
+                else:               verify_name('Q', Q, Q_prefix, 'Q')
                 #</Q>
 
                 #<ra>
@@ -321,9 +320,14 @@ def gem():
     #   Results
     #
     portray_inside_triple = {
+                                A_B : 0,
                                 C_A : intern_string(r"'"),
                                 C_B : intern_string(r"'"),
                                 C_C : intern_string(r"\'"),
+                                C_N : 0,
+
+                                Q_R : 0,
+                                S_N : 0,
                                 S_Q : intern_string(r'"'),
                                 S_R : intern_string(r'"'),
                                 S_S : intern_string(r'\"'),
@@ -331,10 +335,13 @@ def gem():
 
 
     portray_last_inside_triple = {
+                                     A_B : intern_string(r"'''"),
                                      C_A : intern_string(r"\''''"),
                                      C_B : intern_string(r"\''''"),
                                      C_C : intern_string(r"\''''"),
                                      C_N : intern_string(r"'''"),
+
+                                     Q_R : intern_string(r'"""'),
                                      S_N : intern_string(r'"""'),
                                      S_Q : intern_string(r'\""""'),
                                      S_R : intern_string(r'\""""'),
@@ -347,7 +354,7 @@ def gem():
 
         f     = create_StringOutput()
         w     = f.write
-        state = C_N
+        state = A_B
 
         w("'''")
 
@@ -356,21 +363,27 @@ def gem():
 
             if a is none:
                 if state is not C_N:
-                    w(portray_inside_triple(state))
+                    if state is not A_B:
+                        w(portray_inside_triple(state))
+
                     state = C_N
 
                 w(portray(c)[1:-1])
                 continue
 
             if a.is_apostrophe:
-                if state is not C_N:
-                    w(portray_inside_triple(state))
+                previous = portray_inside_triple(state)
+
+                if previous is not 0:
+                    w(previous)
 
                 state = state.A
                 continue
 
             if state is not C_N:
-                w(portray_inside_triple(state))
+                if state is not A_B:
+                    w(portray_inside_triple(state))
+
                 state = C_N
 
             w(a.portray)
@@ -385,7 +398,7 @@ def gem():
 
         f     = create_StringOutput()
         w     = f.write
-        state = S_N
+        state = Q_R
 
         w('"""')
 
@@ -394,21 +407,27 @@ def gem():
 
             if a is none:
                 if state is not S_N:
-                    w(portray_inside_triple(state))
+                    if state is not Q_R:
+                        w(portray_inside_triple(state))
+
                     state = S_N
 
                 w(portray(c)[1:-1])
                 continue
 
             if a.is_quotation_mark:
-                if state is not S_N:
-                    w(portray_inside_triple(state))
+                previous = portray_inside_triple(state)
+
+                if previous is not 0:
+                    w(previous)
 
                 state = state.Q
                 continue
 
             if state is not S_N:
-                w(portray_inside_triple(state))
+                if state is not Q_R:
+                    w(portray_inside_triple(state))
+
                 state = S_N
 
             w(a.portray)
@@ -477,19 +496,19 @@ def gem():
     AS_N .setup(AS_A, AS_K, AS_N, AS_Q, 1, RC, _,  KC, _,  PC, _)           #   Has ' & """
     AS_Q .setup(AS_A, AS_K, AS_N, AS_R, 1, RC, _,  KC, _,  KC, _)           #   Has ' & """; ends in "
     AS_R .setup(AS_A, AS_K, AS_N, AS_S, 1, RC, _,  KC, _,  KC, _)           #   Has ' & """; ends in ""
-    AS_S .setup(AS_A, AS_K, AS_N, AS_Q, 1, RC, _,  KC, _,  KC, _,  F3 = 1)  #   Has ' & """; ends in """
+    AS_S .setup(AS_A, AS_K, AS_N, AS_R, 1, RC, _,  KC, _,  KC, _,  F3 = 1)  #   Has ' & """; ends in """
 
     #           '     \     N     "
     C_A  .setup(C_B,  C_K,  C_N,  CQ_Q, _, RQ, _)                           #   Has '''; ends in '
     C_B  .setup(C_C,  C_K,  C_N,  CQ_Q, _, RQ, _)                           #   Has '''; ends in ''
-    C_C  .setup(C_A,  C_K,  C_N,  CQ_Q, _, RQ, _,  F3 = -1)                 #   Has '''; ends in '''
+    C_C  .setup(C_B,  C_K,  C_N,  CQ_Q, _, RQ, _,  F3 = -1)                 #   Has '''; ends in '''
     C_K  .setup(C_N,  C_N,  C_N,  C_N)                                      #   Has '''; ends in \
     C_N  .setup(C_A,  C_K,  C_N,  CQ_Q, _, RQ, _)                           #   Has '''
 
     #           '     \     N     "
     CQ_A .setup(CQ_B, CQ_K, CQ_N, CQ_Q, 1, RS, _,  KS, _,  PS, _)           #   Has ''' & "; ends in '
     CQ_B .setup(CQ_C, CQ_K, CQ_N, CQ_Q, 1, RS, _,  KS, _,  PS, _)           #   Has ''' & "; ends in ''
-    CQ_C .setup(CQ_A, CQ_K, CQ_N, CQ_Q, 1, RS, _,  KS, _,  PS, _,  F3 = -1) #   Has ''' & "; ends in '''
+    CQ_C .setup(CQ_B, CQ_K, CQ_N, CQ_Q, 1, RS, _,  KS, _,  PS, _,  F3 = -1) #   Has ''' & "; ends in '''
     CQ_K .setup(CQ_N, CQ_N, CQ_N, CQ_N, 1, _,  _,  KS, _,  PS, _)           #   Has ''' & "; ends in \
     CQ_N .setup(CQ_A, CQ_K, CQ_N, CQ_Q, 1, RS, _,  KS, _,  PS, _)           #   Has ''' & "
     CQ_Q .setup(CQ_A, CQ_K, CQ_N, CQ_R, 1, _,  _,  KC, _,  KC, _)           #   Has ''' & "; ends in "
@@ -498,11 +517,11 @@ def gem():
     #           '     \     N     
     CS_A .setup(CS_B, CS_N, CS_N, CS_Q, 1, _,  _,  KS, _,  KS, _)           #   Has ''' & """; ends in '
     CS_B .setup(CS_C, CS_N, CS_N, CS_Q, 1, _,  _,  KS, _,  KS, _)           #   Has ''' & """; ends in ''
-    CS_C .setup(CS_A, CS_N, CS_N, CS_Q, 1, _,  _,  KS, _,  KS, _,  F3 = -1) #   Has ''' & """; ends in '''
+    CS_C .setup(CS_B, CS_N, CS_N, CS_Q, 1, _,  _,  KS, _,  KS, _,  F3 = -1) #   Has ''' & """; ends in '''
     CS_N .setup(CS_A, CS_N, CS_N, CS_Q, 1, _,  _,  KC, KS, PC, PS)          #   Has ''' & """
     CS_Q .setup(CS_A, CS_N, CS_N, CS_R, 1, _,  _,  KC, _,  KC, _)           #   Has ''' & """; ends in "
     CS_R .setup(CS_A, CS_N, CS_N, CS_S, 1, _,  _,  KC, _,  KC, _)           #   Has ''' & """; ends in ""
-    CS_S .setup(CS_A, CS_N, CS_N, CS_Q, 1, _,  _,  KC, _,  KC, _,  F3 = 1)  #   Has ''' & """; ends in """
+    CS_S .setup(CS_A, CS_N, CS_N, CS_R, 1, _,  _,  KC, _,  KC, _,  F3 = 1)  #   Has ''' & """; ends in """
 
     #           '     \     N     "
     N_K  .setup(N_N,  N_N,  N_N,  N_N)                                      #   normal; ends in \
@@ -519,7 +538,7 @@ def gem():
     S_N  .setup(AS_A, S_K,  S_N,  S_Q,  _, RA, _)                           #   Has """
     S_Q  .setup(AS_A, S_K,  S_N,  S_R,  _, RA, _)                           #   Has """; ends in "
     S_R  .setup(AS_A, S_K,  S_N,  S_S,  _, RA, _)                           #   Has """; ends in ""
-    S_S  .setup(AS_A, S_K,  S_N,  S_Q,  _, RA, _,  F3 = 1)                  #   Has """; ends in """
+    S_S  .setup(AS_A, S_K,  S_N,  S_R,  _, RA, _,  F3 = 1)                  #   Has """; ends in """
 
 
     del PortrayStringState.__init__, PortrayStringState.setup
@@ -566,42 +585,40 @@ def gem():
         lemon = favorite_3 = 0
 
         for c in iterator:
-            #old     = state.name
-            #raw_old = raw_state.name
-
             a = lookup_ascii(c, unknown_ascii)
 
             if a.is_portray_boring:
+                #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.N.name, state.name, state.N.name)
+
                 raw_state = raw_state.N
                 state     = state.N
 
-                #line('  %r: %s => %s, %s => %s', c, raw_old, raw_state.name, old, state.name)
                 continue
 
             if a.is_backslash:
+                #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.K.name, state.name, state.N.name)
+
                 backslash = 7
                 raw_state = raw_state.K
                 state     = state.N
-
-                #line('  %r: %s => %s, %s => %s', c, raw_old, raw_state.name, old, state.name)
                 continue
 
             if a.is_quotation_mark:
+                #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.Q.name, state.name, state.Q.name)
+
                 raw_state   = raw_state.Q
                 state       = state.Q
                 favorite   += 1
                 favorite_3 += state.favorite_3
-
-                #line('  %r: %s => %s, %s => %s', c, raw_old, raw_state.name, old, state.name)
                 continue
 
             if a.is_apostrophe:
+                #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.A.name, state.name, state.A.name)
+
                 raw_state   = raw_state.A
                 state       = state.A
                 favorite   -= 1
                 favorite_3 += state.favorite_3
-
-                #line('  %r: %s => %s, %s => %s', c, raw_old, raw_state.name, old, state.name)
                 continue
 
             assert not a.is_printable
