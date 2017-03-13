@@ -350,7 +350,7 @@ def gem():
 
 
     def portray_backslash_string_with_triple_apostrophe(s):
-        line('KC: %r', s)
+        #line('KC: %r', s)
 
         f     = create_StringOutput()
         w     = f.write
@@ -394,7 +394,7 @@ def gem():
 
 
     def portray_backslash_string_with_triple_quotation_mark(s):
-        line('KS: %r', s)
+        #line('KS: %r', s)
 
         f     = create_StringOutput()
         w     = f.write
@@ -557,12 +557,14 @@ def gem():
             if not a.is_portray_boring:
                 break
         else:
+            #line('portray_raw_string(%r): sipmle', s)
+
             return "r'" + s + "'"
 
         #
         #   Complex case
         #
-        #line('portray_raw_string(%r): %s', s, a)
+        line('portray_raw_string(%r): %s', s, a)
 
         if a.is_backslash:
             backslash = 7
@@ -625,29 +627,35 @@ def gem():
 
             lemon = 7
 
-        #line('  final %r: %d/%d/%s/%s, %s, %s', s, favorite, favorite_3, backslash, lemon, raw_state.name, state.name)
+        line('  final %r: %d/%d/%s/%s, %s, %s', s, favorite, favorite_3, backslash, lemon, raw_state.name, state.name)
 
         if lemon is 7:
             if favorite_3 >= 0:
+                line('  %s: lemon, kc', state.name)
                 return state.kc(s)
 
+            line('  %s: lemon, ks', state.name)
             return state.ks(s)
 
         if raw_state.ra is P:
             if backslash is 7:
                 if favorite_3 >= 0:
+                    line('  %s: P, backslash, kc', state.name)
                     return state.kc(s)
 
+                line('  %s: P, backslash, ks', state.name)
                 return state.ks(s)
 
             if favorite_3 >= 0:
-                #line('state.pc: %s', state.pc)
+                line('  %s: P, pc', state.name)
                 return state.pc(s)
 
-            #line('state.ps: %s', state.ps)
+            line('  %s: P, ps', state.name)
             return state.ps(s)
 
         if favorite >= 0:
+            line('  %s: ra', raw_state.name)
             return raw_state.ra(s)
 
+        line('  %s: rq', raw_state.name)
         return raw_state.rq(s)
