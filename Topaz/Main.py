@@ -32,155 +32,219 @@ def gem():
     def main():
         for [s, expected] in [
                 #
-                #   N_N: simple case
+                #   A_A: ra
                 #
-                [   r'',                            r"r''"                              ],
-                [   r'test',                        r"r'test'"                          ],
+                [   r"wink \"\"'",                  r'''r"wink \"\"'"'''                    ],
 
                 #
-                #   N_N (ra & rq)
+                #   A_A: rq
                 #
-                [   r'double backslash: \\',        r"r'double backslash: \\'"          ],
-                [   r"\'",                          r'''r"\'"'''                        ],
+                [   r"ending single quote '",       r'''r"ending single quote '"'''         ],
+                [   r"'",                           r'''r"'"'''                             ],
 
                 #
-                #   A_A (rq)
+                #   A_A/AQ_A: lemon: kc
+                #   A_A/AQ_A: lemon: ks: not possible   (not allowed: """)
                 #
-                [   r"ending single quote '",       r'''r"ending single quote '"'''     ],
-                [   r"'",                           r'''r"'"'''                         ],
+                [   """wi\nk \\"\\"'""",            r'''"""wi\nk \\"\\"'"""'''              ],
 
                 #
-                #   A_B (rq)
+                #   A_A: backslash: kc/ks: not possible (always raw mode)
+                #   A_A: pc/ps:            not possible (always raw mode)
                 #
-                [   r"quoted: ''",                  r'''r"quoted: ''"'''                ],
 
                 #
-                #   A_N (ra)
+                #   A_B: ra
                 #
-                [   r"\"'\"",                       r'''r"\"'\""'''                     ],
+                [   r"\"two apostrophe\": ''",      r'''r"\"two apostrophe\": ''"'''        ],
 
                 #
-                #   A_N (rq)
+                #   A_B: rq
                 #
-                [   r"can't",                       r'''r"can't"'''                     ],
+                [   r"quoted: ''",                  r'''r"quoted: ''"'''                    ],
 
                 #
-                #   AQ_A (ra)
+                #   A_B/AQ_B: lemon: kc
+                #   A_B/AQ_B, lemon: ks: not possible (not allowed """)
                 #
-                [   r"""End with "'": "'""",        r'''r"""End with "'": "'"""'''      ],
-                [   r"""other way: " & '""",        r'''r"""other way: " & '"""'''      ],
+                [   """wo\nk \\"\\"''""",           r'''"""wo\nk \\"\\"''"""'''             ],
 
                 #
-                #   AQ_B (ra)
+                #   A_B: backslash: kc/ks: not possible (always raw mode)
+                #   A_B: pc/ps:            not possible (always raw mode)
                 #
-                [   r"""prefer ", "", ', or ''""",  r'''r"""prefer ", "", ', or ''"""'''],
 
                 #
-                #   AQ_N (ra)
+                #   A_K: ra/rq: not possible (ends in \)
                 #
-                [   r''''triple' is: ""\".''',      r"""r''''triple' is: ""\".'''"""    ],
-                [   r''''"" ""'2''',                r"""r''''"" ""'2'''"""              ],
 
                 #
-                #   AQ_N (rq)
+                #   A_K/A_N: lemon: kc
+                #   A_K/A_N: lemon: ks: not possible (not allowed """)
                 #
-                [   r'''"triple" is: ''\'.''',      r'''r""""triple" is: ''\'."""'''    ],
-                [   r'''"'' ''"!''',                r'''r""""'' ''"!"""'''              ],
-                [   r'''the quotes: ' & "''',       r"""r'''the quotes: ' & "'''"""     ],
-                [   r"""single: ', '' .vs. "?""",   r'''r"""single: ', '' .vs. "?"""''' ],
+                [   "le'mo\n\\",                    portray("le'mo\n\\")                    ],
 
                 #
-                #   AQ_Q (ra)
+                #   A_K/A_N: backslash: kc
+                #   A_K/A_N: backslash: ks: not possible (not allowed """)
                 #
-                [   r'''singles "'" & "''"''',      r"""r'''singles "'" & "''"'''"""    ],
+                [   "apostrophe & backlash: '\\",   portray("apostrophe & backlash: '\\")   ],
 
                 #
-                #   AQ_Q (rq)
+                #   A_N: ra
                 #
-                [   r'''Wow: ''"''',                r"""r'''Wow: ''"'''"""              ],
+                [   r"\"'\"",                       r'''r"\"'\""'''                         ],
 
                 #
-                #   AQ_R (ra)
+                #   A_N: rq
                 #
-                [   r'''more quotes: '' & ""''',    r"""r'''more quotes: '' & ""'''"""  ],
+                [   r"can't",                       r'''r"can't"'''                         ],
 
                 #
-                #   AS_N (ra)
-                #       Have to represent what we "expect" using \' or \" internally
+                #   A_N: lemon: kc
+                #   A_N: lemon: ks (not allowed """)
                 #
-                [   r'''more """" than '!''',      """r'''more ""\"" than '!'''""",     ],
+                [   "ca\n't",                       portray("ca\n't"),                      ],
 
                 #
-                #   AS_N (rq)
-                #       Have to represent what we "expect" using \' or \" internally
+                #   A_N: backslash: kc/ks: not possible (always raw mode)
+                #   A_N: pc/ps:            not possible (always raw mode)
                 #
-                [   r'''l''s """" t''n '!''',      """r'''l''s ""\"" t''n '!'''""",     ],
 
                 #
-                #   C_N (rq)
+                #   AQ_A: ra
                 #
-                #   NOTE:
-                #       vim 7.4 gets confused with """x\"""" & '''x\'''' - so use string concatanation so
-                #       vim can properly parse it.
-                #
-                [   r"lots of ''''' - lots!",       """r"lots of ''''' - lots!""" + '"' ],
+                [   r"""End with "'": "'""",        r'''r"""End with "'": "'"""'''          ],
+                [   r"""other way: " & '""",        r'''r"""other way: " & '"""'''          ],
 
                 #
-                #   CQ_N (ra)
-                #       Have to represent what we "expect" using \' or \" internally
+                #   AQ_B: ra
                 #
-                [   r"""l""s '''' t""n "!""",      '''r"""l""s ''\'' t""n "!"""''',     ],
+                [   r"""prefer ", "", ', or ''""",  r'''r"""prefer ", "", ', or ''"""'''    ],
 
                 #
-                #   CQ_N (rq)
+                #   AQ_N: ra
                 #
-                [   r"""more '''' than "!""",      '''r"""more ''\'' than "!"""''',     ],
+                [   r''''triple' is: ""\".''',      r"""r''''triple' is: ""\".'''"""        ],
+                [   r''''"" ""'2''',                r"""r''''"" ""'2'''"""                  ],
 
                 #
-                #   Q_N (rq)
+                #   AQ_N: rq
                 #
-                [   r'\'"\'',                       r"""r'\'"\''"""                     ],
+                [   r'''"triple" is: ''\'.''',      r'''r""""triple" is: ''\'."""'''        ],
+                [   r'''"'' ''"!''',                r'''r""""'' ''"!"""'''                  ],
+                [   r'''the quotes: ' & "''',       r"""r'''the quotes: ' & "'''"""         ],
+                [   r"""single: ', '' .vs. "?""",   r'''r"""single: ', '' .vs. "?"""'''     ],
 
                 #
-                #   Q_Q (ra)
+                #   AQ_Q: ra
                 #
-                [   r'"',                           r"""r'"'"""                         ],
-                [   r'She said "hello"',            r"""r'She said "hello"'"""          ],
+                [   r'''singles "'" & "''"''',      r"""r'''singles "'" & "''"'''"""        ],
 
                 #
-                #   Q_R (ra)
+                #   AQ_Q: rq
                 #
-                [   r'double quoted: ""',           r"""r'double quoted: ""'"""         ],
+                [   r'''Wow: ''"''',                r"""r'''Wow: ''"'''"""                  ],
 
                 #
-                #   S_N (ra)
+                #   AQ_R: ra
                 #
-                #   NOTE:
-                #       vim 7.4 gets confused with """x\"""" & '''x\'''' - so use string concatanation so
-                #       vim can properly parse it.
-                #
-                [   r'lots of """"" - lots!',       '''r'lots of """"" - lots!''' + "'" ],
-
-                #
-                #   N_N, backslash (kc)
-                #
-                [   'backslash: \\',                portray('backslash: \\')            ],
-
-                #
-                #   CQ_Q (ps)
-                #       End with " & has ''' internally
-                #
-                [   '''\'333: "''\'."''',           r"""'''\'333: "''\'."'''"""         ],
-                [   '''three: "''\''\''."''',       r"""'''three: "''\''\''."'''"""     ],    
+                [   r'''more quotes: '' & ""''',    r"""r'''more quotes: '' & ""'''"""      ],
 
                 #
                 #   AS_A (pc)
                 #       End with ' & has """ internally
                 #
-                [   """': '""\"".'""",              r'''"""': '""\"".'"""'''            ],
-                [   """\""\""\"".'""",              r'''"""\""\""\"".'"""'''            ],
-                [   """3: '""\".'""",               r'''"""3: '""\".'"""'''             ],
-        ]:
+                [   """': '""\"".'""",              r'''"""': '""\"".'"""'''                ],
+                [   """\""\""\"".'""",              r'''"""\""\""\"".'"""'''                ],
+                [   """3: '""\".'""",               r'''"""3: '""\".'"""'''                 ],
+
+                #
+                #   AS_N: ra
+                #       Have to represent what we "expect" using \' or \" internally
+                #
+                [   r'''more """" than '!''',      """r'''more ""\"" than '!'''""",         ],
+
+                #
+                #   AS_N: rq
+                #       Have to represent what we "expect" using \' or \" internally
+                #
+                [   r'''l''s """" t''n '!''',      """r'''l''s ""\"" t''n '!'''""",         ],
+
+                #
+                #   C_N: rq
+                #
+                #   NOTE:
+                #       vim 7.4 gets confused with """x\"""" & '''x\'''' - so use string concatanation so
+                #       vim can properly parse it.
+                #
+                [   r"lots of ''''' - lots!",       """r"lots of ''''' - lots!""" + '"'     ],
+
+                #
+                #   CQ_N: ra
+                #       Have to represent what we "expect" using \' or \" internally
+                #
+                [   r"""l""s '''' t""n "!""",      '''r"""l""s ''\'' t""n "!"""''',         ],
+
+                #
+                #   CQ_N: rq
+                #
+                [   r"""more '''' than "!""",      '''r"""more ''\'' than "!"""''',         ],
+
+                #
+                #   CQ_Q (ps)
+                #       End with " & has ''' internally
+                #
+                [   '''\'333: "''\'."''',           r"""'''\'333: "''\'."'''"""             ],
+                [   '''three: "''\''\''."''',       r"""'''three: "''\''\''."'''"""         ],    
+
+                #
+                #   Q_N: rq
+                #
+                [   r'\'"\'',                       r"""r'\'"\''"""                         ],
+
+                #
+                #   Q_Q: ra
+                #
+                [   r'"',                           r"""r'"'"""                             ],
+                [   r'She said "hello"',            r"""r'She said "hello"'"""              ],
+
+                #
+                #   Q_R: ra
+                #
+                [   r'double quoted: ""',           r"""r'double quoted: ""'"""             ],
+
+                #
+                #   N_N: simple case
+                #
+                [   r'',                            r"r''"                                  ],
+                [   r'test',                        r"r'test'"                              ],
+
+                #
+                #   N_N: ra
+                #
+                [   r'double backslash: \\',        r"r'double backslash: \\'"              ],
+
+                #
+                #   N_N: rq
+                #
+                [   r"\'",                          r'''r"\'"'''                            ],
+
+                #
+                #   N_K/N_N, backslash (kc)
+                #
+                [   'backslash: \\',                portray('backslash: \\')                ],
+
+                #
+                #   S_N: ra
+                #
+                #   NOTE:
+                #       vim 7.4 gets confused with """x\"""" & '''x\'''' - so use string concatanation so
+                #       vim can properly parse it.
+                #
+                [   r'lots of """"" - lots!',       '''r'lots of """"" - lots!''' + "'"     ],
+
+            ]:
             actual = portray_raw_string(s)
 
             if actual != expected:
