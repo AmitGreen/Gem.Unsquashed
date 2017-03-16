@@ -72,10 +72,7 @@ def gem():
                 #
                 #   A_B: backslash: kc/ks: not possible (always raw mode)
                 #   A_B: pc/ps:            not possible (always raw mode)
-                #
-
-                #
-                #   A_K: ra/rq: not possible (ends in \)
+                #   A_K: ra/rq:            not possible (ends in \)
                 #
 
                 #
@@ -115,13 +112,44 @@ def gem():
                 #   AQ_A: ra
                 #
                 [   r"""End with "'": "'""",        r'''r"""End with "'": "'"""'''          ],
-                [   r"""other way: " & '""",        r'''r"""other way: " & '"""'''          ],
+
+                #
+                #   AQ_A: rq
+                #
+                [   r"""other way: '"' & '""",      r'''r"""other way: '"' & '"""'''        ],
+
+                #
+                #   AQ_A: lemon: kc
+                #   AQ_A: lemon: ks (not allowed """)
+                #
+                [   """"lemo\n's"'""",              r'''"""\"lemo\n's"'"""'''               ],
+
+                #
+                #   AQ_A: backslash: kc/ks: not possible (always raw mode)
+                #   AQ_A: pc/ps:            not possible (always raw mode)
+                #
 
                 #
                 #   AQ_B: ra
                 #
                 [   r"""prefer ", "", ', or ''""",  r'''r"""prefer ", "", ', or ''"""'''    ],
 
+                #
+                #   AQ_B: rq
+                #
+                [   r"""prefer ', '', ", or ''""",  r'''r"""prefer ', '', ", or ''"""'''    ],
+
+                #
+                #   AQ_B: lemon: kc
+                #   AQ_B: lemon: ks (not allowed """)
+                #
+                [   """"more lemo\n''s"'""",        r'''"""\"more lemo\n''s"'"""'''         ],
+                #
+                #   AQ_B: backslash: kc/ks: not possible (always raw mode)
+                #   AQ_B: pc/ps:            not possible (always raw mode)
+                #
+
+                [0,0],
                 #
                 #   AQ_N: ra
                 #
@@ -243,8 +271,10 @@ def gem():
                 #       vim can properly parse it.
                 #
                 [   r'lots of """"" - lots!',       '''r'lots of """"" - lots!''' + "'"     ],
+        ]:
+            if s is 0:
+                break
 
-            ]:
             actual = portray_raw_string(s)
 
             if actual != expected:
