@@ -72,10 +72,10 @@ def gem():
                 #
                 #   A_B: backslash: kc/ks: not possible (always raw mode)
                 #   A_B: pc/ps:            not possible (always raw mode)
-                #   A_K: ra/rq:            not possible (ends in \)
                 #
 
                 #
+                #   A_K/A_N: ra/rq:         not possible (ends in \)
                 #   A_K/A_N: lemon: kc
                 #   A_K/A_N: lemon: ks: not possible (not allowed """)
                 #
@@ -144,12 +144,27 @@ def gem():
                 #   AQ_B: lemon: ks (not allowed """)
                 #
                 [   """"more lemo\n''s"'""",        r'''"""\"more lemo\n''s"'"""'''         ],
+
                 #
                 #   AQ_B: backslash: kc/ks: not possible (always raw mode)
                 #   AQ_B: pc/ps:            not possible (always raw mode)
                 #
 
+                #
+                #   AQ_K/A_N: ra/rq:         not possible (ends in \)
+                #   AQ_K/A_N: lemon: kc
+                #   AQ_K/A_N: lemon: ks: not possible (not allowed """)
+                #
+                [   '''le'"mo"\n\\''',              r"""'''le'"mo"\n\\'''"""                ],
+
+                #
+                #   AQ_K/A_N: backslash: kc
+                #   AQ_K/A_N: backslash: ks: not possible (not allowed """)
+                #
+                [   '''all ", ', & \\''',           r"""'''all ", ', & \\'''"""             ],
                 [0,0],
+
+
                 #
                 #   AQ_N: ra
                 #
@@ -161,13 +176,25 @@ def gem():
                 #
                 [   r'''"triple" is: ''\'.''',      r'''r""""triple" is: ''\'."""'''        ],
                 [   r'''"'' ''"!''',                r'''r""""'' ''"!"""'''                  ],
-                [   r'''the quotes: ' & "''',       r"""r'''the quotes: ' & "'''"""         ],
                 [   r"""single: ', '' .vs. "?""",   r'''r"""single: ', '' .vs. "?"""'''     ],
+
+                #
+                #   AQ_N: lemon: kc
+                #   AQ_N: lemon: ks (not allowed """)
+                #
+                [   """lemo\n''s "yet" again""",    r"""'''lemo\n''s "yet" again'''"""      ],
+
+                #
+                #   AQ_N: backslash: kc/ks: not possible (always raw mode)
+                #   AQ_N: pc/ps:            not possible (always raw mode)
+                #
+                [0,0],
 
                 #
                 #   AQ_Q: ra
                 #
                 [   r'''singles "'" & "''"''',      r"""r'''singles "'" & "''"'''"""        ],
+                [   r'''the quotes: ' & "''',       r"""r'''the quotes: ' & "'''"""         ],
 
                 #
                 #   AQ_Q: rq
