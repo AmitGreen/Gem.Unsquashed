@@ -273,19 +273,31 @@ def gem():
                 #   AS_B: ps: not possible (''' not allowed)
                 #
                 [   """\""\""\"".''""",             r'''"""\""\""\"".''"""'''               ],
-                [0,0],
 
                 #
                 #   AS_N: ra
-                #       Have to represent what we "expect" using \' or \" internally
+                #       Have to represent what we "expect" using \" internally
                 #
                 [   r'''more """" than '!''',      """r'''more ""\"" than '!'''""",         ],
 
                 #
                 #   AS_N: rq
-                #       Have to represent what we "expect" using \' or \" internally
+                #       Have to represent what we "expect" using \" internally
                 #
                 [   r'''l''s """" t''n '!''',      """r'''l''s ""\"" t''n '!'''""",         ],
+
+                #
+                #   AS_N: lemon: kc
+                #   AS_N: lemon: ks: not possible (''' not allowed)
+                #       Have to represent what we "expect" using \" internally
+                #
+                [   '''"""'now' AS_\n''',          """'''""\"'now' AS_\\n'''"""             ],
+
+                #
+                #   AS_N: backslash: kc/ks: not possible (always raw mode)
+                #   AS_N: pc/ps:            not possible (always raw mode)
+                #
+                [0,0],
 
                 #
                 #   C_N: rq
