@@ -252,8 +252,27 @@ def gem():
                 #   AS_A: ps: not possible (''' not allowed)
                 #
                 [   """': '""\"".'""",              r'''"""': '""\"".'"""'''                ],
-                [   """\""\""\"".'""",              r'''"""\""\""\"".'"""'''                ],
                 [   """3: '""\".'""",               r'''"""3: '""\".'"""'''                 ],
+
+                #
+                #   AS_B: ra:         not possible (always portray)
+                #   AS_B: rq:         not possible (always portray)
+                #   AS_B: lemon: kc
+                #   AS_B: lemon: ks: not possible (''' not allowed)
+                #
+                [   """\""\"AS_B\n''""",            r'''"""\""\"AS_B\n''"""'''              ],
+
+                #
+                #   AS_B: backslash: kc
+                #   AS_B: backslash: ks: not possible (''' not allowed)
+                #
+                [   """\""\"\\AS_B''""",            r'''"""\""\"\\AS_B''"""'''              ],
+
+                #
+                #   AS_B: pc
+                #   AS_B: ps: not possible (''' not allowed)
+                #
+                [   """\""\""\"".''""",             r'''"""\""\""\"".''"""'''               ],
                 [0,0],
 
                 #
