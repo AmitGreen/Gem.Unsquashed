@@ -90,6 +90,9 @@ def gem():
                 #
                 #   A_N: ra
                 #
+                #       NOTE: Ends in ", which is a little confusing.  We could theoretically use ''', hence:
+                #             r'''\"'\"''' -- but that doesn't seem much clearer.
+                #
                 [   r"\"'\"",                       r'''r"\"'\""'''                         ],
 
                 #
@@ -162,8 +165,6 @@ def gem():
                 #   AQ_K/A_N: backslash: ks: not possible (not allowed """)
                 #
                 [   '''all ", ', & \\''',           r"""'''all ", ', & \\'''"""             ],
-                [0,0],
-
 
                 #
                 #   AQ_N: ra
@@ -188,7 +189,6 @@ def gem():
                 #   AQ_N: backslash: kc/ks: not possible (always raw mode)
                 #   AQ_N: pc/ps:            not possible (always raw mode)
                 #
-                [0,0],
 
                 #
                 #   AQ_Q: ra
@@ -202,9 +202,37 @@ def gem():
                 [   r'''Wow: ''"''',                r"""r'''Wow: ''"'''"""                  ],
 
                 #
+                #   AQ_Q: lemon: kc
+                #   AQ_Q: lemon: ks (not allowed """)
+                #
+                [   '''lemo\n's are "sour"''',      r"""'''lemo\n's are "sour"'''"""        ],
+
+                #
+                #   AQ_Q: backslash: kc/ks: not possible (always raw mode)
+                #   AQ_Q: pc/ps:            not possible (always raw mode)
+                #
+
+                #
                 #   AQ_R: ra
                 #
                 [   r'''more quotes: '' & ""''',    r"""r'''more quotes: '' & ""'''"""      ],
+
+                #
+                #   AQ_R: rq
+                #
+                [   r'''compare: ''+'' .vs. ""''',  r"""r'''compare: ''+'' .vs. ""'''"""    ],
+
+                #
+                #   AQ_R: lemon: kc
+                #   AQ_R: lemon: ks (not allowed """)
+                #
+                [   '''yep - lemo\n's ""sour""''',  r"""'''yep - lemo\n's ""sour""'''"""    ],
+
+                #
+                #   AQ_R: backslash: kc/ks: not possible (always raw mode)
+                #   AQ_R: pc/ps:            not possible (always raw mode)
+                #
+                [0,0],
 
                 #
                 #   AS_A (pc)
