@@ -311,16 +311,30 @@ def gem():
                 #   AS_N: pc/ps:            not possible (always raw mode)
                 #
 #===
-                [0,0],
 
                 #
+                #   C_N: ra - not possible (" not allowed)
                 #   C_N: rq
                 #
                 #   NOTE:
-                #       vim 7.4 gets confused with """x\"""" & '''x\'''' - so use string concatanation so
-                #       vim can properly parse it.
+                #       vim 7.4 gets confused with """x\"""" - so use string concatanation so vim can properly parse
+                #       it.
                 #
                 [   r"lots of ''''' - lots!",       """r"lots of ''''' - lots!""" + '"'     ],
+
+                #
+                #   C_N:  lemon: kc: not possible (" not allowed)
+                #   C_N:  lemon: ks
+                #       Have to represent what we "expect" using \' internally
+                #
+                [   "'''@C_\n",                    '''"''\'@C_\\n"'''                       ],
+
+                #
+                #   C_N: backslash: kc/ks: not possible (always raw mode)
+                #   C_N: pc/ps:            not possible (always raw mode)
+                #
+                [0,0],
+#===
 
                 #
                 #   CQ_N: ra
