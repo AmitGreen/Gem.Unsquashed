@@ -456,9 +456,53 @@ def gem():
                 #   C_N: pc/ps:            not possible (always raw mode)
                 #
             #</C_N>
+
+            #<CQ_A>
+                #
+                #   CQ_A: ra: not possible (""" not allowed)
+                #   CQ_A: rq
+                #
+                [   r"""End '''with "'": "'""",   '''r"""End ''\'with "'": "'"""'''         ],
+
+                #
+                #   CQ_A: lemon: kc: not possible (""" not allowed)
+                #   CQ_A: lemon: ks
+                #
+                [   """\"lemo\n'''s"'""",           '''"""\\"lemo\\n''\'s"'"""'''           ],
+
+                #
+                #   CQ_A: backslash: kc/ks: not possible (always raw mode)
+                #   CQ_A: pc/ps:            not possible (always raw mode)
+                #
+            #</CQ_A>
+
+            #<CQ_B>
+                #
+                #   CQ_B: ra: not possible (""" not allowed)
+                #   CQ_B: rq
+                #
+                [   r"""More "quotes" ''' & ''""",  '''r"""More "quotes" ''\' & ''"""'''    ],
+
+                #
+                #   CQ_B: lemon: kc: not possible (""" not allowed)
+                #   CQ_B: lemon: ks
+                #
+                [   """\"lemo\n"ade'''s''""",   '''"""\\"lemo\\n"ade''\'s''"""'''           ],
+
+                #
+                #   CQ_B: backslash: kc/ks: not possible (always raw mode)
+                #   CQ_B: pc/ps:            not possible (always raw mode)
+                #
+            #</CQ_A>
 #===
                 [0,0],
-#===
+            #<CQ_C>
+                #
+                #   CQ_C: ra: not possible (""" not allowed)
+                #   CQ_C: rq
+                #
+                [   r"""End with 3x "'": "'''""",   '''r"""End with 3x "'": "''\'"""'''     ],
+            #</CQ_C>
 
             #<CQ_N>
                 #
