@@ -148,7 +148,7 @@ def gem():
                 else:
                     Q_prefix = prefix + 'Q'
 
-                #line('%s: SR<%d>, Qp<%s>, Sp<%s>', self.name, SR, Q_prefix, S_prefix)
+                line('%s: SR<%d>, Qp<%s>, Sp<%s>', self.name, SR, Q_prefix, S_prefix)
 
                 if (SQ) or (SS):    verify_name('Q', Q, Q_prefix, 'R')
                 elif SR:            verify_name('Q', Q, S_prefix, 'S')
@@ -350,7 +350,7 @@ def gem():
 
 
     def portray_backslash_string_with_triple_apostrophe(s):
-        #line('KC: %r', s)
+        line('KC: %r', s)
 
         f     = create_StringOutput()
         w     = f.write
@@ -394,7 +394,7 @@ def gem():
 
 
     def portray_backslash_string_with_triple_quotation_mark(s):
-        #line('KS: %r', s)
+        line('KS: %r', s)
 
         f     = create_StringOutput()
         w     = f.write
@@ -559,7 +559,7 @@ def gem():
             if not a.is_portray_boring:
                 break
         else:
-            #line('portray_raw_string(%r): sipmle', s)
+            line('portray_raw_string(%r): sipmle', s)
 
             return "r'" + s + "'"
 
@@ -649,8 +649,14 @@ def gem():
 
         if lemon is 7:
             if favorite_3 >= 0:
+                #if raw_state is not state:
+                #    line('  %r: %s/%s: lemon, kc', s, raw_state.name, state.name)
+
                 line('  %s: lemon, kc', state.name)
                 return state.kc(s)
+
+            #if raw_state is not state:
+            #    line('  %r: %s/%s: lemon, ks', s, raw_state.name, state.name)
 
             line('  %s: lemon, ks', state.name)
             return state.ks(s)
@@ -658,8 +664,14 @@ def gem():
         if raw_state.ra is P:
             if backslash is 7:
                 if favorite_3 >= 0:
+                    #if raw_state is not state:
+                    #    line('  %r: %s/%s: P, backslash, kc', s, raw_state.name, state.name)
+
                     line('  %s: P, backslash, kc', state.name)
                     return state.kc(s)
+
+                #if raw_state is not state:
+                #    line('  %r: %s/%s: P, backslash, ks', s, raw_state.name, state.name)
 
                 line('  %s: P, backslash, ks', state.name)
                 return state.ks(s)

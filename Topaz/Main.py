@@ -154,9 +154,9 @@ def gem():
                 #
 
                 #
-                #   AQ_K/A_N: ra/rq:         not possible (ends in \)
-                #   AQ_K/A_N: lemon: kc
-                #   AQ_K/A_N: lemon: ks: not possible (not allowed ''')
+                #   AQ_K/AQ_N: ra/rq:     not possible (ends in \)
+                #   AQ_K/AQ_N: lemon: kc
+                #   AQ_K/AQ_N: lemon: ks: not possible (not allowed ''')
                 #
                 [   '''le'"mo"\n\\''',              r"""'''le'"mo"\n\\'''"""                ],
 
@@ -275,6 +275,19 @@ def gem():
                 [   """\""\""\"".''""",             r'''"""\""\""\"".''"""'''               ],
 
                 #
+                #   AS_K/AS_N: ra/rq:     not possible (ends in \)
+                #   AS_K/AS_N: lemon: kc
+                #   AS_K/AS_N: lemon: ks: not possible (not allowed ''')
+                #
+                [   '''le'"""mo"""\n\\''',          """'''le'""\"mo""\"\\n\\\\'''"""        ],
+
+                #
+                #   AS_K/A_N: backslash: kc
+                #   AS_K/A_N: backslash: ks: not possible (not allowed ''')
+                #
+                [   '''all """, ', & \\''',         """'''all ""\", ', & \\\\'''"""         ],
+
+                #
                 #   AS_N: ra
                 #       Have to represent what we "expect" using \" internally
                 #
@@ -297,6 +310,7 @@ def gem():
                 #   AS_N: backslash: kc/ks: not possible (always raw mode)
                 #   AS_N: pc/ps:            not possible (always raw mode)
                 #
+#===
                 [0,0],
 
                 #
@@ -359,7 +373,7 @@ def gem():
                 [   r"\'",                          r'''r"\'"'''                            ],
 
                 #
-                #   N_K/N_N, backslash (kc)
+                # ? N_K/N_N, backslash (kc)
                 #
                 [   'backslash: \\',                portray('backslash: \\')                ],
 
