@@ -31,6 +31,7 @@ def gem():
     @share
     def main():
         for [s, expected] in [
+            #<A_A>
                 #
                 #   A_A: ra
                 #
@@ -52,7 +53,9 @@ def gem():
                 #   A_A: backslash: kc/ks: not possible (always raw mode)
                 #   A_A: pc/ps:            not possible (always raw mode)
                 #
+            #</A_A>
 
+            #<A_B>
                 #
                 #   A_B: ra
                 #
@@ -65,7 +68,7 @@ def gem():
 
                 #
                 #   A_B/AQ_B: lemon: kc
-                #   A_B/AQ_B, lemon: ks: not possible (not allowed ''')
+                #   A_B/AQ_B, lemon: ks: not possible (''' not allowed)
                 #
                 [   """wo\nk \\"\\"''""",           r'''"""wo\nk \\"\\"''"""'''             ],
 
@@ -73,20 +76,24 @@ def gem():
                 #   A_B: backslash: kc/ks: not possible (always raw mode)
                 #   A_B: pc/ps:            not possible (always raw mode)
                 #
+            #</A_B>
 
+            #<A_K>
                 #
                 #   A_K/A_N: ra/rq:         not possible (ends in \)
                 #   A_K/A_N: lemon: kc
-                #   A_K/A_N: lemon: ks: not possible (not allowed ''')
+                #   A_K/A_N: lemon: ks: not possible (''' not allowed)
                 #
                 [   "le'mo\n\\",                    portray("le'mo\n\\")                    ],
 
                 #
                 #   A_K/A_N: backslash: kc
-                #   A_K/A_N: backslash: ks: not possible (not allowed ''')
+                #   A_K/A_N: backslash: ks: not possible (''' not allowed)
                 #
                 [   "apostrophe & backlash: '\\",   portray("apostrophe & backlash: '\\")   ],
+            #</A_K>
 
+            #<A_N>
                 #
                 #   A_N: ra
                 #
@@ -102,7 +109,7 @@ def gem():
 
                 #
                 #   A_N: lemon: kc
-                #   A_N: lemon: ks (not allowed ''')
+                #   A_N: lemon: ks (''' not allowed)
                 #
                 [   "ca\n't",                       portray("ca\n't"),                      ],
 
@@ -110,7 +117,9 @@ def gem():
                 #   A_N: backslash: kc/ks: not possible (always raw mode)
                 #   A_N: pc/ps:            not possible (always raw mode)
                 #
+            #</A_N>
 
+            #<AQ_A>
                 #
                 #   AQ_A: ra
                 #
@@ -123,7 +132,7 @@ def gem():
 
                 #
                 #   AQ_A: lemon: kc
-                #   AQ_A: lemon: ks (not allowed ''')
+                #   AQ_A: lemon: ks (''' not allowed)
                 #
                 [   """"lemo\n's"'""",              r'''"""\"lemo\n's"'"""'''               ],
 
@@ -131,7 +140,9 @@ def gem():
                 #   AQ_A: backslash: kc/ks: not possible (always raw mode)
                 #   AQ_A: pc/ps:            not possible (always raw mode)
                 #
+            #</AQ_A>
 
+            #<AQ_B>
                 #
                 #   AQ_B: ra
                 #
@@ -144,7 +155,7 @@ def gem():
 
                 #
                 #   AQ_B: lemon: kc
-                #   AQ_B: lemon: ks (not allowed ''')
+                #   AQ_B: lemon: ks (''' not allowed)
                 #
                 [   """"more lemo\n''s"'""",        r'''"""\"more lemo\n''s"'"""'''         ],
 
@@ -152,20 +163,24 @@ def gem():
                 #   AQ_B: backslash: kc/ks: not possible (always raw mode)
                 #   AQ_B: pc/ps:            not possible (always raw mode)
                 #
+            #</AQ_B>
 
+            #<AQ_K>
                 #
                 #   AQ_K/AQ_N: ra/rq:     not possible (ends in \)
                 #   AQ_K/AQ_N: lemon: kc
-                #   AQ_K/AQ_N: lemon: ks: not possible (not allowed ''')
+                #   AQ_K/AQ_N: lemon: ks: not possible (''' not allowed)
                 #
                 [   '''le'"mo"\n\\''',              r"""'''le'"mo"\n\\'''"""                ],
 
                 #
                 #   AQ_K/A_N: backslash: kc
-                #   AQ_K/A_N: backslash: ks: not possible (not allowed ''')
+                #   AQ_K/A_N: backslash: ks: not possible (''' not allowed)
                 #
                 [   '''all ", ', & \\''',           r"""'''all ", ', & \\'''"""             ],
+            #</AQ_K>
 
+            #<AQ_N>
                 #
                 #   AQ_N: ra
                 #
@@ -181,7 +196,7 @@ def gem():
 
                 #
                 #   AQ_N: lemon: kc
-                #   AQ_N: lemon: ks (not allowed ''')
+                #   AQ_N: lemon: ks (''' not allowed)
                 #
                 [   """lemo\n''s "yet" again""",    r"""'''lemo\n''s "yet" again'''"""      ],
 
@@ -189,7 +204,9 @@ def gem():
                 #   AQ_N: backslash: kc/ks: not possible (always raw mode)
                 #   AQ_N: pc/ps:            not possible (always raw mode)
                 #
+            #</AQ_N>
 
+            #<AQ_Q>
                 #
                 #   AQ_Q: ra
                 #
@@ -203,7 +220,7 @@ def gem():
 
                 #
                 #   AQ_Q: lemon: kc
-                #   AQ_Q: lemon: ks (not allowed ''')
+                #   AQ_Q: lemon: ks (''' not allowed)
                 #
                 [   '''lemo\n's are "sour"''',      r"""'''lemo\n's are "sour"'''"""        ],
 
@@ -211,7 +228,9 @@ def gem():
                 #   AQ_Q: backslash: kc/ks: not possible (always raw mode)
                 #   AQ_Q: pc/ps:            not possible (always raw mode)
                 #
+            #</AQ_Q>
 
+            #<AQ_R>
                 #
                 #   AQ_R: ra
                 #
@@ -224,7 +243,7 @@ def gem():
 
                 #
                 #   AQ_R: lemon: kc
-                #   AQ_R: lemon: ks (not allowed ''')
+                #   AQ_R: lemon: ks (''' not allowed)
                 #
                 [   '''yep - lemo\n's ""sour""''',  r"""'''yep - lemo\n's ""sour""'''"""    ],
 
@@ -232,7 +251,9 @@ def gem():
                 #   AQ_R: backslash: kc/ks: not possible (always raw mode)
                 #   AQ_R: pc/ps:            not possible (always raw mode)
                 #
+            #</AQ_R>
 
+            #<AS_A>
                 #
                 #   AS_A: ra:         not possible (always portray)
                 #   AS_A: rq:         not possible (always portray)
@@ -253,7 +274,9 @@ def gem():
                 #
                 [   """': '""\"".'""",              r'''"""': '""\"".'"""'''                ],
                 [   """3: '""\".'""",               r'''"""3: '""\".'"""'''                 ],
+            #</AS_A>
 
+            #<AS_B>
                 #
                 #   AS_B: ra:         not possible (always portray)
                 #   AS_B: rq:         not possible (always portray)
@@ -273,20 +296,24 @@ def gem():
                 #   AS_B: ps: not possible (''' not allowed)
                 #
                 [   """\""\""\"".''""",             r'''"""\""\""\"".''"""'''               ],
+            #</AS_B>
 
+            #<AS_K>
                 #
                 #   AS_K/AS_N: ra/rq:     not possible (ends in \)
                 #   AS_K/AS_N: lemon: kc
-                #   AS_K/AS_N: lemon: ks: not possible (not allowed ''')
+                #   AS_K/AS_N: lemon: ks: not possible (''' not allowed)
                 #
                 [   '''le'"""mo"""\n\\''',          """'''le'""\"mo""\"\\n\\\\'''"""        ],
 
                 #
                 #   AS_K/A_N: backslash: kc
-                #   AS_K/A_N: backslash: ks: not possible (not allowed ''')
+                #   AS_K/A_N: backslash: ks: not possible (''' not allowed)
                 #
                 [   '''all """, ', & \\''',         """'''all ""\", ', & \\\\'''"""         ],
+            #</AS_K>
 
+            #<AS_N>
                 #
                 #   AS_N: ra
                 #       Have to represent what we "expect" using \" internally
@@ -310,7 +337,9 @@ def gem():
                 #   AS_N: backslash: kc/ks: not possible (always raw mode)
                 #   AS_N: pc/ps:            not possible (always raw mode)
                 #
+            #</AS_N>
 
+            #<C_A>
                 #
                 #   C_A: ra - not possible (" not allowed)
                 #   C_A: rq
@@ -332,7 +361,9 @@ def gem():
                 #   C_A: backslash: kc/ks: not possible (always raw mode)
                 #   C_A: pc/ps:            not possible (always raw mode)
                 #
+            #</C_A>
 
+            #<C_B>
                 #
                 #   C_B: ra - not possible (" not allowed)
                 #   C_B: rq
@@ -351,9 +382,12 @@ def gem():
                 [   "'''@C_N + 2x e\nding ''",     '''"''\'@C_N + 2x e\\nding ''"'''        ],
 
                 #
-                #   C_A: backslash: kc/ks: not possible (always raw mode)
-                #   C_A: pc/ps:            not possible (always raw mode)
+                #   C_B: backslash: kc/ks: not possible (always raw mode)
+                #   C_B: pc/ps:            not possible (always raw mode)
                 #
+            #</C_B>
+
+            #<C_C>
                 #
                 #   C_C: ra - not possible (" not allowed)
                 #   C_C: rq
@@ -375,10 +409,31 @@ def gem():
                 #   C_C: backslash: kc/ks: not possible (always raw mode)
                 #   C_C: pc/ps:            not possible (always raw mode)
                 #
-#C_K
-#===
-                [0,0],
+            #</C_C>
 
+            #<C_K>
+                #
+                #   C_K/C_N: ra/rq:     not possible (ends in \)
+                #   C_K/C_N: lemon: kc: not possible (" not allowed)
+                #   C_K/C_N: lemon: ks
+                #
+                [   "''''Super\n?'''\\",            """\"''''Super\\n?'''\\\\""" + '"'      ],
+
+                #
+                #   C_K/C_N: backslash: kc (" not allowed)
+                #   C_K/C_N: backslash: ks
+                #
+                #   NOTE:
+                #       vim 7.4 gets confused with """x\"""" - so use string concatanation so vim can properly parse
+                #       it.
+                #
+                [
+                    "''''supercalifragilisticexpialidocious?'''\\",
+                    """\"''''supercalifragilisticexpialidocious?'''\\\\""" + '"'
+                ],
+            #</C_K>
+
+            #<C_N>
                 #
                 #   C_N: ra - not possible (" not allowed)
                 #   C_N: rq
@@ -400,9 +455,12 @@ def gem():
                 #   C_N: backslash: kc/ks: not possible (always raw mode)
                 #   C_N: pc/ps:            not possible (always raw mode)
                 #
+            #</C_N>
+#===
                 [0,0],
 #===
 
+            #<CQ_N>
                 #
                 #   CQ_N: ra
                 #       Have to represent what we "expect" using \' or \" internally
@@ -413,30 +471,18 @@ def gem():
                 #   CQ_N: rq
                 #
                 [   r"""more '''' than "!""",      '''r"""more ''\'' than "!"""''',         ],
+            #</CQ_N>
 
+            #<CQ_Q>
                 #
                 #   CQ_Q (ps)
                 #       End with " & has ''' internally
                 #
                 [   '''\'333: "''\'."''',           r"""'''\'333: "''\'."'''"""             ],
                 [   '''three: "''\''\''."''',       r"""'''three: "''\''\''."'''"""         ],    
+            #</CQ_Q>
 
-                #
-                #   Q_N: rq
-                #
-                [   r'\'"\'',                       r"""r'\'"\''"""                         ],
-
-                #
-                #   Q_Q: ra
-                #
-                [   r'"',                           r"""r'"'"""                             ],
-                [   r'She said "hello"',            r"""r'She said "hello"'"""              ],
-
-                #
-                #   Q_R: ra
-                #
-                [   r'double quoted: ""',           r"""r'double quoted: ""'"""             ],
-
+            #<N_N>
                 #
                 #   N_N: simple case
                 #
@@ -452,12 +498,38 @@ def gem():
                 #   N_N: rq
                 #
                 [   r"\'",                          r'''r"\'"'''                            ],
+            #</N_N>
 
+            #<Q_N>
+                #
+                #   Q_N: rq
+                #
+            #</Q_N>
+                [   r'\'"\'',                       r"""r'\'"\''"""                         ],
+
+            #<Q_Q>
+                #
+                #   Q_Q: ra
+                #
+                [   r'"',                           r"""r'"'"""                             ],
+                [   r'She said "hello"',            r"""r'She said "hello"'"""              ],
+            #</Q_Q>
+
+            #<Q_R>
+                #
+                #   Q_R: ra
+                #
+                [   r'double quoted: ""',           r"""r'double quoted: ""'"""             ],
+            #</Q_R>
+
+            #<N_K>
                 #
                 # ? N_K/N_N, backslash (kc)
                 #
                 [   'backslash: \\',                portray('backslash: \\')                ],
+            #</N_K>
 
+            #<S_N>
                 #
                 #   S_N: ra
                 #
@@ -466,6 +538,7 @@ def gem():
                 #       vim can properly parse it.
                 #
                 [   r'lots of """"" - lots!',       '''r'lots of """"" - lots!''' + "'"     ],
+            #</S_N>
         ]:
             if s is 0:
                 break
