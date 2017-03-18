@@ -310,7 +310,74 @@ def gem():
                 #   AS_N: backslash: kc/ks: not possible (always raw mode)
                 #   AS_N: pc/ps:            not possible (always raw mode)
                 #
+
+                #
+                #   C_A: ra - not possible (" not allowed)
+                #   C_A: rq
+                #
+                #   NOTE:
+                #       vim 7.4 gets confused with """x\"""" - so use string concatanation so vim can properly parse
+                #       it.
+                #
+                [   r"lots of ''''' - more'",       """r"lots of ''''' - more'""" + '"'     ],
+
+                #
+                #   C_A:  lemon: kc: not possible (" not allowed)
+                #   C_A:  lemon: ks
+                #       Have to represent what we "expect" using \' internally
+                #
+                [   "'''@C_N + e\nding '",          '''"''\'@C_N + e\\nding '"'''           ],
+
+                #
+                #   C_A: backslash: kc/ks: not possible (always raw mode)
+                #   C_A: pc/ps:            not possible (always raw mode)
+                #
+
+                #
+                #   C_B: ra - not possible (" not allowed)
+                #   C_B: rq
+                #
+                #   NOTE:
+                #       vim 7.4 gets confused with """x\"""" - so use string concatanation so vim can properly parse
+                #       it.
+                #
+                [   r"lots of ''''' - extra''",     """r"lots of ''''' - extra''""" + '"'   ],
+
+                #
+                #   C_B:  lemon: kc: not possible (" not allowed)
+                #   C_B:  lemon: ks
+                #       Have to represent what we "expect" using \' internally
+                #
+                [   "'''@C_N + 2x e\nding ''",     '''"''\'@C_N + 2x e\\nding ''"'''        ],
+
+                #
+                #   C_A: backslash: kc/ks: not possible (always raw mode)
+                #   C_A: pc/ps:            not possible (always raw mode)
+                #
+                #
+                #   C_C: ra - not possible (" not allowed)
+                #   C_C: rq
+                #
+                #   NOTE:
+                #       vim 7.4 gets confused with """x\"""" - so use string concatanation so vim can properly parse
+                #       it.
+                #
+                [   r"abundance of '''''''",        r"""r"abundance of '''''''""" + '"'     ],
+
+                #
+                #   C_C:  lemon: kc: not possible (" not allowed)
+                #   C_C:  lemon: ks
+                #       Have to represent what we "expect" using \' internally
+                #
+                [   "'''C_C is a pali\ndrome'''",   '''"''\'C_C is a pali\\ndrome''\'"'''   ],
+
+                #
+                #   C_C: backslash: kc/ks: not possible (always raw mode)
+                #   C_C: pc/ps:            not possible (always raw mode)
+                #
+#C_K
 #===
+                [0,0],
 
                 #
                 #   C_N: ra - not possible (" not allowed)
