@@ -559,7 +559,7 @@ def gem():
             if not a.is_portray_boring:
                 break
         else:
-            line('portray_raw_string(%r): sipmle', s)
+            line('portray_raw_string(%r): simple', s)
 
             return "r'" + s + "'"
 

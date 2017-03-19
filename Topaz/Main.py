@@ -91,6 +91,10 @@ def gem():
                 #   A_K/A_N: backslash: ks: not possible (''' not allowed)
                 #
                 [   "apostrophe & backlash: '\\",   portray("apostrophe & backlash: '\\")   ],
+
+                #
+                #   A_K: pc/ps: not possible (always backslash)
+                #
             #</A_K>
 
             #<A_N>
@@ -178,6 +182,10 @@ def gem():
                 #   AQ_K/A_N: backslash: ks: not possible (''' not allowed)
                 #
                 [   '''all ", ', & \\''',           r"""'''all ", ', & \\'''"""             ],
+
+                #
+                #   A_QK: pc/ps: not possible (always backslash)
+                #
             #</AQ_K>
 
             #<AQ_N>
@@ -311,6 +319,10 @@ def gem():
                 #   AS_K/A_N: backslash: ks: not possible (''' not allowed)
                 #
                 [   '''all """, ', & \\''',         """'''all ""\", ', & \\\\'''"""         ],
+
+                #
+                #   AS_K: pc/ps: not possible (always backslash)
+                #
             #</AS_K>
 
             #<AS_N>
@@ -431,6 +443,10 @@ def gem():
                     "''''supercalifragilisticexpialidocious?'''\\",
                     """\"''''supercalifragilisticexpialidocious?'''\\\\""" + '"'
                 ],
+
+                #
+                #   C_K: pc/ps: not possible (always backslash)
+                #
             #</C_K>
 
             #<C_N>
@@ -494,15 +510,44 @@ def gem():
                 #   CQ_B: pc/ps:            not possible (always raw mode)
                 #
             #</CQ_A>
-#===
-                [0,0],
+
             #<CQ_C>
                 #
                 #   CQ_C: ra: not possible (""" not allowed)
                 #   CQ_C: rq
                 #
                 [   r"""End with 3x "'": "'''""",   '''r"""End with 3x "'": "''\'"""'''     ],
+
+                #
+                #   CQ_C: lemon: kc: not possible (""" not allowed)
+                #   CQ_C: lemon: ks
+                #
+                [   """'''"\tables"'''""",          '''"""''\'"\\tables"''\'"""'''          ],
+
+                #
+                #   CQ_C: backslash: kc/ks: not possible (always raw mode)
+                #   CQ_C: pc/ps:            not possible (always raw mode)
+                #
             #</CQ_C>
+
+            #<CQ_K>
+                #
+                #   CQ_K/CQ_N: ra/rq:     not possible (ends in \)
+                #   CQ_K/CQ_N: lemon: kc: not possible (""" not allowed)
+                #   CQ_K/CQ_N: lemon: ks
+                #
+                [   """le'''"mo"\n\\""",            '''"""le''\'"mo"\\n\\\\"""'''           ],
+
+                #
+                #   CQ_K/C_N: backslash: kc: not possible (""" not allowed)
+                #   CQ_K/C_N: backslash: ks
+                #
+                [   """deja vu: ", ''', & \\""",    '''"""deja vu: ", ''\', & \\\\"""'''    ],
+
+                #
+                #   CQ_K: pc/ps: not possible (always backslash)
+                #
+            #</CQ_K>
 
             #<CQ_N>
                 #
@@ -515,12 +560,41 @@ def gem():
                 #   CQ_N: rq
                 #
                 [   r"""more '''' than "!""",      '''r"""more ''\'' than "!"""''',         ],
+
+                #
+                #   CQ_C: lemon: kc: not possible (""" not allowed)
+                #   CQ_N: lemon: ks
+                #
+                [   """'''"\rake"''' leaves""",     '''"""''\'"\\rake"''\' leaves"""'''     ],
+
+                #
+                #   CQ_K/C_N: backslash: kc: not possible (""" not allowed)
+                #   CQ_K/C_N: backslash: ks
+                #
+                [
+                    """been "there", '''done that'''\\""",
+                    '''"""been "there", ''\'done that''\'\\\\"""'''
+                ],
+
+                #
+                #   CQ_N: pc/ps:            not possible (always raw mode)
+                #
             #</CQ_N>
 
             #<CQ_Q>
                 #
-                #   CQ_Q (ps)
-                #       End with " & has ''' internally
+                #   CQ_Q: ra/qs: not possible (ends in " so can't use either ''' or """ around it)
+                #
+
+                #
+                #   CQ_Q: lemon: kc: not possible (""" not allowed)
+                #   CQ_Q: lemon: ks
+                #
+                [   '''\''\'\t"''',     """'''\\''\\'\\t"'''"""                             ],
+
+                #
+                #   CQ_Q: pc: not possible (""" not allowed)
+                #   CQ_Q: ps
                 #
                 [   '''\'333: "''\'."''',           r"""'''\'333: "''\'."'''"""             ],
                 [   '''three: "''\''\''."''',       r"""'''three: "''\''\''."'''"""         ],    
@@ -528,10 +602,11 @@ def gem():
 
             #<N_N>
                 #
-                #   N_N: simple case
+                #   N_N: simple cases
                 #
                 [   r'',                            r"r''"                                  ],
-                [   r'test',                        r"r'test'"                              ],
+                [   r'test#2',                      r"r'test#2'"                            ],
+                [0,0],
 
                 #
                 #   N_N: ra
