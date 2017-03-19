@@ -836,6 +836,52 @@ def gem():
                 #   S_Q: pc/ps:            not possible (always raw mode)
                 #
             #</S_Q>
+
+            #<S_R>
+                #
+                #   S_R: ra
+                #
+                [   r'Three """ > 2 ""',            """r'Three ""\" > 2 ""'"""                  ],
+
+                #
+                #   S_R: rq
+                #
+                [   r'"""\'\'hello\'\' & \'bye""',  """r'""\"\\'\\'hello\\'\\' & \\'bye""'"""   ],
+
+                #
+                #   S_R: lemon: kc
+                #   S_R: lemon: ks: not possible (''' not allowed)
+                #
+                [   '"""5 Quotatio\n marks""',      """'""\"5 Quotatio\\n marks""'"""           ],
+
+                #
+                #   S_R: backslash: kc/ks: not possible (always raw mode)
+                #   S_R: pc/ps:            not possible (always raw mode)
+                #
+            #</S_R>
+
+            #<S_S>
+                #
+                #   S_S: ra
+                #
+                [   r'"""',                         """r'""\"'"""                               ],
+
+                #
+                #   S_S: rq
+                #
+                [   r'"""\'\'\'\'\'\'\'"""',        """r'""\"\\'\\'\\'\\'\\'\\'\\'""\"'"""      ],
+
+                #
+                #   S_S: lemon: kc
+                #   S_S: lemon: ks: not possible (''' not allowed)
+                #
+                [   '"""And \now six!"""',          """'""\"And \\now six!""\"'"""              ],
+
+                #
+                #   S_S: backslash: kc/ks: not possible (always raw mode)
+                #   S_S: pc/ps:            not possible (always raw mode)
+                #
+            #</S_S>
         ]:
             if s is 0:
                 break
