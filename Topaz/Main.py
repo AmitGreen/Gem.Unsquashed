@@ -784,7 +784,7 @@ def gem():
                 [   '"""Snakes""" & backslash: \\', """'""\"Snakes""\" & backslash: \\\\'"""    ],
 
                 #
-                #   S_K: pc/ps:            not possible (always backslash)
+                #   S_K: pc/ps: not possible (always backslash)
                 #
             #</S_K>
 
@@ -802,8 +802,40 @@ def gem():
                 #   S_N: rq
                 #
                 [   r'Prefer \'\'\'\' or """?',     """r'Prefer \\'\\'\\'\\' or ""\"?'"""       ],
-                [0,0],
+
+                #
+                #   S_K/S_N: kc
+                #   S_K/S_N: backslash: ks: not possible (''' not allowed)
+                #
+                [   'Yet again """ & \\',           """'Yet again ""\" & \\\\'"""               ],
+
+                #
+                #   S_K: pc/ps: not possible (always raw mode)
+                #
             #</S_N>
+
+            #<S_Q>
+                #
+                #   S_Q: ra
+                #
+                [   r'Three """ is more than 1 "',  """r'Three ""\" is more than 1 "'"""        ],
+
+                #
+                #   S_Q: rq
+                #
+                [   r'"""\'\'hi\'\' & \'hello"',    """r'""\"\\'\\'hi\\'\\' & \\'hello"'"""     ],
+
+                #
+                #   S_Q: lemon: kc
+                #   S_Q: lemon: ks: not possible (''' not allowed)
+                #
+                [   '"""Quotatio\n"',               """'""\"Quotatio\\n"'"""                    ],
+
+                #
+                #   S_Q: backslash: kc/ks: not possible (always raw mode)
+                #   S_Q: pc/ps:            not possible (always raw mode)
+                #
+            #</S_Q>
         ]:
             if s is 0:
                 break
