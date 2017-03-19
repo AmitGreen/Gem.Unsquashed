@@ -590,14 +590,31 @@ def gem():
                 #   CQ_Q: lemon: kc: not possible (""" not allowed)
                 #   CQ_Q: lemon: ks
                 #
-                [   '''\''\'\t"''',     """'''\\''\\'\\t"'''"""                             ],
+                [   '''\''\'\t"''',                 """'''\\''\\'\\t"'''"""                 ],
 
                 #
                 #   CQ_Q: pc: not possible (""" not allowed)
                 #   CQ_Q: ps
                 #
                 [   '''\'333: "''\'."''',           r"""'''\'333: "''\'."'''"""             ],
-                [   '''three: "''\''\''."''',       r"""'''three: "''\''\''."'''"""         ],    
+            #</CQ_Q>
+
+            #<CQ_R>
+                #
+                #   CQ_R: ra/qs: not possible (ends in " so can't use either ''' or """ around it)
+                #
+
+                #
+                #   CQ_R: lemon: kc: not possible (""" not allowed)
+                #   CQ_R: lemon: ks
+                #
+                [   '''almos\t done: ''\'""''',  """'''almos\\t done: ''\\'""'''"""         ],
+
+                #
+                #   CQ_R: pc: not possible (""" not allowed)
+                #   CQ_R: ps
+                #
+                [   '''three: "''\''\''.""''',      r"""'''three: "''\''\''.""'''"""        ],
             #</CQ_Q>
 
             #<N_N>
