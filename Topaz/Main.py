@@ -45,7 +45,7 @@ def gem():
 
                 #
                 #   A_A/AQ_A: lemon: kc
-                #   A_A/AQ_A: lemon: ks: not possible   (not allowed: ''')
+                #   A_A/AQ_A: lemon: ks: not possible   (''' not allowed)
                 #
                 [   """wi\nk \\"\\"'""",            r'''"""wi\nk \\"\\"'"""'''              ],
 
@@ -616,6 +616,25 @@ def gem():
                 #
                 [   '''three: "''\''\''.""''',      r"""'''three: "''\''\''.""'''"""        ],
             #</CQ_Q>
+
+            #<N_K>
+                #
+                #   N_K/N_N: ra/rq:     not possible (ends in \)
+                #   N_K/N_N: lemon: kc
+                #   N_K/N_N: lemon: ks: not possible (''' not allowed)
+                #
+                [   'more lemo\ns\\',       "'more lemo\\ns\\\\'"                           ],
+
+                #
+                #   N_K/N_N: backslash: kc
+                #   N_K/N_N: backslash: ks: not possible (''' not allowed)
+                #
+                [   'not a real lemon\\',  "'not a real lemon\\\\'"                         ],
+
+                #
+                #   N_K: pc/ps: not possible (always backslash)
+                #
+            #</N_K>
 
             #<N_N>
                 #
