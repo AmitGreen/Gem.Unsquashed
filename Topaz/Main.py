@@ -663,7 +663,7 @@ def gem():
                 #   N_K/N_N: backslash: kc
                 #   N_K/N_N: backslash: ks: not possible (''' not allowed)
                 #
-                [   'An unreal lemon\\',            "'An unreal lemon\\\\'"                 ],
+                [   'backslash: \\',                "'backslash: \\\\'"                     ],
 
                 #
                 #   N_N: pc/ps: not possible (always raw mode)
@@ -738,15 +738,22 @@ def gem():
                 #   Q_R: ra
                 #
                 [   r'double quoted: ""',           r"""r'double quoted: ""'"""             ],
-                [0,0],
-            #</Q_R>
 
-            #<N_K>
                 #
-                # ? N_K/N_N, backslash (kc)
+                #   Q_R: rq
                 #
-                [   'backslash: \\',                portray('backslash: \\')                ],
-            #</N_K>
+                [   r'More \'\'\' than ""',         r"""r'More \'\'\' than ""'"""           ],
+
+                #
+                #   Q_R: lemon: kc
+                #   Q_R: lemon: ks: not possible (''' not allowed)
+                #
+                [   'lemo\n"s and quotes""',        """'lemo\\n"s and quotes""'"""          ],
+
+                #
+                #   Q_Q: pc/ps: not possible (always raw)
+                #
+            #</Q_R>
 
             #<S_N>
                 #
