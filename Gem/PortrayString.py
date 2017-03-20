@@ -13,8 +13,6 @@ def gem():
 
     class PortrayStringState(Object):
         __slots__ = ((
-            'name',                     #   String
-
             'A',                        #   PortrayStringState
             'K',                        #   PortrayStringState
             'N',                        #   PortrayStringState
@@ -38,10 +36,25 @@ def gem():
         ))
 
 
-        def __init__(t, name):
-            t.name = name
+        if __debug__:
+            __slots__ = ((
+                'name',                 #   String
+            )) + __slots__
 
 
+        if __debug__:
+            def __init__(t, name):
+                t.name = name
+        else:
+            def __init__(t, name):
+                pass
+
+
+        if __debug__:
+            def __repr__(t):
+                return arrange('<PortrayStringState %s>', t.name)
+
+                
         if __debug__:
             def setup(self, A, K, N, Q, t = 0, ra = 0, rq = 0, kc = 0, ks = 0, pc = 0, ps = 0, F3 = 0):
                 def verify_name(mode, value, expected_prefix, expected_suffix):
@@ -148,7 +161,7 @@ def gem():
                 else:
                     Q_prefix = prefix + 'Q'
 
-                line('%s: SR<%d>, Qp<%s>, Sp<%s>', self.name, SR, Q_prefix, S_prefix)
+                #line('%s: SR<%d>, Qp<%s>, Sp<%s>', self.name, SR, Q_prefix, S_prefix)
 
                 if (SQ) or (SS):    verify_name('Q', Q, Q_prefix, 'R')
                 elif SR:            verify_name('Q', Q, S_prefix, 'S')
@@ -350,7 +363,7 @@ def gem():
 
 
     def portray_backslash_string_with_triple_apostrophe(s):
-        line('KC: %r', s)
+        #line('KC: %r', s)
 
         f     = create_StringOutput()
         w     = f.write
@@ -394,7 +407,7 @@ def gem():
 
 
     def portray_backslash_string_with_triple_quotation_mark(s):
-        line('KS: %r', s)
+        #line('KS: %r', s)
 
         f     = create_StringOutput()
         w     = f.write
@@ -554,22 +567,22 @@ def gem():
         for c in iterator:
             a = lookup_ascii(c, unknown_ascii)
 
-            line('c: %r, a: %r', c, a)
+            #line('c: %r, a: %r', c, a)
 
             if not a.is_portray_boring:
                 break
         else:
-            line('portray_raw_string(%r): simple', s)
+            #line('portray_raw_string(%r): simple', s)
 
             return "r'" + s + "'"
 
         #
         #   Complex case
         #
-        line('portray_raw_string(%r): %s', s, a)
+        #line('portray_raw_string(%r): %s', s, a)
 
         if a.is_backslash:
-            line('  %r: backslash: %s, %s', c, N_K.name, N_N.name)
+            #line('  %r: backslash: %s, %s', c, N_K.name, N_N.name)
 
             backslash = 7
             lemon     = favorite  = 0
@@ -579,19 +592,19 @@ def gem():
             backslash = 0
 
             if a.is_quotation_mark:
-                line('  %r: %s, %s', c, Q_Q.name, Q_Q.name)
+                #line('  %r: %s, %s', c, Q_Q.name, Q_Q.name)
 
                 favorite = 1
                 lemon    = 0
                 raw_state = state = Q_Q
             elif a.is_apostrophe:
-                line('  %r: %s, %s', c, A_A.name, A_A.name)
+                #line('  %r: %s, %s', c, A_A.name, A_A.name)
 
                 favorite  = -1
                 lemon     = 0
                 raw_state = state = A_A
             else:
-                line('  %r: lemon: %s, %s', c, N_N.name, N_N.name)
+                #line('  %r: lemon: %s, %s', c, N_N.name, N_N.name)
 
                 favorite  = 0
                 lemon     = 7
@@ -603,7 +616,7 @@ def gem():
             a = lookup_ascii(c, unknown_ascii)
 
             if a.is_portray_boring:
-                line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.N.name, state.name, state.N.name)
+                #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.N.name, state.name, state.N.name)
 
                 raw_state = raw_state.N
                 state     = state.N
@@ -611,7 +624,7 @@ def gem():
                 continue
 
             if a.is_backslash:
-                line('  %r: backslash: %s => %s, %s => %s', c, raw_state.name, raw_state.K.name, state.name, state.N.name)
+                #line('  %r: backslash: %s => %s, %s => %s', c, raw_state.name, raw_state.K.name, state.name, state.N.name)
 
                 backslash = 7
                 raw_state = raw_state.K
@@ -619,7 +632,7 @@ def gem():
                 continue
 
             if a.is_quotation_mark:
-                line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.Q.name, state.name, state.Q.name)
+                #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.Q.name, state.name, state.Q.name)
 
                 raw_state   = raw_state.Q
                 state       = state.Q
@@ -628,7 +641,7 @@ def gem():
                 continue
 
             if a.is_apostrophe:
-                line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.A.name, state.name, state.A.name)
+                #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.A.name, state.name, state.A.name)
 
                 raw_state   = raw_state.A
                 state       = state.A
@@ -639,53 +652,58 @@ def gem():
             assert not a.is_printable
 
 
-            line('  %r: lemon: %s => %s, %s => %s', c, raw_state.name, raw_state.N.name, state.name, state.N.name)
+            #line('  %r: lemon: %s => %s, %s => %s', c, raw_state.name, raw_state.N.name, state.name, state.N.name)
 
             lemon = 7
             raw_state = raw_state.N
             state     = raw_state.N
 
-        line('  final %r: %d/%d/%s/%s, %s, %s', s, favorite, favorite_3, backslash, lemon, raw_state.name, state.name)
+        #line('  final %r: %d/%d/%s/%s, %s, %s', s, favorite, favorite_3, backslash, lemon, raw_state.name, state.name)
 
         if lemon is 7:
             if favorite_3 >= 0:
                 #if raw_state is not state:
-                #    line('  %r: %s/%s: lemon, kc', s, raw_state.name, state.name)
+                #    #line('  %r: %s/%s: lemon, kc', s, raw_state.name, state.name)
 
-                line('  %s: lemon, kc', state.name)
+                #line('  %s: lemon, kc', state.name)
                 return state.kc(s)
 
             #if raw_state is not state:
-            #    line('  %r: %s/%s: lemon, ks', s, raw_state.name, state.name)
+            #    #line('  %r: %s/%s: lemon, ks', s, raw_state.name, state.name)
 
-            line('  %s: lemon, ks', state.name)
+            #line('  %s: lemon, ks', state.name)
             return state.ks(s)
 
         if raw_state.ra is P:
             if backslash is 7:
                 if favorite_3 >= 0:
                     #if raw_state is not state:
-                    #    line('  %r: %s/%s: P, backslash, kc', s, raw_state.name, state.name)
+                    #    #line('  %r: %s/%s: P, backslash, kc', s, raw_state.name, state.name)
 
-                    line('  %s: P, backslash, kc', state.name)
+                    #line('  %s: P, backslash, kc', state.name)
                     return state.kc(s)
 
                 #if raw_state is not state:
-                #    line('  %r: %s/%s: P, backslash, ks', s, raw_state.name, state.name)
+                #    #line('  %r: %s/%s: P, backslash, ks', s, raw_state.name, state.name)
 
-                line('  %s: P, backslash, ks', state.name)
+                #line('  %s: P, backslash, ks', state.name)
                 return state.ks(s)
 
             if favorite_3 >= 0:
-                line('  %s: P, pc', state.name)
+                #line('  %s: P, pc', state.name)
                 return state.pc(s)
 
-            line('  %s: P, ps', state.name)
+            #line('  %s: P, ps', state.name)
             return state.ps(s)
 
         if favorite >= 0:
-            line('  %s: ra', raw_state.name)
+            #line('  %s: ra', raw_state.name)
             return raw_state.ra(s)
 
-        line('  %s: rq', raw_state.name)
+        #line('  %s: rq', raw_state.name)
         return raw_state.rq(s)
+
+
+    export(
+        'N_N',  N_N,
+    )

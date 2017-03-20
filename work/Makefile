@@ -34,7 +34,8 @@ LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
 TOPAZ_FILE = \
-    ../Topaz/Main.py
+    ../Topaz/Main.py \
+    ../Topaz/PortrayString.py
 
 TREMOLITE_FILES = \
     ../Tremolite/Build.py \
@@ -79,7 +80,7 @@ clean:
 	rm -f rm.py rx.py
 	rm -f sio.py
 	rm -f tc.py tm.py tp.py tu.py tx.py
-	rm -f zm.py
+	rm -f zm.py zps.py
 
 
 files:
@@ -135,6 +136,7 @@ links:
 	ln -s ../Tremolite/Build.py                 tu.py
 	ln -s ../Tremolite/Compile.py               tx.py
 	ln -s ../Topaz/Main.py                      zm.py
+	ln -s ../Topaz/PortrayString.py             zps.py
 
 
 wc:
