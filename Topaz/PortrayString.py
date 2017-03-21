@@ -1001,62 +1001,81 @@ def gem():
         else:               verify_name('Q', Q, Q_prefix, 'Q')
         #</Q>
 
-        #<ra>
+        #<ra & rq>
         if (PL) or (PCS) or (SK):
-            expected_RO = expected_RN = '__repr__'
+            expected_RQ = expected_RN = 0
         elif (PC):
             assert not SS
 
             if (SQ) or (SR):
-                expected_RO = expected_RN = '__repr__'
+                expected_RQ = expected_RN = 0
             else:
                 if PQ:
-                    expected_RO = expected_RN = 'portray_raw_string_with_triple_quotation_mark'
+                    expected_RQ = expected_RN = 'portray_raw_string_with_triple_quotation_mark'
                 else:
-                    expected_RO = expected_RN = 'portray_raw_string_with_quotation_mark'
+                    expected_RQ = expected_RN = 'portray_raw_string_with_quotation_mark'
         elif (PS):
             assert not SC
 
             if (SA) or (SB):
-                expected_RO = expected_RN = '__repr__'
+                expected_RQ = expected_RN = 0
             else:
                 if PA:
-                    expected_RO = expected_RN = 'portray_raw_string_with_triple_apostrophe'
+                    expected_RQ = expected_RN = 'portray_raw_string_with_triple_apostrophe'
                 else:
-                    expected_RO = expected_RN = 'portray_raw_string_with_apostrophe'
+                    expected_RQ = expected_RN = 'portray_raw_string_with_apostrophe'
         elif PA:
             assert not SC
 
             if PQ:
                 if (SA) or (SB):
-                    expected_RO = expected_RN = 'portray_raw_string_with_triple_quotation_mark'
+                    expected_RQ = expected_RN = 'portray_raw_string_with_triple_quotation_mark'
                 elif (SQ) or (SR):
-                    expected_RO = expected_RN = 'portray_raw_string_with_triple_apostrophe'
+                    expected_RQ = expected_RN = 'portray_raw_string_with_triple_apostrophe'
                 else:
                     expected_RN = 'portray_raw_string_with_triple_apostrophe'
-                    expected_RO = 'portray_raw_string_with_triple_quotation_mark'
+                    expected_RQ = 'portray_raw_string_with_triple_quotation_mark'
             else:
-                expected_RN = expected_RO = 'portray_raw_string_with_quotation_mark'
+                expected_RN = expected_RQ = 'portray_raw_string_with_quotation_mark'
         elif PQ:
             assert not SS
 
-            expected_RO = expected_RN = 'portray_raw_string_with_apostrophe'
+            expected_RQ = expected_RN = 'portray_raw_string_with_apostrophe'
         elif PN:
             assert (not SA) and (not SB) and (not SC) and (not SQ) and (not SR) and (not SS)
 
             expected_RN = 'portray_raw_string_with_apostrophe'
-            expected_RO = 'portray_raw_string_with_quotation_mark'
+            expected_RQ = 'portray_raw_string_with_quotation_mark'
         else:
-            expected_RO = expected_RN = '?'
+            expected_RQ = expected_RN = '?'
 
-        if ra.__name__ != expected_RN:
+        if expected_RN is 0:
+            if ra is not 0:
+                raise_runtime_error('PortrayStringState.setup: %s.ra => %s (expected_RN 0)', name, ra, expected_RN)
+        elif ra.__name__ != expected_RN:
             raise_runtime_error('PortrayStringState.setup: %s.ra => %s (expected_RN %s)',
                                 name, ra.__name__, expected_RN)
 
-        if rq.__name__ != expected_RO:
-            raise_runtime_error('PortrayStringState.setup: %s.rq => %s (expected_RO %s)',
-                                name, rq.__name__, expected_RO)
-        #</ra>
+        if expected_RQ is 0:
+            if rq is not 0:
+                raise_runtime_error('PortrayStringState.setup: %s.rq => %s (expected_RQ 0)', name, rq, expected_RQ)
+        elif rq.__name__ != expected_RQ:
+            raise_runtime_error('PortrayStringState.setup: %s.rq => %s (expected_RQ %s)',
+                                name, rq.__name__, expected_RQ)
+        #</ra & rq>
+
+        #<favorite_3>
+        if SC:
+            expected_F3 = -1
+        elif SS:
+            expected_F3 = 1
+        else:
+            expected_F3 = 0
+
+        if state.favorite_3 != expected_F3:
+            raise_runtime_error('PortrayStringState.setup: %s.favorite_3<%d>  (expected %d)',
+                                name, state.favorite_3, expected_F3)
+        #</favorite_3>
 
 
     def test_portray_raw_string__state_machine():
@@ -1069,6 +1088,6 @@ def gem():
     @share
     def test_portray_raw_string():
         test_portray_raw_string__state_machine()
-        #test_portray_raw_string__raw_string()
+        test_portray_raw_string__raw_string()
 
         line('PASSED: portray_raw_string')
