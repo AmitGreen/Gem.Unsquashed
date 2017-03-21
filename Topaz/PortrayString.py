@@ -3,15 +3,15 @@
 #
 @gem('Topaz.PortrayString')
 def gem():
-    require_gem('Gem.Exception')
+    require_gem('Topaz.Core')
     require_gem('Gem.PortrayString')
 
 
-    from Gem import iterate_items_sorted_by_key, N_N, portray_raw_string, raise_value_error
+    from Gem import N_N, portray_raw_string
 
 
     def test_portray_raw_string__raw_string():
-        for [s, expected    ] in [
+        for [s, expected] in [
             #<A_A>
                 #
                 #   A_A: ra
@@ -877,10 +877,10 @@ def gem():
                 raise_value_error('portray_raw_string(%r): %r (expected: %r)', s, actual, expected)
 
 
-    def test_portray_raw_string__state_machine():
-        state_machine__map     = {}
-        state_machine__lookup  = state_machine__map.get
-        state_machine__store   = state_machine__map.__setitem__
+    def create_state_machine_tuple():
+        state_machine__map    = {}
+        state_machine__lookup = state_machine__map.get
+        state_machine__store  = state_machine__map.__setitem__
 
 
         def state_machine__insert(state):
@@ -901,11 +901,169 @@ def gem():
 
         state_machine__insert(N_N)
 
+        return values_tuple_sorted_by_key(state_machine__map)
 
-        for [k, v] in iterate_items_sorted_by_key(state_machine__map):
-            line('%s:  %s', k, v)
 
-        line('total: %d', length(state_machine__map))
+    def test_state_machine(state):
+        def verify_name(mode, value, expected_prefix, expected_suffix):
+            if value.name != expected_prefix + '_' + expected_suffix:
+                raise_runtime_error('PortrayStringState.setup: %s + %s => %s (expected %s)',
+                                    name, mode, value.name, expected_prefix + '_' + expected_suffix)
+
+        name = state.name
+        A    = state.A
+        K    = state.K
+        N    = state.N
+        Q    = state.Q
+        kc   = state.kc
+        ks   = state.ks
+        pc   = state.pc
+        ps   = state.ps
+        ra   = state.ra
+        rq   = state.rq
+
+        underscore = name.index('_')
+        prefix     = name[:underscore]
+        suffix     = name[underscore + 1:]
+
+        PA = PC = PCS = PL = PN = PQ = PS = 0
+        SA = SB = SC = SK = SN = SQ = SR = SS = 0
+
+        if prefix == 'A':           PA = 7
+        elif prefix == 'AQ':        PA = PQ = 7
+        elif prefix == 'AS':        PA = PS = 7
+        elif prefix == 'C':         PC = 7
+        elif prefix == 'CQ':        PC = PQ = 7
+        elif prefix == 'CS':        PC = PCS = PS = 7
+        elif prefix == 'L':         PL = 7
+        elif prefix == 'N':         PN = 7
+        elif prefix == 'Q':         PQ = 7
+        elif prefix == 'S':         PS = 7
+        else:                       raise_runtime_error('incomplete: prefix: %s', prefix)
+
+        if suffix == 'A':           SA = 7
+        elif suffix == 'B':         SB = 7
+        elif suffix == 'C':         SC = 7
+        elif suffix == 'K':         SK = 7
+        elif suffix == 'N':         SN = 7
+        elif suffix == 'Q':         SQ = 7
+        elif suffix == 'R':         SR = 7
+        elif suffix == 'S':         SS = 7
+        else:
+            raise_runtime_error('incomplete: suffix: %s', suffix)
+
+        #<A>
+        C_prefix = '?'
+
+        if PA:
+            A_prefix = prefix
+            C_prefix = 'C' + prefix[1:]
+        elif (PC) or (PL):
+            A_prefix = C_prefix = prefix
+        elif PN:
+            A_prefix = 'A'
+        else:
+            A_prefix = 'A' + prefix
+
+        if (SA) or (SC):    verify_name('A', A, A_prefix, 'B')
+        elif SB:            verify_name('A', A, C_prefix, 'C')
+        elif SK:            verify_name('A', A, prefix,   'N')
+        else:               verify_name('A', A, A_prefix, 'A')
+        #</A>
+
+        #<K>
+        if SK:      verify_name('K', K, prefix, 'N')
+        else:       verify_name('K', K, prefix, ('N'   if (PCS) or (PL) else   'K'))
+        #</K>
+
+        #<N>
+        verify_name('N', N, prefix, 'N')
+        #</N>
+
+        #<Q>
+        S_prefix = '?'
+
+        if PQ:
+            Q_prefix = prefix
+            S_prefix = prefix[:-1] + 'S'
+        elif (PL) or (PS):
+            Q_prefix = S_prefix = prefix
+        elif PN:
+            Q_prefix = 'Q'
+        else:
+            Q_prefix = prefix + 'Q'
+
+        #line('%s: SR<%d>, Qp<%s>, Sp<%s>', name, SR, Q_prefix, S_prefix)
+
+        if (SQ) or (SS):    verify_name('Q', Q, Q_prefix, 'R')
+        elif SR:            verify_name('Q', Q, S_prefix, 'S')
+        elif SK:            verify_name('Q', Q, prefix,   'N')
+        else:               verify_name('Q', Q, Q_prefix, 'Q')
+        #</Q>
+
+        #<ra>
+        if (PL) or (PCS) or (SK):
+            expected_RO = expected_RN = '__repr__'
+        elif (PC):
+            assert not SS
+
+            if (SQ) or (SR):
+                expected_RO = expected_RN = '__repr__'
+            else:
+                if PQ:
+                    expected_RO = expected_RN = 'portray_raw_string_with_triple_quotation_mark'
+                else:
+                    expected_RO = expected_RN = 'portray_raw_string_with_quotation_mark'
+        elif (PS):
+            assert not SC
+
+            if (SA) or (SB):
+                expected_RO = expected_RN = '__repr__'
+            else:
+                if PA:
+                    expected_RO = expected_RN = 'portray_raw_string_with_triple_apostrophe'
+                else:
+                    expected_RO = expected_RN = 'portray_raw_string_with_apostrophe'
+        elif PA:
+            assert not SC
+
+            if PQ:
+                if (SA) or (SB):
+                    expected_RO = expected_RN = 'portray_raw_string_with_triple_quotation_mark'
+                elif (SQ) or (SR):
+                    expected_RO = expected_RN = 'portray_raw_string_with_triple_apostrophe'
+                else:
+                    expected_RN = 'portray_raw_string_with_triple_apostrophe'
+                    expected_RO = 'portray_raw_string_with_triple_quotation_mark'
+            else:
+                expected_RN = expected_RO = 'portray_raw_string_with_quotation_mark'
+        elif PQ:
+            assert not SS
+
+            expected_RO = expected_RN = 'portray_raw_string_with_apostrophe'
+        elif PN:
+            assert (not SA) and (not SB) and (not SC) and (not SQ) and (not SR) and (not SS)
+
+            expected_RN = 'portray_raw_string_with_apostrophe'
+            expected_RO = 'portray_raw_string_with_quotation_mark'
+        else:
+            expected_RO = expected_RN = '?'
+
+        if ra.__name__ != expected_RN:
+            raise_runtime_error('PortrayStringState.setup: %s.ra => %s (expected_RN %s)',
+                                name, ra.__name__, expected_RN)
+
+        if rq.__name__ != expected_RO:
+            raise_runtime_error('PortrayStringState.setup: %s.rq => %s (expected_RO %s)',
+                                name, rq.__name__, expected_RO)
+        #</ra>
+
+
+    def test_portray_raw_string__state_machine():
+        state_machine_tuple = create_state_machine_tuple()
+
+        for state in state_machine_tuple:
+            test_state_machine(state)
 
 
     @share

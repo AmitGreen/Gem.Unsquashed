@@ -55,204 +55,49 @@ def gem():
                 return arrange('<PortrayStringState %s>', t.name)
 
                 
-        if __debug__:
-            def setup(self, A, K, N, Q, t = 0, ra = 0, rq = 0, kc = 0, ks = 0, pc = 0, ps = 0, F3 = 0):
-                def verify_name(mode, value, expected_prefix, expected_suffix):
-                    if value.name != expected_prefix + '_' + expected_suffix:
-                        raise_runtime_error('PortrayStringState.setup: %s + %s => %s (expected %s)',
-                                            self.name, mode, value.name, expected_prefix + '_' + expected_suffix)
+        def setup(self, A, K, N, Q, t = 0, ra = 0, rq = 0, kc = 0, ks = 0, pc = 0, ps = 0, F3 = 0):
+            assert (t is 0) or (t is 1)
 
+            if ra is 0:
+                assert rq is 0
 
-                assert (t is 0) or (t is 1)
+                ra = P
 
-                if ra is 0:
-                    assert rq is 0
+            if rq is 0:
+                rq = ra
 
-                    ra = P
+            if kc is 0:
+                assert ks is 0
 
-                if rq is 0:
-                    rq = ra
+                kc = P
 
-                if kc is 0:
-                    assert ks is 0
+            if ks is 0:
+                ks = kc
 
-                    kc = P
+            if pc is 0:
+                assert ps is 0
 
-                if ks is 0:
-                    ks = kc
+                pc = P
 
-                if pc is 0:
-                    assert ps is 0
+            if ps is 0:
+                ps = pc
 
-                    pc = P
+            self.A = A
+            self.K = K
+            self.N = N
+            self.Q = Q
 
-                if ps is 0:
-                    ps = pc
+            self.kc = (kc) or (P)
+            self.ks = (ks) or (kc) or (P)
 
-                underscore = self.name.index('_')
+            self.pc = pc
+            self.ps = (ps) or (pc)
 
-                prefix = self.name[:underscore]
-                suffix = self.name[underscore + 1:]
+            self.ra = ra
+            self.rq = (rq) or (ra)
 
-                PA = PC = PCS = PL = PN = PQ = PS = 0
-                SA = SB = SC = SK = SN = SQ = SR = SS = 0
-
-                if prefix == 'A':           PA = 7
-                elif prefix == 'AQ':        PA = PQ = 7
-                elif prefix == 'AS':        PA = PS = 7
-                elif prefix == 'C':         PC = 7
-                elif prefix == 'CQ':        PC = PQ = 7
-                elif prefix == 'CS':        PC = PCS = PS = 7
-                elif prefix == 'L':         PL = 7
-                elif prefix == 'N':         PN = 7
-                elif prefix == 'Q':         PQ = 7
-                elif prefix == 'S':         PS = 7
-                else:                       raise_runtime_error('incomplete: prefix: %s', prefix)
-
-                if suffix == 'A':           SA = 7
-                elif suffix == 'B':         SB = 7
-                elif suffix == 'C':         SC = 7
-                elif suffix == 'K':         SK = 7
-                elif suffix == 'N':         SN = 7
-                elif suffix == 'Q':         SQ = 7
-                elif suffix == 'R':         SR = 7
-                elif suffix == 'S':         SS = 7
-                else:
-                    raise_runtime_error('incomplete: suffix: %s', suffix)
-
-                #<A>
-                C_prefix = '?'
-
-                if PA:
-                    A_prefix = prefix
-                    C_prefix = 'C' + prefix[1:]
-                elif (PC) or (PL):
-                    A_prefix = C_prefix = prefix
-                elif PN:
-                    A_prefix = 'A'
-                else:
-                    A_prefix = 'A' + prefix
-
-                if (SA) or (SC):    verify_name('A', A, A_prefix, 'B')
-                elif SB:            verify_name('A', A, C_prefix, 'C')
-                elif SK:            verify_name('A', A, prefix,   'N')
-                else:               verify_name('A', A, A_prefix, 'A')
-                #</A>
-
-                #<K>
-                if SK:      verify_name('K', K, prefix, 'N')
-                else:       verify_name('K', K, prefix, ('N'   if (PCS) or (PL) else   'K'))
-                #</K>
-
-                #<N>
-                verify_name('N', N, prefix, 'N')
-                #</N>
-
-                #<Q>
-                S_prefix = '?'
-
-                if PQ:
-                    Q_prefix = prefix
-                    S_prefix = prefix[:-1] + 'S'
-                elif (PL) or (PS):
-                    Q_prefix = S_prefix = prefix
-                elif PN:
-                    Q_prefix = 'Q'
-                else:
-                    Q_prefix = prefix + 'Q'
-
-                #line('%s: SR<%d>, Qp<%s>, Sp<%s>', self.name, SR, Q_prefix, S_prefix)
-
-                if (SQ) or (SS):    verify_name('Q', Q, Q_prefix, 'R')
-                elif SR:            verify_name('Q', Q, S_prefix, 'S')
-                elif SK:            verify_name('Q', Q, prefix,   'N')
-                else:               verify_name('Q', Q, Q_prefix, 'Q')
-                #</Q>
-
-                #<ra>
-                if (PL) or (PCS) or (SK):
-                    expected_RO = expected_RN = '__repr__'
-                elif (PC):
-                    assert not SS
-
-                    if (SQ) or (SR):
-                        expected_RO = expected_RN = '__repr__'
-                    else:
-                        if PQ:
-                            expected_RO = expected_RN = 'portray_raw_string_with_triple_quotation_mark'
-                        else:
-                            expected_RO = expected_RN = 'portray_raw_string_with_quotation_mark'
-                elif (PS):
-                    assert not SC
-
-                    if (SA) or (SB):
-                        expected_RO = expected_RN = '__repr__'
-                    else:
-                        if PA:
-                            expected_RO = expected_RN = 'portray_raw_string_with_triple_apostrophe'
-                        else:
-                            expected_RO = expected_RN = 'portray_raw_string_with_apostrophe'
-                elif PA:
-                    assert not SC
-
-                    if PQ:
-                        if (SA) or (SB):
-                            expected_RO = expected_RN = 'portray_raw_string_with_triple_quotation_mark'
-                        elif (SQ) or (SR):
-                            expected_RO = expected_RN = 'portray_raw_string_with_triple_apostrophe'
-                        else:
-                            expected_RN = 'portray_raw_string_with_triple_apostrophe'
-                            expected_RO = 'portray_raw_string_with_triple_quotation_mark'
-                    else:
-                        expected_RN = expected_RO = 'portray_raw_string_with_quotation_mark'
-                elif PQ:
-                    assert not SS
-
-                    expected_RO = expected_RN = 'portray_raw_string_with_apostrophe'
-                elif PN:
-                    assert (not SA) and (not SB) and (not SC) and (not SQ) and (not SR) and (not SS)
-
-                    expected_RN = 'portray_raw_string_with_apostrophe'
-                    expected_RO = 'portray_raw_string_with_quotation_mark'
-                else:
-                    expected_RO = expected_RN = '?'
-
-                if ra.__name__ != expected_RN:
-                    raise_runtime_error('PortrayStringState.setup: %s.ra => %s (expected_RN %s)',
-                                        self.name, ra.__name__, expected_RN)
-
-                if rq.__name__ != expected_RO:
-                    raise_runtime_error('PortrayStringState.setup: %s.rq => %s (expected_RO %s)',
-                                        self.name, rq.__name__, expected_RO)
-                #</ra>
-
-                self.A = A
-                self.K = K
-                self.N = N
-                self.Q = Q
-
-                self.kc = (kc) or (P)
-                self.ks = (ks) or (kc) or (P)
-
-                self.pc = pc
-                self.ps = (ps) or (pc)
-
-                self.ra = ra
-                self.rq = (rq) or (ra)
-
-                self.favorite_3 = F3
-                self.triple     = Boolean(t)
-        else:
-            def setup(t, A, K, N, Q, ra, rq, F3 = 0):
-                t.A = A
-                t.K = K
-                t.N = N
-                t.Q = Q
-
-                t.ra = ra
-                t.rq = (rq) or (ra)
-
-                t.favorite_3 = F3
+            self.favorite_3 = F3
+            self.triple     = Boolean(t)
 
 
     state = PortrayStringState
