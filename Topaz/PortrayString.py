@@ -7,11 +7,11 @@ def gem():
     require_gem('Gem.PortrayString')
 
 
-    from Gem import N_N, portray_raw_string
+    from Gem import N_N, portray_raw_string, portray_string
 
 
     def test_portray_raw_string__raw_string():
-        for [s, expected] in [
+        for row in [
             #<A_A>
                 #
                 #   A_A: ra
@@ -21,8 +21,16 @@ def gem():
                 #
                 #   A_A: rq
                 #
-                [   r"ending single quote '",       r'''r"ending single quote '"'''             ],
-                [   r"'",                           r'''r"'"'''                                 ],
+                [
+                    "ending single quote '",
+                    r'''r"ending single quote '"''',
+                    '''"ending single quote '"''',
+                ],
+                [
+                    "'",
+                    r'''r"'"''',
+                    '''"'"''',
+                ],
 
                 #
                 #   A_A/AQ_A: lemon: kc
@@ -45,7 +53,11 @@ def gem():
                 #
                 #   A_B: rq
                 #
-                [   r"quoted: ''",                  r'''r"quoted: ''"'''                        ],
+                [
+                    "quoted: ''",
+                    r'''r"quoted: ''"''',
+                    '''"quoted: ''"''',
+                ],
 
                 #
                 #   A_B/AQ_B: lemon: kc
@@ -90,7 +102,11 @@ def gem():
                 #
                 #   A_N: rq
                 #
-                [   r"can't",                       r'''r"can't"'''                             ],
+                [
+                    "can't",
+                    r'''r"can't"''',
+                    '''"can't"''',
+                ],
 
                 #
                 #   A_N: lemon: kc
@@ -108,12 +124,20 @@ def gem():
                 #
                 #   AQ_A: ra
                 #
-                [   r"""End with "'": "'""",        r'''r"""End with "'": "'"""'''              ],
+                [
+                    """End with "'": "'""",
+                    r'''r"""End with "'": "'"""''',
+                    '''"""End with "'": "'"""''',
+                ],
 
                 #
                 #   AQ_A: rq
                 #
-                [   r"""other way: '"' & '""",      r'''r"""other way: '"' & '"""'''            ],
+                [
+                    """other way: '"' & '""",
+                    r'''r"""other way: '"' & '"""''',
+                    '''"""other way: '"' & '"""''',
+                ],
 
                 #
                 #   AQ_A: lemon: kc
@@ -131,12 +155,20 @@ def gem():
                 #
                 #   AQ_B: ra
                 #
-                [   r"""prefer ", "", ', or ''""",  r'''r"""prefer ", "", ', or ''"""'''        ],
+                [
+                    """prefer ", "", ', or ''""",
+                    r'''r"""prefer ", "", ', or ''"""''',
+                    '''"""prefer ", "", ', or ''"""''',
+                ],
 
                 #
                 #   AQ_B: rq
                 #
-                [   r"""prefer ', '', ", or ''""",  r'''r"""prefer ', '', ", or ''"""'''        ],
+                [
+                    """prefer ', '', ", or ''""",
+                    r'''r"""prefer ', '', ", or ''"""''',
+                    '''"""prefer ', '', ", or ''"""''',
+                ],
 
                 #
                 #   AQ_B: lemon: kc
@@ -174,14 +206,28 @@ def gem():
                 #   AQ_N: ra
                 #
                 [   r''''triple' is: ""\".''',      r"""r''''triple' is: ""\".'''"""            ],
-                [   r''''"" ""'2''',                r"""r''''"" ""'2'''"""                      ],
+                [
+                    '''\'"" ""'2''',
+                    r"""r''''"" ""'2'''""",
+                    """'''\\'"" ""'2'''""",
+                ],
 
                 #
                 #   AQ_N: rq
                 #
                 [   r'''"triple" is: ''\'.''',      r'''r""""triple" is: ''\'."""'''            ],
-                [   r'''"'' ''"!''',                r'''r""""'' ''"!"""'''                      ],
-                [   r"""single: ', '' .vs. "?""",   r'''r"""single: ', '' .vs. "?"""'''         ],
+
+                [
+                    """\"'' ''"!""",
+                    r'''r""""'' ''"!"""''',
+                    '''"""\\"'' ''"!"""''',
+                ],
+
+                [
+                    """single: ', '' .vs. "?""",
+                    r'''r"""single: ', '' .vs. "?"""''',
+                    '''"""single: ', '' .vs. "?"""''',
+                ],
 
                 #
                 #   AQ_N: lemon: kc
@@ -199,13 +245,25 @@ def gem():
                 #
                 #   AQ_Q: ra
                 #
-                [   r'''singles "'" & "''"''',      r"""r'''singles "'" & "''"'''"""            ],
-                [   r'''the quotes: ' & "''',       r"""r'''the quotes: ' & "'''"""             ],
+                [
+                    '''singles "'" & "''"''',
+                    r"""r'''singles "'" & "''"'''""",
+                    """'''singles "'" & "''"'''""",
+                ],
+                [
+                    '''the quotes: ' & "''',
+                    r"""r'''the quotes: ' & "'''""",
+                    """'''the quotes: ' & "'''""",
+                ],
 
                 #
                 #   AQ_Q: rq
                 #
-                [   r'''Wow: ''"''',                r"""r'''Wow: ''"'''"""                      ],
+                [
+                    '''Wow: ''"''',
+                    r"""r'''Wow: ''"'''""",
+                    """'''Wow: ''"'''""",
+                ],
 
                 #
                 #   AQ_Q: lemon: kc
@@ -223,12 +281,20 @@ def gem():
                 #
                 #   AQ_R: ra
                 #
-                [   r'''more quotes: '' & ""''',    r"""r'''more quotes: '' & ""'''"""          ],
+                [
+                    '''more quotes: '' & ""''',
+                    r"""r'''more quotes: '' & ""'''""",
+                    """'''more quotes: '' & ""'''""",
+                ],
 
                 #
                 #   AQ_R: rq
                 #
-                [   r'''compare: ''+'' .vs. ""''',  r"""r'''compare: ''+'' .vs. ""'''"""        ],
+                [
+                    '''compare: ''+'' .vs. ""''',
+                    r"""r'''compare: ''+'' .vs. ""'''""",
+                    """'''compare: ''+'' .vs. ""'''""",
+                ],
 
                 #
                 #   AQ_R: lemon: kc
@@ -311,13 +377,21 @@ def gem():
                 #   AS_N: ra
                 #       Have to represent what we "expect" using \" internally
                 #
-                [   r'''more """" than '!''',      """r'''more ""\"" than '!'''""",             ],
+                [
+                    '''more """" than '!''',
+                    """r'''more ""\"" than '!'''""",
+                    """'''more ""\"" than '!'''""",
+                ],
 
                 #
                 #   AS_N: rq
                 #       Have to represent what we "expect" using \" internally
                 #
-                [   r'''l''s """" t''n '!''',      """r'''l''s ""\"" t''n '!'''""",             ],
+                [
+                    '''l''s """" t''n '!''',
+                    """r'''l''s ""\"" t''n '!'''""",
+                    """'''l''s ""\"" t''n '!'''""",
+                ],
 
                 #
                 #   AS_N: lemon: kc
@@ -341,7 +415,11 @@ def gem():
                 #       vim 7.4 gets confused with """x\"""" - so use string concatanation so vim can properly parse
                 #       it.
                 #
-                [   r"lots of ''''' - more'",       """r"lots of ''''' - more'""" + '"'         ],
+                [
+                    "lots of ''''' - more'",
+                    """r"lots of ''''' - more'""" + '"',
+                    '''"lots of ''\''\' - more'"''',
+                ],
 
                 #
                 #   C_A:  lemon: kc: not possible (""" not allowed)
@@ -365,7 +443,11 @@ def gem():
                 #       vim 7.4 gets confused with """x\"""" - so use string concatanation so vim can properly parse
                 #       it.
                 #
-                [   r"lots of ''''' - extra''",     """r"lots of ''''' - extra''""" + '"'       ],
+                [
+                    "lots of ''''' - extra''",
+                    """r"lots of ''''' - extra''""" + '"',
+                    '''"lots of ''\''\' - extra''"''',
+                ],
 
                 #
                 #   C_B:  lemon: kc: not possible (""" not allowed)
@@ -389,7 +471,12 @@ def gem():
                 #       vim 7.4 gets confused with """x\"""" - so use string concatanation so vim can properly parse
                 #       it.
                 #
-                [   r"abundance of '''''''",        r"""r"abundance of '''''''""" + '"'         ],
+                [
+                    "abundance of '''''''",
+                    r"""r"abundance of '''''''""" + '"',
+                    '''"abundance of ''\''\''\'"''',
+                ],
+                0,
 
                 #
                 #   C_C:  lemon: kc: not possible (""" not allowed)
@@ -864,17 +951,33 @@ def gem():
                 #
             #</S_S>
         ]:
-            if s is 0:
+            if row is 0:
                 break
+
+            if length(row) is 2:
+                [s, raw_expected] = row
+                expected          = raw_expected
+            else:
+                [s, raw_expected, expected] = row
 
             actual = portray_raw_string(s)
 
-            if actual != expected:
-                line('%r', s)
+            if actual != raw_expected:
+                line('portray_raw_string(%r)', s)
                 line('  actual:   %s', actual)
-                line('  expected: %s', expected)
+                line('  expected: %s', raw_expected)
 
-                raise_value_error('portray_raw_string(%r): %r (expected: %r)', s, actual, expected)
+                raise_value_error('portray_raw_string(%r): %r (expected: %r)', s, actual, raw_expected)
+
+            if expected is not none:
+                actual = portray_string(s)
+
+                if actual != expected:
+                    line('portray_string(%r)', s)
+                    line('  actual:   %s', actual)
+                    line('  expected: %s', expected)
+
+                    raise_value_error('portray_string(%r): %r (expected: %r)', s, actual, expected)
 
 
     def create_state_machine_tuple():

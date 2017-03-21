@@ -32,6 +32,8 @@ def gem():
             #   Tracking ''' & """ for normal portray
             #
             'favorite_3',               #   Integer
+            'end_C',                    #   Integer
+            'end_S',                    #   Integer
         ))
 
 
@@ -90,6 +92,8 @@ def gem():
             t.rq = (rq) or (ra)
 
             t.favorite_3 = F3
+            t.end_C = (1  if F3 is -1 else   0)
+            t.end_S = (1  if F3 is 1  else   0)
 
 
     state = PortrayStringState
@@ -491,9 +495,9 @@ def gem():
 
             #line('  %r: lemon: %s => %s, %s => %s', c, raw_state.name, raw_state.N.name, state.name, state.N.name)
 
-            lemon = 7
+            lemon     = 7
             raw_state = raw_state.N
-            state     = raw_state.N
+            state     = state.N
 
         #line('  final %r: %d/%d/%s/%s, %s, %s', s, favorite, favorite_3, backslash, lemon, raw_state.name, state.name)
 
@@ -541,6 +545,178 @@ def gem():
         return raw_state.rq(s)
 
 
+    is_apostrophe_or_quotation_mark = FrozenSet(['"', "'"]).__contains__
+
+
+    @export
+    def portray_string(s):
+        iterator = iterate(s)
+
+        line('portray_string(%r)', s)
+
+        #
+        #   Simple case.
+        #
+        for c in iterator:
+            a = lookup_ascii(c, unknown_ascii)
+
+            line('c: %r, a: %r', c, a)
+
+            if not a.is_portray_boring:
+                break
+        else:
+            line('portray_string(%r): simple', s)
+
+            return "'" + s + "'"
+
+        #
+        #   Complex case
+        #
+        line('portray_string(%r): %s', s, a)
+
+        if a.is_backslash:
+            line('  %r: backslash: %s, %s', c, N_K.name, N_N.name)
+
+            backslash = 7
+            lemon     = favorite  = 0
+            raw_state = N_K
+            state     = N_N
+        else:
+            backslash = 0
+
+            if a.is_quotation_mark:
+                line('  %r: %s, %s', c, Q_Q.name, Q_Q.name)
+
+                favorite = 1
+                lemon    = 0
+                raw_state = state = Q_Q
+            elif a.is_apostrophe:
+                line('  %r: %s, %s', c, A_A.name, A_A.name)
+
+                favorite  = -1
+                lemon     = 0
+                raw_state = state = A_A
+            else:
+                line('  %r: lemon: %s, %s', c, N_N.name, N_N.name)
+
+                favorite  = 0
+                lemon     = 7
+                raw_state = state = N_N
+
+        C = 0
+        S = 0
+
+        for c in iterator:
+            a = lookup_ascii(c, unknown_ascii)
+
+            if a.is_portray_boring:
+                line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.N.name, state.name, state.N.name)
+
+                raw_state = raw_state.N
+                state     = state.N
+
+                continue
+
+            if a.is_backslash:
+                line('  %r: backslash: %s => %s, %s => %s', c, raw_state.name, raw_state.K.name, state.name, state.N.name)
+
+                backslash = 7
+                raw_state = raw_state.K
+                state     = state.N
+                continue
+
+            if a.is_quotation_mark:
+                line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.Q.name, state.name, state.Q.name)
+
+                raw_state = raw_state.Q
+                state     = state.Q
+                favorite += 1
+                S        += state.end_S
+                continue
+
+            if a.is_apostrophe:
+                line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.A.name, state.name, state.A.name)
+
+                raw_state = raw_state.A
+                state     = state.A
+                favorite -= 1
+                C        += state.end_C
+                continue
+
+            assert not a.is_printable
+
+            line('  %r: lemon: %s => %s, %s => %s', c, raw_state.name, raw_state.N.name, state.name, state.N.name)
+
+            lemon     = 7
+            raw_state = raw_state.N
+            state     = state.N
+
+        line('  final %r: %d/%d/%d/%s/%s, %s, %s', s, favorite, C, S, backslash, lemon, raw_state.name, state.name)
+
+        if lemon is 7:
+            if ( (S == C) and (favorite >= 0) ) or (S > C):
+                #if raw_state is not state:
+                #    line('  %r: %s/%s: lemon, kc', s, raw_state.name, state.name)
+
+                line('  %s: lemon, kc', state.name)
+                return state.kc(s)
+
+            #if raw_state is not state:
+            #    line('  %r: %s/%s: lemon, ks', s, raw_state.name, state.name)
+
+            line('  %s: lemon, ks', state.name)
+            return state.ks(s)
+
+        if backslash is 7:
+            if favorite >= 0:
+                ra = raw_state.ra
+
+                if ra is not 0:
+                    line('  %s: ra', raw_state.name)
+                    return ra(s)
+            else:
+                rq = raw_state.rq
+
+                if rq is not 0:
+                    line('  %s: rq', raw_state.name)
+                    return rq(s)
+
+            if ( (S == C) and (favorite >= 0) ) or (S > C):
+                #if raw_state is not state:
+                #    line('  %r: %s/%s: P, backslash, kc', s, raw_state.name, state.name)
+
+                line('  %s: P, backslash, kc', state.name)
+                return state.kc(s)
+
+            #if raw_state is not state:
+            #    line('  %r: %s/%s: P, backslash, ks', s, raw_state.name, state.name)
+
+            line('  %s: P, backslash, ks', state.name)
+            return state.ks(s)
+
+        c = s[0]
+
+        if c is '"':
+            if ( (S == C) and (favorite + 1 >= 0) ) or (S > C):
+                line("  %s: P, begin with ', kc", state.name)
+                return state.kc(s)
+
+            line('''  %s: P, begin with ' or ", ks''', state.name)
+            return state.ks(s)
+
+        if c is "'":
+            if ( (S == C) and (favorite - 1 >= 0) ) or (S > C):
+                line('  %s: P, begin with ", kc', state.name)
+                return state.kc(s)
+
+        if ( (S == C) and (favorite >= 0) ) or (S > C):
+            line('  %s: P, pc', state.name)
+            return state.pc(s)
+
+        line('  %s: P, ps', state.name)
+        return state.ps(s)
+
+
     export(
-        'N_N',  N_N,
+        'N_N',  N_N,                    #   For unit testing
     )
