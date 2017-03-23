@@ -551,6 +551,7 @@ def gem():
     @export
     def portray_string(s):
         iterator = iterate(s)
+        start    = 7
 
         line('portray_string(%r)', s)
 
@@ -564,6 +565,8 @@ def gem():
 
             if not a.is_portray_boring:
                 break
+
+            start = 0
         else:
             line('portray_string(%r): simple', s)
 
@@ -578,7 +581,7 @@ def gem():
             line('  %r: backslash: %s, %s', c, N_K.name, N_N.name)
 
             backslash = 7
-            lemon     = favorite  = 0
+            S         = C = lemon = favorite = start = 0
             raw_state = N_K
             state     = N_N
         else:
@@ -587,24 +590,33 @@ def gem():
             if a.is_quotation_mark:
                 line('  %r: %s, %s', c, Q_Q.name, Q_Q.name)
 
-                favorite = 1
-                lemon    = 0
+                if start is 7:
+                    favorite = 1
+                    S        = 1
+                else:
+                    favorite = 1
+                    S        = 0
+
+                C         = lemon = 0
                 raw_state = state = Q_Q
             elif a.is_apostrophe:
                 line('  %r: %s, %s', c, A_A.name, A_A.name)
 
-                favorite  = -1
-                lemon     = 0
+                if start is 7:
+                    favorite = -1
+                    C        = 1
+                else:
+                    favorite = -1
+                    C        = 0
+
+                S         = lemon = 0
                 raw_state = state = A_A
             else:
                 line('  %r: lemon: %s, %s', c, N_N.name, N_N.name)
 
-                favorite  = 0
-                lemon     = 7
+                S     = C = favorite = start = 0
+                lemon = 7
                 raw_state = state = N_N
-
-        C = 0
-        S = 0
 
         for c in iterator:
             a = lookup_ascii(c, unknown_ascii)
@@ -651,7 +663,8 @@ def gem():
             raw_state = raw_state.N
             state     = state.N
 
-        line('  final %r: %d/%d/%d/%s/%s, %s, %s', s, favorite, C, S, backslash, lemon, raw_state.name, state.name)
+        line('  final %r: favorite/C/S: %d/%d/%d; backslash/start/lemon: %d/%d/%d, %s, %s',
+             s, favorite, C, S, backslash, start, lemon, raw_state.name, state.name)
 
         if lemon is 7:
             if ( (S == C) and (favorite >= 0) ) or (S > C):
@@ -694,20 +707,13 @@ def gem():
             line('  %s: P, backslash, ks', state.name)
             return state.ks(s)
 
-        c = s[0]
-
-        if c is '"':
-            if ( (S == C) and (favorite + 1 >= 0) ) or (S > C):
-                line("  %s: P, begin with ', kc", state.name)
+        if start is 7:
+            if ( (S == C) and (favorite >= 0) ) or (S > C):
+                line('''%s: P, begin with ' or ", kc''', state.name)
                 return state.kc(s)
 
             line('''  %s: P, begin with ' or ", ks''', state.name)
             return state.ks(s)
-
-        if c is "'":
-            if ( (S == C) and (favorite - 1 >= 0) ) or (S > C):
-                line('  %s: P, begin with ", kc', state.name)
-                return state.kc(s)
 
         if ( (S == C) and (favorite >= 0) ) or (S > C):
             line('  %s: P, pc', state.name)

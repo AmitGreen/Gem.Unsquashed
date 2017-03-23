@@ -11,6 +11,8 @@ def gem():
 
 
     def test_portray_raw_string__raw_string():
+        saw_2 = false
+
         for row in [
             #<A_A>
                 #
@@ -207,20 +209,23 @@ def gem():
                 #
                 [   r''''triple' is: ""\".''',      r"""r''''triple' is: ""\".'''"""            ],
                 [
-                    '''\'"" ""'2''',
+                    """'"" ""'2""",
                     r"""r''''"" ""'2'''""",
-                    """'''\\'"" ""'2'''""",
+                    '''"""'"" ""'2"""''',
                 ],
 
                 #
                 #   AQ_N: rq
                 #
-                [   r'''"triple" is: ''\'.''',      r'''r""""triple" is: ''\'."""'''            ],
+                [
+                    r'''"triple" is: ''\'.''',
+                    r'''r""""triple" is: ''\'."""''',
+                ],
 
                 [
-                    """\"'' ''"!""",
+                    '''\"'' ''"!''',
                     r'''r""""'' ''"!"""''',
-                    '''"""\\"'' ''"!"""''',
+                    """'''\"'' ''"!'''""",
                 ],
 
                 [
@@ -476,7 +481,7 @@ def gem():
                     r"""r"abundance of '''''''""" + '"',
                     '''"abundance of ''\''\''\'"''',
                 ],
-                0,
+                2,
 
                 #
                 #   C_C:  lemon: kc: not possible (""" not allowed)
@@ -951,8 +956,9 @@ def gem():
                 #
             #</S_S>
         ]:
-            if row is 0:
-                break
+            if row is 2:
+                saw_2 = true
+                continue
 
             if length(row) is 2:
                 [s, raw_expected] = row
@@ -968,6 +974,9 @@ def gem():
                 line('  expected: %s', raw_expected)
 
                 raise_value_error('portray_raw_string(%r): %r (expected: %r)', s, actual, raw_expected)
+
+            if saw_2:
+                continue
 
             if expected is not none:
                 actual = portray_string(s)
