@@ -206,11 +206,12 @@ def gem():
             #<AQ_N>
                 #
                 #   AQ_N: ra
+                #       """ chosen instead of ''' --- as it starts with a '
                 #
-                [   r''''triple' is: ""\".''',      r"""r''''triple' is: ""\".'''"""            ],
+                [   r"""'triple' is: ""\".""",      r'''r"""'triple' is: ""\"."""'''            ],
                 [
                     """'"" ""'2""",
-                    r"""r''''"" ""'2'''""",
+                    r'''r"""'"" ""'2"""''',
                     '''"""'"" ""'2"""''',
                 ],
 
@@ -956,6 +957,9 @@ def gem():
                 #
             #</S_S>
         ]:
+            if row is 0:
+                break
+
             if row is 2:
                 saw_2 = true
                 continue

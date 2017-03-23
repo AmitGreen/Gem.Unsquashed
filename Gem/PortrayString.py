@@ -56,6 +56,24 @@ def gem():
                 return arrange('<PortrayStringState %s>', t.name)
 
                 
+        def overall(t, A, K, L, Q, ra = 7, rq = 7, pc = 7, ps = 7):
+            if rq is 7:     rq = ra
+            if pc is 7:     pc = rq
+            if ps is 7:     ps = pc
+
+            t.A = A
+            t.K = K
+            t.N = L         #   .N really means .L
+            t.Q = Q
+
+            t.kc = 0
+            t.ks = 0
+            t.pc = pc
+            t.ps = ps
+            t.ra = ra
+            t.rq = rq
+
+
         def setup(t, A, K, N, Q, ra = 0, rq = 7, kc = 7, ks = 7, pc = 7, ps = 7, F3 = 0):
             if ra is 0:
                 assert rq is 7
@@ -100,7 +118,50 @@ def gem():
 
 
     #
-    #   states
+    #   States (overall)
+    #
+    #       E = Empty
+    #       K = Backslash
+    #       L = Lemon
+    #       N = Normal
+    #       T = Starts with "
+    #       U = Starts with '
+    #
+    E  = state('E')
+    K  = state('K')
+    L  = state('L')
+    N  = state('N')
+    TK = state('TK')
+    TL = state('TL')
+    T  = state('T')
+    UK = state('UK')
+    UL = state('UL')
+    U  = state('U')
+
+
+    KC = PortrayStringState.kc.__get__
+    KS = PortrayStringState.ks.__get__
+    PC = PortrayStringState.pc.__get__
+    PS = PortrayStringState.ps.__get__
+    RA = PortrayStringState.ra.__get__
+    RQ = PortrayStringState.rq.__get__
+    _  = 7
+
+    #           '   \   L   "   ra  rq  pc  ps
+    E .overall (U,  K,  L,  T,  0)
+    K .overall (_,  K,  L,  _,  RA, RQ, KC, KS)
+    L .overall (_,  L,  L,  _,  0,  _,  KC, KS)
+    N .overall (N,  K,  L,  N,  RA, RQ, PC, PS)
+    TK.overall (_,  TK, TL, _,  RA,     KC)
+    TL.overall (_,  TL, TL, _,  0,  _,  KC)
+    T .overall (_,  TK, TL, _,  RA, _,  PC)
+    UK.overall (_,  UK, UL, _,  RQ,     KS)
+    UL.overall (_,  UL, TL, _,  0,  _,  KS)
+    U .overall (_,  UK, UL, _,  RQ, _,  PS)
+
+
+    #
+    #   States ('has' & ending)
     #
     #       A = '
     #       B = ''
@@ -401,6 +462,7 @@ def gem():
     @export
     def portray_raw_string(s):
         iterator = iterate(s)
+        overall  = E
 
         #
         #   Simple case
@@ -408,140 +470,181 @@ def gem():
         for c in iterator:
             a = lookup_ascii(c, unknown_ascii)
 
-            #line('c: %r, a: %r', c, a)
+            line('c: %r, a: %r', c, a)
 
             if not a.is_portray_boring:
                 break
+
+            overall  = N
         else:
-            #line('portray_raw_string(%r): simple', s)
+            line('portray_raw_string(%r): simple', s)
 
             return "r'" + s + "'"
 
         #
         #   Complex case
         #
-        #line('portray_raw_string(%r): %s', s, a)
+        line('portray_raw_string(%r): %s', s, a)
 
         if a.is_backslash:
-            #line('  %r: backslash: %s, %s', c, N_K.name, N_N.name)
+            line('  %r: backslash: %s, %s', c, N_K.name, N_N.name)
 
+            overall   = K
             backslash = 7
-            lemon     = favorite  = 0
+            lemon     = favorite = 0
             raw_state = N_K
             state     = N_N
         else:
             backslash = 0
 
-            if a.is_quotation_mark:
-                #line('  %r: %s, %s', c, Q_Q.name, Q_Q.name)
+            if a.is_apostrophe:
+                line('  %r: %s, %s', c, A_A.name, A_A.name)
 
-                favorite = 1
-                lemon    = 0
-                raw_state = state = Q_Q
-            elif a.is_apostrophe:
-                #line('  %r: %s, %s', c, A_A.name, A_A.name)
-
+                overall   = overall.A
                 favorite  = -1
                 lemon     = 0
                 raw_state = state = A_A
-            else:
-                #line('  %r: lemon: %s, %s', c, N_N.name, N_N.name)
+            elif a.is_quotation_mark:
+                line('  %r: %s, %s', c, Q_Q.name, Q_Q.name)
 
+                overall  = overall.Q
+                favorite = 1
+                lemon    = 0
+                raw_state = state = Q_Q
+            else:
+                line('  %r: lemon: %s, %s', c, N_N.name, N_N.name)
+
+                overall   = L
                 favorite  = 0
                 lemon     = 7
                 raw_state = state = N_N
 
-        favorite_3 = 0
+        C = S = favorite_3 = 0
 
         for c in iterator:
             a = lookup_ascii(c, unknown_ascii)
 
             if a.is_portray_boring:
-                #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.N.name, state.name, state.N.name)
+                line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.N.name, state.name, state.N.name)
 
                 raw_state = raw_state.N
                 state     = state.N
 
                 continue
 
+            if a.is_apostrophe:
+                line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.A.name, state.name, state.A.name)
+
+                raw_state   = raw_state.A
+                state       = state.A
+                favorite   -= 1
+                C          += state.favorite_3
+                favorite_3 += state.favorite_3
+                continue
+
             if a.is_backslash:
-                #line('  %r: backslash: %s => %s, %s => %s', c, raw_state.name, raw_state.K.name, state.name, state.N.name)
+                line('  %r: backslash: %s => %s, %s => %s', c, raw_state.name, raw_state.K.name, state.name, state.N.name)
 
                 backslash = 7
+                overall   = overall.K
                 raw_state = raw_state.K
                 state     = state.N
                 continue
 
             if a.is_quotation_mark:
-                #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.Q.name, state.name, state.Q.name)
+                line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.Q.name, state.name, state.Q.name)
 
                 raw_state   = raw_state.Q
                 state       = state.Q
                 favorite   += 1
-                favorite_3 += state.favorite_3
-                continue
-
-            if a.is_apostrophe:
-                #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.A.name, state.name, state.A.name)
-
-                raw_state   = raw_state.A
-                state       = state.A
-                favorite   -= 1
+                S          -= state.favorite_3
                 favorite_3 += state.favorite_3
                 continue
 
             assert not a.is_printable
 
 
-            #line('  %r: lemon: %s => %s, %s => %s', c, raw_state.name, raw_state.N.name, state.name, state.N.name)
+            line('  %r: lemon: %s => %s, %s => %s', c, raw_state.name, raw_state.N.name, state.name, state.N.name)
 
             lemon     = 7
+            overall   = overall.N       #   .N really means .L
             raw_state = raw_state.N
             state     = state.N
 
-        #line('  final %r: %d/%d/%s/%s, %s, %s', s, favorite, favorite_3, backslash, lemon, raw_state.name, state.name)
+        line('  final %r: %d/%d/%s/%s, %s, %s', s, favorite, favorite_3, backslash, lemon, raw_state.name, state.name)
 
         if lemon is 7:
+            assert L.ra is L.rq is 0
+
             if favorite_3 >= 0:
                 #if raw_state is not state:
-                #    #line('  %r: %s/%s: lemon, kc', s, raw_state.name, state.name)
+                #    line('  %r: %s/%s: lemon, kc', s, raw_state.name, state.name)
 
-                #line('  %s: lemon, kc', state.name)
+                line('  %s: lemon, kc', state.name)
+                assert state.kc is overall.pc(state)
                 return state.kc(s)
 
             #if raw_state is not state:
-            #    #line('  %r: %s/%s: lemon, ks', s, raw_state.name, state.name)
+            #    line('  %r: %s/%s: lemon, ks', s, raw_state.name, state.name)
 
-            #line('  %s: lemon, ks', state.name)
+            line('  %s: lemon, ks', state.name)
+            assert state.ks is overall.ps(state)
             return state.ks(s)
 
         if raw_state.ra is 0:
             if backslash is 7:
+                assert (overall is K) or (overall is TK) or (overall is UK)
+
                 if favorite_3 >= 0:
                     #if raw_state is not state:
-                    #    #line('  %r: %s/%s: P, backslash, kc', s, raw_state.name, state.name)
+                    #    line('  %r: %s/%s: P, backslash, kc', s, raw_state.name, state.name)
 
-                    #line('  %s: P, backslash, kc', state.name)
+                    line('  %s: P, backslash, kc', state.name)
+
+                    if state.kc is not overall.pc(state):
+                        raise_runtime_error('  %r: state<%s>.kc<%s> is NOT overall<%s>.pc(state)<%s>',
+                                            s, state.name, state.kc, overall.name, overall.pc(state))
+
+                    assert state.kc is overall.pc(state)
                     return state.kc(s)
 
                 #if raw_state is not state:
-                #    #line('  %r: %s/%s: P, backslash, ks', s, raw_state.name, state.name)
+                #    line('  %r: %s/%s: P, backslash, ks', s, raw_state.name, state.name)
 
-                #line('  %s: P, backslash, ks', state.name)
+                line('  %s: P, backslash, ks', state.name)
+                assert state.kc is overall.ps(state)
                 return state.ks(s)
 
             if favorite_3 >= 0:
-                #line('  %s: P, pc', state.name)
+                line('  %s: P, pc', state.name)
+                assert state.pc is overall.pc(state)
                 return state.pc(s)
 
-            #line('  %s: P, ps', state.name)
+            line('  %s: P, ps', state.name)
+            assert state.ps is overall.ps(state)
             return state.ps(s)
 
         if favorite >= 0:
-            #line('  %s: ra', raw_state.name)
+            if (overall is U) or (overall is UK) or (overall is UL):
+                if raw_state.rq is not overall.ra(raw_state):
+                    raise_runtime_error('  %r: raw_state<%s>.ra<%s> is NOT overall<%s>.ra(raw_state)<%s>',
+                                        s, raw_state.name, raw_state.rq.__name__, overall.name, overall.ra(raw_state).__name__)
+
+                line("  %s: rq (due to starting with ')", raw_state.name)
+                return raw_state.rq(s)
+
+            if raw_state.ra is not overall.ra(raw_state):
+                raise_runtime_error('  %r: raw_state<%s>.ra<%s> is NOT overall<%s>.ra(raw_state)<%s>',
+                                    s, raw_state.name, raw_state.ra.__name__, overall.name, overall.ra(raw_state).__name__)
+
+            line('  %s: ra', raw_state.name)
             return raw_state.ra(s)
 
-        #line('  %s: rq', raw_state.name)
+        line('  %s: rq', raw_state.name)
+        if raw_state.ra is not overall.ra(raw_state):
+            raise_runtime_error('  %r: raw_state<%s>.rq<%s> is NOT overall<%s>.rq(raw_state)<%s>',
+                                s, raw_state.name, raw_state.rq.__name__, overall.name, overall.rq(raw_state).__name__)
+
         return raw_state.rq(s)
 
 
@@ -551,6 +654,7 @@ def gem():
     @export
     def portray_string(s):
         iterator = iterate(s)
+        overall  = E
         start    = 7
 
         line('portray_string(%r)', s)
@@ -566,7 +670,8 @@ def gem():
             if not a.is_portray_boring:
                 break
 
-            start = 0
+            overall = N
+            start   = 0
         else:
             line('portray_string(%r): simple', s)
 
@@ -580,6 +685,7 @@ def gem():
         if a.is_backslash:
             line('  %r: backslash: %s, %s', c, N_K.name, N_N.name)
 
+            overall   = K
             backslash = 7
             S         = C = lemon = favorite = start = 0
             raw_state = N_K
@@ -587,20 +693,10 @@ def gem():
         else:
             backslash = 0
 
-            if a.is_quotation_mark:
-                line('  %r: %s, %s', c, Q_Q.name, Q_Q.name)
-
-                if start is 7:
-                    favorite = 1
-                    S        = 1
-                else:
-                    favorite = 1
-                    S        = 0
-
-                C         = lemon = 0
-                raw_state = state = Q_Q
-            elif a.is_apostrophe:
+            if a.is_apostrophe:
                 line('  %r: %s, %s', c, A_A.name, A_A.name)
+
+                overall = overall.A
 
                 if start is 7:
                     favorite = -1
@@ -611,9 +707,24 @@ def gem():
 
                 S         = lemon = 0
                 raw_state = state = A_A
+            elif a.is_quotation_mark:
+                line('  %r: %s, %s', c, Q_Q.name, Q_Q.name)
+
+                overall  = overall.Q
+
+                if start is 7:
+                    favorite = 1
+                    S        = 1
+                else:
+                    favorite = 1
+                    S        = 0
+
+                C         = lemon = 0
+                raw_state = state = Q_Q
             else:
                 line('  %r: lemon: %s, %s', c, N_N.name, N_N.name)
 
+                overall   = L
                 S     = C = favorite = start = 0
                 lemon = 7
                 raw_state = state = N_N
@@ -632,6 +743,7 @@ def gem():
             if a.is_backslash:
                 line('  %r: backslash: %s => %s, %s => %s', c, raw_state.name, raw_state.K.name, state.name, state.N.name)
 
+                overall   = overall.K
                 backslash = 7
                 raw_state = raw_state.K
                 state     = state.N
@@ -659,6 +771,7 @@ def gem():
 
             line('  %r: lemon: %s => %s, %s => %s', c, raw_state.name, raw_state.N.name, state.name, state.N.name)
 
+            overall   = overall.N       #   .N really means .L
             lemon     = 7
             raw_state = raw_state.N
             state     = state.N
@@ -685,6 +798,14 @@ def gem():
                 ra = raw_state.ra
 
                 if ra is not 0:
+                    if (overall is U) or (overall is UK) or (overall is UL):
+                        if raw_state.rq is not overall.ra(raw_state):
+                            raise_runtime_error('  %r: raw_state<%s>.ra<%s> is NOT overall<%s>.ra(raw_state)<%s>',
+                                                s, raw_state.name, raw_state.rq.__name__, overall.name, overall.ra(raw_state).__name__)
+
+                        line("  %s: rq (due to starting with ')", raw_state.name)
+                        return raw_state.rq(s)
+
                     line('  %s: ra', raw_state.name)
                     return ra(s)
             else:
