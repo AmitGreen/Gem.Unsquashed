@@ -152,10 +152,10 @@ def gem():
     K .overall (_,  K,  L,  _,  RA, RQ, KC, KS)
     L .overall (_,  L,  L,  _,  0,  _,  KC, KS)
     N .overall (N,  K,  L,  N,  RA, RQ, PC, PS)
-    TK.overall (_,  TK, TL, _,  RA,     KC)
+    TK.overall (_,  TK, TL, _,  RA, _,  KC)
     TL.overall (_,  TL, TL, _,  0,  _,  KC)
     T .overall (_,  TK, TL, _,  RA, _,  PC)
-    UK.overall (_,  UK, UL, _,  RQ,     KS)
+    UK.overall (_,  UK, UL, _,  RQ, _,  KS)
     UL.overall (_,  UL, TL, _,  0,  _,  KS)
     U .overall (_,  UK, UL, _,  RQ, _,  PS)
 
@@ -571,7 +571,24 @@ def gem():
             raw_state = raw_state.N
             state     = state.N
 
-        line('  final %r: %d/%d/%s/%s, %s, %s', s, favorite, favorite_3, backslash, lemon, raw_state.name, state.name)
+        line('  final %r: %d/%d/%s/%s, %s, %s, %s', s, favorite, favorite_3, backslash, lemon, overall.name, raw_state.name, state.name)
+
+        if (overall.ra is 0) or (raw_state.ra is 0):
+            if favorite_3 >= 0:
+                return overall.pc(state)(s)
+
+            return overall.ps(state)(s)
+
+        if favorite >= 0:
+            line('  %r: overall<%s>.ra(raw_state<%s>)<%s>',
+                 s, overall.name, raw_state.name, overall.ra(raw_state))
+
+            return overall.ra(raw_state)(s)
+
+        line('  %r: overall<%s>.rq(raw_state<%s>)<%s>',
+             s, overall.name, raw_state.name, overall.rq(raw_state))
+
+        return overall.rq(raw_state)(s)
 
         if lemon is 7:
             assert L.ra is L.rq is 0

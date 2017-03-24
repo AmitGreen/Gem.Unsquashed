@@ -61,7 +61,7 @@ do
     else
         mv $tmp2 2
         echo -en '\E[H\E[J'
-        cat 2
+        tail -50 2
     fi
 
     $commandO <$tmp1 >&$tmp3
