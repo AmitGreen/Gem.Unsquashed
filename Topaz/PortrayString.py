@@ -209,11 +209,10 @@ def gem():
                 #       """ chosen instead of ''' --- as it starts with a '
                 #
                 [   r"""'triple' is: ""\".""",      r'''r"""'triple' is: ""\"."""'''            ],
-                2,
                 [
                     """'"" ""'2""",
                     r'''r"""'"" ""'2"""''',
-                #   '''"""'"" ""'2"""''',
+                    '''"""'"" ""'2"""''',
                 ],
 
                 #
@@ -484,7 +483,6 @@ def gem():
                     r"""r"abundance of '''''''""" + '"',
                     '''"abundance of ''\''\''\'"''',
                 ],
-                2,
 
                 #
                 #   C_C:  lemon: kc: not possible (""" not allowed)
@@ -534,7 +532,11 @@ def gem():
                 #       vim 7.4 gets confused with """x\"""" - so use string concatanation so vim can properly parse
                 #       it.
                 #
-                [   r"lots of ''''' - lots!",       """r"lots of ''''' - lots!""" + '"'         ],
+                [
+                    "lots of ''''' - lots!",
+                    """r"lots of ''''' - lots!""" + '"',
+                    '''"lots of ''\''\' - lots!"''',
+                ],
 
                 #
                 #   C_N:  lemon: kc: not possible (""" not allowed)
@@ -560,7 +562,11 @@ def gem():
                 #   CQ_A: ra: not possible (""" not allowed)
                 #   CQ_A: rq
                 #
-                [   r"""End '''with "'": "'""",   '''r"""End ''\'with "'": "'"""'''             ],
+                [
+                    r"""End '''with "'": "'""",
+                    '''r"""End ''\'with "'": "'"""''',
+                    '''"""End ''\'with "'": "'"""''',
+                ],
 
                 #
                 #   CQ_A: lemon: kc: not possible (""" not allowed)
@@ -579,7 +585,11 @@ def gem():
                 #   CQ_B: ra: not possible (""" not allowed)
                 #   CQ_B: rq
                 #
-                [   r"""More "quotes" ''' & ''""",  '''r"""More "quotes" ''\' & ''"""'''        ],
+                [
+                    """More "quotes" ''' & ''""",
+                    '''r"""More "quotes" ''\' & ''"""''',
+                    '''"""More "quotes" ''\' & ''"""''',
+                ],
 
                 #
                 #   CQ_B: lemon: kc: not possible (""" not allowed)
@@ -598,7 +608,11 @@ def gem():
                 #   CQ_C: ra: not possible (""" not allowed)
                 #   CQ_C: rq
                 #
-                [   r"""End with 3x "'": "'''""",   '''r"""End with 3x "'": "''\'"""'''         ],
+                [
+                    """End with 3x "'": "'''""",
+                    '''r"""End with 3x "'": "''\'"""''',
+                    '''"""End with 3x "'": "''\'"""''',
+                ],
 
                 #
                 #   CQ_C: lemon: kc: not possible (""" not allowed)
@@ -636,12 +650,20 @@ def gem():
                 #   CQ_N: ra
                 #       Have to represent what we "expect" using \' or \" internally
                 #
-                [   r"""l""s '''' t""n "!""",      '''r"""l""s ''\'' t""n "!"""''',             ],
+                [
+                    """l""s '''' t""n "!""",
+                    '''r"""l""s ''\'' t""n "!"""''',
+                    '''"""l""s ''\'' t""n "!"""''',
+                ],
 
                 #
                 #   CQ_N: rq
                 #
-                [   r"""more '''' than "!""",      '''r"""more ''\'' than "!"""''',             ],
+                [
+                    """more '''' than "!""",
+                    '''r"""more ''\'' than "!"""''',
+                    '''"""more ''\'' than "!"""''',
+                ],
 
                 #
                 #   CQ_C: lemon: kc: not possible (""" not allowed)
@@ -722,8 +744,17 @@ def gem():
                 #
                 #   N_N: simple cases
                 #
-                [   r'',                            r"r''"                                      ],
-                [   r'test#2',                      r"r'test#2'"                                ],
+                [
+                    '',
+                    "r''",
+                    "''",
+                ],
+
+                [ 
+                    'test#2',
+                    "r'test#2'",
+                    "'test#2'",
+                ],
 
                 #
                 #   N_N: ra
@@ -775,7 +806,11 @@ def gem():
                 #
                 #   Q_N: ra
                 #
-                [   r'" is a quotation mark',       r"""r'" is a quotation mark'"""             ],
+                [
+                    '" is a quotation mark',
+                    """r'" is a quotation mark'""",
+                    """'" is a quotation mark'""",
+                ],
 
                 #
                 #   Q_N: rq
@@ -803,7 +838,11 @@ def gem():
                 #
                 #   Q_Q: ra
                 #
-                [   r'"',                           r"""r'"'"""                                 ],
+                [
+                    '"',
+                    """r'"'""",
+                    """'"'""",
+                ],
 
                 #
                 #   Q_Q: rq
@@ -826,7 +865,11 @@ def gem():
                 #
                 #   Q_R: ra
                 #
-                [   r'double quoted: ""',           r"""r'double quoted: ""'"""                 ],
+                [
+                    'double quoted: ""',
+                    """r'double quoted: ""'""",
+                    """'double quoted: ""'""",
+                ],
 
                 #
                 #   Q_R: rq
@@ -872,7 +915,11 @@ def gem():
                 #       vim 7.4 gets confused with '''x\'''' - so use string concatanation so vim can properly parse
                 #       it.
                 #
-                [   r'lots of """"" - lots!',       '''r'lots of """"" - lots!''' + "'"         ],
+                [
+                    'lots of """"" - lots!',
+                    """r'lots of ""\""\" - lots!'""",
+                    """'lots of ""\""\" - lots!'""",
+                ],
 
                 #
                 #   S_N: rq
@@ -894,7 +941,11 @@ def gem():
                 #
                 #   S_Q: ra
                 #
-                [   r'Three """ is more than 1 "',  """r'Three ""\" is more than 1 "'"""        ],
+                [
+                    'Three """ is more than 1 "',
+                    """r'Three ""\" is more than 1 "'""",
+                    """'Three ""\" is more than 1 "'""",
+                ],
 
                 #
                 #   S_Q: rq
@@ -917,7 +968,11 @@ def gem():
                 #
                 #   S_R: ra
                 #
-                [   r'Three """ > 2 ""',            """r'Three ""\" > 2 ""'"""                  ],
+                [
+                    'Three """ > 2 ""',
+                    """r'Three ""\" > 2 ""'""",
+                    """'Three ""\" > 2 ""'""",
+                ],
 
                 #
                 #   S_R: rq
@@ -940,7 +995,11 @@ def gem():
                 #
                 #   S_S: ra
                 #
-                [   r'"""',                         """r'""\"'"""                               ],
+                [
+                    '"""',
+                    """r'""\"'""",
+                    """'""\"'""",
+                ],
 
                 #
                 #   S_S: rq
@@ -958,6 +1017,13 @@ def gem():
                 #   S_S: pc/ps:            not possible (always raw mode)
                 #
             #</S_S>
+
+            #<Others>
+                [
+                    '''"lots of ''\''\' - lots!"''',
+                    """'''"lots of ''\\''\\' - lots!"'''""",
+                ],
+            #</Others>
         ]:
             if row is 0:
                 break
@@ -1205,7 +1271,9 @@ def gem():
 
     @share
     def test_portray_raw_string():
-        test_portray_raw_string__state_machine()
+        if __debug__:
+            test_portray_raw_string__state_machine()
+
         test_portray_raw_string__raw_string()
 
         line('PASSED: portray_raw_string')
