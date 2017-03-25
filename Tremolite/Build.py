@@ -6,25 +6,6 @@ def gem():
     require_gem('Tremolite.Core')
 
 
-    from Gem import execute
-
-
-    exact_map   = {}
-    find_exact  = exact_map.__getitem__
-    store_exact = exact_map.__setitem__
-
-
-    @execute
-    def execute():
-        is_special_character = FrozenSet(r'$()*+.?[\]^{}').__contains__
-
-
-        for i in iterate_range(ordinal(' '), ordinal('~') + 1):
-            c = character(i)
-
-            store_exact(c, '\\' + c   if is_special_character(c) else   c)
-
-
     class TremoliteBase(Object):
         __slots__ = ((
             'pattern',          #   String
@@ -115,12 +96,21 @@ def gem():
     END_OF_STRING = TremoliteSpecial(r'\Z', true, 'END_OF_STRING')
 
 
+    def find_pattern_exact(c, s):
+        a = lookup_ascii(c)
+
+        if not a.is_printable:
+            raise_runtime_error('Invalid character <%s> passed to EXACT(%s)', portray_string(c), portray_string(s))
+
+        return a.pattern
+
+
     @export
     def EXACT(s):
         assert length(s) >= 1
 
         return TremoliteExact(
-                   intern_string(''.join(find_exact(c)   for c in s)),
+                   intern_string(''.join(find_pattern_exact(c, s)   for c in s)),
                    length(s) == 1,
                    intern_string(s),
                )

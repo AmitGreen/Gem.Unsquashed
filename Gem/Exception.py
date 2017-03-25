@@ -18,7 +18,7 @@ def gem():
     #
     #   raise_runtime_error
     #
-    @export
+    @built_in
     def raise_runtime_error(format, *arguments):
         runtime_error = (format   % arguments   if arguments else   format)
 
@@ -28,7 +28,7 @@ def gem():
     #
     #   raise_value_error
     #
-    @export
+    @built_in
     def raise_value_error(format, *arguments):
         value_error = format % arguments
 
