@@ -38,8 +38,16 @@ def gem():
         python__create_regular_expression_code = PythonRegularExpressionCompile._code
         python__parse_regular_expression       = PythonRegularExpressionParse.parse
 
-        p          = python__parse_regular_expression(encode_ascii(regular_expression), flags)
-        code       = ''.join(character(i)   for i in python__create_regular_expression_code(p, flags))
+        p    = python__parse_regular_expression(encode_ascii(regular_expression), flags)
+        code = python__create_regular_expression_code(p, flags)
+
+        for i in code:
+            if not (0 <= i <= 255):
+                code = Tuple(code)
+                break
+        else:
+            code = ''.join(character(i)   for i in code)
+
         p_pattern  = p.pattern
         full_flags = flags | p_pattern.flags
         groups     = p_pattern.groups

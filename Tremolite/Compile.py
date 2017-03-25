@@ -48,14 +48,27 @@ def gem():
                        list_of_single_none,
                    )
 
-
         assert type(parsed) is Tuple
 
         total = length(parsed)
 
         assert total >= 2
 
-        code  = List(ordinal(c)   for c in parsed[0])
+        code = parsed[0]
+
+        if type(code) is Integer:
+            return python__bedrock_compile_regular_expression(
+                       regular_expression, 0, List(parsed),
+                       0,
+                       empty_map,
+                       list_of_single_none,
+                   )
+
+        if type(code) is Tuple:
+            code = List(code)
+        else:
+            code = List(ordinal(i)   for i in code)
+
         flags = parsed[1]
 
         #line('flags: %r', flags)

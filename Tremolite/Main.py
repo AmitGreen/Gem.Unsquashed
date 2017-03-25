@@ -32,11 +32,13 @@ def gem():
                 [   OPTIONAL('a') + OPTIONAL('bc') + OPTIONAL(EXACT('d') | 'ef') + 'x' + END_OF_STRING, 'efx'       ],
                 [   'x' + ('lemo' + ANY('a-z') | GROUP('abc', 'y')) + END_OF_STRING,                    'xy'        ],
                 [   'x' + GROUP('abc', ANY('a-z', 'A-Z')) + GROUP('z', 'z') + END_OF_STRING,            'xYz'       ],
+                [   ONE_OR_MORE('x') + END_OF_STRING,                                                   'xx'        ],
         ]:
+            line('%s', pattern)
+            line('%r', pattern)
+
             compiled = pattern.compile_ascii_regular_expression()
             m        = compiled.match(test)
 
-            line('%s', pattern)
-            line('%r', pattern)
             line('  %r %r', m.group(), m.groups())
             line()

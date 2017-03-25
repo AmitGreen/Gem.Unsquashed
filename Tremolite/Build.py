@@ -55,11 +55,7 @@ def gem():
 
 
         def compile_ascii_regular_expression(t):
-            parsed = parse_ascii_regular_expression(t.pattern)
-
-            #line('parsed: %s', parsed)
-
-            return compile_regular_expression(t.pattern, parsed)
+            return compile_regular_expression(t.pattern, parse_ascii_regular_expression(t.pattern))
 
 
     class TremoliteAdd(TremoliteBase):
@@ -330,6 +326,21 @@ def gem():
                    intern_arrange('(?P<%s>%s)', group_name, inside.pattern),
                    arrange('GROUP(%s, %s)', portray_string(group_name), inside),
                    group_name,
+                   inside,
+               )
+
+
+    @export
+    def ONE_OR_MORE(inside):
+        if type(inside) is String:
+            inside = wrap_string(inside)
+
+        if not inside.singular:
+            inside = wrap_parenthesis(inside)
+
+        return TremoliteRepeat(
+                   intern_arrange('%s+', inside.pattern),
+                   arrange('ONE_OR_MORE(%s)', inside),
                    inside,
                )
 
