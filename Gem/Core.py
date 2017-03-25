@@ -11,6 +11,14 @@ def gem():
 
 
     #
+    #   intern_arrange
+    #
+    @built_in
+    def intern_arrange(format, *arguments):
+        return intern_string(format % arguments)
+
+
+    #
     #   line
     #
     flush_standard_output = PythonSystem.stdout.flush
