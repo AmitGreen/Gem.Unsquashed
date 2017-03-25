@@ -24,7 +24,8 @@ def gem():
 
 
         def __add__(t, that):
-            that = WRAP(that)
+            if type(that) is String:
+                that = wrap_string(that)
 
             if t.is_tremolite_add:
                 return TremoliteAdd(t.pattern + that.pattern, t.portray + ' + ' + that.portray, t.many + ((that,)) )
@@ -33,7 +34,7 @@ def gem():
 
 
         def __radd__(t, that):
-            return WRAP(that) + t
+            return wrap_string(that) + t
 
 
         def __str__(t):
@@ -41,7 +42,11 @@ def gem():
 
 
         def compile_ascii_regular_expression(t):
-            return compile_regular_expression(t.pattern, parse_ascii_regular_expression(t.pattern))
+            parsed = parse_ascii_regular_expression(t.pattern)
+
+            #line('parsed: %s', parsed)
+
+            return compile_regular_expression(t.pattern, parsed)
 
 
     class TremoliteAdd(TremoliteBase):
@@ -59,10 +64,32 @@ def gem():
             t.portray = portray
             t.many    = many
 
+
         def __repr__(t):
             return arrange('<TremoliteAdd %s %s>',
                            portray_string(t.pattern),
                            ' '.join((portray_string(v)   if type(v) is String else   portray(v))  for v in t.many))
+
+
+    class TremoliteAny(TremoliteBase):
+        __slots__ = ((
+            'many',             #   Tuple of String
+        ))
+
+
+        singular = true
+
+
+        def __init__(t, pattern, portray, many):
+            t.pattern = pattern
+            t.portray = portray
+            t.many    = many
+
+
+        def __repr__(t):
+            return arrange('<TremoliteAny %s %s>',
+                           portray_string(t.pattern),
+                           ' '.join(portray_string(v)  for v in t.many))
 
 
     class TremoliteGroup(TremoliteBase):
@@ -146,32 +173,71 @@ def gem():
     END_OF_STRING = TremoliteSpecialSingular(r'\Z', 'END_OF_STRING')
 
 
-    def find_pattern_exact(c, s):
-        a = lookup_ascii(c)
-
-        if not a.is_printable:
-            raise_runtime_error('invalid character <%s> passed to EXACT(%s)', portray_string(c), portray_string(s))
-
-        return a.pattern
-
-
     def create_exact(s):
         assert length(s) >= 1
 
-        return intern_string(''.join(find_pattern_exact(c, s)   for c in s))
+        many   = []
+        append = many.append
+
+        for c in s:
+            a = lookup_ascii(c)
+
+            if not a.is_printable:
+                raise_runtime_error('invalid character <%s> passed to EXACT(%s)', portray_string(c), portray_string(s))
+
+            append(a.pattern)
+
+        return intern_string(''.join(many))
 
 
-    def EXACT(s):
-        assert length(s) >= 1
+    @export
+    def ANY(*arguments):
+        assert length(arguments) > 0
 
-        return (TremoliteMultiple   if length(s) > 1 else   TremoliteSingular)(
-                   create_exact(s), intern_arrange('EXACT(%s)', portray_string(s)), intern_string(s),
+        many   = ['[']
+        append = many.append
+
+        for s in arguments:
+            if length(s) is 1:
+                assert lookup_ascii(s).is_printable
+
+                many.append(s)
+            else:
+                assert (length(s) is 3) and (s[1] is '-')
+
+                a0 = lookup_ascii(s[0])
+                a2 = lookup_ascii(s[2])
+
+                if not a0.is_printable:
+                    raise_runtime_error('invalid character <%s> passed to ANY(%s)', portray_string(s[0]), portray_string(s))
+
+                if not a2.is_printable:
+                    raise_runtime_error('invalid character <%s> passed to ANY(%s)', portray_string(s[2]), portray_string(s))
+
+                many.append(a0.pattern + '-' + a2.pattern)
+
+        many.append(']')
+
+        return TremoliteAny(
+                   intern_string(''.join(many)),
+                   intern_arrange('ANY(%s)', ', '.join(portray_string(s)   for s in arguments)),
+                   Tuple(intern_string(s)   for s in arguments)
                )
+
+
+    if 0:
+        def EXACT(s):
+            assert length(s) >= 1
+
+            return (TremoliteMultiple   if length(s) > 1 else   TremoliteSingular)(
+                       create_exact(s), intern_arrange('EXACT(%s)', portray_string(s)), intern_string(s),
+                   )
 
 
     @export
     def GROUP(group_name, inside):
-        inside = WRAP(inside)
+        if type(inside) is String:
+            inside = wrap_string(inside)
 
         return TremoliteGroup(
                    intern_arrange('(?P<%s>%s)', group_name, inside.pattern),
@@ -181,25 +247,14 @@ def gem():
                )
 
 
-    def WRAP(s):
-        if type(s) is String:
-            assert length(s) >= 1
+    def wrap_string(s):
+        assert (type(s) is String) and (length(s) >= 1)
 
-            return (TremoliteMultiple   if length(s) > 1 else   TremoliteSingular)(
-                       create_exact(s), intern_string(portray_string(s)), intern_string(s),
-                   )
-
-        assert s.is_tremolite
-
-        return s
+        return (TremoliteMultiple   if length(s) > 1 else   TremoliteSingular)(
+                   create_exact(s), intern_string(portray_string(s)), intern_string(s),
+               )
 
 
     export(
         'END_OF_STRING',    END_OF_STRING,
     )
-
-
-    test = r'fake: \r' + GROUP('abc', '(abc)') + 'end' + END_OF_STRING
-
-    line('%s', test)
-    line('%r', test)

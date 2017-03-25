@@ -29,12 +29,13 @@ def gem():
     @share
     def main():
         for [pattern, test] in [
-                [   'x' + END_OF_STRING,                                          'x'         ],
-                [   'x' + GROUP('abc', 'y') + END_OF_STRING,                      'xy'        ],
-                [   'x' + GROUP('abc', 'y') + GROUP('z', 'z') + END_OF_STRING,    'xyz'       ],
+                [   'x' + END_OF_STRING,                                                        'x'         ],
+                [   'x' + GROUP('abc', 'y') + END_OF_STRING,                                    'xy'        ],
+                [   'x' + GROUP('abc', ANY('a-z', 'A-Z')) + GROUP('z', 'z') + END_OF_STRING,    'xYz'       ],
         ]:
             compiled = pattern.compile_ascii_regular_expression()
             m        = compiled.match(test)
 
             line('%s', pattern)
+            line('%r', pattern)
             line('  %r %r', m.group(), m.groups())

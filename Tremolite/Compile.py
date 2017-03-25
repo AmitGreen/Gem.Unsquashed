@@ -86,7 +86,7 @@ def gem():
 
             return python__bedrock_compile_regular_expression(
                        regular_expression, flags, code,
-                       length(parsed) - 1,
+                       length(parsed) - 2,
                        { k : i - 1   for [i, k] in enumerate(parsed)   if i >= 2 },
                        index_group,
                    )
@@ -106,8 +106,7 @@ def gem():
 
         return python__bedrock_compile_regular_expression(
                    regular_expression, 0, code,
-                   length(parsed),
-                   { k : i   for [i, k] in enumerate(parsed)   if i >= 1 },
-                   index_group,
+                   length(parsed) - 1,
+                   { k : i   for [i, k] in enumerate(parsed)   if i >= 1 }, index_group,
                )
     #</copyright>
