@@ -458,7 +458,7 @@ def gem():
     del PortrayStringState.__init__, PortrayStringState.setup
 
 
-    @export
+    @built_in
     def portray_raw_string(s):
         iterator = iterate(s)
         overall  = E
@@ -581,7 +581,7 @@ def gem():
         return overall.rq(raw_state)(s)
 
 
-    @export
+    @built_in
     def portray_string(s):
         iterator = iterate(s)
         overall  = E

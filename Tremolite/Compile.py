@@ -58,7 +58,7 @@ def gem():
         code  = List(ordinal(c)   for c in parsed[0])
         flags = parsed[1]
 
-        line('flags: %r', flags)
+        #line('flags: %r', flags)
 
         if flags.__class__ is Integer:
             if total is 2:

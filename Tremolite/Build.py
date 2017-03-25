@@ -3,11 +3,10 @@
 #
 @gem('Tremolite.Build')
 def gem():
-    require_gem('Gem.PortrayString')
     require_gem('Tremolite.Core')
 
 
-    from Gem import execute, portray_raw_string
+    from Gem import execute
 
 
     exact_map   = {}
@@ -56,7 +55,7 @@ def gem():
 
         def __repr__(t):
             return arrange('<TremoliteAdd %s %s>',
-                           portray_raw_string(t.pattern),
+                           portray_string(t.pattern),
                            ' '.join(portray(v)   for v in t.many))
 
 
@@ -81,7 +80,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<TremoliteSepcial %s %s %s>', portray_raw_string(t.pattern), t.singular, t.original)
+            return arrange('<TremoliteSpecial %s %s %s>', portray_string(t.pattern), t.singular, t.original)
 
 
         def __str__(t):
@@ -106,11 +105,11 @@ def gem():
 
         def __repr__(t):
             return arrange('<TremoliteExact %s %s %s>',
-                           portray_raw_string(t.pattern), t.singular, portray_raw_string(t.exact))
+                           portray_string(t.pattern), t.singular, portray_string(t.exact))
 
 
         def __str__(t):
-            return arrange('EXACT(%s)', portray_raw_string(t.exact))
+            return arrange('EXACT(%s)', portray_string(t.exact))
 
 
     END_OF_STRING = TremoliteSpecial(r'\Z', true, 'END_OF_STRING')

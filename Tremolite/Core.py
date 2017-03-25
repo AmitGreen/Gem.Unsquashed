@@ -7,6 +7,7 @@ def gem():
     require_gem('Gem.Exception')
     require_gem('Gem.Import')           #   For import_module
     require_gem('Gem.Map')
+    require_gem('Gem.PortrayString')
 
 
     from Gem import encode_ascii, first_map_item, iterate_items_sorted_by_key, raise_value_error, view_items
