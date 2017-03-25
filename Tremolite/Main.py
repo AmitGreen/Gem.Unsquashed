@@ -30,7 +30,7 @@ def gem():
     def main():
         for [pattern, test] in [
                 [   'x' + END_OF_STRING,                                                        'x'         ],
-                [   'x' + GROUP('abc', 'y') + END_OF_STRING,                                    'xy'        ],
+                [   'x' + ('lemo' + ANY('a-z') | GROUP('abc', 'y')) + END_OF_STRING,            'xy'        ],
                 [   'x' + GROUP('abc', ANY('a-z', 'A-Z')) + GROUP('z', 'z') + END_OF_STRING,    'xYz'       ],
         ]:
             compiled = pattern.compile_ascii_regular_expression()

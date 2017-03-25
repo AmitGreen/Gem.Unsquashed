@@ -15,7 +15,7 @@ def gem():
 
 
         is_tremolite     = true
-        is_tremolite_add = false
+        is_tremolite_or  = false
 
 
         #def __init__(t, pattern, portray):
@@ -26,15 +26,26 @@ def gem():
         def __add__(t, that):
             if type(that) is String:
                 that = wrap_string(that)
-
-            if t.is_tremolite_add:
-                return TremoliteAdd(t.pattern + that.pattern, t.portray + ' + ' + that.portray, t.many + ((that,)) )
+            elif that.is_tremolite_or:
+                that = TremoliteParenthesis(
+                           intern_arrange('(?:%s)', that.pattern),
+                           intern_arrange('(%s)', that.portray),
+                           that,
+                       )
 
             return TremoliteAdd(t.pattern + that.pattern, t.portray + ' + ' + that.portray, ((t, that)) )
 
 
+        def __or__(t, that):
+            return TremoliteOr(t.pattern + '|' + that.pattern, t.portray + ' | ' + that.portray, ((t, that)) )
+
+
         def __radd__(t, that):
             return wrap_string(that) + t
+
+
+        def __ror__(t, that):
+            return wrap_string(that) | t
 
 
         def __str__(t):
@@ -55,10 +66,6 @@ def gem():
         ))
 
 
-        is_tremolite_add = true
-        singular         = false
-
-
         def __init__(t, pattern, portray, many):
             t.pattern = pattern
             t.portray = portray
@@ -69,6 +76,19 @@ def gem():
             return arrange('<TremoliteAdd %s %s>',
                            portray_string(t.pattern),
                            ' '.join((portray_string(v)   if type(v) is String else   portray(v))  for v in t.many))
+
+
+        def __add__(t, that):
+            if type(that) is String:
+                that = wrap_string(that)
+            elif that.is_tremolite_or:
+                that = TremoliteParenthesis(
+                           intern_arrange('(?:%s)', that.pattern),
+                           intern_arrange('(%s)', that.portray),
+                           that,
+                       )
+
+            return TremoliteAdd(t.pattern + that.pattern, t.portray + ' + ' + that.portray, t.many + ((that,)) )
 
 
     class TremoliteAny(TremoliteBase):
@@ -116,6 +136,46 @@ def gem():
 
 
 
+    class TremoliteOr(TremoliteBase):
+        __slots__ = ((
+            'many',             #   Tuple of TremoliteBase+
+        ))
+
+
+        is_tremolite_or = true
+        singular        = false
+
+
+        def __init__(t, pattern, portray, many):
+            t.pattern = pattern
+            t.portray = portray
+            t.many    = many
+
+
+        def __repr__(t):
+            return arrange('<TremoliteOr %s %s>',
+                           portray_string(t.pattern),
+                           ' '.join((portray_string(v)   if type(v) is String else   portray(v))  for v in t.many))
+
+
+        def __add__(t, that):
+            return (
+                         TremoliteParenthesis(
+                             intern_arrange('(?:%s)', t.pattern),
+                             intern_arrange('(%s)', t.portray),
+                             t,
+                         )
+                       + that
+                   )
+
+
+        def __or__(t, that):
+            if type(that) is String:
+                that = wrap_string(that)
+
+            return TremoliteOr(t.pattern + '|' + that.pattern, t.portray + ' | ' + that.portray, t.many + ((that,)) )
+
+
     class TremoliteMultiple(TremoliteBase):
         __slots__ = ((
             'exact',            #   String
@@ -135,9 +195,28 @@ def gem():
             return arrange('<TremoliteMultiple %s %s>', portray_string(t.pattern), portray_string(t.exact))
 
 
+    class TremoliteParenthesis(TremoliteBase):
+        __slots__ = ((
+            'inside',                   #   String
+        ))
+
+
+        singular = true
+
+
+        def __init__(t, pattern, portray, inside):
+            t.pattern = intern_string(pattern)
+            t.portray = portray
+            t.inside  = inside
+
+
+        def __repr__(t):
+            return arrange('<TremoliteParenthesis %s %r>', portray_string(t.pattern), t.inside)
+
+
     class TremoliteSingular(TremoliteBase):
         __slots__ = ((
-            'exact',            #   String
+            'exact',                    #   String
         ))
 
 
