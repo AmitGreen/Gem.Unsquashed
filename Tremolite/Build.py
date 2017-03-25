@@ -14,6 +14,7 @@ def gem():
         ))
 
 
+        is_repeated      = false
         is_tremolite     = true
         is_tremolite_or  = false
 
@@ -27,16 +28,17 @@ def gem():
             if type(that) is String:
                 that = wrap_string(that)
             elif that.is_tremolite_or:
-                that = TremoliteParenthesis(
-                           intern_arrange('(?:%s)', that.pattern),
-                           intern_arrange('(%s)', that.portray),
-                           that,
-                       )
+                that = wrap_parenthesis(that)
 
             return TremoliteAdd(t.pattern + that.pattern, t.portray + ' + ' + that.portray, ((t, that)) )
 
 
         def __or__(t, that):
+            if type(that) is String:
+                that = wrap_string(that)
+            else:
+                assert not that.is_tremolite_or
+
             return TremoliteOr(t.pattern + '|' + that.pattern, t.portray + ' | ' + that.portray, ((t, that)) )
 
 
@@ -82,11 +84,7 @@ def gem():
             if type(that) is String:
                 that = wrap_string(that)
             elif that.is_tremolite_or:
-                that = TremoliteParenthesis(
-                           intern_arrange('(?:%s)', that.pattern),
-                           intern_arrange('(%s)', that.portray),
-                           that,
-                       )
+                that = wrap_parenthesis(that)
 
             return TremoliteAdd(t.pattern + that.pattern, t.portray + ' + ' + that.portray, t.many + ((that,)) )
 
@@ -130,10 +128,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<TremoliteGroup %s %s>',
-                           t.group_name,
-                           portray_string(t.inside)   if type(t.inside) is String else   portray(t.inside))
-
+            return arrange('<TremoliteGroup %s %r>', t.group_name, t.inside)
 
 
     class TremoliteOr(TremoliteBase):
@@ -159,14 +154,7 @@ def gem():
 
 
         def __add__(t, that):
-            return (
-                         TremoliteParenthesis(
-                             intern_arrange('(?:%s)', t.pattern),
-                             intern_arrange('(%s)', t.portray),
-                             t,
-                         )
-                       + that
-                   )
+            return wrap_parenthesis(t) + that
 
 
         def __or__(t, that):
@@ -186,9 +174,9 @@ def gem():
 
 
         def __init__(t, pattern, portray, exact):
-            t.pattern  = intern_string(pattern)
+            t.pattern  = pattern
             t.portray  = portray
-            t.exact    = intern_string(exact)
+            t.exact    = exact
 
 
         def __repr__(t):
@@ -214,6 +202,26 @@ def gem():
             return arrange('<TremoliteParenthesis %s %r>', portray_string(t.pattern), t.inside)
 
 
+    class TremoliteRepeat(TremoliteBase):
+        __slots__ = ((
+            'repeated',                 #   String
+        ))
+
+
+        is_repeated = true
+        singular    = true
+
+
+        def __init__(t, pattern, portray, repeated):
+            t.pattern  = pattern
+            t.portray  = portray
+            t.repeated = repeated
+
+
+        def __repr__(t):
+            return arrange('<TremoliteRepeat %s %r>', portray_string(t.pattern), t.repeated)
+
+
     class TremoliteSingular(TremoliteBase):
         __slots__ = ((
             'exact',                    #   String
@@ -224,9 +232,9 @@ def gem():
 
 
         def __init__(t, pattern, portray, exact):
-            t.pattern  = intern_string(pattern)
+            t.pattern  = pattern
             t.portray  = portray
-            t.exact    = intern_string(exact)
+            t.exact    = exact
 
 
         def __repr__(t):
@@ -304,13 +312,13 @@ def gem():
                )
 
 
-    if 0:
-        def EXACT(s):
-            assert length(s) >= 1
+    @export
+    def EXACT(s):
+        assert length(s) >= 1
 
-            return (TremoliteMultiple   if length(s) > 1 else   TremoliteSingular)(
-                       create_exact(s), intern_arrange('EXACT(%s)', portray_string(s)), intern_string(s),
-                   )
+        return (TremoliteMultiple   if length(s) > 1 else   TremoliteSingular)(
+                   create_exact(s), intern_arrange('EXACT(%s)', portray_string(s)), intern_string(s),
+               )
 
 
     @export
@@ -322,6 +330,31 @@ def gem():
                    intern_arrange('(?P<%s>%s)', group_name, inside.pattern),
                    arrange('GROUP(%s, %s)', portray_string(group_name), inside),
                    group_name,
+                   inside,
+               )
+
+
+    @export
+    def OPTIONAL(inside):
+        if type(inside) is String:
+            inside = wrap_string(inside)
+
+        if not inside.singular:
+            inside = wrap_parenthesis(inside)
+
+        return TremoliteRepeat(
+                   intern_arrange('%s?', inside.pattern),
+                   arrange('OPTIONAL(%s)', inside),
+                   inside,
+               )
+
+
+    def wrap_parenthesis(inside):
+        assert not inside.singular
+
+        return TremoliteParenthesis(
+                   intern_arrange('(?:%s)', inside.pattern),
+                   intern_arrange('(%s)', inside.portray),
                    inside,
                )
 

@@ -29,9 +29,9 @@ def gem():
     @share
     def main():
         for [pattern, test] in [
-                [   'x' + END_OF_STRING,                                                        'x'         ],
-                [   'x' + ('lemo' + ANY('a-z') | GROUP('abc', 'y')) + END_OF_STRING,            'xy'        ],
-                [   'x' + GROUP('abc', ANY('a-z', 'A-Z')) + GROUP('z', 'z') + END_OF_STRING,    'xYz'       ],
+                [   OPTIONAL('a') + OPTIONAL('bc') + OPTIONAL(EXACT('d') | 'ef') + 'x' + END_OF_STRING, 'efx'       ],
+                [   'x' + ('lemo' + ANY('a-z') | GROUP('abc', 'y')) + END_OF_STRING,                    'xy'        ],
+                [   'x' + GROUP('abc', ANY('a-z', 'A-Z')) + GROUP('z', 'z') + END_OF_STRING,            'xYz'       ],
         ]:
             compiled = pattern.compile_ascii_regular_expression()
             m        = compiled.match(test)
@@ -39,3 +39,4 @@ def gem():
             line('%s', pattern)
             line('%r', pattern)
             line('  %r %r', m.group(), m.groups())
+            line()
