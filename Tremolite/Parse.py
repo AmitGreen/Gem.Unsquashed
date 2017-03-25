@@ -56,10 +56,7 @@ def gem():
         if groups is 1:
             assert length(group_map) is 0
 
-            if full_flags is 0:
-                return code
-
-            return ((code, full_flags))
+            return ((code, 0, full_flags))
 
         if groups is 2:
             assert length(group_map) is 1
@@ -68,10 +65,7 @@ def gem():
 
             assert i is 1
 
-            if full_flags is 0:
-                return (( code, intern_string(k) ))
-
-            return (( code, full_flags, intern_string(k) ))
+            return ((code, (( none, intern_string(k) )), full_flags))
 
         if is_python_2:
             if groups > 100:
@@ -79,15 +73,12 @@ def gem():
 
         assert groups == 1 + length(group_map)
 
-        index_group = [code] * groups
+        index_group = list_of_single_none * groups
 
         for [k, i] in view_items(group_map):
-            assert index_group[i] is code
+            assert index_group[i] is none
 
             index_group[i] = intern_string(k)
 
-        if full_flags is not 0:
-            index_group.insert(1, full_flags)
-
-        return Tuple(index_group)
+        return ((code, Tuple(index_group), full_flags))
     #</copyright>

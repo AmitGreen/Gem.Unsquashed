@@ -14,9 +14,8 @@ def gem():
 
 
     @export
-    def compile_regular_expression(regular_expression, parsed):
+    def compile_regular_expression(regular_expression, code, groups = 0, flags = 0):
         assert type(regular_expression) is String
-
 
         if not __debug__:
             regular_expression = none
@@ -40,86 +39,23 @@ def gem():
         #   NOTE:  Dual copyright only applies to the changes, not to the original code which is obviously
         #          only licensed under the original license.
         #
-        if type(parsed) is String:
-            return python__bedrock_compile_regular_expression(
-                       regular_expression, 0, List(ordinal(c)   for c in parsed),
-                       0,
-                       empty_map,
-                       list_of_single_none,
-                   )
-
-        assert type(parsed) is Tuple
-
-        total = length(parsed)
-
-        assert total >= 2
-
-        code = parsed[0]
-
-        if type(code) is Integer:
-            return python__bedrock_compile_regular_expression(
-                       regular_expression, 0, List(parsed),
-                       0,
-                       empty_map,
-                       list_of_single_none,
-                   )
-
         if type(code) is Tuple:
             code = List(code)
         else:
             code = List(ordinal(i)   for i in code)
 
-        flags = parsed[1]
-
-        #line('flags: %r', flags)
-
-        if type(flags) is Integer:
-            if total is 2:
-                return python__bedrock_compile_regular_expression(
-                           regular_expression, flags, code,
-                           0,
-                           empty_map,
-                           list_of_single_none,
-                       )
-
-            if total is 3:
-                group_1 = parsed[2]
-
-                return python__bedrock_compile_regular_expression(
-                           regular_expression, flags, code,
-                           1,
-                           { group_1 : 1 },
-                           [none, group_1],
-                       )
-
-            index_group    = List(parsed)
-            index_group[0] = none
-
-            del index_group[1]
-
+        if groups is 0:
             return python__bedrock_compile_regular_expression(
                        regular_expression, flags, code,
-                       length(parsed) - 2,
-                       { k : i - 1   for [i, k] in enumerate(parsed)   if i >= 2 },
-                       index_group,
+                       0,
+                       empty_map,
+                       ((none,)),
                    )
-
-        if total is 2:
-            group_1 = parsed[1]
-
-            return python__bedrock_compile_regular_expression(
-                       regular_expression, 0, code,
-                       1,
-                       { group_1 : 1 },
-                       [none, group_1],
-                   )
-
-        index_group    = List(parsed)
-        index_group[0] = none
 
         return python__bedrock_compile_regular_expression(
-                   regular_expression, 0, code,
-                   length(parsed) - 1,
-                   { k : i   for [i, k] in enumerate(parsed)   if i >= 1 }, index_group,
+                   regular_expression, flags, code,
+                   length(groups) - 1,
+                   { k : i   for [i, k] in enumerate(groups)   if i >= 1 },
+                   groups,
                )
     #</copyright>

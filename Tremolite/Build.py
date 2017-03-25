@@ -55,7 +55,7 @@ def gem():
 
 
         def compile_ascii_regular_expression(t):
-            return compile_regular_expression(t.pattern, parse_ascii_regular_expression(t.pattern))
+            return compile_regular_expression(t.pattern, *parse_ascii_regular_expression(t.pattern))
 
 
     class TremoliteAdd(TremoliteBase):
