@@ -58,7 +58,7 @@ def gem():
 
             return arrange('<TremoliteAdd %s %s>',
                            portray_string(t.pattern),
-                           ' '.join((portray_string(v)   if v.__class__ is String else   portray(v))  for v in t.many))
+                           ' '.join((portray_string(v)   if type(v) is String else   portray(v))  for v in t.many))
 
 
     class TremoliteGroup(TremoliteBase):
@@ -81,7 +81,7 @@ def gem():
         def __repr__(t):
             return arrange('<TremoliteGroup %s %s>',
                            t.group_name,
-                           portray_string(t.inside)   if t.inside.__class__ is String else   portray(t.inside))
+                           portray_string(t.inside)   if type(t.inside) is String else   portray(t.inside))
 
 
 

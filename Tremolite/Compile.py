@@ -15,7 +15,7 @@ def gem():
 
     @export
     def compile_regular_expression(regular_expression, parsed):
-        assert regular_expression.__class__ is String
+        assert type(regular_expression) is String
 
 
         if not __debug__:
@@ -40,7 +40,7 @@ def gem():
         #   NOTE:  Dual copyright only applies to the changes, not to the original code which is obviously
         #          only licensed under the original license.
         #
-        if parsed.__class__ is String:
+        if type(parsed) is String:
             return python__bedrock_compile_regular_expression(
                        regular_expression, 0, List(ordinal(c)   for c in parsed),
                        0,
@@ -60,7 +60,7 @@ def gem():
 
         #line('flags: %r', flags)
 
-        if flags.__class__ is Integer:
+        if type(flags) is Integer:
             if total is 2:
                 return python__bedrock_compile_regular_expression(
                            regular_expression, flags, code,

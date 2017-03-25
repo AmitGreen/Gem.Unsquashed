@@ -36,7 +36,7 @@ def gem():
                 is_symbolic_link    = false,
                 nonexistent         = false,
         ):
-            assert name.__class__ is String
+            assert type(name) is String
 
             assert (
                      (

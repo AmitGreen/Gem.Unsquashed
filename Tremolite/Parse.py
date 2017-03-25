@@ -12,8 +12,8 @@ def gem():
 
     @export
     def parse_ascii_regular_expression(regular_expression, flags = 0):
-        assert regular_expression.__class__ is String
-        assert flags             .__class__ is Integer
+        assert type(regular_expression) is String
+        assert type(flags)              is Integer
 
 
         #
