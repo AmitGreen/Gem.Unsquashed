@@ -29,10 +29,11 @@ def gem():
     @share
     def main():
         for [pattern, test] in [
-                [   OPTIONAL('a') + OPTIONAL('bc') + OPTIONAL(EXACT('d') | 'ef') + 'x' + END_OF_STRING, 'efx'       ],
-                [   'x' + ('lemo' + ANY('a-z') | GROUP('abc', 'y')) + END_OF_STRING,                    'xy'        ],
-                [   'x' + GROUP('abc', ANY('a-z', 'A-Z')) + GROUP('z', 'z') + END_OF_STRING,            'xYz'       ],
-                [   ONE_OR_MORE('x') + END_OF_STRING,                                                   'xx'        ],
+                [   OPTIONAL('bc') + OPTIONAL(EXACT('d') + 'g' | EXACT('hi') + 'j') + 'x' + END_OF_STRING,  'hijx'      ],
+                [   'x' + ('lemo' + ANY('a-z') | GROUP('abc', 'y')) + END_OF_STRING,                        'xy'        ],
+                [   'x' + GROUP('abc', ANY('a-z', 'A-Z')) + GROUP('z', 'z') + END_OF_STRING,                'xYz'       ],
+                [   OPTIONAL('a') + ONE_OR_MORE('x') + ZERO_OR_MORE('yz') + END_OF_STRING,                  'xx'        ],
+                [   'a' + (EXACT('b') | 'ci') + 'd',                                                        'acid'      ],
         ]:
             line('%s', pattern)
             line('%r', pattern)

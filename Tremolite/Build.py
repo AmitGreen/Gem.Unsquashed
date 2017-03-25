@@ -336,7 +336,7 @@ def gem():
             inside = wrap_string(inside)
 
         if not inside.singular:
-            inside = wrap_parenthesis(inside)
+            inside = wrap_parenthesis(inside, invisible = true)
 
         return TremoliteRepeat(
                    intern_arrange('%s+', inside.pattern),
@@ -351,7 +351,7 @@ def gem():
             inside = wrap_string(inside)
 
         if not inside.singular:
-            inside = wrap_parenthesis(inside)
+            inside = wrap_parenthesis(inside, invisible = true)
 
         return TremoliteRepeat(
                    intern_arrange('%s?', inside.pattern),
@@ -360,12 +360,27 @@ def gem():
                )
 
 
-    def wrap_parenthesis(inside):
+    @export
+    def ZERO_OR_MORE(inside):
+        if type(inside) is String:
+            inside = wrap_string(inside)
+
+        if not inside.singular:
+            inside = wrap_parenthesis(inside, invisible = true)
+
+        return TremoliteRepeat(
+                   intern_arrange('%s*', inside.pattern),
+                   arrange('ZERO_OR_MORE(%s)', inside),
+                   inside,
+               )
+
+
+    def wrap_parenthesis(inside, invisible = false):
         assert not inside.singular
 
         return TremoliteParenthesis(
                    intern_arrange('(?:%s)', inside.pattern),
-                   intern_arrange('(%s)', inside.portray),
+                   (inside.portray   if invisible else   intern_arrange('(%s)', inside.portray)),
                    inside,
                )
 
