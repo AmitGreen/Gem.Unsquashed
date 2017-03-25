@@ -4,6 +4,7 @@
 @gem('Tremolite.Build')
 def gem():
     require_gem('Tremolite.Core')
+    require_gem('Tremolite.Parse')
 
 
     class TremoliteBase(Object):
@@ -39,6 +40,10 @@ def gem():
             return t.portray
 
 
+        def compile_ascii_regular_expression(t):
+            return compile_regular_expression(t.pattern, parse_ascii_regular_expression(t.pattern))
+
+
     class TremoliteAdd(TremoliteBase):
         __slots__ = ((
             'many',             #   Tuple of TremoliteBase+
@@ -55,7 +60,6 @@ def gem():
             t.many    = many
 
         def __repr__(t):
-
             return arrange('<TremoliteAdd %s %s>',
                            portray_string(t.pattern),
                            ' '.join((portray_string(v)   if type(v) is String else   portray(v))  for v in t.many))
@@ -101,7 +105,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<TremolitMultiple %s %s>', portray_string(t.pattern), portray_string(t.exact))
+            return arrange('<TremoliteMultiple %s %s>', portray_string(t.pattern), portray_string(t.exact))
 
 
     class TremoliteSingular(TremoliteBase):
@@ -120,7 +124,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<TremolitSingular %s %s>', portray_string(t.pattern), portray_string(t.exact))
+            return arrange('<TremoliteSingular %s %s>', portray_string(t.pattern), portray_string(t.exact))
 
 
     class TremoliteSpecialSingular(TremoliteBase):
@@ -146,7 +150,7 @@ def gem():
         a = lookup_ascii(c)
 
         if not a.is_printable:
-            raise_runtime_error('Invalid character <%s> passed to EXACT(%s)', portray_string(c), portray_string(s))
+            raise_runtime_error('invalid character <%s> passed to EXACT(%s)', portray_string(c), portray_string(s))
 
         return a.pattern
 
@@ -157,7 +161,6 @@ def gem():
         return intern_string(''.join(find_pattern_exact(c, s)   for c in s))
 
 
-    @export
     def EXACT(s):
         assert length(s) >= 1
 
@@ -176,7 +179,6 @@ def gem():
                    group_name,
                    inside,
                )
-
 
 
     def WRAP(s):

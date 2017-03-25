@@ -101,13 +101,13 @@ def gem():
                        [none, group_1],
                    )
 
-            index_group    = List(parsed)
-            index_group[0] = none
+        index_group    = List(parsed)
+        index_group[0] = none
 
-            return python__bedrock_compile_regular_expression(
-                       regular_expression, 0, code,
-                       length(parsed),
-                       { k : i   for [i, k] in enumerate(parsed)   if i >= 1 },
-                       index_group,
-                   )
+        return python__bedrock_compile_regular_expression(
+                   regular_expression, 0, code,
+                   length(parsed),
+                   { k : i   for [i, k] in enumerate(parsed)   if i >= 1 },
+                   index_group,
+               )
     #</copyright>
