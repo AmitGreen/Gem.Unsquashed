@@ -11,6 +11,14 @@ def gem():
 
 
     #
+    #   intern_arrange
+    #
+    @built_in
+    def intern_arrange(format, *arguments):
+        return intern_string(format % arguments)
+
+
+    #
     #   line
     #
     flush_standard_output = PythonSystem.stdout.flush
@@ -65,10 +73,12 @@ def gem():
         'introspection',    PythonBuiltIn.dir,
         'iterate',          PythonBuiltIn.iter,
         'iterate_range',    PythonBuiltIn.range,
+        'maximum',          PythonBuiltIn.max,
         'ordinal',          PythonBuiltIn.ord,
         'portray',          PythonBuiltIn.repr,
         'property',         PythonBuiltIn.property,
         'sorted_list',      PythonBuiltIn.sorted,
+        'static_method',    PythonBuiltIn.staticmethod,
         'type',             PythonBuiltIn.type,
 
         #

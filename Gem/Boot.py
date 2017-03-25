@@ -87,7 +87,7 @@ def gem():
     #       Gem.Core
     #       Gem.Restricted
     #       Gem.Shared
-    #   
+    #
     for module in [Gem, GemBuiltIn, GemPrivileged, GemShared]:
         store_python_module(module.__name__, module)
 
@@ -671,7 +671,7 @@ def gem():
 
         if parent_module is none:
             parent_module = require_gem(parent_module_name)
-        
+
         Shared_Scope = parent_module.Shared.__dict__
 
         if child_module_name == 'Main':
