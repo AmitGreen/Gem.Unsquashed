@@ -71,26 +71,37 @@ def gem():
         is_special_pattern = FrozenSet(r'$()*+.?[\]^{}').__contains__
 
         for i in iterate_range(0, 128):
-            c         = character(i)
-            c_portray = portray(c)[1:-1]
+            c = character(i)
 
             if not (32 <= i <= 126):
+                c_portray = intern_string(portray(c)[1:-1])
+
                 store_ascii(c, Ascii(c, c_portray, c_portray))
                 continue
 
             if c == '"':
-                store_ascii(c, Ascii(c, c_portray, '"', is_quotation_mark = true, is_printable = true))
+                store_ascii(c, Ascii(c, c, c, is_quotation_mark = true, is_printable = true))
                 continue
 
             if c == '\\':
-                store_ascii(c, Ascii(c, c_portray, '\\', is_backslash = true, is_printable = true))
+                portay_backslash = intern_string(r'\\')
+
+                store_ascii(c, Ascii(c, portay_backslash, portay_backslash, is_backslash = true, is_printable = true))
                 continue
 
             if c == "'":
-                store_ascii(c, Ascii(c, c_portray, "'", is_printable = true, is_apostrophe = true))
+                store_ascii(c, Ascii(c, c, c, is_printable = true, is_apostrophe = true))
                 continue
 
-            store_ascii(c, Ascii(c, c_portray, ('\\' + c    if is_special_pattern(c) else    c), is_printable = true))
+            store_ascii(
+                c,
+                Ascii(
+                    c,
+                    c,
+                    (intern_string('\\' + c)    if is_special_pattern(c) else    c),
+                    is_printable = true,
+                ),
+            )
 
 
         if 0:
