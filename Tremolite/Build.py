@@ -21,21 +21,16 @@ def gem():
 
 
         def __add__(t, that):
-            if that.__class__ is String:
-                that_pattern = create_exact(that)
-            else:
-                that_pattern = that.pattern
+            that = WRAP(that)
 
             if t.is_tremolite_add:
-                return TremoliteAdd(t.pattern + that_pattern, t.many + ((that,)) )
+                return TremoliteAdd(t.pattern + that.pattern, t.many + ((that,)) )
 
-            return TremoliteAdd(t.pattern + that_pattern, ((t, that)) )
+            return TremoliteAdd(t.pattern + that.pattern, ((t, that)) )
 
 
         def __radd__(t, that):
-            assert that.__class__ is String
-
-            return TremoliteAdd(create_exact(that) + t.pattern, ((that, t)) )
+            return WRAP(that) + t
 
 
     class TremoliteAdd(TremoliteBase):
@@ -86,7 +81,7 @@ def gem():
 
         def __str__(t):
             return arrange('GROUP(%s, %s)',
-                           t.group_name,
+                           portray_string(t.group_name),
                            portray_string(t.inside)   if t.inside.__class__ is String else   t.inside)
 
 
@@ -137,27 +132,52 @@ def gem():
             return t.original
 
             
-    class TremoliteSingular(TremoliteBase):
+    class TremoliteMultiple(TremoliteBase):
         __slots__ = ((
+            'portray',          #   String
             'exact',            #   String
         ))
 
 
-        singular     = true
+        singular = false
 
 
-        def __init__(t, pattern, exact):
+        def __init__(t, pattern, portray, exact):
             t.pattern  = intern_string(pattern)
+            t.portray  = portray
             t.exact    = intern_string(exact)
 
 
         def __repr__(t):
-            return arrange('<TremoliteSingular %s %s>',
-                           portray_string(t.pattern), portray_string(t.exact))
+            return arrange('<TremolitMultiple %s %s>', portray_string(t.pattern), portray_string(t.exact))
 
 
         def __str__(t):
-            return arrange('EXACT(%s)', portray_string(t.exact))
+            return t.portray
+
+
+    class TremoliteSingular(TremoliteBase):
+        __slots__ = ((
+            'portray',          #   String
+            'exact',            #   String
+        ))
+
+
+        singular = true
+
+
+        def __init__(t, pattern, portray, exact):
+            t.pattern  = intern_string(pattern)
+            t.portray  = portray
+            t.exact    = intern_string(exact)
+
+
+        def __repr__(t):
+            return arrange('<TremolitSingular %s %s>', portray_string(t.pattern), portray_string(t.exact))
+
+
+        def __str__(t):
+            return t.portray
 
 
     END_OF_STRING = TremoliteSpecial(r'\Z', true, 'END_OF_STRING')
@@ -182,20 +202,29 @@ def gem():
     def EXACT(s):
         assert length(s) >= 1
 
-        if length(s) == 1:
-            return TremoliteSingular(create_exact(s), intern_string(s))
-
-        return TremoliteMultiple(create_exact(s), intern_string(s))
+        return (TremoliteMultiple   if length(s) > 1 else   TremoliteSingular)(
+                   create_exact(s), intern_arrange('EXACT(%s)', portray_string(s)), intern_string(s),
+               )
 
 
     @export
     def GROUP(group_name, inside):
-        if type(inside) is String:
-            pattern = create_exact(inside)
-        else:
-            pattern = inside.pattern
+        inside = WRAP(inside)
 
-        return TremoliteGroup(intern_string('(?P<' + group_name + '>' + pattern + ')'), group_name, inside)
+        return TremoliteGroup(intern_string('(?P<' + group_name + '>' + inside.pattern + ')'), group_name, inside)
+
+
+    def WRAP(s):
+        if type(s) is String:
+            assert length(s) >= 1
+
+            return (TremoliteMultiple   if length(s) > 1 else   TremoliteSingular)(
+                       create_exact(s), intern_string(portray_string(s)), intern_string(s),
+                   )
+
+        assert s.is_tremolite
+
+        return s
 
 
     export(
