@@ -3,91 +3,7 @@
 #
 @gem('Gem.RawString')
 def gem():
-    require_gem('Gem.CatchException')
-    require_gem('Gem.Map')
-
-
-    from Gem import execute
-
-
-    ascii_map   = {}
-    lookup_ascii = ascii_map.get
-
-
-    class Ascii(Object):
-        __slots__ = ((
-            'c',                        #   String
-            'portray',                  #   String
-            'is_backslash',             #   Boolean
-            'is_double_quote',          #   Boolean
-            'is_printable',             #   Boolean
-            'is_single_quote',          #   Boolean
-        ))
-
-
-        def __init__(
-                t, c, portray,
-
-                is_backslash    = false,
-                is_double_quote = false,
-                is_printable    = false,
-                is_single_quote = false,
-        ):
-            t.c       = c
-            t.portray = portray
-
-            t.is_backslash    = is_backslash
-            t.is_double_quote = is_double_quote
-            t.is_printable    = is_printable
-            t.is_single_quote = is_single_quote
-
-
-        if __debug__:
-            def __repr__(t):
-                other = ''
-
-                if t.is_backslash:         other += ' is_backslash'
-                if t.is_double_quote:      other += ' is_double_quote'
-                if t.is_printable:         other += ' is_printable'
-                if t.is_single_quote:      other += ' is_single_quote'
-
-                return arrange('<Ascii %r %r%s>', t.c, t.portray, other)
-
-
-    #unknown_ascii = Ascii(none, none, is_unknown = true)
-
-
-    @execute
-    def execute():
-        store_ascii = ascii_map.__setitem__
-
-        for i in iterate_range(0, 128):
-            c         = character(i)
-            c_portray = portray(c)[1:-1]
-
-            if not (32 <= i <= 126):
-                store_ascii(c, Ascii(c, c_portray))
-                continue
-
-            if c == '"':
-                store_ascii(c, Ascii(c, c_portray, is_double_quote = true, is_printable = true))
-                continue
-
-            if c == '\\':
-                store_ascii(c, Ascii(c, c_portray, is_backslash = true, is_printable = true))
-                continue
-
-            if c == "'":
-                store_ascii(c, Ascii(c, c_portray, is_printable = true, is_single_quote = true))
-                continue
-
-            store_ascii(c, Ascii(c, c_portray, is_printable = true))
-
-        del Ascii.__init__
-
-        if 0:
-            for [i, k] in iterate_items_sorted_by_key(ascii_map):
-                line('%r: %r', i, k)
+    require_gem('Gem.Ascii')
 
 
     if __debug__:
@@ -95,7 +11,8 @@ def gem():
         is_2_3_5_6_or_7 = FrozenSet([2, 3, 5, 6, 7]).__contains__
         is_3_5_or_7     = FrozenSet([3, 5, 7      ]).__contains__
 
-    is_0_or_2   = FrozenSet([ 0,  2]).__contains__
+    is_1_or_4   = FrozenSet([ 1,  4]).__contains__
+    is_2_or_6   = FrozenSet([ 2,  6]).__contains__
     is_4_or_5   = FrozenSet([ 4,  5]).__contains__
     is_6_or_7   = FrozenSet([ 6,  7]).__contains__
     is_9_or_10  = FrozenSet([ 9, 10]).__contains__
@@ -346,16 +263,26 @@ def gem():
 
         #
         #   0 = no ' or " seen
-        #   2 = saw a "
         #
-        if is_0_or_2(saw):
-            return "r'" + s + "'"
+        if saw is 0:
+            if favorite >= 0:
+                return "r'" + s + "'"
+
+            return 'r"' + s + '"'
 
         #
         #   1 = saw a '
+        #   4 = saw a '''
         #
-        if saw is 1:
+        if is_1_or_4(saw):
             return 'r"' + s + '"'
+
+        #
+        #   2 = saw a "
+        #   6 = saw a """
+        #
+        if is_2_or_6(saw):
+            return "r'" + s + "'"
 
         #
         #<special-cases>
@@ -402,18 +329,15 @@ def gem():
 
             return 'r"""' + s + '"""'
 
-
         #
-        #   4 = saw a '''
         #   5 = saw a ''' & "
         #
-        if is_4_or_5(saw):
+        if saw is 5:
             return 'r"""' + s + '"""'
 
         #
-        #   6 = saw a """
         #   7 = saw a """ & '
         #
-        assert is_6_or_7(saw)
+        assert saw is 7
 
         return "r'''" + s + "'''"
