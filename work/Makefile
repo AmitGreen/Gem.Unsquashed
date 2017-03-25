@@ -132,6 +132,7 @@ links:
 	ln -s ../Junk/PortrayString_3.py            ps3.py
 	ln -s ../Agate/RUNME.py                     rm.py
 	ln -s ../Gem/RegularExpression.py           rx.py
+	ln -s ../Gem/StringIO.py                    sio.py
 	ln -s ../Tremolite/Core.py                  tc.py
 	ln -s ../Tremolite/Main.py                  tm.py
 	ln -s ../Tremolite/Parse.py                 tp.py
