@@ -41,7 +41,7 @@ TOPAZ_FILE = \
 TREMOLITE_FILES = \
     ../Tremolite/Build.py \
     ../Tremolite/Compile.py ../Tremolite/Core.py \
-    ../Tremolite/Main.py \
+    ../Tremolite/Main.py ../Tremolite/Match.py \
     ../Tremolite/Parse.py
 
 WORK_FILES = Makefile
@@ -80,7 +80,7 @@ clean:
 	rm -f pa.py ps.py ps3.py
 	rm -f rm.py rx.py
 	rm -f sio.py
-	rm -f tc.py tm.py tp.py tu.py tx.py
+	rm -f tc.py tm.py tp.py tt.py tu.py tx.py
 	rm -f zc.py zm.py zps.py
 
 
@@ -134,6 +134,7 @@ links:
 	ln -s ../Tremolite/Core.py                  tc.py
 	ln -s ../Tremolite/Main.py                  tm.py
 	ln -s ../Tremolite/Parse.py                 tp.py
+	ln -s ../Tremolite/Match.py                 tt.py
 	ln -s ../Tremolite/Build.py                 tu.py
 	ln -s ../Tremolite/Compile.py               tx.py
 	ln -s ../Topaz/Core.py                      zc.py
