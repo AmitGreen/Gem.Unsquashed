@@ -24,7 +24,7 @@ def gem():
 
         def __add__(t, that):
             if type(that) is String:
-                that = wrap_string(that)
+                that = INVISIBLE_EXACT(that)
             elif that.is_tremolite_or:
                 that = wrap_parenthesis(that)
 
@@ -37,7 +37,7 @@ def gem():
 
         def __or__(t, that):
             if type(that) is String:
-                that = wrap_string(that)
+                that = INVISIBLE_EXACT(that)
             else:
                 assert not that.is_tremolite_or
 
@@ -49,11 +49,11 @@ def gem():
 
 
         def __radd__(t, that):
-            return wrap_string(that) + t
+            return INVISIBLE_EXACT(that) + t
 
 
         def __ror__(t, that):
-            return wrap_string(that) | t
+            return INVISIBLE_EXACT(that) | t
 
 
         def __str__(t):
@@ -91,7 +91,7 @@ def gem():
 
         def __add__(t, that):
             if type(that) is String:
-                that = wrap_string(that)
+                that = INVISIBLE_EXACT(that)
             elif that.is_tremolite_or:
                 that = wrap_parenthesis(that)
 
@@ -204,7 +204,7 @@ def gem():
 
         def __or__(t, that):
             if type(that) is String:
-                that = wrap_string(that)
+                that = INVISIBLE_EXACT(that)
 
             return TremoliteOr(
                        t.regular_expression + '|' + that.regular_expression,
@@ -303,7 +303,7 @@ def gem():
 
     def create_repeat(name, inside, m, n, question_mark = ''):
         if type(inside) is String:
-            inside = wrap_string(inside)
+            inside = INVISIBLE_EXACT(inside)
         else:
             assert inside.repeatable
 
@@ -348,7 +348,7 @@ def gem():
 
     def create_simple_repeat(name, inside, suffix):
         if type(inside) is String:
-            inside = wrap_string(inside)
+            inside = INVISIBLE_EXACT(inside)
         else:
             assert inside.repeatable
 
@@ -370,14 +370,6 @@ def gem():
                    intern_arrange('(?:%s)', inside.regular_expression),
                    (inside.portray   if invisible else   intern_arrange('(%s)', inside.portray)),
                    inside,
-               )
-
-
-    def wrap_string(s):
-        assert (type(s) is String) and (length(s) >= 1)
-
-        return TremoliteExact(
-                   create_exact(s), intern_string(portray_string(s)), intern_string(s), length(s) is 1,
                )
 
 
@@ -428,13 +420,22 @@ def gem():
     @export
     def GROUP(group_name, inside):
         if type(inside) is String:
-            inside = wrap_string(inside)
+            inside = INVISIBLE_EXACT(inside)
 
         return TremoliteGroup(
                    intern_arrange('(?P<%s>%s)', group_name, inside.regular_expression),
                    arrange('GROUP(%s, %s)', portray_string(group_name), inside),
                    group_name,
                    inside,
+               )
+
+
+    @export
+    def INVISIBLE_EXACT(s):
+        assert (type(s) is String) and (length(s) >= 1)
+
+        return TremoliteExact(
+                   create_exact(s), intern_string(portray_string(s)), intern_string(s), length(s) is 1,
                )
 
 
@@ -488,7 +489,7 @@ def gem():
             assert not singular
 
         return TremoliteSpecial(intern_string(regular_expression), intern_string(portray), repeatable, singular)
-        
+
 
     @export
     def ZERO_OR_MORE(inside):

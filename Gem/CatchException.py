@@ -37,7 +37,6 @@ def gem():
 
 
         if is_python_2:
-
             __nonzero__ = __bool__
 
 

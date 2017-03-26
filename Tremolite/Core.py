@@ -4,6 +4,7 @@
 @gem('Tremolite.Core')
 def gem():
     require_gem('Gem.Ascii')
+    require_gem('Gem.Cache')
     require_gem('Gem.Codec')
     require_gem('Gem.Exception')
     require_gem('Gem.Import')           #   For import_module
@@ -12,18 +13,19 @@ def gem():
 
 
     from Gem import encode_ascii, first_map_item, iterate_items_sorted_by_key, lookup_ascii
-    from Gem import view_items
+    from Gem import produce_cache_and_insert_function, view_items
 
 
     share(
         #
         #   Imported functions
         #
-        'encode_ascii',                 encode_ascii,
-        'first_map_item',               first_map_item,
-        'iterate_items_sorted_by_key',  iterate_items_sorted_by_key,
-        'lookup_ascii',                 lookup_ascii,
-        'view_items',                   view_items,
+        'encode_ascii',                         encode_ascii,
+        'first_map_item',                       first_map_item,
+        'iterate_items_sorted_by_key',          iterate_items_sorted_by_key,
+        'lookup_ascii',                         lookup_ascii,
+        'produce_cache_and_insert_function',    produce_cache_and_insert_function,
+        'view_items',                           view_items,
 
 
         #
