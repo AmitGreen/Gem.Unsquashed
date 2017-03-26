@@ -12,7 +12,7 @@ def gem():
             'pattern',                  #   TremoliteBase+
         ))
 
-        
+
         def __init__(t, name, pattern):
             t.name    = name
             t.pattern = pattern
@@ -38,7 +38,7 @@ def gem():
 
 
     @export
-    def dump_match_cache(): 
+    def dump_match_cache():
         line('dump_match_cache:')
 
         for [k, v] in iterate_items_sorted_by_key(cache):

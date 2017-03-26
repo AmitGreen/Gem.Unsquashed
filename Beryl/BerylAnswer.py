@@ -72,8 +72,8 @@ def gem():
                 line()
                 line('You will need to provide:')
                 line('    1.  GitHub username;')
-                line('    2.  Your name;') 
-                line('    3.  Your GPG key;') 
+                line('    2.  Your name;')
+                line('    3.  Your GPG key;')
                 line('    4.  A pronoun.')
                 line()
 

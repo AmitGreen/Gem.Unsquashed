@@ -20,13 +20,14 @@ def boot():
 
 @gem('Topaz.Main')
 def gem():
+    require_gem('Gem.DelayedFileOutput')
     require_gem('Gem.Path')
     require_gem('Topaz.Pattern')
     require_gem('Topaz.PortrayString')
     require_gem('Topaz.StringOutput')
 
 
-    from Gem import remove_path__ignore_file_not_found
+    from Gem import create_DelayedFileOutput, remove_path__ignore_file_not_found
 
 
     @share
@@ -36,4 +37,10 @@ def gem():
         test_string_output()
 
         remove_path__ignore_file_not_found('nonexistent')
+
+        with create_DelayedFileOutput('/tmp/x.txt') as f:
+            f.line()
+            f.line('This is /tmp/x.txt')
+            f.line('Goodbye %s', 'world')
+
         #remove_path__ignore_file_not_found('/tmp/oops/x')

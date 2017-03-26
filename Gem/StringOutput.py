@@ -18,13 +18,18 @@ def gem():
             t.write = f.write
 
 
+        def close(t):
+            f       = t.f
+            t.write = t.f = none
+
+            if f is not none:
+                f.close()
+
+
         def finish(t):
-            f   = t.f
-            t.f = none
+            r = t.f.getvalue()
 
-            r = f.getvalue()
-
-            f.close()
+            t.close()
 
             return r
 

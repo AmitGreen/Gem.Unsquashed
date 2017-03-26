@@ -55,7 +55,7 @@ def gem():
             def __repr__(t):
                 return arrange('<PortrayStringState %s>', t.name)
 
-                
+
         def overall(t, A, K, L, Q, ra = 7, rq = 7, pc = 7, ps = 7, is_K = 0):
             if rq is 7:     rq = ra
             if pc is 7:     pc = rq

@@ -10,7 +10,7 @@ def gem():
 
     PythonOperatingSystem = import_module('os')
     PythonPath            = import_module('os.path')
-    rename_path           = PythonOperatingSystem.rename
+    python__rename_path   = PythonOperatingSystem.rename
     python__remove_path   = PythonOperatingSystem.remove
     open_path             = PythonBuiltIn.open
 
@@ -20,6 +20,13 @@ def gem():
     def read_text_from_path(path):
         with open_path(path, 'r') as f:
             return f.read()
+
+
+    @export
+    @privileged_2
+    def write_binary_to_path(path, data):
+        with open_path(path, 'wb') as f:
+            return f.write(data)
 
 
     if is_python_2:
@@ -32,7 +39,7 @@ def gem():
 
                 if (type(arguments) is Tuple) and (length(arguments) is 2):
                     error_number = arguments[0]
-                    
+
                     if error_number is ERROR_NO_ACCESS:
                         raise PermissionError(*arguments)
 
@@ -43,9 +50,34 @@ def gem():
     else:
         remove_path = python__remove_path
 
-
         export(
             'remove_path',  remove_path,
+        )
+
+
+    if is_python_2:
+        @export
+        def rename_path(from_path, to_path):
+            try:
+                python__rename_path(from_path, to_path)
+            except OSError as e:
+                arguments = e.args
+
+                if (type(arguments) is Tuple) and (length(arguments) is 2):
+                    error_number = arguments[0]
+
+                    if error_number is ERROR_NO_ACCESS:
+                        raise PermissionError(*arguments)
+
+                    if error_number is ERROR_NO_ENTRY:
+                        raise FileNotFoundError(*arguments)
+
+                raise
+    else:
+        rename_path = python__rename_path
+
+        export(
+            'rename_path',  rename_path,
         )
 
 
