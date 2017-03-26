@@ -3,7 +3,7 @@
 #
 @gem('Tremolite.Match')
 def gem():
-    require_gem('Tremolite.Core')
+    require_gem('Tremolite.Build')
 
 
     class TremoliteMatch(Object):
@@ -11,6 +11,15 @@ def gem():
             'name',                     #   String
             'pattern',                  #   TremoliteBase+
         ))
+
+        
+        def __init__(t, name, pattern):
+            t.name    = name
+            t.pattern = pattern
+
+
+        def __repr__(t):
+            return arrange('<TremoliteMatch %s %r>', t.name, t.pattern)
 
 
     [cache, insert] = produce_cache_and_insert_function('tremolite.match')
@@ -25,7 +34,7 @@ def gem():
 
         name = intern_string(name)
 
-        return insert_match(name, TremoliteMatch(name, pattern))
+        return insert(name, TremoliteMatch(name, pattern))
 
 
     @export

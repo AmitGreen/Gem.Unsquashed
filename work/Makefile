@@ -15,7 +15,7 @@ GEM_FILES = \
 	../Gem/Boot.py \
 	../Gem/Cache.py ../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
 	../Gem/Exception.py ../Gem/ExecuteFile.py \
-	../Gem/File.py ../Gem/FileOutput.py ../Gem/FileStatus.py \
+	../Gem/FileOutput.py ../Gem/FileStatus.py \
 	../Gem/Import.py ../Gem/IO.py \
 	../Gem/Map.py \
 	../Gem/Path.py ../Gem/PortrayString.py \
@@ -71,7 +71,7 @@ clean:
 	rm -f ca.py ce.py co.py
 	rm -f de.py di.py dm.py dr.py
 	rm -f ef.py ex.py
-	rm -f files fi.py fo.py fs.py
+	rm -f files fo.py fs.py
 	rm -f gd.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
@@ -115,7 +115,6 @@ links:
 	ln -s ../Dravite/RSA_Example.py             dr.py
 	ln -s ../Gem/ExecuteFile.py                 ef.py
 	ln -s ../Gem/Exception.py                   ex.py
-	ln -s ../Gem/File.py                        fi.py
 	ln -s ../Gem/FileOutput.py                  fo.py
 	ln -s ../Gem/FileStatus.py                  fs.py
 	ln -s ../Gem/Codec.py                       gd.py

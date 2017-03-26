@@ -20,11 +20,12 @@ def boot():
 
 @gem('Tremolite.Main')
 def gem():
-    require_gem('Tremolite.Build')
-    require_gem('Tremolite.Compile')
-    require_gem('Tremolite.Parse')
+    require_gem('Tremolite.Core')
+    require_gem('Tremolite.Match')
 
 
     @share
     def main():
-        raise_runtime_error('main: incomplete')
+        MATCH('test', 'test')
+
+        dump_match_cache()
