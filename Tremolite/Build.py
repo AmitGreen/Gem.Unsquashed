@@ -109,22 +109,30 @@ def gem():
                            ' '.join(portray_string(v)  for v in t.many))
 
 
-    class TremoliteEmpty(TremoliteBase):
-        __slots__ = (())
+    class TremoliteExact(TremoliteBase):
+        __slots__ = ((
+            'exact',            #   String
+            'singular',         #   Boolean
+        ))
 
 
-        repeatable = false
-        singular   = false
+        repeatable = true
 
 
-        def __init__(t):
-            t.pattern = ''
-            t.portray = intern_string('EMPTY')
+        def __init__(t, pattern, portray, exact, singular):
+            t.pattern  = pattern
+            t.portray  = portray
+            t.exact    = exact
+            t.singular = singular
 
 
-        @static_method
-        def __repr__():
-            return '<TremoliteEmpty>'
+        def __repr__(t):
+            suffix = ('; singular'    if t.singular else    '')
+
+            if t.pattern is t.exact:
+                return arrange('<TremoliteExact %s%s>', portray_string(t.pattern), suffix)
+
+            return arrange('<TremoliteExact %s %s%s>', portray_string(t.pattern), portray_string(t.exact), suffix)
 
 
     class TremoliteGroup(TremoliteBase):
@@ -183,29 +191,6 @@ def gem():
             return TremoliteOr(t.pattern + '|' + that.pattern, t.portray + ' | ' + that.portray, t.many + ((that,)) )
 
 
-    class TremoliteMultiple(TremoliteBase):
-        __slots__ = ((
-            'exact',            #   String
-        ))
-
-
-        repeatable = true
-        singular   = false
-
-
-        def __init__(t, pattern, portray, exact):
-            t.pattern  = pattern
-            t.portray  = portray
-            t.exact    = exact
-
-
-        def __repr__(t):
-            if t.pattern is t.exact:
-                return arrange('<TremoliteMultiple %s>', portray_string(t.pattern))
-
-            return arrange('<TremoliteMultiple %s %s>', portray_string(t.pattern), portray_string(t.exact))
-
-
     class TremoliteParenthesis(TremoliteBase):
         __slots__ = ((
             'inside',                   #   String
@@ -248,46 +233,36 @@ def gem():
             return arrange('<TremoliteRepeat %s %r>', portray_string(t.pattern), t.repeated)
 
 
-    class TremoliteSingular(TremoliteBase):
-        __slots__ = ((
-            'exact',                    #   String
-        ))
-
-
-        repeatable = true
-        singular   = true
-
-
-        def __init__(t, pattern, portray, exact):
-            t.pattern  = pattern
-            t.portray  = portray
-            t.exact    = exact
-
-
-        def __repr__(t):
-            if t.pattern is t.exact:
-                return arrange('<TremoliteSingular %s>', portray_string(t.pattern))
-
-            return arrange('<TremoliteSingular %s %s>', portray_string(t.pattern), portray_string(t.exact))
-
-
-    class TremoliteSpecialSingular(TremoliteBase):
+    class TremoliteSpecial(TremoliteBase):
         __slots__ = ((
             'repeatable',               #   Boolean
+            'singular',                 #   Boolean
         ))
 
 
-        singular = true
+        def __init__(t, pattern, portray, repeatable = false, singular = false):
+            if not repeatable:
+                assert not singular
 
-
-        def __init__(t, pattern, portray, repeatable):
             t.pattern    = intern_string(pattern)
             t.portray    = intern_string(portray)
             t.repeatable = repeatable
+            t.singular   = singular
 
 
         def __repr__(t):
-            return arrange('<TremoliteSpecialSingular %s %s>', portray_string(t.pattern), t.portray)
+            if t.repeatable:
+                if t.singular:
+                    suffix = '; repeatable & singular'
+                else:
+                    suffix = '; repeatable'
+            else:
+                if t.singular:
+                    suffix = '; singular'                   #   Can't happen -- here for completeness
+                else:
+                    suffix = ''
+
+            return arrange('<TremoliteSpecial %s %s%s>', portray_string(t.pattern), t.portray, suffix)
 
 
     def create_exact(s):
@@ -307,7 +282,52 @@ def gem():
         return intern_string(''.join(many))
 
 
-    def create_repeat(name, inside, suffix):
+    def create_repeat(name, inside, m, n, question_mark = ''):
+        if type(inside) is String:
+            inside = wrap_string(inside)
+        else:
+            assert inside.repeatable
+
+        prefix = (inside.pattern   if inside.singular else   '(?:' + inside.pattern + ')')
+
+        if n is none:
+            assert m >= 2
+
+            return TremoliteRepeat(
+                       intern_arrange('%s{%d}%s', suffix, m, question_mark),
+                       arrange('%s(%s, %d)', name, inside, m),
+                       inside,
+                   )
+
+        if n == -7:
+            assert m >= 0
+
+            if m is 0:
+                suffix = arrange('{,}%s', question_mark)
+            else:
+                suffix = arrange('{%d,}%s', m, question_mark)
+
+            return TremoliteRepeat(
+                       intern_string(prefix + suffix),
+                       arrange('%s(%s, %d)', name, inside, m),
+                       inside,
+                   )
+
+        assert 0 <= m < n
+
+        if m is 0:
+            suffix = arrange('{,%d}%s', n, question_mark)
+        else:
+            suffix = arrange('{%d,%d}%s', m, n, question_mark)
+
+        return TremoliteRepeat(
+                   intern_string(prefix + suffix),
+                   arrange('%s(%s, %d, %d)', name, inside, m, n),
+                   inside,
+               )
+
+
+    def create_simple_repeat(name, inside, suffix):
         if type(inside) is String:
             inside = wrap_string(inside)
         else:
@@ -315,7 +335,7 @@ def gem():
 
         return TremoliteRepeat(
                    (
-                       intern_arrange(inside.pattern + suffix)
+                       intern_string(inside.pattern + suffix)
                            if inside.singular else
                                intern_arrange('(?:%s)%s', inside.pattern, suffix)
                    ),
@@ -337,8 +357,8 @@ def gem():
     def wrap_string(s):
         assert (type(s) is String) and (length(s) >= 1)
 
-        return (TremoliteMultiple   if length(s) > 1 else   TremoliteSingular)(
-                   create_exact(s), intern_string(portray_string(s)), intern_string(s),
+        return TremoliteExact(
+                   create_exact(s), intern_string(portray_string(s)), intern_string(s), length(s) is 1,
                )
 
 
@@ -381,8 +401,8 @@ def gem():
     def EXACT(s):
         assert length(s) >= 1
 
-        return (TremoliteMultiple   if length(s) > 1 else   TremoliteSingular)(
-                   create_exact(s), intern_arrange('EXACT(%s)', portray_string(s)), intern_string(s),
+        return TremoliteExact(
+                   create_exact(s), intern_arrange('EXACT(%s)', portray_string(s)), intern_string(s), length(s) is 1,
                )
 
 
@@ -400,21 +420,56 @@ def gem():
 
 
     @export
+    def MINIMUM_OF_ONE_OR_MORE(inside):
+        return create_simple_repeat('MINIMUM_OF_ONE_OR_MORE', inside, '+?')
+
+
+    @export
+    def MINIMUM_OF_OPTIONAL(inside):
+        return create_simple_repeat('MINIMUM_OF_OPTIONAL', inside, '??')
+
+
+    @export
+    def MINIMUM_OF_REPEAT(inside, m, n = none):
+        return create_repeat('MINIMUM_OF_REPEAT', inside, m, n, '?')
+
+
+    @export
+    def MINIMUM_OF_REPEAT_OR_MORE(inside, m):
+        return create_repeat('MINIMUM_OF_REPEAT_OR_MORE', inside, m, -7, '?')
+
+
+    @export
+    def MINIMUM_OF_ZERO_OR_MORE(inside):
+        return create_simple_repeat('MINIMUM_OF_ZERO_OR_MORE', inside, '*?')
+
+
+    @export
     def ONE_OR_MORE(inside):
-        return create_repeat('ONE_OR_MORE', inside, '+')
+        return create_simple_repeat('ONE_OR_MORE', inside, '+')
 
 
     @export
     def OPTIONAL(inside):
-        return create_repeat('OPTIONAL', inside, '?')
+        return create_simple_repeat('OPTIONAL', inside, '?')
+
+
+    @export
+    def REPEAT_OR_MORE(inside, m):
+        return create_repeat('REPEAT_OR_MORE', inside, m, -7)
+
+
+    @export
+    def REPEAT(inside, m, n = none):
+        return create_repeat('REPEAT', inside, m, n)
 
 
     @export
     def ZERO_OR_MORE(inside):
-        return create_repeat('ZERO_OR_MORE', inside, '*')
+        return create_simple_repeat('ZERO_OR_MORE', inside, '*')
 
 
     export(
-        'EMPTY',            TremoliteEmpty(),
-        'END_OF_STRING',    TremoliteSpecialSingular(r'\Z', 'END_OF_STRING', false),
+        'EMPTY',            TremoliteSpecial('',    'EMPTY'),
+        'END_OF_PATTERN',   TremoliteSpecial(r'\Z', 'END_OF_PATTERN'),
     )
