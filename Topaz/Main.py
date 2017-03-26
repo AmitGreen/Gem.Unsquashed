@@ -20,9 +20,11 @@ def boot():
 
 @gem('Topaz.Main')
 def gem():
+    require_gem('Topaz.Pattern')
     require_gem('Topaz.PortrayString')
 
 
     @share
     def main():
+        test_pattern()
         test_portray_raw_string()

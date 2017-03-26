@@ -4,6 +4,7 @@
 @gem('Tremolite.Build')
 def gem():
     require_gem('Tremolite.Core')
+    require_gem('Tremolite.Compile')
     require_gem('Tremolite.Parse')
 
 

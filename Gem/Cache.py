@@ -25,7 +25,7 @@ def gem():
                    ))
     else:
         @export
-        def cache_and_produce_insert_function(name):
+        def produce_cache_and_insert_function(name):
             cache = {}
 
             return ((
