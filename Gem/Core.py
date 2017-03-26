@@ -77,6 +77,7 @@ def gem():
         'portray',          PythonBuiltIn.repr,
         'property',         PythonBuiltIn.property,
         'sorted_list',      PythonBuiltIn.sorted,
+        'static_method',    PythonBuiltIn.staticmethod,
         'type',             PythonBuiltIn.type,
 
         #

@@ -33,7 +33,7 @@ def gem():
                 [   'x' + ('lemo' + ANY_OF('a-z') | GROUP('abc', 'y')) + END_OF_STRING,                     'xy'        ],
                 [   'x' + GROUP('abc', ANY_OF('a-z', 'A-Z')) + GROUP('z', 'z') + END_OF_STRING,             'xYz'       ],
                 [   OPTIONAL('a') + ONE_OR_MORE('x') + ZERO_OR_MORE('yz') + END_OF_STRING,                  'xx'        ],
-                [   'a' + (EXACT('b') | r'c\i') + 'd',                                                      r'ac\id'    ],
+                [   'a' + (EXACT('b') | r'c\i') + 'd' + ONE_OR_MORE('e' | EMPTY),                           r'ac\id'    ],
         ]:
             line('%s', pattern)
             line('%r', pattern)

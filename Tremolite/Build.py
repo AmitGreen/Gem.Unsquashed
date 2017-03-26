@@ -14,9 +14,7 @@ def gem():
         ))
 
 
-        is_repeated      = false
-        is_tremolite     = true
-        is_tremolite_or  = false
+        is_tremolite_or = false
 
 
         #def __init__(t, pattern, portray):
@@ -64,6 +62,10 @@ def gem():
         ))
 
 
+        repeatable = true
+        singular   = false
+
+
         def __init__(t, pattern, portray, many):
             t.pattern = pattern
             t.portray = portray
@@ -91,7 +93,8 @@ def gem():
         ))
 
 
-        singular = true
+        repeatable = true
+        singular   = true
 
 
         def __init__(t, pattern, portray, many):
@@ -106,6 +109,24 @@ def gem():
                            ' '.join(portray_string(v)  for v in t.many))
 
 
+    class TremoliteEmpty(TremoliteBase):
+        __slots__ = (())
+
+
+        repeatable = false
+        singular   = false
+
+
+        def __init__(t):
+            t.pattern = ''
+            t.portray = intern_string('EMPTY')
+
+
+        @static_method
+        def __repr__():
+            return '<TremoliteEmpty>'
+
+
     class TremoliteGroup(TremoliteBase):
         __slots__ = ((
             'group_name',       #   String
@@ -113,7 +134,8 @@ def gem():
         ))
 
 
-        singular = true
+        repeatable = true
+        singular   = true
 
 
         def __init__(t, pattern, portray, group_name, inside):
@@ -134,6 +156,7 @@ def gem():
 
 
         is_tremolite_or = true
+        repeatable      = true
         singular        = false
 
 
@@ -166,7 +189,8 @@ def gem():
         ))
 
 
-        singular = false
+        repeatable = true
+        singular   = false
 
 
         def __init__(t, pattern, portray, exact):
@@ -188,10 +212,13 @@ def gem():
         ))
 
 
-        singular = true
+        repeatable = true
+        singular   = true
 
 
         def __init__(t, pattern, portray, inside):
+            assert inside.repeatable
+
             t.pattern = intern_string(pattern)
             t.portray = portray
             t.inside  = inside
@@ -207,8 +234,8 @@ def gem():
         ))
 
 
-        is_repeated = true
-        singular    = true
+        repeatable = false
+        singular   = true
 
 
         def __init__(t, pattern, portray, repeated):
@@ -227,7 +254,8 @@ def gem():
         ))
 
 
-        singular = true
+        repeatable = true
+        singular   = true
 
 
         def __init__(t, pattern, portray, exact):
@@ -244,22 +272,22 @@ def gem():
 
 
     class TremoliteSpecialSingular(TremoliteBase):
-        __slots__ = (())
+        __slots__ = ((
+            'repeatable',               #   Boolean
+        ))
 
 
         singular = true
 
 
-        def __init__(t, pattern, portray):
-            t.pattern  = intern_string(pattern)
-            t.portray  = intern_string(portray)
+        def __init__(t, pattern, portray, repeatable):
+            t.pattern    = intern_string(pattern)
+            t.portray    = intern_string(portray)
+            t.repeatable = repeatable
 
 
         def __repr__(t):
             return arrange('<TremoliteSpecialSingular %s %s>', portray_string(t.pattern), t.portray)
-
-
-    END_OF_STRING = TremoliteSpecialSingular(r'\Z', 'END_OF_STRING')
 
 
     def create_exact(s):
@@ -282,6 +310,8 @@ def gem():
     def create_repeat(name, inside, suffix):
         if type(inside) is String:
             inside = wrap_string(inside)
+        else:
+            assert inside.repeatable
 
         return TremoliteRepeat(
                    (
@@ -385,5 +415,6 @@ def gem():
 
 
     export(
-        'END_OF_STRING',    END_OF_STRING,
+        'EMPTY',            TremoliteEmpty(),
+        'END_OF_STRING',    TremoliteSpecialSingular(r'\Z', 'END_OF_STRING', false),
     )
