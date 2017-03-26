@@ -39,7 +39,24 @@ def gem():
         raise ValueError(value_error)
 
 
+    if is_python_2:
+        EnvironmentError = PythonException.EnvironmentError
+
+
+        class FileNotFoundError(EnvironmentError):
+            pass
+
+
+        class PermissionError(EnvironmentError):
+            pass
+    else:
+        FileNotFoundError = PythonBuiltIn.FileNotFoundError
+        PermissionError   = PythonBuiltIn.PermissionError
+
+
     export(
-        'FileNotFoundError',  (PythonBuiltIn.OSError   if is_python_2 else    PythonBuiltIn.FileNotFoundError),
+        'FileNotFoundError',  FileNotFoundError,
         'ImportError',        PythonException.ImportError,
+        'OSError',            PythonException.OSError,
+        'PermissionError',    PermissionError,
     )

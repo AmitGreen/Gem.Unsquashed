@@ -3,18 +3,21 @@
 #
 @gem('Gem.CatchException')
 def gem():
+    require_gem('Gem.ErrorNumber')
     require_gem('Gem.Exception')
 
 
     class CatchException(Object):
         __slots__ = ((
             'exception_type',           #   Type
+            'error_number',             #   Integer
             'caught',                   #   None | FileNotFoundError
         ))
 
 
-        def __init__(t, exception_type):
+        def __init__(t, exception_type, error_number):
             t.exception_type = exception_type
+            t.error_number   = error_number
             t.caught         = none
 
 
@@ -26,10 +29,16 @@ def gem():
             return t
 
 
-        def __exit__(t, e_type, value, traceback):
+        def __exit__(t, e_type, e, traceback):
             if e_type is t.exception_type:
-                t.caught = value
-                return true
+                arguments = e.args
+
+                line('arguments: %s', arguments)
+
+                if (type(arguments) is Tuple) and (length(arguments) is 2):
+                    if arguments[0] == t.error_number:
+                        t.caught = e
+                        return true
 
 
         def __repr__(t):
@@ -42,4 +51,4 @@ def gem():
 
     @export
     def catch_FileNotFoundError():
-        return CatchException(FileNotFoundError)
+        return CatchException(FileNotFoundError, ERROR_NO_ENTRY)

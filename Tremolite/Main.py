@@ -7,6 +7,7 @@ def boot(module_name):
 
     return execute
 
+
 @boot('Boot')
 def boot():
     from sys     import path    as module_path

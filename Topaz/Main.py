@@ -20,11 +20,18 @@ def boot():
 
 @gem('Topaz.Main')
 def gem():
+    require_gem('Gem.Path')
     require_gem('Topaz.Pattern')
     require_gem('Topaz.PortrayString')
 
 
+    from Gem import remove_path__ignore_file_not_found
+
+
     @share
     def main():
+        remove_path__ignore_file_not_found('nonexistent')
+        remove_path__ignore_file_not_found('/tmp/oops/x')
+
         test_pattern()
         test_portray_raw_string()
