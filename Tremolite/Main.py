@@ -30,10 +30,10 @@ def gem():
     def main():
         for [pattern, test] in [
                 [   OPTIONAL('bc') + OPTIONAL(EXACT('d') + 'g' | EXACT('hi') + 'j') + 'x' + END_OF_STRING,  'hijx'      ],
-                [   'x' + ('lemo' + ANY('a-z') | GROUP('abc', 'y')) + END_OF_STRING,                        'xy'        ],
-                [   'x' + GROUP('abc', ANY('a-z', 'A-Z')) + GROUP('z', 'z') + END_OF_STRING,                'xYz'       ],
+                [   'x' + ('lemo' + ANY_OF('a-z') | GROUP('abc', 'y')) + END_OF_STRING,                     'xy'        ],
+                [   'x' + GROUP('abc', ANY_OF('a-z', 'A-Z')) + GROUP('z', 'z') + END_OF_STRING,             'xYz'       ],
                 [   OPTIONAL('a') + ONE_OR_MORE('x') + ZERO_OR_MORE('yz') + END_OF_STRING,                  'xx'        ],
-                [   'a' + (EXACT('b') | 'ci') + 'd',                                                        'acid'      ],
+                [   'a' + (EXACT('b') | r'c\i') + 'd',                                                      r'ac\id'    ],
         ]:
             line('%s', pattern)
             line('%r', pattern)
@@ -41,5 +41,5 @@ def gem():
             compiled = pattern.compile_ascii_regular_expression()
             m        = compiled.match(test)
 
-            line('  %r %r', m.group(), m.groups())
+            line('  %s %r', portray_string(m.group()), m.groups())
             line()

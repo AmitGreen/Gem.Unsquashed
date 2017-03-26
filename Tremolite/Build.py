@@ -85,7 +85,7 @@ def gem():
             return TremoliteAdd(t.pattern + that.pattern, t.portray + ' + ' + that.portray, t.many + ((that,)) )
 
 
-    class TremoliteAny(TremoliteBase):
+    class TremoliteAnyOf(TremoliteBase):
         __slots__ = ((
             'many',             #   Tuple of String
         ))
@@ -101,7 +101,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<TremoliteAny %s %s>',
+            return arrange('<TremoliteAnyOf %s %s>',
                            portray_string(t.pattern),
                            ' '.join(portray_string(v)  for v in t.many))
 
@@ -176,6 +176,9 @@ def gem():
 
 
         def __repr__(t):
+            if t.pattern is t.exact:
+                return arrange('<TremoliteMultiple %s>', portray_string(t.pattern))
+
             return arrange('<TremoliteMultiple %s %s>', portray_string(t.pattern), portray_string(t.exact))
 
 
@@ -234,6 +237,9 @@ def gem():
 
 
         def __repr__(t):
+            if t.pattern is t.exact:
+                return arrange('<TremoliteSingular %s>', portray_string(t.pattern))
+
             return arrange('<TremoliteSingular %s %s>', portray_string(t.pattern), portray_string(t.exact))
 
 
@@ -273,8 +279,41 @@ def gem():
         return intern_string(''.join(many))
 
 
+    def create_repeat(name, inside, suffix):
+        if type(inside) is String:
+            inside = wrap_string(inside)
+
+        return TremoliteRepeat(
+                   (
+                       intern_arrange(inside.pattern + suffix)
+                           if inside.singular else
+                               intern_arrange('(?:%s)%s', inside.pattern, suffix)
+                   ),
+                   arrange('%s(%s)', name, inside),
+                   inside,
+               )
+
+
+    def wrap_parenthesis(inside, invisible = false):
+        assert not inside.singular
+
+        return TremoliteParenthesis(
+                   intern_arrange('(?:%s)', inside.pattern),
+                   (inside.portray   if invisible else   intern_arrange('(%s)', inside.portray)),
+                   inside,
+               )
+
+
+    def wrap_string(s):
+        assert (type(s) is String) and (length(s) >= 1)
+
+        return (TremoliteMultiple   if length(s) > 1 else   TremoliteSingular)(
+                   create_exact(s), intern_string(portray_string(s)), intern_string(s),
+               )
+
+
     @export
-    def ANY(*arguments):
+    def ANY_OF(*arguments):
         assert length(arguments) > 0
 
         many   = ['[']
@@ -301,7 +340,7 @@ def gem():
 
         many.append(']')
 
-        return TremoliteAny(
+        return TremoliteAnyOf(
                    intern_string(''.join(many)),
                    intern_arrange('ANY(%s)', ', '.join(portray_string(s)   for s in arguments)),
                    Tuple(intern_string(s)   for s in arguments)
@@ -332,65 +371,17 @@ def gem():
 
     @export
     def ONE_OR_MORE(inside):
-        if type(inside) is String:
-            inside = wrap_string(inside)
-
-        if not inside.singular:
-            inside = wrap_parenthesis(inside, invisible = true)
-
-        return TremoliteRepeat(
-                   intern_arrange('%s+', inside.pattern),
-                   arrange('ONE_OR_MORE(%s)', inside),
-                   inside,
-               )
+        return create_repeat('ONE_OR_MORE', inside, '+')
 
 
     @export
     def OPTIONAL(inside):
-        if type(inside) is String:
-            inside = wrap_string(inside)
-
-        if not inside.singular:
-            inside = wrap_parenthesis(inside, invisible = true)
-
-        return TremoliteRepeat(
-                   intern_arrange('%s?', inside.pattern),
-                   arrange('OPTIONAL(%s)', inside),
-                   inside,
-               )
+        return create_repeat('OPTIONAL', inside, '?')
 
 
     @export
     def ZERO_OR_MORE(inside):
-        if type(inside) is String:
-            inside = wrap_string(inside)
-
-        if not inside.singular:
-            inside = wrap_parenthesis(inside, invisible = true)
-
-        return TremoliteRepeat(
-                   intern_arrange('%s*', inside.pattern),
-                   arrange('ZERO_OR_MORE(%s)', inside),
-                   inside,
-               )
-
-
-    def wrap_parenthesis(inside, invisible = false):
-        assert not inside.singular
-
-        return TremoliteParenthesis(
-                   intern_arrange('(?:%s)', inside.pattern),
-                   (inside.portray   if invisible else   intern_arrange('(%s)', inside.portray)),
-                   inside,
-               )
-
-
-    def wrap_string(s):
-        assert (type(s) is String) and (length(s) >= 1)
-
-        return (TremoliteMultiple   if length(s) > 1 else   TremoliteSingular)(
-                   create_exact(s), intern_string(portray_string(s)), intern_string(s),
-               )
+        return create_repeat('ZERO_OR_MORE', inside, '*')
 
 
     export(
