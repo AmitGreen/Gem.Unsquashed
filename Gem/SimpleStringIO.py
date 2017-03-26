@@ -13,5 +13,5 @@ def gem():
 
 
     @export
-    def create_StringOutput():
+    def create_SimpleStringOutput():
         return StringIO()

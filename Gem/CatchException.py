@@ -33,12 +33,9 @@ def gem():
             if e_type is t.exception_type:
                 arguments = e.args
 
-                line('arguments: %s', arguments)
-
-                if (type(arguments) is Tuple) and (length(arguments) is 2):
-                    if arguments[0] == t.error_number:
-                        t.caught = e
-                        return true
+                if (type(arguments) is Tuple) and (length(arguments) is 2) and (arguments[0] == t.error_number):
+                    t.caught = e
+                    return true
 
 
         def __repr__(t):

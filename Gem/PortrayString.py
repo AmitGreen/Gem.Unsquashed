@@ -5,7 +5,7 @@
 def gem():
     require_gem('Gem.Ascii')
     require_gem('Gem.Exception')
-    require_gem('Gem.StringIO')
+    require_gem('Gem.SimpleStringIO')
 
 
     P = String.__repr__
@@ -266,7 +266,7 @@ def gem():
     def portray_backslash_string_with_triple_apostrophe(s):
         #line('KC: %r', s)
 
-        f     = create_StringOutput()
+        f     = create_SimpleStringOutput()
         w     = f.write
         state = A_B
 
@@ -310,7 +310,7 @@ def gem():
     def portray_backslash_string_with_triple_quotation_mark(s):
         #line('KS: %r', s)
 
-        f     = create_StringOutput()
+        f     = create_SimpleStringOutput()
         w     = f.write
         state = Q_R
 

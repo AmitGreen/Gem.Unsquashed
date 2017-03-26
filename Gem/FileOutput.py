@@ -34,15 +34,17 @@ def gem():
 
 
         def __exit__(t, e_type, value, traceback):
+            f        = t.f
+            t._write = t.f = none
+
+            f.close()
+
             path = t.path
-            f    = t.f
 
             path_new = t.path_new       #   Grab t.path_new & t.path_old before zapping t.path
             path_old = t.path_old
 
-            t._write = t.f = t.path = none
-
-            f.close()
+            t.path = none
 
             if e_type is none:
                 remove_path__ignore_file_not_found(path_old)

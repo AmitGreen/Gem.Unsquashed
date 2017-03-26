@@ -20,7 +20,7 @@ GEM_FILES = \
 	../Gem/Map.py \
 	../Gem/Path.py ../Gem/PortrayString.py \
     ../Gem/RegularExpression.py \
-    ../Gem/StringIO.py
+    ../Gem/SimpleStringIO.py ../Gem/StringOutput.py
 
 DRAVITE_FILES = \
     ../Dravite/Euclid.py \
@@ -36,7 +36,8 @@ LICENSE_FILES = \
 TOPAZ_FILE = \
     ../Topaz/Core.py \
     ../Topaz/Main.py \
-    ../Topaz/Pattern.py ../Topaz/PortrayString.py
+    ../Topaz/Pattern.py ../Topaz/PortrayString.py \
+    ../Topaz/StringOutput.py
 
 TREMOLITE_FILES = \
     ../Tremolite/Build.py \
@@ -79,9 +80,9 @@ clean:
 	rm -f m m.py
 	rm -f pa.py ps.py ps3.py
 	rm -f rm.py rx.py
-	rm -f sio.py
+	rm -f so.py ssio.py
 	rm -f tc.py tm.py tp.py tt.py tu.py tx.py
-	rm -f zc.py zm.py zpa.py zps.py
+	rm -f zc.py zm.py zpa.py zps.py zso.py
 
 
 files:
@@ -132,7 +133,8 @@ links:
 	ln -s ../Junk/PortrayString_3.py            ps3.py
 	ln -s ../Agate/RUNME.py                     rm.py
 	ln -s ../Gem/RegularExpression.py           rx.py
-	ln -s ../Gem/StringIO.py                    sio.py
+	ln -s ../Gem/StringOutput.py                so.py
+	ln -s ../Gem/SimpleStringIO.py              ssio.py
 	ln -s ../Tremolite/Core.py                  tc.py
 	ln -s ../Tremolite/Main.py                  tm.py
 	ln -s ../Tremolite/Parse.py                 tp.py
@@ -143,6 +145,7 @@ links:
 	ln -s ../Topaz/Main.py                      zm.py
 	ln -s ../Topaz/Pattern.py                   zpa.py
 	ln -s ../Topaz/PortrayString.py             zps.py
+	ln -s ../Topaz/StringOutput.py              zso.py
 
 
 wc:
