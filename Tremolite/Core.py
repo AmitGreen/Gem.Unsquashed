@@ -6,23 +6,27 @@ def gem():
     require_gem('Gem.Ascii')
     require_gem('Gem.Cache')
     require_gem('Gem.Codec')
+    require_gem('Gem.DelayedFileOutput')
     require_gem('Gem.Exception')
     require_gem('Gem.Import')           #   For import_module
     require_gem('Gem.Map')
     require_gem('Gem.PortrayString')
 
 
-    from Gem import encode_ascii, first_map_item, iterate_items_sorted_by_key, lookup_ascii
-    from Gem import produce_cache_and_insert_function, view_items
+    from Gem import create_DelayedFileOutput, encode_ascii, first_map_item
+    from Gem import iterate_items_sorted_by_key, iterate_values_sorted_by_key
+    from Gem import lookup_ascii, produce_cache_and_insert_function, view_items
 
 
     share(
         #
         #   Imported functions
         #
+        'create_DelayedFileOutput',             create_DelayedFileOutput,
         'encode_ascii',                         encode_ascii,
         'first_map_item',                       first_map_item,
         'iterate_items_sorted_by_key',          iterate_items_sorted_by_key,
+        'iterate_values_sorted_by_key',         iterate_values_sorted_by_key,
         'lookup_ascii',                         lookup_ascii,
         'produce_cache_and_insert_function',    produce_cache_and_insert_function,
         'view_items',                           view_items,

@@ -3,8 +3,11 @@
 #
 @gem('Gem.FileStatus')
 def gem():
-    PythonOperatingSystem         = __import__('os')
-    PythonFileStatus              = __import__('stat')
+    require_gem('Gem.Import')
+
+
+    PythonOperatingSystem         = import_module('os')
+    PythonFileStatus              = import_module('stat')
     PythonFileStatus__inode_flags = PythonFileStatus.S_IMODE
     PythonFileStatus__file_type   = PythonFileStatus.S_IFMT
     python_file_status            = PythonOperatingSystem.stat

@@ -14,7 +14,7 @@ def gem():
 
 
     @export
-    def compile_regular_expression(regular_expression, code, groups = 0, flags = 0):
+    def compile_regular_expression(regular_expression, code, groups, flags):
         assert type(regular_expression) is String
 
         if not __debug__:

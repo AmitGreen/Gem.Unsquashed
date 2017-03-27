@@ -13,14 +13,18 @@ def gem():
     class DelayedFileOutput(Object):
         __slots__ = ((
             'path',                     #   String+
+            'data',                     #   None | String
             'f',                        #   File
-            '_write',                   #   Method
+            'blank',                    #   Method
+            'blank2',                   #   Method
+            'indent',                   #   Method
+            'line',                     #   Method
         ))
 
 
         def __init__(t, path):
-            t.path   = path
-            t._write = t.f  = none
+            t.path = path
+            t.line = t.indent = t.blank2 = t.blank = t.f = t.data = none
 
 
         @privileged
@@ -28,21 +32,20 @@ def gem():
             assert t.f is none
 
             t.f      = f       = create_StringOutput()
-            t._write = f.write
+            t.blank2 = f.blank2
+            t.blank  = f.blank
+            t.indent = f.indent
+            t.line   = f.line
 
             return t
 
 
         def __exit__(t, e_type, e, traceback):
-            f        = t.f
-            t._write = t.f = none
-
             if e is not none:
-                f.close()
-                t.path = none
+                t.close()
                 return
 
-            data = f.finish()
+            data = (t.data) or (f.finish())
 
             path     = t.path
             path_new = t.path_new       #   Grab t.path_new & t.path_old before zapping t.path
@@ -56,14 +59,23 @@ def gem():
             rename_path(path_new, path)
 
 
-        def line(t, format = none, *arguments):
-            if format is none:
-                assert length(arguments) is 0
+        def close(t):
+            f      = t.f
+            t.line = t.indent = t.blank2 = t.blank = t.f = t.data = none
 
-                t._write('\n')
-                return
+            if f is not none:
+                f.close()
 
-            t._write((format % arguments   if arguments else   format) + '\n')
+
+        def finish(t):
+            assert t.data is none
+
+            f      = t.f
+            t.line = t.indent = t.blank2 = t.blank = t.f = none
+
+            data = t.data = f.finish()
+
+            return data
 
 
         @property

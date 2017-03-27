@@ -3,7 +3,10 @@
 #
 @gem('Gem.Exception')
 def gem():
-    PythonException = (__import__('exceptions')   if is_python_2 else  PythonBuiltIn)
+    require_gem('Gem.Import')
+
+
+    PythonException = (import_module('exceptions')   if is_python_2 else  PythonBuiltIn)
     RuntimeError    = PythonException.RuntimeError
     ValueError      = PythonException.ValueError
 
@@ -55,8 +58,16 @@ def gem():
 
 
     export(
+        #
+        #   Exception Types
+        #
         'FileNotFoundError',  FileNotFoundError,
         'ImportError',        PythonException.ImportError,
         'OSError',            PythonException.OSError,
         'PermissionError',    PermissionError,
+
+        #
+        #   Functions
+        #
+        'exception_information',    PythonSystem.exc_info,
     )

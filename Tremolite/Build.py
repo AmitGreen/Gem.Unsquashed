@@ -393,10 +393,10 @@ def gem():
                 a2 = lookup_ascii(s[2])
 
                 if not a0.is_printable:
-                    raise_runtime_error('invalid character <%s> passed to ANY(%s)', portray_string(s[0]), portray_string(s))
+                    raise_runtime_error('invalid character <%s> passed to ANY_OF(%s)', portray_string(s[0]), portray_string(s))
 
                 if not a2.is_printable:
-                    raise_runtime_error('invalid character <%s> passed to ANY(%s)', portray_string(s[2]), portray_string(s))
+                    raise_runtime_error('invalid character <%s> passed to ANY_OF(%s)', portray_string(s[2]), portray_string(s))
 
                 many.append(a0.pattern + '-' + a2.pattern)
 
@@ -404,7 +404,7 @@ def gem():
 
         return TremoliteAnyOf(
                    intern_string(''.join(many)),
-                   intern_arrange('ANY(%s)', ', '.join(portray_string(s)   for s in arguments)),
+                   intern_arrange('ANY_OF(%s)', ', '.join(portray_string(s)   for s in arguments)),
                    Tuple(intern_string(s)   for s in arguments)
                )
 

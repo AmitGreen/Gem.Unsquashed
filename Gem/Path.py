@@ -30,23 +30,40 @@ def gem():
 
 
     if is_python_2:
+        def adjust_OSError_exception():
+            [e_type, e, e_traceback] = e_all = exception_information()
+
+            assert e_type is OSError
+
+            arguments = e.args
+
+            if (type(arguments) is Tuple) and (length(arguments) is 2):
+                error_number = arguments[0]
+
+                if error_number is ERROR_NO_ACCESS:
+                    return ((PermissionError, arguments, e_traceback))
+
+                if error_number is ERROR_NO_ENTRY:
+                    return ((FileNotFoundError, arguments, e_traceback))
+
+            line('e_all: %r', e_all)
+            raise e_all
+
+
+    if is_python_2:
         @export
         def remove_path(path):
             try:
                 python__remove_path(path)
             except OSError as e:
-                arguments = e.args
+                #
+                #   NOTE:
+                #       To avoid adding an extra frame in the traceback, the 'raise' must be issued in this function,
+                #       instead of inside adjust_OSError_exception()
+                #
+                [e_type, e, e_traceback] = adjust_OSError_exception()
 
-                if (type(arguments) is Tuple) and (length(arguments) is 2):
-                    error_number = arguments[0]
-
-                    if error_number is ERROR_NO_ACCESS:
-                        raise PermissionError(*arguments)
-
-                    if error_number is ERROR_NO_ENTRY:
-                        raise FileNotFoundError(*arguments)
-
-                raise
+                raise e_type, e, e_traceback
     else:
         remove_path = python__remove_path
 
@@ -61,18 +78,14 @@ def gem():
             try:
                 python__rename_path(from_path, to_path)
             except OSError as e:
-                arguments = e.args
+                #
+                #   NOTE:
+                #       To avoid adding an extra frame in the traceback, the 'raise' must be issued in this function,
+                #       instead of inside adjust_OSError_exception()
+                #
+                [e_type, e, e_traceback] = adjust_OSError_exception()
 
-                if (type(arguments) is Tuple) and (length(arguments) is 2):
-                    error_number = arguments[0]
-
-                    if error_number is ERROR_NO_ACCESS:
-                        raise PermissionError(*arguments)
-
-                    if error_number is ERROR_NO_ENTRY:
-                        raise FileNotFoundError(*arguments)
-
-                raise
+                raise e_type, e, e_traceback
     else:
         rename_path = python__rename_path
 
