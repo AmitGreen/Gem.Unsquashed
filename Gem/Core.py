@@ -73,6 +73,7 @@ def gem():
         'introspection',    PythonBuiltIn.dir,
         'iterate',          PythonBuiltIn.iter,
         'iterate_range',    PythonBuiltIn.range,
+        'maximum',          PythonBuiltIn.max,
         'ordinal',          PythonBuiltIn.ord,
         'portray',          PythonBuiltIn.repr,
         'property',         PythonBuiltIn.property,

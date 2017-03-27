@@ -6,6 +6,7 @@ def gem():
     require_gem('Tremolite.Core')
     require_gem('Tremolite.Compile')
     require_gem('Tremolite.Parse')
+    require_gem('Tremolite.ParsedMatch')
 
 
     class TremoliteBase(Object):
@@ -422,6 +423,9 @@ def gem():
     def GROUP(group_name, inside):
         if type(inside) is String:
             inside = INVISIBLE_EXACT(inside)
+
+        if group_name_match(group_name) is none:
+            raise_runtime_error('GROUP: invalid group name: %s (expected a python identifier)', group_name)
 
         return TremoliteGroup(
                    intern_arrange('(?P<%s>%s)', group_name, inside.regular_expression),
