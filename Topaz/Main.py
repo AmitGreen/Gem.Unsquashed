@@ -22,6 +22,7 @@ def boot():
 def gem():
     require_gem('Gem.DelayedFileOutput')
     require_gem('Gem.Path')
+    require_gem('Topaz.Path')
     require_gem('Topaz.PortrayString')
     require_gem('Topaz.StringOutput')
 
@@ -33,3 +34,5 @@ def gem():
     def main():
         test_portray_raw_string()
         test_string_output()
+        test_remove_path()
+        test_rename_path()
