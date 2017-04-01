@@ -9,6 +9,26 @@ def gem():
     require_gem('Tremolite.Match')
 
 
+    show = false
+
+
+    #
+    #   TremoliteBase
+    #       TremoliteExact
+    #       TremoliteGroupBase
+    #           TremoliteGroup
+    #           TremoliteName
+    #           TremoliteNamedGroup
+    #           TremoliteOptionalGroup
+    #       TremoliteMany
+    #           TremoliteAdd
+    #           TremoliteAnyOf
+    #           TremoliteOr
+    #       TremoliteOne
+    #           TremoliteParenthesis
+    #           TremoliteRepeat
+    #       TremoliteSpecial
+    #
     class TremoliteBase(Object):
         __slots__ = ((
             'regular_expression',       #   String
@@ -69,63 +89,6 @@ def gem():
                    )
 
 
-    class TremoliteAdd(TremoliteBase):
-        __slots__ = ((
-            'many',                     #   Tuple of TremoliteBase+
-        ))
-
-
-        repeatable = true
-        singular   = false
-
-
-        def __init__(t, regular_expression, portray, many):
-            t.regular_expression = regular_expression
-            t.portray            = portray
-            t.many               = many
-
-
-        def __repr__(t):
-            return arrange('<TremoliteAdd %s %s>',
-                           portray_string(t.regular_expression),
-                           ' '.join((portray_string(v)   if type(v) is String else   portray(v))  for v in t.many))
-
-
-        def __add__(t, that):
-            if type(that) is String:
-                that = INVISIBLE_EXACT(that)
-            elif that.is_tremolite_or:
-                that = wrap_parenthesis(that)
-
-            return TremoliteAdd(
-                       t.regular_expression + that.regular_expression,
-                       t.portray + ' + ' + that.portray,
-                       t.many + ((that,)),
-                   )
-
-
-    class TremoliteAnyOf(TremoliteBase):
-        __slots__ = ((
-            'many',                     #   Tuple of String
-        ))
-
-
-        repeatable = true
-        singular   = true
-
-
-        def __init__(t, regular_expression, portray, many):
-            t.regular_expression = regular_expression
-            t.portray            = portray
-            t.many               = many
-
-
-        def __repr__(t):
-            return arrange('<TremoliteAnyOf %s %s>',
-                           portray_string(t.regular_expression),
-                           ' '.join(portray_string(v)  for v in t.many))
-
-
     class TremoliteExact(TremoliteBase):
         __slots__ = ((
             'exact',                    #   String
@@ -155,37 +118,79 @@ def gem():
                            suffix)
 
 
-    class TremoliteGroup(TremoliteBase):
+    class TremoliteGroupBase(TremoliteBase):
         __slots__ = ((
-            'group_name',               #   String
-            'inside',                   #   String
+            'name',                     #   String
+            'pattern',                  #   String
         ))
+
+
+        def __init__(t, regular_expression, portray, name, pattern):
+            t.regular_expression = regular_expression
+            t.portray            = portray
+            t.name               = name
+            t.pattern            = pattern
+
+
+        def __repr__(t):
+            return arrange('<%s %s %r>', t.__class__.__name__, t.name, t.pattern)
+
+
+    class TremoliteGroup(TremoliteGroupBase):
+        __slots__ = (())
 
 
         repeatable = true
         singular   = true
 
 
-        def __init__(t, regular_expression, portray, group_name, inside):
-            t.regular_expression = regular_expression
-            t.portray            = portray
-            t.group_name         = group_name
-            t.inside             = inside
+    class TremoliteName(TremoliteGroupBase):
+        __slots__ = (())
 
 
-        def __repr__(t):
-            return arrange('<TremoliteGroup %s %r>', t.group_name, t.inside)
+        def __init__(t, name, pattern):
+            t.regular_expression = pattern.regular_expression
+            t.portray            = t.name = name
+            t.pattern            = pattern
 
 
-    class TremoliteOr(TremoliteBase):
+        @property
+        def repeatable(t):
+            return t.pattern.repeatable
+
+
+        @property
+        def singular(t):
+            return t.pattern.singular
+
+
+    class TremoliteNamedGroup(TremoliteGroupBase):
+        __slots__ = (())
+
+
+        @property
+        def repeatable(t):
+            return t.pattern.repeatable
+
+
+        singular = repeatable
+
+
+    class TremoliteOptionalGroup(TremoliteGroupBase):
+        __slots__ = (())
+
+
+        repeatable = false
+        singular   = false
+
+
+    class TremoliteMany(TremoliteBase):
         __slots__ = ((
             'many',                     #   Tuple of TremoliteBase+
         ))
 
 
-        is_tremolite_or = true
-        repeatable      = true
-        singular        = false
+        repeatable = true
 
 
         def __init__(t, regular_expression, portray, many):
@@ -195,9 +200,51 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<TremoliteOr %s %s>',
+            return arrange('<%s %s %s>',
+                           t.__class__.__name__,
                            portray_string(t.regular_expression),
                            ' '.join((portray_string(v)   if type(v) is String else   portray(v))  for v in t.many))
+
+
+    class TremoliteAdd(TremoliteMany):
+        __slots__ = (())
+
+
+        singular = false
+
+
+        def __add__(t, that):
+            if type(that) is String:
+                that = INVISIBLE_EXACT(that)
+            elif that.is_tremolite_or:
+                that = wrap_parenthesis(that)
+
+            return TremoliteAdd(
+                       t.regular_expression + that.regular_expression,
+                       t.portray + ' + ' + that.portray,
+                       t.many + ((that,)),
+                   )
+
+
+    class TremoliteAnyOf(TremoliteMany):
+        __slots__ = (())
+
+
+        singular = true
+
+
+        def __repr__(t):
+            return arrange('<TremoliteAnyOf %s %s>',
+                           portray_string(t.regular_expression),
+                           ' '.join(portray_string(v)  for v in t.many))
+
+
+    class TremoliteOr(TremoliteMany):
+        __slots__ = (())
+
+
+        is_tremolite_or = true
+        singular        = false
 
 
         def __add__(t, that):
@@ -215,46 +262,52 @@ def gem():
                    )
 
 
-    class TremoliteParenthesis(TremoliteBase):
+    class TremoliteOne(TremoliteBase):
         __slots__ = ((
-            'inside',                   #   String
+            'pattern',                  #   String
         ))
 
 
-        repeatable = true
-        singular   = true
-
-
-        def __init__(t, regular_expression, portray, inside):
-            assert inside.repeatable
-
+        def __init__(t, regular_expression, portray, pattern):
             t.regular_expression = regular_expression
             t.portray            = portray
-            t.inside             = inside
+            t.pattern            = pattern
 
 
         def __repr__(t):
-            return arrange('<TremoliteParenthesis %s %r>', portray_string(t.regular_expression), t.inside)
+            return arrange('<%s %s %r>', t.__class__.__name__, portray_string(t.regular_expression), t.pattern)
 
 
-    class TremoliteRepeat(TremoliteBase):
-        __slots__ = ((
-            'repeated',                 #   String
-        ))
+    class TremoliteNotFollowedBy(TremoliteOne):
+        __slots__ = (())
 
 
         repeatable = false
         singular   = true
 
 
-        def __init__(t, regular_expression, portray, repeated):
+    class TremoliteParenthesis(TremoliteOne):
+        __slots__ = (())
+
+
+        repeatable = true
+        singular   = true
+
+
+        def __init__(t, regular_expression, portray, pattern):
+            assert pattern.repeatable
+
             t.regular_expression = regular_expression
             t.portray            = portray
-            t.repeated           = repeated
+            t.pattern            = pattern
 
 
-        def __repr__(t):
-            return arrange('<TremoliteRepeat %s %r>', portray_string(t.regular_expression), t.repeated)
+    class TremoliteRepeat(TremoliteOne):
+        __slots__ = (())
+
+
+        repeatable = false
+        singular   = true
 
 
     class TremoliteSpecial(TremoliteBase):
@@ -286,6 +339,9 @@ def gem():
             return arrange('<TremoliteSpecial %s %s%s>', portray_string(t.regular_expression), t.portray, suffix)
 
 
+    [name_cache, name_insert] = produce_cache_functions('Tremolite.name_cache', produce_cache = true, produce_insert = true)
+
+
     def create_exact(s):
         assert length(s) >= 1
 
@@ -303,21 +359,21 @@ def gem():
         return intern_string(''.join(many))
 
 
-    def create_repeat(name, inside, m, n, question_mark = ''):
-        if type(inside) is String:
-            inside = INVISIBLE_EXACT(inside)
+    def create_repeat(name, pattern, m, n, question_mark = ''):
+        if type(pattern) is String:
+            pattern = INVISIBLE_EXACT(pattern)
         else:
-            assert inside.repeatable
+            assert pattern.repeatable
 
-        prefix = (inside.regular_expression   if inside.singular else   '(?:' + inside.regular_expression + ')')
+        prefix = (pattern.regular_expression   if pattern.singular else   '(?:' + pattern.regular_expression + ')')
 
         if n is none:
             assert m >= 2
 
             return TremoliteRepeat(
                        intern_arrange('%s{%d}%s', suffix, m, question_mark),
-                       arrange('%s(%s, %d)', name, inside, m),
-                       inside,
+                       arrange('%s(%s, %d)', name, pattern, m),
+                       pattern,
                    )
 
         if n == -7:
@@ -330,8 +386,8 @@ def gem():
 
             return TremoliteRepeat(
                        intern_string(prefix + suffix),
-                       arrange('%s(%s, %d)', name, inside, m),
-                       inside,
+                       arrange('%s(%s, %d)', name, pattern, m),
+                       pattern,
                    )
 
         assert 0 <= m < n
@@ -343,35 +399,35 @@ def gem():
 
         return TremoliteRepeat(
                    intern_string(prefix + suffix),
-                   arrange('%s(%s, %d, %d)', name, inside, m, n),
-                   inside,
+                   arrange('%s(%s, %d, %d)', name, pattern, m, n),
+                   pattern,
                )
 
 
-    def create_simple_repeat(name, inside, suffix):
-        if type(inside) is String:
-            inside = INVISIBLE_EXACT(inside)
+    def create_simple_repeat(name, pattern, suffix):
+        if type(pattern) is String:
+            pattern = INVISIBLE_EXACT(pattern)
         else:
-            assert inside.repeatable
+            assert pattern.repeatable
 
         return TremoliteRepeat(
                    (
-                       intern_string(inside.regular_expression + suffix)
-                           if inside.singular else
-                               intern_arrange('(?:%s)%s', inside.regular_expression, suffix)
+                       intern_string(pattern.regular_expression + suffix)
+                           if pattern.singular else
+                               intern_arrange('(?:%s)%s', pattern.regular_expression, suffix)
                    ),
-                   arrange('%s(%s)', name, inside),
-                   inside,
+                   arrange('%s(%s)', name, pattern),
+                   pattern,
                )
 
 
-    def wrap_parenthesis(inside, invisible = false):
-        assert not inside.singular
+    def wrap_parenthesis(pattern, invisible = false):
+        assert not pattern.singular
 
         return TremoliteParenthesis(
-                   intern_arrange('(?:%s)', inside.regular_expression),
-                   (inside.portray   if invisible else   intern_arrange('(%s)', inside.portray)),
-                   inside,
+                   intern_arrange('(?:%s)', pattern.regular_expression),
+                   (pattern.portray   if invisible else   intern_arrange('(%s)', pattern.portray)),
+                   pattern,
                )
 
 
@@ -379,34 +435,48 @@ def gem():
     def ANY_OF(*arguments):
         assert length(arguments) > 0
 
-        many   = ['[']
-        append = many.append
+        regular_expressions = ['[']
+        portray             = []
+        many                = []
 
-        for s in arguments:
-            if length(s) is 1:
-                assert lookup_ascii(s).is_printable
+        for v in arguments:
+            if v is LINEFEED:
+                regular_expressions.append(r'\n')
+                portray.append(v.portray)
+                many.append(v)
+                continue
 
-                many.append(s)
+            if length(v) is 1:
+                a = lookup_ascii(v)
+
+                assert a.is_printable
+
+                regular_expressions.append(a.pattern)
             else:
-                assert (length(s) is 3) and (s[1] is '-')
+                assert (length(v) is 3) and (v[1] is '-')
 
-                a0 = lookup_ascii(s[0])
-                a2 = lookup_ascii(s[2])
+                a0 = lookup_ascii(v[0])
+                a2 = lookup_ascii(v[2])
 
                 if not a0.is_printable:
-                    raise_runtime_error('invalid character <%s> passed to ANY_OF(%s)', portray_string(s[0]), portray_string(s))
+                    raise_runtime_error('invalid character <%s> passed to ANY_OF(%s)',
+                                        portray_string(s[0]), portray_string(v))
 
                 if not a2.is_printable:
-                    raise_runtime_error('invalid character <%s> passed to ANY_OF(%s)', portray_string(s[2]), portray_string(s))
+                    raise_runtime_error('invalid character <%s> passed to ANY_OF(%s)',
+                                        portray_string(s[2]), portray_string(v))
 
-                many.append(a0.pattern + '-' + a2.pattern)
+                regular_expressions.append(a0.pattern + '-' + a2.pattern)
 
-        many.append(']')
+            portray.append(portray_string(v))
+            many.append(intern_string(v))
+
+        regular_expressions.append(']')
 
         return TremoliteAnyOf(
-                   intern_string(''.join(many)),
-                   intern_arrange('ANY_OF(%s)', ', '.join(portray_string(s)   for s in arguments)),
-                   Tuple(intern_string(s)   for s in arguments)
+                   intern_string(''.join(regular_expressions)),
+                   intern_arrange('ANY_OF(%s)', ', '.join(portray)),
+                   Tuple(many),
                )
 
 
@@ -420,18 +490,18 @@ def gem():
 
 
     @export
-    def GROUP(group_name, inside):
-        if type(inside) is String:
-            inside = INVISIBLE_EXACT(inside)
+    def GROUP(name, pattern):
+        if name_match(name) is none:
+            raise_runtime_error('GROUP: invalid group name: %s (expected a python identifier)', name)
 
-        if group_name_match(group_name) is none:
-            raise_runtime_error('GROUP: invalid group name: %s (expected a python identifier)', group_name)
+        if type(pattern) is String:
+            pattern = INVISIBLE_EXACT(pattern)
 
         return TremoliteGroup(
-                   intern_arrange('(?P<%s>%s)', group_name, inside.regular_expression),
-                   arrange('GROUP(%s, %s)', portray_string(group_name), inside),
-                   group_name,
-                   inside,
+                   intern_arrange('(?P<%s>%s)', name, pattern.regular_expression),
+                   arrange('GROUP(%s, %s)', portray_string(name), pattern),
+                   name,
+                   pattern,
                )
 
 
@@ -445,48 +515,219 @@ def gem():
 
 
     @export
-    def MINIMUM_OF_ONE_OR_MORE(inside):
-        return create_simple_repeat('MINIMUM_OF_ONE_OR_MORE', inside, '+?')
+    def MINIMUM_OF_ONE_OR_MORE(pattern):
+        return create_simple_repeat('MINIMUM_OF_ONE_OR_MORE', pattern, '{1,7777777}?')
 
 
     @export
-    def MINIMUM_OF_OPTIONAL(inside):
-        return create_simple_repeat('MINIMUM_OF_OPTIONAL', inside, '??')
+    def MINIMUM_OF_OPTIONAL(pattern):
+        return create_simple_repeat('MINIMUM_OF_OPTIONAL', pattern, '??')
 
 
     @export
-    def MINIMUM_OF_REPEAT(inside, m, n = none):
-        return create_repeat('MINIMUM_OF_REPEAT', inside, m, n, '?')
+    def MINIMUM_OF_REPEAT(pattern, m, n = none):
+        return create_repeat('MINIMUM_OF_REPEAT', pattern, m, n, '?')
 
 
     @export
-    def MINIMUM_OF_REPEAT_OR_MORE(inside, m):
-        return create_repeat('MINIMUM_OF_REPEAT_OR_MORE', inside, m, -7, '?')
+    def MINIMUM_OF_REPEAT_OR_MORE(pattern, m):
+        return create_repeat('MINIMUM_OF_REPEAT_OR_MORE', pattern, m, 7777777, '?')
 
 
     @export
-    def MINIMUM_OF_ZERO_OR_MORE(inside):
-        return create_simple_repeat('MINIMUM_OF_ZERO_OR_MORE', inside, '*?')
+    def MINIMUM_OF_ZERO_OR_MORE(pattern):
+        return create_simple_repeat('MINIMUM_OF_ZERO_OR_MORE', pattern, '{,7777777}?')
 
 
     @export
-    def ONE_OR_MORE(inside):
-        return create_simple_repeat('ONE_OR_MORE', inside, '+')
+    def NAME(name, pattern):
+        if name_match(name) is none:
+            raise_runtime_error('NAME: invalid name: %s (expected a python identifier)', name)
+
+        if type(pattern) is String:
+            pattern = INVISIBLE_EXACT(pattern)
+
+        name = intern_string(name)
+
+        return name_insert(name, TremoliteName(name, pattern))
 
 
     @export
-    def OPTIONAL(inside):
-        return create_simple_repeat('OPTIONAL', inside, '?')
+    def NAMED_GROUP(name, pattern):
+        if name_match(name) is none:
+            raise_runtime_error('NAMED_GROUP: invalid name: %s (expected a python identifier)', name)
+
+        if type(pattern) is String:
+            pattern = INVISIBLE_EXACT(pattern)
+
+        name = intern_string(name)
+
+        return name_insert(
+                   name,
+                   TremoliteNamedGroup(
+                       intern_arrange('(?P<%s>%s)', name, pattern.regular_expression),
+                       name,
+                       name,
+                       GROUP(name, pattern),
+                   ),
+               )
 
 
     @export
-    def REPEAT_OR_MORE(inside, m):
-        return create_repeat('REPEAT_OR_MORE', inside, m, -7)
+    def NOT_FOLLOWED_BY(pattern):
+        if type(pattern) is String:
+            pattern = INVISIBLE_EXACT(pattern)
+
+        return TremoliteNotFollowedBy(
+                   intern_arrange('(?!%s)', pattern.regular_expression),
+                   intern_arrange('NOT_FOLLOWED_BY(%s)', pattern.portray),
+                   pattern,
+               )
 
 
     @export
-    def REPEAT(inside, m, n = none):
-        return create_repeat('REPEAT', inside, m, n)
+    def ONE_OR_MORE(pattern):
+        return create_simple_repeat('ONE_OR_MORE', pattern, '{1,7777777}')
+
+
+    @export
+    def OPTIONAL(pattern):
+        return create_simple_repeat('OPTIONAL', pattern, '?')
+
+
+    @export
+    def OPTIONAL_GROUP(group_name, pattern):
+        if type(pattern) is String:
+            pattern = INVISIBLE_EXACT(pattern)
+        else:
+            assert pattern.repeatable
+
+        if name_match(group_name) is none:
+            raise_runtime_error('GROUP: invalid group name: %s (expected a python identifier)', group_name)
+
+        return TremoliteOptionalGroup(
+                   intern_arrange('(?P<%s>%s)?', group_name, pattern.regular_expression),
+                   arrange('OPTIONAL_GROUP(%s, %s)', portray_string(group_name), pattern),
+                   group_name,
+                   pattern,
+               )
+
+
+    #
+    #<PRINTABLE_MINUS>
+    #
+    def raise_invalid_printable_minus_character(c, s):
+        raise_runtime_error('invalid character <%s> passed to PRINTABLE_MINUS(%s)',
+                            portray_string(c), portray_string(s))
+
+
+    def raise_already_not_allowed_printable_minus_character(c, s):
+        raise_runtime_error('character %r already not allowed in PRINTABLE_MINUS(%s)',
+                            portray_string(c), portray_string(s))
+
+
+    ordinal_space = ordinal(' ')
+    ordinal_minus = ordinal('-')
+    ordinal_tilde = ordinal('~')
+
+
+    @export
+    def PRINTABLE_MINUS(*arguments):
+        assert length(arguments) > 0
+
+        valid = [ordinal_space <= i <= ordinal_tilde   for i in iterate_range(0, 256)]
+
+        for s in arguments:
+            if length(s) is 1:
+                a = lookup_ascii(s, unknown_ascii)
+
+                if not a.is_printable:
+                    raise_invalid_printable_minus_character(s, s)
+
+                if not valid[a.ordinal]:
+                    raise_already_not_allowed_printable_minus_character(s, s)
+
+                valid[a.ordinal] = false
+                continue
+
+            assert (length(s) is 3) and (s[1] is '-')
+
+            a0 = lookup_ascii(s[0], unknown_ascii)
+            a2 = lookup_ascii(s[2], unknown_ascii)
+
+            if not a0.is_printable:
+                raise_invalid_printable_minus_character(s[0], s)
+
+            if not a2.is_printable:
+                raise_invalid_printable_minus_character(s[2], s)
+
+            if a0.ordinal > a2.ordinal:
+                raise_runtime_error('invalid backwards range PRINTABLE_MINUS(%s)', portray_string(s))
+
+            for i in iterate_range(a0.ordinal, a2.ordinal):
+                if not valid[i]:
+                    raise_already_not_allowed_printable_minus_character(character(i), s)
+
+                valid[i] = false
+
+        many   = ['[']
+        append = many.append
+        lowest = none
+
+
+        def add_range(lowest, highest):
+            if show:
+                line('add_range(%d, %d)', lowest, highest)
+
+            if lowest == ordinal_minus:
+                many.insert(0, '-')
+                lowest += 1
+
+            if highest == ordinal_minus:
+                many.insert(0, '-')
+                highest -= 1
+
+            if lowest == highest:
+                many.append(lookup_ascii(lowest).pattern)
+                return
+
+            if lowest > highest:
+                return
+
+            many.append(arrange('%s-%s', lookup_ascii(lowest).pattern, lookup_ascii(highest).pattern))
+
+
+        for i in iterate_range(0, 256):
+            if valid[i]:
+                if lowest is none:
+                    lowest = i
+                    continue
+            else:
+                if lowest is not none:
+                    add_range(lowest, i - 1)
+                    lowest = none
+        else:
+            if lowest is not none:
+                add_range(lowest, 255)
+
+        many.append(']')
+
+        return TremoliteAnyOf(
+                   intern_string(''.join(many)),
+                   intern_arrange('PRINTABLE_MINUS(%s)', ', '.join(portray_string(s)   for s in arguments)),
+                   Tuple(intern_string(s)   for s in arguments)
+               )
+    #</PRINTABLE_MINUS>
+
+
+    @export
+    def REPEAT_OR_MORE(pattern, m):
+        return create_repeat('REPEAT_OR_MORE', pattern, m, 7777777)
+
+
+    @export
+    def REPEAT(pattern, m, n = none):
+        return create_repeat('REPEAT', pattern, m, n)
 
 
     def SPECIAL(regular_expression, portray, repeatable = false, singular = false):
@@ -497,11 +738,20 @@ def gem():
 
 
     @export
-    def ZERO_OR_MORE(inside):
-        return create_simple_repeat('ZERO_OR_MORE', inside, '*')
+    def ZERO_OR_MORE(pattern):
+        return create_simple_repeat('ZERO_OR_MORE', pattern, '{,7777777}')
+
+
+    share(
+        'name_cache',       name_cache,
+    )
 
 
     export(
-        'EMPTY',            SPECIAL('',    'EMPTY'),
-        'END_OF_PATTERN',   SPECIAL(r'\Z', 'END_OF_PATTERN'),
+        'BACKSLASH',        SPECIAL(r'\\',          'BACKSLASH',    repeatable = true, singular = true),
+        'DOT',              SPECIAL('.',            'DOT',          repeatable = true, singular = true),
+        'EMPTY',            SPECIAL('(?#empty)',    'EMPTY'),
+        'END_OF_PATTERN',   SPECIAL(r'\Z',          'END_OF_PATTERN'),
+        'LINEFEED',         SPECIAL(r'\n',          'LINEFEED',     repeatable = true, singular = true),
+        'PRINTABLE',        SPECIAL('[ -~]',        'PRINTABLE',    repeatable = true, singular = true),
     )

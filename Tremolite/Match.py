@@ -40,11 +40,12 @@ def gem():
             0,
 
             #
-            #   r'[a-z][0-9_a-z]*\Z'
+            #   r'[A-Z_a-z][0-9A-Z_a-z]{,7777777}\Z'
             #
             ((
-                17, 8, 4, 1, 0, 27, 97, 122, 0, 15, 5, 27, 97, 122, 0, 29, 16, 0, Long(4294967295), 15, 11, 10, 0,
-                67043328, 2147483648, 134217726, 0, 0, 0, 0, 0, 1, 6, 7, 1,
+                17, 14, 4, 1, 7777778, 10, 0, 0, 2281701374, 134217726, 0, 0, 0, 0, 0, 15, 11, 10, 0, 0, 2281701374,
+                134217726, 0, 0, 0, 0, 0, 29, 16, 0, 7777777, 15, 11, 10, 0, 67043328, 2281701374, 134217726, 0, 0, 0,
+                0, 0, 1, 6, 7, 1,
             )),
             #</copyright>
         )).__getitem__
@@ -69,16 +70,21 @@ def gem():
 
 
     #
-    #   group_name_match
+    #   identifier = ANY_OF('A-Z', '_', 'a-z') + ZERO_OR_MORE(ANY_OF('0-9', 'A-Z', '_', 'a-z'))
     #
-    #       ANY_OF('a-z') + ZERO_OR_MORE(ANY_OF('0-9', '_', 'a-z')) + END_OF_PATTERN
+
+
     #
-    group_name_match = M(
-        r'[a-z][0-9_a-z]*\Z',
+    #   name_match
+    #
+    #       identifier + END_OF_PATTERN
+    #
+    name_match = M(
+        r'[A-Z_a-z][0-9A-Z_a-z]{,7777777}\Z',
         1,
     )
 
 
     export(
-        'group_name_match',     group_name_match,
+        'name_match',   name_match,
     )
