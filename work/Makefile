@@ -34,6 +34,10 @@ IVORY_FILES = ../Ivory/Main.py
 LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
+SAPPHIRE_FILES = \
+    ../Sapphire/Core.py \
+    ../Sapphire/Sapphire.py \
+
 TOPAZ_FILES = \
     ../Topaz/Core.py \
     ../Topaz/Main.py \
@@ -61,6 +65,7 @@ FILES = \
     $(GEM_FILES) \
     $(IVORY_FILES) \
     $(LICENSE_FILES) \
+    $(SAPPHIRE_FILES) \
     $(TOPAZ_FILES) \
     $(TREMOLITE_FILES) \
     $(WORK_FILES)
@@ -82,6 +87,7 @@ clean:
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gd.py
+	rm -f hc.py hm.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f lr.txt
@@ -129,6 +135,8 @@ links:
 	ln -s ../Gem/FileOutput.py                  fo.py
 	ln -s ../Gem/FileStatus.py                  fs.py
 	ln -s ../Gem/Codec.py                       gd.py
+	ln -s ../Sapphire/Core.py                   hc.py
+	ln -s ../Sapphire/Main.py                   hm.py
 	ln -s ../Gem/__init__.py                    in.py
 	ln -s ../Gem/Import.py                      im.py
 	ln -s ../Ivory/Main.py                      iv.py
@@ -172,6 +180,7 @@ wc:
         $(GEM_FILES) \
         $(IVORY_FILES) \
         $(LICENSE_FILES) \
+        $(SAPPHIRE_FILES) \
         $(TOPAZ_FILES) \
         $(TREMOLITE_FILES) \
         $(WORK_FILES)
