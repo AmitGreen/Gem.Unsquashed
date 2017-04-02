@@ -20,12 +20,13 @@ def gem():
             'blank_suppress',           #   Method
             'indent',                   #   Method
             'line',                     #   Method
+            'write',                    #   Method
         ))
 
 
         def __init__(t, path):
             t.path = path
-            t.line = t.indent = t.blank2 = t.blank = t.f = t.data = none
+            t.write = t.line = t.indent = t.blank2 = t.blank = t.f = t.data = none
 
 
         @privileged
@@ -38,6 +39,7 @@ def gem():
             t.blank_suppress = f.blank_suppress
             t.indent         = f.indent
             t.line           = f.line
+            t.write          = f.write
 
             return t
 
@@ -47,7 +49,7 @@ def gem():
                 t.close()
                 return
 
-            data = (t.data) or (f.finish())
+            data = (t.data) or (t.finish())
 
             path     = t.path
             path_new = t.path_new       #   Grab t.path_new & t.path_old before zapping t.path
@@ -62,8 +64,8 @@ def gem():
 
 
         def close(t):
-            f      = t.f
-            t.line = t.indent = t.blank_suppress = t.blank2 = t.blank = t.f = t.data = none
+            f       = t.f
+            t.write = t.line = t.indent = t.blank_suppress = t.blank2 = t.blank = t.f = t.data = none
 
             if f is not none:
                 f.close()
@@ -72,8 +74,8 @@ def gem():
         def finish(t):
             assert t.data is none
 
-            f      = t.f
-            t.line = t.indent = t.blank2 = t.blank = t.f = none
+            f       = t.f
+            t.write = t.line = t.indent = t.blank2 = t.blank = t.f = none
 
             data = t.data = f.finish()
 
@@ -88,6 +90,7 @@ def gem():
         @property
         def path_old(t):
             return arrange('%s.old', t.path)
+
 
         @property
         def prefix_total(t):
