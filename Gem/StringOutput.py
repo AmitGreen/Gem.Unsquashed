@@ -40,16 +40,29 @@ def gem():
         __slots__ = ((
             'f',                        #   StringIO
             'prefix',                   #   String
+            'result',                   #   None | String
             '_blank',                   #   Integer
-            '_write',                   #   Method
+            'write',                    #   Method
         ))
 
 
         def __init__(t, f):
             t.f      = f
             t.prefix = ''
+            t.result = none
             t._blank = -1
-            t._write = f.write
+            t.write  = f.write
+
+
+        def __enter__(t):
+            return t
+
+
+        def __exit__(t, e_type, e, e_traceback):
+            if e_type is none:
+                t.finish()
+            else:
+                t.close()
 
 
         def blank(t):
@@ -67,8 +80,8 @@ def gem():
 
 
         def close(t):
-            f        = t.f
-            t._write = t.f = none
+            f       = t.f
+            t.write = t.f = none
 
             if f is not none:
                 f.close()
@@ -81,7 +94,7 @@ def gem():
 
             
         def finish(t):
-            r = t.f.getvalue()
+            r = t.result = t.f.getvalue()
 
             t.close()
 
@@ -92,7 +105,7 @@ def gem():
             if format is none:
                 assert length(arguments) is 0
 
-                t._write('\n')
+                t.write('\n')
 
                 if t._blank > 0:
                     t._blank -= 1
@@ -100,11 +113,11 @@ def gem():
                 return
 
             if t._blank > 0:
-                t._write('\n' * t._blank + t.prefix + (format % arguments   if arguments else   format) + '\n')
+                t.write('\n' * t._blank + t.prefix + (format % arguments   if arguments else   format) + '\n')
                 t._blank = 0
                 return
 
-            t._write(t.prefix + (format % arguments   if arguments else   format) + '\n')
+            t.write(t.prefix + (format % arguments   if arguments else   format) + '\n')
             t._blank = 0
 
 

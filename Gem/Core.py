@@ -37,6 +37,12 @@ def gem():
         flush_standard_output()
 
 
+    @built_in
+    def partial(format, *arguments):
+        write_standard_output(format % arguments   if arguments else   format)
+        flush_standard_output()
+
+
     #
     #   privileged_2
     #
