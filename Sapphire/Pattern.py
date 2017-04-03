@@ -77,9 +77,14 @@ def gem():
         MATCH(
             'argument_1_match',
             (
-                  (name | number)
-                + GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(', ',', '[')) + ow)     #   ]
+                  (name | number | single_quote)
+                + GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(', ')', ',', '[')) + ow)     #   ]
             )
+        )
+
+        MATCH(
+            'argument_1A_match',
+            GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(', ')', ',', '[')) + ow)          #   ]
         )
 
         MATCH(
@@ -104,7 +109,15 @@ def gem():
             )
         )
 
-        MATCH('statement_expression_match', OPTIONAL(dot + GROUP('right', identifier)) + left_parenthesis)
+        MATCH(
+            'statement_expression_match',
+            (
+                  OPTIONAL(dot + GROUP('right', identifier))
+                + GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(')) + ow)
+                + OPTIONAL(name | number | single_quote)
+            )
+        )
+
         FULL_MATCH('statement_postfix_match', LINEFEED)
  
         #

@@ -10,8 +10,8 @@ def gem():
     tuple_of_3_nones = ((none, none, none))
 
 
-    def parse_arguments__atom__left_parenthesis(s, m, atom):
-        [arguments, index] = parse_arguments__left_parenthesis(s, m.end(), OperatorLeftParenthesis(m.group('operator__ow')))
+    def parse_arguments__atom__left_parenthesis(s, m0, atom):
+        [arguments, index] = parse_arguments__left_parenthesis(s, m0)
 
         if arguments is none:
             return tuple_of_3_nones
@@ -20,7 +20,7 @@ def gem():
         m    = argument_postfix_match(s, index)
 
         if m is none:
-            line('parse_arguments__atom__left_parenthesis: incomplete #1A: %r %r', call, s[index:])
+            line('parse_arguments__atom__left_parenthesis: incomplete #1A: %r %r', call, s[m0.end():])
             return tuple_of_3_nones
 
         operator = m.group('operator')
@@ -32,6 +32,31 @@ def gem():
             return (( call, OperatorComma(m.group('operator__ow')), m.end() ))
 
         line('parse_arguments__atom__left_parenthesis: incomplete #2: %r %r', call, operator)
+        return tuple_of_3_nones
+
+
+    def parse_arguments__atom__left_parenthesis__argument_0(s, m, atom, argument_0):
+        [arguments, index] = parse_arguments__left_parenthesis__argument_0(s, m, argument_0)
+
+        if arguments is none:
+            return tuple_of_3_nones
+
+        call = ExpressionCall(atom, arguments)
+        m    = argument_postfix_match(s, index)
+
+        if m is none:
+            line('parse_arguments__atom__left_parenthesis__argument_0: incomplete #1B: %r %r', call, s[index:])
+            return tuple_of_3_nones
+
+        operator = m.group('operator')
+
+        if operator is ')':
+            return (( call, OperatorRightParenthesis(m.group('operator__ow')), m.end() ))
+
+        if operator is ',':
+            return (( call, OperatorComma(m.group('operator__ow')), m.end() ))
+
+        line('parse_arguments__atom__left_parenthesis__argument_0: incomplete #1C: %r %r', call, operator)
         return tuple_of_3_nones
 
 
@@ -85,24 +110,58 @@ def gem():
                                             }.__getitem__
 
 
-    def parse_arguments__left_parenthesis(s, index, left_parenthesis_0):
-        m = argument_1_match(s, index)
+    def parse_arguments__left_parenthesis(s, m0):
+        left_parenthesis_0 = OperatorLeftParenthesis(m0.group('operator__ow'))
+        m                  = argument_1_match(s, m0.end())
 
         if m is none:
-            line('parse_arguments__left_parenthesis: incomplete #8: %s', portray_string(s[index:]))
+            line('parse_arguments__left_parenthesis: incomplete #8: %s', portray_string(s[m0.end():]))
             return tuple_of_2_nones
 
-        [name, number, operator] = m.group('name', 'number', 'operator')
+        [name, number, single_quote, operator] = m.group('name', 'number', 'single_quote', 'operator')
 
         if name is not none:
-            assert number is none
+            assert number is single_quote is none
 
             argument_0 = Symbol(name)
-        else:
-            assert number is not none
+        elif number is not none:
+            assert single_quote is none
 
             argument_0 = Number(number)
+        else:
+            assert single_quote is not none
 
+            argument_0 = SingleQuote(single_quote)
+
+        if operator is ')':
+            return ((
+                       Arguments_1(left_parenthesis_0, argument_0, OperatorRightParenthesis(operator)),
+                       m.end(),
+                   ))
+
+        return parse_arguments__left_parenthesis__argument__operator(s, m, left_parenthesis_0, argument_0, operator)
+
+
+    def parse_arguments__left_parenthesis__argument_0(s, m0, argument_0):
+        left_parenthesis_0 = OperatorLeftParenthesis(m0.group('operator__ow'))
+        m                  = argument_1A_match(s, m0.end())
+
+        if m is none:
+            line('parse_arguments__left_parenthesis__argument_0: incomplete #8B: %s', portray_string(s[m0.end():]))
+            return tuple_of_2_nones
+
+        operator = m.group('operator')
+
+        if operator is ')':
+            return ((
+                       Arguments_1(left_parenthesis_0, argument_0, OperatorRightParenthesis(m.group('operator__ow'))),
+                       m.end(),
+                   ))
+
+        return parse_arguments__left_parenthesis__argument__operator(s, m, left_parenthesis_0, argument_0, operator)
+
+
+    def parse_arguments__left_parenthesis__argument__operator(s, m, left_parenthesis_0, argument_0, operator):
         if operator is ',':
             operator_0 = OperatorComma(operator)
             index_0    = m.end()
@@ -120,13 +179,13 @@ def gem():
                        ))
 
             if not operator_0.is_comma:
-                line('parse_arguments__left_parenthesis: incomplete #9: %r %r', argument_0, operator_0)
+                line('parse_arguments__left_parenthesis__argument__operator: incomplete #9: %r %r', argument_0, operator_0)
                 return tuple_of_2_nones
 
         m = argument_2_match(s, index_0)
 
         if m is none:
-            line('parse_arguments__left_parenthesis: incomplete #10: %r %r %r', argument_0, operator_0, s[index_0:])
+            line('parse_arguments__left_parenthesis__argument__operator: incomplete #10: %r %r %r', argument_0, operator_0, s[index_0:])
             return tuple_of_2_nones
 
         [name, number, single_quote, operator] = m.group('name', 'number', 'single_quote', 'operator')
@@ -165,12 +224,12 @@ def gem():
                            index_1,
                        ))
 
-            line('parse_arguments__left_parenthesis: incomplete #11: %r; %r; %r; %r; %r; %r',
+            line('parse_arguments__left_parenthesis__argument__operator: incomplete #11: %r; %r; %r; %r; %r; %r',
                  left_parenthesis_0, argument_0, operator_0, argument_1, operator_1, s[index:])
 
             return tuple_of_2_nones
 
-        line('parse_arguments__left_parenthesis: incomplete #12: %r, %r', argument_1, operator)
+        line('parse_arguments__left_parenthesis__argument__operator: incomplete #12: %r, %r', argument_1, operator)
         return tuple_of_2_nones
 
 
@@ -184,8 +243,31 @@ def gem():
         if m is none:
             return UnknownLine(s)
 
-        [dot, right, left_parenthesis] = m.group('dot', 'right', 'left_parenthesis')
-        [arguments, index]             = parse_arguments__left_parenthesis(s, m.end(), left_parenthesis)
+        [
+                dot, right, operator, name_0, number_0, single_quote_0
+        ] = m.group('dot', 'right', 'operator', 'name', 'number', 'single_quote')
+
+        assert operator is '('
+
+        if name_0 is not none:
+            assert number_0 is single_quote_0 is none
+
+            [arguments, index] = parse_arguments__atom__left_parenthesis__argument_0(
+                                     s, m, name, Symbol(name_0),
+                                 )
+        elif number_0 is not none:
+            assert single_quote_0 is none
+
+            [arguments, index] = parse_arguments__atom__left_parenthesis__argument_0(
+                                     s, m, name, Number(number_0),
+                                 )
+
+        elif single_quote_0 is not none:
+            [arguments, index] = parse_arguments__atom__left_parenthesis__argument_0(
+                                     s, m, name, SingleQuote(single_quote_0),
+                                 )
+        else:
+            [arguments, index] = parse_arguments__atom__left_parenthesis(s, m, name)
 
         if arguments is none:
             return UnknownLine(s)
