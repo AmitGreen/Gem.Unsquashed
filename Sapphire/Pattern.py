@@ -115,6 +115,7 @@ def gem():
                   OPTIONAL(dot + GROUP('right', identifier))
                 + GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(')) + ow)
                 + OPTIONAL(name | number | single_quote)
+                + OPTIONAL(right_parenthesis)
             )
         )
 

@@ -220,30 +220,49 @@ def gem():
             return UnknownLine(s)
 
         [
-                dot, right, operator, name_0, number_0, single_quote_0
-        ] = m.group('dot', 'right', 'operator', 'name', 'number', 'single_quote')
+                dot, right, operator, name_0, number_0, single_quote_0, right_parenthesis
+        ] = m.group('dot', 'right', 'operator', 'name', 'number', 'single_quote', 'right_parenthesis')
 
         assert operator is '('
 
-        if name_0 is not none:
-            assert number_0 is single_quote_0 is none
+        if right_parenthesis is not none:
+            left_parenthesis  = OperatorLeftParenthesis(m.group('operator__ow'))
+            right_parenthesis = OperatorRightParenthesis(right_parenthesis)
 
-            [arguments, index] = parse_arguments__left_parenthesis__argument_0(
-                                     s, m, Symbol(name_0),
-                                 )
-        elif number_0 is not none:
-            assert single_quote_0 is none
+            if name_0 is not none:
+                assert number_0 is single_quote_0 is none
 
-            [arguments, index] = parse_arguments__left_parenthesis__argument_0(
-                                     s, m, Number(number_0),
-                                 )
+                arguments = Arguments_1(left_parenthesis, Symbol(name_0), right_parenthesis)
+            elif number_0 is not none:
+                assert single_quote_0 is none
 
-        elif single_quote_0 is not none:
-            [arguments, index] = parse_arguments__left_parenthesis__argument_0(
-                                     s, m, SingleQuote(single_quote_0),
-                                 )
+                arguments = Arguments_1(left_parenthesis, Number(number_0), right_parenthesis)
+            elif single_quote_0 is not none:
+                arguments = Arguments_1(left_parenthesis, SingleQuote(single_quote_0), right_parenthesis)
+            else:
+                arguments = Arguments_0(left_parenthesis, right_parenthesis)
+
+            index = m.end()
         else:
-            [arguments, index] = parse_arguments__left_parenthesis(s, m)
+            if name_0 is not none:
+                assert number_0 is single_quote_0 is none
+
+                [arguments, index] = parse_arguments__left_parenthesis__argument_0(
+                                         s, m, Symbol(name_0),
+                                     )
+            elif number_0 is not none:
+                assert single_quote_0 is none
+
+                [arguments, index] = parse_arguments__left_parenthesis__argument_0(
+                                         s, m, Number(number_0),
+                                     )
+
+            elif single_quote_0 is not none:
+                [arguments, index] = parse_arguments__left_parenthesis__argument_0(
+                                         s, m, SingleQuote(single_quote_0),
+                                     )
+            else:
+                [arguments, index] = parse_arguments__left_parenthesis(s, m)
 
         if arguments is none:
             return UnknownLine(s)

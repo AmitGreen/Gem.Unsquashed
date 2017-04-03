@@ -8,6 +8,23 @@ def gem():
 
 
     @share
+    class Arguments_0(Object):
+        __slots__ = ((
+            'left_parenthesis',         #   OperatorLeftParenthesis
+            'right_parenthesis',        #   OperatorRightParenthesis
+        ))
+
+
+        def __init__(t, left_parenthesis, right_parenthesis):
+            t.left_parenthesis  = left_parenthesis
+            t.right_parenthesis = right_parenthesis
+
+
+        def __repr__(t):
+            return arrange('<Arguments_0 %r %r>', t.left_parenthesis, t.right_parenthesis)
+
+
+    @share
     class Arguments_1(Object):
         __slots__ = ((
             'left_parenthesis',         #   OperatorLeftParenthesis
