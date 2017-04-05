@@ -35,8 +35,11 @@ def gem():
         if m is none:
             return UnknownLine(s)
 
-        return DecoratorHeader(OperatorAtSign(m0.group('indented') + m0.group('keyword__ow')), parse_expression(m))
-
+        return DecoratorHeader(
+                   OperatorAtSign(m0.group('indented') + m0.group('keyword__ow')),
+                   parse_expression(m),
+                   m.group('newline'),
+               )
 
     def parse_statement_from(m0, s):
         m = from_1_match(s, m0.end())
@@ -61,6 +64,7 @@ def gem():
                        module,
                        KeywordImport(keyword__import__w),
                        as_fragment,
+                       m.group('newline'),
                    )
 
         m2 = from_2_match(s, m.end())
@@ -79,7 +83,8 @@ def gem():
                        KeywordFrom(m0.group('indented') + m0.group('keyword__ow')),
                        module,
                        KeywordImport(keyword__import__w),
-                       ExpressionComma(as_fragment, OperatorComma(comma), as_fragment_2)
+                       ExpressionComma(as_fragment, OperatorComma(comma), as_fragment_2),
+                       m2.group('newline'),
                    )
 
         raise_runtime_error('parse_statement_from: incomplete')
@@ -94,11 +99,10 @@ def gem():
         if m is none:
             return UnknownLine(s)
 
-        name_1 = m.group('name_1')
-
         return StatementImport(
                    KeywordImport(m0.group('indented') + m0.group('keyword__ow')),
-                   name_1,
+                   m.group('name_1'),
+                   m.group('newline'),
                )
 
 
@@ -109,15 +113,15 @@ def gem():
             return UnknownLine(s)
 
         [
-            name_1, left_parenthesis, name_2, right_parenthesis__colon,
-        ] = m.group('name_1', 'left_parenthesis', 'name_2', 'right_parenthesis__colon')
+            name_1, left_parenthesis, name_2, right_parenthesis__colon, newline,
+        ] = m.group('name_1', 'left_parenthesis', 'name_2', 'right_parenthesis__colon', 'newline')
 
         if name_2 is none:
             parameters = ParameterColon_0(left_parenthesis + right_parenthesis__colon)
         else:
             parameters = ParameterColon_1(left_parenthesis, name_2, right_parenthesis__colon)
 
-        return DefineHeader(KeywordDefine(m0.group('indented') + m0.group('keyword__ow')), name_1, parameters)
+        return DefineHeader(KeywordDefine(m0.group('indented') + m0.group('keyword__ow')), name_1, parameters, newline)
 
 
     def parse_statement_return(m0, s):
@@ -129,6 +133,7 @@ def gem():
         return StatementReturnExpression(
                    KeywordReturn(m0.group('indented') + m0.group('keyword__ow')),
                    parse_expression(m),
+                   m.group('newline'),
                )
 
 
@@ -172,21 +177,13 @@ def gem():
 
             if comment is not none:
                 if indented is '':
-                    if comment is '':
-                        append(empty_comment)
-                        continue
-
-                    append(Comment(comment))
+                    append(Comment(comment, newline_2))
                     continue
 
-                append(IndentedComment(indented, comment))
+                append(IndentedComment(indented, comment, newline_2))
                 continue
 
-            if indented is '':
-                append(empty_line)
-                continue
-
-            append(EmptyLine(indented))
+            append(EmptyLine(indented + newline_2))
             continue
 
         for v in many:

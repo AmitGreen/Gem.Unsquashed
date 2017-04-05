@@ -23,6 +23,7 @@ def gem():
         w2  = NAMED_GROUP('w2', w)
 
         middle_ow = NAME('middle_ow', OPTIONAL(w + NOT_FOLLOWED_BY(ANY_OF(LINEFEED, ' ', '#'))))
+        newline   = NAMED_GROUP('newline', ow + OPTIONAL('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
 
         alphanumeric_or_underscore = NAME('alphanumeric_or_underscore', ANY_OF('0-9', 'A-Z', '_', 'a-z'))
 
@@ -120,15 +121,12 @@ def gem():
                 + OPTIONAL(
                         #   (
                         GROUP('right_parenthesis', ow + ')')
-                      + OPTIONAL_GROUP('newline', ow + OPTIONAL('#' + ZERO_OR_MORE(DOT)) + LINEFEED + END_OF_PATTERN)
+                      + OPTIONAL(newline + END_OF_PATTERN)
                   )
             )
         )
 
-        FULL_MATCH(
-            'statement_postfix_match',
-            GROUP('newline', ow + OPTIONAL('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
-        )
+        FULL_MATCH('statement_postfix_match', newline)
  
         #
         #   Statements
@@ -145,7 +143,7 @@ def gem():
 
         FULL_MATCH(
             'define_match',
-            name_1 + left_parenthesis + OPTIONAL(name_2) + right_parenthesis__colon + LINEFEED,
+            name_1 + left_parenthesis + OPTIONAL(name_2) + right_parenthesis__colon + newline,
         )
 
         MATCH(
@@ -154,20 +152,24 @@ def gem():
                   name_1 + OPTIONAL(dot + name_2)
                 + keyword__import__w + name_3
                 + keyword__as__w + name_4
-                + (comma | LINEFEED + END_OF_PATTERN)
+                + (comma | newline + END_OF_PATTERN)
             )
         )
 
         MATCH(
             'from_2_match',
-            name_1 + keyword__as__w + name_2 + (comma | LINEFEED + END_OF_PATTERN)
+            name_1 + keyword__as__w + name_2 + (comma | newline + END_OF_PATTERN)
         )
 
-        FULL_MATCH('import_match', name_1 + LINEFEED)
+        FULL_MATCH('import_match', name_1 + newline)
 
         FULL_MATCH(
             'expression_match',
-            name + OPTIONAL(left_parenthesis + OPTIONAL(single_quote) + right_parenthesis) + LINEFEED,
+            (
+                  name
+                + OPTIONAL(left_parenthesis + OPTIONAL(single_quote) + right_parenthesis)
+                + newline
+            ),
         )
 
         create_match_code('../Sapphire/Match.py', '2017 Amit Green', 'Sapphire.Match')

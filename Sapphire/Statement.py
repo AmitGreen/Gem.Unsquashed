@@ -9,9 +9,9 @@ def gem():
     @share
     class AsFragment(Object):
         __slots__ = ((
-            'left_name',                    #   String+
-            'keyword_as',                   #   KeywordAs
-            'right_name',                   #   String+
+            'left_name',                #   String+
+            'keyword_as',               #   KeywordAs
+            'right_name',               #   String+
         ))
 
 
@@ -26,53 +26,63 @@ def gem():
 
 
     @share
-    class Comment(Token):
-        __slots__ = (())
+    class Comment(Object):
+        __slots__ = ((
+            'comment',                  #   Comment
+            'newline',                  #   String
+        ))
+
+
+        def __init__(t, comment, newline):
+            t.comment = comment
+            t.newline = newline
+
+
+        def __repr__(t):
+            if t.comment is '':
+                return arrange('<# %r>', t.newline)
+
+            return arrange('<# %r %r>', t.comment, t.newline)
 
 
     @share
     class DecoratorHeader(Object):
         __slots__ = ((
-            'operator_decorator',           #   OperatorAtSign
-            'expresssion',                  #   Any
+            'operator_decorator',       #   OperatorAtSign
+            'expresssion',              #   Any
+            'newline',                  #   String
         ))
 
 
-        def __init__(t, operator_decorator, expresssion):
+        def __init__(t, operator_decorator, expresssion, newline):
             t.operator_decorator = operator_decorator
             t.expresssion        = expresssion
+            t.newline            = newline
 
 
         def  __repr__(t):
-            return arrange('<DecoratorHeader %r %r>', t.operator_decorator, t.expresssion)
+            return arrange('<DecoratorHeader %r %r %r>', t.operator_decorator, t.expresssion, t.newline)
 
 
     @share
     class DefineHeader(Object):
         __slots__ = ((
-            'keyword_define',               #   KeywordDefine
-            'name',                         #   String
-            'parameters_colon',             #   Parameter_0 | Parameter_1
+            'keyword_define',           #   KeywordDefine
+            'name',                     #   String
+            'parameters_colon',         #   Parameter_0 | Parameter_1
+            'newline',                  #   String
         ))
 
 
-        def __init__(t, keyword_define, name, parameters_colon):
+        def __init__(t, keyword_define, name, parameters_colon, newline):
             t.keyword_define   = keyword_define
             t.name             = name
             t.parameters_colon = parameters_colon
+            t.newline          = newline
 
 
         def  __repr__(t):
-            return arrange('<DefineHeader %s %s %r>', t.keyword_define, t.name, t.parameters_colon)
-
-
-    class EmptyComment(Token):
-        __slots__ = (())
-
-
-        @static_method
-        def __repr__():
-            return '<EmptyComment>'
+            return arrange('<DefineHeader %s %s %r %r>', t.keyword_define, t.name, t.parameters_colon, t.newline)
 
 
     @share
@@ -88,22 +98,25 @@ def gem():
 
 
     @share
-    class IndentedComment(Token):
+    class IndentedComment(Object):
         __slots__ = ((
-            'indented',                     #   String
+            'indented',                 #   String
+            'comment',                  #   Comment
+            'newline',                  #   String
         ))
 
 
-        def __init__(t, indented, s):
+        def __init__(t, indented, comment, newline):
             t.indented = indented
-            t.s        = s
+            t.comment  = comment
+            t.newline  = newline
 
 
         def __repr__(t):
-            if t.s is '':
-                return arrange('<+# %r #>', t.indented)
+            if t.comment is '':
+                return arrange('<+# %r %r>', t.indented, t.newline)
 
-            return arrange('<+# %r # %s>', t.indented, portray_string(t.s))
+            return arrange('<+# %r %r %r>', t.indented, t.comment, t.newline)
 
 
     @share
@@ -114,9 +127,9 @@ def gem():
     @share
     class ParameterColon_1(Object):
         __slots__ = ((
-            'left_parenthesis',             #   String
-            'argument_1',                   #   String
-            'right_parenthesis__colon',     #   String
+            'left_parenthesis',         #   String
+            'argument_1',               #   String
+            'right_parenthesis__colon', #   String
         ))
 
 
@@ -136,10 +149,10 @@ def gem():
     @share
     class StatementCall(Object):
         __slot__ = ((
-            'indented',                     #   String+
-            'left',                         #   Expression
-            'arguments',                    #   Arguments*
-            'newline',                      #   String+
+            'indented',                 #   String+
+            'left',                     #   Expression
+            'arguments',                #   Arguments*
+            'newline',                  #   String+
         ))
 
 
@@ -157,33 +170,36 @@ def gem():
     @share
     class StatementFromImport(Object):
         __slots__ = ((
-            'keyword_from',                 #   KeywordFrom
-            'module',                       #   String+
-            'keyword_import',               #   KeywordImport
-            'imported',                     #   String+ | AsFragment
+            'keyword_from',             #   KeywordFrom
+            'module',                   #   String+
+            'keyword_import',           #   KeywordImport
+            'imported',                 #   String+ | AsFragment
+            'newline',                  #   String+
         ))
 
 
-        def __init__(t, keyword_from, module, keyword_import, imported):
+        def __init__(t, keyword_from, module, keyword_import, imported, newline):
             t.keyword_from   = keyword_from
             t.module         = module
             t.keyword_import = keyword_import
             t.imported       = imported
+            t.newline        = newline
 
 
         def __repr__(t):
-            return arrange('<StatementFrom %r %r %r %r>', t.keyword_from, t.module, t.keyword_import, t.imported)
+            return arrange('<StatementFrom %r %r %r %r %r>',
+                           t.keyword_from, t.module, t.keyword_import, t.imported, t.newline)
 
 
     @share
     class StatementMethodCall(Object):
         __slot__ = ((
-            'indented',                     #   String+
-            'left',                         #   Expression
-            'dot',                          #   OperatorDot
-            'right',                        #   Symbol
-            'arguments',                    #   Arguments*
-            'newline',                      #   String+
+            'indented',                 #   String+
+            'left',                     #   Expression
+            'dot',                      #   OperatorDot
+            'right',                    #   Symbol
+            'arguments',                #   Arguments*
+            'newline',                  #   String+
         ))
 
 
@@ -204,38 +220,36 @@ def gem():
     @share
     class StatementImport(Object):
         __slots__ = ((
-            'keyword_import',               #   KeywordImport
-            'module',                       #   String+
+            'keyword_import',           #   KeywordImport
+            'module',                   #   String+
+            'newline',                  #   String+
         ))
 
 
-        def __init__(t, keyword_import, module):
+        def __init__(t, keyword_import, module, newline):
             t.keyword_import = keyword_import
             t.module         = module
+            t.newline        = newline
 
 
         def __repr__(t):
-            return arrange('<StatementImport %r %r>', t.keyword_import, t.module)
+            return arrange('<StatementImport %r %r %r>', t.keyword_import, t.module, t.newline)
 
 
     @share
     class StatementReturnExpression(Token):
         __slots__ = ((
-            'keyword_return',               #   String
-            'expression',                   #   String
+            'keyword_return',           #   String
+            'expression',               #   String
+            'newline',                  #   String
         ))
 
 
-        def __init__(t, keyword_return, expression):
+        def __init__(t, keyword_return, expression, newline):
             t.keyword_return = keyword_return
             t.expression     = expression
+            t.newline        = newline
 
 
         def  __repr__(t):
-            return arrange('<Return %r %s>', t.keyword_return, t.expression)
-
-
-    share(
-        'empty_comment',        EmptyComment(''),
-        'empty_line',           EmptyLine(''),
-    )
+            return arrange('<Return %r %r %r>', t.keyword_return, t.expression, t.newline)
