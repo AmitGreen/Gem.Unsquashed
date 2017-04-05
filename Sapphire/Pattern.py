@@ -117,11 +117,18 @@ def gem():
                   OPTIONAL(dot + GROUP('right', identifier))
                 + GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(')) + ow)
                 + OPTIONAL(name | number | single_quote)
-                + OPTIONAL(right_parenthesis)
+                + OPTIONAL(
+                        #   (
+                        GROUP('right_parenthesis', ow + ')')
+                      + OPTIONAL_GROUP('newline', ow + OPTIONAL('#' + ZERO_OR_MORE(DOT)) + LINEFEED + END_OF_PATTERN)
+                  )
             )
         )
 
-        FULL_MATCH('statement_postfix_match', GROUP('linefeed', ow + OPTIONAL(comment) + LINEFEED))
+        FULL_MATCH(
+            'statement_postfix_match',
+            GROUP('newline', ow + OPTIONAL('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
+        )
  
         #
         #   Statements

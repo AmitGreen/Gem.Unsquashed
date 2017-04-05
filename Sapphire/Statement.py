@@ -151,7 +151,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<StatementCall %r %r>', t.indented, t.left, t.arguments, t.newline)
+            return arrange('<StatementCall %r %r %r %r>', t.indented, t.left, t.arguments, t.newline)
 
 
     @share
@@ -173,6 +173,32 @@ def gem():
 
         def __repr__(t):
             return arrange('<StatementFrom %r %r %r %r>', t.keyword_from, t.module, t.keyword_import, t.imported)
+
+
+    @share
+    class StatementMethodCall(Object):
+        __slot__ = ((
+            'indented',                     #   String+
+            'left',                         #   Expression
+            'dot',                          #   OperatorDot
+            'right',                        #   Symbol
+            'arguments',                    #   Arguments*
+            'newline',                      #   String+
+        ))
+
+
+        def __init__(t, indented, left, dot, right, arguments, newline):
+            t.indented  = indented
+            t.left      = left
+            t.dot       = dot
+            t.right     = right
+            t.arguments = arguments
+            t.newline   = newline
+
+
+        def __repr__(t):
+            return arrange('<StatementCall %r %r %r %r %r %r>',
+                           t.indented, t.left, t.dot, t.right, t.arguments, t.newline)
 
 
     @share

@@ -143,7 +143,7 @@ def gem():
 
     @share
     def parse_python_from_path(path):
-        data   = read_text_from_path('../Sapphire/Main.py')
+        data   = read_text_from_path(path)
         many   = []
         append = many.append
 

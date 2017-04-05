@@ -247,7 +247,8 @@ def gem():
             else:
                 arguments = Arguments_0(left_parenthesis, right_parenthesis)
 
-            index = m.end()
+            newline = m.group('newline')
+            index   = m.end()
         else:
             if name_0 is not none:
                 assert number_0 is single_quote_0 is none
@@ -269,20 +270,22 @@ def gem():
             else:
                 [arguments, index] = parse_arguments__left_parenthesis(s, m)
 
+            m = statement_postfix_match(s, index)
+
+            if m is none:
+                line('parse_statement_expression__symbol: incomplete #15: %r', s[index:])
+                return UnknownLine(s)
+
+            newline = m.group('newline')
+
         if arguments is none:
-            return UnknownLine(s)
-
-        m = statement_postfix_match(s, index)
-
-        if m is none:
-            line('parse_statement_expression__symbol: incomplete #15: %r', s[index:])
             return UnknownLine(s)
 
         indented = m0.group('indented')
 
-        #line('indented: %r', indented)
+        #line('indented: %r; newline: %r', indented, newline)
 
         if dot is none:
-            return ExpressionCall(name, arguments)
+            return StatementCall(indented, name, arguments, newline)
 
-        return ExpressionMethodCall(name, dot, right, arguments)
+        return StatementMethodCall(indented, name, dot, right, arguments, newline)
