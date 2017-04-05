@@ -154,12 +154,10 @@ def gem():
                 append(UnknownLine(s))
                 continue
 
-            [
-                    indented, keyword, name, comment, newline_2,
-            ] = m.group('indented', 'keyword', 'name', 'comment', 'newline_2')
+            [keyword, name] = m.group('keyword', 'name')
 
             if keyword is not none:
-                assert name is comment is newline_2 is none
+                assert name is none
 
                 append(find_parse_line(keyword)(m, s))
                 continue
@@ -167,6 +165,8 @@ def gem():
             if name:
                 append(parse_statement_expression__symbol(m, s, name))
                 continue
+
+            [indented, comment, newline_2] = m.group('indented', 'comment', 'newline_2')
 
             assert newline_2 is not none
 

@@ -25,6 +25,7 @@ def gem():
 
         operator = m.group('operator')
 
+        #   (
         if operator is ')':
             return (( call, OperatorRightParenthesis(m.group('operator__ow')), m.end() ))
 
@@ -68,6 +69,7 @@ def gem():
 
         operator = m.group('operator')
 
+        #   (
         if operator is ')':
             line('parse_arguments__atom__left_square_bracket: incomplete #6: %r %r', left, operator)
             return tuple_of_3_nones
@@ -109,6 +111,7 @@ def gem():
 
             argument_0 = SingleQuote(single_quote)
 
+        #   (
         if operator is ')':
             return ((
                        Arguments_1(left_parenthesis_0, argument_0, OperatorRightParenthesis(m.group('operator__ow'))),
@@ -128,6 +131,7 @@ def gem():
 
         operator = m.group('operator')
 
+        #   (
         if operator is ')':
             return ((
                        Arguments_1(left_parenthesis_0, argument_0, OperatorRightParenthesis(m.group('operator__ow'))),
@@ -178,6 +182,7 @@ def gem():
 
             argument_1 = SingleQuote(single_quote)
 
+        #   (
         if operator is ')':
             return ((
                        Arguments_2(left_parenthesis_0, argument_0, operator_0, argument_1, OperatorRightParenthesis(operator)),
@@ -270,7 +275,12 @@ def gem():
         m = statement_postfix_match(s, index)
 
         if m is none:
+            line('parse_statement_expression__symbol: incomplete #15: %r', s[index:])
             return UnknownLine(s)
+
+        indented = m0.group('indented')
+
+        #line('indented: %r', indented)
 
         if dot is none:
             return ExpressionCall(name, arguments)

@@ -134,6 +134,27 @@ def gem():
 
 
     @share
+    class StatementCall(Object):
+        __slot__ = ((
+            'indented',                     #   String+
+            'left',                         #   Expression
+            'arguments',                    #   Arguments*
+            'newline',                      #   String+
+        ))
+
+
+        def __init__(t, indented, left, arguments, newline):
+            t.indented  = indented
+            t.left      = left
+            t.arguments = arguments
+            t.newline   = newline
+
+
+        def __repr__(t):
+            return arrange('<StatementCall %r %r>', t.indented, t.left, t.arguments, t.newline)
+
+
+    @share
     class StatementFromImport(Object):
         __slots__ = ((
             'keyword_from',                 #   KeywordFrom

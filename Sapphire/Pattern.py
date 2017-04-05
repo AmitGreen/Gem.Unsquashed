@@ -16,11 +16,13 @@ def gem():
 
     @share
     def create_sapphire_match():
-        ow  = ZERO_OR_MORE(' ')
+        ow  = NAME('ow', ZERO_OR_MORE(' '))
         ow1 = NAMED_GROUP('ow1', ow)
-        w   = ONE_OR_MORE(' ')
+        w   = NAME('w', ONE_OR_MORE(' '))
         w1  = NAMED_GROUP('w1', w)
         w2  = NAMED_GROUP('w2', w)
+
+        middle_ow = NAME('middle_ow', OPTIONAL(w + NOT_FOLLOWED_BY(ANY_OF(LINEFEED, ' ', '#'))))
 
         alphanumeric_or_underscore = NAME('alphanumeric_or_underscore', ANY_OF('0-9', 'A-Z', '_', 'a-z'))
 
@@ -44,7 +46,7 @@ def gem():
         comma                    = NAMED_GROUP('comma',                    ow + ',' + ow)
         dot                      = NAMED_GROUP('dot',                      ow + '.' + ow)
         left_parenthesis         = NAMED_GROUP('left_parenthesis',         ow + '(' + ow)
-        right_parenthesis        = NAMED_GROUP('right_parenthesis',        ow + ')' + ow)
+        right_parenthesis        = NAMED_GROUP('right_parenthesis',        ow + ')' + middle_ow)
         right_parenthesis__colon = NAMED_GROUP('right_parenthesis__colon', ow + ')' + ow + ':')
         #pair_of_parenthesis      = NAMED_GROUP('pair_of_parenthesis',      ow + '(' + ow + ')' + ow)
 
@@ -78,27 +80,27 @@ def gem():
             'argument_1_match',
             (
                   (name | number | single_quote)
-                + GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(', ')', ',', '[')) + ow)     #   ]
+                + GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(', ')', ',', '[')) + middle_ow)     #   ]
             )
         )
 
         MATCH(
             'argument_1A_match',
-            GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(', ')', ',', '[')) + ow)          #   ]
+            GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(', ')', ',', '[')) + middle_ow)          #   ]
         )
 
         MATCH(
             'argument_2_match',
             (
                   (name | number | single_quote)
-                + GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(', ')', ',')) + ow)
+                + GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(', ')', ',')) + middle_ow)
             )
         )
 
         MATCH(
             'argument_postfix_match',
             #   (
-            GROUP('operator__ow', ow + GROUP('operator', ANY_OF(')', ',')) + ow)
+            GROUP('operator__ow', ow + GROUP('operator', ANY_OF(')', ',')) + middle_ow)
         )
 
         MATCH(
@@ -119,7 +121,7 @@ def gem():
             )
         )
 
-        FULL_MATCH('statement_postfix_match', LINEFEED)
+        FULL_MATCH('statement_postfix_match', GROUP('linefeed', ow + OPTIONAL(comment) + LINEFEED))
  
         #
         #   Statements
