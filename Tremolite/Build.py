@@ -435,34 +435,48 @@ def gem():
     def ANY_OF(*arguments):
         assert length(arguments) > 0
 
-        many   = ['[']
-        append = many.append
+        regular_expressions = ['[']
+        portray             = []
+        many                = []
 
-        for s in arguments:
-            if length(s) is 1:
-                assert lookup_ascii(s).is_printable
+        for v in arguments:
+            if v is LINEFEED:
+                regular_expressions.append(r'\n')
+                portray.append(v.portray)
+                many.append(v)
+                continue
 
-                many.append(s)
+            if length(v) is 1:
+                a = lookup_ascii(v)
+
+                assert a.is_printable
+
+                regular_expressions.append(a.pattern)
             else:
-                assert (length(s) is 3) and (s[1] is '-')
+                assert (length(v) is 3) and (v[1] is '-')
 
-                a0 = lookup_ascii(s[0])
-                a2 = lookup_ascii(s[2])
+                a0 = lookup_ascii(v[0])
+                a2 = lookup_ascii(v[2])
 
                 if not a0.is_printable:
-                    raise_runtime_error('invalid character <%s> passed to ANY_OF(%s)', portray_string(s[0]), portray_string(s))
+                    raise_runtime_error('invalid character <%s> passed to ANY_OF(%s)',
+                                        portray_string(s[0]), portray_string(v))
 
                 if not a2.is_printable:
-                    raise_runtime_error('invalid character <%s> passed to ANY_OF(%s)', portray_string(s[2]), portray_string(s))
+                    raise_runtime_error('invalid character <%s> passed to ANY_OF(%s)',
+                                        portray_string(s[2]), portray_string(v))
 
-                many.append(a0.pattern + '-' + a2.pattern)
+                regular_expressions.append(a0.pattern + '-' + a2.pattern)
 
-        many.append(']')
+            portray.append(portray_string(v))
+            many.append(intern_string(v))
+
+        regular_expressions.append(']')
 
         return TremoliteAnyOf(
-                   intern_string(''.join(many)),
-                   intern_arrange('ANY_OF(%s)', ', '.join(portray_string(s)   for s in arguments)),
-                   Tuple(intern_string(s)   for s in arguments)
+                   intern_string(''.join(regular_expressions)),
+                   intern_arrange('ANY_OF(%s)', ', '.join(portray)),
+                   Tuple(many),
                )
 
 
