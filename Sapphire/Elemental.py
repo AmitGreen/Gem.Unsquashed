@@ -66,8 +66,9 @@ def gem():
 
     @export
     class OperatorLeftParenthesis(KeywordAndOperatorBase):
-        __slots__ = (())
-        keyword   = '('             #   )
+        __slots__           = (())
+        is_left_parenthesis = true
+        keyword             = '('             #   )
 
 
     @export

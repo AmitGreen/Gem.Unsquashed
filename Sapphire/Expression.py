@@ -34,6 +34,9 @@ def gem():
 
 
         def __init__(t, left_parenthesis, argument_0, right_parenthesis):
+            assert left_parenthesis .is_left_parenthesis
+            assert right_parenthesis.is_right_parenthesis
+
             t.left_parenthesis  = left_parenthesis
             t.argument_0        = argument_0
             t.right_parenthesis = right_parenthesis
@@ -41,6 +44,12 @@ def gem():
 
         def __repr__(t):
             return arrange('<Arguments_1 %r %r %r>', t.left_parenthesis, t.argument_0, t.right_parenthesis)
+
+
+        def write(t, w):
+            t.left_parenthesis .write(w)
+            t.argument_0       .write(w)
+            t.right_parenthesis.write(w)
 
 
     @share

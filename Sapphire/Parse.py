@@ -10,7 +10,7 @@ def gem():
     require_gem('Sapphire.Token')
 
 
-    show = true
+    show = false
 
 
     def parse_expression(m):
@@ -186,5 +186,18 @@ def gem():
             append(EmptyLine(indented + newline_2))
             continue
 
-        for v in many:
-            line('%r', v)
+        if show:
+            for v in many:
+                line('%r', v)
+
+        with create_StringOutput() as f:
+            w = f.write
+
+            for v in many:
+                v.write(w)
+
+        if data != f.result:
+            with FileOutput('oops.txt') as f:
+                f.write(f.result)
+
+            raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')

@@ -21,6 +21,10 @@ def gem():
             return arrange('<%s %s>', t.__class__.__name__, portray_string(t.s))
 
 
+        def write(t, w):
+            w(t.s)
+
+
     @share
     class UnknownLine(Token):
         pass

@@ -85,6 +85,12 @@ def gem():
             return arrange('<DefineHeader %s %s %r %r>', t.keyword_define, t.name, t.parameters_colon, t.newline)
 
 
+        def write(t, w):
+            w(t.keyword_define.s + t.name)
+            t.parameters_colon.write(w)
+            w(t.newline)
+
+
     @share
     class EmptyLine(Token):
         __slots__ = (())
@@ -215,6 +221,14 @@ def gem():
         def __repr__(t):
             return arrange('<StatementCall %r %r %r %r %r %r>',
                            t.indented, t.left, t.dot, t.right, t.arguments, t.newline)
+
+
+        def write(t, w):
+            w(t.indented)
+            t.left.write(w)
+            w(t.dot + t.right)
+            t.arguments.write(w)
+            w(t.newline)
 
 
     @share

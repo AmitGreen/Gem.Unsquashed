@@ -5,15 +5,17 @@
 def gem():
     require_gem('Gem.Cache')
     require_gem('Gem.Path')
+    require_gem('Gem.StringOutput')
 
 
-    from Gem import produce_cache_functions, read_text_from_path
+    from Gem import create_StringOutput, produce_cache_functions, read_text_from_path
 
 
     share(
         #
         #   Imported functions
         #
-        'produce_cache_functions',    produce_cache_functions,
-        'read_text_from_path',        read_text_from_path,
+        'create_StringOutput',          create_StringOutput,
+        'produce_cache_functions',      produce_cache_functions,
+        'read_text_from_path',          read_text_from_path,
     )

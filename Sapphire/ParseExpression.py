@@ -286,6 +286,6 @@ def gem():
         #line('indented: %r; newline: %r', indented, newline)
 
         if dot is none:
-            return StatementCall(indented, name, arguments, newline)
+            return StatementCall(indented, Symbol(name), arguments, newline)
 
-        return StatementMethodCall(indented, name, dot, right, arguments, newline)
+        return StatementMethodCall(indented, Symbol(name), dot, right, arguments, newline)
