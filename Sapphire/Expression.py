@@ -24,6 +24,10 @@ def gem():
             return arrange('<Arguments_0 %r %r>', t.left_parenthesis, t.right_parenthesis)
 
 
+        def write(t, w):
+            w(t.left_parenthesis.s + t.right_parenthesis.s)
+
+
     @share
     class Arguments_1(Object):
         __slots__ = ((
@@ -108,12 +112,19 @@ def gem():
 
 
         def __init__(t, left, arguments):
+            assert type(arguments) is not String
+
             t.left      = left
             t.arguments = arguments
 
 
         def __repr__(t):
             return arrange('<ExpressionCall %r %r>', t.left, t.arguments)
+
+
+        def write(t, w):
+            t.left     .write(w)
+            t.arguments.write(w)
 
 
     @share

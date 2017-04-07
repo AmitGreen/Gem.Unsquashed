@@ -25,6 +25,10 @@ def gem():
             return arrange('<AsFragment %s %s %s>', t.left_name, t.keyword_as, t.right_name)
 
 
+        def write(t, w):
+            w(t.left_name + t.keyword_as.s + t.right_name)
+
+
     @share
     class Comment(Object):
         __slots__ = ((
@@ -45,6 +49,10 @@ def gem():
             return arrange('<# %r %r>', t.comment, t.newline)
 
 
+        def write(t, w):
+            w('#' + t.comment + t.newline)
+
+
     @share
     class DecoratorHeader(Object):
         __slots__ = ((
@@ -62,6 +70,13 @@ def gem():
 
         def  __repr__(t):
             return arrange('<DecoratorHeader %r %r %r>', t.operator_decorator, t.expresssion, t.newline)
+
+
+        def write(t, w):
+            w(t.operator_decorator.s)
+            t.expresssion.write(w)
+            w(t.newline)
+
 
 
     @share
@@ -133,13 +148,18 @@ def gem():
     @share
     class ParameterColon_1(Object):
         __slots__ = ((
-            'left_parenthesis',         #   String
-            'argument_1',               #   String
-            'right_parenthesis__colon', #   String
+            'left_parenthesis',             #   OperatorLeftParenthesis
+            'argument_1',                   #   Expression*
+            'right_parenthesis__colon',     #   OperatorRightParenthesis
         ))
 
 
         def __init__(t, left_parenthesis, argument_1, right_parenthesis__colon):
+            assert left_parenthesis        .is_left_parenthesis
+            assert type(argument_1) is not String
+            assert right_parenthesis__colon.is__right_parenthesis__colon
+
+
             t.left_parenthesis         = left_parenthesis
             t.argument_1               = argument_1
             t.right_parenthesis__colon = right_parenthesis__colon
@@ -150,6 +170,14 @@ def gem():
                            portray_string(t.left_parenthesis),
                            t.argument_1,
                            portray_string(t.right_parenthesis__colon))
+
+
+        def write(t, w):
+            t.left_parenthesis        .write(w)
+            t.argument_1              .write(w)
+            t.right_parenthesis__colon.write(w)
+
+            
 
 
     @share
@@ -185,6 +213,8 @@ def gem():
 
 
         def __init__(t, keyword_from, module, keyword_import, imported, newline):
+            assert type(module) is not String
+
             t.keyword_from   = keyword_from
             t.module         = module
             t.keyword_import = keyword_import
@@ -195,6 +225,14 @@ def gem():
         def __repr__(t):
             return arrange('<StatementFrom %r %r %r %r %r>',
                            t.keyword_from, t.module, t.keyword_import, t.imported, t.newline)
+
+
+        def write(t, w):
+            w(t.keyword_from.s)
+            t.module.write(w)
+            w(t.keyword_import.s)
+            t.imported.write(w)
+            w(t.newline)
 
 
     @share
@@ -251,7 +289,7 @@ def gem():
 
 
     @share
-    class StatementReturnExpression(Token):
+    class StatementReturnExpression(Object):
         __slots__ = ((
             'keyword_return',           #   String
             'expression',               #   String
@@ -267,3 +305,9 @@ def gem():
 
         def  __repr__(t):
             return arrange('<Return %r %r %r>', t.keyword_return, t.expression, t.newline)
+
+
+        def write(t, w):
+            w(t.keyword_return.s)
+            t.expression.write(w)
+            w(t.newline)

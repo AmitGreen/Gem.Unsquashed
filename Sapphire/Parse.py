@@ -24,9 +24,22 @@ def gem():
             return expression
 
         if single_quote is none:
-            return ExpressionCall(expression, left_parenthesis + right_parenthesis)
+            return ExpressionCall(
+                       expression,
+                       Arguments_0(
+                           OperatorLeftParenthesis(left_parenthesis),
+                           OperatorRightParenthesis(right_parenthesis),
+                       ),
+                   )
 
-        return ExpressionCall(expression, Arguments_1(left_parenthesis, SingleQuote(single_quote), right_parenthesis))
+        return ExpressionCall(
+                   expression,
+                   Arguments_1(
+                       OperatorLeftParenthesis(left_parenthesis),
+                       SingleQuote(single_quote),
+                       OperatorRightParenthesis(right_parenthesis),
+                   ),
+               )
 
 
     def parse_statement_decorator_header(m0, s):
@@ -61,7 +74,7 @@ def gem():
         if comma is none:
             return StatementFromImport(
                        KeywordFrom(m0.group('indented') + m0.group('keyword__ow')),
-                       module,
+                       Symbol(module),
                        KeywordImport(keyword__import__w),
                        as_fragment,
                        m.group('newline'),
@@ -119,7 +132,11 @@ def gem():
         if name_2 is none:
             parameters = ParameterColon_0(left_parenthesis + right_parenthesis__colon)
         else:
-            parameters = ParameterColon_1(left_parenthesis, name_2, right_parenthesis__colon)
+            parameters = ParameterColon_1(
+                             OperatorLeftParenthesis(left_parenthesis),
+                             Symbol(name_2),
+                             OperatorRightParenthesisColon(right_parenthesis__colon),
+                         )
 
         return DefineHeader(KeywordDefine(m0.group('indented') + m0.group('keyword__ow')), name_1, parameters, newline)
 

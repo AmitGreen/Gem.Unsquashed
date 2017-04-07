@@ -81,8 +81,16 @@ def gem():
     class OperatorRightParenthesis(KeywordAndOperatorBase):
         __slots__            = (())
         is_right_parenthesis = true
-        #  ([
+        #  (
         keyword              = ')'
+
+
+    @export
+    class OperatorRightParenthesisColon(KeywordAndOperatorBase):
+        __slots__                    = (())
+        is__right_parenthesis__colon = true
+        #  ([
+        keyword                      = '):'
 
 
     @export
