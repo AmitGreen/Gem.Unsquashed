@@ -8,7 +8,11 @@ def gem():
 
     PythonException = (import_module('exceptions')   if is_python_2 else  PythonBuiltIn)
     RuntimeError    = PythonException.RuntimeError
+    StopIteration   = PythonException.StopIteration
     ValueError      = PythonException.ValueError
+
+
+    stop_iteration = StopIteration()
 
 
     #
@@ -61,13 +65,19 @@ def gem():
         #
         #   Exception Types
         #
-        'FileNotFoundError',  FileNotFoundError,
-        'ImportError',        PythonException.ImportError,
-        'OSError',            PythonException.OSError,
-        'PermissionError',    PermissionError,
+        'FileNotFoundError',    FileNotFoundError,
+        'ImportError',          PythonException.ImportError,
+        'OSError',              PythonException.OSError,
+        'PermissionError',      PermissionError,
+        'StopIteration',        StopIteration,
 
         #
         #   Functions
         #
         'exception_information',    PythonSystem.exc_info,
+
+        #
+        #   'values'
+        #
+        'stop_iteration',       stop_iteration,
     )

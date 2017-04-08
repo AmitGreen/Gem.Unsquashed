@@ -3,6 +3,9 @@
 #
 @gem('Gem.Core')
 def gem():
+    PythonTypes = __import__('types')
+
+
     @export
     def execute(f):
         f()
@@ -67,6 +70,7 @@ def gem():
         'List',             PythonBuiltIn.list,
         'Long',             (PythonBuiltIn.long    if is_python_2 else   PythonBuiltIn.int),
         'Map',              PythonBuiltIn.dict,
+        'Method',           PythonTypes.MethodType,
         'Object',           PythonBuiltIn.object,
         'Tuple',            PythonBuiltIn.tuple,
 

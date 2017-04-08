@@ -7,29 +7,6 @@ def gem():
 
 
     @share
-    class AsFragment(Object):
-        __slots__ = ((
-            'left_name',                #   String+
-            'keyword_as',               #   KeywordAs
-            'right_name',               #   String+
-        ))
-
-
-        def __init__(t, left_name, keyword_as, right_name):
-            t.left_name  = left_name
-            t.keyword_as = keyword_as
-            t.right_name = right_name
-
-
-        def __repr__(t):
-            return arrange('<AsFragment %s %s %s>', t.left_name, t.keyword_as, t.right_name)
-
-
-        def write(t, w):
-            w(t.left_name + t.keyword_as.s + t.right_name)
-
-
-    @share
     class Comment(Object):
         __slots__ = ((
             'comment',                  #   Comment
@@ -54,6 +31,45 @@ def gem():
 
 
     @share
+    class ClassOrDefineHeaderBase(Object):
+        __slots__ = ((
+            'keyword',                  #   KeywordClass | KeywordDefine
+            'name',                     #   String
+            'parameters_colon',         #   Parameter_0 | Parameter_1
+            'newline',                  #   String
+        ))
+
+
+        def __init__(t, keyword, name, parameters_colon, newline):
+            assert newline.is_token_newline
+
+            t.keyword          = keyword
+            t.name             = name
+            t.parameters_colon = parameters_colon
+            t.newline          = newline
+
+
+        def  __repr__(t):
+            return arrange('<%s %s %s %r %r>', t.__class__.__name__, t.keyword, t.name, t.parameters_colon, t.newline)
+
+
+        def write(t, w):
+            w(t.keyword.s + t.name)
+            t.parameters_colon.write(w)
+            w(t.newline.s)
+
+
+    @share
+    class ClassHeader(ClassOrDefineHeaderBase):
+        __slots__ = (())
+
+
+    @share
+    class DefineHeader(ClassOrDefineHeaderBase):
+        __slots__ = (())
+
+
+    @share
     class DecoratorHeader(Object):
         __slots__ = ((
             'operator_decorator',       #   OperatorAtSign
@@ -63,6 +79,8 @@ def gem():
 
 
         def __init__(t, operator_decorator, expresssion, newline):
+            assert newline.is_token_newline
+
             t.operator_decorator = operator_decorator
             t.expresssion        = expresssion
             t.newline            = newline
@@ -75,35 +93,7 @@ def gem():
         def write(t, w):
             w(t.operator_decorator.s)
             t.expresssion.write(w)
-            w(t.newline)
-
-
-
-    @share
-    class DefineHeader(Object):
-        __slots__ = ((
-            'keyword_define',           #   KeywordDefine
-            'name',                     #   String
-            'parameters_colon',         #   Parameter_0 | Parameter_1
-            'newline',                  #   String
-        ))
-
-
-        def __init__(t, keyword_define, name, parameters_colon, newline):
-            t.keyword_define   = keyword_define
-            t.name             = name
-            t.parameters_colon = parameters_colon
-            t.newline          = newline
-
-
-        def  __repr__(t):
-            return arrange('<DefineHeader %s %s %r %r>', t.keyword_define, t.name, t.parameters_colon, t.newline)
-
-
-        def write(t, w):
-            w(t.keyword_define.s + t.name)
-            t.parameters_colon.write(w)
-            w(t.newline)
+            w(t.newline.s)
 
 
     @share
@@ -116,6 +106,32 @@ def gem():
                 return '<EmptyLine>'
 
             return arrange('<EmptyLine %r>', t.s)
+
+
+    @share
+    class FromAsFragment(Object):
+        __slots__ = ((
+            'left_name',                #   String+
+            'keyword_as',               #   KeywordAs
+            'right_name',               #   String+
+        ))
+
+
+        def __init__(t, left_name, keyword_as, right_name):
+            assert type(left_name)  is not String
+            assert type(right_name) is not String
+
+            t.left_name  = left_name
+            t.keyword_as = keyword_as
+            t.right_name = right_name
+
+
+        def __repr__(t):
+            return arrange('<FromAsFragment %s %s %s>', t.left_name, t.keyword_as, t.right_name)
+
+
+        def write(t, w):
+            w(t.left_name.s + t.keyword_as.s + t.right_name.s)
 
 
     @share
@@ -145,6 +161,33 @@ def gem():
 
 
     @share
+    class ModuleAsFragment(Object):
+        __slots__ = ((
+            'module',                   #   Expression
+            'keyword_as',               #   KeywordAs
+            'right_name',               #   String+
+        ))
+
+
+        def __init__(t, module, keyword_as, right_name):
+            assert type(module)  is not String
+            assert type(right_name) is not String
+
+            t.module     = module
+            t.keyword_as = keyword_as
+            t.right_name = right_name
+
+
+        def __repr__(t):
+            return arrange('<ModuleAsFragment %s %s %s>', t.module, t.keyword_as, t.right_name)
+
+
+        def write(t, w):
+            t.module.write(w)
+            w(t.keyword_as.s + t.right_name.s)
+
+
+    @share
     class ParameterColon_0(Token):
         pass
 
@@ -170,10 +213,7 @@ def gem():
 
 
         def  __repr__(t):
-            return arrange('<ParameterColon_1 %s %s %s>',
-                           portray_string(t.left_parenthesis),
-                           t.argument_1,
-                           portray_string(t.right_parenthesis__colon))
+            return arrange('<ParameterColon_1 %r %r %r>', t.left_parenthesis, t.argument_1, t.right_parenthesis__colon)
 
 
         def write(t, w):
@@ -193,6 +233,8 @@ def gem():
 
 
         def __init__(t, indented, left, arguments, newline):
+            assert newline.is_token_newline
+
             t.indented  = indented
             t.left      = left
             t.arguments = arguments
@@ -207,7 +249,32 @@ def gem():
             w(t.indented)
             t.left     .write(w)
             t.arguments.write(w)
-            w(t.newline)
+            w(t.newline.s)
+
+
+    @share
+    class StatementExpression(Object):
+        __slot__ = ((
+            'indented',                 #   String+
+            'expression',               #   Expression
+            'newline',                  #   String+
+        ))
+
+
+        def __init__(t, indented, expression, newline):
+            t.indented   = indented
+            t.expression = expression
+            t.newline    = newline
+
+
+        def __repr__(t):
+            return arrange('<StatementExpression %r %r %r>', t.indented, t.expression, t.newline)
+
+
+        def write(t, w):
+            w(t.indented)
+            t.expression.write(w)
+            w(t.newline.s)
 
 
     @share
@@ -216,13 +283,14 @@ def gem():
             'keyword_from',             #   KeywordFrom
             'module',                   #   String+
             'keyword_import',           #   KeywordImport
-            'imported',                 #   String+ | AsFragment
+            'imported',                 #   String+ | FromAsFragment
             'newline',                  #   String+
         ))
 
 
         def __init__(t, keyword_from, module, keyword_import, imported, newline):
             assert type(module) is not String
+            assert newline.is_token_newline
 
             t.keyword_from   = keyword_from
             t.module         = module
@@ -241,7 +309,7 @@ def gem():
             t.module.write(w)
             w(t.keyword_import.s)
             t.imported.write(w)
-            w(t.newline)
+            w(t.newline.s)
 
 
     @share
@@ -289,6 +357,7 @@ def gem():
 
         def __init__(t, keyword_import, module, newline):
             assert type(module) is not String
+            assert newline.is_token_newline
 
             t.keyword_import = keyword_import
             t.module         = module
@@ -302,7 +371,7 @@ def gem():
         def write(t, w):
             w(t.keyword_import.s)
             t.module.write(w)
-            w(t.newline)
+            w(t.newline.s)
 
 
     @share
@@ -315,6 +384,8 @@ def gem():
 
 
         def __init__(t, keyword_return, expression, newline):
+            assert newline.is_token_newline
+
             t.keyword_return = keyword_return
             t.expression     = expression
             t.newline        = newline
@@ -327,4 +398,4 @@ def gem():
         def write(t, w):
             w(t.keyword_return.s)
             t.expression.write(w)
-            w(t.newline)
+            w(t.newline.s)

@@ -10,10 +10,14 @@ def gem():
         ))
 
 
-        is_keyword = false
+        is_comma             = false
+        is_keyword           = false
+        is_right_parenthesis = false
 
 
         def __init__(t, s):
+            assert type(s) is String
+
             t.s = s
 
 
@@ -23,6 +27,11 @@ def gem():
 
         def write(t, w):
             w(t.s)
+
+
+    @share
+    class TokenNewline(Token):
+        is_token_newline = true
 
 
     @share
