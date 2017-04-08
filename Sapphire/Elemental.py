@@ -22,6 +22,12 @@ def gem():
 
 
     @export
+    class KeywordClass(KeywordAndOperatorBase):
+        __slots__ = (())
+        keyword   = 'class'
+
+
+    @export
     class KeywordDefine(KeywordAndOperatorBase):
         __slots__ = (())
         keyword   = 'def'
@@ -118,17 +124,3 @@ def gem():
             produce_find    = true,
             produce_lookup  = true,
         )
-
-
-    share(
-        #
-        #   Values
-        #
-        'keyword_define',       conjure_symbol('def',    KeywordDefine),
-        'keyword_from',         conjure_symbol('from',   KeywordFrom),
-        'keyword_import',       conjure_symbol('import', KeywordImport),
-        'keyword_return',       conjure_symbol('return', KeywordReturn),
-        'operator_at_sign',     conjure_symbol('@',      OperatorAtSign),
-        'operator_comma',       conjure_symbol(',',      OperatorComma),
-        'operator_dot',         conjure_symbol('.',      OperatorDot),
-    )
