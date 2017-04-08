@@ -93,7 +93,6 @@ def gem():
 
         if m is none:
             line('parse_arguments__left_parenthesis: incomplete #8: %s', portray_string(s[m0.end():]))
-            assert 0, 'oops'
             return tuple_of_2_nones
 
         [name, number, single_quote, operator] = m.group('name', 'number', 'single_quote', 'operator')
@@ -247,6 +246,10 @@ def gem():
             else:
                 arguments = Arguments_0(left_parenthesis, right_parenthesis)
 
+            if arguments is none:
+                line('parse_statement_expression__symbol: incomplete #15: %r', s[index:])
+                return UnknownLine(s)
+
             newline = m.group('newline')
             index   = m.end()
         else:
@@ -270,16 +273,18 @@ def gem():
             else:
                 [arguments, index] = parse_arguments__left_parenthesis(s, m)
 
+            if arguments is none:
+                line('parse_statement_expression__symbol: incomplete #16: %r', s[index:])
+                return UnknownLine(s)
+
             m = statement_postfix_match(s, index)
 
             if m is none:
-                line('parse_statement_expression__symbol: incomplete #15: %r', s[index:])
+                line('parse_statement_expression__symbol: incomplete #17: %r', s[index:])
                 return UnknownLine(s)
 
             newline = m.group('newline')
 
-        if arguments is none:
-            return UnknownLine(s)
 
         indented = m0.group('indented')
 

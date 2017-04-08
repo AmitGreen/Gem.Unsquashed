@@ -80,30 +80,40 @@ def gem():
 
 
     @share
-    class DefineHeader(Object):
+    class ClassOrDefineHeaderBase(Object):
         __slots__ = ((
-            'keyword_define',           #   KeywordDefine
+            'keyword',                  #   KeywordClass | KeywordDefine
             'name',                     #   String
             'parameters_colon',         #   Parameter_0 | Parameter_1
             'newline',                  #   String
         ))
 
 
-        def __init__(t, keyword_define, name, parameters_colon, newline):
-            t.keyword_define   = keyword_define
+        def __init__(t, keyword, name, parameters_colon, newline):
+            t.keyword          = keyword
             t.name             = name
             t.parameters_colon = parameters_colon
             t.newline          = newline
 
 
         def  __repr__(t):
-            return arrange('<DefineHeader %s %s %r %r>', t.keyword_define, t.name, t.parameters_colon, t.newline)
+            return arrange('<%s %s %s %r %r>', t.__class__.__name__, t.keyword, t.name, t.parameters_colon, t.newline)
 
 
         def write(t, w):
-            w(t.keyword_define.s + t.name)
+            w(t.keyword.s + t.name)
             t.parameters_colon.write(w)
             w(t.newline)
+
+
+    @share
+    class ClassHeader(ClassOrDefineHeaderBase):
+        __slots__ = (())
+
+
+    @share
+    class DefineHeader(ClassOrDefineHeaderBase):
+        __slots__ = (())
 
 
     @share
@@ -170,10 +180,7 @@ def gem():
 
 
         def  __repr__(t):
-            return arrange('<ParameterColon_1 %s %s %s>',
-                           portray_string(t.left_parenthesis),
-                           t.argument_1,
-                           portray_string(t.right_parenthesis__colon))
+            return arrange('<ParameterColon_1 %r %r %r>', t.left_parenthesis, t.argument_1, t.right_parenthesis__colon)
 
 
         def write(t, w):

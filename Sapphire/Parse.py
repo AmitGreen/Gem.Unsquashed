@@ -10,7 +10,7 @@ def gem():
     require_gem('Sapphire.Token')
 
 
-    show = false
+    show = true
 
 
     def parse_expression(m):
@@ -42,6 +42,28 @@ def gem():
                )
 
 
+    def parse_statement_class(m0, s):
+        if show:
+            line(portray_raw_string(s[m0.end():]))
+
+        m = class_match(s, m0.end())
+
+        if m is none:
+            return UnknownLine(s)
+
+        [
+            name_1, left_parenthesis, name_2, right_parenthesis__colon, newline,
+        ] = m.group('name_1', 'left_parenthesis', 'name_2', 'right_parenthesis__colon', 'newline')
+
+        parameters = ParameterColon_1(
+                         OperatorLeftParenthesis(left_parenthesis),
+                         Symbol(name_2),
+                         OperatorRightParenthesisColon(right_parenthesis__colon),
+                     )
+
+        return ClassHeader(KeywordClass(m0.group('indented') + m0.group('keyword__ow')), name_1, parameters, newline)
+
+
     def parse_statement_decorator_header(m0, s):
         m = expression_match(s, m0.end())
 
@@ -53,6 +75,29 @@ def gem():
                    parse_expression(m),
                    m.group('newline'),
                )
+
+
+    def parse_statement_define_header(m0, s):
+        m = define_match(s, m0.end())
+
+        if m is none:
+            return UnknownLine(s)
+
+        [
+            name_1, left_parenthesis, name_2, right_parenthesis__colon, newline,
+        ] = m.group('name_1', 'left_parenthesis', 'name_2', 'right_parenthesis__colon', 'newline')
+
+        if name_2 is none:
+            parameters = ParameterColon_0(left_parenthesis + right_parenthesis__colon)
+        else:
+            parameters = ParameterColon_1(
+                             OperatorLeftParenthesis(left_parenthesis),
+                             Symbol(name_2),
+                             OperatorRightParenthesisColon(right_parenthesis__colon),
+                         )
+
+        return DefineHeader(KeywordDefine(m0.group('indented') + m0.group('keyword__ow')), name_1, parameters, newline)
+
 
     def parse_statement_from(m0, s):
         m = from_1_match(s, m0.end())
@@ -104,9 +149,6 @@ def gem():
 
 
     def parse_statement_import(m0, s):
-        #if show:
-        #    line(portray_raw_string(s[m0.end():]))
-
         m = import_match(s, m0.end())
 
         if m is none:
@@ -117,28 +159,6 @@ def gem():
                    Symbol(m.group('name_1')),
                    m.group('newline'),
                )
-
-
-    def parse_statement_define_header(m0, s):
-        m = define_match(s, m0.end())
-
-        if m is none:
-            return UnknownLine(s)
-
-        [
-            name_1, left_parenthesis, name_2, right_parenthesis__colon, newline,
-        ] = m.group('name_1', 'left_parenthesis', 'name_2', 'right_parenthesis__colon', 'newline')
-
-        if name_2 is none:
-            parameters = ParameterColon_0(left_parenthesis + right_parenthesis__colon)
-        else:
-            parameters = ParameterColon_1(
-                             OperatorLeftParenthesis(left_parenthesis),
-                             Symbol(name_2),
-                             OperatorRightParenthesisColon(right_parenthesis__colon),
-                         )
-
-        return DefineHeader(KeywordDefine(m0.group('indented') + m0.group('keyword__ow')), name_1, parameters, newline)
 
 
     def parse_statement_return(m0, s):
@@ -155,6 +175,7 @@ def gem():
 
 
     find_parse_line = {
+                          'class'  : parse_statement_class,
                           'def'    : parse_statement_define_header,
                           'from'   : parse_statement_from,
                           'import' : parse_statement_import,
