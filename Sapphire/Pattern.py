@@ -63,7 +63,7 @@ def gem():
                                     (
                                           '@'
                                         | (
-                                                (EXACT('def') | 'from' | 'import' | 'return')
+                                                (EXACT('def') | 'class' | 'from' | 'import' | 'return')
                                               + NOT_FOLLOWED_BY(alphanumeric_or_underscore)
                                           )
                                     )
@@ -139,6 +139,11 @@ def gem():
                       | name
                       | (comment | EMPTY) + GROUP('newline_2', LINEFEED) + END_OF_PATTERN
                   )
+        )
+
+        FULL_MATCH(
+            'class_match',
+            name_1 + left_parenthesis + name_2 + right_parenthesis__colon + newline,
         )
 
         FULL_MATCH(
