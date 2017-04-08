@@ -1,5 +1,3 @@
-================================================================================
-
 TITLE
     MySQL tool to document schemas, read schemas, create Python & PHP (Part 1)
 
