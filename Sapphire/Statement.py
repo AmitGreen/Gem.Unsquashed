@@ -140,6 +140,10 @@ def gem():
             return arrange('<+# %r %r %r>', t.indented, t.comment, t.newline)
 
 
+        def write(t, w):
+            w(t.indented + '#' + t.comment + t.newline)
+
+
     @share
     class ParameterColon_0(Token):
         pass
@@ -177,8 +181,6 @@ def gem():
             t.argument_1              .write(w)
             t.right_parenthesis__colon.write(w)
 
-            
-
 
     @share
     class StatementCall(Object):
@@ -199,6 +201,13 @@ def gem():
 
         def __repr__(t):
             return arrange('<StatementCall %r %r %r %r>', t.indented, t.left, t.arguments, t.newline)
+
+
+        def write(t, w):
+            w(t.indented)
+            t.left     .write(w)
+            t.arguments.write(w)
+            w(t.newline)
 
 
     @share
@@ -279,6 +288,8 @@ def gem():
 
 
         def __init__(t, keyword_import, module, newline):
+            assert type(module) is not String
+
             t.keyword_import = keyword_import
             t.module         = module
             t.newline        = newline
@@ -286,6 +297,12 @@ def gem():
 
         def __repr__(t):
             return arrange('<StatementImport %r %r %r>', t.keyword_import, t.module, t.newline)
+
+
+        def write(t, w):
+            w(t.keyword_import.s)
+            t.module.write(w)
+            w(t.newline)
 
 
     @share

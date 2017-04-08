@@ -67,7 +67,7 @@ def gem():
         if dot is none:
             module = name_1
         else:
-            module = ExpressionDot(name_1, dot, name_2)
+            module = ExpressionDot(Symbol(name_1), OperatorDot(dot), name_2)
 
         as_fragment = AsFragment(name_3, KeywordAs(keyword__as__w), name_4)
 
@@ -114,7 +114,7 @@ def gem():
 
         return StatementImport(
                    KeywordImport(m0.group('indented') + m0.group('keyword__ow')),
-                   m.group('name_1'),
+                   Symbol(m.group('name_1')),
                    m.group('newline'),
                )
 

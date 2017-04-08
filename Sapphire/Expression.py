@@ -84,6 +84,14 @@ def gem():
                            t.right_parenthesis)
 
 
+        def write(t, w):
+            t.left_parenthesis .write(w)
+            t.argument_0       .write(w)
+            t.comma_0          .write(w)
+            t.argument_1       .write(w)
+            t.right_parenthesis.write(w)
+
+
     @share
     class ExpressionBinaryBase(Object):
         __slots__ = ((
@@ -94,6 +102,9 @@ def gem():
 
 
         def __init__(t, left, operator, right):
+            assert type(left)  is not String
+            assert type(right) is not String
+
             t.left     = left
             t.operator = operator
             t.right    = right
@@ -101,6 +112,17 @@ def gem():
 
         def __repr__(t):
             return arrange('<%s %r %r %r>', t.__class__.__name__, t.left, t.operator, t.right)
+
+
+        def write(t, w):
+            t.left    .write(w)
+            t.operator.write(w)
+            t.right   .write(w)
+
+
+    @share
+    class ExpressionComma(ExpressionBinaryBase):
+        __slots__ = (())
 
 
     @share
@@ -128,13 +150,31 @@ def gem():
 
 
     @share
-    class ExpressionComma(ExpressionBinaryBase):
-        __slots__ = (())
+    class ExpressionDot(Object):
+        __slots__ = ((
+            'left',                     #   Expression
+            'operator',                 #   Operator*
+            'right',                    #   String
+        ))
 
 
-    @share
-    class ExpressionDot(ExpressionBinaryBase):
-        __slots__ = (())
+        def __init__(t, left, operator, right):
+            assert type(left)     is not String
+            assert type(operator) is not String
+
+            t.left     = left
+            t.operator = operator
+            t.right    = right
+
+
+        def __repr__(t):
+            return arrange('<. %r %r %r>', t.left, t.operator, t.right)
+
+
+        def write(t, w):
+            t.left    .write(w)
+            t.operator.write(w)
+            w(t.right)
 
 
     @share
@@ -157,6 +197,13 @@ def gem():
         def __repr__(t):
             return arrange('<%s %r %r %r %r>',
                            t.__class__.__name__, t.array, t.left_square_bracket, t.index, t.right_square_bracket)
+
+
+        def write(t, w):
+            t.array               .write(w)
+            t.left_square_bracket .write(w)
+            t.index               .write(w)
+            t.right_square_bracket.write(w)
 
 
     @share
