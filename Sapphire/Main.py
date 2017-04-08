@@ -32,5 +32,5 @@ def gem():
         require_gem('Sapphire.Parse')               #   Must be after 'create_sapphire_match'
 
         #parse_python_from_path('test.py')
-        #parse_python_from_path('../Sapphire/Main.py')
-        parse_python_from_path('../Gem/Absent.py')
+        parse_python_from_path('../Sapphire/Main.py')
+        #parse_python_from_path('../Gem/Absent.py')
