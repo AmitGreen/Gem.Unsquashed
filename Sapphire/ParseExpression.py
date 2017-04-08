@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.ParseExpression')
 def gem():
-    show = false
+    show = true
 
 
     tuple_of_2_nones = ((none, none))
@@ -11,6 +11,10 @@ def gem():
 
 
     def parse_arguments__atom__left_parenthesis(s, m0, atom):
+        if show:
+            line('parse_arguments__atom__left_parenthesis: %s; %s; calling parse_arguments__left_parenthesis',
+                 atom, portray_raw_string(s[m0.end():]))
+
         [arguments, index] = parse_arguments__left_parenthesis(s, m0)
 
         if arguments is none:
@@ -88,11 +92,16 @@ def gem():
 
 
     def parse_arguments__left_parenthesis(s, m0):
+        if show:
+            line('parse_arguments__left_parenthesis: %s', portray_raw_string(s[m0.end():]))
+            assert 0,'stop#1'
+
         left_parenthesis_0 = OperatorLeftParenthesis(m0.group('operator__ow'))
         m                  = argument_1_match(s, m0.end())
 
         if m is none:
             line('parse_arguments__left_parenthesis: incomplete #8: %s', portray_string(s[m0.end():]))
+            #assert 0, 'oops'
             return tuple_of_2_nones
 
         [name, number, single_quote, operator] = m.group('name', 'number', 'single_quote', 'operator')
@@ -121,6 +130,9 @@ def gem():
 
 
     def parse_arguments__left_parenthesis__argument_0(s, m0, argument_0):
+        if show:
+            line('parse_arguments__left_parenthesis__argument_0: %r, %s', argument_0, portray_raw_string(s[m0.end():]))
+
         left_parenthesis_0 = OperatorLeftParenthesis(m0.group('operator__ow'))
         m                  = argument_1A_match(s, m0.end())
 
@@ -140,12 +152,17 @@ def gem():
         return parse_arguments__left_parenthesis__argument__operator(s, m, left_parenthesis_0, argument_0, operator)
 
 
-    def parse_arguments__left_parenthesis__argument__operator(s, m, left_parenthesis_0, argument_0, operator):
+    def parse_arguments__left_parenthesis__argument__operator(s, m0, left_parenthesis_0, argument_0, operator):
         if operator is ',':
-            operator_0 = OperatorComma(m.group('operator__ow'))
-            index_0    = m.end()
+            operator_0 = OperatorComma(m0.group('operator__ow'))
+            index_0    = m0.end()
         else:
-            [argument_0, operator_0, index_0] = find__parse_arguments__atom__operator(operator)(s, m, argument_0)
+            if show:
+                line('parse_arguments__left_parenthesis__argument__operator: %s %s; %s %r; calling %s',
+                     left_parenthesis_0, argument_0, portray_raw_string(s[m0.end():]), operator,
+                     find__parse_arguments__atom__operator(operator).__name__)
+
+            [argument_0, operator_0, index_0] = find__parse_arguments__atom__operator(operator)(s, m0, argument_0)
 
             if argument_0 is none:
                 return tuple_of_2_nones
@@ -214,9 +231,6 @@ def gem():
 
     @share
     def parse_statement_expression__symbol(m0, s, name):
-        if show:
-            line('parse_statement_expression__symbol: %s', portray_raw_string(s[m0.end():]))
-
         m = statement_expression_match(s, m0.end())
 
         if m is none:
@@ -224,7 +238,8 @@ def gem():
             return UnknownLine(s)
 
         [
-                dot, right, operator, name_0, number_0, single_quote_0, right_parenthesis
+                dot, right, operator, name_0, number_0, single_quote_0, right_parenthesis,
+                #newline,
         ] = m.group('dot', 'right', 'operator', 'name', 'number', 'single_quote', 'right_parenthesis')
 
         assert operator is '('
@@ -271,16 +286,18 @@ def gem():
                                          s, m, SingleQuote(single_quote_0),
                                      )
             else:
+                line('parse_statement_expression__symbol: incomplete #16: calling parse_arguments__left_parenthesis')
+                assert 0, 'oops#16'
                 [arguments, index] = parse_arguments__left_parenthesis(s, m)
 
             if arguments is none:
-                line('parse_statement_expression__symbol: incomplete #16: %r', s[index:])
+                line('parse_statement_expression__symbol: incomplete #17: %r', s[index:])
                 return UnknownLine(s)
 
             m = statement_postfix_match(s, index)
 
             if m is none:
-                line('parse_statement_expression__symbol: incomplete #17: %r', s[index:])
+                line('parse_statement_expression__symbol: incomplete #18: %r', s[index:])
                 return UnknownLine(s)
 
             newline = m.group('newline')
