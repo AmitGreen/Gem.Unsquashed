@@ -172,9 +172,7 @@ def gem():
 
 
         def write(t, w):
-            t.left    .write(w)
-            t.operator.write(w)
-            w(t.right)
+            w(t.left.s + t.operator.s + t.right)
 
 
     @share
@@ -225,21 +223,3 @@ def gem():
 
         def __repr__(t):
             return arrange('<ExpressionCall %r %r %r %r>', t.left, t.dot, t.right, t.arguments)
-
-
-    @share
-    class Number(Token):
-        __slots__ = (())
-
-
-        def __repr__(t):
-            return t.s
-
-
-    @share
-    class SingleQuote(Token):
-        __slots__ = (())
-
-
-        def __repr__(t):
-            return arrange('<%s>', t.s)
