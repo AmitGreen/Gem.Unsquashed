@@ -1,11 +1,11 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Parse')
+@gem('Sapphire.Parse7')
 def gem():
     require_gem('Sapphire.Expression')
     require_gem('Sapphire.Match')
-    require_gem('Sapphire.ParseExpression')
+    require_gem('Sapphire.Parse7Expression')
     require_gem('Sapphire.Statement')
     require_gem('Sapphire.Token')
 
@@ -13,7 +13,7 @@ def gem():
     show = false
 
 
-    def parse_expression(m):
+    def parse7_expression(m):
         [
                 name, left_parenthesis, single_quote, right_parenthesis,
         ] = m.group('name', 'left_parenthesis', 'single_quote', 'right_parenthesis')
@@ -42,7 +42,7 @@ def gem():
                )
 
 
-    def parse_statement_class(m0, s):
+    def parse7_statement_class(m0, s):
         if show:
             line(portray_raw_string(s[m0.end():]))
 
@@ -64,7 +64,7 @@ def gem():
         return ClassHeader(KeywordClass(m0.group('indented') + m0.group('keyword__ow')), name_1, parameters, newline)
 
 
-    def parse_statement_decorator_header(m0, s):
+    def parse7_statement_decorator_header(m0, s):
         m = expression_match(s, m0.end())
 
         if m is none:
@@ -72,12 +72,12 @@ def gem():
 
         return DecoratorHeader(
                    OperatorAtSign(m0.group('indented') + m0.group('keyword__ow')),
-                   parse_expression(m),
+                   parse7_expression(m),
                    m.group('newline'),
                )
 
 
-    def parse_statement_define_header(m0, s):
+    def parse7_statement_define_header(m0, s):
         m = define_match(s, m0.end())
 
         if m is none:
@@ -99,7 +99,7 @@ def gem():
         return DefineHeader(KeywordDefine(m0.group('indented') + m0.group('keyword__ow')), name_1, parameters, newline)
 
 
-    def parse_statement_from(m0, s):
+    def parse7_statement_from(m0, s):
         m = from_1_match(s, m0.end())
 
         if m is none:
@@ -145,10 +145,10 @@ def gem():
                        m2.group('newline'),
                    )
 
-        raise_runtime_error('parse_statement_from: incomplete')
+        raise_runtime_error('parse7_statement_from: incomplete')
 
 
-    def parse_statement_import(m0, s):
+    def parse7_statement_import(m0, s):
         m = import_match(s, m0.end())
 
         if m is none:
@@ -161,7 +161,7 @@ def gem():
                )
 
 
-    def parse_statement_return(m0, s):
+    def parse7_statement_return(m0, s):
         m = expression_match(s, m0.end())
 
         if m is none:
@@ -169,23 +169,23 @@ def gem():
 
         return StatementReturnExpression(
                    KeywordReturn(m0.group('indented') + m0.group('keyword__ow')),
-                   parse_expression(m),
+                   parse7_expression(m),
                    m.group('newline'),
                )
 
 
-    find_parse_line = {
-                          'class'  : parse_statement_class,
-                          'def'    : parse_statement_define_header,
-                          'from'   : parse_statement_from,
-                          'import' : parse_statement_import,
-                          'return' : parse_statement_return,
-                          '@'      : parse_statement_decorator_header,
+    find_parse7_line = {
+                          'class'  : parse7_statement_class,
+                          'def'    : parse7_statement_define_header,
+                          'from'   : parse7_statement_from,
+                          'import' : parse7_statement_import,
+                          'return' : parse7_statement_return,
+                          '@'      : parse7_statement_decorator_header,
                       }.__getitem__
 
 
     @share
-    def parse_python_from_path(path):
+    def parse7_python_from_path(path):
         data   = read_text_from_path(path)
         many   = []
         append = many.append
@@ -202,11 +202,11 @@ def gem():
             if keyword is not none:
                 assert name is none
 
-                append(find_parse_line(keyword)(m, s))
+                append(find_parse7_line(keyword)(m, s))
                 continue
 
             if name:
-                append(parse_statement_expression__symbol(m, s, name))
+                append(parse7_statement_expression__symbol(m, s, name))
                 continue
 
             [indented, comment, newline_2] = m.group('indented', 'comment', 'newline_2')
