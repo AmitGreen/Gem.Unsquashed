@@ -95,7 +95,8 @@ def gem():
             (
                   (name | number | single_quote)
                 + GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(', ')', ',')) + middle_ow)
-            )
+            ),
+            debug = true,
         )
 
         MATCH(

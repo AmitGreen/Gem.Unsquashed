@@ -10,7 +10,7 @@ def gem():
     require_gem('Sapphire.Token')
 
 
-    show = true
+    show = false
 
 
     def parse_expression(m):

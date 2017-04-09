@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.ParseExpression')
 def gem():
-    show = true
+    show = false
 
 
     tuple_of_2_nones = ((none, none))
@@ -94,7 +94,8 @@ def gem():
     def parse_arguments__left_parenthesis(s, m0):
         if show:
             line('parse_arguments__left_parenthesis: %s', portray_raw_string(s[m0.end():]))
-            assert 0,'stop#1'
+            line('m0: %s', m0)
+            #assert 0,'stop#1'
 
         left_parenthesis_0 = OperatorLeftParenthesis(m0.group('operator__ow'))
         m                  = argument_1_match(s, m0.end())
