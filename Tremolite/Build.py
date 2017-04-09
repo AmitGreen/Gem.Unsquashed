@@ -148,6 +148,9 @@ def gem():
         __slots__ = (())
 
 
+        is_tremolite_name = true
+
+
         def __init__(t, name, pattern):
             t.regular_expression = pattern.regular_expression
             t.portray            = t.name = name
@@ -490,16 +493,26 @@ def gem():
 
 
     @export
-    def GROUP(name, pattern):
+    def G(name, pattern = absent):
+        if pattern is absent:
+            assert name.is_tremolite_name
+
+            return TremoliteGroup(
+                       intern_arrange('(?P<%s>%s)', name.name, name.regular_expression),
+                       arrange('G(%s)', portray_string(name.name)),
+                       name,
+                       name,
+                   )
+
         if name_match(name) is none:
-            raise_runtime_error('GROUP: invalid group name: %s (expected a python identifier)', name)
+            raise_runtime_error('G: invalid group name: %s (expected a python identifier)', name)
 
         if type(pattern) is String:
             pattern = INVISIBLE_EXACT(pattern)
 
         return TremoliteGroup(
                    intern_arrange('(?P<%s>%s)', name, pattern.regular_expression),
-                   arrange('GROUP(%s, %s)', portray_string(name), pattern),
+                   arrange('G(%s, %s)', portray_string(name), pattern),
                    name,
                    pattern,
                )
@@ -568,7 +581,7 @@ def gem():
                        intern_arrange('(?P<%s>%s)', name, pattern.regular_expression),
                        name,
                        name,
-                       GROUP(name, pattern),
+                       G(name, pattern),
                    ),
                )
 
@@ -596,19 +609,29 @@ def gem():
 
 
     @export
-    def OPTIONAL_GROUP(group_name, pattern):
+    def Q(name, pattern = absent):
+        if pattern is absent:
+            assert name.is_tremolite_name
+
+            return TremoliteGroup(
+                       intern_arrange('(?P<%s>%s)?', name.name, name.regular_expression),
+                       arrange('Q(%s)', portray_string(name.name)),
+                       name,
+                       name,
+                   )
+
         if type(pattern) is String:
             pattern = INVISIBLE_EXACT(pattern)
         else:
             assert pattern.repeatable
 
-        if name_match(group_name) is none:
-            raise_runtime_error('GROUP: invalid group name: %s (expected a python identifier)', group_name)
+        if name_match(name) is none:
+            raise_runtime_error('Q: invalid group name: %s (expected a python identifier)', name)
 
         return TremoliteOptionalGroup(
-                   intern_arrange('(?P<%s>%s)?', group_name, pattern.regular_expression),
-                   arrange('OPTIONAL_GROUP(%s, %s)', portray_string(group_name), pattern),
-                   group_name,
+                   intern_arrange('(?P<%s>%s)?', name, pattern.regular_expression),
+                   arrange('Q(%s, %s)', portray_string(name), pattern),
+                   name,
                    pattern,
                )
 

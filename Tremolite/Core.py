@@ -3,12 +3,13 @@
 #
 @gem('Tremolite.Core')
 def gem():
+    require_gem('Gem.Absent')               #   For built_in absent
     require_gem('Gem.Ascii')
     require_gem('Gem.Cache')
     require_gem('Gem.Codec')
     require_gem('Gem.DelayedFileOutput')
     require_gem('Gem.Exception')
-    require_gem('Gem.Import')           #   For import_module
+    require_gem('Gem.Import')               #   For built_in import_module
     require_gem('Gem.Map')
     require_gem('Gem.Path')
     require_gem('Gem.PortrayString')
