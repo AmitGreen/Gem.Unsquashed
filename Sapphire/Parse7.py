@@ -52,16 +52,16 @@ def gem():
             return UnknownLine(s)
 
         [
-            name_1, left_parenthesis, name_2, right_parenthesis__colon, newline,
-        ] = m.group('name_1', 'left_parenthesis', 'name_2', 'right_parenthesis__colon', 'newline')
+            name1, left_parenthesis, name2, right_parenthesis__colon, newline,
+        ] = m.group('name1', 'left_parenthesis', 'name2', 'right_parenthesis__colon', 'newline')
 
         parameters = ParameterColon_1(
                          OperatorLeftParenthesis(left_parenthesis),
-                         Symbol(name_2),
+                         Symbol(name2),
                          OperatorRightParenthesisColon(right_parenthesis__colon),
                      )
 
-        return ClassHeader(KeywordClass(m0.group('indented') + m0.group('keyword__ow')), name_1, parameters, newline)
+        return ClassHeader(KeywordClass(m0.group('indented') + m0.group('keyword__ow')), name1, parameters, newline)
 
 
     def parse7_statement_decorator_header(m0, s):
@@ -78,25 +78,25 @@ def gem():
 
 
     def parse7_statement_define_header(m0, s):
-        m = define_match(s, m0.end())
+        m = define7_match(s, m0.end())
 
         if m is none:
             return UnknownLine(s)
 
         [
-            name_1, left_parenthesis, name_2, right_parenthesis__colon, newline,
-        ] = m.group('name_1', 'left_parenthesis', 'name_2', 'right_parenthesis__colon', 'newline')
+            name1, left_parenthesis, name2, right_parenthesis__colon, newline,
+        ] = m.group('name1', 'left_parenthesis', 'name2', 'right_parenthesis__colon', 'newline')
 
-        if name_2 is none:
+        if name2 is none:
             parameters = ParameterColon_0(left_parenthesis + right_parenthesis__colon)
         else:
             parameters = ParameterColon_1(
                              OperatorLeftParenthesis(left_parenthesis),
-                             Symbol(name_2),
+                             Symbol(name2),
                              OperatorRightParenthesisColon(right_parenthesis__colon),
                          )
 
-        return DefineHeader(KeywordDefine(m0.group('indented') + m0.group('keyword__ow')), name_1, parameters, newline)
+        return DefineHeader(KeywordDefine(m0.group('indented') + m0.group('keyword__ow')), name1, parameters, newline)
 
 
     def parse7_statement_from(m0, s):
@@ -106,15 +106,15 @@ def gem():
             return UnknownLine(s)
 
         [
-                name_1, dot, name_2, keyword__import__w, name_3, keyword__as__w, name_4, comma
-        ] = m.group('name_1', 'dot', 'name_2', 'keyword__import__w', 'name_3', 'keyword__as__w', 'name_4', 'comma')
+                name1, dot, name2, keyword__import__w, name3, keyword__as__w, name4, comma
+        ] = m.group('name1', 'dot', 'name2', 'keyword__import__w', 'name3', 'keyword__as__w', 'name4', 'comma')
 
         if dot is none:
-            module = name_1
+            module = name1
         else:
-            module = ExpressionDot(Symbol(name_1), OperatorDot(dot), name_2)
+            module = ExpressionDot(Symbol(name1), OperatorDot(dot), name2)
 
-        as_fragment = AsFragment(name_3, KeywordAs(keyword__as__w), name_4)
+        as_fragment = AsFragment(name3, KeywordAs(keyword__as__w), name4)
 
         if comma is none:
             return StatementFromImport(
@@ -131,10 +131,10 @@ def gem():
             return UnknownLine(s)
 
         [
-                name_1, keyword__as__w, name_2, comma_2
-        ] = m2.group('name_1', 'keyword__as__w', 'name_2', 'comma')
+                name1, keyword__as__w, name2, comma_2
+        ] = m2.group('name1', 'keyword__as__w', 'name2', 'comma')
 
-        as_fragment_2 = AsFragment(name_1, KeywordAs(keyword__as__w), name_2)
+        as_fragment_2 = AsFragment(name1, KeywordAs(keyword__as__w), name2)
 
         if comma_2 is none:
             return StatementFromImport(
@@ -156,7 +156,7 @@ def gem():
 
         return StatementImport(
                    KeywordImport(m0.group('indented') + m0.group('keyword__ow')),
-                   Symbol(m.group('name_1')),
+                   Symbol(m.group('name1')),
                    m.group('newline'),
                )
 
@@ -191,7 +191,7 @@ def gem():
         append = many.append
 
         for s in data.splitlines(true):
-            m = line_match(s)
+            m = line7_match(s)
 
             if m is none:
                 append(UnknownLine(s))

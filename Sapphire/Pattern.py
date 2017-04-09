@@ -10,33 +10,30 @@ def gem():
 
 
     from Tremolite import create_match_code, ANY_OF, BACKSLASH, DOT, EMPTY, END_OF_PATTERN, EXACT, FULL_MATCH
-    from Tremolite import GROUP, LINEFEED, MATCH, NAME, NAMED_GROUP, NOT_FOLLOWED_BY
+    from Tremolite import G, LINEFEED, MATCH, NAME, NAMED_GROUP, NOT_FOLLOWED_BY
     from Tremolite import ONE_OR_MORE, OPTIONAL, OPTIONAL_GROUP, PRINTABLE, PRINTABLE_MINUS, ZERO_OR_MORE
 
 
     @share
     def create_sapphire_match():
-        ow  = NAME('ow', ZERO_OR_MORE(' '))
-        ow1 = NAMED_GROUP('ow1', ow)
-        w   = NAME('w', ONE_OR_MORE(' '))
-        w1  = NAMED_GROUP('w1', w)
-        w2  = NAMED_GROUP('w2', w)
+        ow = NAME('ow', ZERO_OR_MORE(' '))
+        w  = NAME('w', ONE_OR_MORE(' '))
 
         middle_ow = NAME('middle_ow', OPTIONAL(w + NOT_FOLLOWED_BY(ANY_OF(LINEFEED, ' ', '#'))))
-        newline   = NAMED_GROUP('newline', ow + OPTIONAL('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
+
+        newline = NAME       ('newline', ow + OPTIONAL('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
 
         alphanumeric_or_underscore = NAME('alphanumeric_or_underscore', ANY_OF('0-9', 'A-Z', '_', 'a-z'))
+        letter_or_underscore       = NAME('letter_or_underscore',       ANY_OF('A-Z', '_', 'a-z'))
 
-        identifier = NAME('identifier', ANY_OF('A-Z', '_', 'a-z') + ZERO_OR_MORE(alphanumeric_or_underscore))
-        name       = NAMED_GROUP('name', identifier)
-        name_1     = NAMED_GROUP('name_1', identifier)
-        name_2     = NAMED_GROUP('name_2', identifier)
-        name_3     = NAMED_GROUP('name_3', identifier)
-        name_4     = NAMED_GROUP('name_4', identifier)
+        name   = NAME('name', letter_or_underscore + ZERO_OR_MORE(alphanumeric_or_underscore))
+        name1  = NAME('name1', name)
+        name2  = NAME('name2', name)
+        name3_G  = NAMED_GROUP('name3', name)
+        name4_G  = NAMED_GROUP('name4', name)
+        number_G = NAMED_GROUP('number', '0' | ANY_OF('1-9') + ZERO_OR_MORE('0-9'))
 
-        number = NAMED_GROUP('number', '0' | ANY_OF('1-9') + ZERO_OR_MORE('0-9'))
-
-        single_quote = NAMED_GROUP(
+        single_quote_G = NAMED_GROUP(
                            'single_quote',
                            (
                                   "'" + ONE_OR_MORE(BACKSLASH + PRINTABLE | PRINTABLE_MINUS("'", '\\')) + "'"
@@ -44,12 +41,14 @@ def gem():
                            )
                        )
 
-        comma                    = NAMED_GROUP('comma',                    ow + ',' + ow)
-        dot                      = NAMED_GROUP('dot',                      ow + '.' + ow)
-        left_parenthesis         = NAMED_GROUP('left_parenthesis',         ow + '(' + ow)
-        right_parenthesis        = NAMED_GROUP('right_parenthesis',        ow + ')' + middle_ow)
-        right_parenthesis__colon = NAMED_GROUP('right_parenthesis__colon', ow + ')' + ow + ':')
-        #pair_of_parenthesis      = NAMED_GROUP('pair_of_parenthesis',      ow + '(' + ow + ')' + ow)
+        left_parenthesis__N         = NAME      ('left_parenthesis__N',          ow + '(' + ow)
+        right_parenthesis__colon__N = NAMED_GROUP('right_parenthesis__colon__N', ow + ')' + ow + ':')
+
+        comma_G                     = NAMED_GROUP('comma',                    ow + ',' + ow)
+        dot_G                       = NAMED_GROUP('dot',                      ow + '.' + ow)
+        left_parenthesis__G         = NAMED_GROUP('left_parenthesis',         left_parenthesis__N)
+        right_parenthesis__colon__G = NAMED_GROUP('right_parenthesis__colon', right_parenthesis__colon__N)
+        right_parenthesis__G        = NAMED_GROUP('right_parenthesis',        ow + ')' + middle_ow)
 
         keyword__as__w = NAMED_GROUP('keyword__as__w', w + 'as' + w)
 
@@ -58,7 +57,7 @@ def gem():
         keyword__ow = NAMED_GROUP(
                           'keyword__ow',
                           (
-                                GROUP(
+                                G(
                                     'keyword',
                                     (
                                           '@'
@@ -72,7 +71,12 @@ def gem():
                           ),
                       )
 
-        comment = NAME('comment', '#' + GROUP('comment', ZERO_OR_MORE(DOT)))
+        comment = NAME('comment', '#' + G('comment', ZERO_OR_MORE(DOT)))
+
+        #
+        #   Generic
+        #
+        name_match = MATCH('name_match', name, debug = true)
 
         #
         #   Expressions
@@ -80,101 +84,133 @@ def gem():
         MATCH(
             'argument_1_match',
             (
-                  (name | number | single_quote)
-                + GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(', ')', ',', '[')) + middle_ow)     #   ]
+                  (G(name) | number_G | single_quote_G)
+                + G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',', '[')) + middle_ow)     #   ]
             )
         )
 
         MATCH(
             'argument_1A_match',
-            GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(', ')', ',', '[')) + middle_ow)          #   ]
+            G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',', '[')) + middle_ow)          #   ]
         )
 
         MATCH(
             'argument_2_match',
             (
-                  (name | number | single_quote)
-                + GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(', ')', ',')) + middle_ow)
+                  (G(name) | number_G | single_quote_G)
+                + G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',')) + middle_ow)
             ),
-            debug = true,
         )
 
         MATCH(
             'argument_postfix_match',
             #   (
-            GROUP('operator__ow', ow + GROUP('operator', ANY_OF(')', ',')) + middle_ow)
+            G('operator__ow', ow + G('operator', ANY_OF(')', ',')) + middle_ow)
         )
 
         MATCH(
             'index_1_match',
             (
-                  (name | number)
-                + GROUP('operator__ow', ow + GROUP('operator', ANY_OF(']')) + ow)
+                  (G(name) | number_G)
+                + G('operator__ow', ow + G('operator', ANY_OF(']')) + ow)
             )
         )
 
         MATCH(
             'statement_expression_match',
             (
-                  OPTIONAL(dot + GROUP('right', identifier))
-                + GROUP('operator__ow', ow + GROUP('operator', ANY_OF('(')) + ow)
-                + OPTIONAL(name | number | single_quote)
+                  OPTIONAL(dot_G + G('right', name))
+                + G('operator__ow', ow + G('operator', ANY_OF('(')) + ow)
+                + OPTIONAL(G(name) | number_G | single_quote_G)
                 + OPTIONAL(
                         #   (
-                        GROUP('right_parenthesis', ow + ')')
-                      + OPTIONAL(newline + END_OF_PATTERN)
+                        G('right_parenthesis', ow + ')')
+                      + OPTIONAL(G(newline) + END_OF_PATTERN)
                   )
             )
         )
 
-        FULL_MATCH('statement_postfix_match', newline)
+        FULL_MATCH('statement_postfix_match', G(newline))
  
         #
-        #   Statements
+        #   Statements - Parse 1
         #
         MATCH(
-            'line_match',
-            NAMED_GROUP('indented', ow)
+            'line1_match',
+            (
+                  ow
+                + OPTIONAL(G('token', '@' | name) + ow)
+                + OPTIONAL(OPTIONAL(comment) + G('newline', LINEFEED) + END_OF_PATTERN)
+            ),
+        )
+
+        MATCH(
+            'define1_parenthesis_match',
+            (
+                  left_parenthesis__N
+                + OPTIONAL(right_parenthesis__colon__N + G(newline) + END_OF_PATTERN)
+            ),
+            debug = true,
+        )
+
+        MATCH(
+            'define1__right_parenthesis__colon__match',
+            right_parenthesis__colon__G + G(newline) + END_OF_PATTERN,
+            debug = true,
+        )
+
+        FULL_MATCH(
+            'define1_match2',
+            left_parenthesis__G + OPTIONAL_GROUP(name2) + right_parenthesis__colon__G + G(newline),
+        )
+
+
+        #
+        #   Statements - Parse 7
+        #
+        MATCH(
+            'line7_match',
+            G('indented', ow)
                 + (
-                        keyword__ow + OPTIONAL(GROUP('newline_1', LINEFEED) + END_OF_PATTERN)
-                      | name
-                      | (comment | EMPTY) + GROUP('newline_2', LINEFEED) + END_OF_PATTERN
+                        keyword__ow + OPTIONAL(G('newline_1', LINEFEED) + END_OF_PATTERN)
+                      | G(name)
+                      | (comment | EMPTY) + G('newline_2', LINEFEED) + END_OF_PATTERN
                   )
         )
 
         FULL_MATCH(
             'class_match',
-            name_1 + left_parenthesis + name_2 + right_parenthesis__colon + newline,
+            G(name1) + left_parenthesis__G + G(name2) + right_parenthesis__colon__G + G(newline),
         )
 
         FULL_MATCH(
-            'define_match',
-            name_1 + left_parenthesis + OPTIONAL(name_2) + right_parenthesis__colon + newline,
+            'define7_match',
+            G(name1) + left_parenthesis__G + OPTIONAL_GROUP(name2) + right_parenthesis__colon__G + G(newline),
         )
 
         MATCH(
             'from_1_match',
             (
-                  name_1 + OPTIONAL(dot + name_2)
-                + keyword__import__w + name_3
-                + keyword__as__w + name_4
-                + (comma | newline + END_OF_PATTERN)
+                  G(name1) + OPTIONAL(dot_G + G(name2))
+                + keyword__import__w + name3_G
+                + keyword__as__w + name4_G
+                + (comma_G | G(newline) + END_OF_PATTERN)
             )
         )
 
         MATCH(
             'from_2_match',
-            name_1 + keyword__as__w + name_2 + (comma | newline + END_OF_PATTERN)
+            G(name1) + keyword__as__w + G(name2) + (comma_G | G(newline) + END_OF_PATTERN)
         )
 
-        FULL_MATCH('import_match', name_1 + newline)
+        FULL_MATCH('import_match', G(name1) + G(newline))
 
         FULL_MATCH(
             'expression_match',
             (
-                  name
-                + OPTIONAL(left_parenthesis + OPTIONAL(single_quote) + right_parenthesis)
-                + newline
+                  G(name)
+                + OPTIONAL(left_parenthesis__G + OPTIONAL(single_quote_G) + right_parenthesis__G)
+                + G(newline)
             ),
         )
 
