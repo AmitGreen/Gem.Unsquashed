@@ -4,17 +4,19 @@
 @gem('Sapphire.Core')
 def gem():
     require_gem('Gem.Cache')
+    require_gem('Gem.DelayedFileOutput')
     require_gem('Gem.Path')
     require_gem('Gem.StringOutput')
 
 
-    from Gem import create_StringOutput, produce_cache_functions, read_text_from_path
+    from Gem import create_DelayedFileOutput, create_StringOutput, produce_cache_functions, read_text_from_path
 
 
     share(
         #
         #   Imported functions
         #
+        'create_DelayedFileOutput',     create_DelayedFileOutput,
         'create_StringOutput',          create_StringOutput,
         'produce_cache_functions',      produce_cache_functions,
         'read_text_from_path',          read_text_from_path,

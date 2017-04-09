@@ -25,12 +25,22 @@ def gem():
     require_gem('Sapphire.Pattern')
 
 
+    depth = 7
+
+
     @share
     def main():
         create_sapphire_match()
 
-        require_gem('Sapphire.Parse7')                      #   Must be after 'create_sapphire_match'
+        if depth == 1:
+            require_gem('Sapphire.Parse1')                      #   Must be after 'create_sapphire_match'
 
-        #parse7_python_from_path('test.py')
-        parse7_python_from_path('../Sapphire/Main.py')
-        #parse7_python_from_path('../Gem/Absent.py')
+            parse1_python_from_path('test.py')
+        else:
+            assert depth == 7
+
+            require_gem('Sapphire.Parse7')                      #   Must be after 'create_sapphire_match'
+
+            #parse7_python_from_path('test.py')
+            parse7_python_from_path('../Sapphire/Main.py')
+            #parse7_python_from_path('../Gem/Absent.py')
