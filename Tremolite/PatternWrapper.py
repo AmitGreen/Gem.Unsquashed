@@ -66,6 +66,40 @@ def gem():
             return arrange('<Match %s %s %s>', t.name, portray_string(t.group(0)), ' '.join(many))
 
 
+        def portray_match(t):
+            group           = t.group
+            pattern_groups  = t.pattern_groups
+            portray_group_0 = portray_string(group(0))
+
+            if pattern_groups is 0:
+                return portray_group_0
+
+            if length(pattern_groups) is 2:
+                group_1 = group(1)
+
+                return arrange('%s %s=%s',
+                               portray_group_0,
+                               pattern_groups[1],
+                               'none'   if group_1 is none else   portray_string(group_1))
+
+            many   = [portray_group_0]
+            append = many.append
+
+            for s in pattern_groups:
+                if s is none:
+                    continue
+
+                v = group(s)
+
+                if v is none:
+                    append(arrange('%s=none', s))
+                    continue
+
+                append(arrange('%s=%s', s, portray_string(v)))
+
+            return ' '.join(many)
+
+
     @export
     class PatternWrapper(Object):
         __slots__ = ((
@@ -94,20 +128,20 @@ def gem():
 
                 if m is none:
                     if index is absent:
-                        line('match(%s) => none', portray_string(s))
+                        line('%s(%s) => none', t.name, portray_string(s))
                     else:
-                        line('match(%s @%d %s) => none', portray_string(s[:index]), index, portray_string(s[index:]))
+                        line('%s(%s @%d %s) => none', t.name, portray_string(s[:index]), index, portray_string(s[index:]))
 
                     return none
 
                 r = MatchWrapper(t.name, t.pattern_groups, m)
 
                 if index is absent:
-                    line('match(%s)', portray_string(s))
+                    line('%s(%s)', t.name, portray_string(s))
                 else:
-                    line('match(%s @%d %s) => none', portray_string(s[:index]), index, portray_string(s[index:]))
+                    line('%s(%s @%d %s) => none', t.name, portray_string(s[:index]), index, portray_string(s[index:]))
 
-                line('  => %r', r)
+                line('  => %s', r.portray_match())
 
                 return r
         else:
