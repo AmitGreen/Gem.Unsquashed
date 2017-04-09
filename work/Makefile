@@ -38,7 +38,7 @@ SAPPHIRE_FILES = \
     ../Sapphire/Core.py \
     ../Sapphire/Elemental.py ../Sapphire/Expression.py \
     ../Sapphire/Main.py \
-    ../Sapphire/Parse.py ../Sapphire/ParseExpression.py \
+    ../Sapphire/Parse7.py ../Sapphire/Parse7Expression.py \
     ../Sapphire/Pattern.py \
     ../Sapphire/Statement.py \
     ../Sapphire/Token.py
@@ -88,6 +88,7 @@ clean:
 	rm -rf __pycache__
 	rm -f *.old *.new *.pyc
 
+	rm -f 7pa.py 7pe.py
 	rm -f ab.py ac.py ag.py
 	rm -f 2re.py 2sf.py 2sp.py 2sc.py
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
@@ -97,7 +98,7 @@ clean:
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gd.py
-	rm -f hc.py hem.py hex.py hk.py hma.py hmc.py hpa.py hpe.py hpt.py hs.py
+	rm -f hc.py hem.py hex.py hk.py hma.py hmc.py hpt.py hs.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f lr.txt
@@ -115,6 +116,8 @@ files:
 
 
 links:
+	ln -s ../Sapphire/Parse7.py                 7pa.py
+	ln -s ../Sapphire/Parse7Expression.py       7pe.py
 	ln -s ../Gem/Absent.py                      ab.py
 	ln -s ../Gem/Ascii.py                       ac.py
 	ln -s ../Agate/RUNME.py                     ag.py
@@ -151,8 +154,6 @@ links:
 	ln -s ../Sapphire/Token.py                  hk.py
 	ln -s ../Sapphire/Main.py                   hma.py
 	ln -s ../Sapphire/Match.py                  hmc.py
-	ln -s ../Sapphire/Parse.py                  hpa.py
-	ln -s ../Sapphire/ParseExpression.py        hpe.py
 	ln -s ../Sapphire/Pattern.py                hpt.py
 	ln -s ../Sapphire/Statement.py              hs.py
 	ln -s ../Gem/__init__.py                    in.py
