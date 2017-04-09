@@ -6,7 +6,7 @@ def gem():
     require_gem('Tremolite.Name')
 
 
-    show = false
+    show = true
 
 
     @export
@@ -33,9 +33,18 @@ def gem():
             with f.indent('def gem():'):
                 f.line('require_gem(%r)', 'Gem.System')
                 f.line('require_gem(%r)', 'Tremolite.Compile')
+
+                if show:
+                    f.line('require_gem(%r)', 'Tremolite.PatternWrapper')
+
                 f.blank2()
                 f.line('from Gem import python_version')
-                f.line('from Tremolite import compile_regular_expression')
+
+                if show:
+                    f.line('from Tremolite import create_wrapped_match_function')
+                else:
+                    f.line('from Tremolite import compile_regular_expression')
+
                 f.blank2()
 
                 with f.indent(arrange('if python_version == %s:', portray_string(python_version))):
@@ -91,8 +100,12 @@ def gem():
 
                     f.blank2()
 
-                    with f.indent('def M(regular_expression, code, groups = 0, flags = 0):'):
-                        f.line('return compile_regular_expression(regular_expression, C(code), C(groups), C(flags)).match')
+                    if show:
+                        with f.indent('def M(name, regular_expression, code, groups = 0, flags = 0):'):
+                            f.line('return create_wrapped_match_function(name, regular_expression, C(code), C(groups), C(flags))')
+                    else:
+                        with f.indent('def M(regular_expression, code, groups = 0, flags = 0):'):
+                            f.line('return compile_regular_expression(regular_expression, C(code), C(groups), C(flags)).match')
 
                 f.blank2()
 
@@ -102,10 +115,15 @@ def gem():
                     f.line('from Tremolite import parse_ascii_regular_expression')
                     f.blank2()
 
-                    with f.indent('def M(regular_expression, code, groups = 0, flags = 0):'):
-                        with f.indent('return compile_regular_expression(', ').match'):
-                            f.line('regular_expression,')
-                            f.line('*parse_ascii_regular_expression(regular_expression)#,')
+                    if show:
+                        with f.indent('def M(name, regular_expression, code, groups = 0, flags = 0):'):
+                            f.line('return create_wrapped_match_function(name, regular_expression, *%s)',
+                                   'parse_ascii_regular_expression(regular_expression)')
+                    else:
+                        with f.indent('def M(regular_expression, code, groups = 0, flags = 0):'):
+                            with f.indent('return compile_regular_expression(', ').match'):
+                                f.line('regular_expression,')
+                                f.line('*parse_ascii_regular_expression(regular_expression)#,')
 
                 if name_cache:
                     f.blank2()
@@ -134,6 +152,9 @@ def gem():
                             arrange('%s = M(', v.name),
                             ')',
                     ):
+                        if show:
+                            f.line('%s,', portray_string(v.name))
+
                         f.line('%s,', portray_string(v.pattern.regular_expression))
                         f.line('%d,', index)
                         index += 1
@@ -161,7 +182,3 @@ def gem():
                         f.line('%*s%s,', -total, arrange('%r,', v.name), v.name)
 
             data = f.finish()
-
-        if show:
-            for s in data.splitlines():
-                line(s)
