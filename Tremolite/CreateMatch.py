@@ -6,14 +6,18 @@ def gem():
     require_gem('Tremolite.Name')
 
 
-    show = false
-
-
     @export
     def create_match_code(path, copyright, module_name):
         notice        = []
         append_notice = notice.append
         found         = 0
+        debug         = false
+
+        for v in iterate_values_sorted_by_key(match_cache):
+            v.parse_ascii_regular_expression()
+
+            debug |= v.debug
+
 
         for s in read_text_from_path('../Tremolite/LicenseTemplate.txt').splitlines():
             if s == '#':
@@ -33,9 +37,18 @@ def gem():
             with f.indent('def gem():'):
                 f.line('require_gem(%r)', 'Gem.System')
                 f.line('require_gem(%r)', 'Tremolite.Compile')
+
+                if debug:
+                    f.line('require_gem(%r)', 'Tremolite.PatternWrapper')
+
                 f.blank2()
                 f.line('from Gem import python_version')
-                f.line('from Tremolite import compile_regular_expression')
+
+                if debug:
+                    f.line('from Tremolite import compile_regular_expression, create_wrapped_match_function')
+                else:
+                    f.line('from Tremolite import compile_regular_expression')
+
                 f.blank2()
 
                 with f.indent(arrange('if python_version == %s:', portray_string(python_version))):
@@ -46,7 +59,9 @@ def gem():
                         f.line('0,')
 
                         for v in iterate_values_sorted_by_key(match_cache):
-                            [code, groups, flags] = parse_ascii_regular_expression(v.pattern.regular_expression)
+                            code   = v.code
+                            groups = v.groups
+                            flags  = v.flags
 
                             f.blank()
                             f.line('#')
@@ -89,6 +104,18 @@ def gem():
 
                         f.line('#</copyright>')
 
+
+                    if debug:
+                        f.blank2()
+
+                        with f.indent('def D(name, regular_expression, code, groups = 0, flags = 0):'):
+                            with f.indent('return create_wrapped_match_function(', '       )', 11):
+                                f.line('intern_string(name),')
+                                f.line('regular_expression,')
+                                f.line('C(code),')
+                                f.line('C(groups),')
+                                f.line('C(flags),')
+
                     f.blank2()
 
                     with f.indent('def M(regular_expression, code, groups = 0, flags = 0):'):
@@ -100,6 +127,16 @@ def gem():
                     f.line('require_gem(%r)', 'Tremolite.Parse')
                     f.blank2()
                     f.line('from Tremolite import parse_ascii_regular_expression')
+
+                    if debug:
+                        f.blank2()
+
+                        with f.indent('def D(name, regular_expression, code, groups = 0, flags = 0):'):
+                            with f.indent('return create_wrapped_match_function(', '       )', 11):
+                                f.line('intern_string(name),')
+                                f.line('regular_expression,')
+                                f.line('*parse_ascii_regular_expression(regular_expression)#,')
+
                     f.blank2()
 
                     with f.indent('def M(regular_expression, code, groups = 0, flags = 0):'):
@@ -121,7 +158,9 @@ def gem():
                 index = 1
 
                 for v in iterate_values_sorted_by_key(match_cache):
-                    [code, groups, flags] = parse_ascii_regular_expression(v.pattern.regular_expression)
+                    code   = v.code
+                    groups = v.groups
+                    flags  = v.flags
 
                     f.blank()
                     f.line('#')
@@ -131,9 +170,12 @@ def gem():
                     f.line('#')
 
                     with f.indent(
-                            arrange('%s = M(', v.name),
+                            arrange('%s = %s(', v.name, ('D'    if v.debug else    'M')),
                             ')',
                     ):
+                        if v.debug:
+                            f.line('%s,', portray_string(v.name))
+
                         f.line('%s,', portray_string(v.pattern.regular_expression))
                         f.line('%d,', index)
                         index += 1
@@ -161,7 +203,3 @@ def gem():
                         f.line('%*s%s,', -total, arrange('%r,', v.name), v.name)
 
             data = f.finish()
-
-        if show:
-            for s in data.splitlines():
-                line(s)

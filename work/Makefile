@@ -58,7 +58,7 @@ TREMOLITE_FILES = \
     ../Tremolite/Compile.py ../Tremolite/Core.py ../Tremolite/CreateMatch.py \
     ../Tremolite/Main.py \
     ../Tremolite/Name.py \
-    ../Tremolite/Parse.py
+    ../Tremolite/Parse.py ../Tremolite/PatternWrapper.py \
     #
     #   Excludes:
     #       ../Tremolite/LICENSE
@@ -105,7 +105,7 @@ clean:
 	rm -f pa.py pa2.py ps.py ps3.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
-	rm -f tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tx.py
+	rm -f tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f zc.py zm.py zpa.py zps.py zpt.py zso.py
 
 
@@ -180,6 +180,7 @@ links:
 	ln -s ../Tremolite/Name.py                  tn.py
 	ln -s ../Tremolite/Parse.py                 tp.py
 	ln -s ../Tremolite/Build.py                 tu.py
+	ln -s ../Tremolite/PatternWrapper.py        tw.py
 	ln -s ../Tremolite/Compile.py               tx.py
 	ln -s ../Topaz/Core.py                      zc.py
 	ln -s ../Topaz/Main.py                      zm.py
