@@ -107,6 +107,12 @@ def gem():
 
 
     @share
+    class StatementReturn(Token):
+        __slots__ = (())
+        keyword   = 'return'
+
+
+    @share
     class Symbol(Token):
         __slots__ = (())
 

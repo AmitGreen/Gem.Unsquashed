@@ -77,7 +77,20 @@ def gem():
 
 
         #
-        #   Expressions
+        #   Expressions 1
+        #
+        MATCH(
+            'atom1_match',
+            name | number | single_quote,
+        )
+
+        MATCH(
+            'postfix1_match',
+            newline,
+        )
+
+        #
+        #   Expressions 7
         #
         MATCH(
             'argument_1_match',
@@ -141,7 +154,6 @@ def gem():
                 + P(G('token', '@' | name) + ow)
                 + P(P(G_comment) + G('newline', LINEFEED) + END_OF_PATTERN)
             ),
-            debug = true,
         )
 
         MATCH(

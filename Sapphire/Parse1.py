@@ -14,13 +14,36 @@ def gem():
     show = true
 
 
+    find_atom_type = {
+                         "'" : SingleQuote,
+                         '.' : Number,
+
+                         '0' : Number, '1' : Number, '2' : Number, '3' : Number, '4' : Number,
+                         '5' : Number, '6' : Number, '7' : Number, '8' : Number, '9' : Number,
+
+                         'A' : Symbol, 'B' : Symbol, 'C' : Symbol, 'D' : Symbol, 'E' : Symbol, 'F' : Symbol,
+                         'G' : Symbol, 'H' : Symbol, 'I' : Symbol, 'J' : Symbol, 'K' : Symbol, 'L' : Symbol,
+                         'M' : Symbol, 'N' : Symbol, 'O' : Symbol, 'P' : Symbol, 'Q' : Symbol, 'R' : Symbol,
+                         'S' : Symbol, 'T' : Symbol, 'U' : Symbol, 'V' : Symbol, 'W' : Symbol, 'X' : Symbol,
+                         'Y' : Symbol, 'Z' : Symbol,
+
+                         '_' : Symbol,
+
+                         'a' : Symbol, 'b' : Symbol, 'c' : Symbol, 'd' : Symbol, 'e' : Symbol, 'f' : Symbol,
+                         'g' : Symbol, 'h' : Symbol, 'i' : Symbol, 'J' : Symbol, 'k' : Symbol, 'l' : Symbol,
+                         'm' : Symbol, 'n' : Symbol, 'o' : Symbol, 'p' : Symbol, 'q' : Symbol, 'r' : Symbol,
+                         'S' : Symbol, 't' : Symbol, 'u' : Symbol, 'v' : Symbol, 'w' : Symbol, 'x' : Symbol,
+                         'y' : Symbol, 'z' : Symbol,
+                     }.__getitem__
+
+
     def parse1_statement_define_header(m1, s):
         if m1.end('newline') is not -1:
             line('parse1_statement_define_header: incomplete#1')
             return UnknownLine(s)
 
         #
-        #   name1
+        #<name1>
         #
         m2 = name_match(s, m1.end())
 
@@ -33,7 +56,7 @@ def gem():
         m2_end = m2.end()
 
         #
-        #   parenthesis
+        #<parenthesis>
         #
         m3 = define1_parenthesis_match(s, m2_end)
 
@@ -47,7 +70,7 @@ def gem():
             parameters = ParameterColon_0(s[m2_end : m3.start('newline')])
         else:
             #
-            #   name2
+            #<name2>
             #
             m4 = name_match(s, m3.end())
 
@@ -58,7 +81,7 @@ def gem():
             #</name2>
 
             #
-            #   right-parenthesis
+            #<right-parenthesis>
             #
             m5 = define1__right_parenthesis__colon__match(s, m4.end())
 
@@ -77,12 +100,48 @@ def gem():
         return DefineHeader(KeywordDefine(m1.group()), name1, parameters, newline)
 
 
+    def parse1_statement_return(m1, s):
+        if m1.end('newline') is not -1:
+            return StatementReturn(m1.group())
+
+        #
+        #<atom>
+        #
+        m2 = atom1_match(s, m1.end())
+
+        if m2 is none:
+            line('parse1_statement_return: incomplete#1')
+            return UnknownLine(s)
+
+        s1   = m2.group()
+        atom = find_atom_type(s1[0])(s1)
+        #</atom1>
+
+        #
+        #<newline>
+        #
+        m3 = postfix1_match(s, m2.end())
+
+        if m3 is none:
+            line('parse1_statement_return: incomplete#2')
+            return UnknownLine(s)
+
+        newline = m3.group()
+        #</newline>
+
+        return StatementReturnExpression(
+                   KeywordReturn(m1.group()),
+                   atom,
+                   m3.group(),
+               )
+
+
     lookup_parse1_line = {
                              #'class'  : parse7_statement_class,
                              'def'    : parse1_statement_define_header,
                              #'from'   : parse7_statement_from,
                              #'import' : parse7_statement_import,
-                             #'return' : parse7_statement_return,
+                             'return' : parse1_statement_return,
                              #'@'      : parse7_statement_decorator_header,
                          }.get
 
