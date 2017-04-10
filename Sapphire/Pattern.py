@@ -137,10 +137,11 @@ def gem():
         MATCH(
             'line1_match',
             (
-                  ow
+                  Q('indented', w)
                 + P(G('token', '@' | name) + ow)
                 + P(P(G_comment) + G('newline', LINEFEED) + END_OF_PATTERN)
             ),
+            debug = true,
         )
 
         MATCH(
@@ -151,9 +152,9 @@ def gem():
             ),
         )
 
-        MATCH(
+        FULL_MATCH(
             'define1__right_parenthesis__colon__match',
-            G(right_parenthesis__colon) + G(newline) + END_OF_PATTERN,
+            G(right_parenthesis__colon) + G(newline),
         )
 
 

@@ -25,6 +25,8 @@ def gem():
     #           TremoliteAnyOf
     #           TremoliteOr
     #       TremoliteOne
+    #           TremoliteNotFollowedBy
+    #           TremoliteOptional
     #           TremoliteParenthesis
     #           TremoliteRepeat
     #       TremoliteSpecial
@@ -96,6 +98,7 @@ def gem():
         ))
 
 
+        optional   = true
         repeatable = true
 
 
@@ -136,12 +139,23 @@ def gem():
             return arrange('<%s %s %r>', t.__class__.__name__, t.name, t.pattern)
 
 
+        @property
+        def optional(t):
+            return t.pattern.optional
+
+
+        @property
+        def repeatable(t):
+            return t.pattern.repeatable
+
+
+        @property
+        def singular(t):
+            return t.pattern.singular
+
+
     class TremoliteGroup(TremoliteGroupBase):
         __slots__ = (())
-
-
-        repeatable = true
-        singular   = true
 
 
     class TremoliteName(TremoliteGroupBase):
@@ -157,32 +171,15 @@ def gem():
             t.pattern            = pattern
 
 
-        @property
-        def repeatable(t):
-            return t.pattern.repeatable
-
-
-        @property
-        def singular(t):
-            return t.pattern.singular
-
-
     class TremoliteNamedGroup(TremoliteGroupBase):
         __slots__ = (())
-
-
-        @property
-        def repeatable(t):
-            return t.pattern.repeatable
-
-
-        singular = repeatable
 
 
     class TremoliteOptionalGroup(TremoliteGroupBase):
         __slots__ = (())
 
 
+        optional   = false
         repeatable = false
         singular   = false
 
@@ -193,6 +190,7 @@ def gem():
         ))
 
 
+        optional   = true
         repeatable = true
 
 
@@ -271,6 +269,9 @@ def gem():
         ))
 
 
+        singular = true
+
+
         def __init__(t, regular_expression, portray, pattern):
             t.regular_expression = regular_expression
             t.portray            = portray
@@ -285,19 +286,28 @@ def gem():
         __slots__ = (())
 
 
+        optional   = false
         repeatable = false
-        singular   = true
+
+
+    class TremoliteOptional(TremoliteOne):
+        __slots__ = (())
+
+
+        optional   = false
+        repeatable = false
 
 
     class TremoliteParenthesis(TremoliteOne):
         __slots__ = (())
 
 
+        optional   = true
         repeatable = true
-        singular   = true
 
 
         def __init__(t, regular_expression, portray, pattern):
+            assert pattern.optional
             assert pattern.repeatable
 
             t.regular_expression = regular_expression
@@ -309,6 +319,7 @@ def gem():
         __slots__ = (())
 
 
+        optional   = true
         repeatable = false
         singular   = true
 
@@ -362,7 +373,7 @@ def gem():
         return intern_string(''.join(many))
 
 
-    def create_repeat(name, pattern, m, n, question_mark = ''):
+    def create_repeat(name, pattern, m, n, question_mark = false):
         if type(pattern) is String:
             pattern = INVISIBLE_EXACT(pattern)
         else:
@@ -373,8 +384,15 @@ def gem():
         if n is none:
             assert m >= 2
 
+            if question_mark:
+                return TremoliteOptional(
+                           intern_arrange('%s{%d}?', suffix, m),
+                           arrange('%s(%s, %d)', name, pattern, m),
+                           pattern,
+                       )
+
             return TremoliteRepeat(
-                       intern_arrange('%s{%d}%s', suffix, m, question_mark),
+                       intern_arrange('%s{%d}', suffix, m),
                        arrange('%s(%s, %d)', name, pattern, m),
                        pattern,
                    )
@@ -383,9 +401,16 @@ def gem():
             assert m >= 0
 
             if m is 0:
-                suffix = arrange('{,}%s', question_mark)
+                suffix = '{,}'
             else:
-                suffix = arrange('{%d,}%s', m, question_mark)
+                suffix = arrange('{%d,}', m)
+
+            if question_mark:
+                return TremoliteOptional(
+                           intern_string(prefix + suffix + '?'),
+                           arrange('%s(%s, %d)', name, pattern, m),
+                           pattern,
+                       )
 
             return TremoliteRepeat(
                        intern_string(prefix + suffix),
@@ -396,9 +421,16 @@ def gem():
         assert 0 <= m < n
 
         if m is 0:
-            suffix = arrange('{,%d}%s', n, question_mark)
+            suffix = arrange('{,%d}')
         else:
-            suffix = arrange('{%d,%d}%s', m, n, question_mark)
+            suffix = arrange('{%d,%d}', m, n)
+
+        if question_mark:
+            return TremoliteOptional(
+                       intern_string(prefix + suffix + '?'),
+                       arrange('%s(%s, %d, %d)', name, pattern, m, n),
+                       pattern,
+                   )
 
         return TremoliteRepeat(
                    intern_string(prefix + suffix),
@@ -407,11 +439,22 @@ def gem():
                )
 
 
-    def create_simple_repeat(name, pattern, suffix):
+    def create_simple_repeat(name, pattern, suffix, question_mark = false):
         if type(pattern) is String:
             pattern = INVISIBLE_EXACT(pattern)
         else:
             assert pattern.repeatable
+
+        if question_mark:
+            return TremoliteOptional(
+                       (
+                           intern_string(pattern.regular_expression + suffix + '?')
+                               if pattern.singular else
+                                   intern_arrange('(?:%s)%s?', pattern.regular_expression, suffix)
+                       ),
+                       arrange('%s(%s)', name, pattern),
+                       pattern,
+                   )
 
         return TremoliteRepeat(
                    (
@@ -529,27 +572,27 @@ def gem():
 
     @export
     def MINIMUM_OF_ONE_OR_MORE(pattern):
-        return create_simple_repeat('MINIMUM_OF_ONE_OR_MORE', pattern, '{1,7777777}?')
+        return create_simple_repeat('MINIMUM_OF_ONE_OR_MORE', pattern, '{1,7777777}', question_mark = true)
 
 
     @export
     def MINIMUM_OF_OPTIONAL(pattern):
-        return create_simple_repeat('MINIMUM_OF_OPTIONAL', pattern, '??')
+        return create_simple_repeat('MINIMUM_OF_OPTIONAL', pattern, '?', question_mark = true)
 
 
     @export
     def MINIMUM_OF_REPEAT(pattern, m, n = none):
-        return create_repeat('MINIMUM_OF_REPEAT', pattern, m, n, '?')
+        return create_repeat('MINIMUM_OF_REPEAT', pattern, m, n, question_mark = true)
 
 
     @export
     def MINIMUM_OF_REPEAT_OR_MORE(pattern, m):
-        return create_repeat('MINIMUM_OF_REPEAT_OR_MORE', pattern, m, 7777777, '?')
+        return create_repeat('MINIMUM_OF_REPEAT_OR_MORE', pattern, m, 7777777, question_mark = true)
 
 
     @export
     def MINIMUM_OF_ZERO_OR_MORE(pattern):
-        return create_simple_repeat('MINIMUM_OF_ZERO_OR_MORE', pattern, '{,7777777}?')
+        return create_simple_repeat('MINIMUM_OF_ZERO_OR_MORE', pattern, '{,7777777}', question_mark = true)
 
 
     @export
@@ -605,7 +648,7 @@ def gem():
 
     @export
     def OPTIONAL(pattern):
-        return create_simple_repeat('OPTIONAL', pattern, '?')
+        return create_simple_repeat('OPTIONAL', pattern, '', question_mark = true)
 
 
     @export
@@ -623,7 +666,7 @@ def gem():
         if type(pattern) is String:
             pattern = INVISIBLE_EXACT(pattern)
         else:
-            assert pattern.repeatable
+            assert pattern.optional
 
         if name_match(name) is none:
             raise_runtime_error('Q: invalid group name: %s (expected a python identifier)', name)

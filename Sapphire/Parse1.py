@@ -11,7 +11,7 @@ def gem():
     #require_gem('Sapphire.Token')
 
 
-    show = false
+    show = true
 
 
     def parse1_statement_define_header(m1, s):
@@ -30,10 +30,12 @@ def gem():
         name1 = m2.group()
         #</name1>
 
+        m2_end = m2.end()
+
         #
         #   parenthesis
         #
-        m3 = define1_parenthesis_match(s, m2.end())
+        m3 = define1_parenthesis_match(s, m2_end)
 
         if m3 is none:
             return UnknownLine(s)
@@ -42,7 +44,7 @@ def gem():
         #</parenthesis>
 
         if newline is not none:
-            parameters = ParameterColon_0(s[m2.end() : m3.start('newline')])
+            parameters = ParameterColon_0(s[m2_end : m3.start('newline')])
         else:
             #
             #   name2
@@ -72,7 +74,7 @@ def gem():
                              OperatorRightParenthesisColon(m5.group('right_parenthesis__colon')),
                          )
 
-        return DefineHeader(KeywordDefine(s[:m1.end()]), name1, parameters, newline)
+        return DefineHeader(KeywordDefine(m1.group()), name1, parameters, newline)
 
 
     lookup_parse1_line = {
@@ -118,23 +120,21 @@ def gem():
                 append(parse7_statement_expression__symbol(m, s, name))
                 continue
 
-            line('parse1_python_from_path: incomplete#3')
-            append(UnknownLine(s))
-            continue
-
-            [indented, comment, newline_2] = m.group('indented', 'comment', 'newline_2')
-
-            assert newline_2 is not none
+            comment = m.group('comment')
 
             if comment is not none:
-                if indented is '':
-                    append(Comment(comment, newline_2))
+                [indented, newline] = m.group('indented', 'newline')
+
+                assert newline is not none
+
+                if indented is none:
+                    append(Comment(comment, newline))
                     continue
 
-                append(IndentedComment(indented, comment, newline_2))
+                append(IndentedComment(indented, comment, newline))
                 continue
 
-            append(EmptyLine(indented + newline_2))
+            append(EmptyLine(m.group()))
             continue
 
         if show:
