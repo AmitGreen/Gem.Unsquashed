@@ -240,7 +240,7 @@ def gem():
 
         [
                 dot, right, operator, name_0, number_0, single_quote_0, right_parenthesis,
-                #newline,
+                #ow_comment_newline,
         ] = m.group('dot', 'right', 'operator', 'name', 'number', 'single_quote', 'right_parenthesis')
 
         assert operator is '('
@@ -266,8 +266,8 @@ def gem():
                 line('parse7_statement_expression__symbol: incomplete #15: %r', s[index:])
                 return UnknownLine(s)
 
-            newline = m.group('newline')
-            index   = m.end()
+            ow_comment_newline = m.group('ow_comment_newline')
+            index              = m.end()
         else:
             if name_0 is not none:
                 assert number_0 is single_quote_0 is none
@@ -301,14 +301,14 @@ def gem():
                 line('parse7_statement_expression__symbol: incomplete #18: %r', s[index:])
                 return UnknownLine(s)
 
-            newline = m.group('newline')
+            ow_comment_newline = m.group('ow_comment_newline')
 
 
         indented = m0.group('indented')
 
-        #line('indented: %r; newline: %r', indented, newline)
+        #line('indented: %r; ow_comment_newline: %r', indented, ow_comment_newline)
 
         if dot is none:
-            return StatementCall(indented, Symbol(name), arguments, newline)
+            return StatementCall(indented, Symbol(name), arguments, ow_comment_newline)
 
-        return StatementMethodCall(indented, Symbol(name), dot, right, arguments, newline)
+        return StatementMethodCall(indented, Symbol(name), dot, right, arguments, ow_comment_newline)

@@ -63,11 +63,11 @@ def gem():
         if m3 is none:
             return UnknownLine(s)
 
-        newline = m3.group('newline')
+        comment_newline = m3.group('comment_newline')
         #</parenthesis>
 
-        if newline is not none:
-            parameters = ParameterColon_0(s[m2_end : m3.start('newline')])
+        if comment_newline is not none:
+            parameters = ParameterColon_0(s[m2_end : m3.start('comment_newline')])
         else:
             #
             #<name2>
@@ -88,16 +88,16 @@ def gem():
             if m5 is none:
                 return UnknownLine(s)
 
-            newline = m5.group('newline')
+            comment_newline = m5.group('comment_newline')
             #</parenthesis>
 
             parameters = ParameterColon_1(
                              OperatorLeftParenthesis(m3.group()),
                              Symbol(name2),
-                             OperatorRightParenthesisColon(m5.group('right_parenthesis__colon')),
+                             OperatorRightParenthesisColon(m5.group('ow__right_parenthesis__colon__ow')),
                          )
 
-        return DefineHeader(KeywordDefine(m1.group()), name1, parameters, newline)
+        return DefineHeader(KeywordDefine(m1.group()), name1, parameters, comment_newline)
 
 
     def parse1_statement_return(m1, s):
@@ -125,8 +125,6 @@ def gem():
         if m3 is none:
             line('parse1_statement_return: incomplete#2')
             return UnknownLine(s)
-
-        newline = m3.group()
         #</newline>
 
         return StatementReturnExpression(

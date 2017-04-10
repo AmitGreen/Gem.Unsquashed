@@ -353,6 +353,9 @@ def gem():
             return arrange('<TremoliteSpecial %s %s%s>', portray_string(t.regular_expression), t.portray, suffix)
 
 
+    TremoliteSpecial.optional = TremoliteSpecial.repeatable
+
+
     [name_cache, name_insert] = produce_cache_functions('Tremolite.name_cache', produce_cache = true, produce_insert = true)
 
 

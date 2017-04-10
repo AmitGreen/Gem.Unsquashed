@@ -139,7 +139,7 @@ def gem():
                 if index is absent:
                     line('%s(%s)', t.name, portray_string(s))
                 else:
-                    line('%s(%s @%d %s) => none', t.name, portray_string(s[:index]), index, portray_string(s[index:]))
+                    line('%s(%s @%d %s)', t.name, portray_string(s[:index]), index, portray_string(s[index:]))
 
                 line('  => %s', r.portray_match())
 

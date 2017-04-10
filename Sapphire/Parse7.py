@@ -16,7 +16,7 @@ def gem():
     def parse7_expression(m):
         [
                 name, left_parenthesis, single_quote, right_parenthesis,
-        ] = m.group('name', 'left_parenthesis', 'single_quote', 'right_parenthesis')
+        ] = m.group('name', 'left_parenthesis', 'single_quote', 'OLD__right_parenthesis')
 
         expression = Symbol(name)
 
@@ -53,7 +53,7 @@ def gem():
 
         [
             name1, left_parenthesis, name2, right_parenthesis__colon, newline,
-        ] = m.group('name1', 'left_parenthesis', 'name2', 'right_parenthesis__colon', 'newline')
+        ] = m.group('name1', 'left_parenthesis', 'name2', 'ow__right_parenthesis__colon__ow', 'newline')
 
         parameters = ParameterColon_1(
                          OperatorLeftParenthesis(left_parenthesis),
@@ -73,7 +73,7 @@ def gem():
         return DecoratorHeader(
                    OperatorAtSign(m0.group('indented') + m0.group('keyword__ow')),
                    parse7_expression(m),
-                   m.group('newline'),
+                   m.group('ow_comment_newline'),
                )
 
 
@@ -84,8 +84,8 @@ def gem():
             return UnknownLine(s)
 
         [
-            name1, left_parenthesis, name2, right_parenthesis__colon, newline,
-        ] = m.group('name1', 'left_parenthesis', 'name2', 'right_parenthesis__colon', 'newline')
+            name1, left_parenthesis, name2, right_parenthesis__colon, comment_newline,
+        ] = m.group('name1', 'left_parenthesis', 'name2', 'ow__right_parenthesis__colon__ow', 'comment_newline')
 
         if name2 is none:
             parameters = ParameterColon_0(left_parenthesis + right_parenthesis__colon)
@@ -96,7 +96,9 @@ def gem():
                              OperatorRightParenthesisColon(right_parenthesis__colon),
                          )
 
-        return DefineHeader(KeywordDefine(m0.group('indented') + m0.group('keyword__ow')), name1, parameters, newline)
+        return DefineHeader(
+                   KeywordDefine(m0.group('indented') + m0.group('keyword__ow')), name1, parameters, comment_newline,
+               )
 
 
     def parse7_statement_from(m0, s):
@@ -106,23 +108,23 @@ def gem():
             return UnknownLine(s)
 
         [
-                name1, dot, name2, keyword__import__w, name3, keyword__as__w, name4, comma
-        ] = m.group('name1', 'dot', 'name2', 'keyword__import__w', 'name3', 'keyword__as__w', 'name4', 'comma')
+                name1, dot, name2, w_import_w, name3, w_as_w, name4, comma
+        ] = m.group('name1', 'dot', 'name2', 'w_import_w', 'name3', 'w_as_w', 'name4', 'comma')
 
         if dot is none:
             module = name1
         else:
             module = ExpressionDot(Symbol(name1), OperatorDot(dot), name2)
 
-        as_fragment = AsFragment(name3, KeywordAs(keyword__as__w), name4)
+        as_fragment = AsFragment(name3, KeywordAs(w_as_w), name4)
 
         if comma is none:
             return StatementFromImport(
                        KeywordFrom(m0.group('indented') + m0.group('keyword__ow')),
                        Symbol(module),
-                       KeywordImport(keyword__import__w),
+                       KeywordImport(w_import_w),
                        as_fragment,
-                       m.group('newline'),
+                       m.group('ow_comment_newline'),
                    )
 
         m2 = from_2_match(s, m.end())
@@ -131,18 +133,18 @@ def gem():
             return UnknownLine(s)
 
         [
-                name1, keyword__as__w, name2, comma_2
-        ] = m2.group('name1', 'keyword__as__w', 'name2', 'comma')
+                name1, w_as_w, name2, comma_2
+        ] = m2.group('name1', 'w_as_w', 'name2', 'comma')
 
-        as_fragment_2 = AsFragment(name1, KeywordAs(keyword__as__w), name2)
+        as_fragment_2 = AsFragment(name1, KeywordAs(w_as_w), name2)
 
         if comma_2 is none:
             return StatementFromImport(
                        KeywordFrom(m0.group('indented') + m0.group('keyword__ow')),
                        module,
-                       KeywordImport(keyword__import__w),
+                       KeywordImport(w_import_w),
                        ExpressionComma(as_fragment, OperatorComma(comma), as_fragment_2),
-                       m2.group('newline'),
+                       m2.group('ow_comment_newline'),
                    )
 
         raise_runtime_error('parse7_statement_from: incomplete')
@@ -157,7 +159,7 @@ def gem():
         return StatementImport(
                    KeywordImport(m0.group('indented') + m0.group('keyword__ow')),
                    Symbol(m.group('name1')),
-                   m.group('newline'),
+                   m.group('ow_comment_newline'),
                )
 
 
@@ -170,7 +172,7 @@ def gem():
         return StatementReturnExpression(
                    KeywordReturn(m0.group('indented') + m0.group('keyword__ow')),
                    parse7_expression(m),
-                   m.group('newline'),
+                   m.group('ow_comment_newline'),
                )
 
 
