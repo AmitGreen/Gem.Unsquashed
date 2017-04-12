@@ -29,39 +29,42 @@ def gem():
         OLD__middle_ow  = NAME('OLD__middle_ow',  P(w + NOT_FOLLOWED_BY(ANY_OF(LINEFEED, ' ', '#'))))
         comment_newline = NAME('comment_newline', P('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
 
-        name1              = NAME('name1',      name)
-        name2              = NAME('name2',      name)
-        name3              = NAME('name3',      name)
-        name4              = NAME('name4',      name)
-        number             = NAME('number',     '0' | ANY_OF('1-9') + ZERO_OR_MORE(ANY_OF('0-9')))
-        ow_comma_ow        = NAME('comma',      ow + ',' + ow)
-        ow_dot_ow          = NAME('dot',        ow + '.' + ow)
-        ow_comment_newline = NAME('ow_comment_newline', ow + comment_newline)
-        w_as_w             = NAME('w_as_w',     w + 'as' + w)
-        w_import_w         = NAME('w_import_w', w + 'import' + w)
+        left_parenthesis     = NAME('left_parenthesis',     '(')                                #   )
+        left_parenthesis__ow = NAME('left_parenthesis__ow', '(' + ow)                           #   )
+        name1                = NAME('name1',      name)
+        name2                = NAME('name2',      name)
+        name3                = NAME('name3',      name)
+        name4                = NAME('name4',      name)
+        number               = NAME('number',     '0' | ANY_OF('1-9') + ZERO_OR_MORE(ANY_OF('0-9')))
+        ow_comma_ow          = NAME('comma',      ow + ',' + ow)
+        ow_comment_newline   = NAME('ow_comment_newline', ow + comment_newline)
+        ow_dot_ow            = NAME('dot',        ow + '.' + ow)
+        w_as_w               = NAME('w_as_w',     w + 'as' + w)
+        w_import_w           = NAME('w_import_w', w + 'import' + w)
 
         #   (
         ow__right_parenthesis__colon__ow = NAME('ow__right_parenthesis__colon__ow', ow + ')' + ow + ':' + ow)
 
-        #   ()
-        left_parenthesis  = NAME('left_parenthesis',   '(')
-        right_parenthesis = NAME('right_parenthesis',  ')')
+        #   (
+        right_parenthesis = NAME('right_parenthesis',     ')')
 
         single_quote = NAME(
                            'single_quote',
                            (
-                                  "'" + ONE_OR_MORE(BACKSLASH + PRINTABLE | PRINTABLE_MINUS("'", '\\')) + "'"
-                                | ("''" + NOT_FOLLOWED_BY("'"))
-                           )
+                                  "'"
+                                + (
+                                        ONE_OR_MORE(BACKSLASH + PRINTABLE | PRINTABLE_MINUS("'", '\\')) + "'"
+                                      | ("'" + NOT_FOLLOWED_BY("'"))
+                                  )
+                           ),
                        )
 
         #
         #   OLD
         #
-
-        #   ()
-        ow__left_parenthesis__ow = NAME('ow__left_parenthesis__ow', ow + '(' + ow)
+        #   (
         OLD__right_parenthesis   = NAME('OLD__right_parenthesis',   ow + ')' + OLD__middle_ow)
+        ow__left_parenthesis__ow = NAME('ow__left_parenthesis__ow', ow + '(' + ow)              #   )
 
         #
         #   With internal group
@@ -101,20 +104,40 @@ def gem():
         )
 
         MATCH(
-            'postfix1_match',
-             (
-                   ow
-                 + P(G(left_parenthesis) + ow + P(G(right_parenthesis) + ow))
-                 + P(comment_newline)
-             ),
-             debug = true
+           'decorator1_match',
+            (
+                  ow
+                + P(G(left_parenthesis) + ow + P(G(right_parenthesis) + ow))
+                + Q(comment_newline)
+            ),
         )
+
+        MATCH(
+           'postfix1_match',
+            (
+                  ow
+                + P(G(left_parenthesis__ow) + P(G(right_parenthesis) + ow))
+                + Q(comment_newline)
+            ),
+        )
+
+        MATCH(
+            'single_quote_match',
+            single_quote,
+        )
+
+        MATCH(
+            'argument1_operator1_match',
+            ow + G(right_parenthesis) + ow + G(comment_newline),
+            debug = true,
+        )
+
 
         #
         #   Expressions 7
         #
         MATCH(
-            'argument_1_match',
+            'argument7_1_match',
             (
                   (G(name) | G(number) | G(single_quote))
                 + G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',', '[')) + OLD__middle_ow)     #   ]
@@ -122,12 +145,12 @@ def gem():
         )
 
         MATCH(
-            'argument_1A_match',
+            'argument7_1A_match',
             G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',', '[')) + OLD__middle_ow)          #   ]
         )
 
         MATCH(
-            'argument_2_match',
+            'argument7_2_match',
             (
                   (G(name) | G(number) | G(single_quote))
                 + G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',')) + OLD__middle_ow)
@@ -135,7 +158,7 @@ def gem():
         )
 
         MATCH(
-            'argument_postfix_match',
+            'argument7_postfix_match',
             #   (
             G('operator__ow', ow + G('operator', ANY_OF(')', ',')) + OLD__middle_ow)
         )

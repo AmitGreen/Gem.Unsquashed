@@ -37,10 +37,110 @@ def gem():
                      }.__getitem__
 
 
+    def parse1_statement_call(s, i, left, left_parenthesis):
+        #
+        #<single_quote>
+        #
+        m1 = single_quote_match(s, i)
+
+        if m1 is none:
+            line('parse1_statement_call: incomplete#1')
+            return UnknownLine(s)
+
+        argument_1 = SingleQuote(m1.group())
+        m1_end     = m1.end()
+        #</single_quote>
+
+        #
+        #<right-parenthesis>
+        #
+        m2 = argument1_operator1_match(s, m1_end)
+
+        if m2 is none:
+            line('parse1_statement_call: incomplete#1')
+            return UnknownLine(s)
+
+        right_parenthesis__end = m2.end('right_parenthesis')
+
+        if right_parenthesis__end is -1:
+            line('parse1_statement_call: incomplete#2')
+            return UnknownLine(s)
+        #</right-parenthesis>
+
+        right_parenthesis = OperatorRightParenthesis(s[m1_end : right_parenthesis__end])
+
+        return ((
+                   ExpressionCall(
+                       left,
+                       Arguments_1(
+                           left_parenthesis,
+                           argument_1,
+                           right_parenthesis,
+                       ),
+                   ),
+                   s[right_parenthesis__end:],
+               ))
+
+
+    def parse1_statement_decorator_header(m1, s):
+        operator_at_sign = OperatorAtSign(m1.group())
+
+        #
+        #<atom>
+        #
+        m2 = atom1_match(s, m1.end())
+
+        if m2 is none:
+            line('parse1_statement_decorator_header: incomplete#1')
+            return UnknownLine(s)
+
+        s1     = m2.group()
+        atom   = find_atom_type(s1[0])(s1)
+        m2_end = m2.end()
+        #</atom1>
+
+        #
+        #<postfix>
+        #
+        m3 = postfix1_match(s, m2_end)
+
+        if m3 is none:
+            line('parse1_statement_decorator_header: incomplete#2')
+            return UnknownLine(s)
+
+        left_parenthesis__end = m3.end('left_parenthesis__ow')
+        #</postfix>
+
+        if left_parenthesis__end is -1:
+            return DecoratorHeader(operator_at_sign, atom, m3.group())
+
+        left_parenthesis  = OperatorLeftParenthesis(s[m2_end : left_parenthesis__end])
+        right_parenthesis = m3.group('right_parenthesis')
+
+        if right_parenthesis is not none:
+            right_parenthesis = OperatorRightParenthesis(right_parenthesis)
+
+            if m3.end('comment_newline') is not -1:
+                return DecoratorHeader(
+                           operator_at_sign,
+                           ExpressionCall(atom, Arguments_0(left_parenthesis, right_parenthesis)),
+                           s[m3.end('right_parenthesis'):],
+                       )
+
+            line('parse1_statement_decorator_header: incomplete#3')
+            return UnknownLine(s)
+
+        [expression, newline] = parse1_statement_call(s, m3.end(), atom, left_parenthesis)
+
+        return DecoratorHeader(operator_at_sign, expression, newline)
+
+
     def parse1_statement_define_header(m1, s):
         if m1.end('newline') is not -1:
             line('parse1_statement_define_header: incomplete#1')
             return UnknownLine(s)
+
+        keyword_define = KeywordDefine(m1.group())
 
         #
         #<name1>
@@ -97,12 +197,14 @@ def gem():
                              OperatorRightParenthesisColon(m5.group('ow__right_parenthesis__colon__ow')),
                          )
 
-        return DefineHeader(KeywordDefine(m1.group()), name1, parameters, comment_newline)
+        return DefineHeader(keyword_define, name1, parameters, comment_newline)
 
 
     def parse1_statement_return(m1, s):
         if m1.end('newline') is not -1:
             return StatementReturn(m1.group())
+
+        keyword_return = KeywordReturn(m1.group())
 
         #
         #<atom>
@@ -113,25 +215,45 @@ def gem():
             line('parse1_statement_return: incomplete#1')
             return UnknownLine(s)
 
-        s1   = m2.group()
-        atom = find_atom_type(s1[0])(s1)
+        s1     = m2.group()
+        atom   = find_atom_type(s1[0])(s1)
+        m2_end = m2.end()
         #</atom1>
 
         #
-        #<newline>
+        #<postfix>
         #
-        m3 = postfix1_match(s, m2.end())
+        m3 = postfix1_match(s, m2_end)
 
         if m3 is none:
             line('parse1_statement_return: incomplete#2')
             return UnknownLine(s)
-        #</newline>
 
-        return StatementReturnExpression(
-                   KeywordReturn(m1.group()),
-                   atom,
-                   m3.group(),
-               )
+        left_parenthesis__end = m3.end('left_parenthesis__ow')
+        #</postfix>
+
+        if left_parenthesis__end is -1:
+            return StatementReturnExpression(keyword_return, atom, m3.group())
+
+        left_parenthesis  = OperatorLeftParenthesis(s[m2_end : left_parenthesis__end])
+        right_parenthesis = m3.group('right_parenthesis')
+
+        if right_parenthesis is not none:
+            right_parenthesis = OperatorRightParenthesis(right_parenthesis)
+
+            if m3.end('comment_newline') is not -1:
+                return StatementReturnExpression(
+                           keyword_return,
+                           ExpressionCall(atom, Arguments_0(left_parenthesis, right_parenthesis)),
+                           s[m3.end('right_parenthesis'):],
+                       )
+
+            line('parse1_statement_decorator_header: incomplete#3')
+            return UnknownLine(s)
+
+        [expression, newline] = parse1_statement_call(s, m3.end(), atom, left_parenthesis)
+
+        return StatementReturnExpression(keyword_return, expression, newline)
 
 
     lookup_parse1_line = {
@@ -140,7 +262,7 @@ def gem():
                              #'from'   : parse7_statement_from,
                              #'import' : parse7_statement_import,
                              'return' : parse1_statement_return,
-                             #'@'      : parse7_statement_decorator_header,
+                             '@'      : parse1_statement_decorator_header,
                          }.get
 
 
@@ -154,6 +276,7 @@ def gem():
             m = line1_match(s)
 
             if m is none:
+                line('parse1_python_from_path: incomplete#1')
                 append(UnknownLine(s))
                 continue
 
@@ -167,22 +290,24 @@ def gem():
                     continue
 
                 if m.end('newline') is not none:
-                    line('parse1_python_from_path: incomplete#1')
+                    line('parse1_python_from_path: incomplete#2')
                     append(UnknownLine(s))
                     continue
 
-                line('parse1_python_from_path: incomplete#2')
+                line('parse1_python_from_path: incomplete#3')
                 append(UnknownLine(s))
-
-                append(parse7_statement_expression__symbol(m, s, name))
                 continue
 
-            comment = m.group('comment')
+            [comment, newline] = m.group('comment', 'newline')
+
+            if newline is none:
+                assert comment is none
+
+                line('parse1_python_from_path: incomplete#4')
+                append(UnknownLine(s))
 
             if comment is not none:
-                [indented, newline] = m.group('indented', 'newline')
-
-                assert newline is not none
+                indented = m.group('indented')
 
                 if indented is none:
                     append(Comment(comment, newline))
@@ -192,7 +317,6 @@ def gem():
                 continue
 
             append(EmptyLine(m.group()))
-            continue
 
         if show:
             for v in many:

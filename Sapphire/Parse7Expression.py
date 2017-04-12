@@ -6,10 +6,6 @@ def gem():
     show = false
 
 
-    tuple_of_2_nones = ((none, none))
-    tuple_of_3_nones = ((none, none, none))
-
-
     def parse7_arguments__atom__left_parenthesis(s, m0, atom):
         if show:
             line('parse7_arguments__atom__left_parenthesis: %s; %s; calling parse7_arguments__left_parenthesis',
@@ -21,7 +17,7 @@ def gem():
             return tuple_of_3_nones
 
         call = ExpressionCall(atom, arguments)
-        m    = argument_postfix_match(s, index)
+        m    = argument7_postfix_match(s, index)
 
         if m is none:
             line('parse7_arguments__atom__left_parenthesis: incomplete #1A: %r %r', call, s[m0.end():])
@@ -65,7 +61,7 @@ def gem():
             line('parse7_arguments__atom__left_square_bracket: incomplete #4: %r %r', index_1, operator)
             return tuple_of_3_nones
 
-        m = argument_postfix_match(s, m.end())
+        m = argument7_postfix_match(s, m.end())
 
         if m is none:
             line('parse7_arguments__atom__left_square_bracket: incomplete #5: %r %r', left, s[m.end():])
@@ -98,7 +94,7 @@ def gem():
             #assert 0,'stop#1'
 
         left_parenthesis_0 = OperatorLeftParenthesis(m0.group('operator__ow'))
-        m                  = argument_1_match(s, m0.end())
+        m                  = argument7_1_match(s, m0.end())
 
         if m is none:
             line('parse7_arguments__left_parenthesis: incomplete #8: %s', portray_string(s[m0.end():]))
@@ -135,7 +131,7 @@ def gem():
             line('parse7_arguments__left_parenthesis__argument_0: %r, %s', argument_0, portray_raw_string(s[m0.end():]))
 
         left_parenthesis_0 = OperatorLeftParenthesis(m0.group('operator__ow'))
-        m                  = argument_1A_match(s, m0.end())
+        m                  = argument7_1A_match(s, m0.end())
 
         if m is none:
             line('parse7_arguments__left_parenthesis__argument_0: incomplete #9: %s', portray_string(s[m0.end():]))
@@ -178,7 +174,7 @@ def gem():
                 line('parse7_arguments__left_parenthesis__argument__operator: incomplete #10: %r %r', argument_0, operator_0)
                 return tuple_of_2_nones
 
-        m = argument_2_match(s, index_0)
+        m = argument7_2_match(s, index_0)
 
         if m is none:
             line('parse7_arguments__left_parenthesis__argument__operator: incomplete #11: %r %r %r', argument_0, operator_0, s[index_0:])

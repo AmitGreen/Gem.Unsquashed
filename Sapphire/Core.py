@@ -20,4 +20,10 @@ def gem():
         'create_StringOutput',          create_StringOutput,
         'produce_cache_functions',      produce_cache_functions,
         'read_text_from_path',          read_text_from_path,
+
+        #
+        #   Values
+        #
+        'tuple_of_2_nones',             ((none, none)),
+        'tuple_of_3_nones',             ((none, none, none)),
     )
