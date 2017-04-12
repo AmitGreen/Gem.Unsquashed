@@ -16,6 +16,9 @@ def gem():
 
 
         def __init__(t, left_name, keyword_as, right_name):
+            assert type(left_name)  is not String
+            assert type(right_name) is not String
+
             t.left_name  = left_name
             t.keyword_as = keyword_as
             t.right_name = right_name
@@ -26,7 +29,7 @@ def gem():
 
 
         def write(t, w):
-            w(t.left_name + t.keyword_as.s + t.right_name)
+            w(t.left_name.s + t.keyword_as.s + t.right_name.s)
 
 
     @share

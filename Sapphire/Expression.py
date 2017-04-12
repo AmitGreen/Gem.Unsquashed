@@ -172,9 +172,7 @@ def gem():
 
 
         def write(t, w):
-            t.left    .write(w)
-            t.operator.write(w)
-            w(t.right)
+            w(t.left.s + t.operator.s + t.right)
 
 
     @share

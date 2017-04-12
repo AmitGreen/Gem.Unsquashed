@@ -38,7 +38,7 @@ SAPPHIRE_FILES = \
     ../Sapphire/Core.py \
     ../Sapphire/Elemental.py ../Sapphire/Expression.py \
     ../Sapphire/Main.py \
-    ../Sapphire/Parse1.py ../Sapphire/Parse7.py ../Sapphire/Parse7Expression.py \
+    ../Sapphire/Parse1.py ../Sapphire/Parse1From.py ../Sapphire/Parse7.py ../Sapphire/Parse7Expression.py \
     ../Sapphire/Pattern.py \
     ../Sapphire/Statement.py \
     ../Sapphire/Token.py
@@ -88,7 +88,7 @@ clean:
 	rm -rf __pycache__
 	rm -f *.old *.new *.pyc
 
-	rm -f 1pa.py
+	rm -f 1pa.py 1pf.py
 	rm -f 7pa.py 7pe.py
 	rm -f ab.py ac.py ag.py
 	rm -f 2re.py 2sf.py 2sp.py 2sc.py
@@ -118,6 +118,7 @@ files:
 
 links:
 	ln -s ../Sapphire/Parse1.py                 1pa.py
+	ln -s ../Sapphire/Parse1From.py             1pf.py
 	ln -s ../Sapphire/Parse7.py                 7pa.py
 	ln -s ../Sapphire/Parse7Expression.py       7pe.py
 	ln -s ../Gem/Absent.py                      ab.py

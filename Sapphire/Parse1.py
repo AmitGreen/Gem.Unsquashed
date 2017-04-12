@@ -5,6 +5,7 @@
 def gem():
     #require_gem('Sapphire.Expression')
     require_gem('Sapphire.Match')
+    require_gem('Sapphire.Parse1From')
     require_gem('Sapphire.Parse7')
     require_gem('Sapphire.Parse7Expression')
     require_gem('Sapphire.Statement')
@@ -259,7 +260,7 @@ def gem():
     lookup_parse1_line = {
                              #'class'  : parse7_statement_class,
                              'def'    : parse1_statement_define_header,
-                             #'from'   : parse7_statement_from,
+                             'from'   : parse1_statement_from,
                              #'import' : parse7_statement_import,
                              'return' : parse1_statement_return,
                              '@'      : parse1_statement_decorator_header,

@@ -25,22 +25,23 @@ def gem():
         ow                         = NAME('ow',                         ZERO_OR_MORE(' '))
         w                          = NAME('w',                          ONE_OR_MORE(' '))
 
-        name            = NAME('name',            letter_or_underscore + ZERO_OR_MORE(alphanumeric_or_underscore))
-        OLD__middle_ow  = NAME('OLD__middle_ow',  P(w + NOT_FOLLOWED_BY(ANY_OF(LINEFEED, ' ', '#'))))
+        comma           = NAME('comma',           ',')
         comment_newline = NAME('comment_newline', P('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
+        period          = NAME('period',          '.')
+        name            = NAME('name',            letter_or_underscore + ZERO_OR_MORE(alphanumeric_or_underscore))
 
         left_parenthesis     = NAME('left_parenthesis',     '(')                                #   )
         left_parenthesis__ow = NAME('left_parenthesis__ow', '(' + ow)                           #   )
-        name1                = NAME('name1',      name)
-        name2                = NAME('name2',      name)
-        name3                = NAME('name3',      name)
-        name4                = NAME('name4',      name)
-        number               = NAME('number',     '0' | ANY_OF('1-9') + ZERO_OR_MORE(ANY_OF('0-9')))
-        ow_comma_ow          = NAME('comma',      ow + ',' + ow)
-        ow_comment_newline   = NAME('ow_comment_newline', ow + comment_newline)
-        ow_dot_ow            = NAME('dot',        ow + '.' + ow)
-        w_as_w               = NAME('w_as_w',     w + 'as' + w)
-        w_import_w           = NAME('w_import_w', w + 'import' + w)
+        name1                = NAME('name1',                name)
+        name2                = NAME('name2',                name)
+        name3                = NAME('name3',                name)
+        name4                = NAME('name4',                name)
+        number               = NAME('number',               '0' | ANY_OF('1-9') + ZERO_OR_MORE(ANY_OF('0-9')))
+        ow_comma_ow          = NAME('ow_comma_ow',          ow + ',' + ow)
+        ow_comment_newline   = NAME('ow_comment_newline',   ow + comment_newline)
+        ow_dot_ow            = NAME('dot',                  ow + period + ow)
+        w_as_w               = NAME('w_as_w',               w + 'as' + w)
+        w_import_w           = NAME('w_import_w',           w + 'import' + w)
 
         #   (
         ow__right_parenthesis__colon__ow = NAME('ow__right_parenthesis__colon__ow', ow + ')' + ow + ':' + ow)
@@ -63,6 +64,8 @@ def gem():
         #   OLD
         #
         #   (
+        OLD__middle_ow = NAME('OLD__middle_ow',  P(w + NOT_FOLLOWED_BY(ANY_OF(LINEFEED, ' ', '#'))))
+
         OLD__right_parenthesis   = NAME('OLD__right_parenthesis',   ow + ')' + OLD__middle_ow)
         ow__left_parenthesis__ow = NAME('ow__left_parenthesis__ow', ow + '(' + ow)              #   )
 
@@ -129,7 +132,6 @@ def gem():
         MATCH(
             'argument1_operator1_match',
             ow + G(right_parenthesis) + ow + G(comment_newline),
-            debug = true,
         )
 
 
@@ -213,6 +215,33 @@ def gem():
             G(ow__right_parenthesis__colon__ow) + G(comment_newline),
         )
 
+        MATCH(
+            'from1_module_match',
+            ow + G('operator', period | 'import') + ow,
+        )
+
+        MATCH(
+            'from1_as_match',
+            (
+                  ow
+                + (
+                        G('keyword', EXACT('as') | ',') + ow
+                      | comment_newline
+                  )
+            ),
+        )
+
+        MATCH(
+            'from1_comma_match',
+            (
+                  ow
+                + (
+                        G('comma', ',') + ow
+                      | comment_newline
+                  )
+            ),
+        )
+
 
         #
         #   Statements - Parse 7
@@ -250,18 +279,19 @@ def gem():
         )
 
         MATCH(
-            'from_1_match',
+            'from7_1_match',
             (
                   G(name1) + P(G(ow_dot_ow) + G(name2))
                 + G(w_import_w) + G(name3)
                 + G(w_as_w) + G(name4)
                 + (G(ow_comma_ow) | G(ow_comment_newline))
-            )
+            ),
         )
 
         MATCH(
             'from_2_match',
-            G(name1) + G(w_as_w) + G(name2) + (G(ow_comma_ow) | G(ow_comment_newline))
+            G(name1) + G(w_as_w) + G(name2) + (G(ow_comma_ow) | G(ow_comment_newline)),
+            debug = true,
         )
 
         FULL_MATCH('import_match', G(name1) + G(ow_comment_newline))
