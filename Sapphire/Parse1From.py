@@ -9,7 +9,47 @@ def gem():
     require_gem('Sapphire.Statement')
 
 
-    @share
+    def parse1_statement_from_module(s, index):
+        #
+        #<name1>
+        #
+        m1 = name_match(s, index)
+
+        if m1 is none:
+            line('parse1_statement_from_module: incomplete#1')
+            return tuple_of_3_nones
+
+        module = Symbol(m1.group())
+        #</name1>
+
+        #
+        #<module: name ||| ['.' name] ... 'import'>
+        #
+        while true:
+            m2       = from1_module_match(s, m1.end())
+            operator = m2.group('operator')
+
+            if operator is not '.':
+                break
+
+            operator_dot = OperatorDot(m2.group())
+
+            #
+            #<name2>
+            #
+            m1 = name_match(s, m2.end())
+
+            if m1 is none:
+                line('parse1_statement_from_module: incomplete#2')
+                return tuple_of_3_nones
+            #</name2>
+
+            module = ExpressionDot(module, operator_dot, m1.group())
+
+        return (( module, KeywordImport(m2.group()), m2.end() ))
+        #</module>
+
+
     def parse1_statement_from_as(s, index):
         #
         #<name>
@@ -76,49 +116,15 @@ def gem():
         keyword_from = KeywordDefine(m1.group())
 
         #
-        #<name1>
+        #<module ... 'import'>
         #
-        m2 = name_match(s, m1.end())
-
-        if m2 is none:
-            line('parse1_statement_from: incomplete#1')
-            return UnknownLine(s)
-
-        module = Symbol(m2.group())
-        #</name1>
+        [module, keyword_import, index] = parse1_statement_from_module(s, m1.end())
+        #</module>
 
         #
-        #<import>
-        #   ['.' name] ... 'import'
+        #<imported ... (, | newline)>
         #
-        while true:
-            m3       = from1_module_match(s, m2.end())
-            operator = m3.group('operator')
-
-            if operator is not '.':
-                break
-
-            operator_dot = OperatorDot(m3.group())
-
-            #
-            #<name2>
-            #
-            m2 = name_match(s, m3.end())
-
-            if m2 is none:
-                line('parse1_statement_from: incomplete#2')
-                return UnknownLine(s)
-            #</name2>
-
-            module = ExpressionDot(module, operator_dot, m2.group())
-
-        keyword_import = KeywordImport(m3.group())
-        #<import>
-
-        #
-        #<imported: name [as name] ... (, | newline)>
-        #
-        [imported, operator, index] = parse1_statement_from_as(s, m3.end())
+        [imported, operator, index] = parse1_statement_from_as(s, index)
 
         if imported is none:
             return UnknownLine(s)
@@ -136,7 +142,7 @@ def gem():
                    )
 
         #
-        #<imported: name [as name] ... (, | newline)>
+        #<imported ... (, | newline)>
         #
         [imported_2, operator_2, index] = parse1_statement_from_as(s, index)
 
@@ -145,6 +151,8 @@ def gem():
         #<imported/>
 
         if operator_2.is_token_newline:
+            assert length(s) == index
+
             return StatementFromImport(
                        keyword_from,
                        module,
