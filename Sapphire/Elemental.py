@@ -59,9 +59,10 @@ def gem():
 
     @export
     class OperatorComma(KeywordAndOperatorBase):
-        __slots__ = (())
-        is_comma  = true
-        keyword   = ','
+        __slots__        = (())
+        is_comma         = true
+        is_token_newline = false
+        keyword          = ','
 
 
     @export

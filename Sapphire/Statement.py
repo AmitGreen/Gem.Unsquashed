@@ -233,6 +233,7 @@ def gem():
 
         def __init__(t, keyword_from, module, keyword_import, imported, newline):
             assert type(module) is not String
+            assert newline.is_token_newline
 
             t.keyword_from   = keyword_from
             t.module         = module
@@ -251,7 +252,7 @@ def gem():
             t.module.write(w)
             w(t.keyword_import.s)
             t.imported.write(w)
-            w(t.newline)
+            w(t.newline.s)
 
 
     @share

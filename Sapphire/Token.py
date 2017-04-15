@@ -26,5 +26,10 @@ def gem():
 
 
     @share
+    class TokenNewline(Token):
+        is_token_newline = true
+
+
+    @share
     class UnknownLine(Token):
         pass

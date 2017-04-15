@@ -10,6 +10,68 @@ def gem():
 
 
     @share
+    def parse1_statement_from_as(s, index):
+        #
+        #<name>
+        #
+        m1 = name_match(s, index)
+
+        if m1 is none:
+            line('parse1_statement_from_as: incomplete#1')
+            return tuple_of_3_nones
+
+        imported = Symbol(m1.group())
+        #</name>
+
+        #
+        #<as>
+        #
+        m2 = from1_as_match(s, m1.end())
+
+        if m2 is none:
+            line('parse1_statement_from_as: incomplete#2')
+            return tuple_of_3_nones
+
+        keyword = m2.group('keyword')
+        #</as>
+
+        if keyword is none:
+            return (( imported, TokenNewline(m2.group()), m2.end() ))
+
+        if keyword is ',':
+            return (( imported, OperatorComma(m2.group()), m2.end() ))
+
+        as_keyword = KeywordAs(m2.group())
+
+        #
+        #<name2>
+        #
+        m3 = name_match(s, m2.end())
+
+        if m3 is none:
+            line('parse1_statement_from_as: incomplete#3')
+            return tuple_of_3_nones
+
+        imported = AsFragment(imported, as_keyword, Symbol(m3.group()))
+        #</name2>
+
+        #
+        #<comma>
+        #
+        m4 = from1_comma_match(s, m3.end())
+
+        if m4 is none:
+            line('parse1_statement_from_as: incomplete#4')
+            return tuple_of_3_nones
+        #</comma>
+
+        if m4.start('comma') is -1:
+            return (( imported, TokenNewline(m4.group()), m4.end() ))
+
+        return (( imported, OperatorComma(m4.group()), m4.end() ))
+
+
+    @share
     def parse1_statement_from(m1, s):
         keyword_from = KeywordDefine(m1.group())
 
@@ -19,7 +81,7 @@ def gem():
         m2 = name_match(s, m1.end())
 
         if m2 is none:
-            line('parse1_statement_from: incomplete#1A')
+            line('parse1_statement_from: incomplete#1')
             return UnknownLine(s)
 
         module = Symbol(m2.group())
@@ -54,146 +116,42 @@ def gem():
         #<import>
 
         #
-        #<name>
+        #<imported: name [as name] ... (, | newline)>
         #
-        m4 = name_match(s, m3.end())
+        [imported, operator, index] = parse1_statement_from_as(s, m3.end())
 
-        if m4 is none:
-            line('parse1_statement_from: incomplete#3')
+        if imported is none:
             return UnknownLine(s)
+        #<imported/>
 
-        imported = Symbol(m4.group())
-        #</name>
+        if operator.is_token_newline:
+            assert length(s) == index
 
-        #
-        #<as>
-        #
-        m5 = from1_as_match(s, m4.end())
-
-        if m5 is none:
-            line('parse1_statement_from: incomplete#4')
-            return UnknownLine(s)
-
-        keyword = m5.group('keyword')
-        #</as>
-
-        if keyword is none:
             return StatementFromImport(
                        keyword_from,
                        module,
                        keyword_import,
                        imported,
-                       m5.group(),
+                       operator,
                    )
 
-        if keyword is ',':
-            operator_comma = OperatorComma(m5.group())
-        else:
-            as_keyword = KeywordAs(m5.group())
-
-            #
-            #<name2>
-            #
-            m6 = name_match(s, m5.end())
-
-            if m6 is none:
-                line('parse1_statement_from: incomplete#5')
-                return UnknownLine(s)
-
-            imported = AsFragment(imported, as_keyword, Symbol(m6.group()))
-            #</name2>
-
-            #
-            #<comma>
-            #
-            m5 = from1_comma_match(s, m6.end())
-
-            if m5 is none:
-                line('parse1_statement_from: incomplete#6')
-                return UnknownLine(s)
-            #</comma>
-
-            if m5.start('comma') is -1:
-                return StatementFromImport(
-                           keyword_from,
-                           module,
-                           keyword_import,
-                           imported,
-                           m5.group(),
-                       )
-
-            operator_comma = OperatorComma(m5.group())
-
         #
-        #<name>
+        #<imported: name [as name] ... (, | newline)>
         #
-        m4 = name_match(s, m5.end())
+        [imported_2, operator_2, index] = parse1_statement_from_as(s, index)
 
-        if m4 is none:
-            line('parse1_statement_from: incomplete#7')
+        if imported is none:
             return UnknownLine(s)
+        #<imported/>
 
-        imported_2 = Symbol(m4.group())
-        #</name>
-
-        #
-        #<as>
-        #
-        m5 = from1_as_match(s, m4.end())
-
-        if m5 is none:
-            line('parse1_statement_from: incomplete#8')
-            return UnknownLine(s)
-
-        keyword = m5.group('keyword')
-        #</as>
-
-        if keyword is none:
+        if operator_2.is_token_newline:
             return StatementFromImport(
                        keyword_from,
                        module,
                        keyword_import,
-                       ExpressionComma(imported, operator_comma, imported_2),
-                       m5.group(),
+                       ExpressionComma(imported, operator, imported_2),
+                       operator_2,
                    )
 
-        if keyword is ',':
-            operator_comma = OperatorComma(m5.group())
-        else:
-            as_keyword = KeywordAs(m5.group())
-
-            #
-            #<name2>
-            #
-            m6 = name_match(s, m5.end())
-
-            if m6 is none:
-                line('parse1_statement_from: incomplete#9')
-                return UnknownLine(s)
-
-            imported_2 = AsFragment(imported_2, as_keyword, Symbol(m6.group()))
-            #</name2>
-
-            #
-            #<comma>
-            #
-            m5 = from1_comma_match(s, m6.end())
-
-            if m5 is none:
-                line('parse1_statement_from: incomplete#10')
-                return UnknownLine(s)
-            #</comma>
-
-            if m5.start('comma') is -1:
-                return StatementFromImport(
-                           keyword_from,
-                           module,
-                           keyword_import,
-                           ExpressionComma(imported, operator_comma, imported_2),
-                           m5.group(),
-                       )
-
-            operator_comma = OperatorComma(m5.group())
-
-        line('parse1_statement_from: incomplete#11')
+        line('parse1_statement_from: incomplete#3')
         return UnknownLine(s)

@@ -124,7 +124,7 @@ def gem():
                        module,
                        KeywordImport(w_import_w),
                        as_fragment,
-                       m.group('ow_comment_newline'),
+                       TokenNewline(m.group('ow_comment_newline')),
                    )
 
         m2 = from_2_match(s, m.end())
@@ -144,7 +144,7 @@ def gem():
                        module,
                        KeywordImport(w_import_w),
                        ExpressionComma(as_fragment, OperatorComma(comma), as_fragment_2),
-                       m2.group('ow_comment_newline'),
+                       TokenNewline(m2.group('ow_comment_newline')),
                    )
 
         raise_runtime_error('parse7_statement_from: incomplete')
