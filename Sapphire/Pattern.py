@@ -30,6 +30,7 @@ def gem():
         period          = NAME('period',          '.')
         name            = NAME('name',            letter_or_underscore + ZERO_OR_MORE(alphanumeric_or_underscore))
 
+        keyword_as           = NAME('as',                   'as')
         left_parenthesis     = NAME('left_parenthesis',     '(')                                #   )
         left_parenthesis__ow = NAME('left_parenthesis__ow', '(' + ow)                           #   )
         name1                = NAME('name1',                name)
@@ -37,7 +38,7 @@ def gem():
         name3                = NAME('name3',                name)
         name4                = NAME('name4',                name)
         number               = NAME('number',               '0' | ANY_OF('1-9') + ZERO_OR_MORE(ANY_OF('0-9')))
-        ow_comma_ow          = NAME('ow_comma_ow',          ow + ',' + ow)
+        ow_comma_ow          = NAME('ow_comma_ow',          ow + comma + ow)
         ow_comment_newline   = NAME('ow_comment_newline',   ow + comment_newline)
         ow_dot_ow            = NAME('dot',                  ow + period + ow)
         w_as_w               = NAME('w_as_w',               w + 'as' + w)
@@ -225,18 +226,29 @@ def gem():
             (
                   ow
                 + (
-                        G('keyword', EXACT('as') | ',') + ow
+                        G('operator', keyword_as | comma) + ow
                       | comment_newline
                   )
             ),
         )
 
         MATCH(
-            'from1_comma_match',
+            'comma1_or_newline_match',
             (
                   ow
                 + (
-                        G('comma', ',') + ow
+                        G(comma) + ow
+                      | comment_newline
+                  )
+            ),
+        )
+
+        MATCH(
+            'import1_module_match',
+            (
+                  ow
+                + (
+                        G('operator', period | keyword_as | comma) + ow
                       | comment_newline
                   )
             ),
@@ -291,10 +303,9 @@ def gem():
         MATCH(
             'from_2_match',
             G(name1) + G(w_as_w) + G(name2) + (G(ow_comma_ow) | G(ow_comment_newline)),
-            debug = true,
         )
 
-        FULL_MATCH('import_match', G(name1) + G(ow_comment_newline))
+        FULL_MATCH('import7_match', G(name1) + G(ow_comment_newline))
 
         FULL_MATCH(
             'expression_match',

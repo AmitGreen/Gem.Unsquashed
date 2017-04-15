@@ -4,9 +4,9 @@
 @gem('Sapphire.Parse1From')
 def gem():
     require_gem('Sapphire.Elemental')
-    require_gem('Sapphire.Expression')
     require_gem('Sapphire.Match')
     require_gem('Sapphire.Statement')
+    require_gem('Sapphire.Token')
 
 
     def parse1_statement_from_module(s, index):
@@ -26,7 +26,12 @@ def gem():
         #<module: name ||| ['.' name] ... 'import'>
         #
         while true:
-            m2       = from1_module_match(s, m1.end())
+            m2 = from1_module_match(s, m1.end())
+
+            if m2 is none:
+                line('parse1_statement_from_module: incomplete#2')
+                return tuple_of_3_nones
+
             operator = m2.group('operator')
 
             if operator is not '.':
@@ -40,7 +45,7 @@ def gem():
             m1 = name_match(s, m2.end())
 
             if m1 is none:
-                line('parse1_statement_from_module: incomplete#2')
+                line('parse1_statement_from_module: incomplete#3')
                 return tuple_of_3_nones
             #</name2>
 
@@ -72,16 +77,16 @@ def gem():
             line('parse1_statement_from_as: incomplete#2')
             return tuple_of_3_nones
 
-        keyword = m2.group('keyword')
+        operator = m2.group('operator')
         #</as>
 
-        if keyword is none:
+        if operator is none:
             return (( imported, TokenNewline(m2.group()), m2.end() ))
 
-        if keyword is ',':
+        if operator is ',':
             return (( imported, OperatorComma(m2.group()), m2.end() ))
 
-        as_keyword = KeywordAs(m2.group())
+        keyword_as = KeywordAs(m2.group())
 
         #
         #<name2>
@@ -92,18 +97,18 @@ def gem():
             line('parse1_statement_from_as: incomplete#3')
             return tuple_of_3_nones
 
-        imported = AsFragment(imported, as_keyword, Symbol(m3.group()))
+        imported = FromAsFragment(imported, keyword_as, Symbol(m3.group()))
         #</name2>
 
         #
-        #<comma>
+        #<comma-or-newline>
         #
-        m4 = from1_comma_match(s, m3.end())
+        m4 = comma1_or_newline_match(s, m3.end())
 
         if m4 is none:
             line('parse1_statement_from_as: incomplete#4')
             return tuple_of_3_nones
-        #</comma>
+        #</comma-or-newline>
 
         if m4.start('comma') is -1:
             return (( imported, TokenNewline(m4.group()), m4.end() ))
@@ -113,7 +118,7 @@ def gem():
 
     @share
     def parse1_statement_from(m1, s):
-        keyword_from = KeywordDefine(m1.group())
+        keyword_from = KeywordFrom(m1.group())
 
         #
         #<module ... 'import'>

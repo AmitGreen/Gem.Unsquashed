@@ -7,32 +7,6 @@ def gem():
 
 
     @share
-    class AsFragment(Object):
-        __slots__ = ((
-            'left_name',                #   String+
-            'keyword_as',               #   KeywordAs
-            'right_name',               #   String+
-        ))
-
-
-        def __init__(t, left_name, keyword_as, right_name):
-            assert type(left_name)  is not String
-            assert type(right_name) is not String
-
-            t.left_name  = left_name
-            t.keyword_as = keyword_as
-            t.right_name = right_name
-
-
-        def __repr__(t):
-            return arrange('<AsFragment %s %s %s>', t.left_name, t.keyword_as, t.right_name)
-
-
-        def write(t, w):
-            w(t.left_name.s + t.keyword_as.s + t.right_name.s)
-
-
-    @share
     class Comment(Object):
         __slots__ = ((
             'comment',                  #   Comment
@@ -54,32 +28,6 @@ def gem():
 
         def write(t, w):
             w('#' + t.comment + t.newline)
-
-
-    @share
-    class DecoratorHeader(Object):
-        __slots__ = ((
-            'operator_decorator',       #   OperatorAtSign
-            'expresssion',              #   Any
-            'newline',                  #   String
-        ))
-
-
-        def __init__(t, operator_decorator, expresssion, newline):
-            t.operator_decorator = operator_decorator
-            t.expresssion        = expresssion
-            t.newline            = newline
-
-
-        def  __repr__(t):
-            return arrange('<DecoratorHeader %r %r %r>', t.operator_decorator, t.expresssion, t.newline)
-
-
-        def write(t, w):
-            w(t.operator_decorator.s)
-            t.expresssion.write(w)
-            w(t.newline)
-
 
 
     @share
@@ -120,6 +68,32 @@ def gem():
 
 
     @share
+    class DecoratorHeader(Object):
+        __slots__ = ((
+            'operator_decorator',       #   OperatorAtSign
+            'expresssion',              #   Any
+            'newline',                  #   String
+        ))
+
+
+        def __init__(t, operator_decorator, expresssion, newline):
+            t.operator_decorator = operator_decorator
+            t.expresssion        = expresssion
+            t.newline            = newline
+
+
+        def  __repr__(t):
+            return arrange('<DecoratorHeader %r %r %r>', t.operator_decorator, t.expresssion, t.newline)
+
+
+        def write(t, w):
+            w(t.operator_decorator.s)
+            t.expresssion.write(w)
+            w(t.newline)
+
+
+
+    @share
     class EmptyLine(Token):
         __slots__ = (())
 
@@ -129,6 +103,32 @@ def gem():
                 return '<EmptyLine>'
 
             return arrange('<EmptyLine %r>', t.s)
+
+
+    @share
+    class FromAsFragment(Object):
+        __slots__ = ((
+            'left_name',                #   String+
+            'keyword_as',               #   KeywordAs
+            'right_name',               #   String+
+        ))
+
+
+        def __init__(t, left_name, keyword_as, right_name):
+            assert type(left_name)  is not String
+            assert type(right_name) is not String
+
+            t.left_name  = left_name
+            t.keyword_as = keyword_as
+            t.right_name = right_name
+
+
+        def __repr__(t):
+            return arrange('<FromAsFragment %s %s %s>', t.left_name, t.keyword_as, t.right_name)
+
+
+        def write(t, w):
+            w(t.left_name.s + t.keyword_as.s + t.right_name.s)
 
 
     @share
@@ -155,6 +155,33 @@ def gem():
 
         def write(t, w):
             w(t.indented + '#' + t.comment + t.newline)
+
+
+    @share
+    class ModuleAsFragment(Object):
+        __slots__ = ((
+            'module',                   #   Expression
+            'keyword_as',               #   KeywordAs
+            'right_name',               #   String+
+        ))
+
+
+        def __init__(t, module, keyword_as, right_name):
+            assert type(module)  is not String
+            assert type(right_name) is not String
+
+            t.module     = module
+            t.keyword_as = keyword_as
+            t.right_name = right_name
+
+
+        def __repr__(t):
+            return arrange('<ModuleAsFragment %s %s %s>', t.module, t.keyword_as, t.right_name)
+
+
+        def write(t, w):
+            t.module.write(w)
+            w(t.keyword_as.s + t.right_name.s)
 
 
     @share
@@ -226,7 +253,7 @@ def gem():
             'keyword_from',             #   KeywordFrom
             'module',                   #   String+
             'keyword_import',           #   KeywordImport
-            'imported',                 #   String+ | AsFragment
+            'imported',                 #   String+ | FromAsFragment
             'newline',                  #   String+
         ))
 
@@ -300,6 +327,7 @@ def gem():
 
         def __init__(t, keyword_import, module, newline):
             assert type(module) is not String
+            assert newline.is_token_newline
 
             t.keyword_import = keyword_import
             t.module         = module
@@ -313,7 +341,7 @@ def gem():
         def write(t, w):
             w(t.keyword_import.s)
             t.module.write(w)
-            w(t.newline)
+            w(t.newline.s)
 
 
     @share

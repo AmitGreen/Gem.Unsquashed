@@ -17,8 +17,9 @@ def gem():
 
     @export
     class KeywordAs(KeywordAndOperatorBase):
-        __slots__ = (())
-        keyword   = 'as'
+        __slots__        = (())
+        is_token_newline = false
+        keyword          = 'as'
 
 
     @export

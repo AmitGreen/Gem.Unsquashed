@@ -3,13 +3,12 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    #require_gem('Sapphire.Expression')
     require_gem('Sapphire.Match')
     require_gem('Sapphire.Parse1From')
+    require_gem('Sapphire.Parse1Import')
     require_gem('Sapphire.Parse7')
     require_gem('Sapphire.Parse7Expression')
     require_gem('Sapphire.Statement')
-    #require_gem('Sapphire.Token')
 
 
     show = true
@@ -261,7 +260,7 @@ def gem():
                              #'class'  : parse7_statement_class,
                              'def'    : parse1_statement_define_header,
                              'from'   : parse1_statement_from,
-                             #'import' : parse7_statement_import,
+                             'import' : parse1_statement_import,
                              'return' : parse1_statement_return,
                              '@'      : parse1_statement_decorator_header,
                          }.get
