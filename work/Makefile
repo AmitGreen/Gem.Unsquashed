@@ -42,7 +42,7 @@ SAPPHIRE_FILES = \
         ../Sapphire/Parse7Expression.py \
     ../Sapphire/Pattern.py \
     ../Sapphire/Statement.py \
-    ../Sapphire/Token.py
+    ../Sapphire/Token.py ../Sapphire/Tokenizer.py
     #
     #   Excludes:
     #       ../Sapphire/Match.py
@@ -100,7 +100,7 @@ clean:
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gd.py
-	rm -f hc.py hem.py hex.py hk.py hma.py hmc.py hpt.py hs.py
+	rm -f hc.py hem.py hex.py hk.py hma.py hmc.py hpt.py hs.py hz.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f lr.txt
@@ -161,6 +161,7 @@ links:
 	ln -s ../Sapphire/Match.py                  hmc.py
 	ln -s ../Sapphire/Pattern.py                hpt.py
 	ln -s ../Sapphire/Statement.py              hs.py
+	ln -s ../Sapphire/Tokenizer.py              hz.py
 	ln -s ../Gem/__init__.py                    in.py
 	ln -s ../Gem/Import.py                      im.py
 	ln -s ../Ivory/Main.py                      iv.py

@@ -9,6 +9,7 @@ def gem():
     require_gem('Sapphire.Parse7')
     require_gem('Sapphire.Parse7Expression')
     require_gem('Sapphire.Statement')
+    require_gem('Sapphire.Tokenizer')
 
 
     show = true
@@ -277,7 +278,14 @@ def gem():
         many   = []
         append = many.append
 
-        for s in data.splitlines(true):
+        next_line = z_initialize(data.splitlines(true))
+
+        while 7 is 7:
+            s = next_line()
+
+            if s is none:
+                break
+
             m = line1_match(s)
 
             if m is none:
