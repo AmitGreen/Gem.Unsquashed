@@ -9,15 +9,16 @@ def gem():
     require_gem('Sapphire.Token')
 
 
-    def parse1_statement_import_module(s, index):
+    def parse1_statement_import_module(index):
+        s = qs()
+
         #
         #<name>
         #
         m1 = name_match(s, index)
 
         if m1 is none:
-            line('parse1_statement_import_module: incomplete#1')
-            return tuple_of_3_nones
+            return parse_incomplete(parse1_statement_import_module, 1)
 
         module = Symbol(m1.group())
         #</name>
@@ -29,8 +30,7 @@ def gem():
             m2 = import1_module_match(s, m1.end())
 
             if m2 is none:
-                line('parse1_statement_import_module: incomplete#2')
-                return tuple_of_3_nones
+                return parse_incomplete(parse1_statement_import_module, 2)
 
             operator = m2.group('operator')
 
@@ -45,17 +45,21 @@ def gem():
             m1 = name_match(s, m2.end())
 
             if m1 is none:
-                line('parse1_statement_import_module: incomplete#3')
-                return tuple_of_3_nones
+                return parse_incomplete(parse1_statement_import_module, 3)
             #</name>
 
             module = ExpressionDot(module, operator_dot, m1.group())
 
         if operator is none:
-            return (( module, TokenNewline(m2.group()), m2.end() ))
+            wk(TokenNewline(m2.group()))
+
+            return module
             
         if operator is ',':
-            return (( module, OperatorComma(m2.group()), m2.end() ))
+            wj(m2.end())
+            wk(OperatorComma(m2.group()))
+
+            return module
 
         keyword_as = KeywordAs(m2.group())
         #</module>
@@ -66,8 +70,7 @@ def gem():
         m3 = name_match(s, m2.end())
 
         if m3 is none:
-            line('parse1_statement_import_module: incomplete#4')
-            return tuple_of_3_nones
+            return parse_incomplete(parse1_statement_import_module, 4)
 
         module = ModuleAsFragment(module, keyword_as, Symbol(m3.group()))
         #</name>
@@ -78,37 +81,36 @@ def gem():
         m4 = comma1_or_newline_match(s, m3.end())
 
         if m4 is none:
-            line('parse1_statement_import_module: incomplete#5')
-            return tuple_of_3_nones
+            return parse_incomplete(parse1_statement_import_module, 5)
         #</comma-or-newline>
 
         if m4.start('comma') is -1:
-            return (( module, TokenNewline(m4.group()), m4.end() ))
+            wk(TokenNewline(m4.group()))
 
-        return (( module, OperatorComma(m4.group()), m4.end() ))
+            return module
+
+        wj(m4.end())
+        wk(OperatorComma(m4.group()))
+
+        return module
 
 
     @share
-    def parse1_statement_import(m1, s):
+    def parse1_statement_import(m1):
         keyword_import = KeywordImport(m1.group())
 
         #
         #<module ... 'import'>
         #
-        [module, operator, index] = parse1_statement_import_module(s, m1.end())
-        #</module>
+        module = parse1_statement_import_module(m1.end())
 
         if module is none:
-            return UnknownLine(s)
+            return create_UnknownLine()
+
+        operator = qk()
+        #</module>
 
         if operator.is_token_newline:
-            assert length(s) == index
+            return StatementImport(keyword_import, module, operator)
 
-            return StatementImport(
-                       keyword_import,
-                       module,
-                       operator,
-                   )
-
-        line('parse1_statement_import: incomplete#1: %r %r %r %r', keyword_import, module, operator, index)
-        return UnknownLine(s)
+        return create_UnknownLine(parse1_statement_import, 1)

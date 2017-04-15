@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.ParseExpression')
 def gem():
+    require_gem('Sapphire.Tokenizer')
+
+
     show = false
 
 
@@ -231,8 +234,7 @@ def gem():
         m = statement_expression_match(s, m0.end())
 
         if m is none:
-            line('parse7_statement_expression__symbol: incomplete #14: %r', s[m0.end():])
-            return UnknownLine(s)
+            return create_UnknownLine(parse7_statement_expression__symbol, 1)
 
         [
                 dot, right, operator, name_0, number_0, single_quote_0, right_parenthesis,
@@ -259,8 +261,7 @@ def gem():
                 arguments = Arguments_0(left_parenthesis, right_parenthesis)
 
             if arguments is none:
-                line('parse7_statement_expression__symbol: incomplete #15: %r', s[index:])
-                return UnknownLine(s)
+                return create_UnknownLine(parse7_statement_expression__symbol, 2)
 
             ow_comment_newline = m.group('ow_comment_newline')
             index              = m.end()
@@ -283,19 +284,18 @@ def gem():
                                          s, m, SingleQuote(single_quote_0),
                                      )
             else:
-                line('parse7_statement_expression__symbol: incomplete #16: calling parse7_arguments__left_parenthesis')
+                return create_UnknownLine(parse7_statement_expression__symbol, 3)
+
                 assert 0, 'oops#16'
                 [arguments, index] = parse7_arguments__left_parenthesis(s, m)
 
             if arguments is none:
-                line('parse7_statement_expression__symbol: incomplete #17: %r', s[index:])
-                return UnknownLine(s)
+                return create_UnknownLine(parse7_statement_expression__symbol, 4)
 
             m = statement_postfix_match(s, index)
 
             if m is none:
-                line('parse7_statement_expression__symbol: incomplete #18: %r', s[index:])
-                return UnknownLine(s)
+                return create_UnknownLine(parse7_statement_expression__symbol, 5)
 
             ow_comment_newline = m.group('ow_comment_newline')
 

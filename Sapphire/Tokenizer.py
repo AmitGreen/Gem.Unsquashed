@@ -3,55 +3,74 @@
 #
 @gem('Sapphire.Tokenizer')
 def gem():
-    class Tokenizer(Object):
-        __slots__ = ((
-            's',                        #   None | String
-            'i',                        #   None | Integer
-            'j',                        #   None | Integer
-        ))
+    require_gem('Sapphire.Token')
 
 
-        def __init__(t):
-            t.j = t.i = t.s = none
+    tokenizer = [none, none, none, none]
 
+    query = tokenizer.__getitem__
+    write = tokenizer.__setitem__
 
-    tokenizer = Tokenizer()
+    qs = Method(query, 0)
+    qi = Method(query, 1)
+    qj = Method(query, 2)
+    qk = Method(query, 3)
 
-
-    del Tokenizer.__init__
+    ws = Method(write, 0)
+    wi = Method(write, 1)
+    wj = Method(write, 2)
+    wk = Method(write, 3)
 
 
     @share
-    def z_initialize(data_lines):
-        maximum_i = length(data_lines)
-        q_data    = data_lines.__getitem__
+    def z_initialize(data):
+        data_lines = data.splitlines(true)
+        maximum_i  = length(data_lines)
+        q_data     = data_lines.__getitem__
 
 
         def GENERATOR_next_line():
             for i in iterate_range(maximum_i):
-                s           = tokenizer.s = q_data(i)
-                tokenizer.i = i
-                tokenizer.j = 0
+                s           = q_data(i)
+
+                ws(s)
+                wi(i)
+                wj(0)
 
                 yield s
 
-            tokenizer.s = none
-            tokenizer.i = none
-            tokenizer.j = none
+            ws(none)
+            wi(none)
+            wj(none)
 
-            yield none
-
-
-        return next_method(GENERATOR_next_line())
+            raise stop_iteration
 
 
-    slot_j = Tokenizer.j
-    slot_s = Tokenizer.s
+        return GENERATOR_next_line()
+
+
+    @share
+    def create_UnknownLine(f = absent, number = absent):
+        if f is absent:
+            assert number is absent
+        else:
+            line('%s #%s', f.__name__, number)
+
+        return UnknownLine(qs())
+
+
+    @share
+    def parse_incomlete(f, number):
+        line('%s #%s', f.__name__, number)
+
+        return none
 
 
     share(
-        'qj',           Method(slot_j.__get__, tokenizer),
-        'qs',           Method(slot_s.__get__, tokenizer),
+        'qj',   qj,
+        'qk',   qk,
+        'qs',   qs,
 
-        'zj',           Method(slot_j.__set__, tokenizer),
+        'wj',   wj,
+        'wk',   wk,
     )

@@ -9,15 +9,16 @@ def gem():
     require_gem('Sapphire.Token')
 
 
-    def parse1_statement_from_module(s, index):
+    def parse1_statement_from_module(index):
+        s = qs()
+
         #
         #<name1>
         #
         m1 = name_match(s, index)
 
         if m1 is none:
-            line('parse1_statement_from_module: incomplete#1')
-            return tuple_of_3_nones
+            return parse_incomplete(parse1_statement_from_module, 1)
 
         module = Symbol(m1.group())
         #</name1>
@@ -29,8 +30,7 @@ def gem():
             m2 = from1_module_match(s, m1.end())
 
             if m2 is none:
-                line('parse1_statement_from_module: incomplete#2')
-                return tuple_of_3_nones
+                return parse_incomplete(parse1_statement_from_module, 2)
 
             operator = m2.group('operator')
 
@@ -45,25 +45,29 @@ def gem():
             m1 = name_match(s, m2.end())
 
             if m1 is none:
-                line('parse1_statement_from_module: incomplete#3')
-                return tuple_of_3_nones
+                return parse_incomplete(parse1_statement_from_module, 2)
             #</name2>
 
             module = ExpressionDot(module, operator_dot, m1.group())
 
-        return (( module, KeywordImport(m2.group()), m2.end() ))
+        wj(m2.end())
+        wk(KeywordImport(m2.group()))
+
+        return module
         #</module>
 
 
-    def parse1_statement_from_as(s, index):
+    def parse1_statement_from_as():
+        s = qs()
+
         #
         #<name>
         #
-        m1 = name_match(s, index)
+        m1 = name_match(s, qj())
 
         if m1 is none:
             line('parse1_statement_from_as: incomplete#1')
-            return tuple_of_3_nones
+            return none
 
         imported = Symbol(m1.group())
         #</name>
@@ -75,16 +79,21 @@ def gem():
 
         if m2 is none:
             line('parse1_statement_from_as: incomplete#2')
-            return tuple_of_3_nones
+            return none
 
         operator = m2.group('operator')
         #</as>
 
         if operator is none:
-            return (( imported, TokenNewline(m2.group()), m2.end() ))
+            wk(TokenNewline(m2.group()))
+
+            return imported
 
         if operator is ',':
-            return (( imported, OperatorComma(m2.group()), m2.end() ))
+            wj(m2.end())
+            wk(OperatorComma(m2.group()))
+
+            return imported
 
         keyword_as = KeywordAs(m2.group())
 
@@ -95,7 +104,7 @@ def gem():
 
         if m3 is none:
             line('parse1_statement_from_as: incomplete#3')
-            return tuple_of_3_nones
+            return none
 
         imported = FromAsFragment(imported, keyword_as, Symbol(m3.group()))
         #</name2>
@@ -107,57 +116,61 @@ def gem():
 
         if m4 is none:
             line('parse1_statement_from_as: incomplete#4')
-            return tuple_of_3_nones
+            return none
         #</comma-or-newline>
 
         if m4.start('comma') is -1:
-            return (( imported, TokenNewline(m4.group()), m4.end() ))
+            wk(TokenNewline(m4.group()))
 
-        return (( imported, OperatorComma(m4.group()), m4.end() ))
+            return imported
+
+        wj(m4.end())
+        wk(OperatorComma(m4.group()))
+
+        return imported
 
 
     @share
-    def parse1_statement_from(m1, s):
+    def parse1_statement_from(m1):
         keyword_from = KeywordFrom(m1.group())
 
         #
         #<module ... 'import'>
         #
-        [module, keyword_import, index] = parse1_statement_from_module(s, m1.end())
+        module = parse1_statement_from_module(m1.end())
+
+        if module is none:
+            return create_UnknownLine()
+
+        keyword_import = qk()
         #</module>
 
         #
         #<imported ... (, | newline)>
         #
-        [imported, operator, index] = parse1_statement_from_as(s, index)
+        imported = parse1_statement_from_as()
 
         if imported is none:
-            return UnknownLine(s)
+            return create_UnknownLine()
+
+        operator = qk()
         #<imported/>
 
         if operator.is_token_newline:
-            assert length(s) == index
-
-            return StatementFromImport(
-                       keyword_from,
-                       module,
-                       keyword_import,
-                       imported,
-                       operator,
-                   )
+            return StatementFromImport(keyword_from, module, keyword_import, imported, operator)
 
         #
         #<imported ... (, | newline)>
         #
-        [imported_2, operator_2, index] = parse1_statement_from_as(s, index)
+        imported_2 = parse1_statement_from_as()
 
-        if imported is none:
-            return UnknownLine(s)
+        if imported_2 is none:
+            return create_UnknownLine()
+
+        operator_2 = qk()
         #<imported/>
 
         if operator_2.is_token_newline:
-            assert length(s) == index
-
             return StatementFromImport(
                        keyword_from,
                        module,
@@ -166,5 +179,4 @@ def gem():
                        operator_2,
                    )
 
-        line('parse1_statement_from: incomplete#3')
-        return UnknownLine(s)
+        return create_UnknownLine(parse1_statement_from, 1)

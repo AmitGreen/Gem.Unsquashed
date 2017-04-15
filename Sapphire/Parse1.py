@@ -38,15 +38,16 @@ def gem():
                      }.__getitem__
 
 
-    def parse1_statement_call(s, i, left, left_parenthesis):
+    def parse1_statement_call(i, left, left_parenthesis):
+        s = qs()
+
         #
         #<single_quote>
         #
         m1 = single_quote_match(s, i)
 
         if m1 is none:
-            line('parse1_statement_call: incomplete#1')
-            return tuple_of_2_nones
+            return parse_incomplete(parse1_statement_call, 1)
 
         argument_1 = SingleQuote(m1.group())
         m1_end     = m1.end()
@@ -58,26 +59,24 @@ def gem():
         m2 = statement_argument1_operator1_match(s, m1_end)
 
         if m2 is none:
-            line('parse1_statement_call: incomplete#1')
-            return tuple_of_2_nones
+            return parse_incomplete(parse1_statement_call, 2)
 
         right_parenthesis__end = m2.end('right_parenthesis')
 
         if right_parenthesis__end is -1:
-            line('parse1_statement_call: incomplete#2')
-            return tuple_of_2_nones
+            return parse_incomplete(parse1_statement_call, 3)
         #</right-parenthesis>
 
         right_parenthesis = OperatorRightParenthesis(s[m1_end : right_parenthesis__end])
 
-        return ((
-                   ExpressionCall(left, Arguments_1(left_parenthesis, argument_1, right_parenthesis)),
-                   TokenNewline(s[right_parenthesis__end:]),
-               ))
+        wk(TokenNewline(s[right_parenthesis__end:]))
+
+        return ExpressionCall(left, Arguments_1(left_parenthesis, argument_1, right_parenthesis))
 
 
-    def parse1_statement_decorator_header(m1, s):
+    def parse1_statement_decorator_header(m1):
         operator_at_sign = OperatorAtSign(m1.group())
+        s                = qs()
 
         #
         #<atom>
@@ -85,8 +84,7 @@ def gem():
         m2 = atom1_match(s, m1.end())
 
         if m2 is none:
-            line('parse1_statement_decorator_header: incomplete#1')
-            return UnknownLine(s)
+            return create_UnknownLine(parse1_statement_decorator_header, 1)
 
         s1     = m2.group()
         atom   = find_atom_type(s1[0])(s1)
@@ -99,14 +97,13 @@ def gem():
         m3 = statement_postfix1_match(s, m2_end)
 
         if m3 is none:
-            line('parse1_statement_decorator_header: incomplete#2')
-            return UnknownLine(s)
+            return create_UnknownLine(parse1_statement_decorator_header, 2)
 
         left_parenthesis__end = m3.end('left_parenthesis__ow')
         #</postfix>
 
         if left_parenthesis__end is -1:
-            return DecoratorHeader( operator_at_sign, atom, TokenNewline(m3.group()) )
+            return DecoratorHeader(operator_at_sign, atom, TokenNewline(m3.group()))
 
         left_parenthesis  = OperatorLeftParenthesis(s[m2_end : left_parenthesis__end])
         right_parenthesis = m3.group('right_parenthesis')
@@ -121,24 +118,22 @@ def gem():
                            TokenNewline(s[m3.end('right_parenthesis'):]),
                        )
 
-            line('parse1_statement_decorator_header: incomplete#3')
-            return UnknownLine(s)
+            return create_UnknownLine(parse1_statement_decorator_header, 3)
 
-        [expression, newline] = parse1_statement_call(s, m3.end(), atom, left_parenthesis)
+        expression = parse1_statement_call(m3.end(), atom, left_parenthesis)
 
         if expression is none:
-            line('parse1_statement_decorator_header: incomplete#4')
-            return UnknownLine(s)
+            return create_UnknownLine()
 
-        return DecoratorHeader(operator_at_sign, expression, newline)
+        return DecoratorHeader(operator_at_sign, expression, qx())
 
 
-    def parse1_statement_define_header(m1, s):
+    def parse1_statement_define_header(m1):
         if m1.end('newline') is not -1:
-            line('parse1_statement_define_header: incomplete#1')
-            return UnknownLine(s)
+            return create_UnknownLine(parse1_statement_define_header, 1)
 
         keyword_define = KeywordDefine(m1.group())
+        s              = qs()
 
         #
         #<name1>
@@ -146,8 +141,7 @@ def gem():
         m2 = name_match(s, m1.end())
 
         if m2 is none:
-            line('parse1_statement_define_header: incomplete#2')
-            return UnknownLine(s)
+            return create_UnknownLine(parse1_statement_define_header, 2)
 
         name1 = m2.group()
         #</name1>
@@ -160,8 +154,7 @@ def gem():
         m3 = define1_parenthesis_match(s, m2_end)
 
         if m3 is none:
-            line('parse1_statement_define_header: incomplete#3')
-            return UnknownLine(s)
+            return create_UnknownLine(parse1_statement_define_header, 3)
 
         comment_newline = m3.group('comment_newline')
         #</parenthesis>
@@ -175,8 +168,7 @@ def gem():
             m4 = name_match(s, m3.end())
 
             if m4 is none:
-                line('parse1_statement_define_header: incomplete#4')
-                return UnknownLine(s)
+                return create_UnknownLine(parse1_statement_define_header, 4)
 
             name2 = m4.group()
             #</name2>
@@ -187,8 +179,7 @@ def gem():
             m5 = define1__right_parenthesis__colon__match(s, m4.end())
 
             if m5 is none:
-                line('parse1_statement_define_header: incomplete#5')
-                return UnknownLine(s)
+                return create_UnknownLine(parse1_statement_define_header, 5)
 
             comment_newline = m5.group('comment_newline')
             #</parenthesis>
@@ -202,11 +193,12 @@ def gem():
         return DefineHeader(keyword_define, name1, parameters, TokenNewline(comment_newline))
 
 
-    def parse1_statement_return(m1, s):
+    def parse1_statement_return(m1):
         if m1.end('newline') is not -1:
             return StatementReturn(m1.group())
 
         keyword_return = KeywordReturn(m1.group())
+        s              = qs()
 
         #
         #<atom>
@@ -214,8 +206,7 @@ def gem():
         m2 = atom1_match(s, m1.end())
 
         if m2 is none:
-            line('parse1_statement_return: incomplete#1')
-            return UnknownLine(s)
+            return create_UnknownLine(parse1_statement_return, 1)
 
         s1     = m2.group()
         atom   = find_atom_type(s1[0])(s1)
@@ -228,8 +219,7 @@ def gem():
         m3 = statement_postfix1_match(s, m2_end)
 
         if m3 is none:
-            line('parse1_statement_return: incomplete#2')
-            return UnknownLine(s)
+            return create_UnknownLine(parse1_statement_return, 2)
 
         left_parenthesis__end = m3.end('left_parenthesis__ow')
         #</postfix>
@@ -250,16 +240,14 @@ def gem():
                            TokenNewline(s[m3.end('right_parenthesis'):]),
                        )
 
-            line('parse1_statement_return: incomplete#3')
-            return UnknownLine(s)
+            return create_UnknownLine(parse1_statement_return, 3)
 
-        [expression, newline] = parse1_statement_call(s, m3.end(), atom, left_parenthesis)
+        expression = parse1_statement_call(s, m3.end(), atom, left_parenthesis)
 
         if expression is none:
-            line('parse1_statement_return: incomplete#4')
-            return UnknownLine(s)
+            return create_UnknownLine()
 
-        return StatementReturnExpression(keyword_return, expression, newline)
+        return StatementReturnExpression(keyword_return, expression, qk())
 
 
     lookup_parse1_line = {
@@ -278,19 +266,13 @@ def gem():
         many   = []
         append = many.append
 
-        next_line = z_initialize(data.splitlines(true))
+        iterate_lines = z_initialize(data)
 
-        while 7 is 7:
-            s = next_line()
-
-            if s is none:
-                break
-
+        for s in iterate_lines:
             m = line1_match(s)
 
             if m is none:
-                line('parse1_python_from_path: incomplete#1')
-                append(UnknownLine(s))
+                append(create_UnknownLine(parse1_python_from_path, 1))
                 continue
 
             token = m.group('token')
@@ -299,16 +281,14 @@ def gem():
                 parse1_line = lookup_parse1_line(token)
 
                 if parse1_line is not none:
-                    append(parse1_line(m, s))
+                    append(parse1_line(m))
                     continue
 
                 if m.end('newline') is not none:
-                    line('parse1_python_from_path: incomplete#2')
-                    append(UnknownLine(s))
+                    append(create_UnknownLine(parse1_python_from_path, 2))
                     continue
 
-                line('parse1_python_from_path: incomplete#3')
-                append(UnknownLine(s))
+                append(create_UnknownLine(parse1_python_from_path, 3))
                 continue
 
             [comment, newline] = m.group('comment', 'newline')
@@ -316,8 +296,8 @@ def gem():
             if newline is none:
                 assert comment is none
 
-                line('parse1_python_from_path: incomplete#4')
-                append(UnknownLine(s))
+                append(create_UnknownLine(parse1_python_from_path, 4))
+                continue
 
             if comment is not none:
                 indented = m.group('indented')
