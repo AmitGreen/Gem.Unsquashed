@@ -41,6 +41,8 @@ def gem():
 
 
         def __init__(t, keyword, name, parameters_colon, newline):
+            assert newline.is_token_newline
+
             t.keyword          = keyword
             t.name             = name
             t.parameters_colon = parameters_colon
@@ -54,7 +56,7 @@ def gem():
         def write(t, w):
             w(t.keyword.s + t.name)
             t.parameters_colon.write(w)
-            w(t.newline)
+            w(t.newline.s)
 
 
     @share
@@ -77,6 +79,8 @@ def gem():
 
 
         def __init__(t, operator_decorator, expresssion, newline):
+            assert newline.is_token_newline
+
             t.operator_decorator = operator_decorator
             t.expresssion        = expresssion
             t.newline            = newline
@@ -89,8 +93,7 @@ def gem():
         def write(t, w):
             w(t.operator_decorator.s)
             t.expresssion.write(w)
-            w(t.newline)
-
+            w(t.newline.s)
 
 
     @share
@@ -354,6 +357,8 @@ def gem():
 
 
         def __init__(t, keyword_return, expression, newline):
+            assert newline.is_token_newline
+
             t.keyword_return = keyword_return
             t.expression     = expression
             t.newline        = newline
@@ -366,4 +371,4 @@ def gem():
         def write(t, w):
             w(t.keyword_return.s)
             t.expression.write(w)
-            w(t.newline)
+            w(t.newline.s)

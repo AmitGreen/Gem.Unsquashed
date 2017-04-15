@@ -117,7 +117,7 @@ def gem():
         )
 
         MATCH(
-           'postfix1_match',
+           'statement_postfix1_match',
             (
                   ow
                 + P(G(left_parenthesis__ow) + P(G(right_parenthesis) + ow))
@@ -131,7 +131,7 @@ def gem():
         )
 
         MATCH(
-            'argument1_operator1_match',
+            'statement_argument1_operator1_match',
             ow + G(right_parenthesis) + ow + G(comment_newline),
         )
 

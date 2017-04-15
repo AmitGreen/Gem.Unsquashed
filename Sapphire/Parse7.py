@@ -73,7 +73,7 @@ def gem():
         return DecoratorHeader(
                    OperatorAtSign(m0.group('indented') + m0.group('keyword__ow')),
                    parse7_expression(m),
-                   m.group('ow_comment_newline'),
+                   TokenNewline(m.group('ow_comment_newline')),
                )
 
 
@@ -97,7 +97,10 @@ def gem():
                          )
 
         return DefineHeader(
-                   KeywordDefine(m0.group('indented') + m0.group('keyword__ow')), name1, parameters, comment_newline,
+                   KeywordDefine(m0.group('indented') + m0.group('keyword__ow')),
+                   name1,
+                   parameters,
+                   TokenNewline(comment_newline),
                )
 
 
@@ -173,7 +176,7 @@ def gem():
         return StatementReturnExpression(
                    KeywordReturn(m0.group('indented') + m0.group('keyword__ow')),
                    parse7_expression(m),
-                   m.group('ow_comment_newline'),
+                   TokenNewline(m.group('ow_comment_newline')),
                )
 
 
