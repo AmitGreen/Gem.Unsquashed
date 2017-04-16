@@ -97,6 +97,9 @@ def gem():
 
     @share
     def parse1_statement_import(m1):
+        if m1.end('newline') is not -1:
+            return create_UnknownLine(parse1_statement_import, 1)
+
         keyword_import = KeywordImport(m1.group())
 
         #
@@ -113,4 +116,4 @@ def gem():
         if operator.is_token_newline:
             return StatementImport(keyword_import, module, operator)
 
-        return create_UnknownLine(parse1_statement_import, 1)
+        return create_UnknownLine(parse1_statement_import, 2)

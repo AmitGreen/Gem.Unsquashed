@@ -14,6 +14,8 @@ def gem():
 
 
         def __init__(t, s):
+            assert type(s) is String
+
             t.s = s
 
 

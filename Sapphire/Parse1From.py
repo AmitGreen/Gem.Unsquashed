@@ -132,6 +132,9 @@ def gem():
 
     @share
     def parse1_statement_from(m1):
+        if m1.end('newline') is not -1:
+            return create_UnknownLine(parse1_statement_from, 1)
+
         keyword_from = KeywordFrom(m1.group())
 
         #
@@ -179,4 +182,4 @@ def gem():
                        operator_2,
                    )
 
-        return create_UnknownLine(parse1_statement_from, 1)
+        return create_UnknownLine(parse1_statement_from, 2)

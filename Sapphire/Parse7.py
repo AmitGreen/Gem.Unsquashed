@@ -43,10 +43,7 @@ def gem():
 
 
     def parse7_statement_class(m0, s):
-        if show:
-            line(portray_raw_string(s[m0.end():]))
-
-        m = class_match(s, m0.end())
+        m = class7_match(s, m0.end())
 
         if m is none:
             return create_UnknownLine(parse7_statement_class, 1)

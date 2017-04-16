@@ -74,7 +74,93 @@ def gem():
         return ExpressionCall(left, Arguments_1(left_parenthesis, argument_1, right_parenthesis))
 
 
+    def parse1_statement_class(m1):
+        if m1.end('newline') is not -1:
+            return create_UnknownLine(parse1_statement_class, 1)
+
+        keyword_class = KeywordClass(m1.group())
+        s             = qs()
+
+        #
+        #<name>
+        #
+        m2 = name_match(s, m1.end())
+
+        if m2 is none:
+            return create_UnknownLine(parse1_statement_class, 2)
+
+        name   = m2.group()
+        m2_end = m2.end()
+        #</name>
+
+        #
+        #<choice: left-parenthesis [right-parenthesis colon newline] | newline>
+        #
+        m3 = class1_parenthesis_match(s, m2_end)
+
+        if m3 is none:
+            return create_UnknownLine(parse1_statement_class, 3)
+
+        newline_2 = m3.group('ow_comment_newline_2')
+
+        if newline_2 is not none:
+            return ClassHeader(
+                       keyword_class,
+                       name,
+                       OperatorColon(s[m2_end : m3.start('ow_comment_newline_2')]),
+                       TokenNewline(newline_2),
+                   )
+
+        newline_1 = m3.group('ow_comment_newline_1')
+
+        if newline_1 is not none:
+            return ClassHeader(
+                       keyword_class,
+                       name,
+                       ParameterColon_0(s[m2_end : m3.start('ow_comment_newline_1')]),
+                       TokenNewline(newline_1),
+                   )
+
+        operator_left_parenthesis = OperatorLeftParenthesis(m3.group())
+        #</choice>
+
+        #
+        #<parameter_1>
+        #
+        m4 = name_match(s, m3.end())
+
+        if m4 is none:
+            return create_UnknownLine(parse1_statement_class, 4)
+
+        parameter_1 = m4.group()
+        m2_end      = m4.end()
+        #</parameter_1>
+
+        #
+        #<right-parenthesis-colon-newline>
+        #
+        m5 = right_parenthesis__colon__match(s, m4.end())
+
+        if m5 is none:
+            return create_UnknownLine(parse1_statement_class, 5)
+        #</right-parenthesis-colon-newline>
+
+        return ClassHeader(
+                   keyword_class,
+                   name,
+                   ParameterColon_1(
+                       operator_left_parenthesis,
+                       Symbol(parameter_1),
+                       OperatorRightParenthesisColon(m5.group('ow__right_parenthesis__colon')),
+                   ),
+                   TokenNewline(m5.group('ow_comment_newline')),
+               )
+
+
     def parse1_statement_decorator_header(m1):
+        if m1.end('newline') is not -1:
+            return create_UnknownLine(parse1_statement_decorator_header, 1)
+
         operator_at_sign = OperatorAtSign(m1.group())
         s                = qs()
 
@@ -84,7 +170,7 @@ def gem():
         m2 = atom1_match(s, m1.end())
 
         if m2 is none:
-            return create_UnknownLine(parse1_statement_decorator_header, 1)
+            return create_UnknownLine(parse1_statement_decorator_header, 2)
 
         s1     = m2.group()
         atom   = find_atom_type(s1[0])(s1)
@@ -97,7 +183,7 @@ def gem():
         m3 = statement_postfix1_match(s, m2_end)
 
         if m3 is none:
-            return create_UnknownLine(parse1_statement_decorator_header, 2)
+            return create_UnknownLine(parse1_statement_decorator_header, 3)
 
         left_parenthesis__end = m3.end('left_parenthesis__ow')
         #</postfix>
@@ -118,7 +204,7 @@ def gem():
                            TokenNewline(s[m3.end('right_parenthesis'):]),
                        )
 
-            return create_UnknownLine(parse1_statement_decorator_header, 3)
+            return create_UnknownLine(parse1_statement_decorator_header, 4)
 
         expression = parse1_statement_call(m3.end(), atom, left_parenthesis)
 
@@ -136,17 +222,16 @@ def gem():
         s              = qs()
 
         #
-        #<name1>
+        #<name>
         #
         m2 = name_match(s, m1.end())
 
         if m2 is none:
             return create_UnknownLine(parse1_statement_define_header, 2)
 
-        name1 = m2.group()
-        #</name1>
-
+        name   = m2.group()
         m2_end = m2.end()
+        #</name>
 
         #
         #<parenthesis>
@@ -156,41 +241,48 @@ def gem():
         if m3 is none:
             return create_UnknownLine(parse1_statement_define_header, 3)
 
-        comment_newline = m3.group('comment_newline')
+        comment_newline = m3.group('ow_comment_newline')
         #</parenthesis>
 
         if comment_newline is not none:
-            parameters = ParameterColon_0(s[m2_end : m3.start('comment_newline')])
-        else:
-            #
-            #<name2>
-            #
-            m4 = name_match(s, m3.end())
+            return DefineHeader(
+                       keyword_define,
+                       name,
+                       ParameterColon_0(s[m2_end : m3.start('ow_comment_newline')]),
+                       parameters,
+                       TokenNewline(comment_newline),
+                   )
 
-            if m4 is none:
-                return create_UnknownLine(parse1_statement_define_header, 4)
+        #
+        #<parameter_1>
+        #
+        m4 = name_match(s, m3.end())
 
-            name2 = m4.group()
-            #</name2>
+        if m4 is none:
+            return create_UnknownLine(parse1_statement_define_header, 4)
 
-            #
-            #<right-parenthesis>
-            #
-            m5 = define1__right_parenthesis__colon__match(s, m4.end())
+        parameter_1 = m4.group()
+        #</parameter_1>
 
-            if m5 is none:
-                return create_UnknownLine(parse1_statement_define_header, 5)
+        #
+        #<right-parenthesis-colon-newline>
+        #
+        m5 = right_parenthesis__colon__match(s, m4.end())
 
-            comment_newline = m5.group('comment_newline')
-            #</parenthesis>
+        if m5 is none:
+            return create_UnknownLine(parse1_statement_define_header, 5)
+        #</right-parenthesis-colon-newline>
 
-            parameters = ParameterColon_1(
-                             OperatorLeftParenthesis(m3.group()),
-                             Symbol(name2),
-                             OperatorRightParenthesisColon(m5.group('ow__right_parenthesis__colon__ow')),
-                         )
-
-        return DefineHeader(keyword_define, name1, parameters, TokenNewline(comment_newline))
+        return DefineHeader(
+                   keyword_define,
+                   name,
+                   ParameterColon_1(
+                       OperatorLeftParenthesis(m3.group()),
+                       Symbol(parameter_1),
+                       OperatorRightParenthesisColon(m5.group('ow__right_parenthesis__colon')),
+                   ),
+                   TokenNewline(m5.group('ow_comment_newline')),
+               )
 
 
     def parse1_statement_return(m1):
@@ -251,7 +343,7 @@ def gem():
 
 
     lookup_parse1_line = {
-                             #'class'  : parse7_statement_class,
+                             'class'  : parse1_statement_class,
                              'def'    : parse1_statement_define_header,
                              'from'   : parse1_statement_from,
                              'import' : parse1_statement_import,

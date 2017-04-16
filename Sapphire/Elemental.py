@@ -59,6 +59,12 @@ def gem():
 
 
     @export
+    class OperatorColon(KeywordAndOperatorBase):
+        __slots__ = (())
+        keyword   = ':'
+
+
+    @export
     class OperatorComma(KeywordAndOperatorBase):
         __slots__        = (())
         is_comma         = true
