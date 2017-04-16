@@ -205,7 +205,7 @@ def gem():
         MATCH(
             'line1_match',
             (
-                  Q('indented', w)
+                  G('indented', ow)
                 + P(G('token', '@' | name) + ow)
                 + P(P(pound_G_comment) + G('newline', LINEFEED))
             ),
@@ -223,7 +223,6 @@ def gem():
                       | (colon + G('ow_comment_newline_2', ow_comment_newline))
                   )
             ),
-            debug = true,
         )
 
         MATCH(

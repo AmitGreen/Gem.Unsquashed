@@ -33,7 +33,7 @@ def gem():
                          'a' : Symbol, 'b' : Symbol, 'c' : Symbol, 'd' : Symbol, 'e' : Symbol, 'f' : Symbol,
                          'g' : Symbol, 'h' : Symbol, 'i' : Symbol, 'J' : Symbol, 'k' : Symbol, 'l' : Symbol,
                          'm' : Symbol, 'n' : Symbol, 'o' : Symbol, 'p' : Symbol, 'q' : Symbol, 'r' : Symbol,
-                         'S' : Symbol, 't' : Symbol, 'u' : Symbol, 'v' : Symbol, 'w' : Symbol, 'x' : Symbol,
+                         's' : Symbol, 't' : Symbol, 'u' : Symbol, 'v' : Symbol, 'w' : Symbol, 'x' : Symbol,
                          'y' : Symbol, 'z' : Symbol,
                      }.__getitem__
 
@@ -211,7 +211,7 @@ def gem():
         if expression is none:
             return create_UnknownLine()
 
-        return DecoratorHeader(operator_at_sign, expression, qx())
+        return DecoratorHeader(operator_at_sign, expression, qk())
 
 
     def parse1_statement_define_header(m1):
@@ -249,7 +249,6 @@ def gem():
                        keyword_define,
                        name,
                        ParameterColon_0(s[m2_end : m3.start('ow_comment_newline')]),
-                       parameters,
                        TokenNewline(comment_newline),
                    )
 
@@ -376,8 +375,10 @@ def gem():
                     append(parse1_line(m))
                     continue
 
-                if m.end('newline') is not none:
-                    append(create_UnknownLine(parse1_python_from_path, 2))
+                indented = m.group('indented')
+
+                if m.start('newline') is not -1:
+                    append(StatementExpression(indented, Symbol(token), TokenNewline(s[m.end('token'):])))
                     continue
 
                 append(create_UnknownLine(parse1_python_from_path, 3))
@@ -394,7 +395,7 @@ def gem():
             if comment is not none:
                 indented = m.group('indented')
 
-                if indented is none:
+                if indented is '':
                     append(Comment(comment, newline))
                     continue
 

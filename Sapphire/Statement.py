@@ -251,6 +251,31 @@ def gem():
 
 
     @share
+    class StatementExpression(Object):
+        __slot__ = ((
+            'indented',                 #   String+
+            'expression',               #   Expression
+            'newline',                  #   String+
+        ))
+
+
+        def __init__(t, indented, expression, newline):
+            t.indented   = indented
+            t.expression = expression
+            t.newline    = newline
+
+
+        def __repr__(t):
+            return arrange('<StatementExpression %r %r %r>', t.indented, t.expression, t.newline)
+
+
+        def write(t, w):
+            w(t.indented)
+            t.expression.write(w)
+            w(t.newline.s)
+
+
+    @share
     class StatementFromImport(Object):
         __slots__ = ((
             'keyword_from',             #   KeywordFrom
