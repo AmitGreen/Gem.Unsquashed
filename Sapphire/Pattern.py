@@ -116,10 +116,29 @@ def gem():
         )
 
         MATCH(
+            'postfix_operator1_match',
+            (
+                  ow
+                + G(left_parenthesis) + ow
+                + P(G(right_parenthesis) + ow)
+                + Q(comment_newline)
+            ),
+        )
+
+        MATCH(
            'decorator1_match',
             (
                   ow
                 + P(G(left_parenthesis) + ow + P(G(right_parenthesis) + ow))
+                + Q(comment_newline)
+            ),
+        )
+
+        MATCH(
+           'decorator_postfix1_match',
+            (
+                  ow
+                + P(G(left_parenthesis__ow) + P(G(right_parenthesis) + ow))
                 + Q(comment_newline)
             ),
         )

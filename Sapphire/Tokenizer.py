@@ -59,12 +59,12 @@ def gem():
         return UnknownLine(qs())
 
 
-    if 0:
-        @share
-        def parse_incomplete(f, number):
-            line('%s #%s', f.__name__, number)
+    @share
+    def parse_incomplete(f, number):
+        line('%s #%s', f.__name__, number)
+        assert 0
 
-            return none
+        return none
 
 
     share(

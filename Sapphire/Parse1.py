@@ -181,7 +181,7 @@ def gem():
         #
         #<postfix>
         #
-        m3 = statement_postfix1_match(s, m2_end)
+        m3 = decorator_postfix1_match(s, m2_end)
 
         if m3 is none:
             return create_UnknownLine(parse1_statement_decorator_header, 3)

@@ -233,6 +233,8 @@ def gem():
 
 
         def __init__(t, indented, left, arguments, newline):
+            assert newline.is_token_newline
+
             t.indented  = indented
             t.left      = left
             t.arguments = arguments
@@ -247,7 +249,7 @@ def gem():
             w(t.indented)
             t.left     .write(w)
             t.arguments.write(w)
-            w(t.newline)
+            w(t.newline.s)
 
 
     @share
