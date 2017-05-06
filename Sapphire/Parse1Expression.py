@@ -6,16 +6,20 @@ def gem():
     require_gem('Sapphire.Tokenizer')
 
 
+    show = 7
+
+
     @share
-    def parse1_statement_expression__symbol(m1, symbol):
-        indented = m1.group('indented')
-        index    = m1.end()
-        s        = qs()
+    def parse1_statement_expression__symbol(indented, symbol, index):
+        s = qs()
+
+        if show:
+            line('indented: %r, symbol: %r; s: %r', indented, symbol, s[index:])
 
         #
         #<postfix1-operator>
         #
-        m2 = postfix_operator1_match(s, index)
+        m2 = statement1_expression_operator(s, index)
 
         if m2 is none:
             return create_UnknownLine(parse1_statement_expression__symbol, 1)
@@ -37,7 +41,27 @@ def gem():
 
             return create_UnknownLine(parse1_statement_expression__symbol, 2)
 
-        return create_UnknownLine(parse1_statement_expression__symbol, 3)
+        if m2.start('equal_sign') is not -1:
+            operator_equal_sign = OperatorEqualSign(m2.group())
+
+            #
+            #<atom1>
+            #
+            m3 = atom1_match(s, m2.end())
+
+            if m3 is none:
+                return create_UnknownLine(parse1_statement_expression__symbol, 1)
+
+            s3     = m3.group()
+            atom   = find_atom_type(s3[0])(s3)
+            m3_end = m3.end()
+            #</atom1>
+
+            line('indented: %r; symbol: %r; operator_equal_sign: %r; atom: %r', indented, symbol, operator_equal_sign, atom)
+
+            return create_UnknownLine(parse1_statement_expression__symbol, 3)
+
+        return create_UnknownLine(parse1_statement_expression__symbol, 4)
 
         #left_parenthesis = m2.group()
-        #line('indented: %r, symbol: %r; s: %r; left_parenthesis: %r', indented, symbol, s[index:], left_parenthesis)
+        line('indented: %r, symbol: %r; s: %r; left_parenthesis: %r', indented, symbol, s[index:], left_parenthesis)

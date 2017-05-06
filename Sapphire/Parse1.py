@@ -16,29 +16,6 @@ def gem():
     show = true
 
 
-    find_atom_type = {
-                         "'" : SingleQuote,
-                         '.' : Number,
-
-                         '0' : Number, '1' : Number, '2' : Number, '3' : Number, '4' : Number,
-                         '5' : Number, '6' : Number, '7' : Number, '8' : Number, '9' : Number,
-
-                         'A' : Symbol, 'B' : Symbol, 'C' : Symbol, 'D' : Symbol, 'E' : Symbol, 'F' : Symbol,
-                         'G' : Symbol, 'H' : Symbol, 'I' : Symbol, 'J' : Symbol, 'K' : Symbol, 'L' : Symbol,
-                         'M' : Symbol, 'N' : Symbol, 'O' : Symbol, 'P' : Symbol, 'Q' : Symbol, 'R' : Symbol,
-                         'S' : Symbol, 'T' : Symbol, 'U' : Symbol, 'V' : Symbol, 'W' : Symbol, 'X' : Symbol,
-                         'Y' : Symbol, 'Z' : Symbol,
-
-                         '_' : Symbol,
-
-                         'a' : Symbol, 'b' : Symbol, 'c' : Symbol, 'd' : Symbol, 'e' : Symbol, 'f' : Symbol,
-                         'g' : Symbol, 'h' : Symbol, 'i' : Symbol, 'J' : Symbol, 'k' : Symbol, 'l' : Symbol,
-                         'm' : Symbol, 'n' : Symbol, 'o' : Symbol, 'p' : Symbol, 'q' : Symbol, 'r' : Symbol,
-                         's' : Symbol, 't' : Symbol, 'u' : Symbol, 'v' : Symbol, 'w' : Symbol, 'x' : Symbol,
-                         'y' : Symbol, 'z' : Symbol,
-                     }.__getitem__
-
-
     def parse1_statement_call(i, left, left_parenthesis):
         s = qs()
 
@@ -166,17 +143,16 @@ def gem():
         s                = qs()
 
         #
-        #<atom>
+        #<name>
         #
-        m2 = atom1_match(s, m1.end())
+        m2 = name_match(s, m1.end())
 
         if m2 is none:
             return create_UnknownLine(parse1_statement_decorator_header, 2)
 
-        s1     = m2.group()
-        atom   = find_atom_type(s1[0])(s1)
+        symbol = Symbol(m2.group())
         m2_end = m2.end()
-        #</atom1>
+        #</name>
 
         #
         #<postfix>
@@ -190,7 +166,7 @@ def gem():
         #</postfix>
 
         if left_parenthesis__end is -1:
-            return DecoratorHeader(operator_at_sign, atom, TokenNewline(m3.group()))
+            return DecoratorHeader(operator_at_sign, symbol, TokenNewline(m3.group()))
 
         left_parenthesis  = OperatorLeftParenthesis(s[m2_end : left_parenthesis__end])
         right_parenthesis = m3.group('right_parenthesis')
@@ -201,13 +177,13 @@ def gem():
             if m3.end('comment_newline') is not -1:
                 return DecoratorHeader(
                            operator_at_sign,
-                           ExpressionCall(atom, Arguments_0(left_parenthesis, right_parenthesis)),
+                           ExpressionCall(symbol, Arguments_0(left_parenthesis, right_parenthesis)),
                            TokenNewline(s[m3.end('right_parenthesis'):]),
                        )
 
             return create_UnknownLine(parse1_statement_decorator_header, 4)
 
-        expression = parse1_statement_call(m3.end(), atom, left_parenthesis)
+        expression = parse1_statement_call(m3.end(), symbol, left_parenthesis)
 
         if expression is none:
             return create_UnknownLine()
@@ -293,15 +269,15 @@ def gem():
         s              = qs()
 
         #
-        #<atom>
+        #<atom1>
         #
         m2 = atom1_match(s, m1.end())
 
         if m2 is none:
             return create_UnknownLine(parse1_statement_return, 1)
 
-        s1     = m2.group()
-        atom   = find_atom_type(s1[0])(s1)
+        s2     = m2.group()
+        atom   = find_atom_type(s2[0])(s2)
         m2_end = m2.end()
         #</atom1>
 
@@ -380,7 +356,7 @@ def gem():
                     append(StatementExpression(m.group('indented'), Symbol(token), TokenNewline(s[m.end('token'):])))
                     continue
 
-                append(parse1_statement_expression__symbol(m, Symbol(token)))
+                append(parse1_statement_expression__symbol(m.group('indented'), Symbol(token), m.end('token')))
                 #append(create_UnknownLine(parse1_python_from_path, 3))
                 continue
 

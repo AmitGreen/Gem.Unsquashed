@@ -10,7 +10,9 @@ def gem():
         ))
 
 
-        is_keyword = false
+        is_comma             = false
+        is_keyword           = false
+        is_right_parenthesis = false
 
 
         def __init__(t, s):

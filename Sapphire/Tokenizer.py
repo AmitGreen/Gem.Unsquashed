@@ -62,7 +62,6 @@ def gem():
     @share
     def parse_incomplete(f, number):
         line('%s #%s', f.__name__, number)
-        assert 0
 
         return none
 

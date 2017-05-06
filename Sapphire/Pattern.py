@@ -28,6 +28,7 @@ def gem():
         colon            = NAME('colon',            ':')
         comma            = NAME('comma',            ',')
         comment_newline  = NAME('comment_newline',  P('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
+        equal_sign       = NAME('equal_sign',       '=')
         keyword_as       = NAME('as',               'as')
         keyword_import   = NAME('import',           'import')
         left_parenthesis = NAME('left_parenthesis', '(')                                #   )
@@ -116,12 +117,13 @@ def gem():
         )
 
         MATCH(
-            'postfix_operator1_match',
+            'statement1_expression_operator',
             (
                   ow
-                + G(left_parenthesis) + ow
-                + P(G(right_parenthesis) + ow)
-                + Q(comment_newline)
+                + (
+                        G(left_parenthesis) + ow + P(G(right_parenthesis) + ow) + Q(comment_newline)
+                      | G(equal_sign) + ow
+                  )
             ),
         )
 
