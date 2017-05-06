@@ -6,6 +6,7 @@ def gem():
     require_gem('Sapphire.Match')
     require_gem('Sapphire.Parse1From')
     require_gem('Sapphire.Parse1Import')
+    require_gem('Sapphire.Parse1Expression')
     require_gem('Sapphire.Parse7')
     require_gem('Sapphire.Parse7Expression')
     require_gem('Sapphire.Statement')
@@ -375,13 +376,12 @@ def gem():
                     append(parse1_line(m))
                     continue
 
-                indented = m.group('indented')
-
                 if m.start('newline') is not -1:
-                    append(StatementExpression(indented, Symbol(token), TokenNewline(s[m.end('token'):])))
+                    append(StatementExpression(m.group('indented'), Symbol(token), TokenNewline(s[m.end('token'):])))
                     continue
 
-                append(create_UnknownLine(parse1_python_from_path, 3))
+                append(parse1_statement_expression__symbol(m, Symbol(token)))
+                #append(create_UnknownLine(parse1_python_from_path, 3))
                 continue
 
             [comment, newline] = m.group('comment', 'newline')

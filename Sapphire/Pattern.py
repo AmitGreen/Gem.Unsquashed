@@ -229,7 +229,7 @@ def gem():
             'define1_parenthesis_match',
             (
                   ow__left_parenthesis__ow
-                + P(ow__right_parenthesis__colon + G(ow_comment_newline))
+                + P(right_parenthesis__colon + G(ow_comment_newline))
             ),
         )
 

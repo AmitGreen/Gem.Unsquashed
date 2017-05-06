@@ -31,7 +31,7 @@ def gem():
 
         def GENERATOR_next_line():
             for i in iterate_range(maximum_i):
-                s           = q_data(i)
+                s = q_data(i)
 
                 ws(s)
                 wi(i)
@@ -59,11 +59,12 @@ def gem():
         return UnknownLine(qs())
 
 
-    @share
-    def parse_incomlete(f, number):
-        line('%s #%s', f.__name__, number)
+    if 0:
+        @share
+        def parse_incomplete(f, number):
+            line('%s #%s', f.__name__, number)
 
-        return none
+            return none
 
 
     share(
