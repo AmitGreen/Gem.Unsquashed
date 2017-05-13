@@ -33,7 +33,7 @@ def gem():
             f.line('#   Copyright %s.  All rights reserved.', copyright)
             f.line('#')
             f.line('@gem(%r)', module_name)
-            
+
             with f.indent('def gem():'):
                 f.line('require_gem(%r)', 'Gem.System')
                 f.line('require_gem(%r)', 'Tremolite.Compile')

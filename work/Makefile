@@ -13,7 +13,7 @@ GEM_FILES = \
 	../Gem/__init__.py \
     ../Gem/Absent.py ../Gem/Ascii.py \
 	../Gem/Boot.py \
-	../Gem/Cache.py ../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
+	../Gem/Cache.py ../Gem/Configuration.py ../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
 	../Gem/DelayedFileOutput.py \
 	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
@@ -34,9 +34,22 @@ IVORY_FILES = ../Ivory/Main.py
 LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
+
 PEARL_FILES = \
-    ../Pearl/Core.py \
+    ../Pearl/Comment.py ../Pearl/ConjureTreeComment.py ../Pearl/Core.py \
+    ../Pearl/Line.py \
     ../Pearl/Token.py ../Pearl/Tokenizer.py
+
+QUARTZ_FILES = \
+	../Quartz/Parse1.py \
+    ../Quartz/Core.py \
+    ../Quartz/Main.py \
+    ../Quartz/Line.py \
+    ../Quartz/Pattern.py \
+    #
+    #   Excludes:
+    #       ../Quartz/Match.py
+    #
 
 SAPPHIRE_FILES = \
     ../Sapphire/Core.py \
@@ -52,7 +65,7 @@ SAPPHIRE_FILES = \
     #
 
 TOPAZ_FILES = \
-    ../Topaz/Core.py \
+    ../Topaz/ConjureTreeComment.py ../Topaz/Core.py \
     ../Topaz/Main.py \
     ../Topaz/Path.py ../Topaz/Pattern.py ../Topaz/PortrayString.py \
     ../Topaz/StringOutput.py
@@ -80,6 +93,7 @@ FILES = \
     $(IVORY_FILES) \
     $(LICENSE_FILES) \
     $(PEARL_FILES) \
+    $(QUARTZ_FILES) \
     $(SAPPHIRE_FILES) \
     $(TOPAZ_FILES) \
     $(TREMOLITE_FILES) \
@@ -101,17 +115,18 @@ clean:
 	rm -f de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
-	rm -f gd.py
-	rm -f h1pa.py h1pe.py h1pf.py h1pi.py h7pa.py h7pe.py hc.py hem.py hex.py hi.py hma.py hmc.py hpt.py hs.py
+	rm -f gc.py gd.py
+	rm -f h1pa.py h1pe.py h1pf.py h1pi.py h7pa.py h7pe.py hc.py hem.py hex.py hk.py hma.py hmc.py hpt.py hs.py hz.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f lr.txt
 	rm -f m m.py
-	rm -f pa.py pa2.py pc.py pk.py ps.py ps3.py pz.py
+	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
+	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
 	rm -f tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
-	rm -f zc.py zm.py zpa.py zps.py zpt.py zso.py
+	rm -f zc.py zj.py zm.py zpa.py zps.py zpt.py zso.py
 
 
 files:
@@ -149,6 +164,7 @@ links:
 	ln -s ../Gem/Exception.py                   ex.py
 	ln -s ../Gem/FileOutput.py                  fo.py
 	ln -s ../Gem/FileStatus.py                  fs.py
+	ln -s ../Gem/Configuration.py               gc.py
 	ln -s ../Gem/Codec.py                       gd.py
 	ln -s ../Sapphire/Parse1.py                 h1pa.py
 	ln -s ../Sapphire/Parse1Expression.py       h1pe.py
@@ -173,11 +189,20 @@ links:
 	ln -s ../Gem/Map.py                         m.py
 	ln -s ../Gem/Path.py                        pa.py
 	ln -s ../Gem/Path2.py                       pa2.py
-	ln -s ../Pearl/Core.py                      pc.py
+	ln -s ../Pearl/Comment.py                   pcm.py
+	ln -s ../Pearl/Core.py                      pco.py
+	ln -s ../Pearl/ConjureTreeComment.py        pj.py
 	ln -s ../Pearl/Token.py                     pk.py
+	ln -s ../Pearl/Line.py                      pl.py
 	ln -s ../Gem/PortrayString.py               ps.py
 	ln -s ../Junk/PortrayString_3.py            ps3.py
 	ln -s ../Pearl/Tokenizer.py                 pz.py
+	ln -s ../Quartz/Parse1.py                   q1p.py
+	ln -s ../Quartz/Core.py                     qc.py
+	ln -s ../Quartz/Line.py                     ql.py
+	ln -s ../Quartz/Main.py                     qma.py
+	ln -s ../Quartz/Match.py                    qmc.py
+	ln -s ../Quartz/Pattern.py                  qp.py
 	ln -s ../Agate/RUNME.py                     rm.py
 	ln -s ../Gem/RegularExpression.py           rx.py
 	ln -s ../Gem/StringOutput.py                so.py
@@ -194,6 +219,7 @@ links:
 	ln -s ../Tremolite/PatternWrapper.py        tw.py
 	ln -s ../Tremolite/Compile.py               tx.py
 	ln -s ../Topaz/Core.py                      zc.py
+	ln -s ../Topaz/ConjureTreeComment.py        zj.py
 	ln -s ../Topaz/Main.py                      zm.py
 	ln -s ../Topaz/Path.py                      zpa.py
 	ln -s ../Topaz/PortrayString.py             zps.py
@@ -202,15 +228,16 @@ links:
 
 
 wc:
-    #
+	#
 	#  Excludes $(AGATE_FILES)
-    #
+	#
 	wc -l \
 		$(BERYL_FILES) \
 		$(DRAVITE_FILES) \
         $(GEM_FILES) \
         $(IVORY_FILES) \
         $(LICENSE_FILES) \
+        $(QUARTZ_FILES) \
         $(SAPPHIRE_FILES) \
         $(TOPAZ_FILES) \
         $(TREMOLITE_FILES) \

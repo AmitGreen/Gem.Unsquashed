@@ -35,8 +35,13 @@ def gem():
 
 
     [
-            match_cache, match_insert,
-    ] = produce_cache_functions('Tremolite.match_cache', TremoliteMatch, produce_cache = true, produce_insert = true)
+            match_cache, match_insert_interned,
+    ] = produce_cache_functions(
+            'Tremolite.match_cache', TremoliteMatch,
+            
+            produce_cache           = true,
+            produce_insert_interned = true,
+        )
 
 
     @export
@@ -46,9 +51,9 @@ def gem():
         if type(pattern) is String:
             pattern = INVISIBLE_EXACT(pattern)
 
-        name = intern_string(name)
+        interned_name = intern_string(name)
 
-        return match_insert(name, TremoliteMatch(name, pattern + END_OF_PATTERN, debug))
+        return match_insert_interned(interned_name, TremoliteMatch(interned_name, pattern + END_OF_PATTERN, debug))
 
 
     @export
@@ -58,9 +63,9 @@ def gem():
         if type(pattern) is String:
             pattern = INVISIBLE_EXACT(pattern)
 
-        name = intern_string(name)
+        interned_name = intern_string(name)
 
-        return match_insert(name, TremoliteMatch(name, pattern, debug))
+        return match_insert_interned(interned_name, TremoliteMatch(interned_name, pattern, debug))
 
 
     share(

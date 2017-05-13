@@ -357,8 +357,13 @@ def gem():
 
 
     [
-            name_cache, name_insert,
-    ] = produce_cache_functions('Tremolite.name_cache', TremoliteName, produce_cache = true, produce_insert = true)
+            name_cache, name_insert_interned,
+    ] = produce_cache_functions(
+            'Tremolite.name_cache', TremoliteName,
+            
+            produce_cache           = true,
+            produce_insert_interned = true,
+        )
 
 
     def create_exact(s):
@@ -426,7 +431,7 @@ def gem():
         assert 0 <= m < n
 
         if m is 0:
-            suffix = arrange('{,%d}')
+            suffix = arrange('{,%d}', n)
         else:
             suffix = arrange('{%d,%d}', m, n)
 
@@ -608,9 +613,9 @@ def gem():
         if type(pattern) is String:
             pattern = INVISIBLE_EXACT(pattern)
 
-        name = intern_string(name)
+        interned_name = intern_string(name)
 
-        return name_insert(name, TremoliteName(name, pattern))
+        return name_insert_interned(interned_name, TremoliteName(interned_name, pattern))
 
 
     @export
@@ -621,15 +626,15 @@ def gem():
         if type(pattern) is String:
             pattern = INVISIBLE_EXACT(pattern)
 
-        name = intern_string(name)
+        interned_name = intern_string(name)
 
-        return name_insert(
-                   name,
+        return name_insert_interned(
+                   interned_name,
                    TremoliteNamedGroup(
-                       intern_arrange('(?P<%s>%s)', name, pattern.regular_expression),
-                       name,
-                       name,
-                       G(name, pattern),
+                       intern_arrange('(?P<%s>%s)', interned_name, pattern.regular_expression),
+                       interned_name,
+                       interned_name,
+                       G(interned_name, pattern),
                    ),
                )
 

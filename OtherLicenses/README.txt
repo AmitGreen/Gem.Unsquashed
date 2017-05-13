@@ -161,8 +161,8 @@ Here a list of both the home page & licenses copied from Creative Commons & thei
         #
                                             (CC) Creative
                                                  Commons
-                            
-                                Attribution 4.0 International (CC BY 4.0) 
+
+                                Attribution 4.0 International (CC BY 4.0)
 
                     This is a human-readable summary of (and not a substitute for) the license.
 
@@ -188,7 +188,7 @@ Here a list of both the home page & licenses copied from Creative Commons & thei
 
 
     As of 2017-03-02, a copy of this license has been saved as:
-    
+
         ".../OtherLicenses/cc/2017-03-02-by-4.0.html"
 
     The full license the above summary links to is at:
@@ -196,7 +196,7 @@ Here a list of both the home page & licenses copied from Creative Commons & thei
        https://creativecommons.org/licenses/by/4.0/legalcode
 
     As of 2017-03-02, a copy of this license has been saved as:
-    
+
         "../OtherLicenses/cc/2017-03-02-by-4.0_legalcode.html"
 
     Since the home page & the four license files below did note otherwise, then as the home page at

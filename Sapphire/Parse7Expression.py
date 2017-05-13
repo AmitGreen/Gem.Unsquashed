@@ -52,7 +52,7 @@ def gem():
         if name is not none:
             assert number is none
 
-            index_1 = Symbol(name)
+            index_1 = conjure_identifier(name)
         else:
             assert number is not none
 
@@ -109,7 +109,7 @@ def gem():
         if name is not none:
             assert number is single_quote is none
 
-            argument_0 = Symbol(name)
+            argument_0 = conjure_identifier(name)
         elif number is not none:
             assert single_quote is none
 
@@ -188,7 +188,7 @@ def gem():
         if name is not none:
             assert number is single_quote is none
 
-            argument_1 = Symbol(name)
+            argument_1 = conjure_identifier(name)
         elif number is not none:
             assert single_quote is none
 
@@ -250,7 +250,7 @@ def gem():
             if name_0 is not none:
                 assert number_0 is single_quote_0 is none
 
-                arguments = Arguments_1(left_parenthesis, Symbol(name_0), right_parenthesis)
+                arguments = Arguments_1(left_parenthesis, conjure_identifier(name_0), right_parenthesis)
             elif number_0 is not none:
                 assert single_quote_0 is none
 
@@ -270,7 +270,7 @@ def gem():
                 assert number_0 is single_quote_0 is none
 
                 [arguments, index] = parse7_arguments__left_parenthesis__argument_0(
-                                         s, m, Symbol(name_0),
+                                         s, m, conjure_identifier(name_0),
                                      )
             elif number_0 is not none:
                 assert single_quote_0 is none
@@ -305,6 +305,8 @@ def gem():
         #line('indented: %r; ow_comment_newline: %r', indented, ow_comment_newline)
 
         if dot is none:
-            return StatementCall(indented, Symbol(name), arguments, TokenNewline(ow_comment_newline))
+            return StatementCall(
+                       indented, conjure_identifier(name), arguments, conjure_token_newline(ow_comment_newline),
+                   )
 
-        return StatementMethodCall(indented, Symbol(name), dot, right, arguments, ow_comment_newline)
+        return StatementMethodCall(indented, conjure_identifier(name), dot, right, arguments, ow_comment_newline)
