@@ -34,9 +34,19 @@ IVORY_FILES = ../Ivory/Main.py
 LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
+
 PEARL_FILES = \
     ../Pearl/Core.py \
     ../Pearl/Token.py ../Pearl/Tokenizer.py
+
+QUARTZ_FILES = \
+    ../Quartz/Core.py \
+    ../Quartz/Main.py \
+    ../Quartz/Pattern.py \
+    #
+    #   Excludes:
+    #       ../Quartz/Match.py
+    #
 
 SAPPHIRE_FILES = \
     ../Sapphire/Core.py \
@@ -80,6 +90,7 @@ FILES = \
     $(IVORY_FILES) \
     $(LICENSE_FILES) \
     $(PEARL_FILES) \
+    $(QUARTZ_FILES) \
     $(SAPPHIRE_FILES) \
     $(TOPAZ_FILES) \
     $(TREMOLITE_FILES) \
@@ -102,12 +113,13 @@ clean:
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gd.py
-	rm -f h1pa.py h1pe.py h1pf.py h1pi.py h7pa.py h7pe.py hc.py hem.py hex.py hi.py hma.py hmc.py hpt.py hs.py
+	rm -f h1pa.py h1pe.py h1pf.py h1pi.py h7pa.py h7pe.py hc.py hem.py hex.py hk.py hma.py hmc.py hpt.py hs.py hz.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f lr.txt
 	rm -f m m.py
 	rm -f pa.py pa2.py pc.py pk.py ps.py ps3.py pz.py
+	rm -f q1.py qc.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
 	rm -f tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
@@ -178,6 +190,11 @@ links:
 	ln -s ../Gem/PortrayString.py               ps.py
 	ln -s ../Junk/PortrayString_3.py            ps3.py
 	ln -s ../Pearl/Tokenizer.py                 pz.py
+	ln -s ../Quartz/Parse1.py                   q1p.py
+	ln -s ../Quartz/Core.py                     qc.py
+	ln -s ../Quartz/Main.py                     qma.py
+	ln -s ../Quartz/Match.py                    qmc.py
+	ln -s ../Quartz/Pattern.py                  qp.py
 	ln -s ../Agate/RUNME.py                     rm.py
 	ln -s ../Gem/RegularExpression.py           rx.py
 	ln -s ../Gem/StringOutput.py                so.py
@@ -202,15 +219,16 @@ links:
 
 
 wc:
-    #
+	#
 	#  Excludes $(AGATE_FILES)
-    #
+	#
 	wc -l \
 		$(BERYL_FILES) \
 		$(DRAVITE_FILES) \
         $(GEM_FILES) \
         $(IVORY_FILES) \
         $(LICENSE_FILES) \
+        $(QUARTZ_FILES) \
         $(SAPPHIRE_FILES) \
         $(TOPAZ_FILES) \
         $(TREMOLITE_FILES) \
