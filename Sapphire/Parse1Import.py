@@ -20,7 +20,7 @@ def gem():
         if m1 is none:
             return parse_incomplete(parse1_statement_import_module, 1)
 
-        module = Symbol(m1.group())
+        module = conjure_identifier(m1.group())
         #</name>
 
         #
@@ -51,10 +51,10 @@ def gem():
             module = ExpressionDot(module, operator_dot, m1.group())
 
         if operator is none:
-            wk(TokenNewline(m2.group()))
+            wk(conjure_token_newline(m2.group()))
 
             return module
-            
+
         if operator is ',':
             wj(m2.end())
             wk(OperatorComma(m2.group()))
@@ -72,7 +72,7 @@ def gem():
         if m3 is none:
             return parse_incomplete(parse1_statement_import_module, 4)
 
-        module = ModuleAsFragment(module, keyword_as, Symbol(m3.group()))
+        module = ModuleAsFragment(module, keyword_as, conjure_identifier(m3.group()))
         #</name>
 
         #
@@ -85,7 +85,7 @@ def gem():
         #</comma-or-newline>
 
         if m4.start('comma') is -1:
-            wk(TokenNewline(m4.group()))
+            wk(conjure_token_newline(m4.group()))
 
             return module
 

@@ -22,18 +22,46 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<%s %s>', t.__class__.__name__, portray_string(t.s))
+            return arrange('<%s %r>', t.display_name, t.s)
 
 
         def write(t, w):
             w(t.s)
 
 
+    @share
+    class Identifier(Token):
+        __slots__ = (())
+
+
+        def __repr__(t):
+            return t.s
+
+
+    [
+            conjure_identifier, insert_interned_identifier, lookup_identifier,
+    ] = produce_cache_functions(
+            'Pearl.Token.identifier_cache', Identifier,
+
+            produce_conjure_by_name = true,
+            produce_insert_interned = true,
+            produce_lookup          = true,
+        )
+
+
     @export
-    class TokenNewline(Token):
-        is_token_newline = true
+    class TokenIndented(Token):
+        display_name      = 'indented'
+        is_token_indented = true
 
 
     @export
     class UnknownLine(Token):
-        pass
+        display_name = 'unknown-line'
+
+
+    export(
+        'conjure_identifier',           conjure_identifier,
+        'insert_interned_identifier',   insert_interned_identifier,
+        'lookup_identifier',            lookup_identifier,
+    )

@@ -9,57 +9,64 @@ def gem():
     @export
     def produce_cache_functions(
             name,
-            meta            = absent,
-            produce_cache   = false,
-            produce_conjure = false,
-            produce_find    = false,
-            produce_insert  = false,
-            produce_lookup  = false,
+            meta                    = absent,
+            produce_cache           = false,
+            produce_conjure_by_name = false,
+            produce_find            = false,
+            produce_insert_interned = false,
+            produce_lookup          = false,
     ):
         result = []
         append = result.append
 
         cache = {}
 
-        if (produce_conjure) or (produce_insert):
+        if (produce_conjure_by_name) or (produce_insert_interned):
             provide = cache.setdefault
 
-        if (produce_conjure) or (produce_lookup):
+        if (produce_conjure_by_name) or (produce_lookup):
             lookup = cache.get
 
-        if (produce_find) or (produce_insert):
+        if (produce_find) or (produce_insert_interned):
             find = cache.__getitem__
 
         if produce_cache:
             append(cache)
 
-        if produce_conjure:
+        if produce_conjure_by_name:
             assert meta is not absent
 
 
-            def conjure(k):
-                return (lookup(k)) or (provide(k, meta(k)))
+            def conjure_by_name(k):
+                r = lookup(k)
+
+                if r is not none:
+                    return r
+
+                interned_k = intern_string(k)
+
+                return provide(interned_k, meta(interned_k))
 
 
-            append(conjure)
+            append(conjure_by_name)
 
         if produce_find:
             append(find)
 
-        if produce_insert:
+        if produce_insert_interned:
             contains = cache.__contains__
 
 
             if __debug__:
-                def insert(k, v):
-                    if contains(k):
+                def insert_interned(interned_k, v):
+                    if contains(interned_k):
                         raise_runtime_error('cache %s: attempt to insert key %r with value %r (already has value %r)',
-                                            name, k, v, find(k))
+                                            name, interned_k, v, find(interned_k))
 
-                    return provide(k, v)
+                    return provide(interned_k, v)
 
 
-                append(insert)
+                append(insert_interned)
             else:
                 append(provide)
 

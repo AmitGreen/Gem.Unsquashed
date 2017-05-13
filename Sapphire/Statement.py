@@ -189,7 +189,7 @@ def gem():
 
     @share
     class ParameterColon_0(Token):
-        pass
+        display_name = 'parameter-colon-0'
 
 
     @share
@@ -318,7 +318,7 @@ def gem():
             'indented',                 #   String+
             'left',                     #   Expression
             'dot',                      #   OperatorDot
-            'right',                    #   Symbol
+            'right',                    #   Identifier
             'arguments',                #   Arguments*
             'newline',                  #   String+
         ))

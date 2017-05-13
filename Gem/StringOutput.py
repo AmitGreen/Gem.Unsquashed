@@ -92,7 +92,7 @@ def gem():
 
             return Indent(t, ending, prefix * ' ')
 
-            
+
         def finish(t):
             r = t.result = t.f.getvalue()
 

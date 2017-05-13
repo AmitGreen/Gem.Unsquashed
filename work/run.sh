@@ -32,9 +32,10 @@ done
 
 Main_py=../Beryl/Main.py
 Main_py=../Ivory/Main.py
-Main_py=../Topaz/Main.py
 Main_py=../Tremolite/Main.py
+Main_py=../Topaz/Main.py
 Main_py=../Sapphire/Main.py
+Main_py=../Quartz/Main.py
 
 command="python $Main_py"
 commandO="python -O $Main_py"
@@ -62,7 +63,7 @@ do
     else
         mv $tmp2 2
         echo -en '\E[H\E[J'
-        tail -50 2
+        tail -60 2
     fi
 
     $commandO <$tmp1 >&$tmp3

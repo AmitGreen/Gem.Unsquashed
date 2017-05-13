@@ -19,20 +19,16 @@ def boot():
     import Gem
 
 
-@gem('Topaz.Main')
+@gem('Quartz.Main')
 def gem():
-    require_gem('Topaz.ConjureTreeComment')
-    require_gem('Topaz.Path')
-    require_gem('Topaz.Pattern')
-    require_gem('Topaz.PortrayString')
-    require_gem('Topaz.StringOutput')
+    require_gem('Quartz.Core')
+    require_gem('Quartz.Pattern')
 
 
     @share
     def main():
-        test_conjure_tree_comment()
-        test_pattern()
-        test_portray_raw_string()
-        test_remove_path()
-        test_rename_path()
-        test_string_output()
+        create_quartz_match()
+
+        require_gem('Quartz.Parse1')                            #   Must be after 'create_quartz_match'
+
+        parse1_mysql_from_path('test.sql')

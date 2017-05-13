@@ -20,7 +20,7 @@ def gem():
         if m1 is none:
             return parse_incomplete(parse1_statement_from_module, 1)
 
-        module = Symbol(m1.group())
+        module = conjure_identifier(m1.group())
         #</name1>
 
         #
@@ -69,7 +69,7 @@ def gem():
             line('parse1_statement_from_as: incomplete#1')
             return none
 
-        imported = Symbol(m1.group())
+        imported = conjure_identifier(m1.group())
         #</name>
 
         #
@@ -85,7 +85,7 @@ def gem():
         #</as>
 
         if operator is none:
-            wk(TokenNewline(m2.group()))
+            wk(conjure_token_newline(m2.group()))
 
             return imported
 
@@ -106,7 +106,7 @@ def gem():
             line('parse1_statement_from_as: incomplete#3')
             return none
 
-        imported = FromAsFragment(imported, keyword_as, Symbol(m3.group()))
+        imported = FromAsFragment(imported, keyword_as, conjure_identifier(m3.group()))
         #</name2>
 
         #
@@ -120,7 +120,7 @@ def gem():
         #</comma-or-newline>
 
         if m4.start('comma') is -1:
-            wk(TokenNewline(m4.group()))
+            wk(conjure_token_newline(m4.group()))
 
             return imported
 
