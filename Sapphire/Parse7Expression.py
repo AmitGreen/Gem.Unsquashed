@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.ParseExpression')
 def gem():
-    require_gem('Sapphire.Tokenizer')
+    require_gem('Sapphire.Core')
 
 
     show = false
@@ -305,6 +305,6 @@ def gem():
         #line('indented: %r; ow_comment_newline: %r', indented, ow_comment_newline)
 
         if dot is none:
-            return StatementCall(indented, Symbol(name), arguments, ow_comment_newline)
+            return StatementCall(indented, Symbol(name), arguments, TokenNewline(ow_comment_newline))
 
         return StatementMethodCall(indented, Symbol(name), dot, right, arguments, ow_comment_newline)

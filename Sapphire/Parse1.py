@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
+    require_gem('Sapphire.Core')
     require_gem('Sapphire.Match')
     require_gem('Sapphire.Parse1From')
     require_gem('Sapphire.Parse1Import')
@@ -10,7 +11,6 @@ def gem():
     require_gem('Sapphire.Parse7')
     require_gem('Sapphire.Parse7Expression')
     require_gem('Sapphire.Statement')
-    require_gem('Sapphire.Tokenizer')
 
 
     show = true

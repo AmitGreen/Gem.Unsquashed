@@ -3,9 +3,13 @@
 #
 @gem('Gem.Cache')
 def gem():
+    require_gem('Gem.Absent')
+
+
     @export
     def produce_cache_functions(
             name,
+            meta            = absent,
             produce_cache   = false,
             produce_conjure = false,
             produce_find    = false,
@@ -30,7 +34,10 @@ def gem():
             append(cache)
 
         if produce_conjure:
-            def conjure(k, meta):
+            assert meta is not absent
+
+
+            def conjure(k):
                 return (lookup(k)) or (provide(k, meta(k)))
 
 

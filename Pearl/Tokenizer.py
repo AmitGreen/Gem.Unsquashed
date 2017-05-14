@@ -1,9 +1,10 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Tokenizer')
+@gem('Pearl.Tokenizer')
 def gem():
-    require_gem('Sapphire.Token')
+    require_gem('Pearl.Core')
+    require_gem('Pearl.Token')
 
 
     tokenizer = [none, none, none, none]
@@ -22,7 +23,7 @@ def gem():
     wk = Method(write, 3)
 
 
-    @share
+    @export
     def z_initialize(data):
         data_lines = data.splitlines(true)
         maximum_i  = length(data_lines)
@@ -49,7 +50,7 @@ def gem():
         return GENERATOR_next_line()
 
 
-    @share
+    @export
     def create_UnknownLine(f = absent, number = absent):
         if f is absent:
             assert number is absent
@@ -59,14 +60,14 @@ def gem():
         return UnknownLine(qs())
 
 
-    @share
+    @export
     def parse_incomplete(f, number):
         line('%s #%s', f.__name__, number)
 
         return none
 
 
-    share(
+    export(
         'qj',   qj,
         'qk',   qk,
         'qs',   qs,

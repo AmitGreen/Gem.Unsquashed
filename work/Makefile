@@ -34,6 +34,10 @@ IVORY_FILES = ../Ivory/Main.py
 LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
+PEARL_FILES = \
+    ../Pearl/Core.py \
+    ../Pearl/Token.py ../Pearl/Tokenizer.py
+
 SAPPHIRE_FILES = \
     ../Sapphire/Core.py \
     ../Sapphire/Elemental.py ../Sapphire/Expression.py \
@@ -42,7 +46,6 @@ SAPPHIRE_FILES = \
         ../Sapphire/Parse7.py ../Sapphire/Parse7Expression.py \
     ../Sapphire/Pattern.py \
     ../Sapphire/Statement.py \
-    ../Sapphire/Token.py ../Sapphire/Tokenizer.py
     #
     #   Excludes:
     #       ../Sapphire/Match.py
@@ -76,6 +79,7 @@ FILES = \
     $(GEM_FILES) \
     $(IVORY_FILES) \
     $(LICENSE_FILES) \
+    $(PEARL_FILES) \
     $(SAPPHIRE_FILES) \
     $(TOPAZ_FILES) \
     $(TREMOLITE_FILES) \
@@ -89,8 +93,6 @@ clean:
 	rm -rf __pycache__
 	rm -f *.old *.new *.pyc
 
-	rm -f 1pa.py 1pe.py 1pf.py 1pi.py
-	rm -f 7pa.py 7pe.py
 	rm -f ab.py ac.py ag.py
 	rm -f 2re.py 2sf.py 2sp.py 2sc.py
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
@@ -100,12 +102,12 @@ clean:
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gd.py
-	rm -f hc.py hem.py hex.py hk.py hma.py hmc.py hpt.py hs.py hz.py
+	rm -f h1pa.py h1pe.py h1pf.py h1pi.py h7pa.py h7pe.py hc.py hem.py hex.py hi.py hma.py hmc.py hpt.py hs.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f lr.txt
 	rm -f m m.py
-	rm -f pa.py pa2.py ps.py ps3.py
+	rm -f pa.py pa2.py pc.py pk.py ps.py ps3.py pz.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
 	rm -f tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
@@ -118,12 +120,6 @@ files:
 
 
 links:
-	ln -s ../Sapphire/Parse1.py                 1pa.py
-	ln -s ../Sapphire/Parse1Expression.py       1pe.py
-	ln -s ../Sapphire/Parse1From.py             1pf.py
-	ln -s ../Sapphire/Parse1Import.py           1pi.py
-	ln -s ../Sapphire/Parse7.py                 7pa.py
-	ln -s ../Sapphire/Parse7Expression.py       7pe.py
 	ln -s ../Gem/Absent.py                      ab.py
 	ln -s ../Gem/Ascii.py                       ac.py
 	ln -s ../Agate/RUNME.py                     ag.py
@@ -154,15 +150,19 @@ links:
 	ln -s ../Gem/FileOutput.py                  fo.py
 	ln -s ../Gem/FileStatus.py                  fs.py
 	ln -s ../Gem/Codec.py                       gd.py
+	ln -s ../Sapphire/Parse1.py                 h1pa.py
+	ln -s ../Sapphire/Parse1Expression.py       h1pe.py
+	ln -s ../Sapphire/Parse1From.py             h1pf.py
+	ln -s ../Sapphire/Parse1Import.py           h1pi.py
+	ln -s ../Sapphire/Parse7.py                 h7pa.py
+	ln -s ../Sapphire/Parse7Expression.py       h7pe.py
 	ln -s ../Sapphire/Core.py                   hc.py
 	ln -s ../Sapphire/Elemental.py              hem.py
 	ln -s ../Sapphire/Expression.py             hex.py
-	ln -s ../Sapphire/Token.py                  hk.py
 	ln -s ../Sapphire/Main.py                   hma.py
 	ln -s ../Sapphire/Match.py                  hmc.py
 	ln -s ../Sapphire/Pattern.py                hpt.py
 	ln -s ../Sapphire/Statement.py              hs.py
-	ln -s ../Sapphire/Tokenizer.py              hz.py
 	ln -s ../Gem/__init__.py                    in.py
 	ln -s ../Gem/Import.py                      im.py
 	ln -s ../Ivory/Main.py                      iv.py
@@ -173,8 +173,11 @@ links:
 	ln -s ../Gem/Map.py                         m.py
 	ln -s ../Gem/Path.py                        pa.py
 	ln -s ../Gem/Path2.py                       pa2.py
+	ln -s ../Pearl/Core.py                      pc.py
+	ln -s ../Pearl/Token.py                     pk.py
 	ln -s ../Gem/PortrayString.py               ps.py
 	ln -s ../Junk/PortrayString_3.py            ps3.py
+	ln -s ../Pearl/Tokenizer.py                 pz.py
 	ln -s ../Agate/RUNME.py                     rm.py
 	ln -s ../Gem/RegularExpression.py           rx.py
 	ln -s ../Gem/StringOutput.py                so.py
