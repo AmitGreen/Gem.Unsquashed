@@ -1,9 +1,9 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Token')
+@gem('Sapphire.Elemental')
 def gem():
-    require_gem('Sapphire.Token')
+    require_gem('Sapphire.Core')
 
 
     class KeywordAndOperatorBase(Token):
@@ -152,7 +152,7 @@ def gem():
     [
             conjure_symbol, find_symbol, lookup_symbol,
     ] = produce_cache_functions(
-            'Sapphire.symbol_cache',
+            'Sapphire.symbol_cache', Symbol,
 
             produce_conjure = true,
             produce_find    = true,

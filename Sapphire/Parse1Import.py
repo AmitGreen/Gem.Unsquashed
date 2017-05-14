@@ -3,10 +3,10 @@
 #
 @gem('Sapphire.Parse1From')
 def gem():
+    require_gem('Sapphire.Core')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.Match')
     require_gem('Sapphire.Statement')
-    require_gem('Sapphire.Token')
 
 
     def parse1_statement_import_module(index):

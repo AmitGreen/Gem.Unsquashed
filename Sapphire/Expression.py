@@ -3,8 +3,8 @@
 #
 @gem('Sapphire.Expression')
 def gem():
+    require_gem('Sapphire.Core')
     require_gem('Sapphire.Elemental')
-    require_gem('Sapphire.Token')
 
 
     @share
