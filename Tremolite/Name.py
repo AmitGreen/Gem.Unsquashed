@@ -34,7 +34,9 @@ def gem():
             [t.code, t.groups, t.flags] = parse_ascii_regular_expression(t.pattern.regular_expression)
 
 
-    [match_cache, match_insert] = produce_cache_functions('Tremolite.match_cache', produce_cache = true, produce_insert = true)
+    [
+            match_cache, match_insert,
+    ] = produce_cache_functions('Tremolite.match_cache', TremoliteMatch, produce_cache = true, produce_insert = true)
 
 
     @export

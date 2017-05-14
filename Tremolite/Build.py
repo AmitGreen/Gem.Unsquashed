@@ -356,7 +356,9 @@ def gem():
     TremoliteSpecial.optional = TremoliteSpecial.repeatable
 
 
-    [name_cache, name_insert] = produce_cache_functions('Tremolite.name_cache', produce_cache = true, produce_insert = true)
+    [
+            name_cache, name_insert,
+    ] = produce_cache_functions('Tremolite.name_cache', TremoliteName, produce_cache = true, produce_insert = true)
 
 
     def create_exact(s):

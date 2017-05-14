@@ -1,9 +1,9 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Token')
+@gem('Pearl.Token')
 def gem():
-    @share
+    @export
     class Token(Object):
         __slots__ = ((
             's',
@@ -29,11 +29,11 @@ def gem():
             w(t.s)
 
 
-    @share
+    @export
     class TokenNewline(Token):
         is_token_newline = true
 
 
-    @share
+    @export
     class UnknownLine(Token):
         pass

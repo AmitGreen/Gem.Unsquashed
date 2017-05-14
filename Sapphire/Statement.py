@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Statement')
 def gem():
-    require_gem('Sapphire.Token')
+    require_gem('Sapphire.Core')
 
 
     @share
