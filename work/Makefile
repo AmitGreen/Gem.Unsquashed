@@ -37,6 +37,7 @@ LICENSE_FILES = \
 
 PEARL_FILES = \
     ../Pearl/Core.py \
+    ../Pearl/Line.py \
     ../Pearl/Token.py ../Pearl/Tokenizer.py
 
 QUARTZ_FILES = \
@@ -118,8 +119,8 @@ clean:
 	rm -f jb.py
 	rm -f lr.txt
 	rm -f m m.py
-	rm -f pa.py pa2.py pc.py pk.py ps.py ps3.py pz.py
-	rm -f q1.py qc.py qma.py qmc.py qp.py
+	rm -f pa.py pa2.py pc.py pk.py pl.py ps.py ps3.py pz.py
+	rm -f q1p.py qc.py qma.py qmc.py qp.py qs.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
 	rm -f tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
@@ -187,6 +188,7 @@ links:
 	ln -s ../Gem/Path2.py                       pa2.py
 	ln -s ../Pearl/Core.py                      pc.py
 	ln -s ../Pearl/Token.py                     pk.py
+	ln -s ../Pearl/Line.py                      pl.py
 	ln -s ../Gem/PortrayString.py               ps.py
 	ln -s ../Junk/PortrayString_3.py            ps3.py
 	ln -s ../Pearl/Tokenizer.py                 pz.py
@@ -195,6 +197,7 @@ links:
 	ln -s ../Quartz/Main.py                     qma.py
 	ln -s ../Quartz/Match.py                    qmc.py
 	ln -s ../Quartz/Pattern.py                  qp.py
+	ln -s ../Quartz/Statement.py                qs.py
 	ln -s ../Agate/RUNME.py                     rm.py
 	ln -s ../Gem/RegularExpression.py           rx.py
 	ln -s ../Gem/StringOutput.py                so.py

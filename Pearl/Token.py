@@ -30,6 +30,11 @@ def gem():
 
 
     @export
+    class TokenIndented(Token):
+        is_token_indented = true
+
+
+    @export
     class TokenNewline(Token):
         is_token_newline = true
 
