@@ -85,7 +85,7 @@ def gem():
         #</as>
 
         if operator is none:
-            wk(TokenNewline(m2.group()))
+            wk(conjure_token_newline(m2.group()))
 
             return imported
 
@@ -120,7 +120,7 @@ def gem():
         #</comma-or-newline>
 
         if m4.start('comma') is -1:
-            wk(TokenNewline(m4.group()))
+            wk(conjure_token_newline(m4.group()))
 
             return imported
 

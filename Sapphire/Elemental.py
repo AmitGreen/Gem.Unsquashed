@@ -174,9 +174,9 @@ def gem():
     ] = produce_cache_functions(
             'Sapphire.symbol_cache', Symbol,
 
-            produce_conjure = true,
-            produce_find    = true,
-            produce_lookup  = true,
+            produce_conjure_by_name = true,
+            produce_find            = true,
+            produce_lookup          = true,
         )
 
 

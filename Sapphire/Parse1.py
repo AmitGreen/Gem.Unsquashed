@@ -47,7 +47,7 @@ def gem():
 
         right_parenthesis = OperatorRightParenthesis(s[m1_end : right_parenthesis__end])
 
-        wk(TokenNewline(s[right_parenthesis__end:]))
+        wk(conjure_token_newline(s[right_parenthesis__end:]))
 
         return ExpressionCall(left, Arguments_1(left_parenthesis, argument_1, right_parenthesis))
 
@@ -86,7 +86,7 @@ def gem():
                        keyword_class,
                        name,
                        OperatorColon(s[m2_end : m3.start('ow_comment_newline_2')]),
-                       TokenNewline(newline_2),
+                       conjure_token_newline(newline_2),
                    )
 
         newline_1 = m3.group('ow_comment_newline_1')
@@ -96,7 +96,7 @@ def gem():
                        keyword_class,
                        name,
                        ParameterColon_0(s[m2_end : m3.start('ow_comment_newline_1')]),
-                       TokenNewline(newline_1),
+                       conjure_token_newline(newline_1),
                    )
 
         operator_left_parenthesis = OperatorLeftParenthesis(m3.group())
@@ -131,7 +131,7 @@ def gem():
                        Symbol(parameter_1),
                        OperatorRightParenthesisColon(m5.group('ow__right_parenthesis__colon')),
                    ),
-                   TokenNewline(m5.group('ow_comment_newline')),
+                   conjure_token_newline(m5.group('ow_comment_newline')),
                )
 
 
@@ -166,7 +166,7 @@ def gem():
         #</postfix>
 
         if left_parenthesis__end is -1:
-            return DecoratorHeader(operator_at_sign, symbol, TokenNewline(m3.group()))
+            return DecoratorHeader(operator_at_sign, symbol, conjure_token_newline(m3.group()))
 
         left_parenthesis  = OperatorLeftParenthesis(s[m2_end : left_parenthesis__end])
         right_parenthesis = m3.group('right_parenthesis')
@@ -178,7 +178,7 @@ def gem():
                 return DecoratorHeader(
                            operator_at_sign,
                            ExpressionCall(symbol, Arguments_0(left_parenthesis, right_parenthesis)),
-                           TokenNewline(s[m3.end('right_parenthesis'):]),
+                           conjure_token_newline(s[m3.end('right_parenthesis'):]),
                        )
 
             return create_UnknownLine(parse1_statement_decorator_header, 4)
@@ -226,7 +226,7 @@ def gem():
                        keyword_define,
                        name,
                        ParameterColon_0(s[m2_end : m3.start('ow_comment_newline')]),
-                       TokenNewline(comment_newline),
+                       conjure_token_newline(comment_newline),
                    )
 
         #
@@ -257,7 +257,7 @@ def gem():
                        Symbol(parameter_1),
                        OperatorRightParenthesisColon(m5.group('ow__right_parenthesis__colon')),
                    ),
-                   TokenNewline(m5.group('ow_comment_newline')),
+                   conjure_token_newline(m5.group('ow_comment_newline')),
                )
 
 
@@ -293,7 +293,7 @@ def gem():
         #</postfix>
 
         if left_parenthesis__end is -1:
-            return StatementReturnExpression(keyword_return, atom, TokenNewline(m3.group()))
+            return StatementReturnExpression(keyword_return, atom, conjure_token_newline(m3.group()))
 
         left_parenthesis  = OperatorLeftParenthesis(s[m2_end : left_parenthesis__end])
         right_parenthesis = m3.group('right_parenthesis')
@@ -305,7 +305,7 @@ def gem():
                 return StatementReturnExpression(
                            keyword_return,
                            ExpressionCall(atom, Arguments_0(left_parenthesis, right_parenthesis)),
-                           TokenNewline(s[m3.end('right_parenthesis'):]),
+                           conjure_token_newline(s[m3.end('right_parenthesis'):]),
                        )
 
             return create_UnknownLine(parse1_statement_return, 3)
@@ -353,7 +353,7 @@ def gem():
                     continue
 
                 if m.start('newline') is not -1:
-                    append(StatementExpression(m.group('indented'), Symbol(token), TokenNewline(s[m.end('token'):])))
+                    append(StatementExpression(m.group('indented'), Symbol(token), conjure_token_newline(s[m.end('token'):])))
                     continue
 
                 append(parse1_statement_expression__symbol(m.group('indented'), Symbol(token), m.end('token')))

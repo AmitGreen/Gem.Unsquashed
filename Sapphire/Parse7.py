@@ -70,7 +70,7 @@ def gem():
         return DecoratorHeader(
                    OperatorAtSign(m0.group('indented') + m0.group('keyword__ow')),
                    parse7_expression(m),
-                   TokenNewline(m.group('ow_comment_newline')),
+                   conjure_token_newline(m.group('ow_comment_newline')),
                )
 
 
@@ -97,7 +97,7 @@ def gem():
                    KeywordDefine(m0.group('indented') + m0.group('keyword__ow')),
                    name1,
                    parameters,
-                   TokenNewline(comment_newline),
+                   conjure_token_newline(comment_newline),
                )
 
 
@@ -124,7 +124,7 @@ def gem():
                        module,
                        KeywordImport(w_import_w),
                        as_fragment,
-                       TokenNewline(m.group('ow_comment_newline')),
+                       conjure_token_newline(m.group('ow_comment_newline')),
                    )
 
         m2 = from_2_match(s, m.end())
@@ -144,7 +144,7 @@ def gem():
                        module,
                        KeywordImport(w_import_w),
                        ExpressionComma(as_fragment, OperatorComma(comma), as_fragment_2),
-                       TokenNewline(m2.group('ow_comment_newline')),
+                       conjure_token_newline(m2.group('ow_comment_newline')),
                    )
 
         raise_runtime_error('parse7_statement_from: incomplete')
@@ -159,7 +159,7 @@ def gem():
         return StatementImport(
                    KeywordImport(m0.group('indented') + m0.group('keyword__ow')),
                    Symbol(m.group('name1')),
-                   TokenNewline(m.group('ow_comment_newline')),
+                   conjure_token_newline(m.group('ow_comment_newline')),
                )
 
 
@@ -172,7 +172,7 @@ def gem():
         return StatementReturnExpression(
                    KeywordReturn(m0.group('indented') + m0.group('keyword__ow')),
                    parse7_expression(m),
-                   TokenNewline(m.group('ow_comment_newline')),
+                   conjure_token_newline(m.group('ow_comment_newline')),
                )
 
 

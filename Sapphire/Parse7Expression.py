@@ -305,6 +305,6 @@ def gem():
         #line('indented: %r; ow_comment_newline: %r', indented, ow_comment_newline)
 
         if dot is none:
-            return StatementCall(indented, Symbol(name), arguments, TokenNewline(ow_comment_newline))
+            return StatementCall(indented, Symbol(name), arguments, conjure_token_newline(ow_comment_newline))
 
         return StatementMethodCall(indented, Symbol(name), dot, right, arguments, ow_comment_newline)

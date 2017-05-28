@@ -7,9 +7,9 @@ def gem():
     require_gem('Tremolite.Build')
 
 
-    from Tremolite import ANY_OF, DOT, END_OF_PATTERN, EMPTY, EXACT, GROUP
+    from Tremolite import ANY_OF, DOT, END_OF_PATTERN, EMPTY, EXACT, G
     from Tremolite import MINIMUM_OF_ONE_OR_MORE, MINIMUM_OF_OPTIONAL, MINIMUM_OF_REPEAT_OR_MORE, MINIMUM_OF_ZERO_OR_MORE
-    from Tremolite import ONE_OR_MORE, OPTIONAL, OPTIONAL_GROUP, REPEAT, ZERO_OR_MORE
+    from Tremolite import ONE_OR_MORE, OPTIONAL, Q, REPEAT, ZERO_OR_MORE
 
 
     show = false
@@ -19,14 +19,14 @@ def gem():
     def test_pattern():
         for [pattern, test] in [
                 [   OPTIONAL('bc') + OPTIONAL('d' | EXACT('hi') + 'j') + 'x' + END_OF_PATTERN,      'hijx'      ],
-                [   'x' + ('lemo' + ANY_OF('a-z') | GROUP('abc', 'y')) + END_OF_PATTERN,            'xy'        ],
-                [   'x' + GROUP('abc', ANY_OF('a-z', 'A-Z')) + GROUP('z', 'z') + END_OF_PATTERN,    'xYz'       ],
+                [   'x' + ('lemo' + ANY_OF('a-z') | G('abc', 'y')) + END_OF_PATTERN,                'xy'        ],
+                [   'x' + G('abc', ANY_OF('a-z', 'A-Z')) + G('z', 'z') + END_OF_PATTERN,            'xYz'       ],
                 [   OPTIONAL('a') + ONE_OR_MORE('x') + ZERO_OR_MORE('yz') + END_OF_PATTERN,         'xx'        ],
                 [   'a' + (EXACT('b') | r'c\i') + 'd' + ONE_OR_MORE('e' | EMPTY) + END_OF_PATTERN,  r'ac\id'    ],
                 [   'x' + MINIMUM_OF_OPTIONAL('y') + MINIMUM_OF_ONE_OR_MORE('z') + END_OF_PATTERN,  'xzz'       ],
                 [   MINIMUM_OF_ZERO_OR_MORE('x') + REPEAT('yz', 2, 3) + END_OF_PATTERN,             'yzyzyz'    ],
                 [   MINIMUM_OF_REPEAT_OR_MORE('x' | EXACT('z'), 0) + 'y' + END_OF_PATTERN,          'xzxy'      ],
-                [   'x' + ZERO_OR_MORE(DOT) + OPTIONAL_GROUP('never', 'never') + END_OF_PATTERN,    'xqq'       ],
+                [   'x' + ZERO_OR_MORE(DOT) + Q('never', 'never') + END_OF_PATTERN,                 'xqq'       ],
         ]:
             if show:
                 line('%s', pattern)

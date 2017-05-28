@@ -36,7 +36,7 @@ def gem():
                                OperatorLeftParenthesis(s[index:right_parenthesis__start]),
                                OperatorRightParenthesis(m2.group('right_parenthesis')),
                            ),
-                           TokenNewline(s[m2.end('right_parenthesis'):]),
+                           conjure_token_newline(s[m2.end('right_parenthesis'):]),
                        )
 
             return create_UnknownLine(parse1_statement_expression__symbol, 2)

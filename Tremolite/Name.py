@@ -46,9 +46,9 @@ def gem():
         if type(pattern) is String:
             pattern = INVISIBLE_EXACT(pattern)
 
-        name = intern_string(name)
+        interned_name = intern_string(name)
 
-        return match_insert(name, TremoliteMatch(name, pattern + END_OF_PATTERN, debug))
+        return match_insert(interned_name, TremoliteMatch(interned_name, pattern + END_OF_PATTERN, debug))
 
 
     @export
@@ -58,9 +58,9 @@ def gem():
         if type(pattern) is String:
             pattern = INVISIBLE_EXACT(pattern)
 
-        name = intern_string(name)
+        interned_name = intern_string(name)
 
-        return match_insert(name, TremoliteMatch(name, pattern, debug))
+        return match_insert(interned_name, TremoliteMatch(interned_name, pattern, debug))
 
 
     share(
