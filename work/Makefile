@@ -41,8 +41,10 @@ PEARL_FILES = \
     ../Pearl/Token.py ../Pearl/Tokenizer.py
 
 QUARTZ_FILES = \
+	../Quartz/Parse1.py \
     ../Quartz/Core.py \
     ../Quartz/Main.py \
+    ../Quartz/Line.py \
     ../Quartz/Pattern.py \
     #
     #   Excludes:
@@ -120,7 +122,7 @@ clean:
 	rm -f lr.txt
 	rm -f m m.py
 	rm -f pa.py pa2.py pc.py pk.py pl.py ps.py ps3.py pz.py
-	rm -f q1p.py qc.py qma.py qmc.py qp.py qs.py
+	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
 	rm -f tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
@@ -194,10 +196,10 @@ links:
 	ln -s ../Pearl/Tokenizer.py                 pz.py
 	ln -s ../Quartz/Parse1.py                   q1p.py
 	ln -s ../Quartz/Core.py                     qc.py
+	ln -s ../Quartz/Line.py                     ql.py
 	ln -s ../Quartz/Main.py                     qma.py
 	ln -s ../Quartz/Match.py                    qmc.py
 	ln -s ../Quartz/Pattern.py                  qp.py
-	ln -s ../Quartz/Statement.py                qs.py
 	ln -s ../Agate/RUNME.py                     rm.py
 	ln -s ../Gem/RegularExpression.py           rx.py
 	ln -s ../Gem/StringOutput.py                so.py

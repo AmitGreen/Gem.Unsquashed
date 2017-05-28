@@ -22,7 +22,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<%s %s>', t.__class__.__name__, portray_string(t.s))
+            return arrange('<%s %r>', t.display_name, t.s)
 
 
         def write(t, w):
@@ -31,14 +31,10 @@ def gem():
 
     @export
     class TokenIndented(Token):
+        display_name      = 'indented'
         is_token_indented = true
 
 
     @export
-    class TokenNewline(Token):
-        is_token_newline = true
-
-
-    @export
     class UnknownLine(Token):
-        pass
+        display_name = 'unknown-line'

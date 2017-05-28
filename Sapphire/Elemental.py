@@ -14,38 +14,44 @@ def gem():
     @export
     class KeywordAs(KeywordAndOperatorBase):
         __slots__        = (())
+        display_name     = 'as'
         is_token_newline = false
         keyword          = 'as'
 
 
     @export
     class KeywordClass(KeywordAndOperatorBase):
-        __slots__ = (())
-        keyword   = 'class'
+        __slots__    = (())
+        display_name = 'class'
+        keyword      = 'class'
 
 
     @export
     class KeywordDefine(KeywordAndOperatorBase):
-        __slots__ = (())
-        keyword   = 'def'
+        __slots__    = (())
+        display_name = 'define'
+        keyword      = 'def'
 
 
     @export
     class KeywordFrom(KeywordAndOperatorBase):
-        __slots__ = (())
-        keyword   = 'from'
+        __slots__    = (())
+        display_name = 'from'
+        keyword      = 'from'
 
 
     @export
     class KeywordImport(KeywordAndOperatorBase):
-        __slots__ = (())
-        keyword   = 'import'
+        __slots__    = (())
+        display_name = 'import'
+        keyword      = 'import'
 
 
     @export
     class KeywordReturn(KeywordAndOperatorBase):
-        __slots__ = (())
-        keyword   = 'return'
+        __slots__    = (())
+        display_name = 'return'
+        keyword      = 'return'
 
 
     @share
@@ -59,19 +65,22 @@ def gem():
 
     @export
     class OperatorAtSign(KeywordAndOperatorBase):
-        __slots__ = (())
-        keyword   = '@'
+        __slots__    = (())
+        display_name = '@'
+        keyword      = '@'
 
 
     @export
     class OperatorColon(KeywordAndOperatorBase):
-        __slots__ = (())
-        keyword   = ':'
+        __slots__    = (())
+        display_name = ':'
+        keyword      = ':'
 
 
     @export
     class OperatorComma(KeywordAndOperatorBase):
         __slots__        = (())
+        display_name     = ','
         is_comma         = true
         is_token_newline = false
         keyword          = ','
@@ -79,32 +88,38 @@ def gem():
 
     @export
     class OperatorDot(KeywordAndOperatorBase):
-        __slots__ = (())
-        keyword   = '.'
+        __slots__    = (())
+        display_name = '.'
+        keyword      = '.'
 
 
     @export
     class OperatorEqualSign(KeywordAndOperatorBase):
-        __slots__ = (())
-        keyword   = '='
+        __slots__    = (())
+        display_name = '='
+        keyword      = '='
 
 
     @export
     class OperatorLeftParenthesis(KeywordAndOperatorBase):
         __slots__           = (())
+        display_name        = '('       #   )
         is_left_parenthesis = true
-        keyword             = '('             #   )
+        keyword             = '('       #   )
 
 
     @export
     class OperatorLeftSquareBracket(KeywordAndOperatorBase):
-        __slots__ = (())
-        keyword   = '['             #   ]
+        __slots__    = (())
+        display_name = '['              #   ]
+        keyword      = '['              #   ]
 
 
     @export
     class OperatorRightParenthesis(KeywordAndOperatorBase):
         __slots__            = (())
+        #  (
+        display_name         = ')'
         is_right_parenthesis = true
         #  (
         keyword              = ')'
@@ -113,6 +128,8 @@ def gem():
     @export
     class OperatorRightParenthesisColon(KeywordAndOperatorBase):
         __slots__                    = (())
+        #  ([
+        display_name                 = '):'
         is__right_parenthesis__colon = true
         #  ([
         keyword                      = '):'
@@ -120,9 +137,11 @@ def gem():
 
     @export
     class OperatorRightSquareBracket(KeywordAndOperatorBase):
-        __slots__ = (())
+        __slots__    = (())
         #   [
-        keyword   = ']'
+        display_name = ']'
+        #   [
+        keyword      = ']'
 
 
     @share
@@ -136,8 +155,9 @@ def gem():
 
     @share
     class StatementReturn(Token):
-        __slots__ = (())
-        keyword   = 'return'
+        __slots__    = (())
+        display_name = 'return'
+        keyword      = 'return'
 
 
     @share

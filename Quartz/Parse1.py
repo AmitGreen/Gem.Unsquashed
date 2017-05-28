@@ -34,11 +34,11 @@ def gem():
             comment_start = m1.start('comment')
 
             if comment_start is 1:
-                append(PoundSignComment(comment, TokenNewline(s[m1.end('comment'):])))
+                append(PoundSignCommentLine(comment, TokenNewline(s[m1.end('comment'):])))
                 continue
 
             append(
-                IndentedPoundSignComment(
+                IndentedPoundSignCommentLine(
                     TokenIndented(s[:comment_start - 1]),
                     comment,
                     TokenNewline(s[m1.end('comment'):]),
