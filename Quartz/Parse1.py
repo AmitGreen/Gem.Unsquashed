@@ -31,20 +31,8 @@ def gem():
                 append(EmptyLine(s))
                 continue
 
-            comment_start = m1.start('comment')
 
-            if comment_start is 1:
-                append(PoundSignCommentLine(comment, conjure_token_newline(s[m1.end('comment'):])))
-                continue
-
-            append(
-                CommentNewline(
-                    conjure_comment_operator(s[:comment_start - 1]),
-                    comment,
-                    conjure_token_newline(s[m1.end('comment'):]),
-                ),
-            )
-
+            append(conjure_tree_comment(s[:m1.start('comment')], comment, s[m1.end('comment'):]))
             continue
 
         if show:
