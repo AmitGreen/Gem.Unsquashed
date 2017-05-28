@@ -8,7 +8,7 @@ def gem():
     require_gem('Gem.Exception')
     require_gem('Gem.Path')
     require_gem('Gem.StringOutput')
-    require_gem('Pearl.Comment')
+    require_gem('Pearl.ConjureTreeComment')
     require_gem('Pearl.Line')
     require_gem('Pearl.Token')
     require_gem('Pearl.Tokenizer')
@@ -23,7 +23,7 @@ def gem():
     share(
         #
         #   Classes
-        #   
+        #
         'EmptyLine',                        EmptyLine,
         'Token',                            Token,
         'TokenIndented',                    TokenIndented,

@@ -8,7 +8,7 @@ def gem():
             'testing',                  #   Boolean
         ))
 
-        
+
         def __init__(t):
             t.testing = false
 

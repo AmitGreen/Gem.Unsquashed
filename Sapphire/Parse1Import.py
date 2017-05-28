@@ -54,7 +54,7 @@ def gem():
             wk(conjure_token_newline(m2.group()))
 
             return module
-            
+
         if operator is ',':
             wj(m2.end())
             wk(OperatorComma(m2.group()))

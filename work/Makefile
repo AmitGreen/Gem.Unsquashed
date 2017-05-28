@@ -36,7 +36,7 @@ LICENSE_FILES = \
 
 
 PEARL_FILES = \
-    ../Pearl/Comment.py ../Pearl/Core.py \
+    ../Pearl/Comment.py ../Pearl/ConjureTreeComment.py ../Pearl/Core.py \
     ../Pearl/Line.py \
     ../Pearl/Token.py ../Pearl/Tokenizer.py
 
@@ -121,7 +121,7 @@ clean:
 	rm -f jb.py
 	rm -f lr.txt
 	rm -f m m.py
-	rm -f pa.py pa2.py pco.py pcm.py pk.py pl.py ps.py ps3.py pz.py
+	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
@@ -191,6 +191,7 @@ links:
 	ln -s ../Gem/Path2.py                       pa2.py
 	ln -s ../Pearl/Comment.py                   pcm.py
 	ln -s ../Pearl/Core.py                      pco.py
+	ln -s ../Pearl/ConjureTreeComment.py        pj.py
 	ln -s ../Pearl/Token.py                     pk.py
 	ln -s ../Pearl/Line.py                      pl.py
 	ln -s ../Gem/PortrayString.py               ps.py

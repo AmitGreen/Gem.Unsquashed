@@ -39,12 +39,12 @@ def gem():
 
             def conjure_by_name(k):
                 r = lookup(k)
-                
+
                 if r is not none:
                     return r
-                    
+
                 interned_k = intern_string(k)
-                
+
                 return provide(interned_k, meta(interned_k))
 
 
