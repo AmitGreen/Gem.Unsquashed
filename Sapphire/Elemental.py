@@ -170,13 +170,11 @@ def gem():
 
 
     [
-            conjure_symbol, find_symbol, lookup_symbol,
+            conjure_symbol,
     ] = produce_cache_functions(
             'Sapphire.symbol_cache', Symbol,
 
             produce_conjure_by_name = true,
-            produce_find            = true,
-            produce_lookup          = true,
         )
 
 

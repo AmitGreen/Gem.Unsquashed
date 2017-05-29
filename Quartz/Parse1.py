@@ -25,13 +25,36 @@ def gem():
                 append(create_UnknownLine(parse1_mysql_from_path, 1))
                 continue
 
-            comment_start = m1.end('comment_operator')
+            identifier = m1.group('identifier')
+
+            if identifier is not none:
+                identifier_start = m1.start('identifier')
+
+                line('identifier_start: %d', identifier_start)
+                line('identifier: %r', identifier)
+
+            comment_start = m1.end('pound_sign')
 
             if comment_start is -1:
-                append(EmptyLine(s))
+                #
+                #   '+ 1' due to the required space after --.
+                #
+                comment_start = m1.end('dash_dash') + 1
+
+                if comment_start is 0:                          #   '0' instead of '-1' due to the '+ 1' above.
+                    append(EmptyLine(s))
+                    continue
+
+                comment_end = m1.end('dash_dash_comment')
+
+                if comment_end is -1:
+                    append(conjure_comment_newline(s))
+                    continue
+
+                append(conjure_tree_comment(s[:comment_start], s[comment_start : comment_end], s[comment_end:]))
                 continue
 
-            comment_end = m1.end('comment')
+            comment_end = m1.end('pound_sign_comment')
 
             if comment_end is -1:
                 append(conjure_comment_newline(s))

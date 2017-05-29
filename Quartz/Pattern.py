@@ -20,25 +20,25 @@ def gem():
 
     @share
     def create_quartz_match():
-        alphanumeric_or_underscore = NAME('alphanumeric_or_underscore', ANY_OF('0-9', 'A-Z', '_', 'a-z'))
-        letter_or_underscore       = NAME('letter_or_underscore',       ANY_OF('A-Z', '_', 'a-z'))
-        ow                         = NAME('ow',                         ZERO_OR_MORE(' '))
+        ow         = NAME('ow',         ZERO_OR_MORE(' '))
+        w          = NAME('w',          ONE_OR_MORE(' '))
+        identifier = NAME('identifier', ONE_OR_MORE(ANY_OF('$', '0-9', 'A-Z', '_', 'a-z')))
 
-        name = NAME('name', letter_or_underscore + ZERO_OR_MORE(alphanumeric_or_underscore))
 
         #
         #   Generic
         #
-        comment_newline = NAME('comment_newline',  P('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
-        name_match      = MATCH('name_match', name)
-
-        ow_comment_newline  = NAME('ow_comment_newline',   ow + comment_newline)
-
-
-        #
-        #   With internal group
-        #
-        pound_G_comment = NAME('pound_G_comment', G('comment_operator', '#') + ow + Q('comment', ONE_OR_MORE(DOT)))
+        trailing_newline = NAME(
+            'trailing_newline',
+            (
+                  ow
+                + P(
+                        G('newline_pound_sign', '#') +  ow + Q('newline_pound_sign_comment', ONE_OR_MORE(DOT))
+                      | G('newline_dash_dash', '--') + P(w + Q('newline_dash_dash_comment',  ONE_OR_MORE(DOT)))
+                  )
+                + G('newline', LINEFEED)
+            )
+        )
 
 
         #
@@ -46,7 +46,19 @@ def gem():
         #
         FULL_MATCH(
             'mysql_line_match',
-            ow + P(pound_G_comment) + LINEFEED,
+            (
+                  ow
+                + (
+                        G(identifier)
+                      | (
+                              P(
+                                      G('pound_sign', '#') +  ow + Q('pound_sign_comment', ONE_OR_MORE(DOT))
+                                    | G('dash_dash', '--') + P(w + Q('dash_dash_comment',  ONE_OR_MORE(DOT)))
+                              )
+                            + LINEFEED
+                        )
+                  )
+            ),
         )
 
 
