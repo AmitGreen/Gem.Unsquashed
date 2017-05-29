@@ -14,11 +14,15 @@ def gem():
 
     class TokenComment(Token):
         __slots__        = (())
+        display_name     = 'comment'
         is_token_comment = true
 
 
-        def __repr__(t):
-            return arrange('<comment %s>', t.s)
+    class TokenCommentNewline(Token):
+        __slots__        = (())
+        display_name     = 'comment-newline'
+        is_token_comment = true
+        is_token_newline = true
 
 
     class TokenNewline(Token):
@@ -44,9 +48,6 @@ def gem():
 
 
         def __repr__(t):
-            if t.comment.s is '':
-                return arrange('<comment %r %r>', t.comment_operator.s, t.newline.s)
-
             return arrange('<comment %r %r %r>', t.comment_operator.s, t.comment.s, t.newline.s)
 
 
@@ -56,29 +57,26 @@ def gem():
 
     [
             conjure_comment_operator,
-    ] = produce_cache_functions(
-            'Pearl.Token.comment_operator_cache', CommentOperator,
+    ] = produce_cache_functions('Pearl.Token.comment_operator_cache', CommentOperator, produce_conjure_by_name = true)
 
+
+    [
+            conjure_comment_newline,
+    ] = produce_cache_functions(
+            'Pearl.Token.comment_operator_newline_cache', TokenCommentNewline,
+            
             produce_conjure_by_name = true,
         )
 
 
     [
             conjure_token_comment,
-    ] = produce_cache_functions(
-            'Pearl.Comment.token_comment_cache', TokenComment,
-
-            produce_conjure_by_name = true,
-        )
+    ] = produce_cache_functions('Pearl.Comment.token_comment_cache', TokenComment, produce_conjure_by_name = true)
 
 
     [
             conjure_token_newline,
-    ] = produce_cache_functions(
-            'Pearl.Comment.token_newline_cache', TokenNewline,
-
-            produce_conjure_by_name = true,
-        )
+    ] = produce_cache_functions('Pearl.Comment.token_newline_cache', TokenNewline, produce_conjure_by_name = true)
 
 
     share(
@@ -88,5 +86,6 @@ def gem():
 
 
     export(
-        'conjure_token_newline',    conjure_token_newline,
+        'conjure_comment_newline',     conjure_comment_newline,
+        'conjure_token_newline',       conjure_token_newline,
     )

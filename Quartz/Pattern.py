@@ -32,13 +32,13 @@ def gem():
         comment_newline = NAME('comment_newline',  P('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
         name_match      = MATCH('name_match', name)
 
-
         ow_comment_newline  = NAME('ow_comment_newline',   ow + comment_newline)
+
 
         #
         #   With internal group
         #
-        pound_G_comment = NAME('pound_G_comment', '#' + G('comment', ZERO_OR_MORE(DOT)))
+        pound_G_comment = NAME('pound_G_comment', G('comment_operator', '#') + ow + Q('comment', ONE_OR_MORE(DOT)))
 
 
         #

@@ -25,14 +25,19 @@ def gem():
                 append(create_UnknownLine(parse1_mysql_from_path, 1))
                 continue
 
-            comment = m1.group('comment')
+            comment_start = m1.end('comment_operator')
 
-            if comment is none:
+            if comment_start is -1:
                 append(EmptyLine(s))
                 continue
 
+            comment_end = m1.end('comment')
 
-            append(conjure_tree_comment(s[:m1.start('comment')], comment, s[m1.end('comment'):]))
+            if comment_end is -1:
+                append(conjure_comment_newline(s))
+                continue
+
+            append(conjure_tree_comment(s[:comment_start], s[comment_start : comment_end], s[comment_end:]))
             continue
 
         if show:
