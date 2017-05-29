@@ -10,11 +10,11 @@ def gem():
 
 
     @share
-    def parse1_statement_expression__symbol(indented, symbol, index):
+    def parse1_statement_expression__symbol(indented, identifier, index):
         s = qs()
 
         if show:
-            line('indented: %r, symbol: %r; s: %r', indented, symbol, s[index:])
+            line('indented: %r, identifier: %r; s: %r', indented, identifier, s[index:])
 
         #
         #<postfix1-operator>
@@ -31,7 +31,7 @@ def gem():
             if m2.start('comment_newline') is not -1:
                 return StatementCall(
                            indented,
-                           symbol,
+                           identifier,
                            Arguments_0(
                                OperatorLeftParenthesis(s[index:right_parenthesis__start]),
                                OperatorRightParenthesis(m2.group('right_parenthesis')),
@@ -57,11 +57,14 @@ def gem():
             m3_end = m3.end()
             #</atom1>
 
-            line('indented: %r; symbol: %r; operator_equal_sign: %r; atom: %r', indented, symbol, operator_equal_sign, atom)
+            line('indented: %r; identifier: %r; operator_equal_sign: %r; atom: %r',
+                 indented, identifier, operator_equal_sign, atom)
 
             return create_UnknownLine(parse1_statement_expression__symbol, 3)
 
         return create_UnknownLine(parse1_statement_expression__symbol, 4)
 
         #left_parenthesis = m2.group()
-        line('indented: %r, symbol: %r; s: %r; left_parenthesis: %r', indented, symbol, s[index:], left_parenthesis)
+
+        line('indented: %r, identifier: %r; s: %r; left_parenthesis: %r',
+             indented, identifier, s[index:], left_parenthesis)

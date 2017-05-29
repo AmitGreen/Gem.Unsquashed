@@ -128,7 +128,7 @@ def gem():
                    name,
                    ParameterColon_1(
                        operator_left_parenthesis,
-                       Symbol(parameter_1),
+                       conjure_identifier(parameter_1),
                        OperatorRightParenthesisColon(m5.group('ow__right_parenthesis__colon')),
                    ),
                    conjure_token_newline(m5.group('ow_comment_newline')),
@@ -150,8 +150,8 @@ def gem():
         if m2 is none:
             return create_UnknownLine(parse1_statement_decorator_header, 2)
 
-        symbol = Symbol(m2.group())
-        m2_end = m2.end()
+        identifier = conjure_identifier(m2.group())
+        m2_end     = m2.end()
         #</name>
 
         #
@@ -166,7 +166,7 @@ def gem():
         #</postfix>
 
         if left_parenthesis__end is -1:
-            return DecoratorHeader(operator_at_sign, symbol, conjure_token_newline(m3.group()))
+            return DecoratorHeader(operator_at_sign, identifier, conjure_token_newline(m3.group()))
 
         left_parenthesis  = OperatorLeftParenthesis(s[m2_end : left_parenthesis__end])
         right_parenthesis = m3.group('right_parenthesis')
@@ -177,13 +177,13 @@ def gem():
             if m3.end('comment_newline') is not -1:
                 return DecoratorHeader(
                            operator_at_sign,
-                           ExpressionCall(symbol, Arguments_0(left_parenthesis, right_parenthesis)),
+                           ExpressionCall(identifier, Arguments_0(left_parenthesis, right_parenthesis)),
                            conjure_token_newline(s[m3.end('right_parenthesis'):]),
                        )
 
             return create_UnknownLine(parse1_statement_decorator_header, 4)
 
-        expression = parse1_statement_call(m3.end(), symbol, left_parenthesis)
+        expression = parse1_statement_call(m3.end(), identifier, left_parenthesis)
 
         if expression is none:
             return create_UnknownLine()
@@ -254,7 +254,7 @@ def gem():
                    name,
                    ParameterColon_1(
                        OperatorLeftParenthesis(m3.group()),
-                       Symbol(parameter_1),
+                       conjure_identifier(parameter_1),
                        OperatorRightParenthesisColon(m5.group('ow__right_parenthesis__colon')),
                    ),
                    conjure_token_newline(m5.group('ow_comment_newline')),
@@ -353,11 +353,24 @@ def gem():
                     continue
 
                 if m.start('newline') is not -1:
-                    append(StatementExpression(m.group('indented'), Symbol(token), conjure_token_newline(s[m.end('token'):])))
+                    append(
+                        StatementExpression(
+                            m.group('indented'),
+                            conjure_identifier(token),
+                            conjure_token_newline(s[m.end('token'):]),
+                        ),
+                    )
+
                     continue
 
-                append(parse1_statement_expression__symbol(m.group('indented'), Symbol(token), m.end('token')))
-                #append(create_UnknownLine(parse1_python_from_path, 3))
+                append(
+                    parse1_statement_expression__symbol(
+                        m.group('indented'),
+                        conjure_identifier(token),
+                        m.end('token'),
+                    ),
+                )
+
                 continue
 
             [comment, newline] = m.group('comment', 'newline')

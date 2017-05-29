@@ -18,7 +18,7 @@ def gem():
                 name, left_parenthesis, single_quote, right_parenthesis,
         ] = m.group('name', 'left_parenthesis', 'single_quote', 'OLD__right_parenthesis')
 
-        expression = Symbol(name)
+        expression = conjure_identifier(name)
 
         if left_parenthesis is none:
             return expression
@@ -54,7 +54,7 @@ def gem():
 
         parameters = ParameterColon_1(
                          OperatorLeftParenthesis(left_parenthesis),
-                         Symbol(name2),
+                         conjure_identifier(name2),
                          OperatorRightParenthesisColon(right_parenthesis__colon),
                      )
 
@@ -89,7 +89,7 @@ def gem():
         else:
             parameters = ParameterColon_1(
                              OperatorLeftParenthesis(left_parenthesis),
-                             Symbol(name2),
+                             conjure_identifier(name2),
                              OperatorRightParenthesisColon(right_parenthesis__colon),
                          )
 
@@ -112,11 +112,11 @@ def gem():
         ] = m.group('name1', 'dot', 'name2', 'w_import_w', 'name3', 'w_as_w', 'name4', 'ow_comma_ow')
 
         if dot is none:
-            module = Symbol(name1)
+            module = conjure_identifier(name1)
         else:
-            module = ExpressionDot(Symbol(name1), OperatorDot(dot), name2)
+            module = ExpressionDot(conjure_identifier(name1), OperatorDot(dot), name2)
 
-        as_fragment = FromAsFragment(Symbol(name3), KeywordAs(w_as_w), Symbol(name4))
+        as_fragment = FromAsFragment(conjure_identifier(name3), KeywordAs(w_as_w), conjure_identifier(name4))
 
         if comma is none:
             return StatementFromImport(
@@ -136,7 +136,7 @@ def gem():
                 name1, w_as_w, name2, comma_2
         ] = m2.group('name1', 'w_as_w', 'name2', 'ow_comma_ow')
 
-        as_fragment_2 = FromAsFragment(Symbol(name1), KeywordAs(w_as_w), Symbol(name2))
+        as_fragment_2 = FromAsFragment(conjure_identifier(name1), KeywordAs(w_as_w), conjure_identifier(name2))
 
         if comma_2 is none:
             return StatementFromImport(
@@ -158,7 +158,7 @@ def gem():
 
         return StatementImport(
                    KeywordImport(m0.group('indented') + m0.group('keyword__ow')),
-                   Symbol(m.group('name1')),
+                   conjure_identifier(m.group('name1')),
                    conjure_token_newline(m.group('ow_comment_newline')),
                )
 

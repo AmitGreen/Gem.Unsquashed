@@ -209,7 +209,7 @@ def gem():
         __slot__ = ((
             'left',                         #   Expression
             'dot',                          #   OperatorDot
-            'right',                        #   Symbol
+            'right',                        #   Identifier
             'arguments',                    #   Arguments*
         ))
 

@@ -15,7 +15,8 @@ def gem():
 
     from Gem import create_DelayedFileOutput, create_StringOutput, produce_cache_functions, stop_iteration
     from Gem import read_text_from_path
-    from Pearl import conjure_token_newline, create_UnknownLine, qj, qk, qs, Token, wj, wk, z_initialize
+    from Pearl import conjure_identifier, conjure_token_newline, create_UnknownLine
+    from Pearl import qj, qk, qs, Token, wj, wk, z_initialize
 
 
     share(
@@ -28,6 +29,7 @@ def gem():
         #
         #   Imported functions
         #
+        'conjure_identifier',           conjure_identifier,
         'conjure_token_newline',        conjure_token_newline,
         'create_DelayedFileOutput',     create_DelayedFileOutput,
         'create_StringOutput',          create_StringOutput,

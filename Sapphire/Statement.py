@@ -318,7 +318,7 @@ def gem():
             'indented',                 #   String+
             'left',                     #   Expression
             'dot',                      #   OperatorDot
-            'right',                    #   Symbol
+            'right',                    #   Identifier
             'arguments',                #   Arguments*
             'newline',                  #   String+
         ))

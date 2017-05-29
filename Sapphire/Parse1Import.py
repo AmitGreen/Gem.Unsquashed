@@ -20,7 +20,7 @@ def gem():
         if m1 is none:
             return parse_incomplete(parse1_statement_import_module, 1)
 
-        module = Symbol(m1.group())
+        module = conjure_identifier(m1.group())
         #</name>
 
         #
@@ -72,7 +72,7 @@ def gem():
         if m3 is none:
             return parse_incomplete(parse1_statement_import_module, 4)
 
-        module = ModuleAsFragment(module, keyword_as, Symbol(m3.group()))
+        module = ModuleAsFragment(module, keyword_as, conjure_identifier(m3.group()))
         #</name>
 
         #

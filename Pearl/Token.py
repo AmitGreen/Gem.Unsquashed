@@ -29,6 +29,24 @@ def gem():
             w(t.s)
 
 
+    @share
+    class Identifier(Token):
+        __slots__ = (())
+
+
+        def __repr__(t):
+            return t.s
+
+
+    [
+            conjure_identifier,
+    ] = produce_cache_functions(
+            'Pearl.Token.identifier_cache', Identifier,
+
+            produce_conjure_by_name = true,
+        )
+
+
     @export
     class TokenIndented(Token):
         display_name      = 'indented'
@@ -38,3 +56,8 @@ def gem():
     @export
     class UnknownLine(Token):
         display_name = 'unknown-line'
+
+
+    export(
+        'conjure_identifier',   conjure_identifier,
+    )
