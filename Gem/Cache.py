@@ -13,7 +13,7 @@ def gem():
             produce_cache           = false,
             produce_conjure_by_name = false,
             produce_find            = false,
-            produce_insert          = false,
+            produce_insert_interned = false,
             produce_lookup          = false,
     ):
         result = []
@@ -21,13 +21,13 @@ def gem():
 
         cache = {}
 
-        if (produce_conjure_by_name) or (produce_insert):
+        if (produce_conjure_by_name) or (produce_insert_interned):
             provide = cache.setdefault
 
         if (produce_conjure_by_name) or (produce_lookup):
             lookup = cache.get
 
-        if (produce_find) or (produce_insert):
+        if (produce_find) or (produce_insert_interned):
             find = cache.__getitem__
 
         if produce_cache:
@@ -53,12 +53,12 @@ def gem():
         if produce_find:
             append(find)
 
-        if produce_insert:
+        if produce_insert_interned:
             contains = cache.__contains__
 
 
             if __debug__:
-                def insert(interned_k, v):
+                def insert_interned(interned_k, v):
                     if contains(interned_k):
                         raise_runtime_error('cache %s: attempt to insert key %r with value %r (already has value %r)',
                                             name, interned_k, v, find(interned_k))
@@ -66,7 +66,7 @@ def gem():
                     return provide(interned_k, v)
 
 
-                append(insert)
+                append(insert_interned)
             else:
                 append(provide)
 

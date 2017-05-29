@@ -357,8 +357,13 @@ def gem():
 
 
     [
-            name_cache, name_insert,
-    ] = produce_cache_functions('Tremolite.name_cache', TremoliteName, produce_cache = true, produce_insert = true)
+            name_cache, name_insert_interned,
+    ] = produce_cache_functions(
+            'Tremolite.name_cache', TremoliteName,
+            
+            produce_cache           = true,
+            produce_insert_interned = true,
+        )
 
 
     def create_exact(s):
@@ -610,7 +615,7 @@ def gem():
 
         interned_name = intern_string(name)
 
-        return name_insert(interned_name, TremoliteName(interned_name, pattern))
+        return name_insert_interned(interned_name, TremoliteName(interned_name, pattern))
 
 
     @export
@@ -623,7 +628,7 @@ def gem():
 
         interned_name = intern_string(name)
 
-        return name_insert(
+        return name_insert_interned(
                    interned_name,
                    TremoliteNamedGroup(
                        intern_arrange('(?P<%s>%s)', interned_name, pattern.regular_expression),

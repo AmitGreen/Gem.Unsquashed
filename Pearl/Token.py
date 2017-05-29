@@ -39,11 +39,13 @@ def gem():
 
 
     [
-            conjure_identifier,
+            conjure_identifier, insert_interned_identifier, lookup_identifier,
     ] = produce_cache_functions(
             'Pearl.Token.identifier_cache', Identifier,
 
             produce_conjure_by_name = true,
+            produce_insert_interned = true,
+            produce_lookup          = true,
         )
 
 
@@ -59,5 +61,7 @@ def gem():
 
 
     export(
-        'conjure_identifier',   conjure_identifier,
+        'conjure_identifier',           conjure_identifier,
+        'insert_interned_identifier',   insert_interned_identifier,
+        'lookup_identifier',            lookup_identifier,
     )
