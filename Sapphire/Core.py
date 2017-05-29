@@ -8,13 +8,14 @@ def gem():
     require_gem('Gem.Exception')
     require_gem('Gem.Path')
     require_gem('Gem.StringOutput')
+    require_gem('Pearl.Comment')
     require_gem('Pearl.Token')
     require_gem('Pearl.Tokenizer')
 
 
-    from Gem import conjure_token_newline, create_DelayedFileOutput, create_StringOutput, produce_cache_functions, stop_iteration
+    from Gem import create_DelayedFileOutput, create_StringOutput, produce_cache_functions, stop_iteration
     from Gem import read_text_from_path
-    from Pearl import create_UnknownLine, qj, qk, qs, Token, wj, wk, z_initialize
+    from Pearl import conjure_token_newline, create_UnknownLine, qj, qk, qs, Token, wj, wk, z_initialize
 
 
     share(
