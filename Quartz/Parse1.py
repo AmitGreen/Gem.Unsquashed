@@ -25,13 +25,21 @@ def gem():
                 append(create_UnknownLine(parse1_mysql_from_path, 1))
                 continue
 
-            identifier = m1.group('identifier')
+            identifier_s = m1.group('identifier')
 
-            if identifier is not none:
+            if identifier_s is not none:
+                identifier = lookup_identifier(identifier_s)
+
+                if identifier is none:
+                    lower = identifier_s.lower()
+
+                    line('lower: %s', lower)
+
                 identifier_start = m1.start('identifier')
 
                 line('identifier_start: %d', identifier_start)
                 line('identifier: %r', identifier)
+                line('identifier_s: %r', identifier)
 
             comment_start = m1.end('pound_sign')
 
