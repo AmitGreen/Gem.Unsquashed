@@ -3,6 +3,7 @@
 #
 #   NOTE:
 #       Due to the fact that python 3.0 rejects 'raise' with three parameters, this code is in a seperate file
+#       only used by Python 2.
 #
 @gem('Gem.Path2')
 def gem():
@@ -16,7 +17,7 @@ def gem():
     python__remove_path   = PythonOperatingSystem.remove
 
 
-    def adjust_OSError_exception():
+    def adjust_OSError_exception(path, path2 = none):
         [e_type, e, e_traceback] = e_all = exception_information()
 
         assert e_type is OSError
@@ -24,15 +25,15 @@ def gem():
         arguments = e.args
 
         if (type(arguments) is Tuple) and (length(arguments) is 2):
-            error_number = arguments[0]
+            [error_number, message] = arguments
 
-            if error_number is ERROR_NO_ACCESS:
-                return ((PermissionError, arguments, e_traceback))
+            if (error_number is ERROR_NO_ACCESS) and ((e.filename is none) or (e.filename == path)) and (path2 is none):
+                return ((PermissionError, ((error_number, message, path)), e_traceback))
 
-            if error_number is ERROR_NO_ENTRY:
-                return ((FileNotFoundError, arguments, e_traceback))
+            if (error_number is ERROR_NO_ENTRY) and ((e.filename is none) or (e.filename == path)):
+                return ((FileNotFoundError, ((error_number, message, path, path2)), e_traceback))
 
-        raise e_all
+        return e_all
 
 
     @export
@@ -45,7 +46,7 @@ def gem():
             #       To avoid adding an extra frame in the traceback, the 'raise' must be issued in this function,
             #       instead of inside adjust_OSError_exception()
             #
-            [e_type, e, e_traceback] = adjust_OSError_exception()
+            [e_type, e, e_traceback] = adjust_OSError_exception(path)
 
             raise e_type, e, e_traceback
 
@@ -60,6 +61,6 @@ def gem():
             #       To avoid adding an extra frame in the traceback, the 'raise' must be issued in this function,
             #       instead of inside adjust_OSError_exception()
             #
-            [e_type, e, e_traceback] = adjust_OSError_exception()
+            [e_type, e, e_traceback] = adjust_OSError_exception(from_path, to_path)
 
             raise e_type, e, e_traceback

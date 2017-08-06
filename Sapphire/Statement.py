@@ -375,6 +375,20 @@ def gem():
 
 
     @share
+    class StatementPass(Token):
+        __slots__    = (())
+        display_name = 'pass'
+        keyword      = 'pass'
+
+
+    @share
+    class StatementReturn(Token):
+        __slots__    = (())
+        display_name = 'return'
+        keyword      = 'return'
+
+
+    @share
     class StatementReturnExpression(Object):
         __slots__ = ((
             'keyword_return',           #   String

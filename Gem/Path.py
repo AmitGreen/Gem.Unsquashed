@@ -56,7 +56,7 @@ def gem():
 
     @export
     def remove_path__ignore_file_not_found(path):
-        with catch_FileNotFoundError() as e:
+        with catch_FileNotFoundError(path) as e:
             remove_path(path)
 
         return e.caught is none
@@ -64,7 +64,7 @@ def gem():
 
     @export
     def rename_path__ignore_file_not_found(from_path, to_path):
-        with catch_FileNotFoundError() as e:
+        with catch_FileNotFoundError(from_path, to_path) as e:
             rename_path(from_path, to_path)
 
         return e.caught is none

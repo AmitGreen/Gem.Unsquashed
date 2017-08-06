@@ -7,8 +7,8 @@ def gem():
     #   view_items
     #       Access the .viewitems method of a Map.
     #
-    #       (Deals with the annoyance of .viewitems method named .viewitems in python 2.0, but .items in
-    #       python 3.0)
+    #       (Deals with the annoyance of .viewitems method named .viewitems in Python 2.0, but .items in
+    #       Python 3.0)
     #
     view_items = (Map.viewitems   if is_python_2 else  Map.items)
 

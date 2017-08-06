@@ -47,11 +47,19 @@ def gem():
 
 
     if is_python_2:
-        EnvironmentError = PythonException.EnvironmentError
+        EnvironmentError           = PythonException.EnvironmentError
+        construct_EnvironmentError = EnvironmentError.__init__
 
 
         class FileNotFoundError(EnvironmentError):
-            pass
+            __slots__ = ((
+                'filename2',                #   None | String
+            ))
+
+
+            def __init__(t, error_number, message, path = none, path2 = none):
+                construct_EnvironmentError(t, error_number, message, path)
+                t.filename2 = path2
 
 
         class PermissionError(EnvironmentError):

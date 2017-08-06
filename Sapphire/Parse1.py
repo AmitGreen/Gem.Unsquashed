@@ -13,48 +13,64 @@ def gem():
     require_gem('Sapphire.Statement')
 
 
-    show = true
+    show = 1
 
 
-    def parse1_statement_call(i, left, left_parenthesis):
+    def parse1__newline(j):
+        #
+        #<ow-comment-newline>
+        #
+        m1 = ow_comment_newline_match(qs(), j)
+
+        if m1 is none:
+            return parse_incomplete(1)
+
+        return conjure_token_newline(m1.group())
+        #</ow-comment-newline>
+
+
+    def parse1_arguments__left_parenthesis(left_parenthesis, j):
         s = qs()
+
+        if show is 7:
+            line('parse1_arguments__left_parenthesis: left_parenthesis: %s; s: %s',
+                 left_parenthesis, portray_raw_string(s[j:]))
 
         #
         #<single_quote>
         #
-        m1 = single_quote_match(s, i)
+        m1 = single_quote_match(s, j)
 
         if m1 is none:
-            return parse_incomplete(parse1_statement_call, 1)
+            return parse_incomplete(1)
 
         argument_1 = SingleQuote(m1.group())
-        m1_end     = m1.end()
         #</single_quote>
 
         #
         #<right-parenthesis>
         #
-        m2 = statement_argument1_operator1_match(s, m1_end)
+        m2 = statement_argument1_operator_match1(s, m1.end())
 
         if m2 is none:
-            return parse_incomplete(parse1_statement_call, 2)
+            return parse_incomplete(2)
 
-        right_parenthesis__end = m2.end('right_parenthesis')
-
-        if right_parenthesis__end is -1:
-            return parse_incomplete(parse1_statement_call, 3)
+        right_parenthesis = OperatorRightParenthesis(m2.group())
         #</right-parenthesis>
 
-        right_parenthesis = OperatorRightParenthesis(s[m1_end : right_parenthesis__end])
+        wj(m2.end())
+        return Arguments_1(left_parenthesis, argument_1, right_parenthesis)
 
-        wk(conjure_token_newline(s[right_parenthesis__end:]))
 
-        return ExpressionCall(left, Arguments_1(left_parenthesis, argument_1, right_parenthesis))
+    def parse1_expression_call(j, left, left_parenthesis):
+        arguments = parse1_arguments__left_parenthesis(left_parenthesis, j)
+
+        return ExpressionCall(left, arguments)
 
 
     def parse1_statement_class(m1):
         if m1.end('newline') is not -1:
-            return create_UnknownLine(parse1_statement_class, 1)
+            return create_UnknownLine(1)
 
         keyword_class = KeywordClass(m1.group())
         s             = qs()
@@ -65,7 +81,7 @@ def gem():
         m2 = name_match(s, m1.end())
 
         if m2 is none:
-            return create_UnknownLine(parse1_statement_class, 2)
+            return create_UnknownLine(2)
 
         name   = m2.group()
         m2_end = m2.end()
@@ -74,10 +90,10 @@ def gem():
         #
         #<choice: left-parenthesis [right-parenthesis colon newline] | newline>
         #
-        m3 = class1_parenthesis_match(s, m2_end)
+        m3 = class_parenthesis_match1(s, m2_end)
 
         if m3 is none:
-            return create_UnknownLine(parse1_statement_class, 3)
+            return create_UnknownLine(3)
 
         newline_2 = m3.group('ow_comment_newline_2')
 
@@ -108,7 +124,7 @@ def gem():
         m4 = name_match(s, m3.end())
 
         if m4 is none:
-            return create_UnknownLine(parse1_statement_class, 4)
+            return create_UnknownLine(4)
 
         parameter_1 = m4.group()
         m2_end      = m4.end()
@@ -120,7 +136,7 @@ def gem():
         m5 = right_parenthesis__colon__match(s, m4.end())
 
         if m5 is none:
-            return create_UnknownLine(parse1_statement_class, 5)
+            return create_UnknownLine(5)
         #</right-parenthesis-colon-newline>
 
         return ClassHeader(
@@ -137,7 +153,7 @@ def gem():
 
     def parse1_statement_decorator_header(m1):
         if m1.end('newline') is not -1:
-            return create_UnknownLine(parse1_statement_decorator_header, 1)
+            return create_UnknownLine(1)
 
         operator_at_sign = OperatorAtSign(m1.group())
         s                = qs()
@@ -148,7 +164,7 @@ def gem():
         m2 = name_match(s, m1.end())
 
         if m2 is none:
-            return create_UnknownLine(parse1_statement_decorator_header, 2)
+            return create_UnknownLine(2)
 
         identifier = conjure_identifier(m2.group())
         m2_end     = m2.end()
@@ -157,10 +173,10 @@ def gem():
         #
         #<postfix>
         #
-        m3 = decorator_postfix1_match(s, m2_end)
+        m3 = decorator_postfix_match1(s, m2_end)
 
         if m3 is none:
-            return create_UnknownLine(parse1_statement_decorator_header, 3)
+            return create_UnknownLine(3)
 
         left_parenthesis__end = m3.end('left_parenthesis__ow')
         #</postfix>
@@ -181,19 +197,28 @@ def gem():
                            conjure_token_newline(s[m3.end('right_parenthesis'):]),
                        )
 
-            return create_UnknownLine(parse1_statement_decorator_header, 4)
+            return create_UnknownLine(4)
 
-        expression = parse1_statement_call(m3.end(), identifier, left_parenthesis)
+        expression = parse1_expression_call(m3.end(), identifier, left_parenthesis)
 
         if expression is none:
-            return create_UnknownLine()
+            return create_UnknownLine_0()
 
-        return DecoratorHeader(operator_at_sign, expression, qk())
+        #
+        #<newline>
+        #
+        newline = parse1__newline(qj())
+
+        if newline is none:
+            return create_UnknownLine(5)
+        #</newline>
+
+        return DecoratorHeader(operator_at_sign, expression, newline)
 
 
     def parse1_statement_define_header(m1):
         if m1.end('newline') is not -1:
-            return create_UnknownLine(parse1_statement_define_header, 1)
+            return create_UnknownLine(1)
 
         keyword_define = KeywordDefine(m1.group())
         s              = qs()
@@ -204,7 +229,7 @@ def gem():
         m2 = name_match(s, m1.end())
 
         if m2 is none:
-            return create_UnknownLine(parse1_statement_define_header, 2)
+            return create_UnknownLine(2)
 
         name   = m2.group()
         m2_end = m2.end()
@@ -213,10 +238,10 @@ def gem():
         #
         #<parenthesis>
         #
-        m3 = define1_parenthesis_match(s, m2_end)
+        m3 = define_parenthesis_match1(s, m2_end)
 
         if m3 is none:
-            return create_UnknownLine(parse1_statement_define_header, 3)
+            return create_UnknownLine(3)
 
         comment_newline = m3.group('ow_comment_newline')
         #</parenthesis>
@@ -235,7 +260,7 @@ def gem():
         m4 = name_match(s, m3.end())
 
         if m4 is none:
-            return create_UnknownLine(parse1_statement_define_header, 4)
+            return create_UnknownLine(4)
 
         parameter_1 = m4.group()
         #</parameter_1>
@@ -246,7 +271,7 @@ def gem():
         m5 = right_parenthesis__colon__match(s, m4.end())
 
         if m5 is none:
-            return create_UnknownLine(parse1_statement_define_header, 5)
+            return create_UnknownLine(5)
         #</right-parenthesis-colon-newline>
 
         return DefineHeader(
@@ -261,6 +286,13 @@ def gem():
                )
 
 
+    def parse1_statement_pass(m1):
+        if m1.end('newline') is -1:
+            return create_UnknownLine(1)
+
+        return StatementPass(m1.group())
+
+
     def parse1_statement_return(m1):
         if m1.end('newline') is not -1:
             return StatementReturn(m1.group())
@@ -271,10 +303,10 @@ def gem():
         #
         #<atom1>
         #
-        m2 = atom1_match(s, m1.end())
+        m2 = atom_match1(s, m1.end())
 
         if m2 is none:
-            return create_UnknownLine(parse1_statement_return, 1)
+            return create_UnknownLine(1)
 
         s2     = m2.group()
         atom   = find_atom_type(s2[0])(s2)
@@ -284,10 +316,10 @@ def gem():
         #
         #<postfix>
         #
-        m3 = statement_postfix1_match(s, m2_end)
+        m3 = statement_postfix_match1(s, m2_end)
 
         if m3 is none:
-            return create_UnknownLine(parse1_statement_return, 2)
+            return create_UnknownLine(2)
 
         left_parenthesis__end = m3.end('left_parenthesis__ow')
         #</postfix>
@@ -308,14 +340,23 @@ def gem():
                            conjure_token_newline(s[m3.end('right_parenthesis'):]),
                        )
 
-            return create_UnknownLine(parse1_statement_return, 3)
+            return create_UnknownLine(3)
 
-        expression = parse1_statement_call(s, m3.end(), atom, left_parenthesis)
+        expression = parse1_expression_call(s, m3.end(), atom, left_parenthesis)
 
         if expression is none:
-            return create_UnknownLine()
+            return create_UnknownLine_0()
 
-        return StatementReturnExpression(keyword_return, expression, qk())
+        #
+        #<newline>
+        #
+        newline = parse1__newline(qj())
+
+        if newline is none:
+            return create_UnknownLine(4)
+        #</newline>
+
+        return StatementReturnExpression(keyword_return, expression, newline)
 
 
     lookup_parse1_line = {
@@ -323,6 +364,7 @@ def gem():
                              'def'    : parse1_statement_define_header,
                              'from'   : parse1_statement_from,
                              'import' : parse1_statement_import,
+                             'pass'   : parse1_statement_pass,
                              'return' : parse1_statement_return,
                              '@'      : parse1_statement_decorator_header,
                          }.get
@@ -337,10 +379,10 @@ def gem():
         iterate_lines = z_initialize(data)
 
         for s in iterate_lines:
-            m = line1_match(s)
+            m = line_match1(s)
 
             if m is none:
-                append(create_UnknownLine(parse1_python_from_path, 1))
+                append(create_UnknownLine(1))
                 continue
 
             token = m.group('token')
@@ -378,7 +420,7 @@ def gem():
             if newline is none:
                 assert comment is none
 
-                append(create_UnknownLine(parse1_python_from_path, 4))
+                append(create_UnknownLine(4))
                 continue
 
             if comment is not none:
