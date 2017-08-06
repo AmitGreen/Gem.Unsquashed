@@ -239,7 +239,7 @@ def gem():
         [
                 dot, right, operator, name_0, number_0, single_quote_0, right_parenthesis,
                 #ow_comment_newline,
-        ] = m.group('dot', 'right', 'operator', 'name', 'number', 'single_quote', 'right_parenthesis')
+        ] = m.group('ow_dot_ow', 'right', 'operator', 'name', 'number', 'single_quote', 'right_parenthesis')
 
         assert operator is '('
 

@@ -27,7 +27,7 @@ def gem():
         #<module: name ||| ['.' name] ... ('as' | ',' | newline)
         #
         while true:
-            m2 = import1_module_match(s, m1.end())
+            m2 = import_module_match1(s, m1.end())
 
             if m2 is none:
                 return parse_incomplete(parse1_statement_import_module, 2)
@@ -48,7 +48,7 @@ def gem():
                 return parse_incomplete(parse1_statement_import_module, 3)
             #</name>
 
-            module = ExpressionDot(module, operator_dot, m1.group())
+            module = ExpressionDot(module, operator_dot, conjure_identifier(m1.group()))
 
         if operator is none:
             wk(conjure_token_newline(m2.group()))
@@ -78,7 +78,7 @@ def gem():
         #
         #<comma-or-newline>
         #
-        m4 = comma1_or_newline_match(s, m3.end())
+        m4 = comma_or_newline_match1(s, m3.end())
 
         if m4 is none:
             return parse_incomplete(parse1_statement_import_module, 5)

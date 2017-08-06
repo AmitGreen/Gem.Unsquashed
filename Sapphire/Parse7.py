@@ -109,12 +109,12 @@ def gem():
 
         [
                 name1, dot, name2, w_import_w, name3, w_as_w, name4, comma
-        ] = m.group('name1', 'dot', 'name2', 'w_import_w', 'name3', 'w_as_w', 'name4', 'ow_comma_ow')
+        ] = m.group('name1', 'ow_dot_ow', 'name2', 'w_import_w', 'name3', 'w_as_w', 'name4', 'ow_comma_ow')
 
         if dot is none:
             module = conjure_identifier(name1)
         else:
-            module = ExpressionDot(conjure_identifier(name1), OperatorDot(dot), name2)
+            module = ExpressionDot(conjure_identifier(name1), OperatorDot(dot), conjure_identifier(name2))
 
         as_fragment = FromAsFragment(conjure_identifier(name3), KeywordAs(w_as_w), conjure_identifier(name4))
 

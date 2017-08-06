@@ -27,7 +27,7 @@ def gem():
         #<module: name ||| ['.' name] ... 'import'>
         #
         while true:
-            m2 = from1_module_match(s, m1.end())
+            m2 = from_module_match1(s, m1.end())
 
             if m2 is none:
                 return parse_incomplete(parse1_statement_from_module, 2)
@@ -48,7 +48,7 @@ def gem():
                 return parse_incomplete(parse1_statement_from_module, 2)
             #</name2>
 
-            module = ExpressionDot(module, operator_dot, m1.group())
+            module = ExpressionDot(module, operator_dot, conjure_identifier(m1.group()))
 
         wj(m2.end())
         wk(KeywordImport(m2.group()))
@@ -75,7 +75,7 @@ def gem():
         #
         #<as>
         #
-        m2 = from1_as_match(s, m1.end())
+        m2 = from_as_match1(s, m1.end())
 
         if m2 is none:
             line('parse1_statement_from_as: incomplete#2')
@@ -112,7 +112,7 @@ def gem():
         #
         #<comma-or-newline>
         #
-        m4 = comma1_or_newline_match(s, m3.end())
+        m4 = comma_or_newline_match1(s, m3.end())
 
         if m4 is none:
             line('parse1_statement_from_as: incomplete#4')
