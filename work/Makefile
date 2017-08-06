@@ -11,13 +11,14 @@ BERYL_FILES = \
 
 GEM_FILES = \
 	../Gem/__init__.py \
-    ../Gem/Absent.py ../Gem/Ascii.py \
+    ../Gem/Absent.py ../Gem/All.py ../Gem/Ascii.py \
 	../Gem/Boot.py \
-	../Gem/Cache.py ../Gem/Configuration.py ../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
+	../Gem/Cache.py ../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
 	../Gem/DelayedFileOutput.py \
 	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
-	../Gem/Import.py ../Gem/IO.py \
+	../Gem/Global.py \
+    ../Gem/Import.py ../Gem/IO.py \
     ../Gem/Map.py \
     ../Gem/Path.py ../Gem/Path2.py ../Gem/PortrayString.py \
     ../Gem/RegularExpression.py \
@@ -107,15 +108,15 @@ clean:
 	rm -rf __pycache__
 	rm -f *.old *.new *.pyc
 
-	rm -f ab.py ac.py ag.py
 	rm -f 2re.py 2sf.py 2sp.py 2sc.py
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
+	rm -f a.py ab.py ac.py ag.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py ce.py co.py
 	rm -f de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
-	rm -f gc.py gd.py
+	rm -f gd.py gg.py
 	rm -f h1pa.py h1pe.py h1pf.py h1pi.py h7pa.py h7pe.py hc.py hem.py hex.py hk.py hma.py hmc.py hpt.py hs.py hz.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
@@ -135,9 +136,6 @@ files:
 
 
 links:
-	ln -s ../Gem/Absent.py                      ab.py
-	ln -s ../Gem/Ascii.py                       ac.py
-	ln -s ../Agate/RUNME.py                     ag.py
 	ln -s /usr/lib/python2.7/re.py              2re.py
 	ln -s /usr/lib/python2.7/sre_compile.py     2sc.py
 	ln -s /usr/lib/python2.7/sre_constants.py   2sf.py
@@ -146,6 +144,10 @@ links:
 	ln -s /usr/lib/python3.5/sre_compile.py     3sc.py
 	ln -s /usr/lib/python3.5/sre_constants.py   3sf.py
 	ln -s /usr/lib/python3.5/sre_parse.py       3sp.py
+	ln -s ../Gem/All.py                         a.py
+	ln -s ../Gem/Absent.py                      ab.py
+	ln -s ../Gem/Ascii.py                       ac.py
+	ln -s ../Agate/RUNME.py                     ag.py
 	ln -s ../Beryl/BerylAnswer.py               ba.py
 	ln -s ../Beryl/__init__.py                  bi.py
 	ln -s ../Beryl/Ask.py                       bk.py
@@ -164,8 +166,8 @@ links:
 	ln -s ../Gem/Exception.py                   ex.py
 	ln -s ../Gem/FileOutput.py                  fo.py
 	ln -s ../Gem/FileStatus.py                  fs.py
-	ln -s ../Gem/Configuration.py               gc.py
 	ln -s ../Gem/Codec.py                       gd.py
+	ln -s ../Gem/Global.py                      gg.py
 	ln -s ../Sapphire/Parse1.py                 h1pa.py
 	ln -s ../Sapphire/Parse1Expression.py       h1pe.py
 	ln -s ../Sapphire/Parse1From.py             h1pf.py

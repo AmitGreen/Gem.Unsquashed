@@ -96,8 +96,7 @@ def gem():
     #   boot
     #
     def boot():
-        del Gem.Boot
-        del python_modules['Gem.Boot']
+        del Gem.boot, Gem.Boot, python_modules['Gem.Boot']
 
 
     #
@@ -569,6 +568,7 @@ def gem():
         special_builtins_name, PythonBuiltIn.__dict__,
     )
 
+
     #
     #   Initial shares's
     #
@@ -579,20 +579,19 @@ def gem():
         #'__builtins__',    GemBuiltIn_scope,       #   Done in produce_export_and_share
         #
 
-        #
         #   Functions
         #
         'built_in',     built_in,
-        'Privileged',   GemPrivileged,
         'restricted',   restricted,
 
         #
         #   Modules
         #
+        'Privileged',       GemPrivileged,
         'PythonBuiltIn',    PythonBuiltIn,
         'PythonSystem',     PythonSystem,
         'PythonException',  PythonException,
-        #'Shared',      Shared                      #   Done in produce_export_and_share
+        #'Shared',          Shared                      #   Done in produce_export_and_share
     )
 
 

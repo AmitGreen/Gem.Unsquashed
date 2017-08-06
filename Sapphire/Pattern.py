@@ -28,6 +28,7 @@ def gem():
         colon            = NAME('colon',            ':')
         comma            = NAME('comma',            ',')
         comment_newline  = NAME('comment_newline',  P('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
+        dot              = NAME('dot',              '.')
         equal_sign       = NAME('equal_sign',       '=')
         keyword_as       = NAME('as',               'as')
         keyword_import   = NAME('import',           'import')
@@ -58,7 +59,7 @@ def gem():
         name4                = NAME('name4',                name)
         ow_comma_ow          = NAME('ow_comma_ow',          ow + comma + ow)
         ow_comment_newline   = NAME('ow_comment_newline',   ow + comment_newline)
-        ow_dot_ow            = NAME('dot',                  ow + period + ow)
+        ow_dot_ow            = NAME('ow_dot_ow',            ow + period + ow)
         w_as_w               = NAME('w_as_w',               w + keyword_as + w)
         w_import_w           = NAME('w_import_w',           w + keyword_import + w)
 
@@ -111,33 +112,31 @@ def gem():
         #
         #   Expressions 1
         #
+        FULL_MATCH('ow_comment_newline_match', G(ow_comment_newline))
+        
         MATCH(
-            'atom1_match',
+            'argument1_operator_match1',
+            ow + right_parenthesis,
+        )
+
+        MATCH(
+            'atom_match1',
             name | number | single_quote,
         )
 
         MATCH(
-            'statement1_expression_operator',
+            'statement_postfix_operator_match1',
             (
                   ow
                 + (
                         G(left_parenthesis) + ow + P(G(right_parenthesis) + ow) + Q(comment_newline)
-                      | G(equal_sign) + ow
+                      | G('operator', equal_sign | dot) + ow
                   )
             ),
         )
 
         MATCH(
-           'decorator1_match',
-            (
-                  ow
-                + P(G(left_parenthesis) + ow + P(G(right_parenthesis) + ow))
-                + Q(comment_newline)
-            ),
-        )
-
-        MATCH(
-           'decorator_postfix1_match',
+           'decorator_postfix_match1',
             (
                   ow
                 + P(G(left_parenthesis__ow) + P(G(right_parenthesis) + ow))
@@ -146,7 +145,7 @@ def gem():
         )
 
         MATCH(
-           'statement_postfix1_match',
+           'statement_postfix_match1',
             (
                   ow
                 + P(G(left_parenthesis__ow) + P(G(right_parenthesis) + ow))
@@ -160,8 +159,8 @@ def gem():
         )
 
         MATCH(
-            'statement_argument1_operator1_match',
-            ow + G(right_parenthesis) + ow + G(comment_newline),
+            'statement_argument1_operator_match1',
+            ow + right_parenthesis,
         )
 
 
@@ -172,13 +171,13 @@ def gem():
             'argument7_1_match',
             (
                   (G(name) | G(number) | G(single_quote))
-                + G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',', '[')) + OLD__middle_ow)     #   ]
+                + G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',', '[')) + OLD__middle_ow)        #   ]
             )
         )
 
         MATCH(
             'argument7_1A_match',
-            G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',', '[')) + OLD__middle_ow)          #   ]
+            G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',', '[')) + OLD__middle_ow)              #   ]
         )
 
         MATCH(
@@ -224,7 +223,7 @@ def gem():
         #   Statements - Parse 1
         #
         MATCH(
-            'line1_match',
+            'line_match1',
             (
                   G('indented', ow)
                 + P(G('token', '@' | name) + ow)
@@ -233,7 +232,7 @@ def gem():
         )
 
         MATCH(
-            'class1_parenthesis_match',
+            'class_parenthesis_match1',
             (
                   ow
                 + (
@@ -247,7 +246,7 @@ def gem():
         )
 
         MATCH(
-            'define1_parenthesis_match',
+            'define_parenthesis_match1',
             (
                   ow__left_parenthesis__ow
                 + P(right_parenthesis__colon + G(ow_comment_newline))
@@ -260,12 +259,12 @@ def gem():
         )
 
         MATCH(
-            'from1_module_match',
+            'from_module_match1',
             ow + G('operator', period | 'import') + ow,
         )
 
         MATCH(
-            'from1_as_match',
+            'from_as_match1',
             (
                   ow
                 + (
@@ -276,7 +275,7 @@ def gem():
         )
 
         MATCH(
-            'comma1_or_newline_match',
+            'comma_or_newline_match1',
             (
                   ow
                 + (
@@ -287,7 +286,7 @@ def gem():
         )
 
         MATCH(
-            'import1_module_match',
+            'import_module_match1',
             (
                   ow
                 + (

@@ -7,6 +7,8 @@ def gem():
 
 
     class KeywordAndOperatorBase(Token):
+        is_dot = false
+
         def __repr__(t):
             return arrange('<%s>', t.s)
 
@@ -90,6 +92,7 @@ def gem():
     class OperatorDot(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = '.'
+        is_dot       = true
         keyword      = '.'
 
 
@@ -151,13 +154,6 @@ def gem():
 
         def __repr__(t):
             return arrange('<%s>', t.s)
-
-
-    @share
-    class StatementReturn(Token):
-        __slots__    = (())
-        display_name = 'return'
-        keyword      = 'return'
 
 
     find_atom_type = {

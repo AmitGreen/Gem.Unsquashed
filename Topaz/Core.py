@@ -3,15 +3,15 @@
 #
 @gem('Topaz.Core')
 def gem():
-    require_gem('Gem.Configuration')
     require_gem('Gem.Exception')
+    require_gem('Gem.Global')
     require_gem('Gem.Map')
 
 
-    from Gem import gem_configuration, iterate_items_sorted_by_key, values_tuple_sorted_by_key
+    from Gem import gem_global, iterate_items_sorted_by_key, values_tuple_sorted_by_key
 
 
-    gem_configuration.testing = true
+    gem_global.testing = true
 
 
     share(

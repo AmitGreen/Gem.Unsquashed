@@ -153,14 +153,13 @@ def gem():
     class ExpressionDot(Object):
         __slots__ = ((
             'left',                     #   Expression
-            'operator',                 #   Operator*
-            'right',                    #   String
+            'operator',                 #   OperatorDot
+            'right',                    #   Identifier
         ))
 
 
         def __init__(t, left, operator, right):
-            assert type(left)     is not String
-            assert type(operator) is not String
+            assert (type(left) is not String) and (operator.is_dot) and (right.is_identifier)
 
             t.left     = left
             t.operator = operator
@@ -172,7 +171,8 @@ def gem():
 
 
         def write(t, w):
-            w(t.left.s + t.operator.s + t.right)
+            t.left.write(s)
+            w(t.operator.s + t.right.s)
 
 
     @share

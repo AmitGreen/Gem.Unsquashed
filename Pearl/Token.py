@@ -11,6 +11,7 @@ def gem():
 
 
         is_comma             = false
+        is_identifier        = false
         is_keyword           = false
         is_right_parenthesis = false
 
@@ -32,6 +33,9 @@ def gem():
     @share
     class Identifier(Token):
         __slots__ = (())
+
+
+        is_identifier = true
 
 
         def __repr__(t):
