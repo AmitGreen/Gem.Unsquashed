@@ -18,7 +18,7 @@ def gem():
         m1 = name_match(s, index)
 
         if m1 is none:
-            return parse_incomplete(parse1_statement_from_module, 1)
+            return parse_incomplete(1)
 
         module = conjure_identifier(m1.group())
         #</name1>
@@ -30,7 +30,7 @@ def gem():
             m2 = from_module_match1(s, m1.end())
 
             if m2 is none:
-                return parse_incomplete(parse1_statement_from_module, 2)
+                return parse_incomplete(2)
 
             operator = m2.group('operator')
 
@@ -45,7 +45,7 @@ def gem():
             m1 = name_match(s, m2.end())
 
             if m1 is none:
-                return parse_incomplete(parse1_statement_from_module, 2)
+                return parse_incomplete(2)
             #</name2>
 
             module = ExpressionDot(module, operator_dot, conjure_identifier(m1.group()))
@@ -133,7 +133,7 @@ def gem():
     @share
     def parse1_statement_from(m1):
         if m1.end('newline') is not -1:
-            return create_UnknownLine(parse1_statement_from, 1)
+            return create_UnknownLine(1)
 
         keyword_from = KeywordFrom(m1.group())
 
@@ -143,7 +143,7 @@ def gem():
         module = parse1_statement_from_module(m1.end())
 
         if module is none:
-            return create_UnknownLine()
+            return create_UnknownLine_0()
 
         keyword_import = qk()
         #</module>
@@ -154,7 +154,7 @@ def gem():
         imported = parse1_statement_from_as()
 
         if imported is none:
-            return create_UnknownLine()
+            return create_UnknownLine_0()
 
         operator = qk()
         #<imported/>
@@ -168,7 +168,7 @@ def gem():
         imported_2 = parse1_statement_from_as()
 
         if imported_2 is none:
-            return create_UnknownLine()
+            return create_UnknownLine_0()
 
         operator_2 = qk()
         #<imported/>
@@ -182,4 +182,4 @@ def gem():
                        operator_2,
                    )
 
-        return create_UnknownLine(parse1_statement_from, 2)
+        return create_UnknownLine(2)

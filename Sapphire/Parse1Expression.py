@@ -30,7 +30,7 @@ def gem():
         m2 = statement_postfix_operator_match1(s, index)
 
         if m2 is none:
-            return create_UnknownLine(parse1_statement_expression__symbol, 1)
+            return create_UnknownLine(1)
 
         right_parenthesis = m2.group('right_parenthesis')
         #</postfix1-operator>
@@ -47,7 +47,7 @@ def gem():
                            conjure_token_newline(s[m2.end('right_parenthesis'):]),
                        )
 
-            return create_UnknownLine(parse1_statement_expression__symbol, 2)
+            return create_UnknownLine(2)
 
         OperatorMeta = lookup_operator(m2.group('operator'))
 
@@ -61,7 +61,7 @@ def gem():
                 m3 = name_match(s, m2.end())
 
                 if m3 is none:
-                    return create_UnknownLine(parse1_statement_expression__symbol, 1)
+                    return create_UnknownLine(1)
                 #</name1>
 
                 left = ExpressionDot(identifier, operator, conjure_identifier(m3.group()))
@@ -74,13 +74,13 @@ def gem():
                 m4 = statement_postfix_operator_match1(s, m3.end())
 
                 if m4 is none:
-                    return create_UnknownLine(parse1_statement_expression__symbol, 2)
+                    return create_UnknownLine(2)
 
                 right_parenthesis = m4.group('right_parenthesis')
                 #</postfix1-operator>
 
                 if right_parenthesis is not none:
-                    return create_UnknownLine(parse1_statement_expression__symbol, 3)
+                    return create_UnknownLine(3)
                 
                 left_parenthesis = m4.group('left_parenthesis')
 
@@ -89,9 +89,9 @@ def gem():
 
                     arguments = parse1_arguments__left_parenthesis(OperatorLeftParenthesis(left_parenthesis), m4.end())
 
-                    return create_UnknownLine(parse1_statement_expression__symbol, 5)
+                    return create_UnknownLine(5)
                 
-                return create_UnknownLine(parse1_statement_expression__symbol, 6)
+                return create_UnknownLine(6)
 
             #
             #<atom1>
@@ -99,7 +99,7 @@ def gem():
             m3 = atom_match1(s, m2.end())
 
             if m3 is none:
-                return create_UnknownLine(parse1_statement_expression__symbol, 6)
+                return create_UnknownLine(6)
 
             s3     = m3.group()
             atom   = find_atom_type(s3[0])(s3)
@@ -109,6 +109,6 @@ def gem():
             line('indented: %r; identifier: %r; operator: %r; atom: %r',
                  indented, identifier, operator, atom)
 
-            return create_UnknownLine(parse1_statement_expression__symbol, 7)
+            return create_UnknownLine(7)
 
-        return create_UnknownLine(parse1_statement_expression__symbol, 8)
+        return create_UnknownLine(8)

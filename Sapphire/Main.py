@@ -28,8 +28,13 @@ def gem():
     depth = 1
 
 
+    import Gem
+
     @share
     def main():
+        for k in introspection(Gem):
+            print k
+
         create_sapphire_match()
 
         if (depth == 7) or (depth == 99):

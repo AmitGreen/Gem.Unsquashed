@@ -4,5 +4,6 @@
 @gem('Gem.System')
 def gem():
     export(
+        'python_frame',     PythonSystem._getframe,
         'python_version',   PythonSystem.version,
     )

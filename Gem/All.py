@@ -1,0 +1,64 @@
+import  Gem.Builtin         #   Gem.Boot
+import  Gem.Privileged      #   Gem.Boot
+import  Gem.Shared          #   Gem.Boot
+import  PythonBuiltIn       #   Gem.Boot
+import  PythonException     #   Gem.Boot
+import  PythonSystem        #   Gem.Boot
+
+from    Gem.BuiltIn         import  arrange                                 #   Gem.Boot
+from    Gem.BuiltIn         import  __build_class                           #   Gem.Boot (Python 3 only)
+from    Gem.BuiltIn         import  false                                   #   Gem.Boot
+from    Gem.BuiltIn         import  __import__                              #   Gem.Boot
+from    Gem.BuiltIn         import  intern_string                           #   Gem.Boot
+from    Gem.BuiltIn         import  is_python_2                             #   Gem.Boot
+from    Gem.BuiltIn         import  is_python_3                             #   Gem.Boot
+from    Gem.BuiltIn         import  length                                  #   Gem.Boot
+from    Gem.BuiltIn         import  LiquidSet                               #   Gem.Boot
+from    Gem.BuiltIn         import  next_method                             #   Gem.Boot
+from    Gem.BuiltIn         import  none                                    #   Gem.Boot
+from    Gem.BuiltIn         import  String                                  #   Gem.Boot
+from    Gem.BuiltIn         import  true                                    #   Gem.Boot
+from    Gem                 import  absent                                  #   Gem.Absent
+from    Gem                 import  built_in                                #   Gem.Boot
+from    Gem                 import  catch_FileNotFoundError                 #   Gem.CatchException
+from    Gem                 import  create_DelayedFileOutput                #   Gem.DelayedFileOutput
+from    Gem                 import  create_SimpleStringOutput               #   Gem.SimpleStringIO
+from    Gem                 import  create_StringOutput                     #   Gem.StringOutput
+from    Gem                 import  encode_ascii                            #   Gem.Codec
+from    Gem                 import  EnvironmentError                        #   Gem.Exception (Python 3 only)
+from    Gem                 import  ERROR_NO_ACCESS                         #   Gem.ErrorNumber
+from    Gem                 import  ERROR_NO_ENTRY                          #   Gem.ErrorNumber
+from    Gem                 import  exception_information                   #   Gem.Exception
+from    Gem                 import  execute                                 #   Gem.Core
+from    Gem                 import  FileNotFoundError                       #   Gem.Exception
+from    Gem                 import  first_map_item                          #   Gem.Map
+from    Gem                 import  gem_configuration                       #   Gem.Configuration
+from    Gem                 import  ImportError                             #   Gem.Exception
+from    Gem                 import  iterate_items_sorted_by_key             #   Gem.Map
+from    Gem                 import  lookup_ascii                            #   Gem.Ascii
+from    Gem                 import  Module                                  #   Gem.Boot
+from    Gem                 import  N_N                                     #   Gem.PortrayString (Unit Testing only)
+from    Gem                 import  OSError                                 #   Gem.Exception
+from    Gem                 import  path_basename                           #   Gem.Exception
+from    Gem                 import  path_join                               #   Gem.Exception
+from    Gem                 import  path_split_extension                    #   Gem.Exception
+from    Gem                 import  PermissionError                         #   Gem.Exception
+from    Gem                 import  privileged_2                            #   Gem.Core
+from    Gem                 import  privileged                              #   Gem.Boot
+from    Gem                 import  produce_cache_functions                 #   Gem.Cache
+from    Gem                 import  python_frame                            #   Gem.System
+from    Gem                 import  python_version                          #   Gem.System
+from    Gem                 import  read_text_from_path                     #   Gem.Path
+from    Gem                 import  remove_path                             #   Gem.Path (via Gem.Path2 for Python 2)
+from    Gem                 import  remove_path__ignore_file_not_found      #   Gem.Path
+from    Gem                 import  rename_function                         #   Gem.Boot
+from    Gem                 import  rename_path                             #   Gem.Path
+from    Gem                 import  rename_path__ignore_file_not_found      #   Gem.Path
+from    Gem                 import  restricted                              #   Gem.Boot
+from    Gem                 import  Shared                                  #   Gem.Boot
+from    Gem                 import  stop_iteration                          #   Gem.Exception
+from    Gem                 import  StopIteration                           #   Gem.Exception
+from    Gem                 import  unknown_ascii                           #   Gem.Ascii
+from    Gem                 import  values_tuple_sorted_by_key              #   Gem.Map
+from    Gem                 import  view_items                              #   Gem.Map
+from    Gem                 import  write_binary_to_path                    #   Gem.Path

@@ -18,7 +18,7 @@ def gem():
         m1 = name_match(s, index)
 
         if m1 is none:
-            return parse_incomplete(parse1_statement_import_module, 1)
+            return parse_incomplete(1)
 
         module = conjure_identifier(m1.group())
         #</name>
@@ -30,7 +30,7 @@ def gem():
             m2 = import_module_match1(s, m1.end())
 
             if m2 is none:
-                return parse_incomplete(parse1_statement_import_module, 2)
+                return parse_incomplete(2)
 
             operator = m2.group('operator')
 
@@ -45,7 +45,7 @@ def gem():
             m1 = name_match(s, m2.end())
 
             if m1 is none:
-                return parse_incomplete(parse1_statement_import_module, 3)
+                return parse_incomplete(3)
             #</name>
 
             module = ExpressionDot(module, operator_dot, conjure_identifier(m1.group()))
@@ -70,7 +70,7 @@ def gem():
         m3 = name_match(s, m2.end())
 
         if m3 is none:
-            return parse_incomplete(parse1_statement_import_module, 4)
+            return parse_incomplete(4)
 
         module = ModuleAsFragment(module, keyword_as, conjure_identifier(m3.group()))
         #</name>
@@ -81,7 +81,7 @@ def gem():
         m4 = comma_or_newline_match1(s, m3.end())
 
         if m4 is none:
-            return parse_incomplete(parse1_statement_import_module, 5)
+            return parse_incomplete(5)
         #</comma-or-newline>
 
         if m4.start('comma') is -1:
@@ -98,7 +98,7 @@ def gem():
     @share
     def parse1_statement_import(m1):
         if m1.end('newline') is not -1:
-            return create_UnknownLine(parse1_statement_import, 1)
+            return create_UnknownLine(1)
 
         keyword_import = KeywordImport(m1.group())
 
@@ -108,7 +108,7 @@ def gem():
         module = parse1_statement_import_module(m1.end())
 
         if module is none:
-            return create_UnknownLine()
+            return create_UnknownLine_0()
 
         operator = qk()
         #</module>
@@ -116,4 +116,4 @@ def gem():
         if operator.is_token_newline:
             return StatementImport(keyword_import, module, operator)
 
-        return create_UnknownLine(parse1_statement_import, 2)
+        return create_UnknownLine(2)

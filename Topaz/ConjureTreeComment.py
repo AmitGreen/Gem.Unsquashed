@@ -4,7 +4,7 @@
 @gem('Topaz.ConjureTreeComment')
 def gem():
     require_gem('Topaz.Core')
-    require_gem('Pearl.Comment')
+    require_gem('Pearl.ConjureTreeComment')
 
 
     from Pearl import conjure_tree_comment, tree_comment_cache
