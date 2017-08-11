@@ -5,12 +5,12 @@
 def gem():
     require_gem('Gem.Absent')
     require_gem('Gem.Cache')
-    require_gem('Gem.Configuration')
     require_gem('Gem.Exception')
+    require_gem('Gem.Global')
     require_gem('Gem.System')
 
 
-    from Gem import gem_configuration, produce_cache_functions, python_frame, stop_iteration
+    from Gem import gem_global, produce_cache_functions, python_frame, stop_iteration
 
 
     share(
@@ -24,6 +24,6 @@ def gem():
         #
         #   Values
         #
-        'gem_configuration',            gem_configuration,
+        'gem_global',                   gem_global,
         'stop_iteration',               stop_iteration,
     )

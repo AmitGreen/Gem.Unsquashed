@@ -4,8 +4,8 @@
 @gem('Gem.PortrayString')
 def gem():
     require_gem('Gem.Ascii')
-    require_gem('Gem.Configuration')
     require_gem('Gem.Exception')
+    require_gem('Gem.Global')
     require_gem('Gem.SimpleStringIO')
 
 
@@ -706,7 +706,7 @@ def gem():
         return overall.ps(state)(s)
 
 
-    if gem_configuration.testing:
+    if gem_global.testing:
         export(
             'N_N',  N_N,                    #   For unit testing
         )

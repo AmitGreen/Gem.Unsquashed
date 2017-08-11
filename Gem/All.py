@@ -32,7 +32,7 @@ from    Gem                 import  exception_information                   #   
 from    Gem                 import  execute                                 #   Gem.Core
 from    Gem                 import  FileNotFoundError                       #   Gem.Exception
 from    Gem                 import  first_map_item                          #   Gem.Map
-from    Gem                 import  gem_configuration                       #   Gem.Configuration
+from    Gem                 import  gem_global                              #   Gem.Global
 from    Gem                 import  ImportError                             #   Gem.Exception
 from    Gem                 import  iterate_items_sorted_by_key             #   Gem.Map
 from    Gem                 import  lookup_ascii                            #   Gem.Ascii

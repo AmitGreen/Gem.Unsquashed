@@ -114,7 +114,7 @@ def gem():
         return third
 
 
-    if gem_configuration.testing:
+    if gem_global.testing:
         export(
             'tree_comment_cache',   tree_comment_cache,
         )
