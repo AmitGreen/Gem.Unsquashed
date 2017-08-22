@@ -13,16 +13,18 @@ GEM_FILES = \
 	../Gem/__init__.py \
     ../Gem/Absent.py ../Gem/All.py ../Gem/Ascii.py \
 	../Gem/Boot.py \
-	../Gem/Cache.py ../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
+	../Gem/Cache.py ../Gem/Cadence.py ../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
 	../Gem/DelayedFileOutput.py \
 	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
 	../Gem/Global.py \
     ../Gem/Import.py ../Gem/IO.py \
     ../Gem/Map.py \
+    ../Gem/Output.py \
     ../Gem/Path.py ../Gem/Path2.py ../Gem/PortrayString.py \
     ../Gem/RegularExpression.py \
-    ../Gem/SimpleStringIO.py ../Gem/StringOutput.py ../Gem/System.py
+    ../Gem/SimpleStringIO.py ../Gem/StringOutput.py ../Gem/System.py \
+    ../Gem/Traceback.py
 
 DRAVITE_FILES = \
     ../Dravite/Euclid.py \
@@ -67,6 +69,7 @@ SAPPHIRE_FILES = \
 
 TOPAZ_FILES = \
     ../Topaz/ConjureTreeComment.py ../Topaz/Core.py \
+    ../Topaz/ExceptionChain.py \
     ../Topaz/Main.py \
     ../Topaz/Path.py ../Topaz/Pattern.py ../Topaz/PortrayString.py \
     ../Topaz/StringOutput.py
@@ -112,7 +115,7 @@ clean:
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
 	rm -f a.py ab.py ac.py ag.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
-	rm -f ca.py ce.py co.py
+	rm -f ca.py cd.py ce.py co.py
 	rm -f de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
@@ -122,12 +125,13 @@ clean:
 	rm -f jb.py
 	rm -f lr.txt
 	rm -f m m.py
+	rm -f o.py
 	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
-	rm -f tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
-	rm -f zc.py zj.py zm.py zpa.py zps.py zpt.py zso.py
+	rm -f tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
+	rm -f zc.py ze.py zj.py zm.py zpa.py zps.py zpt.py zso.py
 
 
 files:
@@ -154,6 +158,7 @@ links:
 	ln -s ../Beryl/Main.py                      bm.py
 	ln -s ../Gem/Boot.py                        bo.py
 	ln -s ../Gem/Cache.py                       ca.py
+	ln -s ../Gem/Cadence.py                     cd.py
 	ln -s ../Gem/CatchException.py              ce.py
 	ln -s ../Gem/Core.py                        co.py
 	ln -s ../Dravite/Euclid.py                  de.py
@@ -189,6 +194,7 @@ links:
 	ln -s ../OtherLicenses/README.txt           lr.txt
 	ln -s Makefile                              m
 	ln -s ../Gem/Map.py                         m.py
+	ln -s ../Gem/Output.py                      o.py
 	ln -s ../Gem/Path.py                        pa.py
 	ln -s ../Gem/Path2.py                       pa2.py
 	ln -s ../Pearl/Comment.py                   pcm.py
@@ -210,6 +216,7 @@ links:
 	ln -s ../Gem/StringOutput.py                so.py
 	ln -s ../Gem/SimpleStringIO.py              ssio.py
 	ln -s ../Gem/System.py                      sy.py
+	ln -s ../Gem/Traceback.py                   tb.py
 	ln -s ../Tremolite/CreateMatch.py           tcm.py
 	ln -s ../Tremolite/Core.py                  tco.py
 	ln -s ../Tremolite/LicenseTemplate.txt      tlp.txt
@@ -221,6 +228,7 @@ links:
 	ln -s ../Tremolite/PatternWrapper.py        tw.py
 	ln -s ../Tremolite/Compile.py               tx.py
 	ln -s ../Topaz/Core.py                      zc.py
+	ln -s ../Topaz/ExceptionChain.py            ze.py
 	ln -s ../Topaz/ConjureTreeComment.py        zj.py
 	ln -s ../Topaz/Main.py                      zm.py
 	ln -s ../Topaz/Path.py                      zpa.py

@@ -32,8 +32,8 @@ def gem():
 
     @share
     def main():
-        for k in introspection(Gem):
-            print k
+        #for k in introspection(Gem):
+        #    print k
 
         create_sapphire_match()
 

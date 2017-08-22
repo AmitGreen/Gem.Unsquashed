@@ -22,6 +22,7 @@ def boot():
 @gem('Topaz.Main')
 def gem():
     require_gem('Topaz.ConjureTreeComment')
+    require_gem('Topaz.ExceptionChain')
     require_gem('Topaz.Path')
     require_gem('Topaz.Pattern')
     require_gem('Topaz.PortrayString')
@@ -36,3 +37,4 @@ def gem():
         test_remove_path()
         test_rename_path()
         test_string_output()
+        test_exception_chain()

@@ -535,14 +535,14 @@ if __name__ == '__main__':
                 return t
 
 
-            def __exit__(t, e_type, e_value, e_traceback):
-                if (e_value is None) or (e_type is SystemExit):
+            def __exit__(t, e_type, e, e_traceback):
+                if (e is None) or (e_type is SystemExit):
                     return
 
                 if position() != 0:
                     line()
 
-                PythonTraceBack.print_exception(e_type, e_value, e_traceback.tb_next)
+                PythonTraceBack.print_exception(e_type, e, e_traceback.tb_next)
 
                 #
                 #   Swallow exception

@@ -36,6 +36,9 @@ Main_py=../Tremolite/Main.py
 Main_py=../Quartz/Main.py
 Main_py=../Sapphire/Main.py
 Main_py=../Topaz/Main.py
+#Main_py=test3.py
+
+show=2
 
 command="python $Main_py"
 commandO="python -O $Main_py"
@@ -52,7 +55,7 @@ y
 END
 
 echo -en '\E[H\E[J'
-cat 2
+cat $show
 
 while :
 do
@@ -62,15 +65,28 @@ do
         :
     else
         mv $tmp2 2
-        echo -en '\E[H\E[J'
-        tail -60 2
+
+        if [ $show = 2 ]; then
+            echo -en '\E[H\E[J'
+            tail -60 2
+        fi
     fi
 
     $commandO <$tmp1 >&$tmp3
     mv $tmp3 2o
 
     $command3 <$tmp1 >&$tmp3
-    mv $tmp3 3
+    if cmp -s $tmp3 3
+    then
+        :
+    else
+        mv $tmp3 3
+
+        if [ $show = 3 ]; then
+            echo -en '\E[H\E[J'
+            tail -60 3
+        fi
+    fi
 
     $command3O <$tmp1 >&$tmp3
     mv $tmp3 3o
