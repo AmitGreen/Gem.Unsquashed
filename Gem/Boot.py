@@ -14,6 +14,7 @@ def gem():
     #   This really belongs in Gem.Core, but is here since we need it during Boot
     #
     PythonSystem    = __import__('sys')
+    PythonTypes     = __import__('types')
     is_python_2     = PythonSystem.version_info.major is 2
     is_python_3     = PythonSystem.version_info.major is 3
     PythonBuiltIn   = __import__('__builtin__'  if is_python_2 else   'builtins')
@@ -23,12 +24,16 @@ def gem():
     #
     #   Python keywords
     #
-    none = None
+    false = False
+    none  = None
+    true  = True
+
 
     #
     #   Python Functions
     #
     intern_string = (PythonBuiltIn   if is_python_2 else   PythonSystem).intern
+    is_instance   = isinstance
     iterate       = PythonBuiltIn.iter
     length        = PythonBuiltIn.len
 
@@ -38,7 +43,9 @@ def gem():
     #
     Module    = PythonBuiltIn.__class__
     LiquidSet = PythonBuiltIn.set
+    Object    = PythonBuiltIn.object
     String    = PythonBuiltIn.str
+    Traceback = PythonTypes.TracebackType
 
 
     #
@@ -346,6 +353,84 @@ def gem():
 
 
     #
+    #   ThreadContext
+    #
+    if is_python_3:
+        def raising_exception(e):
+            assert e.__cause__             is none
+            assert (e.__context__ is none) or (is_instance(type(e.__context__), Exception))
+            assert e.__suppress_context__  is False
+            assert e.__traceback__         is none
+
+
+        def raising_exception_from(e, cause):
+            assert e.__cause__             is none
+            assert (e.__context__ is none) or (is_instance(type(e.__context__), Exception))
+            assert e.__suppress_context__  is False
+            assert e.__traceback__         is none
+
+            e.__cause__ = cause
+    else:
+        ThreadingLocalBase = __import__('threading').local
+
+
+        class ThreadContext(ThreadingLocalBase):
+            __slots__ = (())
+
+
+            def __init__(t):
+                t.exception_stack = []
+                t.last_exception  = none
+
+
+        thread_context = ThreadContext()
+
+        
+        #
+        #   Do not use 'hasattr' or 'getattr' here for multiple reasons:
+        #
+        #       1.  Mainly is defective (in that it can hide underlying errors in user functions);
+        #       2.  Don't want to call user functions; and
+        #       3.  Don't want to handle the complexity of extra exceptions here.
+        #
+        def raising_exception(e):
+            if '__cause__' in e.__dict__:
+                assert '__context__'          in e.__dict__
+                assert '__suppress_context__' in e.__dict__
+                assert '__traceback__'        in e.__dict__
+            else:
+                assert '__context__'          not in e.__dict__
+                assert '__suppress_context__' not in e.__dict__
+                assert '__traceback__'        not in e.__dict__
+
+                last_exception = thread_context.last_exception
+                
+                e.__cause__            = none
+                e.__context__          = (none   if e is last_exception else   last_exception)
+                e.__suppress_context__ = false
+                e.__traceback__        = none
+
+
+        def raising_exception_from(e, cause):
+            if '__cause__' in e.__dict__:
+                assert '__context__'          in e.__dict__
+                assert '__suppress_context__' in e.__dict__
+                assert '__traceback__'        in e.__dict__
+            else:
+                assert '__context__'          not in e.__dict__
+                assert '__suppress_context__' not in e.__dict__
+                assert '__traceback__'        not in e.__dict__
+
+                last_exception = thread_context.last_exception
+                
+                e.__context__          = (none if (e is last_exception) or (cause is last_exception) else   last_exception)
+                e.__suppress_context__ = true
+                e.__traceback__        = none
+
+            e.__cause__ = cause
+
+
+    #
     #   raise_already_exists
     #
     if __debug__:
@@ -354,14 +439,18 @@ def gem():
 
         @localize
         def raise_already_exists(module_name, name, previous, exporting):
-            name_error = arrange("%s.%s already exists (value: %r): can't export %r also",
-                                 module_name, name, previous, exporting)
+            name_error = NameError(
+                             arrange("%s.%s already exists (value: %r): can't export %r also",
+                                     module_name, name, previous, exporting),
+                         )
+
+            raising_exception(name_error)
 
             #
             #   Since the next line will appear in stack traces, make it look prettier by using 'name_error'
             #   (to make the line shorter & more readable)
             #
-            raise NameError(name_error)
+            raise name_error
 
 
     #
@@ -522,29 +611,32 @@ def gem():
         #   Keywords
         #       implemented as keywords in Python 3.0 --so can't use an expression like 'PythonBuiltIn.None'.
         #
-        'false',    False,
-        'none',     None,
-        'true',     True,
+        'false',                    false,
+        'none',                     none,
+        'true',                     true,
 
         #
         #   Types
         #
-        'LiquidSet',    PythonBuiltIn.set,
-        'String',       PythonBuiltIn.str,
+        'LiquidSet',                PythonBuiltIn.set,
+        'String',                   String,
 
         #
         #   Functions
         #
-        'arrange',          arrange,
-        'length',           length,
-        'next_method',      next_method,
-        'intern_string',    intern_string,
+        'arrange',                  arrange,
+        'intern_string',            intern_string,
+        'length',                   length,
+        'next_method',              next_method,
+        'raising_exception_from',   raising_exception_from,
+        'raising_exception',        raising_exception,
+
 
         #
         #   Values
         #
-        'is_python_2',  is_python_2,
-        'is_python_3',  is_python_3,
+        'is_python_2',              is_python_2,
+        'is_python_3',              is_python_3,
     )
 
 
@@ -595,11 +687,18 @@ def gem():
     )
 
 
+    if is_python_2:
+        share(
+            'thread_context',     thread_context,
+        )
+
+
     export(
         #
         #   Types
         #
-        'Module',   Module,
+        'Module',       Module,
+        'Traceback',    Traceback,
 
         #
         #   Modules
@@ -610,8 +709,9 @@ def gem():
         #
         #   Functions
         #
-        'rename_function',  rename_function,
-        'privileged',       privileged,
+        'is_instance',              is_instance,
+        'privileged',               privileged,
+        'rename_function',          rename_function,
     )
 
 
@@ -836,9 +936,15 @@ def gem():
             blueprint   = lookup_module_blueprint(module_name)
 
             if blueprint is none:
-                import_error = arrange("Can't find module %s", module_name)
+                import_error = ImportError(arrange("Can't find module %s", module_name))
 
-                raise ImportError(import_error)
+                raising_exception(import_error)
+
+                #
+                #   Since the next line will appear in stack traces, make it look prettier by using 'import_error'
+                #   (to make the line shorter & more readable)
+                #
+                raise import_error
 
             is_package = 0
             module     = create_module_from_blueprint(blueprint)

@@ -372,81 +372,85 @@ def gem():
 
     @share
     def parse1_python_from_path(path):
-        data   = read_text_from_path(path)
-        many   = []
-        append = many.append
+        data = read_text_from_path(path)
 
-        iterate_lines = z_initialize(data)
+        parse_context = z_initialize(data)
 
-        for s in iterate_lines:
-            m = line_match1(s)
+        append        = parse_context.append
+        many          = parse_context.many
+        iterate_lines = parse_context.iterate_lines
 
-            if m is none:
-                append(create_UnknownLine(1))
-                continue
+        for LOOP in parse_context:
+            with parse_context:
+                for s in iterate_lines:
+                    m = line_match1(s)
 
-            token = m.group('token')
+                    if m is none:
+                        append(create_UnknownLine(1))
+                        continue
 
-            if token is not none:
-                parse1_line = lookup_parse1_line(token)
+                    token = m.group('token')
 
-                if parse1_line is not none:
-                    append(parse1_line(m))
-                    continue
+                    if token is not none:
+                        parse1_line = lookup_parse1_line(token)
 
-                if m.start('newline') is not -1:
-                    append(
-                        StatementExpression(
-                            m.group('indented'),
-                            conjure_identifier(token),
-                            conjure_token_newline(s[m.end('token'):]),
-                        ),
-                    )
+                        if parse1_line is not none:
+                            append(parse1_line(m))
+                            continue
 
-                    continue
+                        if m.start('newline') is not -1:
+                            append(
+                                StatementExpression(
+                                    m.group('indented'),
+                                    conjure_identifier(token),
+                                    conjure_token_newline(s[m.end('token'):]),
+                                ),
+                            )
 
-                append(
-                    parse1_statement_expression__symbol(
-                        m.group('indented'),
-                        conjure_identifier(token),
-                        m.end('token'),
-                    ),
-                )
+                            continue
 
-                continue
+                        append(
+                            parse1_statement_expression__symbol(
+                                m.group('indented'),
+                                conjure_identifier(token),
+                                m.end('token'),
+                            ),
+                        )
 
-            [comment, newline] = m.group('comment', 'newline')
+                        continue
 
-            if newline is none:
-                assert comment is none
+                    [comment, newline] = m.group('comment', 'newline')
 
-                append(create_UnknownLine(4))
-                continue
+                    if newline is none:
+                        assert comment is none
 
-            if comment is not none:
-                indented = m.group('indented')
+                        append(create_UnknownLine(4))
+                        continue
 
-                if indented is '':
-                    append(Comment(comment, newline))
-                    continue
+                    if comment is not none:
+                        indented = m.group('indented')
 
-                append(IndentedComment(indented, comment, newline))
-                continue
+                        if indented is '':
+                            append(Comment(comment, newline))
+                            continue
 
-            append(EmptyLine(m.group()))
+                        append(IndentedComment(indented, comment, newline))
+                        continue
 
-        if show:
-            for v in many:
-                line('%r', v)
+                    append(EmptyLine(m.group()))
 
-        with create_StringOutput() as f:
-            w = f.write
+                if show:
+                    for v in many:
+                        line('%r', v)
 
-            for v in many:
-                v.write(w)
+                with create_StringOutput() as f:
+                    w = f.write
 
-        if data != f.result:
-            with create_DelayedFileOutput('oops.txt') as oops:
-                oops.write(f.result)
+                    for v in many:
+                        v.write(w)
 
-            raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')
+                if data != f.result:
+                    with create_DelayedFileOutput('oops.txt') as oops:
+                        oops.write(f.result)
+
+                    raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')

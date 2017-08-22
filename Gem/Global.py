@@ -4,12 +4,24 @@
 @gem('Gem.Global')
 def gem():
     class Gem_Global(Object):
-        __slots__ = ((
+        __slots__ = (())
+
+
+        if is_python_2:
+            __slots__ += ((
+                'context',              #   None | Exception
+            ))
+
+
+        __slots__ += ((
             'testing',                  #   Boolean
         ))
 
 
         def __init__(t):
+            if is_python_2:
+                t.context = none
+
             t.testing = false
 
 
