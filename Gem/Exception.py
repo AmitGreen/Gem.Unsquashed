@@ -53,13 +53,19 @@ def gem():
 
         class FileNotFoundError(EnvironmentError):
             __slots__ = ((
+                '__cause__',                #   None | Exception
+                '__context__',              #   None | Exception
+                '__traceback__',            #   None | Python.Traceback
+                '__suppress_context__',     #   Boolean
                 'filename2',                #   None | String
             ))
 
 
             def __init__(t, error_number, message, path = none, path2 = none):
                 construct_EnvironmentError(t, error_number, message, path)
-                t.filename2 = path2
+                t.__traceback__        = t.__context__ = t.__cause__ = none
+                t.__suppress_context__ = false
+                t.filename2            = path2
 
 
         class PermissionError(EnvironmentError):

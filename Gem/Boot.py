@@ -38,6 +38,7 @@ def gem():
     #
     Module    = PythonBuiltIn.__class__
     LiquidSet = PythonBuiltIn.set
+    Object    = PythonBuiltIn.object
     String    = PythonBuiltIn.str
 
 
@@ -346,6 +347,67 @@ def gem():
 
 
     #
+    #   ThreadContext
+    #
+    if is_python_2:
+        exception_information = PythonSystem.exc_info
+
+        class ThreadContext(Object):
+            __slots__ = ((
+                'exception_context',    #   None | Exception
+            ))
+
+
+            def __init__(t):
+                t.exception_context = none
+
+
+        main_context = ThreadContext()
+
+
+        del ThreadContext.__init__
+
+
+        def caught_exception(e):
+            #
+            #   We do not want to use 'hasattr' here for multiple reasons, mainly is defective (in that it can hide underlying
+            #   errors in user funtions); we don't want to call user functions; and we don't want to handle the complexity of
+            #   extra exceptions here.
+            #
+            if '__traceback' not in e.__dict__:
+                e.__traceback__ = exception_information()[2]
+
+
+        def handled_exception(e):
+            if main_context.exception_context is e:
+                main_context.exception_context = none
+
+
+        def raising_exception(e):
+            e.__cause__            = none
+            e.__context__          = main_context.exception_context
+            e.__suppress_context__ = false
+            e.__traceback__        = none
+
+            main_context.exception_context = e
+
+
+        def raising_exception_from(e, cause):
+            e.__cause__            = cause
+            e.__context__          = main_context.exception_context
+            e.__suppress_context__ = true
+            e.__traceback__        = none
+
+            main_context.exception_context = e
+    else:
+        def raising_exception(e):
+            assert e.__cause__            is none
+            assert (e.__context is none) or (isinstance(type(e.__context__), Exception))
+            assert e.__suppress_context__ is False
+            assert e.__traceback__        is none
+
+
+    #
     #   raise_already_exists
     #
     if __debug__:
@@ -354,14 +416,18 @@ def gem():
 
         @localize
         def raise_already_exists(module_name, name, previous, exporting):
-            name_error = arrange("%s.%s already exists (value: %r): can't export %r also",
-                                 module_name, name, previous, exporting)
+            name_error = NameError(
+                             arrange("%s.%s already exists (value: %r): can't export %r also",
+                                     module_name, name, previous, exporting),
+                         )
+
+            raising_exception(name_error)
 
             #
             #   Since the next line will appear in stack traces, make it look prettier by using 'name_error'
             #   (to make the line shorter & more readable)
             #
-            raise NameError(name_error)
+            raise name_error
 
 
     #
@@ -836,9 +902,15 @@ def gem():
             blueprint   = lookup_module_blueprint(module_name)
 
             if blueprint is none:
-                import_error = arrange("Can't find module %s", module_name)
+                import_error = ImportError(arrange("Can't find module %s", module_name))
 
-                raise ImportError(import_error)
+                raising_exception(import_error)
+
+                #
+                #   Since the next line will appear in stack traces, make it look prettier by using 'import_error'
+                #   (to make the line shorter & more readable)
+                #
+                raise import_error
 
             is_package = 0
             module     = create_module_from_blueprint(blueprint)
