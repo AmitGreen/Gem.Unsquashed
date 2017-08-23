@@ -20,9 +20,11 @@ GEM_FILES = \
 	../Gem/Global.py \
     ../Gem/Import.py ../Gem/IO.py \
     ../Gem/Map.py \
+    ../Gem/Output.py \
     ../Gem/Path.py ../Gem/Path2.py ../Gem/PortrayString.py \
     ../Gem/RegularExpression.py \
-    ../Gem/SimpleStringIO.py ../Gem/StringOutput.py ../Gem/System.py
+    ../Gem/SimpleStringIO.py ../Gem/StringOutput.py ../Gem/System.py \
+    ../Gem/Traceback.py
 
 DRAVITE_FILES = \
     ../Dravite/Euclid.py \
@@ -122,11 +124,12 @@ clean:
 	rm -f jb.py
 	rm -f lr.txt
 	rm -f m m.py
+	rm -f o.py
 	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
-	rm -f tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
+	rm -f tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f zc.py zj.py zm.py zpa.py zps.py zpt.py zso.py
 
 
@@ -189,6 +192,7 @@ links:
 	ln -s ../OtherLicenses/README.txt           lr.txt
 	ln -s Makefile                              m
 	ln -s ../Gem/Map.py                         m.py
+	ln -s ../Gem/Output.py                      o.py
 	ln -s ../Gem/Path.py                        pa.py
 	ln -s ../Gem/Path2.py                       pa2.py
 	ln -s ../Pearl/Comment.py                   pcm.py
@@ -210,6 +214,7 @@ links:
 	ln -s ../Gem/StringOutput.py                so.py
 	ln -s ../Gem/SimpleStringIO.py              ssio.py
 	ln -s ../Gem/System.py                      sy.py
+	ln -s ../Gem/Traceback.py                   tb.py
 	ln -s ../Tremolite/CreateMatch.py           tcm.py
 	ln -s ../Tremolite/Core.py                  tco.py
 	ln -s ../Tremolite/LicenseTemplate.txt      tlp.txt

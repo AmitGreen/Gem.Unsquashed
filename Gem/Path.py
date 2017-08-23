@@ -3,16 +3,27 @@
 #
 @gem('Gem.Path')
 def gem():
+    show = 7
+
+
     require_gem('Gem.CatchException')
-    require_gem('Gem.ErrorNumber')
-    require_gem('Gem.Import')
 
     if is_python_3:
         require_gem('Gem.Codec')
 
+    require_gem('Gem.ErrorNumber')
+    require_gem('Gem.Import')
+
+    if show is 7:
+        require_gem('Gem.Traceback')
+
+
     PythonOperatingSystem = import_module('os')
     PythonPath            = import_module('os.path')
-    open_path             = PythonBuiltIn.open
+
+
+    open_path = PythonBuiltIn.open
+
 
     if is_python_2:
         require_gem('Gem.Path2')
@@ -21,6 +32,7 @@ def gem():
     else:
         rename_path = PythonOperatingSystem.rename
         remove_path = PythonOperatingSystem.remove
+
 
 
     @export
@@ -66,6 +78,12 @@ def gem():
     def rename_path__ignore_file_not_found(from_path, to_path):
         with catch_FileNotFoundError(from_path, to_path) as e:
             rename_path(from_path, to_path)
+
+        if show is 7:
+            if e.caught is not none:
+                line('=== rename_path__ignore_file_not_found(%s, %s) ===', from_path, to_path)
+                print_exception(e.caught)
+
 
         return e.caught is none
 

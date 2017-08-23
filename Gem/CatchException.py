@@ -44,6 +44,9 @@ def gem():
                     and e.filename        == t.path
                 ):
                     t.caught = e
+
+                    assert 0, 'oh no'
+
                     return true
 
 

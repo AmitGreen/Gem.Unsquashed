@@ -7,29 +7,149 @@ def gem():
 
 
     PythonException = (import_module('exceptions')   if is_python_2 else  PythonBuiltIn)
-    RuntimeError    = PythonException.RuntimeError
-    StopIteration   = PythonException.StopIteration
-    ValueError      = PythonException.ValueError
 
 
-    stop_iteration = StopIteration()
+    BaseException = PythonException.BaseException
+    RuntimeError  = PythonException.RuntimeError
+    StopIteration = PythonException.StopIteration
+    ValueError    = PythonException.ValueError
+
+
+    exception_information = PythonSystem.exc_info
+    stop_iteration        = StopIteration()
 
 
     #
-    #   GENERIC NOTE:
+    #   NOTE:
+    #       Do not use 'hasattr' or 'getattr' here for multiple reasons:
+    #
+    #       1.  Mainly 'hasattr' is defective (in that it can hide underlying errors in user functions);
+    #       2.  Don't want to call user functions; and
+    #       3.  Don't want to handle the complexity of extra exceptions here.
+    #
+    #   THUS:
+    #
+    #       The Python 2.0 implementation of __cause__, __context__, __suppress_context__, __traceback__
+    #       is limited to members in __dict__ (i.e.: no __slots__ or other implementation via __getattr__
+    #       or __getattribute__).
+    #
+    if is_python_3:
+        if __debug__:
+            @export
+            def caught_any_exception(e):
+                [e_type, e, e_traceback] = exception_information()
+
+                assert is_instance(e_type, BaseException)
+
+                assert type(e) is e_type
+                assert (e.__cause__   is none) or is_instance(e.__cause__, BaseException)
+                assert (e.__context__ is none) or is_instance(e.__cause__, BaseException)
+                assert type(e.__suppress_context__) is Boolean
+                assert type(e.__traceback__)        is Traceback
+
+                assert type(e_traceback) is Traceback
+
+                return e
+        else:
+            @export
+            def caught_any_exception(e):
+                return exception_information()[0]
+
+
+        if __debug__:
+            @export
+            def caught_exception(e):
+                assert is_instance(e, BaseException)
+
+                assert (e.__cause__   is none) or is_instance(e.__cause__, BaseException)
+                assert (e.__context__ is none) or is_instance(e.__cause__, BaseException)
+                assert type(e.__suppress_context__) is Boolean
+                assert type(e.__traceback__)        is Traceback
+        else:
+            @export
+            def caught_exception(e):
+                pass
+
+
+        @export
+        def handled_exception(e):
+            pass
+    else:
+        def fixup_caught_exception(e):
+            assert is_instance(e, BaseException)
+
+            contains = e.__dict__.__contains__
+
+            if contains('__cause__'):
+                assert (e.__cause__ is none) or is_instance(e.__cause__, BaseException)
+            else:
+                e.__cause__ = none
+
+            if contains('__context__'):
+                assert (e.__context__ is none) or is_instance(e.__cause__, BaseException)
+            else:
+                e.__context__ = none
+
+            if contains('__supress_context__'):
+                assert type(e.__supress_context__) is Boolean
+            else:
+                e.__supress_context__ = false
+                
+            if contains('__traceback__'):
+                if e.__traceback__ is none:
+                    return true
+
+                assert type(e.__traceback__) is Traceback
+
+                return false
+
+            return true
+
+
+        @export
+        def caught_any_exception():
+            [e_type, e, e_traceback] = exception_information()
+
+            assert type(e) is e_type
+
+            if fixup_caught_exception(e):
+                e.__traceback__ = e_traceback
+
+            assert type(e_traceback) is Traceback
+
+            return e
+
+
+        @export
+        def caught_exception(e):
+            if fixup_caught_exception(e):
+                e.__traceback__ = exception_information()[2]
+
+
+        @export
+        def handled_exception(e):
+            if main_context.exception_context is e:
+                main_context.exception_context = none
+
+
+    #
+    #   NOTE:
     #       Lines with 'raise' will appear in stack traces, so make them look prettier by using
     #       a precalculated variable like 'runtime_error' (to make the line shorter & more readable)
     #       instead of doing the calculation on the line with 'raise'.
     #
+
 
     #
     #   raise_runtime_error
     #
     @built_in
     def raise_runtime_error(format, *arguments):
-        runtime_error = (format   % arguments   if arguments else   format)
+        runtime_error = RuntimeError(format   % arguments   if arguments else   format)
 
-        raise RuntimeError(runtime_error)
+        raising_exception(runtime_error)
+        
+        raise runtime_error
 
 
     #
@@ -37,13 +157,11 @@ def gem():
     #
     @built_in
     def raise_value_error(format, *arguments):
-        value_error = format % arguments
+        value_error = ValueError(format % arguments)
 
-        #
-        #   Since the next line will appear in stack traces, make it look prettier by using 'value_error'
-        #   (to make the line shorter & more readable)
-        #
-        raise ValueError(value_error)
+        raising_exception(value_error)
+
+        raise value_error
 
 
     if is_python_2:
@@ -53,19 +171,27 @@ def gem():
 
         class FileNotFoundError(EnvironmentError):
             __slots__ = ((
-                '__cause__',                #   None | Exception
-                '__context__',              #   None | Exception
-                '__traceback__',            #   None | Python.Traceback
-                '__suppress_context__',     #   Boolean
                 'filename2',                #   None | String
             ))
 
 
             def __init__(t, error_number, message, path = none, path2 = none):
                 construct_EnvironmentError(t, error_number, message, path)
+
+                t.filename2 = path2
+
+                #
+                #  Stored in __dict__[*]
+                #
                 t.__traceback__        = t.__context__ = t.__cause__ = none
                 t.__suppress_context__ = false
-                t.filename2            = path2
+
+
+            def __str__(t):
+                if t.filename2 is none:
+                    return arrange('[Errno %d] %s: %r', t.args[0], t.args[1], t.filename)
+
+                return arrange('[Errno %d] %s: %r -> %r', t.args[0], t.args[1], t.filename, t.filename2)
 
 
         class PermissionError(EnvironmentError):
@@ -79,6 +205,7 @@ def gem():
         #
         #   Exception Types
         #
+        'BaseException',        BaseException,
         'FileNotFoundError',    FileNotFoundError,
         'ImportError',          PythonException.ImportError,
         'OSError',              PythonException.OSError,
@@ -88,7 +215,7 @@ def gem():
         #
         #   Functions
         #
-        'exception_information',    PythonSystem.exc_info,
+        'caught_any_exception',     caught_any_exception,
 
         #
         #   'values'

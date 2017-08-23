@@ -14,6 +14,7 @@ def gem():
     #   This really belongs in Gem.Core, but is here since we need it during Boot
     #
     PythonSystem    = __import__('sys')
+    PythonTypes     = __import__('types')
     is_python_2     = PythonSystem.version_info.major is 2
     is_python_3     = PythonSystem.version_info.major is 3
     PythonBuiltIn   = __import__('__builtin__'  if is_python_2 else   'builtins')
@@ -29,6 +30,7 @@ def gem():
     #   Python Functions
     #
     intern_string = (PythonBuiltIn   if is_python_2 else   PythonSystem).intern
+    is_instance   = isinstance
     iterate       = PythonBuiltIn.iter
     length        = PythonBuiltIn.len
 
@@ -40,6 +42,7 @@ def gem():
     LiquidSet = PythonBuiltIn.set
     Object    = PythonBuiltIn.object
     String    = PythonBuiltIn.str
+    Traceback = PythonTypes.TracebackType
 
 
     #
@@ -349,9 +352,20 @@ def gem():
     #
     #   ThreadContext
     #
-    if is_python_2:
-        exception_information = PythonSystem.exc_info
+    if is_python_3:
+        def raising_exception(e):
+            assert e.__cause__             is none
+            assert (e.__context__ is none) or (is_instance(type(e.__context__), Exception))
+            assert e.__suppress_context__  is False
+            assert e.__traceback__         is none
 
+
+        def raising_exception_from(e):
+            assert e.__cause__             is none
+            assert (e.__context__ is none) or (is_instance(type(e.__context__), Exception))
+            assert e.__suppress_context__  is False
+            assert e.__traceback__         is none
+    else:
         class ThreadContext(Object):
             __slots__ = ((
                 'exception_context',    #   None | Exception
@@ -367,45 +381,39 @@ def gem():
 
         del ThreadContext.__init__
 
-
-        def caught_exception(e):
-            #
-            #   We do not want to use 'hasattr' here for multiple reasons, mainly is defective (in that it can hide underlying
-            #   errors in user funtions); we don't want to call user functions; and we don't want to handle the complexity of
-            #   extra exceptions here.
-            #
-            if '__traceback' not in e.__dict__:
-                e.__traceback__ = exception_information()[2]
-
-
-        def handled_exception(e):
-            if main_context.exception_context is e:
-                main_context.exception_context = none
-
-
+        
+        #
+        #   Do not use 'hasattr' or 'getattr' here for multiple reasons:
+        #
+        #       1.  Mainly is defective (in that it can hide underlying errors in user functions);
+        #       2.  Don't want to call user functions; and
+        #       3.  Don't want to handle the complexity of extra exceptions here.
+        #
         def raising_exception(e):
-            e.__cause__            = none
-            e.__context__          = main_context.exception_context
-            e.__suppress_context__ = false
-            e.__traceback__        = none
+            assert '__cause__'            not in e.__dict__
+            assert '__context__'          not in e.__dict__
+            assert '__suppress_context__' not in e.__dict__
+            assert '__traceback__'        not in e.__dict__
+            
+            e.__cause__     = none
+            e.__context__   = main_context.exception_context
+            e.__traceback__ = none
 
             main_context.exception_context = e
 
 
         def raising_exception_from(e, cause):
+            assert '__cause__'            not in e.__dict__
+            assert '__context__'          not in e.__dict__
+            assert '__suppress_context__' not in e.__dict__
+            assert '__traceback__'        not in e.__dict__
+            
             e.__cause__            = cause
             e.__context__          = main_context.exception_context
             e.__suppress_context__ = true
             e.__traceback__        = none
 
             main_context.exception_context = e
-    else:
-        def raising_exception(e):
-            assert e.__cause__            is none
-            assert (e.__context is none) or (isinstance(type(e.__context__), Exception))
-            assert e.__suppress_context__ is False
-            assert e.__traceback__        is none
-
 
     #
     #   raise_already_exists
@@ -665,7 +673,8 @@ def gem():
         #
         #   Types
         #
-        'Module',   Module,
+        'Module',       Module,
+        'Traceback',    Traceback,
 
         #
         #   Modules
@@ -676,8 +685,9 @@ def gem():
         #
         #   Functions
         #
-        'rename_function',  rename_function,
+        'is_instance',      is_instance,
         'privileged',       privileged,
+        'rename_function',  rename_function,
     )
 
 

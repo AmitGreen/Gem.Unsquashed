@@ -10,6 +10,7 @@ from    Gem.BuiltIn         import  __build_class                           #   
 from    Gem.BuiltIn         import  false                                   #   Gem.Boot
 from    Gem.BuiltIn         import  __import__                              #   Gem.Boot
 from    Gem.BuiltIn         import  intern_string                           #   Gem.Boot
+from    Gem.BuiltIn         import  is_instance                             #   Gem.Boot
 from    Gem.BuiltIn         import  is_python_2                             #   Gem.Boot
 from    Gem.BuiltIn         import  is_python_3                             #   Gem.Boot
 from    Gem.BuiltIn         import  length                                  #   Gem.Boot
@@ -21,6 +22,7 @@ from    Gem.BuiltIn         import  true                                    #   
 from    Gem                 import  absent                                  #   Gem.Absent
 from    Gem                 import  built_in                                #   Gem.Boot
 from    Gem                 import  catch_FileNotFoundError                 #   Gem.CatchException
+from    Gem                 import  caught_any_exception                    #   Gem.Exception
 from    Gem                 import  create_DelayedFileOutput                #   Gem.DelayedFileOutput
 from    Gem                 import  create_SimpleStringOutput               #   Gem.SimpleStringIO
 from    Gem                 import  create_StringOutput                     #   Gem.StringOutput
@@ -28,7 +30,6 @@ from    Gem                 import  encode_ascii                            #   
 from    Gem                 import  EnvironmentError                        #   Gem.Exception (Python 3 only)
 from    Gem                 import  ERROR_NO_ACCESS                         #   Gem.ErrorNumber
 from    Gem                 import  ERROR_NO_ENTRY                          #   Gem.ErrorNumber
-from    Gem                 import  exception_information                   #   Gem.Exception
 from    Gem                 import  execute                                 #   Gem.Core
 from    Gem                 import  FileNotFoundError                       #   Gem.Exception
 from    Gem                 import  first_map_item                          #   Gem.Map
@@ -58,7 +59,10 @@ from    Gem                 import  restricted                              #   
 from    Gem                 import  Shared                                  #   Gem.Boot
 from    Gem                 import  stop_iteration                          #   Gem.Exception
 from    Gem                 import  StopIteration                           #   Gem.Exception
+from    Gem                 import  Traceback                               #   Gem.Boot
 from    Gem                 import  unknown_ascii                           #   Gem.Ascii
 from    Gem                 import  values_tuple_sorted_by_key              #   Gem.Map
 from    Gem                 import  view_items                              #   Gem.Map
 from    Gem                 import  write_binary_to_path                    #   Gem.Path
+from    Gem                 import  flush_standard_output                   #   Gem.Boot
+from    Gem                 import  write_standard_output                   #   Gem.Boot
