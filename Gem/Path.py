@@ -3,7 +3,7 @@
 #
 @gem('Gem.Path')
 def gem():
-    show = 7
+    show = 0
 
 
     require_gem('Gem.CatchException')
@@ -82,7 +82,7 @@ def gem():
         if show is 7:
             if e.caught is not none:
                 line('=== rename_path__ignore_file_not_found(%s, %s) ===', from_path, to_path)
-                print_exception(e.caught)
+                print_exception_chain(e.caught)
 
 
         return e.caught is none

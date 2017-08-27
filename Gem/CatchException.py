@@ -45,8 +45,6 @@ def gem():
                 ):
                     t.caught = e
 
-                    assert 0, 'oh no'
-
                     return true
 
 

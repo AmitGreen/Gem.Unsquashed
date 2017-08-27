@@ -26,6 +26,8 @@ def gem():
     require_gem('Topaz.Pattern')
     require_gem('Topaz.PortrayString')
     require_gem('Topaz.StringOutput')
+    require_gem('Gem.Exception')
+    require_gem('Gem.Traceback')
 
 
     @share
@@ -36,3 +38,30 @@ def gem():
         test_remove_path()
         test_rename_path()
         test_string_output()
+
+
+        from Gem import caught_any_exception, caught_exception, Exception, print_exception_chain
+        from Gem import raising_exception_from
+
+
+        def b(previous):
+            e = Exception('b')
+
+            raising_exception_from(e, previous)
+
+            raise e
+
+
+        try:
+            try:
+                assert 0, 'a'
+            except AssertionError as e:
+                with caught_exception(e):
+                    try:
+                        b(e)
+                    except:
+                        with caught_any_exception():
+                            assert 0, 'c'
+        except:
+            with caught_any_exception() as e:
+                print_exception_chain(e)

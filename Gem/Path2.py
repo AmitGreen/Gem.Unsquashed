@@ -48,19 +48,18 @@ def gem():
         try:
             python__remove_path(path)
         except OSError as e:
-            caught_exception(e)
+            with caught_exception(e):
+                #
+                #   NOTE:
+                #       To avoid adding an extra frame in the traceback, the 'raise' must be issued in this function,
+                #       instead of inside adjust_OSError_exception()
+                #
+                e = adjust_OSError_exception(e, path)
 
-            #
-            #   NOTE:
-            #       To avoid adding an extra frame in the traceback, the 'raise' must be issued in this function,
-            #       instead of inside adjust_OSError_exception()
-            #
-            e = adjust_OSError_exception(e, path)
+                e_type      = type(e)
+                e_traceback = e.__traceback__
 
-            e_type      = type(e)
-            e_traceback = e.__traceback__
-
-            raise e_type, e, e_traceback
+                raise e_type, e, e_traceback
 
 
     @export
@@ -68,16 +67,15 @@ def gem():
         try:
             python__rename_path(from_path, to_path)
         except OSError as e:
-            caught_exception(e)
+            with caught_exception(e):
+                #
+                #   NOTE:
+                #       To avoid adding an extra frame in the traceback, the 'raise' must be issued in this function,
+                #       instead of inside adjust_OSError_exception()
+                #
+                e = adjust_OSError_exception(e, from_path, to_path)
 
-            #
-            #   NOTE:
-            #       To avoid adding an extra frame in the traceback, the 'raise' must be issued in this function,
-            #       instead of inside adjust_OSError_exception()
-            #
-            e = adjust_OSError_exception(e, from_path, to_path)
+                e_type      = type(e)
+                e_traceback = e.__traceback__
 
-            e_type      = type(e)
-            e_traceback = e.__traceback__
-
-            raise e_type, e, e_traceback
+                raise e_type, e, e_traceback

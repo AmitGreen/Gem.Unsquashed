@@ -24,7 +24,10 @@ def gem():
     #
     #   Python keywords
     #
-    none = None
+    false = False
+    none  = None
+    true  = True
+
 
     #
     #   Python Functions
@@ -360,26 +363,27 @@ def gem():
             assert e.__traceback__         is none
 
 
-        def raising_exception_from(e):
+        def raising_exception_from(e, cause):
             assert e.__cause__             is none
             assert (e.__context__ is none) or (is_instance(type(e.__context__), Exception))
             assert e.__suppress_context__  is False
             assert e.__traceback__         is none
+
+            e.__cause__ = cause
     else:
-        class ThreadContext(Object):
-            __slots__ = ((
-                'exception_context',    #   None | Exception
-            ))
+        ThreadingLocalBase = __import__('threading').local
+
+
+        class ThreadContext(ThreadingLocalBase):
+            __slots__ = (())
 
 
             def __init__(t):
-                t.exception_context = none
+                t.exception_stack = []
+                t.last_exception  = none
 
 
-        main_context = ThreadContext()
-
-
-        del ThreadContext.__init__
+        thread_context = ThreadContext()
 
         
         #
@@ -394,12 +398,13 @@ def gem():
             assert '__context__'          not in e.__dict__
             assert '__suppress_context__' not in e.__dict__
             assert '__traceback__'        not in e.__dict__
-            
-            e.__cause__     = none
-            e.__context__   = main_context.exception_context
-            e.__traceback__ = none
 
-            main_context.exception_context = e
+            last_exception = thread_context.last_exception
+            
+            e.__cause__            = none
+            e.__context__          = (none   if e is last_exception else   last_exception)
+            e.__suppress_context__ = false
+            e.__traceback__        = none
 
 
         def raising_exception_from(e, cause):
@@ -407,13 +412,14 @@ def gem():
             assert '__context__'          not in e.__dict__
             assert '__suppress_context__' not in e.__dict__
             assert '__traceback__'        not in e.__dict__
+
+            last_exception = thread_context.last_exception
             
             e.__cause__            = cause
-            e.__context__          = main_context.exception_context
+            e.__context__          = (none if (e is last_exception) or (cause is last_exception) else   last_exception)
             e.__suppress_context__ = true
             e.__traceback__        = none
 
-            main_context.exception_context = e
 
     #
     #   raise_already_exists
@@ -669,6 +675,12 @@ def gem():
     )
 
 
+    if is_python_2:
+        share(
+            'thread_context',     thread_context,
+        )
+
+
     export(
         #
         #   Types
@@ -685,9 +697,11 @@ def gem():
         #
         #   Functions
         #
-        'is_instance',      is_instance,
-        'privileged',       privileged,
-        'rename_function',  rename_function,
+        'is_instance',              is_instance,
+        'privileged',               privileged,
+        'raising_exception',        raising_exception,
+        'raising_exception_from',   raising_exception_from,
+        'rename_function',          rename_function,
     )
 
 

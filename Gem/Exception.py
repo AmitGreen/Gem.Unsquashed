@@ -19,6 +19,75 @@ def gem():
     stop_iteration        = StopIteration()
 
 
+    if is_python_3:
+        class CaughtExceptionContext(Object):
+            __slots__ = ((
+                'e',
+            ))
+
+
+            def __init__(t, e):
+                assert is_instance(e, BaseException)
+
+                t.e = e
+
+            def __enter__(t):
+                return t.e
+
+            
+            def __exit__(t, e_type, e, e_traceback):
+                pass
+    else:
+        class CaughtExceptionContext(Object):
+            __slots__ = ((
+                'e',                        #   BaseException+
+                'exception_stack',          #   List of BaseException+
+            ))
+
+
+            def __init__(t, e):
+                assert is_instance(e, BaseException)
+
+                t.e               = e
+                t.exception_stack = thread_context.exception_stack
+
+
+            def __enter__(t):
+                e = t.e
+
+                t.exception_stack.append(e)
+                thread_context.exception_context = e
+
+                return e
+
+
+            def __exit__(t, e_type, e, e_traceback):
+                last_exception = t.e
+
+                if e is not none:
+                    if '__cause__' in e.__dict__:
+                        assert '__context__'          in e.__dict__
+                        assert '__suppress_context__' in e.__dict__
+                        assert '__traceback__'        in e.__dict__
+                    else:
+                        assert '__context__'          not in e.__dict__
+                        assert '__suppress_context__' not in e.__dict__
+                        assert '__traceback__'        not in e.__dict__
+                
+                        e.__cause__            = none
+                        e.__context__          = (none   if e is last_exception else   last_exception)
+                        e.__suppress_context__ = false
+                        e.__traceback__        = none
+
+                exception_stack = t.exception_stack
+
+                e = exception_stack.pop()
+
+                assert e is last_exception
+
+                thread_context.exception_context = (none   if length(exception_stack) is 0 else   exception_stack[-1])
+
+
     #
     #   NOTE:
     #       Do not use 'hasattr' or 'getattr' here for multiple reasons:
@@ -36,7 +105,7 @@ def gem():
     if is_python_3:
         if __debug__:
             @export
-            def caught_any_exception(e):
+            def caught_any_exception():
                 [e_type, e, e_traceback] = exception_information()
 
                 assert is_instance(e_type, BaseException)
@@ -49,11 +118,11 @@ def gem():
 
                 assert type(e_traceback) is Traceback
 
-                return e
+                return CaughtExceptionContext(e)
         else:
             @export
-            def caught_any_exception(e):
-                return exception_information()[0]
+            def caught_any_exception():
+                return CaughtExceptionContext(exception_information()[0])
 
 
         if __debug__:
@@ -65,10 +134,12 @@ def gem():
                 assert (e.__context__ is none) or is_instance(e.__cause__, BaseException)
                 assert type(e.__suppress_context__) is Boolean
                 assert type(e.__traceback__)        is Traceback
+
+                return CaughtExceptionContext(e)
         else:
             @export
             def caught_exception(e):
-                pass
+                return CaughtExceptionContext(e)
 
 
         @export
@@ -86,14 +157,14 @@ def gem():
                 e.__cause__ = none
 
             if contains('__context__'):
-                assert (e.__context__ is none) or is_instance(e.__cause__, BaseException)
+                assert (e.__context__ is none) or is_instance(e.__context__, BaseException)
             else:
                 e.__context__ = none
 
-            if contains('__supress_context__'):
-                assert type(e.__supress_context__) is Boolean
+            if contains('__suppress_context__'):
+                assert type(e.__suppress_context__) is Boolean
             else:
-                e.__supress_context__ = false
+                e.__suppress_context__ = false
                 
             if contains('__traceback__'):
                 if e.__traceback__ is none:
@@ -117,13 +188,15 @@ def gem():
 
             assert type(e_traceback) is Traceback
 
-            return e
+            return CaughtExceptionContext(e)
 
 
         @export
         def caught_exception(e):
             if fixup_caught_exception(e):
                 e.__traceback__ = exception_information()[2]
+
+            return CaughtExceptionContext(e)
 
 
         @export
@@ -206,6 +279,7 @@ def gem():
         #   Exception Types
         #
         'BaseException',        BaseException,
+        'Exception',            PythonException.Exception,
         'FileNotFoundError',    FileNotFoundError,
         'ImportError',          PythonException.ImportError,
         'OSError',              PythonException.OSError,

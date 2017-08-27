@@ -36,6 +36,7 @@ Main_py=../Tremolite/Main.py
 Main_py=../Quartz/Main.py
 Main_py=../Sapphire/Main.py
 Main_py=../Topaz/Main.py
+#Main_py=test2.py
 
 command="python $Main_py"
 commandO="python -O $Main_py"
@@ -70,7 +71,14 @@ do
     mv $tmp3 2o
 
     $command3 <$tmp1 >&$tmp3
-    mv $tmp3 3
+    if cmp -s $tmp3 3
+    then
+        :
+    else
+        mv $tmp3 3
+        #echo -en '\E[H\E[J'
+        #tail -60 3
+    fi
 
     $command3O <$tmp1 >&$tmp3
     mv $tmp3 3o
