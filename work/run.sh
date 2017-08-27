@@ -43,6 +43,8 @@ commandO="python -O $Main_py"
 command3="python3 $Main_py"
 command3O="python3 -O $Main_py"
 
+show=2
+
 cat >$tmp1 <<END
 AmitGreen
 CA1A41C16B1D3F25
@@ -53,7 +55,7 @@ y
 END
 
 echo -en '\E[H\E[J'
-cat 2
+cat $show
 
 while :
 do
@@ -63,8 +65,11 @@ do
         :
     else
         mv $tmp2 2
-        echo -en '\E[H\E[J'
-        tail -60 2
+
+        if [ $show = 2 ]; then
+            echo -en '\E[H\E[J'
+            tail -60 2
+        fi
     fi
 
     $commandO <$tmp1 >&$tmp3
@@ -76,8 +81,11 @@ do
         :
     else
         mv $tmp3 3
-        #echo -en '\E[H\E[J'
-        #tail -60 3
+
+        if [ $show = 3 ]; then
+            echo -en '\E[H\E[J'
+            tail -60 3
+        fi
     fi
 
     $command3O <$tmp1 >&$tmp3

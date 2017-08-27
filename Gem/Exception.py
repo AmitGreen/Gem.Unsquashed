@@ -108,11 +108,11 @@ def gem():
             def caught_any_exception():
                 [e_type, e, e_traceback] = exception_information()
 
-                assert is_instance(e_type, BaseException)
-
                 assert type(e) is e_type
-                assert (e.__cause__   is none) or is_instance(e.__cause__, BaseException)
-                assert (e.__context__ is none) or is_instance(e.__cause__, BaseException)
+
+                assert is_instance(e, BaseException)
+                assert (e.__cause__   is none) or is_instance(e.__cause__,   BaseException)
+                assert (e.__context__ is none) or is_instance(e.__context__, BaseException)
                 assert type(e.__suppress_context__) is Boolean
                 assert type(e.__traceback__)        is Traceback
 
@@ -130,8 +130,8 @@ def gem():
             def caught_exception(e):
                 assert is_instance(e, BaseException)
 
-                assert (e.__cause__   is none) or is_instance(e.__cause__, BaseException)
-                assert (e.__context__ is none) or is_instance(e.__cause__, BaseException)
+                assert (e.__cause__   is none) or is_instance(e.__cause__,   BaseException)
+                assert (e.__context__ is none) or is_instance(e.__context__, BaseException)
                 assert type(e.__suppress_context__) is Boolean
                 assert type(e.__traceback__)        is Traceback
 

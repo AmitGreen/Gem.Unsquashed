@@ -3,7 +3,7 @@
 #
 @gem('Gem.Path')
 def gem():
-    show = 0
+    show = 7
 
 
     require_gem('Gem.CatchException')

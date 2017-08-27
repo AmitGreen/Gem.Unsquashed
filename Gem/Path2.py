@@ -30,14 +30,18 @@ def gem():
 
             if (error_number is ERROR_NO_ACCESS) and ((e.filename is none) or (e.filename == path)) and (path2 is none):
                 r = PermissionError(error_number, message, path)
-                r.__context__   = e
-                r.__traceback__ = e.__traceback__
+                r.__cause__            = e.__cause__
+                r.__context__          = e.__context__
+                r.__suppress_context__ = e.__suppress_context__
+                r.__traceback__        = e.__traceback__
                 return r
 
             if (error_number is ERROR_NO_ENTRY) and ((e.filename is none) or (e.filename == path)):
                 r = FileNotFoundError(error_number, message, path, path2)
-                r.__context__   = e
-                r.__traceback__ = e.__traceback__
+                r.__cause__            = e.__cause__
+                r.__context__          = e.__context__
+                r.__suppress_context__ = e.__suppress_context__
+                r.__traceback__        = e.__traceback__
                 return r
 
         return e
@@ -59,6 +63,8 @@ def gem():
                 e_type      = type(e)
                 e_traceback = e.__traceback__
 
+                raising_exception_from(e, none)
+
                 raise e_type, e, e_traceback
 
 
@@ -77,5 +83,7 @@ def gem():
 
                 e_type      = type(e)
                 e_traceback = e.__traceback__
+
+                raising_exception_from(e, none)
 
                 raise e_type, e, e_traceback

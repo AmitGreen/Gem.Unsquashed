@@ -394,31 +394,40 @@ def gem():
         #       3.  Don't want to handle the complexity of extra exceptions here.
         #
         def raising_exception(e):
-            assert '__cause__'            not in e.__dict__
-            assert '__context__'          not in e.__dict__
-            assert '__suppress_context__' not in e.__dict__
-            assert '__traceback__'        not in e.__dict__
+            if '__cause__' in e.__dict__:
+                assert '__context__'          in e.__dict__
+                assert '__suppress_context__' in e.__dict__
+                assert '__traceback__'        in e.__dict__
+            else:
+                assert '__context__'          not in e.__dict__
+                assert '__suppress_context__' not in e.__dict__
+                assert '__traceback__'        not in e.__dict__
 
-            last_exception = thread_context.last_exception
-            
-            e.__cause__            = none
-            e.__context__          = (none   if e is last_exception else   last_exception)
-            e.__suppress_context__ = false
-            e.__traceback__        = none
+                last_exception = thread_context.last_exception
+                
+                e.__cause__            = none
+                e.__context__          = (none   if e is last_exception else   last_exception)
+                e.__suppress_context__ = false
+                e.__traceback__        = none
 
 
         def raising_exception_from(e, cause):
-            assert '__cause__'            not in e.__dict__
-            assert '__context__'          not in e.__dict__
-            assert '__suppress_context__' not in e.__dict__
-            assert '__traceback__'        not in e.__dict__
+            if '__cause__' in e.__dict__:
+                assert '__context__'          in e.__dict__
+                assert '__suppress_context__' in e.__dict__
+                assert '__traceback__'        in e.__dict__
+            else:
+                assert '__context__'          not in e.__dict__
+                assert '__suppress_context__' not in e.__dict__
+                assert '__traceback__'        not in e.__dict__
 
-            last_exception = thread_context.last_exception
-            
-            e.__cause__            = cause
-            e.__context__          = (none if (e is last_exception) or (cause is last_exception) else   last_exception)
-            e.__suppress_context__ = true
-            e.__traceback__        = none
+                last_exception = thread_context.last_exception
+                
+                e.__context__          = (none if (e is last_exception) or (cause is last_exception) else   last_exception)
+                e.__suppress_context__ = true
+                e.__traceback__        = none
+
+            e.__cause__ = cause
 
 
     #
