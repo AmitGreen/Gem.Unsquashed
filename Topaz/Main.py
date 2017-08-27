@@ -32,28 +32,28 @@ def gem():
 
     @share
     def main():
-        test_conjure_tree_comment()
-        test_pattern()
-        test_portray_raw_string()
-        test_remove_path()
-        test_rename_path()
-        test_string_output()
+        from Gem import caught_any_exception, caught_exception, Exception, print_exception_chain
+        from Gem import raising_exception_from
 
 
-        if 0:
-            from Gem import caught_any_exception, caught_exception, Exception, print_exception_chain
-            from Gem import raising_exception_from
+        try:
+            test_conjure_tree_comment()
+            test_pattern()
+            test_portray_raw_string()
+            test_remove_path()
+            test_rename_path()
+            test_string_output()
 
 
-            def b(previous):
-                e = Exception('b')
+            if 0:
+                def b(previous):
+                    e = Exception('b')
 
-                raising_exception_from(e, previous)
+                    raising_exception_from(e, previous)
 
-                raise e
+                    raise e
 
 
-            try:
                 try:
                     assert 0, 'a'
                 except AssertionError as e:
@@ -63,6 +63,6 @@ def gem():
                         except:
                             with caught_any_exception():
                                 assert 0, 'c'
-            except:
-                with caught_any_exception() as e:
-                    print_exception_chain(e)
+        except:
+            with caught_any_exception() as e:
+                print_exception_chain(e)

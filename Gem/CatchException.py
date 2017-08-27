@@ -7,7 +7,7 @@ def gem():
     require_gem('Gem.Exception')
 
 
-    class CatchFileNotFoundException(Object):
+    class CatchOsError(Object):
         __slots__ = ((
             'exception_type',           #   Type
             'error_number',             #   Integer
@@ -42,6 +42,7 @@ def gem():
                     and length(arguments) is 2
                     and arguments[0]      == t.error_number
                     and e.filename        == t.path
+                    and (e.filename2 == t.path2   if is_python_3 else   true)
                 ):
                     t.caught = e
 
@@ -49,7 +50,11 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<CatchException %r %r>', t.exception_type, t.caught)
+            return arrange('<CatchOsError %r %r>', t.exception_type, t.caught)
+
+
+        def cleanup(t):
+            t.caught = none
 
 
         if is_python_2:
@@ -58,4 +63,10 @@ def gem():
 
     @export
     def catch_FileNotFoundError(path, path2 = none):
-        return CatchFileNotFoundException(FileNotFoundError, ERROR_NO_ENTRY, path, path2)
+        return CatchOsError(FileNotFoundError, ERROR_NO_ENTRY, path, path2)
+
+
+    if is_python_2:
+        @export
+        def catch_OSError__FileNotFound(path):
+            return CatchOsError(OSError, ERROR_NO_ENTRY, path, none)
