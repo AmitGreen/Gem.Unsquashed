@@ -51,39 +51,45 @@ def gem():
     def remove_path(path):
         try:
             python__remove_path(path)
-        except OSError as e:
-            with caught_exception(e):
+        except OSError as e0:
+            with caught_exception(e0):
                 #
                 #   NOTE:
                 #       To avoid adding an extra frame in the traceback, the 'raise' must be issued in this function,
                 #       instead of inside adjust_OSError_exception()
                 #
-                e = adjust_OSError_exception(e, path)
+                e = adjust_OSError_exception(e0, path)
 
                 e_type      = type(e)
                 e_traceback = e.__traceback__
 
-                raising_exception_from(e, none)
+                if e is not e0:
+                    raising_exception_from(e, none)
 
                 raise e_type, e, e_traceback
+
+            del e0
 
 
     @export
     def rename_path(from_path, to_path):
         try:
             python__rename_path(from_path, to_path)
-        except OSError as e:
-            with caught_exception(e):
+        except OSError as e0:
+            with caught_exception(e0):
                 #
                 #   NOTE:
                 #       To avoid adding an extra frame in the traceback, the 'raise' must be issued in this function,
                 #       instead of inside adjust_OSError_exception()
                 #
-                e = adjust_OSError_exception(e, from_path, to_path)
+                e = adjust_OSError_exception(e0, from_path, to_path)
 
                 e_type      = type(e)
                 e_traceback = e.__traceback__
 
-                raising_exception_from(e, none)
+                if e is not e0:
+                    raising_exception_from(e, none)
 
                 raise e_type, e, e_traceback
+
+            del e0
