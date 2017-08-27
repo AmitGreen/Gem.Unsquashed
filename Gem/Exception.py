@@ -3,6 +3,9 @@
 #
 @gem('Gem.Exception')
 def gem():
+    show = 0
+
+
     require_gem('Gem.Import')
 
 
@@ -34,7 +37,7 @@ def gem():
             def __enter__(t):
                 return t.e
 
-            
+
             def __exit__(t, e_type, e, e_traceback):
                 pass
     else:
@@ -42,6 +45,7 @@ def gem():
             __slots__ = ((
                 'e',                        #   BaseException+
                 'exception_stack',          #   List of BaseException+
+                '_show',                    #   Integer
             ))
 
 
@@ -50,13 +54,14 @@ def gem():
 
                 t.e               = e
                 t.exception_stack = thread_context.exception_stack
+                t._show           = 0
 
 
             def __enter__(t):
                 e = t.e
 
                 t.exception_stack.append(e)
-                thread_context.exception_context = e
+                thread_context.last_exception = e
 
                 return e
 
@@ -73,11 +78,15 @@ def gem():
                         assert '__context__'          not in e.__dict__
                         assert '__suppress_context__' not in e.__dict__
                         assert '__traceback__'        not in e.__dict__
-                
+
                         e.__cause__            = none
                         e.__context__          = (none   if e is last_exception else   last_exception)
                         e.__suppress_context__ = false
-                        e.__traceback__        = none
+                        e.__traceback__        = e_traceback
+
+                        if t._show:
+                            line('handled %s; none, %s, false, none', e, e.__context__)
+
 
                 exception_stack = t.exception_stack
 
@@ -85,7 +94,30 @@ def gem():
 
                 assert e is last_exception
 
-                thread_context.exception_context = (none   if length(exception_stack) is 0 else   exception_stack[-1])
+                thread_context.last_exception = (none   if length(exception_stack) is 0 else   exception_stack[-1])
+
+
+            def show(t, show):
+                assert (t._show is 0) and (show is 7)
+
+                t._show = show
+
+                return t
+
+
+    class EmptyContext(Object):
+        __slots__ = (())
+
+
+        def __enter__(t):
+            pass
+
+
+        def __exit__(t, e_type, e, e_traceback):
+            pass
+
+
+    empty_context = EmptyContext()
 
 
     #
@@ -143,8 +175,8 @@ def gem():
 
 
         @export
-        def handled_exception(e):
-            pass
+        def maybe_exit_exception(e_type, e, e_traceback):
+            return empty_context
     else:
         def fixup_caught_exception(e):
             assert is_instance(e, BaseException)
@@ -159,20 +191,34 @@ def gem():
             if contains('__context__'):
                 assert (e.__context__ is none) or is_instance(e.__context__, BaseException)
             else:
-                e.__context__ = none
+                last_exception = thread_context.last_exception
+
+                e.__context__ = (none   if e is last_exception else   last_exception)
 
             if contains('__suppress_context__'):
                 assert type(e.__suppress_context__) is Boolean
             else:
                 e.__suppress_context__ = false
-                
+
             if contains('__traceback__'):
                 if e.__traceback__ is none:
+                    if show:
+                        line('fixed %s; %s, %s, %s, %s; has e.__traceback__ is none => true',
+                             e, e.__cause__, e.__context__, e.__traceback__, e.__suppress_context__)
+
                     return true
 
                 assert type(e.__traceback__) is Traceback
 
+                if show:
+                    line('fixed %s; %s, %s, %s, %s; has e.__traceback__ => false',
+                         e, e.__cause__, e.__context__, e.__traceback__, e.__suppress_context__)
+
                 return false
+
+            if show:
+                line('fixed %s; %s, %s, missing, %s; no e.__traceback__ => true',
+                     e, e.__cause__, e.__context__, e.__suppress_context__)
 
             return true
 
@@ -200,9 +246,20 @@ def gem():
 
 
         @export
-        def handled_exception(e):
-            if main_context.exception_context is e:
-                main_context.exception_context = none
+        def maybe_exit_exception(e_type, e, e_traceback):
+            if e_type is none:
+                assert e is e_traceback is none
+
+                return empty_context
+
+            assert type(e) is e_type
+
+            if fixup_caught_exception(e):
+                e.__traceback__ = e_traceback
+
+            assert type(e_traceback) is Traceback
+
+            return CaughtExceptionContext(e)
 
 
     #
@@ -221,7 +278,7 @@ def gem():
         runtime_error = RuntimeError(format   % arguments   if arguments else   format)
 
         raising_exception(runtime_error)
-        
+
         raise runtime_error
 
 
