@@ -69,6 +69,7 @@ SAPPHIRE_FILES = \
 
 TOPAZ_FILES = \
     ../Topaz/ConjureTreeComment.py ../Topaz/Core.py \
+    ../Topaz/ExceptionChain.py \
     ../Topaz/Main.py \
     ../Topaz/Path.py ../Topaz/Pattern.py ../Topaz/PortrayString.py \
     ../Topaz/StringOutput.py
@@ -130,7 +131,7 @@ clean:
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
 	rm -f tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
-	rm -f zc.py zj.py zm.py zpa.py zps.py zpt.py zso.py
+	rm -f zc.py ze.py zj.py zm.py zpa.py zps.py zpt.py zso.py
 
 
 files:
@@ -226,6 +227,7 @@ links:
 	ln -s ../Tremolite/PatternWrapper.py        tw.py
 	ln -s ../Tremolite/Compile.py               tx.py
 	ln -s ../Topaz/Core.py                      zc.py
+	ln -s ../Topaz/ExceptionChain.py            ze.py
 	ln -s ../Topaz/ConjureTreeComment.py        zj.py
 	ln -s ../Topaz/Main.py                      zm.py
 	ln -s ../Topaz/Path.py                      zpa.py

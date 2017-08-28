@@ -11,6 +11,7 @@ def gem():
 
 
     python_print_exception = PythonTraceback.print_exception
+    python_print_traceback = PythonTraceback.print_tb
 
 
     if is_python_3:
@@ -70,3 +71,10 @@ def gem():
             flush_standard_output()
             print_single_exception(e)
             flush_standard_error()
+
+
+    @export
+    def print_traceback(traceback):
+        flush_standard_output()
+        python_print_traceback(traceback)
+        flush_standard_error()

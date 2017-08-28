@@ -36,7 +36,7 @@ Main_py=../Tremolite/Main.py
 Main_py=../Quartz/Main.py
 Main_py=../Sapphire/Main.py
 Main_py=../Topaz/Main.py
-#Main_py=test1.py
+#Main_py=test3.py
 
 show=2
 

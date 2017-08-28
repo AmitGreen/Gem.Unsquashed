@@ -84,8 +84,9 @@ def gem():
                         e.__suppress_context__ = false
                         e.__traceback__        = e_traceback
 
-                        if t._show:
+                        if show:
                             line('handled %s; none, %s, false, none', e, e.__context__)
+                            print_traceback(e_traceback)
 
 
                 exception_stack = t.exception_stack
@@ -178,8 +179,9 @@ def gem():
         def maybe_exit_exception(e_type, e, e_traceback):
             return empty_context
     else:
-        def fixup_caught_exception(e):
+        def fixup_caught_exception(e, traceback):
             assert is_instance(e, BaseException)
+            assert type(traceback) is Traceback
 
             contains = e.__dict__.__contains__
 
@@ -200,27 +202,7 @@ def gem():
             else:
                 e.__suppress_context__ = false
 
-            if contains('__traceback__'):
-                if e.__traceback__ is none:
-                    if show:
-                        line('fixed %s; %s, %s, %s, %s; has e.__traceback__ is none => true',
-                             e, e.__cause__, e.__context__, e.__traceback__, e.__suppress_context__)
-
-                    return true
-
-                assert type(e.__traceback__) is Traceback
-
-                if show:
-                    line('fixed %s; %s, %s, %s, %s; has e.__traceback__ => false',
-                         e, e.__cause__, e.__context__, e.__traceback__, e.__suppress_context__)
-
-                return false
-
-            if show:
-                line('fixed %s; %s, %s, missing, %s; no e.__traceback__ => true',
-                     e, e.__cause__, e.__context__, e.__suppress_context__)
-
-            return true
+            e.__traceback__ = traceback
 
 
         @export
@@ -229,18 +211,14 @@ def gem():
 
             assert type(e) is e_type
 
-            if fixup_caught_exception(e):
-                e.__traceback__ = e_traceback
-
-            assert type(e_traceback) is Traceback
+            fixup_caught_exception(e, e_traceback)
 
             return CaughtExceptionContext(e)
 
 
         @export
         def caught_exception(e):
-            if fixup_caught_exception(e):
-                e.__traceback__ = exception_information()[2]
+            fixup_caught_exception(e, exception_information()[2])
 
             return CaughtExceptionContext(e)
 
@@ -254,10 +232,7 @@ def gem():
 
             assert type(e) is e_type
 
-            if fixup_caught_exception(e):
-                e.__traceback__ = e_traceback
-
-            assert type(e_traceback) is Traceback
+            fixup_caught_exception(e, e_traceback)
 
             return CaughtExceptionContext(e)
 
