@@ -7,6 +7,7 @@ import  PythonSystem        #   Gem.Boot
 
 from    Gem.BuiltIn         import  arrange                                 #   Gem.Boot
 from    Gem.BuiltIn         import  __build_class                           #   Gem.Boot (Python 3 only)
+from    Gem.Builtin         import  except_any_clause                       #   Gem.Exception
 from    Gem.BuiltIn         import  false                                   #   Gem.Boot
 from    Gem.BuiltIn         import  __import__                              #   Gem.Boot
 from    Gem.BuiltIn         import  intern_string                           #   Gem.Boot
@@ -17,12 +18,13 @@ from    Gem.BuiltIn         import  length                                  #   
 from    Gem.BuiltIn         import  LiquidSet                               #   Gem.Boot
 from    Gem.BuiltIn         import  next_method                             #   Gem.Boot
 from    Gem.BuiltIn         import  none                                    #   Gem.Boot
+from    Gem.BuiltIn         import  raising_exception_from                  #   Gem.Boot
+from    Gem.BuiltIn         import  raising_exception                       #   Gem.Boot
 from    Gem.BuiltIn         import  String                                  #   Gem.Boot
 from    Gem.BuiltIn         import  true                                    #   Gem.Boot
 from    Gem                 import  absent                                  #   Gem.Absent
 from    Gem                 import  built_in                                #   Gem.Boot
 from    Gem                 import  catch_FileNotFoundError                 #   Gem.CatchException
-from    Gem                 import  caught_any_exception                    #   Gem.Exception
 from    Gem                 import  create_DelayedFileOutput                #   Gem.DelayedFileOutput
 from    Gem                 import  create_SimpleStringOutput               #   Gem.SimpleStringIO
 from    Gem                 import  create_StringOutput                     #   Gem.StringOutput
@@ -57,7 +59,6 @@ from    Gem                 import  rename_path                             #   
 from    Gem                 import  rename_path__ignore_file_not_found      #   Gem.Path
 from    Gem                 import  restricted                              #   Gem.Boot
 from    Gem                 import  Shared                                  #   Gem.Boot
-from    Gem                 import  stop_iteration                          #   Gem.Exception
 from    Gem                 import  StopIteration                           #   Gem.Exception
 from    Gem                 import  Traceback                               #   Gem.Boot
 from    Gem                 import  unknown_ascii                           #   Gem.Ascii

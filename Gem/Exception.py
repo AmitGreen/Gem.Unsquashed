@@ -19,7 +19,6 @@ def gem():
 
 
     exception_information = PythonSystem.exc_info
-    stop_iteration        = StopIteration()
 
 
     if is_python_3:
@@ -41,6 +40,7 @@ def gem():
             def __exit__(t, e_type, e, e_traceback):
                 pass
     else:
+        @share
         class CaughtExceptionContext(Object):
             __slots__ = ((
                 'e',                        #   BaseException+
@@ -137,8 +137,8 @@ def gem():
     #
     if is_python_3:
         if __debug__:
-            @export
-            def caught_any_exception():
+            @built_in
+            def except_any_clause():
                 [e_type, e, e_traceback] = exception_information()
 
                 assert type(e) is e_type
@@ -149,13 +149,24 @@ def gem():
                 assert type(e.__suppress_context__) is Boolean
                 assert type(e.__traceback__)        is Traceback
 
-                assert type(e_traceback) is Traceback
+                assert e.__traceback__ is e_traceback
 
                 return CaughtExceptionContext(e)
         else:
-            @export
-            def caught_any_exception():
-                return CaughtExceptionContext(exception_information()[0])
+            @built_in
+            def except_any_clause():
+                [e_type, e, e_traceback] = exception_information()
+
+                assert type(e) is e_type
+                assert is_instance(e, BaseException)
+                assert (e.__cause__   is none) or is_instance(e.__cause__,   BaseException)
+                assert (e.__context__ is none) or is_instance(e.__context__, BaseException)
+                assert type(e.__suppress_context__) is Boolean
+                assert type(e.__traceback__)        is Traceback
+
+                assert e.__traceback__ is e_traceback
+
+                return CaughtExceptionContext(e)
 
 
         if __debug__:
@@ -179,6 +190,7 @@ def gem():
         def maybe_exit_exception(e_type, e, e_traceback):
             return empty_context
     else:
+        @export
         def fixup_caught_exception(e, traceback):
             assert is_instance(e, BaseException)
             assert type(traceback) is Traceback
@@ -204,9 +216,11 @@ def gem():
 
             e.__traceback__ = traceback
 
+            return e
 
-        @export
-        def caught_any_exception():
+
+        @built_in
+        def except_any_clause():
             [e_type, e, e_traceback] = exception_information()
 
             assert type(e) is e_type
@@ -218,7 +232,13 @@ def gem():
 
         @export
         def caught_exception(e):
-            fixup_caught_exception(e, exception_information()[2])
+            [e_type, e_verify, e_traceback] = exception_information()
+
+            assert e is e_verify
+
+            assert type(e) is e_type
+
+            fixup_caught_exception(e, e_traceback)
 
             return CaughtExceptionContext(e)
 
@@ -317,14 +337,9 @@ def gem():
         'OSError',              PythonException.OSError,
         'PermissionError',      PermissionError,
         'StopIteration',        StopIteration,
+    )
 
-        #
-        #   Functions
-        #
-        'caught_any_exception',     caught_any_exception,
 
-        #
-        #   'values'
-        #
-        'stop_iteration',       stop_iteration,
+    share(
+        'exception_information',    exception_information,
     )

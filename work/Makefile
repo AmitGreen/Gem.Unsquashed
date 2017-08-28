@@ -13,7 +13,7 @@ GEM_FILES = \
 	../Gem/__init__.py \
     ../Gem/Absent.py ../Gem/All.py ../Gem/Ascii.py \
 	../Gem/Boot.py \
-	../Gem/Cache.py ../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
+	../Gem/Cache.py ../Gem/Cadence.py ../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
 	../Gem/DelayedFileOutput.py \
 	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
@@ -115,7 +115,7 @@ clean:
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
 	rm -f a.py ab.py ac.py ag.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
-	rm -f ca.py ce.py co.py
+	rm -f ca.py cd.py ce.py co.py
 	rm -f de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
@@ -158,6 +158,7 @@ links:
 	ln -s ../Beryl/Main.py                      bm.py
 	ln -s ../Gem/Boot.py                        bo.py
 	ln -s ../Gem/Cache.py                       ca.py
+	ln -s ../Gem/Cadence.py                     cd.py
 	ln -s ../Gem/CatchException.py              ce.py
 	ln -s ../Gem/Core.py                        co.py
 	ln -s ../Dravite/Euclid.py                  de.py

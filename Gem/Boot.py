@@ -611,29 +611,32 @@ def gem():
         #   Keywords
         #       implemented as keywords in Python 3.0 --so can't use an expression like 'PythonBuiltIn.None'.
         #
-        'false',    False,
-        'none',     None,
-        'true',     True,
+        'false',                    false,
+        'none',                     none,
+        'true',                     true,
 
         #
         #   Types
         #
-        'LiquidSet',    PythonBuiltIn.set,
-        'String',       PythonBuiltIn.str,
+        'LiquidSet',                PythonBuiltIn.set,
+        'String',                   String,
 
         #
         #   Functions
         #
-        'arrange',          arrange,
-        'length',           length,
-        'next_method',      next_method,
-        'intern_string',    intern_string,
+        'arrange',                  arrange,
+        'intern_string',            intern_string,
+        'length',                   length,
+        'next_method',              next_method,
+        'raising_exception_from',   raising_exception_from,
+        'raising_exception',        raising_exception,
+
 
         #
         #   Values
         #
-        'is_python_2',  is_python_2,
-        'is_python_3',  is_python_3,
+        'is_python_2',              is_python_2,
+        'is_python_3',              is_python_3,
     )
 
 
@@ -708,8 +711,6 @@ def gem():
         #
         'is_instance',              is_instance,
         'privileged',               privileged,
-        'raising_exception',        raising_exception,
-        'raising_exception_from',   raising_exception_from,
         'rename_function',          rename_function,
     )
 

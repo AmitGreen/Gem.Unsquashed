@@ -25,40 +25,72 @@ def gem():
     wk = Method(write, 3)
 
 
-    class ParseContext(Object):
+    construct_Exception = Exception.__init__
+
+
+    class UnknownLineException(Exception):
         __slots__ = ((
-            'cadence',                  #   Cadence
-            'e_type',                   #   None | Type
-            'e_value',                  #   None | .e_type
-            'e_traceback',              #   None | Python_Traceback
+            'unknown_line',             #   Unknown_line
         ))
 
 
-        def __init__(t):
-            t.cadence     = cadence_initialized
-            t.e_traceback = t.e_value = t.e_type = none
+        def __init__(t, message, unknown_line):
+            construct_Exception(t, message)
+
+            t.unknown_line = unknown_line
+
+
+    class ParseContext(Object):
+        __slots__ = ((
+            'cadence',                  #   Cadence
+            'iterate_lines',            #   Generator
+            'many',                     #   Tuple of *
+            'append',                   #   Method
+        ))
+
+
+        def __init__(t, iterate_lines):
+            t.cadence = cadence_constructing
+
+            t.iterate_lines = iterate_lines
+            t.many          = many                = []
+            t.append        = many.append
+
+            t.cadence = cadence_initialized
 
 
         def __enter__(t):
-            assert t.life_cycle.is_cadence__initialized_exited_or_exception
+            assert t.cadence.is_initialized_exited_or_exception
 
-            t.cadence = cadence__entered
-
-
-        def __exit__(t, e_type, e_value, e_traceback):
-            cadence = t.cadence
-
-            t.cadence = cadence__exception
-
-            assert cadence is cadence__entered
+            t.cadence = cadence_entered
 
 
-        def push_exception(t, e_type, e_value, e_traceback):
-            if t.e_type is not none:
-                try:
-                    assert (e_type is not none) and (e_value is not none) and (e_traceback is not none)
-                except:
-                    pass
+        def __exit__(t, e_type, e, e_traceback):
+            with maybe_exit_exception(e_type, e, e_traceback):
+                cadence = t.cadence
+
+                t.cadence = cadence_exception
+
+                assert cadence is cadence_entered
+
+                if e is none:
+                   t.cadence = cadence_exited
+                   return
+
+                if type(e) is not UnknownLineException:
+                    return
+
+                t.append(e.unknown_line)
+
+                return true
+
+
+        def __iter__(t):
+            loop = 0
+
+            while t.cadence is not cadence_exited:
+                yield loop
+                loop += 1
 
 
     @export
@@ -82,22 +114,36 @@ def gem():
             wi(none)
             wj(none)
 
-            raise stop_iteration
 
-
-        return GENERATOR_next_line()
+        return ParseContext(GENERATOR_next_line())
 
 
     @export
     def create_UnknownLine(number):
         line('%s #%s', frame_1().f_code.co_name, number)
 
-        return UnknownLine(qs())
+        unknown_line_error = UnknownLineException(
+                                 arrange('parse incomplete %s #%d', frame_1().f_code.co_name, number),
+                                 UnknownLine(qs()),
+                             )
+
+        raising_exception(unknown_line_error)
+
+        raise unknown_line_error
 
 
     @export
     def create_UnknownLine_0():
-        return UnknownLine(qs())
+        line('unknown_line %s', frame_1().f_code.co_name)
+
+        unknown_line_error = UnknownLineException(
+                                 arrange('parse incomplete %s', frame_1().f_code.co_name),
+                                 UnknownLine(qs()),
+                             )
+
+        raising_exception(unknown_line_error)
+
+        raise unknown_line_error
 
 
     @export

@@ -29,7 +29,7 @@ def gem():
             t.write = t.line = t.indent = t.blank2 = t.blank = t.f = t.data = none
 
 
-        @privileged
+        #@privileged
         def __enter__(t):
             assert t.f is none
 

@@ -15,7 +15,7 @@ def gem():
 
 
     from Gem import create_DelayedFileOutput, create_StringOutput, produce_cache_functions
-    from Gem import stop_iteration, read_text_from_path
+    from Gem import read_text_from_path
     from Pearl import conjure_identifier, conjure_token_newline, create_UnknownLine
     from Pearl import parse_incomplete, qj, qk, qs, Token, wj, wk, z_initialize
 
@@ -45,10 +45,10 @@ def gem():
         'wk',                           wk,
         'z_initialize',                 z_initialize,
 
+
         #
         #   Values
         #
-        'stop_iteration',               stop_iteration,
         'tuple_of_2_nones',             ((none, none)),
         'tuple_of_3_nones',             ((none, none, none)),
     )
