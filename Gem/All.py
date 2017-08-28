@@ -8,6 +8,8 @@ import  PythonSystem        #   Gem.Boot
 from    Gem.BuiltIn         import  arrange                                 #   Gem.Boot
 from    Gem.BuiltIn         import  __build_class                           #   Gem.Boot (Python 3 only)
 from    Gem.Builtin         import  except_any_clause                       #   Gem.Exception
+from    Gem.Builtin         import  except_clause                           #   Gem.Exception
+from    Gem.Builtin         import  exit_clause                             #   Gem.Exception
 from    Gem.BuiltIn         import  false                                   #   Gem.Boot
 from    Gem.BuiltIn         import  __import__                              #   Gem.Boot
 from    Gem.BuiltIn         import  intern_string                           #   Gem.Boot

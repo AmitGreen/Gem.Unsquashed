@@ -49,13 +49,11 @@ def gem():
 
     @export
     def remove_path(path):
-        with catch_OSError__FileNotFound(path) as e:
+        with catch_OSError__FileNotFound(path) as cup:
             python__remove_path(path)
 
-        if e.caught:
-            with caught_exception(e.caught) as e0:
-                e.cleanup()
-
+        if cup.caught:
+            with cup.handle_exception() as e0:
                 #
                 #   NOTE:
                 #       To avoid adding an extra frame in the traceback, the 'raise' must be issued in this function,
@@ -81,13 +79,11 @@ def gem():
         #       In Python 2.0 'os.rename' throws an OSError with '.filename' set to none when the rename fails;
         #       hence the first paramater to catch_OSError__FileNotFound is set to none.
         #
-        with catch_OSError__FileNotFound(none) as e:
+        with catch_OSError__FileNotFound(none) as cup:
             python__rename_path(from_path, to_path)
 
-        if e.caught:
-            with caught_exception(e.caught) as e0:
-                e.cleanup()
-
+        if cup.caught:
+            with cup.handle_exception() as e0:
                 #
                 #   NOTE:
                 #       To avoid adding an extra frame in the traceback, the 'raise' must be issued in this function,

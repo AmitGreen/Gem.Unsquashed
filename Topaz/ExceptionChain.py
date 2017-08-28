@@ -9,8 +9,8 @@ def gem():
     require_gem('Gem.Traceback')
     require_gem('Topaz.Core')
 
-    from Gem import catch_FileNotFoundError, caught_exception, Exception
-    from Gem import maybe_exit_exception, print_exception_chain, rename_path
+    from Gem import catch_FileNotFoundError, Exception
+    from Gem import print_exception_chain, rename_path
 
 
     class Context(Object):
@@ -22,7 +22,7 @@ def gem():
 
 
         def __exit__(t, e_type, e, e_traceback):
-            with maybe_exit_exception(e_type, e, e_traceback):
+            with exit_clause(e_type, e, e_traceback):
                 from_path = 'd.d.d.d'
                 to_path   = 'd.d.d.d.d'
 
@@ -34,7 +34,7 @@ def gem():
                         try:
                             assert 0, 'e'
                         except AssertionError as e:
-                            with caught_exception(e):
+                            with except_clause(e):
                                 assert 0, 'f'
 
 
@@ -50,7 +50,7 @@ def gem():
         try:
             assert 0, 'a'
         except AssertionError as e:
-            with caught_exception(e):
+            with except_clause(e):
                 try:
                     test_b(e)
                 except:

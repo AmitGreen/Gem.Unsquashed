@@ -66,7 +66,7 @@ def gem():
 
 
         def __exit__(t, e_type, e, e_traceback):
-            with maybe_exit_exception(e_type, e, e_traceback):
+            with exit_clause(e_type, e, e_traceback):
                 cadence = t.cadence
 
                 t.cadence = cadence_exception

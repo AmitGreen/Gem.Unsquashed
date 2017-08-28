@@ -155,9 +155,18 @@ def gem():
         else:
             @built_in
             def except_any_clause():
-                [e_type, e, e_traceback] = exception_information()
+                return CaughtExceptionContext(exception_information()[1])
+
+
+        if __debug__:
+            @built_in
+            def except_clause(e):
+                [e_type, e_verify, e_traceback] = exception_information()
+
+                assert e is e_verify
 
                 assert type(e) is e_type
+
                 assert is_instance(e, BaseException)
                 assert (e.__cause__   is none) or is_instance(e.__cause__,   BaseException)
                 assert (e.__context__ is none) or is_instance(e.__context__, BaseException)
@@ -167,27 +176,14 @@ def gem():
                 assert e.__traceback__ is e_traceback
 
                 return CaughtExceptionContext(e)
-
-
-        if __debug__:
-            @export
-            def caught_exception(e):
-                assert is_instance(e, BaseException)
-
-                assert (e.__cause__   is none) or is_instance(e.__cause__,   BaseException)
-                assert (e.__context__ is none) or is_instance(e.__context__, BaseException)
-                assert type(e.__suppress_context__) is Boolean
-                assert type(e.__traceback__)        is Traceback
-
-                return CaughtExceptionContext(e)
         else:
-            @export
-            def caught_exception(e):
+            @built_in
+            def except_clause(e):
                 return CaughtExceptionContext(e)
 
 
-        @export
-        def maybe_exit_exception(e_type, e, e_traceback):
+        @built_in
+        def exit_clause(e_type, e, e_traceback):
             return empty_context
     else:
         @export
@@ -230,8 +226,8 @@ def gem():
             return CaughtExceptionContext(e)
 
 
-        @export
-        def caught_exception(e):
+        @built_in
+        def except_clause(e):
             [e_type, e_verify, e_traceback] = exception_information()
 
             assert e is e_verify
@@ -243,8 +239,8 @@ def gem():
             return CaughtExceptionContext(e)
 
 
-        @export
-        def maybe_exit_exception(e_type, e, e_traceback):
+        @built_in
+        def exit_clause(e_type, e, e_traceback):
             if e_type is none:
                 assert e is e_traceback is none
 
