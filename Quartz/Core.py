@@ -16,8 +16,8 @@ def gem():
 
     from Gem import create_DelayedFileOutput, create_StringOutput, produce_cache_functions, read_text_from_path
     from Pearl import conjure_comment_newline, conjure_token_newline, conjure_tree_comment
-    from Pearl import create_UnknownLine, EmptyLine, insert_interned_identifier, lookup_identifier
-    from Pearl import qj, qk, qs, Token, TokenIndented, wj, wk, z_initialize
+    from Pearl import EmptyLine, insert_interned_identifier, lookup_identifier
+    from Pearl import qj, qk, qs, raise_unknown_line, Token, TokenIndented, wj, wk, z_initialize
 
 
     share(
@@ -37,13 +37,13 @@ def gem():
         'conjure_tree_comment',         conjure_tree_comment,
         'create_DelayedFileOutput',     create_DelayedFileOutput,
         'create_StringOutput',          create_StringOutput,
-        'create_UnknownLine',           create_UnknownLine,
         'insert_interned_identifier',   insert_interned_identifier,
         'lookup_identifier',            lookup_identifier,
 #       'produce_cache_functions',      produce_cache_functions,
         'qj',                           qj,
         'qk',                           qk,
         'qs',                           qs,
+        'raise_unknown_line',           raise_unknown_line,
         'read_text_from_path',          read_text_from_path,
         'wj',                           wj,
         'wk',                           wk,

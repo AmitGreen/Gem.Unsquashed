@@ -18,7 +18,7 @@ def gem():
         m1 = name_match(s, index)
 
         if m1 is none:
-            return parse_incomplete(1)
+            raise_unknown_line(1)
 
         module = conjure_identifier(m1.group())
         #</name1>
@@ -30,7 +30,7 @@ def gem():
             m2 = from_module_match1(s, m1.end())
 
             if m2 is none:
-                return parse_incomplete(2)
+                raise_unknown_line(2)
 
             operator = m2.group('operator')
 
@@ -45,7 +45,7 @@ def gem():
             m1 = name_match(s, m2.end())
 
             if m1 is none:
-                return parse_incomplete(2)
+                raise_unknown_line(3)
             #</name2>
 
             module = ExpressionDot(module, operator_dot, conjure_identifier(m1.group()))
@@ -66,8 +66,7 @@ def gem():
         m1 = name_match(s, qj())
 
         if m1 is none:
-            line('parse1_statement_from_as: incomplete#1')
-            return none
+            raise_unknown_line(1)
 
         imported = conjure_identifier(m1.group())
         #</name>
@@ -78,8 +77,7 @@ def gem():
         m2 = from_as_match1(s, m1.end())
 
         if m2 is none:
-            line('parse1_statement_from_as: incomplete#2')
-            return none
+            raise_unknown_line(2)
 
         operator = m2.group('operator')
         #</as>
@@ -103,8 +101,7 @@ def gem():
         m3 = name_match(s, m2.end())
 
         if m3 is none:
-            line('parse1_statement_from_as: incomplete#3')
-            return none
+            raise_unknown_line(3)
 
         imported = FromAsFragment(imported, keyword_as, conjure_identifier(m3.group()))
         #</name2>
@@ -115,8 +112,7 @@ def gem():
         m4 = comma_or_newline_match1(s, m3.end())
 
         if m4 is none:
-            line('parse1_statement_from_as: incomplete#4')
-            return none
+            raise_unknown_line(4)
         #</comma-or-newline>
 
         if m4.start('comma') is -1:
@@ -133,7 +129,7 @@ def gem():
     @share
     def parse1_statement_from(m1):
         if m1.end('newline') is not -1:
-            return create_UnknownLine(1)
+            raise_unknown_line(1)
 
         keyword_from = KeywordFrom(m1.group())
 
@@ -142,9 +138,6 @@ def gem():
         #
         module = parse1_statement_from_module(m1.end())
 
-        if module is none:
-            return create_UnknownLine_0()
-
         keyword_import = qk()
         #</module>
 
@@ -152,9 +145,6 @@ def gem():
         #<imported ... (, | newline)>
         #
         imported = parse1_statement_from_as()
-
-        if imported is none:
-            return create_UnknownLine_0()
 
         operator = qk()
         #<imported/>
@@ -166,9 +156,6 @@ def gem():
         #<imported ... (, | newline)>
         #
         imported_2 = parse1_statement_from_as()
-
-        if imported_2 is none:
-            return create_UnknownLine_0()
 
         operator_2 = qk()
         #<imported/>
@@ -182,4 +169,4 @@ def gem():
                        operator_2,
                    )
 
-        return create_UnknownLine(2)
+        raise_unknown_line(2)
