@@ -24,20 +24,20 @@ def gem():
             return expression
 
         if single_quote is none:
-            return ExpressionCall(
+            return CallExpression(
                        expression,
                        Arguments_0(
-                           OperatorLeftParenthesis(left_parenthesis),
-                           OperatorRightParenthesis(right_parenthesis),
+                           conjure_left_parenthesis(left_parenthesis),
+                           conjure_right_parenthesis(right_parenthesis),
                        ),
                    )
 
-        return ExpressionCall(
+        return CallExpression(
                    expression,
                    Arguments_1(
-                       OperatorLeftParenthesis(left_parenthesis),
+                       conjure_left_parenthesis(left_parenthesis),
                        SingleQuote(single_quote),
-                       OperatorRightParenthesis(right_parenthesis),
+                       conjure_right_parenthesis(right_parenthesis),
                    ),
                )
 
@@ -46,14 +46,14 @@ def gem():
         m = class7_match(s, m0.end())
 
         if m is none:
-            return create_UnknownLine(1)
+            raise_unknown_line()
 
         [
             name1, left_parenthesis, name2, right_parenthesis__colon, newline,
         ] = m.group('name1', 'left_parenthesis', 'name2', 'ow__right_parenthesis__colon__ow', 'newline')
 
         parameters = ParameterColon_1(
-                         OperatorLeftParenthesis(left_parenthesis),
+                         conjure_left_parenthesis(left_parenthesis),
                          conjure_identifier(name2),
                          OperatorRightParenthesisColon(right_parenthesis__colon),
                      )
@@ -65,7 +65,7 @@ def gem():
         m = expression_match(s, m0.end())
 
         if m is none:
-            return create_UnknownLine(1)
+            raise_unknown_line()
 
         return DecoratorHeader(
                    OperatorAtSign(m0.group('indented') + m0.group('keyword__ow')),
@@ -78,7 +78,7 @@ def gem():
         m = define7_match(s, m0.end())
 
         if m is none:
-            return create_UnknownLine(1)
+            raise_unknown_line()
 
         [
             name1, left_parenthesis, name2, right_parenthesis__colon, comment_newline,
@@ -88,13 +88,13 @@ def gem():
             parameters = ParameterColon_0(left_parenthesis + right_parenthesis__colon)
         else:
             parameters = ParameterColon_1(
-                             OperatorLeftParenthesis(left_parenthesis),
+                             conjure_left_parenthesis(left_parenthesis),
                              conjure_identifier(name2),
                              OperatorRightParenthesisColon(right_parenthesis__colon),
                          )
 
-        return DefineHeader(
-                   KeywordDefine(m0.group('indented') + m0.group('keyword__ow')),
+        return FunctionHeader(
+                   KeywordFunction(m0.group('indented') + m0.group('keyword__ow')),
                    name1,
                    parameters,
                    conjure_token_newline(comment_newline),
@@ -105,7 +105,7 @@ def gem():
         m = from7_1_match(s, m0.end())
 
         if m is none:
-            return create_UnknownLine(1)
+            raise_unknown_line()
 
         [
                 name1, dot, name2, w_import_w, name3, w_as_w, name4, comma
@@ -114,9 +114,9 @@ def gem():
         if dot is none:
             module = conjure_identifier(name1)
         else:
-            module = ExpressionDot(conjure_identifier(name1), OperatorDot(dot), conjure_identifier(name2))
+            module = MemberExpression_1(conjure_identifier(name1), conjure_dot(dot), conjure_identifier(name2))
 
-        as_fragment = FromAsFragment(conjure_identifier(name3), KeywordAs(w_as_w), conjure_identifier(name4))
+        as_fragment = FromAsFragment(conjure_identifier(name3), conjure_keyword_as(w_as_w), conjure_identifier(name4))
 
         if comma is none:
             return StatementFromImport(
@@ -130,20 +130,20 @@ def gem():
         m2 = from_2_match(s, m.end())
 
         if m2 is none:
-            return create_UnknownLine(2)
+            return raise_unknown_line()
 
         [
                 name1, w_as_w, name2, comma_2
         ] = m2.group('name1', 'w_as_w', 'name2', 'ow_comma_ow')
 
-        as_fragment_2 = FromAsFragment(conjure_identifier(name1), KeywordAs(w_as_w), conjure_identifier(name2))
+        as_fragment_2 = FromAsFragment(conjure_identifier(name1), conjure_keyword_as(w_as_w), conjure_identifier(name2))
 
         if comma_2 is none:
             return StatementFromImport(
                        KeywordFrom(m0.group('indented') + m0.group('keyword__ow')),
                        module,
                        KeywordImport(w_import_w),
-                       ExpressionComma(as_fragment, OperatorComma(comma), as_fragment_2),
+                       CommaExpression_1(as_fragment, conjure_comma(comma), as_fragment_2),
                        conjure_token_newline(m2.group('ow_comment_newline')),
                    )
 
@@ -154,9 +154,9 @@ def gem():
         m = import7_match(s, m0.end())
 
         if m is none:
-            return create_UnknownLine(1)
+            raise_unknown_line()
 
-        return StatementImport(
+        return StatementImport_1(
                    KeywordImport(m0.group('indented') + m0.group('keyword__ow')),
                    conjure_identifier(m.group('name1')),
                    conjure_token_newline(m.group('ow_comment_newline')),
@@ -167,10 +167,10 @@ def gem():
         m = expression_match(s, m0.end())
 
         if m is none:
-            return create_UnknownLine(1)
+            raise_unknown_line()
 
-        return StatementReturnExpression(
-                   KeywordReturn(m0.group('indented') + m0.group('keyword__ow')),
+        return ReturnStatement_1(
+                   conjure_keyword_return(m0.group('indented') + m0.group('keyword__ow')),
                    parse7_expression(m),
                    conjure_token_newline(m.group('ow_comment_newline')),
                )
@@ -198,8 +198,7 @@ def gem():
             m = line7_match(s)
 
             if m is none:
-                append(create_UnknownLine(1))
-                continue
+                raise_unknown_line()
 
             [keyword, name] = m.group('keyword', 'name')
 

@@ -19,15 +19,51 @@ def gem():
 
 
     class TokenCommentNewline(Token):
-        __slots__        = (())
-        display_name     = 'comment-newline'
-        is_token_comment = true
-        is_token_newline = true
+        __slots__                               = (())
+        display_name                            = 'comment-newline'
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
+        is_end_of_logical_or_expression         = true
+        is_end_of_multiply_expression           = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
+        is_end_of_unary_expression              = true
+        is_token_comment                        = true
+        is_token_newline                        = true
+
+
+        def display_token(t):
+            return portray_raw_string(t.s)
 
 
     class TokenNewline(Token):
-        display_name     = 'newline'
-        is_token_newline = true
+        display_name                            = 'newline'
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
+        is_end_of_logical_or_expression         = true
+        is_end_of_multiply_expression           = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
+        is_end_of_unary_expression              = true
+        is_token_newline                        = true
+
+
+        def display_token(t):
+            return portray_raw_string(t.s)
 
 
     @share
@@ -55,28 +91,10 @@ def gem():
             w(t.comment_operator.s + t.comment.s + t.newline.s)
 
 
-    [
-            conjure_comment_operator,
-    ] = produce_cache_functions('Pearl.Token.comment_operator_cache', CommentOperator, produce_conjure_by_name = true)
-
-
-    [
-            conjure_comment_newline,
-    ] = produce_cache_functions(
-            'Pearl.Token.comment_operator_newline_cache', TokenCommentNewline,
-            
-            produce_conjure_by_name = true,
-        )
-
-
-    [
-            conjure_token_comment,
-    ] = produce_cache_functions('Pearl.Comment.token_comment_cache', TokenComment, produce_conjure_by_name = true)
-
-
-    [
-            conjure_token_newline,
-    ] = produce_cache_functions('Pearl.Comment.token_newline_cache', TokenNewline, produce_conjure_by_name = true)
+    conjure_comment_operator = produce_conjure_by_name('comment_operator',         CommentOperator)
+    conjure_comment_newline  = produce_conjure_by_name('comment_operator_newline', TokenCommentNewline)
+    conjure_token_comment    = produce_conjure_by_name('token_comment',            TokenComment)
+    conjure_token_newline    = produce_conjure_by_name('token_newline',            TokenNewline)
 
 
     share(

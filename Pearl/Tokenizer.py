@@ -6,23 +6,31 @@ def gem():
     require_gem('Pearl.Core')
     require_gem('Pearl.Token')
 
-
-    frame_1 = Method(python_frame, 1)
-
-    tokenizer = [none, none, none, none]
+    tokenizer = [none, 0, 0, 0, none, none, none]
 
     query = tokenizer.__getitem__
     write = tokenizer.__setitem__
 
     qs = Method(query, 0)
-    qi = Method(query, 1)
-    qj = Method(query, 2)
-    qk = Method(query, 3)
+    qd = Method(query, 1)
+    qi = Method(query, 2)
+    qj = Method(query, 3)
+    qk = Method(query, 4)
+    ql = Method(query, 5)
+    qn = Method(query, 6)
 
     ws = Method(write, 0)
-    wi = Method(write, 1)
-    wj = Method(write, 2)
-    wk = Method(write, 3)
+    wd = Method(write, 1)
+    wi = Method(write, 2)
+    wj = Method(write, 3)
+    wk = Method(write, 4)
+    wl = Method(write, 5)
+    wn = Method(write, 6)
+
+    wd0 = Method(wd, 0)
+    wd1 = Method(wd, 1)
+    wi0 = Method(wi, 0)
+    wj0 = Method(wj, 0)
 
 
     construct_Exception = Exception.__init__
@@ -43,16 +51,16 @@ def gem():
     class ParseContext(Object):
         __slots__ = ((
             'cadence',                  #   Cadence
-            'iterate_lines',            #   Generator
+            'iterate_lines',            #   None | Generator
             'many',                     #   Tuple of *
             'append',                   #   Method
         ))
 
 
-        def __init__(t, iterate_lines):
+        def __init__(t):
             t.cadence = cadence_constructing
 
-            t.iterate_lines = iterate_lines
+            t.iterate_lines = none
             t.many          = many                = []
             t.append        = many.append
 
@@ -80,6 +88,7 @@ def gem():
                 if type(e) is not UnknownLineException:
                     return
 
+                wd0()
                 t.append(e.unknown_line)
 
                 return true
@@ -93,6 +102,19 @@ def gem():
                 loop += 1
 
 
+        def reset(t, iterate_lines):
+            assert t.cadence.is_initialized_exited_or_exception
+
+            del t.many[:]
+
+            t.iterate_lines = iterate_lines
+
+            return t
+
+
+    parse_context = ParseContext()
+
+
     @export
     def z_initialize(data):
         data_lines = data.splitlines(true)
@@ -101,63 +123,65 @@ def gem():
 
 
         def GENERATOR_next_line():
-            for i in iterate_range(maximum_i):
-                s = q_data(i)
+            for line_number in iterate_range(maximum_i):
+                s = q_data(line_number)
 
                 ws(s)
-                wi(i)
-                wj(0)
+                wi0()
+                wj0()
+                wl(line_number)
+                wk(none)
+                wn(none)
 
                 yield s
 
+            wd(none)
             ws(none)
             wi(none)
             wj(none)
+            wl(none)
+            wk(none)
+            wn(none)
 
 
-        return ParseContext(GENERATOR_next_line())
+        return parse_context.reset(GENERATOR_next_line())
 
 
     @export
-    def create_UnknownLine(number):
-        line('%s #%s', frame_1().f_code.co_name, number)
+    def raise_unknown_line():
+        caller_frame = caller_frame_1()
+        caller_name  = caller_frame.f_code.co_name
+        basename     = path_basename(caller_frame.f_code.co_filename)
+
+        line('%s#%s: %s', basename, caller_frame.f_lineno, caller_name)
 
         unknown_line_error = UnknownLineException(
-                                 arrange('parse incomplete %s #%d', frame_1().f_code.co_name, number),
+                                 arrange('parse incomplete: %s#%s: %s', basename, caller_frame.f_lineno, caller_name),
                                  UnknownLine(qs()),
                              )
 
         raising_exception(unknown_line_error)
 
         raise unknown_line_error
-
-
-    @export
-    def create_UnknownLine_0():
-        line('unknown_line %s', frame_1().f_code.co_name)
-
-        unknown_line_error = UnknownLineException(
-                                 arrange('parse incomplete %s', frame_1().f_code.co_name),
-                                 UnknownLine(qs()),
-                             )
-
-        raising_exception(unknown_line_error)
-
-        raise unknown_line_error
-
-
-    @export
-    def parse_incomplete(number):
-        line('%s #%s', frame_1().f_code.co_name, number)
-
-        return none
 
 
     export(
-        'qj',   qj,
-        'qk',   qk,
-        'qs',   qs,
+        'parse_context',    parse_context,
 
-        'wj',   wj,
-        'wk',   wk,
+        'qd',               qd,
+        'qi',               qi,
+        'qj',               qj,
+        'qk',               qk,
+        'ql',               ql,
+        'qn',               qn,
+        'qs',               qs,
+
+        'wd',               wd,
+        'wd0',              wd0,
+        'wd1',              wd1,
+        'wi',               wi,
+        'wj',               wj,
+        'wk',               wk,
+        'wn',               wn,
+        'ws',               ws,
     )

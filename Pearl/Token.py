@@ -10,10 +10,11 @@ def gem():
         ))
 
 
-        is_comma             = false
-        is_identifier        = false
-        is_keyword           = false
-        is_right_parenthesis = false
+        is_comma                = false
+        is_identifier           = false
+        is_keyword              = false
+        is_right_parenthesis    = false
+        is_right_square_bracket = false
 
 
         def __init__(t, s):
@@ -26,31 +27,33 @@ def gem():
             return arrange('<%s %r>', t.display_name, t.s)
 
 
+        def display_full_token(t):
+            return arrange('<%s %s>', t.display_name, portray_string(t.s))
+
+
+        display_token = __repr__
+
+
         def write(t, w):
             w(t.s)
 
 
-    @share
+    @export
     class Identifier(Token):
         __slots__ = (())
 
 
-        is_identifier = true
+        display_name                          = 'Identifier'
+        is__atom__or__special_operator        = true
+        is_atom                               = true
+        is_colon                              = false
+        is_identifier                         = true
+        is_right_brace                        = false
+        is__right_parenthesis__colon__newline = false
 
 
-        def __repr__(t):
+        def display_token(t):
             return t.s
-
-
-    [
-            conjure_identifier, insert_interned_identifier, lookup_identifier,
-    ] = produce_cache_functions(
-            'Pearl.Token.identifier_cache', Identifier,
-
-            produce_conjure_by_name = true,
-            produce_insert_interned = true,
-            produce_lookup          = true,
-        )
 
 
     @export
@@ -59,13 +62,30 @@ def gem():
         is_token_indented = true
 
 
+    class TokenWhitespace(Token):
+        display_name = 'whitespace'
+
+
     @export
     class UnknownLine(Token):
         display_name = 'unknown-line'
 
 
+    [
+            conjure_identifier, lookup_identifier,
+    ] = produce_cache_functions(
+            'identifier', Identifier,
+
+            produce_conjure_by_name = true,
+            produce_lookup          = true,
+        )
+
+
+    conjure_whitespace = produce_conjure_by_name('whitespace', TokenWhitespace)
+
+
     export(
-        'conjure_identifier',           conjure_identifier,
-        'insert_interned_identifier',   insert_interned_identifier,
-        'lookup_identifier',            lookup_identifier,
+        'conjure_identifier',   conjure_identifier,
+        'conjure_whitespace',   conjure_whitespace,
+        'lookup_identifier',    lookup_identifier,
     )

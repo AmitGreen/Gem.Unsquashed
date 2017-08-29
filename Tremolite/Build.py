@@ -98,8 +98,9 @@ def gem():
         ))
 
 
-        optional   = true
-        repeatable = true
+        is_tremolite_exact = true
+        optional           = true
+        repeatable         = true
 
 
         def __init__(t, regular_expression, portray, exact, singular):
@@ -359,7 +360,7 @@ def gem():
     [
             name_cache, name_insert_interned,
     ] = produce_cache_functions(
-            'Tremolite.name_cache', TremoliteName,
+            'name', TremoliteName,
             
             produce_cache           = true,
             produce_insert_interned = true,
@@ -502,12 +503,31 @@ def gem():
                 many.append(v)
                 continue
 
-            if length(v) is 1:
-                a = lookup_ascii(v)
+            if type(v) is not String:
+                assert (v.is_tremolite_name) and (v.pattern.is_tremolite_exact) and (v.pattern.singular)
 
-                assert a.is_printable
+                v = v.pattern.exact
 
-                regular_expressions.append(a.pattern)
+                assert length(v) is 1
+
+                if v == '-':
+                    regular_expressions.append(r'\-')
+                else:
+                    a = lookup_ascii(v)
+
+                    assert a.is_printable
+
+                    regular_expressions.append(a.pattern)
+
+            elif length(v) is 1:
+                if v == '-':
+                    regular_expressions.append(r'\-')
+                else:
+                    a = lookup_ascii(v)
+
+                    assert a.is_printable
+
+                    regular_expressions.append(a.pattern)
             else:
                 assert (length(v) is 3) and (v[1] is '-')
 

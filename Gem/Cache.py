@@ -7,6 +7,14 @@ def gem():
 
 
     @export
+    def produce_conjure_by_name(name, meta):
+        [conjure_by_name] = produce_cache_functions(name, meta, produce_conjure_by_name = true)
+            
+        return conjure_by_name
+
+
+    @export
+    @privileged
     def produce_cache_functions(
             name,
             meta                    = absent,
@@ -48,6 +56,10 @@ def gem():
                 return provide(interned_k, meta(interned_k))
 
 
+            if __debug__:
+                conjure_by_name.__name__ = arrange('conjure_%s', name)
+
+
             append(conjure_by_name)
 
         if produce_find:
@@ -64,6 +76,9 @@ def gem():
                                             name, interned_k, v, find(interned_k))
 
                     return provide(interned_k, v)
+
+
+                insert_interned.__name__ = arrange('insert_interned_%s', name)
 
 
                 append(insert_interned)
