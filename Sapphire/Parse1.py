@@ -5,7 +5,7 @@
 def gem():
     require_gem('Sapphire.Core')
     require_gem('Sapphire.Match')
-    require_gem('Sapphire.Parse1Argument')
+    require_gem('Sapphire.Parse1Call')
     require_gem('Sapphire.Parse1From')
     require_gem('Sapphire.Parse1Import')
     require_gem('Sapphire.Parse1Expression')
@@ -28,12 +28,6 @@ def gem():
 
         return conjure_token_newline(m1.group())
         #</ow-comment-newline>
-
-
-    def parse1_expression_call(j, left, left_parenthesis):
-        arguments = parse1_arguments__left_parenthesis(left_parenthesis, j)
-
-        return ExpressionCall(left, arguments)
 
 
     def parse1_statement_class(m1):
