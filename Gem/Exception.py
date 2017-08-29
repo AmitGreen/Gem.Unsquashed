@@ -45,7 +45,6 @@ def gem():
             __slots__ = ((
                 'e',                        #   BaseException+
                 'exception_stack',          #   List of BaseException+
-                '_show',                    #   Integer
             ))
 
 
@@ -54,7 +53,6 @@ def gem():
 
                 t.e               = e
                 t.exception_stack = thread_context.exception_stack
-                t._show           = 0
 
 
             def __enter__(t):
@@ -96,14 +94,6 @@ def gem():
                 assert e is last_exception
 
                 thread_context.last_exception = (none   if length(exception_stack) is 0 else   exception_stack[-1])
-
-
-            def show(t, show):
-                assert (t._show is 0) and (show is 7)
-
-                t._show = show
-
-                return t
 
 
     class EmptyContext(Object):
@@ -182,8 +172,29 @@ def gem():
                 return CaughtExceptionContext(e)
 
 
+        if __debug__:
+            @built_in
+            def exit_clause(e_type, e, e_traceback):
+                if e is none:
+                    assert e_type is e_traceback is none
+                else:
+                    assert type(e) is e_type
+
+                    assert is_instance(e, BaseException)
+                    assert (e.__cause__   is none) or is_instance(e.__cause__,   BaseException)
+                    assert (e.__context__ is none) or is_instance(e.__context__, BaseException)
+                    assert type(e.__suppress_context__) is Boolean
+                    assert type(e.__traceback__)        is Traceback
+
+                return empty_context
+        else:
+            @built_in
+            def exit_clause(e_type, e, e_traceback):
+                return empty_context
+
+
         @built_in
-        def exit_clause(e_type, e, e_traceback):
+        def finally_clause():
             return empty_context
     else:
         @export
@@ -252,6 +263,29 @@ def gem():
 
             return CaughtExceptionContext(e)
 
+
+        @built_in
+        def finally_clause():
+            [e_type, e, e_traceback] = exception_information()
+
+            if e is none:
+                return empty_context
+
+            line('finally_clause: %s', e)
+
+            assert type(e) is e_type
+
+            if thread_context.last_exception is e:
+                assert (e.__cause__   is none) or is_instance(e.__cause__,   BaseException)
+                assert (e.__context__ is none) or is_instance(e.__context__, BaseException)
+                assert type(e.__suppress_context__) is Boolean
+                assert type(e.__traceback__) is Traceback
+
+                return empty_context
+
+            fixup_caught_exception(e, e_traceback)
+
+            return CaughtExceptionContext(e)
 
     #
     #   NOTE:

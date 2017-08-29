@@ -32,10 +32,18 @@ def gem():
                 if e.caught:
                     with e.handle_exception():
                         try:
-                            assert 0, 'e'
-                        except AssertionError as e:
+                            e = Exception('e')
+
+                            raising_exception(e)
+
+                            raise e
+                        except Exception as e:
                             with except_clause(e):
-                                assert 0, 'f'
+                                e = Exception('f')
+
+                                raising_exception(e)
+
+                                raise e
 
 
     def test_b(previous):
@@ -48,15 +56,23 @@ def gem():
 
     def test_abcd():
         try:
-            assert 0, 'a'
-        except AssertionError as e:
+            e = Exception('a')
+
+            raising_exception(e)
+
+            raise e
+        except Exception as e:
             with except_clause(e):
                 try:
                     test_b(e)
                 except:
                     with except_any_clause():
                         with Context():
-                            assert 0, 'c'
+                            e = Exception('c')
+
+                            #raising_exception(e)       #   Test with this missing
+
+                            raise e
 
     @share
     def test_exception_chain():
