@@ -22,8 +22,7 @@ def gem():
             m1 = mysql_line_match(s)
 
             if m1 is none:
-                append(create_UnknownLine(1))
-                continue
+                raise_unknown_line()
 
             identifier_s = m1.group('identifier')
 

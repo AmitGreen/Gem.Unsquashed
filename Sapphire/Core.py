@@ -9,21 +9,24 @@ def gem():
     require_gem('Gem.Path')
     require_gem('Gem.StringOutput')
     require_gem('Gem.System')
+    require_gem('Gem.Traceback')
     require_gem('Pearl.Comment')
     require_gem('Pearl.Token')
     require_gem('Pearl.Tokenizer')
 
 
-    from Gem import create_DelayedFileOutput, create_StringOutput, produce_cache_functions
-    from Gem import read_text_from_path
-    from Pearl import conjure_identifier, conjure_token_newline, create_UnknownLine
-    from Pearl import parse_incomplete, qj, qk, qs, Token, wj, wk, z_initialize
+    from Gem import create_DelayedFileOutput, create_StringOutput, produce_conjure_by_name, program_exit
+    from Gem import read_text_from_path, print_exception_chain
+    from Pearl import conjure_identifier, conjure_token_newline, conjure_whitespace, Identifier, parse_context
+    from Pearl import qd, qi, qj, qk, ql, qn, qs, raise_unknown_line, Token
+    from Pearl import wd, wd0, wd1, wi, wj, wk, wn, ws, z_initialize
 
 
     share(
         #
         #   Classes
         #
+        'Identifier',                   Identifier,
         'Token',                        Token,
 
 
@@ -32,23 +35,36 @@ def gem():
         #
         'conjure_identifier',           conjure_identifier,
         'conjure_token_newline',        conjure_token_newline,
+        'conjure_whitespace',           conjure_whitespace,
         'create_DelayedFileOutput',     create_DelayedFileOutput,
         'create_StringOutput',          create_StringOutput,
-        'create_UnknownLine',           create_UnknownLine,
-        'parse_incomplete',             parse_incomplete,
-        'produce_cache_functions',      produce_cache_functions,
+        'print_exception_chain',        print_exception_chain,
+        'program_exit',                 program_exit,
+        'produce_conjure_by_name',      produce_conjure_by_name,
+        'qd',                           qd,
+        'qi',                           qi,
         'qj',                           qj,
         'qk',                           qk,
+        'ql',                           ql,
+        'qn',                           qn,
         'qs',                           qs,
+        'raise_unknown_line',           raise_unknown_line,
         'read_text_from_path',          read_text_from_path,
+        'wd',                           wd,
+        'wd0',                          wd0,
+        'wd1',                          wd1,
+        'wi',                           wi,
         'wj',                           wj,
+        'wn',                           wn,
         'wk',                           wk,
+        'ws',                           ws,
         'z_initialize',                 z_initialize,
 
 
         #
         #   Values
         #
+        'parse_context',                parse_context,
         'tuple_of_2_nones',             ((none, none)),
         'tuple_of_3_nones',             ((none, none, none)),
     )

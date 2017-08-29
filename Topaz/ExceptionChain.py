@@ -74,6 +74,7 @@ def gem():
 
                             raise e
 
+
     @share
     def test_exception_chain():
         try:

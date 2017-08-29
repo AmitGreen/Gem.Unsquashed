@@ -18,6 +18,7 @@ from    Gem.BuiltIn         import  is_python_2                             #   
 from    Gem.BuiltIn         import  is_python_3                             #   Gem.Boot
 from    Gem.BuiltIn         import  length                                  #   Gem.Boot
 from    Gem.BuiltIn         import  LiquidSet                               #   Gem.Boot
+from    Gem.BuiltIn         import  my_line                                 #   Gem.System
 from    Gem.BuiltIn         import  next_method                             #   Gem.Boot
 from    Gem.BuiltIn         import  none                                    #   Gem.Boot
 from    Gem.BuiltIn         import  raising_exception_from                  #   Gem.Boot
@@ -26,6 +27,7 @@ from    Gem.BuiltIn         import  String                                  #   
 from    Gem.BuiltIn         import  true                                    #   Gem.Boot
 from    Gem                 import  absent                                  #   Gem.Absent
 from    Gem                 import  built_in                                #   Gem.Boot
+from    Gem                 import  caller_frame_1                          #   Gem.System
 from    Gem                 import  catch_FileNotFoundError                 #   Gem.CatchException
 from    Gem                 import  create_DelayedFileOutput                #   Gem.DelayedFileOutput
 from    Gem                 import  create_SimpleStringOutput               #   Gem.SimpleStringIO
@@ -37,20 +39,23 @@ from    Gem                 import  ERROR_NO_ENTRY                          #   
 from    Gem                 import  execute                                 #   Gem.Core
 from    Gem                 import  FileNotFoundError                       #   Gem.Exception
 from    Gem                 import  first_map_item                          #   Gem.Map
+from    Gem                 import  flush_standard_output                   #   Gem.Boot
 from    Gem                 import  gem_global                              #   Gem.Global
 from    Gem                 import  ImportError                             #   Gem.Exception
 from    Gem                 import  iterate_items_sorted_by_key             #   Gem.Map
 from    Gem                 import  lookup_ascii                            #   Gem.Ascii
 from    Gem                 import  Module                                  #   Gem.Boot
+from    Gem                 import  my_name                                 #   Gem.System
 from    Gem                 import  N_N                                     #   Gem.PortrayString (Unit Testing only)
 from    Gem                 import  OSError                                 #   Gem.Exception
-from    Gem                 import  path_basename                           #   Gem.Exception
-from    Gem                 import  path_join                               #   Gem.Exception
-from    Gem                 import  path_split_extension                    #   Gem.Exception
+from    Gem                 import  path_basename                           #   Gem.Path
+from    Gem                 import  path_join                               #   Gem.Path
+from    Gem                 import  path_split_extension                    #   Gem.Path
 from    Gem                 import  PermissionError                         #   Gem.Exception
 from    Gem                 import  privileged_2                            #   Gem.Core
 from    Gem                 import  privileged                              #   Gem.Boot
 from    Gem                 import  produce_cache_functions                 #   Gem.Cache
+from    Gem                 import  produce_conjure_by_name                 #   Gem.Cache
 from    Gem                 import  python_frame                            #   Gem.System
 from    Gem                 import  python_version                          #   Gem.System
 from    Gem                 import  read_text_from_path                     #   Gem.Path
@@ -67,5 +72,4 @@ from    Gem                 import  unknown_ascii                           #   
 from    Gem                 import  values_tuple_sorted_by_key              #   Gem.Map
 from    Gem                 import  view_items                              #   Gem.Map
 from    Gem                 import  write_binary_to_path                    #   Gem.Path
-from    Gem                 import  flush_standard_output                   #   Gem.Boot
 from    Gem                 import  write_standard_output                   #   Gem.Boot

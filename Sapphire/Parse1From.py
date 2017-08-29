@@ -3,12 +3,6 @@
 #
 @gem('Sapphire.Parse1From')
 def gem():
-    require_gem('Sapphire.Core')
-    require_gem('Sapphire.Elemental')
-    require_gem('Sapphire.Match')
-    require_gem('Sapphire.Statement')
-
-
     def parse1_statement_from_module(index):
         s = qs()
 
@@ -18,7 +12,7 @@ def gem():
         m1 = name_match(s, index)
 
         if m1 is none:
-            return parse_incomplete(1)
+            raise_unknown_line()
 
         module = conjure_identifier(m1.group())
         #</name1>
@@ -30,14 +24,14 @@ def gem():
             m2 = from_module_match1(s, m1.end())
 
             if m2 is none:
-                return parse_incomplete(2)
+                raise_unknown_line()
 
             operator = m2.group('operator')
 
             if operator is not '.':
                 break
 
-            operator_dot = OperatorDot(m2.group())
+            operator_dot = conjure_dot(m2.group())
 
             #
             #<name2>
@@ -45,10 +39,10 @@ def gem():
             m1 = name_match(s, m2.end())
 
             if m1 is none:
-                return parse_incomplete(2)
+                raise_unknown_line()
             #</name2>
 
-            module = ExpressionDot(module, operator_dot, conjure_identifier(m1.group()))
+            module = MemberExpression_1(module, operator_dot, conjure_identifier(m1.group()))
 
         wj(m2.end())
         wk(KeywordImport(m2.group()))
@@ -66,8 +60,7 @@ def gem():
         m1 = name_match(s, qj())
 
         if m1 is none:
-            line('parse1_statement_from_as: incomplete#1')
-            return none
+            raise_unknown_line()
 
         imported = conjure_identifier(m1.group())
         #</name>
@@ -78,8 +71,7 @@ def gem():
         m2 = from_as_match1(s, m1.end())
 
         if m2 is none:
-            line('parse1_statement_from_as: incomplete#2')
-            return none
+            raise_unknown_line()
 
         operator = m2.group('operator')
         #</as>
@@ -91,11 +83,11 @@ def gem():
 
         if operator is ',':
             wj(m2.end())
-            wk(OperatorComma(m2.group()))
+            wk(conjure_comma(m2.group()))
 
             return imported
 
-        keyword_as = KeywordAs(m2.group())
+        keyword_as = conjure_keyword_as(m2.group())
 
         #
         #<name2>
@@ -103,8 +95,7 @@ def gem():
         m3 = name_match(s, m2.end())
 
         if m3 is none:
-            line('parse1_statement_from_as: incomplete#3')
-            return none
+            raise_unknown_line()
 
         imported = FromAsFragment(imported, keyword_as, conjure_identifier(m3.group()))
         #</name2>
@@ -115,8 +106,7 @@ def gem():
         m4 = comma_or_newline_match1(s, m3.end())
 
         if m4 is none:
-            line('parse1_statement_from_as: incomplete#4')
-            return none
+            raise_unknown_line()
         #</comma-or-newline>
 
         if m4.start('comma') is -1:
@@ -125,15 +115,15 @@ def gem():
             return imported
 
         wj(m4.end())
-        wk(OperatorComma(m4.group()))
+        wk(conjure_comma(m4.group()))
 
         return imported
 
 
     @share
     def parse1_statement_from(m1):
-        if m1.end('newline') is not -1:
-            return create_UnknownLine(1)
+        if m1.end('comment_newline') is not -1:
+            raise_unknown_line()
 
         keyword_from = KeywordFrom(m1.group())
 
@@ -142,10 +132,9 @@ def gem():
         #
         module = parse1_statement_from_module(m1.end())
 
-        if module is none:
-            return create_UnknownLine_0()
-
         keyword_import = qk()
+
+        wk(none)
         #</module>
 
         #
@@ -153,24 +142,25 @@ def gem():
         #
         imported = parse1_statement_from_as()
 
-        if imported is none:
-            return create_UnknownLine_0()
-
         operator = qk()
+
+        wk(none)
         #<imported/>
 
         if operator.is_token_newline:
             return StatementFromImport(keyword_from, module, keyword_import, imported, operator)
+
+        if not operator.is_comma:
+            raise_unknown_line()
 
         #
         #<imported ... (, | newline)>
         #
         imported_2 = parse1_statement_from_as()
 
-        if imported_2 is none:
-            return create_UnknownLine_0()
-
         operator_2 = qk()
+
+        wk(none)
         #<imported/>
 
         if operator_2.is_token_newline:
@@ -178,8 +168,32 @@ def gem():
                        keyword_from,
                        module,
                        keyword_import,
-                       ExpressionComma(imported, operator, imported_2),
+                       CommaExpression_1(imported, operator, imported_2),
                        operator_2,
                    )
 
-        return create_UnknownLine(2)
+        if not operator_2.is_comma:
+            raise_unknown_line()
+
+        many = [imported, operator, imported_2, operator_2]
+
+        while 7 is 7:
+            many.append(parse1_statement_from_as())
+
+            operator_7 = qk()
+
+            wk(none)
+
+            if operator_7.is_token_newline:
+                return StatementFromImport(
+                           keyword_from,
+                           module,
+                           keyword_import,
+                           CommaExpression_Many(Tuple(many)),
+                           operator_7,
+                       )
+
+            if not operator_7.is_comma:
+                raise_unknown_line()
+
+            many.append(operator_7)

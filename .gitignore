@@ -9,6 +9,5 @@ __pycache__/
 .*.sw[op]
 *.tmp
 tmp/
-x
-y
-z
+[xyz]
+[xyz][1-9]

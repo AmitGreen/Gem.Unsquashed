@@ -19,7 +19,7 @@ def gem():
         if arguments is none:
             return tuple_of_3_nones
 
-        call = ExpressionCall(atom, arguments)
+        call = CallExpression(atom, arguments)
         m    = argument7_postfix_match(s, index)
 
         if m is none:
@@ -30,10 +30,10 @@ def gem():
 
         #   (
         if operator is ')':
-            return (( call, OperatorRightParenthesis(m.group('operator__ow')), m.end() ))
+            return (( call, conjure_right_parenthesis(m.group('operator__ow')), m.end() ))
 
         if operator is ',':
-            return (( call, OperatorComma(m.group('operator__ow')), m.end() ))
+            return (( call, conjure_comma(m.group('operator__ow')), m.end() ))
 
         line('parse7_arguments__atom__left_parenthesis: incomplete #2: %r %r', call, operator)
         return tuple_of_3_nones
@@ -78,7 +78,7 @@ def gem():
             return tuple_of_3_nones
 
         if operator is ',':
-            return (( left, OperatorComma(m.group('operator__ow')), m.end() ))
+            return (( left, conjure_comma(m.group('operator__ow')), m.end() ))
 
         line('parse7_arguments__atom__left_square_bracket: incomplete #7: %r %r', left, operator)
         return tuple_of_3_nones
@@ -96,7 +96,7 @@ def gem():
             line('m0: %s', m0)
             #assert 0,'stop#1'
 
-        left_parenthesis_0 = OperatorLeftParenthesis(m0.group('operator__ow'))
+        left_parenthesis_0 = conjure_left_parenthesis(m0.group('operator__ow'))
         m                  = argument7_1_match(s, m0.end())
 
         if m is none:
@@ -122,7 +122,7 @@ def gem():
         #   (
         if operator is ')':
             return ((
-                       Arguments_1(left_parenthesis_0, argument_0, OperatorRightParenthesis(m.group('operator__ow'))),
+                       Arguments_1(left_parenthesis_0, argument_0, conjure_right_parenthesis(m.group('operator__ow'))),
                        m.end(),
                    ))
 
@@ -133,7 +133,7 @@ def gem():
         if show:
             line('parse7_arguments__left_parenthesis__argument_0: %r, %s', argument_0, portray_raw_string(s[m0.end():]))
 
-        left_parenthesis_0 = OperatorLeftParenthesis(m0.group('operator__ow'))
+        left_parenthesis_0 = conjure_left_parenthesis(m0.group('operator__ow'))
         m                  = argument7_1A_match(s, m0.end())
 
         if m is none:
@@ -145,7 +145,7 @@ def gem():
         #   (
         if operator is ')':
             return ((
-                       Arguments_1(left_parenthesis_0, argument_0, OperatorRightParenthesis(m.group('operator__ow'))),
+                       Arguments_1(left_parenthesis_0, argument_0, conjure_right_parenthesis(m.group('operator__ow'))),
                        m.end(),
                    ))
 
@@ -154,7 +154,7 @@ def gem():
 
     def parse7_arguments__left_parenthesis__argument__operator(s, m0, left_parenthesis_0, argument_0, operator):
         if operator is ',':
-            operator_0 = OperatorComma(m0.group('operator__ow'))
+            operator_0 = conjure_comma(m0.group('operator__ow'))
             index_0    = m0.end()
         else:
             if show:
@@ -201,12 +201,12 @@ def gem():
         #   (
         if operator is ')':
             return ((
-                       Arguments_2(left_parenthesis_0, argument_0, operator_0, argument_1, OperatorRightParenthesis(operator)),
+                       Arguments_2(left_parenthesis_0, argument_0, operator_0, argument_1, conjure_right_parenthesis(operator)),
                        m.end(),
                    ))
 
         if operator is ',':
-            comma_1 = OperatorComma(operator)
+            comma_1 = conjure_comma(operator)
             index_1 = m.end()
         else:
             [argument_1, operator_1, index_1] = find__parse7_arguments__atom__operator(operator)(s, m, argument_1)
@@ -234,7 +234,7 @@ def gem():
         m = statement_expression_match(s, m0.end())
 
         if m is none:
-            return create_UnknownLine(1)
+            raise_unknown_line()
 
         [
                 dot, right, operator, name_0, number_0, single_quote_0, right_parenthesis,
@@ -244,8 +244,8 @@ def gem():
         assert operator is '('
 
         if right_parenthesis is not none:
-            left_parenthesis  = OperatorLeftParenthesis(m.group('operator__ow'))
-            right_parenthesis = OperatorRightParenthesis(right_parenthesis)
+            left_parenthesis  = conjure_left_parenthesis(m.group('operator__ow'))
+            right_parenthesis = conjure_right_parenthesis(right_parenthesis)
 
             if name_0 is not none:
                 assert number_0 is single_quote_0 is none
@@ -260,8 +260,7 @@ def gem():
             else:
                 arguments = Arguments_0(left_parenthesis, right_parenthesis)
 
-            if arguments is none:
-                return create_UnknownLine(2)
+            assert arguments is not none        #   Remove this
 
             ow_comment_newline = m.group('ow_comment_newline')
             index              = m.end()
@@ -284,18 +283,17 @@ def gem():
                                          s, m, SingleQuote(single_quote_0),
                                      )
             else:
-                return create_UnknownLine(3)
+                raise_unknown_line()
 
                 assert 0, 'oops#16'
                 [arguments, index] = parse7_arguments__left_parenthesis(s, m)
 
-            if arguments is none:
-                return create_UnknownLine(4)
+            assert arguments is not none        #   Remove this
 
             m = statement_postfix_match(s, index)
 
             if m is none:
-                return create_UnknownLine(5)
+                raise_unknown_line()
 
             ow_comment_newline = m.group('ow_comment_newline')
 
@@ -309,4 +307,4 @@ def gem():
                        indented, conjure_identifier(name), arguments, conjure_token_newline(ow_comment_newline),
                    )
 
-        return StatementMethodCall(indented, conjure_identifier(name), dot, right, arguments, ow_comment_newline)
+        return MethodCallStatement_1(indented, conjure_identifier(name), dot, right, arguments, ow_comment_newline)

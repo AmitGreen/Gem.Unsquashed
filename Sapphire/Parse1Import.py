@@ -9,111 +9,149 @@ def gem():
     require_gem('Sapphire.Statement')
 
 
-    def parse1_statement_import_module(index):
+    def parse1_statement_import_module():
         s = qs()
 
         #
         #<name>
         #
-        m1 = name_match(s, index)
+        m = name_match(s, qj())
 
-        if m1 is none:
-            return parse_incomplete(1)
+        if m is none:
+            raise_unknown_line()
 
-        module = conjure_identifier(m1.group())
+        module = conjure_identifier(m.group())
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
         #</name>
 
         #
         #<module: name ||| ['.' name] ... ('as' | ',' | newline)
         #
         while true:
-            m2 = import_module_match1(s, m1.end())
+            m = import_module_match1(s, qj())
 
-            if m2 is none:
-                return parse_incomplete(2)
+            if m is none:
+                raise_unknown_line()
 
-            operator = m2.group('operator')
+            j = m.end()
+
+            wi(j)
+            wj(j)
+
+            operator = m.group('operator')
 
             if operator is not '.':
                 break
 
-            operator_dot = OperatorDot(m2.group())
+            operator_dot = conjure_dot(m.group())
 
             #
             #<name>
             #
-            m1 = name_match(s, m2.end())
+            m = name_match(s, qj())
 
-            if m1 is none:
-                return parse_incomplete(3)
+            if m is none:
+                raise_unknown_line()
+
+            j = m.end()
+
+            wi(j)
+            wj(j)
             #</name>
 
-            module = ExpressionDot(module, operator_dot, conjure_identifier(m1.group()))
+            module = MemberExpression_1(module, operator_dot, conjure_identifier(m.group()))
 
         if operator is none:
-            wk(conjure_token_newline(m2.group()))
+            wk(conjure_token_newline(m.group()))
 
             return module
 
         if operator is ',':
-            wj(m2.end())
-            wk(OperatorComma(m2.group()))
+            wk(conjure_comma(m.group()))
 
             return module
 
-        keyword_as = KeywordAs(m2.group())
+        keyword_as = conjure_keyword_as(m.group())
         #</module>
 
         #
         #<name>
         #
-        m3 = name_match(s, m2.end())
+        m = name_match(s, qj())
 
-        if m3 is none:
-            return parse_incomplete(4)
+        if m is none:
+            raise_unknown_line()
 
-        module = ModuleAsFragment(module, keyword_as, conjure_identifier(m3.group()))
+        module = ModuleAsFragment(module, keyword_as, conjure_identifier(m.group()))
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
         #</name>
 
         #
         #<comma-or-newline>
         #
-        m4 = comma_or_newline_match1(s, m3.end())
+        m = comma_or_newline_match1(s, qj())
 
-        if m4 is none:
-            return parse_incomplete(5)
+        if m is none:
+            raise_unknown_line()
         #</comma-or-newline>
 
-        if m4.start('comma') is -1:
-            wk(conjure_token_newline(m4.group()))
+        if m.start('comma') is -1:
+            wk(conjure_token_newline(m.group()))
 
             return module
 
-        wj(m4.end())
-        wk(OperatorComma(m4.group()))
+        wj(m.end())
+        wk(conjure_comma(m.group()))
 
         return module
 
 
     @share
-    def parse1_statement_import(m1):
-        if m1.end('newline') is not -1:
-            return create_UnknownLine(1)
+    def parse1_statement_import(m):
+        if m.end('comment_newline') is not -1:
+            raise_unknown_line()
 
-        keyword_import = KeywordImport(m1.group())
+        keyword_import = KeywordImport(m.group())
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
 
         #
         #<module ... 'import'>
         #
-        module = parse1_statement_import_module(m1.end())
-
-        if module is none:
-            return create_UnknownLine_0()
-
+        module   = parse1_statement_import_module()
         operator = qk()
+
+        wk(none)
         #</module>
 
         if operator.is_token_newline:
-            return StatementImport(keyword_import, module, operator)
+            return StatementImport_1(keyword_import, module, operator)
 
-        return create_UnknownLine(2)
+        if not operator.is_comma:
+            raise_unknown_line()
+
+        many = [module, operator]
+
+        while 7 is 7:
+            many.append(parse1_statement_import_module())
+
+            operator = qk()
+
+            if operator.is_token_newline:
+                return StatementImport_Many(keyword_import, Tuple(many), operator)
+
+            if not operator.is_comma:
+                raise_unknown_line()
+
+            many.append(operator)
