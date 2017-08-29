@@ -9,13 +9,14 @@ def gem():
     require_gem('Gem.Path')
     require_gem('Gem.StringOutput')
     require_gem('Gem.System')
+    require_gem('Gem.Traceback')
     require_gem('Pearl.Comment')
     require_gem('Pearl.Token')
     require_gem('Pearl.Tokenizer')
 
 
     from Gem import create_DelayedFileOutput, create_StringOutput, produce_cache_functions
-    from Gem import read_text_from_path
+    from Gem import read_text_from_path, print_exception_chain
     from Pearl import conjure_identifier, conjure_token_newline, create_UnknownLine
     from Pearl import parse_incomplete, qj, qk, qs, Token, wj, wk, z_initialize
 
@@ -36,6 +37,7 @@ def gem():
         'create_StringOutput',          create_StringOutput,
         'create_UnknownLine',           create_UnknownLine,
         'parse_incomplete',             parse_incomplete,
+        'print_exception_chain',        print_exception_chain,
         'produce_cache_functions',      produce_cache_functions,
         'qj',                           qj,
         'qk',                           qk,
