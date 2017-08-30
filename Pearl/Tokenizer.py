@@ -9,7 +9,7 @@ def gem():
 
     frame_1 = Method(python_frame, 1)
 
-    tokenizer = [none, none, none, none]
+    tokenizer = [none, none, none, none, none]
 
     query = tokenizer.__getitem__
     write = tokenizer.__setitem__
@@ -18,11 +18,13 @@ def gem():
     qi = Method(query, 1)
     qj = Method(query, 2)
     qk = Method(query, 3)
+    ql = Method(query, 4)
 
     ws = Method(write, 0)
     wi = Method(write, 1)
     wj = Method(write, 2)
     wk = Method(write, 3)
+    wl = Method(write, 4)
 
 
     construct_Exception = Exception.__init__
@@ -101,18 +103,20 @@ def gem():
 
 
         def GENERATOR_next_line():
-            for i in iterate_range(maximum_i):
-                s = q_data(i)
+            for line_number in iterate_range(maximum_i):
+                s = q_data(line_number)
 
                 ws(s)
-                wi(i)
+                wi(0)
                 wj(0)
+                wl(line_number)
 
                 yield s
 
             ws(none)
             wi(none)
             wj(none)
+            wl(none)
 
 
         return ParseContext(GENERATOR_next_line())

@@ -75,7 +75,7 @@ def gem():
         #   OLD
         #
         #   (
-        OLD__middle_ow = NAME('OLD__middle_ow',  P(w + NOT_FOLLOWED_BY(ANY_OF(LINEFEED, ' ', '#'))))
+        OLD__middle_ow = NAME('OLD__middle_ow', P(w + NOT_FOLLOWED_BY(ANY_OF(LINEFEED, '#'))))
 
         OLD__right_parenthesis   = NAME('OLD__right_parenthesis',   ow + ')' + OLD__middle_ow)
         ow__left_parenthesis__ow = NAME('ow__left_parenthesis__ow', ow + '(' + ow)              #   )

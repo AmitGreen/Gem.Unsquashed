@@ -25,13 +25,13 @@ def gem():
         if m1 is none:
             raise_unknown_line(1)
 
-        s1     = m1.group()
-        atom   = find_atom_type(s1[0])(s1)
+        s1         = m1.group()
+        argument_1 = find_atom_type(s1[0])(s1)
         #</atom1>
 
         if show is 7:
             line('parse1_arguments__left_parenthesis: left_parenthesis: %s; atom: %s; s: %s',
-                 left_parenthesis, atom, portray_raw_string(s[m1.end():]))
+                 left_parenthesis, argument_1, portray_raw_string(s[m1.end():]))
 
         #
         #<right-parenthesis>
