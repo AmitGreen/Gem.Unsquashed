@@ -126,7 +126,7 @@ def gem():
 
         MATCH(
             'atom_match',
-            G('atom', name | number | single_quote) + G(ow),
+            G('atom', name | number | single_quote) + ow + Q(comment_newline),
         )
 
         MATCH(

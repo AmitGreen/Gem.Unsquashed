@@ -1,0 +1,91 @@
+#
+#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#
+@gem('Sapphire.Tokenize1Expression')
+def gem():
+    show = 0
+
+
+    @share
+    def tokenize_nested_atom():
+        m = atom_match(qs(), qj())
+
+        if m is none:
+            #line('%s: %s', my_name(), portray_raw_string(qs()[qj():]))
+            raise_unknown_line(1)
+
+        if m.start('comment_newline') is not -1:
+            raise_unknown_line(2)
+
+        wi(m.end('atom'))
+        wj(m.end())
+
+        s1 = m.group('atom')
+
+        return find_atom_type(s1[0])(s1)
+
+
+    @share
+    def tokenize_argument1_operator():
+        s = qs()
+        m = argument1_operator_match1(s, qj())
+
+        if m is none:
+            #line('%s: %s', my_name(), portray_raw_string(s[qj():]))
+            raise_unknown_line(1)
+
+        conjure = find_operator_conjure_function(m.group('operator'))
+
+        if conjure is conjure_right_parenthesis:
+            if m.start('comment_newline') is -1:
+                raise_unknown_line(2)
+
+            i = m.end('operator')
+
+            wn(conjure_token_newline(s[i:]))
+
+            return conjure(s[qi():i])
+        
+        if m.start('comment_newline') is not -1:
+            raise_unknown_line(3)
+
+        j = m.end()
+        r = conjure(s[qi():j])
+
+        wi(j)
+        wj(j)
+
+        return r
+
+
+    @share
+    def tokenize_argument7_operator():
+        s = qs()
+        m = argument7_operator_match1(s, qj())
+
+        if m is none:
+            #line('%s: %s', my_name(), portray_raw_string(s[qj():]))
+            raise_unknown_line(1)
+
+        conjure = find_operator_conjure_function(m.group('operator'))
+
+        if conjure is conjure_right_parenthesis:
+            if m.start('comment_newline') is -1:
+                raise_unknown_line(2)
+
+            i = m.end('operator')
+
+            wn(conjure_token_newline(s[i:]))
+
+            return conjure(s[qi():i])
+        
+        if m.start('comment_newline') is not -1:
+            raise_unknown_line(3)
+
+        j = m.end()
+        r = conjure(s[qi():j])
+
+        wi(j)
+        wj(j)
+
+        return r

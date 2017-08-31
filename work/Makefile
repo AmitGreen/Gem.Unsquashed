@@ -59,9 +59,11 @@ SAPPHIRE_FILES = \
     ../Sapphire/Elemental.py ../Sapphire/Expression.py \
     ../Sapphire/Main.py \
     ../Sapphire/Parse1.py ../Sapphire/Parse1Call.py ../Sapphire/Parse1Expression.py ../Sapphire/Parse1From.py \
-        ../Sapphire/Parse1Import.py ../Sapphire/Parse7.py ../Sapphire/Parse7Expression.py \
+        ../Sapphire/Parse1Import.py ../Sapphire/Parse1Simple.py \
+        ../Sapphire/Parse7.py ../Sapphire/Parse7Expression.py \
     ../Sapphire/Pattern.py \
     ../Sapphire/Statement.py \
+    ../Sapphire/Tokenize1Expression.py \
     #
     #   Excludes:
     #       ../Sapphire/Match.py
@@ -120,8 +122,8 @@ clean:
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gd.py gg.py
-	rm -f h1p.py h1pc.py h1pe.py h1pf.py h1pi.py h7pa.py h7pe.py
-	rm -f   hc.py hem.py hex.py hk.py hma.py hmc.py hpt.py hs.py hz.py
+	rm -f h1p.py h1pc.py h1pe.py h1pf.py h1pi.py h1ps.py h1ze.py
+	rm -f   h7pa.py h7pe.py hc.py hem.py hex.py hk.py hma.py hmc.py hpt.py hs.py hz.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f lr.txt
@@ -179,6 +181,8 @@ links:
 	ln -s ../Sapphire/Parse1Expression.py       h1pe.py
 	ln -s ../Sapphire/Parse1From.py             h1pf.py
 	ln -s ../Sapphire/Parse1Import.py           h1pi.py
+	ln -s ../Sapphire/Parse1Simple.py           h1ps.py
+	ln -s ../Sapphire/Tokenize1Expression.py    h1ze.py
 	ln -s ../Sapphire/Parse7.py                 h7pa.py
 	ln -s ../Sapphire/Parse7Expression.py       h7pe.py
 	ln -s ../Sapphire/Core.py                   hc.py

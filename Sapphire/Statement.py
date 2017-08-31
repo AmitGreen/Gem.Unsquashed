@@ -419,6 +419,9 @@ def gem():
             return arrange('<Return %r %r %r>', t.keyword_return, t.expression, t.newline)
 
 
+        display_token = __repr__
+
+
         def write(t, w):
             w(t.keyword_return.s)
             t.expression.write(w)
