@@ -14,9 +14,9 @@ def gem():
     require_gem('Pearl.Tokenizer')
 
 
-    from Gem import create_DelayedFileOutput, create_StringOutput, produce_cache_functions, read_text_from_path
+    from Gem import create_DelayedFileOutput, create_StringOutput, read_text_from_path
     from Pearl import conjure_comment_newline, conjure_token_newline, conjure_tree_comment
-    from Pearl import EmptyLine, insert_interned_identifier, lookup_identifier
+    from Pearl import EmptyLine, lookup_identifier
     from Pearl import qj, qk, qs, raise_unknown_line, Token, TokenIndented, wj, wk, z_initialize
 
 
@@ -37,9 +37,7 @@ def gem():
         'conjure_tree_comment',         conjure_tree_comment,
         'create_DelayedFileOutput',     create_DelayedFileOutput,
         'create_StringOutput',          create_StringOutput,
-        'insert_interned_identifier',   insert_interned_identifier,
         'lookup_identifier',            lookup_identifier,
-#       'produce_cache_functions',      produce_cache_functions,
         'qj',                           qj,
         'qk',                           qk,
         'qs',                           qs,

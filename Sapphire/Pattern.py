@@ -116,7 +116,17 @@ def gem():
         
         MATCH(
             'argument1_operator_match1',
-            ow + right_parenthesis,
+            G('operator', comma | right_parenthesis) + ow + Q(comment_newline),
+        )
+
+        MATCH(
+            'argument7_operator_match1',
+            G('operator', comma | right_parenthesis) + ow + Q(comment_newline),
+        )
+
+        MATCH(
+            'atom_match',
+            G('atom', name | number | single_quote) + G(ow),
         )
 
         MATCH(
@@ -156,11 +166,6 @@ def gem():
         MATCH(
             'single_quote_match',
             single_quote,
-        )
-
-        MATCH(
-            'statement_argument1_operator_match1',
-            ow + right_parenthesis,
         )
 
 

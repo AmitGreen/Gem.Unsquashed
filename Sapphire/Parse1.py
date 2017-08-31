@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
+    show = 1
+
+
     require_gem('Sapphire.Core')
     require_gem('Sapphire.Match')
     require_gem('Sapphire.Parse1Call')
@@ -14,14 +17,15 @@ def gem():
     require_gem('Sapphire.Statement')
 
 
-    show = 7
+    @share
+    def parse1_newline():
+        if show is 7:
+            line('%s: %s', my_name(), portray_string(qs()[qj():]))
 
-
-    def parse1__newline(j):
         #
         #<ow-comment-newline>
         #
-        m1 = ow_comment_newline_match(qs(), j)
+        m1 = ow_comment_newline_match(qs(), qj())
 
         if m1 is none:
             raise_unknown_line(1)
@@ -140,6 +144,8 @@ def gem():
         if m3 is none:
             raise_unknown_line(3)
 
+        wj(m3.end())
+
         left_parenthesis__end = m3.end('left_parenthesis__ow')
         #</postfix>
 
@@ -150,7 +156,7 @@ def gem():
         right_parenthesis = m3.group('right_parenthesis')
 
         if right_parenthesis is not none:
-            right_parenthesis = OperatorRightParenthesis(right_parenthesis)
+            right_parenthesis = conjure_right_parenthesis(right_parenthesis)
 
             if m3.end('comment_newline') is not -1:
                 return DecoratorHeader(
@@ -161,15 +167,12 @@ def gem():
 
             raise_unknown_line(4)
 
-        expression = parse1_expression_call(m3.end(), identifier, left_parenthesis)
 
-        #
-        #<newline>
-        #
-        newline = parse1__newline(qj())
-        #</newline>
-
-        return DecoratorHeader(operator_at_sign, expression, newline)
+        return DecoratorHeader(
+                   operator_at_sign,
+                   parse1_expression_call(identifier, left_parenthesis),
+                   qn(),
+               )
 
 
     def parse1_statement_define_header(m1):
@@ -287,7 +290,7 @@ def gem():
         right_parenthesis = m3.group('right_parenthesis')
 
         if right_parenthesis is not none:
-            right_parenthesis = OperatorRightParenthesis(right_parenthesis)
+            right_parenthesis = conjure_right_parenthesis(right_parenthesis)
 
             if m3.end('comment_newline') is not -1:
                 return StatementReturnExpression(
@@ -303,7 +306,7 @@ def gem():
         #
         #<newline>
         #
-        newline = parse1__newline(qj())
+        newline = parse1_newline()
         #</newline>
 
         return StatementReturnExpression(keyword_return, expression, newline)
@@ -387,9 +390,9 @@ def gem():
 
                     append(EmptyLine(m.group()))
 
-                if show is 7:
+                if show:
                     for v in many:
-                        line('%r', v)
+                        line('%s', v.display_token())
 
                 with create_StringOutput() as f:
                     w = f.write

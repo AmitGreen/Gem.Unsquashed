@@ -3,10 +3,10 @@
 #
 @gem('Sapphire.Parse1Expression')
 def gem():
-    require_gem('Sapphire.Core')
-
-
     show = 0
+
+
+    require_gem('Sapphire.Core')
 
 
     lookup_operator = {
@@ -16,13 +16,13 @@ def gem():
                       }.__getitem__
 
 
-
     @share
     def parse1_statement_expression__symbol(indented, identifier, index):
         s = qs()
 
         if show:
-            line('indented: %r, identifier: %r; s: %r', indented, identifier, s[index:])
+            line('%s: indented: %r, identifier: %r; s: %r',
+                 my_name(), indented, identifier, s[index:])
 
         #
         #<postfix1-operator>
@@ -42,7 +42,7 @@ def gem():
                            identifier,
                            Arguments_0(
                                OperatorLeftParenthesis(s[index:m2.start('right_parenthesis')]),
-                               OperatorRightParenthesis(right_parenthesis),
+                               conjure_right_parenthesis(right_parenthesis),
                            ),
                            conjure_token_newline(s[m2.end('right_parenthesis'):]),
                        )
@@ -62,11 +62,15 @@ def gem():
 
                 if m3 is none:
                     raise_unknown_line(3)
+
+                right = conjure_identifier(m3.group())
                 #</name1>
 
-                left = ExpressionDot(identifier, operator, conjure_identifier(m3.group()))
+                dot = operator
                 
-                #line('left: %r; s: %s', left, portray_raw_string(s[m3.end():]))
+                if show:
+                    line('%s: identifier: %r; dot: %s; right: %s; s: %s',
+                         parse1_statement_expression__symbol.__name__, identifier, dot, right, portray_raw_string(s[m3.end():]))
 
                 #
                 #<postfix1-operator>
@@ -75,6 +79,8 @@ def gem():
 
                 if m4 is none:
                     raise_unknown_line(4)
+
+                wj(m4.end())
 
                 right_parenthesis = m4.group('right_parenthesis')
                 #</postfix1-operator>
@@ -87,9 +93,14 @@ def gem():
                 if left_parenthesis is not none:
                     assert m4.start('comment_newline') is -1
 
-                    arguments = parse1_arguments__left_parenthesis(OperatorLeftParenthesis(left_parenthesis), m4.end())
-
-                    raise_unknown_line(6)
+                    return StatementMethodCall(
+                               indented,
+                               identifier,
+                               dot,
+                               right,
+                               parse1_arguments__left_parenthesis(OperatorLeftParenthesis(left_parenthesis)),
+                               qn(),
+                            )
                 
                 raise_unknown_line(7)
 

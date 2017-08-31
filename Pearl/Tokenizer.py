@@ -7,9 +7,7 @@ def gem():
     require_gem('Pearl.Token')
 
 
-    frame_1 = Method(python_frame, 1)
-
-    tokenizer = [none, none, none, none, none]
+    tokenizer = [none, none, none, none, none, none]
 
     query = tokenizer.__getitem__
     write = tokenizer.__setitem__
@@ -19,12 +17,14 @@ def gem():
     qj = Method(query, 2)
     qk = Method(query, 3)
     ql = Method(query, 4)
+    qn = Method(query, 5)
 
     ws = Method(write, 0)
     wi = Method(write, 1)
     wj = Method(write, 2)
     wk = Method(write, 3)
     wl = Method(write, 4)
+    wn = Method(write, 5)
 
 
     construct_Exception = Exception.__init__
@@ -110,6 +110,8 @@ def gem():
                 wi(0)
                 wj(0)
                 wl(line_number)
+                wk(none)
+                wn(none)
 
                 yield s
 
@@ -117,6 +119,8 @@ def gem():
             wi(none)
             wj(none)
             wl(none)
+            wk(none)
+            wn(none)
 
 
         return ParseContext(GENERATOR_next_line())
@@ -124,10 +128,12 @@ def gem():
 
     @export
     def raise_unknown_line(number):
-        line('%s #%s', frame_1().f_code.co_name, number)
+        caller_name = caller_frame_1().f_code.co_name
+
+        line('%s #%s', caller_name, number)
 
         unknown_line_error = UnknownLineException(
-                                 arrange('parse incomplete %s #%d', frame_1().f_code.co_name, number),
+                                 arrange('parse incomplete %s #%d', caller_name, number),
                                  UnknownLine(qs()),
                              )
 
@@ -137,10 +143,14 @@ def gem():
 
 
     export(
+        'qi',   qi,
         'qj',   qj,
         'qk',   qk,
+        'qn',   qn,
         'qs',   qs,
 
+        'wi',   wi,
         'wj',   wj,
         'wk',   wk,
+        'wn',   wn,
     )

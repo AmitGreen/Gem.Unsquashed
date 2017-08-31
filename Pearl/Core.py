@@ -12,7 +12,7 @@ def gem():
 
 
     from Gem import cadence_constructing, cadence_entered, cadence_exception, cadence_exited, cadence_initialized
-    from Gem import Exception, gem_global, produce_cache_functions, python_frame
+    from Gem import caller_frame_1, Exception, gem_global, produce_cache_functions
 
 
     share(
@@ -24,8 +24,8 @@ def gem():
         #
         #   Functions
         #
+        'caller_frame_1',               caller_frame_1,
         'produce_cache_functions',      produce_cache_functions,
-        'python_frame',                 python_frame,
 
 
         #

@@ -89,7 +89,7 @@ def gem():
 
         if operator is ',':
             wj(m2.end())
-            wk(OperatorComma(m2.group()))
+            wk(conjure_comma(m2.group()))
 
             return imported
 
@@ -121,7 +121,7 @@ def gem():
             return imported
 
         wj(m4.end())
-        wk(OperatorComma(m4.group()))
+        wk(conjure_comma(m4.group()))
 
         return imported
 

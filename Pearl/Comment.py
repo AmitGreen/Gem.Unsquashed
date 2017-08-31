@@ -57,13 +57,13 @@ def gem():
 
     [
             conjure_comment_operator,
-    ] = produce_cache_functions('Pearl.Token.comment_operator_cache', CommentOperator, produce_conjure_by_name = true)
+    ] = produce_cache_functions('comment_operator', CommentOperator, produce_conjure_by_name = true)
 
 
     [
             conjure_comment_newline,
     ] = produce_cache_functions(
-            'Pearl.Token.comment_operator_newline_cache', TokenCommentNewline,
+            'comment_operator_newline', TokenCommentNewline,
             
             produce_conjure_by_name = true,
         )
@@ -71,12 +71,12 @@ def gem():
 
     [
             conjure_token_comment,
-    ] = produce_cache_functions('Pearl.Comment.token_comment_cache', TokenComment, produce_conjure_by_name = true)
+    ] = produce_cache_functions('token_comment', TokenComment, produce_conjure_by_name = true)
 
 
     [
             conjure_token_newline,
-    ] = produce_cache_functions('Pearl.Comment.token_newline_cache', TokenNewline, produce_conjure_by_name = true)
+    ] = produce_cache_functions('token_newline', TokenNewline, produce_conjure_by_name = true)
 
 
     share(

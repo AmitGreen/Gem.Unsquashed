@@ -79,7 +79,6 @@ def gem():
         keyword      = ':'
 
 
-    @export
     class OperatorComma(KeywordAndOperatorBase):
         __slots__        = (())
         display_name     = ','
@@ -118,7 +117,6 @@ def gem():
         keyword      = '['              #   ]
 
 
-    @export
     class OperatorRightParenthesis(KeywordAndOperatorBase):
         __slots__            = (())
         #  (
@@ -156,6 +154,21 @@ def gem():
             return arrange('<%s>', t.s)
 
 
+    [conjure_comma] = produce_cache_functions(
+                          'comma',
+                          OperatorComma,
+
+                          produce_conjure_by_name = true,
+                      )
+
+    [conjure_right_parenthesis] = produce_cache_functions(
+                                      'right_parenthesis',
+                                      OperatorRightParenthesis,
+
+                                      produce_conjure_by_name = true,
+                                  )
+
+
     find_atom_type = {
                          "'" : SingleQuote,
                          '.' : Number,
@@ -185,6 +198,18 @@ def gem():
                      }.__getitem__
 
 
-    export(
-        'find_atom_type',   find_atom_type,
+    find_operator_conjure_function = {
+                                         ',' : conjure_comma,
+                                         #
+                                         #   (
+                                         #
+                                         ')' : conjure_right_parenthesis,
+                                     }.__getitem__
+
+
+    share(
+        'conjure_comma',                    conjure_comma,
+        'conjure_right_parenthesis',        conjure_right_parenthesis,
+        'find_atom_type',                   find_atom_type,
+        'find_operator_conjure_function',   find_operator_conjure_function,
     )

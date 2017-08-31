@@ -3,47 +3,108 @@
 #
 @gem('Sapphire.Parse1Call')
 def gem():
-    show = 7
+    show = 0
 
 
     @share
-    def parse1_expression_call(j, left, left_parenthesis):
-        arguments = parse1_arguments__left_parenthesis(left_parenthesis, j)
-
-        return ExpressionCall(left, arguments)
+    def parse1_expression_call(left, left_parenthesis):
+        return ExpressionCall(left, parse1_arguments__left_parenthesis(left_parenthesis))
 
 
-    @share
-    def parse1_arguments__left_parenthesis(left_parenthesis, j):
-        s = qs()
+    def tokenize_atom():
+        m = atom_match(qs(), qj())
 
-        #
-        #<atom1>
-        #
-        m1 = atom_match1(s, j)
-
-        if m1 is none:
+        if m is none:
+            #line('%s: %s', my_name(), portray_raw_string(qs()[qj():]))
             raise_unknown_line(1)
 
-        s1         = m1.group()
-        argument_1 = find_atom_type(s1[0])(s1)
-        #</atom1>
+        wi(m.start('ow'))
+        wj(m.end())
 
-        if show is 7:
-            line('parse1_arguments__left_parenthesis: left_parenthesis: %s; atom: %s; s: %s',
-                 left_parenthesis, argument_1, portray_raw_string(s[m1.end():]))
+        s1 = m.group('atom')
 
-        #
-        #<right-parenthesis>
-        #
-        m2 = statement_argument1_operator_match1(s, m1.end())
+        return find_atom_type(s1[0])(s1)
 
-        if m2 is none:
+
+    def tokenize_argument1_operator():
+        s = qs()
+        m = argument1_operator_match1(s, qj())
+
+        if m is none:
+            #line('%s: %s', my_name(), portray_raw_string(s[qj():]))
+            raise_unknown_line(1)
+
+        conjure = find_operator_conjure_function(m.group('operator'))
+
+        if conjure is conjure_right_parenthesis:
+            if m.start('comment_newline') is -1:
+                raise_unknown_line(2)
+
+            i = m.end('operator')
+
+            wn(conjure_token_newline(s[i:]))
+
+            return conjure(s[qi():i])
+        
+        if m.start('comment_newline') is not -1:
+            raise_unknown_line(3)
+
+        j = m.end()
+        r = conjure(s[qi():j])
+
+        wi(j)
+        wj(j)
+
+        return r
+
+
+    def tokenize_argument7_operator():
+        s = qs()
+        m = argument7_operator_match1(s, qj())
+
+        if m is none:
+            #line('%s: %s', my_name(), portray_raw_string(s[qj():]))
+            raise_unknown_line(1)
+
+        conjure = find_operator_conjure_function(m.group('operator'))
+
+        if conjure is conjure_right_parenthesis:
+            if m.start('comment_newline') is -1:
+                raise_unknown_line(2)
+
+            i = m.end('operator')
+
+            wn(conjure_token_newline(s[i:]))
+
+            return conjure(s[qi():i])
+        
+        if m.start('comment_newline') is not -1:
+            raise_unknown_line(3)
+
+        j = m.end()
+        r = conjure(s[qi():j])
+
+        wi(j)
+        wj(j)
+
+        return r
+
+
+    @share
+    def parse1_arguments__left_parenthesis(left_parenthesis):
+        atom_1     = tokenize_atom()
+        operator_1 = tokenize_argument1_operator()
+
+        if operator_1.is_right_parenthesis:
+            return Arguments_1(left_parenthesis, atom_1, operator_1)
+
+        if operator_1.is_comma:
+            atom_2     = tokenize_atom()
+            operator_2 = tokenize_argument7_operator()
+
+            if operator_2.is_right_parenthesis:
+                return Arguments_2(left_parenthesis, atom_1, operator_1, atom_2, operator_2)
+
             raise_unknown_line(2)
 
-        right_parenthesis = OperatorRightParenthesis(m2.group())
-        #</right-parenthesis>
-
-        wj(m2.end())
-
-        return Arguments_1(left_parenthesis, argument_1, right_parenthesis)
+        raise_unknown_line(3)

@@ -53,6 +53,9 @@ def gem():
             return arrange('<%s %s %s %r %r>', t.__class__.__name__, t.keyword, t.name, t.parameters_colon, t.newline)
 
 
+        display_token = __repr__
+
+
         def write(t, w):
             w(t.keyword.s + t.name)
             t.parameters_colon.write(w)
@@ -88,6 +91,9 @@ def gem():
 
         def  __repr__(t):
             return arrange('<DecoratorHeader %r %r %r>', t.operator_decorator, t.expresssion, t.newline)
+
+
+        display_token = __repr__
 
 
         def write(t, w):
@@ -338,12 +344,16 @@ def gem():
                            t.indented, t.left, t.dot, t.right, t.arguments, t.newline)
 
 
+        display_token = __repr__
+
+
         def write(t, w):
             w(t.indented)
             t.left.write(w)
-            w(t.dot + t.right)
+            t.dot.write(w)
+            t.right.write(w)
             t.arguments.write(w)
-            w(t.newline)
+            t.newline.write(w)
 
 
     @share

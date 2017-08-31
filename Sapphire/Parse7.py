@@ -28,7 +28,7 @@ def gem():
                        expression,
                        Arguments_0(
                            OperatorLeftParenthesis(left_parenthesis),
-                           OperatorRightParenthesis(right_parenthesis),
+                           conjure_right_parenthesis(right_parenthesis),
                        ),
                    )
 
@@ -37,7 +37,7 @@ def gem():
                    Arguments_1(
                        OperatorLeftParenthesis(left_parenthesis),
                        SingleQuote(single_quote),
-                       OperatorRightParenthesis(right_parenthesis),
+                       conjure_right_parenthesis(right_parenthesis),
                    ),
                )
 
@@ -143,7 +143,7 @@ def gem():
                        KeywordFrom(m0.group('indented') + m0.group('keyword__ow')),
                        module,
                        KeywordImport(w_import_w),
-                       ExpressionComma(as_fragment, OperatorComma(comma), as_fragment_2),
+                       ExpressionComma(as_fragment, conjure_comma(comma), as_fragment_2),
                        conjure_token_newline(m2.group('ow_comment_newline')),
                    )
 

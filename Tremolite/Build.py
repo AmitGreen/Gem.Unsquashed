@@ -359,7 +359,7 @@ def gem():
     [
             name_cache, name_insert_interned,
     ] = produce_cache_functions(
-            'Tremolite.name_cache', TremoliteName,
+            'name', TremoliteName,
             
             produce_cache           = true,
             produce_insert_interned = true,

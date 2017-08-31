@@ -26,6 +26,9 @@ def gem():
             return arrange('<%s %r>', t.display_name, t.s)
 
 
+        display_token = __repr__
+
+
         def write(t, w):
             w(t.s)
 
@@ -35,20 +38,20 @@ def gem():
         __slots__ = (())
 
 
+        display_name  = 'Identifier'
         is_identifier = true
 
 
-        def __repr__(t):
+        def display_token(t):
             return t.s
 
 
     [
-            conjure_identifier, insert_interned_identifier, lookup_identifier,
+            conjure_identifier, lookup_identifier,
     ] = produce_cache_functions(
-            'Pearl.Token.identifier_cache', Identifier,
+            'identifier', Identifier,
 
             produce_conjure_by_name = true,
-            produce_insert_interned = true,
             produce_lookup          = true,
         )
 
@@ -65,7 +68,6 @@ def gem():
 
 
     export(
-        'conjure_identifier',           conjure_identifier,
-        'insert_interned_identifier',   insert_interned_identifier,
-        'lookup_identifier',            lookup_identifier,
+        'conjure_identifier',   conjure_identifier,
+        'lookup_identifier',    lookup_identifier,
     )

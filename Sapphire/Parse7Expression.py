@@ -30,10 +30,10 @@ def gem():
 
         #   (
         if operator is ')':
-            return (( call, OperatorRightParenthesis(m.group('operator__ow')), m.end() ))
+            return (( call, conjure_right_parenthesis(m.group('operator__ow')), m.end() ))
 
         if operator is ',':
-            return (( call, OperatorComma(m.group('operator__ow')), m.end() ))
+            return (( call, conjure_comma(m.group('operator__ow')), m.end() ))
 
         line('parse7_arguments__atom__left_parenthesis: incomplete #2: %r %r', call, operator)
         return tuple_of_3_nones
@@ -78,7 +78,7 @@ def gem():
             return tuple_of_3_nones
 
         if operator is ',':
-            return (( left, OperatorComma(m.group('operator__ow')), m.end() ))
+            return (( left, conjure_comma(m.group('operator__ow')), m.end() ))
 
         line('parse7_arguments__atom__left_square_bracket: incomplete #7: %r %r', left, operator)
         return tuple_of_3_nones
@@ -122,7 +122,7 @@ def gem():
         #   (
         if operator is ')':
             return ((
-                       Arguments_1(left_parenthesis_0, argument_0, OperatorRightParenthesis(m.group('operator__ow'))),
+                       Arguments_1(left_parenthesis_0, argument_0, conjure_right_parenthesis(m.group('operator__ow'))),
                        m.end(),
                    ))
 
@@ -145,7 +145,7 @@ def gem():
         #   (
         if operator is ')':
             return ((
-                       Arguments_1(left_parenthesis_0, argument_0, OperatorRightParenthesis(m.group('operator__ow'))),
+                       Arguments_1(left_parenthesis_0, argument_0, conjure_right_parenthesis(m.group('operator__ow'))),
                        m.end(),
                    ))
 
@@ -154,7 +154,7 @@ def gem():
 
     def parse7_arguments__left_parenthesis__argument__operator(s, m0, left_parenthesis_0, argument_0, operator):
         if operator is ',':
-            operator_0 = OperatorComma(m0.group('operator__ow'))
+            operator_0 = conjure_comma(m0.group('operator__ow'))
             index_0    = m0.end()
         else:
             if show:
@@ -201,12 +201,12 @@ def gem():
         #   (
         if operator is ')':
             return ((
-                       Arguments_2(left_parenthesis_0, argument_0, operator_0, argument_1, OperatorRightParenthesis(operator)),
+                       Arguments_2(left_parenthesis_0, argument_0, operator_0, argument_1, conjure_right_parenthesis(operator)),
                        m.end(),
                    ))
 
         if operator is ',':
-            comma_1 = OperatorComma(operator)
+            comma_1 = conjure_comma(operator)
             index_1 = m.end()
         else:
             [argument_1, operator_1, index_1] = find__parse7_arguments__atom__operator(operator)(s, m, argument_1)
@@ -245,7 +245,7 @@ def gem():
 
         if right_parenthesis is not none:
             left_parenthesis  = OperatorLeftParenthesis(m.group('operator__ow'))
-            right_parenthesis = OperatorRightParenthesis(right_parenthesis)
+            right_parenthesis = conjure_right_parenthesis(right_parenthesis)
 
             if name_0 is not none:
                 assert number_0 is single_quote_0 is none
