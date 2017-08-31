@@ -14,23 +14,23 @@ def gem():
         keyword_return = KeywordReturn(m1.group())
         s              = qs()
 
-        #
-        #<atom1>
-        #
-        m2 = atom_match1(s, m1.end())
+        wj(m1.end())
 
-        if m2 is none:
-            raise_unknown_line(1)
+        #
+        #<atom>
+        #
+        atom = tokenize_normal_atom()
+        #</atom>
 
-        s2     = m2.group()
-        atom   = find_atom_type(s2[0])(s2)
-        m2_end = m2.end()
-        #</atom1>
+        newline = qn()
+
+        if newline is not none:
+            return StatementReturnExpression(keyword_return, atom, newline)
 
         #
         #<postfix>
         #
-        m3 = statement_postfix_match1(s, m2_end)
+        m3 = statement_postfix_match1(s, qj())
 
         if m3 is none:
             raise_unknown_line(2)
@@ -43,7 +43,7 @@ def gem():
         if left_parenthesis__end is -1:
             return StatementReturnExpression(keyword_return, atom, conjure_token_newline(m3.group()))
 
-        left_parenthesis  = OperatorLeftParenthesis(s[m2_end : left_parenthesis__end])
+        left_parenthesis  = OperatorLeftParenthesis(s[qi() : left_parenthesis__end])
         right_parenthesis = m3.group('right_parenthesis')
 
         if right_parenthesis is not none:
