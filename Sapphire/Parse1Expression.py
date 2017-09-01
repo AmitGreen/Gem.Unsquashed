@@ -19,7 +19,6 @@ def gem():
         if token.is_atom:
             return token
 
-        line('%s: %s', my_name(), token)
         raise_unknown_line(1)
 
 
@@ -32,11 +31,14 @@ def gem():
 
         if token.is_left_parenthesis:
             left     = parse1_nested_atom()
-            #operator = 
+            operator = tokenize_nested_operator()
 
-            raise_unknown_line(1)
+            if operator.is_right_parenthesis:
+                return PathenthesizedExpression(token, left, operator)
 
-        raise_unknown_line(2)
+            raise_unknown_line(2)
+
+        raise_unknown_line(3)
 
 
     @share

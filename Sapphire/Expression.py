@@ -41,41 +41,6 @@ def gem():
 
 
     @share
-    class Arguments_1(Object):
-        __slots__ = ((
-            'left_parenthesis',         #   OperatorLeftParenthesis
-            'argument_0',               #   Expression*
-            'right_parenthesis',        #   OperatorRightParenthesis
-        ))
-
-
-        def __init__(t, left_parenthesis, argument_0, right_parenthesis):
-            assert left_parenthesis .is_left_parenthesis
-            assert right_parenthesis.is_right_parenthesis
-
-            t.left_parenthesis  = left_parenthesis
-            t.argument_0        = argument_0
-            t.right_parenthesis = right_parenthesis
-
-
-        def __repr__(t):
-            return arrange('<Arguments_1 %r %r %r>', t.left_parenthesis, t.argument_0, t.right_parenthesis)
-
-
-        def display_token(t):
-            return arrange('<(1) %s %s %s>',
-                           t.left_parenthesis .display_token(),
-                           t.argument_0       .display_token(),
-                           t.right_parenthesis.display_token())
-
-
-        def write(t, w):
-            t.left_parenthesis .write(w)
-            t.argument_0       .write(w)
-            t.right_parenthesis.write(w)
-
-
-    @share
     class Arguments_2(Object):
         __slots__ = ((
             'left_parenthesis',         #   OperatorLeftParenthesis
@@ -160,6 +125,61 @@ def gem():
     class ExpressionComma(ExpressionBinaryBase):
         __slots__    = (())
         display_name = ','
+
+
+    @share
+    class ExpressionBookcase(Object):
+        __slots__ = ((
+            'left',                     #   Operator+
+            'middle',                   #   Expression+
+            'right',                    #   Operator+
+        ))
+
+
+        def __init__(t, left, middle, right):
+            t.left   = left
+            t.middle = middle
+            t.right  = right
+
+
+        def __repr__(t):
+            return arrange('<%s %r %r %r>', t.__class__.__name__, t.left, t.middle, t.right)
+
+
+        def display_token(t):
+            return arrange('<%s %s %s %s>',
+                           t.display_name,
+                           t.left  .display_token(),
+                           t.middle.display_token(),
+                           t.right .display_token())
+
+
+        def write(t, w):
+            w(t.left.s)
+            t.middle.write(w)
+            w(t.right.s)
+
+
+    @share
+    class Arguments_1(ExpressionBookcase):
+        __slots__    = (())
+        display_name = '(1)'
+
+
+    @share
+    class PathenthesizedExpression(ExpressionBookcase):
+        __slots__    = (())
+        display_name = '()'
+
+
+        def display_token(t):
+            if t.left.s == '(' and t.right.s == ')':
+                return arrange('(%s)', t.middle.display_token())
+
+            return arrange('(%s %s %s)',
+                           t.left  .display_token(),
+                           t.middle.display_token(),
+                           t.right .display_token())
 
 
     @share

@@ -21,11 +21,14 @@ def gem():
 
         keyword_if = conjure_keyword_if(m.group())
 
-        wj(m.end())
+        j = m.end()
+
+        wi(j)
+        wj(j)
 
         left = parse1_normal_atom()
 
-        if qn is not none():
+        if qn() is not none:
             raise_unknown_line(2)
             
         operator = tokenize_normal_operator()
