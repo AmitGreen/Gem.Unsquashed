@@ -151,7 +151,6 @@ def gem():
 
             raise_unknown_line(4)
 
-
         return DecoratorHeader(
                    operator_at_sign,
                    parse1_expression_call(identifier, left_parenthesis),

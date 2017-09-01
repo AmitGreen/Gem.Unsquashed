@@ -25,17 +25,19 @@ def gem():
         ow                         = NAME('ow',                         ZERO_OR_MORE(' '))
         w                          = NAME('w',                          ONE_OR_MORE(' '))
 
-        colon            = NAME('colon',            ':')
-        comma            = NAME('comma',            ',')
-        comment_newline  = NAME('comment_newline',  P('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
-        dot              = NAME('dot',              '.')
-        equal_sign       = NAME('equal_sign',       '=')
-        keyword_as       = NAME('as',               'as')
-        keyword_import   = NAME('import',           'import')
-        left_parenthesis = NAME('left_parenthesis', '(')                                #   )
-        name             = NAME('name',             letter_or_underscore + ZERO_OR_MORE(alphanumeric_or_underscore))
-        number           = NAME('number',           '0' | ANY_OF('1-9') + ZERO_OR_MORE(ANY_OF('0-9')))
-        period           = NAME('period',           '.')
+        colon               = NAME('colon',               ':')
+        comma               = NAME('comma',               ',')
+        comment_newline     = NAME('comment_newline',     P('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
+        dot                 = NAME('dot',                 '.')
+        equal_sign          = NAME('equal_sign',          '=')
+        keyword_as          = NAME('as',                  'as')
+        keyword_import      = NAME('import',              'import')
+        left_parenthesis    = NAME('left_parenthesis',    '(')                                #   )
+        left_square_bracket = NAME('left_square_bracket', '[')                                #   ]
+
+        name                = NAME('name',   letter_or_underscore + ZERO_OR_MORE(alphanumeric_or_underscore))
+        number              = NAME('number', '0' | ANY_OF('1-9') + ZERO_OR_MORE(ANY_OF('0-9')))
+        period              = NAME('period', '.')
 
         single_quote = NAME(
                            'single_quote',
@@ -49,8 +51,9 @@ def gem():
                        )
 
 
-        #   (
-        right_parenthesis = NAME('right_parenthesis',   ')')
+        #   [(
+        right_parenthesis    = NAME('right_parenthesis',    ')')
+        right_square_bracket = NAME('right_square_bracket', ']')
 
         left_parenthesis__ow = NAME('left_parenthesis__ow', left_parenthesis + ow)
         name1                = NAME('name1',                name)
@@ -115,11 +118,6 @@ def gem():
         FULL_MATCH('ow_comment_newline_match', G(ow_comment_newline))
         
         MATCH(
-            'argument_operator_match1',
-            G('operator', comma | left_parenthesis | right_parenthesis) + ow + Q(comment_newline),
-        )
-
-        MATCH(
             'atom_match',
             G('atom', name | number | single_quote) + ow + Q(comment_newline),
         )
@@ -127,25 +125,6 @@ def gem():
         MATCH(
             'atom_match1',
             name | number | single_quote,
-        )
-
-        MATCH(
-           'postfix_operator_match1',
-            (
-                  G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
-                + Q(comment_newline)
-            ),
-        )
-
-        MATCH(
-            'statement_postfix_operator_match1',
-            (
-                  ow
-                + (
-                        G(left_parenthesis) + ow + P(G(right_parenthesis) + ow) + Q(comment_newline)
-                      | G('operator', equal_sign | dot) + ow
-                  )
-            ),
         )
 
         MATCH(
@@ -158,10 +137,41 @@ def gem():
         )
 
         MATCH(
+            'nested_operator_match1',
+            (
+                  G(
+                    'operator',
+                    comma | left_parenthesis | left_square_bracket | right_parenthesis | right_square_bracket,
+                  )
+                + ow
+                + Q(comment_newline)
+            ),
+        )
+
+        MATCH(
+           'postfix_operator_match1',
+            (
+                  G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
+                + Q(comment_newline)
+            ),
+        )
+
+        MATCH(
             'single_quote_match',
             single_quote,
         )
 
+
+        MATCH(
+            'statement_postfix_operator_match1',
+            (
+                  ow
+                + (
+                        G(left_parenthesis) + ow + P(G(right_parenthesis) + ow) + Q(comment_newline)
+                      | G('operator', equal_sign | dot) + ow
+                  )
+            ),
+        )
 
         #
         #   Expressions 7

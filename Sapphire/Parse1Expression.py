@@ -17,6 +17,19 @@ def gem():
 
 
     @share
+    def parse1_expression_index(left, left_square_bracket):
+        atom = tokenize_nested_atom()
+
+        while 7 is 7:
+            operator = tokenize_nested_operator()
+
+            if operator.is_right_square_bracket:
+                return ExpressionIndex_1(left, left_square_bracket, atom, operator)
+
+            raise_unknown_line(2)
+
+
+    @share
     def parse1_statement_expression__symbol(indented, identifier, index):
         s = qs()
 
@@ -93,14 +106,13 @@ def gem():
                 if left_parenthesis is not none:
                     assert m4.start('comment_newline') is -1
 
-                    return StatementMethodCall(
-                               indented,
-                               identifier,
-                               dot,
-                               right,
-                               parse1_arguments__left_parenthesis(conjure_left_parenthesis(left_parenthesis)),
-                               qn(),
-                            )
+                    arguments = parse1_arguments__left_parenthesis(conjure_left_parenthesis(left_parenthesis))
+                    newline   = qn()
+
+                    if newline is none:
+                        raise_unknown_line(6)
+
+                    return StatementMethodCall(indented, identifier, dot, right, arguments, newline)
                 
                 raise_unknown_line(7)
 

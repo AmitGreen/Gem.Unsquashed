@@ -17,16 +17,23 @@ def gem():
     @share
     def parse_argument7(left):
         while 7 is 7:
-            operator = tokenize_argument_operator()
+            operator = tokenize_nested_operator()
 
             if operator.is_left_parenthesis:
                 left = parse1_expression_call(left, operator)
+                continue
+
+            if operator.is_left_square_bracket:
+                left = parse1_expression_index(left, operator)
                 continue
 
             if operator.is_right_parenthesis:
                 wk(operator)
 
                 return left
+
+            if show is 7:
+                line('%s: operator: %r', my_name(), operator)
 
             raise_unknown_line(1)
 
@@ -36,10 +43,11 @@ def gem():
         atom = tokenize_nested_atom()
 
         while 7 is 7:
-            operator = tokenize_argument_operator()
+            operator = tokenize_nested_operator()
 
             if operator.is_left_parenthesis:
-                atom = parse1_arguments__left_parenthesis(operator)
+                atom = parse1_expression_call(atom, operator)
+                line('%s: atom: %r ... continue#1', my_name(), atom)
                 continue
 
             if operator.is_right_parenthesis:
@@ -55,7 +63,13 @@ def gem():
         operator_2 = qk()
 
         if operator_2.is_right_parenthesis:
+            if show is 7:
+                line('%s: => %r; %r; %s',
+                     my_name(),
+                     Arguments_2(left_parenthesis, atom, operator, atom_2, operator_2),
+                     qn(),
+                     portray_raw_string(qs()[qj():]))
+
             return Arguments_2(left_parenthesis, atom, operator, atom_2, operator_2)
 
-        #line('%s: operator_1: %r', my_name(), operator_1)
         raise_unknown_line(2)

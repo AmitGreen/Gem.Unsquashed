@@ -25,33 +25,18 @@ def gem():
 
 
     @share
-    def tokenize_normal_atom():
+    def tokenize_nested_operator():
         s = qs()
-        m = atom_match(s, qj())
-
-        if m is none:
-            raise_unknown_line(1)
-
-        atom_s = m.group('atom')
-
-        if m.start('comment_newline') is -1:
-            wi(m.end('atom'))
-            wj(m.end())
-        else:
-            wn(conjure_token_newline(s[m.end('atom'):]))
-
-        return find_atom_type(atom_s[0])(atom_s)
-
-
-    @share
-    def tokenize_argument_operator():
-        s = qs()
-        m = argument_operator_match1(s, qj())
+        m = nested_operator_match1(s, qj())
 
         if m is none:
             raise_unknown_line(1)
 
         conjure = find_operator_conjure_function(m.group('operator'))
+
+        if show is 7:
+            line('%s: %s; conjure; %s; comment_newline: %s',
+                 my_name(), portray_raw_string(s[qj():]), conjure, m.start('comment_newline'))
 
         if m.start('comment_newline') is not -1:
             if conjure is conjure_right_parenthesis:
@@ -70,3 +55,22 @@ def gem():
         wj(j)
 
         return r
+
+
+    @share
+    def tokenize_normal_atom():
+        s = qs()
+        m = atom_match(s, qj())
+
+        if m is none:
+            raise_unknown_line(1)
+
+        atom_s = m.group('atom')
+
+        if m.start('comment_newline') is -1:
+            wi(m.end('atom'))
+            wj(m.end())
+        else:
+            wn(conjure_token_newline(s[m.end('atom'):]))
+
+        return find_atom_type(atom_s[0])(atom_s)

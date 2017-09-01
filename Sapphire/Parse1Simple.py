@@ -58,7 +58,11 @@ def gem():
                 raise_unknown_line(2)
 
             expression = parse1_expression_call(atom, operator)
+            newline    = qn()
 
-            return StatementReturnExpression(keyword_return, expression, qn())
+            if newline is none:
+                raise_unknown_line(3)
+            
+            return StatementReturnExpression(keyword_return, expression, newline)
 
         raise_unknown_line(3)

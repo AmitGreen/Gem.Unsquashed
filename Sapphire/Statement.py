@@ -262,7 +262,12 @@ def gem():
             return arrange('<StatementCall %r %r %r %r>', t.indented, t.left, t.arguments, t.newline)
 
 
-        display_token = __repr__
+        def display_token(t):
+            return arrange('<StatementCall %s %s %r %s>',
+                           portray_raw_string(t.indented),
+                           t.left.display_token(),
+                           t.arguments.display_token(),
+                           t.newline.display_token())
 
 
         def write(t, w):
@@ -357,11 +362,18 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<StatementCall %r %r %r %r %r %r>',
+            return arrange('<StatementMethodCall %r %r %r %r %r %r>',
                            t.indented, t.left, t.dot, t.right, t.arguments, t.newline)
 
 
-        display_token = __repr__
+        def display_token(t):
+            return arrange('<StatementMethodCall %s %s %s %s %s %s>',
+                           portray_raw_string(t.indented),
+                           t.left.display_token(),
+                           t.dot.display_token(),
+                           t.right.display_token(),
+                           t.arguments.display_token(),
+                           t.newline.display_token())
 
 
         def write(t, w):

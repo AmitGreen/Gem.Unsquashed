@@ -7,9 +7,12 @@ def gem():
 
 
     class KeywordAndOperatorBase(Token):
-        is_arguments_0      = false
-        is_dot              = false
-        is_left_parenthesis = false
+        is_arguments_0          = false
+        is_dot                  = false
+        is_left_parenthesis     = false
+        is_left_square_bracket  = false
+        is_right_square_bracket = false
+
 
         def __repr__(t):
             return arrange('<%s>', t.s)
@@ -60,11 +63,13 @@ def gem():
 
     @share
     class Number(Token):
-        __slots__ = (())
+        __slots__    = (())
+        display_name = 'number'
 
 
-        def __repr__(t):
+        def display_token(t):
             return t.s
+
 
 
     @export
@@ -113,9 +118,10 @@ def gem():
 
     @export
     class OperatorLeftSquareBracket(KeywordAndOperatorBase):
-        __slots__    = (())
-        display_name = '['              #   ]
-        keyword      = '['              #   ]
+        __slots__              = (())
+        is_left_square_bracket = true
+        display_name           = '['              #   ]
+        keyword                = '['              #   ]
 
 
     class OperatorRightParenthesis(KeywordAndOperatorBase):
@@ -139,11 +145,11 @@ def gem():
 
     @export
     class OperatorRightSquareBracket(KeywordAndOperatorBase):
-        __slots__    = (())
-        #   [
-        display_name = ']'
-        #   [
-        keyword      = ']'
+        __slots__               = (())
+        is_right_square_bracket = true
+        #   [[
+        display_name            = ']'
+        keyword                 = ']'
 
 
     @share
@@ -169,12 +175,26 @@ def gem():
                                      produce_conjure_by_name = true,
                                  )
 
+    [conjure_left_square_bracket] = produce_cache_functions(
+                                        'left_square_brakcet',
+                                        OperatorLeftSquareBracket,
+
+                                        produce_conjure_by_name = true,
+                                    )
+
     [conjure_right_parenthesis] = produce_cache_functions(
                                       'right_parenthesis',
                                       OperatorRightParenthesis,
 
                                       produce_conjure_by_name = true,
                                   )
+
+    [conjure_right_square_bracket] = produce_cache_functions(
+                                         'right_square_brakcet',
+                                         OperatorRightSquareBracket,
+
+                                         produce_conjure_by_name = true,
+                                     )
 
 
     find_atom_type = {
@@ -210,6 +230,8 @@ def gem():
                                          ',' : conjure_comma,
                                          '(' : conjure_left_parenthesis,
                                          ')' : conjure_right_parenthesis,
+                                         '[' : conjure_left_square_bracket,
+                                         ']' : conjure_right_square_bracket,
                                      }.__getitem__
 
 

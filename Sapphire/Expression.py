@@ -87,6 +87,15 @@ def gem():
                            t.right_parenthesis)
 
 
+        def display_token(t):
+            return arrange('<Arguments_2 %s %s %s %s %s>',
+                           t.left_parenthesis.display_token(),
+                           t.argument_0.display_token(),
+                           t.comma_0.display_token(),
+                           t.argument_1.display_token(),
+                           t.right_parenthesis.display_token)
+
+
         def write(t, w):
             t.left_parenthesis .write(w)
             t.argument_0       .write(w)
@@ -196,8 +205,16 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<%s %r %r %r %r>',
-                           t.__class__.__name__, t.array, t.left_square_bracket, t.index, t.right_square_bracket)
+            return arrange('<[] %r %r %r %r>',
+                           t.array, t.left_square_bracket, t.index, t.right_square_bracket)
+
+
+        def display_token(t):
+            return arrange('<[] %s %s %s %s>',
+                           t.array               .display_token(),
+                           t.left_square_bracket .display_token(),
+                           t.index               .display_token(),
+                           t.right_square_bracket.display_token())
 
 
         def write(t, w):
