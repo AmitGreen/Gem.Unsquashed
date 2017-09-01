@@ -87,7 +87,8 @@ def gem():
         m = operator_match(s, qj())
 
         if m is none:
-            #line('%s: %s', my_name(), portray_raw_string(s[qj():]))
+            assert 0
+            line('%s: %s', my_name(), portray_raw_string(s[qj():]))
             raise_unknown_line(1)
 
         operator_s = m.group('operator')

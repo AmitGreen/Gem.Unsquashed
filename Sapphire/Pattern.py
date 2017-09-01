@@ -35,6 +35,7 @@ def gem():
         keyword_as          = NAME('as',                  'as')
         keyword_except      = NAME('except',              'except')
         keyword_import      = NAME('import',              'import')
+        keyword_or          = NAME('or',                  'or')
         keyword_try         = NAME('try',                 'try')
         left_parenthesis    = NAME('left_parenthesis',    '(')                                #   )
         left_square_bracket = NAME('left_square_bracket', '[')                                #   ]
@@ -156,6 +157,7 @@ def gem():
                                      | comma
                                      | dot
                                      | keyword_as
+                                     | keyword_or
                                      | left_square_bracket
                                      | right_parenthesis
                                      | right_square_bracket

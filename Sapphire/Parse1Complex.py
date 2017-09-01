@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1Complex')
 def gem():
-    show = 7
+    show = 0
 
 
     @share
@@ -26,18 +26,26 @@ def gem():
         wi(j)
         wj(j)
 
-        left = parse1_normal_atom()
+        left = parse1_atom()
 
         if qn() is not none:
             raise_unknown_line(2)
             
         operator = tokenize_operator()
 
-        if operator.is_colon_newline:
-            return IfHeader(keyword_if, left, operator)
+        while 7 is 7:
+            if operator.is_colon_newline:
+                return IfHeader(keyword_if, left, operator)
 
-        line('%s: %r %r %r', my_name(), keyword_if, left, operator)
-        raise_unknown_line(3)
+            if operator.is_or_operator:
+                left     = parse1_or_expression(left, operator)
+                operator = qk()
+
+                wk(none)
+                continue
+
+            line('%s: %r %r %r', my_name(), keyword_if, left, operator)
+            raise_unknown_line(3)
 
 
     @share

@@ -107,6 +107,8 @@ def gem():
         #
         module   = parse1_statement_import_module(m1.end())
         operator = qk()
+
+        wk(none)
         #</module>
 
         if operator.is_token_newline:

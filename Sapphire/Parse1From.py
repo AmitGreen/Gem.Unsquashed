@@ -139,6 +139,8 @@ def gem():
         module = parse1_statement_from_module(m1.end())
 
         keyword_import = qk()
+
+        wk(none)
         #</module>
 
         #
@@ -147,6 +149,8 @@ def gem():
         imported = parse1_statement_from_as()
 
         operator = qk()
+
+        wk(none)
         #<imported/>
 
         if operator.is_token_newline:
@@ -158,6 +162,8 @@ def gem():
         imported_2 = parse1_statement_from_as()
 
         operator_2 = qk()
+
+        wk(none)
         #<imported/>
 
         if operator_2.is_token_newline:
@@ -165,7 +171,7 @@ def gem():
                        keyword_from,
                        module,
                        keyword_import,
-                       ExpressionComma(imported, operator, imported_2),
+                       CommaExpression(imported, operator, imported_2),
                        operator_2,
                    )
 

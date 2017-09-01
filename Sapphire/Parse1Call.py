@@ -65,6 +65,8 @@ def gem():
         atom_2     = parse_argument7(atom_2)
         operator_2 = qk()
 
+        wk(none)
+
         if operator_2.is_right_parenthesis:
             if show is 7:
                 line('%s: => %r; %r; %s',

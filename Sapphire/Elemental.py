@@ -17,6 +17,7 @@ def gem():
         is_keyword_as                = false
         is_left_parenthesis          = false
         is_left_square_bracket       = false
+        is_or_operator               = false
         is__right_parenthesis__colon = false
         is_right_parenthesis         = false
         is_right_square_bracket      = false
@@ -79,6 +80,13 @@ def gem():
         __slots__    = (())
         display_name = 'import'
         keyword      = 'import'
+
+
+    class KeywordOr(KeywordAndOperatorBase):
+        __slots__      = (())
+        display_name   = 'or'
+        is_or_operator = true
+        keyword        = 'or'
 
 
     class KeywordReturn(KeywordAndOperatorBase):
@@ -292,12 +300,19 @@ def gem():
                                produce_conjure_by_name = true,
                            )
 
-    [conjure_keyword_return] = produce_cache_functions(
-                               'keyword-return',
-                               KeywordReturn,
+    [conjure_keyword_or] = produce_cache_functions(
+                               'keyword-or',
+                               KeywordOr,
 
                                produce_conjure_by_name = true,
                            )
+
+    [conjure_keyword_return] = produce_cache_functions(
+                                   'keyword-return',
+                                   KeywordReturn,
+
+                                   produce_conjure_by_name = true,
+                               )
 
     [conjure_keyword_with] = produce_cache_functions(
                                  'keyword-with',
@@ -381,6 +396,7 @@ def gem():
                                          '='  : conjure_equal_sign,
                                          '==' : conjure_compare_equal,
                                          'as' : conjure_keyword_as,
+                                         'or' : conjure_keyword_or,
                                          '['  : conjure_left_square_bracket,
                                          ']'  : conjure_right_square_bracket,
                                      }.__getitem__

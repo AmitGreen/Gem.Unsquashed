@@ -128,9 +128,15 @@ def gem():
 
 
     @share
-    class ExpressionComma(ExpressionBinaryBase):
+    class CommaExpression(ExpressionBinaryBase):
         __slots__    = (())
         display_name = ','
+
+
+    @share
+    class OrExpression(ExpressionBinaryBase):
+        __slots__    = (())
+        display_name = 'or'
 
 
     @share

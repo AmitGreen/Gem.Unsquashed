@@ -38,8 +38,33 @@ def gem():
 
 
     @share
-    def parse1_normal_atom():
-        token = tokenize_normal_atom()
+    def parse1_or_expression(left, or_operator):
+        if show is 7:
+            line('%s: %r, %r, %s', my_name(), left, or_operator, portray_string(qs()[qj():]))
+
+        right    = parse1_atom()
+        operator = tokenize_operator()
+
+        if show is 7:
+            line('%s: %r, %r, %r, %r, %s',
+                 my_name(), left, or_operator, right, operator, portray_string(qs()[qj():]))
+
+        if (operator.is_right_parenthesis) or (operator.is_colon_newline):
+            assert qk() is none
+
+            wk(operator)
+
+            return OrExpression(left, or_operator, right)
+
+        raise_unknown_line(2)
+
+
+    @share
+    def parse1_atom():
+        if qd() is 0:
+            token = tokenize_normal_atom()
+        else:
+            token = tokenize_nested_atom()
 
         if token.is_atom:
             return token
@@ -55,6 +80,8 @@ def gem():
                 if operator.is_compare_operator:
                     left     = parse1_compare_expression(left, operator)
                     operator = qk()
+
+                    wk(none)
                     continue
 
                 raise_unknown_line(2)
