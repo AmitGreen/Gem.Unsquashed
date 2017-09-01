@@ -122,6 +122,12 @@ def gem():
 
 
     @share
+    class CompareEqualExpression(ExpressionBinaryBase):
+        __slots__    = (())
+        display_name = '=='
+
+
+    @share
     class ExpressionComma(ExpressionBinaryBase):
         __slots__    = (())
         display_name = ','
@@ -299,3 +305,6 @@ def gem():
 
         def __repr__(t):
             return arrange('<ExpressionCall %r %r %r %r>', t.left, t.dot, t.right, t.arguments)
+
+
+    OperatorCompareEqual.compare_expression_meta = CompareEqualExpression

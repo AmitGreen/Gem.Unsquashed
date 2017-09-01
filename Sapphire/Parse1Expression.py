@@ -23,6 +23,21 @@ def gem():
 
 
     @share
+    def parse1_compare_expression(left, compare_operator):
+        right    = tokenize_normal_atom()
+        operator = tokenize_operator()
+
+        if operator.is_right_parenthesis:
+            assert qk() is none
+
+            wk(operator)
+
+            return compare_operator.compare_expression_meta(left, compare_operator, right)
+
+        raise_unknown_line(2)
+
+
+    @share
     def parse1_normal_atom():
         token = tokenize_normal_atom()
 
@@ -33,15 +48,18 @@ def gem():
             left     = parse1_nested_atom()
             operator = tokenize_operator()
 
-            if operator.is_right_parenthesis:
-                return PathenthesizedExpression(token, left, operator)
+            while 7 is 7:
+                if operator.is_right_parenthesis:
+                    return PathenthesizedExpression(token, left, operator)
 
-            if operator.is_compare_operator:
+                if operator.is_compare_operator:
+                    left     = parse1_compare_expression(left, operator)
+                    operator = qk()
+                    continue
+
                 raise_unknown_line(2)
 
-            raise_unknown_line(3)
-
-        raise_unknown_line(4)
+        raise_unknown_line(3)
 
 
     @share

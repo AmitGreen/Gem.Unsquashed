@@ -145,11 +145,19 @@ def gem():
         keyword      = ','
 
 
+    @share
     class OperatorCompareEqual(KeywordAndOperatorBase):
         __slots__           = (())
         display_name        = '=='
         is_compare_operator = true
         keyword             = '=='
+
+
+        def display_token(t):
+            if t.s == ' == ':
+                return '=='
+
+            return arrange('<%s %s>', t.display_name, portray_string(t.s))
 
 
     class OperatorDot(KeywordAndOperatorBase):

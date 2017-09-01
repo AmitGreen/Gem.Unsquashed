@@ -48,6 +48,8 @@ def gem():
         m = atom_match(s, qj())
 
         if m is none:
+            line('%s: %s', my_name(), portray_raw_string(s[qj():]))
+            assert 0
             raise_unknown_line(1)
 
         atom_s = m.group('atom')
