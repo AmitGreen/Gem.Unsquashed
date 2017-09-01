@@ -10,6 +10,7 @@ def gem():
     class KeywordAndOperatorBase(Token):
         is_arguments_0          = false
         is_dot                  = false
+        is_equal_sign           = false
         is_left_parenthesis     = false
         is_left_square_bracket  = false
         is_right_square_bracket = false
@@ -109,11 +110,11 @@ def gem():
         keyword      = '.'
 
 
-    @export
     class OperatorEqualSign(KeywordAndOperatorBase):
-        __slots__    = (())
-        display_name = '='
-        keyword      = '='
+        __slots__     = (())
+        display_name  = '='
+        is_equal_sign = true
+        keyword       = '='
 
 
     class OperatorLeftParenthesis(KeywordAndOperatorBase):
@@ -183,29 +184,36 @@ def gem():
                         produce_conjure_by_name = true,
                     )
 
+    [conjure_equal_sign] = produce_cache_functions(
+                               'equal-sign',
+                               OperatorEqualSign,
+
+                               produce_conjure_by_name = true,
+                           )
+
     [conjure_left_parenthesis] = produce_cache_functions(
-                                     'left_parenthesis',
+                                     'left-parenthesis',
                                      OperatorLeftParenthesis,
 
                                      produce_conjure_by_name = true,
                                  )
 
     [conjure_left_square_bracket] = produce_cache_functions(
-                                        'left_square_brakcet',
+                                        'left-square-brakcet',
                                         OperatorLeftSquareBracket,
 
                                         produce_conjure_by_name = true,
                                     )
 
     [conjure_right_parenthesis] = produce_cache_functions(
-                                      'right_parenthesis',
+                                      'right-parenthesis',
                                       OperatorRightParenthesis,
 
                                       produce_conjure_by_name = true,
                                   )
 
     [conjure_right_square_bracket] = produce_cache_functions(
-                                         'right_square_brakcet',
+                                         'right-square-brakcet',
                                          OperatorRightSquareBracket,
 
                                          produce_conjure_by_name = true,
@@ -246,6 +254,7 @@ def gem():
                                          ')' : conjure_right_parenthesis,
                                          ',' : conjure_comma,
                                          '.' : conjure_dot,
+                                         '=' : conjure_equal_sign,
                                          '[' : conjure_left_square_bracket,
                                          ']' : conjure_right_square_bracket,
                                      }.__getitem__

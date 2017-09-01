@@ -7,6 +7,48 @@ def gem():
 
 
     @share
+    class AssignStatement(Object):
+        __slot__ = ((
+            'indented',                 #   String+
+            'left',                     #   Expression
+            'equal_sign',               #   EqualSign
+            'right',                    #   Expression
+            'newline',                  #   String+
+        ))
+
+
+        def __init__(t, indented, left, equal_sign, right, newline):
+            assert newline.is_token_newline
+
+            t.indented   = indented
+            t.left       = left
+            t.equal_sign = equal_sign
+            t.right      = right
+            t.newline    = newline
+
+
+        def __repr__(t):
+            return arrange('<AssignStatement %r %r %r %r %r>', t.indented, t.left, t.equal_sign, t.right, t.newline)
+
+
+        def display_token(t):
+            return arrange('<assign-statement %s %s %s %s %s>',
+                           portray_string(t.indented),
+                           t.left      .display_token(),
+                           t.equal_sign.display_token(),
+                           t.right     .display_token(),
+                           t.newline   .display_token())
+
+
+        def write(t, w):
+            w(t.indented)
+            t.left      .write(w)
+            w(t.equal_sign.s)
+            t.right     .write(w)
+            w(t.newline.s)
+
+
+    @share
     class Comment(Object):
         __slots__ = ((
             'comment',                  #   Comment

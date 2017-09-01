@@ -9,13 +9,6 @@ def gem():
     require_gem('Sapphire.Core')
 
 
-    lookup_operator = {
-                          none : none,
-                          '.' : conjure_dot,
-                          '=' : OperatorEqualSign,
-                      }.__getitem__
-
-
     @share
     def parse1_expression_index(left, left_square_bracket):
         atom = tokenize_nested_atom()
@@ -29,83 +22,101 @@ def gem():
             raise_unknown_line(2)
 
 
+    def parse1_statement_assign__left__equal_sign(indented, left, equal_sign):
+        if show is 7:
+            line('%s: indented: %r; left: %r; equal_sign: %r; %s',
+                 my_name(), indented, left, equal_sign, portray_string(qs()[qj():]))
+
+        atom    = tokenize_normal_atom()
+        newline = qn()
+
+        if newline is not none:
+            return AssignStatement(indented, left, equal_sign, atom, newline)
+
+        raise_unknown_line(2)
+
+
     @share
-    def parse1_statement_expression__symbol(indented, identifier):
+    def parse1_statement_expression__symbol(indented, left):
         s = qs()
 
         if show:
-            line('%s: indented: %r, identifier: %r; s: %r',
-                 my_name(), indented, identifier, s[qj():])
+            line('%s: indented: %r, left: %r; s: %r',
+                 my_name(), indented, left, s[qj():])
 
-        operator = tokenize_postfix_operator()
+        while 7 is 7:
+            operator = tokenize_postfix_operator()
 
-        if operator.is_arguments_0:
-            newline = qn()
+            if operator.is_dot:
+                #
+                #<name1>
+                #
+                m3 = name_match(s, qj())
 
-            if newline is not none:
-                return StatementCall(indented, identifier, operator, newline)
+                if m3 is none:
+                    raise_unknown_line(1)
 
-            raise_unknown_line(2)
+                right = conjure_identifier(m3.group())
+                #</name1>
 
-        if operator.is_dot:
-            #
-            #<name1>
-            #
-            m3 = name_match(s, qj())
+                dot = operator
+                
+                if show:
+                    line('%s: left: %r; dot: %s; right: %s; s: %s',
+                         parse1_statement_expression__symbol.__name__, left, dot, right, portray_raw_string(s[m3.end():]))
 
-            if m3 is none:
-                raise_unknown_line(3)
+                #
+                #<postfix1-operator>
+                #
+                m4 = statement_postfix_operator_match1(s, m3.end())
 
-            right = conjure_identifier(m3.group())
-            #</name1>
+                if m4 is none:
+                    raise_unknown_line(2)
 
-            dot = operator
-            
-            if show:
-                line('%s: identifier: %r; dot: %s; right: %s; s: %s',
-                     parse1_statement_expression__symbol.__name__, identifier, dot, right, portray_raw_string(s[m3.end():]))
+                wj(m4.end())
 
-            #
-            #<postfix1-operator>
-            #
-            m4 = statement_postfix_operator_match1(s, m3.end())
+                right_parenthesis = m4.group('right_parenthesis')
+                #</postfix1-operator>
 
-            if m4 is none:
-                raise_unknown_line(4)
+                if right_parenthesis is not none:
+                    raise_unknown_line(3)
+                
+                left_parenthesis = m4.group('left_parenthesis')
 
-            wj(m4.end())
+                if left_parenthesis is not none:
+                    assert m4.start('comment_newline') is -1
 
-            right_parenthesis = m4.group('right_parenthesis')
-            #</postfix1-operator>
+                    arguments = parse1_arguments__left_parenthesis(conjure_left_parenthesis(left_parenthesis))
+                    newline   = qn()
 
-            if right_parenthesis is not none:
+                    if newline is none:
+                        raise_unknown_line(4)
+
+                    return StatementMethodCall(indented, left, dot, right, arguments, newline)
+                
                 raise_unknown_line(5)
-            
-            left_parenthesis = m4.group('left_parenthesis')
 
-            if left_parenthesis is not none:
-                assert m4.start('comment_newline') is -1
 
-                arguments = parse1_arguments__left_parenthesis(conjure_left_parenthesis(left_parenthesis))
+            if operator.is_arguments_0:
+                newline = qn()
+
+                if newline is not none:
+                    return StatementCall(indented, left, operator, newline)
+
+                left = ExpressionCall(left, operator)
+                continue
+
+            if operator.is_left_parenthesis:
+                arguments = parse1_arguments__left_parenthesis(operator)
                 newline   = qn()
 
-                if newline is none:
-                    raise_unknown_line(6)
+                if newline is not none:
+                    return StatementCall(indented, left, arguments, newline)
 
-                return StatementMethodCall(indented, identifier, dot, right, arguments, newline)
-            
-            raise_unknown_line(7)
+                left = ExpressionCall(left, arguments)
+                continue
 
-        if operator.is_left_parenthesis:
-            arguments = parse1_arguments__left_parenthesis(operator)
-            newline   = qn()
+            if operator.is_equal_sign:
+                return parse1_statement_assign__left__equal_sign(indented, left, operator)
 
-            if newline is not none:
-                return StatementCall(indented, identifier, arguments, newline)
-
-            raise_unknown_line(9)
-
-
-        line('%s: indented: %r; identifier: %r; operator: %r', my_name(), indented, identifier, operator)
-
-        raise_unknown_line(10)
+            raise_unknown_line(6)

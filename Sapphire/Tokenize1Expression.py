@@ -102,15 +102,16 @@ def gem():
         if right_parenthesis is not none:
             right_parenthesis = conjure_right_parenthesis(right_parenthesis)
 
-            if m.end('comment_newline') is not -1:
+            if m.end('comment_newline') is -1:
+                wi(m.end('right_parenthesis'))
+                wj(m.end())
+            else:
                 wn(conjure_token_newline(s[m.end('right_parenthesis'):]))
 
-                return Arguments_0(left_parenthesis, right_parenthesis)
-
-            raise_unknown_line(3)
+            return Arguments_0(left_parenthesis, right_parenthesis)
 
         if m.end('comment_newline') is not -1:
-            raise_unknown_line(4)
+            raise_unknown_line(2)
 
         j = m.end()
 
