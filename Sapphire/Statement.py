@@ -514,15 +514,13 @@ def gem():
     @share
     class StatementReturnExpression(Object):
         __slots__ = ((
-            'keyword_return',           #   String
+            'keyword_return',           #   KeywordReturn
             'expression',               #   String
             'newline',                  #   String
         ))
 
 
         def __init__(t, keyword_return, expression, newline):
-            assert newline.is_token_newline
-
             t.keyword_return = keyword_return
             t.expression     = expression
             t.newline        = newline
@@ -543,3 +541,44 @@ def gem():
             w(t.keyword_return.s)
             t.expression.write(w)
             w(t.newline.s)
+
+
+    @share
+    class WithHeader(Object):
+        __slots__ = ((
+            'keyword_with',             #   KeywordWith
+            'left',                     #   Expression
+            'keyword_as',               #   KeywordAs
+            'right',                    #   Expression
+            'colon_newline',            #   OperatorColonNewline
+        ))
+
+
+        def __init__(t, keyword_with, left, keyword_as, right, colon_newline):
+            t.keyword_with  = keyword_with
+            t.left          = left
+            t.keyword_as    = keyword_as
+            t.right         = right
+            t.colon_newline = colon_newline
+
+
+        def  __repr__(t):
+            return arrange('<WithHeader %r %r %r %r %r>',
+                           t.keyword_with, t.left, t.keyword_as, t.right, t.colon_newline)
+
+
+        def display_token(t):
+            return arrange('<return <%s> %s <%s> %s %s>',
+                           t.keyword_with .s,
+                           t.left         .display_token(),
+                           t.keyword_as   .s,
+                           t.right        .display_token(),
+                           t.colon_newline.display_token())
+
+
+        def write(t, w):
+            w(t.keyword_with.s)
+            t.left.write(w)
+            w(t.keyword_as.s)
+            t.right.write(w)
+            w(t.colon_newline.s)

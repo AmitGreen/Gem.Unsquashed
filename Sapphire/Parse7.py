@@ -116,7 +116,7 @@ def gem():
         else:
             module = ExpressionDot(conjure_identifier(name1), conjure_dot(dot), conjure_identifier(name2))
 
-        as_fragment = FromAsFragment(conjure_identifier(name3), KeywordAs(w_as_w), conjure_identifier(name4))
+        as_fragment = FromAsFragment(conjure_identifier(name3), conjure_keyword_as(w_as_w), conjure_identifier(name4))
 
         if comma is none:
             return StatementFromImport(
@@ -136,7 +136,7 @@ def gem():
                 name1, w_as_w, name2, comma_2
         ] = m2.group('name1', 'w_as_w', 'name2', 'ow_comma_ow')
 
-        as_fragment_2 = FromAsFragment(conjure_identifier(name1), KeywordAs(w_as_w), conjure_identifier(name2))
+        as_fragment_2 = FromAsFragment(conjure_identifier(name1), conjure_keyword_as(w_as_w), conjure_identifier(name2))
 
         if comma_2 is none:
             return StatementFromImport(
@@ -170,7 +170,7 @@ def gem():
             raise_unknown_line(1)
 
         return StatementReturnExpression(
-                   KeywordReturn(m0.group('indented') + m0.group('keyword__ow')),
+                   conjure_keyword_return(m0.group('indented') + m0.group('keyword__ow')),
                    parse7_expression(m),
                    conjure_token_newline(m.group('ow_comment_newline')),
                )

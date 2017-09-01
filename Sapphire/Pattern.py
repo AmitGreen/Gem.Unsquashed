@@ -31,7 +31,9 @@ def gem():
         dot                 = NAME('dot',                 '.')
         equal_sign          = NAME('equal_sign',          '=')
         keyword_as          = NAME('as',                  'as')
+        keyword_except      = NAME('except',              'except')
         keyword_import      = NAME('import',              'import')
+        keyword_try         = NAME('try',                 'try')
         left_parenthesis    = NAME('left_parenthesis',    '(')                                #   )
         left_square_bracket = NAME('left_square_bracket', '[')                                #   ]
 
@@ -151,8 +153,11 @@ def gem():
         MATCH(
            'postfix_operator_match1',
             (
-                  G('operator', equal_sign | dot) + ow
-                | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow) + Q(comment_newline)
+                (
+                      G('operator', colon | equal_sign | dot | keyword_as) + ow
+                    | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
+                )
+                + Q(comment_newline)
             ),
         )
 
@@ -164,8 +169,8 @@ def gem():
         MATCH(
             'statement_postfix_operator_match1',
             (
-                  G(left_parenthesis) + ow + P(G(right_parenthesis) + ow) + Q(comment_newline)
-                | G('operator', equal_sign | dot) + ow
+                  G('operator', equal_sign | dot) + ow
+                | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow) + Q(comment_newline)
             ),
         )
 
@@ -233,7 +238,7 @@ def gem():
             (
                   G('indented', ow)
                 + P(
-                       G('keyword', EXACT('except') | 'try') + ow + colon + ow
+                       G('keyword', keyword_except | keyword_try) + ow + colon + ow
                       |G('token', '@' | name) + ow
                   )
                 + P(P(pound_G_comment) + G('newline', LINEFEED))

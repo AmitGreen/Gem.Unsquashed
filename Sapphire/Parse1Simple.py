@@ -16,11 +16,10 @@ def gem():
 
     @share
     def parse1_statement_return(m1):
-        if m1.end('newline') is not -1:
-            return StatementReturn(m1.group())
+        keyword_return = conjure_keyword_return(m1.group())
 
-        keyword_return = KeywordReturn(m1.group())
-        s              = qs()
+        if m1.end('newline') is not -1:
+            return keyword_return
 
         wj(m1.end())
 

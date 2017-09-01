@@ -8,12 +8,18 @@ def gem():
 
     @share
     class KeywordAndOperatorBase(Token):
-        is_arguments_0          = false
-        is_dot                  = false
-        is_equal_sign           = false
-        is_left_parenthesis     = false
-        is_left_square_bracket  = false
-        is_right_square_bracket = false
+        is_arguments_0               = false
+        is_colon_newline             = false
+        is_comma                     = false
+        is_dot                       = false
+        is_equal_sign                = false
+        is_keyword_as                = false
+        is_left_parenthesis          = false
+        is_left_square_bracket       = false
+        is__right_parenthesis__colon = false
+        is_right_parenthesis         = false
+        is_right_square_bracket      = false
+        is_token_newline             = false
 
 
         def __repr__(t):
@@ -27,12 +33,11 @@ def gem():
             return arrange('<%s %s>', t.display_name, portray_string(t.s))
 
 
-    @export
     class KeywordAs(KeywordAndOperatorBase):
-        __slots__        = (())
-        display_name     = 'as'
-        is_token_newline = false
-        keyword          = 'as'
+        __slots__     = (())
+        display_name  = 'as'
+        is_keyword_as = true
+        keyword       = 'as'
 
 
     @export
@@ -69,7 +74,6 @@ def gem():
         keyword      = 'import'
 
 
-    @export
     class KeywordReturn(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'return'
@@ -80,6 +84,12 @@ def gem():
         __slots__    = (())
         display_name = 'try:'
         keyword      = 'try:'
+
+
+    class KeywordWith(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'with'
+        keyword      = 'with'
 
 
     @share
@@ -100,19 +110,31 @@ def gem():
         keyword      = '@'
 
 
-    @export
     class OperatorColon(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = ':'
         keyword      = ':'
 
 
-    class OperatorComma(KeywordAndOperatorBase):
+    class OperatorColonNewline(KeywordAndOperatorBase):
         __slots__        = (())
-        display_name     = ','
-        is_comma         = true
-        is_token_newline = false
-        keyword          = ','
+        is_colon_newline = true
+        keyword          = 'colon-newline'
+
+
+        def __repr__(t):
+            return arrange('<OperatorColonNewline %s>', portray_raw_string(t.s))
+
+
+        def display_token(t):
+            return portray_raw_string(t.s)
+
+
+    class OperatorComma(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = ','
+        is_comma     = true
+        keyword      = ','
 
 
     class OperatorDot(KeywordAndOperatorBase):
@@ -182,6 +204,20 @@ def gem():
             return arrange('<%s>', t.s)
 
 
+    [conjure_colon] = produce_cache_functions(
+                          'colon',
+                          OperatorColon,
+
+                          produce_conjure_by_name = true,
+                      )
+
+    [conjure_colon_newline] = produce_cache_functions(
+                                  'colon',
+                                  OperatorColonNewline,
+
+                                  produce_conjure_by_name = true,
+                              )
+
     [conjure_comma] = produce_cache_functions(
                           'comma',
                           OperatorComma,
@@ -210,6 +246,26 @@ def gem():
                                  produce_conjure_by_name = true,
                              )
 
+    [conjure_keyword_as] = produce_cache_functions(
+                               'keyword-as',
+                               KeywordAs,
+
+                               produce_conjure_by_name = true,
+                           )
+
+    [conjure_keyword_return] = produce_cache_functions(
+                               'keyword-return',
+                               KeywordReturn,
+
+                               produce_conjure_by_name = true,
+                           )
+
+    [conjure_keyword_with] = produce_cache_functions(
+                                 'keyword-with',
+                                 KeywordWith,
+
+                                 produce_conjure_by_name = true,
+                             )
 
     [conjure_left_parenthesis] = produce_cache_functions(
                                      'left-parenthesis',
@@ -278,20 +334,27 @@ def gem():
 
 
     find_operator_conjure_function = {
-                                         '(' : conjure_left_parenthesis,
-                                         ')' : conjure_right_parenthesis,
-                                         ',' : conjure_comma,
-                                         '.' : conjure_dot,
-                                         '=' : conjure_equal_sign,
-                                         '[' : conjure_left_square_bracket,
-                                         ']' : conjure_right_square_bracket,
+                                         '('  : conjure_left_parenthesis,
+                                         ')'  : conjure_right_parenthesis,
+                                         ','  : conjure_comma,
+                                         '.'  : conjure_dot,
+                                         ':'  : conjure_colon,
+                                         '='  : conjure_equal_sign,
+                                         'as' : conjure_keyword_as,
+                                         '['  : conjure_left_square_bracket,
+                                         ']'  : conjure_right_square_bracket,
                                      }.__getitem__
 
 
     share(
+        'conjure_colon',                    conjure_colon,
+        'conjure_colon_newline',            conjure_colon_newline,
         'conjure_comma',                    conjure_comma,
         'conjure_dot',                      conjure_dot,
         'conjure_except_colon',             conjure_except_colon,
+        'conjure_keyword_as',               conjure_keyword_as,
+        'conjure_keyword_return',           conjure_keyword_return,
+        'conjure_keyword_with',             conjure_keyword_with,
         'conjure_left_parenthesis',         conjure_left_parenthesis,
         'conjure_right_parenthesis',        conjure_right_parenthesis,
         'conjure_try_colon',                conjure_try_colon,

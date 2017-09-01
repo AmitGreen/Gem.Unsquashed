@@ -7,14 +7,14 @@ def gem():
 
 
     require_gem('Sapphire.Core')
+    require_gem('Sapphire.Expression')
     require_gem('Sapphire.Match')
     require_gem('Sapphire.Parse1Call')
+    require_gem('Sapphire.Parse1Complex')
+    require_gem('Sapphire.Parse1Expression')
     require_gem('Sapphire.Parse1From')
     require_gem('Sapphire.Parse1Import')
-    require_gem('Sapphire.Parse1Expression')
     require_gem('Sapphire.Parse1Simple')
-    require_gem('Sapphire.Parse7')
-    require_gem('Sapphire.Parse7Expression')
     require_gem('Sapphire.Statement')
 
 
@@ -51,7 +51,7 @@ def gem():
             return ClassHeader(
                        keyword_class,
                        name,
-                       OperatorColon(s[m2_end : m3.start('ow_comment_newline_2')]),
+                       conjure_colon(s[m2_end : m3.start('ow_comment_newline_2')]),
                        conjure_token_newline(newline_2),
                    )
 
@@ -228,22 +228,6 @@ def gem():
                )
 
 
-    @share
-    def parse1_statement_except_colon(m):
-        if m.end('newline') is -1:
-            raise_unknown_line(1)
-
-        return conjure_except_colon(m.group())
-
-
-    @share
-    def parse1_statement_try_colon(m):
-        if m.end('newline') is -1:
-            raise_unknown_line(1)
-
-        return conjure_try_colon(m.group())
-
-
     find_parse1_colon_line = {
                                  'except' : parse1_statement_except_colon,
                                  'try'    : parse1_statement_try_colon,
@@ -251,13 +235,14 @@ def gem():
 
 
     lookup_parse1_line = {
+                             '@'      : parse1_statement_decorator_header,
                              'class'  : parse1_statement_class,
                              'def'    : parse1_statement_define_header,
                              'from'   : parse1_statement_from,
                              'import' : parse1_statement_import,
                              'pass'   : parse1_statement_pass,
                              'return' : parse1_statement_return,
-                             '@'      : parse1_statement_decorator_header,
+                             'with'   : parse1_statement_with,
                          }.get
 
 

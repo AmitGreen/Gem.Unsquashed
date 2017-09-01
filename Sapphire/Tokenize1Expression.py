@@ -88,8 +88,20 @@ def gem():
         operator_s = m.group('operator')
 
         if operator_s is not none:
+            conjure = find_operator_conjure_function(operator_s)
+
+            if m.end('comment_newline') is not -1:
+                if conjure is conjure_colon:
+                    return conjure_colon_newline(s[qi():])
+
+                operator_end = m.end('operator')
+                wn(conjure_token_newline(s[operator_end:]))
+
+                return conjure(s[qi():operator_end])
+
+
             j = m.end()
-            r = find_operator_conjure_function(operator_s)(s[qi():j])
+            r = conjure(s[qi():j])
 
             wi(j)
             wj(j)

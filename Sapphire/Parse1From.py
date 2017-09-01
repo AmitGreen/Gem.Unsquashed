@@ -93,7 +93,7 @@ def gem():
 
             return imported
 
-        keyword_as = KeywordAs(m2.group())
+        keyword_as = conjure_keyword_as(m2.group())
 
         #
         #<name2>
