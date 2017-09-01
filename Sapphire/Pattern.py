@@ -151,8 +151,8 @@ def gem():
         MATCH(
            'postfix_operator_match1',
             (
-                  G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
-                + Q(comment_newline)
+                  G('operator', equal_sign | dot) + ow
+                | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow) + Q(comment_newline)
             ),
         )
 
@@ -161,17 +161,14 @@ def gem():
             single_quote,
         )
 
-
         MATCH(
             'statement_postfix_operator_match1',
             (
-                  ow
-                + (
-                        G(left_parenthesis) + ow + P(G(right_parenthesis) + ow) + Q(comment_newline)
-                      | G('operator', equal_sign | dot) + ow
-                  )
+                  G(left_parenthesis) + ow + P(G(right_parenthesis) + ow) + Q(comment_newline)
+                | G('operator', equal_sign | dot) + ow
             ),
         )
+
 
         #
         #   Expressions 7

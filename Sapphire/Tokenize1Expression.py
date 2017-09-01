@@ -85,6 +85,17 @@ def gem():
             line('%s: %s', my_name(), portray_raw_string(s[qj():]))
             raise_unknown_line(1)
 
+        operator_s = m.group('operator')
+
+        if operator_s is not none:
+            j = m.end()
+            r = find_operator_conjure_function(operator_s)(s[qi():j])
+
+            wi(j)
+            wj(j)
+
+            return r
+
         left_parenthesis  = conjure_left_parenthesis(s[qi() : m.end('left_parenthesis__ow')])
         right_parenthesis = m.group('right_parenthesis')
 
@@ -96,10 +107,10 @@ def gem():
 
                 return Arguments_0(left_parenthesis, right_parenthesis)
 
-            raise_unknown_line(2)
+            raise_unknown_line(3)
 
         if m.end('comment_newline') is not -1:
-            raise_unknown_line(3)
+            raise_unknown_line(4)
 
         j = m.end()
 

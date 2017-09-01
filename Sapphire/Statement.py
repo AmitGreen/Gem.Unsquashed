@@ -293,11 +293,11 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<StatementCall %s %s %r %s>',
-                           portray_raw_string(t.indented),
-                           t.left.display_token(),
+            return arrange('<call-statement %s %s %s %s>',
+                           portray_string(t.indented),
+                           t.left     .display_token(),
                            t.arguments.display_token(),
-                           t.newline.display_token())
+                           t.newline  .display_token())
 
 
         def write(t, w):

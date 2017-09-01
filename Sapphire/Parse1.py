@@ -277,11 +277,13 @@ def gem():
 
                             continue
 
+                        wi(m.end('token'))
+                        wj(m.end())
+
                         append(
                             parse1_statement_expression__symbol(
                                 m.group('indented'),
                                 conjure_identifier(token),
-                                m.end('token'),
                             ),
                         )
 

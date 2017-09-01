@@ -102,7 +102,6 @@ def gem():
         keyword          = ','
 
 
-    @export
     class OperatorDot(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = '.'
@@ -177,6 +176,13 @@ def gem():
                           produce_conjure_by_name = true,
                       )
 
+    [conjure_dot] = produce_cache_functions(
+                        'dot',
+                        OperatorDot,
+
+                        produce_conjure_by_name = true,
+                    )
+
     [conjure_left_parenthesis] = produce_cache_functions(
                                      'left_parenthesis',
                                      OperatorLeftParenthesis,
@@ -236,9 +242,10 @@ def gem():
 
 
     find_operator_conjure_function = {
-                                         ',' : conjure_comma,
                                          '(' : conjure_left_parenthesis,
                                          ')' : conjure_right_parenthesis,
+                                         ',' : conjure_comma,
+                                         '.' : conjure_dot,
                                          '[' : conjure_left_square_bracket,
                                          ']' : conjure_right_square_bracket,
                                      }.__getitem__
@@ -246,6 +253,7 @@ def gem():
 
     share(
         'conjure_comma',                    conjure_comma,
+        'conjure_dot',                      conjure_dot,
         'conjure_left_parenthesis',         conjure_left_parenthesis,
         'conjure_right_parenthesis',        conjure_right_parenthesis,
         'find_atom_type',                   find_atom_type,

@@ -114,7 +114,7 @@ def gem():
         if dot is none:
             module = conjure_identifier(name1)
         else:
-            module = ExpressionDot(conjure_identifier(name1), OperatorDot(dot), conjure_identifier(name2))
+            module = ExpressionDot(conjure_identifier(name1), conjure_dot(dot), conjure_identifier(name2))
 
         as_fragment = FromAsFragment(conjure_identifier(name3), KeywordAs(w_as_w), conjure_identifier(name4))
 

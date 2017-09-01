@@ -37,7 +37,7 @@ def gem():
             if operator is not '.':
                 break
 
-            operator_dot = OperatorDot(m2.group())
+            operator_dot = conjure_dot(m2.group())
 
             #
             #<name>
