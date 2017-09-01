@@ -23,7 +23,7 @@ def gem():
             return Arguments_1(left_parenthesis, atom_1, operator_1)
 
         if operator_1.is_comma:
-            atom_2     = tokenize_atom()
+            atom_2     = tokenize_nested_atom()
             operator_2 = tokenize_argument7_operator()
 
             if operator_2.is_right_parenthesis:

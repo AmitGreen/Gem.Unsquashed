@@ -26,6 +26,9 @@ def gem():
             return arrange('<# %r %r>', t.comment, t.newline)
 
 
+        display_token = __repr__
+
+
         def write(t, w):
             w('#' + t.comment + t.newline)
 
@@ -102,9 +105,14 @@ def gem():
             w(t.newline.s)
 
 
+    #
+    #   TODO:
+    #       Answer this question: should this be combined with Pearl.EmptyLine? (either combine or explain why not)
+    #
     @share
     class EmptyLine(Token):
-        __slots__ = (())
+        __slots__    = (())
+        display_name = 'empty-line'
 
 
         def __repr__(t):
@@ -160,6 +168,9 @@ def gem():
                 return arrange('<+# %r %r>', t.indented, t.newline)
 
             return arrange('<+# %r %r %r>', t.indented, t.comment, t.newline)
+
+
+        display_token = __repr__
 
 
         def write(t, w):
@@ -251,6 +262,9 @@ def gem():
             return arrange('<StatementCall %r %r %r %r>', t.indented, t.left, t.arguments, t.newline)
 
 
+        display_token = __repr__
+
+
         def write(t, w):
             w(t.indented)
             t.left     .write(w)
@@ -308,6 +322,9 @@ def gem():
         def __repr__(t):
             return arrange('<StatementFrom %r %r %r %r %r>',
                            t.keyword_from, t.module, t.keyword_import, t.imported, t.newline)
+
+
+        display_token = __repr__
 
 
         def write(t, w):
@@ -376,6 +393,9 @@ def gem():
 
         def __repr__(t):
             return arrange('<StatementImport %r %r %r>', t.keyword_import, t.module, t.newline)
+
+
+        display_token = __repr__
 
 
         def write(t, w):

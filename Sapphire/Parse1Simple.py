@@ -7,6 +7,14 @@ def gem():
 
 
     @share
+    def parse1_statement_pass(m1):
+        if m1.end('newline') is -1:
+            raise_unknown_line(1)
+
+        return StatementPass(m1.group())
+
+
+    @share
     def parse1_statement_return(m1):
         if m1.end('newline') is not -1:
             return StatementReturn(m1.group())

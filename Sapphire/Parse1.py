@@ -18,23 +18,6 @@ def gem():
     require_gem('Sapphire.Statement')
 
 
-    @share
-    def parse1_newline():
-        if show is 7:
-            line('%s: %s', my_name(), portray_string(qs()[qj():]))
-
-        #
-        #<ow-comment-newline>
-        #
-        m1 = ow_comment_newline_match(qs(), qj())
-
-        if m1 is none:
-            raise_unknown_line(1)
-
-        return conjure_token_newline(m1.group())
-        #</ow-comment-newline>
-
-
     def parse1_statement_class(m1):
         if m1.end('newline') is not -1:
             raise_unknown_line(1)
@@ -244,13 +227,6 @@ def gem():
                    ),
                    conjure_token_newline(m5.group('ow_comment_newline')),
                )
-
-
-    def parse1_statement_pass(m1):
-        if m1.end('newline') is -1:
-            raise_unknown_line(1)
-
-        return StatementPass(m1.group())
 
 
     lookup_parse1_line = {
