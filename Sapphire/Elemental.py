@@ -102,6 +102,7 @@ def gem():
     class Number(Token):
         __slots__    = (())
         display_name = 'number'
+        is_atom      = 1
 
 
         def display_token(t):
@@ -160,6 +161,7 @@ def gem():
     class OperatorLeftParenthesis(KeywordAndOperatorBase):
         __slots__           = (())
         display_name        = '('       #   )
+        is_atom             = false
         is_left_parenthesis = true
         keyword             = '('       #   )
 
@@ -203,6 +205,7 @@ def gem():
     @share
     class SingleQuote(Token):
         __slots__    = (())
+        is_atom      = 1
         display_name = "'"
 
 

@@ -10,6 +10,36 @@ def gem():
 
 
     @share
+    def parse1_nested_atom():
+        if show:
+            line('%s: %r', my_name(), qs()[qj():])
+
+        token = tokenize_nested_atom()
+
+        if token.is_atom:
+            return token
+
+        line('%s: %s', my_name(), token)
+        raise_unknown_line(1)
+
+
+    @share
+    def parse1_normal_atom():
+        token = tokenize_normal_atom()
+
+        if token.is_atom:
+            return token
+
+        if token.is_left_parenthesis:
+            left     = parse1_nested_atom()
+            #operator = 
+
+            raise_unknown_line(1)
+
+        raise_unknown_line(2)
+
+
+    @share
     def parse1_expression_index(left, left_square_bracket):
         atom = tokenize_nested_atom()
 
@@ -19,7 +49,7 @@ def gem():
             if operator.is_right_square_bracket:
                 return ExpressionIndex_1(left, left_square_bracket, atom, operator)
 
-            raise_unknown_line(2)
+            raise_unknown_line(1)
 
 
     def parse1_statement_assign__left__equal_sign(indented, left, equal_sign):
@@ -81,7 +111,7 @@ def gem():
                 if right_parenthesis is not none:
                     raise_unknown_line(3)
                 
-                left_parenthesis = m4.group('left_parenthesis')
+                left_parenthesis = m4.group('left_parenthesis__ow')
 
                 if left_parenthesis is not none:
                     assert m4.start('comment_newline') is -1

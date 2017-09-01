@@ -121,7 +121,10 @@ def gem():
         
         MATCH(
             'atom_match',
-            G('atom', name | number | single_quote) + ow + Q(comment_newline),
+            (
+                  G('atom', name | number | single_quote) + ow
+                | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
+            ) + Q(comment_newline),
         )
 
         MATCH(
@@ -154,7 +157,7 @@ def gem():
            'postfix_operator_match1',
             (
                 (
-                      G('operator', colon | equal_sign | dot | keyword_as) + ow
+                      G('operator', colon | comma | equal_sign | dot | keyword_as) + ow
                     | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
                 )
                 + Q(comment_newline)

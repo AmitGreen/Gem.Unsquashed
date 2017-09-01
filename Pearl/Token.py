@@ -39,6 +39,7 @@ def gem():
 
 
         display_name  = 'Identifier'
+        is_atom       = true
         is_identifier = true
 
 

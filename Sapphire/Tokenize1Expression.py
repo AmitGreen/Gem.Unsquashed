@@ -8,20 +8,38 @@ def gem():
 
     @share
     def tokenize_nested_atom():
-        m = atom_match(qs(), qj())
+        s = qs()
+        m = atom_match(s, qj())
 
         if m is none:
             raise_unknown_line(1)
 
         atom_s = m.group('atom')
 
-        if m.start('comment_newline') is not -1:
+        if atom_s is not none:
+            if m.start('comment_newline') is not -1:
+                raise_unknown_line(3)
+
+            wi(m.end('atom'))
+            wj(m.end())
+
+            return find_atom_type(atom_s[0])(atom_s)
+
+        left_parenthesis  = conjure_left_parenthesis(s[qi() : m.end('left_parenthesis__ow')])
+        right_parenthesis = m.group('right_parenthesis')
+
+        if right_parenthesis is not none:
             raise_unknown_line(2)
 
-        wi(m.end('atom'))
-        wj(m.end())
+        if m.start('comment_newline') is not -1:
+            raise_unknown_line(3)
 
-        return find_atom_type(atom_s[0])(atom_s)
+        j = m.end()
+
+        wi(j)
+        wj(j)
+
+        return left_parenthesis
 
 
     @share
@@ -67,13 +85,30 @@ def gem():
 
         atom_s = m.group('atom')
 
-        if m.start('comment_newline') is -1:
-            wi(m.end('atom'))
-            wj(m.end())
-        else:
-            wn(conjure_token_newline(s[m.end('atom'):]))
+        if atom_s is not none:
+            if m.start('comment_newline') is -1:
+                wi(m.end('atom'))
+                wj(m.end())
+            else:
+                wn(conjure_token_newline(s[m.end('atom'):]))
 
-        return find_atom_type(atom_s[0])(atom_s)
+            return find_atom_type(atom_s[0])(atom_s)
+
+        left_parenthesis  = conjure_left_parenthesis(s[qi() : m.end('left_parenthesis__ow')])
+        right_parenthesis = m.group('right_parenthesis')
+
+        if right_parenthesis is not none:
+            raise_unknown_line(2)
+
+        if m.start('comment_newline') is not -1:
+            raise_unknown_line(3)
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
+
+        return left_parenthesis
 
 
     @share

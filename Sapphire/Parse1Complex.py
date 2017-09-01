@@ -23,7 +23,7 @@ def gem():
 
         wj(m.end())
 
-        left     = tokenize_normal_atom()
+        left     = parse1_normal_atom()
         operator = tokenize_postfix_operator()
 
         if operator.is_colon_newline:
