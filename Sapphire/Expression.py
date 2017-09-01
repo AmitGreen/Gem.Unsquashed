@@ -53,6 +53,13 @@ def gem():
             return arrange('<Arguments_1 %r %r %r>', t.left_parenthesis, t.argument_0, t.right_parenthesis)
 
 
+        def display_token(t):
+            return arrange('<Arguments_1 %s %s %s>',
+                           t.left_parenthesis .display_token(),
+                           t.argument_0       .display_token(),
+                           t.right_parenthesis.display_token())
+
+
         def write(t, w):
             t.left_parenthesis .write(w)
             t.argument_0       .write(w)
@@ -153,7 +160,11 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<ExpressionCall %r %r>', t.left, t.arguments)
+            return arrange('<f() %r %r>', t.left, t.arguments)
+
+
+        def display_token(t):
+            return arrange('<f() %s %s>', t.left.display_token(), t.arguments.display_token())
 
 
         def write(t, w):

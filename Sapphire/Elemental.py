@@ -157,7 +157,7 @@ def gem():
         __slots__ = (())
 
 
-        def __repr__(t):
+        def display_token(t):
             return arrange('<%s>', t.s)
 
 
