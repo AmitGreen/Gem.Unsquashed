@@ -56,7 +56,13 @@ def gem():
             return arrange('<%s %s %s %r %r>', t.__class__.__name__, t.keyword, t.name, t.parameters_colon, t.newline)
 
 
-        display_token = __repr__
+        def display_token(t):
+            return arrange('<%s <%s> %s %s %s>',
+                           t.display_name,
+                           t.keyword.s,
+                           t.name,
+                           t.parameters_colon.display_token(),
+                           t.newline         .display_token())
 
 
         def write(t, w):
@@ -67,12 +73,14 @@ def gem():
 
     @share
     class ClassHeader(ClassOrDefineHeaderBase):
-        __slots__ = (())
+        __slots__    = (())
+        display_name = 'class'
 
 
     @share
     class DefineHeader(ClassOrDefineHeaderBase):
-        __slots__ = (())
+        __slots__    = (())
+        display_name = 'function'
 
 
     @share
@@ -96,7 +104,14 @@ def gem():
             return arrange('<DecoratorHeader %r %r %r>', t.operator_decorator, t.expresssion, t.newline)
 
 
-        display_token = __repr__
+        def  display_token(t):
+            if t.operator_decorator.s == '@':
+                return arrange('<@ %s %s>', t.expresssion.display_token(), t.newline.display_token())
+
+            return arrange('<@ %s %s %s>',
+                           portray_string(t.operator_decorator.s),
+                           t.expresssion.display_token(),
+                           t.newline.display_token())
 
 
         def write(t, w):
@@ -142,6 +157,13 @@ def gem():
 
         def __repr__(t):
             return arrange('<FromAsFragment %s %s %s>', t.left_name, t.keyword_as, t.right_name)
+
+
+        def display_token(t):
+            return arrange('<as %s <%s> %s>',
+                           t.left_name .display_token(),
+                           t.keyword_as.s,
+                           t.right_name.display_token())
 
 
         def write(t, w):
@@ -205,8 +227,8 @@ def gem():
 
 
     @share
-    class ParameterColon_0(Token):
-        display_name = 'parameter-colon-0'
+    class ParameterColon_0(KeywordAndOperatorBase):
+        display_name = '():'
 
 
     @share
@@ -230,7 +252,15 @@ def gem():
 
 
         def  __repr__(t):
-            return arrange('<ParameterColon_1 %r %r %r>', t.left_parenthesis, t.argument_1, t.right_parenthesis__colon)
+            return arrange('<(1): %r %r %r>',
+                           t.left_parenthesis, t.argument_1, t.right_parenthesis__colon)
+
+
+        def  display_token(t):
+            return arrange('<(1): %s %s %s>',
+                           t.left_parenthesis        .display_token(),
+                           t.argument_1              .display_token(),
+                           t.right_parenthesis__colon.display_token())
 
 
         def write(t, w):
@@ -328,8 +358,13 @@ def gem():
             return arrange('<StatementFrom %r %r %r %r %r>',
                            t.keyword_from, t.module, t.keyword_import, t.imported, t.newline)
 
-
-        display_token = __repr__
+        def display_token(t):
+            return arrange('<from <%s> %s <%s> %s %s>',
+                           t.keyword_from.s,
+                           t.module        .display_token(),
+                           t.keyword_import.s,
+                           t.imported      .display_token(),
+                           t.newline       .display_token())
 
 
         def write(t, w):
@@ -367,8 +402,8 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<StatementMethodCall %s %s %s %s %s %s>',
-                           portray_raw_string(t.indented),
+            return arrange('<method-call-statement %s %s %s %s %s %s>',
+                           portray_string(t.indented),
                            t.left.display_token(),
                            t.dot.display_token(),
                            t.right.display_token(),
@@ -407,7 +442,11 @@ def gem():
             return arrange('<StatementImport %r %r %r>', t.keyword_import, t.module, t.newline)
 
 
-        display_token = __repr__
+        def display_token(t):
+            return arrange('<import <%s> %s %s>',
+                           t.keyword_import.s,
+                           t.module .display_token(),
+                           t.newline.display_token())
 
 
         def write(t, w):
@@ -448,10 +487,14 @@ def gem():
 
 
         def  __repr__(t):
-            return arrange('<Return %r %r %r>', t.keyword_return, t.expression, t.newline)
+            return arrange('<StatementReturnExpression %r %r %r>', t.keyword_return, t.expression, t.newline)
 
 
-        display_token = __repr__
+        def display_token(t):
+            return arrange('<return <%s> %s %s>',
+                           t.keyword_return.s,
+                           t.expression.display_token(),
+                           t.newline   .display_token())
 
 
         def write(t, w):

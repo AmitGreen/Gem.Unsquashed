@@ -6,6 +6,7 @@ def gem():
     require_gem('Sapphire.Core')
 
 
+    @share
     class KeywordAndOperatorBase(Token):
         is_arguments_0          = false
         is_dot                  = false
@@ -16,6 +17,13 @@ def gem():
 
         def __repr__(t):
             return arrange('<%s>', t.s)
+
+
+        def display_token(t):
+            if t.s == t.display_name:
+                return arrange('<%s>', t.display_name)
+
+            return arrange('<%s %s>', t.display_name, portray_string(t.s))
 
 
     @export
@@ -154,7 +162,8 @@ def gem():
 
     @share
     class SingleQuote(Token):
-        __slots__ = (())
+        __slots__    = (())
+        display_name = "'"
 
 
         def display_token(t):

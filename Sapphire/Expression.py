@@ -27,6 +27,15 @@ def gem():
             return arrange('<Arguments_0 %r %r>', t.left_parenthesis, t.right_parenthesis)
 
 
+        def display_token(t):
+            if (t.left_parenthesis.s == '(') and (t.right_parenthesis.s == ')'):
+                return '<(0)>'
+
+            return arrange('<(0) <%s> <%s>>',
+                           t.left_parenthesis .s,
+                           t.right_parenthesis.s)
+
+
         def write(t, w):
             w(t.left_parenthesis.s + t.right_parenthesis.s)
 
@@ -54,7 +63,7 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<Arguments_1 %s %s %s>',
+            return arrange('<(1) %s %s %s>',
                            t.left_parenthesis .display_token(),
                            t.argument_0       .display_token(),
                            t.right_parenthesis.display_token())
@@ -95,12 +104,12 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<Arguments_2 %s %s %s %s %s>',
-                           t.left_parenthesis.display_token(),
-                           t.argument_0.display_token(),
-                           t.comma_0.display_token(),
-                           t.argument_1.display_token(),
-                           t.right_parenthesis.display_token)
+            return arrange('<(2) %s %s %s %s %s>',
+                           t.left_parenthesis .display_token(),
+                           t.argument_0       .display_token(),
+                           t.comma_0          .display_token(),
+                           t.argument_1       .display_token(),
+                           t.right_parenthesis.display_token())
 
 
         def write(t, w):
@@ -133,6 +142,14 @@ def gem():
             return arrange('<%s %r %r %r>', t.__class__.__name__, t.left, t.operator, t.right)
 
 
+        def display_token(t):
+            return arrange('<%s %s %s %s>',
+                           t.display_name,
+                           t.left    .display_token(),
+                           t.operator.display_token(),
+                           t.right   .display_token())
+
+
         def write(t, w):
             t.left    .write(w)
             t.operator.write(w)
@@ -141,7 +158,8 @@ def gem():
 
     @share
     class ExpressionComma(ExpressionBinaryBase):
-        __slots__ = (())
+        __slots__    = (())
+        display_name = ','
 
 
     @share
@@ -160,11 +178,11 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<f() %r %r>', t.left, t.arguments)
+            return arrange('<ExpressionCall %r %r>', t.left, t.arguments)
 
 
         def display_token(t):
-            return arrange('<f() %s %s>', t.left.display_token(), t.arguments.display_token())
+            return arrange('<call %s %s>', t.left.display_token(), t.arguments.display_token())
 
 
         def write(t, w):
@@ -190,7 +208,14 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<. %r %r %r>', t.left, t.operator, t.right)
+            return arrange('<ExpressionDot %r %r %r>', t.left, t.operator, t.right)
+
+
+        def display_token(t):
+            return arrange('<. %s %s %s>',
+                           t.left    .display_token(),
+                           t.operator.display_token(),
+                           t.right   .display_token())
 
 
         def write(t, w):

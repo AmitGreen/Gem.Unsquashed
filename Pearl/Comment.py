@@ -30,6 +30,10 @@ def gem():
         is_token_newline = true
 
 
+        def display_token(t):
+            return portray_raw_string(t.s)
+
+
     @share
     class TreeComment(Object):
         __slots__ = ((
