@@ -232,7 +232,10 @@ def gem():
             'line_match1',
             (
                   G('indented', ow)
-                + P(G('token', '@' | name) + ow)
+                + P(
+                       G('keyword', EXACT('except') | 'try') + ow + colon + ow
+                      |G('token', '@' | name) + ow
+                  )
                 + P(P(pound_G_comment) + G('newline', LINEFEED))
             ),
         )

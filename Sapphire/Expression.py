@@ -8,7 +8,7 @@ def gem():
 
 
     @share
-    class Arguments_0(Object):
+    class Arguments_0(KeywordAndOperatorBase):
         __slots__ = ((
             'left_parenthesis',         #   OperatorLeftParenthesis
             'right_parenthesis',        #   OperatorRightParenthesis

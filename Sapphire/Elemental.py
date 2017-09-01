@@ -49,6 +49,12 @@ def gem():
         keyword      = 'def'
 
 
+    class KeywordExceptColon(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'except:'
+        keyword      = 'except:'
+
+
     @export
     class KeywordFrom(KeywordAndOperatorBase):
         __slots__    = (())
@@ -68,6 +74,12 @@ def gem():
         __slots__    = (())
         display_name = 'return'
         keyword      = 'return'
+
+
+    class KeywordTryColon(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'try:'
+        keyword      = 'try:'
 
 
     @share
@@ -191,6 +203,14 @@ def gem():
                                produce_conjure_by_name = true,
                            )
 
+    [conjure_except_colon] = produce_cache_functions(
+                                 'except-colon',
+                                 KeywordExceptColon,
+
+                                 produce_conjure_by_name = true,
+                             )
+
+
     [conjure_left_parenthesis] = produce_cache_functions(
                                      'left-parenthesis',
                                      OperatorLeftParenthesis,
@@ -213,11 +233,19 @@ def gem():
                                   )
 
     [conjure_right_square_bracket] = produce_cache_functions(
-                                         'right-square-brakcet',
+                                         'right-square-bracket',
                                          OperatorRightSquareBracket,
 
                                          produce_conjure_by_name = true,
                                      )
+
+
+    [conjure_try_colon] = produce_cache_functions(
+                              'try-colon',
+                              KeywordTryColon,
+
+                              produce_conjure_by_name = true,
+                          )
 
 
     find_atom_type = {
@@ -263,8 +291,10 @@ def gem():
     share(
         'conjure_comma',                    conjure_comma,
         'conjure_dot',                      conjure_dot,
+        'conjure_except_colon',             conjure_except_colon,
         'conjure_left_parenthesis',         conjure_left_parenthesis,
         'conjure_right_parenthesis',        conjure_right_parenthesis,
+        'conjure_try_colon',                conjure_try_colon,
         'find_atom_type',                   find_atom_type,
         'find_operator_conjure_function',   find_operator_conjure_function,
     )

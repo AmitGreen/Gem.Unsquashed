@@ -228,6 +228,28 @@ def gem():
                )
 
 
+    @share
+    def parse1_statement_except_colon(m):
+        if m.end('newline') is -1:
+            raise_unknown_line(1)
+
+        return conjure_except_colon(m.group())
+
+
+    @share
+    def parse1_statement_try_colon(m):
+        if m.end('newline') is -1:
+            raise_unknown_line(1)
+
+        return conjure_try_colon(m.group())
+
+
+    find_parse1_colon_line = {
+                                 'except' : parse1_statement_except_colon,
+                                 'try'    : parse1_statement_try_colon,
+                             }.__getitem__
+
+
     lookup_parse1_line = {
                              'class'  : parse1_statement_class,
                              'def'    : parse1_statement_define_header,
@@ -237,6 +259,7 @@ def gem():
                              'return' : parse1_statement_return,
                              '@'      : parse1_statement_decorator_header,
                          }.get
+
 
 
     @share
@@ -287,6 +310,12 @@ def gem():
                             ),
                         )
 
+                        continue
+
+                    keyword = m.group('keyword')
+
+                    if keyword is not none:
+                        append(find_parse1_colon_line(keyword)(m))
                         continue
 
                     [comment, newline] = m.group('comment', 'newline')
