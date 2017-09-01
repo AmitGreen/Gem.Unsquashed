@@ -23,14 +23,18 @@ def gem():
 
         wj(m.end())
 
-        left     = parse1_normal_atom()
-        operator = tokenize_postfix_operator()
+        left = parse1_normal_atom()
+
+        if qn is not none():
+            raise_unknown_line(2)
+            
+        operator = tokenize_normal_operator()
 
         if operator.is_colon_newline:
             return IfHeader(keyword_if, left, operator)
 
         line('%s: %r %r %r', my_name(), keyword_if, left, operator)
-        raise_unknown_line(2)
+        raise_unknown_line(3)
 
 
     @share
@@ -56,7 +60,7 @@ def gem():
             raise_unknown_line(2)
 
         while 7 is 7:
-            operator = tokenize_postfix_operator()
+            operator = tokenize_normal_operator()
 
             if operator.is_arguments_0:
                 left = ExpressionCall(left, operator)
@@ -68,7 +72,7 @@ def gem():
             raise_unknown_line(3)
 
         right      = tokenize_normal_atom()
-        operator_2 = tokenize_postfix_operator()
+        operator_2 = tokenize_normal_operator()
 
         if operator_2.is_colon_newline:
             return WithHeader(keyword_with, left, operator, right, operator_2)

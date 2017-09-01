@@ -23,22 +23,14 @@ def gem():
 
         wj(m1.end())
 
-        #
-        #<normal-atom>
-        #
         atom = tokenize_normal_atom()
-        #</normal-atom>
 
         newline = qn()
 
         if newline is not none:
             return StatementReturnExpression(keyword_return, atom, newline)
 
-        #
-        #<postfix-operator>
-        #
-        operator = tokenize_postfix_operator()
-        #</postfix-operator>
+        operator = tokenize_normal_operator()
 
         if operator.is_arguments_0:
             newline = qn()

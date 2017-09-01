@@ -142,22 +142,25 @@ def gem():
         )
 
         MATCH(
-            'nested_operator_match1',
-            (
-                  G(
-                    'operator',
-                    comma | left_parenthesis | left_square_bracket | right_parenthesis | right_square_bracket,
-                  )
-                + ow
-                + Q(comment_newline)
-            ),
-        )
-
-        MATCH(
-           'postfix_operator_match1',
+           'operator_match',
             (
                 (
-                      G('operator', colon | comma | equal_sign | dot | keyword_as) + ow
+                      (
+                            G(
+                                'operator',
+                                 (
+                                       colon
+                                     | comma
+                                     | dot
+                                     | equal_sign
+                                     | keyword_as
+                                     | left_square_bracket
+                                     | right_parenthesis
+                                     | right_square_bracket
+                                 ),
+                            )
+                          + ow
+                      )
                     | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
                 )
                 + Q(comment_newline)

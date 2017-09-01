@@ -75,7 +75,7 @@ def gem():
                  my_name(), indented, left, s[qj():])
 
         while 7 is 7:
-            operator = tokenize_postfix_operator()
+            operator = tokenize_normal_operator()
 
             if operator.is_dot:
                 #
