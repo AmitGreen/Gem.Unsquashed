@@ -36,9 +36,12 @@ def gem():
             if operator.is_right_parenthesis:
                 return PathenthesizedExpression(token, left, operator)
 
-            raise_unknown_line(2)
+            if operator.is_compare_operator:
+                raise_unknown_line(2)
 
-        raise_unknown_line(3)
+            raise_unknown_line(3)
+
+        raise_unknown_line(4)
 
 
     @share

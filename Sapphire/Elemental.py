@@ -11,6 +11,7 @@ def gem():
         is_arguments_0               = false
         is_colon_newline             = false
         is_comma                     = false
+        is_compare_operator          = false
         is_dot                       = false
         is_equal_sign                = false
         is_keyword_as                = false
@@ -144,6 +145,13 @@ def gem():
         keyword      = ','
 
 
+    class OperatorCompareEqual(KeywordAndOperatorBase):
+        __slots__           = (())
+        display_name        = '=='
+        is_compare_operator = true
+        keyword             = '=='
+
+
     class OperatorDot(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = '.'
@@ -233,6 +241,13 @@ def gem():
 
                           produce_conjure_by_name = true,
                       )
+
+    [conjure_compare_equal] = produce_cache_functions(
+                                  '==',
+                                  OperatorCompareEqual,
+
+                                  produce_conjure_by_name = true,
+                              )
 
     [conjure_dot] = produce_cache_functions(
                         'dot',
@@ -356,6 +371,7 @@ def gem():
                                          '.'  : conjure_dot,
                                          ':'  : conjure_colon,
                                          '='  : conjure_equal_sign,
+                                         '==' : conjure_compare_equal,
                                          'as' : conjure_keyword_as,
                                          '['  : conjure_left_square_bracket,
                                          ']'  : conjure_right_square_bracket,

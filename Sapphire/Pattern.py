@@ -28,7 +28,9 @@ def gem():
         colon               = NAME('colon',               ':')
         comma               = NAME('comma',               ',')
         comment_newline     = NAME('comment_newline',     P('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
+        compare_equal       = NAME('compare_equal',       '==')
         dot                 = NAME('dot',                 '.')
+        assign_operator     = NAME('assign_operator',     '=')
         equal_sign          = NAME('equal_sign',          '=')
         keyword_as          = NAME('as',                  'as')
         keyword_except      = NAME('except',              'except')
@@ -149,10 +151,10 @@ def gem():
                             G(
                                 'operator',
                                  (
-                                       colon
+                                       ANY_OF('=') + P('=')
+                                     | colon
                                      | comma
                                      | dot
-                                     | equal_sign
                                      | keyword_as
                                      | left_square_bracket
                                      | right_parenthesis
@@ -175,7 +177,7 @@ def gem():
         MATCH(
             'statement_postfix_operator_match1',
             (
-                  G('operator', equal_sign | dot) + ow
+                  G('operator', assign_operator | dot) + ow
                 | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow) + Q(comment_newline)
             ),
         )
