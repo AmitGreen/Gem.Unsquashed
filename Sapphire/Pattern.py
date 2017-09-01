@@ -135,6 +135,14 @@ def gem():
         )
 
         MATCH(
+           'postfix_operator_match1',
+            (
+                  G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
+                + Q(comment_newline)
+            ),
+        )
+
+        MATCH(
             'statement_postfix_operator_match1',
             (
                   ow
@@ -147,15 +155,6 @@ def gem():
 
         MATCH(
            'decorator_postfix_match1',
-            (
-                  ow
-                + P(G(left_parenthesis__ow) + P(G(right_parenthesis) + ow))
-                + Q(comment_newline)
-            ),
-        )
-
-        MATCH(
-           'statement_postfix_match1',
             (
                   ow
                 + P(G(left_parenthesis__ow) + P(G(right_parenthesis) + ow))

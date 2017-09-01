@@ -15,6 +15,9 @@ def gem():
         ))
 
 
+        is_arguments_0 = true
+
+
         def __init__(t, left_parenthesis, right_parenthesis):
             t.left_parenthesis  = left_parenthesis
             t.right_parenthesis = right_parenthesis

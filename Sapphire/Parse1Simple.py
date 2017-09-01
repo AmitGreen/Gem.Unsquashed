@@ -17,10 +17,10 @@ def gem():
         wj(m1.end())
 
         #
-        #<atom>
+        #<normal-atom>
         #
         atom = tokenize_normal_atom()
-        #</atom>
+        #</normal-atom>
 
         newline = qn()
 
@@ -28,36 +28,29 @@ def gem():
             return StatementReturnExpression(keyword_return, atom, newline)
 
         #
-        #<postfix>
+        #<postfix-operator>
         #
-        m3 = statement_postfix_match1(s, qj())
+        operator = tokenize_postfix_operator()
+        #</postfix-operator>
 
-        if m3 is none:
-            raise_unknown_line(2)
+        if operator.is_arguments_0:
+            newline = qn()
 
-        wj(m3.end())
-
-        left_parenthesis__end = m3.end('left_parenthesis__ow')
-        #</postfix>
-
-        if left_parenthesis__end is -1:
-            return StatementReturnExpression(keyword_return, atom, conjure_token_newline(m3.group()))
-
-        left_parenthesis  = OperatorLeftParenthesis(s[qi() : left_parenthesis__end])
-        right_parenthesis = m3.group('right_parenthesis')
-
-        if right_parenthesis is not none:
-            right_parenthesis = conjure_right_parenthesis(right_parenthesis)
-
-            if m3.end('comment_newline') is not -1:
+            if newline is not none:
                 return StatementReturnExpression(
                            keyword_return,
-                           ExpressionCall(atom, Arguments_0(left_parenthesis, right_parenthesis)),
-                           conjure_token_newline(s[m3.end('right_parenthesis'):]),
+                           ExpressionCall(atom, operator),
+                           newline,
                        )
 
-            raise_unknown_line(3)
+            raise_unknown_line(1)
 
-        expression = parse1_expression_call(atom, left_parenthesis)
+        if operator.is_left_parenthesis:
+            if qn() is not none:
+                raise_unknown_line(2)
 
-        return StatementReturnExpression(keyword_return, expression, qn())
+            expression = parse1_expression_call(atom, operator)
+
+            return StatementReturnExpression(keyword_return, expression, qn())
+
+        raise_unknown_line(3)

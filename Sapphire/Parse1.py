@@ -82,7 +82,7 @@ def gem():
                        conjure_token_newline(newline_1),
                    )
 
-        operator_left_parenthesis = OperatorLeftParenthesis(m3.group())
+        operator_left_parenthesis = conjure_left_parenthesis(m3.group())
         #</choice>
 
         #
@@ -153,7 +153,7 @@ def gem():
         if left_parenthesis__end is -1:
             return DecoratorHeader(operator_at_sign, identifier, conjure_token_newline(m3.group()))
 
-        left_parenthesis  = OperatorLeftParenthesis(s[m2_end : left_parenthesis__end])
+        left_parenthesis  = conjure_left_parenthesis(s[m2_end : left_parenthesis__end])
         right_parenthesis = m3.group('right_parenthesis')
 
         if right_parenthesis is not none:
@@ -238,7 +238,7 @@ def gem():
                    keyword_define,
                    name,
                    ParameterColon_1(
-                       OperatorLeftParenthesis(m3.group()),
+                       conjure_left_parenthesis(m3.group()),
                        conjure_identifier(parameter_1),
                        OperatorRightParenthesisColon(m5.group('ow__right_parenthesis__colon')),
                    ),

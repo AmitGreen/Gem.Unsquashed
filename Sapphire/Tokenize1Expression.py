@@ -82,7 +82,6 @@ def gem():
         m = argument7_operator_match1(s, qj())
 
         if m is none:
-            #line('%s: %s', my_name(), portray_raw_string(s[qj():]))
             raise_unknown_line(1)
 
         conjure = find_operator_conjure_function(m.group('operator'))
@@ -107,3 +106,36 @@ def gem():
         wj(j)
 
         return r
+
+
+    @share
+    def tokenize_postfix_operator():
+        s = qs()
+        m = postfix_operator_match1(s, qj())
+
+        if m is none:
+            line('%s: %s', my_name(), portray_raw_string(s[qj():]))
+            raise_unknown_line(1)
+
+        left_parenthesis  = conjure_left_parenthesis(s[qi() : m.end('left_parenthesis__ow')])
+        right_parenthesis = m.group('right_parenthesis')
+
+        if right_parenthesis is not none:
+            right_parenthesis = conjure_right_parenthesis(right_parenthesis)
+
+            if m.end('comment_newline') is not -1:
+                wn(conjure_token_newline(s[m.end('right_parenthesis'):]))
+
+                return Arguments_0(left_parenthesis, right_parenthesis)
+
+            raise_unknown_line(2)
+
+        if m.end('comment_newline') is not -1:
+            raise_unknown_line(3)
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
+
+        return left_parenthesis

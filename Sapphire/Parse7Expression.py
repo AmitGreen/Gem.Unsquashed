@@ -96,7 +96,7 @@ def gem():
             line('m0: %s', m0)
             #assert 0,'stop#1'
 
-        left_parenthesis_0 = OperatorLeftParenthesis(m0.group('operator__ow'))
+        left_parenthesis_0 = conjure_left_parenthesis(m0.group('operator__ow'))
         m                  = argument7_1_match(s, m0.end())
 
         if m is none:
@@ -133,7 +133,7 @@ def gem():
         if show:
             line('parse7_arguments__left_parenthesis__argument_0: %r, %s', argument_0, portray_raw_string(s[m0.end():]))
 
-        left_parenthesis_0 = OperatorLeftParenthesis(m0.group('operator__ow'))
+        left_parenthesis_0 = conjure_left_parenthesis(m0.group('operator__ow'))
         m                  = argument7_1A_match(s, m0.end())
 
         if m is none:
@@ -244,7 +244,7 @@ def gem():
         assert operator is '('
 
         if right_parenthesis is not none:
-            left_parenthesis  = OperatorLeftParenthesis(m.group('operator__ow'))
+            left_parenthesis  = conjure_left_parenthesis(m.group('operator__ow'))
             right_parenthesis = conjure_right_parenthesis(right_parenthesis)
 
             if name_0 is not none:

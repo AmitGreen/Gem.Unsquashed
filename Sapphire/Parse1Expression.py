@@ -41,7 +41,7 @@ def gem():
                            indented,
                            identifier,
                            Arguments_0(
-                               OperatorLeftParenthesis(s[index:m2.start('right_parenthesis')]),
+                               conjure_left_parenthesis(s[index:m2.start('right_parenthesis')]),
                                conjure_right_parenthesis(right_parenthesis),
                            ),
                            conjure_token_newline(s[m2.end('right_parenthesis'):]),
@@ -98,7 +98,7 @@ def gem():
                                identifier,
                                dot,
                                right,
-                               parse1_arguments__left_parenthesis(OperatorLeftParenthesis(left_parenthesis)),
+                               parse1_arguments__left_parenthesis(conjure_left_parenthesis(left_parenthesis)),
                                qn(),
                             )
                 

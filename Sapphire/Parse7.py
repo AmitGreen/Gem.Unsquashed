@@ -27,7 +27,7 @@ def gem():
             return ExpressionCall(
                        expression,
                        Arguments_0(
-                           OperatorLeftParenthesis(left_parenthesis),
+                           conjure_left_parenthesis(left_parenthesis),
                            conjure_right_parenthesis(right_parenthesis),
                        ),
                    )
@@ -35,7 +35,7 @@ def gem():
         return ExpressionCall(
                    expression,
                    Arguments_1(
-                       OperatorLeftParenthesis(left_parenthesis),
+                       conjure_left_parenthesis(left_parenthesis),
                        SingleQuote(single_quote),
                        conjure_right_parenthesis(right_parenthesis),
                    ),
@@ -53,7 +53,7 @@ def gem():
         ] = m.group('name1', 'left_parenthesis', 'name2', 'ow__right_parenthesis__colon__ow', 'newline')
 
         parameters = ParameterColon_1(
-                         OperatorLeftParenthesis(left_parenthesis),
+                         conjure_left_parenthesis(left_parenthesis),
                          conjure_identifier(name2),
                          OperatorRightParenthesisColon(right_parenthesis__colon),
                      )
@@ -88,7 +88,7 @@ def gem():
             parameters = ParameterColon_0(left_parenthesis + right_parenthesis__colon)
         else:
             parameters = ParameterColon_1(
-                             OperatorLeftParenthesis(left_parenthesis),
+                             conjure_left_parenthesis(left_parenthesis),
                              conjure_identifier(name2),
                              OperatorRightParenthesisColon(right_parenthesis__colon),
                          )

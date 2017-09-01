@@ -7,7 +7,8 @@ def gem():
 
 
     class KeywordAndOperatorBase(Token):
-        is_dot = false
+        is_arguments_0 = false
+        is_dot         = false
 
         def __repr__(t):
             return arrange('<%s>', t.s)
@@ -102,7 +103,6 @@ def gem():
         keyword      = '='
 
 
-    @export
     class OperatorLeftParenthesis(KeywordAndOperatorBase):
         __slots__           = (())
         display_name        = '('       #   )
@@ -161,6 +161,13 @@ def gem():
                           produce_conjure_by_name = true,
                       )
 
+    [conjure_left_parenthesis] = produce_cache_functions(
+                                     'left_parenthesis',
+                                     OperatorLeftParenthesis,
+
+                                     produce_conjure_by_name = true,
+                                 )
+
     [conjure_right_parenthesis] = produce_cache_functions(
                                       'right_parenthesis',
                                       OperatorRightParenthesis,
@@ -200,15 +207,14 @@ def gem():
 
     find_operator_conjure_function = {
                                          ',' : conjure_comma,
-                                         #
-                                         #   (
-                                         #
+                                         '(' : conjure_left_parenthesis,
                                          ')' : conjure_right_parenthesis,
                                      }.__getitem__
 
 
     share(
         'conjure_comma',                    conjure_comma,
+        'conjure_left_parenthesis',         conjure_left_parenthesis,
         'conjure_right_parenthesis',        conjure_right_parenthesis,
         'find_atom_type',                   find_atom_type,
         'find_operator_conjure_function',   find_operator_conjure_function,
