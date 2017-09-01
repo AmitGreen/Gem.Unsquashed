@@ -17,14 +17,14 @@ def gem():
     @share
     def parse1_arguments__left_parenthesis(left_parenthesis):
         atom_1     = tokenize_nested_atom()
-        operator_1 = tokenize_argument1_operator()
+        operator_1 = tokenize_argument_operator()
 
         if operator_1.is_right_parenthesis:
             return Arguments_1(left_parenthesis, atom_1, operator_1)
 
         if operator_1.is_comma:
             atom_2     = tokenize_nested_atom()
-            operator_2 = tokenize_argument7_operator()
+            operator_2 = tokenize_argument_operator()
 
             if operator_2.is_right_parenthesis:
                 return Arguments_2(left_parenthesis, atom_1, operator_1, atom_2, operator_2)

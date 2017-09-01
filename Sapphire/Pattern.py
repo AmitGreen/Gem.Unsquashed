@@ -115,12 +115,7 @@ def gem():
         FULL_MATCH('ow_comment_newline_match', G(ow_comment_newline))
         
         MATCH(
-            'argument1_operator_match1',
-            G('operator', comma | right_parenthesis) + ow + Q(comment_newline),
-        )
-
-        MATCH(
-            'argument7_operator_match1',
+            'argument_operator_match1',
             G('operator', comma | right_parenthesis) + ow + Q(comment_newline),
         )
 
