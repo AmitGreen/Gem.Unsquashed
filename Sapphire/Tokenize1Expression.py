@@ -30,7 +30,6 @@ def gem():
         m = atom_match(s, qj())
 
         if m is none:
-            line('%s: %s', my_name(), portray_raw_string(s[qj():]))
             raise_unknown_line(1)
 
         atom_s = m.group('atom')
@@ -54,19 +53,16 @@ def gem():
 
         conjure = find_operator_conjure_function(m.group('operator'))
 
-        if conjure is conjure_right_parenthesis:
-            if m.start('comment_newline') is -1:
-                raise_unknown_line(2)
-
-            i = m.end('operator')
-
-            wn(conjure_token_newline(s[i:]))
-
-            return conjure(s[qi():i])
-        
         if m.start('comment_newline') is not -1:
-            raise_unknown_line(3)
+            if conjure is conjure_right_parenthesis:
+                i = m.end('operator')
 
+                wn(conjure_token_newline(s[i:]))
+
+                return conjure(s[qi():i])
+
+            raise_unknown_line(2)
+        
         j = m.end()
         r = conjure(s[qi():j])
 

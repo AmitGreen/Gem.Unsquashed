@@ -7,8 +7,9 @@ def gem():
 
 
     class KeywordAndOperatorBase(Token):
-        is_arguments_0 = false
-        is_dot         = false
+        is_arguments_0      = false
+        is_dot              = false
+        is_left_parenthesis = false
 
         def __repr__(t):
             return arrange('<%s>', t.s)

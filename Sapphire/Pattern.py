@@ -116,7 +116,7 @@ def gem():
         
         MATCH(
             'argument_operator_match1',
-            G('operator', comma | right_parenthesis) + ow + Q(comment_newline),
+            G('operator', comma | left_parenthesis | right_parenthesis) + ow + Q(comment_newline),
         )
 
         MATCH(
