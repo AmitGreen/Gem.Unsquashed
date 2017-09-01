@@ -15,6 +15,25 @@ def gem():
 
 
     @share
+    def parse1_statement_if(m):
+        if m.end('newline') is not -1:
+            raise_unknown_line(1)
+
+        keyword_if = conjure_keyword_if(m.group())
+
+        wj(m.end())
+
+        left     = tokenize_normal_atom()
+        operator = tokenize_postfix_operator()
+
+        if operator.is_colon_newline:
+            return IfHeader(keyword_if, left, operator)
+
+        line('%s: %r %r %r', my_name(), keyword_if, left, operator)
+        raise_unknown_line(2)
+
+
+    @share
     def parse1_statement_try_colon(m):
         if m.end('newline') is -1:
             raise_unknown_line(1)

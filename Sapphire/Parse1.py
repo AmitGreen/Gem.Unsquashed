@@ -239,6 +239,7 @@ def gem():
                              'class'  : parse1_statement_class,
                              'def'    : parse1_statement_define_header,
                              'from'   : parse1_statement_from,
+                             'if'     : parse1_statement_if,
                              'import' : parse1_statement_import,
                              'pass'   : parse1_statement_pass,
                              'return' : parse1_statement_return,

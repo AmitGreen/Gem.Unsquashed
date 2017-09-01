@@ -67,6 +67,12 @@ def gem():
         keyword      = 'from'
 
 
+    class KeywordIf(KeywordAndOperatorBase):
+        __slots__     = (())
+        display_name  = 'if'
+        keyword       = 'if'
+
+
     @export
     class KeywordImport(KeywordAndOperatorBase):
         __slots__    = (())
@@ -253,6 +259,13 @@ def gem():
                                produce_conjure_by_name = true,
                            )
 
+    [conjure_keyword_if] = produce_cache_functions(
+                               'keyword-if',
+                               KeywordIf,
+
+                               produce_conjure_by_name = true,
+                           )
+
     [conjure_keyword_return] = produce_cache_functions(
                                'keyword-return',
                                KeywordReturn,
@@ -353,6 +366,7 @@ def gem():
         'conjure_dot',                      conjure_dot,
         'conjure_except_colon',             conjure_except_colon,
         'conjure_keyword_as',               conjure_keyword_as,
+        'conjure_keyword_if',               conjure_keyword_if,
         'conjure_keyword_return',           conjure_keyword_return,
         'conjure_keyword_with',             conjure_keyword_with,
         'conjure_left_parenthesis',         conjure_left_parenthesis,
