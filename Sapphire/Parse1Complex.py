@@ -31,7 +31,7 @@ def gem():
         if qn() is not none:
             raise_unknown_line(2)
             
-        operator = tokenize_normal_operator()
+        operator = tokenize_operator()
 
         if operator.is_colon_newline:
             return IfHeader(keyword_if, left, operator)
@@ -63,7 +63,7 @@ def gem():
             raise_unknown_line(2)
 
         while 7 is 7:
-            operator = tokenize_normal_operator()
+            operator = tokenize_operator()
 
             if operator.is_arguments_0:
                 left = ExpressionCall(left, operator)
@@ -75,7 +75,7 @@ def gem():
             raise_unknown_line(3)
 
         right      = tokenize_normal_atom()
-        operator_2 = tokenize_normal_operator()
+        operator_2 = tokenize_operator()
 
         if operator_2.is_colon_newline:
             return WithHeader(keyword_with, left, operator, right, operator_2)

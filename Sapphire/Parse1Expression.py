@@ -31,7 +31,7 @@ def gem():
 
         if token.is_left_parenthesis:
             left     = parse1_nested_atom()
-            operator = tokenize_nested_operator()
+            operator = tokenize_operator()
 
             if operator.is_right_parenthesis:
                 return PathenthesizedExpression(token, left, operator)
@@ -49,7 +49,7 @@ def gem():
         atom = tokenize_nested_atom()
 
         while 7 is 7:
-            operator = tokenize_nested_operator()
+            operator = tokenize_operator()
 
             if operator.is_right_square_bracket:
                 return ExpressionIndex_1(left, left_square_bracket, atom, operator)
@@ -80,7 +80,7 @@ def gem():
                  my_name(), indented, left, s[qj():])
 
         while 7 is 7:
-            operator = tokenize_normal_operator()
+            operator = tokenize_operator()
 
             if operator.is_dot:
                 #

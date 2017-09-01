@@ -30,7 +30,7 @@ def gem():
         if newline is not none:
             return StatementReturnExpression(keyword_return, atom, newline)
 
-        operator = tokenize_normal_operator()
+        operator = tokenize_operator()
 
         if operator.is_arguments_0:
             newline = qn()

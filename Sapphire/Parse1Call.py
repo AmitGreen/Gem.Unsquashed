@@ -17,7 +17,7 @@ def gem():
     @share
     def parse_argument7(left):
         while 7 is 7:
-            operator = tokenize_nested_operator()
+            operator = tokenize_operator()
 
             if operator.is_left_parenthesis:
                 left = parse1_expression_call(left, operator)
@@ -43,7 +43,7 @@ def gem():
         argument_1 = tokenize_nested_atom()
 
         while 7 is 7:
-            operator_1 = tokenize_nested_operator()
+            operator_1 = tokenize_operator()
 
             if operator_1.is_left_parenthesis:
                 argument_1 = parse1_expression_call(argument_1, operator_1)

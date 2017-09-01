@@ -7,24 +7,26 @@ def gem():
     require_gem('Pearl.Token')
 
 
-    tokenizer = [none, none, none, none, none, none]
+    tokenizer = [none, 0, none, none, none, none, none]
 
     query = tokenizer.__getitem__
     write = tokenizer.__setitem__
 
     qs = Method(query, 0)
-    qi = Method(query, 1)
-    qj = Method(query, 2)
-    qk = Method(query, 3)
-    ql = Method(query, 4)
-    qn = Method(query, 5)
+    qd = Method(query, 1)
+    qi = Method(query, 2)
+    qj = Method(query, 3)
+    qk = Method(query, 4)
+    ql = Method(query, 5)
+    qn = Method(query, 6)
 
     ws = Method(write, 0)
-    wi = Method(write, 1)
-    wj = Method(write, 2)
-    wk = Method(write, 3)
-    wl = Method(write, 4)
-    wn = Method(write, 5)
+    wd = Method(write, 1)
+    wi = Method(write, 2)
+    wj = Method(write, 3)
+    wk = Method(write, 4)
+    wl = Method(write, 5)
+    wn = Method(write, 6)
 
 
     construct_Exception = Exception.__init__
@@ -82,6 +84,7 @@ def gem():
                 if type(e) is not UnknownLineException:
                     return
 
+                wd(0)
                 t.append(e.unknown_line)
 
                 return true
@@ -115,6 +118,7 @@ def gem():
 
                 yield s
 
+            wd(none)
             ws(none)
             wi(none)
             wj(none)
@@ -143,12 +147,14 @@ def gem():
 
 
     export(
+        'qd',   qd,
         'qi',   qi,
         'qj',   qj,
         'qk',   qk,
         'qn',   qn,
         'qs',   qs,
 
+        'wd',   wd,
         'wi',   wi,
         'wj',   wj,
         'wk',   wk,
