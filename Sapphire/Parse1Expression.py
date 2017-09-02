@@ -167,7 +167,10 @@ def gem():
                 if m4 is none:
                     raise_unknown_line(2)
 
-                wj(m4.end())
+                j = m4.end()
+
+                wi(j)
+                wj(j)
 
                 right_parenthesis = m4.group('right_parenthesis')
                 #</postfix1-operator>

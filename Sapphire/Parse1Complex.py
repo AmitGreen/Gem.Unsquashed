@@ -63,7 +63,10 @@ def gem():
 
         keyword_with = conjure_keyword_with(m.group())
 
-        wj(m.end())
+        j = m.end()
+
+        wi(j)
+        wj(j)
 
         left = tokenize_atom()
 

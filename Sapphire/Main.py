@@ -48,3 +48,4 @@ def gem():
         except:
             with except_any_clause() as e:
                 print_exception_chain(e)
+                program_exit(1)

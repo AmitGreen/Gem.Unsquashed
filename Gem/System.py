@@ -17,6 +17,7 @@ def gem():
 
     export(
         'caller_frame_1',   caller_frame_1,
+        'program_exit',     PythonSystem.exit,
         'python_frame',     PythonSystem._getframe,
         'python_version',   PythonSystem.version,
     )

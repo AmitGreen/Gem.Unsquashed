@@ -21,7 +21,10 @@ def gem():
         if m1.end('newline') is not -1:
             return keyword_return
 
-        wj(m1.end())
+        j = m1.end()
+
+        wi(j)
+        wj(j)
 
         atom = tokenize_atom()
 

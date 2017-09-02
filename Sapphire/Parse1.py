@@ -128,7 +128,10 @@ def gem():
         if m3 is none:
             raise_unknown_line(3)
 
-        wj(m3.end())
+        j = m3.end()
+
+        wi(j)
+        wj(j)
 
         left_parenthesis__end = m3.end('left_parenthesis__ow')
         #</postfix>
@@ -338,3 +341,6 @@ def gem():
                         oops.write(f.result)
 
                     raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')
+
+                line('Passed: identical dump fron parse tree.  Total: %d line%s',
+                     length(many), (''   if length(many) is 0 else   's'))
