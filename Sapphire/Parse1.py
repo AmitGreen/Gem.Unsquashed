@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 7
+    show = 0
 
 
     require_gem('Sapphire.Core')
@@ -103,64 +103,45 @@ def gem():
                )
 
 
-    def parse1_statement_decorator_header(m1):
-        if m1.end('newline') is not -1:
+    def parse1_statement_decorator_header(m):
+        if m.end('newline') is not -1:
             raise_unknown_line(1)
 
-        operator_at_sign = OperatorAtSign(m1.group())
+        operator_at_sign = OperatorAtSign(m.group())
         s                = qs()
 
-        #
-        #<name>
-        #
-        m2 = name_match(s, m1.end())
-
-        if m2 is none:
-            raise_unknown_line(2)
-
-        identifier = conjure_identifier(m2.group())
-        m2_end     = m2.end()
-        #</name>
-
-        #
-        #<postfix>
-        #
-        m3 = decorator_postfix_match1(s, m2_end)
-
-        if m3 is none:
-            raise_unknown_line(3)
-
-        j = m3.end()
+        j = m.end()
 
         wi(j)
         wj(j)
 
-        left_parenthesis__end = m3.end('left_parenthesis__ow')
-        #</postfix>
+        identifier = tokenize_name()
+        newline    = qn()
 
-        if left_parenthesis__end is -1:
-            return DecoratorHeader(operator_at_sign, identifier, conjure_token_newline(m3.group()))
+        if newline is not none:
+            return DecoratorHeader(operator_at_sign, identifier, newline)
 
-        left_parenthesis  = conjure_left_parenthesis(s[m2_end : left_parenthesis__end])
-        right_parenthesis = m3.group('right_parenthesis')
+        operator = tokenize_operator()
 
-        if right_parenthesis is not none:
-            right_parenthesis = conjure_right_parenthesis(right_parenthesis)
+        if operator.is_arguments_0:
+            newline = qn()
 
-            if m3.end('comment_newline') is not -1:
-                return DecoratorHeader(
-                           operator_at_sign,
-                           ExpressionCall(identifier, Arguments_0(left_parenthesis, right_parenthesis)),
-                           conjure_token_newline(s[m3.end('right_parenthesis'):]),
-                       )
+            if newline is none:
+                raise_unknown_line(2)
 
+            return DecoratorHeader(operator_at_sign, ExpressionCall(identifier, operator), newline)
+
+        if not operator.is_left_parenthesis:
+            raise_unknown_line(3)
+
+        call = parse1_expression_call(identifier, operator)
+
+        newline = qn()
+
+        if newline is none:
             raise_unknown_line(4)
 
-        return DecoratorHeader(
-                   operator_at_sign,
-                   parse1_expression_call(identifier, left_parenthesis),
-                   qn(),
-               )
+        return DecoratorHeader(operator_at_sign, call, newline)
 
 
     def parse1_statement_define_header(m1):
