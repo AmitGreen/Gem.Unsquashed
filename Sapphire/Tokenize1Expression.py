@@ -144,6 +144,7 @@ def gem():
         right_parenthesis__end = m.end('right_parenthesis')
 
         if m.start('comment_newline') is not -1:
+            line('%s: %r %r', my_name(), left_parenthesis, right_parenthesis__end)
             raise_unknown_line(3)
 
         if right_parenthesis__end is not -1:
