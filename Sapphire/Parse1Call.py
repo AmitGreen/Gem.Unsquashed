@@ -39,7 +39,7 @@ def gem():
     
     @share
     def parse1_arguments__left_parenthesis(left_parenthesis):
-        argument_1 = parse1_argument_first_atom()
+        argument_1 = parse1__argument_first_atom()
 
         if argument_1.is_right_parenthesis:
             raise_unknown_line(1)
@@ -63,10 +63,14 @@ def gem():
 
             raise_unknown_line(2)
 
-        argument_2 = parse1_argument_first_atom()
+        argument_2 = parse1__argument_first_atom()
 
         if argument_2.is_right_parenthesis:
-            raise_unknown_line(3)
+            return Arguments_1(
+                       left_parenthesis,
+                       argument_1,
+                       Comma_RightParenthesis(operator_1, argument_2),
+                   )
 
         argument_2 = parse1_argument7(argument_2)
         operator_2 = qk()
@@ -74,12 +78,6 @@ def gem():
         wk(none)
 
         if operator_2.is_right_parenthesis:
-            if show is 7:
-                my_line('=> %r; %r; %s',
-                        Arguments_2(left_parenthesis, argument_1, operator_1, argument_2, operator_2),
-                        qn(),
-                        portray_raw_string(qs()[qj():]))
-
             return Arguments_2(left_parenthesis, argument_1, operator_1, argument_2, operator_2)
 
         if not operator_2.is_comma:

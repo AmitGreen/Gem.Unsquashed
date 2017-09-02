@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 0
+    show = 7
 
 
     require_gem('Sapphire.Core')
@@ -278,6 +278,8 @@ def gem():
 
                         if parse1_line is not none:
                             append(parse1_line(m))
+
+                            assert qd() is 0
                             continue
 
                         if m.start('newline') is not -1:
@@ -289,6 +291,7 @@ def gem():
                                 ),
                             )
 
+                            assert qd() is 0
                             continue
 
                         wi(m.end('token'))
@@ -301,12 +304,15 @@ def gem():
                             ),
                         )
 
+                        assert qd() is 0
                         continue
 
                     keyword = m.group('keyword')
 
                     if keyword is not none:
                         append(find_parse1_colon_line(keyword)(m))
+
+                        assert qd() is 0
                         continue
 
                     [comment, newline] = m.group('comment', 'newline')
@@ -321,6 +327,7 @@ def gem():
 
                         if indented is '':
                             append(Comment(comment, newline))
+
                             continue
 
                         append(IndentedComment(indented, comment, newline))

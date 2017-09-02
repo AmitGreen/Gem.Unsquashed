@@ -18,7 +18,7 @@ def gem():
     from Gem import create_DelayedFileOutput, create_StringOutput, produce_cache_functions, program_exit
     from Gem import read_text_from_path, print_exception_chain
     from Pearl import conjure_identifier, conjure_token_newline, parse_context
-    from Pearl import qd, qi, qj, qk, qn, qs, raise_unknown_line, Token, wd, wi, wj, wk, wn, z_initialize
+    from Pearl import qd, qi, qj, qk, qn, qs, raise_unknown_line, Token, wd, wd0, wi, wj, wk, wn, z_initialize
 
 
     share(
@@ -47,6 +47,7 @@ def gem():
         'raise_unknown_line',           raise_unknown_line,
         'read_text_from_path',          read_text_from_path,
         'wd',                           wd,
+        'wd0',                          wd0,
         'wi',                           wi,
         'wj',                           wj,
         'wn',                           wn,

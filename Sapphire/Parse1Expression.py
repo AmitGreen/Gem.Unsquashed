@@ -47,11 +47,11 @@ def gem():
 
 
     @share
-    def parse1_argument_first_atom():
+    def parse1__argument_first_atom():
         #
         #<different-from: parse1_atom>
         #
-        token = tokenize_atom()
+        token = tokenize__argument_first_atom()
 
         if token.is__atom__or__right_parenthesis:
             return token

@@ -115,6 +115,7 @@ def gem():
         #   Generic
         #
         name_match             = MATCH('name_match', name)
+        name_ow_match          = MATCH('name_ow_match', name + ow + Q(comment_newline))
         next_nested_line_match = MATCH('next_nested_line_match', ow + Q(comment_newline))
 
 

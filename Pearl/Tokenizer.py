@@ -7,7 +7,7 @@ def gem():
     require_gem('Pearl.Token')
 
 
-    tokenizer = [none, 0, none, none, none, none, none]
+    tokenizer = [none, 0, 0, 0, none, none, none]
 
     query = tokenizer.__getitem__
     write = tokenizer.__setitem__
@@ -27,6 +27,10 @@ def gem():
     wk = Method(write, 4)
     wl = Method(write, 5)
     wn = Method(write, 6)
+
+    wd0 = Method(wd, 0)
+    wi0 = Method(wi, 0)
+    wj0 = Method(wj, 0)
 
 
     construct_Exception = Exception.__init__
@@ -84,7 +88,7 @@ def gem():
                 if type(e) is not UnknownLineException:
                     return
 
-                wd(0)
+                wd0()
                 t.append(e.unknown_line)
 
                 return true
@@ -123,8 +127,8 @@ def gem():
                 s = q_data(line_number)
 
                 ws(s)
-                wi(0)
-                wj(0)
+                wi0()
+                wj0()
                 wl(line_number)
                 wk(none)
                 wn(none)
@@ -170,6 +174,7 @@ def gem():
         'qs',               qs,
 
         'wd',               wd,
+        'wd0',              wd0,
         'wi',               wi,
         'wj',               wj,
         'wk',               wk,

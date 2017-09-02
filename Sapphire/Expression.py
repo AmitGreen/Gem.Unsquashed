@@ -193,7 +193,7 @@ def gem():
         def write(t, w):
             w(t.left.s)
             t.middle.write(w)
-            w(t.right.s)
+            t.right .write(w)
 
 
     @share

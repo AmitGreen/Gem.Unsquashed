@@ -6,6 +6,7 @@ def gem():
     show = 0
 
 
+    @share
     def skip_tokenize_prefix():
         parse_context.iterate_lines.next()
 
@@ -66,7 +67,7 @@ def gem():
                 if d is 1:
                     i = m.end('operator')
 
-                    wd(0)
+                    wd0()
                     wn(conjure_token_newline(s[i : ]))
 
                     return conjure_right_parenthesis(s[qi() : i])

@@ -25,6 +25,7 @@ def gem():
             write_standard_output(
                     (
                           caller_frame_1().f_code.co_name
+                        + ': '
                         + (format % arguments   if arguments else   format)
                         + '\n'
                     ),

@@ -6,18 +6,37 @@ def gem():
     show = 0
 
 
-    def parse1__argument_first_atom__X__left_parenthesis__newline(m):
+    def tokenize__argument_first_atom__X__right_parenthesis__newline(m):
+        d = qd()
         s = qs()
 
-        atom_end = m.end('atom')
+        assert d > 0
 
-        wn(conjure_token_newline(s[atom_end : ]))
+        if show is 7:
+            my_line('d: %d', d)
 
-        return conjure_right_parenthesis(s[qi() : atom_end])
+        if d is 1:
+            atom_end = m.end('atom')
+
+            wd0()
+            wn(conjure_token_newline(s[atom_end : ]))
+
+            return conjure_right_parenthesis(s[qi() : atom_end])
+
+        wd(d - 1)
+
+        r = conjure_right_parenthesis(s[qi() : ])
+
+        skip_tokenize_prefix()
+
+        return r
 
 
     @share
-    def parse1__argument_first_atom():
+    def tokenize__argument_first_atom():
+        if show is 7:
+            my_line(portray_string(qs()[qj() : ]))
+
         #
         #<different-from: tokenize_atom>
         #
@@ -46,19 +65,16 @@ def gem():
             conjure = find_atom_type(atom_s[0])
 
             if conjure is conjure_right_parenthesis:
-                d = qd()
-
-                wd(d - 1)
-
                 if m.start('comment_newline') is -1:
                     j = m.end()
 
+                    wd(qd() - 1)
                     wi(j)
                     wj(j)
 
                     return conjure_right_parenthesis(s[qi() : j])
 
-                return parse1__argument_first_atom__X__left_parenthesis__newline(m)
+                return tokenize__argument_first_atom__X__right_parenthesis__newline(m)
             #</different-from>
 
             i = qi()
@@ -75,7 +91,7 @@ def gem():
 
             #
             #   NOTE:
-            #       See note in 'tokenize_atom'
+            #       See note in 'tokenize_atom' on using '==' instead of 'is'
             #
             if i == j:
                 #
@@ -170,3 +186,37 @@ def gem():
         wj(j)
 
         return left_parenthesis
+
+
+    @share
+    def tokenize_name():
+        i0 = qi()
+        j0 = qj()
+        s  = qs()
+
+        m = name_ow_match(s, j0)
+
+        if m is none:
+            raise_unknown_line(1)
+
+        name_end = m.end('name')
+
+        if m.start('comment_newline') is -1:
+            wi(name_end)
+            wj(m.end())
+        else:
+            if qd() is not 0:
+                raise_unknown_line(2)
+
+            wn(conjure_token_newline(s[name_end : ]))
+
+        #
+        #   NOTE:
+        #       See note in 'tokenize_atom' on using '==' instead of 'is'
+        #
+        r = conjure_identifier(s[j0 : name_end])
+
+        if i0 == j0:
+            return r
+
+        return PrefixAtom(s[i0 : j0], r)
