@@ -142,57 +142,30 @@ def gem():
             operator = tokenize_operator()
 
             if operator.is_dot:
-                #
-                #<name1>
-                #
-                m3 = name_match(s, qj())
+                right = tokenize_name()
 
-                if m3 is none:
+                if qn() is not none:
                     raise_unknown_line(1)
 
-                right = conjure_identifier(m3.group())
-                #</name1>
+                if show is 7:
+                    my_line('left: %r; operator: %s; right: %s; s: %s',
+                            left, operator, right, portray_string(s[m3.end():]))
 
-                dot = operator
-                
-                if show:
-                    line('%s: left: %r; dot: %s; right: %s; s: %s',
-                         parse1_statement_expression__symbol.__name__, left, dot, right, portray_raw_string(s[m3.end():]))
+                operator_2 = tokenize_operator()
 
-                #
-                #<postfix1-operator>
-                #
-                m4 = statement_postfix_operator_match1(s, m3.end())
-
-                if m4 is none:
+                if qn() is not none:
                     raise_unknown_line(2)
 
-                j = m4.end()
-
-                wi(j)
-                wj(j)
-
-                right_parenthesis = m4.group('right_parenthesis')
-                #</postfix1-operator>
-
-                if right_parenthesis is not none:
-                    raise_unknown_line(3)
-                
-                left_parenthesis = m4.group('left_parenthesis__ow')
-
-                if left_parenthesis is not none:
-                    assert m4.start('comment_newline') is -1
-
-                    arguments = parse1_arguments__left_parenthesis(conjure_left_parenthesis(left_parenthesis))
+                if operator_2.is_left_parenthesis:
+                    arguments = parse1_arguments__left_parenthesis(operator_2)
                     newline   = qn()
 
                     if newline is none:
-                        raise_unknown_line(4)
+                        raise_unknown_line(3)
 
-                    return StatementMethodCall(indented, left, dot, right, arguments, newline)
+                    return StatementMethodCall(indented, left, operator, right, arguments, newline)
                 
-                raise_unknown_line(5)
-
+                raise_unknown_line(4)
 
             if operator.is_arguments_0:
                 newline = qn()

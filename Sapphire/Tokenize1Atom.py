@@ -6,6 +6,19 @@ def gem():
     show = 0
 
 
+    #
+    #   Note:
+    #       Below a few tests of 'i == j'.  None of these tests can be optimized to 'i is j'
+    #       since [the original] 'i' & 'j' could have been created with two different calls, such as:
+    #
+    #           1.  m.end('atom'); .vs.
+    #           2.  m.end()
+    #
+    #       with 'ow' is empty -- and thus have the same value (but different internal addresses).
+    #
+    #   Note #2:
+    #       The previous note also applies to tests like 'qi() != j', cannot replace this with 'qi() is not j'
+    #
     def tokenize__argument_first_atom__X__right_parenthesis__newline(m):
         d = qd()
         s = qs()
@@ -89,10 +102,6 @@ def gem():
                 raise_unknown_line(3)
                 #</different-from>
 
-            #
-            #   NOTE:
-            #       See note in 'tokenize_atom' on using '==' instead of 'is'
-            #
             if i == j:
                 #
                 #<different-from: tokenize_atom>
@@ -151,16 +160,6 @@ def gem():
 
                 wn(conjure_token_newline(s[m.end('atom') : ]))
 
-            #
-            #   Note:
-            #       Can't optimize this to 'i is j' since they might be generated from two different
-            #       calls is empty.  The different calls might have been:
-            #
-            #           1.  m.end('atom'); .vs.
-            #           2.  m.end()
-            #
-            #       with 'ow' is empty -- and thus have the same value (but different addresses).
-            #
             if i == j:
                 return find_atom_type(atom_s[0])(atom_s)
 
@@ -188,35 +187,46 @@ def gem():
         return left_parenthesis
 
 
-    @share
-    def tokenize_name():
-        i0 = qi()
-        j0 = qj()
-        s  = qs()
+    def tokenize_name__X__newline(m):
+        j = qj()
+        s = qs()
 
-        m = name_ow_match(s, j0)
-
-        if m is none:
+        if qd() is not 0:
             raise_unknown_line(1)
 
         name_end = m.end('name')
 
-        if m.start('comment_newline') is -1:
-            wi(name_end)
-            wj(m.end())
-        else:
-            if qd() is not 0:
-                raise_unknown_line(2)
+        r = conjure_identifier(s[j : name_end])
 
-            wn(conjure_token_newline(s[name_end : ]))
+        wn(conjure_token_newline(s[name_end : ]))
 
-        #
-        #   NOTE:
-        #       See note in 'tokenize_atom' on using '==' instead of 'is'
-        #
-        r = conjure_identifier(s[j0 : name_end])
-
-        if i0 == j0:
+        if qi() == j:
             return r
 
-        return PrefixAtom(s[i0 : j0], r)
+        return PrefixAtom(s[qi() : j], r)
+
+
+    @share
+    def tokenize_name():
+        j = qj()
+        s = qs()
+
+        m = name_ow_match(s, j)
+
+        if m is none:
+            raise_unknown_line(1)
+
+        if m.start('comment_newline') is not -1:
+            return tokenize_name__X__newline(m)
+
+        name_end = m.end('name')
+
+        r = conjure_identifier(s[j : name_end])
+
+        if qi() != j:
+            r = PrefixAtom(s[qi() : j], r)
+
+        wi(name_end)
+        wj(m.end())
+
+        return r
