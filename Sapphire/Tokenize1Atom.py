@@ -19,30 +19,54 @@ def gem():
     #   Note #2:
     #       The previous note also applies to tests like 'qi() != j', cannot replace this with 'qi() is not j'
     #
-    def tokenize__argument_first_atom__X__right_parenthesis__newline(m):
+
+
+    def tokenize__argument_first_atom__X__newline(m):
         d = qd()
         s = qs()
 
+        #
+        #<different-from: tokenize_atom__X__newline>
+        #
         assert d > 0
+        #</different-from>
 
-        if show is 7:
-            my_line('d: %d', d)
+        atom_s = m.group('atom')
 
-        if d is 1:
-            atom_end = m.end('atom')
+        if atom_s is not none:
+            #
+            #<different-from: tokenize_atom__X__newline>
+            #
+            conjure = find_atom_type(atom_s[0])
 
-            wd0()
-            wn(conjure_token_newline(s[atom_end : ]))
+            if conjure is conjure_right_parenthesis:
+                if show is 7:
+                    my_line('d: %d', d)
 
-            return conjure_right_parenthesis(s[qi() : atom_end])
+                if d is 1:
+                    atom_end = m.end('atom')
 
-        wd(d - 1)
+                    wd0()
+                    wn(conjure_token_newline(s[atom_end : ]))
 
-        r = conjure_right_parenthesis(s[qi() : ])
+                    return conjure_right_parenthesis(s[qi() : atom_end])
 
-        skip_tokenize_prefix()
+                wd(d - 1)
 
-        return r
+                r = conjure_right_parenthesis(s[qi() : ])
+
+                skip_tokenize_prefix()
+
+                return r
+            #</different-from>
+
+            #
+            #<different-from: tokenize_atom__X__newline>
+            #
+            raise_unknown_line(1)
+            #</different-from>
+
+        raise_unknown_line(2)
 
 
     @share
@@ -66,8 +90,11 @@ def gem():
         #</different-from>
 
         if m is none:
-            my_line(portray_string(s[j : ]))
+            #my_line(portray_string(s[j : ]))
             raise_unknown_line(1)
+
+        if m.start('comment_newline') is not -1:
+            return tokenize__argument_first_atom__X__newline(m)
 
         atom_s = m.group('atom')
 
@@ -78,48 +105,27 @@ def gem():
             conjure = find_atom_type(atom_s[0])
 
             if conjure is conjure_right_parenthesis:
-                if m.start('comment_newline') is -1:
-                    j = m.end()
+                j = m.end()
 
-                    wd(qd() - 1)
-                    wi(j)
-                    wj(j)
+                wd(qd() - 1)
+                wi(j)
+                wj(j)
 
-                    return conjure_right_parenthesis(s[qi() : j])
+                return conjure_right_parenthesis(s[qi() : j])
 
-                return tokenize__argument_first_atom__X__right_parenthesis__newline(m)
+            r = conjure(atom_s)
             #</different-from>
 
-            i = qi()
+            if qi() != j:
+                r = PrefixAtom(s[qi() : j], r)
 
-            if m.start('comment_newline') is -1:
-                wi(m.end('atom'))
-                wj(m.end())
-            else:
-                #
-                #<different-from: tokenize_atom>
-                #
-                raise_unknown_line(3)
-                #</different-from>
+            wi(m.end('atom'))
+            wj(m.end())
 
-            if i == j:
-                #
-                #<different-from: tokenize_atom>
-                #
-                return conjure(atom_s)
-                #</different-from>
-
-            #
-            #<different-from: tokenize_atom>
-            #
-            return PrefixAtom(s[i : j], conjure(atom_s))
-            #</different-from>
+            return r
 
         left_parenthesis       = conjure_left_parenthesis(s[qi() : m.end('left_parenthesis__ow')])
         right_parenthesis__end = m.end('right_parenthesis')
-
-        if m.start('comment_newline') is not -1:
-            raise_unknown_line(4)
 
         if right_parenthesis__end is not -1:
             wi(right_parenthesis__end)
@@ -137,11 +143,12 @@ def gem():
 
 
     def tokenize_atom__X__newline(m):
+        d      = qd()
         s      = qs()
         atom_s = m.group('atom')
 
         if atom_s is not none:
-            if qd() is not 0:
+            if d is not 0:
                 raise_unknown_line(1)
 
             r = find_atom_type(atom_s[0])(atom_s)
@@ -198,48 +205,3 @@ def gem():
         wj(j)
 
         return left_parenthesis
-
-
-    def tokenize_name__X__newline(m):
-        j = qj()
-        s = qs()
-
-        if qd() is not 0:
-            raise_unknown_line(1)
-
-        name_end = m.end('name')
-
-        r = conjure_identifier(s[j : name_end])
-
-        wn(conjure_token_newline(s[name_end : ]))
-
-        if qi() == j:
-            return r
-
-        return PrefixAtom(s[qi() : j], r)
-
-
-    @share
-    def tokenize_name():
-        j = qj()
-        s = qs()
-
-        m = name_ow_match(s, j)
-
-        if m is none:
-            raise_unknown_line(1)
-
-        if m.start('comment_newline') is not -1:
-            return tokenize_name__X__newline(m)
-
-        name_end = m.end('name')
-
-        r = conjure_identifier(s[j : name_end])
-
-        if qi() != j:
-            r = PrefixAtom(s[qi() : j], r)
-
-        wi(name_end)
-        wj(m.end())
-
-        return r
