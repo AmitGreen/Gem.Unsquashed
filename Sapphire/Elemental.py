@@ -113,9 +113,11 @@ def gem():
 
     @share
     class Number(Token):
-        __slots__    = (())
-        display_name = 'number'
-        is_atom      = 1
+        __slots__                       = (())
+        display_name                    = 'number'
+        is__atom__or__right_parenthesis = true
+        is_atom                         = true
+        is_right_parenthesis            = false
 
 
         def display_token(t):
@@ -188,11 +190,13 @@ def gem():
 
 
     class OperatorLeftParenthesis(KeywordAndOperatorBase):
-        __slots__           = (())
-        display_name        = '('       #   )
-        is_atom             = false
-        is_left_parenthesis = true
-        keyword             = '('       #   )
+        __slots__                       = (())
+        display_name                    = '('       #   )
+        is_atom                         = false
+        is__atom__or__right_parenthesis = false
+        is_left_parenthesis             = true
+        is_right_parenthesis            = false
+        keyword                         = '('       #   )
 
 
     @export
@@ -207,6 +211,7 @@ def gem():
         __slots__                        = (())
         #  (
         display_name                     = ')'
+        is__atom__or__right_parenthesis  = true
         is__comma__or__right_parenthesis = true
         is_right_parenthesis             = true
         #  (
@@ -226,17 +231,19 @@ def gem():
     @export
     class OperatorRightSquareBracket(KeywordAndOperatorBase):
         __slots__               = (())
+        display_name            = ']'
         is_right_square_bracket = true
         #   [[
-        display_name            = ']'
         keyword                 = ']'
 
 
     @share
     class SingleQuote(Token):
-        __slots__    = (())
-        is_atom      = 1
-        display_name = "'"
+        __slots__                       = (())
+        display_name                    = "'"
+        is__atom__or__right_parenthesis = true
+        is_atom                         = true
+        is_right_parenthesis            = false
 
 
         def display_token(t):
@@ -366,6 +373,8 @@ def gem():
 
     find_atom_type = {
                          "'" : SingleQuote,
+                         #   (
+                         ')' : conjure_right_parenthesis,
                          '.' : Number,
 
                          '0' : Number, '1' : Number, '2' : Number, '3' : Number, '4' : Number,

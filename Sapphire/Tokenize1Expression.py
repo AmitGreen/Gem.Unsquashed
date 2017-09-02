@@ -7,13 +7,108 @@ def gem():
 
 
     @share
+    def parse1__argument_first_atom():
+        #
+        #<different-from: tokenize_atom>
+        #
+        assert qd() > 0
+        #</different-from>
+
+        j = qj()
+        s = qs()
+
+        #
+        #<different-from: tokenize_atom>
+        #
+        m = argument_first_atom_match(s, j)
+        #</different-from>
+
+        if m is none:
+            line('%s: %s', my_name(), portray_string(s[j : ]))
+            raise_unknown_line(1)
+
+        atom_s = m.group('atom')
+
+        if atom_s is not none:
+            #
+            #<different-from: tokenize_atom>
+            #
+            conjure = find_atom_type(atom_s[0])
+
+            if conjure is conjure_right_parenthesis:
+                if m.start('comment_newline') is -1:
+                    j = m.end()
+
+                    wi(j)
+                    wj(j)
+
+                    return conjure_right_parenthesis(s[qi() : j])
+
+                atom_end = m.end('atom')
+
+                wn(conjure_token_newline(s[atom_end : ]))
+
+                return conjure_right_parenthesis(s[qi() : atom_end])
+            #</different-from>
+
+            i = qi()
+
+            if m.start('comment_newline') is -1:
+                wi(m.end('atom'))
+                wj(m.end())
+            else:
+                #
+                #<different-from: tokenize_atom>
+                #
+                raise_unknown_line(3)
+                #</different-from>
+
+            #
+            #   NOTE:
+            #       See note in 'tokenize_atom'
+            #
+            if i == j:
+                #
+                #<different-from: tokenize_atom>
+                #
+                return conjure(atom_s)
+                #</different-from>
+
+            #
+            #<different-from: tokenize_atom>
+            #
+            return PrefixAtom(s[i : j], conjure(atom_s))
+            #</different-from>
+
+        left_parenthesis       = conjure_left_parenthesis(s[qi() : m.end('left_parenthesis__ow')])
+        right_parenthesis__end = m.end('right_parenthesis')
+
+        if m.start('comment_newline') is not -1:
+            raise_unknown_line(4)
+
+        if right_parenthesis__end is not -1:
+            wi(right_parenthesis__end)
+            wj(m.end())
+
+            return EmptyTuple(left_parenthesis, conjure_right_parenthesis(m.group('right_parenthesis')))
+
+        j = m.end()
+
+        wd(qd() + 1)
+        wi(j)
+        wj(j)
+
+        return left_parenthesis
+
+
+    @share
     def tokenize_atom():
         j = qj()
         s = qs()
         m = atom_match(s, j)
 
         if m is none:
-            line('%s: %s', my_name(), portray_string(s[j : ]))
+            #line('%s: %s', my_name(), portray_string(s[j : ]))
             raise_unknown_line(1)
 
         atom_s = m.group('atom')
@@ -30,23 +125,26 @@ def gem():
 
                 wn(conjure_token_newline(s[m.end('atom') : ]))
 
-
             #
-            #   'is' is safe here, as 'i' & 'j' are always saved at the same time (from the same value)
-            #   if they are identical
+            #   Note:
+            #       Can't optimize this to 'i is j' since they might be generated from two different
+            #       calls is empty.  The different calls might have been:
             #
-            if i is j:
+            #           1.  m.end('atom'); .vs.
+            #           2.  m.end()
+            #
+            #       with 'ow' is empty -- and thus have the same value (but different addresses).
+            #
+            if i == j:
                 return find_atom_type(atom_s[0])(atom_s)
 
-            assert i < j
-
-            return PrefixAtom(s[i:j], find_atom_type(atom_s[0])(atom_s))
+            return PrefixAtom(s[i : j], find_atom_type(atom_s[0])(atom_s))
 
         left_parenthesis       = conjure_left_parenthesis(s[qi() : m.end('left_parenthesis__ow')])
         right_parenthesis__end = m.end('right_parenthesis')
 
         if m.start('comment_newline') is not -1:
-            raise_unknown_line(4)
+            raise_unknown_line(3)
 
         if right_parenthesis__end is not -1:
             wi(right_parenthesis__end)
@@ -83,8 +181,7 @@ def gem():
         m = operator_match(s, qj())
 
         if m is none:
-            assert 0
-            line('%s: %s', my_name(), portray_raw_string(s[qj() : ]))
+            #line('%s: %s', my_name(), portray_raw_string(s[qj() : ]))
             raise_unknown_line(1)
 
         operator_s = m.group('operator')
@@ -102,7 +199,7 @@ def gem():
                     wd(d - 1)
 
                 j = m.end()
-                r = conjure(s[qi():j])
+                r = conjure(s[qi() : j])
 
                 wi(j)
                 wj(j)
@@ -120,13 +217,16 @@ def gem():
 
                 return conjure(s[qi():operator_end])
 
-            if (d is 1) and (conjure is conjure_right_parenthesis):
-                i = m.end('operator')
+            if conjure is conjure_right_parenthesis:
+                if d is 1:
+                    i = m.end('operator')
 
-                wd(0)
-                wn(conjure_token_newline(s[i : ]))
+                    wd(0)
+                    wn(conjure_token_newline(s[i : ]))
 
-                return conjure_right_parenthesis(s[qi() : i])
+                    return conjure_right_parenthesis(s[qi() : i])
+
+                wd(d - 1)
 
             r = conjure(s[qi() : ])
 
@@ -138,7 +238,7 @@ def gem():
         right_parenthesis         = m.group('right_parenthesis')
 
         if right_parenthesis is not none:
-            left_parenthesis  = conjure_left_parenthesis(s[qi() : left_parenthesis__ow__end])
+            left_parenthesis = conjure_left_parenthesis(s[qi() : left_parenthesis__ow__end])
 
             if m.end('comment_newline') is -1:
                 right_parenthesis = conjure_right_parenthesis(right_parenthesis)
@@ -158,7 +258,7 @@ def gem():
             return Arguments_0(left_parenthesis, right_parenthesis)
 
         if m.end('comment_newline') is -1:
-            left_parenthesis = conjure_left_parenthesis(s[qi() : m.end('left_parenthesis__ow')])
+            left_parenthesis = conjure_left_parenthesis(s[qi() : left_parenthesis__ow__end])
 
             j = m.end()
 

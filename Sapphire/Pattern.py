@@ -124,6 +124,15 @@ def gem():
         FULL_MATCH('ow_comment_newline_match', G(ow_comment_newline))
         
         MATCH(
+            'argument_first_atom_match',
+            (
+                  G('atom', name | number | single_quote | right_parenthesis) + ow
+                | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
+            ) + Q(comment_newline),
+        )
+
+
+        MATCH(
             'atom_match',
             (
                   G('atom', name | number | single_quote) + ow

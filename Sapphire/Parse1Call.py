@@ -42,7 +42,10 @@ def gem():
     
     @share
     def parse1_arguments__left_parenthesis(left_parenthesis):
-        argument_1 = parse1_atom()
+        argument_1 = parse1_argument_first_atom()
+
+        if argument_1.is_right_parenthesis:
+            raise_unknown_line(1)
 
         while 7 is 7:
             operator_1 = tokenize_operator()
@@ -61,10 +64,14 @@ def gem():
             if operator_1.is_comma:
                 break
 
-            raise_unknown_line(1)
+            raise_unknown_line(2)
 
-        atom_2     = parse1_atom()
-        atom_2     = parse1_argument7(atom_2)
+        argument_2 = parse1_argument_first_atom()
+
+        if argument_2.is_right_parenthesis:
+            raise_unknown_line(3)
+
+        argument_2 = parse1_argument7(argument_2)
         operator_2 = qk()
 
         wk(none)
@@ -73,16 +80,24 @@ def gem():
             if show is 7:
                 line('%s: => %r; %r; %s',
                      my_name(),
-                     Arguments_2(left_parenthesis, argument_1, operator_1, atom_2, operator_2),
+                     Arguments_2(left_parenthesis, argument_1, operator_1, argument_2, operator_2),
                      qn(),
                      portray_raw_string(qs()[qj():]))
 
-            return Arguments_2(left_parenthesis, argument_1, operator_1, atom_2, operator_2)
+            return Arguments_2(left_parenthesis, argument_1, operator_1, argument_2, operator_2)
 
         if not operator_2.is_comma:
-            raise_unknown_line(2)
+            raise_unknown_line(4)
 
-        atom_3 = parse1__atom__or__right_parenthesis()
+        argument_3 = parse1__argument_first_atom()
 
-        line('%s: %r', my_name(), operator_2)
-        raise_unknown_line(3)
+        if argument_3.is_right_parenthesis:
+            return Arguments_2(
+                       left_parenthesis,
+                       argument_1,
+                       operator_1,
+                       argument_2,
+                       Comma_RightParenthesis(operator_2, argument_3),
+                   )
+
+        raise_unknown_line(5)

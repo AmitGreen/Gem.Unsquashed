@@ -60,49 +60,62 @@ def gem():
         display_name = 'or'
 
 
-    class BaseOpenAndCloseParenthesis(KeywordAndOperatorBase):
+    class BaseDualOperator(KeywordAndOperatorBase):
         __slots__ = ((
-            'left_parenthesis',         #   OperatorLeftParenthesis
-            'right_parenthesis',        #   OperatorRightParenthesis
+            'first',         #   OperatorLeftParenthesis
+            'second',        #   OperatorRightParenthesis
         ))
 
 
-        def __init__(t, left_parenthesis, right_parenthesis):
-            t.left_parenthesis  = left_parenthesis
-            t.right_parenthesis = right_parenthesis
+        def __init__(t, first, second):
+            t.first  = first
+            t.second = second
 
 
         def __repr__(t):
             return arrange('<%s %r %r>',
-                           t.__class__.__name__, t.left_parenthesis, t.right_parenthesis)
+                           t.__class__.__name__, t.first, t.second)
 
 
         def display_token(t):
-            if (t.left_parenthesis.s == '(') and (t.right_parenthesis.s == ')'):
-                return t.display_name
+            display_name = t.display_name
+            first_s      = t.first.s
+            second_s     = t.second.s
+
+            if display_name == first_s + second_s:
+                return display_name
 
             return arrange('<%s <%s> <%s>>',
-                           t.display_name,
-                           t.left_parenthesis .s,
-                           t.right_parenthesis.s)
+                           display_name,
+                           portray_string(first_s)    if '\n' in first_s  else   first_s,
+                           portray_string(second_s)   if '\n' in second_s else   second_s)
 
 
         def write(t, w):
-            w(t.left_parenthesis.s + t.right_parenthesis.s)
+            w(t.first.s + t.second.s)
 
 
     @share
-    class Arguments_0(BaseOpenAndCloseParenthesis):
+    class Arguments_0(BaseDualOperator):
         __slots__      = (())
         is_arguments_0 = true
         display_name   = '(0)'
 
 
     @share
-    class EmptyTuple(BaseOpenAndCloseParenthesis):
-        __slots__    = (())
-        is_atom      = true
-        display_name = '()'
+    class Comma_RightParenthesis(BaseDualOperator):
+        __slots__      = (())
+        #   (
+        display_name   = ',)'
+
+
+    @share
+    class EmptyTuple(BaseDualOperator):
+        __slots__                       = (())
+        display_name                    = '()'
+        is__atom__or__right_parenthesis = true
+        is_atom                         = true
+        is_right_parenthesis            = false
 
 
     @share
@@ -332,7 +345,9 @@ def gem():
         ))
 
 
-        is_atom = true
+        is__atom__or__right_parenthesis = true
+        is_atom                         = true
+        is_right_parenthesis            = false
 
 
         def __init__(t, prefix, middle):
