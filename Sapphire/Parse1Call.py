@@ -6,9 +6,6 @@ def gem():
     show = 0
 
 
-    require_gem('Sapphire.Tokenize1Expression')
-
-
     @share
     def parse1_expression_call(left, left_parenthesis):
         return ExpressionCall(left, parse1_arguments__left_parenthesis(left_parenthesis))

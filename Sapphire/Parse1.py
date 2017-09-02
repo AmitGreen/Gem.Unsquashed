@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 7
+    show = 0
 
 
     require_gem('Sapphire.Core')
@@ -16,6 +16,8 @@ def gem():
     require_gem('Sapphire.Parse1Import')
     require_gem('Sapphire.Parse1Simple')
     require_gem('Sapphire.Statement')
+    require_gem('Sapphire.Tokenize1Atom')
+    require_gem('Sapphire.Tokenize1Operator')
 
 
     def parse1_statement_class(m1):
