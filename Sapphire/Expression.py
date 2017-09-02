@@ -7,6 +7,59 @@ def gem():
     require_gem('Sapphire.Elemental')
 
 
+    class BaseBinaryExpression(Object):
+        __slots__ = ((
+            'left',                     #   Expression
+            'operator',                 #   Operator*
+            'right',                    #   Expression
+        ))
+
+
+        def __init__(t, left, operator, right):
+            assert type(left)  is not String
+            assert type(right) is not String
+
+            t.left     = left
+            t.operator = operator
+            t.right    = right
+
+
+        def __repr__(t):
+            return arrange('<%s %r %r %r>', t.__class__.__name__, t.left, t.operator, t.right)
+
+
+        def display_token(t):
+            return arrange('<%s %s %s %s>',
+                           t.display_name,
+                           t.left    .display_token(),
+                           t.operator.display_token(),
+                           t.right   .display_token())
+
+
+        def write(t, w):
+            t.left    .write(w)
+            t.operator.write(w)
+            t.right   .write(w)
+
+
+    @share
+    class CompareEqualExpression(BaseBinaryExpression):
+        __slots__    = (())
+        display_name = '=='
+
+
+    @share
+    class CommaExpression(BaseBinaryExpression):
+        __slots__    = (())
+        display_name = ','
+
+
+    @share
+    class OrExpression(BaseBinaryExpression):
+        __slots__    = (())
+        display_name = 'or'
+
+
     class BaseOpenAndCloseParenthesis(KeywordAndOperatorBase):
         __slots__ = ((
             'left_parenthesis',         #   OperatorLeftParenthesis
@@ -95,60 +148,6 @@ def gem():
             t.comma_0          .write(w)
             t.argument_1       .write(w)
             t.right_parenthesis.write(w)
-
-
-    @share
-    class ExpressionBinaryBase(Object):
-        __slots__ = ((
-            'left',                     #   Expression
-            'operator',                 #   Operator*
-            'right',                    #   Expression
-        ))
-
-
-        def __init__(t, left, operator, right):
-            assert type(left)  is not String
-            assert type(right) is not String
-
-            t.left     = left
-            t.operator = operator
-            t.right    = right
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r %r>', t.__class__.__name__, t.left, t.operator, t.right)
-
-
-        def display_token(t):
-            return arrange('<%s %s %s %s>',
-                           t.display_name,
-                           t.left    .display_token(),
-                           t.operator.display_token(),
-                           t.right   .display_token())
-
-
-        def write(t, w):
-            t.left    .write(w)
-            t.operator.write(w)
-            t.right   .write(w)
-
-
-    @share
-    class CompareEqualExpression(ExpressionBinaryBase):
-        __slots__    = (())
-        display_name = '=='
-
-
-    @share
-    class CommaExpression(ExpressionBinaryBase):
-        __slots__    = (())
-        display_name = ','
-
-
-    @share
-    class OrExpression(ExpressionBinaryBase):
-        __slots__    = (())
-        display_name = 'or'
 
 
     @share
@@ -307,10 +306,10 @@ def gem():
     @share
     class ExpressionMethodCall(Object):
         __slot__ = ((
-            'left',                         #   Expression
-            'dot',                          #   OperatorDot
-            'right',                        #   Identifier
-            'arguments',                    #   Arguments*
+            'left',                     #   Expression
+            'dot',                      #   OperatorDot
+            'right',                    #   Identifier
+            'arguments',                #   Arguments*
         ))
 
 
@@ -323,6 +322,35 @@ def gem():
 
         def __repr__(t):
             return arrange('<ExpressionCall %r %r %r %r>', t.left, t.dot, t.right, t.arguments)
+
+
+    @share
+    class PrefixAtom(Object):
+        __slots__ = ((
+            'prefix',                   #   String+
+            'middle',                   #   Token+
+        ))
+
+
+        is_atom = true
+
+
+        def __init__(t, prefix, middle):
+            t.prefix = prefix
+            t.middle = middle
+
+
+        def __repr__(t):
+            return arrange('<PrefixAtom %r %r>', t.prefix, t.middle)
+
+
+        def display_token(t):
+            return arrange('<prefix-atom %r %s>', t.prefix, t.middle.display_token())
+
+
+        def write(t, w):
+            w(t.prefix)
+            t.middle.write(w)
 
 
     OperatorCompareEqual.compare_expression_meta = CompareEqualExpression

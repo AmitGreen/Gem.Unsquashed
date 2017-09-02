@@ -47,16 +47,16 @@ def gem():
     class ParseContext(Object):
         __slots__ = ((
             'cadence',                  #   Cadence
-            'iterate_lines',            #   Generator
+            'iterate_lines',            #   None | Generator
             'many',                     #   Tuple of *
             'append',                   #   Method
         ))
 
 
-        def __init__(t, iterate_lines):
+        def __init__(t):
             t.cadence = cadence_constructing
 
-            t.iterate_lines = iterate_lines
+            t.iterate_lines = none
             t.many          = many                = []
             t.append        = many.append
 
@@ -98,6 +98,19 @@ def gem():
                 loop += 1
 
 
+        def reset(t, iterate_lines):
+            assert t.cadence.is_initialized_exited_or_exception
+
+            del t.many[:]
+
+            t.iterate_lines = iterate_lines
+
+            return t
+
+
+    parse_context = ParseContext()
+
+
     @export
     def z_initialize(data):
         data_lines = data.splitlines(true)
@@ -127,7 +140,7 @@ def gem():
             wn(none)
 
 
-        return ParseContext(GENERATOR_next_line())
+        return parse_context.reset(GENERATOR_next_line())
 
 
     @export
@@ -147,16 +160,18 @@ def gem():
 
 
     export(
-        'qd',   qd,
-        'qi',   qi,
-        'qj',   qj,
-        'qk',   qk,
-        'qn',   qn,
-        'qs',   qs,
+        'parse_context',    parse_context,
 
-        'wd',   wd,
-        'wi',   wi,
-        'wj',   wj,
-        'wk',   wk,
-        'wn',   wn,
+        'qd',               qd,
+        'qi',               qi,
+        'qj',               qj,
+        'qk',               qk,
+        'qn',               qn,
+        'qs',               qs,
+
+        'wd',               wd,
+        'wi',               wi,
+        'wj',               wj,
+        'wk',               wk,
+        'wn',               wn,
     )

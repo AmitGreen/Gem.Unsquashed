@@ -15,7 +15,7 @@ def gem():
 
 
     @share
-    def parse_argument7(left):
+    def parse1_argument7(left):
         while 7 is 7:
             operator = tokenize_operator()
 
@@ -27,20 +27,22 @@ def gem():
                 left = parse1_expression_index(left, operator)
                 continue
 
-            if operator.is_right_parenthesis:
+            if operator.is__comma__or__right_parenthesis:
                 wk(operator)
 
                 return left
 
-            if show is 7:
-                line('%s: operator: %r', my_name(), operator)
+            if operator.is_arguments_0:
+                left = ExpressionCall(left, operator)
+                continue
 
+            line('%s: operator: %r', my_name(), operator)
             raise_unknown_line(1)
 
     
     @share
     def parse1_arguments__left_parenthesis(left_parenthesis):
-        argument_1 = tokenize_atom()
+        argument_1 = parse1_atom()
 
         while 7 is 7:
             operator_1 = tokenize_operator()
@@ -61,8 +63,8 @@ def gem():
 
             raise_unknown_line(1)
 
-        atom_2     = tokenize_atom()
-        atom_2     = parse_argument7(atom_2)
+        atom_2     = parse1_atom()
+        atom_2     = parse1_argument7(atom_2)
         operator_2 = qk()
 
         wk(none)
@@ -77,4 +79,10 @@ def gem():
 
             return Arguments_2(left_parenthesis, argument_1, operator_1, atom_2, operator_2)
 
-        raise_unknown_line(2)
+        if not operator_2.is_comma:
+            raise_unknown_line(2)
+
+        atom_3 = parse1__atom__or__right_parenthesis()
+
+        line('%s: %r', my_name(), operator_2)
+        raise_unknown_line(3)

@@ -8,23 +8,27 @@ def gem():
 
     @share
     class KeywordAndOperatorBase(Token):
-        is_arguments_0               = false
-        is_colon_newline             = false
-        is_comma                     = false
-        is_compare_operator          = false
-        is_dot                       = false
-        is_equal_sign                = false
-        is_keyword_as                = false
-        is_left_parenthesis          = false
-        is_left_square_bracket       = false
-        is_or_operator               = false
-        is__right_parenthesis__colon = false
-        is_right_parenthesis         = false
-        is_right_square_bracket      = false
-        is_token_newline             = false
+        is_arguments_0                   = false
+        is_colon_newline                 = false
+        is_comma                         = false
+        is__comma__or__right_parenthesis = false
+        is_compare_operator              = false
+        is_dot                           = false
+        is_equal_sign                    = false
+        is_keyword_as                    = false
+        is_left_parenthesis              = false
+        is_left_square_bracket           = false
+        is_or_operator                   = false
+        is__right_parenthesis__colon     = false
+        is_right_parenthesis             = false
+        is_right_square_bracket          = false
+        is_token_newline                 = false
 
 
         def __repr__(t):
+            if '\n' in t.s:
+                return arrange('<%s>', portray_string(t.s))
+
             return arrange('<%s>', t.s)
 
 
@@ -147,10 +151,11 @@ def gem():
 
 
     class OperatorComma(KeywordAndOperatorBase):
-        __slots__    = (())
-        display_name = ','
-        is_comma     = true
-        keyword      = ','
+        __slots__                        = (())
+        display_name                     = ','
+        is_comma                         = true
+        is__comma__or__right_parenthesis = true
+        keyword                          = ','
 
 
     @share
@@ -199,12 +204,13 @@ def gem():
 
 
     class OperatorRightParenthesis(KeywordAndOperatorBase):
-        __slots__            = (())
+        __slots__                        = (())
         #  (
-        display_name         = ')'
-        is_right_parenthesis = true
+        display_name                     = ')'
+        is__comma__or__right_parenthesis = true
+        is_right_parenthesis             = true
         #  (
-        keyword              = ')'
+        keyword                          = ')'
 
 
     @export

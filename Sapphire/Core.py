@@ -17,7 +17,7 @@ def gem():
 
     from Gem import create_DelayedFileOutput, create_StringOutput, produce_cache_functions
     from Gem import read_text_from_path, print_exception_chain
-    from Pearl import conjure_identifier, conjure_token_newline
+    from Pearl import conjure_identifier, conjure_token_newline, parse_context
     from Pearl import qd, qi, qj, qk, qn, qs, raise_unknown_line, Token, wd, wi, wj, wk, wn, z_initialize
 
 
@@ -56,6 +56,7 @@ def gem():
         #
         #   Values
         #
+        'parse_context',                parse_context,
         'tuple_of_2_nones',             ((none, none)),
         'tuple_of_3_nones',             ((none, none, none)),
     )
