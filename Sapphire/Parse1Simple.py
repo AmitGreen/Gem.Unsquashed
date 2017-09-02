@@ -23,7 +23,7 @@ def gem():
 
         wj(m1.end())
 
-        atom = tokenize_normal_atom()
+        atom = tokenize_atom()
 
         newline = qn()
 

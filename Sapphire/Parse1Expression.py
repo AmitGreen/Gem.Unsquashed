@@ -10,21 +10,8 @@ def gem():
 
 
     @share
-    def parse1_nested_atom():
-        if show:
-            line('%s: %r', my_name(), qs()[qj():])
-
-        token = tokenize_nested_atom()
-
-        if token.is_atom:
-            return token
-
-        raise_unknown_line(1)
-
-
-    @share
     def parse1_compare_expression(left, compare_operator):
-        right    = tokenize_normal_atom()
+        right    = tokenize_atom()
         operator = tokenize_operator()
 
         if operator.is_right_parenthesis:
@@ -61,16 +48,13 @@ def gem():
 
     @share
     def parse1_atom():
-        if qd() is 0:
-            token = tokenize_normal_atom()
-        else:
-            token = tokenize_nested_atom()
+        token = tokenize_atom()
 
         if token.is_atom:
             return token
 
         if token.is_left_parenthesis:
-            left     = parse1_nested_atom()
+            left     = parse1_atom()
             operator = tokenize_operator()
 
             while 7 is 7:
@@ -91,7 +75,7 @@ def gem():
 
     @share
     def parse1_expression_index(left, left_square_bracket):
-        atom = tokenize_nested_atom()
+        atom = tokenize_atom()
 
         while 7 is 7:
             operator = tokenize_operator()
@@ -103,15 +87,14 @@ def gem():
 
 
     def parse1_statement_assign__left__equal_sign(indented, left, equal_sign):
-        if show is 7:
-            line('%s: indented: %r; left: %r; equal_sign: %r; %s',
-                 my_name(), indented, left, equal_sign, portray_string(qs()[qj():]))
-
-        atom    = tokenize_normal_atom()
+        atom    = parse1_atom()
         newline = qn()
 
         if newline is not none:
             return AssignStatement(indented, left, equal_sign, atom, newline)
+
+        line('%s: indented: %r; left: %r; equal_sign: %r; atom: %s; s: %s',
+             my_name(), indented, left, equal_sign, atom, portray_string(qs()[qj():]))
 
         raise_unknown_line(2)
 

@@ -7,49 +7,12 @@ def gem():
 
 
     @share
-    def tokenize_nested_atom():
+    def tokenize_atom():
         s = qs()
         m = atom_match(s, qj())
 
         if m is none:
-            raise_unknown_line(1)
-
-        atom_s = m.group('atom')
-
-        if atom_s is not none:
-            if m.start('comment_newline') is not -1:
-                raise_unknown_line(3)
-
-            wi(m.end('atom'))
-            wj(m.end())
-
-            return find_atom_type(atom_s[0])(atom_s)
-
-        left_parenthesis  = conjure_left_parenthesis(s[qi() : m.end('left_parenthesis__ow')])
-        right_parenthesis = m.group('right_parenthesis')
-
-        if right_parenthesis is not none:
-            raise_unknown_line(2)
-
-        if m.start('comment_newline') is not -1:
-            raise_unknown_line(3)
-
-        j = m.end()
-
-        wi(j)
-        wj(j)
-
-        return left_parenthesis
-
-
-    @share
-    def tokenize_normal_atom():
-        s = qs()
-        m = atom_match(s, qj())
-
-        if m is none:
-            line('%s: %s', my_name(), portray_raw_string(s[qj():]))
-            assert 0
+            line('%s: %s', my_name(), portray_string(s[qj():]))
             raise_unknown_line(1)
 
         atom_s = m.group('atom')
@@ -59,18 +22,24 @@ def gem():
                 wi(m.end('atom'))
                 wj(m.end())
             else:
+                if qd() is not 0:
+                    raise_unknown_line(2)
+
                 wn(conjure_token_newline(s[m.end('atom'):]))
 
             return find_atom_type(atom_s[0])(atom_s)
 
-        left_parenthesis  = conjure_left_parenthesis(s[qi() : m.end('left_parenthesis__ow')])
-        right_parenthesis = m.group('right_parenthesis')
-
-        if right_parenthesis is not none:
-            raise_unknown_line(2)
+        left_parenthesis       = conjure_left_parenthesis(s[qi() : m.end('left_parenthesis__ow')])
+        right_parenthesis__end = m.end('right_parenthesis')
 
         if m.start('comment_newline') is not -1:
             raise_unknown_line(3)
+
+        if right_parenthesis__end is not -1:
+            wi(right_parenthesis__end)
+            wj(m.end())
+
+            return EmptyTuple(left_parenthesis, conjure_right_parenthesis(m.group('right_parenthesis')))
 
         j = m.end()
 
@@ -147,10 +116,10 @@ def gem():
                 wi(m.end('right_parenthesis'))
                 wj(m.end())
             else:
-                if qd() is 0:
-                    wn(conjure_token_newline(s[m.end('right_parenthesis'):]))
-                else:
+                if qd() is not 0:
                     raise_unknown_line(5)
+
+                wn(conjure_token_newline(s[m.end('right_parenthesis'):]))
 
             return Arguments_0(left_parenthesis, right_parenthesis)
 

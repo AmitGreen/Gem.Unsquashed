@@ -7,15 +7,11 @@ def gem():
     require_gem('Sapphire.Elemental')
 
 
-    @share
-    class Arguments_0(KeywordAndOperatorBase):
+    class BaseOpenAndCloseParenthesis(KeywordAndOperatorBase):
         __slots__ = ((
             'left_parenthesis',         #   OperatorLeftParenthesis
             'right_parenthesis',        #   OperatorRightParenthesis
         ))
-
-
-        is_arguments_0 = true
 
 
         def __init__(t, left_parenthesis, right_parenthesis):
@@ -24,20 +20,36 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<Arguments_0 %r %r>', t.left_parenthesis, t.right_parenthesis)
+            return arrange('<%s %r %r>',
+                           t.__class__.__name__, t.left_parenthesis, t.right_parenthesis)
 
 
         def display_token(t):
             if (t.left_parenthesis.s == '(') and (t.right_parenthesis.s == ')'):
-                return '<(0)>'
+                return t.display_name
 
-            return arrange('<(0) <%s> <%s>>',
+            return arrange('<%s <%s> <%s>>',
+                           t.display_name,
                            t.left_parenthesis .s,
                            t.right_parenthesis.s)
 
 
         def write(t, w):
             w(t.left_parenthesis.s + t.right_parenthesis.s)
+
+
+    @share
+    class Arguments_0(BaseOpenAndCloseParenthesis):
+        __slots__      = (())
+        is_arguments_0 = true
+        display_name   = '(0)'
+
+
+    @share
+    class EmptyTuple(BaseOpenAndCloseParenthesis):
+        __slots__    = (())
+        is_atom      = true
+        display_name = '()'
 
 
     @share

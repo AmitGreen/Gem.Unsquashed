@@ -40,7 +40,7 @@ def gem():
     
     @share
     def parse1_arguments__left_parenthesis(left_parenthesis):
-        argument_1 = tokenize_nested_atom()
+        argument_1 = tokenize_atom()
 
         while 7 is 7:
             operator_1 = tokenize_operator()
@@ -61,7 +61,7 @@ def gem():
 
             raise_unknown_line(1)
 
-        atom_2     = tokenize_nested_atom()
+        atom_2     = tokenize_atom()
         atom_2     = parse_argument7(atom_2)
         operator_2 = qk()
 

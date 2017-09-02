@@ -65,7 +65,7 @@ def gem():
 
         wj(m.end())
 
-        left = tokenize_normal_atom()
+        left = tokenize_atom()
 
         if qn() is not none:
             raise_unknown_line(2)
@@ -82,7 +82,7 @@ def gem():
 
             raise_unknown_line(3)
 
-        right      = tokenize_normal_atom()
+        right      = tokenize_atom()
         operator_2 = tokenize_operator()
 
         if operator_2.is_colon_newline:
