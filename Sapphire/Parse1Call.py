@@ -36,7 +36,7 @@ def gem():
                 left = ExpressionCall(left, operator)
                 continue
 
-            line('%s: operator: %r', my_name(), operator)
+            my_line('operator: %r', operator)
             raise_unknown_line(1)
 
     
@@ -78,11 +78,10 @@ def gem():
 
         if operator_2.is_right_parenthesis:
             if show is 7:
-                line('%s: => %r; %r; %s',
-                     my_name(),
-                     Arguments_2(left_parenthesis, argument_1, operator_1, argument_2, operator_2),
-                     qn(),
-                     portray_raw_string(qs()[qj():]))
+                my_line('=> %r; %r; %s',
+                        Arguments_2(left_parenthesis, argument_1, operator_1, argument_2, operator_2),
+                        qn(),
+                        portray_raw_string(qs()[qj():]))
 
             return Arguments_2(left_parenthesis, argument_1, operator_1, argument_2, operator_2)
 

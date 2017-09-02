@@ -44,7 +44,7 @@ def gem():
                 wk(none)
                 continue
 
-            line('%s: %r %r %r', my_name(), keyword_if, left, operator)
+            my_line('%r %r %r', keyword_if, left, operator)
             raise_unknown_line(3)
 
 

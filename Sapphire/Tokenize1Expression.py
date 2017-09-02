@@ -24,7 +24,7 @@ def gem():
         #</different-from>
 
         if m is none:
-            line('%s: %s', my_name(), portray_string(s[j : ]))
+            my_line('%s', portray_string(s[j : ]))
             raise_unknown_line(1)
 
         atom_s = m.group('atom')
@@ -108,7 +108,7 @@ def gem():
         m = atom_match(s, j)
 
         if m is none:
-            #line('%s: %s', my_name(), portray_string(s[j : ]))
+            #my_line('%s', portray_string(s[j : ]))
             raise_unknown_line(1)
 
         atom_s = m.group('atom')
@@ -144,7 +144,7 @@ def gem():
         right_parenthesis__end = m.end('right_parenthesis')
 
         if m.start('comment_newline') is not -1:
-            line('%s: %r %r', my_name(), left_parenthesis, right_parenthesis__end)
+            my_line('%r %r', left_parenthesis, right_parenthesis__end)
             raise_unknown_line(3)
 
         if right_parenthesis__end is not -1:
@@ -182,7 +182,7 @@ def gem():
         m = operator_match(s, qj())
 
         if m is none:
-            #line('%s: %s', my_name(), portray_raw_string(s[qj() : ]))
+            #my_line('%s', portray_raw_string(s[qj() : ]))
             raise_unknown_line(1)
 
         operator_s = m.group('operator')
@@ -276,6 +276,6 @@ def gem():
         wd(qd() + 1)
 
         if show is 7:
-            line('%s: %r; %s', my_name(), left_parenthesis, portray_string(s[qj() : ]))
+            my_line('%r; %s', left_parenthesis, portray_string(s[qj() : ]))
 
         return left_parenthesis

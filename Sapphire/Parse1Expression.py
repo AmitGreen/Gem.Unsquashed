@@ -27,14 +27,14 @@ def gem():
     @share
     def parse1_or_expression(left, or_operator):
         if show is 7:
-            line('%s: %r, %r, %s', my_name(), left, or_operator, portray_string(qs()[qj():]))
+            my_line('%r, %r, %s', left, or_operator, portray_string(qs()[qj():]))
 
         right    = parse1_atom()
         operator = tokenize_operator()
 
         if show is 7:
-            line('%s: %r, %r, %r, %r, %s',
-                 my_name(), left, or_operator, right, operator, portray_string(qs()[qj():]))
+            my_line('%r, %r, %r, %r, %s',
+                    left, or_operator, right, operator, portray_string(qs()[qj():]))
 
         if (operator.is_right_parenthesis) or (operator.is_colon_newline):
             assert qk() is none
@@ -124,8 +124,8 @@ def gem():
         if newline is not none:
             return AssignStatement(indented, left, equal_sign, atom, newline)
 
-        line('%s: indented: %r; left: %r; equal_sign: %r; atom: %s; s: %s',
-             my_name(), indented, left, equal_sign, atom, portray_string(qs()[qj():]))
+        my_line('indented: %r; left: %r; equal_sign: %r; atom: %s; s: %s',
+                indented, left, equal_sign, atom, portray_string(qs()[qj():]))
 
         raise_unknown_line(2)
 
@@ -135,8 +135,8 @@ def gem():
         s = qs()
 
         if show:
-            line('%s: indented: %r, left: %r; s: %r',
-                 my_name(), indented, left, s[qj():])
+            my_line('indented: %r, left: %r; s: %r',
+                    indented, left, s[qj():])
 
         while 7 is 7:
             operator = tokenize_operator()

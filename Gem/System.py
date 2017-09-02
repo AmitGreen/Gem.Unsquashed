@@ -10,9 +10,27 @@ def gem():
     caller_frame_1 = Method(python_frame, 1)
 
 
-    @built_in
+    @export
     def my_name():
         return caller_frame_1().f_code.co_name
+
+
+    @built_in
+    def my_line(format = none, *arguments):
+        if format is none:
+            assert length(arguments) is 0
+
+            write_standard_output(caller_frame_1().f_code.co_name + '\n')
+        else:
+            write_standard_output(
+                    (
+                          caller_frame_1().f_code.co_name
+                        + (format % arguments   if arguments else   format)
+                        + '\n'
+                    ),
+                )
+
+        flush_standard_output()
  
 
     export(
