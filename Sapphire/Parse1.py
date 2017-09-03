@@ -13,6 +13,7 @@ def gem():
     require_gem('Sapphire.Parse1Call')
     require_gem('Sapphire.Parse1Complex')
     require_gem('Sapphire.Parse1Expression')
+    require_gem('Sapphire.Parse1ExpressionStatement')
     require_gem('Sapphire.Parse1From')
     require_gem('Sapphire.Parse1Import')
     require_gem('Sapphire.Parse1Simple')
