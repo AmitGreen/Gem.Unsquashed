@@ -222,6 +222,15 @@ def gem():
 
 
     @share
+    class Tuple_1(ExpressionBookcase):
+        __slots__                       = (())
+        display_name                    = '{,}'
+        is__atom__or__right_parenthesis = true
+        is_atom                         = true
+        is_right_parenthesis            = false
+
+
+    @share
     class ExpressionCall(Object):
         __slot__ = ((
             'left',                         #   Expression

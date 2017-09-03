@@ -88,7 +88,7 @@ def gem():
         return tokenize__atom__X__left_parenthesis__newline(m)
 
 
-    def tokenize__argument_first_atom__X__newline(m):
+    def tokenize__comma__first_atom__X__newline(m):
         atom_s = m.group('atom')
 
         if atom_s is not none:
@@ -124,9 +124,8 @@ def gem():
     @share
     def tokenize_atom():
         j = qj()
-        s = qs()
 
-        m = atom_match(s, j)
+        m = atom_match(qs(), j)
 
         if m is none:
             raise_unknown_line(1)
@@ -140,10 +139,10 @@ def gem():
             r = find_atom_type(atom_s[0])(atom_s)
 
             #
-            #<same-as: tokenize__argument_first_atom>
+            #<same-as: tokenize__argument__first_atom & tokenize__comma__first_atom>
             #
             if qi() != j:
-                r = PrefixAtom(s[qi() : j], r)
+                r = PrefixAtom(qs()[qi() : j], r)
 
             wi(m.end('atom'))
             wj(m.end())
@@ -152,32 +151,31 @@ def gem():
             #</same-as>
 
         #
-        #<same-as: tokenize__argument_first_atom>
+        #<same-as: tokenize__argument__first_atom & tokenize__comma__first_atom>
         #
         return tokenize_atom__X__left_parenthesis(m)
         #</same-as>
 
 
     @share
-    def tokenize__argument_first_atom():
-        #if show is 7:
-        #    my_line(portray_string(qs()[qj() : ]))
-
+    def tokenize__argument__first_atom():
         assert qd() > 0
 
+        #
+        #<same-as: tokenize__comma__first_atom>
+        #
         j = qj()
-        s = qs()
 
-        m = argument_first_atom_match(s, j)
+        m = argument_first_atom_match(qs(), j)
 
         if m is none:
-            #my_line(portray_string(s[j : ]))
             raise_unknown_line(1)
 
         if m.start('comment_newline') is not -1:
-            return tokenize__argument_first_atom__X__newline(m)
+            return tokenize__comma__first_atom__X__newline(m)
 
         atom_s = m.group('atom')
+        #</same-as>
 
         if atom_s is not none:
             conjure = find_atom_type(atom_s[0])
@@ -185,11 +183,13 @@ def gem():
             if conjure is conjure_right_parenthesis:
                 j = m.end()
 
+                r = conjure_right_parenthesis(qs()[qi() : j])
+
                 wd(qd() - 1)
                 wi(j)
                 wj(j)
 
-                return conjure_right_parenthesis(s[qi() : j])
+                return r
 
             r = conjure(atom_s)
 
@@ -197,7 +197,67 @@ def gem():
             #<same-as: tokenize_atom>
             #
             if qi() != j:
-                r = PrefixAtom(s[qi() : j], r)
+                r = PrefixAtom(qs()[qi() : j], r)
+
+            wi(m.end('atom'))
+            wj(m.end())
+
+            return r
+            #</same-as>
+
+        #
+        #<same-as: tokenize_atom>
+        #
+        return tokenize_atom__X__left_parenthesis(m)
+        #</same-as>
+
+
+    @share
+    def tokenize__comma__first_atom():
+        j = qj()
+
+        #
+        #<same-as: tokenize__argument__first_atom>
+        #
+        m = argument_first_atom_match(qs(), j)
+
+        if m is none:
+            #my_line(portray_string(qs()[qj() : ]))
+            raise_unknown_line(1)
+
+        if m.start('comment_newline') is not -1:
+            return tokenize__comma__first_atom__X__newline(m)
+
+        atom_s = m.group('atom')
+        #</same-as>
+
+        if atom_s is not none:
+            conjure = find_atom_type(atom_s[0])
+
+            if conjure is conjure_right_parenthesis:
+                d = qd()
+                j = m.end()
+
+                if d is 0:
+                    raise_unknown_line(2)
+
+                assert d > 0
+
+                r = conjure_right_parenthesis(qs()[qi() : j])
+
+                wd(d - 1)
+                wi(j)
+                wj(j)
+
+                return r
+
+            r = conjure(atom_s)
+
+            #
+            #<same-as: tokenize_atom>
+            #
+            if qi() != j:
+                r = PrefixAtom(qs()[qi() : j], r)
 
             wi(m.end('atom'))
             wj(m.end())

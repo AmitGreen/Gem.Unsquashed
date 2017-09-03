@@ -47,11 +47,11 @@ def gem():
 
 
     @share
-    def parse1__argument_first_atom():
+    def parse1__argument__first_atom():
         #
         #<different-from: parse1_atom>
         #
-        token = tokenize__argument_first_atom()
+        token = tokenize__argument__first_atom()
 
         if token.is__atom__or__right_parenthesis:
             return token
@@ -88,7 +88,7 @@ def gem():
             left     = parse1_atom()
             operator = tokenize_operator()
 
-            while 7 is 7:
+            while not operator.is_comma:
                 if operator.is_right_parenthesis:
                     return PathenthesizedExpression(token, left, operator)
 
@@ -101,7 +101,14 @@ def gem():
 
                 raise_unknown_line(2)
 
-        raise_unknown_line(3)
+            token_2 = tokenize__comma__first_atom()
+
+            if token_2.is_right_parenthesis:
+                return Tuple_1(token, left, Comma_RightParenthesis(operator, token_2))
+
+            raise_unknown_line(3)
+
+        raise_unknown_line(4)
 
 
     @share
