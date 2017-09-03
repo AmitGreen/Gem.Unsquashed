@@ -66,7 +66,31 @@ def gem():
             raise_unknown_line(1)
             #</different-from>
 
-        raise_unknown_line(2)
+        right_parenthesis__end = m.end('right_parenthesis')
+
+        if right_parenthesis__end is not -1:
+            left_parenthesis__ow__end = m.end('left_parenthesis__ow')
+
+            if d is 0:
+                raise_unknown_line(2)
+
+            r = EmptyTuple(
+                    conjure_left_parenthesis (s[qi() : left_parenthesis__ow__end]),
+                    conjure_right_parenthesis(s[left_parenthesis__ow__end : ]),
+                )
+
+            skip_tokenize_prefix()
+
+            return r
+
+        if d is 0:
+            raise_unknown_line(3)
+
+        r = conjure_left_parenthesis(s[qi() : ])
+
+        skip_tokenize_prefix()
+
+        return r
 
 
     @share
@@ -160,7 +184,31 @@ def gem():
 
             return PrefixAtom(s[qi() : qj()], r)
 
-        raise_unknown_line(2)
+        right_parenthesis__end = m.end('right_parenthesis')
+
+        if right_parenthesis__end is not -1:
+            left_parenthesis__ow__end = m.end('left_parenthesis__ow')
+
+            if d is 0:
+                raise_unknown_line(2)
+
+            r = EmptyTuple(
+                    conjure_left_parenthesis (s[qi() : left_parenthesis__ow__end]),
+                    conjure_right_parenthesis(s[left_parenthesis__ow__end : ]),
+                )
+
+            skip_tokenize_prefix()
+
+            return r
+
+        if d is 0:
+            raise_unknown_line(3)
+
+        r = conjure_left_parenthesis(s[qi() : ])
+
+        skip_tokenize_prefix()
+
+        return r
 
 
     @share
@@ -170,7 +218,6 @@ def gem():
         m = atom_match(s, j)
 
         if m is none:
-            #my_line(portray_string(s[j : ]))
             raise_unknown_line(1)
 
         if m.start('comment_newline') is not -1:

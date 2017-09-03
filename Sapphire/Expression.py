@@ -204,8 +204,11 @@ def gem():
 
     @share
     class PathenthesizedExpression(ExpressionBookcase):
-        __slots__    = (())
-        display_name = '()'
+        __slots__                       = (())
+        display_name                    = '()'
+        is__atom__or__right_parenthesis = true
+        is_atom                         = true
+        is_right_parenthesis            = false
 
 
         def display_token(t):
