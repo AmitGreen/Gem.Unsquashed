@@ -22,75 +22,36 @@ def gem():
 
 
     def tokenize__argument_first_atom__X__newline(m):
-        d = qd()
-        s = qs()
-
-        #
-        #<different-from: tokenize_atom__X__newline>
-        #
-        assert d > 0
-        #</different-from>
-
         atom_s = m.group('atom')
 
         if atom_s is not none:
-            #
-            #<different-from: tokenize_atom__X__newline>
-            #
             conjure = find_atom_type(atom_s[0])
 
             if conjure is conjure_right_parenthesis:
-                if show is 7:
-                    my_line('d: %d', d)
-
-                if d is 1:
+                if qd() is 1:
                     atom_end = m.end('atom')
+                    s        = qs()
+
+                    r = conjure_right_parenthesis(s[qi() : atom_end])
 
                     wd0()
                     wn(conjure_token_newline(s[atom_end : ]))
 
-                    return conjure_right_parenthesis(s[qi() : atom_end])
+                    return r
 
-                wd(d - 1)
+                assert qd() > 0
 
-                r = conjure_right_parenthesis(s[qi() : ])
+                wd(qd() - 1)
+
+                r = conjure_right_parenthesis(qs()[qi() : ])
 
                 skip_tokenize_prefix()
 
                 return r
-            #</different-from>
 
-            #
-            #<different-from: tokenize_atom__X__newline>
-            #
             raise_unknown_line(1)
-            #</different-from>
 
-        right_parenthesis__end = m.end('right_parenthesis')
-
-        if right_parenthesis__end is not -1:
-            left_parenthesis__ow__end = m.end('left_parenthesis__ow')
-
-            if d is 0:
-                raise_unknown_line(2)
-
-            r = EmptyTuple(
-                    conjure_left_parenthesis (s[qi() : left_parenthesis__ow__end]),
-                    conjure_right_parenthesis(s[left_parenthesis__ow__end : ]),
-                )
-
-            skip_tokenize_prefix()
-
-            return r
-
-        if d is 0:
-            raise_unknown_line(3)
-
-        r = conjure_left_parenthesis(s[qi() : ])
-
-        skip_tokenize_prefix()
-
-        return r
+        return tokenize__atom__X__left_parenthesis__newline(m)
 
 
     @share
@@ -166,32 +127,16 @@ def gem():
         return left_parenthesis
 
 
-    def tokenize_atom__X__newline(m):
-        d      = qd()
-        s      = qs()
-        atom_s = m.group('atom')
-
-        if atom_s is not none:
-            if d is not 0:
-                raise_unknown_line(1)
-
-            r = find_atom_type(atom_s[0])(atom_s)
-
-            wn(conjure_token_newline(s[m.end('atom') : ]))
-
-            if qi() == qj():
-                return r
-
-            return PrefixAtom(s[qi() : qj()], r)
-
+    def tokenize__atom__X__left_parenthesis__newline(m):
         right_parenthesis__end = m.end('right_parenthesis')
 
         if right_parenthesis__end is not -1:
             left_parenthesis__ow__end = m.end('left_parenthesis__ow')
 
-            if d is 0:
-                raise_unknown_line(2)
+            if qd() is 0:
+                raise_unknown_line(1)
 
+            s = qs()
             r = EmptyTuple(
                     conjure_left_parenthesis (s[qi() : left_parenthesis__ow__end]),
                     conjure_right_parenthesis(s[left_parenthesis__ow__end : ]),
@@ -201,14 +146,33 @@ def gem():
 
             return r
 
-        if d is 0:
-            raise_unknown_line(3)
+        if qd() is 0:
+            raise_unknown_line(2)
 
-        r = conjure_left_parenthesis(s[qi() : ])
+        r = conjure_left_parenthesis(qs()[qi() : ])
 
         skip_tokenize_prefix()
 
         return r
+
+
+    def tokenize_atom__X__newline(m):
+        atom_s = m.group('atom')
+
+        if atom_s is not none:
+            if qd() is not 0:
+                raise_unknown_line(1)
+
+            r = find_atom_type(atom_s[0])(atom_s)
+
+            wn(conjure_token_newline(qs()[m.end('atom') : ]))
+
+            if qi() == qj():
+                return r
+
+            return PrefixAtom(qs()[qi() : qj()], r)
+
+        return tokenize__atom__X__left_parenthesis__newline(m)
 
 
     @share
