@@ -9,6 +9,7 @@ def gem():
     require_gem('Sapphire.Core')
     require_gem('Sapphire.Expression')
     require_gem('Sapphire.Match')
+    require_gem('Sapphire.Parse1Atom')
     require_gem('Sapphire.Parse1Call')
     require_gem('Sapphire.Parse1Complex')
     require_gem('Sapphire.Parse1Expression')
