@@ -367,3 +367,26 @@ def gem():
         wj(j)
 
         return r
+
+
+    @share
+    def tokenize__right_parenthesis__colon():
+        assert qd() is 1
+        assert qk() is none
+        assert qn() is none
+
+        s = qs()
+
+        m = right_parenthesis__colon__match(s, qj())
+
+        if m is none:
+            raise_unknown_line(1)
+
+        right_parenthesis__colon__end = m.end('right_parenthesis__colon')
+
+        r = OperatorRightParenthesisColon(s[qi() : right_parenthesis__colon__end])
+
+        wd0()
+        wn(conjure_token_newline(s[right_parenthesis__colon__end : ]))
+
+        return r

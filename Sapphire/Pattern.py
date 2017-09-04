@@ -288,7 +288,7 @@ def gem():
 
         FULL_MATCH(
             'right_parenthesis__colon__match',
-            G(ow__right_parenthesis__colon) + G(ow_comment_newline),
+            G(right_parenthesis__colon) + G(ow_comment_newline),
         )
 
         MATCH(

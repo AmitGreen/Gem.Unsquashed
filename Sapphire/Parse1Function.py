@@ -37,39 +37,28 @@ def gem():
         if not operator_1.is_left_parenthesis:
             raise_unknown_line(3)
 
-        s = qs()
-
         #
         #<parameter_1>
         #
-        m4 = name_match(s, qj())
+        parameter_1 = tokenize_name()
 
-        if m4 is none:
+        if qn() is not none:
             raise_unknown_line(4)
-
-        parameter_1 = m4.group()
         #</parameter_1>
 
-        #
-        #<right-parenthesis-colon-newline>
-        #
-        m5 = right_parenthesis__colon__match(s, m4.end())
+        operator_2 = tokenize__right_parenthesis__colon()
 
-        if m5 is none:
+        if not operator_2.is__right_parenthesis__colon:
             raise_unknown_line(5)
-        #</right-parenthesis-colon-newline>
 
-        assert qd() is 1
+        newline = qn()
 
-        wd0()
-
+        if newline is none:
+            raise_unknown_line(6)
+            
         return FunctionHeader(
                    keyword_function,
                    name,
-                   ParameterColon_1(
-                       operator_1,
-                       conjure_identifier(parameter_1),
-                       OperatorRightParenthesisColon(m5.group('ow__right_parenthesis__colon')),
-                   ),
-                   conjure_token_newline(m5.group('ow_comment_newline')),
+                   ParameterColon_1(operator_1, parameter_1, operator_2),
+                   newline,
                )
