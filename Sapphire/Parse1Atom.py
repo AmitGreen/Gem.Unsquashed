@@ -11,26 +11,37 @@ def gem():
         #   TODO:
         #       Replace this with 'parse1__parenthesis__first_atom' & handle a right-parenthesis as an empty tuple
         #
-        left = parse1_atom()
+        middle_1 = parse1_atom()
 
-        operator = tokenize_operator()
+        operator_1 = tokenize_operator()
 
-        if not operator.is_end_of_expression:
-            left = parse1_expression__left__operator(left, operator)
+        if not operator_1.is_end_of_expression:
+            middle_1 = parse1_expression__left__operator(middle_1, operator_1)
 
-            operator = qk()
+            operator_1 = qk()
             wk(none)
 
-        if operator.is_right_parenthesis:
-            return PathenthesizedExpression(left_parenthesis, left, operator)
+        if operator_1.is_right_parenthesis:
+            return PathenthesizedExpression(left_parenthesis, middle_1, operator_1)
 
-        if not operator.is_comma:
+        if not operator_1.is_comma:
             raise_unknown_line(2)
 
-        token_2 = tokenize__comma__first_atom()
+        middle_2 = tokenize__comma__first_atom()
 
-        if token_2.is_right_parenthesis:
-            return Tuple_1(left_parenthesis, left, Comma_RightParenthesis(operator, token_2))
+        if middle_2.is_right_parenthesis:
+            return Tuple_1(left_parenthesis, middle_1, Comma_RightParenthesis(operator_1, middle_2))
+
+        operator_2 = tokenize_operator()
+
+        if not operator_2.is_end_of_expression:
+            middle_2 = parse1_expression__left__operator(middle_2, operator_2)
+
+            operator_2 = qk()
+            wk(none)
+
+        if operator_2.is_right_parenthesis:
+            return Tuple_2(left_parenthesis, middle_1, operator_1, middle_2, operator_2)
 
         raise_unknown_line(3)
 

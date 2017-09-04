@@ -33,6 +33,10 @@ def gem():
             return arrange('<%s>', t.s)
 
 
+        def display_full_token(t):
+            return arrange('<%s %s>', t.display_name, portray_string(t.s))
+
+
         def display_token(t):
             if t.s == t.display_name:
                 return arrange('<%s>', t.display_name)

@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 0
+    show = 7
 
 
     require_gem('Sapphire.Core')
@@ -335,5 +335,5 @@ def gem():
 
                     raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')
 
-                line('Passed: identical dump fron parse tree.  Total: %d line%s',
+                line('Passed: identical dump from parse tree.  Total: %d line%s',
                      length(many), (''   if length(many) is 0 else   's'))

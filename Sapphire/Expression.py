@@ -380,4 +380,55 @@ def gem():
             t.middle.write(w)
 
 
+    @share
+    class Tuple_2(Object):
+        __slots__ = ((
+            'left',                     #   OperatorLeftParenthesis
+            'middle_1',                 #   Expression+
+            'comma_1',                  #   OperatorComma
+            'middle_2',                 #   Expression+
+            'right',                    #   OperatorRightParenthesis | Comma_RightParenthesis
+        ))
+
+
+        is__atom__or__right_parenthesis = true
+        is_atom                         = true
+        is_right_parenthesis            = false
+
+
+        def __init__(t, left, middle_1, comma_1, middle_2, right):
+            t.left     = left
+            t.middle_1 = middle_1
+            t.comma_1  = comma_1
+            t.middle_2 = middle_2
+            t.right    = right
+
+
+        def __repr__(t):
+            return arrange('<Tuple_2 %r %r %r %r %r>', t.left, t.middle_1, t.comma_1, t.middle_2, t.right)
+
+
+        def display_token(t):
+            if t.left.s == '(' and t.right.s == ')':
+                return arrange('({,2} %s %s %s)',
+                               t.middle_1.display_token(),
+                               t.comma_1 .display_token(),
+                               t.middle_2.display_token())
+
+            return arrange('({,2} %s %s %s %s %s)',
+                           t.left    .display_full_token(),
+                           t.middle_1.display_token(),
+                           t.comma_1 .display_token(),
+                           t.middle_2.display_token(),
+                           t.right   .display_full_token())
+
+
+        def write(t, w):
+            w(t.left.s)
+            t.middle_1.write(w)
+            t.comma_1 .write(w)
+            t.middle_2.write(w)
+            t.right   .write(w)
+
+
     OperatorCompareEqual.compare_expression_meta = CompareEqualExpression
