@@ -76,7 +76,7 @@ def gem():
 
 
     @share
-    class ClassOrFunctionHeaderBase(Object):
+    class ClassOrFunctionHeaderBase_Old(Object):
         __slots__ = ((
             'keyword',                  #   KeywordClass | KeywordFunction
             'name',                     #   String
@@ -114,9 +114,41 @@ def gem():
 
 
     @share
-    class ClassHeader(ClassOrFunctionHeaderBase):
+    class ClassHeader(ClassOrFunctionHeaderBase_Old):
         __slots__    = (())
         display_name = 'class'
+
+
+    @share
+    class ClassOrFunctionHeaderBase(Object):
+        __slots__ = ((
+            'keyword',                  #   KeywordClass | KeywordFunction
+            'name',                     #   String
+            'parameters_colon',         #   Parameter_0 | Parameter_1
+        ))
+
+
+        def __init__(t, keyword, name, parameters_colon):
+            t.keyword          = keyword
+            t.name             = name
+            t.parameters_colon = parameters_colon
+
+
+        def  __repr__(t):
+            return arrange('<%s %s %r %r>', t.__class__.__name__, t.keyword, t.name, t.parameters_colon)
+
+
+        def display_token(t):
+            return arrange('<%s <%s> %s %s>',
+                           t.display_name,
+                           t.keyword.s,
+                           t.name,
+                           t.parameters_colon.display_token())
+
+
+        def write(t, w):
+            w(t.keyword.s + t.name.s)
+            t.parameters_colon.write(w)
 
 
     @share
@@ -302,12 +334,6 @@ def gem():
 
 
     @share
-    class ParameterColon_0(KeywordAndOperatorBase):
-        display_name         = '():'
-        is_parameter_colon_0 = true
-
-
-    @share
     class ParameterColon_1(Object):
         __slots__ = ((
             'left_parenthesis',             #   OperatorLeftParenthesis
@@ -319,8 +345,7 @@ def gem():
         def __init__(t, left_parenthesis, argument_1, right_parenthesis__colon):
             assert left_parenthesis        .is_left_parenthesis
             assert type(argument_1) is not String
-            assert right_parenthesis__colon.is__right_parenthesis__colon
-
+            assert right_parenthesis__colon.is__right_parenthesis__colon__newline
 
             t.left_parenthesis         = left_parenthesis
             t.argument_1               = argument_1

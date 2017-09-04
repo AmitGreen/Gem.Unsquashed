@@ -286,9 +286,21 @@ def gem():
             ) + Q(comment_newline),
         )
 
-        FULL_MATCH(
-            'right_parenthesis__colon__match',
-            G(right_parenthesis__colon) + G(ow_comment_newline),
+        MATCH(
+            'parameter_operator_match',
+            (
+                  (
+                        (
+                              G(comma) + ow
+                            + P(
+                                    G('comma_RP', right_parenthesis) + ow
+                                  + P(G('comma_RP_colon', colon) + ow)
+                              )
+                        )
+                      | G(right_parenthesis) + ow + P(G('RP_colon', colon) + ow)
+                  )
+                + Q(comment_newline)
+            )
         )
 
         MATCH(

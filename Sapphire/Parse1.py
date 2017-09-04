@@ -8,6 +8,7 @@ def gem():
 
     require_gem('Sapphire.Core')
     require_gem('Sapphire.Expression')
+    require_gem('Sapphire.JoinedToken')
     require_gem('Sapphire.Match')
     require_gem('Sapphire.Parse1Atom')
     require_gem('Sapphire.Parse1Call')
@@ -89,7 +90,7 @@ def gem():
         #
         #<right-parenthesis-colon-newline>
         #
-        m5 = right_parenthesis__colon__match(s, m4.end())
+        m5 = tokenize_parameter_operator(s, m4.end())
 
         if m5 is none:
             raise_unknown_line(5)

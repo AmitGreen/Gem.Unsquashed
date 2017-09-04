@@ -8,25 +8,26 @@ def gem():
 
     @share
     class KeywordAndOperatorBase(Token):
-        is_arguments_0                   = false
-        is_colon_newline                 = false
-        is_comma                         = false
-        is__comma__or__right_parenthesis = false
-        is_compare_operator              = false
-        is_dot                           = false
-        is_end_of_expression             = false
-        is_equal_sign                    = false
-        is_keyword_as                    = false
-        is_left_brace                    = false
-        is_left_parenthesis              = false
-        is_left_square_bracket           = false
-        is_or_operator                   = false
-        is_parameter_colon_0             = false
-        is_right_brace                   = false
-        is__right_parenthesis__colon     = false
-        is_right_parenthesis             = false
-        is_right_square_bracket          = false
-        is_token_newline                 = false
+        is_any_parameter_colon_0              = false
+        is_arguments_0                        = false
+        is_colon_newline                      = false
+        is_comma                              = false
+        is__comma__or__right_parenthesis      = false
+        is_compare_operator                   = false
+        is_dot                                = false
+        is_end_of_expression                  = false
+        is_equal_sign                         = false
+        is_keyword_as                         = false
+        is_left_brace                         = false
+        is_left_parenthesis                   = false
+        is_left_square_bracket                = false
+        is_or_operator                        = false
+        is_right_brace                        = false
+        is__right_parenthesis__colon          = false
+        is__right_parenthesis__colon__newline = false
+        is_right_parenthesis                  = false
+        is_right_square_bracket               = false
+        is_token_newline                      = false
 
 
         def __repr__(t):

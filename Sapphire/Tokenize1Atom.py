@@ -337,14 +337,13 @@ def gem():
         comment_newline = m.group('comment_newline')
 
         if comment_newline is not none:
-            right_parenthesis__colon__end = m.end('right_parenthesis__colon')
+            right_parenthesis__colon__start = m.start('right_parenthesis__colon')
 
-            if right_parenthesis__colon__end  is not -1:
-                r = ParameterColon_0(s[qi() : right_parenthesis__colon__end])
-
-                wn(conjure_token_newline(s[right_parenthesis__colon__end : ]))
-
-                return r
+            if right_parenthesis__colon__start is not -1:
+                return ParameterColon_0_Newline(
+                           conjure_right_parenthesis(s[qi() : right_parenthesis__colon__start]),
+                           conjure_colon_newline    (s[right_parenthesis__colon__start : ]),
+                       )
 
             left_parenthesis__end = m.end('left_parenthesis')
 
@@ -370,23 +369,74 @@ def gem():
 
 
     @share
-    def tokenize__right_parenthesis__colon():
+    def tokenize_parameter_operator():
         assert qd() is 1
         assert qk() is none
         assert qn() is none
 
         s = qs()
 
-        m = right_parenthesis__colon__match(s, qj())
+        m = parameter_operator_match(s, qj())
 
         if m is none:
             raise_unknown_line(1)
 
-        right_parenthesis__colon__end = m.end('right_parenthesis__colon')
+        comma_end = m.end('comma')
 
-        r = OperatorRightParenthesisColon(s[qi() : right_parenthesis__colon__end])
+        if comma_end is not -1:
+            comma_RP_end = m.end('comma_RP')
+
+            if comma_RP_end is not -1:
+                if m.start('comma_RP_colon') is not -1:
+                    if m.end('comment_newline') is -1:
+                        raise_unknown_line(1)
+
+                    wd0()
+
+                    comma_RP_start = m.start('comma_RP')
+
+                    return Comma_RightParenthesis_Colon_Newline(
+                               conjure_comma            (s[qi()           : comma_RP_start]),
+                               conjure_right_parenthesis(s[comma_RP_start : comma_RP_end  ]),
+                               conjure_colon            (s[comma_RP_end   :               ])
+                           )
+
+                raise_unknown_line(2)
+
+            if m.end('comment_newline') is -1:
+                return conjure_comma(s[qi() :])
+
+            j = m.end()
+
+            r = conjure_comma(s[qi() : j])
+
+            wi(j)
+            wj(j)
+
+            return r
+
+        right_parenthesis__end = m.end('right_parenthesis')
+
+        if m.start('RP_colon') is not -1:
+            if m.end('comment_newline') is -1:
+                raise_unknown_line(1)
+
+            right_parenthesis__start = m.start('comma_RP')
+
+            wd0()
+
+            return RightParenthesis_Colon_Newline(
+                       conjure_right_parenthesis(s[qi()                   : right_parenthesis__end]),
+                       conjure_colon            (s[right_parenthesis__end :                       ]),
+                   )
+
+        if m.end('comment_newline') is -1:
+            return conjure_right_parenthesis(s[qi() :])
+
+        r = conjure_right_parenthesis(s[qi() : right_parenthesis__end])
 
         wd0()
-        wn(conjure_token_newline(s[right_parenthesis__colon__end : ]))
+        wi(right_parenthesis__end)
+        wj(m.end())
 
         return r

@@ -3,7 +3,6 @@
 #
 @gem('Sapphire.Expression')
 def gem():
-    require_gem('Sapphire.Core')
     require_gem('Sapphire.Elemental')
 
 
@@ -58,90 +57,6 @@ def gem():
     class OrExpression(BaseBinaryExpression):
         __slots__    = (())
         display_name = 'or'
-
-
-    construct_KeywordAndOperatorBase = KeywordAndOperatorBase.__init__
-
-
-    class BaseDualOperator(KeywordAndOperatorBase):
-        __slots__ = ((
-            'first',         #   OperatorLeftParenthesis
-            'second',        #   OperatorRightParenthesis
-        ))
-
-
-        def __init__(t, first, second):
-            construct_KeywordAndOperatorBase(t, first.s + second.s)
-
-            t.first  = first
-            t.second = second
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r>',
-                           t.__class__.__name__, t.first, t.second)
-
-
-        def display_full_token(t):
-            display_name = t.display_name
-            first_s      = t.first.s
-            second_s     = t.second.s
-
-            return arrange('<%s <%s> <%s>>',
-                           display_name,
-                           portray_string(first_s)    if '\n' in first_s  else   first_s,
-                           portray_string(second_s)   if '\n' in second_s else   second_s)
-
-
-        def display_token(t):
-            display_name = t.display_name
-
-            if display_name == t.s:
-                return display_name
-
-            first_s  = t.first.s
-            second_s = t.second.s
-
-            return arrange('<%s <%s> <%s>>',
-                           display_name,
-                           portray_string(first_s)    if '\n' in first_s  else   first_s,
-                           portray_string(second_s)   if '\n' in second_s else   second_s)
-
-
-        def write(t, w):
-            w(t.first.s + t.second.s)
-
-
-    @share
-    class Arguments_0(BaseDualOperator):
-        __slots__      = (())
-        is_arguments_0 = true
-        display_name   = '(0)'
-
-
-    @share
-    class Comma_RightParenthesis(BaseDualOperator):
-        __slots__      = (())
-        #   (
-        display_name   = ',)'
-
-
-    @share
-    class EmptyMap(BaseDualOperator):
-        __slots__                       = (())
-        display_name                    = '{:}'
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_right_parenthesis            = false
-
-
-    @share
-    class EmptyTuple(BaseDualOperator):
-        __slots__                       = (())
-        display_name                    = '{,}'
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_right_parenthesis            = false
 
 
     @share

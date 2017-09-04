@@ -26,13 +26,11 @@ def gem():
 
         operator_1 = tokenize_function_header_parenthesis_atom()
 
-        if operator_1.is_parameter_colon_0:
-            newline = qn()
-
-            if newline is none:
+        if operator_1.is_any_parameter_colon_0:
+            if qn() is not none:
                 raise_unknown_line(2)
 
-            return FunctionHeader(keyword_function, name, operator_1, newline)
+            return FunctionHeader(keyword_function, name, operator_1)
 
         if not operator_1.is_left_parenthesis:
             raise_unknown_line(3)
@@ -46,19 +44,17 @@ def gem():
             raise_unknown_line(4)
         #</parameter_1>
 
-        operator_2 = tokenize__right_parenthesis__colon()
+        operator_2 = tokenize_parameter_operator()
 
-        if not operator_2.is__right_parenthesis__colon:
+        if not operator_2.is__right_parenthesis__colon__newline:
+            my_line('operator_2: %s', operator_2)
             raise_unknown_line(5)
 
-        newline = qn()
-
-        if newline is none:
+        if qn() is not none:
             raise_unknown_line(6)
             
         return FunctionHeader(
                    keyword_function,
                    name,
                    ParameterColon_1(operator_1, parameter_1, operator_2),
-                   newline,
                )
