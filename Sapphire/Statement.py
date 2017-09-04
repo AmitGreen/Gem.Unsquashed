@@ -108,7 +108,7 @@ def gem():
 
 
         def write(t, w):
-            w(t.keyword.s + t.name)
+            w(t.keyword.s + t.name.s)
             t.parameters_colon.write(w)
             w(t.newline.s)
 

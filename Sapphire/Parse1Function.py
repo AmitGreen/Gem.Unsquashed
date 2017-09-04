@@ -4,30 +4,32 @@
 @gem('Sapphire.Parse1Function')
 def gem():
     @share
-    def parse1_statement_function_header(m1):
-        if m1.end('newline') is not -1:
+    def parse1_statement_function_header(m):
+        if m.end('newline') is not -1:
             raise_unknown_line(1)
 
-        keyword_function = KeywordFunction(m1.group())
+        keyword_function = KeywordFunction(m.group())
 
-        s = qs()
+        j = m.end()
+
+        wi(j)
+        wj(j)
 
         #
         #<name>
         #
-        m2 = name_match(s, m1.end())
+        name = tokenize_name()
 
-        if m2 is none:
-            raise_unknown_line(2)
-
-        name   = m2.group()
-        m2_end = m2.end()
+        if qn() is not none:
+            raise_unknown_line(1)
         #</name>
+
+        s = qs()
 
         #
         #<parenthesis>
         #
-        m3 = define_parenthesis_match1(s, m2_end)
+        m3 = define_parenthesis_match1(s, qj())
 
         if m3 is none:
             raise_unknown_line(3)
@@ -39,7 +41,7 @@ def gem():
             return FunctionHeader(
                        keyword_function,
                        name,
-                       ParameterColon_0(s[m2_end : m3.start('ow_comment_newline')]),
+                       ParameterColon_0(s[qj() : m3.start('ow_comment_newline')]),
                        conjure_token_newline(comment_newline),
                    )
 
