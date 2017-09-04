@@ -8,6 +8,10 @@ def gem():
 
     def parse1__parenthesized_expression__left_parenthesis(left_parenthesis):
         #
+        #   1
+        #
+
+        #
         #   TODO:
         #       Replace this with 'parse1__parenthesis__first_atom' & handle a right-parenthesis as an empty tuple
         #
@@ -27,6 +31,9 @@ def gem():
         if not operator_1.is_comma:
             raise_unknown_line(2)
 
+        #
+        #   2
+        #
         middle_2 = tokenize__comma__first_atom()
 
         if middle_2.is_right_parenthesis:
@@ -43,7 +50,24 @@ def gem():
         if operator_2.is_right_parenthesis:
             return Tuple_2(left_parenthesis, middle_1, operator_1, middle_2, operator_2)
 
-        raise_unknown_line(3)
+        if not operator_2.is_comma:
+            raise_unknown_line(3)
+
+        #
+        #   3
+        #
+        middle_3 = tokenize__comma__first_atom()
+
+        if middle_3.is_right_parenthesis:
+            return Tuple_2(
+                       left_parenthesis,
+                       middle_1,
+                       operator_1,
+                       middle_2,
+                       Comma_RightParenthesis(operator_2, middle_3),
+                   )
+
+        raise_unknown_line(4)
 
 
     @share

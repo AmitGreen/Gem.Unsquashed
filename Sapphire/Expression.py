@@ -60,6 +60,9 @@ def gem():
         display_name = 'or'
 
 
+    construct_KeywordAndOperatorBase = KeywordAndOperatorBase.__init__
+
+
     class BaseDualOperator(KeywordAndOperatorBase):
         __slots__ = ((
             'first',         #   OperatorLeftParenthesis
@@ -68,6 +71,8 @@ def gem():
 
 
         def __init__(t, first, second):
+            construct_KeywordAndOperatorBase(t, first.s + second.s)
+
             t.first  = first
             t.second = second
 
@@ -77,13 +82,25 @@ def gem():
                            t.__class__.__name__, t.first, t.second)
 
 
-        def display_token(t):
+        def display_full_token(t):
             display_name = t.display_name
             first_s      = t.first.s
             second_s     = t.second.s
 
-            if display_name == first_s + second_s:
+            return arrange('<%s <%s> <%s>>',
+                           display_name,
+                           portray_string(first_s)    if '\n' in first_s  else   first_s,
+                           portray_string(second_s)   if '\n' in second_s else   second_s)
+
+
+        def display_token(t):
+            display_name = t.display_name
+
+            if display_name == t.s:
                 return display_name
+
+            first_s  = t.first.s
+            second_s = t.second.s
 
             return arrange('<%s <%s> <%s>>',
                            display_name,
