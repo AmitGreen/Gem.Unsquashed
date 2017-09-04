@@ -6,6 +6,31 @@ def gem():
     show = 0
 
 
+    def parse1__parenthesized_expression__left_parenthesis(left_parenthesis):
+        left     = parse1_atom()
+        operator = tokenize_operator()
+
+        while not operator.is_comma:
+            if operator.is_right_parenthesis:
+                return PathenthesizedExpression(left_parenthesis, left, operator)
+
+            if operator.is_compare_operator:
+                left     = parse1_compare_expression__left__operator(left, operator)
+                operator = qk()
+
+                wk(none)
+                continue
+
+            raise_unknown_line(1)
+
+        token_2 = tokenize__comma__first_atom()
+
+        if token_2.is_right_parenthesis:
+            return Tuple_1(left_parenthesis, left, Comma_RightParenthesis(operator, token_2))
+
+        raise_unknown_line(2)
+
+
     @share
     def parse1__argument__first_atom():
         #
@@ -18,23 +43,9 @@ def gem():
         #</different-from>
 
         if token.is_left_parenthesis:
-            left     = parse1_atom()
-            operator = tokenize_operator()
+            return parse1__parenthesized_expression__left_parenthesis(token)
 
-            while 7 is 7:
-                if operator.is_right_parenthesis:
-                    return PathenthesizedExpression(token, left, operator)
-
-                if operator.is_compare_operator:
-                    left     = parse1_compare_expression__left__operator(left, operator)
-                    operator = qk()
-
-                    wk(none)
-                    continue
-
-                raise_unknown_line(2)
-
-        raise_unknown_line(3)
+        raise_unknown_line(1)
 
 
     @share
@@ -45,27 +56,6 @@ def gem():
             return token
 
         if token.is_left_parenthesis:
-            left     = parse1_atom()
-            operator = tokenize_operator()
+            return parse1__parenthesized_expression__left_parenthesis(token)
 
-            while not operator.is_comma:
-                if operator.is_right_parenthesis:
-                    return PathenthesizedExpression(token, left, operator)
-
-                if operator.is_compare_operator:
-                    left     = parse1_compare_expression__left__operator(left, operator)
-                    operator = qk()
-
-                    wk(none)
-                    continue
-
-                raise_unknown_line(2)
-
-            token_2 = tokenize__comma__first_atom()
-
-            if token_2.is_right_parenthesis:
-                return Tuple_1(token, left, Comma_RightParenthesis(operator, token_2))
-
-            raise_unknown_line(3)
-
-        raise_unknown_line(4)
+        raise_unknown_line(1)
