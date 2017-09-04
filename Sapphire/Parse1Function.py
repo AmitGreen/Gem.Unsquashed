@@ -46,7 +46,7 @@ def gem():
 
         operator_2 = tokenize_parameter_operator()
 
-        if not operator_2.is__right_parenthesis__colon__newline:
+        if not operator_2.is__any__right_parenthesis__colon__newline:
             my_line('operator_2: %s', operator_2)
             raise_unknown_line(5)
 
@@ -103,7 +103,7 @@ def gem():
 
         operator_2 = tokenize_parameter_operator()
 
-        if not operator_2.is__right_parenthesis__colon__newline:
+        if not operator_2.is__any__right_parenthesis__colon__newline:
             my_line('operator_2: %s', operator_2)
             raise_unknown_line(5)
 

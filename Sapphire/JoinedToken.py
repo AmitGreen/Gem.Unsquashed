@@ -95,9 +95,9 @@ def gem():
 
     @share
     class RightParenthesis_Colon_Newline(BaseDualOperator):
-        __slots__                             = (())
-        display_name                          = r'):\n'
-        is__right_parenthesis__colon__newline = true
+        __slots__                                  = (())
+        display_name                               = r'):\n'
+        is__any__right_parenthesis__colon__newline = true
 
 
     class BaseTripleOperator(KeywordAndOperatorBase):
@@ -155,6 +155,6 @@ def gem():
 
     @share
     class Comma_RightParenthesis_Colon_Newline(BaseTripleOperator):
-        __slots__                = (())
-        display_name             = r',):\n'
-        is_any_right_parenthesis = false
+        __slots__                                  = (())
+        display_name                               = r',):\n'
+        is__any__right_parenthesis__colon__newline = true

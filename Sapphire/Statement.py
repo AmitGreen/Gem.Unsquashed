@@ -304,10 +304,6 @@ def gem():
 
 
         def __init__(t, left_parenthesis, argument_1, right_parenthesis__colon):
-            assert left_parenthesis        .is_left_parenthesis
-            assert type(argument_1) is not String
-            assert right_parenthesis__colon.is__right_parenthesis__colon__newline
-
             t.left_parenthesis         = left_parenthesis
             t.argument_1               = argument_1
             t.right_parenthesis__colon = right_parenthesis__colon
