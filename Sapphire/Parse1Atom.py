@@ -29,7 +29,7 @@ def gem():
             return PathenthesizedExpression(left_parenthesis, middle_1, operator_1)
 
         if not operator_1.is_comma:
-            raise_unknown_line(2)
+            raise_unknown_line(1)
 
         #
         #   2
@@ -51,7 +51,7 @@ def gem():
             return Tuple_2(left_parenthesis, middle_1, operator_1, middle_2, operator_2)
 
         if not operator_2.is_comma:
-            raise_unknown_line(3)
+            raise_unknown_line(2)
 
         #
         #   3
@@ -67,7 +67,33 @@ def gem():
                        Comma_RightParenthesis(operator_2, middle_3),
                    )
 
-        raise_unknown_line(4)
+        many = [left_parenthesis, middle_1, operator_1, middle_2, operator_2]
+
+        while 7 is 7:
+            operator_7 = tokenize_operator()
+
+            if not operator_7.is_end_of_expression:
+                middle_3 = parse1_expression__left__operator(middle_3, operator_7)
+
+                operator_7 = qk()
+                wk(none)
+
+            many.append(middle_3)
+
+            if operator_7.is_right_parenthesis:
+                many.append(operator_7)
+                return Tuple_Many(Tuple(many))
+
+            if not operator_7.is_comma:
+                raise_unknown_line(3)
+
+            middle_3 = tokenize__comma__first_atom()
+
+            if middle_3.is_right_parenthesis:
+                many.append(Comma_RightParenthesis(operator_7, middle_3))
+                return Tuple_Many(Tuple(many))
+
+            many.append(operator_7)
 
 
     @share

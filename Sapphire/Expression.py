@@ -448,4 +448,41 @@ def gem():
             t.right   .write(w)
 
 
+    @share
+    class Tuple_Many(Object):
+        __slots__ = ((
+            'many',                     #   Tuple of *
+        ))
+
+
+        is__atom__or__right_parenthesis = true
+        is_atom                         = true
+        is_right_parenthesis            = false
+
+
+        def __init__(t, many):
+            t.many = many
+
+
+        def __repr__(t):
+            return arrange('<Tuple_Many %r>', ' '.join(portray(v)   for v in t.many))
+
+
+        def display_token(t):
+            many = t.many
+
+            if (many[0].s == '(') and (many[-1].s == ')'):
+                return arrange('({,*} %s)', ' '.join(v.display_token()   for v in t.many[1:-1]))
+
+            return arrange('({,*} %s %s %s)', 
+                           t.many[0] .display_full_token(),
+                           ' '.join(v.display_token()   for v in t.many[1:-1]),
+                           t.many[-1].display_full_token())
+
+
+        def write(t, w):
+            for v in t.many:
+                v.write(w)
+
+
     OperatorCompareEqual.compare_expression_meta = CompareEqualExpression
