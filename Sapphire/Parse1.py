@@ -25,89 +25,6 @@ def gem():
     require_gem('Sapphire.Tokenize1Operator')
 
 
-    def parse1_statement_class(m1):
-        if m1.end('newline') is not -1:
-            raise_unknown_line(1)
-
-        keyword_class = KeywordClass(m1.group())
-        s             = qs()
-
-        #
-        #<name>
-        #
-        m2 = name_match(s, m1.end())
-
-        if m2 is none:
-            raise_unknown_line(2)
-
-        name   = m2.group()
-        m2_end = m2.end()
-        #</name>
-
-        #
-        #<choice: left-parenthesis [right-parenthesis colon newline] | newline>
-        #
-        m3 = class_parenthesis_match1(s, m2_end)
-
-        if m3 is none:
-            raise_unknown_line(3)
-
-        newline_2 = m3.group('ow_comment_newline_2')
-
-        if newline_2 is not none:
-            return ClassHeader(
-                       keyword_class,
-                       name,
-                       conjure_colon(s[m2_end : m3.start('ow_comment_newline_2')]),
-                       conjure_token_newline(newline_2),
-                   )
-
-        newline_1 = m3.group('ow_comment_newline_1')
-
-        if newline_1 is not none:
-            return ClassHeader(
-                       keyword_class,
-                       name,
-                       ParameterColon_0(s[m2_end : m3.start('ow_comment_newline_1')]),
-                       conjure_token_newline(newline_1),
-                   )
-
-        operator_left_parenthesis = conjure_left_parenthesis(m3.group())
-        #</choice>
-
-        #
-        #<parameter_1>
-        #
-        m4 = name_match(s, m3.end())
-
-        if m4 is none:
-            raise_unknown_line(4)
-
-        parameter_1 = m4.group()
-        m2_end      = m4.end()
-        #</parameter_1>
-
-        #
-        #<right-parenthesis-colon-newline>
-        #
-        m5 = tokenize_parameter_operator(s, m4.end())
-
-        if m5 is none:
-            raise_unknown_line(5)
-        #</right-parenthesis-colon-newline>
-
-        return ClassHeader(
-                   keyword_class,
-                   name,
-                   ParameterColon_1(
-                       operator_left_parenthesis,
-                       conjure_identifier(parameter_1),
-                       OperatorRightParenthesisColon(m5.group('ow__right_parenthesis__colon')),
-                   ),
-                   conjure_token_newline(m5.group('ow_comment_newline')),
-               )
-
-
     def parse1_statement_decorator_header(m):
         if m.end('newline') is not -1:
             raise_unknown_line(1)
@@ -157,7 +74,7 @@ def gem():
 
     lookup_parse1_line = {
                              '@'      : parse1_statement_decorator_header,
-                             'class'  : parse1_statement_class,
+                             'class'  : parse1_statement_class_header,
                              'def'    : parse1_statement_function_header,
                              'from'   : parse1_statement_from,
                              'if'     : parse1_statement_if,

@@ -75,51 +75,6 @@ def gem():
             w('#' + t.comment + t.newline)
 
 
-    @share
-    class ClassOrFunctionHeaderBase_Old(Object):
-        __slots__ = ((
-            'keyword',                  #   KeywordClass | KeywordFunction
-            'name',                     #   String
-            'parameters_colon',         #   Parameter_0 | Parameter_1
-            'newline',                  #   String
-        ))
-
-
-        def __init__(t, keyword, name, parameters_colon, newline):
-            assert newline.is_token_newline
-
-            t.keyword          = keyword
-            t.name             = name
-            t.parameters_colon = parameters_colon
-            t.newline          = newline
-
-
-        def  __repr__(t):
-            return arrange('<%s %s %s %r %r>', t.__class__.__name__, t.keyword, t.name, t.parameters_colon, t.newline)
-
-
-        def display_token(t):
-            return arrange('<%s <%s> %s %s %s>',
-                           t.display_name,
-                           t.keyword.s,
-                           t.name,
-                           t.parameters_colon.display_token(),
-                           t.newline         .display_token())
-
-
-        def write(t, w):
-            w(t.keyword.s + t.name.s)
-            t.parameters_colon.write(w)
-            w(t.newline.s)
-
-
-    @share
-    class ClassHeader(ClassOrFunctionHeaderBase_Old):
-        __slots__    = (())
-        display_name = 'class'
-
-
-    @share
     class ClassOrFunctionHeaderBase(Object):
         __slots__ = ((
             'keyword',                  #   KeywordClass | KeywordFunction
@@ -149,6 +104,12 @@ def gem():
         def write(t, w):
             w(t.keyword.s + t.name.s)
             t.parameters_colon.write(w)
+
+
+    @share
+    class ClassHeader(ClassOrFunctionHeaderBase):
+        __slots__    = (())
+        display_name = 'class'
 
 
     @share
