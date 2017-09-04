@@ -55,19 +55,17 @@ def gem():
 
 
     @share
-    def parse1_expression(left):
-        operator = tokenize_operator()
-
-        while not operator.is_end_of_expression:
+    def parse1_expression__left__operator(left, operator):
+        while 7 is 7:
             if operator.is_compare_operator:
                 left = parse1_compare_expression__left__operator(left, operator)
 
                 operator = qk()
-                wk(none)
 
+                if operator.is_end_of_expression:
+                    return left
+
+                wk(none)
                 continue
 
             raise_unknown_line(1)
-
-        wk(operator)
-        return left

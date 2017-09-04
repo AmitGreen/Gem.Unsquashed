@@ -7,28 +7,32 @@ def gem():
 
 
     def parse1__parenthesized_expression__left_parenthesis(left_parenthesis):
-        left     = parse1_atom()
+        #
+        #   TODO:
+        #       Replace this with 'parse1__parenthesis__first_atom' & handle a right-parenthesis as an empty tuple
+        #
+        left = parse1_atom()
+
         operator = tokenize_operator()
 
-        while not operator.is_comma:
-            if operator.is_right_parenthesis:
-                return PathenthesizedExpression(left_parenthesis, left, operator)
+        if not operator.is_end_of_expression:
+            left = parse1_expression__left__operator(left, operator)
 
-            if operator.is_compare_operator:
-                left     = parse1_compare_expression__left__operator(left, operator)
-                operator = qk()
+            operator = qk()
+            wk(none)
 
-                wk(none)
-                continue
+        if operator.is_right_parenthesis:
+            return PathenthesizedExpression(left_parenthesis, left, operator)
 
-            raise_unknown_line(1)
+        if not operator.is_comma:
+            raise_unknown_line(2)
 
         token_2 = tokenize__comma__first_atom()
 
         if token_2.is_right_parenthesis:
             return Tuple_1(left_parenthesis, left, Comma_RightParenthesis(operator, token_2))
 
-        raise_unknown_line(2)
+        raise_unknown_line(3)
 
 
     @share
