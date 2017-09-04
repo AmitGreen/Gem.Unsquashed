@@ -65,28 +65,10 @@ def gem():
             w(t.comment_operator.s + t.comment.s + t.newline.s)
 
 
-    [
-            conjure_comment_operator,
-    ] = produce_cache_functions('comment_operator', CommentOperator, produce_conjure_by_name = true)
-
-
-    [
-            conjure_comment_newline,
-    ] = produce_cache_functions(
-            'comment_operator_newline', TokenCommentNewline,
-            
-            produce_conjure_by_name = true,
-        )
-
-
-    [
-            conjure_token_comment,
-    ] = produce_cache_functions('token_comment', TokenComment, produce_conjure_by_name = true)
-
-
-    [
-            conjure_token_newline,
-    ] = produce_cache_functions('token_newline', TokenNewline, produce_conjure_by_name = true)
+    conjure_comment_operator = produce_conjure_by_name('comment_operator',         CommentOperator)
+    conjure_comment_newline  = produce_conjure_by_name('comment_operator_newline', TokenCommentNewline)
+    conjure_token_comment    = produce_conjure_by_name('token_comment',            TokenComment)
+    conjure_token_newline    = produce_conjure_by_name('token_newline',            TokenNewline)
 
 
     share(

@@ -3,12 +3,6 @@
 #
 @gem('Sapphire.Parse1From')
 def gem():
-    require_gem('Sapphire.Core')
-    require_gem('Sapphire.Elemental')
-    require_gem('Sapphire.Match')
-    require_gem('Sapphire.Statement')
-
-
     def parse1_statement_from_module(index):
         s = qs()
 

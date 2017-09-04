@@ -76,9 +76,9 @@ def gem():
 
 
     @share
-    class ClassOrDefineHeaderBase(Object):
+    class ClassOrFunctionHeaderBase(Object):
         __slots__ = ((
-            'keyword',                  #   KeywordClass | KeywordDefine
+            'keyword',                  #   KeywordClass | KeywordFunction
             'name',                     #   String
             'parameters_colon',         #   Parameter_0 | Parameter_1
             'newline',                  #   String
@@ -114,13 +114,13 @@ def gem():
 
 
     @share
-    class ClassHeader(ClassOrDefineHeaderBase):
+    class ClassHeader(ClassOrFunctionHeaderBase):
         __slots__    = (())
         display_name = 'class'
 
 
     @share
-    class DefineHeader(ClassOrDefineHeaderBase):
+    class FunctionHeader(ClassOrFunctionHeaderBase):
         __slots__    = (())
         display_name = 'function'
 

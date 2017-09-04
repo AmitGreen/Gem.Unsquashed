@@ -60,13 +60,6 @@ def gem():
         keyword      = 'class'
 
 
-    @export
-    class KeywordDefine(KeywordAndOperatorBase):
-        __slots__    = (())
-        display_name = 'define'
-        keyword      = 'def'
-
-
     class KeywordExceptColon(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'except:'
@@ -78,6 +71,13 @@ def gem():
         __slots__    = (())
         display_name = 'from'
         keyword      = 'from'
+
+
+    @export
+    class KeywordFunction(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'function'
+        keyword      = 'def'
 
 
     class KeywordIf(KeywordAndOperatorBase):
@@ -277,141 +277,26 @@ def gem():
             return arrange('<%s>', t.s)
 
 
-    [conjure_colon] = produce_cache_functions(
-                          'colon',
-                          OperatorColon,
-
-                          produce_conjure_by_name = true,
-                      )
-
-    [conjure_colon_newline] = produce_cache_functions(
-                                  'colon',
-                                  OperatorColonNewline,
-
-                                  produce_conjure_by_name = true,
-                              )
-
-    [conjure_comma] = produce_cache_functions(
-                          'comma',
-                          OperatorComma,
-
-                          produce_conjure_by_name = true,
-                      )
-
-    [conjure_compare_equal] = produce_cache_functions(
-                                  '==',
-                                  OperatorCompareEqual,
-
-                                  produce_conjure_by_name = true,
-                              )
-
-    [conjure_dot] = produce_cache_functions(
-                        'dot',
-                        OperatorDot,
-
-                        produce_conjure_by_name = true,
-                    )
-
-    [conjure_equal_sign] = produce_cache_functions(
-                               'equal-sign',
-                               OperatorEqualSign,
-
-                               produce_conjure_by_name = true,
-                           )
-
-    [conjure_except_colon] = produce_cache_functions(
-                                 'except-colon',
-                                 KeywordExceptColon,
-
-                                 produce_conjure_by_name = true,
-                             )
-
-    [conjure_keyword_as] = produce_cache_functions(
-                               'keyword-as',
-                               KeywordAs,
-
-                               produce_conjure_by_name = true,
-                           )
-
-    [conjure_keyword_if] = produce_cache_functions(
-                               'keyword-if',
-                               KeywordIf,
-
-                               produce_conjure_by_name = true,
-                           )
-
-    [conjure_keyword_or] = produce_cache_functions(
-                               'keyword-or',
-                               KeywordOr,
-
-                               produce_conjure_by_name = true,
-                           )
-
-    [conjure_keyword_return] = produce_cache_functions(
-                                   'keyword-return',
-                                   KeywordReturn,
-
-                                   produce_conjure_by_name = true,
-                               )
-
-    [conjure_keyword_with] = produce_cache_functions(
-                                 'keyword-with',
-                                 KeywordWith,
-
-                                 produce_conjure_by_name = true,
-                             )
-
-    [conjure_left_brace] = produce_cache_functions(
-                               'left-brace',
-                               OperatorLeftBrace,
-
-                               produce_conjure_by_name = true,
-                           )
-
-    [conjure_left_parenthesis] = produce_cache_functions(
-                                     'left-parenthesis',
-                                     OperatorLeftParenthesis,
-
-                                     produce_conjure_by_name = true,
-                                 )
-
-    [conjure_left_square_bracket] = produce_cache_functions(
-                                        'left-square-brakcet',
-                                        OperatorLeftSquareBracket,
-
-                                        produce_conjure_by_name = true,
-                                    )
-
-    [conjure_right_brace] = produce_cache_functions(
-                                'right-brace',
-                                OperatorRightBrace,
-
-                                produce_conjure_by_name = true,
-                            )
-
-
-    [conjure_right_parenthesis] = produce_cache_functions(
-                                      'right-parenthesis',
-                                      OperatorRightParenthesis,
-
-                                      produce_conjure_by_name = true,
-                                  )
-
-    [conjure_right_square_bracket] = produce_cache_functions(
-                                         'right-square-bracket',
-                                         OperatorRightSquareBracket,
-
-                                         produce_conjure_by_name = true,
-                                     )
-
-
-    [conjure_try_colon] = produce_cache_functions(
-                              'try-colon',
-                              KeywordTryColon,
-
-                              produce_conjure_by_name = true,
-                          )
-
+    conjure_colon                = produce_conjure_by_name('colon',                OperatorColon) 
+    conjure_colon_newline        = produce_conjure_by_name('colon_newline',        OperatorColonNewline) 
+    conjure_comma                = produce_conjure_by_name('comma',                OperatorComma) 
+    conjure_compare_equal        = produce_conjure_by_name('==',                   OperatorCompareEqual) 
+    conjure_dot                  = produce_conjure_by_name('dot',                  OperatorDot) 
+    conjure_equal_sign           = produce_conjure_by_name('equal-sign',           OperatorEqualSign) 
+    conjure_except_colon         = produce_conjure_by_name('except-colon',         KeywordExceptColon) 
+    conjure_keyword_as           = produce_conjure_by_name('keyword-as',           KeywordAs) 
+    conjure_keyword_function     = produce_conjure_by_name('keyword-function',     KeywordFunction) 
+    conjure_keyword_if           = produce_conjure_by_name('keyword-if',           KeywordIf) 
+    conjure_keyword_or           = produce_conjure_by_name('keyword-or',           KeywordOr) 
+    conjure_keyword_return       = produce_conjure_by_name('keyword-return',       KeywordReturn) 
+    conjure_keyword_with         = produce_conjure_by_name('keyword-with',         KeywordWith) 
+    conjure_left_brace           = produce_conjure_by_name('left-brace',           OperatorLeftBrace) 
+    conjure_left_parenthesis     = produce_conjure_by_name('left-parenthesis',     OperatorLeftParenthesis) 
+    conjure_left_square_bracket  = produce_conjure_by_name('left-square-brakcet',  OperatorLeftSquareBracket) 
+    conjure_right_brace          = produce_conjure_by_name('right-brace',          OperatorRightBrace) 
+    conjure_right_parenthesis    = produce_conjure_by_name('right-parenthesis',    OperatorRightParenthesis) 
+    conjure_right_square_bracket = produce_conjure_by_name('right-square-bracket', OperatorRightSquareBracket) 
+    conjure_try_colon            = produce_conjure_by_name('try-colon',            KeywordTryColon) 
 
     find_atom_type = {
                          "'" : SingleQuote,

@@ -55,6 +55,7 @@ from    Gem                 import  PermissionError                         #   
 from    Gem                 import  privileged_2                            #   Gem.Core
 from    Gem                 import  privileged                              #   Gem.Boot
 from    Gem                 import  produce_cache_functions                 #   Gem.Cache
+from    Gem                 import  produce_conjure_by_name                 #   Gem.Cache
 from    Gem                 import  python_frame                            #   Gem.System
 from    Gem                 import  python_version                          #   Gem.System
 from    Gem                 import  read_text_from_path                     #   Gem.Path

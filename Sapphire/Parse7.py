@@ -93,8 +93,8 @@ def gem():
                              OperatorRightParenthesisColon(right_parenthesis__colon),
                          )
 
-        return DefineHeader(
-                   KeywordDefine(m0.group('indented') + m0.group('keyword__ow')),
+        return FunctionHeader(
+                   KeywordFunction(m0.group('indented') + m0.group('keyword__ow')),
                    name1,
                    parameters,
                    conjure_token_newline(comment_newline),

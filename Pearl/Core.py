@@ -12,7 +12,7 @@ def gem():
 
 
     from Gem import cadence_constructing, cadence_entered, cadence_exception, cadence_exited, cadence_initialized
-    from Gem import caller_frame_1, Exception, gem_global, produce_cache_functions
+    from Gem import caller_frame_1, Exception, gem_global, produce_cache_functions, produce_conjure_by_name
 
 
     share(
@@ -26,6 +26,7 @@ def gem():
         #
         'caller_frame_1',               caller_frame_1,
         'produce_cache_functions',      produce_cache_functions,
+        'produce_conjure_by_name',      produce_conjure_by_name,
 
 
         #

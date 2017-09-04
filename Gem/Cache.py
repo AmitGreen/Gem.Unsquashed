@@ -7,6 +7,13 @@ def gem():
 
 
     @export
+    def produce_conjure_by_name(name, meta):
+        [conjure_by_name] = produce_cache_functions(name, meta, produce_conjure_by_name = true)
+            
+        return conjure_by_name
+
+
+    @export
     @privileged
     def produce_cache_functions(
             name,
