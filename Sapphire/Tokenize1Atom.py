@@ -163,6 +163,7 @@ def gem():
 
     @share
     def tokenize_atom():
+        assert qk() is none
         assert qn() is none
 
         j = qj()
@@ -203,6 +204,7 @@ def gem():
     @share
     def tokenize__argument__first_atom():
         assert qd() > 0
+        assert qk() is none
         assert qn() is none
 
 
@@ -259,6 +261,7 @@ def gem():
 
     @share
     def tokenize__comma__first_atom():
+        assert qk() is none
         assert qn() is none
 
         j = qj()
@@ -316,3 +319,51 @@ def gem():
         #
         return tokenize_atom__X__left_parenthesis(m)
         #</same-as>
+
+
+    @share
+    def tokenize_function_header_parenthesis_atom():
+        assert qd() is 0
+        assert qk() is none
+        assert qn() is none
+
+        s = qs()
+
+        m = function_header_parenthesis_match1(s, qj())
+
+        if m is none:
+            raise_unknown_line(1)
+
+        comment_newline = m.group('comment_newline')
+
+        if comment_newline is not none:
+            right_parenthesis__colon__end = m.end('right_parenthesis__colon')
+
+            if right_parenthesis__colon__end  is not -1:
+                r = ParameterColon_0(s[qi() : right_parenthesis__colon__end])
+
+                wn(conjure_token_newline(s[right_parenthesis__colon__end : ]))
+
+                return r
+
+            left_parenthesis__end = m.end('left_parenthesis')
+
+            r = conjure_left_parenthesis(s[qi() : left_parenthesis__end])
+
+            wd1()
+            wn(conjure_token_newline(s[left_parenthesis__end : ]))
+
+            return r
+
+        if m.end('right_parenthesis__colon') is not -1:
+            raise_unknown_line(1)
+
+        j = m.end()
+
+        r = conjure_left_parenthesis(s[qi() : j])
+
+        wd1()
+        wi(j)
+        wj(j)
+
+        return r

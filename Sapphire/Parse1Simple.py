@@ -7,21 +7,21 @@ def gem():
 
 
     @share
-    def parse1_statement_pass(m1):
-        if m1.end('newline') is -1:
+    def parse1_statement_pass(m):
+        if m.end('newline') is -1:
             raise_unknown_line(1)
 
-        return StatementPass(m1.group())
+        return StatementPass(m.group())
 
 
     @share
-    def parse1_statement_return(m1):
-        keyword_return = conjure_keyword_return(m1.group())
-
-        if m1.end('newline') is not -1:
+    def parse1_statement_return(m):
+        if m.end('newline') is not -1:
             return keyword_return
 
-        j = m1.end()
+        keyword_return = conjure_keyword_return(m.group())
+
+        j = m.end()
 
         wi(j)
         wj(j)

@@ -24,31 +24,25 @@ def gem():
             raise_unknown_line(1)
         #</name>
 
-        s = qs()
+        operator_1 = tokenize_function_header_parenthesis_atom()
 
-        #
-        #<parenthesis>
-        #
-        m3 = define_parenthesis_match1(s, qj())
+        if operator_1.is_parameter_colon_0:
+            newline = qn()
 
-        if m3 is none:
+            if newline is none:
+                raise_unknown_line(2)
+
+            return FunctionHeader(keyword_function, name, operator_1, newline)
+
+        if not operator_1.is_left_parenthesis:
             raise_unknown_line(3)
 
-        comment_newline = m3.group('ow_comment_newline')
-        #</parenthesis>
-
-        if comment_newline is not none:
-            return FunctionHeader(
-                       keyword_function,
-                       name,
-                       ParameterColon_0(s[qj() : m3.start('ow_comment_newline')]),
-                       conjure_token_newline(comment_newline),
-                   )
+        s = qs()
 
         #
         #<parameter_1>
         #
-        m4 = name_match(s, m3.end())
+        m4 = name_match(s, qj())
 
         if m4 is none:
             raise_unknown_line(4)
@@ -65,11 +59,15 @@ def gem():
             raise_unknown_line(5)
         #</right-parenthesis-colon-newline>
 
+        assert qd() is 1
+
+        wd0()
+
         return FunctionHeader(
                    keyword_function,
                    name,
                    ParameterColon_1(
-                       conjure_left_parenthesis(m3.group()),
+                       operator_1,
                        conjure_identifier(parameter_1),
                        OperatorRightParenthesisColon(m5.group('ow__right_parenthesis__colon')),
                    ),

@@ -279,11 +279,11 @@ def gem():
         )
 
         MATCH(
-            'define_parenthesis_match1',
+            'function_header_parenthesis_match1',
             (
-                  ow__left_parenthesis__ow
-                + P(right_parenthesis__colon + G(ow_comment_newline))
-            ),
+                  G(left_parenthesis) + ow
+                + P(G(right_parenthesis__colon) + ow)
+            ) + Q(comment_newline),
         )
 
         FULL_MATCH(

@@ -303,7 +303,8 @@ def gem():
 
     @share
     class ParameterColon_0(KeywordAndOperatorBase):
-        display_name = '():'
+        display_name         = '():'
+        is_parameter_colon_0 = true
 
 
     @share

@@ -29,6 +29,7 @@ def gem():
     wn = Method(write, 6)
 
     wd0 = Method(wd, 0)
+    wd1 = Method(wd, 1)
     wi0 = Method(wi, 0)
     wj0 = Method(wj, 0)
 
@@ -175,6 +176,7 @@ def gem():
 
         'wd',               wd,
         'wd0',              wd0,
+        'wd1',              wd1,
         'wi',               wi,
         'wj',               wj,
         'wk',               wk,
