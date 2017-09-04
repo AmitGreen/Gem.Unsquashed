@@ -51,7 +51,7 @@ def gem():
             if qn() is not none:
                 raise_unknown_line(2)
 
-            expression = parse1_expression_call(atom, operator)
+            expression = parse1_call_expression__left__operator(atom, operator)
             newline    = qn()
 
             if newline is none:

@@ -137,7 +137,7 @@ def gem():
         if not operator.is_left_parenthesis:
             raise_unknown_line(3)
 
-        call = parse1_expression_call(identifier, operator)
+        call = parse1_call_expression__left__operator(identifier, operator)
 
         newline = qn()
 

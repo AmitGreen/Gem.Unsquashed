@@ -123,6 +123,8 @@ def gem():
 
     @share
     def tokenize_atom():
+        assert qn() is none
+
         j = qj()
 
         m = atom_match(qs(), j)
@@ -160,6 +162,8 @@ def gem():
     @share
     def tokenize__argument__first_atom():
         assert qd() > 0
+        assert qn() is none
+
 
         #
         #<same-as: tokenize__comma__first_atom>
@@ -214,6 +218,8 @@ def gem():
 
     @share
     def tokenize__comma__first_atom():
+        assert qn() is none
+
         j = qj()
 
         #

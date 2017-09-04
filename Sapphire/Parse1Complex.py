@@ -38,7 +38,7 @@ def gem():
                 return IfHeader(keyword_if, left, operator)
 
             if operator.is_or_operator:
-                left     = parse1_or_expression(left, operator)
+                left     = parse1_or_expression__left__operator(left, operator)
                 operator = qk()
 
                 wk(none)

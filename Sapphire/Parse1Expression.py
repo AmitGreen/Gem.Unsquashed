@@ -7,7 +7,7 @@ def gem():
 
 
     @share
-    def parse1_compare_expression(left, compare_operator):
+    def parse1_compare_expression__left__operator(left, compare_operator):
         right    = tokenize_atom()
         operator = tokenize_operator()
 
@@ -22,29 +22,27 @@ def gem():
 
 
     @share
-    def parse1_or_expression(left, or_operator):
+    def parse1_or_expression__left__operator(left, or_operator):
         if show is 7:
             my_line('%r, %r, %s', left, or_operator, portray_string(qs()[qj():]))
 
         right    = parse1_atom()
         operator = tokenize_operator()
 
-        if show is 7:
-            my_line('%r, %r, %r, %r, %s',
-                    left, or_operator, right, operator, portray_string(qs()[qj():]))
+        while not operator.is_end_of_expression:
+            if show is 7:
+                my_line('%r, %r, %r, %r, %s',
+                        left, or_operator, right, operator, portray_string(qs()[qj():]))
 
-        if (operator.is_right_parenthesis) or (operator.is_colon_newline):
-            assert qk() is none
+            raise_unknown_line(2)
 
-            wk(operator)
+        wk(operator)
 
-            return OrExpression(left, or_operator, right)
-
-        raise_unknown_line(2)
+        return OrExpression(left, or_operator, right)
 
 
     @share
-    def parse1_expression_index(left, left_square_bracket):
+    def parse1_index_expression__left__operator(left, left_square_bracket):
         atom = tokenize_atom()
 
         while 7 is 7:
@@ -56,3 +54,20 @@ def gem():
             raise_unknown_line(1)
 
 
+    @share
+    def parse1_expression(left):
+        operator = tokenize_operator()
+
+        while not operator.is_end_of_expression:
+            if operator.is_compare_operator:
+                left = parse1_compare_expression__left__operator(left, operator)
+
+                operator = qk()
+                wk(none)
+
+                continue
+
+            raise_unknown_line(1)
+
+        wk(operator)
+        return left

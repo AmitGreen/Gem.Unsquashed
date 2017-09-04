@@ -14,6 +14,7 @@ def gem():
         is__comma__or__right_parenthesis = false
         is_compare_operator              = false
         is_dot                           = false
+        is_end_of_expression             = false
         is_equal_sign                    = false
         is_keyword_as                    = false
         is_left_parenthesis              = false
@@ -139,9 +140,10 @@ def gem():
 
 
     class OperatorColonNewline(KeywordAndOperatorBase):
-        __slots__        = (())
-        is_colon_newline = true
-        keyword          = 'colon-newline'
+        __slots__            = (())
+        is_colon_newline     = true
+        is_end_of_expression = true
+        keyword              = 'colon-newline'
 
 
         def __repr__(t):
@@ -157,6 +159,7 @@ def gem():
         display_name                     = ','
         is_comma                         = true
         is__comma__or__right_parenthesis = true
+        is_end_of_expression             = true
         keyword                          = ','
 
 
@@ -213,6 +216,7 @@ def gem():
         display_name                     = ')'
         is__atom__or__right_parenthesis  = true
         is__comma__or__right_parenthesis = true
+        is_end_of_expression             = true
         is_right_parenthesis             = true
         #  (
         keyword                          = ')'

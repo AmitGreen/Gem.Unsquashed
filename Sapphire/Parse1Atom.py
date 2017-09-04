@@ -26,7 +26,7 @@ def gem():
                     return PathenthesizedExpression(token, left, operator)
 
                 if operator.is_compare_operator:
-                    left     = parse1_compare_expression(left, operator)
+                    left     = parse1_compare_expression__left__operator(left, operator)
                     operator = qk()
 
                     wk(none)
@@ -53,7 +53,7 @@ def gem():
                     return PathenthesizedExpression(token, left, operator)
 
                 if operator.is_compare_operator:
-                    left     = parse1_compare_expression(left, operator)
+                    left     = parse1_compare_expression__left__operator(left, operator)
                     operator = qk()
 
                     wk(none)
