@@ -25,6 +25,9 @@ def gem():
         ow                         = NAME('ow',                         ZERO_OR_MORE(' '))
         w                          = NAME('w',                          ONE_OR_MORE(' '))
 
+        #
+        #   Simple patterns
+        #
         colon               = NAME('colon',               ':')
         comma               = NAME('comma',               ',')
         comment_newline     = NAME('comment_newline',     P('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
@@ -37,6 +40,7 @@ def gem():
         keyword_import      = NAME('import',              'import')
         keyword_or          = NAME('or',                  'or')
         keyword_try         = NAME('try',                 'try')
+        left_brace          = NAME('left_brace',          '{')                                #   }
         left_parenthesis    = NAME('left_parenthesis',    '(')                                #   )
         left_square_bracket = NAME('left_square_bracket', '[')                                #   ]
 
@@ -57,19 +61,25 @@ def gem():
 
 
         #   [(
-        right_parenthesis    = NAME('right_parenthesis',    ')')
-        right_square_bracket = NAME('right_square_bracket', ']')
+        right_brace             = NAME('right_brace',             '}')
+        right_parenthesis       = NAME('right_parenthesis',       ')')
+        right_square_bracket    = NAME('right_square_bracket',    ']')
 
-        left_parenthesis__ow = NAME('left_parenthesis__ow', left_parenthesis + ow)
-        name1                = NAME('name1',                name)
-        name2                = NAME('name2',                name)
-        name3                = NAME('name3',                name)
-        name4                = NAME('name4',                name)
-        ow_comma_ow          = NAME('ow_comma_ow',          ow + comma + ow)
-        ow_comment_newline   = NAME('ow_comment_newline',   ow + comment_newline)
-        ow_dot_ow            = NAME('ow_dot_ow',            ow + period + ow)
-        w_as_w               = NAME('w_as_w',               w + keyword_as + w)
-        w_import_w           = NAME('w_import_w',           w + keyword_import + w)
+        #
+        #   More complicated patterns
+        #
+        left_brace__ow          = NAME('left_brace__ow',          left_brace + ow)
+        left_square_bracket__ow = NAME('left_square_bracket__ow', left_square_bracket + ow)
+        left_parenthesis__ow    = NAME('left_parenthesis__ow',    left_parenthesis + ow)
+        name1                   = NAME('name1',                   name)
+        name2                   = NAME('name2',                   name)
+        name3                   = NAME('name3',                   name)
+        name4                   = NAME('name4',                   name)
+        ow_comma_ow             = NAME('ow_comma_ow',             ow + comma + ow)
+        ow_comment_newline      = NAME('ow_comment_newline',      ow + comment_newline)
+        ow_dot_ow               = NAME('ow_dot_ow',               ow + period + ow)
+        w_as_w                  = NAME('w_as_w',                  w + keyword_as + w)
+        w_import_w              = NAME('w_import_w',              w + keyword_import + w)
 
         right_parenthesis__colon     = NAME('right_parenthesis__colon',     right_parenthesis + ow + colon)
         ow__right_parenthesis__colon = NAME('ow__right_parenthesis__colon', ow + right_parenthesis + ow + colon)
@@ -137,22 +147,10 @@ def gem():
             'atom_match',
             (
                   G('atom', name | number | single_quote) + ow
-                | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
+                | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
+                | G(left_brace__ow)          + P(G(right_brace)          + ow)
+#               | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
             ) + Q(comment_newline),
-        )
-
-        MATCH(
-            'atom_match1',
-            name | number | single_quote,
-        )
-
-        MATCH(
-           'decorator_postfix_match1',
-            (
-                  ow
-                + P(G(left_parenthesis__ow) + P(G(right_parenthesis) + ow))
-                + Q(comment_newline)
-            ),
         )
 
         MATCH(

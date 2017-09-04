@@ -17,9 +17,11 @@ def gem():
         is_end_of_expression             = false
         is_equal_sign                    = false
         is_keyword_as                    = false
+        is_left_brace                    = false
         is_left_parenthesis              = false
         is_left_square_bracket           = false
         is_or_operator                   = false
+        is_right_brace                   = false
         is__right_parenthesis__colon     = false
         is_right_parenthesis             = false
         is_right_square_bracket          = false
@@ -196,13 +198,21 @@ def gem():
         keyword       = '='
 
 
+    class OperatorLeftBrace(KeywordAndOperatorBase):
+        __slots__                       = (())
+        display_name                    = '{'       #   }
+        is_atom                         = false
+        is__atom__or__right_parenthesis = false
+        is_left_brace                   = true
+        keyword                         = '{'       #   }
+
+
     class OperatorLeftParenthesis(KeywordAndOperatorBase):
         __slots__                       = (())
         display_name                    = '('       #   )
         is_atom                         = false
         is__atom__or__right_parenthesis = false
         is_left_parenthesis             = true
-        is_right_parenthesis            = false
         keyword                         = '('       #   )
 
 
@@ -212,6 +222,15 @@ def gem():
         is_left_square_bracket = true
         display_name           = '['              #   ]
         keyword                = '['              #   ]
+
+
+    class OperatorRightBrace(KeywordAndOperatorBase):
+        __slots__            = (())
+        #  |
+        display_name         = '}'
+        is_end_of_expression = true
+        is_right_brace       = true
+        #  (
 
 
     class OperatorRightParenthesis(KeywordAndOperatorBase):
@@ -342,6 +361,13 @@ def gem():
                                  produce_conjure_by_name = true,
                              )
 
+    [conjure_left_brace] = produce_cache_functions(
+                               'left-brace',
+                               OperatorLeftBrace,
+
+                               produce_conjure_by_name = true,
+                           )
+
     [conjure_left_parenthesis] = produce_cache_functions(
                                      'left-parenthesis',
                                      OperatorLeftParenthesis,
@@ -355,6 +381,14 @@ def gem():
 
                                         produce_conjure_by_name = true,
                                     )
+
+    [conjure_right_brace] = produce_cache_functions(
+                                'right-brace',
+                                OperatorRightBrace,
+
+                                produce_conjure_by_name = true,
+                            )
+
 
     [conjure_right_parenthesis] = produce_cache_functions(
                                       'right-parenthesis',
@@ -435,7 +469,9 @@ def gem():
         'conjure_keyword_if',               conjure_keyword_if,
         'conjure_keyword_return',           conjure_keyword_return,
         'conjure_keyword_with',             conjure_keyword_with,
+        'conjure_left_brace',               conjure_left_brace,
         'conjure_left_parenthesis',         conjure_left_parenthesis,
+        'conjure_right_brace',              conjure_right_brace,
         'conjure_right_parenthesis',        conjure_right_parenthesis,
         'conjure_try_colon',                conjure_try_colon,
         'find_atom_type',                   find_atom_type,

@@ -40,19 +40,59 @@ def gem():
         return left_parenthesis
 
 
-    def tokenize__atom__X__left_parenthesis__newline(m):
-        right_parenthesis__end = m.end('right_parenthesis')
+    def tokenize__atom__X__open__newline(m):
+        left_parenthesis__ow__end = m.end('left_parenthesis__ow')
 
-        if right_parenthesis__end is not -1:
-            left_parenthesis__ow__end = m.end('left_parenthesis__ow')
+        if left_parenthesis__ow__end is not -1:
+            right_parenthesis__end = m.end('right_parenthesis')
+
+            if right_parenthesis__end is not -1:
+                if qd() is 0:
+                    raise_unknown_line(1)
+
+                s = qs()
+                r = EmptyTuple(
+                        conjure_left_parenthesis (s[qi() : left_parenthesis__ow__end]),
+                        conjure_right_parenthesis(s[left_parenthesis__ow__end : ]),
+                    )
+
+                skip_tokenize_prefix()
+
+                return r
 
             if qd() is 0:
-                raise_unknown_line(1)
+                raise_unknown_line(2)
+
+            r = conjure_left_parenthesis(qs()[qi() : ])
+
+            skip_tokenize_prefix()
+
+            return r
+
+        right_brace__end = m.end('right_brace')
+
+        if right_brace__end is not -1:
+            left_brace__ow__end = m.end('left_brace__ow')
 
             s = qs()
-            r = EmptyTuple(
-                    conjure_left_parenthesis (s[qi() : left_parenthesis__ow__end]),
-                    conjure_right_parenthesis(s[left_parenthesis__ow__end : ]),
+
+            left_brace = conjure_left_brace(s[qi() : left_brace__ow__end])
+
+            if qd() is 0:
+                right_brace__end = m.end('right_brace')
+
+                r = EmptyMap(
+                        left_brace,
+                        conjure_right_brace(s[left_brace__ow__end : right_brace__end])
+                    )
+
+                wn(conjure_token_newline(s[right_brace__end : ]))
+
+                return r
+
+            r = EmptyMap(
+                    left_brace,
+                    conjure_right_brace(s[left_brace__ow__end : ]),
                 )
 
             skip_tokenize_prefix()
@@ -60,9 +100,9 @@ def gem():
             return r
 
         if qd() is 0:
-            raise_unknown_line(2)
+            raise_unknown_line(4)
 
-        r = conjure_left_parenthesis(qs()[qi() : ])
+        r = conjure_left_brace(qs()[qi() : ])
 
         skip_tokenize_prefix()
 
@@ -85,7 +125,7 @@ def gem():
 
             return PrefixAtom(qs()[qi() : qj()], r)
 
-        return tokenize__atom__X__left_parenthesis__newline(m)
+        return tokenize__atom__X__open__newline(m)
 
 
     def tokenize__comma__first_atom__X__newline(m):
@@ -118,7 +158,7 @@ def gem():
 
             raise_unknown_line(1)
 
-        return tokenize__atom__X__left_parenthesis__newline(m)
+        return tokenize__atom__X__open__newline(m)
 
 
     @share
@@ -130,6 +170,7 @@ def gem():
         m = atom_match(qs(), j)
 
         if m is none:
+            my_line(portray_string(qs()[qj() : ]))
             raise_unknown_line(1)
 
         if m.start('comment_newline') is not -1:
@@ -228,7 +269,6 @@ def gem():
         m = argument_first_atom_match(qs(), j)
 
         if m is none:
-            #my_line(portray_string(qs()[qj() : ]))
             raise_unknown_line(1)
 
         if m.start('comment_newline') is not -1:
