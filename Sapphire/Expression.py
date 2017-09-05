@@ -7,7 +7,7 @@ def gem():
 
 
     @share
-    class BaseBinaryExpression(Object):
+    class BinaryExpression(Object):
         __slots__ = ((
             'left',                     #   Expression
             'operator',                 #   Operator*
@@ -43,19 +43,19 @@ def gem():
 
 
     @share
-    class CompareEqualExpression(BaseBinaryExpression):
+    class CompareEqualExpression(BinaryExpression):
         __slots__    = (())
         display_name = '=='
 
 
     @share
-    class CommaExpression(BaseBinaryExpression):
+    class CommaExpression(BinaryExpression):
         __slots__    = (())
         display_name = ','
 
 
     @share
-    class OrExpression(BaseBinaryExpression):
+    class OrExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'or'
 
@@ -432,6 +432,40 @@ def gem():
             t.comma_1 .write(w)
             t.middle_2.write(w)
             t.right   .write(w)
+
+
+    class UnaryExpression(Object):
+        __slots__ = ((
+            'operator',                 #   Operator*
+            'right',                    #   Expression
+        ))
+
+
+        def __init__(t, operator, right):
+            t.operator = operator
+            t.right    = right
+
+
+        def __repr__(t):
+            return arrange('<%s %r %r>', t.__class__.__name__, t.operator, t.right)
+
+
+        def display_token(t):
+            return arrange('<%s %s %s>',
+                           t.display_name,
+                           t.operator.display_token(),
+                           t.right   .display_token())
+
+
+        def write(t, w):
+            t.operator.write(w)
+            t.right   .write(w)
+
+
+    @share
+    class NotExpression(UnaryExpression):
+        __slots__    = (())
+        display_name = 'not'
 
 
     OperatorCompareEqual.compare_expression_meta = CompareEqualExpression

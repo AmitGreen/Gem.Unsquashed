@@ -268,7 +268,7 @@ def gem():
 
 
     @share
-    class KeywordParameter(BaseBinaryExpression):
+    class KeywordParameter(BinaryExpression):
         __slots__    = (())
         display_name = 'keyword-parameter'
 

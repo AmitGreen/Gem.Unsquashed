@@ -38,6 +38,7 @@ def gem():
         keyword_as          = NAME('as',                  'as')
         keyword_except      = NAME('except',              'except')
         keyword_import      = NAME('import',              'import')
+        keyword_not         = NAME('not',                 'not')
         keyword_or          = NAME('or',                  'or')
         keyword_try         = NAME('try',                 'try')
         left_brace          = NAME('left_brace',          '{')                                #   }
@@ -146,7 +147,8 @@ def gem():
         MATCH(
             'atom_match',
             (
-                  G('atom', name | number | single_quote) + ow
+                  G('keyword', keyword_not) + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
+                | G('atom', name | number | single_quote) + ow
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_brace__ow)          + P(G(right_brace)          + ow)
 #               | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)

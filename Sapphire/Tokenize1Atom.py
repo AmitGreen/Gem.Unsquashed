@@ -193,6 +193,18 @@ def gem():
             return r
             #</same-as>
 
+        keyword_s = m.group('keyword')
+
+        if keyword_s is not none:
+            j = m.end()
+
+            r = find_operator_conjure_function(keyword_s)(qs()[qi() : j])
+
+            wi(j)
+            wj(j)
+
+            return r
+
         #
         #<same-as: tokenize__argument__first_atom & tokenize__comma__first_atom>
         #

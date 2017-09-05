@@ -19,6 +19,7 @@ def gem():
         is_end_of_expression                       = false
         is_equal_sign                              = false
         is_keyword_as                              = false
+        is_keyword_not                             = false
         is_left_brace                              = false
         is_left_parenthesis                        = false
         is_left_square_bracket                     = false
@@ -95,6 +96,16 @@ def gem():
         __slots__    = (())
         display_name = 'import'
         keyword      = 'import'
+
+
+    class KeywordNot(KeywordAndOperatorBase):
+        __slots__                       = (())
+        display_name                    = 'not'
+        is_atom                         = false
+        is__atom__or__right_parenthesis = false
+        is_right_parenthesis            = false
+        is_keyword_not                  = true
+        keyword                         = 'not'
 
 
     class KeywordOr(KeywordAndOperatorBase):
@@ -291,6 +302,7 @@ def gem():
     conjure_keyword_as           = produce_conjure_by_name('keyword-as',           KeywordAs) 
     conjure_keyword_function     = produce_conjure_by_name('keyword-function',     KeywordFunction) 
     conjure_keyword_if           = produce_conjure_by_name('keyword-if',           KeywordIf) 
+    conjure_keyword_not          = produce_conjure_by_name('keyword-not',          KeywordNot) 
     conjure_keyword_or           = produce_conjure_by_name('keyword-or',           KeywordOr) 
     conjure_keyword_return       = produce_conjure_by_name('keyword-return',       KeywordReturn) 
     conjure_keyword_with         = produce_conjure_by_name('keyword-with',         KeywordWith) 
@@ -334,17 +346,18 @@ def gem():
 
 
     find_operator_conjure_function = {
-                                         '('  : conjure_left_parenthesis,
-                                         ')'  : conjure_right_parenthesis,
-                                         ','  : conjure_comma,
-                                         '.'  : conjure_dot,
-                                         ':'  : conjure_colon,
-                                         '='  : conjure_equal_sign,
-                                         '==' : conjure_compare_equal,
-                                         'as' : conjure_keyword_as,
-                                         'or' : conjure_keyword_or,
-                                         '['  : conjure_left_square_bracket,
-                                         ']'  : conjure_right_square_bracket,
+                                         '('   : conjure_left_parenthesis,
+                                         ')'   : conjure_right_parenthesis,
+                                         ','   : conjure_comma,
+                                         '.'   : conjure_dot,
+                                         ' :'  : conjure_colon,
+                                         '='   : conjure_equal_sign,
+                                         '=='  : conjure_compare_equal,
+                                         'as'  : conjure_keyword_as,
+                                         'not' : conjure_keyword_not,
+                                         'or'  : conjure_keyword_or,
+                                         '['   : conjure_left_square_bracket,
+                                         ']'   : conjure_right_square_bracket,
                                      }.__getitem__
 
 

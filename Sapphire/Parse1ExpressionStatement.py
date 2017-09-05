@@ -15,7 +15,6 @@ def gem():
 
         my_line('indented: %r; left: %r; equal_sign: %r; atom: %s; s: %s',
                 indented, left, equal_sign, atom, portray_string(qs()[qj():]))
-
         raise_unknown_line(2)
 
 
@@ -23,7 +22,7 @@ def gem():
     def parse1_statement_expression__symbol(indented, left):
         s = qs()
 
-        if show:
+        if show is 7:
             my_line('indented: %r, left: %r; s: %r',
                     indented, left, s[qj():])
 
@@ -61,7 +60,9 @@ def gem():
 
                     return StatementMethodCall(indented, left, operator, right, arguments, newline)
                 
-                my_line('operator_2: %s', operator_2)
+                if show is 7:
+                    my_line('operator_2: %s', operator_2)
+
                 raise_unknown_line(5)
 
             if operator.is_arguments_0:
