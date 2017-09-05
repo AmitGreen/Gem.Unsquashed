@@ -22,7 +22,7 @@ def gem():
         if qi() == j:
             return r
 
-        return PrefixAtom(s[qi() : j], r)
+        return PrefixAtom(conjure_whitespace(s[qi() : j]), r)
 
 
     @share
@@ -43,7 +43,7 @@ def gem():
         r = conjure_identifier(s[j : name_end])
 
         if qi() != j:
-            r = PrefixAtom(s[qi() : j], r)
+            r = PrefixAtom(conjure_whitespace(s[qi() : j]), r)
 
         wi(name_end)
         wj(m.end())

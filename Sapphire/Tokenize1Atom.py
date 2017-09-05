@@ -197,7 +197,7 @@ def gem():
             #<same-as: tokenize__argument__first_atom & tokenize__comma__first_atom>
             #
             if qi() != j:
-                r = PrefixAtom(qs()[qi() : j], r)
+                r = PrefixAtom(conjure_whitespace(qs()[qi() : j]), r)
 
             wi(m.end('atom'))
             wj(m.end())
@@ -267,7 +267,7 @@ def gem():
             #<same-as: tokenize_atom>
             #
             if qi() != j:
-                r = PrefixAtom(qs()[qi() : j], r)
+                r = PrefixAtom(conjure_whitespace(qs()[qi() : j]), r)
 
             wi(m.end('atom'))
             wj(m.end())
@@ -329,7 +329,7 @@ def gem():
             #<same-as: tokenize_atom>
             #
             if qi() != j:
-                r = PrefixAtom(qs()[qi() : j], r)
+                r = PrefixAtom(conjure_whitespace(qs()[qi() : j]), r)
 
             wi(m.end('atom'))
             wj(m.end())

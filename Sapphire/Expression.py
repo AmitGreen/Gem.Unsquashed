@@ -487,7 +487,7 @@ def gem():
 
 
     @share
-    class PrefixAtom(Object):
+    class PrefixAtom(UnaryExpression):
         __slots__                             = (())
         display_name                          = 'prefixed-atom'
         is__atom__or__right_parenthesis       = true
