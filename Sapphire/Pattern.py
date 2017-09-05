@@ -279,13 +279,27 @@ def gem():
         )
 
         MATCH(
-            'function_header_parenthesis_match1',
+            'header_parenthesis_match1',
             (
-                  G(left_parenthesis) + ow
-                + P(G(right_parenthesis__colon) + ow)
-            ) + Q(comment_newline),
+                  (
+                        G(left_parenthesis) + ow
+                      + P(G(right_parenthesis__colon) + ow)
+                  )
+                + Q(comment_newline)
+            ),
         )
 
+        MATCH(
+            'parameter_argument_match',
+            (
+                  (
+                        G(name) + ow
+                      | G(right_parenthesis) + ow + P(G(colon) + ow)
+                  )
+                + Q(comment_newline)
+            ),
+        )
+            
         MATCH(
             'parameter_operator_match',
             (
@@ -297,10 +311,10 @@ def gem():
                                   + P(G('comma_RP_colon', colon) + ow)
                               )
                         )
-                      | G(right_parenthesis) + ow + P(G('RP_colon', colon) + ow)
+                      | G(right_parenthesis) + ow + P(G(colon) + ow)
                   )
                 + Q(comment_newline)
-            )
+            ),
         )
 
         MATCH(

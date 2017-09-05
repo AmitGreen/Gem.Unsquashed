@@ -88,16 +88,11 @@ def gem():
 
 
     @share
-    class ParameterColon_0_Newline(BaseDualOperator):
-        display_name             = r'():\n'
-        is_any_parameter_colon_0 = true
-
-
-    @share
     class RightParenthesis_Colon_Newline(BaseDualOperator):
         __slots__                                  = (())
         display_name                               = r'):\n'
         is__any__right_parenthesis__colon__newline = true
+        is__right_parenthesis__colon__newline      = true
 
 
     class BaseTripleOperator(KeywordAndOperatorBase):
@@ -158,3 +153,10 @@ def gem():
         __slots__                                  = (())
         display_name                               = r',):\n'
         is__any__right_parenthesis__colon__newline = true
+
+
+    @share
+    class ParameterColon_0_Newline(BaseTripleOperator):
+        display_name                 = r'():\n'
+        is_any_parameter_colon_0     = true
+        is_parameter_colon_0_newline = true

@@ -38,11 +38,12 @@ def gem():
         __slots__ = (())
 
 
-        display_name                    = 'Identifier'
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_identifier                   = true
-        is_right_parenthesis            = false
+        display_name                          = 'Identifier'
+        is__atom__or__right_parenthesis       = true
+        is_atom                               = true
+        is_identifier                         = true
+        is_right_parenthesis                  = false
+        is__right_parenthesis__colon__newline = false
 
 
         def display_token(t):

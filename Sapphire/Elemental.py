@@ -23,8 +23,10 @@ def gem():
         is_left_parenthesis                        = false
         is_left_square_bracket                     = false
         is_or_operator                             = false
+        is_parameter_colon_0_newline               = false
         is_right_brace                             = false
         is__right_parenthesis__colon               = false
+        is__right_parenthesis__colon__newline      = false
         is_right_parenthesis                       = false
         is_right_square_bracket                    = false
         is_token_newline                           = false
