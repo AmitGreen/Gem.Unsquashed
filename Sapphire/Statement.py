@@ -268,6 +268,12 @@ def gem():
 
 
     @share
+    class KeywordParameter(BaseBinaryExpression):
+        __slots__    = (())
+        display_name = 'keyword-parameter'
+
+
+    @share
     class ModuleAsFragment(Object):
         __slots__ = ((
             'module',                   #   Expression

@@ -353,6 +353,7 @@ def gem():
         'conjure_colon_newline',            conjure_colon_newline,
         'conjure_comma',                    conjure_comma,
         'conjure_dot',                      conjure_dot,
+        'conjure_equal_sign',               conjure_equal_sign,
         'conjure_except_colon',             conjure_except_colon,
         'conjure_keyword_as',               conjure_keyword_as,
         'conjure_keyword_if',               conjure_keyword_if,

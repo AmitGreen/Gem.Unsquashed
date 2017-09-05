@@ -116,6 +116,34 @@ def gem():
         return tokenize_parameter_operator__X__right_parenthesis(m)
 
                 
+    if 0:
+        MATCH(
+            'parameter_operator_match',
+            (
+                  (
+                        G(equal_sign) + ow
+                      | (
+                              G(comma) + ow
+                            + P(
+                                    G('comma_RP', right_parenthesis) + ow
+                                  + P(G('comma_RP_colon', colon) + ow)
+                              )
+                        )
+                      | G(right_parenthesis) + ow + P(G(colon) + ow)
+                  )
+                + Q(comment_newline)
+            ),
+        )
+
+
+    def tokenize_nested__X__equal_sign__blankline():
+        r = conjure_equal_sign(s[qi() : ])
+
+        skip_tokenize_prefix()
+
+        return r
+
+        
     @share
     def tokenize_parameter_operator():
         assert qd() is 1
@@ -128,6 +156,21 @@ def gem():
 
         if m is none:
             raise_unknown_line(1)
+
+        equal_sign__end = m.end('equal_sign')
+
+        if equal_sign__end is not -1:
+            if m.start('comment_newline') is not -1:
+                return tokenize_nested__X__equal_sign__blankline()
+
+            j = m.end()
+
+            r = conjure_equal_sign(s[qi() : j])
+
+            wi(j)
+            wj(j)
+
+            return r
 
         comma_end = m.end('comma')
 

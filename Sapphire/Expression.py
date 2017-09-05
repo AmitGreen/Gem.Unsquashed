@@ -6,6 +6,7 @@ def gem():
     require_gem('Sapphire.Elemental')
 
 
+    @share
     class BaseBinaryExpression(Object):
         __slots__ = ((
             'left',                     #   Expression

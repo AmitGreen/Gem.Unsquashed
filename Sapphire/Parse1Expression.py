@@ -55,6 +55,20 @@ def gem():
 
 
     @share
+    def parse1_expression():
+        left = tokenize_atom()
+        operator = tokenize_operator()
+
+        if operator.is_end_of_expression:
+            wk(operator)
+
+            return left
+
+        return parse1_expression__left__operator(left, operator)
+
+
+
+    @share
     def parse1_expression__left__operator(left, operator):
         while 7 is 7:
             if operator.is_compare_operator:
