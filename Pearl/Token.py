@@ -50,6 +50,21 @@ def gem():
             return t.s
 
 
+    @export
+    class TokenIndented(Token):
+        display_name      = 'indented'
+        is_token_indented = true
+
+
+    class TokenWhitespace(Token):
+        display_name = 'whitespace'
+
+
+    @export
+    class UnknownLine(Token):
+        display_name = 'unknown-line'
+
+
     [
             conjure_identifier, lookup_identifier,
     ] = produce_cache_functions(
@@ -60,18 +75,11 @@ def gem():
         )
 
 
-    @export
-    class TokenIndented(Token):
-        display_name      = 'indented'
-        is_token_indented = true
-
-
-    @export
-    class UnknownLine(Token):
-        display_name = 'unknown-line'
+    conjure_whitespace = produce_conjure_by_name('whitespace', TokenWhitespace)
 
 
     export(
         'conjure_identifier',   conjure_identifier,
+        'conjure_whitespace',   conjure_whitespace,
         'lookup_identifier',    lookup_identifier,
     )

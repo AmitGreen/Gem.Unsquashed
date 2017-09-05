@@ -60,8 +60,7 @@ def gem():
 
                 return r
 
-            if qd() is 0:
-                raise_unknown_line(2)
+            wd(qd() + 1)
 
             r = conjure_left_parenthesis(qs()[qi() : ])
 
@@ -113,17 +112,30 @@ def gem():
         atom_s = m.group('atom')
 
         if atom_s is not none:
-            if qd() is not 0:
-                raise_unknown_line(1)
-
             r = find_atom_type(atom_s[0])(atom_s)
+
+            if qd() is not 0:
+                suffix = conjure_whitespace(qs()[m.end('atom') : ])
+
+                if qi() == qj():
+                    r = SuffixAtom(r, suffix)
+                else:
+                    r = BookcaseAtom(
+                            conjure_whitespace(qs()[qi() : qj()]),
+                            r,
+                            suffix,
+                        )
+
+                skip_tokenize_prefix()
+
+                return r
 
             wn(conjure_token_newline(qs()[m.end('atom') : ]))
 
             if qi() == qj():
                 return r
 
-            return PrefixAtom(qs()[qi() : qj()], r)
+            return PrefixAtom(conjure_whitespace(qs()[qi() : qj()]), r)
 
         return tokenize__atom__X__open__newline(m)
 

@@ -199,6 +199,18 @@ def gem():
 
 
     @share
+    class BookcaseAtom(ExpressionBookcase):
+        __slots__    = (())
+        display_name = 'bookcased-atom'
+
+
+        is__atom__or__right_parenthesis       = true
+        is_atom                               = true
+        is__right_parenthesis__colon__newline = false
+        is_right_parenthesis                  = false
+
+
+    @share
     class Arguments_1(ExpressionBookcase):
         __slots__    = (())
         display_name = '(1)'
@@ -352,38 +364,6 @@ def gem():
 
 
     @share
-    class PrefixAtom(Object):
-        __slots__ = ((
-            'prefix',                   #   String+
-            'middle',                   #   Token+
-        ))
-
-
-        is__atom__or__right_parenthesis       = true
-        is_atom                               = true
-        is__right_parenthesis__colon__newline = false
-        is_right_parenthesis                  = false
-
-
-        def __init__(t, prefix, middle):
-            t.prefix = prefix
-            t.middle = middle
-
-
-        def __repr__(t):
-            return arrange('<PrefixAtom %r %r>', t.prefix, t.middle)
-
-
-        def display_token(t):
-            return arrange('<prefix-atom %r %s>', t.prefix, t.middle.display_token())
-
-
-        def write(t, w):
-            w(t.prefix)
-            t.middle.write(w)
-
-
-    @share
     class TupleExpression_2(Object):
         __slots__ = ((
             'left',                     #   OperatorLeftParenthesis
@@ -466,6 +446,18 @@ def gem():
     class NotExpression(UnaryExpression):
         __slots__    = (())
         display_name = 'not'
+
+
+    @share
+    class PrefixAtom(Object):
+        __slots__ = (())
+
+
+        display_name                          = 'prefixed-atom'
+        is__atom__or__right_parenthesis       = true
+        is_atom                               = true
+        is__right_parenthesis__colon__newline = false
+        is_right_parenthesis                  = false
 
 
     OperatorCompareEqual.compare_expression_meta = CompareEqualExpression
