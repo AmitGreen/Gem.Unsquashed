@@ -19,11 +19,12 @@ def gem():
 
 
     class TokenCommentNewline(Token):
-        __slots__            = (())
-        display_name         = 'comment-newline'
-        is_end_of_expression = true
-        is_token_comment     = true
-        is_token_newline     = true
+        __slots__                = (())
+        display_name             = 'comment-newline'
+        is_end_of_expression     = true
+        is_end_of_not_expression = true
+        is_token_comment         = true
+        is_token_newline         = true
 
 
         def display_token(t):
@@ -31,9 +32,10 @@ def gem():
 
 
     class TokenNewline(Token):
-        display_name         = 'newline'
-        is_end_of_expression = true
-        is_token_newline     = true
+        display_name             = 'newline'
+        is_end_of_expression     = true
+        is_end_of_not_expression = true
+        is_token_newline         = true
 
 
         def display_token(t):

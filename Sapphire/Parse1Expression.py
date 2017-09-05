@@ -103,7 +103,7 @@ def gem():
             if qn() is not none:
                 raise_unknown_line(1)
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_not_expression:
                 return NotExpression(not_operator, right)
 
             wk(none)
@@ -115,11 +115,15 @@ def gem():
 
             operator = tokenize_operator()
 
-            if operator.is_end_of_expression:
+            if qk() is not none:
+                raise_unknown_line(2)
+
+            if operator.is_end_of_not_expression:
                 wk(operator)
                 return NotExpression(not_operator, right)
 
-        raise_unknown_line(2)
+        my_line('right: %s, operator: %s', right, operator)
+        raise_unknown_line(3)
 
 
     #
@@ -162,10 +166,6 @@ def gem():
                     if qk() is not none:
                         my_line('qk: %r, qn: %r', qk(), qn())
                         raise_unknown_line(4)
-
-                    if qn() is not none:
-                        my_line('qk: %r, qn: %r', qk(), qn())
-                        raise_unknown_line(5)
                 else:
                     wk(none)
 
@@ -174,6 +174,10 @@ def gem():
             my_line('left: %r; or_operator: %r; right: %r; operator: %r; s: %s',
                     left, or_operator, right, operator, portray_string(qs()[qj():]))
 
+            raise_unknown_line(5)
+
+        if qk() is not none:
+            my_line('qk: %r, qn: %r', qk(), qn())
             raise_unknown_line(6)
 
         wk(operator)
