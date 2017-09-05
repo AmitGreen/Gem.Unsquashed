@@ -171,7 +171,6 @@ def gem():
         m = atom_match(qs(), j)
 
         if m is none:
-            my_line(portray_string(qs()[qj() : ]))
             raise_unknown_line(1)
 
         if m.start('comment_newline') is not -1:
@@ -422,6 +421,7 @@ def gem():
         m = parameter_argument_match(s, j)
 
         if m is none:
+            my_line(portray_string(qs()[qj() : ]))
             raise_unknown_line(1)
 
         name = m.group('name')
@@ -464,7 +464,7 @@ def gem():
             if comma_RP_end is not -1:
                 if m.start('comma_RP_colon') is not -1:
                     if m.end('comment_newline') is -1:
-                        raise_unknown_line(1)
+                        raise_unknown_line(2)
 
                     wd0()
 
@@ -476,10 +476,14 @@ def gem():
                                conjure_colon            (s[comma_RP_end   :               ])
                            )
 
-                raise_unknown_line(2)
+                raise_unknown_line(3)
 
             if m.end('comment_newline') is not -1:
-                return conjure_comma(s[qi() :])
+                r = conjure_comma(s[qi() :])
+
+                skip_tokenize_prefix()
+
+                return r
 
             j = m.end()
 

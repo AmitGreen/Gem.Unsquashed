@@ -37,7 +37,7 @@ def gem():
         middle_2 = tokenize__comma__first_atom()
 
         if middle_2.is_right_parenthesis:
-            return Tuple_1(left_parenthesis, middle_1, Comma_RightParenthesis(operator_1, middle_2))
+            return TupleExpression_1(left_parenthesis, middle_1, Comma_RightParenthesis(operator_1, middle_2))
 
         operator_2 = tokenize_operator()
 
@@ -48,7 +48,7 @@ def gem():
             wk(none)
 
         if operator_2.is_right_parenthesis:
-            return Tuple_2(left_parenthesis, middle_1, operator_1, middle_2, operator_2)
+            return TupleExpression_2(left_parenthesis, middle_1, operator_1, middle_2, operator_2)
 
         if not operator_2.is_comma:
             raise_unknown_line(2)
@@ -59,7 +59,7 @@ def gem():
         middle_3 = tokenize__comma__first_atom()
 
         if middle_3.is_right_parenthesis:
-            return Tuple_2(
+            return TupleExpression_2(
                        left_parenthesis,
                        middle_1,
                        operator_1,
@@ -82,7 +82,7 @@ def gem():
 
             if operator_7.is_right_parenthesis:
                 many.append(operator_7)
-                return Tuple_Many(Tuple(many))
+                return TupleExpression_Many(Tuple(many))
 
             if not operator_7.is_comma:
                 raise_unknown_line(3)
@@ -91,7 +91,7 @@ def gem():
 
             if middle_3.is_right_parenthesis:
                 many.append(Comma_RightParenthesis(operator_7, middle_3))
-                return Tuple_Many(Tuple(many))
+                return TupleExpression_Many(Tuple(many))
 
             many.append(operator_7)
 

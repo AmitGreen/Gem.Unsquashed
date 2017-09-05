@@ -60,6 +60,66 @@ def gem():
 
 
     @share
+    class BaseExpression_Many(Object):
+        __slots__ = ((
+            'many',                     #   Tuple of *
+        ))
+
+
+        def __init__(t, many):
+            t.many = many
+
+
+        def __repr__(t):
+            return arrange('<%s %r>', t.__class__.__name__, ' '.join(portray(v)   for v in t.many))
+
+
+        def write(t, w):
+            for v in t.many:
+                v.write(w)
+
+
+    @share
+    class ParameterColon_Many(BaseExpression_Many):
+        __slots__ = (())
+
+
+        def display_token(t):
+            many = t.many
+
+            if (many[0].s == '(') and (many[-1].s == '):'):
+                return arrange('<(): %s>', ' '.join(v.display_token()   for v in t.many[1:-1]))
+
+            return arrange('<(): %s %s %s>',
+                           t.many[0] .display_full_token(),
+                           ' '.join(v.display_token()   for v in t.many[1:-1]),
+                           t.many[-1].display_full_token())
+
+
+    @share
+    class TupleExpression_Many(BaseExpression_Many):
+        __slots__ = (())
+
+
+        is__atom__or__right_parenthesis = true
+        is_atom                         = true
+        is_right_parenthesis            = false
+
+
+        def display_token(t):
+            many = t.many
+
+            if (many[0].s == '(') and (many[-1].s == ')'):
+                return arrange('({,*} %s)', ' '.join(v.display_token()   for v in t.many[1:-1]))
+
+            return arrange('({,*} %s %s %s)',
+                           t.many[0] .display_full_token(),
+                           ' '.join(v.display_token()   for v in t.many[1:-1]),
+                           t.many[-1].display_full_token())
+
+
+
+    @share
     class Arguments_2(Object):
         __slots__ = ((
             'left_parenthesis',         #   OperatorLeftParenthesis
@@ -163,7 +223,7 @@ def gem():
 
 
     @share
-    class Tuple_1(ExpressionBookcase):
+    class TupleExpression_1(ExpressionBookcase):
         __slots__                       = (())
         display_name                    = '{,}'
         is__atom__or__right_parenthesis = true
@@ -322,7 +382,7 @@ def gem():
 
 
     @share
-    class Tuple_2(Object):
+    class TupleExpression_2(Object):
         __slots__ = ((
             'left',                     #   OperatorLeftParenthesis
             'middle_1',                 #   Expression+
@@ -346,7 +406,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<Tuple_2 %r %r %r %r %r>', t.left, t.middle_1, t.comma_1, t.middle_2, t.right)
+            return arrange('<TupleExpression_2 %r %r %r %r %r>', t.left, t.middle_1, t.comma_1, t.middle_2, t.right)
 
 
         def display_token(t):
@@ -370,43 +430,6 @@ def gem():
             t.comma_1 .write(w)
             t.middle_2.write(w)
             t.right   .write(w)
-
-
-    @share
-    class Tuple_Many(Object):
-        __slots__ = ((
-            'many',                     #   Tuple of *
-        ))
-
-
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_right_parenthesis            = false
-
-
-        def __init__(t, many):
-            t.many = many
-
-
-        def __repr__(t):
-            return arrange('<Tuple_Many %r>', ' '.join(portray(v)   for v in t.many))
-
-
-        def display_token(t):
-            many = t.many
-
-            if (many[0].s == '(') and (many[-1].s == ')'):
-                return arrange('({,*} %s)', ' '.join(v.display_token()   for v in t.many[1:-1]))
-
-            return arrange('({,*} %s %s %s)', 
-                           t.many[0] .display_full_token(),
-                           ' '.join(v.display_token()   for v in t.many[1:-1]),
-                           t.many[-1].display_full_token())
-
-
-        def write(t, w):
-            for v in t.many:
-                v.write(w)
 
 
     OperatorCompareEqual.compare_expression_meta = CompareEqualExpression

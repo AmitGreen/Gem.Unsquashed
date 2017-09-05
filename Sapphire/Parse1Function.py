@@ -123,24 +123,23 @@ def gem():
         if not operator_2.is_comma:
             raise_unknown_line(6)
 
-        many = [operator_1, parameter_1]
+        many = [operator_1, token_1]
+
+        token_7 = tokenize_parameter_atom()
+
+        if qn() is not none:
+            raise_unknown_line(7)
+
+        if token_7.is__right_parenthesis__colon__newline:
+            return FunctionHeader(
+                       keyword_function,
+                       name,
+                       ParameterColon_1(
+                           operator_1,
+                           token_1, 
+                           Comma_RightParenthesis_Colon_Newline(operator_2, token_7.first, token_7.second),
+                       ),
+                   )
 
         while 7 is 7:
-            token_7 = tokenize_parameter_operator()
-
-            if qn() is not none:
-                raise_unknown_line(7)
-
-            if operator_7.is_any_parameter_colon_0:
-                if operator_7.is_parameter_colon_0_newline:
-                    many.append(Comma_RightParenthesis_Colon_Newline(operator_2, token_7.first, token_7.second))
-
-                    return FunctionHeader(
-                               keyword_function,
-                               name,
-                               ParameterColon_Many(tuple(many))
-                           )
-
-                raise_unknown_line(8)
-
-            raise_unknown_line(9)
+            raise_unknown_line(8)

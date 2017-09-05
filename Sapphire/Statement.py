@@ -97,7 +97,7 @@ def gem():
             return arrange('<%s <%s> %s %s>',
                            t.display_name,
                            t.keyword.s,
-                           t.name,
+                           t.name            .display_token(),
                            t.parameters_colon.display_token())
 
 
