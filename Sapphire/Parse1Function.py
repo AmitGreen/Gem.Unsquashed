@@ -108,11 +108,14 @@ def gem():
                        Comma_RightParenthesis_Colon_Newline(operator_1, token_1.first, token_1.second),
                     )
 
+        if not token_1.is_atom:
+            raise_unknown_line(5)
+
         operator_2 = tokenize_parameter_operator()
 
         if operator_2.is__any__right_parenthesis__colon__newline:
             if qn() is not none:
-                raise_unknown_line(5)
+                raise_unknown_line(6)
                 
             return FunctionHeader(
                        keyword_function,
@@ -121,14 +124,12 @@ def gem():
                    )
 
         if not operator_2.is_comma:
-            raise_unknown_line(6)
-
-        many = [operator_1, token_1]
+            raise_unknown_line(7)
 
         token_7 = tokenize_parameter_atom()
 
         if qn() is not none:
-            raise_unknown_line(7)
+            raise_unknown_line(8)
 
         if token_7.is__right_parenthesis__colon__newline:
             return FunctionHeader(
@@ -141,5 +142,37 @@ def gem():
                        ),
                    )
 
+        if not token_7.is_atom:
+            raise_unknown_line(9)
+
+        many = [operator_1, token_1, operator_2, token_7]
+
         while 7 is 7:
-            raise_unknown_line(8)
+            operator_7 = tokenize_parameter_operator()
+
+            if operator_7.is__any__right_parenthesis__colon__newline:
+                if qn() is not none:
+                    raise_unknown_line(10)
+                    
+                many.append(operator_7)
+
+                return FunctionHeader(keyword_function, name, ParameterColon_Many(Tuple(many)))
+
+            if not operator_7.is_comma:
+                raise_unknown_line(11)
+
+            token_7 = tokenize_parameter_atom()
+
+            if qn() is not none:
+                raise_unknown_line(12)
+
+            if token_7.is__right_parenthesis__colon__newline:
+                many.append(Comma_RightParenthesis_Colon_Newline(operator_7, token_7.first, token_7.second))
+
+                return FunctionHeader(keyword_function, name, ParameterColon_Many(Tuple(many)))
+
+            if not token_7.is_atom:
+                raise_unknown_line(13)
+
+            many.append(operator_7)
+            many.append(token_7)

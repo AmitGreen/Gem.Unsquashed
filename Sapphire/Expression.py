@@ -358,9 +358,10 @@ def gem():
         ))
 
 
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_right_parenthesis            = false
+        is__atom__or__right_parenthesis       = true
+        is_atom                               = true
+        is__right_parenthesis__colon__newline = false
+        is_right_parenthesis                  = false
 
 
         def __init__(t, prefix, middle):
