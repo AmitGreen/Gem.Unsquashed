@@ -45,16 +45,24 @@ def gem():
                 if qn() is not none:
                     raise_unknown_line(2)
 
+                if operator_2.is_equal_sign:
+                    return parse1_statement_assign__left__equal_sign(
+                               indented,
+                               ExpressionDot(left, operator, right),
+                               operator_2,
+                           )
+
                 if operator_2.is_left_parenthesis:
                     arguments = parse1_arguments__left_parenthesis(operator_2)
                     newline   = qn()
 
                     if newline is none:
-                        raise_unknown_line(3)
+                        raise_unknown_line(4)
 
                     return StatementMethodCall(indented, left, operator, right, arguments, newline)
                 
-                raise_unknown_line(4)
+                my_line('operator_2: %s', operator_2)
+                raise_unknown_line(5)
 
             if operator.is_arguments_0:
                 newline = qn()
