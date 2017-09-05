@@ -7,7 +7,7 @@ def gem():
 
 
     #
-    #   1.  Index
+    #   1.  Index (Python 2.7.14rc1 grammer calls this 'atom_trailer')
     #
     @share
     def parse1_index_expression__left__operator(left, left_square_bracket):
@@ -23,54 +23,39 @@ def gem():
 
 
     #
-    #   2.  Power
+    #   2.  Power-Expression (Python 2.7.14rc1 grammer calls this 'power')
     #
 
     #
-    #   3.  Factor
+    #   3.  Unary-Expression (Python 2.7.14rc1 grammer calls this 'factor')
     #
 
     #
-    #   4.  Multiply
+    #   4.  Multiply-Expression (Python 2.7.14rc1 grammer calls this 'term')
     #
 
     #
-    #   5.  Arithmetic
+    #   5.  Arithmetic-Expression (Python 2.7.14rc1 grammer calls this 'arith_expr')
     #
 
     #
-    #   6.  Shift
+    #   6.  Shift-Expression (Python 2.7.14rc1 grammer calls this 'shift_expr')
     #
 
     #
-    #   7.  Logical-And
+    #   7.  Logical-And-Expression (Python 2.7.14rc1 grammer calls this 'and_expr')
     #
 
     #
-    #   8.  Logical-Exclusive-Or
+    #   8.  Logical-Exclusive-Or-Expression (Python 2.7.14rc1 grammer calls this 'xor_expr')
     #
 
     #
-    #   9.  Expression (Logical-Inclusive-Or)
+    #   9.  Expression (Logical-Inclusive-Or) (Python 2.7.14rc1 grammer calls this 'expr')
     #
-    if 0:
-        @share
-        def parse1_expression():
-            left = tokenize_atom()
-            operator = tokenize_operator()
-
-            if operator.is_end_of_expression:
-                wk(operator)
-
-                return left
-
-            return parse1_expression__left__operator(left, operator)
-
-
-
 
     #
-    #   10.  compare
+    #   10.  Compare-Expression (Python 2.7.14rc1 grammer calls this 'comparasion')
     #
     @share
     def parse1_compare_expression__left__operator(left, compare_operator):
@@ -88,7 +73,7 @@ def gem():
 
 
     #
-    #   11. Not
+    #   11.  Not-Expression (Python 2.7.14rc1 grammer calls this 'not_test')
     #
     @share
     def parse1_not_expression__operator(not_operator):
@@ -127,11 +112,11 @@ def gem():
 
 
     #
-    #   12. Boolean-And
+    #   12. Boolean-And-Expression (Python 2.7.14rc1 grammer calls this 'and_test')
     #
 
     #
-    #   13. Boolean-Or
+    #   13. Boolean-Or-Expression (Python 2.7.14rc1 grammer calls this 'or_test')
     #
     @share
     def parse1_or_expression__left__operator(left, or_operator):
@@ -185,8 +170,21 @@ def gem():
         return OrExpression(left, or_operator, right)
 
 
+    #
+    #   14.  Ternary-Expression (Python 2.7.14rc1 grammer calls this 'test')
+    #   14.  Lambda-Expression  (Python 2.7.14rc1 grammer calls this 'lambdef')
+    #
+    #           ternary-expression
+    #               : boolean-or-expression
+    #               | boolean-or-expression 'if' boolean-or-expression 'else' ternary-expression
+    #               | lambda-expression
+    #
+    #
+    #           lambda-Expression
+    #               : 'lambda' [variable-argument-list] ':' ternary-expression
+    #
     @share
-    def parse1_any_or_expression__left__operator(left, operator):
+    def parse1_any_ternary_expression__left__operator(left, operator):
         if operator.is_or_operator:
             left = parse1_or_expression__left__operator(left, operator)
 
@@ -213,6 +211,46 @@ def gem():
         raise_unknown_line(1)
 
 
-#
-#   14. Lambda
-#
+    #
+    #   15.  Comprehension-Expression (Python 2.7.14rc1 grammer calls this 'testlist_comp')
+    #
+    @share
+    def parse1_any_comprehension_expression():
+        left = tokenize_atom()
+
+        operator = tokenize_operator()
+
+        if operator.is_end_of_expression:
+            wk(operator)
+
+            return left
+
+        return parse1_any_comprehension_expression__left__operator(left, operator)
+
+
+    @share
+    def parse1_any_comprehension_expression__left__operator(left, operator):
+        if operator.is_or_operator:
+            left = parse1_or_expression__left__operator(left, operator)
+
+            operator = qk()
+
+            if operator.is_end_of_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_compare_operator:
+            left = parse1_compare_expression__left__operator(left, operator)
+
+            operator = qk()
+
+            if operator.is_end_of_expression:
+                return left
+
+            wk(none)
+
+        my_line('left: %s; operator: %s; s: %s',
+                left, operator, portray_string(qs()[qj():]))
+
+        raise_unknown_line(1)
