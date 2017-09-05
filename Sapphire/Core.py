@@ -18,7 +18,8 @@ def gem():
     from Gem import create_DelayedFileOutput, create_StringOutput, produce_conjure_by_name, program_exit
     from Gem import read_text_from_path, print_exception_chain
     from Pearl import conjure_identifier, conjure_token_newline, parse_context
-    from Pearl import qd, qi, qj, qk, qn, qs, raise_unknown_line, Token, wd, wd0, wd1, wi, wj, wk, wn, z_initialize
+    from Pearl import qd, qi, qj, qk, qn, qs, raise_unknown_line, Token
+    from Pearl import wd, wd0, wd1, wi, wj, wk, wn, ws, z_initialize
 
 
     share(
@@ -53,6 +54,7 @@ def gem():
         'wj',                           wj,
         'wn',                           wn,
         'wk',                           wk,
+        'ws',                           ws,
         'z_initialize',                 z_initialize,
 
 

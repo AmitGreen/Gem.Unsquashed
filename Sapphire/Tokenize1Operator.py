@@ -15,11 +15,31 @@ def gem():
         if m is none:
             raise_unknown_line(1)
 
-        if m.group('comment_newline') is not none:
-            raise_unknown_line(2)
+        if m.group('comment_newline') is none:
+            wj(m.end())
+            return
 
-        wj(m.end())
+        many = [qs()]
 
+        while 7 is 7:
+            parse_context.iterate_lines.next()
+
+            s = qs()
+            m = next_nested_line_match(s)
+
+            if m is none:
+                raise_unknown_line(1)
+
+            if m.group('comment_newline') is none:
+                prefix = ''.join(many)
+                total  = length(prefix)
+
+                ws(prefix + s)
+                wj(total + m.end())
+
+                return
+
+            many.append(s)
 
     @share
     def tokenize_operator():

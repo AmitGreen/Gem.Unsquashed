@@ -181,4 +181,5 @@ def gem():
         'wj',               wj,
         'wk',               wk,
         'wn',               wn,
+        'ws',               ws,
     )
