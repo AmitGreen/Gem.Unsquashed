@@ -350,7 +350,7 @@ def gem():
                                          ')'   : conjure_right_parenthesis,
                                          ','   : conjure_comma,
                                          '.'   : conjure_dot,
-                                         ' :'  : conjure_colon,
+                                         ':'   : conjure_colon,
                                          '='   : conjure_equal_sign,
                                          '=='  : conjure_compare_equal,
                                          'as'  : conjure_keyword_as,

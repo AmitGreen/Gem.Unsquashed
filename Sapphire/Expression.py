@@ -414,6 +414,44 @@ def gem():
             t.right   .write(w)
 
 
+    class PostfixExpression(Object):
+        __slots__ = ((
+            'left',                     #   Expression
+            'operator',                 #   Operator*
+        ))
+
+
+        def __init__(t, left, operator):
+            t.left     = left
+            t.operator = operator
+
+
+        def __repr__(t):
+            return arrange('<%s %r %r>', t.__class__.__name__, t.left, t.operator)
+
+
+        def display_token(t):
+            return arrange('<%s %s %s>',
+                           t.display_name,
+                           t.left    .display_token(),
+                           t.operator.display_token())
+
+
+        def write(t, w):
+            t.left    .write(w)
+            t.operator.write(w)
+
+
+    @share
+    class SuffixAtom(PostfixExpression):
+        __slots__                             = (())
+        display_name                          = 'suffixed-atom'
+        is__atom__or__right_parenthesis       = true
+        is_atom                               = true
+        is__right_parenthesis__colon__newline = false
+        is_right_parenthesis                  = false
+
+
     class UnaryExpression(Object):
         __slots__ = ((
             'operator',                 #   Operator*
@@ -450,9 +488,7 @@ def gem():
 
     @share
     class PrefixAtom(Object):
-        __slots__ = (())
-
-
+        __slots__                             = (())
         display_name                          = 'prefixed-atom'
         is__atom__or__right_parenthesis       = true
         is_atom                               = true
