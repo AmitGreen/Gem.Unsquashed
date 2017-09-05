@@ -134,15 +134,47 @@ def gem():
         if show is 7:
             my_line('%r, %r, %s', left, or_operator, portray_string(qs()[qj():]))
 
-        right    = parse1_atom()
+        right = parse1_atom()
+
+        if qk() is not qn() is not none:
+            raise_unknown_line(1)
+
         operator = tokenize_operator()
 
-        while not operator.is_end_of_expression:
-            if show is 7:
-                my_line('%r, %r, %r, %r, %s',
-                        left, or_operator, right, operator, portray_string(qs()[qj():]))
-
+        if qk() is not qn() is not none:
             raise_unknown_line(2)
+
+        while not operator.is_end_of_expression:
+            if operator.is_or_operator:
+                left        = OrExpression(left, or_operator, right)
+                or_operator = operator
+
+                if qn() is not none:
+                    raise_unknown_line(3)
+
+                right = parse1_atom()
+
+                operator = qk()
+
+                if operator is none:
+                    operator = tokenize_operator()
+
+                    if qk() is not none:
+                        my_line('qk: %r, qn: %r', qk(), qn())
+                        raise_unknown_line(4)
+
+                    if qn() is not none:
+                        my_line('qk: %r, qn: %r', qk(), qn())
+                        raise_unknown_line(5)
+                else:
+                    wk(none)
+
+                continue
+
+            my_line('left: %r; or_operator: %r; right: %r; operator: %r; s: %s',
+                    left, or_operator, right, operator, portray_string(qs()[qj():]))
+
+            raise_unknown_line(6)
 
         wk(operator)
 
