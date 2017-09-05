@@ -265,26 +265,9 @@ def gem():
         )
 
         MATCH(
-            'class_parenthesis_match1',
-            (
-                  ow
-                + (
-                        (
-                              G(left_parenthesis) + ow
-                            + P(right_parenthesis__colon + G('ow_comment_newline_1', ow_comment_newline))
-                        )
-                      | (colon + G('ow_comment_newline_2', ow_comment_newline))
-                  )
-            ),
-        )
-
-        MATCH(
             'header_parenthesis_match1',
             (
-                  (
-                        G(left_parenthesis) + ow
-                      + P(G(right_parenthesis__colon) + ow)
-                  )
+                  G(left_parenthesis) + ow + P(G(right_parenthesis) + ow + P(G(colon) + ow))
                 + Q(comment_newline)
             ),
         )

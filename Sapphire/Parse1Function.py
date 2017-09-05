@@ -156,7 +156,7 @@ def gem():
         if not token_7.is_atom:
             raise_unknown_line(10)
 
-        many = [operator_1, token_1, operator_2, token_7]
+        many = [operator_1, token_1, operator_2]
 
         while 7 is 7:
             operator_7 = tokenize_parameter_operator()
@@ -165,17 +165,32 @@ def gem():
                 if qn() is not none:
                     raise_unknown_line(11)
                     
+                many.append(token_7)
                 many.append(operator_7)
 
                 return FunctionHeader(keyword_function, name, ParameterColon_Many(Tuple(many)))
 
+            if operator_7.is_equal_sign:
+                value = parse1_expression()
+
+                token_7 = KeywordParameter(token_7, operator_7, value)
+
+                operator_7 = qk()
+                wk(none)
+
+                if operator_7 is none:
+                    raise_unknown_line(12)
+
+
             if not operator_7.is_comma:
-                raise_unknown_line(12)
+                raise_unknown_line(13)
+
+            many.append(token_7)
 
             token_7 = tokenize_parameter_atom()
 
             if qn() is not none:
-                raise_unknown_line(13)
+                raise_unknown_line(14)
 
             if token_7.is__right_parenthesis__colon__newline:
                 many.append(Comma_RightParenthesis_Colon_Newline(operator_7, token_7.first, token_7.second))
@@ -183,7 +198,6 @@ def gem():
                 return FunctionHeader(keyword_function, name, ParameterColon_Many(Tuple(many)))
 
             if not token_7.is_atom:
-                raise_unknown_line(14)
+                raise_unknown_line(15)
 
             many.append(operator_7)
-            many.append(token_7)
