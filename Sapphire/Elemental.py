@@ -25,6 +25,7 @@ def gem():
         is_left_brace                              = false
         is_left_parenthesis                        = false
         is_left_square_bracket                     = false
+        is_modify_operator                         = false
         is_or_operator                             = false
         is_parameter_colon_0_newline               = false
         is_postfix_operator                        = false
@@ -249,6 +250,13 @@ def gem():
         keyword                = '['              #   ]
 
 
+    class OperatorModifyPlus(KeywordAndOperatorBase):
+        __slots__          = (())
+        display_name       = '+='
+        is_modify_operator = true
+        keyword            = '}+='
+
+
     class OperatorRightBrace(KeywordAndOperatorBase):
         __slots__                = (())
         #  {
@@ -322,6 +330,7 @@ def gem():
     conjure_left_brace           = produce_conjure_by_name('left-brace',           OperatorLeftBrace) 
     conjure_left_parenthesis     = produce_conjure_by_name('left-parenthesis',     OperatorLeftParenthesis) 
     conjure_left_square_bracket  = produce_conjure_by_name('left-square-brakcet',  OperatorLeftSquareBracket) 
+    conjure_modify_plus          = produce_conjure_by_name('modify-plus',          OperatorModifyPlus) 
     conjure_right_brace          = produce_conjure_by_name('right-brace',          OperatorRightBrace) 
     conjure_right_parenthesis    = produce_conjure_by_name('right-parenthesis',    OperatorRightParenthesis) 
     conjure_right_square_bracket = produce_conjure_by_name('right-square-bracket', OperatorRightSquareBracket) 
@@ -361,6 +370,7 @@ def gem():
     find_operator_conjure_function = {
                                          '('   : conjure_left_parenthesis,
                                          ')'   : conjure_right_parenthesis,
+                                         '+='  : conjure_modify_plus,
                                          ','   : conjure_comma,
                                          '.'   : conjure_dot,
                                          ':'   : conjure_colon,

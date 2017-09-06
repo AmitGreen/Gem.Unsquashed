@@ -163,7 +163,7 @@ def gem():
                             G(
                                 'operator',
                                  (
-                                       ANY_OF('=') + P('=')
+                                       ANY_OF('+', '=') + P('=')
                                      | colon
                                      | comma
                                      | dot

@@ -11,10 +11,22 @@ def gem():
         newline = qn()
 
         if newline is not none:
-            return AssignStatement(indented, left, equal_sign, atom, newline)
+            return ModifyStatement(indented, left, equal_sign, atom, newline)
 
         my_line('indented: %r; left: %r; equal_sign: %r; atom: %s; s: %s',
                 indented, left, equal_sign, atom, portray_string(qs()[qj():]))
+        raise_unknown_line(2)
+
+
+    def parse1_statement_modify__left__operator(indented, left, modify_operator):
+        atom    = parse1_atom()
+        newline = qn()
+
+        if newline is not none:
+            return ModifyStatement(indented, left, modify_operator, atom, newline)
+
+        my_line('indented: %r; left: %r; modify_operator: %r; atom: %s; s: %s',
+                indented, left, modify_operator, atom, portray_string(qs()[qj():]))
         raise_unknown_line(2)
 
 
@@ -23,8 +35,7 @@ def gem():
         s = qs()
 
         if show is 7:
-            my_line('indented: %r, left: %r; s: %r',
-                    indented, left, s[qj():])
+            my_line('indented: %r, left: %r; s: %r', indented, left, s[qj():])
 
         while 7 is 7:
             operator = tokenize_operator()
@@ -56,14 +67,12 @@ def gem():
                     newline   = qn()
 
                     if newline is none:
-                        raise_unknown_line(4)
+                        raise_unknown_line(3)
 
                     return StatementMethodCall(indented, left, operator, right, arguments, newline)
                 
-                if show is 7:
-                    my_line('operator_2: %s', operator_2)
-
-                raise_unknown_line(5)
+                my_line('operator_2: %s', operator_2)
+                raise_unknown_line(4)
 
             if operator.is_arguments_0:
                 newline = qn()
@@ -87,4 +96,8 @@ def gem():
             if operator.is_equal_sign:
                 return parse1_statement_assign__left__equal_sign(indented, left, operator)
 
-            raise_unknown_line(6)
+            if operator.is_modify_operator:
+                return parse1_statement_modify__left__operator(indented, left, operator)
+
+            my_line('operator: %s', operator)
+            raise_unknown_line(5)

@@ -41,6 +41,7 @@ def gem():
 
             many.append(s)
 
+
     @share
     def tokenize_operator():
         s = qs()
@@ -48,7 +49,6 @@ def gem():
 
         if m is none:
             my_line(portray_string(s[qj() : ]))
-            assert 0
             raise_unknown_line(1)
 
         operator_s = m.group('operator')
