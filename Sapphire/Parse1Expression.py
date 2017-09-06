@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1Expression')
 def gem():
-    show = 7
+    show = 0
 
 
     #
@@ -205,9 +205,6 @@ def gem():
 
                     operator = tokenize_operator()
 
-                    if qn() is not none:
-                        raise_unknown_line(6)
-
                     if not operator.is_postfix_operator:
                         wk(operator)
 
@@ -215,9 +212,12 @@ def gem():
 
             if operator.is_left_square_bracket:
                 if qn() is not none:
-                    raise_unknown_line(7)
+                    raise_unknown_line(6)
 
-                middle = tokenize_atom()
+                middle = parse1_atom()
+
+                if qk() is not none:
+                    raise_unknown_line(7)
 
                 if qn() is not none:
                     raise_unknown_line(8)
@@ -268,7 +268,13 @@ def gem():
 
     @share
     def parse1_index_expression__left__operator(left, left_square_bracket):
-        atom = tokenize_atom()
+        atom = parse1_atom()
+
+        if qk() is not none:
+            raise_unknown_line(1)
+
+        if qn() is not none:
+            raise_unknown_line(2)
 
         while 7 is 7:
             operator = tokenize_operator()
@@ -276,7 +282,7 @@ def gem():
             if operator.is_right_square_bracket:
                 return ExpressionIndex_1(left, left_square_bracket, atom, operator)
 
-            raise_unknown_line(1)
+            raise_unknown_line(3)
 
 
     #
@@ -316,7 +322,14 @@ def gem():
     #
     @share
     def parse1_compare_expression__left__operator(left, compare_operator):
-        right    = tokenize_atom()
+        right    = parse1_atom()
+
+        if qk() is not none:
+            raise_unknown_line(1)
+
+        if qn() is not none:
+            raise_unknown_line(2)
+
         operator = tokenize_operator()
 
         if operator.is_right_parenthesis:
@@ -326,7 +339,7 @@ def gem():
 
             return compare_operator.compare_expression_meta(left, compare_operator, right)
 
-        raise_unknown_line(2)
+        raise_unknown_line(3)
 
 
     #
@@ -339,11 +352,17 @@ def gem():
 
         right = parse1_atom()
 
+        if qk() is not none:
+            raise_unknown_line(1)
+
+        if qn() is not none:
+            return NotExpression(not_operator, right)
+
         operator = qk()
 
         if operator is not none:
             if qn() is not none:
-                raise_unknown_line(1)
+                raise_unknown_line(3)
 
             if operator.is_end_of_not_expression:
                 return NotExpression(not_operator, right)
@@ -358,14 +377,14 @@ def gem():
             operator = tokenize_operator()
 
             if qk() is not none:
-                raise_unknown_line(2)
+                raise_unknown_line(4)
 
             if operator.is_end_of_not_expression:
                 wk(operator)
                 return NotExpression(not_operator, right)
 
         my_line('right: %s, operator: %s', right, operator)
-        raise_unknown_line(3)
+        raise_unknown_line(5)
 
 
     #
@@ -382,13 +401,16 @@ def gem():
 
         right = parse1_atom()
 
-        if qk() is not qn() is not none:
+        if qk() is not none:
             raise_unknown_line(1)
+
+        if qn() is not none:
+            raise_unknown_line(2)
 
         operator = tokenize_operator()
 
-        if qk() is not qn() is not none:
-            raise_unknown_line(2)
+        if qn() is not none:
+            raise_unknown_line(3)
 
         while not operator.is_end_of_expression:
             if operator.is_or_operator:
@@ -396,7 +418,7 @@ def gem():
                 or_operator = operator
 
                 if qn() is not none:
-                    raise_unknown_line(3)
+                    raise_unknown_line(4)
 
                 right = parse1_atom()
 
@@ -407,7 +429,7 @@ def gem():
 
                     if qk() is not none:
                         my_line('qk: %r, qn: %r', qk(), qn())
-                        raise_unknown_line(4)
+                        raise_unknown_line(5)
                 else:
                     wk(none)
 
@@ -416,11 +438,11 @@ def gem():
             my_line('left: %r; or_operator: %r; right: %r; operator: %r; s: %s',
                     left, or_operator, right, operator, portray_string(qs()[qj():]))
 
-            raise_unknown_line(5)
+            raise_unknown_line(6)
 
         if qk() is not none:
             my_line('qk: %r, qn: %r', qk(), qn())
-            raise_unknown_line(6)
+            raise_unknown_line(7)
 
         wk(operator)
 
@@ -442,7 +464,7 @@ def gem():
     #
     @share
     def parse1_any_ternary_expression():
-        left = tokenize_atom()
+        left = parse1_atom()
 
         if qk() is not none:
             raise_unknown_line(1)
@@ -452,11 +474,8 @@ def gem():
 
         operator = tokenize_operator()
 
-        if qk() is not none:
-            raise_unknown_line(3)
-
         if qn() is not none:
-            raise_unknown_line(4)
+            raise_unknown_line(3)
 
         if operator.is_end_of_expression:
             wk(operator)
@@ -509,9 +528,18 @@ def gem():
     #
     @share
     def parse1_any_comprehension_expression():
-        left = tokenize_atom()
+        left = parse1_atom()
+
+        if qk() is not none:
+            raise_unknown_line(1)
+
+        if qn() is not none:
+            raise_unknown_line(2)
 
         operator = tokenize_operator()
+
+        if qn() is not none:
+            raise_unknown_line(3)
 
         if operator.is_end_of_expression:
             wk(operator)
