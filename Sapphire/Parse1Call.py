@@ -12,27 +12,59 @@ def gem():
 
 
     @share
-    def parse1_argument7__left(left):
+    def parse1_argument1__left(left):
+        assert qd() > 0
+        assert qk() is none
+        assert qn() is none
+
         operator = tokenize_operator()
 
-        while not operator.is_end_of_expression:
-            if operator.is_postfix_operator:
-                left = parse1_postfix_expression__left__operator(left, operator)
+        if operator.is_postfix_operator:
+            left = parse1_postfix_expression__left__operator(left, operator)
 
-                operator = qk()
+            operator = qk()
 
-                assert operator is not none
+            if operator.is_end_of_expression:
+                return left
 
-                wk(none)
-                continue
+            wk(none)
 
-            my_line('operator: %r', operator)
-            raise_unknown_line(1)
+        if operator.is_end_of_expression:
+            wk(operator)
 
-        wk(operator)
+            return left
 
-        return left
+        my_line('left: %r, operator: %r', left, operator)
+        raise_unknown_line(2)
+
+
+    @share
+    def parse1_argument7__left(left):
+        assert qd() > 0
+        assert qk() is none
+        assert qn() is none
+
+        operator = tokenize_operator()
+
+        if operator.is_postfix_operator:
+            left = parse1_postfix_expression__left__operator(left, operator)
+
+            operator = qk()
+
+            if operator.is_end_of_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_end_of_expression:
+            wk(operator)
+
+            return left
+
+        my_line('left: %r, operator: %r', left, operator)
+        raise_unknown_line(2)
     
+
     @share
     def parse1_arguments__left_parenthesis(left_parenthesis):
         argument_1 = parse1__argument__first_atom()
@@ -40,29 +72,15 @@ def gem():
         if argument_1.is_right_parenthesis:
             raise_unknown_line(1)
 
-        while 7 is 7:
-            operator_1 = tokenize_operator()
+        argument_1 = parse1_argument1__left(argument_1)
+        operator_1 = qk()
 
-            if operator_1.is_left_parenthesis:
-                argument_1 = parse1_call_expression__left__operator(argument_1, operator_1)
+        wk(none)
 
-                assert qk() is none
-                assert qn() is none
-                continue
+        if operator_1.is_right_parenthesis:
+            return Arguments_1(left_parenthesis, argument_1, operator_1)
 
-            if operator_1.is_left_square_bracket:
-                argument_1 = parse1_index_expression__left__operator(argument_1, operator_1)
-
-                assert qk() is none
-                assert qn() is none
-                continue
-
-            if operator_1.is_right_parenthesis:
-                return Arguments_1(left_parenthesis, argument_1, operator_1)
-
-            if operator_1.is_comma:
-                break
-
+        if not operator_1.is_comma:
             raise_unknown_line(2)
 
         argument_2 = parse1__argument__first_atom()

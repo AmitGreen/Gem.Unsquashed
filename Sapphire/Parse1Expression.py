@@ -225,9 +225,9 @@ def gem():
                 operator_2 = tokenize_operator()
 
                 if operator_2.is_right_square_bracket:
-                    left = ExpressionIndex_1(left, operator, atom, operator_2)
+                    left = ExpressionIndex_1(left, operator, middle, operator_2)
                 else:
-                    left = parse1_any_ternary_expression__left__operator(atom, operator_2)
+                    middle = parse1_any_ternary_expression__left__operator(middle, operator_2)
 
                     operator_2 = qk()
 
@@ -238,7 +238,7 @@ def gem():
                     if not operator_2.is_right_square_bracket:
                         raise_unknown_line(9)
 
-                    left = ExpressionIndex_1(left, operator, atom, operator_2)
+                    left = ExpressionIndex_1(left, operator, middle, operator_2)
 
                 operator = qk()
 
