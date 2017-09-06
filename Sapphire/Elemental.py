@@ -12,6 +12,7 @@ def gem():
         is__any__right_parenthesis__colon__newline = false
         is_arguments_0                             = false
         is__arguments_0__or__left_parenthesis      = false
+        is_colon                                   = false
         is_colon_newline                           = false
         is_comma                                   = false
         is__comma__or__right_parenthesis           = false
@@ -160,9 +161,12 @@ def gem():
 
 
     class OperatorColon(KeywordAndOperatorBase):
-        __slots__    = (())
-        display_name = ':'
-        keyword      = ':'
+        __slots__                = (())
+        display_name             = ':'
+        is_colon                 = true
+        is_end_of_expression     = true
+        is_end_of_not_expression = true
+        keyword                  = ':'
 
 
     class OperatorColonNewline(KeywordAndOperatorBase):

@@ -240,6 +240,43 @@ def gem():
 
 
     @share
+    class IfStatement(Object):
+        __slots__ = ((
+            'keyword_if',               #   KeywordIf
+            'condition',                #   Expression
+            'colon',                    #   OperatorColon
+            'body',                     #   *Statement
+        ))
+
+
+        def __init__(t, keyword_if, condition, colon, body):
+            t.keyword_if = keyword_if
+            t.condition  = condition
+            t.colon      = colon
+            t.body       = body
+
+
+        def  __repr__(t):
+            return arrange('<IfHeader %r %r %r %r>',
+                           t.keyword_with, t.condition, t.colon, t.body)
+
+
+        def display_token(t):
+            return arrange('<if <%s> %s %s %s>',
+                           t.keyword_if.s,
+                           t.condition .display_token(),
+                           t.colon     .display_token(),
+                           t.body      .display_token())
+
+
+        def write(t, w):
+            w(t.keyword_if.s)
+            t.condition.write(w)
+            w(t.colon.s)
+            t.body     .write(w)
+
+
+    @share
     class IndentedComment(Object):
         __slots__ = ((
             'indented',                 #   String

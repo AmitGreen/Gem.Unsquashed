@@ -30,8 +30,10 @@ def gem():
 
         operator = qk()
 
-        if operator is none:
-            raise_unknown_line(2)
+        if operator is not none:
+            wk(none)
+        else:
+            operator = tokenize_operator()
 
         if qn() is not none:
             raise_unknown_line(3)
@@ -39,7 +41,23 @@ def gem():
         if operator.is_colon_newline:
             return IfHeader(keyword_if, condition, operator)
 
-        raise_unknown_line(4)
+        if not operator.is_colon:
+            raise_unknown_line(4)
+
+        left = parse1_atom()
+
+        if qn() is not none:
+            raise_unknown_line(5)
+
+        if not left.is_atom:
+            raise_unknown_line(7)
+
+        return IfStatement(
+                   keyword_if,
+                   condition,
+                   operator,
+                   parse1_statement_expression__symbol('', left),
+               )
 
 
     @share
