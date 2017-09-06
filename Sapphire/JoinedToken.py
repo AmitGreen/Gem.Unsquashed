@@ -61,6 +61,7 @@ def gem():
         display_name                          = '(0)'
         is__arguments_0__or__left_parenthesis = true
         is_arguments_0                        = true
+        is_postfix_operator                   = true
 
 
     @share

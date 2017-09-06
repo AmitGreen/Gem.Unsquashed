@@ -16,22 +16,14 @@ def gem():
         operator = tokenize_operator()
 
         while not operator.is_end_of_expression:
-            if operator.is_left_parenthesis:
-                left = parse1_call_expression__left__operator(left, operator)
+            if operator.is_postfix_operator:
+                left = parse1_postfix_expression__left__operator(left, operator)
 
-                operator = tokenize_operator()
-                continue
+                operator = qk()
 
-            if operator.is_left_square_bracket:
-                left = parse1_index_expression__left__operator(left, operator)
+                assert operator is not none
 
-                operator = tokenize_operator()
-                continue
-
-            if operator.is_arguments_0:
-                left = ExpressionCall(left, operator)
-
-                operator = tokenize_operator()
+                wk(none)
                 continue
 
             my_line('operator: %r', operator)

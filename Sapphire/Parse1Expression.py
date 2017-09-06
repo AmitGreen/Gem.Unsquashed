@@ -90,7 +90,7 @@ def gem():
                                 operator = tokenize_operator()
 
                                 if qn() is not none:
-                                    raise_unknown_line(4)
+                                    raise_unknown_line(3)
 
                                 if not operator.is_postfix_operator:
                                     wk(operator)
@@ -128,7 +128,7 @@ def gem():
                             operator = tokenize_operator()
 
                             if qn() is not none:
-                                raise_unknown_line(5)
+                                raise_unknown_line(4)
 
                             if not operator.is_postfix_operator:
                                 wk(operator)
@@ -167,7 +167,7 @@ def gem():
                         operator = tokenize_operator()
 
                         if qn() is not none:
-                            raise_unknown_line(6)
+                            raise_unknown_line(5)
 
                         if not operator.is_postfix_operator:
                             wk(operator)
@@ -183,8 +183,87 @@ def gem():
 
                     return ExpressionDot(left, operator, name)
 
+            if operator.is__arguments_0__or__left_parenthesis:
+                if operator.is_left_parenthesis:
+                    assert qd() > 0
+                    assert qn() is none
 
-        raise_unknown_line(6)
+                    operator = parse1_arguments__left_parenthesis(operator)
+
+                left = ExpressionCall(left, operator)
+
+                operator = qk()
+
+                if operator is not none:
+                    if not operator.is_postfix_operator:
+                        return left
+
+                    wk(none)
+                else:
+                    if qn() is not none:
+                        return left
+
+                    operator = tokenize_operator()
+
+                    if qn() is not none:
+                        raise_unknown_line(6)
+
+                    if not operator.is_postfix_operator:
+                        wk(operator)
+
+                        return left
+
+            if operator.is_left_square_bracket:
+                if qn() is not none:
+                    raise_unknown_line(7)
+
+                middle = tokenize_atom()
+
+                if qn() is not none:
+                    raise_unknown_line(8)
+
+                operator_2 = tokenize_operator()
+
+                if operator_2.is_right_square_bracket:
+                    left = ExpressionIndex_1(left, operator, atom, operator_2)
+                else:
+                    left = parse1_any_ternary_expression__left__operator(atom, operator_2)
+
+                    operator_2 = qk()
+
+                    assert operator_2 is not none
+
+                    wk(none)
+
+                    if not operator_2.is_right_square_bracket:
+                        raise_unknown_line(9)
+
+                    left = ExpressionIndex_1(left, operator, atom, operator_2)
+
+                operator = qk()
+
+                if operator is not none:
+                    if not operator.is_postfix_operator:
+                        return left
+
+                    wk(none)
+                else:
+                    if qn() is not none:
+                        return left
+
+                    operator = tokenize_operator()
+
+                    if qn() is not none:
+                        raise_unknown_line(10)
+
+                    if not operator.is_postfix_operator:
+                        wk(operator)
+
+                        return left
+
+            assert operator.is_postfix_operator
+
+        raise_unknown_line(11)
 
 
     @share
@@ -389,8 +468,8 @@ def gem():
 
     @share
     def parse1_any_ternary_expression__left__operator(left, operator):
-        if operator.is_dot:
-            left = parse1_dot_expression__left__operator(left, operator)
+        if operator.is_postfix_operator:
+            left = parse1_postfix_expression__left__operator(left, operator)
 
             operator = qk()
 
