@@ -111,7 +111,7 @@ def gem():
             r = conjure_identifier(name)
 
             if qi() != j:
-                r = PrefixAtom(conjure_whitespace(s[qi() : j]), r)
+                r = PrefixIdentifier(conjure_whitespace(s[qi() : j]), r)
 
             wi(m.end('name'))
             wj(m.end())

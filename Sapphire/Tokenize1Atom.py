@@ -118,9 +118,9 @@ def gem():
                 suffix = conjure_whitespace(qs()[m.end('atom') : ])
 
                 if qi() == qj():
-                    r = SuffixAtom(r, suffix)
+                    r = r.suffix_meta(r, suffix)
                 else:
-                    r = BookcaseAtom(
+                    r = r.bookcase_meta(
                             conjure_whitespace(qs()[qi() : qj()]),
                             r,
                             suffix,
@@ -135,7 +135,7 @@ def gem():
             if qi() == qj():
                 return r
 
-            return PrefixAtom(conjure_whitespace(qs()[qi() : qj()]), r)
+            return r.prefix_meta(conjure_whitespace(qs()[qi() : qj()]), r)
 
         return tokenize__atom__X__open__newline(m)
 
@@ -197,7 +197,7 @@ def gem():
             #<same-as: tokenize__argument__first_atom & tokenize__comma__first_atom>
             #
             if qi() != j:
-                r = PrefixAtom(conjure_whitespace(qs()[qi() : j]), r)
+                r = r.prefix_meta(conjure_whitespace(qs()[qi() : j]), r)
 
             wi(m.end('atom'))
             wj(m.end())
@@ -267,7 +267,7 @@ def gem():
             #<same-as: tokenize_atom>
             #
             if qi() != j:
-                r = PrefixAtom(conjure_whitespace(qs()[qi() : j]), r)
+                r = r.prefix_meta(conjure_whitespace(qs()[qi() : j]), r)
 
             wi(m.end('atom'))
             wj(m.end())
@@ -329,7 +329,7 @@ def gem():
             #<same-as: tokenize_atom>
             #
             if qi() != j:
-                r = PrefixAtom(conjure_whitespace(qs()[qi() : j]), r)
+                r = r.prefix_meta(conjure_whitespace(qs()[qi() : j]), r)
 
             wi(m.end('atom'))
             wj(m.end())

@@ -228,6 +228,19 @@ def gem():
 
 
     @share
+    class BookcaseIdentifier(ExpressionBookcase):
+        __slots__    = (())
+        display_name = 'bookcased-identifier'
+
+
+        is__atom__or__right_parenthesis       = true
+        is_atom                               = true
+        is_identifier                         = true
+        is__right_parenthesis__colon__newline = false
+        is_right_parenthesis                  = false
+
+
+    @share
     class Arguments_1(ExpressionBookcase):
         __slots__    = (())
         display_name = '(1)'
@@ -469,6 +482,17 @@ def gem():
         is_right_parenthesis                  = false
 
 
+    @share
+    class SuffixIdentifier(PostfixExpression):
+        __slots__                             = (())
+        display_name                          = 'suffixed-identifier'
+        is__atom__or__right_parenthesis       = true
+        is_atom                               = true
+        is_identifier                         = true
+        is__right_parenthesis__colon__newline = false
+        is_right_parenthesis                  = false
+
+
     class UnaryExpression(Object):
         __slots__ = ((
             'operator',                 #   Operator*
@@ -512,5 +536,28 @@ def gem():
         is__right_parenthesis__colon__newline = false
         is_right_parenthesis                  = false
 
+
+    @share
+    class PrefixIdentifier(UnaryExpression):
+        __slots__                             = (())
+        display_name                          = 'prefixed-identifier'
+        is__atom__or__right_parenthesis       = true
+        is_atom                               = true
+        is_identifier                         = true
+        is__right_parenthesis__colon__newline = false
+        is_right_parenthesis                  = false
+
+
+    Identifier .bookcase_meta = BookcaseIdentifier
+    SingleQuote.bookcase_meta = BookcaseAtom
+    Number     .bookcase_meta = BookcaseAtom
+
+    Identifier .prefix_meta = PrefixIdentifier
+    SingleQuote.prefix_meta = PrefixAtom
+    Number     .prefix_meta = PrefixAtom
+
+    Identifier .suffix_meta = SuffixIdentifier
+    SingleQuote.suffix_meta = SuffixAtom
+    Number     .suffix_meta = SuffixAtom
 
     OperatorCompareEqual.compare_expression_meta = CompareEqualExpression

@@ -306,6 +306,12 @@ def gem():
 
 
     @share
+    class KeywordArgument(BinaryExpression):
+        __slots__    = (())
+        display_name = 'keyword-argument'
+
+
+    @share
     class KeywordParameter(BinaryExpression):
         __slots__    = (())
         display_name = 'keyword-parameter'

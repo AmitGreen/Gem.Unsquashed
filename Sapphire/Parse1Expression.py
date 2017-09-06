@@ -474,9 +474,6 @@ def gem():
 
         operator = tokenize_operator()
 
-        if qn() is not none:
-            raise_unknown_line(3)
-
         if operator.is_end_of_expression:
             wk(operator)
 

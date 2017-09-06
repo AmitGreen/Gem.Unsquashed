@@ -33,7 +33,7 @@ def gem():
             w(t.s)
 
 
-    @share
+    @export
     class Identifier(Token):
         __slots__ = (())
 
