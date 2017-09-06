@@ -27,6 +27,7 @@ def gem():
         is_left_square_bracket                     = false
         is_or_operator                             = false
         is_parameter_colon_0_newline               = false
+        is_postfix_operator                        = false
         is_right_brace                             = false
         is__right_parenthesis__colon               = false
         is__right_parenthesis__colon__newline      = false
@@ -205,10 +206,11 @@ def gem():
 
 
     class OperatorDot(KeywordAndOperatorBase):
-        __slots__    = (())
-        display_name = '.'
-        is_dot       = true
-        keyword      = '.'
+        __slots__           = (())
+        display_name        = '.'
+        is_dot              = true
+        is_postfix_operator = true
+        keyword             = '.'
 
 
     class OperatorEqualSign(KeywordAndOperatorBase):
@@ -234,14 +236,16 @@ def gem():
         is_atom                               = false
         is__atom__or__right_parenthesis       = false
         is_left_parenthesis                   = true
+        is_postfix_operator                   = true
         keyword                               = '('       #   )
 
 
     @export
     class OperatorLeftSquareBracket(KeywordAndOperatorBase):
         __slots__              = (())
-        is_left_square_bracket = true
         display_name           = '['              #   ]
+        is_left_square_bracket = true
+        is_postfix_operator    = true
         keyword                = '['              #   ]
 
 

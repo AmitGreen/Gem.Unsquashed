@@ -30,117 +30,161 @@ def gem():
     #           : postfix-expression '.' name '(' [ argument-list ] ')'
     #
     @share
-    def parse1_postfix_expression__left__operator(left, left_operator):
+    def parse1_postfix_expression__left__operator(left, operator):
+        assert operator.is_postfix_operator
+
         while 7 is 7:
             assert qk() is none
             assert qn() is none
 
-            if left_operator.is_dot:
+            if operator.is_dot:
                 name = tokenize_name()
 
-                if qk() is not none:
-                    raise_unknown_line(1)
-
                 if qn() is not none:
-                    return ExpressionDot(left, left_operator, name)
+                    return ExpressionDot(left, operator, name)
 
                 operator_2 = tokenize_operator()
 
-                if qk() is not none:
-                    raise_unknown_line(2)
-
-                if qn() is not none:
-                    raise_unknown_line(3)
-
                 if operator_2.is_dot:
+                    if qn() is not none:
+                        raise_unknown_line(1)
+
                     name_2 = tokenize_name()
 
-                    if qk() is not none:
-                        raise_unknown_line(4)
-
                     if qn() is not none:
-                        return ExpressionDot_2(left, left_operator, name, operator_2, name_2)
+                        return ExpressionDot_2(left, operator, name, operator_2, name_2)
 
                     operator_3 = tokenize_operator()
 
-                    if qk() is not none:
-                        raise_unknown_line(5)
-
-                    if qn() is not none:
-                        raise_unknown_line(6)
-
                     if operator_3.is_dot:
+                        if qn() is not none:
+                            raise_unknown_line(2)
+
                         name_3 = tokenize_name()
 
-                        if qk() is not none:
-                            raise_unknown_line(7)
-
                         if qn() is not none:
-                            return ExpressionDot_3(left, left_operator, name, operator_2, name_2, operator_3, name_3)
+                            return ExpressionDot_3(left, operator, name, operator_2, name_2, operator_3, name_3)
 
-                        operator = tokenize_operator()
+                        operator_4 = tokenize_operator()
 
-                        if qk() is not none:
-                            raise_unknown_line(8)
+                        if operator_4.is__arguments_0__or__left_parenthesis:
+                            if operator_4.is_left_parenthesis:
+                                assert qd() > 0
+                                assert qn() is none
 
-                        if qn() is not none:
-                            raise_unknown_line(9)
+                                operator_4 = parse1_arguments__left_parenthesis(operator_4)
 
-                        if operator.is_left_parenthesis:
-                            arguments = parse1_arguments__left_parenthesis(operator)
-
-                            left = MethodCall_3(left, left_operator, name, operator_2, name_2, operator_3, name_3, arguments)
+                            left = MethodCall_3(left, operator, name, operator_2, name_2, operator_3, name_3, operator_4)
 
                             operator = qk()
 
                             if operator is not none:
+                                if not operator.is_postfix_operator:
+                                    return left
+
                                 wk(none)
                             else:
-                                operator = qn()
+                                if qn() is not none:
+                                    return left
 
-                                if operator is not none:
-                                    wn(none)
-                                else:
-                                    operator = tokenize_operator()
+                                operator = tokenize_operator()
 
-                                    if qk() is not qn() is not none:
-                                        raise_unknown_line(4)
+                                if qn() is not none:
+                                    raise_unknown_line(4)
+
+                                if not operator.is_postfix_operator:
+                                    wk(operator)
+
+                                    return left
+                        elif operator_4.is_postfix_operator:
+                            left = ExpressionDot_3(left, operator, name, operator_2, name_2, operator_3, name_3)
+
+                            operator = operator_4
                         else:
-                            left = ExpressionDot_3(left, left_operator, name, operator_2, name_2, operator_3, name_3)
-                    elif operator_3.is_left_parenthesis:
-                        arguments = parse1_arguments__left_parenthesis(operator)
+                            wk(operator_4)
 
-                        left = MethodCall_2(left, left_operator, name, operator_2, name_2, arguments)
+                            return ExpressionDot_3(left, operator, name, operator_2, name_2, operator_3, name_3)
+
+                    elif operator_3.is__arguments_0__or__left_parenthesis:
+                        if operator_3.is_left_parenthesis:
+                            assert qd() > 0
+                            assert qn() is none
+
+                            operator_3 = parse1_arguments__left_parenthesis(operator_3)
+
+                        left = MethodCall_2(left, operator, name, operator_2, name_2, operator_3)
 
                         operator = qk()
 
                         if operator is not none:
+                            if not operator.is_postfix_operator:
+                                return left
+
                             wk(none)
                         else:
-                            operator = qn()
+                            if qn() is not none:
+                                return left
 
-                            if operator is not none:
-                                wn(none)
-                            else:
-                                operator = tokenize_operator()
+                            operator = tokenize_operator()
 
-                                if qk() is not qn() is not none:
-                                    raise_unknown_line(4)
-                    else:
-                        left     = ExpressionDot_2(left, left_operator, name, operator_2, name_2)
+                            if qn() is not none:
+                                raise_unknown_line(5)
+
+                            if not operator.is_postfix_operator:
+                                wk(operator)
+
+                                return left
+
+                    elif operator_3.is_postfix_operator:
+                        left = ExpressionDot_2(left, operator, name, operator_2, name_2)
+
                         operator = operator_3
+                    else:
+                        wk(operator_3)
+
+                        return ExpressionDot_2(left, operator, name, operator_2, name_2)
+
+                elif operator_2.is__arguments_0__or__left_parenthesis:
+                    if operator_2.is_left_parenthesis:
+                        assert qd() > 0
+                        assert qn() is none
+
+                        operator_2 = parse1_arguments__left_parenthesis(operator_2)
+
+                    left = MethodCall_2(left, operator, name, operator_2)
+
+                    operator = qk()
+
+                    if operator is not none:
+                        if not operator.is_postfix_operator:
+                            return left
+
+                        wk(none)
+                    else:
+                        if qn() is not none:
+                            return left
+
+                        operator = tokenize_operator()
+
+                        if qn() is not none:
+                            raise_unknown_line(6)
+
+                        if not operator.is_postfix_operator:
+                            wk(operator)
+
+                            return left
+
+                elif operator_2.is_postfix_operator:
+                    left = ExpressionDot(left, operator, name)
+
+                    operator = operator_2
+                else:
+                    wk(operator_2)
+
+                    return ExpressionDot(left, operator, name)
 
 
-        raise_unknown_line(77)
-        atom = tokenize_atom()
-
-        while 7 is 7:
-            operator = tokenize_operator()
-
-            if operator.is_right_square_bracket:
-                return ExpressionIndex_1(left, left_square_bracket, atom, operator)
-
-            raise_unknown_line(1)
+        raise_unknown_line(6)
 
 
     @share

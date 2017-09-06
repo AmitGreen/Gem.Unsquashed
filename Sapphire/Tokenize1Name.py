@@ -52,6 +52,3 @@ def gem():
         wj(m.end())
 
         return r
-        assert qk() is none
-        assert qn() is none
-
