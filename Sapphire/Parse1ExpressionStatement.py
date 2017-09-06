@@ -7,7 +7,7 @@ def gem():
 
 
     def parse1_statement_assign__left__equal_sign(indented, left, equal_sign):
-        right = parse1_any_ternary_expression_list()
+        right = parse1_ternary_expression_list()
 
         newline = qn()
 
@@ -20,7 +20,7 @@ def gem():
 
 
     def parse1_statement_modify__left__operator(indented, left, modify_operator):
-        right = parse1_any_ternary_expression_list()
+        right = parse1_ternary_expression_list()
 
         newline = qn()
 

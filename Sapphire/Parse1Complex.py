@@ -15,6 +15,48 @@ def gem():
 
 
     @share
+    def parse1_statement_for(m):
+        if m.end('newline') is not -1:
+            raise_unknown_line(1)
+
+        keyword_for = conjure_keyword_for(m.group())
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
+
+        raise_unknown_line(2)
+
+    ###
+        left = tokenize_atom()
+
+        if qn() is not none:
+            raise_unknown_line(2)
+
+        while 7 is 7:
+            operator = tokenize_operator()
+
+            if operator.is_arguments_0:
+                left = ExpressionCall(left, operator)
+                continue
+
+            if operator.is_keyword_as:
+                break
+
+            raise_unknown_line(3)
+
+        right      = tokenize_atom()
+        operator_2 = tokenize_operator()
+
+        if operator_2.is_colon_newline:
+            return WithHeader(keyword_with, left, operator, right, operator_2)
+
+        raise_unknown_line(4)
+    ###
+
+
+    @share
     def parse1_statement_if(m):
         if m.end('newline') is not -1:
             raise_unknown_line(1)
@@ -26,7 +68,7 @@ def gem():
         wi(j)
         wj(j)
 
-        condition = parse1_any_ternary_expression()
+        condition = parse1_ternary_expression()
 
         operator = qk()
 

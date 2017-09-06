@@ -23,7 +23,7 @@ def gem():
             if not left.is_identifier:
                 raise_unknown_line(1)
 
-            return KeywordArgument(left, operator, parse1_any_ternary_expression())
+            return KeywordArgument(left, operator, parse1_ternary_expression())
 
         if operator.is_postfix_operator:
             left = parse1_postfix_expression__left__operator(left, operator)
@@ -56,7 +56,7 @@ def gem():
             if not left.is_identifier:
                 raise_unknown_line(1)
 
-            return KeywordArgument(left, operator, parse1_any_ternary_expression())
+            return KeywordArgument(left, operator, parse1_ternary_expression())
 
         if operator.is_postfix_operator:
             left = parse1_postfix_expression__left__operator(left, operator)

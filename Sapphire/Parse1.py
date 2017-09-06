@@ -77,6 +77,7 @@ def gem():
                              '@'      : parse1_statement_decorator_header,
                              'class'  : parse1_statement_class_header,
                              'def'    : parse1_statement_function_header,
+                             'for'    : parse1_statement_for,
                              'from'   : parse1_statement_from,
                              'if'     : parse1_statement_if,
                              'import' : parse1_statement_import,

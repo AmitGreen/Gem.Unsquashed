@@ -76,6 +76,12 @@ def gem():
         keyword      = 'except:'
 
 
+    class KeywordFor(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'for'
+        keyword      = 'for'
+
+
     @export
     class KeywordFrom(KeywordAndOperatorBase):
         __slots__    = (())
@@ -94,6 +100,12 @@ def gem():
         __slots__     = (())
         display_name  = 'if'
         keyword       = 'if'
+
+
+    class KeywordIn(KeywordAndOperatorBase):
+        __slots__     = (())
+        display_name  = 'in'
+        keyword       = 'in'
 
 
     @export
@@ -325,8 +337,10 @@ def gem():
     conjure_equal_sign           = produce_conjure_by_name('equal-sign',           OperatorEqualSign) 
     conjure_except_colon         = produce_conjure_by_name('except-colon',         KeywordExceptColon) 
     conjure_keyword_as           = produce_conjure_by_name('keyword-as',           KeywordAs) 
+    conjure_keyword_for          = produce_conjure_by_name('keyword-for',          KeywordFor) 
     conjure_keyword_function     = produce_conjure_by_name('keyword-function',     KeywordFunction) 
     conjure_keyword_if           = produce_conjure_by_name('keyword-if',           KeywordIf) 
+    conjure_keyword_in           = produce_conjure_by_name('keyword-in',           KeywordIn) 
     conjure_keyword_not          = produce_conjure_by_name('keyword-not',          KeywordNot) 
     conjure_keyword_or           = produce_conjure_by_name('keyword-or',           KeywordOr) 
     conjure_keyword_return       = produce_conjure_by_name('keyword-return',       KeywordReturn) 
@@ -381,6 +395,7 @@ def gem():
                                          '='   : conjure_equal_sign,
                                          '=='  : conjure_compare_equal,
                                          'as'  : conjure_keyword_as,
+                                         'in'  : conjure_keyword_in,
                                          'not' : conjure_keyword_not,
                                          'or'  : conjure_keyword_or,
                                          '['   : conjure_left_square_bracket,
@@ -396,6 +411,7 @@ def gem():
         'conjure_equal_sign',               conjure_equal_sign,
         'conjure_except_colon',             conjure_except_colon,
         'conjure_keyword_as',               conjure_keyword_as,
+        'conjure_keyword_for',              conjure_keyword_for,
         'conjure_keyword_if',               conjure_keyword_if,
         'conjure_keyword_return',           conjure_keyword_return,
         'conjure_keyword_with',             conjure_keyword_with,

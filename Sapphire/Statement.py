@@ -223,7 +223,7 @@ def gem():
 
         def  __repr__(t):
             return arrange('<IfHeader %r %r %r>',
-                           t.keyword_with, t.condition, t.colon_newline)
+                           t.keyword_if, t.condition, t.colon_newline)
 
 
         def display_token(t):
@@ -258,7 +258,7 @@ def gem():
 
         def  __repr__(t):
             return arrange('<IfHeader %r %r %r %r>',
-                           t.keyword_with, t.condition, t.colon, t.body)
+                           t.keyword_if, t.condition, t.colon, t.body)
 
 
         def display_token(t):
