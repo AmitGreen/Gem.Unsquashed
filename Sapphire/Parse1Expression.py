@@ -3,12 +3,146 @@
 #
 @gem('Sapphire.Parse1Expression')
 def gem():
-    show = 0
+    show = 7
 
 
     #
-    #   1.  Index (Python 2.7.14rc1 grammer calls this 'atom_trailer')
+    #   1.  Postfix-Expression (Python 2.7.14rc1 grammer calls this 'trailer')
+    #   1.  Dot-Expression
+    #   1.  Call-Expression
+    #   1.  Method_Call-Expression
+    #   1.  Index-Expression
     #
+    #       postfix-expression
+    #           : atom
+    #           | dot-expression
+    #           | call-expression
+    #           | method-call-expression
+    #           | index-expression
+    #
+    #       dot-expression
+    #           : postfix-expression '.' name
+    #
+    #       call-expression
+    #           : postfix-expression '(' [ argument-list ] ')'
+    #
+    #       method-call-expression:
+    #           : postfix-expression '.' name '(' [ argument-list ] ')'
+    #
+    @share
+    def parse1_postfix_expression__left__operator(left, left_operator):
+        while 7 is 7:
+            assert qk() is none
+            assert qn() is none
+
+            if left_operator.is_dot:
+                name = tokenize_name()
+
+                if qk() is not none:
+                    raise_unknown_line(1)
+
+                if qn() is not none:
+                    return ExpressionDot(left, left_operator, name)
+
+                operator_2 = tokenize_operator()
+
+                if qk() is not none:
+                    raise_unknown_line(2)
+
+                if qn() is not none:
+                    raise_unknown_line(3)
+
+                if operator_2.is_dot:
+                    name_2 = tokenize_name()
+
+                    if qk() is not none:
+                        raise_unknown_line(4)
+
+                    if qn() is not none:
+                        return ExpressionDot_2(left, left_operator, name, operator_2, name_2)
+
+                    operator_3 = tokenize_operator()
+
+                    if qk() is not none:
+                        raise_unknown_line(5)
+
+                    if qn() is not none:
+                        raise_unknown_line(6)
+
+                    if operator_3.is_dot:
+                        name_3 = tokenize_name()
+
+                        if qk() is not none:
+                            raise_unknown_line(7)
+
+                        if qn() is not none:
+                            return ExpressionDot_3(left, left_operator, name, operator_2, name_2, operator_3, name_3)
+
+                        operator = tokenize_operator()
+
+                        if qk() is not none:
+                            raise_unknown_line(8)
+
+                        if qn() is not none:
+                            raise_unknown_line(9)
+
+                        if operator.is_left_parenthesis:
+                            arguments = parse1_arguments__left_parenthesis(operator)
+
+                            left = MethodCall_3(left, left_operator, name, operator_2, name_2, operator_3, name_3, arguments)
+
+                            operator = qk()
+
+                            if operator is not none:
+                                wk(none)
+                            else:
+                                operator = qn()
+
+                                if operator is not none:
+                                    wn(none)
+                                else:
+                                    operator = tokenize_operator()
+
+                                    if qk() is not qn() is not none:
+                                        raise_unknown_line(4)
+                        else:
+                            left = ExpressionDot_3(left, left_operator, name, operator_2, name_2, operator_3, name_3)
+                    elif operator_3.is_left_parenthesis:
+                        arguments = parse1_arguments__left_parenthesis(operator)
+
+                        left = MethodCall_2(left, left_operator, name, operator_2, name_2, arguments)
+
+                        operator = qk()
+
+                        if operator is not none:
+                            wk(none)
+                        else:
+                            operator = qn()
+
+                            if operator is not none:
+                                wn(none)
+                            else:
+                                operator = tokenize_operator()
+
+                                if qk() is not qn() is not none:
+                                    raise_unknown_line(4)
+                    else:
+                        left     = ExpressionDot_2(left, left_operator, name, operator_2, name_2)
+                        operator = operator_3
+
+
+        raise_unknown_line(77)
+        atom = tokenize_atom()
+
+        while 7 is 7:
+            operator = tokenize_operator()
+
+            if operator.is_right_square_bracket:
+                return ExpressionIndex_1(left, left_square_bracket, atom, operator)
+
+            raise_unknown_line(1)
+
+
     @share
     def parse1_index_expression__left__operator(left, left_square_bracket):
         atom = tokenize_atom()
@@ -184,7 +318,43 @@ def gem():
     #               : 'lambda' [variable-argument-list] ':' ternary-expression
     #
     @share
+    def parse1_any_ternary_expression():
+        left = tokenize_atom()
+
+        if qk() is not none:
+            raise_unknown_line(1)
+
+        if qn() is not none:
+            raise_unknown_line(2)
+
+        operator = tokenize_operator()
+
+        if qk() is not none:
+            raise_unknown_line(3)
+
+        if qn() is not none:
+            raise_unknown_line(4)
+
+        if operator.is_end_of_expression:
+            wk(operator)
+
+            return left
+
+        return parse1_any_ternary_expression__left__operator(left, operator)
+
+
+    @share
     def parse1_any_ternary_expression__left__operator(left, operator):
+        if operator.is_dot:
+            left = parse1_dot_expression__left__operator(left, operator)
+
+            operator = qk()
+
+            if operator.is_end_of_expression:
+                return left
+
+            wk(none)
+
         if operator.is_or_operator:
             left = parse1_or_expression__left__operator(left, operator)
 

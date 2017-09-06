@@ -209,32 +209,32 @@ def gem():
     class IfHeader(Object):
         __slots__ = ((
             'keyword_if',               #   KeywordIf
-            'left',                     #   Expression
+            'condition',                #   Expression
             'colon_newline',            #   OperatorColonNewline
         ))
 
 
-        def __init__(t, keyword_if, left, colon_newline):
+        def __init__(t, keyword_if, condition, colon_newline):
             t.keyword_if    = keyword_if
-            t.left          = left
+            t.condition     = condition
             t.colon_newline = colon_newline
 
 
         def  __repr__(t):
             return arrange('<IfHeader %r %r %r>',
-                           t.keyword_with, t.left, t.colon_newline)
+                           t.keyword_with, t.condition, t.colon_newline)
 
 
         def display_token(t):
             return arrange('<if <%s> %s %s>',
                            t.keyword_if   .s,
-                           t.left         .display_token(),
+                           t.condition    .display_token(),
                            t.colon_newline.display_token())
 
 
         def write(t, w):
             w(t.keyword_if.s)
-            t.left.write(w)
+            t.condition.write(w)
             w(t.colon_newline.s)
 
 

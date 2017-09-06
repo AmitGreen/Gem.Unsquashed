@@ -11,6 +11,7 @@ def gem():
         is_any_parameter_colon_0                   = false
         is__any__right_parenthesis__colon__newline = false
         is_arguments_0                             = false
+        is__arguments_0__or__left_parenthesis      = false
         is_colon_newline                           = false
         is_comma                                   = false
         is__comma__or__right_parenthesis           = false
@@ -227,12 +228,13 @@ def gem():
 
 
     class OperatorLeftParenthesis(KeywordAndOperatorBase):
-        __slots__                       = (())
-        display_name                    = '('       #   )
-        is_atom                         = false
-        is__atom__or__right_parenthesis = false
-        is_left_parenthesis             = true
-        keyword                         = '('       #   )
+        __slots__                             = (())
+        display_name                          = '('       #   )
+        is__arguments_0__or__left_parenthesis = true
+        is_atom                               = false
+        is__atom__or__right_parenthesis       = false
+        is_left_parenthesis                   = true
+        keyword                               = '('       #   )
 
 
     @export

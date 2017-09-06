@@ -57,9 +57,10 @@ def gem():
 
     @share
     class Arguments_0(BaseDualOperator):
-        __slots__      = (())
-        is_arguments_0 = true
-        display_name   = '(0)'
+        __slots__                             = (())
+        display_name                          = '(0)'
+        is__arguments_0__or__left_parenthesis = true
+        is_arguments_0                        = true
 
 
     @share

@@ -27,6 +27,9 @@ def gem():
 
     @share
     def tokenize_name():
+        assert qk() is none
+        assert qn() is none
+
         j = qj()
         s = qs()
 
@@ -49,3 +52,6 @@ def gem():
         wj(m.end())
 
         return r
+        assert qk() is none
+        assert qn() is none
+

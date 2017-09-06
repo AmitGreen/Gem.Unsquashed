@@ -26,26 +26,20 @@ def gem():
         wi(j)
         wj(j)
 
-        left = parse1_atom()
+        condition = parse1_any_ternary_expression()
+
+        operator = qk()
+
+        if operator is none:
+            raise_unknown_line(2)
 
         if qn() is not none:
-            raise_unknown_line(2)
-            
-        operator = tokenize_operator()
-
-        while 7 is 7:
-            if operator.is_colon_newline:
-                return IfHeader(keyword_if, left, operator)
-
-            if operator.is_or_operator:
-                left     = parse1_or_expression__left__operator(left, operator)
-                operator = qk()
-
-                wk(none)
-                continue
-
-            my_line('%r %r %r', keyword_if, left, operator)
             raise_unknown_line(3)
+            
+        if operator.is_colon_newline:
+            return IfHeader(keyword_if, condition, operator)
+
+        raise_unknown_line(4)
 
 
     @share
