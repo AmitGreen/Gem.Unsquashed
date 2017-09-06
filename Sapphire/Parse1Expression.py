@@ -524,27 +524,82 @@ def gem():
 
 
     #
+    #   15.  Ternary-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist')
+    #
+    #   See also:
+    #       15.  Comprehension-Expression
+    #
+    @share
+    def parse1_any_ternary_expression_list():
+        left = parse1_atom()
+
+        operator = qk()
+
+        if operator is not none:
+            if operator.is_end_of_expression:
+                return left
+
+            wk(none)
+        else:
+            if qn() is not none:
+                return left
+
+            operator = tokenize_operator()
+
+            if qn() is not none:
+                raise_unknown_line(1)
+
+            if operator.is_end_of_expression:
+                wk(operator)
+
+                return left
+
+        if operator.is_postfix_operator:
+            left = parse1_postfix_expression__left__operator(left, operator)
+
+            if qn() is not none:
+                return left
+
+            operator = qk()
+
+            if operator.is_end_of_expression:
+                return left
+
+            wk(none)
+
+        raise_unknown_line(1)
+
+
+    #
     #   15.  Comprehension-Expression (Python 2.7.14rc1 grammer calls this 'testlist_comp')
+    #
+    #   See also:
+    #       15.  Ternary-Expression-List
     #
     @share
     def parse1_any_comprehension_expression():
         left = parse1_atom()
 
-        if qk() is not none:
-            raise_unknown_line(1)
+        operator = qk()
 
-        if qn() is not none:
-            raise_unknown_line(2)
+        if operator is not none:
+            if operator.is_end_of_expression:
+                return left
 
-        operator = tokenize_operator()
+            wk(none)
+        else:
+            if qn() is not none:
+                return left
 
-        if qn() is not none:
-            raise_unknown_line(3)
+            operator = tokenize_operator()
 
-        if operator.is_end_of_expression:
-            wk(operator)
+            if qn() is not none:
+                raise_unknown_line(1)
 
-            return left
+            if operator.is_end_of_expression:
+                wk(operator)
+
+                return left
 
         return parse1_any_comprehension_expression__left__operator(left, operator)
 
@@ -571,7 +626,5 @@ def gem():
 
             wk(none)
 
-        my_line('left: %s; operator: %s; s: %s',
-                left, operator, portray_string(qs()[qj():]))
-
+        my_line('left: %s; operator: %s; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line(1)

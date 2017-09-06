@@ -7,26 +7,28 @@ def gem():
 
 
     def parse1_statement_assign__left__equal_sign(indented, left, equal_sign):
-        atom    = parse1_atom()
+        right = parse1_any_ternary_expression_list()
+
         newline = qn()
 
         if newline is not none:
-            return ModifyStatement(indented, left, equal_sign, atom, newline)
+            return ModifyStatement(indented, left, equal_sign, right, newline)
 
-        my_line('indented: %r; left: %r; equal_sign: %r; atom: %s; s: %s',
-                indented, left, equal_sign, atom, portray_string(qs()[qj():]))
+        my_line('indented: %r; left: %r; equal_sign: %r; right: %s; s: %s',
+                indented, left, equal_sign, right, portray_string(qs()[qj():]))
         raise_unknown_line(2)
 
 
     def parse1_statement_modify__left__operator(indented, left, modify_operator):
-        atom    = parse1_atom()
+        right = parse1_any_ternary_expression_list()
+
         newline = qn()
 
         if newline is not none:
-            return ModifyStatement(indented, left, modify_operator, atom, newline)
+            return ModifyStatement(indented, left, modify_operator, right, newline)
 
-        my_line('indented: %r; left: %r; modify_operator: %r; atom: %s; s: %s',
-                indented, left, modify_operator, atom, portray_string(qs()[qj():]))
+        my_line('indented: %r; left: %r; modify_operator: %r; right: %s; s: %s',
+                indented, left, modify_operator, right, portray_string(qs()[qj():]))
         raise_unknown_line(2)
 
 
