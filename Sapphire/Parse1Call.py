@@ -96,4 +96,28 @@ def gem():
                        Comma_RightParenthesis(operator_2, argument_3),
                    )
 
-        raise_unknown_line(5)
+        many = [left_parenthesis, argument_1, operator_1, argument_2, operator_2]
+
+        while 7 is 7:
+            argument_3 = parse1_argument7__left(argument_3)
+            operator_7 = qk()
+
+            wk(none)
+
+            if operator_7.is_right_parenthesis:
+                many.append(argument_3)
+                many.append(operator_7)
+                return Arguments_Many(Tuple(many))
+
+            if not operator_7.is_comma:
+                raise_unknown_line(5)
+
+            many.append(argument_3)
+
+            argument_3 = parse1__argument__first_atom()
+
+            if argument_3.is_right_parenthesis:
+                many.append(Comma_RightParenthesis(operator_7, argument_3))
+                return Arguments_Many(Tuple(many))
+
+            many.append(operator_7)

@@ -428,6 +428,12 @@ def gem():
             return arrange('<StatementExpression %r %r %r>', t.indented, t.expression, t.newline)
 
 
+        def display_token(t):
+            return arrange('<expression-statement %r %s %s>',
+                           t.indented,
+                           t.expression.display_token(),
+                           t.newline   .display_token())
+
         def write(t, w):
             w(t.indented)
             t.expression.write(w)
