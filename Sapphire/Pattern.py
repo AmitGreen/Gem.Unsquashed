@@ -52,9 +52,10 @@ def gem():
         single_quote = NAME(
                            'single_quote',
                            (
-                                  "'"
+                                  OPTIONAL('r')
+                                + "'"
                                 + (
-                                        ONE_OR_MORE(BACKSLASH + PRINTABLE | PRINTABLE_MINUS("'", '\\')) + "'"
+                                        ONE_OR_MORE(PRINTABLE_MINUS("'", '\\') | BACKSLASH + PRINTABLE) + "'"
                                       | ("'" + NOT_FOLLOWED_BY("'"))
                                   )
                            ),
@@ -138,7 +139,18 @@ def gem():
         MATCH(
             'argument_first_atom_match',
             (
-                  G('atom', name | number | single_quote | right_parenthesis) + ow
+                  (
+                        G(
+                            'atom',
+                            (
+                                  single_quote              #   Must be first due to matches like r'hello'
+                                | name
+                                | number
+                                | right_parenthesis
+                            ),
+                        )
+                      + ow
+                  )
                 | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
             ) + Q(comment_newline),
         )
