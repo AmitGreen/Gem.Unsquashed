@@ -21,9 +21,98 @@ def gem():
     #   Note #2:
     #       The previous note also applies to tests like 'qi() != j', cannot replace this with 'qi() is not j'
     #
+    @share
+    def tokenize_atom():
+        assert qk() is none
+        assert qn() is none
 
+        j = qj()
 
-    def tokenize_atom__X__newline(m):
+        m = atom_match(qs(), j)
+
+        if m is none:
+            my_line('full: %r; s: %r', portray_string(qs()), portray_string(qs()[j :]))
+            raise_unknown_line(1)
+
+        if m.start('comment_newline') is -1:
+            atom_s = m.group('atom')
+
+            if atom_s is not none:
+                r = find_atom_type(atom_s[0])(atom_s)
+
+                if qi() != j:
+                    r = r.prefix_meta(conjure_whitespace(qs()[qi() : j]), r)
+
+                wi(m.end('atom'))
+                wj(m.end())
+
+                return r
+
+            quote_start = m.start('quote')
+            s           = qs()
+
+            if quote_start is not -1:
+                quote_end = m.end('quote')
+
+                r = find_atom_type(s[quote_start])(s[j : quote_end])
+
+                if qi() != j:
+                    r = r.prefix_meta(conjure_whitespace(s[qi() : j]), r)
+
+                wi(quote_end)
+                wj(m.end())
+
+                return r
+
+            keyword_s = (m.group('keyword')) or (m.group('operator'))
+
+            if keyword_s is not none:
+                j = m.end()
+
+                if is_close_operator(keyword_s) is 7:
+                    d            = qd()
+                    operator_end = m.end('operator')
+
+                    r = find_operator_conjure_function(keyword_s)(s[qi() : operator_end])
+
+                    if d is 0:
+                        raise_unknown_line(2)
+
+                    assert d > 0
+
+                    wd(d - 1)
+                    wi(operator_end)
+                    wj(j)
+
+                    return r
+
+                r = find_operator_conjure_function(keyword_s)(s[qi() : j])
+
+                wi(j)
+                wj(j)
+
+                return r
+
+            left_parenthesis       = conjure_left_parenthesis(s[qi() : m.end('left_parenthesis__ow')])
+            right_parenthesis__end = m.end('right_parenthesis')
+
+            if right_parenthesis__end is not -1:
+                wi(right_parenthesis__end)
+                wj(m.end())
+
+                return EmptyTuple(left_parenthesis, conjure_right_parenthesis(m.group('right_parenthesis')))
+
+            j = m.end()
+
+            wd(qd() + 1)
+            wi(j)
+            wj(j)
+
+            return left_parenthesis
+
+        #
+        #   Newline
+        #
         atom_s = m.group('atom')
 
         if atom_s is not none:
@@ -212,95 +301,3 @@ def gem():
         skip_tokenize_prefix()
 
         return r
-
-
-    @share
-    def tokenize_atom():
-        assert qk() is none
-        assert qn() is none
-
-        j = qj()
-
-        m = atom_match(qs(), j)
-
-        if m is none:
-            my_line('full: %r; s: %r', portray_string(qs()), portray_string(qs()[j :]))
-            raise_unknown_line(1)
-
-        if m.start('comment_newline') is not -1:
-            return tokenize_atom__X__newline(m)
-
-        atom_s = m.group('atom')
-
-        if atom_s is not none:
-            r = find_atom_type(atom_s[0])(atom_s)
-
-            if qi() != j:
-                r = r.prefix_meta(conjure_whitespace(qs()[qi() : j]), r)
-
-            wi(m.end('atom'))
-            wj(m.end())
-
-            return r
-
-        quote_start = m.start('quote')
-        s           = qs()
-
-        if quote_start is not -1:
-            quote_end = m.end('quote')
-
-            r = find_atom_type(s[quote_start])(s[j : quote_end])
-
-            if qi() != j:
-                r = r.prefix_meta(conjure_whitespace(s[qi() : j]), r)
-
-            wi(quote_end)
-            wj(m.end())
-
-            return r
-
-        keyword_s = (m.group('keyword')) or (m.group('operator'))
-
-        if keyword_s is not none:
-            j = m.end()
-
-            if is_close_operator(keyword_s) is 7:
-                d            = qd()
-                operator_end = m.end('operator')
-
-                r = find_operator_conjure_function(keyword_s)(s[qi() : operator_end])
-
-                if d is 0:
-                    raise_unknown_line(2)
-
-                assert d > 0
-
-                wd(d - 1)
-                wi(operator_end)
-                wj(j)
-
-                return r
-
-            r = find_operator_conjure_function(keyword_s)(s[qi() : j])
-
-            wi(j)
-            wj(j)
-
-            return r
-
-        left_parenthesis       = conjure_left_parenthesis(s[qi() : m.end('left_parenthesis__ow')])
-        right_parenthesis__end = m.end('right_parenthesis')
-
-        if right_parenthesis__end is not -1:
-            wi(right_parenthesis__end)
-            wj(m.end())
-
-            return EmptyTuple(left_parenthesis, conjure_right_parenthesis(m.group('right_parenthesis')))
-
-        j = m.end()
-
-        wd(qd() + 1)
-        wi(j)
-        wj(j)
-
-        return left_parenthesis
