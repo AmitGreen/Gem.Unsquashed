@@ -184,6 +184,30 @@ def gem():
         )
 
         MATCH(
+            'index_atom_match',
+            (
+                  G('keyword', keyword_not) + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
+                | (
+                        G(
+                            'atom',
+                            (
+                                  single_quote              #   Must be first due to matches like r'hello'
+                                | name
+                                | number
+                                | right_square_bracket
+                            ),
+                        )
+                      + ow
+                  )
+                | G('operator', ANY_OF('-'))
+                | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
+                | G(left_brace__ow)          + P(G(right_brace)          + ow)
+#               | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
+            ) + Q(comment_newline),
+        )
+
+
+        MATCH(
            'operator_match',
             (
                 (

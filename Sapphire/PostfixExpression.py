@@ -44,7 +44,7 @@ def gem():
     class SuffixAtom(PostfixExpression):
         __slots__                             = (())
         display_name                          = 'suffixed-atom'
-        is__atom__or__right_parenthesis       = true
+        is__atom__or__right_close_operator    = true
         is_atom                               = true
         is__right_parenthesis__colon__newline = false
         is_right_parenthesis                  = false
@@ -54,7 +54,7 @@ def gem():
     class SuffixIdentifier(PostfixExpression):
         __slots__                             = (())
         display_name                          = 'suffixed-identifier'
-        is__atom__or__right_parenthesis       = true
+        is__atom__or__right_close_operator    = true
         is_atom                               = true
         is_identifier                         = true
         is__right_parenthesis__colon__newline = false

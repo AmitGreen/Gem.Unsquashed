@@ -44,7 +44,7 @@ def gem():
         display_name = 'bookcased-atom'
 
 
-        is__atom__or__right_parenthesis       = true
+        is__atom__or__right_close_operator    = true
         is_atom                               = true
         is__right_parenthesis__colon__newline = false
         is_right_parenthesis                  = false
@@ -56,7 +56,7 @@ def gem():
         display_name = 'bookcased-identifier'
 
 
-        is__atom__or__right_parenthesis       = true
+        is__atom__or__right_close_operator    = true
         is_atom                               = true
         is_identifier                         = true
         is__right_parenthesis__colon__newline = false
@@ -105,11 +105,11 @@ def gem():
 
     @share
     class PathenthesizedExpression(BookcaseExpression):
-        __slots__                       = (())
-        display_name                    = '()'
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_right_parenthesis            = false
+        __slots__                          = (())
+        display_name                       = '()'
+        is__atom__or__right_close_operator = true
+        is_atom                            = true
+        is_right_parenthesis               = false
 
 
         def display_token(t):
@@ -124,11 +124,11 @@ def gem():
 
     @share
     class TupleExpression_1(BookcaseExpression):
-        __slots__                       = (())
-        display_name                    = '{,}'
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_right_parenthesis            = false
+        __slots__                          = (())
+        display_name                       = '{,}'
+        is__atom__or__right_close_operator = true
+        is_atom                            = true
+        is_right_parenthesis               = false
 
 
     Identifier .bookcase_meta = BookcaseIdentifier

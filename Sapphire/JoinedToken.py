@@ -73,20 +73,20 @@ def gem():
 
     @share
     class EmptyMap(BaseDualOperator):
-        __slots__                       = (())
-        display_name                    = '{:}'
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_right_parenthesis            = false
+        __slots__                          = (())
+        display_name                       = '{:}'
+        is__atom__or__right_close_operator = true
+        is_atom                            = true
+        is_right_parenthesis               = false
 
 
     @share
     class EmptyTuple(BaseDualOperator):
-        __slots__                       = (())
-        display_name                    = '{,}'
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_right_parenthesis            = false
+        __slots__                          = (())
+        display_name                       = '{,}'
+        is__atom__or__right_close_operator = true
+        is_atom                            = true
+        is_right_parenthesis               = false
 
 
     @share

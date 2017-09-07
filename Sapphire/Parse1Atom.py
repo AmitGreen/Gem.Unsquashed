@@ -97,29 +97,19 @@ def gem():
 
 
     @share
-    def parse1__argument__first_atom():
+    def parse1_argument_atom():
         #
         #<different-from: parse1_atom>
         #
         token = tokenize_argument_atom()
 
-        if token.is__atom__or__right_parenthesis:
+        if token.is__atom__or__right_close_operator:
             return token
         #</different-from>
 
-        if token.is_left_parenthesis:
-            return parse1__parenthesized_expression__left_parenthesis(token)
-
-        raise_unknown_line(1)
-
-
-    @share
-    def parse1_atom():
-        token = tokenize_atom()
-
-        if token.is_atom:
-            return token
-
+        #
+        #<same-as: parse1_atom>
+        #
         if token.is_keyword_not:
             return parse1_not_expression__operator(token)
 
@@ -130,3 +120,58 @@ def gem():
             return parse1__parenthesized_expression__left_parenthesis(token)
 
         raise_unknown_line(1)
+        #</same-as>
+
+
+    @share
+    def parse1_index_atom():
+        #
+        #<different-from: parse1_atom>
+        #
+        token = tokenize_index_atom()
+
+        if token.is__atom__or__right_close_operator:
+            return token
+        #</different-from>
+
+        #
+        #<same-as: parse1_atom>
+        #
+        if token.is_keyword_not:
+            return parse1_not_expression__operator(token)
+
+        if token.is_minus_sign:
+            return parse1_negative_expression__operator(token)
+
+        if token.is_left_parenthesis:
+            return parse1__parenthesized_expression__left_parenthesis(token)
+
+        raise_unknown_line(1)
+        #</same-as>
+
+
+    @share
+    def parse1_atom():
+        #
+        #<different-from: parse1_argument_atom>
+        #
+        token = tokenize_atom()
+
+        if token.is_atom:
+            return token
+        #</different-from>
+
+        #
+        #<same-as: parse1_argument_atom>
+        #
+        if token.is_keyword_not:
+            return parse1_not_expression__operator(token)
+
+        if token.is_minus_sign:
+            return parse1_negative_expression__operator(token)
+
+        if token.is_left_parenthesis:
+            return parse1__parenthesized_expression__left_parenthesis(token)
+
+        raise_unknown_line(1)
+        #</same-as>

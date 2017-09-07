@@ -178,6 +178,13 @@ def gem():
         assert qk() is none
         assert qn() is none
 
+        #
+        #<similiar-to: tokenize_{comma,index}_atom>
+        #
+        #   Difference:
+        #       Uses atom_match instead of {comma,index}_atom_match
+        #       Calls tokenize_atom__X__newline instead of tokenize_{comma,index}_atom__X__newline
+        #
         j = qj()
 
         m = atom_match(qs(), j)
@@ -188,6 +195,7 @@ def gem():
 
         if m.start('comment_newline') is not -1:
             return tokenize_atom__X__newline(m)
+        #<similiar-to: tokenize_{comma,index}_atom>
 
         atom_s = m.group('atom')
 
@@ -227,15 +235,26 @@ def gem():
 
     @share
     def tokenize_argument_atom():
-        assert qd() > 0
+        #
+        #   Temporary hack, will allow '*' later
+        # 
+        return tokenize_comma_atom()
+
+
+    @share
+    def tokenize_comma_atom():
         assert qk() is none
         assert qn() is none
 
-        #
-        #<same-as: tokenize_comma_atom>
-        #
         j = qj()
 
+        #
+        #<similiar-to: tokenize_atom>
+        #
+        #   Difference:
+        #       Uses comma_atom_match instead of atom_match
+        #       Calls tokenize_comma_atom__X__newline instead of tokenize_atom__X__newline
+        #
         m = argument_atom_match(qs(), j)
 
         if m is none:
@@ -245,21 +264,33 @@ def gem():
             return tokenize_comma_atom__X__newline(m)
 
         atom_s = m.group('atom')
-        #</same-as>
+        #</similiar-to: tokenize_atom>
 
         if atom_s is not none:
             conjure = find_atom_type(atom_s[0])
 
+            #
+            #<similiar-to: tokenize_index_atom>
+            #
+            #   Difference: Deals with right-parenthesis instead of right-square-bracket 
+            #
             if conjure is conjure_right_parenthesis:
+                d = qd()
                 j = m.end()
+
+                if d is 0:
+                    raise_unknown_line(2)
+
+                assert d > 0
 
                 r = conjure_right_parenthesis(qs()[qi() : j])
 
-                wd(qd() - 1)
+                wd(d - 1)
                 wi(j)
                 wj(j)
 
                 return r
+            #</similiar-to: tokenize_comma-atom>
 
             r = conjure(atom_s)
 
@@ -295,30 +326,39 @@ def gem():
 
 
     @share
-    def tokenize_comma_atom():
+    def tokenize_index_atom():
         assert qk() is none
         assert qn() is none
 
+        #
+        #<similiar-to: tokenize_atom>
+        #
+        #   Difference:
+        #       Uses index_atom_match instead of atom_match
+        #       Calls tokenize_index_atom__X__newline instead of tokenize_atom__X__newline
+        #
         j = qj()
 
-        #
-        #<same-as: tokenize_argument_atom>
-        #
-        m = argument_atom_match(qs(), j)
+        m = index_atom_match(qs(), j)
 
         if m is none:
             raise_unknown_line(1)
 
         if m.start('comment_newline') is not -1:
-            return tokenize_comma_atom__X__newline(m)
+            return tokenize_index_atom__X__newline(m)
+        #</similiar-to: tokenize_atom>
 
         atom_s = m.group('atom')
-        #</same-as>
 
         if atom_s is not none:
             conjure = find_atom_type(atom_s[0])
 
-            if conjure is conjure_right_parenthesis:
+            #
+            #<similiar-to: tokenize_comma-atom>
+            #
+            #   Difference: Deals with right-square-bracket instead of right-parenthesis
+            #
+            if conjure is conjure_right_square_bracket:
                 d = qd()
                 j = m.end()
 
@@ -327,13 +367,14 @@ def gem():
 
                 assert d > 0
 
-                r = conjure_right_parenthesis(qs()[qi() : j])
+                r = conjure_right_square_bracket(qs()[qi() : j])
 
                 wd(d - 1)
                 wi(j)
                 wj(j)
 
                 return r
+            #</similiar-to: tokenize_comma-atom>
 
             r = conjure(atom_s)
 

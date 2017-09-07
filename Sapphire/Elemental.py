@@ -13,7 +13,7 @@ def gem():
         is_arguments_0                             = false
         is__arguments_0__or__left_parenthesis      = false
         is_atom                                    = false
-        is__atom__or__right_parenthesis            = false
+        is__atom__or__right_close_operator         = false
         is_colon                                   = false
         is_colon_newline                           = false
         is_comma                                   = false
@@ -132,13 +132,12 @@ def gem():
 
 
     class KeywordNot(KeywordAndOperatorBase):
-        __slots__                       = (())
-        display_name                    = 'not'
-        is_atom                         = false
-        is__atom__or__right_parenthesis = false
-        is_right_parenthesis            = false
-        is_keyword_not                  = true
-        keyword                         = 'not'
+        __slots__            = (())
+        display_name         = 'not'
+        is_atom              = false
+        is_right_parenthesis = false
+        is_keyword_not       = true
+        keyword              = 'not'
 
 
     class KeywordOr(KeywordAndOperatorBase):
@@ -173,11 +172,11 @@ def gem():
 
     @share
     class Number(Token):
-        __slots__                       = (())
-        display_name                    = 'number'
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_right_parenthesis            = false
+        __slots__                          = (())
+        display_name                       = 'number'
+        is__atom__or__right_close_operator = true
+        is_atom                            = true
+        is_right_parenthesis               = false
 
 
         def display_token(t):
@@ -293,12 +292,12 @@ def gem():
 
 
     class OperatorLeftBrace(KeywordAndOperatorBase):
-        __slots__                       = (())
-        display_name                    = '{'       #   }
-        is_atom                         = false
-        is__atom__or__right_parenthesis = false
-        is_left_brace                   = true
-        keyword                         = '{'       #   }
+        __slots__                          = (())
+        display_name                       = '{'       #   }
+        is_atom                            = false
+        is__atom__or__right_close_operator = false
+        is_left_brace                      = true
+        keyword                            = '{'       #   }
 
 
     class OperatorLeftParenthesis(KeywordAndOperatorBase):
@@ -306,7 +305,7 @@ def gem():
         display_name                          = '('       #   )
         is__arguments_0__or__left_parenthesis = true
         is_atom                               = false
-        is__atom__or__right_parenthesis       = false
+        is__atom__or__right_close_operator    = false
         is_left_parenthesis                   = true
         is_postfix_operator                   = true
         keyword                               = '('       #   )
@@ -380,20 +379,20 @@ def gem():
     class OperatorRightParenthesis(KeywordAndOperatorBase):
         __slots__                        = (())
         #  (
-        display_name                     = ')'
-        is__atom__or__right_parenthesis  = true
-        is__comma__or__right_parenthesis = true
-        is_end_of_boolean_and_expression = true
-        is_end_of_boolean_or_expression  = true
-        is_end_of_compare_expression     = true
-        is_end_of_expression__OLD        = true
-        is_end_of_normal_expression_list = true
-        is_end_of_normal_expression      = true
-        is_end_of_ternary_expression     = true
-        is_end_of_unary_expression       = true
-        is_right_parenthesis             = true
+        display_name                       = ')'
+        is__atom__or__right_close_operator = true
+        is__comma__or__right_parenthesis   = true
+        is_end_of_boolean_and_expression   = true
+        is_end_of_boolean_or_expression    = true
+        is_end_of_compare_expression       = true
+        is_end_of_expression__OLD          = true
+        is_end_of_normal_expression_list   = true
+        is_end_of_normal_expression        = true
+        is_end_of_ternary_expression       = true
+        is_end_of_unary_expression         = true
+        is_right_parenthesis               = true
         #  (
-        keyword                          = ')'
+        keyword                            = ')'
 
 
     @export
@@ -426,11 +425,11 @@ def gem():
 
     @share
     class SingleQuote(Token):
-        __slots__                       = (())
-        display_name                    = "'"
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_right_parenthesis            = false
+        __slots__                          = (())
+        display_name                       = "'"
+        is__atom__or__right_close_operator = true
+        is_atom                            = true
+        is_right_parenthesis               = false
 
 
         def display_token(t):
