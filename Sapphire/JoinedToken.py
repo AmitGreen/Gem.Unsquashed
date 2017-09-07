@@ -65,6 +65,13 @@ def gem():
 
 
     @share
+    class Colon_RightSquareBracket(BaseDualOperator):
+        __slots__      = (())
+        #   [
+        display_name   = ':['
+
+
+    @share
     class Comma_RightParenthesis(BaseDualOperator):
         __slots__      = (())
         #   (

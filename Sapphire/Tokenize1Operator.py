@@ -84,14 +84,14 @@ def gem():
 
                 return conjure(s[qi():operator_end])
 
-            if conjure is conjure_right_parenthesis:
+            if (conjure is conjure_right_parenthesis) or (conjure is conjure_right_square_bracket):
                 if d is 1:
                     i = m.end('operator')
 
                     wd0()
                     wn(conjure_token_newline(s[i : ]))
 
-                    return conjure_right_parenthesis(s[qi() : i])
+                    return conjure(s[qi() : i])
 
                 wd(d - 1)
 
@@ -102,30 +102,77 @@ def gem():
             return r
 
         left_parenthesis__ow__end = m.end('left_parenthesis__ow')
-        right_parenthesis         = m.group('right_parenthesis')
 
-        if right_parenthesis is not none:
-            left_parenthesis = conjure_left_parenthesis(s[qi() : left_parenthesis__ow__end])
+        if left_parenthesis__ow__end is not -1:
+            right_parenthesis         = m.group('right_parenthesis')
+
+            if right_parenthesis is not none:
+                left_parenthesis = conjure_left_parenthesis(s[qi() : left_parenthesis__ow__end])
+
+                if m.end('comment_newline') is -1:
+                    right_parenthesis = conjure_right_parenthesis(right_parenthesis)
+
+                    wi(m.end('right_parenthesis'))
+                    wj(m.end())
+                else:
+                    if qd() is 0:
+                        right_parenthesis = conjure_right_parenthesis(right_parenthesis)
+
+                        wn(conjure_token_newline(s[m.end('right_parenthesis') : ]))
+                    else:
+                        right_parenthesis = conjure_right_parenthesis(s[left_parenthesis__ow__end : ])
+
+                        skip_tokenize_prefix()
+
+                return Arguments_0(left_parenthesis, right_parenthesis)
 
             if m.end('comment_newline') is -1:
-                right_parenthesis = conjure_right_parenthesis(right_parenthesis)
+                left_parenthesis = conjure_left_parenthesis(s[qi() : left_parenthesis__ow__end])
 
-                wi(m.end('right_parenthesis'))
+                j = m.end()
+
+                wd(qd() + 1)
+                wi(j)
+                wj(j)
+
+                return left_parenthesis
+
+            left_parenthesis = conjure_left_parenthesis(s[qi() : ])
+
+            skip_tokenize_prefix()
+
+            wd(qd() + 1)
+
+            if show is 7:
+                my_line('%r; %s', left_parenthesis, portray_string(s[qj() : ]))
+
+            return left_parenthesis
+
+        left_square_bracket__ow__end = m.end('left_square_bracket__ow')
+        right_square_bracket         = m.group('right_square_bracket')
+
+        if right_square_bracket is not none:
+            left_square_bracket = conjure_left_square_bracket(s[qi() : left_square_bracket__ow__end])
+
+            if m.end('comment_newline') is -1:
+                right_square_bracket = conjure_right_square_bracket(right_square_bracket)
+
+                wi(m.end('right_square_bracket'))
                 wj(m.end())
             else:
                 if qd() is 0:
-                    right_parenthesis = conjure_right_parenthesis(right_parenthesis)
+                    right_square_bracket = conjure_right_square_bracket(right_square_bracket)
 
-                    wn(conjure_token_newline(s[m.end('right_parenthesis') : ]))
+                    wn(conjure_token_newline(s[m.end('right_square_bracket') : ]))
                 else:
-                    right_parenthesis = conjure_right_parenthesis(s[left_parenthesis__ow__end : ])
+                    right_square_bracket = conjure_right_square_bracket(s[left_square_bracket__ow__end : ])
 
                     skip_tokenize_prefix()
 
-            return Arguments_0(left_parenthesis, right_parenthesis)
+            return Arguments_0(left_square_bracket, right_square_bracket)
 
         if m.end('comment_newline') is -1:
-            left_parenthesis = conjure_left_parenthesis(s[qi() : left_parenthesis__ow__end])
+            left_square_bracket = conjure_left_square_bracket(s[qi() : left_square_bracket__ow__end])
 
             j = m.end()
 
@@ -133,15 +180,15 @@ def gem():
             wi(j)
             wj(j)
 
-            return left_parenthesis
+            return left_square_bracket
 
-        left_parenthesis = conjure_left_parenthesis(s[qi() : ])
+        left_square_bracket = conjure_left_square_bracket(s[qi() : ])
 
         skip_tokenize_prefix()
 
         wd(qd() + 1)
 
         if show is 7:
-            my_line('%r; %s', left_parenthesis, portray_string(s[qj() : ]))
+            my_line('%r; %s', left_square_bracket, portray_string(s[qj() : ]))
 
-        return left_parenthesis
+        return left_square_bracket

@@ -146,6 +146,7 @@ def gem():
         if token.is_left_parenthesis:
             return parse1__parenthesized_expression__left_parenthesis(token)
 
+        my_line('token: %s; %s', token, token.is__atom__or__right_close_operator)
         raise_unknown_line(1)
         #</same-as>
 

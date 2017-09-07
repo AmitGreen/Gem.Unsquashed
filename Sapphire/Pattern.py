@@ -218,14 +218,14 @@ def gem():
                                        ANY_OF('+', '<', '=') + P('=')
                                      | colon | comma | dot
                                      | keyword_as | keyword_in | keyword_or
-                                     | left_square_bracket
                                      | right_parenthesis
                                      | right_square_bracket
                                  ),
                             )
                           + ow
                       )
-                    | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
+                    | G(left_parenthesis__ow)    + P(G(right_parenthesis) + ow)
+                    | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
                 )
                 + Q(comment_newline)
             ),

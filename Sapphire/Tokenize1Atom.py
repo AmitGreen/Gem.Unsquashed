@@ -40,7 +40,7 @@ def gem():
         return left_parenthesis
 
 
-    def tokenize__atom__X__open__newline(m):
+    def tokenize_atom__X__open_newline(m):
         left_parenthesis__ow__end = m.end('left_parenthesis__ow')
 
         if left_parenthesis__ow__end is not -1:
@@ -137,10 +137,15 @@ def gem():
 
             return r.prefix_meta(conjure_whitespace(qs()[qi() : qj()]), r)
 
-        return tokenize__atom__X__open__newline(m)
+        return tokenize_atom__X__open_newline(m)
 
 
     def tokenize_comma_atom__X__newline(m):
+        #
+        #<similiar-to: tokenize_comma_atom__X__newline>
+        #
+        #   Difference: Uses 'right-parenthesis' instead of 'right-square-bracket'
+        #
         atom_s = m.group('atom')
 
         if atom_s is not none:
@@ -170,7 +175,47 @@ def gem():
 
             raise_unknown_line(1)
 
-        return tokenize__atom__X__open__newline(m)
+        return tokenize_atom__X__open_newline(m)
+        #</similiar-to>
+
+
+    def tokenize_index_atom__X__newline(m):
+        #
+        #<similiar-to: tokenize_comma_atom__X__newline>
+        #
+        #   Difference: Uses 'right-square-bracket' instead of 'right-parenthesis'
+        #
+        atom_s = m.group('atom')
+
+        if atom_s is not none:
+            conjure = find_atom_type(atom_s[0])
+
+            if conjure is conjure_right_square_bracket:
+                if qd() is 1:
+                    atom_end = m.end('atom')
+                    s        = qs()
+
+                    r = conjure_right_square_bracket(s[qi() : atom_end])
+
+                    wd0()
+                    wn(conjure_token_newline(s[atom_end : ]))
+
+                    return r
+
+                assert qd() > 0
+
+                wd(qd() - 1)
+
+                r = conjure_right_square_bracket(qs()[qi() : ])
+
+                skip_tokenize_prefix()
+
+                return r
+
+            raise_unknown_line(1)
+
+        return tokenize_atom__X__open_newline(m)
+        #</similiar-to>
 
 
     @share

@@ -407,20 +407,21 @@ def gem():
 
     @export
     class OperatorRightSquareBracket(KeywordAndOperatorBase):
-        __slots__                        = (())
+        __slots__                          = (())
         #   [
-        display_name                     = ']'
-        is_end_of_boolean_and_expression = true
-        is_end_of_boolean_or_expression  = true
-        is_end_of_compare_expression     = true
-        is_end_of_expression__OLD        = true
-        is_end_of_normal_expression_list = true
-        is_end_of_normal_expression      = true
-        is_end_of_ternary_expression     = true
-        is_end_of_unary_expression       = true
-        is_right_square_bracket          = true
+        display_name                       = ']'
+        is__atom__or__right_close_operator = true
+        is_end_of_boolean_and_expression   = true
+        is_end_of_boolean_or_expression    = true
+        is_end_of_compare_expression       = true
+        is_end_of_expression__OLD          = true
+        is_end_of_normal_expression_list   = true
+        is_end_of_normal_expression        = true
+        is_end_of_ternary_expression       = true
+        is_end_of_unary_expression         = true
+        is_right_square_bracket            = true
         #   [
-        keyword                          = ']'
+        keyword                            = ']'
 
 
     @share
@@ -483,6 +484,9 @@ def gem():
                          'V' : conjure_identifier, 'W' : conjure_identifier, 'X' : conjure_identifier,
                          'Y' : conjure_identifier, 'Z' : conjure_identifier, '_' : conjure_identifier,
 
+                         #  [
+                         ']' : conjure_right_square_bracket,
+
                          'a' : conjure_identifier, 'b' : conjure_identifier, 'c' : conjure_identifier,
                          'd' : conjure_identifier, 'e' : conjure_identifier, 'f' : conjure_identifier,
                          'g' : conjure_identifier, 'h' : conjure_identifier, 'i' : conjure_identifier,
@@ -530,8 +534,10 @@ def gem():
         'conjure_keyword_with',             conjure_keyword_with,
         'conjure_left_brace',               conjure_left_brace,
         'conjure_left_parenthesis',         conjure_left_parenthesis,
+        'conjure_left_square_bracket',      conjure_left_square_bracket,
         'conjure_right_brace',              conjure_right_brace,
         'conjure_right_parenthesis',        conjure_right_parenthesis,
+        'conjure_right_square_bracket',     conjure_right_square_bracket,
         'conjure_try_colon',                conjure_try_colon,
         'find_atom_type',                   find_atom_type,
         'find_operator_conjure_function',   find_operator_conjure_function,
