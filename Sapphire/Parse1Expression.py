@@ -825,16 +825,17 @@ def gem():
 
 
     #
-    #   17.  Comprehension-Expression (Python 2.7.14rc1 grammer calls this 'testlist_comp')
+    #   17.  Comprehension-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist_comp')
     #
     @share
-    def parse1_comprehension_expression():
+    def parse1_comprehension_expression_list():
         left = parse1_atom()
 
         operator = qk()
 
         if operator is not none:
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_comprehension_expression_list:
+                my_line('=1=operator: %r', operator)
                 return left
 
             wk(none)
@@ -847,22 +848,23 @@ def gem():
             if qn() is not none:
                 raise_unknown_line(1)
 
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_comprehension_expression_list:
+                my_line('=2=operator: %r', operator)
                 wk(operator)
 
                 return left
 
-        return parse1_any_comprehension_expression__left__operator(left, operator)
+        return parse1_any_comprehension_expression_list__left__operator(left, operator)
 
 
     @share
-    def parse1_any_comprehension_expression__left__operator(left, operator):
+    def parse1_any_comprehension_expression_list__left__operator(left, operator):
         if operator.is_postfix_operator:
             left = parse1_postfix_expression__left__operator(left, operator)
 
             operator = qk()
 
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_comprehension_expression_list:
                 return left
 
             wk(none)
@@ -872,7 +874,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_comprehension_expression_list:
                 return left
 
             wk(none)
@@ -882,10 +884,11 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_comprehension_expression_list:
                 return left
 
             wk(none)
 
         my_line('left: %s; operator: %s; s: %s', left, operator, portray_string(qs()[qj():]))
+        assert 0
         raise_unknown_line(1)

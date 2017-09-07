@@ -25,6 +25,7 @@ def gem():
         is_end_of_boolean_and_expression           = false
         is_end_of_boolean_or_expression            = false
         is_end_of_compare_expression               = false
+        is_end_of_comprehension_expression_list    = false
         is_end_of_expression__OLD                  = false
         is_end_of_normal_expression                = false
         is_end_of_normal_expression_list           = false
@@ -210,36 +211,38 @@ def gem():
 
 
     class OperatorColon(KeywordAndOperatorBase):
-        __slots__                         = (())
-        display_name                      = ':'
-        is_colon                          = true
-        is_end_of_arithmetic_expression   = true
-        is_end_of_boolean_and_expression  = true
-        is_end_of_boolean_or_expression   = true
-        is_end_of_compare_expression      = true
-        is_end_of_expression__OLD         = true
-        is_end_of_normal_expression_list  = true
-        is_end_of_normal_expression       = true
-        is_end_of_ternary_expression      = true
-        is_end_of_ternary_expression_list = true
-        is_end_of_unary_expression        = true
-        keyword                           = ':'
+        __slots__                               = (())
+        display_name                            = ':'
+        is_colon                                = true
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_expression__OLD               = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression            = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_unary_expression              = true
+        keyword                                 = ':'
 
 
     class OperatorColonNewline(KeywordAndOperatorBase):
-        __slots__                         = (())
-        is_colon_newline                  = true
-        is_end_of_arithmetic_expression   = true
-        is_end_of_boolean_and_expression  = true
-        is_end_of_boolean_or_expression   = true
-        is_end_of_compare_expression      = true
-        is_end_of_expression__OLD         = true
-        is_end_of_normal_expression_list  = true
-        is_end_of_normal_expression       = true
-        is_end_of_ternary_expression      = true
-        is_end_of_ternary_expression_list = true
-        is_end_of_unary_expression        = true
-        keyword                           = 'colon-newline'
+        __slots__                               = (())
+        is_colon_newline                        = true
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_expression__OLD               = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression            = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_unary_expression              = true
+        keyword                                 = 'colon-newline'
 
 
         def __repr__(t):
@@ -301,20 +304,21 @@ def gem():
 
 
     class OperatorHeadIndex(KeywordAndOperatorBase):
-        __slots__                         = (())
-        display_name                      = ':]'
-        is_colon                          = true
-        is_end_of_arithmetic_expression   = true
-        is_end_of_boolean_and_expression  = true
-        is_end_of_boolean_or_expression   = true
-        is_end_of_compare_expression      = true
-        is_end_of_expression__OLD         = true
-        is_end_of_normal_expression_list  = true
-        is_end_of_normal_expression       = true
-        is_end_of_ternary_expression      = true
-        is_end_of_ternary_expression_list = true
-        is_end_of_unary_expression        = true
-        keyword                           = ':]'
+        __slots__                               = (())
+        display_name                            = ':]'
+        is_colon                                = true
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_expression__OLD               = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression            = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_unary_expression              = true
+        keyword                                 = ':]'
 
 
     class OperatorLeftBrace(KeywordAndOperatorBase):
@@ -398,43 +402,45 @@ def gem():
 
 
     class OperatorRightBrace(KeywordAndOperatorBase):
-        __slots__                        = (())
+        __slots__                               = (())
         #  {
-        display_name                     = '}'
-        is_end_of_arithmetic_expression  = true
-        is_end_of_boolean_and_expression = true
-        is_end_of_boolean_or_expression  = true
-        is_end_of_compare_expression     = true
-        is_end_of_expression__OLD        = true
-        is_end_of_normal_expression_list = true
-        is_end_of_normal_expression      = true
-        is_end_of_ternary_expression     = true
-        is_end_of_ternary_expression_list = true
-        is_end_of_unary_expression       = true
-        is_right_brace                   = true
+        display_name                            = '}'
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_expression__OLD               = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression            = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_unary_expression              = true
+        is_right_brace                          = true
         #  {
-        keyword                          = '}'
+        keyword                                 = '}'
 
 
     class OperatorRightParenthesis(KeywordAndOperatorBase):
-        __slots__                        = (())
+        __slots__                               = (())
         #  (
-        display_name                       = ')'
-        is__atom__or__right_close_operator = true
-        is__comma__or__right_parenthesis   = true
-        is_end_of_arithmetic_expression    = true
-        is_end_of_boolean_and_expression   = true
-        is_end_of_boolean_or_expression    = true
-        is_end_of_compare_expression       = true
-        is_end_of_expression__OLD          = true
-        is_end_of_normal_expression_list   = true
-        is_end_of_normal_expression        = true
-        is_end_of_ternary_expression       = true
-        is_end_of_ternary_expression_list  = true
-        is_end_of_unary_expression         = true
-        is_right_parenthesis               = true
+        display_name                            = ')'
+        is__atom__or__right_close_operator      = true
+        is__comma__or__right_parenthesis        = true
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_expression__OLD               = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression            = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_unary_expression              = true
+        is_right_parenthesis                    = true
         #  (
-        keyword                            = ')'
+        keyword                                 = ')'
 
 
     @export
@@ -449,23 +455,24 @@ def gem():
 
     @export
     class OperatorRightSquareBracket(KeywordAndOperatorBase):
-        __slots__                          = (())
+        __slots__                               = (())
         #   [
-        display_name                       = ']'
-        is__atom__or__right_close_operator = true
-        is_end_of_arithmetic_expression    = true
-        is_end_of_boolean_and_expression   = true
-        is_end_of_boolean_or_expression    = true
-        is_end_of_compare_expression       = true
-        is_end_of_expression__OLD          = true
-        is_end_of_normal_expression_list   = true
-        is_end_of_normal_expression        = true
-        is_end_of_ternary_expression       = true
-        is_end_of_ternary_expression_list  = true
-        is_end_of_unary_expression         = true
-        is_right_square_bracket            = true
+        display_name                            = ']'
+        is__atom__or__right_close_operator      = true
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_expression__OLD               = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression            = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_unary_expression              = true
+        is_right_square_bracket                 = true
         #   [
-        keyword                            = ']'
+        keyword                                 = ']'
 
 
     @share

@@ -124,7 +124,7 @@ def gem():
                    )
 
         if operator_2.is_equal_sign:
-            value = parse1_comprehension_expression()
+            value = parse1_ternary_expression()
 
             token_1 = KeywordParameter(token_1, operator_2, value)
 
@@ -171,7 +171,7 @@ def gem():
                 return FunctionHeader(keyword_function, name, ParameterColon_Many(Tuple(many)))
 
             if operator_7.is_equal_sign:
-                value = parse1_comprehension_expression()
+                value = parse1_ternary_expression()
 
                 token_7 = KeywordParameter(token_7, operator_7, value)
 
