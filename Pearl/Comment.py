@@ -21,6 +21,7 @@ def gem():
     class TokenCommentNewline(Token):
         __slots__                        = (())
         display_name                     = 'comment-newline'
+        is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
         is_end_of_boolean_or_expression  = true
         is_end_of_compare_expression     = true
@@ -39,6 +40,7 @@ def gem():
 
     class TokenNewline(Token):
         display_name                     = 'newline'
+        is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
         is_end_of_boolean_or_expression  = true
         is_end_of_compare_expression     = true

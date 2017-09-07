@@ -42,6 +42,12 @@ def gem():
 
 
     @share
+    class AddExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = '+'
+
+
+    @share
     class CompareEqualExpression(BinaryExpression):
         __slots__    = (())
         display_name = '=='

@@ -356,6 +356,48 @@ def gem():
         my_line('right: %r, operator: %s:%r', right, operator)
         raise_unknown_line(1)
 
+
+    def parse1_unary_expression():
+        left = parse1_atom()
+
+        operator = qk()
+
+        if operator is none:
+            newline = qn()
+
+            if qn() is not none:
+                return left
+
+            operator = tokenize_operator()
+
+            if qk() is not none:
+                raise_unknown_line(1)
+
+            if operator.is_end_of_unary_expression:
+                wk(operator)
+                return left
+        else:
+            if operator.is_end_of_unary_expression:
+                return NegativeExpression(negative_operator, right)
+
+            wk(none)
+
+        if operator.is_postfix_operator:
+            left = parse1_postfix_expression__left__operator(left, operator)
+
+            if qn() is not none:
+                return left
+
+            operator = qk()
+
+            if operator.is_end_of_unary_expression:
+                return left
+
+            wk(none)
+
+        raise_unknown_line(2)
+
+
     #
     #   4.  Multiply-Expression (Python 2.7.14rc1 grammer calls this 'term')
     #
@@ -363,6 +405,56 @@ def gem():
     #
     #   5.  Arithmetic-Expression (Python 2.7.14rc1 grammer calls this 'arith_expr')
     #
+    @share
+    def parse1_arithmetic_expression__left__operator(left, add_operator):
+        if show is 7:
+            my_line('left: %r; add_operator: %r; s: %s',
+                    left, add_operator, portray_string(qs()[qj() : ]))
+
+        right = parse1_unary_expression()
+
+        operator = qk()
+
+        if operator is none:
+            if qn() is not none:
+                return AddExpression(left, add_operator, right)
+
+            operator = tokenize_operator()
+
+            if operator.is_end_of_compare_expression:
+                wk(operator)
+
+                return AddExpression(left, add_operator, right)
+        else:
+            if operator.is_end_of_compare_expression:
+                return AddExpression(left, add_operator, right)
+
+            wk(none)
+
+        many = [left, add_operator, right, operator]
+
+        while 7 is 7:
+            many.append(parse1_unary_expression())
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is not none:
+                    return ArithmeticExpression_Many(Tuple(many))
+
+                operator = tokenize_operator()
+
+                if operator.is_end_of_arithmetic_expression:
+                    wk(operator)
+
+                    return ArithmeticExpression_Many(Tuple(many))
+            else:
+                if operator.is_end_of_arithmetic_expression:
+                    return ArithmeticExpression_Many(Tuple(many))
+
+                wk(none)
+
+            many.append(operator)
 
     #
     #   6.  Shift-Expression (Python 2.7.14rc1 grammer calls this 'shift_expr')

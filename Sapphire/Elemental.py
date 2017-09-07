@@ -12,6 +12,7 @@ def gem():
         is__any__right_parenthesis__colon__newline = false
         is_arguments_0                             = false
         is__arguments_0__or__left_parenthesis      = false
+        is_arithmetic_operator                     = false
         is_atom                                    = false
         is__atom__or__right_close_operator         = false
         is_colon                                   = false
@@ -20,6 +21,7 @@ def gem():
         is__comma__or__right_parenthesis           = false
         is_compare_operator                        = false
         is_dot                                     = false
+        is_end_of_arithmetic_expression            = false
         is_end_of_boolean_and_expression           = false
         is_end_of_boolean_or_expression            = false
         is_end_of_compare_expression               = false
@@ -39,6 +41,7 @@ def gem():
         is_modify_operator                         = false
         is_or_operator                             = false
         is_parameter_colon_0_newline               = false
+        is_plus_sign                               = false
         is_postfix_operator                        = false
         is_right_brace                             = false
         is__right_parenthesis__colon               = false
@@ -105,6 +108,7 @@ def gem():
     class KeywordIf(KeywordAndOperatorBase):
         __slots__                        = (())
         display_name                     = 'if'
+        is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
         is_end_of_boolean_or_expression  = true
         is_end_of_compare_expression     = true
@@ -117,6 +121,7 @@ def gem():
     class KeywordIn(KeywordAndOperatorBase):
         __slots__                        = (())
         display_name                     = 'in'
+        is_end_of_arithmetic_expression  = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
@@ -143,10 +148,9 @@ def gem():
     class KeywordOr(KeywordAndOperatorBase):
         __slots__                        = (())
         display_name                     = 'or'
+        is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
         is_end_of_compare_expression     = true
-        is_end_of_normal_expression_list = true
-        is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
         is_or_operator                   = true
         keyword                          = 'or'
@@ -195,6 +199,7 @@ def gem():
         __slots__                        = (())
         display_name                     = ':'
         is_colon                         = true
+        is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
         is_end_of_boolean_or_expression  = true
         is_end_of_compare_expression     = true
@@ -209,6 +214,7 @@ def gem():
     class OperatorColonNewline(KeywordAndOperatorBase):
         __slots__                        = (())
         is_colon_newline                 = true
+        is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
         is_end_of_boolean_or_expression  = true
         is_end_of_compare_expression     = true
@@ -233,6 +239,7 @@ def gem():
         display_name                     = ','
         is__comma__or__right_parenthesis = true
         is_comma                         = true
+        is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
         is_end_of_boolean_or_expression  = true
         is_end_of_compare_expression     = true
@@ -247,6 +254,7 @@ def gem():
     class OperatorCompareEqual(KeywordAndOperatorBase):
         __slots__                        = (())
         display_name                     = '=='
+        is_end_of_arithmetic_expression  = true
         is_compare_operator              = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
@@ -280,6 +288,7 @@ def gem():
         __slots__                        = (())
         display_name                     = ':]'
         is_colon                         = true
+        is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
         is_end_of_boolean_or_expression  = true
         is_end_of_compare_expression     = true
@@ -325,6 +334,7 @@ def gem():
         __slots__                        = (())
         display_name                     = '<='
         is_compare_operator              = true
+        is_end_of_arithmetic_expression  = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
@@ -346,10 +356,12 @@ def gem():
 
 
     class OperatorMinusSign(KeywordAndOperatorBase):
-        __slots__     = (())
-        display_name  = '-'
-        is_minus_sign = true
-        keyword       = '-'
+        __slots__                  = (())
+        display_name               = '-'
+        is_minus_sign              = true
+        is_end_of_unary_expression = true
+        is_arithmetic_operator     = true
+        keyword                    = '-'
 
 
     class OperatorModifyPlus(KeywordAndOperatorBase):
@@ -359,10 +371,20 @@ def gem():
         keyword            = '+='
 
 
+    class OperatorPlusSign(KeywordAndOperatorBase):
+        __slots__                  = (())
+        display_name               = '+'
+        is_arithmetic_operator     = true
+        is_end_of_unary_expression = true
+        is_plus_sign               = true
+        keyword                    = '+'
+
+
     class OperatorRightBrace(KeywordAndOperatorBase):
         __slots__                        = (())
         #  {
         display_name                     = '}'
+        is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
         is_end_of_boolean_or_expression  = true
         is_end_of_compare_expression     = true
@@ -382,6 +404,7 @@ def gem():
         display_name                       = ')'
         is__atom__or__right_close_operator = true
         is__comma__or__right_parenthesis   = true
+        is_end_of_arithmetic_expression    = true
         is_end_of_boolean_and_expression   = true
         is_end_of_boolean_or_expression    = true
         is_end_of_compare_expression       = true
@@ -411,6 +434,7 @@ def gem():
         #   [
         display_name                       = ']'
         is__atom__or__right_close_operator = true
+        is_end_of_arithmetic_expression    = true
         is_end_of_boolean_and_expression   = true
         is_end_of_boolean_or_expression    = true
         is_end_of_compare_expression       = true
@@ -460,6 +484,7 @@ def gem():
     conjure_less_than_or_equal   = produce_conjure_by_name('operator-less-than-or-equal',   OperatorLessThanOrEqual) 
     conjure_minus_sign           = produce_conjure_by_name('operator-minus-sign',           OperatorMinusSign) 
     conjure_modify_plus          = produce_conjure_by_name('operator-modify-plus',          OperatorModifyPlus) 
+    conjure_plus_sign            = produce_conjure_by_name('operator-plus-sign',            OperatorPlusSign) 
     conjure_right_brace          = produce_conjure_by_name('operator-right-brace',          OperatorRightBrace) 
     conjure_right_parenthesis    = produce_conjure_by_name('operator-right-parenthesis',    OperatorRightParenthesis) 
     conjure_right_square_bracket = produce_conjure_by_name('operator-right-square-bracket', OperatorRightSquareBracket) 
@@ -502,6 +527,7 @@ def gem():
     find_operator_conjure_function = {
                                          '('   : conjure_left_parenthesis,
                                          ')'   : conjure_right_parenthesis,
+                                         '+'   : conjure_plus_sign,
                                          '+='  : conjure_modify_plus,
                                          ','   : conjure_comma,
                                          '-'   : conjure_minus_sign,
