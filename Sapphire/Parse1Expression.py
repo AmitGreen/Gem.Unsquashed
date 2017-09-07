@@ -675,7 +675,7 @@ def gem():
         if qn() is not none:
             raise_unknown_line(3)
 
-        while not operator.is_end_of_expression__OLD:
+        while not operator.is_end_of_boolean_or_expression:
             if operator.is_or_operator:
                 left        = OrExpression(left, or_operator, right)
                 or_operator = operator
@@ -790,7 +790,7 @@ def gem():
         operator = qk()
 
         if operator is not none:
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_ternary_expression_list:
                 return left
 
             wk(none)
@@ -803,7 +803,7 @@ def gem():
             if qn() is not none:
                 raise_unknown_line(1)
 
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_ternary_expression_list:
                 wk(operator)
 
                 return left
@@ -816,7 +816,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_ternary_expression_list:
                 return left
 
             wk(none)
@@ -828,7 +828,7 @@ def gem():
     #   17.  Comprehension-Expression (Python 2.7.14rc1 grammer calls this 'testlist_comp')
     #
     @share
-    def parse1_any_comprehension_expression():
+    def parse1_comprehension_expression():
         left = parse1_atom()
 
         operator = qk()

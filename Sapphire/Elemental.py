@@ -29,6 +29,7 @@ def gem():
         is_end_of_normal_expression                = false
         is_end_of_normal_expression_list           = false
         is_end_of_ternary_expression               = false
+        is_end_of_ternary_expression_list          = false
         is_end_of_unary_expression                 = false
         is_equal_sign                              = false
         is_keyword_as                              = false
@@ -209,34 +210,36 @@ def gem():
 
 
     class OperatorColon(KeywordAndOperatorBase):
-        __slots__                        = (())
-        display_name                     = ':'
-        is_colon                         = true
-        is_end_of_arithmetic_expression  = true
-        is_end_of_boolean_and_expression = true
-        is_end_of_boolean_or_expression  = true
-        is_end_of_compare_expression     = true
-        is_end_of_expression__OLD        = true
-        is_end_of_normal_expression_list = true
-        is_end_of_normal_expression      = true
-        is_end_of_ternary_expression     = true
-        is_end_of_unary_expression       = true
-        keyword                          = ':'
+        __slots__                         = (())
+        display_name                      = ':'
+        is_colon                          = true
+        is_end_of_arithmetic_expression   = true
+        is_end_of_boolean_and_expression  = true
+        is_end_of_boolean_or_expression   = true
+        is_end_of_compare_expression      = true
+        is_end_of_expression__OLD         = true
+        is_end_of_normal_expression_list  = true
+        is_end_of_normal_expression       = true
+        is_end_of_ternary_expression      = true
+        is_end_of_ternary_expression_list = true
+        is_end_of_unary_expression        = true
+        keyword                           = ':'
 
 
     class OperatorColonNewline(KeywordAndOperatorBase):
-        __slots__                        = (())
-        is_colon_newline                 = true
-        is_end_of_arithmetic_expression  = true
-        is_end_of_boolean_and_expression = true
-        is_end_of_boolean_or_expression  = true
-        is_end_of_compare_expression     = true
-        is_end_of_expression__OLD        = true
-        is_end_of_normal_expression_list = true
-        is_end_of_normal_expression      = true
-        is_end_of_ternary_expression     = true
-        is_end_of_unary_expression       = true
-        keyword                          = 'colon-newline'
+        __slots__                         = (())
+        is_colon_newline                  = true
+        is_end_of_arithmetic_expression   = true
+        is_end_of_boolean_and_expression  = true
+        is_end_of_boolean_or_expression   = true
+        is_end_of_compare_expression      = true
+        is_end_of_expression__OLD         = true
+        is_end_of_normal_expression_list  = true
+        is_end_of_normal_expression       = true
+        is_end_of_ternary_expression      = true
+        is_end_of_ternary_expression_list = true
+        is_end_of_unary_expression        = true
+        keyword                           = 'colon-newline'
 
 
         def __repr__(t):
@@ -298,19 +301,20 @@ def gem():
 
 
     class OperatorHeadIndex(KeywordAndOperatorBase):
-        __slots__                        = (())
-        display_name                     = ':]'
-        is_colon                         = true
-        is_end_of_arithmetic_expression  = true
-        is_end_of_boolean_and_expression = true
-        is_end_of_boolean_or_expression  = true
-        is_end_of_compare_expression     = true
-        is_end_of_expression__OLD        = true
-        is_end_of_normal_expression_list = true
-        is_end_of_normal_expression      = true
-        is_end_of_ternary_expression     = true
-        is_end_of_unary_expression       = true
-        keyword                          = ':]'
+        __slots__                         = (())
+        display_name                      = ':]'
+        is_colon                          = true
+        is_end_of_arithmetic_expression   = true
+        is_end_of_boolean_and_expression  = true
+        is_end_of_boolean_or_expression   = true
+        is_end_of_compare_expression      = true
+        is_end_of_expression__OLD         = true
+        is_end_of_normal_expression_list  = true
+        is_end_of_normal_expression       = true
+        is_end_of_ternary_expression      = true
+        is_end_of_ternary_expression_list = true
+        is_end_of_unary_expression        = true
+        keyword                           = ':]'
 
 
     class OperatorLeftBrace(KeywordAndOperatorBase):
@@ -405,6 +409,7 @@ def gem():
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_ternary_expression     = true
+        is_end_of_ternary_expression_list = true
         is_end_of_unary_expression       = true
         is_right_brace                   = true
         #  {
@@ -425,6 +430,7 @@ def gem():
         is_end_of_normal_expression_list   = true
         is_end_of_normal_expression        = true
         is_end_of_ternary_expression       = true
+        is_end_of_ternary_expression_list  = true
         is_end_of_unary_expression         = true
         is_right_parenthesis               = true
         #  (
@@ -455,6 +461,7 @@ def gem():
         is_end_of_normal_expression_list   = true
         is_end_of_normal_expression        = true
         is_end_of_ternary_expression       = true
+        is_end_of_ternary_expression_list  = true
         is_end_of_unary_expression         = true
         is_right_square_bracket            = true
         #   [
@@ -552,6 +559,7 @@ def gem():
                                          '='   : conjure_equal_sign,
                                          '=='  : conjure_compare_equal,
                                          'as'  : conjure_keyword_as,
+                                         'if'  : conjure_keyword_if,
                                          'in'  : conjure_keyword_in,
                                          'not' : conjure_keyword_not,
                                          'or'  : conjure_keyword_or,

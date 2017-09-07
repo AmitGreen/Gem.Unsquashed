@@ -152,7 +152,7 @@ def gem():
             'atom_match',
             (
                   (
-                        G('keyword', keyword_if | keyword_not)
+                        G('keyword', keyword_not)
                       + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
                   )
                 | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must preceed 'name'
@@ -173,7 +173,7 @@ def gem():
                              (
                                    ANY_OF('+', '<', '=') + P('=')
                                  | colon | comma | dot
-                                 | keyword_as | keyword_in | keyword_or
+                                 | keyword_as | 'i' + ANY_OF('f', 'n') | keyword_or
                                  | right_parenthesis
                                  | right_square_bracket
                              ),
