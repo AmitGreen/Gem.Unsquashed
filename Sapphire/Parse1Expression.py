@@ -41,7 +41,7 @@ def gem():
                 name = tokenize_name()
 
                 if qn() is not none:
-                    return ExpressionDot(left, operator, name)
+                    return MemberExpression_1(left, operator, name)
 
                 operator_2 = tokenize_operator()
 
@@ -52,7 +52,7 @@ def gem():
                     name_2 = tokenize_name()
 
                     if qn() is not none:
-                        return ExpressionDot_2(left, operator, name, operator_2, name_2)
+                        return MemberExpression_2(left, operator, name, operator_2, name_2)
 
                     operator_3 = tokenize_operator()
 
@@ -63,7 +63,7 @@ def gem():
                         name_3 = tokenize_name()
 
                         if qn() is not none:
-                            return ExpressionDot_3(left, operator, name, operator_2, name_2, operator_3, name_3)
+                            return MemberExpression_3(left, operator, name, operator_2, name_2, operator_3, name_3)
 
                         operator_4 = tokenize_operator()
 
@@ -97,13 +97,13 @@ def gem():
 
                                     return left
                         elif operator_4.is_postfix_operator:
-                            left = ExpressionDot_3(left, operator, name, operator_2, name_2, operator_3, name_3)
+                            left = MemberExpression_3(left, operator, name, operator_2, name_2, operator_3, name_3)
 
                             operator = operator_4
                         else:
                             wk(operator_4)
 
-                            return ExpressionDot_3(left, operator, name, operator_2, name_2, operator_3, name_3)
+                            return MemberExpression_3(left, operator, name, operator_2, name_2, operator_3, name_3)
 
                     elif operator_3.is__arguments_0__or__left_parenthesis:
                         if operator_3.is_left_parenthesis:
@@ -136,13 +136,13 @@ def gem():
                                 return left
 
                     elif operator_3.is_postfix_operator:
-                        left = ExpressionDot_2(left, operator, name, operator_2, name_2)
+                        left = MemberExpression_2(left, operator, name, operator_2, name_2)
 
                         operator = operator_3
                     else:
                         wk(operator_3)
 
-                        return ExpressionDot_2(left, operator, name, operator_2, name_2)
+                        return MemberExpression_2(left, operator, name, operator_2, name_2)
 
                 elif operator_2.is__arguments_0__or__left_parenthesis:
                     if operator_2.is_left_parenthesis:
@@ -175,13 +175,13 @@ def gem():
                             return left
 
                 elif operator_2.is_postfix_operator:
-                    left = ExpressionDot(left, operator, name)
+                    left = MemberExpression_1(left, operator, name)
 
                     operator = operator_2
                 else:
                     wk(operator_2)
 
-                    return ExpressionDot(left, operator, name)
+                    return MemberExpression_1(left, operator, name)
 
             if operator.is__arguments_0__or__left_parenthesis:
                 if operator.is_left_parenthesis:
@@ -190,7 +190,7 @@ def gem():
 
                     operator = parse1_arguments__left_parenthesis(operator)
 
-                left = ExpressionCall(left, operator)
+                left = CallExpression(left, operator)
 
                 operator = qk()
 

@@ -24,7 +24,7 @@ def gem():
             return expression
 
         if single_quote is none:
-            return ExpressionCall(
+            return CallExpression(
                        expression,
                        Arguments_0(
                            conjure_left_parenthesis(left_parenthesis),
@@ -32,7 +32,7 @@ def gem():
                        ),
                    )
 
-        return ExpressionCall(
+        return CallExpression(
                    expression,
                    Arguments_1(
                        conjure_left_parenthesis(left_parenthesis),
@@ -114,7 +114,7 @@ def gem():
         if dot is none:
             module = conjure_identifier(name1)
         else:
-            module = ExpressionDot(conjure_identifier(name1), conjure_dot(dot), conjure_identifier(name2))
+            module = MemberExpression_1(conjure_identifier(name1), conjure_dot(dot), conjure_identifier(name2))
 
         as_fragment = FromAsFragment(conjure_identifier(name3), conjure_keyword_as(w_as_w), conjure_identifier(name4))
 

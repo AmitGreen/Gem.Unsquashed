@@ -56,7 +56,7 @@ def gem():
                 if operator_2.is_equal_sign:
                     return parse1_statement_assign__left__equal_sign(
                                indented,
-                               ExpressionDot(left, operator, right),
+                               MemberExpression_1(left, operator, right),
                                operator_2,
                            )
 
@@ -78,7 +78,7 @@ def gem():
                 if newline is not none:
                     return StatementCall(indented, left, operator, newline)
 
-                left = ExpressionCall(left, operator)
+                left = CallExpression(left, operator)
                 continue
 
             if operator.is_left_parenthesis:
@@ -88,7 +88,7 @@ def gem():
                 if newline is not none:
                     return StatementCall(indented, left, arguments, newline)
 
-                left = ExpressionCall(left, arguments)
+                left = CallExpression(left, arguments)
                 continue
 
             if operator.is_equal_sign:

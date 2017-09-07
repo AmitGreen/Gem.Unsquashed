@@ -48,7 +48,7 @@ def gem():
                 raise_unknown_line(3)
             #</name>
 
-            module = ExpressionDot(module, operator_dot, conjure_identifier(m1.group()))
+            module = MemberExpression_1(module, operator_dot, conjure_identifier(m1.group()))
 
         if operator is none:
             wk(conjure_token_newline(m2.group()))

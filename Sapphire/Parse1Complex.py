@@ -140,7 +140,7 @@ def gem():
             operator = tokenize_operator()
 
             if operator.is_arguments_0:
-                left = ExpressionCall(left, operator)
+                left = CallExpression(left, operator)
                 continue
 
             if operator.is_keyword_as:

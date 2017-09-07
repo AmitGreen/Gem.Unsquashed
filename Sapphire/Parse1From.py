@@ -42,7 +42,7 @@ def gem():
                 raise_unknown_line(3)
             #</name2>
 
-            module = ExpressionDot(module, operator_dot, conjure_identifier(m1.group()))
+            module = MemberExpression_1(module, operator_dot, conjure_identifier(m1.group()))
 
         wj(m2.end())
         wk(KeywordImport(m2.group()))

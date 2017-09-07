@@ -41,7 +41,7 @@ def gem():
             if newline is not none:
                 return StatementReturnExpression(
                            keyword_return,
-                           ExpressionCall(atom, operator),
+                           CallExpression(atom, operator),
                            newline,
                        )
 

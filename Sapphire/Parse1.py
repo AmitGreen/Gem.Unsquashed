@@ -13,6 +13,7 @@ def gem():
     require_gem('Sapphire.ExpressionMany')
     require_gem('Sapphire.JoinedToken')
     require_gem('Sapphire.Match')
+    require_gem('Sapphire.OtherExpression')
     require_gem('Sapphire.Parse1Atom')
     require_gem('Sapphire.Parse1Call')
     require_gem('Sapphire.Parse1Complex')
@@ -22,6 +23,7 @@ def gem():
     require_gem('Sapphire.Parse1Function')
     require_gem('Sapphire.Parse1Import')
     require_gem('Sapphire.Parse1Simple')
+    require_gem('Sapphire.PostfixExpression')
     require_gem('Sapphire.Statement')
     require_gem('Sapphire.Tokenize1Atom')
     require_gem('Sapphire.Tokenize1Header')
@@ -55,7 +57,7 @@ def gem():
             if newline is none:
                 raise_unknown_line(2)
 
-            return DecoratorHeader(operator_at_sign, ExpressionCall(identifier, operator), newline)
+            return DecoratorHeader(operator_at_sign, CallExpression(identifier, operator), newline)
 
         if not operator.is_left_parenthesis:
             raise_unknown_line(3)
