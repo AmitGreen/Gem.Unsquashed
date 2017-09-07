@@ -307,9 +307,6 @@ def gem():
 
                     operator = tokenize_operator()
 
-                    if qn() is not none:
-                        raise_unknown_line(14)
-
                     if not operator.is_postfix_operator:
                         wk(operator)
 
@@ -768,6 +765,16 @@ def gem():
 
     @share
     def parse1_any_comprehension_expression__left__operator(left, operator):
+        if operator.is_postfix_operator:
+            left = parse1_postfix_expression__left__operator(left, operator)
+
+            operator = qk()
+
+            if operator.is_end_of_expression__OLD:
+                return left
+
+            wk(none)
+
         if operator.is_or_operator:
             left = parse1_or_expression__left__operator(left, operator)
 

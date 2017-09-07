@@ -45,6 +45,10 @@ def gem():
     @share
     def tokenize_operator():
         s = qs()
+
+        if show is 7:
+            my_line('d: %d; s: %s', qd(), portray_string(s[qj() : ]))
+
         m = operator_match(s, qj())
 
         if m is none:
@@ -57,7 +61,7 @@ def gem():
             conjure = find_operator_conjure_function(operator_s)
 
             if m.end('comment_newline') is -1:
-                if conjure is conjure_right_parenthesis:
+                if (conjure is conjure_right_parenthesis) or (conjure is conjure_right_square_bracket):
                     d = qd()
 
                     if d is 0:
@@ -169,7 +173,7 @@ def gem():
 
                     skip_tokenize_prefix()
 
-            return Arguments_0(left_square_bracket, right_square_bracket)
+            return EmptyIndex(left_square_bracket, right_square_bracket)
 
         if m.end('comment_newline') is -1:
             left_square_bracket = conjure_left_square_bracket(s[qi() : left_square_bracket__ow__end])

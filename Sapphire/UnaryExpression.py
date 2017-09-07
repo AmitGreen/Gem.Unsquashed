@@ -13,6 +13,9 @@ def gem():
         ))
 
 
+        is_right_square_bracket = false
+
+
         def __init__(t, operator, right):
             t.operator = operator
             t.right    = right

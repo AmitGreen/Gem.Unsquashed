@@ -10,10 +10,11 @@ def gem():
         ))
 
 
-        is_comma             = false
-        is_identifier        = false
-        is_keyword           = false
-        is_right_parenthesis = false
+        is_comma                = false
+        is_identifier           = false
+        is_keyword              = false
+        is_right_parenthesis    = false
+        is_right_square_bracket = false
 
 
         def __init__(t, s):
@@ -47,8 +48,6 @@ def gem():
         is_atom                               = true
         is_identifier                         = true
         is__right_parenthesis__colon__newline = false
-        is_right_parenthesis                  = false
-        is_right_square_bracket               = false
 
 
         def display_token(t):
