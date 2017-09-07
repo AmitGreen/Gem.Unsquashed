@@ -55,10 +55,6 @@ def gem():
             return arrange('<%s>', t.s)
 
 
-        def display_full_token(t):
-            return arrange('<%s %s>', t.display_name, portray_string(t.s))
-
-
         def display_token(t):
             if t.s == t.display_name:
                 return arrange('<%s>', t.display_name)
@@ -281,6 +277,21 @@ def gem():
         keyword       = '='
 
 
+    class OperatorHeadIndex(KeywordAndOperatorBase):
+        __slots__                        = (())
+        display_name                     = ':]'
+        is_colon                         = true
+        is_end_of_boolean_and_expression = true
+        is_end_of_boolean_or_expression  = true
+        is_end_of_compare_expression     = true
+        is_end_of_expression__OLD        = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_ternary_expression     = true
+        is_end_of_unary_expression       = true
+        keyword                          = ':]'
+
+
     class OperatorLeftBrace(KeywordAndOperatorBase):
         __slots__                       = (())
         display_name                    = '{'       #   }
@@ -426,32 +437,33 @@ def gem():
             return arrange('<%s>', t.s)
 
 
-    conjure_colon_newline        = produce_conjure_by_name('colon_newline',        OperatorColonNewline) 
-    conjure_colon                = produce_conjure_by_name('colon',                OperatorColon) 
-    conjure_comma                = produce_conjure_by_name('comma',                OperatorComma) 
-    conjure_compare_equal        = produce_conjure_by_name('==',                   OperatorCompareEqual) 
-    conjure_dot                  = produce_conjure_by_name('dot',                  OperatorDot) 
-    conjure_equal_sign           = produce_conjure_by_name('equal-sign',           OperatorEqualSign) 
-    conjure_except_colon         = produce_conjure_by_name('except-colon',         KeywordExceptColon) 
-    conjure_keyword_as           = produce_conjure_by_name('keyword-as',           KeywordAs) 
-    conjure_keyword_for          = produce_conjure_by_name('keyword-for',          KeywordFor) 
-    conjure_keyword_function     = produce_conjure_by_name('keyword-function',     KeywordFunction) 
-    conjure_keyword_if           = produce_conjure_by_name('keyword-if',           KeywordIf) 
-    conjure_keyword_in           = produce_conjure_by_name('keyword-in',           KeywordIn) 
-    conjure_keyword_not          = produce_conjure_by_name('keyword-not',          KeywordNot) 
-    conjure_keyword_or           = produce_conjure_by_name('keyword-or',           KeywordOr) 
-    conjure_keyword_return       = produce_conjure_by_name('keyword-return',       KeywordReturn) 
-    conjure_keyword_with         = produce_conjure_by_name('keyword-with',         KeywordWith) 
-    conjure_left_brace           = produce_conjure_by_name('left-brace',           OperatorLeftBrace) 
-    conjure_left_parenthesis     = produce_conjure_by_name('left-parenthesis',     OperatorLeftParenthesis) 
-    conjure_left_square_bracket  = produce_conjure_by_name('left-square-brakcet',  OperatorLeftSquareBracket) 
-    conjure_less_than_or_equal   = produce_conjure_by_name('<=',                   OperatorLessThanOrEqual) 
-    conjure_minus_sign           = produce_conjure_by_name('-',                    OperatorMinusSign) 
-    conjure_modify_plus          = produce_conjure_by_name('modify-plus',          OperatorModifyPlus) 
-    conjure_right_brace          = produce_conjure_by_name('right-brace',          OperatorRightBrace) 
-    conjure_right_parenthesis    = produce_conjure_by_name('right-parenthesis',    OperatorRightParenthesis) 
-    conjure_right_square_bracket = produce_conjure_by_name('right-square-bracket', OperatorRightSquareBracket) 
-    conjure_try_colon            = produce_conjure_by_name('try-colon',            KeywordTryColon) 
+    conjure_colon_newline        = produce_conjure_by_name('operator-colon-newline',        OperatorColonNewline) 
+    conjure_colon                = produce_conjure_by_name('operator-colon',                OperatorColon) 
+    conjure_comma                = produce_conjure_by_name('operator-comma',                OperatorComma) 
+    conjure_compare_equal        = produce_conjure_by_name('operator-conmpare-equal',       OperatorCompareEqual) 
+    conjure_dot                  = produce_conjure_by_name('operator-dot',                  OperatorDot) 
+    conjure_equal_sign           = produce_conjure_by_name('operator-equal-sign',           OperatorEqualSign) 
+    conjure_except_colon         = produce_conjure_by_name('keyword-except-colon',          KeywordExceptColon) 
+    conjure_head_index           = produce_conjure_by_name('operator-head-index',           OperatorHeadIndex) 
+    conjure_keyword_as           = produce_conjure_by_name('keyword-as',                    KeywordAs) 
+    conjure_keyword_for          = produce_conjure_by_name('keyword-for',                   KeywordFor) 
+    conjure_keyword_function     = produce_conjure_by_name('keyword-function',              KeywordFunction) 
+    conjure_keyword_if           = produce_conjure_by_name('keyword-if',                    KeywordIf) 
+    conjure_keyword_in           = produce_conjure_by_name('keyword-in',                    KeywordIn) 
+    conjure_keyword_not          = produce_conjure_by_name('keyword-not',                   KeywordNot) 
+    conjure_keyword_or           = produce_conjure_by_name('keyword-or',                    KeywordOr) 
+    conjure_keyword_return       = produce_conjure_by_name('keyword-return',                KeywordReturn) 
+    conjure_keyword_with         = produce_conjure_by_name('keyword-with',                  KeywordWith) 
+    conjure_left_brace           = produce_conjure_by_name('operator-left-brace',           OperatorLeftBrace) 
+    conjure_left_parenthesis     = produce_conjure_by_name('operator-left-parenthesis',     OperatorLeftParenthesis) 
+    conjure_left_square_bracket  = produce_conjure_by_name('operator-left-square-bracket',  OperatorLeftSquareBracket) 
+    conjure_less_than_or_equal   = produce_conjure_by_name('operator-less-than-or-equal',   OperatorLessThanOrEqual) 
+    conjure_minus_sign           = produce_conjure_by_name('operator-minus-sign',           OperatorMinusSign) 
+    conjure_modify_plus          = produce_conjure_by_name('operator-modify-plus',          OperatorModifyPlus) 
+    conjure_right_brace          = produce_conjure_by_name('operator-right-brace',          OperatorRightBrace) 
+    conjure_right_parenthesis    = produce_conjure_by_name('operator-right-parenthesis',    OperatorRightParenthesis) 
+    conjure_right_square_bracket = produce_conjure_by_name('operator-right-square-bracket', OperatorRightSquareBracket) 
+    conjure_try_colon            = produce_conjure_by_name('keyword-try-colon',             KeywordTryColon) 
 
     find_atom_type = {
                          "'" : SingleQuote,
@@ -511,6 +523,7 @@ def gem():
         'conjure_dot',                      conjure_dot,
         'conjure_equal_sign',               conjure_equal_sign,
         'conjure_except_colon',             conjure_except_colon,
+        'conjure_head_index',               conjure_head_index,
         'conjure_keyword_as',               conjure_keyword_as,
         'conjure_keyword_for',              conjure_keyword_for,
         'conjure_keyword_if',               conjure_keyword_if,

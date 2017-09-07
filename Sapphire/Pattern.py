@@ -138,9 +138,10 @@ def gem():
         FULL_MATCH('ow_comment_newline_match', G(ow_comment_newline))
         
         MATCH(
-            'argument_first_atom_match',
+            'argument_atom_match',
             (
-                  (
+                  G('keyword', keyword_not) + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
+                | (
                         G(
                             'atom',
                             (
@@ -152,7 +153,10 @@ def gem():
                         )
                       + ow
                   )
-                | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
+                | G('operator', ANY_OF('-'))
+                | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
+                | G(left_brace__ow)          + P(G(right_brace)          + ow)
+#               | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
             ) + Q(comment_newline),
         )
 
@@ -161,7 +165,17 @@ def gem():
             'atom_match',
             (
                   G('keyword', keyword_not) + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
-                | G('atom', name | number | single_quote) + ow
+                | (
+                        G(
+                            'atom',
+                            (
+                                  single_quote              #   Must be first due to matches like r'hello'
+                                | name
+                                | number
+                            ),
+                        )
+                      + ow
+                  )
                 | G('operator', ANY_OF('-'))
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_brace__ow)          + P(G(right_brace)          + ow)

@@ -228,6 +228,8 @@ def gem():
 
                 if operator_2.is_right_square_bracket:
                     left = IndexExpression(left, NormalIndex(operator, middle, operator_2))
+                elif operator_2.is_colon:
+                    raise_unknown_line(77)
                 else:
                     middle = parse1_any_ternary_expression__left__operator(middle, operator_2)
 
