@@ -46,8 +46,9 @@ def gem():
         is__atom__or__right_close_operator    = true
         is_atom                               = true
         is_identifier                         = true
-        is_right_parenthesis                  = false
         is__right_parenthesis__colon__newline = false
+        is_right_parenthesis                  = false
+        is_right_square_bracket               = false
 
 
         def display_token(t):

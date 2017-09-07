@@ -4,51 +4,6 @@
 @gem('Sapphire.OtherExpression')
 def gem():
     @share
-    class Arguments_2(Object):
-        __slots__ = ((
-            'left_parenthesis',         #   OperatorLeftParenthesis
-            'argument_0',               #   Expression*
-            'comma_0',                  #   OperatorComma
-            'argument_1',               #   Expression*
-            'right_parenthesis',        #   OperatorRightParenthesis
-        ))
-
-
-        def __init__(t, left_parenthesis, argument_0, comma_0, argument_1, right_parenthesis):
-            t.left_parenthesis  = left_parenthesis
-            t.argument_0        = argument_0
-            t.comma_0           = comma_0
-            t.argument_1        = argument_1
-            t.right_parenthesis = right_parenthesis
-
-
-        def __repr__(t):
-            return arrange('<Arguments_2 %r %r %r %r %r>',
-                           t.left_parenthesis,
-                           t.argument_0,
-                           t.comma_0,
-                           t.argument_1,
-                           t.right_parenthesis)
-
-
-        def display_token(t):
-            return arrange('<(2) %s %s %s %s %s>',
-                           t.left_parenthesis .display_token(),
-                           t.argument_0       .display_token(),
-                           t.comma_0          .display_token(),
-                           t.argument_1       .display_token(),
-                           t.right_parenthesis.display_token())
-
-
-        def write(t, w):
-            t.left_parenthesis .write(w)
-            t.argument_0       .write(w)
-            t.comma_0          .write(w)
-            t.argument_1       .write(w)
-            t.right_parenthesis.write(w)
-
-
-    @share
     class CallExpression(Object):
         __slot__ = ((
             'left',                         #   Expression

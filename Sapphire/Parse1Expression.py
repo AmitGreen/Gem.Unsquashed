@@ -232,31 +232,62 @@ def gem():
                     if qn() is not none:
                         raise_unknown_line(8)
 
-                    second = parse1_index_atom()
+                    middle_2 = parse1_index_atom()
 
-                    if second.is_right_square_bracket:
+                    if middle_2.is_right_square_bracket:
                         left = IndexExpression(
                                    left,
                                    HeadIndex(
                                        operator,
                                        middle,
-                                       Colon_RightSquareBracket(operator_2, second),
+                                       Colon_RightSquareBracket(operator_2, middle_2),
                                    ),
                                )
                     else:
-                        raise_unknown_line(9)
+                        operator_3 = qk()
+
+                        if operator_3 is none:
+                            if qn() is not none:
+                                raise_unknown_line(9)
+
+                            operator_3 = tokenize_operator()
+                        else:
+                            wk(none)
+
+                        if operator_3.is_right_square_bracket:
+                            left = IndexExpression(
+                                       left,
+                                       RangeIndex(operator, middle, operator_2, middle_2, operator_3),
+                                   )
+                        else:
+                            middle_2 = parse1_any_ternary_expression__left__operator(middle_2, operator_3)
+
+                            operator_3 = qk()
+
+                            if operator_3 is none:
+                                raise_unknown_line(10)
+
+                            wk(none)
+
+                            if not operator_3.is_right_square_bracket:
+                                raise_unknown_line(11)
+
+                            left = IndexExpression(
+                                       left,
+                                       RangeIndex(operator, middle, operator_2, middle_2, operator_3),
+                                   )
                 else:
                     middle = parse1_any_ternary_expression__left__operator(middle, operator_2)
 
                     operator_2 = qk()
 
                     if operator_2 is none:
-                        raise_unknown_line(10)
+                        raise_unknown_line(12)
 
                     wk(none)
 
                     if not operator_2.is_right_square_bracket:
-                        raise_unknown_line(11)
+                        raise_unknown_line(13)
 
                     left = IndexExpression(left, NormalIndex(operator, middle, operator_2))
 
@@ -277,7 +308,7 @@ def gem():
                     operator = tokenize_operator()
 
                     if qn() is not none:
-                        raise_unknown_line(12)
+                        raise_unknown_line(14)
 
                     if not operator.is_postfix_operator:
                         wk(operator)
@@ -286,7 +317,7 @@ def gem():
 
             assert operator.is_postfix_operator
 
-        raise_unknown_line(13)
+        raise_unknown_line(15)
 
 
     #
