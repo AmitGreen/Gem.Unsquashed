@@ -560,6 +560,10 @@ def gem():
                                      }.__getitem__
 
 
+    #   {[(
+    is_close_operator = { ')' : 7, ']' : 7, '}' : 7 }.get
+
+
     share(
         'conjure_colon',                    conjure_colon,
         'conjure_colon_newline',            conjure_colon_newline,
@@ -582,4 +586,5 @@ def gem():
         'conjure_try_colon',                conjure_try_colon,
         'find_atom_type',                   find_atom_type,
         'find_operator_conjure_function',   find_operator_conjure_function,
+        'is_close_operator',                is_close_operator,
     )

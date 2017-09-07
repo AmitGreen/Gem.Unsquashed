@@ -131,7 +131,7 @@ def gem():
         if quote_start is not -1:
             return tokenize_atom__X__quote_newline(m, quote_start)
 
-        keyword_end = m.group('keyword')
+        keyword_s = m.group('keyword')
 
         if keyword_s is not none:
             j = m.end()
@@ -222,58 +222,24 @@ def gem():
 
 
     def tokenize_atom__X__newline(m):
-        operator_s = m.group('operator')
+        keyword_s = (m.group('keyword')) or (m.group('operator'))
 
-        if operator_s is not none:
-            conjure = find_operator_conjure_function(operator_s)
+        if keyword_s is not none:
+            if is_close_operator(keyword_s) is 7:
+                d = qd()
 
-            if qd() is not 0:
-                r = conjure(s[qi() : ])
-
-                skip_tokenize_prefix()
-
-                return r
-
-            operator_end = m.end('operator')
-            s            = qs()
-
-            r = conjure(s[qi() : operator_end])
-
-            wn(conjure_token_newline(s[operator_end : ]))
-
-            return r
-
-        return tokenize_atom__X2__newline(m)
-
-
-    def tokenize_comma_atom__X__newline(m):
-        #
-        #<similiar-to: tokenize_index_atom__X__newline>
-        #
-        #   Difference: Uses 'right-parenthesis' instead of 'right-square-bracket'
-        #
-        operator_s = m.group('operator')
-
-        if operator_s is not none:
-            conjure = find_operator_conjure_function(operator_s)
-
-            if conjure is conjure_right_parenthesis:
-                if qd() is 1:
+                if d is 1:
                     operator_end = m.end('operator')
                     s            = qs()
 
-                    r = conjure_right_parenthesis(s[qi() : operator_end])
+                    r = find_operator_conjure_function(keyword_s)(s[qi() : operator_end])
 
                     wd0()
                     wn(conjure_token_newline(s[operator_end : ]))
 
                     return r
 
-                assert qd() > 0
-
-                wd(qd() - 1)
-
-                r = conjure_right_parenthesis(qs()[qi() : ])
+                r = find_operator_conjure_function(keyword_s)(s[qi() : operator_end])
 
                 skip_tokenize_prefix()
 
@@ -283,73 +249,19 @@ def gem():
                 operator_end = m.end('operator')
                 s            = qs()
 
-                r = conjure(s[qi() : operator_end])
+                r = find_operator_conjure_function(keyword_s)(s[qi() : operator_end])
 
                 wn(conjure_token_newline(s[operator_end : ]))
 
                 return r
 
-            r = conjure(qs()[qi() : ])
+            r = find_operator_conjure_function(keyword_s)(qs()[qi() : ])
 
             skip_tokenize_prefix()
 
             return r
 
         return tokenize_atom__X2__newline(m)
-        #</similiar-to>
-
-
-    def tokenize_index_atom__X__newline(m):
-        #
-        #<similiar-to: tokenize_comma_atom__X__newline>
-        #
-        #   Difference: Uses 'right-square-bracket' instead of 'right-parenthesis'
-        #
-        operator_s = m.group('operator')
-
-        if operator_s is not none:
-            conjure = find_operator_conjure_function(operator_s)
-
-            if conjure is conjure_right_square_bracket:
-                if qd() is 1:
-                    operator_end = m.end('operator')
-                    s            = qs()
-
-                    r = conjure_right_square_bracket(s[qi() : operator_end])
-
-                    wd0()
-                    wn(conjure_token_newline(s[operator_end : ]))
-
-                    return r
-
-                assert qd() > 0
-
-                wd(qd() - 1)
-
-                r = conjure_right_square_bracket(qs()[qi() : ])
-
-                skip_tokenize_prefix()
-
-                return r
-
-            if qd() is 0:
-                operator_end = m.end('operator')
-                s            = qs()
-
-                r = conjure(s[qi() : operator_end])
-
-                wn(conjure_token_newline(s[operator_end : ]))
-
-                return r
-
-            r = conjure(qs()[qi() : ])
-
-            skip_tokenize_prefix()
-
-            return r
-
-        return tokenize_atom__X2__newline(m)
-        #</similiar-to>
 
 
     @share
@@ -357,13 +269,6 @@ def gem():
         assert qk() is none
         assert qn() is none
 
-        #
-        #<similiar-to: tokenize_{comma,index}_atom>
-        #
-        #   Difference:
-        #       Uses atom_match instead of {comma,index}_atom_match
-        #       Calls tokenize_atom__X__newline instead of tokenize_{comma,index}_atom__X__newline
-        #
         j = qj()
 
         m = atom_match(qs(), j)
@@ -375,7 +280,6 @@ def gem():
 
         if m.start('comment_newline') is not -1:
             return tokenize_atom__X__newline(m)
-        #<similiar-to: tokenize_{comma,index}_atom>
 
         atom_s = m.group('atom')
 
@@ -411,14 +315,24 @@ def gem():
         if keyword_s is not none:
             j = m.end()
 
-            #
-            #<similiar-to: tokenize_{comma,index}_atom>
-            #
-            #   Difference:
-            #       Does not deal with special '}' or ']' (and adjusting depth)
-            #
+            if is_close_operator(keyword_s) is 7:
+                d            = qd()
+                operator_end = m.end('operator')
+
+                r = find_operator_conjure_function(keyword_s)(s[qi() : operator_end])
+
+                if d is 0:
+                    raise_unknown_line(2)
+
+                assert d > 0
+
+                wd(d - 1)
+                wi(operator_end)
+                wj(j)
+
+                return r
+
             r = find_operator_conjure_function(keyword_s)(s[qi() : j])
-            #<similiar-to: tokenize_{comma,index}_atom>
 
             wi(j)
             wj(j)
@@ -426,215 +340,3 @@ def gem():
             return r
 
         return tokenize_atom__X__left_parenthesis(m)
-
-
-    @share
-    def tokenize_argument_atom():
-        #
-        #   Temporary hack, will allow '*' later
-        # 
-        return tokenize_comma_atom()
-
-
-    @share
-    def tokenize_comma_atom():
-        assert qk() is none
-        assert qn() is none
-
-        j = qj()
-
-        #
-        #<similiar-to: tokenize_atom>
-        #
-        #   Difference:
-        #       Uses comma_atom_match instead of atom_match
-        #       Calls tokenize_comma_atom__X__newline instead of tokenize_atom__X__newline
-        #
-        m = argument_atom_match(qs(), j)
-
-        if m is none:
-            raise_unknown_line(1)
-
-        if m.start('comment_newline') is not -1:
-            return tokenize_comma_atom__X__newline(m)
-        #</similiar-to: tokenize_atom>
-
-        #
-        #<same-as: tokenize_atom>
-        #
-        atom_s = m.group('atom')
-
-        if atom_s is not none:
-            r = find_atom_type(atom_s[0])(atom_s)
-
-            if qi() != j:
-                r = r.prefix_meta(conjure_whitespace(qs()[qi() : j]), r)
-
-            wi(m.end('atom'))
-            wj(m.end())
-
-            return r
-        #</same-as>
-
-        #
-        #<same-as: tokenize-atom>
-        #
-        quote_start = m.start('quote')
-        s           = qs()
-
-        if quote_start is not -1:
-            quote_end = m.end('quote')
-
-            r = find_atom_type(s[quote_start])(s[j : quote_end])
-
-            if qi() != j:
-                r = r.prefix_meta(conjure_whitespace(s[qi() : j]), r)
-
-            wi(quote_end)
-            wj(m.end())
-
-            return r
-        #</same-as>
-
-        keyword_s = (m.group('keyword')) or (m.group('operator'))
-
-        if keyword_s is not none:
-            conjure = find_operator_conjure_function(keyword_s)
-            j       = m.end()
-
-            #
-            #<similiar-to: tokenize_index_atom>
-            #
-            #   Difference: Deals with right-parenthesis instead of right-square-bracket 
-            #
-            if conjure is conjure_right_parenthesis:
-                d = qd()
-
-                if d is 0:
-                    raise_unknown_line(2)
-
-                assert d > 0
-
-                r = conjure_right_parenthesis(s[qi() : j])
-
-                wd(d - 1)
-                wi(j)
-                wj(j)
-
-                return r
-            #</similiar-to: tokenize_comma-atom>
-
-            r = conjure(s[qi() : j])
-
-            wi(j)
-            wj(j)
-
-            return r
-
-        #
-        #<same-as: tokenize_atom>
-        #
-        return tokenize_atom__X__left_parenthesis(m)
-        #</same-as>
-
-
-    @share
-    def tokenize_index_atom():
-        assert qk() is none
-        assert qn() is none
-
-        #
-        #<similiar-to: tokenize_atom>
-        #
-        #   Difference:
-        #       Uses index_atom_match instead of atom_match
-        #       Calls tokenize_index_atom__X__newline instead of tokenize_atom__X__newline
-        #
-        j = qj()
-
-        m = index_atom_match(qs(), j)
-
-        if m is none:
-            raise_unknown_line(1)
-
-        if m.start('comment_newline') is not -1:
-            return tokenize_index_atom__X__newline(m)
-        #</similiar-to: tokenize_atom>
-
-        #
-        #<same-as: tokenize_atom>
-        #
-        atom_s = m.group('atom')
-
-        if atom_s is not none:
-            r = find_atom_type(atom_s[0])(atom_s)
-
-            if qi() != j:
-                r = r.prefix_meta(conjure_whitespace(qs()[qi() : j]), r)
-
-            wi(m.end('atom'))
-            wj(m.end())
-
-            return r
-        #</same-as>
-
-        #
-        #<same-as: tokenize-atom>
-        #
-        quote_start = m.start('quote')
-        s           = qs()
-
-        if quote_start is not -1:
-            quote_end = m.end('quote')
-
-            r = find_atom_type(s[quote_start])(s[j : quote_end])
-
-            if qi() != j:
-                r = r.prefix_meta(conjure_whitespace(s[qi() : j]), r)
-
-            wi(quote_end)
-            wj(m.end())
-
-            return r
-        #</same-as>
-
-        keyword_s = (m.group('keyword')) or (m.group('operator'))
-
-        if keyword_s is not none:
-            conjure = find_operator_conjure_function(keyword_s)
-            j       = m.end()
-
-            #
-            #<similiar-to: tokenize_index_atom>
-            #
-            #   Difference: Deals with right-square-bracket instead of right-parenthesis 
-            #
-            if conjure is conjure_right_square_bracket:
-                d = qd()
-
-                if d is 0:
-                    raise_unknown_line(2)
-
-                assert d > 0
-
-                r = conjure_right_square_bracket(s[qi() : j])
-
-                wd(d - 1)
-                wi(j)
-                wj(j)
-
-                return r
-            #</similiar-to: tokenize_comma-atom>
-
-            r = conjure(s[qi() : j])
-
-            wi(j)
-            wj(j)
-
-            return r
-
-        #
-        #<same-as: tokenize_atom>
-        #
-        return tokenize_atom__X__left_parenthesis(m)
-        #</same-as>

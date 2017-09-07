@@ -232,7 +232,7 @@ def gem():
                     if qn() is not none:
                         raise_unknown_line(8)
 
-                    middle_2 = parse1_index_atom()
+                    middle_2 = parse1_atom()
 
                     if middle_2.is_right_square_bracket:
                         left = IndexExpression(

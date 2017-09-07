@@ -98,8 +98,9 @@ def gem():
         ))
 
 
-        optional   = true
-        repeatable = true
+        is_tremolite_exact = true
+        optional           = true
+        repeatable         = true
 
 
         def __init__(t, regular_expression, portray, exact, singular):
@@ -502,7 +503,20 @@ def gem():
                 many.append(v)
                 continue
 
-            if length(v) is 1:
+            if type(v) is not String:
+                assert (v.is_tremolite_name) and (v.pattern.is_tremolite_exact) and (v.pattern.singular)
+
+                v = v.pattern.exact
+
+                assert length(v) is 1
+
+                a = lookup_ascii(v)
+
+                assert a.is_printable
+
+                regular_expressions.append(a.pattern)
+
+            elif length(v) is 1:
                 a = lookup_ascii(v)
 
                 assert a.is_printable

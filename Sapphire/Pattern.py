@@ -149,93 +149,40 @@ def gem():
         FULL_MATCH('ow_comment_newline_match', G(ow_comment_newline))
         
         MATCH(
-            'argument_atom_match',
-            (
-                  (
-                        G('keyword', keyword_if | keyword_not)
-                      + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
-                  )
-                | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must preced 'name'
-                | G('atom', name | number) + ow
-                #
-                #<differs-from: atom-match>
-                #
-                #   (
-                #
-                | G('operator', ANY_OF('-', ')')) + ow
-                #</differs>
-                | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
-                | G(left_brace__ow)          + P(G(right_brace)          + ow)
-#               | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
-            ) + Q(comment_newline),
-        )
-
-
-        MATCH(
             'atom_match',
             (
                   (
                         G('keyword', keyword_if | keyword_not)
                       + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
                   )
-                | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must preced 'name'
+                | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must preceed 'name'
                 | G('atom', name | number) + ow
-                #
-                #<differs-from: {argument,index}_atom_match>
-                #
-                | G('operator', ANY_OF('-')) + ow
-                #</differs-from>
+                | G('operator', ANY_OF('-', right_parenthesis, right_brace)) + ow
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_brace__ow)          + P(G(right_brace)          + ow)
 #               | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
             ) + Q(comment_newline),
         )
-
-        MATCH(
-            'index_atom_match',
-            (
-                  (
-                        G('keyword', keyword_if | keyword_not)
-                      + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
-                  )
-                | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must preced 'name'
-                | G('atom', name | number) + ow
-                #
-                #<differs-from: atom-match>
-                #
-                #   [
-                #
-                | G('operator', ANY_OF('-', ']')) + ow
-                #</differs>
-                | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
-                | G(left_brace__ow)          + P(G(right_brace)          + ow)
-#               | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
-            ) + Q(comment_newline),
-        )
-
 
         MATCH(
            'operator_match',
             (
-                (
-                      (
-                            G(
-                                'operator',
-                                 (
-                                       ANY_OF('+', '<', '=') + P('=')
-                                     | colon | comma | dot
-                                     | keyword_as | keyword_in | keyword_or
-                                     | right_parenthesis
-                                     | right_square_bracket
-                                 ),
-                            )
-                          + ow
-                      )
-                    | G(left_parenthesis__ow)    + P(G(right_parenthesis) + ow)
-                    | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
-                )
-                + Q(comment_newline)
-            ),
+                  (
+                        G(
+                            'operator',
+                             (
+                                   ANY_OF('+', '<', '=') + P('=')
+                                 | colon | comma | dot
+                                 | keyword_as | keyword_in | keyword_or
+                                 | right_parenthesis
+                                 | right_square_bracket
+                             ),
+                        )
+                      + ow
+                  )
+                | G(left_parenthesis__ow)    + P(G(right_parenthesis) + ow)
+                | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
+            ) + Q(comment_newline),
         )
 
         MATCH(
