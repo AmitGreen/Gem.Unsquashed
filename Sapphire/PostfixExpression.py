@@ -62,5 +62,6 @@ def gem():
 
 
     Identifier .suffix_meta = SuffixIdentifier
+    DoubleQuote.suffix_meta = SuffixAtom
     SingleQuote.suffix_meta = SuffixAtom
     Number     .suffix_meta = SuffixAtom

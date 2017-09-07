@@ -50,6 +50,18 @@ def gem():
         number              = NAME('number', '0' | ANY_OF('1-9') + ZERO_OR_MORE(ANY_OF('0-9')))
         period              = NAME('period', '.')
 
+        double_quote = NAME(
+                           'double_quote',
+                           (
+                                  OPTIONAL('r')
+                                + '"'
+                                + (
+                                        ONE_OR_MORE(PRINTABLE_MINUS('"', '\\') | BACKSLASH + PRINTABLE) + '"'
+                                      | ('"' + NOT_FOLLOWED_BY('"'))
+                                  )
+                           ),
+                       )
+
         single_quote = NAME(
                            'single_quote',
                            (
@@ -146,6 +158,7 @@ def gem():
                             'atom',
                             (
                                   single_quote              #   Must be first due to matches like r'hello'
+                                | double_quote              #   Must be second due to matches like r'hello'
                                 | name
                                 | number
                                 | right_parenthesis
@@ -170,6 +183,7 @@ def gem():
                             'atom',
                             (
                                   single_quote              #   Must be first due to matches like r'hello'
+                                | double_quote              #   Must be second due to matches like r'hello'
                                 | name
                                 | number
                             ),
@@ -192,6 +206,7 @@ def gem():
                             'atom',
                             (
                                   single_quote              #   Must be first due to matches like r'hello'
+                                | double_quote              #   Must be second due to matches like r'hello'
                                 | name
                                 | number
                                 | right_square_bracket

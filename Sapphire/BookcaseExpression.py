@@ -190,5 +190,6 @@ def gem():
 
 
     Identifier .bookcase_meta = BookcaseIdentifier
+    DoubleQuote.bookcase_meta = BookcaseAtom
     SingleQuote.bookcase_meta = BookcaseAtom
     Number     .bookcase_meta = BookcaseAtom

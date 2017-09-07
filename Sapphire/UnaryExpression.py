@@ -71,5 +71,6 @@ def gem():
 
 
     Identifier .prefix_meta = PrefixIdentifier
+    DoubleQuote.prefix_meta = PrefixAtom
     SingleQuote.prefix_meta = PrefixAtom
     Number     .prefix_meta = PrefixAtom

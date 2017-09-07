@@ -65,6 +65,19 @@ def gem():
             return arrange('<%s %s>', t.display_name, portray_string(t.s))
 
 
+    @share
+    class DoubleQuote(Token):
+        __slots__                          = (())
+        display_name                       = '"'
+        is__atom__or__right_close_operator = true
+        is_atom                            = true
+        is_right_parenthesis               = false
+
+
+        def display_token(t):
+            return arrange('<%s>', t.s)
+
+
     class KeywordAs(KeywordAndOperatorBase):
         __slots__     = (())
         display_name  = 'as'
@@ -491,7 +504,9 @@ def gem():
     conjure_try_colon            = produce_conjure_by_name('keyword-try-colon',             KeywordTryColon) 
 
     find_atom_type = {
+                         '"' : DoubleQuote,
                          "'" : SingleQuote,
+
                          #   (
                          ')' : conjure_right_parenthesis,
                          '.' : Number,
