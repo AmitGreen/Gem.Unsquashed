@@ -314,12 +314,12 @@ def gem():
 
             operator = tokenize_operator()
 
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_normal_expression:
                 wk(operator)
 
                 return left
         else:
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_normal_expression:
                 return left
 
             wk(none)
@@ -332,7 +332,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_normal_expression:
                 return left
 
             wk(none)
@@ -397,17 +397,41 @@ def gem():
 
             operator = tokenize_operator()
 
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_compare_expression:
                 wk(operator)
 
                 return compare_operator.compare_expression_meta(left, compare_operator, right)
         else:
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_compare_expression:
                 return compare_operator.compare_expression_meta(left, compare_operator, right)
 
             wk(none)
 
-        raise_unknown_line(1)
+        many = [left, compare_operator, right, operator]
+
+        while 7 is 7:
+            many.append(parse1_normal_expression())
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is not none:
+                    return CompareExpression_Many(Tuple(many))
+
+                operator = tokenize_operator()
+
+                if operator.is_end_of_compare_expression:
+                    wk(operator)
+
+                    return CompareExpression_Many(Tuple(many))
+            else:
+                if operator.is_end_of_compare_expression:
+                    return CompareExpression_Many(Tuple(many))
+
+                wk(none)
+
+            many.append(operator)
+
 
 
     #

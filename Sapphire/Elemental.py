@@ -18,6 +18,7 @@ def gem():
         is__comma__or__right_parenthesis           = false
         is_compare_operator                        = false
         is_dot                                     = false
+        is_end_of_compare_expression               = false
         is_end_of_expression__OLD                  = false
         is_end_of_normal_expression_list           = false
         is_end_of_normal_expression                = false
@@ -108,6 +109,7 @@ def gem():
     class KeywordIn(KeywordAndOperatorBase):
         __slots__                        = (())
         display_name                     = 'in'
+        is_end_of_compare_expression     = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_not_expression         = true
@@ -135,6 +137,7 @@ def gem():
     class KeywordOr(KeywordAndOperatorBase):
         __slots__                        = (())
         display_name                     = 'or'
+        is_end_of_compare_expression     = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_not_expression         = true
@@ -185,6 +188,7 @@ def gem():
         __slots__                        = (())
         display_name                    = ':'
         is_colon                         = true
+        is_end_of_compare_expression     = true
         is_end_of_expression__OLD        = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
@@ -195,6 +199,7 @@ def gem():
     class OperatorColonNewline(KeywordAndOperatorBase):
         __slots__                        = (())
         is_colon_newline                 = true
+        is_end_of_compare_expression     = true
         is_end_of_expression__OLD        = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
@@ -215,6 +220,7 @@ def gem():
         display_name                     = ','
         is__comma__or__right_parenthesis = true
         is_comma                         = true
+        is_end_of_compare_expression     = true
         is_end_of_expression__OLD        = true
         is_end_of_normal_expression      = true
         is_end_of_not_expression         = true
@@ -282,6 +288,30 @@ def gem():
         keyword                = '['              #   ]
 
 
+    @share
+    class OperatorLessThanOrEqual(KeywordAndOperatorBase):
+        __slots__                        = (())
+        display_name                     = '<='
+        is_compare_operator              = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        keyword                          = '<='
+
+
+        def __repr__(t):
+            if '\n' in t.s:
+                return arrange('{%s}', portray_string(t.s))
+
+            return arrange('{%s}', t.s)
+
+
+        def display_token(t):
+            if t.s == ' <= ':
+                return '{<=}'
+
+            return arrange('{%s %s}', t.display_name, portray_string(t.s))
+
+
     class OperatorModifyPlus(KeywordAndOperatorBase):
         __slots__          = (())
         display_name       = '+='
@@ -293,6 +323,7 @@ def gem():
         __slots__                        = (())
         #  {
         display_name                     = '}'
+        is_end_of_compare_expression     = true
         is_end_of_expression__OLD        = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
@@ -308,6 +339,7 @@ def gem():
         display_name                     = ')'
         is__atom__or__right_parenthesis  = true
         is__comma__or__right_parenthesis = true
+        is_end_of_compare_expression     = true
         is_end_of_expression__OLD        = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
@@ -349,8 +381,8 @@ def gem():
             return arrange('<%s>', t.s)
 
 
-    conjure_colon                = produce_conjure_by_name('colon',                OperatorColon) 
     conjure_colon_newline        = produce_conjure_by_name('colon_newline',        OperatorColonNewline) 
+    conjure_colon                = produce_conjure_by_name('colon',                OperatorColon) 
     conjure_comma                = produce_conjure_by_name('comma',                OperatorComma) 
     conjure_compare_equal        = produce_conjure_by_name('==',                   OperatorCompareEqual) 
     conjure_dot                  = produce_conjure_by_name('dot',                  OperatorDot) 
@@ -368,6 +400,7 @@ def gem():
     conjure_left_brace           = produce_conjure_by_name('left-brace',           OperatorLeftBrace) 
     conjure_left_parenthesis     = produce_conjure_by_name('left-parenthesis',     OperatorLeftParenthesis) 
     conjure_left_square_bracket  = produce_conjure_by_name('left-square-brakcet',  OperatorLeftSquareBracket) 
+    conjure_less_than_or_equal   = produce_conjure_by_name('<=',                   OperatorLessThanOrEqual) 
     conjure_modify_plus          = produce_conjure_by_name('modify-plus',          OperatorModifyPlus) 
     conjure_right_brace          = produce_conjure_by_name('right-brace',          OperatorRightBrace) 
     conjure_right_parenthesis    = produce_conjure_by_name('right-parenthesis',    OperatorRightParenthesis) 
@@ -412,6 +445,7 @@ def gem():
                                          ','   : conjure_comma,
                                          '.'   : conjure_dot,
                                          ':'   : conjure_colon,
+                                         '<='  : conjure_less_than_or_equal,
                                          '='   : conjure_equal_sign,
                                          '=='  : conjure_compare_equal,
                                          'as'  : conjure_keyword_as,

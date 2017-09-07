@@ -176,7 +176,7 @@ def gem():
                             G(
                                 'operator',
                                  (
-                                       ANY_OF('+', '=') + P('=')
+                                       ANY_OF('+', '<', '=') + P('=')
                                      | colon | comma | dot
                                      | keyword_as | keyword_in | keyword_or
                                      | left_square_bracket

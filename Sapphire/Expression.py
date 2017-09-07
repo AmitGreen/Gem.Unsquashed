@@ -55,6 +55,12 @@ def gem():
 
 
     @share
+    class LessThanOrEqualExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = '<='
+
+
+    @share
     class OrExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'or'
@@ -92,6 +98,22 @@ def gem():
                 return arrange('(%s)', ' '.join(v.display_token()   for v in t.many[1:-1]))
 
             return arrange('(%s %s %s)',
+                           t.many[0] .display_full_token(),
+                           ' '.join(v.display_token()   for v in t.many[1:-1]),
+                           t.many[-1].display_full_token())
+
+
+    @share
+    class CompareExpression_Many(BaseExpression_Many):
+        __slots__ = (())
+
+        def __repr__(t):
+            return arrange('{%s %r}', t.__class__.__name__, ' '.join(portray(v)   for v in t.many))
+
+        def display_token(t):
+            many = t.many
+
+            return arrange('{%s %s %s}',
                            t.many[0] .display_full_token(),
                            ' '.join(v.display_token()   for v in t.many[1:-1]),
                            t.many[-1].display_full_token())
@@ -560,4 +582,5 @@ def gem():
     SingleQuote.suffix_meta = SuffixAtom
     Number     .suffix_meta = SuffixAtom
 
-    OperatorCompareEqual.compare_expression_meta = CompareEqualExpression
+    OperatorCompareEqual   .compare_expression_meta = CompareEqualExpression
+    OperatorLessThanOrEqual.compare_expression_meta = LessThanOrEqualExpression
