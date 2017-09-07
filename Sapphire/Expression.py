@@ -7,66 +7,6 @@ def gem():
 
 
     @share
-    class BinaryExpression(Object):
-        __slots__ = ((
-            'left',                     #   Expression
-            'operator',                 #   Operator*
-            'right',                    #   Expression
-        ))
-
-
-        def __init__(t, left, operator, right):
-            assert type(left)  is not String
-            assert type(right) is not String
-
-            t.left     = left
-            t.operator = operator
-            t.right    = right
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r %r>', t.__class__.__name__, t.left, t.operator, t.right)
-
-
-        def display_token(t):
-            return arrange('<%s %s %s %s>',
-                           t.display_name,
-                           t.left    .display_token(),
-                           t.operator.display_token(),
-                           t.right   .display_token())
-
-
-        def write(t, w):
-            t.left    .write(w)
-            t.operator.write(w)
-            t.right   .write(w)
-
-
-    @share
-    class CompareEqualExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = '=='
-
-
-    @share
-    class CommaExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = ','
-
-
-    @share
-    class LessThanOrEqualExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = '<='
-
-
-    @share
-    class OrExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = 'or'
-
-
-    @share
     class BaseExpression_Many(Object):
         __slots__ = ((
             'many',                     #   Tuple of *
@@ -205,7 +145,7 @@ def gem():
 
 
     @share
-    class ExpressionBookcase(Object):
+    class BookcaseExpression(Object):
         __slots__ = ((
             'left',                     #   Operator+
             'middle',                   #   Expression+
@@ -238,7 +178,7 @@ def gem():
 
 
     @share
-    class BookcaseAtom(ExpressionBookcase):
+    class BookcaseAtom(BookcaseExpression):
         __slots__    = (())
         display_name = 'bookcased-atom'
 
@@ -250,7 +190,7 @@ def gem():
 
 
     @share
-    class BookcaseIdentifier(ExpressionBookcase):
+    class BookcaseIdentifier(BookcaseExpression):
         __slots__    = (())
         display_name = 'bookcased-identifier'
 
@@ -263,13 +203,13 @@ def gem():
 
 
     @share
-    class Arguments_1(ExpressionBookcase):
+    class Arguments_1(BookcaseExpression):
         __slots__    = (())
         display_name = '(1)'
 
 
     @share
-    class PathenthesizedExpression(ExpressionBookcase):
+    class PathenthesizedExpression(BookcaseExpression):
         __slots__                       = (())
         display_name                    = '()'
         is__atom__or__right_parenthesis = true
@@ -288,7 +228,7 @@ def gem():
 
 
     @share
-    class TupleExpression_1(ExpressionBookcase):
+    class TupleExpression_1(BookcaseExpression):
         __slots__                       = (())
         display_name                    = '{,}'
         is__atom__or__right_parenthesis = true
@@ -541,6 +481,12 @@ def gem():
         def write(t, w):
             t.operator.write(w)
             t.right   .write(w)
+
+
+    @share
+    class NegativeExpression(UnaryExpression):
+        __slots__    = (())
+        display_name = '-'
 
 
     @share

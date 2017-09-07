@@ -3,10 +3,11 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 0
+    show = 7
 
 
     require_gem('Sapphire.Core')
+    require_gem('Sapphire.BinaryExpression')
     require_gem('Sapphire.Expression')
     require_gem('Sapphire.JoinedToken')
     require_gem('Sapphire.Match')

@@ -48,10 +48,6 @@ def gem():
                 if qn() is not none:
                     raise_unknown_line(1)
 
-                if show is 7:
-                    my_line('left: %r; operator: %s; right: %s; s: %s',
-                            left, operator, right, portray_string(s[m3.end():]))
-
                 operator_2 = tokenize_operator()
 
                 if qn() is not none:

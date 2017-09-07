@@ -162,6 +162,7 @@ def gem():
             (
                   G('keyword', keyword_not) + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
                 | G('atom', name | number | single_quote) + ow
+                | G('operator', ANY_OF('-'))
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_brace__ow)          + P(G(right_brace)          + ow)
 #               | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)

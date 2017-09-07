@@ -123,6 +123,9 @@ def gem():
         if token.is_keyword_not:
             return parse1_not_expression__operator(token)
 
+        if token.is_minus_sign:
+            return parse1_negative_expression__operator(token)
+
         if token.is_left_parenthesis:
             return parse1__parenthesized_expression__left_parenthesis(token)
 

@@ -223,9 +223,6 @@ def gem():
                         raise_unknown_line(7)
 
                     operator_2 = tokenize_operator()
-
-                    if qn() is not none:
-                        raise_unknown_line(8)
                 else:
                     wk(none)
 
@@ -236,7 +233,8 @@ def gem():
 
                     operator_2 = qk()
 
-                    assert operator_2 is not none
+                    if operator_2 is none:
+                        raise_unknown_line(8)
 
                     wk(none)
 
@@ -244,6 +242,9 @@ def gem():
                         raise_unknown_line(9)
 
                     left = ExpressionIndex_1(left, operator, middle, operator_2)
+
+                if qn() is not none:
+                    return left
 
                 operator = qk()
 
@@ -278,6 +279,37 @@ def gem():
     #
     #   3.  Unary-Expression (Python 2.7.14rc1 grammer calls this 'factor')
     #
+    @share
+    def parse1_negative_expression__operator(negative_operator):
+        if show is 7:
+            my_line('%s, %s', negative_operator, portray_raw_string(qs()[qj(): ]))
+
+        right = parse1_atom()
+
+        operator = qk()
+
+        if operator is none:
+            newline = qn()
+
+            if qn() is not none:
+                return NegativeExpression(negative_operator, right)
+
+            operator = tokenize_operator()
+
+            if qk() is not none:
+                raise_unknown_line(4)
+
+            if operator.is_end_of_unary_expression:
+                wk(operator)
+                return NegativeExpression(negative_operator, right)
+        else:
+            if operator.is_end_of_unary_expression:
+                return NegativeExpression(negative_operator, right)
+
+            wk(none)
+
+        my_line('right: %r, operator: %s:%r', right, operator)
+        raise_unknown_line(1)
 
     #
     #   4.  Multiply-Expression (Python 2.7.14rc1 grammer calls this 'term')
@@ -387,6 +419,10 @@ def gem():
     #
     @share
     def parse1_compare_expression__left__operator(left, compare_operator):
+        if show is 7:
+            my_line('left: %r; compare_operator: %r; s: %s',
+                    left, compare_operator, portray_string(qs()[qj() : ]))
+
         right = parse1_normal_expression()
 
         operator = qk()
@@ -433,9 +469,16 @@ def gem():
             many.append(operator)
 
 
-
     #
     #   12.  Not-Expression (Python 2.7.14rc1 grammer calls this 'not_test')
+    #
+    #       not-expression
+    #           : compare-expression
+    #           | 'not' not-test
+    #
+    #   NOTE:
+    #       Uses .is_end_of_compare_expression on purpose (there is no .is_end_of_not_expression, as it would be
+    #       identicial to .is_end_of_compare_expression)
     #
     @share
     def parse1_not_expression__operator(not_operator):
@@ -444,23 +487,9 @@ def gem():
 
         right = parse1_atom()
 
-        if qk() is not none:
-            raise_unknown_line(1)
-
-        if qn() is not none:
-            return NotExpression(not_operator, right)
-
         operator = qk()
 
-        if operator is not none:
-            if qn() is not none:
-                raise_unknown_line(3)
-
-            if operator.is_end_of_not_expression:
-                return NotExpression(not_operator, right)
-
-            wk(none)
-        else:
+        if operator is none:
             newline = qn()
 
             if qn() is not none:
@@ -471,9 +500,14 @@ def gem():
             if qk() is not none:
                 raise_unknown_line(4)
 
-            if operator.is_end_of_not_expression:
+            if operator.is_end_of_compare_expression:
                 wk(operator)
                 return NotExpression(not_operator, right)
+        else:
+            if operator.is_end_of_compare_expression:
+                return NotExpression(not_operator, right)
+
+            wk(none)
 
         my_line('right: %s, operator: %s', right, operator)
         raise_unknown_line(5)
@@ -563,7 +597,7 @@ def gem():
 
         operator = tokenize_operator()
 
-        if operator.is_end_of_expression__OLD:
+        if operator.is_end_of_ternary_expression:
             wk(operator)
 
             return left
@@ -578,7 +612,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_ternary_expression:
                 return left
 
             wk(none)
@@ -588,7 +622,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_ternary_expression:
                 return left
 
             wk(none)
@@ -598,7 +632,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression__OLD:
+            if operator.is_end_of_ternary_expression:
                 return left
 
             wk(none)

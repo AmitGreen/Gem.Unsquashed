@@ -183,6 +183,7 @@ def gem():
         m = atom_match(qs(), j)
 
         if m is none:
+            my_line('s: %r', portray_string(qs()[j :]))
             raise_unknown_line(1)
 
         if m.start('comment_newline') is not -1:
@@ -205,7 +206,7 @@ def gem():
             return r
             #</same-as>
 
-        keyword_s = m.group('keyword')
+        keyword_s = (m.group('keyword')) or (m.group('operator'))
 
         if keyword_s is not none:
             j = m.end()
