@@ -7,99 +7,6 @@ def gem():
 
 
     @share
-    class BaseExpression_Many(Object):
-        __slots__ = ((
-            'many',                     #   Tuple of *
-        ))
-
-
-        def __init__(t, many):
-            t.many = many
-
-
-        def __repr__(t):
-            return arrange('<%s %r>', t.__class__.__name__, ' '.join(portray(v)   for v in t.many))
-
-
-        def write(t, w):
-            for v in t.many:
-                v.write(w)
-
-
-    @share
-    class Arguments_Many(BaseExpression_Many):
-        __slots__ = (())
-
-
-        def display_token(t):
-            many = t.many
-
-            if (many[0].s == '(') and (many[-1].s == ')'):
-                return arrange('(%s)', ' '.join(v.display_token()   for v in t.many[1:-1]))
-
-            return arrange('(%s %s %s)',
-                           t.many[0] .display_full_token(),
-                           ' '.join(v.display_token()   for v in t.many[1:-1]),
-                           t.many[-1].display_full_token())
-
-
-    @share
-    class CompareExpression_Many(BaseExpression_Many):
-        __slots__ = (())
-
-        def __repr__(t):
-            return arrange('{%s %r}', t.__class__.__name__, ' '.join(portray(v)   for v in t.many))
-
-        def display_token(t):
-            many = t.many
-
-            return arrange('{%s %s %s}',
-                           t.many[0] .display_full_token(),
-                           ' '.join(v.display_token()   for v in t.many[1:-1]),
-                           t.many[-1].display_full_token())
-
-
-    @share
-    class ParameterColon_Many(BaseExpression_Many):
-        __slots__ = (())
-
-
-        def display_token(t):
-            many = t.many
-
-            if (many[0].s == '(') and (many[-1].s == '):'):
-                return arrange('<(): %s>', ' '.join(v.display_token()   for v in t.many[1:-1]))
-
-            return arrange('<(): %s %s %s>',
-                           t.many[0] .display_full_token(),
-                           ' '.join(v.display_token()   for v in t.many[1:-1]),
-                           t.many[-1].display_full_token())
-
-
-    @share
-    class TupleExpression_Many(BaseExpression_Many):
-        __slots__ = (())
-
-
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_right_parenthesis            = false
-
-
-        def display_token(t):
-            many = t.many
-
-            if (many[0].s == '(') and (many[-1].s == ')'):
-                return arrange('({,*} %s)', ' '.join(v.display_token()   for v in t.many[1:-1]))
-
-            return arrange('({,*} %s %s %s)',
-                           t.many[0] .display_full_token(),
-                           ' '.join(v.display_token()   for v in t.many[1:-1]),
-                           t.many[-1].display_full_token())
-
-
-
-    @share
     class Arguments_2(Object):
         __slots__ = ((
             'left_parenthesis',         #   OperatorLeftParenthesis
@@ -142,98 +49,6 @@ def gem():
             t.comma_0          .write(w)
             t.argument_1       .write(w)
             t.right_parenthesis.write(w)
-
-
-    @share
-    class BookcaseExpression(Object):
-        __slots__ = ((
-            'left',                     #   Operator+
-            'middle',                   #   Expression+
-            'right',                    #   Operator+
-        ))
-
-
-        def __init__(t, left, middle, right):
-            t.left   = left
-            t.middle = middle
-            t.right  = right
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r %r>', t.__class__.__name__, t.left, t.middle, t.right)
-
-
-        def display_token(t):
-            return arrange('<%s %s %s %s>',
-                           t.display_name,
-                           t.left  .display_token(),
-                           t.middle.display_token(),
-                           t.right .display_token())
-
-
-        def write(t, w):
-            w(t.left.s)
-            t.middle.write(w)
-            t.right .write(w)
-
-
-    @share
-    class BookcaseAtom(BookcaseExpression):
-        __slots__    = (())
-        display_name = 'bookcased-atom'
-
-
-        is__atom__or__right_parenthesis       = true
-        is_atom                               = true
-        is__right_parenthesis__colon__newline = false
-        is_right_parenthesis                  = false
-
-
-    @share
-    class BookcaseIdentifier(BookcaseExpression):
-        __slots__    = (())
-        display_name = 'bookcased-identifier'
-
-
-        is__atom__or__right_parenthesis       = true
-        is_atom                               = true
-        is_identifier                         = true
-        is__right_parenthesis__colon__newline = false
-        is_right_parenthesis                  = false
-
-
-    @share
-    class Arguments_1(BookcaseExpression):
-        __slots__    = (())
-        display_name = '(1)'
-
-
-    @share
-    class PathenthesizedExpression(BookcaseExpression):
-        __slots__                       = (())
-        display_name                    = '()'
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_right_parenthesis            = false
-
-
-        def display_token(t):
-            if t.left.s == '(' and t.right.s == ')':
-                return arrange('(%s)', t.middle.display_token())
-
-            return arrange('(%s %s %s)',
-                           t.left  .display_token(),
-                           t.middle.display_token(),
-                           t.right .display_token())
-
-
-    @share
-    class TupleExpression_1(BookcaseExpression):
-        __slots__                       = (())
-        display_name                    = '{,}'
-        is__atom__or__right_parenthesis = true
-        is_atom                         = true
-        is_right_parenthesis            = false
 
 
     @share
@@ -516,10 +331,6 @@ def gem():
         is_right_parenthesis                  = false
 
 
-    Identifier .bookcase_meta = BookcaseIdentifier
-    SingleQuote.bookcase_meta = BookcaseAtom
-    Number     .bookcase_meta = BookcaseAtom
-
     Identifier .prefix_meta = PrefixIdentifier
     SingleQuote.prefix_meta = PrefixAtom
     Number     .prefix_meta = PrefixAtom
@@ -527,6 +338,3 @@ def gem():
     Identifier .suffix_meta = SuffixIdentifier
     SingleQuote.suffix_meta = SuffixAtom
     Number     .suffix_meta = SuffixAtom
-
-    OperatorCompareEqual   .compare_expression_meta = CompareEqualExpression
-    OperatorLessThanOrEqual.compare_expression_meta = LessThanOrEqualExpression

@@ -55,9 +55,9 @@ QUARTZ_FILES = \
     #
 
 SAPPHIRE_FILES = \
-    ../Sapphire/BinaryExpression.py \
+    ../Sapphire/BinaryExpression.py ../Sapphire/BookcaseExpression.py \
     ../Sapphire/Core.py \
-    ../Sapphire/Elemental.py ../Sapphire/Expression.py \
+    ../Sapphire/Elemental.py ../Sapphire/Expression.py ../Sapphire/ExpressionMany.py \
     ../Sapphire/JoinedToken.py \
     ../Sapphire/Main.py \
     ../Sapphire/Parse1.py ../Sapphire/Parse1Atom.py ../Sapphire/Tokenize1Header.py ../Sapphire/Parse1Call.py \
@@ -127,7 +127,7 @@ clean:
 	rm -f gd.py gg.py
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
-	rm -f   h7pa.py h7pe.py hb.py hc.py hem.py hex.py hj.py hma.py hmc.py hpt.py hs.py hz.py
+	rm -f   h7pa.py h7pe.py hb.py hc.py hel.py hem.py hex.py hj.py hk.py hma.py hmc.py hpt.py hs.py hz.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f lr.txt
@@ -198,9 +198,11 @@ links:
 	ln -s ../Sapphire/Parse7Expression.py           h7pe.py
 	ln -s ../Sapphire/BinaryExpression.py           hb.py
 	ln -s ../Sapphire/Core.py                       hc.py
-	ln -s ../Sapphire/Elemental.py                  hem.py
+	ln -s ../Sapphire/Elemental.py                  hel.py
+	ln -s ../Sapphire/ExpressionMany.py             hem.py
 	ln -s ../Sapphire/Expression.py                 hex.py
 	ln -s ../Sapphire/JoinedToken.py                hj.py
+	ln -s ../Sapphire/BookcaseExpression.py         hk.py
 	ln -s ../Sapphire/Main.py                       hma.py
 	ln -s ../Sapphire/Match.py                      hmc.py
 	ln -s ../Sapphire/Pattern.py                    hpt.py

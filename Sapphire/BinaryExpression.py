@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.Expression')
 def gem():
+    require_gem('Sapphire.Elemental')
+
+
     class BinaryExpression(Object):
         __slots__ = ((
             'left',                     #   Expression
@@ -72,3 +75,7 @@ def gem():
     class OrExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'or'
+
+
+    OperatorCompareEqual   .compare_expression_meta = CompareEqualExpression
+    OperatorLessThanOrEqual.compare_expression_meta = LessThanOrEqualExpression
