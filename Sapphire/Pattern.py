@@ -37,6 +37,7 @@ def gem():
         equal_sign          = NAME('equal_sign',          '=')
         keyword_as          = NAME('as',                  'as')
         keyword_except      = NAME('except',              'except')
+        keyword_if          = NAME('if',                  'if')
         keyword_import      = NAME('import',              'import')
         keyword_in          = NAME('in',                  'in')
         keyword_not         = NAME('not',                 'not')
@@ -53,8 +54,7 @@ def gem():
         double_quote = NAME(
                            'double_quote',
                            (
-                                  OPTIONAL('r')
-                                + '"'
+                                  '"'
                                 + (
                                         ONE_OR_MORE(PRINTABLE_MINUS('"', '\\') | BACKSLASH + PRINTABLE) + '"'
                                       | ('"' + NOT_FOLLOWED_BY('"'))
@@ -65,8 +65,7 @@ def gem():
         single_quote = NAME(
                            'single_quote',
                            (
-                                  OPTIONAL('r')
-                                + "'"
+                                  "'"
                                 + (
                                         ONE_OR_MORE(PRINTABLE_MINUS("'", '\\') | BACKSLASH + PRINTABLE) + "'"
                                       | ("'" + NOT_FOLLOWED_BY("'"))
@@ -119,21 +118,21 @@ def gem():
         pound_G_comment = NAME('pound_G_comment', '#' + G('comment', ZERO_OR_MORE(DOT)))
 
         G__keyword__ow = NAMED_GROUP(
-                          'keyword__ow',
-                          (
-                                G(
-                                    'keyword',
-                                    (
-                                          '@'
-                                        | (
-                                                (EXACT('def') | 'class' | 'from' | 'import' | 'return')
-                                              + NOT_FOLLOWED_BY(alphanumeric_or_underscore)
-                                          )
-                                    )
-                                )
-                              + ow
-                          ),
-                      )
+                             'keyword__ow',
+                             (
+                                   G(
+                                       'keyword',
+                                       (
+                                             '@'
+                                           | (
+                                                   (EXACT('def') | 'class' | 'from' | 'import' | 'return')
+                                                 + NOT_FOLLOWED_BY(alphanumeric_or_underscore)
+                                             )
+                                       )
+                                   )
+                                 + ow
+                             ),
+                         )
 
 
         #
@@ -152,21 +151,19 @@ def gem():
         MATCH(
             'argument_atom_match',
             (
-                  G('keyword', keyword_not) + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
-                | (
-                        G(
-                            'atom',
-                            (
-                                  single_quote              #   Must be first due to matches like r'hello'
-                                | double_quote              #   Must be second due to matches like r'hello'
-                                | name
-                                | number
-                                | right_parenthesis
-                            ),
-                        )
-                      + ow
+                  (
+                        G('keyword', keyword_if | keyword_not)
+                      + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
                   )
-                | G('operator', ANY_OF('-'))
+                | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must preced 'name'
+                | G('atom', name | number) + ow
+                #
+                #<differs-from: atom-match>
+                #
+                #   (
+                #
+                | G('operator', ANY_OF('-', ')')) + ow
+                #</differs>
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_brace__ow)          + P(G(right_brace)          + ow)
 #               | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
@@ -177,20 +174,17 @@ def gem():
         MATCH(
             'atom_match',
             (
-                  G('keyword', keyword_not) + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
-                | (
-                        G(
-                            'atom',
-                            (
-                                  single_quote              #   Must be first due to matches like r'hello'
-                                | double_quote              #   Must be second due to matches like r'hello'
-                                | name
-                                | number
-                            ),
-                        )
-                      + ow
+                  (
+                        G('keyword', keyword_if | keyword_not)
+                      + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
                   )
-                | G('operator', ANY_OF('-'))
+                | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must preced 'name'
+                | G('atom', name | number) + ow
+                #
+                #<differs-from: {argument,index}_atom_match>
+                #
+                | G('operator', ANY_OF('-')) + ow
+                #</differs-from>
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_brace__ow)          + P(G(right_brace)          + ow)
 #               | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
@@ -200,21 +194,19 @@ def gem():
         MATCH(
             'index_atom_match',
             (
-                  G('keyword', keyword_not) + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
-                | (
-                        G(
-                            'atom',
-                            (
-                                  single_quote              #   Must be first due to matches like r'hello'
-                                | double_quote              #   Must be second due to matches like r'hello'
-                                | name
-                                | number
-                                | right_square_bracket
-                            ),
-                        )
-                      + ow
+                  (
+                        G('keyword', keyword_if | keyword_not)
+                      + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
                   )
-                | G('operator', ANY_OF('-'))
+                | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must preced 'name'
+                | G('atom', name | number) + ow
+                #
+                #<differs-from: atom-match>
+                #
+                #   [
+                #
+                | G('operator', ANY_OF('-', ']')) + ow
+                #</differs>
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_brace__ow)          + P(G(right_brace)          + ow)
 #               | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
