@@ -70,6 +70,40 @@ def gem():
 
 
     @share
+    class HeadIndex(BookcaseExpression):
+        __slots__    = (())
+        display_name = 'head-index'
+
+
+        def display_token(t):
+            if (t.left.s == '[') and (t.right.s == ':]'):
+                return arrange('<%s [ %s :]>', t.display_name, t.middle.display_token())
+
+            return arrange('<%s %s %s %s>',
+                           t.display_name,
+                           t.left  .display_token(),
+                           t.middle.display_token(),
+                           t.right .display_token())
+
+
+    @share
+    class NormalIndex(BookcaseExpression):
+        __slots__    = (())
+        display_name = 'index'
+
+
+        def display_token(t):
+            if (t.left.s == '[') and (t.right.s == ']'):
+                return arrange('<%s [ %s ]>', t.display_name, t.middle.display_token())
+
+            return arrange('<%s %s %s %s>',
+                           t.display_name,
+                           t.left  .display_token(),
+                           t.middle.display_token(),
+                           t.right .display_token())
+
+
+    @share
     class PathenthesizedExpression(BookcaseExpression):
         __slots__                       = (())
         display_name                    = '()'

@@ -3,13 +3,12 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 0
+    show = 7
 
 
     require_gem('Sapphire.Core')
     require_gem('Sapphire.BinaryExpression')
     require_gem('Sapphire.BookcaseExpression')
-    require_gem('Sapphire.Expression')
     require_gem('Sapphire.ExpressionMany')
     require_gem('Sapphire.JoinedToken')
     require_gem('Sapphire.Match')
@@ -29,6 +28,7 @@ def gem():
     require_gem('Sapphire.Tokenize1Header')
     require_gem('Sapphire.Tokenize1Name')
     require_gem('Sapphire.Tokenize1Operator')
+    require_gem('Sapphire.UnaryExpression')
 
 
     def parse1_statement_decorator_header(m):

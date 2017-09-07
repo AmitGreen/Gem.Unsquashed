@@ -57,7 +57,7 @@ QUARTZ_FILES = \
 SAPPHIRE_FILES = \
     ../Sapphire/BinaryExpression.py ../Sapphire/BookcaseExpression.py \
     ../Sapphire/Core.py \
-    ../Sapphire/Elemental.py ../Sapphire/Expression.py ../Sapphire/ExpressionMany.py \
+    ../Sapphire/Elemental.py ../Sapphire/ExpressionMany.py \
     ../Sapphire/JoinedToken.py \
     ../Sapphire/Main.py \
     ../Sapphire/OtherExpression.py \
@@ -69,6 +69,7 @@ SAPPHIRE_FILES = \
     ../Sapphire/Pattern.py \
     ../Sapphire/Statement.py \
     ../Sapphire/Tokenize1Atom.py ../Sapphire/Tokenize1Name.py ../Sapphire/Tokenize1Operator.py \
+    ../Sapphire/UnaryExpression.py
     #
     #   Excludes:
     #       ../Sapphire/Match.py
@@ -129,7 +130,8 @@ clean:
 	rm -f gd.py gg.py
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
-	rm -f   h7pa.py h7pe.py hb.py hc.py hel.py hem.py hex.py hj.py hk.py hma.py hmc.py hoe.py hpt.py hs.py hx.py
+	rm -f   h7pa.py h7pe.py
+	rm -f   hb.py hc.py hel.py hem.py hj.py hk.py hma.py hmc.py hoe.py hpt.py hs.py hu.py hx.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f lr.txt
@@ -202,7 +204,6 @@ links:
 	ln -s ../Sapphire/Core.py                       hc.py
 	ln -s ../Sapphire/Elemental.py                  hel.py
 	ln -s ../Sapphire/ExpressionMany.py             hem.py
-	ln -s ../Sapphire/Expression.py                 hex.py
 	ln -s ../Sapphire/JoinedToken.py                hj.py
 	ln -s ../Sapphire/BookcaseExpression.py         hk.py
 	ln -s ../Sapphire/Main.py                       hma.py
@@ -210,6 +211,7 @@ links:
 	ln -s ../Sapphire/OtherExpression.py            hoe.py
 	ln -s ../Sapphire/Pattern.py                    hpt.py
 	ln -s ../Sapphire/Statement.py                  hs.py
+	ln -s ../Sapphire/UnaryExpression.py            hu.py
 	ln -s ../Sapphire/PostfixExpression.py          hx.py
 	ln -s ../Gem/__init__.py                        in.py
 	ln -s ../Gem/Import.py                          im.py

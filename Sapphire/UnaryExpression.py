@@ -6,43 +6,6 @@ def gem():
     require_gem('Sapphire.Elemental')
 
 
-    @share
-    class ExpressionIndex_1(Object):
-        __slots__ = ((
-            'array',                    #   Expression
-            'left_square_bracket',      #   LeftSquareBracket
-            'index',                    #   Expression
-            'right_square_bracket',     #   RightSquareBracket
-        ))
-
-
-        def __init__(t, array, left_square_bracket, index, right_square_bracket):
-            t.array                = array
-            t.left_square_bracket  = left_square_bracket
-            t.index                = index
-            t.right_square_bracket = right_square_bracket
-
-
-        def __repr__(t):
-            return arrange('<[] %r %r %r %r>',
-                           t.array, t.left_square_bracket, t.index, t.right_square_bracket)
-
-
-        def display_token(t):
-            return arrange('<[] %s %s %s %s>',
-                           t.array               .display_token(),
-                           t.left_square_bracket .display_token(),
-                           t.index               .display_token(),
-                           t.right_square_bracket.display_token())
-
-
-        def write(t, w):
-            t.array               .write(w)
-            t.left_square_bracket .write(w)
-            t.index               .write(w)
-            t.right_square_bracket.write(w)
-
-
     class UnaryExpression(Object):
         __slots__ = ((
             'operator',                 #   Operator*

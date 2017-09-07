@@ -35,6 +35,12 @@ def gem():
 
 
     @share
+    class IndexExpression(PostfixExpression):
+        __slots__    = (())
+        display_name = []
+
+
+    @share
     class SuffixAtom(PostfixExpression):
         __slots__                             = (())
         display_name                          = 'suffixed-atom'

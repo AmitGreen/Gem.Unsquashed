@@ -227,7 +227,7 @@ def gem():
                     wk(none)
 
                 if operator_2.is_right_square_bracket:
-                    left = ExpressionIndex_1(left, operator, middle, operator_2)
+                    left = IndexExpression(left, NormalIndex(operator, middle, operator_2))
                 else:
                     middle = parse1_any_ternary_expression__left__operator(middle, operator_2)
 
@@ -241,7 +241,7 @@ def gem():
                     if not operator_2.is_right_square_bracket:
                         raise_unknown_line(9)
 
-                    left = ExpressionIndex_1(left, operator, middle, operator_2)
+                    left = IndexExpression(left, NormalIndex(operator, middle, operator_2))
 
                 if qn() is not none:
                     return left
