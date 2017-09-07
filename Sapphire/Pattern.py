@@ -38,6 +38,7 @@ def gem():
         keyword_as          = NAME('as',                  'as')
         keyword_except      = NAME('except',              'except')
         keyword_import      = NAME('import',              'import')
+        keyword_in          = NAME('in',                  'in')
         keyword_not         = NAME('not',                 'not')
         keyword_or          = NAME('or',                  'or')
         keyword_try         = NAME('try',                 'try')
@@ -176,11 +177,8 @@ def gem():
                                 'operator',
                                  (
                                        ANY_OF('+', '=') + P('=')
-                                     | colon
-                                     | comma
-                                     | dot
-                                     | keyword_as
-                                     | keyword_or
+                                     | colon | comma | dot
+                                     | keyword_as | keyword_in | keyword_or
                                      | left_square_bracket
                                      | right_parenthesis
                                      | right_square_bracket

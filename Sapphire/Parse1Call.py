@@ -30,12 +30,12 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 return left
 
             wk(none)
 
-        if operator.is_end_of_expression:
+        if operator.is_end_of_expression__OLD:
             wk(operator)
 
             return left
@@ -63,12 +63,12 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 return left
 
             wk(none)
 
-        if operator.is_end_of_expression:
+        if operator.is_end_of_expression__OLD:
             wk(operator)
 
             return left

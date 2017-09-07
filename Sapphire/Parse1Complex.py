@@ -26,34 +26,43 @@ def gem():
         wi(j)
         wj(j)
 
-        raise_unknown_line(2)
+        left = parse1_normal_expression_list()
 
-    ###
-        left = tokenize_atom()
+        operator = qk()
 
-        if qn() is not none:
-            raise_unknown_line(2)
+        if operator is not none:
+            wk(none)
+        else:
+            if qn() is not none:
+                raise_unknown_line(2)
 
-        while 7 is 7:
             operator = tokenize_operator()
 
-            if operator.is_arguments_0:
-                left = ExpressionCall(left, operator)
-                continue
+            if qn() is not none:
+                raise_unknown_line(3)
 
-            if operator.is_keyword_as:
-                break
+        if not operator.is_keyword_in:
+            raise_unknown_line(4)
 
-            raise_unknown_line(3)
+        right = parse1_ternary_expression_list()
 
-        right      = tokenize_atom()
-        operator_2 = tokenize_operator()
+        operator_2 = qk()
 
-        if operator_2.is_colon_newline:
-            return WithHeader(keyword_with, left, operator, right, operator_2)
+        if operator_2 is not none:
+            wk(none)
+        else:
+            if qn() is not none:
+                raise_unknown_line(5)
 
-        raise_unknown_line(4)
-    ###
+            operator_2 = tokenize_operator()
+
+            if qn() is not none:
+                raise_unknown_line(6)
+
+        if not operator_2.is_colon_newline:
+            raise_unknown_line(7)
+
+        return ForHeader(keyword_for, left, operator, right, operator_2)
 
 
     @share

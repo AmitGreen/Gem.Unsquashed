@@ -18,10 +18,13 @@ def gem():
         is__comma__or__right_parenthesis           = false
         is_compare_operator                        = false
         is_dot                                     = false
-        is_end_of_expression                       = false
+        is_end_of_expression__OLD                  = false
+        is_end_of_normal_expression_list           = false
+        is_end_of_normal_expression                = false
         is_end_of_not_expression                   = false
         is_equal_sign                              = false
         is_keyword_as                              = false
+        is_keyword_in                              = false
         is_keyword_not                             = false
         is_left_brace                              = false
         is_left_parenthesis                        = false
@@ -103,9 +106,13 @@ def gem():
 
 
     class KeywordIn(KeywordAndOperatorBase):
-        __slots__     = (())
-        display_name  = 'in'
-        keyword       = 'in'
+        __slots__                        = (())
+        display_name                     = 'in'
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_not_expression         = true
+        is_keyword_in                    = true
+        keyword                          = 'in'
 
 
     @export
@@ -126,11 +133,13 @@ def gem():
 
 
     class KeywordOr(KeywordAndOperatorBase):
-        __slots__                = (())
-        display_name             = 'or'
-        is_end_of_not_expression = true
-        is_or_operator           = true
-        keyword                  = 'or'
+        __slots__                        = (())
+        display_name                     = 'or'
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_not_expression         = true
+        is_or_operator                   = true
+        keyword                          = 'or'
 
 
     class KeywordReturn(KeywordAndOperatorBase):
@@ -173,20 +182,24 @@ def gem():
 
 
     class OperatorColon(KeywordAndOperatorBase):
-        __slots__                = (())
-        display_name             = ':'
-        is_colon                 = true
-        is_end_of_expression     = true
-        is_end_of_not_expression = true
-        keyword                  = ':'
+        __slots__                        = (())
+        display_name                    = ':'
+        is_colon                         = true
+        is_end_of_expression__OLD        = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_not_expression         = true
+        keyword                          = ':'
 
 
     class OperatorColonNewline(KeywordAndOperatorBase):
-        __slots__                = (())
-        is_colon_newline         = true
-        is_end_of_expression     = true
-        is_end_of_not_expression = true
-        keyword                  = 'colon-newline'
+        __slots__                        = (())
+        is_colon_newline                 = true
+        is_end_of_expression__OLD        = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_not_expression         = true
+        keyword                          = 'colon-newline'
 
 
         def __repr__(t):
@@ -202,17 +215,20 @@ def gem():
         display_name                     = ','
         is__comma__or__right_parenthesis = true
         is_comma                         = true
-        is_end_of_expression             = true
+        is_end_of_expression__OLD        = true
+        is_end_of_normal_expression      = true
         is_end_of_not_expression         = true
         keyword                          = ','
 
 
     @share
     class OperatorCompareEqual(KeywordAndOperatorBase):
-        __slots__           = (())
-        display_name        = '=='
-        is_compare_operator = true
-        keyword             = '=='
+        __slots__                        = (())
+        display_name                     = '=='
+        is_compare_operator              = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        keyword                          = '=='
 
 
         def display_token(t):
@@ -274,14 +290,16 @@ def gem():
 
 
     class OperatorRightBrace(KeywordAndOperatorBase):
-        __slots__                = (())
+        __slots__                        = (())
         #  {
-        display_name             = '}'
-        is_end_of_expression     = true
-        is_end_of_not_expression = true
-        is_right_brace           = true
+        display_name                     = '}'
+        is_end_of_expression__OLD        = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_not_expression         = true
+        is_right_brace                   = true
         #  {
-        keyword                  = '}'
+        keyword                          = '}'
 
 
     class OperatorRightParenthesis(KeywordAndOperatorBase):
@@ -290,7 +308,9 @@ def gem():
         display_name                     = ')'
         is__atom__or__right_parenthesis  = true
         is__comma__or__right_parenthesis = true
-        is_end_of_expression             = true
+        is_end_of_expression__OLD        = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
         is_end_of_not_expression         = true
         is_right_parenthesis             = true
         #  (

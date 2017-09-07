@@ -300,10 +300,10 @@ def gem():
     #
 
     #
-    #   9.  Expression (Logical-Inclusive-Or) (Python 2.7.14rc1 grammer calls this 'expr')
+    #   9.  Normal-Expression (Logical-Inclusive-Or) (Python 2.7.14rc1 grammer calls this 'expr')
     #
     @share
-    def parse1_expression():
+    def parse1_normal_expression():
         left = parse1_atom()
 
         operator = qk()
@@ -314,12 +314,12 @@ def gem():
 
             operator = tokenize_operator()
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 wk(operator)
 
                 return left
         else:
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 return left
 
             wk(none)
@@ -332,7 +332,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 return left
 
             wk(none)
@@ -341,10 +341,10 @@ def gem():
 
 
     #
-    #   10. Expression-List
+    #   10. Normal-Expression-List
     #
     @share
-    def parse1_expression_list():
+    def parse1_normal_expression_list():
         left = parse1_atom()
 
         operator = qk()
@@ -355,12 +355,12 @@ def gem():
 
             operator = tokenize_operator()
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_normal_expression_list:
                 wk(operator)
 
                 return left
         else:
-            if operator.is_end_of_expression:
+            if operator.is_end_of_normal_expression_list:
                 return left
 
             wk(none)
@@ -373,11 +373,12 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_normal_expression_list:
                 return left
 
             wk(none)
 
+        my_line('left: %s; operator: %s', left, operator)
         raise_unknown_line(1)
 
 
@@ -386,7 +387,7 @@ def gem():
     #
     @share
     def parse1_compare_expression__left__operator(left, compare_operator):
-        right = parse1_expression()
+        right = parse1_normal_expression()
 
         operator = qk()
 
@@ -396,12 +397,12 @@ def gem():
 
             operator = tokenize_operator()
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 wk(operator)
 
                 return compare_operator.compare_expression_meta(left, compare_operator, right)
         else:
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 return compare_operator.compare_expression_meta(left, compare_operator, right)
 
             wk(none)
@@ -479,7 +480,7 @@ def gem():
         if qn() is not none:
             raise_unknown_line(3)
 
-        while not operator.is_end_of_expression:
+        while not operator.is_end_of_expression__OLD:
             if operator.is_or_operator:
                 left        = OrExpression(left, or_operator, right)
                 or_operator = operator
@@ -538,7 +539,7 @@ def gem():
 
         operator = tokenize_operator()
 
-        if operator.is_end_of_expression:
+        if operator.is_end_of_expression__OLD:
             wk(operator)
 
             return left
@@ -553,7 +554,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 return left
 
             wk(none)
@@ -563,7 +564,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 return left
 
             wk(none)
@@ -573,7 +574,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 return left
 
             wk(none)
@@ -594,7 +595,7 @@ def gem():
         operator = qk()
 
         if operator is not none:
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 return left
 
             wk(none)
@@ -607,7 +608,7 @@ def gem():
             if qn() is not none:
                 raise_unknown_line(1)
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 wk(operator)
 
                 return left
@@ -620,7 +621,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 return left
 
             wk(none)
@@ -638,7 +639,7 @@ def gem():
         operator = qk()
 
         if operator is not none:
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 return left
 
             wk(none)
@@ -651,7 +652,7 @@ def gem():
             if qn() is not none:
                 raise_unknown_line(1)
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 wk(operator)
 
                 return left
@@ -666,7 +667,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 return left
 
             wk(none)
@@ -676,7 +677,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_expression:
+            if operator.is_end_of_expression__OLD:
                 return left
 
             wk(none)

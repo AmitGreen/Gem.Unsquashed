@@ -173,6 +173,62 @@ def gem():
             return arrange('<EmptyLine %r>', t.s)
 
 
+    class ForOrWithHeader(Object):
+        __slots__ = ((
+            'keyword',                  #   KeywordFor | KeywordWith
+            'left',                     #   Expression
+            'middle',                   #   KeywordAs | KeywordIn
+            'right',                    #   Expression
+            'colon_newline',            #   OperatorColonNewline
+        ))
+
+
+        def __init__(t, keyword, left, middle, right, colon_newline):
+            t.keyword       = keyword
+            t.left          = left
+            t.middle        = middle
+            t.right         = right
+            t.colon_newline = colon_newline
+
+
+        def  __repr__(t):
+            return arrange('<%s %r %r %r %r %r>',
+                           t.__class__.__name__,
+                           t.keyword, t.left, t.middle, t.right, t.colon_newline)
+
+
+        def display_token(t):
+            return arrange('<%s <%s> %s <%s> %s %s>',
+                           t.display_name,
+                           t.keyword      .s,
+                           t.left         .display_token(),
+                           t.middle       .s,
+                           t.right        .display_token(),
+                           t.colon_newline.display_token())
+
+
+        def write(t, w):
+            w(t.keyword.s)
+            t.left.write(w)
+            w(t.middle.s)
+            t.right.write(w)
+            w(t.colon_newline.s)
+
+
+    @share
+    class ForHeader(ForOrWithHeader):
+        __slots__ = (())
+
+        display_name = 'with'
+
+
+    @share
+    class WithHeader(ForOrWithHeader):
+        __slots__ = (())
+
+        display_name = 'with'
+
+
     @share
     class FromAsFragment(Object):
         __slots__ = ((
@@ -613,44 +669,3 @@ def gem():
             w(t.keyword_return.s)
             t.expression.write(w)
             w(t.newline.s)
-
-
-    @share
-    class WithHeader(Object):
-        __slots__ = ((
-            'keyword_with',             #   KeywordWith
-            'left',                     #   Expression
-            'keyword_as',               #   KeywordAs
-            'right',                    #   Expression
-            'colon_newline',            #   OperatorColonNewline
-        ))
-
-
-        def __init__(t, keyword_with, left, keyword_as, right, colon_newline):
-            t.keyword_with  = keyword_with
-            t.left          = left
-            t.keyword_as    = keyword_as
-            t.right         = right
-            t.colon_newline = colon_newline
-
-
-        def  __repr__(t):
-            return arrange('<WithHeader %r %r %r %r %r>',
-                           t.keyword_with, t.left, t.keyword_as, t.right, t.colon_newline)
-
-
-        def display_token(t):
-            return arrange('<with <%s> %s <%s> %s %s>',
-                           t.keyword_with .s,
-                           t.left         .display_token(),
-                           t.keyword_as   .s,
-                           t.right        .display_token(),
-                           t.colon_newline.display_token())
-
-
-        def write(t, w):
-            w(t.keyword_with.s)
-            t.left.write(w)
-            w(t.keyword_as.s)
-            t.right.write(w)
-            w(t.colon_newline.s)
