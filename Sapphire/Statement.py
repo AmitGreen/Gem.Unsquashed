@@ -644,9 +644,9 @@ def gem():
 
         def display_token(t):
             return arrange('<import %s %s %s>',
-                           t.keyword.display_token(),
-                           t.module .display_token(),
-                           t.newline.display_token())
+                           t.keyword_import.display_token(),
+                           t.module        .display_token(),
+                           t.newline       .display_token())
 
 
         def write(t, w):

@@ -155,30 +155,25 @@ def gem():
 
     class BookcasedDualExpression(Object):
         __slots__ = ((
-            'left_operator',            #   OperatorLeftParenthesis | OperatorLeftSquareBracket
+            'left_operator',            #   Operator*
             'left',                     #   Expression*
-            'middle_operator',          #   OperatorColon | OperatorComma
+            'middle_operator',          #   Operator*
             'right',                    #   Expression*
-            'right_operator',           #   OperatorRightParenthesis | OperatorRightSquareBracket
+            'right_operator',           #   Operator*
         ))
 
 
         def __init__(t, left_operator, left, middle_operator, right, right_operator):
-            t.left_operator  = left_operator
-            t.left        = left
-            t.middle_operator           = middle_operator
-            t.right        = right
-            t.right_operator = right_operator
+            t.left_operator   = left_operator
+            t.left            = left
+            t.middle_operator = middle_operator
+            t.right           = right
+            t.right_operator  = right_operator
 
 
         def __repr__(t):
             return arrange('<%s %r %r %r %r %r>',
-                           t.__class__.__name__,
-                           t.left_operator,
-                           t.left,
-                           t.middle_operator,
-                           t.right,
-                           t.right_operator)
+                           t.__class__.__name__, t.left_operator, t.left, t.middle_operator, t.right, t.right_operator)
 
 
         def display_token(t):
@@ -206,9 +201,63 @@ def gem():
 
 
     @share
+    class ListExpression_2(BookcasedDualExpression):
+        __slots__                          = (())
+        is__atom__or__right_close_operator = true
+        is_atom                            = true
+        is_right_parenthesis               = false
+
+
+        def display_token(t):
+            if t.left_operator.s == '[' and t.right_operator.s == ']':
+                return arrange('<[2] %s %s %s>',
+                               t.left           .display_token(),
+                               t.middle_operator.display_token(),
+                               t.right          .display_token())
+
+
+            return arrange('<[2] %s %s %s %s %s>',
+                           t.left_operator  .display_full_token(),
+                           t.left           .display_token(),
+                           t.middle_operator.display_token(),
+                           t.right          .display_token(),
+                           t.right_operator .display_full_token())
+
+
+    @share
     class RangeIndex(BookcasedDualExpression):
         __slots__    = (())
         display_name = 'range-index'
+
+
+    @share
+    class TernaryExpression(BookcasedDualExpression):
+        __slots__    = (())
+        display_nane = '?:'
+
+
+    @share
+    class TupleExpression_2(BookcasedDualExpression):
+        __slots__                          = (())
+        is__atom__or__right_close_operator = true
+        is_atom                            = true
+        is_right_parenthesis               = false
+
+
+        def display_token(t):
+            if t.left_operator.s == '(' and t.right_operator.s == ')':
+                return arrange('({,2} %s %s %s)',
+                               t.left           .display_token(),
+                               t.middle_operator.display_token(),
+                               t.right          .display_token())
+
+
+            return arrange('({,2} %s %s %s %s %s)',
+                           t.left_operator  .display_full_token(),
+                           t.left           .display_token(),
+                           t.middle_operator.display_token(),
+                           t.right          .display_token(),
+                           t.right_operator .display_full_token())
 
 
     Identifier .bookcase_meta = BookcaseIdentifier
