@@ -28,7 +28,7 @@ def gem():
             m = next_nested_line_match(s)
 
             if m is none:
-                raise_unknown_line(1)
+                raise_unknown_line(2)
 
             if m.group('comment_newline') is none:
                 prefix = ''.join(many)
@@ -55,12 +55,10 @@ def gem():
             my_line(portray_string(s[qj() : ]))
             raise_unknown_line(1)
 
-        operator_s = m.group('operator')
+        if m.end('comment_newline') is -1:
+            operator_s = m.group('operator')
 
-        if operator_s is not none:
-            conjure = find_operator_conjure_function(operator_s)
-
-            if m.end('comment_newline') is -1:
+            if operator_s is not none:
                 if is_close_operator(operator_s) is 7:
                     d = qd()
 
@@ -69,7 +67,7 @@ def gem():
 
                     operator_end = m.end('operator')
 
-                    r = conjure(s[qi() : operator_end])
+                    r = find_operator_conjure_function(operator_s)(s[qi() : operator_end])
 
                     wd(d - 1)
                     wi(operator_end)
@@ -78,12 +76,81 @@ def gem():
                     return r
 
                 j = m.end()
-                r = conjure(s[qi() : j])
+                r = find_operator_conjure_function(operator_s)(s[qi() : j])
 
                 wi(j)
                 wj(j)
 
                 return r
+
+            #
+            #<similiar-to: {left_square_bracket__ow} below>
+            #
+            #   Differences:
+            #       Uses *parenthesis* instead of *square_bracket*
+            #
+            left_end = m.end('left_parenthesis__ow')
+
+            if left_end is not -1:
+                left    = conjure_left_parenthesis(s[qi() : left_end])
+                RP_s = m.group('right_parenthesis')
+
+                if RP_s is not none:
+                    right = conjure_right_parenthesis(RP_s)
+
+                    wi(m.end('right_parenthesis'))
+                    wj(m.end())
+
+                    return Arguments_0(left, right)
+
+                j = m.end()
+
+                wd(qd() + 1)
+                wi(j)
+                wj(j)
+
+                return left
+            #</similiar-to>
+
+            #
+            #<similiar-to: {left_parenthesis__ow} below>
+            #
+            #   Differences:
+            #       Uses *square_bracket* instead of *parenthesis* 
+            #
+            left_end = m.end('left_square_bracket__ow')
+
+            if left_end is not -1:
+                left    = conjure_left_square_bracket(s[qi() : left_end])
+                RSB_s = m.group('right_square_bracket')
+
+                if RSB_s is not none:
+                    right = conjure_right_square_bracket(RSB_s)
+
+                    wi(m.end('right_square_bracket'))
+                    wj(m.end())
+
+                    return EmptyIndex(left, right)
+
+                j = m.end()
+
+                wd(qd() + 1)
+                wi(j)
+                wj(j)
+
+                return left
+            #</similiar-to>
+
+            raise_unknown_line(3)
+
+
+        #
+        #   Newline version
+        #
+        operator_s = m.group('operator')
+
+        if operator_s is not none:
+            conjure = find_operator_conjure_function(operator_s)
 
             d = qd()
 
@@ -113,94 +180,72 @@ def gem():
 
             return r
 
-        left_parenthesis__ow__end = m.end('left_parenthesis__ow')
+        #
+        #<similiar-to: {left_square_bracket__ow} below>
+        #
+        #   Differences:
+        #       Uses *parenthesis* instead of *square_bracket*
+        #
+        left_end = m.end('left_parenthesis__ow')
 
-        if left_parenthesis__ow__end is not -1:
-            right_parenthesis         = m.group('right_parenthesis')
+        if left_end is not -1:
+            right_end = m.end('right_parenthesis')
 
-            if right_parenthesis is not none:
-                left_parenthesis = conjure_left_parenthesis(s[qi() : left_parenthesis__ow__end])
+            if right_end is not -1:
+                left = conjure_left_parenthesis(s[qi() : left_end])
 
-                if m.end('comment_newline') is -1:
-                    right_parenthesis = conjure_right_parenthesis(right_parenthesis)
+                if qd() is 0:
+                    right = conjure_right_parenthesis(s[left_end : right_end])
 
-                    wi(m.end('right_parenthesis'))
-                    wj(m.end())
+                    wn(conjure_token_newline(s[right_end : ]))
                 else:
-                    if qd() is 0:
-                        right_parenthesis = conjure_right_parenthesis(right_parenthesis)
+                    right = conjure_right_parenthesis(s[left_end : ])
 
-                        wn(conjure_token_newline(s[m.end('right_parenthesis') : ]))
-                    else:
-                        right_parenthesis = conjure_right_parenthesis(s[left_parenthesis__ow__end : ])
+                    skip_tokenize_prefix()
 
-                        skip_tokenize_prefix()
+                return Arguments_0(left, right)
 
-                return Arguments_0(left_parenthesis, right_parenthesis)
-
-            if m.end('comment_newline') is -1:
-                left_parenthesis = conjure_left_parenthesis(s[qi() : left_parenthesis__ow__end])
-
-                j = m.end()
-
-                wd(qd() + 1)
-                wi(j)
-                wj(j)
-
-                return left_parenthesis
-
-            left_parenthesis = conjure_left_parenthesis(s[qi() : ])
+            left = conjure_left_parenthesis(s[qi() : ])
 
             skip_tokenize_prefix()
 
             wd(qd() + 1)
 
-            if show is 7:
-                my_line('%r; %s', left_parenthesis, portray_string(s[qj() : ]))
+            return left
+        #</similiar-to>
 
-            return left_parenthesis
+        #
+        #<similiar-to: {left_parenthesis__ow} below>
+        #
+        #   Differences:
+        #       Uses *square_bracket* instead of *parenthesis* 
+        #
+        left_end = m.end('left_square_bracket__ow')
 
-        left_square_bracket__ow__end = m.end('left_square_bracket__ow')
-        right_square_bracket         = m.group('right_square_bracket')
+        if left_end is not -1:
+            right_end = m.end('right_square_bracket')
 
-        if right_square_bracket is not none:
-            left_square_bracket = conjure_left_square_bracket(s[qi() : left_square_bracket__ow__end])
+            if right_end is not -1:
+                left = conjure_left_square_bracket(s[qi() : left_end])
 
-            if m.end('comment_newline') is -1:
-                right_square_bracket = conjure_right_square_bracket(right_square_bracket)
-
-                wi(m.end('right_square_bracket'))
-                wj(m.end())
-            else:
                 if qd() is 0:
-                    right_square_bracket = conjure_right_square_bracket(right_square_bracket)
+                    right = conjure_right_square_bracket(s[left_end : right_end])
 
-                    wn(conjure_token_newline(s[m.end('right_square_bracket') : ]))
+                    wn(conjure_token_newline(s[right_end : ]))
                 else:
-                    right_square_bracket = conjure_right_square_bracket(s[left_square_bracket__ow__end : ])
+                    right = conjure_right_square_bracket(s[left_end : ])
 
                     skip_tokenize_prefix()
 
-            return EmptyIndex(left_square_bracket, right_square_bracket)
+                return EmptyIndex(left, right)
 
-        if m.end('comment_newline') is -1:
-            left_square_bracket = conjure_left_square_bracket(s[qi() : left_square_bracket__ow__end])
+            left = conjure_left_square_bracket(s[qi() : ])
 
-            j = m.end()
+            skip_tokenize_prefix()
 
             wd(qd() + 1)
-            wi(j)
-            wj(j)
 
-            return left_square_bracket
+            return left
+        #</similiar-to>
 
-        left_square_bracket = conjure_left_square_bracket(s[qi() : ])
-
-        skip_tokenize_prefix()
-
-        wd(qd() + 1)
-
-        if show is 7:
-            my_line('%r; %s', left_square_bracket, portray_string(s[qj() : ]))
-
-        return left_square_bracket
+        raise_unknown_line(4)
