@@ -155,13 +155,13 @@ def gem():
                   (
                         G('keyword', keyword_not)
                       + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
-                  )
-                | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must preceed 'name'
+                  )                                                             #   Must preceed 'name'
+                | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must also preceed 'name'
                 | G('atom', name | number) + ow
                 | G('operator', ANY_OF('-', right_parenthesis, right_brace)) + ow
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
+                | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
                 | G(left_brace__ow)          + P(G(right_brace)          + ow)
-#               | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
             ) + Q(comment_newline),
         )
 

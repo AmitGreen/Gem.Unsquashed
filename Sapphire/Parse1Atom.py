@@ -112,4 +112,7 @@ def gem():
         if token.is_left_parenthesis:
             return parse1__parenthesized_expression__left_parenthesis(token)
 
+        if token.is_left_square_bracket:
+            return parse1__list_expression__left_square_bracket(token)
+
         raise_unknown_line(1)
