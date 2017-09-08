@@ -81,6 +81,7 @@ def gem():
 
     lookup_parse1_line = {
                              '@'      : parse1_statement_decorator_header,
+                             'assert' : parse1_statement_assert,
                              'class'  : parse1_statement_class_header,
                              'def'    : parse1_statement_function_header,
                              'del'    : parse1_statement_delete,

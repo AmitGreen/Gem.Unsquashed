@@ -381,7 +381,7 @@ def gem():
         def display_token(t):
             return arrange('<%s %s %s %s>',
                            t.display_name,
-                           t.keyword   .display_token,
+                           t.keyword   .display_token(),
                            t.expression.display_token(),
                            t.newline   .display_token())
 
@@ -390,6 +390,12 @@ def gem():
             w(t.keyword.s)
             t.expression.write(w)
             w(t.newline.s)
+
+
+    @share
+    class Assert_1(KeywordExpressionStatement):
+        __slots__    = (())
+        display_name = 'assert'
 
 
     @share

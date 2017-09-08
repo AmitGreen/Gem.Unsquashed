@@ -321,7 +321,7 @@ def gem():
 
             assert operator.is_postfix_operator
 
-        raise_unknown_line(15)
+        raise_unknown_line(14)
 
 
     #
@@ -338,15 +338,13 @@ def gem():
         operator = qk()
 
         if operator is none:
-            newline = qn()
-
             if qn() is not none:
                 return NegativeExpression(negative_operator, right)
 
             operator = tokenize_operator()
 
             if qk() is not none:
-                raise_unknown_line(4)
+                raise_unknown_line(1)
 
             if operator.is_end_of_unary_expression:
                 wk(operator)
@@ -358,7 +356,7 @@ def gem():
             wk(none)
 
         my_line('right: %r; operator: %r; s: %s', right, operator, portray_string(qs()[qj():]))
-        raise_unknown_line(1)
+        raise_unknown_line(2)
 
 
     def parse1_unary_expression():
@@ -389,17 +387,20 @@ def gem():
         if operator.is_postfix_operator:
             left = parse1_postfix_expression__left__operator(left, operator)
 
-            if qn() is not none:
-                return left
-
             operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
 
             if operator.is_end_of_unary_expression:
                 return left
 
             wk(none)
 
-        raise_unknown_line(2)
+        raise_unknown_line(3)
 
 
     #
@@ -505,10 +506,13 @@ def gem():
         if operator.is_postfix_operator:
             left = parse1_postfix_expression__left__operator(left, operator)
 
-            if qn() is not none:
-                return left
-
             operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
 
             if operator.is_end_of_normal_expression:
                 return left
@@ -516,7 +520,7 @@ def gem():
             wk(none)
 
         my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-        raise_unknown_line(1)
+        raise_unknown_line(2)
 
 
     #
@@ -547,10 +551,13 @@ def gem():
         if operator.is_postfix_operator:
             left = parse1_postfix_expression__left__operator(left, operator)
 
-            if qn() is not none:
-                return left
-
             operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
 
             if operator.is_end_of_normal_expression_list:
                 return left
@@ -558,7 +565,7 @@ def gem():
             wk(none)
 
         my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-        raise_unknown_line(1)
+        raise_unknown_line(2)
 
 
     #
@@ -634,15 +641,13 @@ def gem():
         operator = qk()
 
         if operator is none:
-            newline = qn()
-
             if qn() is not none:
                 return NotExpression(not_operator, right)
 
             operator = tokenize_operator()
 
             if qk() is not none:
-                raise_unknown_line(4)
+                raise_unknown_line(1)
 
             if operator.is_end_of_compare_expression:
                 wk(operator)
@@ -654,7 +659,7 @@ def gem():
             wk(none)
 
         my_line('right: %r; operator: %r; s: %s', right, operator, portray_string(qs()[qj():]))
-        raise_unknown_line(5)
+        raise_unknown_line(2)
 
 
     #
@@ -732,9 +737,6 @@ def gem():
 
             operator = tokenize_operator()
 
-            if qn() is not none:
-                raise_unknown_line(1)
-
             if operator.is_end_of_boolean_or_expression:
                 wk(operator)
 
@@ -744,6 +746,12 @@ def gem():
             left = parse1_postfix_expression__left__operator(left, operator)
 
             operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
 
             if operator.is_end_of_boolean_or_expression:
                 return left
@@ -755,6 +763,12 @@ def gem():
 
             operator = qk()
 
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
+
             if operator.is_end_of_boolean_or_expression:
                 return left
 
@@ -765,6 +779,12 @@ def gem():
 
             operator = qk()
 
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(3)
+
+                return left
+
             if operator.is_end_of_boolean_or_expression:
                 return left
 
@@ -772,7 +792,7 @@ def gem():
 
         if not operator.is_keyword_or:
             my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line(2)
+            raise_unknown_line(4)
 
         return parse1_boolean_or_expression__left_operator(left, operator)
 
@@ -802,7 +822,7 @@ def gem():
             my_line('left: %r; operator: %r; middle: %r; operator_2: %r; s: %s',
                     left, operator, middle, operator_2, portray_string(qs()[qj():]))
 
-            raise_unknown_line(2)
+            raise_unknown_line(1)
 
         return TernaryExpression(left, operator, middle, operator_2, parse1_ternary_expression())
 
@@ -814,6 +834,12 @@ def gem():
 
             operator = qk()
 
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
+
             if operator.is_end_of_ternary_expression:
                 return left
 
@@ -823,6 +849,12 @@ def gem():
             left = parse1_compare_expression__left_operator(left, operator)
 
             operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
 
             if operator.is_end_of_ternary_expression:
                 return left
@@ -834,6 +866,12 @@ def gem():
 
             operator = qk()
 
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(3)
+
+                return left
+
             if operator.is_end_of_ternary_expression:
                 return left
 
@@ -841,7 +879,7 @@ def gem():
 
         if not operator.is_keyword_if:
             my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line(1)
+            raise_unknown_line(4)
 
         return parse1_ternary_expression__left_operator(left, operator)
 
@@ -862,9 +900,6 @@ def gem():
                 return left
 
             operator = tokenize_operator()
-
-            if qn() is not none:
-                raise_unknown_line(1)
 
             if operator.is_end_of_ternary_expression:
                 wk(operator)
@@ -894,9 +929,6 @@ def gem():
 
             operator = tokenize_operator()
 
-            if qn() is not none:
-                raise_unknown_line(1)
-
             if operator.is_end_of_ternary_expression_list:
                 wk(operator)
 
@@ -905,10 +937,13 @@ def gem():
         if operator.is_postfix_operator:
             left = parse1_postfix_expression__left__operator(left, operator)
 
-            if qn() is not none:
-                return left
-
             operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
 
             if operator.is_end_of_ternary_expression_list:
                 return left
@@ -936,6 +971,12 @@ def gem():
 
             operator = qk()
 
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(3)
+
+                return left
+
             if operator.is_end_of_ternary_expression_list:
                 return left
 
@@ -946,12 +987,18 @@ def gem():
 
             operator = qk()
 
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(4)
+
+                return left
+
             if operator.is_end_of_ternary_expression_list:
                 return left
 
             wk(none)
 
-        raise_unknown_line(3)
+        raise_unknown_line(5)
 
 
     #

@@ -89,6 +89,12 @@ def gem():
         keyword       = 'as'
 
 
+    class KeywordAssert(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'assert'
+        keyword      = 'assert'
+
+
     @export
     class KeywordClass(KeywordAndOperatorBase):
         __slots__    = (())
@@ -550,6 +556,7 @@ def gem():
     conjure_except_colon         = produce_conjure_by_name('keyword-except-colon',          KeywordExceptColon) 
     conjure_head_index           = produce_conjure_by_name('operator-head-index',           OperatorHeadIndex) 
     conjure_keyword_as           = produce_conjure_by_name('keyword-as',                    KeywordAs) 
+    conjure_keyword_assert       = produce_conjure_by_name('keyword-assert',                KeywordAssert) 
     conjure_keyword_delete       = produce_conjure_by_name('keyword-delete',                KeywordDelete) 
     conjure_keyword_else         = produce_conjure_by_name('keyword-else',                  KeywordElse) 
     conjure_keyword_for          = produce_conjure_by_name('keyword-for',                   KeywordFor) 
@@ -647,6 +654,7 @@ def gem():
         'conjure_except_colon',             conjure_except_colon,
         'conjure_head_index',               conjure_head_index,
         'conjure_keyword_as',               conjure_keyword_as,
+        'conjure_keyword_assert',           conjure_keyword_assert,
         'conjure_keyword_delete',           conjure_keyword_delete,
         'conjure_keyword_for',              conjure_keyword_for,
         'conjure_keyword_if',               conjure_keyword_if,

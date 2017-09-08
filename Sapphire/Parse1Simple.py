@@ -7,6 +7,31 @@ def gem():
 
 
     @share
+    def parse1_statement_assert(m):
+        keyword = conjure_keyword_assert(m.group())
+
+        if m.end('newline') is not -1:
+            raise_unknown_line(1)
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
+
+        right = parse1_ternary_expression()
+
+        if qk() is not none:
+            raise_unknown_line(2)
+
+        newline = qn()
+
+        if newline is none:
+            raise_unknown_line(3)
+
+        return Assert_1(keyword, right, newline)
+
+
+    @share
     def parse1_statement_delete(m):
         if m.end('newline') is not -1:
             raise_unknown_line(1)
