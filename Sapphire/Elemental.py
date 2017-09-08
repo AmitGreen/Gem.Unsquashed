@@ -75,6 +75,7 @@ def gem():
         is__atom__or__right_close_operator = true
         is_atom                            = true
         is_right_parenthesis               = false
+        is_right_square_bracket            = false
 
 
         def display_token(t):
@@ -174,12 +175,10 @@ def gem():
 
 
     class KeywordNot(KeywordAndOperatorBase):
-        __slots__            = (())
-        display_name         = 'not'
-        is_atom              = false
-        is_right_parenthesis = false
-        is_keyword_not       = true
-        keyword              = 'not'
+        __slots__      = (())
+        display_name   = 'not'
+        is_keyword_not = true
+        keyword        = 'not'
 
 
     class KeywordOr(KeywordAndOperatorBase):
@@ -220,6 +219,7 @@ def gem():
         is__atom__or__right_close_operator = true
         is_atom                            = true
         is_right_parenthesis               = false
+        is_right_square_bracket            = false
 
 
         def display_token(t):
@@ -499,6 +499,7 @@ def gem():
         is__atom__or__right_close_operator = true
         is_atom                            = true
         is_right_parenthesis               = false
+        is_right_square_bracket            = false
 
 
         def display_token(t):

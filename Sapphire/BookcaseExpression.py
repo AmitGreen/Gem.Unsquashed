@@ -13,6 +13,10 @@ def gem():
             'right',                    #   Operator+
         ))
 
+        is__right_parenthesis__colon__newline = false
+        is_right_parenthesis                  = false
+        is_right_square_bracket               = false
+
 
         def __init__(t, left, middle, right):
             t.left   = left
@@ -47,10 +51,8 @@ def gem():
         display_name = 'bookcased-atom'
 
 
-        is__atom__or__right_close_operator    = true
-        is_atom                               = true
-        is__right_parenthesis__colon__newline = false
-        is_right_parenthesis                  = false
+        is__atom__or__right_close_operator = true
+        is_atom                            = true
 
 
     @share
@@ -59,11 +61,9 @@ def gem():
         display_name = 'bookcased-identifier'
 
 
-        is__atom__or__right_close_operator    = true
-        is_atom                               = true
-        is_identifier                         = true
-        is__right_parenthesis__colon__newline = false
-        is_right_parenthesis                  = false
+        is__atom__or__right_close_operator = true
+        is_atom                            = true
+        is_identifier                      = true
 
 
     @share
@@ -95,7 +95,6 @@ def gem():
         display_name                       = '[1]'
         is__atom__or__right_close_operator = true
         is_atom                            = true
-        is_right_parenthesis               = false
 
 
         def display_token(t):
@@ -131,7 +130,6 @@ def gem():
         display_name                       = '()'
         is__atom__or__right_close_operator = true
         is_atom                            = true
-        is_right_parenthesis               = false
 
 
         def display_token(t):
@@ -150,7 +148,6 @@ def gem():
         display_name                       = '{,}'
         is__atom__or__right_close_operator = true
         is_atom                            = true
-        is_right_parenthesis               = false
 
 
     class BookcasedDualExpression(Object):
@@ -205,7 +202,6 @@ def gem():
         __slots__                          = (())
         is__atom__or__right_close_operator = true
         is_atom                            = true
-        is_right_parenthesis               = false
 
 
         def display_token(t):
@@ -241,7 +237,6 @@ def gem():
         __slots__                          = (())
         is__atom__or__right_close_operator = true
         is_atom                            = true
-        is_right_parenthesis               = false
 
 
         def display_token(t):

@@ -9,6 +9,9 @@ def gem():
             'many',                     #   Tuple of *
         ))
 
+        is_right_parenthesis    = false
+        is_right_square_bracket = false
+
 
         def __init__(t, many):
             t.many = many
@@ -73,7 +76,6 @@ def gem():
 
         is__atom__or__right_close_operator = true
         is_atom                            = true
-        is_right_parenthesis               = false
 
 
         def display_token(t):
@@ -118,7 +120,6 @@ def gem():
 
         is__atom__or__right_close_operator = true
         is_atom                            = true
-        is_right_parenthesis               = false
 
 
         def display_token(t):
