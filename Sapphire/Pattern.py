@@ -28,14 +28,15 @@ def gem():
         #
         #   Simple patterns
         #
+        assign_operator     = NAME('assign_operator',     '=')
         colon               = NAME('colon',               ':')
         comma               = NAME('comma',               ',')
         comment_newline     = NAME('comment_newline',     P('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
         compare_equal       = NAME('compare_equal',       '==')
         dot                 = NAME('dot',                 '.')
-        assign_operator     = NAME('assign_operator',     '=')
         equal_sign          = NAME('equal_sign',          '=')
         keyword_as          = NAME('as',                  'as')
+        keyword_else        = NAME('else',                'else')
         keyword_except      = NAME('except',              'except')
         keyword_if          = NAME('if',                  'if')
         keyword_import      = NAME('import',              'import')
@@ -173,7 +174,7 @@ def gem():
                              (
                                    ANY_OF('+', '<', '=') + P('=')
                                  | colon | comma | dot
-                                 | keyword_as | 'i' + ANY_OF('f', 'n') | keyword_or
+                                 | keyword_as | keyword_else | 'i' + ANY_OF('f', 'n') | keyword_or
                                  | right_parenthesis
                                  | right_square_bracket
                              ),

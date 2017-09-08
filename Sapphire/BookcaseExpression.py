@@ -32,6 +32,9 @@ def gem():
                            t.right .display_token())
 
 
+        display_full_token = display_token
+
+
         def write(t, w):
             w(t.left.s)
             t.middle.write(w)
