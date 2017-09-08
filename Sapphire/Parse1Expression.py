@@ -742,7 +742,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_ternary_expression:
+            if operator.is_end_of_boolean_or_expression:
                 return left
 
             wk(none)
@@ -752,7 +752,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_ternary_expression:
+            if operator.is_end_of_boolean_or_expression:
                 return left
 
             wk(none)
@@ -762,7 +762,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_end_of_ternary_expression:
+            if operator.is_end_of_boolean_or_expression:
                 return left
 
             wk(none)
@@ -801,7 +801,7 @@ def gem():
 
             raise_unknown_line(2)
 
-        raise_unknown_line(3)
+        return TernaryExpression(left, operator, middle, operator_2, parse1_ternary_expression())
 
 
     @share

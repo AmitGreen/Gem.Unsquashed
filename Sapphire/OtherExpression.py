@@ -86,6 +86,47 @@ def gem():
 
 
     @share
+    class TernaryExpression(Object):
+        __slots__ = ((
+            'left',                     #   Expression
+            'if_operator',              #   KeywordIf
+            'middle',                   #   Expression
+            'else_operator',            #   KeywordElse
+            'right',                    #   Expression
+        ))
+
+
+        def __init__(t, left, if_operator, middle, else_operator, right):
+            t.left          = left
+            t.if_operator   = if_operator
+            t.middle        = middle
+            t.else_operator = else_operator
+            t.right         = right
+
+
+        def __repr__(t):
+            return arrange('<%s %r %r %r %r %r>',
+                           t.__class__.__name__, t.left, t.if_operator, t.middle, t.else_operator, t.right)
+
+
+        def display_token(t):
+            return arrange('<?: %s %s %s %s %s>',
+                           t.left         .display_token(),
+                           t.if_operator  .display_token(),
+                           t.middle       .display_token(),
+                           t.else_operator.display_token(),
+                           t.right        .display_token())
+
+
+        def write(t, w):
+            t.left         .write(w)
+            t.if_operator  .write(w)
+            t.middle       .write(w)
+            t.else_operator.write(w)
+            t.right        .write(w)
+
+
+    @share
     class TupleExpression_2(Object):
         __slots__ = ((
             'left',                     #   OperatorLeftParenthesis

@@ -95,6 +95,20 @@ def gem():
         keyword      = 'class'
 
 
+    class KeywordElse(KeywordAndOperatorBase):
+        __slots__                        = (())
+        display_name                     = 'else'
+        is_end_of_arithmetic_expression  = true
+        is_end_of_boolean_and_expression = true
+        is_end_of_boolean_or_expression  = true
+        is_end_of_compare_expression     = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_unary_expression       = true
+        is_keyword_else                  = true
+        keyword                          = 'else'
+
+
     class KeywordExceptColon(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'except:'
@@ -494,6 +508,7 @@ def gem():
     conjure_except_colon         = produce_conjure_by_name('keyword-except-colon',          KeywordExceptColon) 
     conjure_head_index           = produce_conjure_by_name('operator-head-index',           OperatorHeadIndex) 
     conjure_keyword_as           = produce_conjure_by_name('keyword-as',                    KeywordAs) 
+    conjure_keyword_else         = produce_conjure_by_name('keyword-else',                  KeywordElse) 
     conjure_keyword_for          = produce_conjure_by_name('keyword-for',                   KeywordFor) 
     conjure_keyword_function     = produce_conjure_by_name('keyword-function',              KeywordFunction) 
     conjure_keyword_if           = produce_conjure_by_name('keyword-if',                    KeywordIf) 
@@ -551,24 +566,25 @@ def gem():
 
 
     find_operator_conjure_function = {
-                                         '('   : conjure_left_parenthesis,
-                                         ')'   : conjure_right_parenthesis,
-                                         '+'   : conjure_plus_sign,
-                                         '+='  : conjure_modify_plus,
-                                         ','   : conjure_comma,
-                                         '-'   : conjure_minus_sign,
-                                         '.'   : conjure_dot,
-                                         ':'   : conjure_colon,
-                                         '<='  : conjure_less_than_or_equal,
-                                         '='   : conjure_equal_sign,
-                                         '=='  : conjure_compare_equal,
-                                         'as'  : conjure_keyword_as,
-                                         'if'  : conjure_keyword_if,
-                                         'in'  : conjure_keyword_in,
-                                         'not' : conjure_keyword_not,
-                                         'or'  : conjure_keyword_or,
-                                         '['   : conjure_left_square_bracket,
-                                         ']'   : conjure_right_square_bracket,
+                                         '('    : conjure_left_parenthesis,
+                                         ')'    : conjure_right_parenthesis,
+                                         '+'    : conjure_plus_sign,
+                                         '+='   : conjure_modify_plus,
+                                         ','    : conjure_comma,
+                                         '-'    : conjure_minus_sign,
+                                         '.'    : conjure_dot,
+                                         ':'    : conjure_colon,
+                                         '<='   : conjure_less_than_or_equal,
+                                         '='    : conjure_equal_sign,
+                                         '=='   : conjure_compare_equal,
+                                         'as'   : conjure_keyword_as,
+                                         'else' : conjure_keyword_else,
+                                         'if'   : conjure_keyword_if,
+                                         'in'   : conjure_keyword_in,
+                                         'not'  : conjure_keyword_not,
+                                         'or'   : conjure_keyword_or,
+                                         '['    : conjure_left_square_bracket,
+                                         ']'    : conjure_right_square_bracket,
                                      }.__getitem__
 
 
