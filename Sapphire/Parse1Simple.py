@@ -7,6 +7,31 @@ def gem():
 
 
     @share
+    def parse1_statement_delete(m):
+        if m.end('newline') is not -1:
+            raise_unknown_line(1)
+
+        keyword = conjure_keyword_delete(m.group())
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
+
+        right = parse1_normal_expression_list()
+
+        if qk() is not none:
+            raise_unknown_line(2)
+
+        newline = qn()
+
+        if newline is none:
+            raise_unknown_line(3)
+
+        return DeleteExpression(keyword, right, newline)
+
+
+    @share
     def parse1_statement_pass(m):
         if m.end('newline') is -1:
             raise_unknown_line(1)
@@ -16,47 +41,24 @@ def gem():
 
     @share
     def parse1_statement_return(m):
-        if m.end('newline') is not -1:
-            return keyword_return
+        keyword = conjure_keyword_return(m.group())
 
-        keyword_return = conjure_keyword_return(m.group())
+        if m.end('newline') is not -1:
+            return keyword
 
         j = m.end()
 
         wi(j)
         wj(j)
 
-        atom = tokenize_atom()
+        right = parse1_normal_expression_list()
+
+        if qk() is not none:
+            raise_unknown_line(2)
 
         newline = qn()
 
-        if newline is not none:
-            return StatementReturnExpression(keyword_return, atom, newline)
+        if newline is none:
+            raise_unknown_line(3)
 
-        operator = tokenize_operator()
-
-        if operator.is_arguments_0:
-            newline = qn()
-
-            if newline is not none:
-                return StatementReturnExpression(
-                           keyword_return,
-                           CallExpression(atom, operator),
-                           newline,
-                       )
-
-            raise_unknown_line(1)
-
-        if operator.is_left_parenthesis:
-            if qn() is not none:
-                raise_unknown_line(2)
-
-            expression = parse1_call_expression__left__operator(atom, operator)
-            newline    = qn()
-
-            if newline is none:
-                raise_unknown_line(3)
-            
-            return StatementReturnExpression(keyword_return, expression, newline)
-
-        raise_unknown_line(3)
+        return ReturnExpression(keyword, right, newline)

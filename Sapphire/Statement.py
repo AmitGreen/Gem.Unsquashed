@@ -362,6 +362,51 @@ def gem():
 
 
     @share
+    class KeywordExpressionStatement(Object):
+        __slots__ = ((
+            'keyword',                  #   KeywordDelete | KeywordReturn
+            'expression',               #   Expression
+            'newline',                  #   newline
+        ))
+
+
+        def __init__(t, keyword, expression, newline):
+            t.keyword    = keyword
+            t.expression = expression
+            t.newline    = newline
+
+
+        def  __repr__(t):
+            return arrange('<%s %r %r %r>', t.__class__.__name__, t.keyword, t.expression, t.newline)
+
+
+        def display_token(t):
+            return arrange('<%s %s %s %s>',
+                           t.display_name,
+                           t.keyword   .display_token,
+                           t.expression.display_token(),
+                           t.newline   .display_token())
+
+
+        def write(t, w):
+            w(t.keyword.s)
+            t.expression.write(w)
+            w(t.newline.s)
+
+
+    @share
+    class DeleteExpression(KeywordExpressionStatement):
+        __slots__    = (())
+        display_name = 'delete'
+
+
+    @share
+    class ReturnExpression(KeywordExpressionStatement):
+        __slots__    = (())
+        display_name = 'return'
+
+
+    @share
     class ModuleAsFragment(Object):
         __slots__ = ((
             'module',                   #   Expression
@@ -588,9 +633,6 @@ def gem():
 
 
         def __init__(t, keyword_import, module, newline):
-            assert type(module) is not String
-            assert newline.is_token_newline
-
             t.keyword_import = keyword_import
             t.module         = module
             t.newline        = newline
@@ -601,8 +643,8 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<import <%s> %s %s>',
-                           t.keyword_import.s,
+            return arrange('<import %s %s %s>',
+                           t.keyword.display_token(),
                            t.module .display_token(),
                            t.newline.display_token())
 
@@ -625,35 +667,3 @@ def gem():
         __slots__    = (())
         display_name = 'return'
         keyword      = 'return'
-
-
-    @share
-    class StatementReturnExpression(Object):
-        __slots__ = ((
-            'keyword_return',           #   KeywordReturn
-            'expression',               #   String
-            'newline',                  #   String
-        ))
-
-
-        def __init__(t, keyword_return, expression, newline):
-            t.keyword_return = keyword_return
-            t.expression     = expression
-            t.newline        = newline
-
-
-        def  __repr__(t):
-            return arrange('<StatementReturnExpression %r %r %r>', t.keyword_return, t.expression, t.newline)
-
-
-        def display_token(t):
-            return arrange('<return <%s> %s %s>',
-                           t.keyword_return.s,
-                           t.expression.display_token(),
-                           t.newline   .display_token())
-
-
-        def write(t, w):
-            w(t.keyword_return.s)
-            t.expression.write(w)
-            w(t.newline.s)

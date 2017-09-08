@@ -521,7 +521,7 @@ def gem():
 
 
     #
-    #   10. Normal-Expression-List
+    #   10. Normal-Expression-List (Python 2.7.14rc1 grammer calls this 'exprlist')
     #
     @share
     def parse1_normal_expression_list():

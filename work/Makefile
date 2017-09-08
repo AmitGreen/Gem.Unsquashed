@@ -141,7 +141,7 @@ clean:
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
-	rm -f tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
+	rm -f t.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f zc.py ze.py zj.py zm.py zpa.py zps.py zpt.py zso.py
 
 
@@ -243,6 +243,7 @@ links:
 	ln -s ../Gem/StringOutput.py                    so.py
 	ln -s ../Gem/SimpleStringIO.py                  ssio.py
 	ln -s ../Gem/System.py                          sy.py
+	ln -s test.py                                   t.py
 	ln -s ../Gem/Traceback.py                       tb.py
 	ln -s ../Tremolite/CreateMatch.py               tcm.py
 	ln -s ../Tremolite/Core.py                      tco.py
