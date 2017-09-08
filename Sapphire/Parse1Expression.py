@@ -47,7 +47,6 @@ def gem():
 
         while 7 is 7:
             assert qk() is none
-            assert qn() is none
 
             if operator.is_dot:
                 name = tokenize_name()

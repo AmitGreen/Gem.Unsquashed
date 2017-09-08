@@ -134,7 +134,7 @@ clean:
 	rm -f   hb.py hc.py hel.py hem.py hj.py hk.py hma.py hmc.py hoe.py hpt.py hs.py hu.py hx.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
-	rm -f lr.txt
+	rm -f l.txt lr.txt
 	rm -f m m.py
 	rm -f o.py
 	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
@@ -218,6 +218,7 @@ links:
 	ln -s ../Ivory/Main.py                          iv.py
 	ln -s ../Gem/IO.py                              io.py
 	ln -s ../Junk/Boot.py                           jb.py
+	ln -s log.txt                                   l.txt
 	ln -s ../OtherLicenses/README.txt               lr.txt
 	ln -s Makefile                                  m
 	ln -s ../Gem/Map.py                             m.py
