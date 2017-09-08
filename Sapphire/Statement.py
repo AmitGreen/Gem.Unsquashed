@@ -217,15 +217,13 @@ def gem():
 
     @share
     class ForHeader(ForOrWithHeader):
-        __slots__ = (())
-
-        display_name = 'with'
+        __slots__    = (())
+        display_name = 'for'
 
 
     @share
     class WithHeader(ForOrWithHeader):
-        __slots__ = (())
-
+        __slots__    = (())
         display_name = 'with'
 
 

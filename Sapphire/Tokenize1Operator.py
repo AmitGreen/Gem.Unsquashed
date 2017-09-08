@@ -61,13 +61,21 @@ def gem():
             conjure = find_operator_conjure_function(operator_s)
 
             if m.end('comment_newline') is -1:
-                if (conjure is conjure_right_parenthesis) or (conjure is conjure_right_square_bracket):
+                if is_close_operator(operator_s) is 7:
                     d = qd()
 
                     if d is 0:
                         raise_unknown_line(2)
 
+                    operator_end = m.end('operator')
+
+                    r = conjure(s[qi() : operator_end])
+
                     wd(d - 1)
+                    wi(operator_end)
+                    wj(m.end())
+
+                    return r
 
                 j = m.end()
                 r = conjure(s[qi() : j])
@@ -88,7 +96,7 @@ def gem():
 
                 return conjure(s[qi():operator_end])
 
-            if (conjure is conjure_right_parenthesis) or (conjure is conjure_right_square_bracket):
+            if is_close_operator(operator_s) is 7:
                 if d is 1:
                     i = m.end('operator')
 

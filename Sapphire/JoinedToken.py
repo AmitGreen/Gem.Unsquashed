@@ -79,6 +79,13 @@ def gem():
 
 
     @share
+    class Comma_RightSquareBracket(BaseDualOperator):
+        __slots__      = (())
+        #   [
+        display_name   = ',]'
+
+
+    @share
     class EmptyMap(BaseDualOperator):
         __slots__                          = (())
         display_name                       = '{:}'

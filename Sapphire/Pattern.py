@@ -158,7 +158,7 @@ def gem():
                   )                                                             #   Must preceed 'name'
                 | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must also preceed 'name'
                 | G('atom', name | number) + ow
-                | G('operator', ANY_OF('-', right_parenthesis, right_brace)) + ow
+                | G('operator', ANY_OF('-', right_parenthesis, right_brace, right_square_bracket)) + ow
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
                 | G(left_brace__ow)          + P(G(right_brace)          + ow)
@@ -168,19 +168,18 @@ def gem():
         MATCH(
            'operator_match',
             (
-                  (
-                        G(
-                            'operator',
-                             (
-                                   ANY_OF('+', '<', '=') + P('=')
-                                 | colon | comma | dot
-                                 | keyword_as | keyword_else | 'i' + ANY_OF('f', 'n') | keyword_or
-                                 | right_parenthesis
-                                 | right_square_bracket
-                             ),
-                        )
-                      + ow
-                  )
+                  G(
+                      'operator',
+                       (
+                             ANY_OF('+', '<', '=') + P('=')
+                           | ANY_OF(
+                                 colon, comma,
+                                 dot,
+                                 right_brace, right_parenthesis, right_square_bracket,
+                             )
+                           | keyword_as | keyword_else | 'i' + ANY_OF('f', 'n') | keyword_or
+                       ),
+                  ) + ow
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis) + ow)
                 | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
             ) + Q(comment_newline),

@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 7
+    show = 0
 
 
     require_gem('Sapphire.Core')
@@ -107,6 +107,8 @@ def gem():
         for LOOP in parse_context:
             with parse_context:
                 for s in iterate_lines:
+                    assert qd() is 0
+
                     m = line_match1(s)
 
                     if m is none:

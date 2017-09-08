@@ -233,7 +233,7 @@ def gem():
     @share
     class TernaryExpression(BookcasedDualExpression):
         __slots__    = (())
-        display_nane = '?:'
+        display_name = '?:'
 
 
     @share
