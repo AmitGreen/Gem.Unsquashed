@@ -97,7 +97,7 @@ def gem():
 
     @share
     def parse1_statement_import(m1):
-        if m1.end('newline') is not -1:
+        if m1.end('comment_newline') is not -1:
             raise_unknown_line(1)
 
         keyword_import = KeywordImport(m1.group())

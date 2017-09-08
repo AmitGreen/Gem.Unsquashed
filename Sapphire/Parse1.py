@@ -127,7 +127,7 @@ def gem():
                             assert qd() is 0
                             continue
 
-                        if m.start('newline') is not -1:
+                        if m.start('comment_newline') is not -1:
                             append(
                                 StatementExpression(
                                     m.group('indented'),
@@ -156,6 +156,17 @@ def gem():
 
                     if keyword is not none:
                         append(find_parse1_colon_line(keyword)(m))
+
+                        assert qd() is 0
+                        continue
+
+                    if m.start('something') is not -1:
+                        append(
+                            parse1_statement_expression__atom(
+                                m.group('indented'),
+                                analyze_atom(m)
+                            ),
+                        )
 
                         assert qd() is 0
                         continue
