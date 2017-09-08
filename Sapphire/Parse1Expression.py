@@ -566,7 +566,9 @@ def gem():
     #   11.  Compare-Expression (Python 2.7.14rc1 grammer calls this 'comparasion')
     #
     @share
-    def parse1_compare_expression__left__operator(left, compare_operator):
+    def parse1_compare_expression__left_operator(left, compare_operator):
+        assert compare_operator.is_compare_operator
+
         right = parse1_normal_expression()
 
         operator = qk()
@@ -626,6 +628,8 @@ def gem():
     #
     @share
     def parse1_not_expression__operator(not_operator):
+        assert not_operator.is_keyword_not
+
         right = parse1_atom()
 
         operator = qk()
@@ -758,7 +762,7 @@ def gem():
             wk(none)
 
         if operator.is_compare_operator:
-            left = parse1_compare_expression__left__operator(left, operator)
+            left = parse1_compare_expression__left_operator(left, operator)
 
             operator = qk()
 
@@ -817,7 +821,7 @@ def gem():
             wk(none)
 
         if operator.is_compare_operator:
-            left = parse1_compare_expression__left__operator(left, operator)
+            left = parse1_compare_expression__left_operator(left, operator)
 
             operator = qk()
 
