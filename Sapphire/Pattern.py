@@ -41,6 +41,7 @@ def gem():
         keyword_if          = NAME('if',                  'if')
         keyword_import      = NAME('import',              'import')
         keyword_in          = NAME('in',                  'in')
+        keyword_is          = NAME('is',                  'is')
         keyword_not         = NAME('not',                 'not')
         keyword_or          = NAME('or',                  'or')
         keyword_try         = NAME('try',                 'try')
@@ -83,6 +84,9 @@ def gem():
         #
         #   More complicated patterns
         #
+        keyword_is__ow  = NAME('keyword_is__ow',  keyword_is  + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore)))
+        keyword_not__ow = NAME('keyword_not__ow', keyword_not + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore)))
+
         left_brace__ow          = NAME('left_brace__ow',          left_brace + ow)
         left_square_bracket__ow = NAME('left_square_bracket__ow', left_square_bracket + ow)
         left_parenthesis__ow    = NAME('left_parenthesis__ow',    left_parenthesis + ow)
@@ -182,9 +186,18 @@ def gem():
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
                 | (
-                        G('keyword', keyword_as | keyword_else | 'i' + ANY_OF('f', 'n') | keyword_or)
+                        G(
+                            'keyword',
+                            (
+                                  keyword_as
+                                | keyword_else
+                                | 'i' + ANY_OF('f', 'n')
+                                | keyword_or
+                            ),
+                        )
                       + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
                   )                                                             #   Must preceed 'name'
+                | G(keyword_is__ow) + Q(keyword_not__ow)
             ) + Q(comment_newline),
         )
 
@@ -265,7 +278,7 @@ def gem():
             (
                   G('indented', ow)
                 + P(
-                       G('keyword', keyword_except | keyword_try) + ow + colon + ow
+                       G('keyword', keyword_else | keyword_except | keyword_try) + ow + colon + ow
                       |G('token', '@' | name) + ow
                   )
                 + P(P(pound_G_comment) + G('newline', LINEFEED))

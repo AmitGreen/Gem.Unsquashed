@@ -110,6 +110,16 @@ def gem():
 
 
     @share
+    class IsNot(BaseDualOperator):
+        __slots__                        = (())
+        display_name                     = 'is not'
+        is_compare_operator              = true
+        is_end_of_arithmetic_expression  = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_unary_expression       = true
+
+    @share
     class RightParenthesis_Colon_Newline(BaseDualOperator):
         __slots__                                  = (())
         display_name                               = r'):\n'

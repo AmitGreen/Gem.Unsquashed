@@ -7,6 +7,14 @@ def gem():
 
 
     @share
+    def parse1_statement_else_colon(m):
+        if m.end('newline') is -1:
+            raise_unknown_line(1)
+
+        return conjure_else_colon(m.group())
+
+
+    @share
     def parse1_statement_except_colon(m):
         if m.end('newline') is -1:
             raise_unknown_line(1)

@@ -116,6 +116,12 @@ def gem():
         keyword                          = 'else'
 
 
+    class KeywordElseColon(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'else:'
+        keyword      = 'else:'
+
+
     class KeywordExceptColon(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'except:'
@@ -167,6 +173,18 @@ def gem():
         keyword                          = 'in'
 
 
+    @share
+    class KeywordIs(KeywordAndOperatorBase):
+        __slots__                        = (())
+        display_name                     = 'is'
+        is_compare_operator              = true
+        is_end_of_arithmetic_expression  = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_unary_expression       = true
+        keyword                          = 'is'
+
+
     @export
     class KeywordImport(KeywordAndOperatorBase):
         __slots__    = (())
@@ -179,6 +197,22 @@ def gem():
         display_name   = 'not'
         is_keyword_not = true
         keyword        = 'not'
+
+
+        #
+        #   NOTE:
+        #       The following are actually being set for the 'not in' keyword, which the 'not' keyword is a
+        #       sub-part of.
+        #
+        #       This means than when [partially] parsing the 'not in' keyword by just parsing the first keyword,
+        #       it will still be treated properly in expression parsing (which has not yet parsed the following
+        #       'in' keyword).
+        #
+        is_compare_operator              = true
+        is_end_of_arithmetic_expression  = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_unary_expression       = true
 
 
     class KeywordOr(KeywordAndOperatorBase):
@@ -512,6 +546,7 @@ def gem():
     conjure_compare_equal        = produce_conjure_by_name('operator-conmpare-equal',       OperatorCompareEqual) 
     conjure_dot                  = produce_conjure_by_name('operator-dot',                  OperatorDot) 
     conjure_equal_sign           = produce_conjure_by_name('operator-equal-sign',           OperatorEqualSign) 
+    conjure_else_colon           = produce_conjure_by_name('keyword-else-colon',            KeywordElseColon) 
     conjure_except_colon         = produce_conjure_by_name('keyword-except-colon',          KeywordExceptColon) 
     conjure_head_index           = produce_conjure_by_name('operator-head-index',           OperatorHeadIndex) 
     conjure_keyword_as           = produce_conjure_by_name('keyword-as',                    KeywordAs) 
@@ -521,6 +556,7 @@ def gem():
     conjure_keyword_function     = produce_conjure_by_name('keyword-function',              KeywordFunction) 
     conjure_keyword_if           = produce_conjure_by_name('keyword-if',                    KeywordIf) 
     conjure_keyword_in           = produce_conjure_by_name('keyword-in',                    KeywordIn) 
+    conjure_keyword_is           = produce_conjure_by_name('keyword-is',                    KeywordIs) 
     conjure_keyword_not          = produce_conjure_by_name('keyword-not',                   KeywordNot) 
     conjure_keyword_or           = produce_conjure_by_name('keyword-or',                    KeywordOr) 
     conjure_keyword_return       = produce_conjure_by_name('keyword-return',                KeywordReturn) 
@@ -589,6 +625,7 @@ def gem():
                                          'else' : conjure_keyword_else,
                                          'if'   : conjure_keyword_if,
                                          'in'   : conjure_keyword_in,
+                                         'is'   : conjure_keyword_is,
                                          'not'  : conjure_keyword_not,
                                          'or'   : conjure_keyword_or,
                                          '['    : conjure_left_square_bracket,
@@ -605,6 +642,7 @@ def gem():
         'conjure_colon_newline',            conjure_colon_newline,
         'conjure_comma',                    conjure_comma,
         'conjure_dot',                      conjure_dot,
+        'conjure_else_colon',               conjure_else_colon,
         'conjure_equal_sign',               conjure_equal_sign,
         'conjure_except_colon',             conjure_except_colon,
         'conjure_head_index',               conjure_head_index,
@@ -612,6 +650,8 @@ def gem():
         'conjure_keyword_delete',           conjure_keyword_delete,
         'conjure_keyword_for',              conjure_keyword_for,
         'conjure_keyword_if',               conjure_keyword_if,
+        'conjure_keyword_is',               conjure_keyword_is,
+        'conjure_keyword_not',              conjure_keyword_not,
         'conjure_keyword_return',           conjure_keyword_return,
         'conjure_keyword_with',             conjure_keyword_with,
         'conjure_left_brace',               conjure_left_brace,

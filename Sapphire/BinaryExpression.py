@@ -4,6 +4,7 @@
 @gem('Sapphire.Expression')
 def gem():
     require_gem('Sapphire.Elemental')
+    require_gem('Sapphire.JoinedToken')
 
 
     class BinaryExpression(Object):
@@ -54,6 +55,18 @@ def gem():
 
 
     @share
+    class CompareDifferentExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = 'is-not'
+
+
+    @share
+    class CompareIdentityExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = 'is'
+
+
+    @share
     class CommaExpression(BinaryExpression):
         __slots__    = (())
         display_name = ','
@@ -83,5 +96,7 @@ def gem():
         display_name = 'or'
 
 
+    IsNot                  .compare_expression_meta = CompareDifferentExpression
+    KeywordIs              .compare_expression_meta = CompareIdentityExpression
     OperatorCompareEqual   .compare_expression_meta = CompareEqualExpression
     OperatorLessThanOrEqual.compare_expression_meta = LessThanOrEqualExpression

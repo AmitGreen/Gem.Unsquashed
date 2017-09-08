@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 0
+    show = 7
 
 
     require_gem('Sapphire.Core')
@@ -73,6 +73,7 @@ def gem():
 
 
     find_parse1_colon_line = {
+                                 'else'   : parse1_statement_else_colon,
                                  'except' : parse1_statement_except_colon,
                                  'try'    : parse1_statement_try_colon,
                              }.__getitem__

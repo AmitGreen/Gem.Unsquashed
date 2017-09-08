@@ -84,19 +84,24 @@ def gem():
                 return r
 
             #
-            #<similiar-to: {left_square_bracket__ow} below>
+            #<similiar-to: '{keyword_is,left_square_bracket}__ow' below>
             #
             #   Differences:
-            #       Uses *parenthesis* instead of *square_bracket*
+            #
+            #       See each of them for documented differences
+            #
+            #   NOTE:
+            #       As this is an 'operator' the meaning of '()'  must be 'Arguments_0' instead of 'Tuple_0'
+            #       (Tuple_0 is an atom)
             #
             left_end = m.end('left_parenthesis__ow')
 
             if left_end is not -1:
                 left    = conjure_left_parenthesis(s[qi() : left_end])
-                RP_s = m.group('right_parenthesis')
+                right_s = m.group('right_parenthesis')
 
-                if RP_s is not none:
-                    right = conjure_right_parenthesis(RP_s)
+                if right_s is not none:
+                    right = conjure_right_parenthesis(right_s)
 
                     wi(m.end('right_parenthesis'))
                     wj(m.end())
@@ -113,10 +118,11 @@ def gem():
             #</similiar-to>
 
             #
-            #<similiar-to: {left_parenthesis__ow} below>
+            #<similiar-to: {left_parenthesis__ow} above>
             #
             #   Differences:
             #       Uses *square_bracket* instead of *parenthesis* 
+            #       Uses EmptyIndex       instead of Arguments_0
             #
             left_end = m.end('left_square_bracket__ow')
 
@@ -151,6 +157,53 @@ def gem():
                 wj(j)
 
                 return r
+
+            #
+            #<similiar-to: {left_parenthesis__ow} above>
+            #
+            #   Differences:
+            #       Uses keyword_is*  instead of left_parenthesis* 
+            #       Uses keyword_not* instead of right_parenthesis* 
+            #       Uses IsNot        instead of Arguments_0
+            #       Does not increment 'd' when parsing the 'is' keyword.
+            #
+            #   NOTE:
+            #       When parsing 'is not' the whitespace after 'not' is treated as part of the 'not' keyword
+            #
+            #       This is different than ')', ']' & '}', none of which treat the whitespace as part of
+            #       of the closing operator.
+            #
+            #       This subtle difference is implemented in three ways:
+            #
+            #           1.  By the regular pattern, which includes the whitespace as part of the 'not' keyword
+            #               (but not included as part of ')', ']', and '}')
+            #
+            #           2.  The code below on setting 'wi' is different than the code above.
+            #
+            #           3.  The 'return IsNot()' statement is also optimized since it is able to use 'right_s'
+            #               to construct the 'not' keyword.
+            #
+            left_end = m.end('keyword_is__ow')
+
+            if left_end is not -1:
+                left    = conjure_keyword_is(s[qi() : left_end])
+                right_s = m.group('keyword_not__ow')
+
+                if right_s is not none:
+                    j = m.end()
+
+                    wi(j)
+                    wj(j)
+
+                    return IsNot(left, conjure_keyword_not(right_s))
+
+                j = m.end()
+
+                wi(j)
+                wj(j)
+
+                return left
+            #</similiar-to>
 
             raise_unknown_line(3)
 

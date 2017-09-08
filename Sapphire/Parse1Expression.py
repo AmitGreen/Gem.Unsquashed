@@ -915,7 +915,43 @@ def gem():
 
             wk(none)
 
-        raise_unknown_line(1)
+        if operator.is_compare_operator:
+            left = parse1_compare_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
+                    
+            if operator.is_end_of_ternary_expression_list:
+                return left
+
+            wk(none)
+
+        if operator.is_keyword_or:
+            left = parse1_boolean_or_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator.is_end_of_ternary_expression_list:
+                return left
+
+            wk(none)
+
+        if operator.is_keyword_if:
+            left = parse1_ternary_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator.is_end_of_ternary_expression_list:
+                return left
+
+            wk(none)
+
+        raise_unknown_line(3)
 
 
     #
