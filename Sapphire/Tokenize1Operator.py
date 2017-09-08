@@ -141,6 +141,17 @@ def gem():
                 return left
             #</similiar-to>
 
+            keyword_s = m.group('keyword')
+
+            if keyword_s is not none:
+                j = m.end()
+                r = find_operator_conjure_function(keyword_s)(s[qi() : j])
+
+                wi(j)
+                wj(j)
+
+                return r
+
             raise_unknown_line(3)
 
 
@@ -247,5 +258,23 @@ def gem():
 
             return left
         #</similiar-to>
+
+        keyword_s = m.group('keyword')
+
+        if keyword_s is not none:
+            if qd() is 0:
+                keyword_end = m.end('keyword')
+
+                r = find_operator_conjure_function(keyword_s)(s[qi() : keyword_end])
+
+                wn(conjure_token_newline(s[keyword_end : ]))
+
+                return r
+
+            r = find_operator_conjure_function(keyword_s)(s[qi() : ])
+
+            skip_tokenize_prefix()
+
+            return r
 
         raise_unknown_line(4)

@@ -177,11 +177,14 @@ def gem():
                                  dot,
                                  right_brace, right_parenthesis, right_square_bracket,
                              )
-                           | keyword_as | keyword_else | 'i' + ANY_OF('f', 'n') | keyword_or
                        ),
                   ) + ow
-                | G(left_parenthesis__ow)    + P(G(right_parenthesis) + ow)
+                | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
+                | (
+                        G('keyword', keyword_as | keyword_else | 'i' + ANY_OF('f', 'n') | keyword_or)
+                      + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
+                  )                                                             #   Must preceed 'name'
             ) + Q(comment_newline),
         )
 
