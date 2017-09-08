@@ -11,6 +11,9 @@ def gem():
         ))
 
 
+        is_method_call_statement = false
+
+
         def __init__(t, left, arguments):
             assert type(arguments) is not String
 
@@ -38,6 +41,9 @@ def gem():
             'operator',                 #   OperatorDot
             'right',                    #   Identifier
         ))
+
+
+        is_method_call_statement = false
 
 
         def __init__(t, left, operator, right):
@@ -72,6 +78,9 @@ def gem():
             'right',                    #   Identifier
             'arguments',                #   Arguments*
         ))
+
+
+        is_method_call_statement = false
 
 
         def __init__(t, left, dot, right, arguments):

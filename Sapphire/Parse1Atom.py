@@ -6,6 +6,7 @@ def gem():
     show = 0
 
 
+    @share
     def parse1__list_expression__left_square_bracket(left_square_bracket):
         #
         #   1
@@ -96,6 +97,7 @@ def gem():
             many.append(operator_7)
 
 
+    @share
     def parse1__parenthesized_expression__left_parenthesis(left_parenthesis):
         #
         #   1

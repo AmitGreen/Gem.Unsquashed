@@ -34,68 +34,99 @@ def gem():
 
     @share
     def parse1_statement_expression__atom(indented, left):
-        s = qs()
+        if left.is_atom:
+            pass
+        elif left.is_keyword_not:
+            left = parse1_not_expression__operator(left)
+        elif left.is_minus_sign:
+            left = parse1_negative_expression__operator(left)
+        elif left.is_left_parenthesis:
+            left = parse1__parenthesized_expression__left_parenthesis(left)
+        elif left.is_left_square_bracket:
+            left = parse1__list_expression__left_square_bracket(left)
+        else:
+            raise_unknown_line(1)
 
-        if show is 7:
-            my_line('indented: %r, left: %r; s: %r', indented, left, s[qj():])
+        operator = qk()
 
-        while 7 is 7:
+        if operator is not none:
+            wk(none)
+        else:
+            newline = qn()
+
+            if newline is not none:
+                return StatementExpression(indented, left, newline)
+
             operator = tokenize_operator()
 
-            if operator.is_dot:
-                right = tokenize_name()
+        if operator.is_postfix_operator:
+            left = parse1_postfix_expression__left__operator(left, operator, indented)
 
-                if qn() is not none:
-                    raise_unknown_line(1)
+            if left.is_method_call_statement:
+                return left
 
-                operator_2 = tokenize_operator()
+            operator = qk()
 
-                if qn() is not none:
-                    raise_unknown_line(2)
-
-                if operator_2.is_equal_sign:
-                    return parse1_statement_assign__left__equal_sign(
-                               indented,
-                               MemberExpression_1(left, operator, right),
-                               operator_2,
-                           )
-
-                if operator_2.is_left_parenthesis:
-                    arguments = parse1_arguments__left_parenthesis(operator_2)
-                    newline   = qn()
-
-                    if newline is none:
-                        raise_unknown_line(3)
-
-                    return StatementMethodCall(indented, left, operator, right, arguments, newline)
-                
-                my_line('operator_2: %s', operator_2)
-                raise_unknown_line(4)
-
-            if operator.is_arguments_0:
+            if operator is none:
                 newline = qn()
 
                 if newline is not none:
-                    return StatementCall(indented, left, operator, newline)
+                    return StatementExpression(indented, left, newline)
 
-                left = CallExpression(left, operator)
-                continue
+                raise_unknown_line(1)
 
-            if operator.is_left_parenthesis:
-                arguments = parse1_arguments__left_parenthesis(operator)
-                newline   = qn()
+            wk(none)
+
+        if operator.is_compare_operator:
+            left = parse1_compare_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                newline = qn()
 
                 if newline is not none:
-                    return StatementCall(indented, left, arguments, newline)
+                    return StatementExpression(indented, left, newline)
 
-                left = CallExpression(left, arguments)
-                continue
+                raise_unknown_line(2)
 
-            if operator.is_equal_sign:
-                return parse1_statement_assign__left__equal_sign(indented, left, operator)
+            wk(none)
 
-            if operator.is_modify_operator:
-                return parse1_statement_modify__left__operator(indented, left, operator)
+        if operator.is_keyword_or:
+            left = parse1_boolean_or_expression__left_operator(left, operator)
 
-            my_line('operator: %s', operator)
-            raise_unknown_line(5)
+            operator = qk()
+
+            if operator is none:
+                newline = qn()
+
+                if newline is not none:
+                    return StatementExpression(indented, left, newline)
+
+                raise_unknown_line(3)
+
+            wk(none)
+
+        if operator.is_keyword_if:
+            left = parse1_ternary_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                newline = qn()
+
+                if newline is not none:
+                    return StatementExpression(indented, left, newline)
+
+                raise_unknown_line(4)
+
+            wk(none)
+
+        if operator.is_equal_sign:
+            return parse1_statement_assign__left__equal_sign(indented, left, operator)
+
+        if operator.is_modify_operator:
+            return parse1_statement_modify__left__operator(indented, left, operator)
+
+        my_line('operator: %s', operator)
+        raise_unknown_line(5)

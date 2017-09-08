@@ -583,7 +583,7 @@ def gem():
 
 
     @share
-    class StatementMethodCall(Object):
+    class MethodCallStatement_1(Object):
         __slot__ = ((
             'indented',                 #   String+
             'left',                     #   Expression
@@ -592,6 +592,9 @@ def gem():
             'arguments',                #   Arguments*
             'newline',                  #   String+
         ))
+
+
+        is_method_call_statement = true
 
 
         def __init__(t, indented, left, dot, right, arguments, newline):
@@ -604,12 +607,12 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<StatementMethodCall %r %r %r %r %r %r>',
+            return arrange('<MethodCallStatement_1 %r %r %r %r %r %r>',
                            t.indented, t.left, t.dot, t.right, t.arguments, t.newline)
 
 
         def display_token(t):
-            return arrange('<method-call-statement %s %s %s %s %s %s>',
+            return arrange('<method-call-statement-1 %s %s %s %s %s %s>',
                            portray_string(t.indented),
                            t.left.display_token(),
                            t.dot.display_token(),
@@ -625,6 +628,62 @@ def gem():
             t.right.write(w)
             t.arguments.write(w)
             t.newline.write(w)
+
+
+    @share
+    class MethodCallStatement_2(Object):
+        __slot__ = ((
+            'indented',                 #   String+
+            'left',                     #   Expression
+            'dot_1',                    #   OperatorDot
+            'middle',                   #   Identifier
+            'dot_2',                    #   OperatorDot
+            'right',                    #   Identifier
+            'arguments',                #   Arguments*
+            'newline',                  #   String+
+        ))
+
+
+        is_method_call_statement = true
+
+
+        def __init__(t, indented, left, dot_1, middle, dot_2, right, arguments, newline):
+            t.indented  = indented
+            t.left      = left
+            t.dot_1     = dot_1
+            t.middle    = middle
+            t.dot_2     = dot_2
+            t.right     = right
+            t.arguments = arguments
+            t.newline   = newline
+
+
+        def __repr__(t):
+            return arrange('<MethodCallStatement_2 %r %r %r %r %r %r %r %r>',
+                           t.indented, t.left, t.dot_1, t.middle, t.dot_2, t.right, t.arguments, t.newline)
+
+
+        def display_token(t):
+            return arrange('<method-call-statement-2 %s %s %s %s %s %s %s %s>',
+                           portray_string(t.indented),
+                           t.left     .display_token(),
+                           t.dot_1    .display_token(),
+                           t.middle   .display_token(),
+                           t.dot_2    .display_token(),
+                           t.right    .display_token(),
+                           t.arguments.display_token(),
+                           t.newline  .display_token())
+
+
+        def write(t, w):
+            w(t.indented)
+            t.left     .write(w)
+            t.dot_1    .write(w)
+            t.middle   .write(w)
+            t.dot_2    .write(w)
+            t.right    .write(w)
+            t.arguments.write(w)
+            t.newline  .write(w)
 
 
     @share

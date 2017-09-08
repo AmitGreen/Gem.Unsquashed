@@ -42,7 +42,7 @@ def gem():
     #           | [ternary-expression] ':' [ternary-expression] ':' [ternary-expression]
     #
     @share
-    def parse1_postfix_expression__left__operator(left, operator):
+    def parse1_postfix_expression__left__operator(left, operator, indented = 0):
         assert operator.is_postfix_operator
 
         while 7 is 7:
@@ -162,7 +162,16 @@ def gem():
 
                         operator_2 = parse1_arguments__left_parenthesis(operator_2)
 
-                    left = MethodCall_2(left, operator, name, operator_2)
+                    if indented is not 0:
+                        newline = qn()
+
+                        if newline is not none:
+                            if qk() is not none:
+                                raise_unknown_line(3.3)
+
+                            return MethodCallStatement_1(indented, left, operator, name, operator_2, newline)
+
+                    left = MethodCall_1(left, operator, name, operator_2)
 
                     operator = qk()
 

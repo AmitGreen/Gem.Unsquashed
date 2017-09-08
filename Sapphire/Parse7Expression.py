@@ -307,4 +307,4 @@ def gem():
                        indented, conjure_identifier(name), arguments, conjure_token_newline(ow_comment_newline),
                    )
 
-        return StatementMethodCall(indented, conjure_identifier(name), dot, right, arguments, ow_comment_newline)
+        return MethodCallStatement_1(indented, conjure_identifier(name), dot, right, arguments, ow_comment_newline)

@@ -39,8 +39,9 @@ def gem():
 
     @share
     class IndexExpression(PostfixExpression):
-        __slots__    = (())
-        display_name = []
+        __slots__               = (())
+        display_name            = []
+        is_method_call_statement = false
 
 
     @share
