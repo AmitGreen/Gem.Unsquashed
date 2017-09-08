@@ -115,7 +115,7 @@ def gem():
                    keyword_if,
                    condition,
                    operator,
-                   parse1_statement_expression__symbol('', left),
+                   parse1_statement_expression__atom('', left),
                )
 
 

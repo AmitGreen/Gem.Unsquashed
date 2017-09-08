@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 7
+    show = 0
 
 
     require_gem('Sapphire.Core')
@@ -111,15 +111,15 @@ def gem():
                 for s in iterate_lines:
                     assert qd() is 0
 
-                    m = line_match1(s)
+                    m = line_match(s)
 
                     if m is none:
                         raise_unknown_line(1)
 
-                    token = m.group('token')
+                    atom_s = m.group('atom')
 
-                    if token is not none:
-                        parse1_line = lookup_parse1_line(token)
+                    if atom_s is not none:
+                        parse1_line = lookup_parse1_line(atom_s)
 
                         if parse1_line is not none:
                             append(parse1_line(m))
@@ -131,21 +131,21 @@ def gem():
                             append(
                                 StatementExpression(
                                     m.group('indented'),
-                                    conjure_identifier(token),
-                                    conjure_token_newline(s[m.end('token'):]),
+                                    conjure_identifier(atom_s),
+                                    conjure_token_newline(s[m.end('atom'):]),
                                 ),
                             )
 
                             assert qd() is 0
                             continue
 
-                        wi(m.end('token'))
+                        wi(m.end('atom'))
                         wj(m.end())
 
                         append(
-                            parse1_statement_expression__symbol(
+                            parse1_statement_expression__atom(
                                 m.group('indented'),
-                                conjure_identifier(token),
+                                conjure_identifier(atom_s),
                             ),
                         )
 

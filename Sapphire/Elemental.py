@@ -644,6 +644,11 @@ def gem():
     is_close_operator = { ')' : 7, ']' : 7, '}' : 7 }.get
 
 
+    lookup_keyword_conjure_function = {
+                                          'not' : conjure_keyword_not,
+                                      }.get
+
+
     share(
         'conjure_colon',                    conjure_colon,
         'conjure_colon_newline',            conjure_colon_newline,
@@ -672,4 +677,5 @@ def gem():
         'find_atom_type',                   find_atom_type,
         'find_operator_conjure_function',   find_operator_conjure_function,
         'is_close_operator',                is_close_operator,
+        'lookup_keyword_conjure_function',  lookup_keyword_conjure_function,
     )

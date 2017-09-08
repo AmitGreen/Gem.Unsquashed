@@ -52,7 +52,7 @@ def gem():
         m = operator_match(s, qj())
 
         if m is none:
-            my_line(portray_string(s[qj() : ]))
+            #my_line(portray_string(s[qj() : ]))
             raise_unknown_line(1)
 
         if m.end('comment_newline') is -1:
@@ -63,6 +63,7 @@ def gem():
                     d = qd()
 
                     if d is 0:
+                        my_line('d: %d; operator_s: %r; s: %s', d, operator_s, portray_string(s[qj() : ]))
                         raise_unknown_line(2)
 
                     operator_end = m.end('operator')

@@ -156,18 +156,30 @@ def gem():
         MATCH(
             'atom_match',
             (
-                  (
-                        G('keyword', keyword_not)
-                      + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
-                  )                                                             #   Must preceed 'name'
-                | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must also preceed 'name'
-                | G('atom', name | number) + ow
-                | G('operator', ANY_OF('-', right_parenthesis, right_brace, right_square_bracket)) + ow
+                  OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must also preceed 'name'
+                | G('atom', number | name) + ow
+                | G('operator', ANY_OF(right_parenthesis, '-', right_square_bracket, right_brace)) + ow
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
                 | G(left_brace__ow)          + P(G(right_brace)          + ow)
             ) + Q(comment_newline),
         )
+
+        MATCH(
+            'line_match',
+            (
+                  G('indented', ow)
+                + Q(
+                      'something',
+                      (
+                            G('keyword', keyword_else | keyword_except | keyword_try) + ow + colon + ow
+                          | G('atom', number | '@' | name) + ow
+                      ),
+                  )
+                + P(P(pound_G_comment) + G('newline', LINEFEED))
+            ),
+        )
+
 
         MATCH(
            'operator_match',
@@ -273,18 +285,6 @@ def gem():
         #
         #   Statements - Parse 1
         #
-        MATCH(
-            'line_match1',
-            (
-                  G('indented', ow)
-                + P(
-                       G('keyword', keyword_else | keyword_except | keyword_try) + ow + colon + ow
-                      |G('token', '@' | name) + ow
-                  )
-                + P(P(pound_G_comment) + G('newline', LINEFEED))
-            ),
-        )
-
         MATCH(
             'header_parenthesis_match1',
             (

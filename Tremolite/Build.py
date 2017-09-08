@@ -510,18 +510,24 @@ def gem():
 
                 assert length(v) is 1
 
-                a = lookup_ascii(v)
+                if v == '-':
+                    regular_expressions.append(r'\-')
+                else:
+                    a = lookup_ascii(v)
 
-                assert a.is_printable
+                    assert a.is_printable
 
-                regular_expressions.append(a.pattern)
+                    regular_expressions.append(a.pattern)
 
             elif length(v) is 1:
-                a = lookup_ascii(v)
+                if v == '-':
+                    regular_expressions.append(r'\-')
+                else:
+                    a = lookup_ascii(v)
 
-                assert a.is_printable
+                    assert a.is_printable
 
-                regular_expressions.append(a.pattern)
+                    regular_expressions.append(a.pattern)
             else:
                 assert (length(v) is 3) and (v[1] is '-')
 

@@ -38,6 +38,18 @@ def gem():
             atom_s = m.group('atom')
 
             if atom_s is not none:
+                conjure = lookup_keyword_conjure_function(atom_s)
+
+                if conjure is not none:
+                    j = m.end()
+
+                    r = conjure(qs()[qi() : j])
+
+                    wi(j)
+                    wj(j)
+
+                    return r
+
                 r = find_atom_type(atom_s[0])(atom_s)
 
                 if qi() != j:
@@ -48,17 +60,17 @@ def gem():
 
                 return r
 
-            keyword_s = (m.group('keyword')) or (m.group('operator'))
+            operator_s = m.group('operator')
 
-            if keyword_s is not none:
+            if operator_s is not none:
                 j = m.end()
                 s = qs()
 
-                if is_close_operator(keyword_s) is 7:
+                if is_close_operator(operator_s) is 7:
                     d            = qd()
                     operator_end = m.end('operator')
 
-                    r = find_operator_conjure_function(keyword_s)(s[qi() : operator_end])
+                    r = find_operator_conjure_function(operator_s)(s[qi() : operator_end])
 
                     if d is 0:
                         raise_unknown_line(2)
@@ -71,7 +83,7 @@ def gem():
 
                     return r
 
-                r = find_operator_conjure_function(keyword_s)(s[qi() : j])
+                r = find_operator_conjure_function(operator_s)(s[qi() : j])
 
                 wi(j)
                 wj(j)
@@ -159,6 +171,7 @@ def gem():
                 wi(j)
                 wj(j)
 
+                #my_line('d: %d; left_square_bracket: %r', qd(), left_square_bracket)
                 return left_square_bracket
             #</similiar-to>
 
@@ -186,6 +199,24 @@ def gem():
         atom_s = m.group('atom')
 
         if atom_s is not none:
+            conjure = lookup_keyword_conjure_function(atom_s)
+
+            if conjure is not none:
+                if qd() is 0:
+                    atom_end = m.end('atom')
+
+                    r = conjure(atom_s)(qs()[qi() : atom_end])
+
+                    wn(conjure_token_newline(s[atom_end : ]))
+
+                    return r
+
+                r = conjure(atom_s)(qs()[qi() : ])
+
+                skip_tokenize_prefix()
+
+                return r
+
             r = find_atom_type(atom_s[0])(atom_s)
 
             #
@@ -220,17 +251,17 @@ def gem():
             return r.prefix_meta(conjure_whitespace(qs()[qi() : qj()]), r)
             #</similiar-to>
 
-        keyword_s = (m.group('keyword')) or (m.group('operator'))
+        operator_s = m.group('operator')
 
-        if keyword_s is not none:
-            if is_close_operator(keyword_s) is 7:
+        if operator_s is not none:
+            if is_close_operator(operator_s) is 7:
                 d = qd()
 
                 if d is 1:
                     operator_end = m.end('operator')
                     s            = qs()
 
-                    r = find_operator_conjure_function(keyword_s)(s[qi() : operator_end])
+                    r = find_operator_conjure_function(operator_s)(s[qi() : operator_end])
 
                     wd0()
                     wn(conjure_token_newline(s[operator_end : ]))
@@ -239,7 +270,7 @@ def gem():
 
                 wd(d - 1)
 
-                r = find_operator_conjure_function(keyword_s)(qs()[qi() : ])
+                r = find_operator_conjure_function(operator_s)(qs()[qi() : ])
 
                 skip_tokenize_prefix()
 
@@ -248,13 +279,13 @@ def gem():
             if qd() is 0:
                 operator_end = m.end('operator')
 
-                r = find_operator_conjure_function(keyword_s)(qs()[qi() : operator_end])
+                r = find_operator_conjure_function(operator_s)(qs()[qi() : operator_end])
 
                 wn(conjure_token_newline(s[operator_end : ]))
 
                 return r
 
-            r = find_operator_conjure_function(keyword_s)(qs()[qi() : ])
+            r = find_operator_conjure_function(operator_s)(qs()[qi() : ])
 
             skip_tokenize_prefix()
 

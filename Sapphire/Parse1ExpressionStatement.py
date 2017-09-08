@@ -33,7 +33,7 @@ def gem():
 
 
     @share
-    def parse1_statement_expression__symbol(indented, left):
+    def parse1_statement_expression__atom(indented, left):
         s = qs()
 
         if show is 7:
