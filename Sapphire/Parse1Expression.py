@@ -267,7 +267,7 @@ def gem():
                             wk(none)
 
                         if not operator_3.is_end_of_ternary_expression:
-                            middle_2 = parse1_ternary_expression__X__left__operator(middle_2, operator_3)
+                            middle_2 = parse1_ternary_expression__X__left_operator(middle_2, operator_3)
 
                             operator_3 = qk()
 
@@ -285,7 +285,7 @@ def gem():
                                )
                 else:
                     if not operator_2.is_end_of_ternary_expression:
-                        middle = parse1_ternary_expression__X__left__operator(middle, operator_2)
+                        middle = parse1_ternary_expression__X__left_operator(middle, operator_2)
 
                         operator_2 = qk()
 
@@ -432,6 +432,9 @@ def gem():
 
             wk(none)
 
+        if not operator.is_arithmetic_operator:
+            raise_unknown_line(1)
+
         many = [left, add_operator, right, operator]
 
         while 7 is 7:
@@ -456,7 +459,7 @@ def gem():
                 wk(none)
 
             if not operator.is_arithmetic_operator:
-                raise_unknown_line(1)
+                raise_unknown_line(2)
 
             many.append(operator)
 
@@ -478,6 +481,8 @@ def gem():
     #
     @share
     def parse1_normal_expression():
+        assert qk() is none
+
         left = parse1_atom()
 
         operator = qk()
@@ -656,54 +661,56 @@ def gem():
     #
     #   14. Boolean-Or-Expression (Python 2.7.14rc1 grammer calls this 'or_test')
     #
-    def parse1_boolean_or_expression__X__left__operator(left, or_operator):
+    def parse1_boolean_or_expression__left_operator(left, operator):
+        assert operator.is_keyword_or
+
         right = parse1_normal_expression()                  #   FIX to Boolean-And-Expression
 
-        operator = qk()
+        operator_2 = qk()
 
-        if operator is none:
+        if operator_2 is none:
             if qn() is not none:
-                return OrExpression(left, or_operator, right)
+                return OrExpression(left, operator, right)
 
-            operator = tokenize_operator()
+            operator_2 = tokenize_operator()
 
-            if operator.is_end_of_boolean_or_expression:
-                wk(operator)
+            if operator_2.is_end_of_boolean_or_expression:
+                wk(operator_2)
 
-                return OrExpression(left, or_operator, right)
+                return OrExpression(left, operator, right)
         else:
-            if operator.is_end_of_boolean_or_expression:
-                return OrExpression(left, or_operator, right)
+            if operator_2.is_end_of_boolean_or_expression:
+                return OrExpression(left, operator, right)
 
             wk(none)
 
-        many = [left, or_operator, right, operator]
+        many = [left, operator, right, operator_2]
 
         while 7 is 7:
             many.append(parse1_normal_expression())       #   FIX to Boolean-And-Expression
 
-            operator = qk()
+            operator_7 = qk()
 
-            if operator is none:
+            if operator_7 is none:
                 if qn() is not none:
                     return OrExpression_Many(Tuple(many))
 
-                operator = tokenize_operator()
+                operator_7 = tokenize_operator()
 
-                if operator.is_end_of_boolean_or_expression:
-                    wk(operator)
+                if operator_7.is_end_of_boolean_or_expression:
+                    wk(operator_7)
 
                     return OrExpression_Many(Tuple(many))
             else:
-                if operator.is_end_of_boolean_or_expression:
+                if operator_7.is_end_of_boolean_or_expression:
                     return OrExpression_Many(Tuple(many))
 
                 wk(none)
 
-            if not operator.is_keyword_or:
+            if not operator_7.is_keyword_or:
                 raise_unknown_line(1)
 
-            many.append(operator)
+            many.append(operator_7)
 
 
     def parse1_boolean_or_expression():
@@ -730,7 +737,41 @@ def gem():
 
                 return left
 
-        return parse1_boolean_or_expression__X__left__operator(left, operator)
+        if operator.is_postfix_operator:
+            left = parse1_postfix_expression__left__operator(left, operator)
+
+            operator = qk()
+
+            if operator.is_end_of_ternary_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_arithmetic_operator:
+            left = parse1_arithmetic_expression__left__operator(left, operator)
+
+            operator = qk()
+
+            if operator.is_end_of_ternary_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_compare_operator:
+            left = parse1_compare_expression__left__operator(left, operator)
+
+            operator = qk()
+
+            if operator.is_end_of_ternary_expression:
+                return left
+
+            wk(none)
+
+        if not operator.is_keyword_or:
+            my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+            raise_unknown_line(2)
+
+        return parse1_boolean_or_expression__left_operator(left, operator)
 
 
     #
@@ -745,7 +786,7 @@ def gem():
     #               : 'lambda' [variable-argument-list] ':' ternary-expression
     #
     @share
-    def parse1_ternary_expression__X__left__operator(left, operator):
+    def parse1_ternary_expression__X__left_operator(left, operator):
         if operator.is_postfix_operator:
             left = parse1_postfix_expression__left__operator(left, operator)
 
@@ -767,7 +808,7 @@ def gem():
             wk(none)
 
         if operator.is_keyword_or:
-            left = parse1_boolean_or_expression__X__left__operator(left, operator)
+            left = parse1_boolean_or_expression__left_operator(left, operator)
 
             operator = qk()
 
@@ -776,21 +817,26 @@ def gem():
 
             wk(none)
 
-            my_line('=== %r', operator)
+        if not operator.is_keyword_if:
+            my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+            raise_unknown_line(1)
 
-        if operator.is_keyword_if:
-            middle = parse1_boolean_or_expression()
 
-            operator_2 = qk()
+        #
+        #   Actual parsing of ternary-expression begins here
+        #
+        middle = parse1_boolean_or_expression()
 
-            wk(none)
+        operator_2 = qk()
 
-            if not operator_2.is_keyword_else:
-                raise_unknown_line(1)
+        wk(none)
+
+        if not operator_2.is_keyword_else:
+            my_line('left: %r; operator: %r; middle: %r; operator_2: %r; s: %s',
+                    left, operator, middle, operator_2, portray_string(qs()[qj():]))
 
             raise_unknown_line(2)
 
-        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line(3)
 
 
@@ -819,7 +865,7 @@ def gem():
 
                 return left
 
-        return parse1_ternary_expression__X__left__operator(left, operator)
+        return parse1_ternary_expression__X__left_operator(left, operator)
 
 
     #
@@ -871,7 +917,7 @@ def gem():
     #
     if 0:
         @share
-        def parse1_comprehension_expression_list__X__left__operator(left, operator):
+        def parse1_any_comprehension_expression_list__X__left__operator(left, operator):
             if operator.is_postfix_operator:
                 left = parse1_postfix_expression__left__operator(left, operator)
 
@@ -883,7 +929,7 @@ def gem():
                 wk(none)
 
             if operator.is_keyword_or:
-                left = parse1_boolean_or_expression__X__left__operator(left, operator)
+                left = parse1_boolean_or_expression__left_operator(left, operator)
 
                 operator = qk()
 
@@ -907,7 +953,7 @@ def gem():
 
 
         @share
-        def parse1_comprehension_expression_list():
+        def parse1_any_comprehension_expression_list():
             left = parse1_atom()
 
             operator = qk()
@@ -931,4 +977,4 @@ def gem():
 
                     return left
 
-            return parse1_comprehension_expression_list__X__left__operator(left, operator)
+            return parse1_any_comprehension_expression_list__X__left__operator(left, operator)

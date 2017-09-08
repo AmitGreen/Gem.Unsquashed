@@ -20,7 +20,7 @@ def gem():
         operator_1 = tokenize_operator()
 
         if not operator_1.is_end_of_ternary_expression:
-            middle_1 = parse1_ternary_expression__X__left__operator(middle_1, operator_1)
+            middle_1 = parse1_ternary_expression__X__left_operator(middle_1, operator_1)
 
             operator_1 = qk()
             wk(none)
@@ -42,7 +42,7 @@ def gem():
         operator_2 = tokenize_operator()
 
         if not operator_2.is_end_of_ternary_expression:
-            middle_2 = parse1_ternary_expression__X__left__operator(middle_2, operator_2)
+            middle_2 = parse1_ternary_expression__X__left_operator(middle_2, operator_2)
 
             operator_2 = qk()
             wk(none)
@@ -73,7 +73,7 @@ def gem():
             operator_7 = tokenize_operator()
 
             if not operator_7.is_end_of_ternary_expression:
-                middle_3 = parse1_ternary_expression__X__left__operator(middle_3, operator_7)
+                middle_3 = parse1_ternary_expression__X__left_operator(middle_3, operator_7)
 
                 operator_7 = qk()
                 wk(none)

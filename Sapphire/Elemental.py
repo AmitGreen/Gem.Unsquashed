@@ -33,6 +33,7 @@ def gem():
         is_end_of_unary_expression                 = false
         is_equal_sign                              = false
         is_keyword_as                              = false
+        is_keyword_else                            = false
         is_keyword_if                              = false
         is_keyword_in                              = false
         is_keyword_not                             = false
