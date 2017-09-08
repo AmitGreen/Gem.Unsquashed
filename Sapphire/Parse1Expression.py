@@ -267,7 +267,7 @@ def gem():
                             wk(none)
 
                         if not operator_3.is_end_of_ternary_expression:
-                            middle_2 = parse1_ternary_expression__X__left_operator(middle_2, operator_3)
+                            middle_2 = parse1_ternary_expression__X__any_expression(middle_2, operator_3)
 
                             operator_3 = qk()
 
@@ -285,7 +285,7 @@ def gem():
                                )
                 else:
                     if not operator_2.is_end_of_ternary_expression:
-                        middle = parse1_ternary_expression__X__left_operator(middle, operator_2)
+                        middle = parse1_ternary_expression__X__any_expression(middle, operator_2)
 
                         operator_2 = qk()
 
@@ -786,7 +786,26 @@ def gem():
     #               : 'lambda' [variable-argument-list] ':' ternary-expression
     #
     @share
-    def parse1_ternary_expression__X__left_operator(left, operator):
+    def parse1_ternary_expression__left_operator(left, operator):
+        assert operator.is_keyword_if
+
+        middle = parse1_boolean_or_expression()
+
+        operator_2 = qk()
+
+        wk(none)
+
+        if not operator_2.is_keyword_else:
+            my_line('left: %r; operator: %r; middle: %r; operator_2: %r; s: %s',
+                    left, operator, middle, operator_2, portray_string(qs()[qj():]))
+
+            raise_unknown_line(2)
+
+        raise_unknown_line(3)
+
+
+    @share
+    def parse1_ternary_expression__X__any_expression(left, operator):
         if operator.is_postfix_operator:
             left = parse1_postfix_expression__left__operator(left, operator)
 
@@ -821,23 +840,7 @@ def gem():
             my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
             raise_unknown_line(1)
 
-
-        #
-        #   Actual parsing of ternary-expression begins here
-        #
-        middle = parse1_boolean_or_expression()
-
-        operator_2 = qk()
-
-        wk(none)
-
-        if not operator_2.is_keyword_else:
-            my_line('left: %r; operator: %r; middle: %r; operator_2: %r; s: %s',
-                    left, operator, middle, operator_2, portray_string(qs()[qj():]))
-
-            raise_unknown_line(2)
-
-        raise_unknown_line(3)
+        return parse1_ternary_expression__left_operator(left, operator)
 
 
     @share
@@ -865,7 +868,7 @@ def gem():
 
                 return left
 
-        return parse1_ternary_expression__X__left_operator(left, operator)
+        return parse1_ternary_expression__X__any_expression(left, operator)
 
 
     #
@@ -915,66 +918,3 @@ def gem():
     #
     #   17.  Comprehension-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist_comp')
     #
-    if 0:
-        @share
-        def parse1_any_comprehension_expression_list__X__left__operator(left, operator):
-            if operator.is_postfix_operator:
-                left = parse1_postfix_expression__left__operator(left, operator)
-
-                operator = qk()
-
-                if operator.is_end_of_comprehension_expression_list:
-                    return left
-
-                wk(none)
-
-            if operator.is_keyword_or:
-                left = parse1_boolean_or_expression__left_operator(left, operator)
-
-                operator = qk()
-
-                if operator.is_end_of_comprehension_expression_list:
-                    return left
-
-                wk(none)
-
-            if operator.is_compare_operator:
-                left = parse1_compare_expression__left__operator(left, operator)
-
-                operator = qk()
-
-                if operator.is_end_of_comprehension_expression_list:
-                    return left
-
-                wk(none)
-
-            my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line(1)
-
-
-        @share
-        def parse1_any_comprehension_expression_list():
-            left = parse1_atom()
-
-            operator = qk()
-
-            if operator is not none:
-                if operator.is_end_of_comprehension_expression_list:
-                    return left
-
-                wk(none)
-            else:
-                if qn() is not none:
-                    return left
-
-                operator = tokenize_operator()
-
-                if qn() is not none:
-                    raise_unknown_line(1)
-
-                if operator.is_end_of_comprehension_expression_list:
-                    wk(operator)
-
-                    return left
-
-            return parse1_any_comprehension_expression_list__X__left__operator(left, operator)
