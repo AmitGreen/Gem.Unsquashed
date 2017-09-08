@@ -34,7 +34,7 @@ def gem():
         #
         #   2
         #
-        middle_2 = tokenize_atom()
+        middle_2 = parse1_atom()
 
         if middle_2.is_right_square_bracket:
             return ListExpression_1(left_square_bracket, middle_1, Comma_RightSquareBracket(operator_1, middle_2))
@@ -56,7 +56,7 @@ def gem():
         #
         #   3
         #
-        middle_3 = tokenize_atom()
+        middle_3 = parse1_atom()
 
         if middle_3.is_right_square_bracket:
             return ListExpression_2(
@@ -87,7 +87,7 @@ def gem():
             if not operator_7.is_comma:
                 raise_unknown_line(3)
 
-            middle_3 = tokenize_atom()
+            middle_3 = parse1_atom()
 
             if middle_3.is_right_square_bracket:
                 many.append(Comma_RightSquareBracket(operator_7, middle_3))
@@ -124,7 +124,7 @@ def gem():
         #
         #   2
         #
-        middle_2 = tokenize_atom()
+        middle_2 = parse1_atom()
 
         if middle_2.is_right_parenthesis:
             return TupleExpression_1(left_parenthesis, middle_1, Comma_RightParenthesis(operator_1, middle_2))
@@ -146,7 +146,7 @@ def gem():
         #
         #   3
         #
-        middle_3 = tokenize_atom()
+        middle_3 = parse1_atom()
 
         if middle_3.is_right_parenthesis:
             return TupleExpression_2(
@@ -177,7 +177,7 @@ def gem():
             if not operator_7.is_comma:
                 raise_unknown_line(3)
 
-            middle_3 = tokenize_atom()
+            middle_3 = parse1_atom()
 
             if middle_3.is_right_parenthesis:
                 many.append(Comma_RightParenthesis(operator_7, middle_3))
@@ -188,7 +188,16 @@ def gem():
 
     @share
     def parse1_atom():
-        token = tokenize_atom()
+        assert qk() is none
+        assert qn() is none
+
+        m = atom_match(qs(), qj())
+
+        if m is none:
+            #my_line('full: %r; s: %r', portray_string(qs()), portray_string(qs()[j :]))
+            raise_unknown_line(1)
+
+        token = analyze_atom(m)
 
         if token.is__atom__or__right_close_operator:
             return token
@@ -205,4 +214,4 @@ def gem():
         if token.is_left_square_bracket:
             return parse1__list_expression__left_square_bracket(token)
 
-        raise_unknown_line(1)
+        raise_unknown_line(2)

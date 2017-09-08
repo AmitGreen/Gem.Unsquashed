@@ -139,7 +139,7 @@ def gem():
         wi(j)
         wj(j)
 
-        left = tokenize_atom()
+        left = parse1_atom()
 
         if qn() is not none:
             raise_unknown_line(2)
@@ -156,7 +156,7 @@ def gem():
 
             raise_unknown_line(3)
 
-        right      = tokenize_atom()
+        right      = parse1_atom()
         operator_2 = tokenize_operator()
 
         if operator_2.is_colon_newline:

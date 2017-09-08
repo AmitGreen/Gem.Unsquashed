@@ -22,18 +22,7 @@ def gem():
     #       The previous note also applies to tests like 'qi() != j', cannot replace this with 'qi() is not j'
     #
     @share
-    def tokenize_atom():
-        assert qk() is none
-        assert qn() is none
-
-        j = qj()
-
-        m = atom_match(qs(), j)
-
-        if m is none:
-            #my_line('full: %r; s: %r', portray_string(qs()), portray_string(qs()[j :]))
-            raise_unknown_line(1)
-
+    def analyze_atom(m):
         if m.start('comment_newline') is -1:
             atom_s = m.group('atom')
 
@@ -52,8 +41,8 @@ def gem():
 
                 r = find_atom_type(atom_s[0])(atom_s)
 
-                if qi() != j:
-                    r = r.prefix_meta(conjure_whitespace(qs()[qi() : j]), r)
+                if qi() != qj():
+                    r = r.prefix_meta(conjure_whitespace(qs()[qi() : qj()]), r)
 
                 wi(m.end('atom'))
                 wj(m.end())
@@ -63,7 +52,6 @@ def gem():
             operator_s = m.group('operator')
 
             if operator_s is not none:
-                j = m.end()
                 s = qs()
 
                 if is_close_operator(operator_s) is 7:
@@ -73,15 +61,17 @@ def gem():
                     r = find_operator_conjure_function(operator_s)(s[qi() : operator_end])
 
                     if d is 0:
-                        raise_unknown_line(2)
+                        raise_unknown_line(1)
 
                     assert d > 0
 
                     wd(d - 1)
                     wi(operator_end)
-                    wj(j)
+                    wj(m.end())
 
                     return r
+
+                j = m.end()
 
                 r = find_operator_conjure_function(operator_s)(s[qi() : j])
 
@@ -179,6 +169,7 @@ def gem():
 
             if quote_start is not -1:
                 quote_end = m.end('quote')
+                j         = qj()
                 s         = qs()
 
                 r = find_atom_type(s[quote_start])(s[j : quote_end])
@@ -191,7 +182,7 @@ def gem():
 
                 return r
 
-            raise_unknown_line(3)
+            raise_unknown_line(2)
 
         #
         #   Newline
@@ -477,4 +468,4 @@ def gem():
             return r.prefix_meta(conjure_whitespace(qs()[qi() : qj()]), r)
             #</similiar-to>
 
-        raise_unknown_line(4)
+        raise_unknown_line(3)
