@@ -62,7 +62,7 @@ def gem():
         if operator.is_postfix_operator:
             left = parse1_postfix_expression__left__operator(left, operator, indented)
 
-            if left.is_method_call_statement:
+            if left.is_statement:
                 return left
 
             operator = qk()

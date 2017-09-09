@@ -92,9 +92,9 @@ def gem():
 
     @share
     class MemberExpression_1(BinaryExpression):
-        __slots__                = (())
-        display_name             = '.'
-        is_method_call_statement = false
+        __slots__    = (())
+        display_name = '.'
+        is_statement = false
 
 
     @share

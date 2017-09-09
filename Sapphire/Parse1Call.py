@@ -25,33 +25,7 @@ def gem():
 
             return KeywordArgument(left, operator, parse1_ternary_expression())
 
-        if operator.is_postfix_operator:
-            left = parse1_postfix_expression__left__operator(left, operator)
-
-            operator = qk()
-
-            if operator.is_end_of_normal_expression:
-                return left
-
-            wk(none)
-
-        if operator.is_arithmetic_operator:
-            left = parse1_arithmetic_expression__left__operator(left, operator)
-
-            operator = qk()
-
-            if operator.is_end_of_normal_expression:
-                return left
-
-            wk(none)
-
-        if operator.is_end_of_normal_expression:
-            wk(operator)
-
-            return left
-
-        my_line('left: %r, operator: %r', left, operator)
-        raise_unknown_line(2)
+        return parse1_ternary_expression__X__any_expression(left, operator)
 
 
     @share
@@ -68,23 +42,7 @@ def gem():
 
             return KeywordArgument(left, operator, parse1_ternary_expression())
 
-        if operator.is_postfix_operator:
-            left = parse1_postfix_expression__left__operator(left, operator)
-
-            operator = qk()
-
-            if operator.is_end_of_normal_expression:
-                return left
-
-            wk(none)
-
-        if operator.is_end_of_normal_expression:
-            wk(operator)
-
-            return left
-
-        my_line('left: %r, operator: %r', left, operator)
-        raise_unknown_line(2)
+        return parse1_ternary_expression__X__any_expression(left, operator)
     
 
     @share

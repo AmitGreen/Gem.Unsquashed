@@ -227,12 +227,6 @@ def gem():
 
 
     @share
-    class TernaryExpression(BookcasedDualExpression):
-        __slots__    = (())
-        display_name = '?:'
-
-
-    @share
     class TupleExpression_2(BookcasedDualExpression):
         __slots__                          = (())
         is__atom__or__right_close_operator = true

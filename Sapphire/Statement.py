@@ -594,7 +594,7 @@ def gem():
         ))
 
 
-        is_method_call_statement = true
+        is_statement = true
 
 
         def __init__(t, indented, left, dot, right, arguments, newline):
@@ -644,7 +644,7 @@ def gem():
         ))
 
 
-        is_method_call_statement = true
+        is_statement = true
 
 
         def __init__(t, indented, left, dot_1, middle, dot_2, right, arguments, newline):

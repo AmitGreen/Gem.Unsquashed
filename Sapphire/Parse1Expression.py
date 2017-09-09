@@ -678,6 +678,7 @@ def gem():
     #
     #   14. Boolean-Or-Expression (Python 2.7.14rc1 grammer calls this 'or_test')
     #
+    @share
     def parse1_boolean_or_expression__left_operator(left, operator):
         assert operator.is_keyword_or
 
