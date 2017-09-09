@@ -198,6 +198,44 @@ def gem():
 
 
     @share
+    class DeleteStatement_Many(Object):
+        __slots__ = ((
+            'keyword',                  #   KeywordDelete
+            'many',                     #   Tuple of (Expression | OperatorComma)
+            'newline',                  #   newline
+        ))
+
+
+        def __init__(t, keyword, many, newline):
+            t.keyword = keyword
+            t.many    = many
+            t.newline = newline
+
+
+        def  __repr__(t):
+            return arrange('<DeleteStatement_Many %r <%r> %r>',
+                           t.keyword,
+                           ' '.join(portray(v)   for v in t.many),
+                           t.newline)
+
+
+        def display_token(t):
+            return arrange('<delete-* %s <%s> %s>',
+                           t.keyword.display_token(),
+                           ' '.join(v.display_token()   for v in t.many),
+                           t.newline.display_token())
+
+
+        def write(t, w):
+            w(t.keyword.s)
+
+            for v in t.many:
+                v.write(w)
+
+            w(t.newline.s)
+
+
+    @share
     class DecoratorHeader(Object):
         __slots__ = ((
             'operator_decorator',       #   OperatorAtSign
@@ -477,7 +515,7 @@ def gem():
 
 
     @share
-    class DeleteExpression(KeywordExpressionStatement):
+    class DeleteStatement_1(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'delete'
 

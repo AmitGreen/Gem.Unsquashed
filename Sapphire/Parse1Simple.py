@@ -43,17 +43,44 @@ def gem():
         wi(j)
         wj(j)
 
-        right = parse1_normal_expression_list()
+        left = parse1_normal_expression()
 
-        if qk() is not none:
-            raise_unknown_line(2)
+        operator = qk()
 
-        newline = qn()
+        if operator is none:
+            newline = qn()
 
-        if newline is none:
+            if newline is none:
+                raise_unknown_line(2)
+
+            return DeleteStatement_1(keyword, right, newline)
+
+        wk(none)
+
+        if not operator.is_comma:
             raise_unknown_line(3)
 
-        return DeleteExpression(keyword, right, newline)
+        many = [left, operator]
+
+        while 7 is 7:
+            many.append(parse1_normal_expression())
+
+            operator = qk()
+
+            if operator is none:
+                newline = qn()
+
+                if newline is none:
+                    raise_unknown_line(4)
+
+                return DeleteStatement_Many(keyword, Tuple(many), newline)
+
+            wk(none)
+
+            if not operator.is_comma:
+                raise_unknown_line(5)
+
+            many.append(operator)
 
 
     @share
