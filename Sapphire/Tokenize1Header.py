@@ -96,7 +96,7 @@ def gem():
         j = qj()
         s = qs()
 
-        m = parameter_argument_match(s, j)
+        m = parameter_atom_match(s, j)
 
         if m is none:
             my_line(portray_string(qs()[qj() : ]))
@@ -110,11 +110,23 @@ def gem():
 
             r = conjure_identifier(name)
 
-            if qi() != j:
-                r = PrefixIdentifier(conjure_whitespace(s[qi() : j]), r)
+            star_end = m.end('star')
 
-            wi(m.end('name'))
-            wj(m.end())
+            if star_end is -1:
+                if qi() != j:
+                    r = PrefixIdentifier(conjure_whitespace(s[qi() : j]), r)
+
+                wi(m.end('name'))
+                wj(m.end())
+
+                return r
+
+            r = TupleParameter(conjure_operator_star(s[qi() : star_end]), r)
+
+            j = m.end()
+
+            wi(j)
+            wj(j)
 
             return r
 

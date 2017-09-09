@@ -73,6 +73,15 @@ def gem():
         is_right_parenthesis                  = false
 
 
+    @share
+    class TupleParameter(UnaryExpression):
+        __slots__                             = (())
+        display_name                          = 'tuple-parameter'
+        is_atom                               = true
+        is_right_parenthesis                  = false
+        is__right_parenthesis__colon__newline = false
+
+
     Identifier .prefix_meta = PrefixIdentifier
     DoubleQuote.prefix_meta = PrefixAtom
     SingleQuote.prefix_meta = PrefixAtom

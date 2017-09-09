@@ -544,6 +544,13 @@ def gem():
         keyword                                 = ']'
 
 
+    class OperatorStar(KeywordAndOperatorBase):
+        __slots__                  = (())
+        display_name               = '*'
+        is_end_of_unary_expression = true
+        keyword                    = '*'
+
+
     @share
     class SingleQuote(Token):
         __slots__                      = (())
@@ -587,6 +594,7 @@ def gem():
     conjure_less_than_or_equal   = produce_conjure_by_name('operator-less-than-or-equal',   OperatorLessThanOrEqual) 
     conjure_minus_sign           = produce_conjure_by_name('operator-minus-sign',           OperatorMinusSign) 
     conjure_modify_plus          = produce_conjure_by_name('operator-modify-plus',          OperatorModifyPlus) 
+    conjure_operator_star        = produce_conjure_by_name('operator-star',                 OperatorStar) 
     conjure_plus_sign            = produce_conjure_by_name('operator-plus-sign',            OperatorPlusSign) 
     conjure_right_brace          = produce_conjure_by_name('operator-right-brace',          OperatorRightBrace) 
     conjure_right_parenthesis    = produce_conjure_by_name('operator-right-parenthesis',    OperatorRightParenthesis) 
@@ -683,6 +691,7 @@ def gem():
         'conjure_left_brace',               conjure_left_brace,
         'conjure_left_parenthesis',         conjure_left_parenthesis,
         'conjure_left_square_bracket',      conjure_left_square_bracket,
+        'conjure_operator_star',            conjure_operator_star,
         'conjure_right_brace',              conjure_right_brace,
         'conjure_right_parenthesis',        conjure_right_parenthesis,
         'conjure_right_square_bracket',     conjure_right_square_bracket,

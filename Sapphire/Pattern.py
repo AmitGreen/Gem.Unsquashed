@@ -48,6 +48,7 @@ def gem():
         left_brace          = NAME('left_brace',          '{')                                #   }
         left_parenthesis    = NAME('left_parenthesis',    '(')                                #   )
         left_square_bracket = NAME('left_square_bracket', '[')                                #   ]
+        star                = NAME('star',                '*')
 
         name                = NAME('name',   letter_or_underscore + ZERO_OR_MORE(alphanumeric_or_underscore))
         number              = NAME('number', '0' | ANY_OF('1-9') + ZERO_OR_MORE(ANY_OF('0-9')))
@@ -283,9 +284,9 @@ def gem():
         )
 
         MATCH(
-            'parameter_argument_match',
+            'parameter_atom_match',
             (
-                  G(name) + ow
+                  Q(star) + G(name) + ow
                 | G(right_parenthesis) + ow + P(G(colon) + ow)
             ) + Q(comment_newline),
         )
