@@ -92,7 +92,7 @@ def gem():
             operator = tokenize_operator()
 
         if operator.is_postfix_operator:
-            left = parse1_postfix_expression__left__operator(left, operator, indented)
+            left = parse1_postfix_expression__left_operator(left, operator, indented)
 
             if left.is_statement:
                 return left

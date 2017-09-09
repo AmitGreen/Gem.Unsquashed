@@ -43,7 +43,7 @@ def gem():
     #           | [ternary-expression] ':' [ternary-expression] ':' [ternary-expression]
     #
     @share
-    def parse1_postfix_expression__left__operator(left, operator, indented = 0):
+    def parse1_postfix_expression__left_operator(left, operator, indented = 0):
         assert operator.is_postfix_operator
 
         while 7 is 7:
@@ -398,7 +398,7 @@ def gem():
             wk(none)
 
         if operator.is_postfix_operator:
-            left = parse1_postfix_expression__left__operator(left, operator)
+            left = parse1_postfix_expression__left_operator(left, operator)
 
             operator = qk()
 
@@ -424,7 +424,7 @@ def gem():
     #   5.  Arithmetic-Expression (Python 2.7.14rc1 grammer calls this 'arith_expr')
     #
     @share
-    def parse1_arithmetic_expression__left__operator(left, add_operator):
+    def parse1_arithmetic_expression__left_operator(left, add_operator):
         right = parse1_unary_expression()
 
         operator = qk()
@@ -517,7 +517,7 @@ def gem():
             wk(none)
 
         if operator.is_postfix_operator:
-            left = parse1_postfix_expression__left__operator(left, operator)
+            left = parse1_postfix_expression__left_operator(left, operator)
 
             operator = qk()
 
@@ -562,7 +562,7 @@ def gem():
             wk(none)
 
         if operator.is_postfix_operator:
-            left = parse1_postfix_expression__left__operator(left, operator)
+            left = parse1_postfix_expression__left_operator(left, operator)
 
             operator = qk()
 
@@ -757,7 +757,7 @@ def gem():
                 return left
 
         if operator.is_postfix_operator:
-            left = parse1_postfix_expression__left__operator(left, operator)
+            left = parse1_postfix_expression__left_operator(left, operator)
 
             operator = qk()
 
@@ -773,7 +773,7 @@ def gem():
             wk(none)
 
         if operator.is_arithmetic_operator:
-            left = parse1_arithmetic_expression__left__operator(left, operator)
+            left = parse1_arithmetic_expression__left_operator(left, operator)
 
             operator = qk()
 
@@ -844,13 +844,29 @@ def gem():
     @share
     def parse1_ternary_expression__X__any_expression(left, operator):
         if operator.is_postfix_operator:
-            left = parse1_postfix_expression__left__operator(left, operator)
+            left = parse1_postfix_expression__left_operator(left, operator)
 
             operator = qk()
 
             if operator is none:
                 if qn() is none:
                     raise_unknown_line(1)
+
+                return left
+
+            if operator.is_end_of_ternary_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_arithmetic_operator:
+            left = parse1_arithmetic_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
 
                 return left
 
@@ -949,7 +965,7 @@ def gem():
                 return left
 
         if operator.is_postfix_operator:
-            left = parse1_postfix_expression__left__operator(left, operator)
+            left = parse1_postfix_expression__left_operator(left, operator)
 
             operator = qk()
 
