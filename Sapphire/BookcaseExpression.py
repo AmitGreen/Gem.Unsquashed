@@ -74,16 +74,14 @@ def gem():
 
     @share
     class HeadIndex(BookcaseExpression):
-        __slots__    = (())
-        display_name = 'head-index'
+        __slots__ = (())
 
 
         def display_token(t):
             if (t.left.s == '[') and (t.right.s == ':]'):
-                return arrange('<%s [ %s :]>', t.display_name, t.middle.display_token())
+                return arrange('<head-index [ %s :]>', t.middle.display_token())
 
-            return arrange('<%s %s %s %s>',
-                           t.display_name,
+            return arrange('<head-index %s %s %s>',
                            t.left  .display_token(),
                            t.middle.display_token(),
                            t.right .display_token())
@@ -141,6 +139,20 @@ def gem():
                            t.middle.display_token(),
                            t.right .display_token())
 
+
+    @share
+    class TailIndex(BookcaseExpression):
+        __slots__ = (())
+
+
+        def display_token(t):
+            if (t.left.s == '[:') and (t.right.s == ']'):
+                return arrange('<tail-index [: %s ]>', t.middle.display_token())
+
+            return arrange('<tail-index %s %s %s>',
+                           t.left  .display_token(),
+                           t.middle.display_token(),
+                           t.right .display_token())
 
     @share
     class TupleExpression_1(BookcaseExpression):

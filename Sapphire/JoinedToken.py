@@ -8,8 +8,8 @@ def gem():
 
     class BaseDualOperator(KeywordAndOperatorBase):
         __slots__ = ((
-            'first',         #   Operator+
-            'second',        #   Operator+
+            'first',                    #   Operator+
+            'second',                   #   Operator+
         ))
 
 
@@ -21,8 +21,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<%s %r %r>',
-                           t.__class__.__name__, t.first, t.second)
+            return arrange('<%s %r %r>', t.__class__.__name__, t.first, t.second)
 
 
         def display_full_token(t):
@@ -66,23 +65,23 @@ def gem():
 
     @share
     class Colon_RightSquareBracket(BaseDualOperator):
-        __slots__      = (())
+        __slots__    = (())
         #   [
-        display_name   = ':['
+        display_name = ':]'
 
 
     @share
     class Comma_RightParenthesis(BaseDualOperator):
-        __slots__      = (())
+        __slots__    = (())
         #   (
-        display_name   = ',)'
+        display_name = ',)'
 
 
     @share
     class Comma_RightSquareBracket(BaseDualOperator):
-        __slots__      = (())
+        __slots__    = (())
         #   [
-        display_name   = ',]'
+        display_name = ',]'
 
 
     @share
@@ -118,6 +117,12 @@ def gem():
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
+
+
+    @share
+    class LeftSquareBracket_Colon(BaseDualOperator):
+        __slots__    = (())
+        display_name = '[:'                             #   ]
 
 
     @share

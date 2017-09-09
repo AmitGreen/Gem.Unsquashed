@@ -238,78 +238,95 @@ def gem():
                 middle = parse1_atom()
 
                 if middle.is_colon:
-                    raise_unknown_line(77)
+                    operator = LeftSquareBracket_Colon(operator, middle)
 
-                operator_2 = qk()
+                    middle = parse1_atom()
 
-                if operator_2 is none:
-                    if qn() is not none:
-                        raise_unknown_line(7)
+                    operator_2 = qk()
 
-                    operator_2 = tokenize_operator()
-                else:
-                    wk(none)
+                    if operator_2 is none:
+                        if qn() is not none:
+                            raise_unknown_line(7)
 
-                if operator_2.is_right_square_bracket:
-                    left = IndexExpression(left, NormalIndex(operator, middle, operator_2))
-                elif operator_2.is_colon:
-                    if qn() is not none:
-                        raise_unknown_line(8)
-
-                    middle_2 = parse1_atom()
-
-                    if middle_2.is_right_square_bracket:
-                        left = IndexExpression(
-                                   left,
-                                   HeadIndex(
-                                       operator,
-                                       middle,
-                                       Colon_RightSquareBracket(operator_2, middle_2),
-                                   ),
-                               )
+                        operator_2 = tokenize_operator()
                     else:
-                        operator_3 = qk()
+                        wk(none)
 
-                        if operator_3 is none:
-                            if qn() is not none:
-                                raise_unknown_line(9)
+                    if operator_2.is_right_square_bracket:
+                        left = IndexExpression(left, TailIndex(operator, middle, operator_2))
+                    else:
+                        raise_unknown_line(78)
+                else:
+                    operator_2 = qk()
 
-                            operator_3 = tokenize_operator()
+                    if operator_2 is none:
+                        if qn() is not none:
+                            raise_unknown_line(7)
+
+                        operator_2 = tokenize_operator()
+                    else:
+                        wk(none)
+
+                    if operator_2.is_right_square_bracket:
+                        left = IndexExpression(left, NormalIndex(operator, middle, operator_2))
+                    elif operator_2.is_colon:
+                        if qn() is not none:
+                            raise_unknown_line(8)
+
+                        middle_2 = parse1_atom()
+
+                        if middle_2.is_right_square_bracket:
+                            left = IndexExpression(
+                                       left,
+                                       HeadIndex(
+                                           operator,
+                                           middle,
+                                           Colon_RightSquareBracket(operator_2, middle_2),
+                                       ),
+                                   )
                         else:
-                            wk(none)
-
-                        if not operator_3.is_end_of_ternary_expression:
-                            middle_2 = parse1_ternary_expression__X__any_expression(middle_2, operator_3)
-
                             operator_3 = qk()
 
                             if operator_3 is none:
-                                raise_unknown_line(10)
+                                if qn() is not none:
+                                    raise_unknown_line(9)
+
+                                operator_3 = tokenize_operator()
+                            else:
+                                wk(none)
+
+                            if not operator_3.is_end_of_ternary_expression:
+                                middle_2 = parse1_ternary_expression__X__any_expression(middle_2, operator_3)
+
+                                operator_3 = qk()
+
+                                if operator_3 is none:
+                                    raise_unknown_line(10)
+
+                                wk(none)
+
+                            if not operator_3.is_right_square_bracket:
+                                raise_unknown_line(11)
+
+                            left = IndexExpression(
+                                       left,
+                                       RangeIndex(operator, middle, operator_2, middle_2, operator_3),
+                                   )
+                    else:
+                        if not operator_2.is_end_of_ternary_expression:
+                            middle = parse1_ternary_expression__X__any_expression(middle, operator_2)
+
+                            operator_2 = qk()
+
+                            if operator_2 is none:
+                                raise_unknown_line(12)
 
                             wk(none)
 
-                        if not operator_3.is_right_square_bracket:
-                            raise_unknown_line(11)
+                        if not operator_2.is_right_square_bracket:
+                            raise_unknown_line(13)
 
-                        left = IndexExpression(
-                                   left,
-                                   RangeIndex(operator, middle, operator_2, middle_2, operator_3),
-                               )
-                else:
-                    if not operator_2.is_end_of_ternary_expression:
-                        middle = parse1_ternary_expression__X__any_expression(middle, operator_2)
-
-                        operator_2 = qk()
-
-                        if operator_2 is none:
-                            raise_unknown_line(12)
-
-                        wk(none)
-
-                    if not operator_2.is_right_square_bracket:
-                        raise_unknown_line(13)
-
-                    left = IndexExpression(left, NormalIndex(operator, middle, operator_2))
+                        left = IndexExpression(left, NormalIndex(operator, middle, operator_2))
 
                 if qn() is not none:
                     return left
