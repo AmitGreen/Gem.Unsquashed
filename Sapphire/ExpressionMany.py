@@ -74,8 +74,8 @@ def gem():
         __slots__ = (())
 
 
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
         def display_token(t):
@@ -118,8 +118,8 @@ def gem():
         __slots__ = (())
 
 
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
         def display_token(t):

@@ -38,7 +38,8 @@ def gem():
     #       subscript
     #           : '.' '.' '.'
     #           | ternary-expression
-    #           | [ternary-expression] ':' [ternary-expression]
+    #           | ternary-expression ':'
+    #           | ':' ternary-expression
     #           | [ternary-expression] ':' [ternary-expression] ':' [ternary-expression]
     #
     @share
@@ -235,6 +236,9 @@ def gem():
                     raise_unknown_line(6)
 
                 middle = parse1_atom()
+
+                if middle.is_colon:
+                    raise_unknown_line(77)
 
                 operator_2 = qk()
 
@@ -887,11 +891,11 @@ def gem():
 
             wk(none)
 
-        if not operator.is_keyword_if:
-            my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line(4)
+        if operator.is_keyword_if:
+            return parse1_ternary_expression__left_operator(left, operator)
 
-        return parse1_ternary_expression__left_operator(left, operator)
+        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        raise_unknown_line(4)
 
 
     @share

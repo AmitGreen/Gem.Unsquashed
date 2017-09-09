@@ -117,11 +117,13 @@ def gem():
             w(t.newline.s)
 
 
+    @share
     class AssignStatement_1(ChangeStatement):
         __slots__    = (())
         display_name = '='
 
 
+    @share
     class ModifyStatement(ChangeStatement):
         __slots__    = (())
         display_name = 'modify-statement'

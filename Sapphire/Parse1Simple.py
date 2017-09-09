@@ -53,7 +53,7 @@ def gem():
             if newline is none:
                 raise_unknown_line(2)
 
-            return DeleteStatement_1(keyword, right, newline)
+            return DeleteStatement_1(keyword, left, newline)
 
         wk(none)
 

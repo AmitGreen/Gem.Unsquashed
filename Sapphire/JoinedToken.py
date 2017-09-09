@@ -87,26 +87,26 @@ def gem():
 
     @share
     class EmptyList(BaseDualOperator):
-        __slots__                          = (())
-        display_name                       = '[,]'
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
+        __slots__                      = (())
+        display_name                   = '[,]'
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
     @share
     class EmptyMap(BaseDualOperator):
-        __slots__                          = (())
-        display_name                       = '{:}'
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
+        __slots__                      = (())
+        display_name                   = '{:}'
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
     @share
     class EmptyTuple(BaseDualOperator):
-        __slots__                          = (())
-        display_name                       = '{,}'
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
+        __slots__                      = (())
+        display_name                   = '{,}'
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
     @share
@@ -118,6 +118,7 @@ def gem():
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
+
 
     @share
     class RightParenthesis_Colon_Newline(BaseDualOperator):

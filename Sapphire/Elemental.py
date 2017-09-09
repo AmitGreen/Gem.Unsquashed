@@ -14,7 +14,7 @@ def gem():
         is__arguments_0__or__left_parenthesis      = false
         is_arithmetic_operator                     = false
         is_atom                                    = false
-        is__atom__or__right_close_operator         = false
+        is__atom__or__special_operator             = false
         is_colon                                   = false
         is_colon_newline                           = false
         is_comma                                   = false
@@ -70,12 +70,13 @@ def gem():
 
     @share
     class DoubleQuote(Token):
-        __slots__                          = (())
-        display_name                       = '"'
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
-        is_right_parenthesis               = false
-        is_right_square_bracket            = false
+        __slots__                      = (())
+        display_name                   = '"'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+        is_colon                       = false
+        is_right_parenthesis           = false
+        is_right_square_bracket        = false
 
 
         def display_token(t):
@@ -254,12 +255,13 @@ def gem():
 
     @share
     class Number(Token):
-        __slots__                          = (())
-        display_name                       = 'number'
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
-        is_right_parenthesis               = false
-        is_right_square_bracket            = false
+        __slots__                      = (())
+        display_name                   = 'number'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+        is_colon                       = false
+        is_right_parenthesis           = false
+        is_right_square_bracket        = false
 
 
         def display_token(t):
@@ -278,6 +280,7 @@ def gem():
         __slots__                               = (())
         display_name                            = ':'
         is_colon                                = true
+        is__atom__or__special_operator          = true
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
         is_end_of_boolean_or_expression         = true
@@ -392,12 +395,12 @@ def gem():
 
 
     class OperatorLeftBrace(KeywordAndOperatorBase):
-        __slots__                          = (())
-        display_name                       = '{'       #   }
-        is_atom                            = false
-        is__atom__or__right_close_operator = false
-        is_left_brace                      = true
-        keyword                            = '{'       #   }
+        __slots__                      = (())
+        display_name                   = '{'       #   }
+        is_atom                        = false
+        is__atom__or__special_operator = true
+        is_left_brace                  = true
+        keyword                        = '{'       #   }
 
 
     class OperatorLeftParenthesis(KeywordAndOperatorBase):
@@ -405,7 +408,6 @@ def gem():
         display_name                          = '('       #   )
         is__arguments_0__or__left_parenthesis = true
         is_atom                               = false
-        is__atom__or__right_close_operator    = false
         is_left_parenthesis                   = true
         is_postfix_operator                   = true
         keyword                               = '('       #   )
@@ -494,7 +496,7 @@ def gem():
         __slots__                               = (())
         #  (
         display_name                            = ')'
-        is__atom__or__right_close_operator      = true
+        is__atom__or__special_operator          = true
         is__comma__or__right_parenthesis        = true
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
@@ -526,7 +528,7 @@ def gem():
         __slots__                               = (())
         #   [
         display_name                            = ']'
-        is__atom__or__right_close_operator      = true
+        is__atom__or__special_operator          = true
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
         is_end_of_boolean_or_expression         = true
@@ -544,12 +546,13 @@ def gem():
 
     @share
     class SingleQuote(Token):
-        __slots__                          = (())
-        display_name                       = "'"
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
-        is_right_parenthesis               = false
-        is_right_square_bracket            = false
+        __slots__                      = (())
+        display_name                   = "'"
+        is__atom__or__special_operator = true
+        is_atom                        = true
+        is_colon                       = false
+        is_right_parenthesis           = false
+        is_right_square_bracket        = false
 
 
         def display_token(t):

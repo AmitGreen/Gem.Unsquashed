@@ -196,12 +196,12 @@ def gem():
         m = atom_match(qs(), qj())
 
         if m is none:
-            #my_line('full: %r; s: %r', portray_string(qs()), portray_string(qs()[j :]))
+            my_line('full: %r; s: %r', portray_string(qs()), portray_string(qs()[qj() :]))
             raise_unknown_line(1)
 
         token = analyze_atom(m)
 
-        if token.is__atom__or__right_close_operator:
+        if token.is__atom__or__special_operator:
             return token
 
         if token.is_keyword_not:

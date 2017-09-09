@@ -56,7 +56,7 @@ def gem():
     class PrefixAtom(UnaryExpression):
         __slots__                             = (())
         display_name                          = 'prefixed-atom'
-        is__atom__or__right_close_operator    = true
+        is__atom__or__special_operator        = true
         is_atom                               = true
         is__right_parenthesis__colon__newline = false
         is_right_parenthesis                  = false
@@ -66,7 +66,7 @@ def gem():
     class PrefixIdentifier(UnaryExpression):
         __slots__                             = (())
         display_name                          = 'prefixed-identifier'
-        is__atom__or__right_close_operator    = true
+        is__atom__or__special_operator        = true
         is_atom                               = true
         is_identifier                         = true
         is__right_parenthesis__colon__newline = false

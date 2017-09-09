@@ -51,8 +51,8 @@ def gem():
         display_name = 'bookcased-atom'
 
 
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
     @share
@@ -61,9 +61,9 @@ def gem():
         display_name = 'bookcased-identifier'
 
 
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
-        is_identifier                      = true
+        is__atom__or__special_operator = true
+        is_atom                        = true
+        is_identifier                  = true
 
 
     @share
@@ -91,10 +91,10 @@ def gem():
 
     @share
     class ListExpression_1(BookcaseExpression):
-        __slots__                          = (())
-        display_name                       = '[1]'
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
+        __slots__                      = (())
+        display_name                   = '[1]'
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
         def display_token(t):
@@ -126,10 +126,10 @@ def gem():
 
     @share
     class ParenthesizedExpression(BookcaseExpression):
-        __slots__                          = (())
-        display_name                       = '()'
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
+        __slots__                      = (())
+        display_name                   = '()'
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
         def display_token(t):
@@ -144,10 +144,10 @@ def gem():
 
     @share
     class TupleExpression_1(BookcaseExpression):
-        __slots__                          = (())
-        display_name                       = '{,}'
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
+        __slots__                      = (())
+        display_name                   = '{,}'
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
     class BookcasedDualExpression(Object):
@@ -199,9 +199,9 @@ def gem():
 
     @share
     class ListExpression_2(BookcasedDualExpression):
-        __slots__                          = (())
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
+        __slots__                      = (())
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
         def display_token(t):
@@ -228,9 +228,9 @@ def gem():
 
     @share
     class TupleExpression_2(BookcasedDualExpression):
-        __slots__                          = (())
-        is__atom__or__right_close_operator = true
-        is_atom                            = true
+        __slots__                      = (())
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
         def display_token(t):

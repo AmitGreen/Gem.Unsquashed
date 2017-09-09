@@ -44,8 +44,9 @@ def gem():
 
 
         display_name                          = 'Identifier'
-        is__atom__or__right_close_operator    = true
+        is__atom__or__special_operator        = true
         is_atom                               = true
+        is_colon                              = false
         is_identifier                         = true
         is__right_parenthesis__colon__newline = false
 

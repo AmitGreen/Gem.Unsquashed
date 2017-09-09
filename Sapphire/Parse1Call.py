@@ -25,6 +25,11 @@ def gem():
 
             return KeywordArgument(left, operator, parse1_ternary_expression())
 
+        if operator.is_end_of_ternary_expression:
+            wk(operator)
+
+            return left
+
         return parse1_ternary_expression__X__any_expression(left, operator)
 
 
@@ -41,6 +46,11 @@ def gem():
                 raise_unknown_line(1)
 
             return KeywordArgument(left, operator, parse1_ternary_expression())
+
+        if operator.is_end_of_ternary_expression:
+            wk(operator)
+
+            return left
 
         return parse1_ternary_expression__X__any_expression(left, operator)
     
