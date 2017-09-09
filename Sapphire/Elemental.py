@@ -358,10 +358,20 @@ def gem():
 
 
     class OperatorEqualSign(KeywordAndOperatorBase):
-        __slots__     = (())
-        display_name  = '='
-        is_equal_sign = true
-        keyword       = '='
+        __slots__                               = (())
+        display_name                            = '='
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
+        is_end_of_unary_expression              = true
+        is_equal_sign                           = true
+        keyword                                 = '='
 
 
     class OperatorHeadIndex(KeywordAndOperatorBase):
@@ -375,8 +385,8 @@ def gem():
         is_end_of_comprehension_expression_list = true
         is_end_of_normal_expression_list        = true
         is_end_of_normal_expression             = true
-        is_end_of_ternary_expression            = true
         is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
         is_end_of_unary_expression              = true
         keyword                                 = ':]'
 
@@ -472,8 +482,8 @@ def gem():
         is_end_of_comprehension_expression_list = true
         is_end_of_normal_expression_list        = true
         is_end_of_normal_expression             = true
-        is_end_of_ternary_expression            = true
         is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
         is_end_of_unary_expression              = true
         is_right_brace                          = true
         #  {
@@ -493,8 +503,8 @@ def gem():
         is_end_of_comprehension_expression_list = true
         is_end_of_normal_expression_list        = true
         is_end_of_normal_expression             = true
-        is_end_of_ternary_expression            = true
         is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
         is_end_of_unary_expression              = true
         is_right_parenthesis                    = true
         #  (
@@ -524,8 +534,8 @@ def gem():
         is_end_of_comprehension_expression_list = true
         is_end_of_normal_expression_list        = true
         is_end_of_normal_expression             = true
-        is_end_of_ternary_expression            = true
         is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
         is_end_of_unary_expression              = true
         is_right_square_bracket                 = true
         #   [

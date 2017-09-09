@@ -7,7 +7,74 @@ def gem():
 
 
     @share
-    class ModifyStatement(Object):
+    class AssignFragment(Object):
+        __slots__ = ((
+            'left',                     #   Expression+
+            'assign_operator',          #   OperatorEqualSign
+        ))
+
+
+        def __init__(t, left, assign_operator):
+            t.left            = left
+            t.assign_operator = assign_operator
+
+
+        def __repr__(t):
+            return arrange('<AssignFragment %r %r>', t.left, t.assign_operator)
+
+
+        def display_token(t):
+            return arrange('<assign-fragment %s %s>', t.left.display_token(), t.assign_operator.display_token())
+
+
+        def write(t, w):
+            t.left.write(w)
+            w(t.assign_operator.s)
+
+
+
+    @share
+    class AssignStatement_Many(Object):
+        __slot__ = ((
+            'indented',                 #   String+
+            'left_many',                #   Tuple of AssignFragment
+            'right',                    #   Expression
+            'newline',                  #   String+
+        ))
+
+
+        def __init__(t, indented, left_many, right, newline):
+            t.indented  = indented
+            t.left_many = left_many
+            t.right     = right
+            t.newline   = newline
+
+
+        def __repr__(t):
+            return arrange('<AssignStatementMany %r <%r> %r r %r>',
+                           t.indented, ' '.join(portray(v)   for v in t.left_many), t.right, t.newline)
+
+
+        def display_token(t):
+            return arrange('<assign-many %s <%s> %s %s>',
+                           portray_string(t.indented),
+                           ' '.join(v.display_token()   for v in t.left_many),
+                           t.right   .display_token(),
+                           t.newline .display_token())
+
+
+        def write(t, w):
+            w(t.indented)
+
+            for v in t.left_many:
+                v.write(w)
+
+            t.right.write(w)
+            w(t.newline.s)
+
+
+    @share
+    class ChangeStatement(Object):
         __slot__ = ((
             'indented',                 #   String+
             'left',                     #   Expression
@@ -33,7 +100,8 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<modify-statement %s %s %s %s %s>',
+            return arrange('<%s %s %s %s %s %s>',
+                           t.display_name,
                            portray_string(t.indented),
                            t.left    .display_token(),
                            t.operator.display_token(),
@@ -47,6 +115,16 @@ def gem():
             w(t.operator.s)
             t.right.write(w)
             w(t.newline.s)
+
+
+    class AssignStatement_1(ChangeStatement):
+        __slots__    = (())
+        display_name = '='
+
+
+    class ModifyStatement(ChangeStatement):
+        __slots__    = (())
+        display_name = 'modify-statement'
 
 
     @share

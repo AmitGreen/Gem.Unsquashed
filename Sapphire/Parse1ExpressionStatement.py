@@ -9,14 +9,46 @@ def gem():
     def parse1_statement_assign__left__equal_sign(indented, left, equal_sign):
         right = parse1_ternary_expression_list()
 
-        newline = qn()
+        operator = qk()
 
-        if newline is not none:
-            return ModifyStatement(indented, left, equal_sign, right, newline)
+        if operator is not none:
+            wk(none)
+        else:
+            newline = qn()
 
-        my_line('indented: %r; left: %r; equal_sign: %r; right: %s; s: %s',
-                indented, left, equal_sign, right, portray_string(qs()[qj():]))
-        raise_unknown_line(2)
+            if newline is not none:
+                return AssignStatement_1(indented, left, equal_sign, right, newline)
+
+            operator = tokenize_operator()
+
+        if not operator.is_equal_sign:
+            my_line('indented: %r; left: %r; equal_sign: %r; right: %s; operator: %r; s: %s',
+                    indented, left, equal_sign, right, operator, portray_string(qs()[qj():]))
+
+            raise_unknown_line(2)
+
+        many = [AssignFragment(left, equal_sign), AssignFragment(right, operator)]
+
+        while 7 is 7:
+            right = parse1_ternary_expression_list()
+
+            operator = qk()
+
+            if operator is not none:
+                wk(none)
+            else:
+                newline = qn()
+
+                if newline is not none:
+                    return AssignStatement_Many(indented, Tuple(many), right, newline)
+
+                operator = tokenize_operator()
+
+            if not operator.is_equal_sign:
+                my_line('right: %s; operator; %r; s: %s', right, operator, portray_string(qs()[qj():]))
+                raise_unknown_line(3)
+
+            many.append(AssignFragment(right, operator))
 
 
     def parse1_statement_modify__left__operator(indented, left, modify_operator):

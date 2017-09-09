@@ -1008,6 +1008,7 @@ def gem():
 
             wk(none)
 
+        my_line('left: %r; operator: %r', left, operator)
         raise_unknown_line(5)
 
 

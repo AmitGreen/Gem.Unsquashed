@@ -28,8 +28,8 @@ def gem():
         is_end_of_comprehension_expression_list = true
         is_end_of_normal_expression_list        = true
         is_end_of_normal_expression             = true
-        is_end_of_ternary_expression            = true
         is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
         is_end_of_unary_expression              = true
         is_token_comment                        = true
         is_token_newline                        = true
@@ -48,8 +48,8 @@ def gem():
         is_end_of_comprehension_expression_list = true
         is_end_of_normal_expression_list        = true
         is_end_of_normal_expression             = true
-        is_end_of_ternary_expression            = true
         is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
         is_end_of_unary_expression              = true
         is_token_newline                        = true
 
