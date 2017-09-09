@@ -151,8 +151,6 @@ def gem():
         #
         #   Expressions 1
         #
-        FULL_MATCH('ow_comment_newline_match', G(ow_comment_newline))
-        
         MATCH(
             'atom_match',
             (
@@ -218,19 +216,6 @@ def gem():
             ) + Q(comment_newline),
         )
 
-        MATCH(
-            'single_quote_match',
-            single_quote,
-        )
-
-        MATCH(
-            'statement_postfix_operator_match1',
-            (
-                  G('operator', assign_operator | dot) + ow
-                | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow) + Q(comment_newline)
-            ),
-        )
-
 
         #
         #   Expressions 7
@@ -258,8 +243,7 @@ def gem():
 
         MATCH(
             'argument7_postfix_match',
-            #   (
-            G('operator__ow', ow + G('operator', ANY_OF(')', ',')) + OLD__middle_ow)
+            G('operator__ow', ow + G('operator', ANY_OF(right_parenthesis, comma)) + OLD__middle_ow)
         )
 
         MATCH(
@@ -301,31 +285,31 @@ def gem():
         MATCH(
             'parameter_argument_match',
             (
-                  (
-                        G(name) + ow
-                      | G(right_parenthesis) + ow + P(G(colon) + ow)
-                  )
-                + Q(comment_newline)
-            ),
+                  G(name) + ow
+                | G(right_parenthesis) + ow + P(G(colon) + ow)
+            ) + Q(comment_newline),
         )
-            
+
         MATCH(
             'parameter_operator_match',
             (
-                  (
-                        G(equal_sign) + ow
-                      | (
-                              G(comma) + ow
-                            + P(
-                                    G('comma_RP', right_parenthesis) + ow
-                                  + P(G('comma_RP_colon', colon) + ow)
-                              )
+                  G(equal_sign) + ow
+                | (
+                        G(comma) + ow
+                      + P(
+                              G('comma_RP', right_parenthesis) + ow
+                            + P(G('comma_RP_colon', colon) + ow)
                         )
-                      | G(right_parenthesis) + ow + P(G(colon) + ow)
                   )
-                + Q(comment_newline)
-            ),
+                | G(right_parenthesis) + ow + P(G(colon) + ow)
+            ) + Q(comment_newline),
         )
+
+        FULL_MATCH(
+            'parameter_colon_newline_match',
+            colon + ow + comment_newline,
+        )
+
 
         MATCH(
             'from_module_match1',

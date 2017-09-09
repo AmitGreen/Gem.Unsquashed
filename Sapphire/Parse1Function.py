@@ -52,7 +52,7 @@ def gem():
 
         if qn() is not none:
             raise_unknown_line(6)
-            
+
         return ClassHeader(
                    keyword_class,
                    name,
@@ -101,6 +101,9 @@ def gem():
             raise_unknown_line(4)
         #</parameter_1>
 
+        if token_1.is_right_parenthesis:
+            raise_unknown_line(77)
+
         if token_1.is__right_parenthesis__colon__newline:
             return FunctionHeader(
                        keyword_function,
@@ -116,7 +119,7 @@ def gem():
         if operator_2.is__any__right_parenthesis__colon__newline:
             if qn() is not none:
                 raise_unknown_line(6)
-                
+
             return FunctionHeader(
                        keyword_function,
                        name,
@@ -148,7 +151,7 @@ def gem():
                        name,
                        ParameterColon_1(
                            operator_1,
-                           token_1, 
+                           token_1,
                            Comma_RightParenthesis_Colon_Newline(operator_2, token_7.first, token_7.second),
                        ),
                    )
@@ -161,15 +164,6 @@ def gem():
         while 7 is 7:
             operator_7 = tokenize_parameter_operator()
 
-            if operator_7.is__any__right_parenthesis__colon__newline:
-                if qn() is not none:
-                    raise_unknown_line(11)
-                    
-                many.append(token_7)
-                many.append(operator_7)
-
-                return FunctionHeader(keyword_function, name, ParameterColon_Many(Tuple(many)))
-
             if operator_7.is_equal_sign:
                 value = parse1_ternary_expression()
 
@@ -181,8 +175,20 @@ def gem():
                 if operator_7 is none:
                     raise_unknown_line(12)
 
+                if operator_7.is_right_parenthesis:
+                    operator_7 = RightParenthesis_Colon_Newline(operator_7, tokenize_parameter_colon_newline())
+
+            if operator_7.is__any__right_parenthesis__colon__newline:
+                if qn() is not none:
+                    raise_unknown_line(11)
+
+                many.append(token_7)
+                many.append(operator_7)
+
+                return FunctionHeader(keyword_function, name, ParameterColon_Many(Tuple(many)))
 
             if not operator_7.is_comma:
+                my_line('operator_7: %s; full_line: %r', operator_7, portray_string(qs()))
                 raise_unknown_line(13)
 
             many.append(token_7)
