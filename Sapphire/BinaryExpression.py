@@ -73,12 +73,6 @@ def gem():
 
 
     @share
-    class LessThanOrEqualExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = '<='
-
-
-    @share
     class KeywordArgument(BinaryExpression):
         __slots__    = (())
         display_name = 'keyword-argument'
@@ -88,6 +82,19 @@ def gem():
     class KeywordParameter(BinaryExpression):
         __slots__    = (())
         display_name = 'keyword-parameter'
+
+
+    @share
+    class LessThanOrEqualExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = '<='
+
+
+    @share
+    class MemberExpression_1(BinaryExpression):
+        __slots__                = (())
+        display_name             = '.'
+        is_method_call_statement = false
 
 
     @share

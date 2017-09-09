@@ -282,3 +282,7 @@ wc:
         $(TOPAZ_FILES) \
         $(TREMOLITE_FILES) \
         $(WORK_FILES)
+
+test:
+	cat a.py ac.py ab.py ca.py hma.py >test.py
+	bash run.sh
