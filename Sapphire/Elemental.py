@@ -259,6 +259,12 @@ def gem():
         keyword                          = 'or'
 
 
+    class KeywordRaise(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'raise'
+        keyword      = 'raise'
+
+
     class KeywordReturn(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'return'
@@ -633,6 +639,7 @@ def gem():
     conjure_keyword_is           = produce_conjure_by_name('keyword-is',                    KeywordIs) 
     conjure_keyword_not          = produce_conjure_by_name('keyword-not',                   KeywordNot) 
     conjure_keyword_or           = produce_conjure_by_name('keyword-or',                    KeywordOr) 
+    conjure_keyword_raise        = produce_conjure_by_name('keyword-raise',                 KeywordRaise) 
     conjure_keyword_return       = produce_conjure_by_name('keyword-return',                KeywordReturn) 
     conjure_keyword_with         = produce_conjure_by_name('keyword-with',                  KeywordWith) 
     conjure_left_brace           = produce_conjure_by_name('operator-left-brace',           OperatorLeftBrace) 
@@ -737,6 +744,7 @@ def gem():
         'conjure_keyword_in',               conjure_keyword_in,
         'conjure_keyword_is',               conjure_keyword_is,
         'conjure_keyword_not',              conjure_keyword_not,
+        'conjure_keyword_raise',            conjure_keyword_raise,
         'conjure_keyword_return',           conjure_keyword_return,
         'conjure_keyword_with',             conjure_keyword_with,
         'conjure_left_brace',               conjure_left_brace,

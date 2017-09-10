@@ -92,6 +92,31 @@ def gem():
 
 
     @share
+    def parse1_statement_raise(m):
+        if m.end('newline') is not -1:
+            raise_unknown_line(1)
+
+        keyword = conjure_keyword_raise(m.group())
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
+
+        right = parse1_normal_expression_list()
+
+        if qk() is not none:
+            raise_unknown_line(2)
+
+        newline = qn()
+
+        if newline is none:
+            raise_unknown_line(3)
+
+        return RaiseExpression(keyword, right, newline)
+
+
+    @share
     def parse1_statement_return(m):
         keyword = conjure_keyword_return(m.group())
 

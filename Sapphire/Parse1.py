@@ -90,6 +90,7 @@ def gem():
                              'if'     : parse1_statement_if,
                              'import' : parse1_statement_import,
                              'pass'   : parse1_statement_pass,
+                             'raise'  : parse1_statement_raise,
                              'return' : parse1_statement_return,
                              'with'   : parse1_statement_with,
                          }.get

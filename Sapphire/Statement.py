@@ -523,6 +523,12 @@ def gem():
 
 
     @share
+    class RaiseExpression(KeywordExpressionStatement):
+        __slots__    = (())
+        display_name = 'raise'
+
+
+    @share
     class ReturnExpression(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'return'
