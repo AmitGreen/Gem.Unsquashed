@@ -113,13 +113,21 @@ def gem():
 
 
     @share
+    class ModulusExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = '%'
+
+
+    @share
     class OrExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = 'or'
 
 
-    IsNot                  .compare_expression_meta = CompareDifferentExpression
-    KeywordIn              .compare_expression_meta = CompareContainsExpression
-    KeywordIs              .compare_expression_meta = CompareIdentityExpression
-    OperatorCompareEqual   .compare_expression_meta = CompareEqualExpression
-    OperatorLessThanOrEqual.compare_expression_meta = LessThanOrEqualExpression
+    IsNot                  .expression_meta = CompareDifferentExpression
+    KeywordIn              .expression_meta = CompareContainsExpression
+    KeywordIs              .expression_meta = CompareIdentityExpression
+    OperatorCompareEqual   .expression_meta = CompareEqualExpression
+    OperatorLessThanOrEqual.expression_meta = LessThanOrEqualExpression
+    OperatorPercentSign    .expression_meta = ModulusExpression
+    OperatorPlusSign       .expression_meta = AddExpression

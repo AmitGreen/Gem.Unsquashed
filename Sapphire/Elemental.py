@@ -26,6 +26,7 @@ def gem():
         is_end_of_boolean_or_expression            = false
         is_end_of_compare_expression               = false
         is_end_of_comprehension_expression_list    = false
+        is_end_of_multiply_expression              = false
         is_end_of_normal_expression                = false
         is_end_of_normal_expression_list           = false
         is_end_of_ternary_expression               = false
@@ -44,6 +45,7 @@ def gem():
         is_left_square_bracket                     = false
         is_minus_sign                              = false
         is_modify_operator                         = false
+        is_multiply_operator                       = false
         is_parameter_colon_0_newline               = false
         is_plus_sign                               = false
         is_postfix_operator                        = false
@@ -89,6 +91,7 @@ def gem():
         display_name                     = 'and'
         is_end_of_arithmetic_expression  = true
         is_end_of_compare_expression     = true
+        is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
@@ -129,6 +132,7 @@ def gem():
         is_end_of_boolean_and_expression = true
         is_end_of_boolean_or_expression  = true
         is_end_of_compare_expression     = true
+        is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
@@ -175,6 +179,7 @@ def gem():
         is_end_of_boolean_and_expression = true
         is_end_of_boolean_or_expression  = true
         is_end_of_compare_expression     = true
+        is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
@@ -188,6 +193,7 @@ def gem():
         display_name                     = 'in'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
@@ -201,6 +207,7 @@ def gem():
         display_name                     = 'is'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
@@ -232,6 +239,7 @@ def gem():
         #
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
@@ -243,6 +251,7 @@ def gem():
         is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
         is_end_of_compare_expression     = true
+        is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
@@ -301,6 +310,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
         is_end_of_normal_expression             = true
         is_end_of_ternary_expression            = true
@@ -317,6 +327,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
         is_end_of_normal_expression             = true
         is_end_of_ternary_expression            = true
@@ -342,6 +353,7 @@ def gem():
         is_end_of_boolean_and_expression = true
         is_end_of_boolean_or_expression  = true
         is_end_of_compare_expression     = true
+        is_end_of_multiply_expression    = true
         is_end_of_normal_expression      = true
         is_end_of_ternary_expression     = true
         is_end_of_unary_expression       = true
@@ -354,6 +366,7 @@ def gem():
         display_name                     = '=='
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
@@ -383,6 +396,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
         is_end_of_normal_expression             = true
         is_end_of_ternary_expression_list       = true
@@ -401,6 +415,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
         is_end_of_normal_expression             = true
         is_end_of_ternary_expression_list       = true
@@ -443,6 +458,7 @@ def gem():
         display_name                     = '<='
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
@@ -464,12 +480,13 @@ def gem():
 
 
     class OperatorMinusSign(KeywordAndOperatorBase):
-        __slots__                  = (())
-        display_name               = '-'
-        is_minus_sign              = true
-        is_end_of_unary_expression = true
-        is_arithmetic_operator     = true
-        keyword                    = '-'
+        __slots__                     = (())
+        display_name                  = '-'
+        is_minus_sign                 = true
+        is_end_of_unary_expression    = true
+        is_end_of_multiply_expression = true
+        is_arithmetic_operator        = true
+        keyword                       = '-'
 
 
     class OperatorModifyPlus(KeywordAndOperatorBase):
@@ -479,13 +496,24 @@ def gem():
         keyword            = '+='
 
 
+    @share
+    class OperatorPercentSign(KeywordAndOperatorBase):
+        __slots__                     = (())
+        display_name                  = '%'
+        is_multiply_operator          = true
+        is_end_of_unary_expression    = true
+        keyword                       = '%'
+
+
+    @share
     class OperatorPlusSign(KeywordAndOperatorBase):
-        __slots__                  = (())
-        display_name               = '+'
-        is_arithmetic_operator     = true
-        is_end_of_unary_expression = true
-        is_plus_sign               = true
-        keyword                    = '+'
+        __slots__                     = (())
+        display_name                  = '+'
+        is_arithmetic_operator        = true
+        is_end_of_unary_expression    = true
+        is_end_of_multiply_expression = true
+        is_plus_sign                  = true
+        keyword                       = '+'
 
 
     class OperatorRightBrace(KeywordAndOperatorBase):
@@ -497,6 +525,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
         is_end_of_normal_expression             = true
         is_end_of_ternary_expression_list       = true
@@ -518,6 +547,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
         is_end_of_normal_expression             = true
         is_end_of_ternary_expression_list       = true
@@ -549,6 +579,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
         is_end_of_normal_expression             = true
         is_end_of_ternary_expression_list       = true
@@ -611,6 +642,7 @@ def gem():
     conjure_minus_sign           = produce_conjure_by_name('operator-minus-sign',           OperatorMinusSign) 
     conjure_modify_plus          = produce_conjure_by_name('operator-modify-plus',          OperatorModifyPlus) 
     conjure_operator_star        = produce_conjure_by_name('operator-star',                 OperatorStar) 
+    conjure_percent_sign         = produce_conjure_by_name('operator-percent-sign',         OperatorPercentSign) 
     conjure_plus_sign            = produce_conjure_by_name('operator-plus-sign',            OperatorPlusSign) 
     conjure_right_brace          = produce_conjure_by_name('operator-right-brace',          OperatorRightBrace) 
     conjure_right_parenthesis    = produce_conjure_by_name('operator-right-parenthesis',    OperatorRightParenthesis) 
@@ -654,6 +686,7 @@ def gem():
 
 
     find_operator_conjure_function = {
+                                         '%'    : conjure_percent_sign,
                                          '('    : conjure_left_parenthesis,
                                          ')'    : conjure_right_parenthesis,
                                          '+'    : conjure_plus_sign,

@@ -436,29 +436,126 @@ def gem():
     #
     #   4.  Multiply-Expression (Python 2.7.14rc1 grammer calls this 'term')
     #
-
-    #
-    #   5.  Arithmetic-Expression (Python 2.7.14rc1 grammer calls this 'arith_expr')
-    #
     @share
-    def parse1_arithmetic_expression__left_operator(left, add_operator):
+    def parse1_multiply_expression__left_operator(left, multiply_operator):
         right = parse1_unary_expression()
 
         operator = qk()
 
         if operator is none:
             if qn() is not none:
-                return AddExpression(left, add_operator, right)
+                return multiply_operator.expression_meta(left, multiply_operator, right)
 
             operator = tokenize_operator()
 
-            if operator.is_end_of_compare_expression:
+            if operator.is_end_of_multiply_expression:
                 wk(operator)
 
-                return AddExpression(left, add_operator, right)
+                return multiply_operator.expression_meta(left, multiply_operator, right)
         else:
-            if operator.is_end_of_compare_expression:
-                return AddExpression(left, add_operator, right)
+            if operator.is_end_of_multiply_expression:
+                return multiply_operator.expression_meta(left, multiply_operator, right)
+
+            wk(none)
+
+        if not operator.is_multiply_operator:
+            raise_unknown_line(1)
+
+        many = [left, multiply_operator, right, operator]
+
+        while 7 is 7:
+            many.append(parse1_unary_expression())
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is not none:
+                    return MultiplyExpression_Many(Tuple(many))
+
+                operator = tokenize_operator()
+
+                if operator.is_end_of_multiply_expression:
+                    wk(operator)
+
+                    return MultiplyExpression_Many(Tuple(many))
+            else:
+                if operator.is_end_of_multiply_expression:
+                    return MultiplyExpression_Many(Tuple(many))
+
+                wk(none)
+
+            if not operator.is_multiply_operator:
+                raise_unknown_line(2)
+
+            many.append(operator)
+
+
+    def parse1_multiply_expression():
+        left = parse1_atom()
+
+        operator = qk()
+
+        if operator is not none:
+            if operator.is_end_of_multiply_expression:
+                return left
+
+            wk(none)
+        else:
+            if qn() is not none:
+                return left
+
+            operator = tokenize_operator()
+
+            if operator.is_end_of_multiply_expression:
+                wk(operator)
+
+                return left
+
+        if operator.is_postfix_operator:
+            left = parse1_postfix_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
+
+            if operator.is_end_of_multiply_expression:
+                return left
+
+            wk(none)
+
+        if not operator.is_multiply_operator:
+            my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+            raise_unknown_line(4)
+
+        return parse1_multiply_expression__left_operator(left, operator)
+
+
+    #
+    #   5.  Arithmetic-Expression (Python 2.7.14rc1 grammer calls this 'arith_expr')
+    #
+    @share
+    def parse1_arithmetic_expression__left_operator(left, add_operator):
+        right = parse1_multiply_expression()
+
+        operator = qk()
+
+        if operator is none:
+            if qn() is not none:
+                return add_operator.expression_meta(left, add_operator, right)
+
+            operator = tokenize_operator()
+
+            if operator.is_end_of_arithmetic_expression:
+                wk(operator)
+
+                return add_operator.expression_meta(left, add_operator, right)
+        else:
+            if operator.is_end_of_arithmetic_expression:
+                return add_operator.expression_meta(left, add_operator, right)
 
             wk(none)
 
@@ -468,7 +565,7 @@ def gem():
         many = [left, add_operator, right, operator]
 
         while 7 is 7:
-            many.append(parse1_unary_expression())
+            many.append(parse1_multiply_expression())
 
             operator = qk()
 
@@ -549,6 +646,38 @@ def gem():
 
             wk(none)
 
+        if operator.is_multiply_operator:
+            left = parse1_multiply_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
+
+            if operator.is_end_of_normal_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_arithmetic_operator:
+            left = parse1_arithmetic_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
+
+            if operator.is_end_of_normal_expression:
+                return left
+
+            wk(none)
+
         my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line(2)
 
@@ -594,6 +723,38 @@ def gem():
 
             wk(none)
 
+        if operator.is_multiply_operator:
+            left = parse1_multiply_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
+
+            if operator.is_end_of_normal_expression_list:
+                return left
+
+            wk(none)
+
+        if operator.is_arithmetic_operator:
+            left = parse1_arithmetic_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
+
+            if operator.is_end_of_normal_expression_list:
+                return left
+
+            wk(none)
+
         my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line(2)
 
@@ -611,17 +772,17 @@ def gem():
 
         if operator is none:
             if qn() is not none:
-                return compare_operator.compare_expression_meta(left, compare_operator, right)
+                return compare_operator.expression_meta(left, compare_operator, right)
 
             operator = tokenize_operator()
 
             if operator.is_end_of_compare_expression:
                 wk(operator)
 
-                return compare_operator.compare_expression_meta(left, compare_operator, right)
+                return compare_operator.expression_meta(left, compare_operator, right)
         else:
             if operator.is_end_of_compare_expression:
-                return compare_operator.compare_expression_meta(left, compare_operator, right)
+                return compare_operator.expression_meta(left, compare_operator, right)
 
             wk(none)
 
@@ -688,6 +849,22 @@ def gem():
 
             wk(none)
 
+        if operator.is_multiply_operator:
+            left = parse1_multiply_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
+
+            if operator.is_end_of_compare_expression:
+                return left
+
+            wk(none)
+
         if operator.is_arithmetic_operator:
             left = parse1_arithmetic_expression__left_operator(left, operator)
 
@@ -709,8 +886,6 @@ def gem():
             raise_unknown_line(4)
 
         return parse1_compare_expression__left_operator(left, operator)
-
-
 
 
     #
@@ -839,6 +1014,22 @@ def gem():
             if operator is none:
                 if qn() is none:
                     raise_unknown_line(1)
+
+                return left
+
+            if operator.is_end_of_boolean_and_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_multiply_operator:
+            left = parse1_multiply_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
 
                 return left
 
@@ -979,6 +1170,22 @@ def gem():
 
             wk(none)
 
+        if operator.is_multiply_operator:
+            left = parse1_multiply_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
+
+            if operator.is_end_of_boolean_or_expression:
+                return left
+
+            wk(none)
+
         if operator.is_arithmetic_operator:
             left = parse1_arithmetic_expression__left_operator(left, operator)
 
@@ -1074,6 +1281,22 @@ def gem():
             if operator is none:
                 if qn() is none:
                     raise_unknown_line(1)
+
+                return left
+
+            if operator.is_end_of_ternary_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_multiply_operator:
+            left = parse1_multiply_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
 
                 return left
 
@@ -1220,6 +1443,38 @@ def gem():
 
             wk(none)
 
+        if operator.is_multiply_operator:
+            left = parse1_multiply_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
+
+            if operator.is_end_of_ternary_expression_list:
+                return left
+
+            wk(none)
+
+        if operator.is_arithmetic_operator:
+            left = parse1_arithmetic_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
+
+            if operator.is_end_of_ternary_expression_list:
+                return left
+
+            wk(none)
+
         if operator.is_compare_operator:
             left = parse1_compare_expression__left_operator(left, operator)
 
@@ -1231,6 +1486,22 @@ def gem():
 
                 return left
                     
+            if operator.is_end_of_ternary_expression_list:
+                return left
+
+            wk(none)
+
+        if operator.is_keyword_and:
+            left = parse1_boolean_and_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
+
             if operator.is_end_of_ternary_expression_list:
                 return left
 

@@ -48,6 +48,9 @@ def gem():
         left_brace          = NAME('left_brace',          '{')                                #   }
         left_parenthesis    = NAME('left_parenthesis',    '(')                                #   )
         left_square_bracket = NAME('left_square_bracket', '[')                                #   ]
+        less_than_sign      = NAME('less_than_sign',      '<')
+        percent_sign        = NAME('percent_sign',        '%')
+        plus_sign           = NAME('plus_sign',           '+')
         star                = NAME('star',                '*')
 
         name                = NAME('name',   letter_or_underscore + ZERO_OR_MORE(alphanumeric_or_underscore))
@@ -153,18 +156,6 @@ def gem():
         #   Expressions 1
         #
         MATCH(
-            'atom_match',
-            (
-                  OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must also preceed 'name'
-                | G('atom', number | name) + ow
-                | G('operator', ANY_OF(right_parenthesis, '-', ':', right_square_bracket, right_brace)) + ow
-                | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
-                | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
-                | G(left_brace__ow)          + P(G(right_brace)          + ow)
-            ) + Q(comment_newline),
-        )
-
-        MATCH(
             'line_match',
             (
                   G('indented', ow)
@@ -184,6 +175,17 @@ def gem():
             ),
         )
 
+        MATCH(
+            'atom_match',
+            (
+                  OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must also preceed 'name'
+                | G('atom', number | name) + ow
+                | G('operator', ANY_OF(right_parenthesis, '-', ':', right_square_bracket, right_brace)) + ow
+                | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
+                | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
+                | G(left_brace__ow)          + P(G(right_brace)          + ow)
+            ) + Q(comment_newline),
+        )
 
         MATCH(
            'operator_match',
@@ -191,7 +193,7 @@ def gem():
                   G(
                       'operator',
                        (
-                             ANY_OF('+', '<', '=') + P('=')
+                             ANY_OF(percent_sign, plus_sign, less_than_sign, equal_sign) + P(equal_sign)
                            | ANY_OF(
                                  colon, comma,
                                  dot,
