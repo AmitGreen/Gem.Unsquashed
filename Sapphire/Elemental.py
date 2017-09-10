@@ -278,6 +278,13 @@ def gem():
         keyword      = 'try:'
 
 
+    class KeywordWhile(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'while'
+        keyword      = 'while'
+
+
+    @share
     class KeywordWith(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'with'
@@ -643,6 +650,7 @@ def gem():
     conjure_keyword_or           = produce_conjure_by_name('keyword-or',                    KeywordOr) 
     conjure_keyword_raise        = produce_conjure_by_name('keyword-raise',                 KeywordRaise) 
     conjure_keyword_return       = produce_conjure_by_name('keyword-return',                KeywordReturn) 
+    conjure_keyword_while        = produce_conjure_by_name('keyword-while',                 KeywordWhile) 
     conjure_keyword_with         = produce_conjure_by_name('keyword-with',                  KeywordWith) 
     conjure_left_brace           = produce_conjure_by_name('operator-left-brace',           OperatorLeftBrace) 
     conjure_left_parenthesis     = produce_conjure_by_name('operator-left-parenthesis',     OperatorLeftParenthesis) 
@@ -749,6 +757,7 @@ def gem():
         'conjure_keyword_not',              conjure_keyword_not,
         'conjure_keyword_raise',            conjure_keyword_raise,
         'conjure_keyword_return',           conjure_keyword_return,
+        'conjure_keyword_while',            conjure_keyword_while,
         'conjure_keyword_with',             conjure_keyword_with,
         'conjure_left_brace',               conjure_left_brace,
         'conjure_left_parenthesis',         conjure_left_parenthesis,

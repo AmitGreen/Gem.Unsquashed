@@ -6,6 +6,51 @@ def gem():
     show = 0
 
 
+    def parse1_condition_statement__X__m(m, conjure, MetaHeader, MetaStatement):
+        if m.end('newline') is not -1:
+            raise_unknown_line(1)
+
+        keyword_if = conjure(m.group())
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
+
+        condition = parse1_ternary_expression()
+
+        operator = qk()
+
+        if operator is not none:
+            wk(none)
+        else:
+            operator = tokenize_operator()
+
+        if qn() is not none:
+            raise_unknown_line(2)
+            
+        if operator.is_colon_newline:
+            return MetaHeader(keyword_if, condition, operator)
+
+        if not operator.is_colon:
+            raise_unknown_line(3)
+
+        left = parse1_atom()
+
+        if qn() is not none:
+            raise_unknown_line(4)
+
+        if not left.is_atom:
+            raise_unknown_line(5)
+
+        return MetaStatement(
+                   keyword_if,
+                   condition,
+                   operator,
+                   parse1_statement_expression__atom('', left),
+               )
+
+
     @share
     def parse1_statement_else_colon(m):
         if m.end('newline') is -1:
@@ -75,48 +120,7 @@ def gem():
 
     @share
     def parse1_statement_if(m):
-        if m.end('newline') is not -1:
-            raise_unknown_line(1)
-
-        keyword_if = conjure_keyword_if(m.group())
-
-        j = m.end()
-
-        wi(j)
-        wj(j)
-
-        condition = parse1_ternary_expression()
-
-        operator = qk()
-
-        if operator is not none:
-            wk(none)
-        else:
-            operator = tokenize_operator()
-
-        if qn() is not none:
-            raise_unknown_line(3)
-            
-        if operator.is_colon_newline:
-            return IfHeader(keyword_if, condition, operator)
-
-        if not operator.is_colon:
-            raise_unknown_line(4)
-
-        left = parse1_atom()
-
-        if qn() is not none:
-            raise_unknown_line(5)
-
-        if not left.is_atom:
-            raise_unknown_line(7)
-
-        return IfStatement(
-                   keyword_if,
-                   condition,
-                   operator,
-                   parse1_statement_expression__atom('', left),
-               )
+        return parse1_condition_statement__X__m(m, conjure_keyword_if, IfHeader, IfStatement)
 
 
     @share
@@ -125,6 +129,11 @@ def gem():
             raise_unknown_line(1)
 
         return conjure_try_colon(m.group())
+
+
+    @share
+    def parse1_statement_while(m):
+        return parse1_condition_statement__X__m(m, conjure_keyword_while, WhileHeader, WhileStatement)
 
 
     @share

@@ -129,33 +129,6 @@ def gem():
         display_name = 'modify-statement'
 
 
-    @share
-    class Comment(Object):
-        __slots__ = ((
-            'comment',                  #   Comment
-            'newline',                  #   String
-        ))
-
-
-        def __init__(t, comment, newline):
-            t.comment = comment
-            t.newline = newline
-
-
-        def __repr__(t):
-            if t.comment is '':
-                return arrange('<# %r>', t.newline)
-
-            return arrange('<# %r %r>', t.comment, t.newline)
-
-
-        display_token = __repr__
-
-
-        def write(t, w):
-            w('#' + t.comment + t.newline)
-
-
     class ClassOrFunctionHeaderBase(Object):
         __slots__ = ((
             'keyword',                  #   KeywordClass | KeywordFunction
@@ -200,6 +173,33 @@ def gem():
 
 
     @share
+    class Comment(Object):
+        __slots__ = ((
+            'comment',                  #   Comment
+            'newline',                  #   String
+        ))
+
+
+        def __init__(t, comment, newline):
+            t.comment = comment
+            t.newline = newline
+
+
+        def __repr__(t):
+            if t.comment is '':
+                return arrange('<# %r>', t.newline)
+
+            return arrange('<# %r %r>', t.comment, t.newline)
+
+
+        display_token = __repr__
+
+
+        def write(t, w):
+            w('#' + t.comment + t.newline)
+
+
+    @share
     class ConditionHeader(Object):
         __slots__ = ((
             'keyword',                  #   KeywordIf | KeywordWith
@@ -240,9 +240,66 @@ def gem():
 
 
     @share
+    class WhileHeader(ConditionHeader):
+        __slots__    = (())
+        display_name = 'while'
+
+
+    @share
     class WithHeader_1(ConditionHeader):
         __slots__    = (())
         display_name = 'with'
+
+
+    @share
+    class ConditionStatement(Object):
+        __slots__ = ((
+            'keyword',                  #   KeywordIf | KeywordWhile
+            'condition',                #   Expression
+            'colon',                    #   OperatorColon
+            'body',                     #   *Statement
+        ))
+
+
+        def __init__(t, keyword, condition, colon, body):
+            t.keyword   = keyword
+            t.condition = condition
+            t.colon     = colon
+            t.body      = body
+
+
+        def  __repr__(t):
+            return arrange('<%s %r %r %r %r>',
+                           t.__class__.__name__, t.keyword, t.condition, t.colon, t.body)
+
+
+        def display_token(t):
+            return arrange('<%s <%s> %s %s %s>',
+                           t.display_name,
+                           t.keyword  .s,
+                           t.condition.display_token(),
+                           t.colon    .display_token(),
+                           t.body     .display_token())
+
+
+        def write(t, w):
+            w(t.keyword.s)
+            t.condition.write(w)
+            w(t.colon.s)
+            t.body     .write(w)
+
+
+    @share
+    class IfStatement(ConditionStatement):
+        __slots__    = (())
+        display_name = 'if'
+
+
+    @share
+    class WhileStatement(ConditionStatement):
+        __slots__    = (())
+        display_name = 'while'
+
 
 
     @share
@@ -422,43 +479,6 @@ def gem():
 
         def write(t, w):
             w(t.left_name.s + t.keyword_as.s + t.right_name.s)
-
-
-    @share
-    class IfStatement(Object):
-        __slots__ = ((
-            'keyword_if',               #   KeywordIf
-            'condition',                #   Expression
-            'colon',                    #   OperatorColon
-            'body',                     #   *Statement
-        ))
-
-
-        def __init__(t, keyword_if, condition, colon, body):
-            t.keyword_if = keyword_if
-            t.condition  = condition
-            t.colon      = colon
-            t.body       = body
-
-
-        def  __repr__(t):
-            return arrange('<IfHeader %r %r %r %r>',
-                           t.keyword_if, t.condition, t.colon, t.body)
-
-
-        def display_token(t):
-            return arrange('<if <%s> %s %s %s>',
-                           t.keyword_if.s,
-                           t.condition .display_token(),
-                           t.colon     .display_token(),
-                           t.body      .display_token())
-
-
-        def write(t, w):
-            w(t.keyword_if.s)
-            t.condition.write(w)
-            w(t.colon.s)
-            t.body     .write(w)
 
 
     @share

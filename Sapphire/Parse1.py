@@ -92,6 +92,7 @@ def gem():
                              'pass'   : parse1_statement_pass,
                              'raise'  : parse1_statement_raise,
                              'return' : parse1_statement_return,
+                             'while'  : parse1_statement_while,
                              'with'   : parse1_statement_with,
                          }.get
 
