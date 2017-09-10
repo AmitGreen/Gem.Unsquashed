@@ -1,11 +1,12 @@
-a.py -> ../Gem/All.py
-ac.py -> ../Gem/Ascii.py
 ab.py -> ../Gem/Absent.py
-ca.py -> ../Gem/Cache.py
+ac.py -> ../Gem/Ascii.py
+a.py -> ../Gem/All.py
 bo.py -> ../Gem/Boot.py
-co.py -> ../Gem/Core.py
-
+ca.py -> ../Gem/Cache.py
 ce.py -> ../Gem/CatchException.py
+co.py -> ../Gem/Core.py
+hma.py -> ../Sapphire/Main.py
+
 cd.py -> ../Gem/Cadence.py
 di.py -> ../Dravite/__init__.py
 dfo.py -> ../Gem/DelayedFileOutput.py
@@ -39,7 +40,6 @@ hem.py -> ../Sapphire/ExpressionMany.py
 hel.py -> ../Sapphire/Elemental.py
 hc.py -> ../Sapphire/Core.py
 hb.py -> ../Sapphire/BinaryExpression.py
-hma.py -> ../Sapphire/Main.py
 hk.py -> ../Sapphire/BookcaseExpression.py
 hj.py -> ../Sapphire/JoinedToken.py
 hpt.py -> ../Sapphire/Pattern.py

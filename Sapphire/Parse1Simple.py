@@ -128,9 +128,10 @@ def gem():
         wi(j)
         wj(j)
 
-        right = parse1_normal_expression_list()
+        right = parse1_ternary_expression_list()
 
         if qk() is not none:
+            #my_line('qk: %r; full: %s', qk(), portray_string(qs()))
             raise_unknown_line(2)
 
         newline = qn()
