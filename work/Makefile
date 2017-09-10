@@ -284,5 +284,5 @@ wc:
         $(WORK_FILES)
 
 test:
-	cat a.py ac.py ab.py ca.py hma.py >test.py
+	cat a.py ac.py ab.py bo.py ca.py hma.py >test.py
 	bash run.sh

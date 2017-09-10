@@ -220,7 +220,7 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<method-call-3 %s %s %s %s %s %s %s>',
+            return arrange('<method-call-3 %s %s %s %s %s %s %s %s>',
                            t.first          .display_token(),
                            t.first_operator .display_token(),
                            t.second         .display_token(),
