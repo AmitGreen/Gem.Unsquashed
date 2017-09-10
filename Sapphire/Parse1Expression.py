@@ -267,6 +267,16 @@ def gem():
                     else:
                         wk(none)
 
+                    if not operator_2.is_end_of_ternary_expression:
+                        middle = parse1_ternary_expression__X__any_expression(middle, operator_2)
+
+                        operator_2 = qk()
+
+                        if operator_2 is none:
+                            raise_unknown_line(12)
+
+                        wk(none)
+
                     if operator_2.is_right_square_bracket:
                         left = IndexExpression(left, NormalIndex(operator, middle, operator_2))
                     elif operator_2.is_colon:
@@ -313,20 +323,7 @@ def gem():
                                        RangeIndex(operator, middle, operator_2, middle_2, operator_3),
                                    )
                     else:
-                        if not operator_2.is_end_of_ternary_expression:
-                            middle = parse1_ternary_expression__X__any_expression(middle, operator_2)
-
-                            operator_2 = qk()
-
-                            if operator_2 is none:
-                                raise_unknown_line(12)
-
-                            wk(none)
-
-                        if not operator_2.is_right_square_bracket:
-                            raise_unknown_line(13)
-
-                        left = IndexExpression(left, NormalIndex(operator, middle, operator_2))
+                        raise_unknown_line(13)
 
                 if qn() is not none:
                     return left

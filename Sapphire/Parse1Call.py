@@ -60,7 +60,7 @@ def gem():
         argument_1 = parse1_atom()
 
         if argument_1.is_right_parenthesis:
-            raise_unknown_line(1)
+            return Arguments_0(left_parenthesis, argument_1)
 
         argument_1 = parse1_argument1__left(argument_1)
         operator_1 = qk()
@@ -71,7 +71,7 @@ def gem():
             return Arguments_1(left_parenthesis, argument_1, operator_1)
 
         if not operator_1.is_comma:
-            raise_unknown_line(2)
+            raise_unknown_line(1)
 
         argument_2 = parse1_atom()
 
@@ -91,7 +91,7 @@ def gem():
             return Arguments_2(left_parenthesis, argument_1, operator_1, argument_2, operator_2)
 
         if not operator_2.is_comma:
-            raise_unknown_line(4)
+            raise_unknown_line(2)
 
         argument_3 = parse1_atom()
 
@@ -118,7 +118,7 @@ def gem():
                 return Arguments_Many(Tuple(many))
 
             if not operator_7.is_comma:
-                raise_unknown_line(5)
+                raise_unknown_line(3)
 
             many.append(argument_3)
 
