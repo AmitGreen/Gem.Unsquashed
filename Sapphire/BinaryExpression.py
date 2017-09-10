@@ -94,6 +94,12 @@ def gem():
 
 
     @share
+    class CompareNotEqualExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = '!='
+
+
+    @share
     class KeywordArgument(BinaryExpression):
         __slots__    = (())
         display_name = 'keyword-argument'
@@ -141,6 +147,7 @@ def gem():
     KeywordIn              .expression_meta = CompareContainsExpression
     KeywordIs              .expression_meta = CompareIdentityExpression
     OperatorCompareEqual   .expression_meta = CompareEqualExpression
+    OperatorCompareNotEqual.expression_meta = CompareNotEqualExpression
     OperatorLessThanOrEqual.expression_meta = LessThanOrEqualExpression
     OperatorPercentSign    .expression_meta = ModulusExpression
     OperatorPlusSign       .expression_meta = AddExpression

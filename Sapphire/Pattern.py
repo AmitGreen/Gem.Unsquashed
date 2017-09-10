@@ -49,6 +49,7 @@ def gem():
         left_parenthesis    = NAME('left_parenthesis',    '(')                                #   )
         left_square_bracket = NAME('left_square_bracket', '[')                                #   ]
         less_than_sign      = NAME('less_than_sign',      '<')
+        not_equal           = NAME('not_equal',           '!=')
         percent_sign        = NAME('percent_sign',        '%')
         plus_sign           = NAME('plus_sign',           '+')
         star                = NAME('star',                '*')
@@ -200,6 +201,7 @@ def gem():
                                  dot,
                                  right_brace, right_parenthesis, right_square_bracket,
                              )
+                           | not_equal
                        ),
                   ) + ow
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)

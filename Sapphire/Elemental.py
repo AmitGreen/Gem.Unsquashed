@@ -395,6 +395,19 @@ def gem():
             return arrange('<%s %s>', t.display_name, portray_string(t.s))
 
 
+    @share
+    class OperatorCompareNotEqual(KeywordAndOperatorBase):
+        __slots__                        = (())
+        display_name                     = '!='
+        is_compare_operator              = true
+        is_end_of_arithmetic_expression  = true
+        is_end_of_multiply_expression    = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_unary_expression       = true
+        keyword                          = '!='
+
+
     class OperatorDot(KeywordAndOperatorBase):
         __slots__           = (())
         display_name        = '.'
@@ -631,6 +644,7 @@ def gem():
     conjure_colon                = produce_conjure_by_name('operator-colon',                OperatorColon) 
     conjure_comma                = produce_conjure_by_name('operator-comma',                OperatorComma) 
     conjure_compare_equal        = produce_conjure_by_name('operator-conmpare-equal',       OperatorCompareEqual) 
+    conjure_compare_not_equal    = produce_conjure_by_name('operator-conmpare-not-equal',   OperatorCompareNotEqual) 
     conjure_dot                  = produce_conjure_by_name('operator-dot',                  OperatorDot) 
     conjure_equal_sign           = produce_conjure_by_name('operator-equal-sign',           OperatorEqualSign) 
     conjure_else_colon           = produce_conjure_by_name('keyword-else-colon',            KeywordElseColon) 
@@ -703,6 +717,7 @@ def gem():
 
 
     find_operator_conjure_function = {
+                                         '!='   : conjure_compare_not_equal,
                                          '%'    : conjure_percent_sign,
                                          '('    : conjure_left_parenthesis,
                                          ')'    : conjure_right_parenthesis,
