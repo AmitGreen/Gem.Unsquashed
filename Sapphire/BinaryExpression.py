@@ -143,18 +143,32 @@ def gem():
 
 
     @share
+    class MultiplyExpression_1(BinaryExpression):
+        __slots__    = (())
+        display_name = '*'
+
+
+    @share
     class OrExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = 'or'
 
 
+    @share
+    class SubtractExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = '-'
+
+
     IsNot                  .expression_meta = CompareDifferentExpression
-    NotIn                  .expression_meta = CompareExcludeExpression
     KeywordIn              .expression_meta = CompareContainsExpression
     KeywordIs              .expression_meta = CompareIdentityExpression
+    NotIn                  .expression_meta = CompareExcludeExpression
     OperatorCompareEqual   .expression_meta = CompareEqualExpression
     OperatorCompareNotEqual.expression_meta = CompareNotEqualExpression
     OperatorIntegerDivide  .expression_meta = IntegerDivideExpression
     OperatorLessThanOrEqual.expression_meta = LessThanOrEqualExpression
+    OperatorMinusSign      .expression_meta = SubtractExpression
     OperatorPercentSign    .expression_meta = ModulusExpression
     OperatorPlusSign       .expression_meta = AddExpression
+    OperatorStarSign       .expression_meta = MultiplyExpression_1

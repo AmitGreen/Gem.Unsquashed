@@ -121,7 +121,7 @@ def gem():
 
                 return r
 
-            r = TupleParameter(conjure_operator_star(s[qi() : star_end]), r)
+            r = TupleParameter(conjure_star_sign(s[qi() : star_end]), r)
 
             j = m.end()
 

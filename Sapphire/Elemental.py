@@ -47,7 +47,6 @@ def gem():
         is_modify_operator                         = false
         is_multiply_operator                       = false
         is_parameter_colon_0_newline               = false
-        is_plus_sign                               = false
         is_postfix_operator                        = false
         is_right_brace                             = false
         is__right_parenthesis__colon               = false
@@ -515,6 +514,7 @@ def gem():
             return arrange('{%s %s}', t.display_name, portray_string(t.s))
 
 
+    @share
     class OperatorMinusSign(KeywordAndOperatorBase):
         __slots__                     = (())
         display_name                  = '-'
@@ -548,7 +548,6 @@ def gem():
         is_arithmetic_operator        = true
         is_end_of_unary_expression    = true
         is_end_of_multiply_expression = true
-        is_plus_sign                  = true
         keyword                       = '+'
 
 
@@ -626,10 +625,12 @@ def gem():
         keyword                                 = ']'
 
 
-    class OperatorStar(KeywordAndOperatorBase):
+    @share
+    class OperatorStarSign(KeywordAndOperatorBase):
         __slots__                  = (())
         display_name               = '*'
         is_end_of_unary_expression = true
+        is_multiply_operator       = true
         keyword                    = '*'
 
 
@@ -681,13 +682,13 @@ def gem():
     conjure_less_than_or_equal   = produce_conjure_by_name('operator-less-than-or-equal',   OperatorLessThanOrEqual) 
     conjure_minus_sign           = produce_conjure_by_name('operator-minus-sign',           OperatorMinusSign) 
     conjure_modify_plus          = produce_conjure_by_name('operator-modify-plus',          OperatorModifyPlus) 
-    conjure_operator_star        = produce_conjure_by_name('operator-star',                 OperatorStar) 
     conjure_percent_sign         = produce_conjure_by_name('operator-percent-sign',         OperatorPercentSign) 
     conjure_integer_divide       = produce_conjure_by_name('operator-integer_divide',       OperatorIntegerDivide) 
     conjure_plus_sign            = produce_conjure_by_name('operator-plus-sign',            OperatorPlusSign) 
     conjure_right_brace          = produce_conjure_by_name('operator-right-brace',          OperatorRightBrace) 
     conjure_right_parenthesis    = produce_conjure_by_name('operator-right-parenthesis',    OperatorRightParenthesis) 
     conjure_right_square_bracket = produce_conjure_by_name('operator-right-square-bracket', OperatorRightSquareBracket) 
+    conjure_star_sign            = produce_conjure_by_name('operator-star-sign',            OperatorStarSign) 
     conjure_try_colon            = produce_conjure_by_name('keyword-try-colon',             KeywordTryColon) 
 
     find_atom_type = {
@@ -731,6 +732,7 @@ def gem():
                                          '%'    : conjure_percent_sign,
                                          '('    : conjure_left_parenthesis,
                                          ')'    : conjure_right_parenthesis,
+                                         '*'    : conjure_star_sign,
                                          '+'    : conjure_plus_sign,
                                          '+='   : conjure_modify_plus,
                                          ','    : conjure_comma,
@@ -788,10 +790,10 @@ def gem():
         'conjure_left_brace',               conjure_left_brace,
         'conjure_left_parenthesis',         conjure_left_parenthesis,
         'conjure_left_square_bracket',      conjure_left_square_bracket,
-        'conjure_operator_star',            conjure_operator_star,
         'conjure_right_brace',              conjure_right_brace,
         'conjure_right_parenthesis',        conjure_right_parenthesis,
         'conjure_right_square_bracket',     conjure_right_square_bracket,
+        'conjure_star_sign',                conjure_star_sign,
         'conjure_try_colon',                conjure_try_colon,
         'find_atom_type',                   find_atom_type,
         'find_operator_conjure_function',   find_operator_conjure_function,
