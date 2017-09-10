@@ -58,6 +58,12 @@ def gem():
 
 
     @share
+    class CompareContainsExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = 'in'
+
+
+    @share
     class CompareEqualExpression(BinaryExpression):
         __slots__    = (())
         display_name = '=='
@@ -113,6 +119,7 @@ def gem():
 
 
     IsNot                  .compare_expression_meta = CompareDifferentExpression
+    KeywordIn              .compare_expression_meta = CompareContainsExpression
     KeywordIs              .compare_expression_meta = CompareIdentityExpression
     OperatorCompareEqual   .compare_expression_meta = CompareEqualExpression
     OperatorLessThanOrEqual.compare_expression_meta = LessThanOrEqualExpression

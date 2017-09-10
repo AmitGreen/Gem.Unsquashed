@@ -182,9 +182,11 @@ def gem():
         keyword                          = 'if'
 
 
+    @share
     class KeywordIn(KeywordAndOperatorBase):
         __slots__                        = (())
         display_name                     = 'in'
+        is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
@@ -350,8 +352,8 @@ def gem():
     class OperatorCompareEqual(KeywordAndOperatorBase):
         __slots__                        = (())
         display_name                     = '=='
-        is_end_of_arithmetic_expression  = true
         is_compare_operator              = true
+        is_end_of_arithmetic_expression  = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
