@@ -100,6 +100,12 @@ def gem():
 
 
     @share
+    class IntegerDivideExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = '//'
+
+
+    @share
     class KeywordArgument(BinaryExpression):
         __slots__    = (())
         display_name = 'keyword-argument'
@@ -148,6 +154,7 @@ def gem():
     KeywordIs              .expression_meta = CompareIdentityExpression
     OperatorCompareEqual   .expression_meta = CompareEqualExpression
     OperatorCompareNotEqual.expression_meta = CompareNotEqualExpression
+    OperatorIntegerDivide  .expression_meta = IntegerDivideExpression
     OperatorLessThanOrEqual.expression_meta = LessThanOrEqualExpression
     OperatorPercentSign    .expression_meta = ModulusExpression
     OperatorPlusSign       .expression_meta = AddExpression

@@ -452,6 +452,15 @@ def gem():
         keyword                                 = ':]'
 
 
+    @share
+    class OperatorIntegerDivide(KeywordAndOperatorBase):
+        __slots__                     = (())
+        display_name                  = '//'
+        is_multiply_operator          = true
+        is_end_of_unary_expression    = true
+        keyword                       = '//'
+
+
     class OperatorLeftBrace(KeywordAndOperatorBase):
         __slots__     = (())
         display_name  = '{'                                 #   }
@@ -674,6 +683,7 @@ def gem():
     conjure_modify_plus          = produce_conjure_by_name('operator-modify-plus',          OperatorModifyPlus) 
     conjure_operator_star        = produce_conjure_by_name('operator-star',                 OperatorStar) 
     conjure_percent_sign         = produce_conjure_by_name('operator-percent-sign',         OperatorPercentSign) 
+    conjure_integer_divide       = produce_conjure_by_name('operator-integer_divide',       OperatorIntegerDivide) 
     conjure_plus_sign            = produce_conjure_by_name('operator-plus-sign',            OperatorPlusSign) 
     conjure_right_brace          = produce_conjure_by_name('operator-right-brace',          OperatorRightBrace) 
     conjure_right_parenthesis    = produce_conjure_by_name('operator-right-parenthesis',    OperatorRightParenthesis) 
@@ -726,6 +736,7 @@ def gem():
                                          ','    : conjure_comma,
                                          '-'    : conjure_minus_sign,
                                          '.'    : conjure_dot,
+                                         '//'   : conjure_integer_divide,
                                          ':'    : conjure_colon,
                                          '<='   : conjure_less_than_or_equal,
                                          '='    : conjure_equal_sign,

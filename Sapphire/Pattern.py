@@ -52,6 +52,7 @@ def gem():
         not_equal           = NAME('not_equal',           '!=')
         percent_sign        = NAME('percent_sign',        '%')
         plus_sign           = NAME('plus_sign',           '+')
+        slash_sign          = NAME('slash_sign',          '/')
         star                = NAME('star',                '*')
 
         name                = NAME('name',   letter_or_underscore + ZERO_OR_MORE(alphanumeric_or_underscore))
@@ -195,7 +196,10 @@ def gem():
                   G(
                       'operator',
                        (
-                             ANY_OF(percent_sign, plus_sign, less_than_sign, equal_sign) + P(equal_sign)
+                             (
+                                   ANY_OF(percent_sign, plus_sign, less_than_sign, equal_sign)
+                                 | slash_sign + P(slash_sign)
+                             ) + P(equal_sign)
                            | ANY_OF(
                                  colon, comma,
                                  dot,
