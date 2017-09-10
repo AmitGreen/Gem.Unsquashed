@@ -76,6 +76,12 @@ def gem():
 
 
     @share
+    class CompareExcludeExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = 'not-in'
+
+
+    @share
     class CompareIdentityExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'is'
@@ -125,6 +131,7 @@ def gem():
 
 
     IsNot                  .expression_meta = CompareDifferentExpression
+    NotIn                  .expression_meta = CompareExcludeExpression
     KeywordIn              .expression_meta = CompareContainsExpression
     KeywordIs              .expression_meta = CompareIdentityExpression
     OperatorCompareEqual   .expression_meta = CompareEqualExpression

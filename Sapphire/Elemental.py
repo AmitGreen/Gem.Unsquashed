@@ -734,6 +734,7 @@ def gem():
         'conjure_keyword_delete',           conjure_keyword_delete,
         'conjure_keyword_for',              conjure_keyword_for,
         'conjure_keyword_if',               conjure_keyword_if,
+        'conjure_keyword_in',               conjure_keyword_in,
         'conjure_keyword_is',               conjure_keyword_is,
         'conjure_keyword_not',              conjure_keyword_not,
         'conjure_keyword_return',           conjure_keyword_return,

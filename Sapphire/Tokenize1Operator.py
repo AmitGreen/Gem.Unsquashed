@@ -166,7 +166,8 @@ def gem():
             #       Uses keyword_is*  instead of left_parenthesis* 
             #       Uses keyword_not* instead of right_parenthesis* 
             #       Uses IsNot        instead of Arguments_0
-            #       Does not increment 'd' when parsing the 'is' keyword.
+            #
+            #       Does not increment depth when parsing the 'is' keyword.
             #
             #   NOTE:
             #       When parsing 'is not' the whitespace after 'not' is treated as part of the 'not' keyword
@@ -188,7 +189,7 @@ def gem():
 
             if left_end is not -1:
                 left    = conjure_keyword_is(s[qi() : left_end])
-                right_s = m.group('keyword_not__ow')
+                right_s = m.group('is_not')
 
                 if right_s is not none:
                     j = m.end()
@@ -197,6 +198,37 @@ def gem():
                     wj(j)
 
                     return IsNot(left, conjure_keyword_not(right_s))
+
+                j = m.end()
+
+                wi(j)
+                wj(j)
+
+                return left
+            #</similiar-to>
+
+
+            #
+            #<similiar-to: {keyword_is__ow} above>
+            #
+            #   Differences:
+            #       Uses keyword_not* instead of keyword_is
+            #       Uses keyword_in*  instead of keyword_in
+            #       Uses IsNot        instead of NotIn
+            #
+            left_end = m.end('keyword_not__ow')
+
+            if left_end is not -1:
+                left    = conjure_keyword_not(s[qi() : left_end])
+                right_s = m.group('not_in')
+
+                if right_s is not none:
+                    j = m.end()
+
+                    wi(j)
+                    wj(j)
+
+                    return NotIn(left, conjure_keyword_in(right_s))
 
                 j = m.end()
 

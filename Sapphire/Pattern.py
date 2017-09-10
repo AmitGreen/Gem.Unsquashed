@@ -88,6 +88,7 @@ def gem():
         #
         #   More complicated patterns
         #
+        keyword_in__ow  = NAME('keyword_in__ow',  keyword_in  + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore)))
         keyword_is__ow  = NAME('keyword_is__ow',  keyword_is  + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore)))
         keyword_not__ow = NAME('keyword_not__ow', keyword_not + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore)))
 
@@ -178,7 +179,7 @@ def gem():
         MATCH(
             'atom_match',
             (
-                  OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must also preceed 'name'
+                  OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must preceed 'name'
                 | G('atom', number | name) + ow
                 | G('operator', ANY_OF(right_parenthesis, '-', ':', right_square_bracket, right_brace)) + ow
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
@@ -214,8 +215,9 @@ def gem():
                             ),
                         )
                       + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
-                  )                                                             #   Must preceed 'name'
-                | G(keyword_is__ow) + Q(keyword_not__ow)
+                  )
+                | G(keyword_is__ow)  + Q('is_not', keyword_not__ow)
+                | G(keyword_not__ow) + Q('not_in', keyword_in__ow)
             ) + Q(comment_newline),
         )
 
