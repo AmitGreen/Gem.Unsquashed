@@ -154,12 +154,15 @@ def gem():
             if operator.is_keyword_as:
                 break
 
+            if operator.is_colon_newline:
+                return WithHeader_1(keyword_with, left, operator)
+
             raise_unknown_line(3)
 
         right      = parse1_atom()
         operator_2 = tokenize_operator()
 
         if operator_2.is_colon_newline:
-            return WithHeader(keyword_with, left, operator, right, operator_2)
+            return WithHeader_2(keyword_with, left, operator, right, operator_2)
 
         raise_unknown_line(4)

@@ -200,6 +200,52 @@ def gem():
 
 
     @share
+    class ConditionHeader(Object):
+        __slots__ = ((
+            'keyword',                  #   KeywordIf | KeywordWith
+            'condition',                #   Expression
+            'colon_newline',            #   OperatorColonNewline
+        ))
+
+
+        def __init__(t, keyword, condition, colon_newline):
+            t.keyword       = keyword
+            t.condition     = condition
+            t.colon_newline = colon_newline
+
+
+        def  __repr__(t):
+            return arrange('<%s %r %r %r>',
+                           t.__class__.__name__, t.keyword, t.condition, t.colon_newline)
+
+
+        def display_token(t):
+            return arrange('<%s <%s> %s %s>',
+                           t.display_name,
+                           t.keyword      .s,
+                           t.condition    .display_token(),
+                           t.colon_newline.display_token())
+
+
+        def write(t, w):
+            w(t.keyword.s)
+            t.condition.write(w)
+            w(t.colon_newline.s)
+
+
+    @share
+    class IfHeader(ConditionHeader):
+        __slots__    = (())
+        display_name = 'if'
+
+
+    @share
+    class WithHeader_1(ConditionHeader):
+        __slots__    = (())
+        display_name = 'with'
+
+
+    @share
     class DeleteStatement_Many(Object):
         __slots__ = ((
             'keyword',                  #   KeywordDelete
@@ -291,7 +337,7 @@ def gem():
             return arrange('<EmptyLine %r>', t.s)
 
 
-    class ForOrWithHeader(Object):
+    class ForOrWithAsHeader(Object):
         __slots__ = ((
             'keyword',                  #   KeywordFor | KeywordWith
             'left',                     #   Expression
@@ -334,13 +380,13 @@ def gem():
 
 
     @share
-    class ForHeader(ForOrWithHeader):
+    class ForHeader(ForOrWithAsHeader):
         __slots__    = (())
         display_name = 'for'
 
 
     @share
-    class WithHeader(ForOrWithHeader):
+    class WithHeader_2(ForOrWithAsHeader):
         __slots__    = (())
         display_name = 'with'
 
@@ -376,39 +422,6 @@ def gem():
 
         def write(t, w):
             w(t.left_name.s + t.keyword_as.s + t.right_name.s)
-
-
-    @share
-    class IfHeader(Object):
-        __slots__ = ((
-            'keyword_if',               #   KeywordIf
-            'condition',                #   Expression
-            'colon_newline',            #   OperatorColonNewline
-        ))
-
-
-        def __init__(t, keyword_if, condition, colon_newline):
-            t.keyword_if    = keyword_if
-            t.condition     = condition
-            t.colon_newline = colon_newline
-
-
-        def  __repr__(t):
-            return arrange('<IfHeader %r %r %r>',
-                           t.keyword_if, t.condition, t.colon_newline)
-
-
-        def display_token(t):
-            return arrange('<if <%s> %s %s>',
-                           t.keyword_if   .s,
-                           t.condition    .display_token(),
-                           t.colon_newline.display_token())
-
-
-        def write(t, w):
-            w(t.keyword_if.s)
-            t.condition.write(w)
-            w(t.colon_newline.s)
 
 
     @share
