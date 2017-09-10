@@ -106,6 +106,24 @@ def gem():
 
 
     @share
+    class MapExpression_1(BookcaseExpression):
+        __slots__                      = (())
+        display_name                   = '{1}'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+
+
+        def display_token(t):
+            if t.left.s == '{' and t.right.s == '}':
+                return arrange('{%s}', t.middle.display_token())
+
+            return arrange('<%s %s %s>',
+                           t.left  .display_token(),
+                           t.middle.display_token(),
+                           t.right .display_token())
+
+
+    @share
     class NormalIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'index'

@@ -78,6 +78,7 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
         is_colon                       = false
+        is_right_brace                 = false
         is_right_parenthesis           = false
         is_right_square_bracket        = false
 
@@ -290,6 +291,7 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
         is_colon                       = false
+        is_right_brace                 = false
         is_right_parenthesis           = false
         is_right_square_bracket        = false
 
@@ -431,31 +433,30 @@ def gem():
 
 
     class OperatorLeftBrace(KeywordAndOperatorBase):
-        __slots__                      = (())
-        display_name                   = '{'       #   }
-        is_atom                        = false
-        is__atom__or__special_operator = true
-        is_left_brace                  = true
-        keyword                        = '{'       #   }
+        __slots__     = (())
+        display_name  = '{'                                 #   }
+        is_atom       = false
+        is_left_brace = true
+        keyword       = '{'                                 #   }
 
 
     class OperatorLeftParenthesis(KeywordAndOperatorBase):
         __slots__                             = (())
-        display_name                          = '('       #   )
+        display_name                          = '('         #   )
         is__arguments_0__or__left_parenthesis = true
         is_atom                               = false
         is_left_parenthesis                   = true
         is_postfix_operator                   = true
-        keyword                               = '('       #   )
+        keyword                               = '('         #   )
 
 
     @export
     class OperatorLeftSquareBracket(KeywordAndOperatorBase):
         __slots__              = (())
-        display_name           = '['              #   ]
+        display_name           = '['                        #   ]
         is_left_square_bracket = true
         is_postfix_operator    = true
-        keyword                = '['              #   ]
+        keyword                = '['                        #   ]
 
 
     @share
@@ -610,6 +611,7 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
         is_colon                       = false
+        is_right_brace                 = false
         is_right_parenthesis           = false
         is_right_square_bracket        = false
 
@@ -715,6 +717,7 @@ def gem():
                                          'or'   : conjure_keyword_or,
                                          '['    : conjure_left_square_bracket,
                                          ']'    : conjure_right_square_bracket,
+                                         '}'    : conjure_right_brace,
                                      }.__getitem__
 
 

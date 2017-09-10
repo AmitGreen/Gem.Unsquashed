@@ -48,6 +48,7 @@ def gem():
         is_atom                               = true
         is_colon                              = false
         is_identifier                         = true
+        is_right_brace                        = false
         is__right_parenthesis__colon__newline = false
 
 

@@ -7,6 +7,59 @@ def gem():
 
 
     @share
+    def parse1_map_element():
+        token = parse1_atom()
+
+        if token.is_right_brace:
+            return token
+
+        operator = qk()
+
+        if operator is none:
+            if qn() is not none:
+                raise_unknown_line(1)
+
+            operator = tokenize_operator()
+        else:
+            wk(none)
+
+        if not operator.is_colon:
+            token = parse1_ternary_expression__X__any_expression(token, colon)
+
+            operator = qk()
+
+            if operator is none:
+                raise_unknown_line(2)
+
+            wk(none)
+
+        if not operator.is_colon:
+            raise_unknown_line(3)
+
+        return MapElement(token, operator, parse1_ternary_expression())
+
+
+    @share
+    def parse1_map__left_brace(left_brace):
+        #
+        #   1
+        #
+        left = parse1_map_element()
+
+        operator = qk()
+
+        if operator is none:
+            raise_unknown_line(1)
+
+        wk(none)
+
+        if operator.is_right_brace:
+            return MapExpression_1(left_brace, left, operator)
+
+        raise_unknown_line(2)
+
+
+    @share
     def parse1__parenthesized_expression__left_parenthesis(left_parenthesis):
         #
         #   1
@@ -209,6 +262,9 @@ def gem():
 
         if token.is_minus_sign:
             return parse1_negative_expression__operator(token)
+
+        if token.is_left_brace:
+            return parse1_map__left_brace(token)
 
         if token.is_left_parenthesis:
             return parse1__parenthesized_expression__left_parenthesis(token)

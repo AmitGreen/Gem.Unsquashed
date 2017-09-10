@@ -112,6 +112,12 @@ def gem():
 
 
     @share
+    class MapElement(BinaryExpression):
+        __slots__    = (())
+        display_name = ':'
+
+
+    @share
     class MemberExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = '.'
