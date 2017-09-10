@@ -651,6 +651,68 @@ def gem():
             many.append(operator)
 
 
+    def parse1_compare_expression():
+        left = parse1_atom()
+
+        operator = qk()
+
+        if operator is not none:
+            if operator.is_end_of_compare_expression:
+                return left
+
+            wk(none)
+        else:
+            if qn() is not none:
+                return left
+
+            operator = tokenize_operator()
+
+            if operator.is_end_of_compare_expression:
+                wk(operator)
+
+                return left
+
+        if operator.is_postfix_operator:
+            left = parse1_postfix_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
+
+            if operator.is_end_of_compare_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_arithmetic_operator:
+            left = parse1_arithmetic_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
+
+            if operator.is_end_of_compare_expression:
+                return left
+
+            wk(none)
+
+        if not operator.is_compare_operator:
+            my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+            raise_unknown_line(4)
+
+        return parse1_compare_expression__left_operator(left, operator)
+
+
+
+
     #
     #   12.  Not-Expression (Python 2.7.14rc1 grammer calls this 'not_test')
     #
@@ -695,6 +757,134 @@ def gem():
     #
     #   13. Boolean-And-Expression (Python 2.7.14rc1 grammer calls this 'and_test')
     #
+    @share
+    def parse1_boolean_and_expression__left_operator(left, operator):
+        assert operator.is_keyword_and
+
+        right = parse1_compare_expression()
+
+        operator_2 = qk()
+
+        if operator_2 is none:
+            if qn() is not none:
+                return AndExpression_1(left, operator, right)
+
+            operator_2 = tokenize_operator()
+
+            if operator_2.is_end_of_boolean_and_expression:
+                wk(operator_2)
+
+                return AndExpression_1(left, operator, right)
+        else:
+            if operator_2.is_end_of_boolean_and_expression:
+                return AndExpression_1(left, operator, right)
+
+            wk(none)
+
+        many = [left, operator, right, operator_2]
+
+        while 7 is 7:
+            many.append(parse1_compare_expression())
+
+            operator_7 = qk()
+
+            if operator_7 is none:
+                if qn() is not none:
+                    return AndExpression_Many(Tuple(many))
+
+                operator_7 = tokenize_operator()
+
+                if operator_7.is_end_of_boolean_and_expression:
+                    wk(operator_7)
+
+                    return AndExpression_Many(Tuple(many))
+            else:
+                if operator_7.is_end_of_boolean_and_expression:
+                    return AndExpression_Many(Tuple(many))
+
+                wk(none)
+
+            if not operator_7.is_keyword_and:
+                raise_unknown_line(1)
+
+            many.append(operator_7)
+
+
+    def parse1_boolean_and_expression():
+        left = parse1_atom()
+
+        operator = qk()
+
+        if operator is not none:
+            if operator.is_end_of_boolean_and_expression:
+                return left
+
+            wk(none)
+        else:
+            if qn() is not none:
+                return left
+
+            operator = tokenize_operator()
+
+            if operator.is_end_of_boolean_and_expression:
+                wk(operator)
+
+                return left
+
+        if operator.is_postfix_operator:
+            left = parse1_postfix_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
+
+            if operator.is_end_of_boolean_and_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_arithmetic_operator:
+            left = parse1_arithmetic_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
+
+            if operator.is_end_of_boolean_and_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_compare_operator:
+            left = parse1_compare_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(3)
+
+                return left
+
+            if operator.is_end_of_boolean_and_expression:
+                return left
+
+            wk(none)
+
+        if not operator.is_keyword_and:
+            my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+            raise_unknown_line(4)
+
+        return parse1_boolean_and_expression__left_operator(left, operator)
+
 
     #
     #   14. Boolean-Or-Expression (Python 2.7.14rc1 grammer calls this 'or_test')
@@ -703,30 +893,30 @@ def gem():
     def parse1_boolean_or_expression__left_operator(left, operator):
         assert operator.is_keyword_or
 
-        right = parse1_normal_expression()                  #   FIX to Boolean-And-Expression
+        right = parse1_boolean_and_expression()
 
         operator_2 = qk()
 
         if operator_2 is none:
             if qn() is not none:
-                return OrExpression(left, operator, right)
+                return OrExpression_1(left, operator, right)
 
             operator_2 = tokenize_operator()
 
             if operator_2.is_end_of_boolean_or_expression:
                 wk(operator_2)
 
-                return OrExpression(left, operator, right)
+                return OrExpression_1(left, operator, right)
         else:
             if operator_2.is_end_of_boolean_or_expression:
-                return OrExpression(left, operator, right)
+                return OrExpression_1(left, operator, right)
 
             wk(none)
 
         many = [left, operator, right, operator_2]
 
         while 7 is 7:
-            many.append(parse1_normal_expression())       #   FIX to Boolean-And-Expression
+            many.append(parse1_boolean_and_expression())
 
             operator_7 = qk()
 
@@ -821,9 +1011,25 @@ def gem():
 
             wk(none)
 
+        if operator.is_keyword_and:
+            left = parse1_boolean_and_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(4)
+
+                return left
+
+            if operator.is_end_of_boolean_or_expression:
+                return left
+
+            wk(none)
+
         if not operator.is_keyword_or:
             my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line(4)
+            raise_unknown_line(5)
 
         return parse1_boolean_or_expression__left_operator(left, operator)
 
@@ -908,8 +1114,8 @@ def gem():
 
             wk(none)
 
-        if operator.is_keyword_or:
-            left = parse1_boolean_or_expression__left_operator(left, operator)
+        if operator.is_keyword_and:
+            left = parse1_boolean_and_expression__left_operator(left, operator)
 
             operator = qk()
 
@@ -924,11 +1130,28 @@ def gem():
 
             wk(none)
 
+
+        if operator.is_keyword_or:
+            left = parse1_boolean_or_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(4)
+
+                return left
+
+            if operator.is_end_of_ternary_expression:
+                return left
+
+            wk(none)
+
         if operator.is_keyword_if:
             return parse1_ternary_expression__left_operator(left, operator)
 
         my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-        raise_unknown_line(4)
+        raise_unknown_line(5)
 
 
     @share

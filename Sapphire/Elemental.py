@@ -32,6 +32,7 @@ def gem():
         is_end_of_ternary_expression_list          = false
         is_end_of_unary_expression                 = false
         is_equal_sign                              = false
+        is_keyword_and                             = false
         is_keyword_as                              = false
         is_keyword_else                            = false
         is_keyword_if                              = false
@@ -81,6 +82,18 @@ def gem():
 
         def display_token(t):
             return arrange('<%s>', t.s)
+
+
+    class KeywordAnd(KeywordAndOperatorBase):
+        __slots__                        = (())
+        display_name                     = 'and'
+        is_end_of_arithmetic_expression  = true
+        is_end_of_compare_expression     = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_unary_expression       = true
+        is_keyword_and                   = true
+        keyword                          = 'and'
 
 
     class KeywordAs(KeywordAndOperatorBase):
@@ -575,6 +588,7 @@ def gem():
     conjure_else_colon           = produce_conjure_by_name('keyword-else-colon',            KeywordElseColon) 
     conjure_except_colon         = produce_conjure_by_name('keyword-except-colon',          KeywordExceptColon) 
     conjure_head_index           = produce_conjure_by_name('operator-head-index',           OperatorHeadIndex) 
+    conjure_keyword_and          = produce_conjure_by_name('keyword-and',                   KeywordAnd) 
     conjure_keyword_as           = produce_conjure_by_name('keyword-as',                    KeywordAs) 
     conjure_keyword_assert       = produce_conjure_by_name('keyword-assert',                KeywordAssert) 
     conjure_keyword_delete       = produce_conjure_by_name('keyword-delete',                KeywordDelete) 
@@ -649,6 +663,7 @@ def gem():
                                          '<='   : conjure_less_than_or_equal,
                                          '='    : conjure_equal_sign,
                                          '=='   : conjure_compare_equal,
+                                         'and'  : conjure_keyword_and,
                                          'as'   : conjure_keyword_as,
                                          'else' : conjure_keyword_else,
                                          'if'   : conjure_keyword_if,

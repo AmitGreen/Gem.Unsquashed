@@ -205,7 +205,7 @@ def gem():
                         G(
                             'keyword',
                             (
-                                  keyword_as
+                                  'a' + (EXACT('nd') | 's')
                                 | keyword_else
                                 | 'i' + ANY_OF('f', 'n')
                                 | keyword_or

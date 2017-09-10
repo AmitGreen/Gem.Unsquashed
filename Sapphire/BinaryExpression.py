@@ -36,6 +36,9 @@ def gem():
                            t.right   .display_token())
 
 
+        display_full_token = display_token
+
+
         def write(t, w):
             t.left    .write(w)
             t.operator.write(w)
@@ -46,6 +49,12 @@ def gem():
     class AddExpression(BinaryExpression):
         __slots__    = (())
         display_name = '+'
+
+
+    @share
+    class AndExpression_1(BinaryExpression):
+        __slots__    = (())
+        display_name = 'and'
 
 
     @share
@@ -98,7 +107,7 @@ def gem():
 
 
     @share
-    class OrExpression(BinaryExpression):
+    class OrExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = 'or'
 

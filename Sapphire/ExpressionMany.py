@@ -35,6 +35,12 @@ def gem():
 
 
     @share
+    class AndExpression_Many(BaseExpression_Many):
+        __slots__    = (())
+        display_name = 'and-*'
+
+
+    @share
     class Arguments_Many(BaseExpression_Many):
         __slots__ = (())
 
@@ -63,7 +69,7 @@ def gem():
         def display_token(t):
             many = t.many
 
-            return arrange('{compare-many %s %s %s}',
+            return arrange('{compare-* %s %s %s}',
                            t.many[0] .display_full_token(),
                            ' '.join(v.display_token()   for v in t.many[1:-1]),
                            t.many[-1].display_full_token())
@@ -93,7 +99,7 @@ def gem():
     @share
     class OrExpression_Many(BaseExpression_Many):
         __slots__    = (())
-        display_name = 'or-many'
+        display_name = 'or-*'
 
 
     @share
@@ -105,9 +111,9 @@ def gem():
             many = t.many
 
             if (many[0].s == '(') and (many[-1].s == '):'):
-                return arrange('<(): %s>', ' '.join(v.display_token()   for v in t.many[1:-1]))
+                return arrange('<()-*: %s>', ' '.join(v.display_token()   for v in t.many[1:-1]))
 
-            return arrange('<(): %s %s %s>',
+            return arrange('<()-*: %s %s %s>',
                            t.many[0] .display_full_token(),
                            ' '.join(v.display_token()   for v in t.many[1:-1]),
                            t.many[-1].display_full_token())
