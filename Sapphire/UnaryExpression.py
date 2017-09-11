@@ -13,7 +13,11 @@ def gem():
         ))
 
 
-        is_right_square_bracket = false
+        is_colon                              = false
+        is_right_brace                        = false
+        is__right_parenthesis__colon__newline = false
+        is_right_parenthesis                  = false
+        is_right_square_bracket               = false
 
 
         def __init__(t, operator, right):
@@ -42,16 +46,14 @@ def gem():
 
     @share
     class NegativeExpression(UnaryExpression):
-        __slots__            = (())
-        display_name         = '-'
-        is_right_parenthesis = false
+        __slots__    = (())
+        display_name = '-'
 
 
     @share
     class NotExpression(UnaryExpression):
-        __slots__            = (())
-        display_name         = 'not'
-        is_right_parenthesis = false
+        __slots__    = (())
+        display_name = 'not'
 
 
     @share
@@ -60,8 +62,6 @@ def gem():
         display_name                          = 'prefixed-atom'
         is__atom__or__special_operator        = true
         is_atom                               = true
-        is__right_parenthesis__colon__newline = false
-        is_right_parenthesis                  = false
 
 
     @share
@@ -71,8 +71,6 @@ def gem():
         is__atom__or__special_operator        = true
         is_atom                               = true
         is_identifier                         = true
-        is__right_parenthesis__colon__newline = false
-        is_right_parenthesis                  = false
 
 
     @share
@@ -80,8 +78,6 @@ def gem():
         __slots__                             = (())
         display_name                          = 'tuple-parameter'
         is_atom                               = true
-        is_right_parenthesis                  = false
-        is__right_parenthesis__colon__newline = false
 
 
     Identifier .prefix_meta = PrefixIdentifier

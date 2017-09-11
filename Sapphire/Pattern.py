@@ -49,6 +49,7 @@ def gem():
         left_parenthesis    = NAME('left_parenthesis',    '(')                                #   )
         left_square_bracket = NAME('left_square_bracket', '[')                                #   ]
         less_than_sign      = NAME('less_than_sign',      '<')
+        logical_or_sign     = NAME('logical_or_sign',     '|')
         minus_sign          = NAME('minus_sign',          '-')
         not_equal           = NAME('not_equal',           '!=')
         percent_sign        = NAME('percent_sign',        '%')
@@ -198,7 +199,14 @@ def gem():
                       'operator',
                        (
                              (
-                                   ANY_OF(percent_sign, plus_sign, minus_sign, less_than_sign, equal_sign)
+                                   ANY_OF(
+                                       percent_sign,
+                                       plus_sign,
+                                       minus_sign,
+                                       less_than_sign,
+                                       equal_sign,
+                                       logical_or_sign,
+                                   )
                                  | star_sign  + P(star_sign)
                                  | slash_sign + P(slash_sign)
                              ) + P(equal_sign)

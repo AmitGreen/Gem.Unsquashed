@@ -24,7 +24,7 @@ def gem():
             wk(none)
 
         if not operator.is_colon:
-            token = parse1_ternary_expression__X__any_expression(token, colon)
+            token = parse1_ternary_expression__X__any_expression(token, operator)
 
             operator = qk()
 
@@ -56,7 +56,28 @@ def gem():
         if operator.is_right_brace:
             return MapExpression_1(left_brace, left, operator)
 
-        raise_unknown_line()
+        if not operator.is_comma:
+            raise_unknown_line()
+
+        many = [left, operator]
+
+        while 7 is 7:
+            many.append(parse1_map_element())
+
+            operator = qk()
+
+            if operator is none:
+                raise_unknown_line()
+
+            wk(none)
+
+            if operator.is_right_brace:
+                return MapExpression_Many(left_brace, Tuple(many), operator)
+
+            if not operator.is_comma:
+                raise_unknown_line()
+
+            many.append(operator)
 
 
     @share

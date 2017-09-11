@@ -130,6 +130,12 @@ def gem():
 
 
     @share
+    class LogicalOrExpression_1(BinaryExpression):
+        __slots__    = (())
+        display_name = '|'
+
+
+    @share
     class MapElement(BinaryExpression):
         __slots__    = (())
         display_name = ':'
