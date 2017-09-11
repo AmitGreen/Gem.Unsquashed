@@ -285,26 +285,13 @@ wc:
 
 test:
 	cat \
-        a.py ac.py ab.py \
-        bo.py \
-        ca.py cd.py ce.py co.py \
-        de.py dfo.py di.py dm.py dr.py \
-        ef.py en.py ex.py \
-        fo.py fs.py \
-        gd.py gg.py \
-        hma.py h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py \
-            h1za.py h1zh.py h1zn.py h1zo.py \
-            h7pa.py h7pe.py \
-            hb.py hc.py hel.py hem.py hj.py hk.py hoe.py hpt.py hs.py hu.py hx.py \
-        im.py in.py io.py iv.py \
-        jb.py \
-        m.py \
-        o.py \
-        pa2.py pa.py pcm.py pco.py pj.py pk.py pl.py ps3.py ps.py pz.py \
-        q1p.py qc.py ql.py qma.py qmc.py qp.py \
-        rx.py \
-        so.py ssio.py sy.py \
-        tb.py tcm.py tco.py tmc.py tn.py tp.py tu.py tw.py tx.py \
-        zc.py ze.py zj.py zm.py zpa.py zps.py zpt.py \
+		$(BERYL_FILES) \
+		$(DRAVITE_FILES) \
+		$(GEM_FILES) \
+		$(IVORY_FILES) \
+		$(QUARTZ_FILES) \
+		$(SAPPHIRE_FILES) \
+		$(TOPAZ_FILES) \
+		$(TREMOLITE_FILES) \
             >test.py
 	bash run.sh
