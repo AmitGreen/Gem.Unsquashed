@@ -755,13 +755,12 @@ def gem():
 
 
         def  __repr__(t):
-            return arrange('<%s %r %r %r %r %r %r %r>',
-                           t.__class__.__name__, t.keyword, t.left, t.comma_1, t.middle, comma_2, t.right, t.newline)
+            return arrange('<RaiseStatement_3 %r %r %r %r %r %r %r>',
+                           t.keyword, t.left, t.comma_1, t.middle, comma_2, t.right, t.newline)
 
 
         def display_token(t):
-            return arrange('<%s %s %s %s %s %s %s %s>',
-                           t.display_name,
+            return arrange('<raise-3 %s %s %s %s %s %s %s>',
                            t.keyword.display_token(),
                            t.left   .display_token(),
                            t.comma_1.display_token(),
