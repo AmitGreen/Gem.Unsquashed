@@ -8,7 +8,9 @@ def gem():
 
     @share
     def skip_tokenize_prefix():
-        parse_context.iterate_lines.next()
+        next = next_method(parse_context.iterate_lines)
+
+        next()
 
         m = next_nested_line_match(qs())
 
@@ -22,7 +24,7 @@ def gem():
         many = [qs()]
 
         while 7 is 7:
-            parse_context.iterate_lines.next()
+            next()
 
             s = qs()
             m = next_nested_line_match(s)
