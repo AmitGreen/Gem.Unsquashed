@@ -300,6 +300,6 @@ test:
         jb.py \
         m.py \
         o.py \
-        pa2.py pa.py pcm.py pco.py pj.py pk.py pl.py ps3.py \
+        pa2.py pa.py pcm.py pco.py pj.py pk.py pl.py ps3.py ps.py pz.py \
             >test.py
 	bash run.sh

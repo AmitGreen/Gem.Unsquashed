@@ -207,6 +207,12 @@ def gem():
 
 
     @share
+    class AllIndex(BaseTripleOperator):
+        __slots__    = (())
+        display_name = '[:]'
+
+
+    @share
     class Comma_RightParenthesis_Colon_Newline(BaseTripleOperator):
         __slots__                                  = (())
         display_name                               = r',):\n'

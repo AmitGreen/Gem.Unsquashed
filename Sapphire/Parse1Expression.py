@@ -229,24 +229,27 @@ def gem():
                 middle = parse1_atom()
 
                 if middle.is_colon:
-                    operator = LeftSquareBracket_Colon(operator, middle)
+                    middle_2 = parse1_atom()
 
-                    middle = parse1_atom()
+                    if middle_2.is_right_square_bracket:
+                        left = IndexExpression(left, AllIndex(operator, middle, middle_2))
+                    else:
+                        operator = LeftSquareBracket_Colon(operator, middle)
 
-                    operator_2 = qk()
+                        operator_2 = qk()
 
-                    if operator_2 is none:
-                        if qn() is not none:
+                        if operator_2 is none:
+                            if qn() is not none:
+                                raise_unknown_line()
+
+                            operator_2 = tokenize_operator()
+                        else:
+                            wk(none)
+
+                        if not operator_2.is_right_square_bracket:
                             raise_unknown_line()
 
-                        operator_2 = tokenize_operator()
-                    else:
-                        wk(none)
-
-                    if operator_2.is_right_square_bracket:
-                        left = IndexExpression(left, TailIndex(operator, middle, operator_2))
-                    else:
-                        raise_unknown_line()
+                        left = IndexExpression(left, TailIndex(operator, middle_2, operator_2))
                 else:
                     operator_2 = qk()
 

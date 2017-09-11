@@ -8,9 +8,9 @@ pj.py -> ../Pearl/ConjureTreeComment.py
 pk.py -> ../Pearl/Token.py
 pl.py -> ../Pearl/Line.py
 ps3.py -> ../Junk/PortrayString_3.py
-
 ps.py -> ../Gem/PortrayString.py
 pz.py -> ../Pearl/Tokenizer.py
+
 q1p.py -> ../Quartz/Parse1.py
 qc.py -> ../Quartz/Core.py
 ql.py -> ../Quartz/Line.py
