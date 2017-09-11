@@ -1,7 +1,6 @@
 m.py -> ../Gem/Map.py
 o.py -> ../Gem/Output.py
 pa2.py -> ../Gem/Path2.py
-
 pa.py -> ../Gem/Path.py
 pcm.py -> ../Pearl/Comment.py
 pco.py -> ../Pearl/Core.py
@@ -9,6 +8,7 @@ pj.py -> ../Pearl/ConjureTreeComment.py
 pk.py -> ../Pearl/Token.py
 pl.py -> ../Pearl/Line.py
 ps3.py -> ../Junk/PortrayString_3.py
+
 ps.py -> ../Gem/PortrayString.py
 pz.py -> ../Pearl/Tokenizer.py
 q1p.py -> ../Quartz/Parse1.py

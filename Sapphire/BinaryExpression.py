@@ -100,6 +100,12 @@ def gem():
 
 
     @share
+    class CompareGreaterThanOrEqualExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = '>='
+
+
+    @share
     class CompareIdentityExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'is'
@@ -191,17 +197,18 @@ def gem():
         display_name = '-'
 
 
-    IsNot                  .expression_meta = CompareDifferentExpression
-    KeywordIn              .expression_meta = CompareContainsExpression
-    KeywordIs              .expression_meta = CompareIdentityExpression
-    NotIn                  .expression_meta = CompareExcludeExpression
-    OperatorCompareEqual   .expression_meta = CompareEqualExpression
-    OperatorCompareNotEqual.expression_meta = CompareNotEqualExpression
-    OperatorDivide         .expression_meta = DivideExpression
-    OperatorGreaterThan    .expression_meta = CompareGreaterThanExpression
-    OperatorIntegerDivide  .expression_meta = IntegerDivideExpression
-    OperatorLessThanOrEqual.expression_meta = LessThanOrEqualExpression
-    OperatorMinusSign      .expression_meta = SubtractExpression
-    OperatorPercentSign    .expression_meta = ModulusExpression
-    OperatorPlusSign       .expression_meta = AddExpression
-    OperatorStarSign       .expression_meta = MultiplyExpression_1
+    IsNot                     .expression_meta = CompareDifferentExpression
+    KeywordIn                 .expression_meta = CompareContainsExpression
+    KeywordIs                 .expression_meta = CompareIdentityExpression
+    NotIn                     .expression_meta = CompareExcludeExpression
+    OperatorCompareEqual      .expression_meta = CompareEqualExpression
+    OperatorCompareNotEqual   .expression_meta = CompareNotEqualExpression
+    OperatorDivide            .expression_meta = DivideExpression
+    OperatorGreaterThan       .expression_meta = CompareGreaterThanExpression
+    OperatorGreaterThanOrEqual.expression_meta = CompareGreaterThanOrEqualExpression
+    OperatorIntegerDivide     .expression_meta = IntegerDivideExpression
+    OperatorLessThanOrEqual   .expression_meta = LessThanOrEqualExpression
+    OperatorMinusSign         .expression_meta = SubtractExpression
+    OperatorPercentSign       .expression_meta = ModulusExpression
+    OperatorPlusSign          .expression_meta = AddExpression
+    OperatorStarSign          .expression_meta = MultiplyExpression_1
