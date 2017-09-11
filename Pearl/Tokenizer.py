@@ -4,12 +4,18 @@
 @gem('Pearl.Tokenizer')
 def gem():
     require_gem('Pearl.Core')
-    require_gem('Pearl.Token')
+
 
     tokenizer = [none, 0, 0, 0, none, none, none]
 
     query = tokenizer.__getitem__
     write = tokenizer.__setitem__
+
+    line_tokens = []
+
+    la = line_tokens.append
+    lt = Method(Tuple, line_tokens)
+    lz = Method(line_tokens.__delitem__, slice_all)
 
     qs = Method(query, 0)
     qd = Method(query, 1)
@@ -51,6 +57,7 @@ def gem():
     class ParseContext(Object):
         __slots__ = ((
             'cadence',                  #   Cadence
+            'data_lines',               #   Tuple of *
             'iterate_lines',            #   None | Generator
             'many',                     #   Tuple of *
             'append',                   #   Method
@@ -68,7 +75,7 @@ def gem():
 
 
         def __enter__(t):
-            assert t.cadence.is_initialized_exited_or_exception
+            assert t.cadence.is_initialized_exited_exception_or_reuse
 
             t.cadence = cadence_entered
 
@@ -88,6 +95,7 @@ def gem():
                 if type(e) is not UnknownLineException:
                     return
 
+                lz()
                 wd0()
                 t.append(e.unknown_line)
 
@@ -99,17 +107,64 @@ def gem():
 
             while t.cadence is not cadence_exited:
                 yield loop
+
                 loop += 1
 
 
-        def reset(t, iterate_lines):
+        def reset(t, data_lines, iterate_lines):
             assert t.cadence.is_initialized_exited_or_exception
+
+            t.cadence = cadence_exception
 
             del t.many[:]
 
+            t.data_lines    = data_lines
             t.iterate_lines = iterate_lines
 
+            t.cadence = cadence_reuse
+
             return t
+
+
+    class UnknownLine(String):
+        __slots__                        = (())
+        display_name                     = 'unknown-line'
+        ends_in_newline                  = true
+        is_end_of_data__or__unknown_line = true
+        is_any_else                      = false
+        is_any_except_or_finally         = false
+        is_comment__or__empty_line       = false
+        is_end_of_data                   = false
+        is_statement_header              = false
+        is_statement                     = true
+        line_marker                      = true
+        newlines                         = 1
+
+
+        def __repr__(t):
+            return arrange('<UnknownLine %s>', portray_string(t))
+
+
+        def count_newlines(t):
+            assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
+            assert (t.count('\n') is 1) and (t[-1] == '\n')
+
+            return 1
+
+
+        display_token = __repr__
+
+
+        def dump_token(t, f, newline = true):
+            assert newline is true
+
+            f.line(t.display_token())
+
+            return false
+
+
+        def write(t, w):
+            w(t)
 
 
     parse_context = ParseContext()
@@ -117,14 +172,16 @@ def gem():
 
     @export
     def z_initialize(data):
-        data_lines = data.splitlines(true)
+        data_lines = Tuple(data.splitlines(true))
         maximum_i  = length(data_lines)
         q_data     = data_lines.__getitem__
 
 
         def GENERATOR_next_line():
-            for line_number in iterate_range(maximum_i):
-                s = q_data(line_number)
+            line_number = 0
+
+            for s in data_lines:
+                line_number += 1
 
                 ws(s)
                 wi0()
@@ -135,16 +192,17 @@ def gem():
 
                 yield s
 
-            wd(none)
+            lz()
+            wd0()
             ws(none)
-            wi(none)
-            wj(none)
+            wi0()
+            wj0()
             wl(none)
             wk(none)
             wn(none)
 
 
-        return parse_context.reset(GENERATOR_next_line())
+        return parse_context.reset(data_lines, GENERATOR_next_line())
 
 
     @export
@@ -153,10 +211,11 @@ def gem():
         caller_name  = caller_frame.f_code.co_name
         basename     = path_basename(caller_frame.f_code.co_filename)
 
-        line('%s#%s: %s', basename, caller_frame.f_lineno, caller_name)
+        line('%s#%s: %s; %s', basename, caller_frame.f_lineno, caller_name, ql())
 
         unknown_line_error = UnknownLineException(
-                                 arrange('parse incomplete: %s#%s: %s', basename, caller_frame.f_lineno, caller_name),
+                                 arrange('parse incomplete: %s#%s: %s; %s',
+                                         basename, caller_frame.f_lineno, caller_name, ql()),
                                  UnknownLine(qs()),
                              )
 
@@ -167,6 +226,10 @@ def gem():
 
     export(
         'parse_context',    parse_context,
+
+        'la',               la,
+        'lt',               lt,
+        'lz',               lz,
 
         'qd',               qd,
         'qi',               qi,

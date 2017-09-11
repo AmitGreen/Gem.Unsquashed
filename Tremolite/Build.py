@@ -205,7 +205,7 @@ def gem():
             return arrange('<%s %s %s>',
                            t.__class__.__name__,
                            portray_string(t.regular_expression),
-                           ' '.join((portray_string(v)   if type(v) is String else   portray(v))  for v in t.many))
+                           ' '.join((portray_string(v)   if type(v) is String else   portray(v))   for v in t.many))
 
 
     class TremoliteAdd(TremoliteMany):
@@ -238,7 +238,7 @@ def gem():
         def __repr__(t):
             return arrange('<TremoliteAnyOf %s %s>',
                            portray_string(t.regular_expression),
-                           ' '.join(portray_string(v)  for v in t.many))
+                           ' '.join(portray_string(v)   for v in t.many))
 
 
     class TremoliteOr(TremoliteMany):
@@ -361,10 +361,77 @@ def gem():
             name_cache, name_insert_interned,
     ] = produce_cache_functions(
             'name', TremoliteName,
-            
+
             produce_cache           = true,
             produce_insert_interned = true,
         )
+
+
+    def create_any_of(name, begin, end, arguments):
+        assert length(arguments) > 0
+
+        regular_expressions = [begin]
+        portray             = []
+        many                = []
+
+        for v in arguments:
+            if v is LINEFEED:
+                regular_expressions.append(r'\n')
+                portray.append(v.portray)
+                many.append(v)
+                continue
+
+            if type(v) is not String:
+                assert (v.is_tremolite_name) and (v.pattern.is_tremolite_exact) and (v.pattern.singular)
+
+                v = v.pattern.exact
+
+                assert length(v) is 1
+
+                if v == '-':
+                    regular_expressions.append(r'\-')
+                else:
+                    a = lookup_ascii(v)
+
+                    assert a.is_printable
+
+                    regular_expressions.append(a.pattern)
+
+            elif length(v) is 1:
+                if v == '-':
+                    regular_expressions.append(r'\-')
+                else:
+                    a = lookup_ascii(v)
+
+                    assert a.is_printable
+
+                    regular_expressions.append(a.pattern)
+            else:
+                assert (length(v) is 3) and (v[1] is '-')
+
+                a0 = lookup_ascii(v[0])
+                a2 = lookup_ascii(v[2])
+
+                if (not a0.is_printable) and (a0.ordinal >= 32):
+                    raise_runtime_error('invalid character <%s> passed to %s(%s)',
+                                            portray_string(v[0]), name, portray_string(v))
+
+                if (not a2.is_printable) and (a2.ordinal >= 32):
+                    raise_runtime_error('invalid character <%s> passed to %s(%s)',
+                                        portray_string(v[2]), name, portray_string(v))
+
+                regular_expressions.append(a0.pattern + '-' + a2.pattern)
+
+            portray.append(portray_string(v))
+            many.append(intern_string(v))
+
+        regular_expressions.append(end)
+
+        return TremoliteAnyOf(
+                   intern_string(''.join(regular_expressions)),
+                   intern_arrange('%s(%s)', name, ', '.join(portray)),
+                   Tuple(many),
+               )
 
 
     def create_exact(s):
@@ -490,70 +557,7 @@ def gem():
 
     @export
     def ANY_OF(*arguments):
-        assert length(arguments) > 0
-
-        regular_expressions = ['[']
-        portray             = []
-        many                = []
-
-        for v in arguments:
-            if v is LINEFEED:
-                regular_expressions.append(r'\n')
-                portray.append(v.portray)
-                many.append(v)
-                continue
-
-            if type(v) is not String:
-                assert (v.is_tremolite_name) and (v.pattern.is_tremolite_exact) and (v.pattern.singular)
-
-                v = v.pattern.exact
-
-                assert length(v) is 1
-
-                if v == '-':
-                    regular_expressions.append(r'\-')
-                else:
-                    a = lookup_ascii(v)
-
-                    assert a.is_printable
-
-                    regular_expressions.append(a.pattern)
-
-            elif length(v) is 1:
-                if v == '-':
-                    regular_expressions.append(r'\-')
-                else:
-                    a = lookup_ascii(v)
-
-                    assert a.is_printable
-
-                    regular_expressions.append(a.pattern)
-            else:
-                assert (length(v) is 3) and (v[1] is '-')
-
-                a0 = lookup_ascii(v[0])
-                a2 = lookup_ascii(v[2])
-
-                if not a0.is_printable:
-                    raise_runtime_error('invalid character <%s> passed to ANY_OF(%s)',
-                                        portray_string(s[0]), portray_string(v))
-
-                if not a2.is_printable:
-                    raise_runtime_error('invalid character <%s> passed to ANY_OF(%s)',
-                                        portray_string(s[2]), portray_string(v))
-
-                regular_expressions.append(a0.pattern + '-' + a2.pattern)
-
-            portray.append(portray_string(v))
-            many.append(intern_string(v))
-
-        regular_expressions.append(']')
-
-        return TremoliteAnyOf(
-                   intern_string(''.join(regular_expressions)),
-                   intern_arrange('ANY_OF(%s)', ', '.join(portray)),
-                   Tuple(many),
-               )
+        return create_any_of('ANY_OF', '[', ']', arguments)
 
 
     @export
@@ -657,6 +661,11 @@ def gem():
                        G(interned_name, pattern),
                    ),
                )
+
+
+    @export
+    def NOT_ANY_OF(*arguments):
+        return create_any_of('NOT_ANY_OF', '[^', ']', arguments)
 
 
     @export

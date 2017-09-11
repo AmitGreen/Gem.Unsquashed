@@ -7,35 +7,28 @@ def gem():
 
 
     def tokenize_name__X__newline(m):
-        j = qj()
-        s = qs()
-
-        name_end = m.end('name')
-
-        r = conjure_identifier(s[j : name_end])
-
         if qd() is not 0:
-            suffix = conjure_whitespace(qs()[name_end : ])
-
             if qi() == qj():
-                r = SuffixIdentifier(r, suffix)
+                r = evoke_name_whitespace(m.end('name'), none)
             else:
-                r = BookcaseIdentifier(
-                        conjure_whitespace(qs()[qi() : qj()]),
-                        r,
-                        suffix,
-                    )
+                r = evoke_whitespace_name_whitespace(qj(), m.end('name'), none)
 
             skip_tokenize_prefix()
 
             return r
 
-        wn(conjure_token_newline(s[name_end : ]))
+        j        = qj()
+        name_end = m.end('name')
+        s        = qs()
 
         if qi() == j:
-            return r
+            r = conjure_name(s[j : name_end])
+        else:
+            r = evoke_whitespace_name(j, name_end)
+        
+        wn(conjure_line_marker(s[name_end : ]))
 
-        return PrefixAtom(conjure_whitespace(s[qi() : j]), r)
+        return r
 
 
     @share
@@ -56,10 +49,10 @@ def gem():
 
         name_end = m.end('name')
 
-        r = conjure_identifier(s[j : name_end])
+        r = conjure_name(s[j : name_end])
 
         if qi() != j:
-            r = PrefixAtom(conjure_whitespace(s[qi() : j]), r)
+            r = conjure_whitespace_identifier(conjure_whitespace(s[qi() : j]), r)
 
         wi(name_end)
         wj(m.end())

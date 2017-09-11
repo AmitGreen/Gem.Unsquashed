@@ -25,5 +25,5 @@ def gem():
 
 
     @share
-    def main():
+    def main(arguments):
         RSA_Example()

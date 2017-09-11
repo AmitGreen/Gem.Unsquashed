@@ -3,16 +3,19 @@
 #
 @gem('Sapphire.Parse1Complex')
 def gem():
+    require_gem('Sapphire.PrefixedDualStatement')
+
+
     show = 0
 
 
-    def parse1_condition_statement__X__m(m, conjure, MetaHeader, MetaStatement):
+    def parse1_condition_statement__X__m(m, conjure_indented_keyword, evoke_header, conjure_body_statement):
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        keyword_if = conjure(m.group())
-
         j = m.end()
+
+        indented_keyword = evoke_indented_else_if(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -28,58 +31,52 @@ def gem():
 
         if qn() is not none:
             raise_unknown_line()
-            
-        if operator.is_colon_newline:
-            return MetaHeader(keyword_if, condition, operator)
+
+        if operator.is_colon__line_marker:
+            return evoke_header(indented_keyword, condition, operator)
 
         if not operator.is_colon:
             raise_unknown_line()
 
         left = parse1_atom()
 
-        if qn() is not none:
-            raise_unknown_line()
-
         if not left.is_atom:
             raise_unknown_line()
 
-        return MetaStatement(
-                   keyword_if,
-                   condition,
-                   operator,
+        return conjure_body_statement(
+                   evoke_header(indented_keyword, condition, operator),
                    parse1_statement_expression__atom('', left),
                )
 
 
     @share
     def parse1_statement_else_colon(m):
-        keyword_colon = conjure_else_colon(m.group())
-
         if m.end('newline') is not -1:
-            return keyword_colon
+            return evoke_indented__else__colon__line_marker(m.end('indented'), m.start('colon'), m.end('colon'))
 
         j = m.end()
+
+        keyword = evoke_indented_else_colon(m.end('indented'), m.start('colon'), j)
 
         wi(j)
         wj(j)
 
         left = parse1_atom()
 
-        if qn() is not none:
-            raise_unknown_line()
-
         if not left.is_atom:
             raise_unknown_line()
 
-        return ElseStatement(
-                   keyword_colon,
-                   parse1_statement_expression__atom('', left),
-               )
+        return conjure_else_fragment(keyword, parse1_statement_expression__atom('', left))
 
 
     @share
     def parse1_statement_else_if(m):
-        return parse1_condition_statement__X__m(m, conjure_keyword_else_if, ElseIfHeader, ElseIfStatement)
+        return parse1_condition_statement__X__m(
+                   m,
+                   conjure_keyword_else_if,
+                   conjure_else_if_header,
+                   conjure_else_if_fragment,
+               )
 
 
     @share
@@ -87,9 +84,9 @@ def gem():
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        keyword = conjure_keyword_except(m.group())
-
         j = m.end()
+
+        indented_keyword = evoke_indented_except(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -103,8 +100,8 @@ def gem():
         else:
             operator = tokenize_operator()
 
-        if operator.is_colon_newline:
-            return WithHeader_1(keyword, left, operator)
+        if operator.is_colon__line_marker:
+            return conjure_except_header_1(indented_keyword, left, operator)
 
         if not operator.is_keyword_as:
             raise_unknown_line()
@@ -118,26 +115,26 @@ def gem():
         else:
             operator_2 = tokenize_operator()
 
-        if operator_2.is_colon_newline:
-            return ExceptHeader_2(keyword, left, operator, right, operator_2)
+        if operator_2.is_colon__line_marker:
+            return conjure_except_header_2(indented_keyword, left, operator, right, operator_2)
 
         raise_unknown_line()
 
 
     @share
     def parse1_statement_except_colon(m):
-        if m.end('newline') is -1:
-            raise_unknown_line()
+        if m.end('newline') is not -1:
+            return evoke_indented__except__colon__line_marker(m.end('indented'), m.start('colon'), m.end('colon'))
 
-        return conjure_except_colon(m.group())
+        raise_unknown_line()
 
 
     @share
     def parse1_statement_finally_colon(m):
-        if m.end('newline') is -1:
-            raise_unknown_line()
+        if m.end('newline') is not -1:
+            return evoke_indented__finally__colon__line_marker(m.end('indented'), m.start('colon'), m.end('colon'))
 
-        return conjure_finally_colon(m.group())
+        raise_unknown_line()
 
 
     @share
@@ -145,9 +142,9 @@ def gem():
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        keyword_for = conjure_keyword_for(m.group())
-
         j = m.end()
+
+        indented_keyword = evoke_indented_for(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -185,28 +182,28 @@ def gem():
             if qn() is not none:
                 raise_unknown_line()
 
-        if not operator_2.is_colon_newline:
+        if not operator_2.is_colon__line_marker:
             raise_unknown_line()
 
-        return ForHeader(keyword_for, left, operator, right, operator_2)
+        return conjure_for_header(indented_keyword, left, operator, right, operator_2)
 
 
     @share
     def parse1_statement_if(m):
-        return parse1_condition_statement__X__m(m, conjure_keyword_if, IfHeader, IfStatement)
+        return parse1_condition_statement__X__m(m, evoke_indented_if, conjure_if_header, conjure_if_statement)
 
 
     @share
     def parse1_statement_try_colon(m):
-        if m.end('newline') is -1:
-            raise_unknown_line()
+        if m.end('newline') is not -1:
+            return evoke_indented__try__colon__line_marker(m.end('indented'), m.start('colon'), m.end('colon'))
 
-        return conjure_try_colon(m.group())
+        raise_unknown_line()
 
 
     @share
     def parse1_statement_while(m):
-        return parse1_condition_statement__X__m(m, conjure_keyword_while, WhileHeader, WhileStatement)
+        return parse1_condition_statement__X__m(m, evoke_indented_while, conjure_while_header, conjure_while_statement)
 
 
     @share
@@ -214,9 +211,9 @@ def gem():
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        keyword = conjure_keyword_with(m.group())
-
         j = m.end()
+
+        indented_keyword = evoke_indented_with(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -230,8 +227,8 @@ def gem():
         else:
             operator = tokenize_operator()
 
-        if operator.is_colon_newline:
-            return WithHeader_1(keyword, left, operator)
+        if operator.is_colon__line_marker:
+            return conjure_with_header_1(indented_keyword, left, operator)
 
         if not operator.is_keyword_as:
             raise_unknown_line()
@@ -245,7 +242,7 @@ def gem():
         else:
             operator_2 = tokenize_operator()
 
-        if operator_2.is_colon_newline:
-            return WithHeader_2(keyword, left, operator, right, operator_2)
+        if operator_2.is_colon__line_marker:
+            return conjure_with_header_2(indented_keyword, left, operator, right, operator_2)
 
         raise_unknown_line()

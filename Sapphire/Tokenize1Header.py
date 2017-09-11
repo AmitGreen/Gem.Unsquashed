@@ -14,39 +14,31 @@ def gem():
 
         s = qs()
 
-        m = header_parenthesis_match1(s, qj())
+        m = definition_header_parenthesis_match(s, qj())
 
         if m is none:
             raise_unknown_line()
 
-        right_parenthesis__start = m.start('right_parenthesis')
+        RP_end = m.end('right_parenthesis')
 
         if m.start('comment_newline') is not -1:
-            right_parenthesis__start = m.start('right_parenthesis')
-
-            if right_parenthesis__start is not -1:
-                colon_start = m.start('colon')
-
-                if colon_start is not -1:
-                    right_parenthesis__start = m.start('right_parenthesis')
-
-                    return ParameterColon_0_Newline(
-                               conjure_left_parenthesis (s[qi()                     : right_parenthesis__start]),
-                               conjure_right_parenthesis(s[right_parenthesis__start : colon_start             ]),
-                               conjure_colon_newline    (s[colon_start              :                         ]),
-                           )
-
+            if RP_end is not -1:
                 raise_unknown_line()
 
-            r = conjure_left_parenthesis(s[qi() : ])
+            r = conjure_left_parenthesis__ends_in_newline(s[qi() : ])
 
             wd1()
             skip_tokenize_prefix()
 
             return r
 
-        if right_parenthesis__start is not -1:
-            raise_unknown_line()
+        if RP_end is not -1:
+            r = evoke_parameters_0(m.start('right_parenthesis'), RP_end)
+
+            wi(RP_end)
+            wj(m.end())
+
+            return r
 
         j = m.end()
 
@@ -64,19 +56,13 @@ def gem():
 
         right_parenthesis__end = m.end('right_parenthesis')
 
-        if m.start('colon') is not -1:
-            if m.end('comment_newline') is -1:
-                raise_unknown_line()
+        if m.end('comment_newline') is not -1:
+            assert qi() == qj()
 
-            wd0()
+            my_line(portray_string(s[qi() : ]))
+            my_line(portray_string(m.group('comment_newline')))
 
-            return RightParenthesis_Colon_Newline(
-                       conjure_right_parenthesis(s[qi()                   : right_parenthesis__end]),
-                       conjure_colon_newline    (s[right_parenthesis__end :                       ]),
-                   )
-
-        if m.end('comment_newline') is -1:
-            return conjure_right_parenthesis(s[qi() :])
+            raise_unknown_line()
 
         r = conjure_right_parenthesis(s[qi() : right_parenthesis__end])
 
@@ -99,7 +85,7 @@ def gem():
         m = parameter_atom_match(s, j)
 
         if m is none:
-            my_line(portray_string(qs()[qj() : ]))
+            #my_line(portray_string(qs()[qj() : ]))
             raise_unknown_line()
 
         name = m.group('name')
@@ -108,20 +94,27 @@ def gem():
             if m.start('comment_newline') is not -1:
                 raise_unknown_line()
 
-            r = conjure_identifier(name)
-
             star_end = m.end('star')
 
             if star_end is -1:
                 if qi() != j:
-                    r = PrefixIdentifier(conjure_whitespace(s[qi() : j]), r)
+                    name_end = m.end('name')
+
+                    r = evoke_whitespace_name(j, name_end)
+
+                    wi(name_end)
+                    wj(m.end())
+
+                    return r
+
+                r = conjure_name(name)
 
                 wi(m.end('name'))
                 wj(m.end())
 
                 return r
 
-            r = TupleParameter(conjure_star_sign(s[qi() : star_end]), r)
+            r = conjure_star_parameter(conjure_star_sign(s[qi() : star_end]), conjure_name(name))
 
             j = m.end()
 
@@ -144,9 +137,10 @@ def gem():
         m = parameter_colon_newline_match(s, qj())
 
         if m is none:
+            #my_line(portray_string(s[qj() : ]))
             raise_unknown_line()
 
-        return conjure_colon_newline(s[qi() : ])
+        return evoke_colon__line_marker(m.end('colon'))
 
 
     def tokenize_nested__X__equal_sign__blankline():
@@ -191,24 +185,25 @@ def gem():
             comma_RP_end = m.end('comma_RP')
 
             if comma_RP_end is not -1:
-                if m.start('comma_RP_colon') is not -1:
-                    if m.end('comment_newline') is -1:
-                        raise_unknown_line()
+                if m.end('comment_newline') is not -1:
+                    raise_unknown_line()
 
-                    wd0()
+                d = qd()
 
-                    comma_RP_start = m.start('comma_RP')
+                if d is 0:
+                    raise_unknown_line()
 
-                    return Comma_RightParenthesis_Colon_Newline(
-                               conjure_comma            (s[qi()           : comma_RP_start]),
-                               conjure_right_parenthesis(s[comma_RP_start : comma_RP_end  ]),
-                               conjure_colon            (s[comma_RP_end   :               ])
-                           )
+                r = evoke_comma__right_parenthesis(comma_end, comma_RP_end)
 
-                raise_unknown_line()
+                wd(d - 1)
+                wi(comma_RP_end)
+                wj(m.end())
+
+                return r
+
 
             if m.end('comment_newline') is not -1:
-                r = conjure_comma(s[qi() :])
+                r = conjure_comma__ends_in_newline(s[qi() :])
 
                 skip_tokenize_prefix()
 

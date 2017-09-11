@@ -3,16 +3,11 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 0
-
-
     require_gem('Sapphire.Core')
+
+    require_gem('Sapphire.Atom')
     require_gem('Sapphire.BinaryExpression')
-    require_gem('Sapphire.BookcaseExpression')
-    require_gem('Sapphire.ExpressionMany')
-    require_gem('Sapphire.JoinedToken')
-    require_gem('Sapphire.Match')
-    require_gem('Sapphire.OtherExpression')
+    require_gem('Sapphire.Comment')
     require_gem('Sapphire.Parse1Atom')
     require_gem('Sapphire.Parse1Call')
     require_gem('Sapphire.Parse1Complex')
@@ -22,54 +17,11 @@ def gem():
     require_gem('Sapphire.Parse1Function')
     require_gem('Sapphire.Parse1Import')
     require_gem('Sapphire.Parse1Simple')
-    require_gem('Sapphire.PostfixExpression')
-    require_gem('Sapphire.Statement')
+    require_gem('Sapphire.QuadrupleToken')
     require_gem('Sapphire.Tokenize1Atom')
     require_gem('Sapphire.Tokenize1Header')
     require_gem('Sapphire.Tokenize1Name')
     require_gem('Sapphire.Tokenize1Operator')
-    require_gem('Sapphire.UnaryExpression')
-
-
-    def parse1_statement_decorator_header(m):
-        if m.end('newline') is not -1:
-            raise_unknown_line()
-
-        operator_at_sign = OperatorAtSign(m.group())
-        s                = qs()
-
-        j = m.end()
-
-        wi(j)
-        wj(j)
-
-        identifier = tokenize_name()
-        newline    = qn()
-
-        if newline is not none:
-            return DecoratorHeader(operator_at_sign, identifier, newline)
-
-        operator = tokenize_operator()
-
-        if operator.is_arguments_0:
-            newline = qn()
-
-            if newline is none:
-                raise_unknown_line()
-
-            return DecoratorHeader(operator_at_sign, CallExpression(identifier, operator), newline)
-
-        if not operator.is_left_parenthesis:
-            raise_unknown_line()
-
-        call = parse1_call_expression__left__operator(identifier, operator)
-
-        newline = qn()
-
-        if newline is none:
-            raise_unknown_line()
-
-        return DecoratorHeader(operator_at_sign, call, newline)
 
 
     find_parse1_colon_line = {
@@ -81,23 +33,25 @@ def gem():
 
 
     lookup_parse1_line = {
-                             '@'      : parse1_statement_decorator_header,
-                             'assert' : parse1_statement_assert,
-                             'class'  : parse1_statement_class_header,
-                             'def'    : parse1_statement_function_header,
-                             'del'    : parse1_statement_delete,
-                             'elif'   : parse1_statement_else_if,
-                             'except' : parse1_statement_except,
-                             'for'    : parse1_statement_for,
-                             'from'   : parse1_statement_from,
-                             'if'     : parse1_statement_if,
-                             'import' : parse1_statement_import,
-                             'pass'   : parse1_statement_pass,
-                             'raise'  : parse1_statement_raise,
-                             'return' : parse1_statement_return,
-                             'yield'  : parse1_statement_yield,
-                             'while'  : parse1_statement_while,
-                             'with'   : parse1_statement_with,
+                             '@'        : parse1_statement_decorator_header,
+                             'assert'   : parse1_statement_assert,
+                             'break'    : parse1_statement_break,
+                             'class'    : parse1_statement_class_header,
+                             'continue' : parse1_statement_continue,
+                             'def'      : parse1_statement_function_header,
+                             'del'      : parse1_statement_delete,
+                             'elif'     : parse1_statement_else_if,
+                             'except'   : parse1_statement_except,
+                             'for'      : parse1_statement_for,
+                             'from'     : parse1_statement_from,
+                             'if'       : parse1_statement_if,
+                             'import'   : parse1_statement_import,
+                             'pass'     : parse1_statement_pass,
+                             'raise'    : parse1_statement_raise,
+                             'return'   : parse1_statement_return,
+                             'yield'    : parse1_statement_yield,
+                             'while'    : parse1_statement_while,
+                             'with'     : parse1_statement_with,
                          }.get
 
 
@@ -135,10 +89,10 @@ def gem():
 
                         if m.start('comment_newline') is not -1:
                             append(
-                                StatementExpression(
-                                    m.group('indented'),
-                                    conjure_identifier(atom_s),
-                                    conjure_token_newline(s[m.end('atom'):]),
+                                conjure_expression_statement(
+                                    conjure_indentation(m.group('indented')),
+                                    conjure_name(atom_s),
+                                    conjure_line_marker(s[m.end('atom'):]),
                                 ),
                             )
 
@@ -151,7 +105,7 @@ def gem():
                         append(
                             parse1_statement_expression__atom(
                                 m.group('indented'),
-                                conjure_identifier(atom_s),
+                                conjure_name(atom_s),
                             ),
                         )
 
@@ -182,41 +136,15 @@ def gem():
                         assert qd() is 0
                         continue
 
-                    [comment, newline] = m.group('comment', 'newline')
+                    comment_end = m.end('comment')
 
-                    if newline is none:
-                        assert comment is none
-
-                        raise_unknown_line()
-
-                    if comment is not none:
-                        indented = m.group('indented')
-
-                        if indented is '':
-                            append(Comment(comment, newline))
-
-                            continue
-
-                        append(IndentedComment(indented, comment, newline))
+                    if comment_end is not -1:
+                        append(conjure_any_comment_line(m.end('indented'), comment_end))
                         continue
 
-                    append(EmptyLine(m.group()))
+                    if m.end('newline') is -1:
+                        raise_unknown_line()
 
-                if show:
-                    for v in many:
-                        line('%s', v.display_token())
+                    append(conjure_empty_line(m.group()))
 
-                with create_StringOutput() as f:
-                    w = f.write
-
-                    for v in many:
-                        v.write(w)
-
-                if data != f.result:
-                    with create_DelayedFileOutput('oops.txt') as oops:
-                        oops.write(f.result)
-
-                    raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')
-
-                line('Passed: identical dump from parse tree.  Total: %d line%s',
-                     length(many), (''   if length(many) is 0 else   's'))
+        return ((data, parse_context.data_lines, many))

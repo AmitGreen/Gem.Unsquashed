@@ -16,15 +16,18 @@ from    Gem.BuiltIn         import  intern_string                           #   
 from    Gem.BuiltIn         import  is_instance                             #   Gem.Boot
 from    Gem.BuiltIn         import  is_python_2                             #   Gem.Boot
 from    Gem.BuiltIn         import  is_python_3                             #   Gem.Boot
+from    Gem.BuiltIn         import  iterate_items_sorted_by_key             #   Gem.Map
 from    Gem.BuiltIn         import  length                                  #   Gem.Boot
 from    Gem.BuiltIn         import  LiquidSet                               #   Gem.Boot
 from    Gem.BuiltIn         import  my_line                                 #   Gem.System
 from    Gem.BuiltIn         import  next_method                             #   Gem.Boot
 from    Gem.BuiltIn         import  none                                    #   Gem.Boot
+from    Gem.BuiltIn         import  privileged_2                            #   Gem.Core
 from    Gem.BuiltIn         import  raising_exception_from                  #   Gem.Boot
 from    Gem.BuiltIn         import  raising_exception                       #   Gem.Boot
 from    Gem.BuiltIn         import  String                                  #   Gem.Boot
 from    Gem.BuiltIn         import  true                                    #   Gem.Boot
+from    Gem.BuiltIn         import  view_items                              #   Gem.Map
 from    Gem                 import  absent                                  #   Gem.Absent
 from    Gem                 import  built_in                                #   Gem.Boot
 from    Gem                 import  caller_frame_1                          #   Gem.System
@@ -42,7 +45,6 @@ from    Gem                 import  first_map_item                          #   
 from    Gem                 import  flush_standard_output                   #   Gem.Boot
 from    Gem                 import  gem_global                              #   Gem.Global
 from    Gem                 import  ImportError                             #   Gem.Exception
-from    Gem                 import  iterate_items_sorted_by_key             #   Gem.Map
 from    Gem                 import  lookup_ascii                            #   Gem.Ascii
 from    Gem                 import  Module                                  #   Gem.Boot
 from    Gem                 import  my_name                                 #   Gem.System
@@ -52,7 +54,6 @@ from    Gem                 import  path_basename                           #   
 from    Gem                 import  path_join                               #   Gem.Path
 from    Gem                 import  path_split_extension                    #   Gem.Path
 from    Gem                 import  PermissionError                         #   Gem.Exception
-from    Gem                 import  privileged_2                            #   Gem.Core
 from    Gem                 import  privileged                              #   Gem.Boot
 from    Gem                 import  produce_cache_functions                 #   Gem.Cache
 from    Gem                 import  produce_conjure_by_name                 #   Gem.Cache
@@ -70,6 +71,5 @@ from    Gem                 import  StopIteration                           #   
 from    Gem                 import  Traceback                               #   Gem.Boot
 from    Gem                 import  unknown_ascii                           #   Gem.Ascii
 from    Gem                 import  values_tuple_sorted_by_key              #   Gem.Map
-from    Gem                 import  view_items                              #   Gem.Map
 from    Gem                 import  write_binary_to_path                    #   Gem.Path
 from    Gem                 import  write_standard_output                   #   Gem.Boot

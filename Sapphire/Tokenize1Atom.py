@@ -39,12 +39,14 @@ def gem():
 
                     return r
 
-                r = find_atom_type(atom_s[0])(atom_s)
+                atom_end = m.end('atom')
 
                 if qi() != qj():
-                    r = r.prefix_meta(conjure_whitespace(qs()[qi() : qj()]), r)
+                    r = find_evoke_whitespace_atom(atom_s[0])(qj(), atom_end)
+                else:
+                    r = find_atom_type(atom_s[0])(atom_s)
 
-                wi(m.end('atom'))
+                wi(atom_end)
                 wj(m.end())
 
                 return r
@@ -58,7 +60,7 @@ def gem():
                     d            = qd()
                     operator_end = m.end('operator')
 
-                    r = find_operator_conjure_function(operator_s)(s[qi() : operator_end])
+                    r = conjure_action_word(operator_s, s[qi() : operator_end])
 
                     if d is 0:
                         raise_unknown_line()
@@ -73,7 +75,7 @@ def gem():
 
                 j = m.end()
 
-                r = find_operator_conjure_function(operator_s)(s[qi() : j])
+                r = conjure_action_word(operator_s, s[qi() : j])
 
                 wi(j)
                 wj(j)
@@ -85,19 +87,22 @@ def gem():
             #
             #   Differences:
             #       Uses '*parenthesis' instead of '*{brace,square_bracket}'
-            #       Uses 'EmptyTuple' instead of 'Empty{Map,List}' 
+            #       Uses 'EmptyTuple' instead of 'Empty{Map,List}'
             #
-            left_parenthesis__end = m.end('left_parenthesis__ow')
+            left_end = m.end('left_parenthesis__ow')
 
-            if left_parenthesis__end is not -1:
-                left_parenthesis       = conjure_left_parenthesis(qs()[qi() : left_parenthesis__end])
-                right_parenthesis__end = m.end('right_parenthesis')
+            if left_end is not -1:
+                right_end = m.end('right_parenthesis')
 
-                if right_parenthesis__end is not -1:
-                    wi(right_parenthesis__end)
+                if right_end is not -1:
+                    r = evoke_empty_tuple(left_end, right_end)
+
+                    wi(right_end)
                     wj(m.end())
 
-                    return EmptyTuple(left_parenthesis, conjure_right_parenthesis(m.group('right_parenthesis')))
+                    return r
+
+                r = conjure_left_parenthesis(qs()[qi() : left_end])
 
                 j = m.end()
 
@@ -105,27 +110,30 @@ def gem():
                 wi(j)
                 wj(j)
 
-                return left_parenthesis
+                return r
             #</similiar-to>
 
             #
             #<similiar-to: 'left_parenthesis__end' above>
             #
             #   Differences:
-            #       Uses '*brace' instead of '*parenthesis' 
+            #       Uses '*brace' instead of '*parenthesis'
             #       Uses 'EmptyMap' instead of 'EmptyTuple'
             #
-            left_brace__end = m.end('left_brace__ow')
+            left_end = m.end('left_brace__ow')
 
-            if left_brace__end is not -1:
-                left_brace       = conjure_left_brace(qs()[qi() : left_brace__end])
-                right_brace__end = m.end('right_brace')
+            if left_end is not -1:
+                right_end = m.end('right_brace')
 
-                if right_brace__end is not -1:
-                    wi(right_brace__end)
+                if right_end is not -1:
+                    r = evoke_empty_map(left_end, right_end)
+
+                    wi(right_end)
                     wj(m.end())
 
-                    return EmptyMap(left_brace, conjure_right_brace(m.group('right_brace')))
+                    return r
+
+                r = conjure_left_brace(qs()[qi() : left_end])
 
                 j = m.end()
 
@@ -133,27 +141,30 @@ def gem():
                 wi(j)
                 wj(j)
 
-                return left_brace
+                return r
             #</similiar-to>
 
             #
             #<similiar-to: 'left_parenthesis__end' above>
             #
             #   Differences:
-            #       Uses '*square_bracket' instead of '*parenthesis' 
+            #       Uses '*square_bracket' instead of '*parenthesis'
             #       Uses 'EmptyMap' instead of 'EmptyTuple'
             #
-            left_square_bracket__end = m.end('left_square_bracket__ow')
+            left_end = m.end('left_square_bracket__ow')
 
-            if left_square_bracket__end is not -1:
-                left_square_bracket       = conjure_left_square_bracket(qs()[qi() : left_square_bracket__end])
-                right_square_bracket__end = m.end('right_square_bracket')
+            if left_end is not -1:
+                right_end = m.end('right_square_bracket')
 
-                if right_square_bracket__end is not -1:
-                    wi(right_square_bracket__end)
+                if right_end is not -1:
+                    r = evoke_empty_list(left_end, right_end)
+
+                    wi(right_end)
                     wj(m.end())
 
-                    return EmptyList(left_square_bracket, conjure_right_square_bracket(m.group('right_square_bracket')))
+                    return r
+
+                r = conjure_left_square_bracket(qs()[qi() : left_end])
 
                 j = m.end()
 
@@ -161,21 +172,21 @@ def gem():
                 wi(j)
                 wj(j)
 
-                #my_line('d: %d; left_square_bracket: %r', qd(), left_square_bracket)
-                return left_square_bracket
+                return r
             #</similiar-to>
 
             quote_start = m.start('quote')
 
             if quote_start is not -1:
-                quote_end = m.end('quote')
                 j         = qj()
-                s         = qs()
-
-                r = find_atom_type(s[quote_start])(s[j : quote_end])
+                quote_end = m.end('quote')
 
                 if qi() != j:
-                    r = r.prefix_meta(conjure_whitespace(s[qi() : j]), r)
+                    r = find_evoke_whitespace_atom(qs()[quote_start])(j, quote_end)
+                else:
+                    s = qs()
+
+                    r = find_atom_type(s[quote_start])(s[j : quote_end])
 
                 wi(quote_end)
                 wj(m.end())
@@ -198,7 +209,7 @@ def gem():
 
                     r = conjure(atom_s)(qs()[qi() : atom_end])
 
-                    wn(conjure_token_newline(s[atom_end : ]))
+                    wn(conjure_line_marker(s[atom_end : ]))
 
                     return r
 
@@ -207,8 +218,6 @@ def gem():
                 skip_tokenize_prefix()
 
                 return r
-
-            r = find_atom_type(atom_s[0])(atom_s)
 
             #
             #<similiar-to: {quote_s} below>
@@ -219,27 +228,25 @@ def gem():
             #       Uses "qs()" intead of "s"
             #
             if qd() is not 0:
-                suffix = conjure_whitespace(qs()[m.end('atom') : ])
-
                 if qi() == qj():
-                    r = r.suffix_meta(r, suffix)
+                    r = find_evoke_atom_whitespace(atom_s[0])(m.end('atom'), none)
                 else:
-                    r = r.bookcase_meta(
-                            conjure_whitespace(qs()[qi() : qj()]),
-                            r,
-                            suffix,
-                        )
+                    r = find_evoke_whitespace_atom_whitespace(atom_s[0])(qj(), m.end('atom'), none)
 
                 skip_tokenize_prefix()
 
                 return r
 
-            wn(conjure_token_newline(qs()[m.end('atom') : ]))
+            atom_end = m.end('atom')
 
             if qi() == qj():
-                return r
+                r = find_atom_type(atom_s[0])(atom_s)
+            else:
+                r = find_evoke_whitespace_atom(atom_s[0])(qj(), m.end('atom'))
 
-            return r.prefix_meta(conjure_whitespace(qs()[qi() : qj()]), r)
+            wn(conjure_line_marker(qs()[atom_end : ]))
+
+            return r
             #</similiar-to>
 
         operator_s = m.group('operator')
@@ -252,16 +259,16 @@ def gem():
                     operator_end = m.end('operator')
                     s            = qs()
 
-                    r = find_operator_conjure_function(operator_s)(s[qi() : operator_end])
+                    r = conjure_action_word(operator_s, s[qi() : operator_end])
 
                     wd0()
-                    wn(conjure_token_newline(s[operator_end : ]))
+                    wn(conjure_line_marker(s[operator_end : ]))
 
                     return r
 
                 wd(d - 1)
 
-                r = find_operator_conjure_function(operator_s)(qs()[qi() : ])
+                r = conjure_action_word__ends_in_newline(operator_s, qs()[qi() : ])
 
                 skip_tokenize_prefix()
 
@@ -270,13 +277,15 @@ def gem():
             if qd() is 0:
                 operator_end = m.end('operator')
 
-                r = find_operator_conjure_function(operator_s)(qs()[qi() : operator_end])
+                s = qs()
 
-                wn(conjure_token_newline(s[operator_end : ]))
+                r = conjure_action_word(operator_s, s[qi() : operator_end])
+
+                wn(conjure_line_marker(s[operator_end : ]))
 
                 return r
 
-            r = find_operator_conjure_function(operator_s)(qs()[qi() : ])
+            r = conjure_action_word__ends_in_newline(operator_s, qs()[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -289,32 +298,22 @@ def gem():
         #       Uses '*parenthesis' instead of '*brace'
         #       Uses 'EmptyTuple' instead of 'Empty{Map,List}'
         #
-        left_parenthesis__end = m.end('left_parenthesis__ow')
+        left_end = m.end('left_parenthesis__ow')
 
-        if left_parenthesis__end is not -1:
-            right_parenthesis__end = m.end('right_parenthesis')
+        if left_end is not -1:
+            right_end = m.end('right_parenthesis')
 
-            if right_parenthesis__end is not -1:
-                s = qs()
-
-                left_parenthesis = conjure_left_parenthesis(s[qi() : left_parenthesis__end])
-
+            if right_end is not -1:
                 if qd() is 0:
-                    right_parenthesis__end = m.end('right_parenthesis')
+                    right_end = m.end('right_parenthesis')
 
-                    r = EmptyTuple(
-                            left_parenthesis,
-                            conjure_right_parenthesis(s[left_parenthesis__end : right_parenthesis__end])
-                        )
+                    r = evoke_empty_tuple(left_end, right_end)
 
-                    wn(conjure_token_newline(s[right_parenthesis__end : ]))
+                    wn(conjure_line_marker(qs()[right_end : ]))
 
                     return r
 
-                r = EmptyTuple(
-                        left_parenthesis,
-                        conjure_right_parenthesis(s[left_parenthesis__end : ]),
-                    )
+                r = evoke_empty_tuple(left_end, none)
 
                 skip_tokenize_prefix()
 
@@ -322,7 +321,7 @@ def gem():
 
             wd(qd() + 1)
 
-            r = conjure_left_parenthesis(qs()[qi() : ])
+            r = conjure_left_parenthesis__ends_in_newline(qs()[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -333,35 +332,25 @@ def gem():
         #<same-as: 'left_parenthesis__end' above>
         #
         #   Differences:
-        #       Uses '*brace' instead of '*parenthesis' 
+        #       Uses '*brace' instead of '*parenthesis'
         #       Uses 'EmptyList' instead of 'EmptyTuple'
         #
-        left_brace__end = m.end('left_brace__ow')
+        left_end = m.end('left_brace__ow')
 
-        if left_brace__end is not -1:
-            right_brace__end = m.end('right_brace')
+        if left_end is not -1:
+            right_end = m.end('right_brace')
 
-            if right_brace__end is not -1:
-                s = qs()
-
-                left_brace = conjure_left_brace(s[qi() : left_brace__end])
-
+            if right_end is not -1:
                 if qd() is 0:
-                    right_brace__end = m.end('right_brace')
+                    right_end = m.end('right_brace')
 
-                    r = EmptyMap(
-                            left_brace,
-                            conjure_right_brace(s[left_brace__end : right_brace__end])
-                        )
+                    r = evoke_empty_map(left_end, right_end)
 
-                    wn(conjure_token_newline(s[right_brace__end : ]))
+                    wn(conjure_line_marker(qs()[right_end : ]))
 
                     return r
 
-                r = EmptyMap(
-                        left_brace,
-                        conjure_right_brace(s[left_brace__end : ]),
-                    )
+                r = evoke_empty_map(left_brace, none)
 
                 skip_tokenize_prefix()
 
@@ -369,7 +358,7 @@ def gem():
 
             wd(qd() + 1)
 
-            r = conjure_left_brace(qs()[qi() : ])
+            r = conjure_left_brace__ends_in_newline(qs()[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -380,35 +369,25 @@ def gem():
         #<same-as: 'left_parenthesis__end' above>
         #
         #   Differences:
-        #       Uses '*square_bracket' instead of '*parenthesis' 
+        #       Uses '*square_bracket' instead of '*parenthesis'
         #       Uses 'EmptyList' instead of 'EmptyTuple'
         #
-        left_square_bracket__end = m.end('left_square_bracket__ow')
+        left_end = m.end('left_square_bracket__ow')
 
-        if left_square_bracket__end is not -1:
-            right_square_bracket__end = m.end('right_square_bracket')
+        if left_end is not -1:
+            right_end = m.end('right_square_bracket')
 
-            if right_square_bracket__end is not -1:
-                s = qs()
-
-                left_square_bracket = conjure_left_square_bracket(s[qi() : left_square_bracket__end])
-
+            if right_end is not -1:
                 if qd() is 0:
-                    right_square_bracket__end = m.end('right_square_bracket')
+                    right_end = m.end('right_square_bracket')
 
-                    r = EmptyList(
-                            left_square_bracket,
-                            conjure_right_square_bracket(s[left_square_bracket__end : right_square_bracket__end])
-                        )
+                    r = evoke_empty_list(left_end, right_end)
 
-                    wn(conjure_token_newline(s[right_square_bracket__end : ]))
+                    wn(conjure_line_marker(qs()[right_end : ]))
 
                     return r
 
-                r = EmptyList(
-                        left_square_bracket,
-                        conjure_right_square_bracket(s[left_square_bracket__end : ]),
-                    )
+                r = evoke_empty_list(left_end, none)
 
                 skip_tokenize_prefix()
 
@@ -416,7 +395,7 @@ def gem():
 
             wd(qd() + 1)
 
-            r = conjure_left_square_bracket(qs()[qi() : ])
+            r = conjure_left_square_bracket__ends_in_newline(qs()[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -426,15 +405,12 @@ def gem():
         quote_start = m.start('quote')
 
         if quote_start is not -1:
-            quote_end = m.end('quote')
-            s         = qs()
-
             #
             #   NOTE:
             #
-            #       Use 'qj()' here to be sure to pick up any letters prefixing the quote, such as r'prefixed'
+            #       In the code below: Use 'qj()' instead of "m.start('quote')" to be sure to pick up any letters
+            #       prefixing the quote, such as r'prefixed'
             #
-            r = find_atom_type(s[quote_start])(s[qj() : quote_end])
 
             #
             #<similiar-to: {atom_s} above>
@@ -445,27 +421,27 @@ def gem():
             #       Uses "s" intead of "qs()"
             #
             if qd() is not 0:
-                suffix = conjure_whitespace(s[quote_end : ])
-
                 if qi() == qj():
-                    r = r.suffix_meta(r, suffix)
+                    r = find_evoke_atom_whitespace(qs()[quote_start])(m.end('quote'), none)
                 else:
-                    r = r.bookcase_meta(
-                            conjure_whitespace(s[qi() : qj()]),
-                            r,
-                            suffix,
-                        )
+                    r = find_evoke_whitespace_atom_whitespace(qs()[quote_start])(qj(), m.end('quote'), none)
 
                 skip_tokenize_prefix()
 
                 return r
 
-            wn(conjure_token_newline(s[m.end('quote') : ]))
+            j         = qj()
+            quote_end = m.end('quote')
+            s         = qs()
 
             if qi() == qj():
-                return r
+                r = find_atom_type(s[quote_start])(s[j : quote_end])
+            else:
+                r = find_evoke_whitespace_atom(s[quote_start])(j, quote_end)
 
-            return r.prefix_meta(conjure_whitespace(qs()[qi() : qj()]), r)
+            wn(conjure_line_marker(s[m.end('quote') : ]))
+
+            return r
             #</similiar-to>
 
         raise_unknown_line()

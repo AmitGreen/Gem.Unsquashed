@@ -17,16 +17,15 @@ def gem():
     from Gem import create_DelayedFileOutput, create_StringOutput, read_text_from_path
     from Pearl import conjure_comment_newline, conjure_token_newline, conjure_tree_comment
     from Pearl import EmptyLine, lookup_identifier
-    from Pearl import qj, qk, qs, raise_unknown_line, Token, TokenIndented, wj, wk, z_initialize
+    from Pearl import qj, qk, qs, raise_unknown_line, Token, wj, wk, z_initialize
 
 
     share(
         #
         #   Classes
         #
-        'EmptyLine',                    EmptyLine,
-        'Token',                        Token,
-        'TokenIndented',                TokenIndented,
+        'EmptyLine',    EmptyLine,
+        'Token',        Token,
 
 
         #
