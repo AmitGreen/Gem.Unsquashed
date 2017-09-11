@@ -642,6 +642,34 @@ def gem():
 
 
     @share
+    class OperatorLessThan(KeywordAndOperatorBase):
+        __slots__                        = (())
+        display_name                     = '<'
+        is_compare_operator              = true
+        is_end_of_arithmetic_expression  = true
+        is_end_of_logical_or_expression  = true
+        is_end_of_multiply_expression    = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_unary_expression       = true
+        keyword                          = '<'
+
+
+        def __repr__(t):
+            if '\n' in t.s:
+                return arrange('{%s}', portray_string(t.s))
+
+            return arrange('{%s}', t.s)
+
+
+        def display_token(t):
+            if t.s == ' < ':
+                return '{<}'
+
+            return arrange('{%s %s}', t.display_name, portray_string(t.s))
+
+
+    @share
     class OperatorLessThanOrEqual(KeywordAndOperatorBase):
         __slots__                        = (())
         display_name                     = '<='
@@ -884,6 +912,7 @@ def gem():
     conjure_left_parenthesis      = produce_conjure_by_name('operator-left-parenthesis',      OperatorLeftParenthesis) 
     conjure_left_square_bracket   = produce_conjure_by_name('operator-left-square-bracket',   OperatorLeftSquareBracket) 
     conjure_less_than_or_equal    = produce_conjure_by_name('operator-less-than-or-equal',    OperatorLessThanOrEqual) 
+    conjure_less_than             = produce_conjure_by_name('operator-less-than',             OperatorLessThan) 
     conjure_logical_or_sign       = produce_conjure_by_name('operator-logical-or-sign',       OperatorLogicalOrSign)
     conjure_minus_sign            = produce_conjure_by_name('operator-minus-sign',            OperatorMinusSign) 
     conjure_percent_sign          = produce_conjure_by_name('operator-percent-sign',          OperatorPercentSign) 
@@ -949,6 +978,7 @@ def gem():
                                          '/'    : conjure_divide,
                                          '//'   : conjure_integer_divide,
                                          ':'    : conjure_colon,
+                                         '<'    : conjure_less_than,
                                          '<='   : conjure_less_than_or_equal,
                                          '='    : conjure_equal_sign,
                                          '=='   : conjure_compare_equal,

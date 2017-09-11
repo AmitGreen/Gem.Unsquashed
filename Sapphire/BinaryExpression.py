@@ -142,6 +142,12 @@ def gem():
 
 
     @share
+    class LessThanExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = '<'
+
+
+    @share
     class LessThanOrEqualExpression(BinaryExpression):
         __slots__    = (())
         display_name = '<='
@@ -207,6 +213,7 @@ def gem():
     OperatorGreaterThan       .expression_meta = CompareGreaterThanExpression
     OperatorGreaterThanOrEqual.expression_meta = CompareGreaterThanOrEqualExpression
     OperatorIntegerDivide     .expression_meta = IntegerDivideExpression
+    OperatorLessThan          .expression_meta = LessThanExpression
     OperatorLessThanOrEqual   .expression_meta = LessThanOrEqualExpression
     OperatorMinusSign         .expression_meta = SubtractExpression
     OperatorPercentSign       .expression_meta = ModulusExpression

@@ -301,5 +301,8 @@ test:
         m.py \
         o.py \
         pa2.py pa.py pcm.py pco.py pj.py pk.py pl.py ps3.py ps.py pz.py \
+        q1p.py qc.py ql.py qma.py qmc.py qp.py \
+        rx.py \
+        so.py ssio.py sy.py \
             >test.py
 	bash run.sh

@@ -10,7 +10,6 @@ pl.py -> ../Pearl/Line.py
 ps3.py -> ../Junk/PortrayString_3.py
 ps.py -> ../Gem/PortrayString.py
 pz.py -> ../Pearl/Tokenizer.py
-
 q1p.py -> ../Quartz/Parse1.py
 qc.py -> ../Quartz/Core.py
 ql.py -> ../Quartz/Line.py
@@ -21,6 +20,7 @@ rx.py -> ../Gem/RegularExpression.py
 so.py -> ../Gem/StringOutput.py
 ssio.py -> ../Gem/SimpleStringIO.py
 sy.py -> ../Gem/System.py
+
 tb.py -> ../Gem/Traceback.py
 tcm.py -> ../Tremolite/CreateMatch.py
 tco.py -> ../Tremolite/Core.py
