@@ -292,5 +292,5 @@ test:
         ef.py en.py ex.py \
         fo.py fs.py \
         gd.py gg.py \
-        hma.py >test.py
+        hma.py h1pa.py >test.py
 	bash run.sh

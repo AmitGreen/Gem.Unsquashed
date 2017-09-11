@@ -85,6 +85,7 @@ def gem():
                              'class'  : parse1_statement_class_header,
                              'def'    : parse1_statement_function_header,
                              'del'    : parse1_statement_delete,
+                             'elif'   : parse1_statement_else_if,
                              'for'    : parse1_statement_for,
                              'from'   : parse1_statement_from,
                              'if'     : parse1_statement_if,

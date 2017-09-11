@@ -60,6 +60,11 @@ def gem():
 
 
     @share
+    def parse1_statement_else_if(m):
+        return parse1_condition_statement__X__m(m, conjure_keyword_else_if, ElseIfHeader, ElseIfStatement)
+
+
+    @share
     def parse1_statement_except_colon(m):
         if m.end('newline') is -1:
             raise_unknown_line()

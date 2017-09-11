@@ -234,6 +234,12 @@ def gem():
 
 
     @share
+    class ElseIfHeader(ConditionHeader):
+        __slots__    = (())
+        display_name = 'else-if'
+
+
+    @share
     class IfHeader(ConditionHeader):
         __slots__    = (())
         display_name = 'if'
@@ -290,15 +296,21 @@ def gem():
 
 
     @share
+    class ElseIfStatement(ConditionStatement):
+        __slots__    = (())
+        display_name = 'else-if-statement'
+
+
+    @share
     class IfStatement(ConditionStatement):
         __slots__    = (())
-        display_name = 'if'
+        display_name = 'if-statement'
 
 
     @share
     class WhileStatement(ConditionStatement):
         __slots__    = (())
-        display_name = 'while'
+        display_name = 'while-statement'
 
 
 

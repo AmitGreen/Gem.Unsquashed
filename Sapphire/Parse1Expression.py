@@ -867,8 +867,13 @@ def gem():
     #
     #   11.  Compare-Expression (Python 2.7.14rc1 grammer calls this 'comparasion')
     #
+    @share
     def parse1_compare_expression__left_operator(left, compare_operator):
         assert compare_operator.is_compare_operator
+
+        if compare_operator.is_keyword_not:
+            #my_line('full: %s', portray_string(qs()))
+            raise_unknown_line()
 
         right = parse1_normal_expression()
 
