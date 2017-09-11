@@ -406,60 +406,6 @@ def gem():
             return arrange('<EmptyLine %r>', t.s)
 
 
-    class ForOrWithAsHeader(Object):
-        __slots__ = ((
-            'keyword',                  #   KeywordFor | KeywordWith
-            'left',                     #   Expression
-            'middle',                   #   KeywordAs | KeywordIn
-            'right',                    #   Expression
-            'colon_newline',            #   OperatorColonNewline
-        ))
-
-
-        def __init__(t, keyword, left, middle, right, colon_newline):
-            t.keyword       = keyword
-            t.left          = left
-            t.middle        = middle
-            t.right         = right
-            t.colon_newline = colon_newline
-
-
-        def  __repr__(t):
-            return arrange('<%s %r %r %r %r %r>',
-                           t.__class__.__name__,
-                           t.keyword, t.left, t.middle, t.right, t.colon_newline)
-
-
-        def display_token(t):
-            return arrange('<%s <%s> %s <%s> %s %s>',
-                           t.display_name,
-                           t.keyword      .s,
-                           t.left         .display_token(),
-                           t.middle       .s,
-                           t.right        .display_token(),
-                           t.colon_newline.display_token())
-
-
-        def write(t, w):
-            w(t.keyword.s)
-            t.left.write(w)
-            w(t.middle.s)
-            t.right.write(w)
-            w(t.colon_newline.s)
-
-
-    @share
-    class ForHeader(ForOrWithAsHeader):
-        __slots__    = (())
-        display_name = 'for'
-
-
-    @share
-    class WithHeader_2(ForOrWithAsHeader):
-        __slots__    = (())
-        display_name = 'with'
-
-
     @share
     class FromAsFragment(Object):
         __slots__ = ((
@@ -520,6 +466,66 @@ def gem():
 
         def write(t, w):
             w(t.indented + '#' + t.comment + t.newline)
+
+
+    class KeywordBinaryStatement(Object):
+        __slots__ = ((
+            'keyword',                  #   KeywordFor | KeywordWith
+            'left',                     #   Expression
+            'middle',                   #   KeywordAs | KeywordIn
+            'right',                    #   Expression
+            'colon_newline',            #   OperatorColonNewline
+        ))
+
+
+        def __init__(t, keyword, left, middle, right, colon_newline):
+            t.keyword       = keyword
+            t.left          = left
+            t.middle        = middle
+            t.right         = right
+            t.colon_newline = colon_newline
+
+
+        def  __repr__(t):
+            return arrange('<%s %r %r %r %r %r>',
+                           t.__class__.__name__,
+                           t.keyword, t.left, t.middle, t.right, t.colon_newline)
+
+
+        def display_token(t):
+            return arrange('<%s <%s> %s <%s> %s %s>',
+                           t.display_name,
+                           t.keyword      .s,
+                           t.left         .display_token(),
+                           t.middle       .s,
+                           t.right        .display_token(),
+                           t.colon_newline.display_token())
+
+
+        def write(t, w):
+            w(t.keyword.s)
+            t.left.write(w)
+            w(t.middle.s)
+            t.right.write(w)
+            w(t.colon_newline.s)
+
+
+    @share
+    class ExceptHeader_2(KeywordBinaryStatement):
+        __slots__    = (())
+        display_name = 'except'
+
+
+    @share
+    class ForHeader(KeywordBinaryStatement):
+        __slots__    = (())
+        display_name = 'for'
+
+
+    @share
+    class WithHeader_2(KeywordBinaryStatement):
+        __slots__    = (())
+        display_name = 'with'
 
 
     @share

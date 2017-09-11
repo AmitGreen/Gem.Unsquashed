@@ -179,6 +179,12 @@ def gem():
         keyword      = 'elif'
 
 
+    class KeywordExcept(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'except'
+        keyword      = 'except'
+
+
     class KeywordExceptColon(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'except:'
@@ -966,6 +972,7 @@ def gem():
     conjure_keyword_delete        = produce_conjure_by_name('keyword-delete',                 KeywordDelete) 
     conjure_keyword_else_if       = produce_conjure_by_name('keyword-else-if',                KeywordElseIf) 
     conjure_keyword_else          = produce_conjure_by_name('keyword-else',                   KeywordElse) 
+    conjure_keyword_except        = produce_conjure_by_name('keyword-except',                 KeywordExcept) 
     conjure_keyword_for           = produce_conjure_by_name('keyword-for',                    KeywordFor) 
     conjure_keyword_function      = produce_conjure_by_name('keyword-function',               KeywordFunction) 
     conjure_keyword_if            = produce_conjure_by_name('keyword-if',                     KeywordIf) 
@@ -1099,6 +1106,7 @@ def gem():
         'conjure_keyword_assert',           conjure_keyword_assert,
         'conjure_keyword_delete',           conjure_keyword_delete,
         'conjure_keyword_else_if',          conjure_keyword_else_if,
+        'conjure_keyword_except',           conjure_keyword_except,
         'conjure_keyword_for',              conjure_keyword_for,
         'conjure_keyword_if',               conjure_keyword_if,
         'conjure_keyword_in',               conjure_keyword_in,

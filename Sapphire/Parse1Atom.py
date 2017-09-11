@@ -56,9 +56,19 @@ def gem():
         operator = qk()
 
         if operator is none:
-            raise_unknown_line()
+            operator = tokenize_operator()
+        else:
+            wk(none)
 
-        wk(none)
+        if operator.is_keyword_for:
+            left = parse1_comprehension_expression__X__any_expression(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                operator = tokenize_operator()
+            else:
+                wk(none)
 
         if operator.is_right_brace:
             return MapExpression_1(left_brace, left, operator)
@@ -198,8 +208,8 @@ def gem():
 
         operator_1 = tokenize_operator()
 
-        if not operator_1.is_end_of_ternary_expression:
-            middle_1 = parse1_ternary_expression__X__any_expression(middle_1, operator_1)
+        if not operator_1.is_end_of_comprehension_expression:
+            middle_1 = parse1_comprehension_expression__X__any_expression(middle_1, operator_1)
 
             operator_1 = qk()
             wk(none)
@@ -208,6 +218,7 @@ def gem():
             return ListExpression_1(left_square_bracket, middle_1, operator_1)
 
         if not operator_1.is_comma:
+            my_line('line: %d; middle_1: %r; operator_1: %r', ql(), middle_1, operator_1)
             raise_unknown_line()
 
         #

@@ -65,6 +65,48 @@ def gem():
 
 
     @share
+    def parse1_statement_except(m):
+        if m.end('newline') is not -1:
+            raise_unknown_line()
+
+        keyword = conjure_keyword_except(m.group())
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
+
+        left = parse1_ternary_expression()
+
+        operator = qk()
+
+        if operator is not none:
+            wk(none)
+        else:
+            operator = tokenize_operator()
+
+        if operator.is_colon_newline:
+            return WithHeader_1(keyword, left, operator)
+
+        if not operator.is_keyword_as:
+            raise_unknown_line()
+
+        right = parse1_ternary_expression()
+
+        operator_2 = qk()
+
+        if operator_2 is not none:
+            wk(none)
+        else:
+            operator_2 = tokenize_operator()
+
+        if operator_2.is_colon_newline:
+            return ExceptHeader_2(keyword, left, operator, right, operator_2)
+
+        raise_unknown_line()
+
+
+    @share
     def parse1_statement_except_colon(m):
         if m.end('newline') is -1:
             raise_unknown_line()

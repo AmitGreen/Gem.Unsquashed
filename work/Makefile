@@ -304,6 +304,7 @@ test:
         q1p.py qc.py ql.py qma.py qmc.py qp.py \
         rx.py \
         so.py ssio.py sy.py \
-        tb.py tcm.py \
+        tb.py tcm.py tco.py tmc.py tn.py tp.py tu.py tw.py tx.py \
+        zc.py ze.py \
             >test.py
 	bash run.sh
