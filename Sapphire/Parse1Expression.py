@@ -1015,7 +1015,7 @@ def gem():
     #           : compare-expression
     #           | 'not' not-test
     #
-    #   NOTE:
+    #   NOTE [FIX IN FUTURE -- When really parsing not expressions properly]:
     #       Uses .is_end_of_compare_expression on purpose (there is no .is_end_of_not_expression, as it would be
     #       identicial to .is_end_of_compare_expression)
     #
@@ -1023,30 +1023,7 @@ def gem():
     def parse1_not_expression__operator(not_operator):
         assert not_operator.is_keyword_not
 
-        right = parse1_atom()
-
-        operator = qk()
-
-        if operator is none:
-            if qn() is not none:
-                return NotExpression(not_operator, right)
-
-            operator = tokenize_operator()
-
-            if qk() is not none:
-                raise_unknown_line()
-
-            if operator.is_end_of_compare_expression:
-                wk(operator)
-                return NotExpression(not_operator, right)
-        else:
-            if operator.is_end_of_compare_expression:
-                return NotExpression(not_operator, right)
-
-            wk(none)
-
-        my_line('right: %r; operator: %r; s: %s', right, operator, portray_string(qs()[qj():]))
-        raise_unknown_line()
+        return NotExpression(not_operator, parse1_compare_expression()) #   Temporary until handle 'not' atom itself
 
 
     #
