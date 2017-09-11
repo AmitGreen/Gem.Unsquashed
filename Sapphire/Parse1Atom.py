@@ -115,7 +115,12 @@ def gem():
         #
         middle_1 = parse1_atom()
 
-        operator_1 = tokenize_operator()
+        operator_1 = qk()
+
+        if operator_1 is none:
+            operator_1 = tokenize_operator()
+        else:
+            wk(none)
 
         if not operator_1.is_end_of_ternary_expression:
             middle_1 = parse1_ternary_expression__X__any_expression(middle_1, operator_1)

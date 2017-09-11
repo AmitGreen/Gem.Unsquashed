@@ -71,8 +71,18 @@ def gem():
                            (
                                   '"'
                                 + (
-                                        ONE_OR_MORE(PRINTABLE_MINUS('"', '\\') | BACKSLASH + PRINTABLE) + '"'
-                                      | ('"' + NOT_FOLLOWED_BY('"'))
+                                        (
+                                              '"'
+                                            + OPTIONAL(
+                                                    '"' 
+                                                  + ONE_OR_MORE(
+                                                          PRINTABLE_MINUS('"', '\\')
+                                                        | BACKSLASH + PRINTABLE
+                                                        | '"' + P('"') + NOT_FOLLOWED_BY('"')
+                                                    ) + '"""'
+                                              )
+                                      )
+                                      | ONE_OR_MORE(PRINTABLE_MINUS('"', '\\') | BACKSLASH + PRINTABLE) + '"'
                                   )
                            ),
                        )
@@ -82,8 +92,18 @@ def gem():
                            (
                                   "'"
                                 + (
-                                        ONE_OR_MORE(PRINTABLE_MINUS("'", '\\') | BACKSLASH + PRINTABLE) + "'"
-                                      | ("'" + NOT_FOLLOWED_BY("'"))
+                                        (
+                                              "'"
+                                            + OPTIONAL(
+                                                    "'" 
+                                                  + ONE_OR_MORE(
+                                                          PRINTABLE_MINUS("'", '\\')
+                                                        | BACKSLASH + PRINTABLE
+                                                        | "'" + P("'") + NOT_FOLLOWED_BY("'")
+                                                    ) + "'''"
+                                              )
+                                      )
+                                      | ONE_OR_MORE(PRINTABLE_MINUS("'", '\\') | BACKSLASH + PRINTABLE) + "'"
                                   )
                            ),
                        )

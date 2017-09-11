@@ -1089,6 +1089,8 @@ def gem():
 
 
     def parse1_compare_expression():
+        assert qk() is none
+
         left = parse1_atom()
 
         operator = qk()

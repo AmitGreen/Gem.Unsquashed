@@ -44,6 +44,9 @@ def gem():
 
     @share
     def tokenize_operator():
+        assert qk() is none
+        assert qn() is none
+
         s = qs()
 
         if show is 7:

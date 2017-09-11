@@ -313,7 +313,6 @@ def gem():
         display_name = 'while-statement'
 
 
-
     @share
     class DeleteStatement_Many(Object):
         __slots__ = ((
@@ -387,6 +386,34 @@ def gem():
             w(t.operator_decorator.s)
             t.expresssion.write(w)
             w(t.newline.s)
+
+
+    @share
+    class ElseStatement(Object):
+        __slots__ = ((
+            'keyword_colon',            #   KeywordElseColon
+            'body',                     #   *Statement
+        ))
+
+
+        def __init__(t, keyword_colon, body):
+            t.keyword_colon = keyword_colon
+            t.body          = body
+
+
+        def  __repr__(t):
+            return arrange('<ElseStatement %r %r>', t.keyword_colon, t.body)
+
+
+        def display_token(t):
+            return arrange('<else-statement <%s> %s>',
+                           t.keyword_colon.s,
+                           t.body.display_token())
+
+
+        def write(t, w):
+            w(t.keyword_colon.s)
+            t.body.write(w)
 
 
     #

@@ -1,12 +1,12 @@
 tx.py -> ../Tremolite/Compile.py
 zc.py -> ../Topaz/Core.py
 ze.py -> ../Topaz/ExceptionChain.py
-
 zj.py -> ../Topaz/ConjureTreeComment.py
 zm.py -> ../Topaz/Main.py
 zpa.py -> ../Topaz/Path.py
 zps.py -> ../Topaz/PortrayString.py
 zpt.py -> ../Topaz/Pattern.py
+
 zso.py -> ../Topaz/StringOutput.py
 
 hmc.py -> ../Sapphire/Match.py

@@ -305,6 +305,6 @@ test:
         rx.py \
         so.py ssio.py sy.py \
         tb.py tcm.py tco.py tmc.py tn.py tp.py tu.py tw.py tx.py \
-        zc.py ze.py \
+        zc.py ze.py zj.py zm.py zpa.py zps.py zpt.py \
             >test.py
 	bash run.sh

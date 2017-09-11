@@ -53,10 +53,28 @@ def gem():
 
     @share
     def parse1_statement_else_colon(m):
-        if m.end('newline') is -1:
+        keyword_colon = conjure_else_colon(m.group())
+
+        if m.end('newline') is not -1:
+            return keyword_colon
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
+
+        left = parse1_atom()
+
+        if qn() is not none:
             raise_unknown_line()
 
-        return conjure_else_colon(m.group())
+        if not left.is_atom:
+            raise_unknown_line()
+
+        return ElseStatement(
+                   keyword_colon,
+                   parse1_statement_expression__atom('', left),
+               )
 
 
     @share

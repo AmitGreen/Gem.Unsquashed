@@ -190,7 +190,8 @@ def gem():
         ))
 
         
-        is_right_parenthesis = false
+        is_right_parenthesis    = false
+        is_right_square_bracket = false
 
 
         def __init__(t, left_operator, left, middle_operator, right, right_operator):
