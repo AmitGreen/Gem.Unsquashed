@@ -100,6 +100,12 @@ def gem():
 
 
     @share
+    class DivideExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = '/'
+
+
+    @share
     class IntegerDivideExpression(BinaryExpression):
         __slots__    = (())
         display_name = '//'
@@ -155,6 +161,12 @@ def gem():
 
 
     @share
+    class PowerExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = 'power'
+
+
+    @share
     class SubtractExpression(BinaryExpression):
         __slots__    = (())
         display_name = '-'
@@ -166,6 +178,7 @@ def gem():
     NotIn                  .expression_meta = CompareExcludeExpression
     OperatorCompareEqual   .expression_meta = CompareEqualExpression
     OperatorCompareNotEqual.expression_meta = CompareNotEqualExpression
+    OperatorDivide         .expression_meta = DivideExpression
     OperatorIntegerDivide  .expression_meta = IntegerDivideExpression
     OperatorLessThanOrEqual.expression_meta = LessThanOrEqualExpression
     OperatorMinusSign      .expression_meta = SubtractExpression

@@ -198,7 +198,8 @@ def gem():
                       'operator',
                        (
                              (
-                                   ANY_OF(percent_sign, star_sign, plus_sign, minus_sign, less_than_sign, equal_sign)
+                                   ANY_OF(percent_sign, plus_sign, minus_sign, less_than_sign, equal_sign)
+                                 | star_sign  + P(star_sign)
                                  | slash_sign + P(slash_sign)
                              ) + P(equal_sign)
                            | ANY_OF(

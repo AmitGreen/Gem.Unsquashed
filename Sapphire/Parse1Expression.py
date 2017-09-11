@@ -351,36 +351,21 @@ def gem():
     #
     #   2.  Power-Expression (Python 2.7.14rc1 grammer calls this 'power')
     #
+    #       power-expression
+    #           :   postfix-expression
+    #           |   postfix-expression '**' unary-expression
+    #
+    @share
+    def parse1_power_expression__left_operator(left, power_operator):
+        return PowerExpression(left, power_operator, parse1_unary_expression())
+
 
     #
     #   3.  Unary-Expression (Python 2.7.14rc1 grammer calls this 'factor')
     #
     @share
     def parse1_negative_expression__operator(negative_operator):
-        right = parse1_atom()
-
-        operator = qk()
-
-        if operator is none:
-            if qn() is not none:
-                return NegativeExpression(negative_operator, right)
-
-            operator = tokenize_operator()
-
-            if qk() is not none:
-                raise_unknown_line(1)
-
-            if operator.is_end_of_unary_expression:
-                wk(operator)
-                return NegativeExpression(negative_operator, right)
-        else:
-            if operator.is_end_of_unary_expression:
-                return NegativeExpression(negative_operator, right)
-
-            wk(none)
-
-        my_line('right: %r; operator: %r; s: %s', right, operator, portray_string(qs()[qj():]))
-        raise_unknown_line(2)
+        return NegativeExpression(negative_operator, parse1_unary_expression())
 
 
     def parse1_unary_expression():
@@ -404,7 +389,7 @@ def gem():
                 return left
         else:
             if operator.is_end_of_unary_expression:
-                return NegativeExpression(negative_operator, right)
+                return left
 
             wk(none)
 
@@ -424,7 +409,39 @@ def gem():
 
             wk(none)
 
-        raise_unknown_line(3)
+        if operator.is_power_operator:
+            left = parse1_power_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(3)
+
+                return left
+
+            if operator.is_end_of_unary_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_power_operator:
+            left = parse1_power_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(4)
+
+                return left
+
+            if operator.is_end_of_unary_expression:
+                return left
+
+            wk(none)
+
+        raise_unknown_line(5)
 
 
     #
@@ -521,9 +538,25 @@ def gem():
 
             wk(none)
 
+        if operator.is_power_operator:
+            left = parse1_power_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
+
+            if operator.is_end_of_multiply_expression:
+                return left
+
+            wk(none)
+
         if not operator.is_multiply_operator:
             my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line(2)
+            raise_unknown_line(3)
 
         return parse1_multiply_expression__left_operator(left, operator)
 
@@ -640,6 +673,22 @@ def gem():
 
             wk(none)
 
+        if operator.is_power_operator:
+            left = parse1_power_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
+
+            if operator.is_end_of_normal_expression:
+                return left
+
+            wk(none)
+
         if operator.is_multiply_operator:
             left = parse1_multiply_expression__left_operator(left, operator)
 
@@ -647,7 +696,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line(3)
 
                 return left
 
@@ -663,7 +712,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line(4)
 
                 return left
 
@@ -673,7 +722,7 @@ def gem():
             wk(none)
 
         my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-        raise_unknown_line(4)
+        raise_unknown_line(5)
 
 
     #
@@ -717,6 +766,22 @@ def gem():
 
             wk(none)
 
+        if operator.is_power_operator:
+            left = parse1_power_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
+
+            if operator.is_end_of_normal_expression_list:
+                return left
+
+            wk(none)
+
         if operator.is_multiply_operator:
             left = parse1_multiply_expression__left_operator(left, operator)
 
@@ -724,7 +789,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line(3)
 
                 return left
 
@@ -740,7 +805,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line(4)
 
                 return left
 
@@ -750,7 +815,7 @@ def gem():
             wk(none)
 
         my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-        raise_unknown_line(4)
+        raise_unknown_line(5)
 
 
     #
@@ -843,6 +908,22 @@ def gem():
 
             wk(none)
 
+        if operator.is_power_operator:
+            left = parse1_power_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
+
+            if operator.is_end_of_compare_expression:
+                return left
+
+            wk(none)
+
         if operator.is_multiply_operator:
             left = parse1_multiply_expression__left_operator(left, operator)
 
@@ -850,7 +931,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line(3)
 
                 return left
 
@@ -866,7 +947,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line(4)
 
                 return left
 
@@ -877,7 +958,7 @@ def gem():
 
         if not operator.is_compare_operator:
             my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line(4)
+            raise_unknown_line(5)
 
         return parse1_compare_expression__left_operator(left, operator)
 
@@ -1016,6 +1097,22 @@ def gem():
 
             wk(none)
 
+        if operator.is_power_operator:
+            left = parse1_power_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
+
+            if operator.is_end_of_boolean_and_expression:
+                return left
+
+            wk(none)
+
         if operator.is_multiply_operator:
             left = parse1_multiply_expression__left_operator(left, operator)
 
@@ -1023,7 +1120,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line(3)
 
                 return left
 
@@ -1039,7 +1136,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line(4)
 
                 return left
 
@@ -1055,7 +1152,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(4)
+                    raise_unknown_line(5)
 
                 return left
 
@@ -1066,7 +1163,7 @@ def gem():
 
         if not operator.is_keyword_and:
             my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line(5)
+            raise_unknown_line(6)
 
         return parse1_boolean_and_expression__left_operator(left, operator)
 
@@ -1150,6 +1247,22 @@ def gem():
 
         if operator.is_postfix_operator:
             left = parse1_postfix_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(1)
+
+                return left
+
+            if operator.is_end_of_boolean_or_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_power_operator:
+            left = parse1_power_expression__left_operator(left, operator)
 
             operator = qk()
 
@@ -1283,6 +1396,22 @@ def gem():
 
             wk(none)
 
+        if operator.is_power_operator:
+            left = parse1_power_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
+
+            if operator.is_end_of_ternary_expression:
+                return left
+
+            wk(none)
+
         if operator.is_multiply_operator:
             left = parse1_multiply_expression__left_operator(left, operator)
 
@@ -1290,7 +1419,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line(3)
 
                 return left
 
@@ -1306,7 +1435,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line(4)
 
                 return left
 
@@ -1322,7 +1451,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(4)
+                    raise_unknown_line(5)
 
                 return left
 
@@ -1338,7 +1467,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(5)
+                    raise_unknown_line(6)
 
                 return left
 
@@ -1355,7 +1484,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(6)
+                    raise_unknown_line(7)
 
                 return left
 
@@ -1368,7 +1497,7 @@ def gem():
             return parse1_ternary_expression__left_operator(left, operator)
 
         my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-        raise_unknown_line(7)
+        raise_unknown_line(8)
 
 
     @share
@@ -1437,6 +1566,22 @@ def gem():
 
             wk(none)
 
+        if operator.is_power_operator:
+            left = parse1_power_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line(2)
+
+                return left
+
+            if operator.is_end_of_ternary_expression_list:
+                return left
+
+            wk(none)
+
         if operator.is_multiply_operator:
             left = parse1_multiply_expression__left_operator(left, operator)
 
@@ -1444,7 +1589,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line(3)
 
                 return left
 
@@ -1460,7 +1605,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line(4)
 
                 return left
 
@@ -1476,7 +1621,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(4)
+                    raise_unknown_line(5)
 
                 return left
                     
@@ -1492,7 +1637,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(5)
+                    raise_unknown_line(6)
 
                 return left
 

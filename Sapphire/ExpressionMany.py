@@ -97,6 +97,12 @@ def gem():
 
 
     @share
+    class MultiplyExpression_Many(BaseExpression_Many):
+        __slots__    = (())
+        display_name = 'multiply-*'
+
+
+    @share
     class OrExpression_Many(BaseExpression_Many):
         __slots__    = (())
         display_name = 'or-*'

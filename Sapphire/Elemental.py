@@ -48,6 +48,7 @@ def gem():
         is_multiply_operator                       = false
         is_parameter_colon_0_newline               = false
         is_postfix_operator                        = false
+        is_power_operator                          = false
         is_right_brace                             = false
         is__right_parenthesis__colon               = false
         is__right_parenthesis__colon__newline      = false
@@ -407,6 +408,15 @@ def gem():
         keyword                          = '!='
 
 
+    @share
+    class OperatorDivide(KeywordAndOperatorBase):
+        __slots__                  = (())
+        display_name               = '/'
+        is_multiply_operator       = true
+        is_end_of_unary_expression = true
+        keyword                    = '/'
+
+
     class OperatorDot(KeywordAndOperatorBase):
         __slots__           = (())
         display_name        = '.'
@@ -453,11 +463,11 @@ def gem():
 
     @share
     class OperatorIntegerDivide(KeywordAndOperatorBase):
-        __slots__                     = (())
-        display_name                  = '//'
-        is_multiply_operator          = true
-        is_end_of_unary_expression    = true
-        keyword                       = '//'
+        __slots__                  = (())
+        display_name               = '//'
+        is_multiply_operator       = true
+        is_end_of_unary_expression = true
+        keyword                    = '//'
 
 
     class OperatorLeftBrace(KeywordAndOperatorBase):
@@ -539,6 +549,14 @@ def gem():
         is_multiply_operator          = true
         is_end_of_unary_expression    = true
         keyword                       = '%'
+
+
+    @share
+    class OperatorPower(KeywordAndOperatorBase):
+        __slots__         = (())
+        display_name      = '**'
+        is_power_operator = true
+        keyword           = '**'
 
 
     @share
@@ -655,11 +673,13 @@ def gem():
     conjure_comma                = produce_conjure_by_name('operator-comma',                OperatorComma) 
     conjure_compare_equal        = produce_conjure_by_name('operator-conmpare-equal',       OperatorCompareEqual) 
     conjure_compare_not_equal    = produce_conjure_by_name('operator-conmpare-not-equal',   OperatorCompareNotEqual) 
+    conjure_divide               = produce_conjure_by_name('operator-divide',               OperatorDivide) 
     conjure_dot                  = produce_conjure_by_name('operator-dot',                  OperatorDot) 
-    conjure_equal_sign           = produce_conjure_by_name('operator-equal-sign',           OperatorEqualSign) 
     conjure_else_colon           = produce_conjure_by_name('keyword-else-colon',            KeywordElseColon) 
+    conjure_equal_sign           = produce_conjure_by_name('operator-equal-sign',           OperatorEqualSign) 
     conjure_except_colon         = produce_conjure_by_name('keyword-except-colon',          KeywordExceptColon) 
     conjure_head_index           = produce_conjure_by_name('operator-head-index',           OperatorHeadIndex) 
+    conjure_integer_divide       = produce_conjure_by_name('operator-integer-divide',       OperatorIntegerDivide) 
     conjure_keyword_and          = produce_conjure_by_name('keyword-and',                   KeywordAnd) 
     conjure_keyword_as           = produce_conjure_by_name('keyword-as',                    KeywordAs) 
     conjure_keyword_assert       = produce_conjure_by_name('keyword-assert',                KeywordAssert) 
@@ -683,8 +703,8 @@ def gem():
     conjure_minus_sign           = produce_conjure_by_name('operator-minus-sign',           OperatorMinusSign) 
     conjure_modify_plus          = produce_conjure_by_name('operator-modify-plus',          OperatorModifyPlus) 
     conjure_percent_sign         = produce_conjure_by_name('operator-percent-sign',         OperatorPercentSign) 
-    conjure_integer_divide       = produce_conjure_by_name('operator-integer_divide',       OperatorIntegerDivide) 
     conjure_plus_sign            = produce_conjure_by_name('operator-plus-sign',            OperatorPlusSign) 
+    conjure_power_operator       = produce_conjure_by_name('operator-power-operator',       OperatorPower) 
     conjure_right_brace          = produce_conjure_by_name('operator-right-brace',          OperatorRightBrace) 
     conjure_right_parenthesis    = produce_conjure_by_name('operator-right-parenthesis',    OperatorRightParenthesis) 
     conjure_right_square_bracket = produce_conjure_by_name('operator-right-square-bracket', OperatorRightSquareBracket) 
@@ -733,11 +753,13 @@ def gem():
                                          '('    : conjure_left_parenthesis,
                                          ')'    : conjure_right_parenthesis,
                                          '*'    : conjure_star_sign,
+                                         '**'   : conjure_power_operator,
                                          '+'    : conjure_plus_sign,
                                          '+='   : conjure_modify_plus,
                                          ','    : conjure_comma,
                                          '-'    : conjure_minus_sign,
                                          '.'    : conjure_dot,
+                                         '/'    : conjure_divide,
                                          '//'   : conjure_integer_divide,
                                          ':'    : conjure_colon,
                                          '<='   : conjure_less_than_or_equal,
@@ -790,6 +812,7 @@ def gem():
         'conjure_left_brace',               conjure_left_brace,
         'conjure_left_parenthesis',         conjure_left_parenthesis,
         'conjure_left_square_bracket',      conjure_left_square_bracket,
+        'conjure_power_operator',           conjure_power_operator,
         'conjure_right_brace',              conjure_right_brace,
         'conjure_right_parenthesis',        conjure_right_parenthesis,
         'conjure_right_square_bracket',     conjure_right_square_bracket,
