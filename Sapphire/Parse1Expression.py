@@ -3,6 +3,10 @@
 #
 @gem('Sapphire.Parse1Expression')
 def gem():
+    require_gem('Sapphire.TernaryExpression')
+    require_gem('Sapphire.UnaryExpression')
+
+
     show = 0
 
 
@@ -43,7 +47,7 @@ def gem():
     #           | [ternary-expression] ':' [ternary-expression] ':' [ternary-expression]
     #
     @share
-    def parse1_postfix_expression__left_operator(left, operator, indented = 0):
+    def parse1_postfix_expression__left_operator(left, operator, indentation = 0):
         assert operator.is_postfix_operator
 
         while 7 is 7:
@@ -53,7 +57,7 @@ def gem():
                 name = tokenize_name()
 
                 if qn() is not none:
-                    return MemberExpression_1(left, operator, name)
+                    return conjure_member_expression(left, conjure_dot_name(operator, name))
 
                 operator_2 = tokenize_operator()
 
@@ -64,7 +68,13 @@ def gem():
                     name_2 = tokenize_name()
 
                     if qn() is not none:
-                        return MemberExpression_2(left, operator, name, operator_2, name_2)
+                        return conjure_member_expression(
+                                   left,
+                                   conjure_dot_name_pair(
+                                       conjure_dot_name(operator,   name),
+                                       conjure_dot_name(operator_2, name_2),
+                                   ),
+                               )
 
                     operator_3 = tokenize_operator()
 
@@ -75,125 +85,86 @@ def gem():
                         name_3 = tokenize_name()
 
                         if qn() is not none:
-                            return MemberExpression_3(left, operator, name, operator_2, name_2, operator_3, name_3)
+                            return conjure_member_expression(
+                                       left,
+                                       conjure_dot_name_triplet(
+                                           conjure_dot_name(operator,   name),
+                                           conjure_dot_name(operator_2, name_2),
+                                           conjure_dot_name(operator_3, name_3),
+                                       ),
+                                   )
 
                         operator_4 = tokenize_operator()
 
-                        if operator_4.is__arguments_0__or__left_parenthesis:
-                            if operator_4.is_left_parenthesis:
-                                assert qd() > 0
-                                assert qn() is none
+                        if operator_4.is_dot:
+                            if qn() is not none:
+                                raise_unknown_line()
 
-                                operator_4 = parse1_arguments__left_parenthesis(operator_4)
+                            name_4 = tokenize_name()
 
-                            left = MethodCall_3(left, operator, name, operator_2, name_2, operator_3, name_3, operator_4)
+                            left = conjure_member_expression(
+                                       left,
+                                       conjure_dot_name_quadruplet(
+                                           conjure_dot_name(operator,   name),
+                                           conjure_dot_name(operator_2, name_2),
+                                           conjure_dot_name(operator_3, name_3),
+                                           conjure_dot_name(operator_4, name_4),
+                                       ),
+                                   )
 
-                            operator = qk()
-
-                            if operator is not none:
-                                if not operator.is_postfix_operator:
-                                    return left
-
-                                wk(none)
-                            else:
-                                if qn() is not none:
-                                    return left
-
-                                operator = tokenize_operator()
-
-                                if not operator.is_postfix_operator:
-                                    wk(operator)
-
-                                    return left
-                        elif operator_4.is_postfix_operator:
-                            left = MemberExpression_3(left, operator, name, operator_2, name_2, operator_3, name_3)
-
-                            operator = operator_4
-                        else:
-                            wk(operator_4)
-
-                            return MemberExpression_3(left, operator, name, operator_2, name_2, operator_3, name_3)
-
-                    elif operator_3.is__arguments_0__or__left_parenthesis:
-                        if operator_3.is_left_parenthesis:
-                            assert qd() > 0
-                            assert qn() is none
-
-                            operator_3 = parse1_arguments__left_parenthesis(operator_3)
-
-                        left = MethodCall_2(left, operator, name, operator_2, name_2, operator_3)
-
-                        operator = qk()
-
-                        if operator is not none:
-                            if not operator.is_postfix_operator:
-                                return left
-
-                            wk(none)
-                        else:
                             if qn() is not none:
                                 return left
 
-                            operator = tokenize_operator()
+                            operator_5 = tokenize_operator()
 
-                            if not operator.is_postfix_operator:
-                                wk(operator)
+                            if not operator_5.is_postfix_operator:
+                                wk(operator_5)
 
                                 return left
 
-                    elif operator_3.is_postfix_operator:
-                        left = MemberExpression_2(left, operator, name, operator_2, name_2)
+                            operator = operator_5
+                        else:
+                            left = conjure_member_expression(
+                                       left,
+                                       conjure_dot_name_triplet(
+                                           conjure_dot_name(operator,   name),
+                                           conjure_dot_name(operator_2, name_2),
+                                           conjure_dot_name(operator_3, name_3),
+                                       ),
+                                   )
+
+                            if not operator_4.is_postfix_operator:
+                                wk(operator_4)
+
+                                return left
+
+                            operator = operator_4
+
+                    else:
+                        left = conjure_member_expression(
+                                   left,
+                                   conjure_dot_name_pair(
+                                       conjure_dot_name(operator,   name),
+                                       conjure_dot_name(operator_2, name_2),
+                                   ),
+                               )
+
+                        if not operator_3.is_postfix_operator:
+                            wk(operator_3)
+
+                            return left
 
                         operator = operator_3
-                    else:
-                        wk(operator_3)
 
-                        return MemberExpression_2(left, operator, name, operator_2, name_2)
+                else:
+                    left = conjure_member_expression(left, conjure_dot_name(operator, name))
 
-                elif operator_2.is__arguments_0__or__left_parenthesis:
-                    if operator_2.is_left_parenthesis:
-                        assert qd() > 0
-                        assert qn() is none
+                    if not operator_2.is_postfix_operator:
+                        wk(operator_2)
 
-                        operator_2 = parse1_arguments__left_parenthesis(operator_2)
-
-                    if indented is not 0:
-                        newline = qn()
-
-                        if newline is not none:
-                            if qk() is not none:
-                                raise_unknown_line()
-
-                            return MethodCallStatement_1(indented, left, operator, name, operator_2, newline)
-
-                    left = MethodCall_1(left, operator, name, operator_2)
-
-                    operator = qk()
-
-                    if operator is not none:
-                        if not operator.is_postfix_operator:
-                            return left
-
-                        wk(none)
-                    else:
-                        if qn() is not none:
-                            return left
-
-                        operator = tokenize_operator()
-
-                        if not operator.is_postfix_operator:
-                            wk(operator)
-
-                            return left
-
-                elif operator_2.is_postfix_operator:
-                    left = MemberExpression_1(left, operator, name)
+                        return left
 
                     operator = operator_2
-                else:
-                    wk(operator_2)
-
-                    return MemberExpression_1(left, operator, name)
 
             if operator.is__arguments_0__or__left_parenthesis:
                 if operator.is_left_parenthesis:
@@ -202,7 +173,14 @@ def gem():
 
                     operator = parse1_arguments__left_parenthesis(operator)
 
-                left = CallExpression(left, operator)
+                newline = qn()
+
+                if (indentation is not 0) and (newline is not none) and (qk() is none):
+                    wn(none)
+
+                    return left.call_statement(conjure_vw_frill(indentation, newline), left, operator)
+
+                left = left.call_expression(left, operator)
 
                 operator = qk()
 
@@ -212,7 +190,7 @@ def gem():
 
                     wk(none)
                 else:
-                    if qn() is not none:
+                    if newline is not none:
                         return left
 
                     operator = tokenize_operator()
@@ -229,27 +207,7 @@ def gem():
                 middle = parse1_atom()
 
                 if middle.is_colon:
-                    middle_2 = parse1_atom()
-
-                    if middle_2.is_right_square_bracket:
-                        left = IndexExpression(left, AllIndex(operator, middle, middle_2))
-                    else:
-                        operator = LeftSquareBracket_Colon(operator, middle)
-
-                        operator_2 = qk()
-
-                        if operator_2 is none:
-                            if qn() is not none:
-                                raise_unknown_line()
-
-                            operator_2 = tokenize_operator()
-                        else:
-                            wk(none)
-
-                        if not operator_2.is_right_square_bracket:
-                            raise_unknown_line()
-
-                        left = IndexExpression(left, TailIndex(operator, middle_2, operator_2))
+                    operator = conjure__left_square_bracket__colon(operator, middle)
                 else:
                     operator_2 = qk()
 
@@ -272,7 +230,7 @@ def gem():
                         wk(none)
 
                     if operator_2.is_right_square_bracket:
-                        left = IndexExpression(left, NormalIndex(operator, middle, operator_2))
+                        left = conjure_index_expression(left, conjure_normal_index(operator, middle, operator_2))
                     elif operator_2.is_colon:
                         if qn() is not none:
                             raise_unknown_line()
@@ -280,12 +238,12 @@ def gem():
                         middle_2 = parse1_atom()
 
                         if middle_2.is_right_square_bracket:
-                            left = IndexExpression(
+                            left = conjure_index_expression(
                                        left,
-                                       HeadIndex(
+                                       conjure_head_index(
                                            operator,
                                            middle,
-                                           Colon_RightSquareBracket(operator_2, middle_2),
+                                           conjure__colon__right_square_bracket(operator_2, middle_2),
                                        ),
                                    )
                         else:
@@ -312,12 +270,81 @@ def gem():
                             if not operator_3.is_right_square_bracket:
                                 raise_unknown_line()
 
-                            left = IndexExpression(
+                            left = conjure_index_expression(
                                        left,
-                                       RangeIndex(operator, middle, operator_2, middle_2, operator_3),
+                                       conjure_range_index(operator, middle, operator_2, middle_2, operator_3),
                                    )
+                    elif operator_2.is_colon__right_square_bracket:
+                        left = conjure_index_expression(left, conjure_head_index(operator, middle, operator_2))
                     else:
+                        my_line('operator_2: %r', operator_2)
                         raise_unknown_line()
+
+                    if qn() is not none:
+                        return left
+
+                    operator = qk()
+
+                    if operator is not none:
+                        if not operator.is_postfix_operator:
+                            return left
+
+                        wk(none)
+                    else:
+                        if qn() is not none:
+                            return left
+
+                        operator = tokenize_operator()
+
+                        if not operator.is_postfix_operator:
+                            wk(operator)
+
+                            return left
+
+            if operator.is_tail_index:
+                middle_2 = parse1_atom()
+
+                if middle_2.is_right_square_bracket:
+                    operator = conjure_all_index(operator.a, operator.b, middle_2)
+                else:
+                    operator_2 = qk()
+
+                    if operator_2 is none:
+                        if qn() is not none:
+                            raise_unknown_line()
+
+                        operator_2 = tokenize_operator()
+                    else:
+                        wk(none)
+
+                    if not operator_2.is_right_square_bracket:
+                        raise_unknown_line()
+
+                    left = conjure_index_expression(left, conjure_tail_index(operator, middle_2, operator_2))
+
+                    if qn() is not none:
+                        return left
+
+                    operator = qk()
+
+                    if operator is not none:
+                        if not operator.is_postfix_operator:
+                            return left
+
+                        wk(none)
+                    else:
+                        if qn() is not none:
+                            return left
+
+                        operator = tokenize_operator()
+
+                        if not operator.is_postfix_operator:
+                            wk(operator)
+
+                            return left
+
+            if operator.is_all_index:
+                left = conjure_index_expression(left, operator)
 
                 if qn() is not none:
                     return left
@@ -353,7 +380,7 @@ def gem():
     #           |   postfix-expression '**' unary-expression
     #
     def parse1_power_expression__left_operator(left, power_operator):
-        return PowerExpression(left, power_operator, parse1_unary_expression())
+        return conjure_power_expression(left, power_operator, parse1_unary_expression())
 
 
     #
@@ -361,12 +388,12 @@ def gem():
     #
     @share
     def parse1_twos_complement_expression__operator(operator):
-        return TwosComplementExpression(operator, parse1_unary_expression())
+        return conjure_twos_complement(operator, parse1_unary_expression())
 
 
     @share
     def parse1_negative_expression__operator(operator):
-        return NegativeExpression(operator, parse1_unary_expression())
+        return conjure_negative_expression(operator, parse1_unary_expression())
 
 
     def parse1_unary_expression():
@@ -472,7 +499,8 @@ def gem():
         if not operator.is_multiply_operator:
             raise_unknown_line()
 
-        many = [left, multiply_operator, right, operator]
+        many       = [left, right]
+        many_frill = [multiply_operator, operator]
 
         while 7 is 7:
             many.append(parse1_unary_expression())
@@ -481,17 +509,16 @@ def gem():
 
             if operator is none:
                 if qn() is not none:
-                    return MultiplyExpression_Many(Tuple(many))
+                    break
 
                 operator = tokenize_operator()
 
                 if operator.is_end_of_multiply_expression:
                     wk(operator)
-
-                    return MultiplyExpression_Many(Tuple(many))
+                    break
             else:
                 if operator.is_end_of_multiply_expression:
-                    return MultiplyExpression_Many(Tuple(many))
+                    break
 
                 wk(none)
 
@@ -499,6 +526,8 @@ def gem():
                 raise_unknown_line()
 
             many.append(operator)
+
+        return conjure_multiply_expression_many(many, many_frill)
 
 
     def parse1_multiply_expression():
@@ -557,7 +586,7 @@ def gem():
         if operator.is_multiply_operator:
             return parse1_multiply_expression__left_operator(left, operator)
 
-        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        #my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line()
 
 
@@ -591,7 +620,8 @@ def gem():
         if not operator.is_arithmetic_operator:
             raise_unknown_line()
 
-        many = [left, add_operator, right, operator]
+        many       = [left, right]
+        many_frill = [add_operator, operator]
 
         while 7 is 7:
             many.append(parse1_multiply_expression())
@@ -600,24 +630,25 @@ def gem():
 
             if operator is none:
                 if qn() is not none:
-                    return ArithmeticExpression_Many(Tuple(many))
+                    break
 
                 operator = tokenize_operator()
 
                 if operator.is_end_of_arithmetic_expression:
                     wk(operator)
-
-                    return ArithmeticExpression_Many(Tuple(many))
+                    break
             else:
                 if operator.is_end_of_arithmetic_expression:
-                    return ArithmeticExpression_Many(Tuple(many))
+                    break
 
                 wk(none)
 
             if not operator.is_arithmetic_operator:
                 raise_unknown_line()
 
-            many.append(operator)
+            many_frill.append(operator)
+
+        return conjure_arithmetic_expression_many(many, many_frill)
 
 
     def parse1_arithmetic_expression():
@@ -692,7 +723,7 @@ def gem():
         if operator.is_arithmetic_operator:
             return parse1_arithmetic_expression__left_operator(left, operator)
 
-        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        #my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line()
 
 
@@ -712,17 +743,17 @@ def gem():
 
         if operator is none:
             if qn() is not none:
-                return LogicalAndExpression_1(left, logical_and_operator, right)
+                return conjure_logical_and_expression(left, logical_and_operator, right)
 
             operator = tokenize_operator()
 
             if operator.is_end_of_logical_and_expression:
                 wk(operator)
 
-                return LogicalAndExpression_1(left, logical_and_operator, right)
+                return conjure_logical_and_expression(left, logical_and_operator, right)
         else:
             if operator.is_end_of_logical_and_expression:
-                return LogicalAndExpression_1(left, logical_and_operator, right)
+                return conjure_logical_and_expression(left, logical_and_operator, right)
 
             wk(none)
 
@@ -847,7 +878,7 @@ def gem():
         if operator.is_logical_and_operator:
             return parse1_logical_and_expression__left_operator(left, operator)
 
-        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        #my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line()
 
 
@@ -868,24 +899,25 @@ def gem():
 
         if operator is none:
             if qn() is not none:
-                return LogicalOrExpression_1(left, logical_or_operator, right)
+                return conjure_logical_or_expression(left, logical_or_operator, right)
 
             operator = tokenize_operator()
 
             if operator.is_end_of_logical_or_expression:
                 wk(operator)
 
-                return LogicalOrExpression_1(left, logical_or_operator, right)
+                return conjure_logical_or_expression(left, logical_or_operator, right)
         else:
             if operator.is_end_of_logical_or_expression:
-                return LogicalOrExpression_1(left, logical_or_operator, right)
+                return conjure_logical_or_expression(left, logical_or_operator, right)
 
             wk(none)
 
         if not operator.is_logical_or_operator:
             raise_unknown_line()
 
-        many = [left, logical_or_operator, right, operator]
+        many       = [left, right]
+        many_frill = [logical_or_operator, operator]
 
         while 7 is 7:
             many.append(parse1_logical_and_expression())
@@ -894,24 +926,25 @@ def gem():
 
             if operator is none:
                 if qn() is not none:
-                    return LogicalOrExpression_Many(Tuple(many))
+                    break
 
                 operator = tokenize_operator()
 
                 if operator.is_end_of_logical_or_expression:
                     wk(operator)
-
-                    return LogicalOrExpression_Many(Tuple(many))
+                    break
             else:
                 if operator.is_end_of_logical_or_expression:
-                    return LogicalOrExpression_Many(Tuple(many))
+                    break
 
                 wk(none)
 
             if not operator.is_logical_or_operator:
                 raise_unknown_line()
 
-            many.append(operator)
+            many_frill.append(operator)
+
+        return conjure_logical_or_expression_many(many, many_frill)
 
 
     @share
@@ -1019,7 +1052,7 @@ def gem():
         if operator.is_logical_or_operator:
             return parse1_normal_expression__left_operator(left, operator)
 
-        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        #my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line()
 
 
@@ -1062,7 +1095,8 @@ def gem():
 
             wk(none)
 
-        many = [left, compare_operator, right, operator]
+        many       = [left, right]
+        many_frill = [compare_operator, operator]
 
         while 7 is 7:
             many.append(parse1_normal_expression())
@@ -1071,21 +1105,22 @@ def gem():
 
             if operator is none:
                 if qn() is not none:
-                    return CompareExpression_Many(Tuple(many))
+                    break
 
                 operator = tokenize_operator()
 
                 if operator.is_end_of_compare_expression:
                     wk(operator)
-
-                    return CompareExpression_Many(Tuple(many))
+                    break
             else:
                 if operator.is_end_of_compare_expression:
-                    return CompareExpression_Many(Tuple(many))
+                    break
 
                 wk(none)
 
-            many.append(operator)
+            many_frill.append(operator)
+
+        return conjure_compare_expression_many(many, many_frill)
 
 
     def parse1_compare_expression():
@@ -1210,7 +1245,7 @@ def gem():
         if operator.is_compare_operator:
             return parse1_compare_expression__left_operator(left, operator)
 
-        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        #my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line()
 
 
@@ -1230,7 +1265,7 @@ def gem():
     def parse1_not_expression__operator(not_operator):
         assert not_operator.is_keyword_not
 
-        return NotExpression(not_operator, parse1_compare_expression()) #   Temporary until handle 'not' atom itself
+        return conjure_not_expression(not_operator, parse1_compare_expression()) #   Temporary until handle 'not' atom itself
 
 
     #
@@ -1245,21 +1280,22 @@ def gem():
 
         if operator_2 is none:
             if qn() is not none:
-                return AndExpression_1(left, operator, right)
+                return conjure_and_expression_1(left, operator, right)
 
             operator_2 = tokenize_operator()
 
             if operator_2.is_end_of_boolean_and_expression:
                 wk(operator_2)
 
-                return AndExpression_1(left, operator, right)
+                return conjure_and_expression_1(left, operator, right)
         else:
             if operator_2.is_end_of_boolean_and_expression:
-                return AndExpression_1(left, operator, right)
+                return conjure_and_expression_1(left, operator, right)
 
             wk(none)
 
-        many = [left, operator, right, operator_2]
+        many       = [left, right]
+        many_frill = [operator, operator_2]
 
         while 7 is 7:
             many.append(parse1_compare_expression())
@@ -1268,24 +1304,24 @@ def gem():
 
             if operator_7 is none:
                 if qn() is not none:
-                    return AndExpression_Many(Tuple(many))
+                    return conjure_and_expression_many(many, many_frill)
 
                 operator_7 = tokenize_operator()
 
                 if operator_7.is_end_of_boolean_and_expression:
                     wk(operator_7)
 
-                    return AndExpression_Many(Tuple(many))
+                    return conjure_and_expression_many(many, many_frill)
             else:
                 if operator_7.is_end_of_boolean_and_expression:
-                    return AndExpression_Many(Tuple(many))
+                    return conjure_and_expression_many(many, many_frill)
 
                 wk(none)
 
             if not operator_7.is_keyword_and:
                 raise_unknown_line()
 
-            many.append(operator_7)
+            many_frill.append(operator_7)
 
 
     def parse1_boolean_and_expression():
@@ -1424,7 +1460,7 @@ def gem():
         if operator.is_keyword_and:
             return parse1_boolean_and_expression__left_operator(left, operator)
 
-        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        #my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line()
 
 
@@ -1441,21 +1477,22 @@ def gem():
 
         if operator_2 is none:
             if qn() is not none:
-                return OrExpression_1(left, operator, right)
+                return conjure_or_expression_1(left, operator, right)
 
             operator_2 = tokenize_operator()
 
             if operator_2.is_end_of_boolean_or_expression:
                 wk(operator_2)
 
-                return OrExpression_1(left, operator, right)
+                return conjure_or_expression_1(left, operator, right)
         else:
             if operator_2.is_end_of_boolean_or_expression:
-                return OrExpression_1(left, operator, right)
+                return conjure_or_expression_1(left, operator, right)
 
             wk(none)
 
-        many = [left, operator, right, operator_2]
+        many       = [left, right]
+        many_frill = [operator, operator_2]
 
         while 7 is 7:
             many.append(parse1_boolean_and_expression())
@@ -1464,24 +1501,25 @@ def gem():
 
             if operator_7 is none:
                 if qn() is not none:
-                    return OrExpression_Many(Tuple(many))
+                    break
 
                 operator_7 = tokenize_operator()
 
                 if operator_7.is_end_of_boolean_or_expression:
                     wk(operator_7)
-
-                    return OrExpression_Many(Tuple(many))
+                    break
             else:
                 if operator_7.is_end_of_boolean_or_expression:
-                    return OrExpression_Many(Tuple(many))
+                    break
 
                 wk(none)
 
             if not operator_7.is_keyword_or:
                 raise_unknown_line()
 
-            many.append(operator_7)
+            many_frill.append(operator_7)
+
+        return conjure_or_expression_many(many, many_frill)
 
 
     def parse1_boolean_or_expression():
@@ -1636,7 +1674,7 @@ def gem():
         if operator.is_keyword_or:
             return parse1_boolean_or_expression__left_operator(left, operator)
 
-        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        #my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line()
 
 
@@ -1662,12 +1700,12 @@ def gem():
         wk(none)
 
         if not operator_2.is_keyword_else:
-            my_line('left: %r; operator: %r; middle: %r; operator_2: %r; s: %s',
-                    left, operator, middle, operator_2, portray_string(qs()[qj():]))
+            #my_line('left: %r; operator: %r; middle: %r; operator_2: %r; s: %s',
+            #        left, operator, middle, operator_2, portray_string(qs()[qj():]))
 
             raise_unknown_line()
 
-        return TernaryExpression(left, operator, middle, operator_2, parse1_ternary_expression())
+        return conjure_ternary_expression(left, operator, middle, operator_2, parse1_ternary_expression())
 
 
     @share
@@ -1820,7 +1858,7 @@ def gem():
         if operator.is_keyword_if:
             return parse1_ternary_expression__left_operator(left, operator)
 
-        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        #my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line()
 
 
@@ -1928,7 +1966,7 @@ def gem():
                     raise_unknown_line()
 
                 return left
-                    
+
             if operator.is_end_of_ternary_expression_list:
                 return left
 
@@ -1944,7 +1982,7 @@ def gem():
                     raise_unknown_line()
 
                 return left
-                    
+
             if operator.is_end_of_ternary_expression_list:
                 return left
 
@@ -1960,7 +1998,7 @@ def gem():
                     raise_unknown_line()
 
                 return left
-                    
+
             if operator.is_end_of_ternary_expression_list:
                 return left
 
@@ -2014,7 +2052,7 @@ def gem():
 
             wk(none)
 
-        my_line('line: %d; left: %r; operator: %r', ql(), left, operator)
+        #my_line('line: %d; left: %r; operator: %r', ql(), left, operator)
         raise_unknown_line()
 
 
@@ -2058,12 +2096,12 @@ def gem():
                 wk(none)
 
                 if not in_operator.is_keyword_in:
-                    my_line('left: %r; operator: %r; middle: %r; in_operator: %r; s: %s',
-                            left, operator, middle, in_operator, portray_string(qs()[qj():]))
+                    #my_line('left: %r; operator: %r; middle: %r; in_operator: %r; s: %s',
+                    #        left, operator, middle, in_operator, portray_string(qs()[qj():]))
 
                     raise_unknown_line()
 
-                left = ComprehensionForExpression(left, operator, middle, in_operator, parse1_boolean_or_expression())
+                left = conjure_comprehension_for(left, operator, middle, in_operator, parse1_boolean_or_expression())
 
                 operator = qk()
 
@@ -2073,7 +2111,7 @@ def gem():
                 wk(none)
 
             if operator.is_keyword_if:
-                left = ComprehensionIfExpression(left, operator, parse1_boolean_or_expression())
+                left = conjure_comprehension_if(left, operator, parse1_boolean_or_expression())
 
                 operator = qk()
 

@@ -8,7 +8,7 @@ def gem():
     require_gem('Gem.Map')
 
 
-    from Gem import gem_global, iterate_items_sorted_by_key, values_tuple_sorted_by_key
+    from Gem import gem_global, values_tuple_sorted_by_key
 
 
     gem_global.testing = true
@@ -18,6 +18,5 @@ def gem():
         #
         #   Imported functions
         #
-        'iterate_items_sorted_by_key',  iterate_items_sorted_by_key,
         'values_tuple_sorted_by_key',   values_tuple_sorted_by_key,
     )

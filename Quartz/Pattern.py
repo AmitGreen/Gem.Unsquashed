@@ -65,4 +65,4 @@ def gem():
         #
         #   Create ../Quartz/Match.py
         #
-        create_match_code('../Quartz/Match.py', '2017 Amit Green', 'Quartz.Match')
+        create_match_code('../Quartz/Match.py', '2017', 'Amit Green', 'Quartz.Match')

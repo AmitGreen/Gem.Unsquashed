@@ -6,7 +6,6 @@ def gem():
     require_gem('Sapphire.Core')
     require_gem('Sapphire.Expression')
     require_gem('Sapphire.Match')
-    require_gem('Sapphire.Parse7Expression')
     require_gem('Sapphire.Statement')
 
 
@@ -43,7 +42,6 @@ def gem():
 
 
     def parse7_statement_class(m0, s):
-        m = class7_match(s, m0.end())
 
         if m is none:
             raise_unknown_line()
@@ -62,7 +60,6 @@ def gem():
 
 
     def parse7_statement_decorator_header(m0, s):
-        m = expression_match(s, m0.end())
 
         if m is none:
             raise_unknown_line()
@@ -75,7 +72,6 @@ def gem():
 
 
     def parse7_statement_define_header(m0, s):
-        m = define7_match(s, m0.end())
 
         if m is none:
             raise_unknown_line()
@@ -102,7 +98,6 @@ def gem():
 
 
     def parse7_statement_from(m0, s):
-        m = from7_1_match(s, m0.end())
 
         if m is none:
             raise_unknown_line()
@@ -127,7 +122,6 @@ def gem():
                        conjure_token_newline(m.group('ow_comment_newline')),
                    )
 
-        m2 = from_2_match(s, m.end())
 
         if m2 is none:
             return raise_unknown_line()
@@ -151,7 +145,6 @@ def gem():
 
 
     def parse7_statement_import(m0, s):
-        m = import7_match(s, m0.end())
 
         if m is none:
             raise_unknown_line()
@@ -164,7 +157,6 @@ def gem():
 
 
     def parse7_statement_return(m0, s):
-        m = expression_match(s, m0.end())
 
         if m is none:
             raise_unknown_line()
@@ -195,7 +187,6 @@ def gem():
         iterate_lines = z_initialize(data)
 
         for s in iterate_lines:
-            m = line7_match(s)
 
             if m is none:
                 raise_unknown_line()
@@ -208,9 +199,6 @@ def gem():
                 append(find_parse7_line(keyword)(m, s))
                 continue
 
-            if name:
-                append(parse7_statement_expression__symbol(m, s, name))
-                continue
 
             [indented, comment, newline_2] = m.group('indented', 'comment', 'newline_2')
 

@@ -14,15 +14,25 @@ def gem():
 
 
     #
-    #   intern_arrange
+    #   intern_arrange & intern_integer
     #
     @built_in
     def intern_arrange(format, *arguments):
         return intern_string(format % arguments)
 
 
+    provide_integer = {}.setdefault
+
+
+    @built_in
+    def intern_integer(v):
+        assert type(v) is Integer
+
+        return provide_integer(v, v)
+
+
     #
-    #   line
+    #   line & partial
     #
     flush_standard_output = PythonSystem.stdout.flush
     write_standard_output = PythonSystem.stdout.write
@@ -44,6 +54,20 @@ def gem():
     def partial(format, *arguments):
         write_standard_output(format % arguments   if arguments else   format)
         flush_standard_output()
+
+
+    #
+    #   method_is_function
+    #
+    if is_python_2:
+        @built_in
+        @privileged
+        def method_is_function(method, f):
+            return method.im_func is f
+    else:
+        @built_in
+        def method_is_function(method, f):
+            return method is f
 
 
     #
@@ -73,11 +97,13 @@ def gem():
         'Method',           PythonTypes.MethodType,
         'Object',           PythonBuiltIn.object,
         'Tuple',            PythonBuiltIn.tuple,
+        'Type',             PythonBuiltIn.type,
 
 
         #
         #   Functions
         #
+        'attribute',        PythonBuiltIn.getattr,
         'character',        PythonBuiltIn.chr,
         'enumerate',        PythonBuiltIn.enumerate,
         'globals',          PythonBuiltIn.globals,
@@ -90,6 +116,7 @@ def gem():
         'property',         PythonBuiltIn.property,
         'sorted_list',      PythonBuiltIn.sorted,
         'static_method',    PythonBuiltIn.staticmethod,
+        'sum',              PythonBuiltIn.sum,
         'type',             PythonBuiltIn.type,
 
         #

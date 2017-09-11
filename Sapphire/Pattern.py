@@ -10,7 +10,7 @@ def gem():
 
 
     from Tremolite import create_match_code, ANY_OF, BACKSLASH, DOT, EMPTY, END_OF_PATTERN, EXACT
-    from Tremolite import G, LINEFEED, MATCH, NAME, NAMED_GROUP, NOT_FOLLOWED_BY
+    from Tremolite import G, LINEFEED, MATCH, NAME, NAMED_GROUP, NOT_ANY_OF, NOT_FOLLOWED_BY
     from Tremolite import ONE_OR_MORE, OPTIONAL, PRINTABLE, PRINTABLE_MINUS, Q, ZERO_OR_MORE
 
 
@@ -47,6 +47,7 @@ def gem():
         keyword_is          = NAME('is',                  'is')
         keyword_not         = NAME('not',                 'not')
         keyword_or          = NAME('or',                  'or')
+        keyword_print       = NAME('print',               'print')
         keyword_try         = NAME('try',                 'try')
         left_brace          = NAME('left_brace',          '{')                                #   }
         left_parenthesis    = NAME('left_parenthesis',    '(')                                #   )
@@ -74,7 +75,7 @@ def gem():
                                         (
                                               '"'
                                             + OPTIONAL(
-                                                    '"' 
+                                                    '"'
                                                   + ONE_OR_MORE(
                                                           PRINTABLE_MINUS('"', '\\')
                                                         | BACKSLASH + PRINTABLE
@@ -95,7 +96,7 @@ def gem():
                                         (
                                               "'"
                                             + OPTIONAL(
-                                                    "'" 
+                                                    "'"
                                                   + ONE_OR_MORE(
                                                           PRINTABLE_MINUS("'", '\\')
                                                         | BACKSLASH + PRINTABLE
@@ -133,14 +134,6 @@ def gem():
         ow_dot_ow               = NAME('ow_dot_ow',               ow + period + ow)
         w_as_w                  = NAME('w_as_w',                  w + keyword_as + w)
         w_import_w              = NAME('w_import_w',              w + keyword_import + w)
-
-        right_parenthesis__colon     = NAME('right_parenthesis__colon',     right_parenthesis + ow + colon)
-        ow__right_parenthesis__colon = NAME('ow__right_parenthesis__colon', ow + right_parenthesis + ow + colon)
-
-        ow__right_parenthesis__colon__ow = NAME(
-                                               'ow__right_parenthesis__colon__ow',
-                                               ow + right_parenthesis + ow + colon + ow,
-                                           )
 
         #
         #   OLD
@@ -183,6 +176,20 @@ def gem():
 
 
         #
+        #   Copyright
+        #
+        FULL_MATCH(
+            'copyright_match',
+            (
+                  EXACT('   Copyright (c)')
+                + ' ' + G('year', '2017')
+                + ' ' + G('author', 'Amit Green')
+                + '.  All rights reserved.'
+            ),
+        )
+
+
+        #
         #   Expressions 1
         #
         MATCH(
@@ -200,7 +207,7 @@ def gem():
                             G(
                                 'keyword',
                                 keyword_else | keyword_except | keyword_finally | keyword_try,
-                            ) + ow + colon + ow
+                            ) + ow + G(colon) + ow
                           | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow
                           | G('atom', number | '@' | name) + ow
                           | G(
@@ -212,7 +219,15 @@ def gem():
                           | G(left_brace__ow)          + P(G(right_brace)          + ow)
                       ),
                   )
-                + Q('comment_newline', P(pound_G_comment) + G('newline', LINEFEED))
+                + Q(
+                      'comment_newline',
+                      P(
+                            '#'
+                          + G('comment', ZERO_OR_MORE(ow + ONE_OR_MORE(NOT_ANY_OF('\x00-\x1F', ' '))))
+                          + ow
+                      )
+                      + G('newline', LINEFEED)
+                  )
             ),
         )
 
@@ -250,12 +265,14 @@ def gem():
                                  | star_sign         + P(star_sign)
                                  | slash_sign        + P(slash_sign)
                              ) + P(equal_sign)
-                           | ANY_OF(right_parenthesis, comma, dot, colon, right_square_bracket, right_brace)
+                           | ANY_OF(right_parenthesis, dot, right_square_bracket, right_brace)
                            | not_equal
                        ),
                   ) + ow
-                | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
-                | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
+                | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
+                | G(left_square_bracket__ow) + P(G('tail_index__ow', colon + ow) + P(G(right_square_bracket) + ow))
+                | G(comma) + ow + P(G('comma_suffix', right_parenthesis | right_square_bracket) + ow)
+                | G(colon) + ow + P(G('head_index', right_square_bracket) + ow)
                 | (
                         G(
                             'keyword',
@@ -265,6 +282,7 @@ def gem():
                                 | keyword_for
                                 | 'i' + ANY_OF('f', 'n')
                                 | keyword_or
+                                | keyword_print
                             ),
                         )
                       + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
@@ -276,75 +294,18 @@ def gem():
 
 
         #
-        #   Expressions 7
-        #
-        MATCH(
-            'argument7_1_match',
-            (
-                  (G(name) | G(number) | G(single_quote))
-                + G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',', '[')) + OLD__middle_ow)        #   ]
-            )
-        )
-
-        MATCH(
-            'argument7_1A_match',
-            G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',', '[')) + OLD__middle_ow)              #   ]
-        )
-
-        MATCH(
-            'argument7_2_match',
-            (
-                  (G(name) | G(number) | G(single_quote))
-                + G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',')) + OLD__middle_ow)
-            ),
-        )
-
-        MATCH(
-            'argument7_postfix_match',
-            G('operator__ow', ow + G('operator', ANY_OF(right_parenthesis, comma)) + OLD__middle_ow)
-        )
-
-        MATCH(
-            'index_1_match',
-            (
-                  (G(name) | G(number))
-                + G('operator__ow', ow + G('operator', ANY_OF(']')) + ow)
-            )
-        )
-
-        MATCH(
-            'statement_expression_match',
-            (
-                  P(G(ow_dot_ow) + G('right', name))
-                + G('operator__ow', ow + G('operator', ANY_OF('(')) + ow)
-                + P(G(name) | G(number) | G(single_quote))
-                + P(
-                        #   (
-                        G('right_parenthesis', ow + ')')
-                      + Q(ow_comment_newline)
-                  )
-            )
-        )
-
-        FULL_MATCH('statement_postfix_match', G(ow_comment_newline))
-
-
-        #
         #   Statements - Parse 1
         #
         MATCH(
-            'header_parenthesis_match1',
-            (
-                  G(left_parenthesis) + ow + P(G(right_parenthesis) + ow + P(G(colon) + ow))
-                + Q(comment_newline)
-            ),
+            'definition_header_parenthesis_match',
+            G(left_parenthesis) + ow + P(G(right_parenthesis) + ow) + Q(comment_newline)
         )
 
         MATCH(
             'parameter_atom_match',
             (
                   Q(star_sign) + G(name) + ow
-                | G(right_parenthesis) + ow + P(G(colon) + ow)
+                | G(right_parenthesis) + ow
             ) + Q(comment_newline),
         )
 
@@ -352,20 +313,14 @@ def gem():
             'parameter_operator_match',
             (
                   G(equal_sign) + ow
-                | (
-                        G(comma) + ow
-                      + P(
-                              G('comma_RP', right_parenthesis) + ow
-                            + P(G('comma_RP_colon', colon) + ow)
-                        )
-                  )
-                | G(right_parenthesis) + ow + P(G(colon) + ow)
+                | G(comma) + ow + P(G('comma_RP', right_parenthesis) + ow)
+                | G(right_parenthesis) + ow
             ) + Q(comment_newline),
         )
 
         FULL_MATCH(
             'parameter_colon_newline_match',
-            colon + ow + comment_newline,
+            G(colon) + ow + comment_newline,
         )
 
 
@@ -409,68 +364,6 @@ def gem():
 
 
         #
-        #   Statements - Parse 7
-        #
-        MATCH(
-            'line7_match',
-            G('indented', ow)
-                + (
-                        G__keyword__ow + Q('newline_1', LINEFEED)
-                      | G(name)
-                      | P(pound_G_comment) + G('newline_2', LINEFEED)
-                  )
-        )
-
-        FULL_MATCH(
-            'class7_match',
-            (
-                  G(name1)
-                + G('left_parenthesis', ow__left_parenthesis__ow)
-                + G(name2)
-                + G(ow__right_parenthesis__colon__ow)
-                + G(comment_newline)
-            ),
-        )
-
-        FULL_MATCH(
-            'define7_match',
-            (
-                  G(name1)
-                + G('left_parenthesis', ow__left_parenthesis__ow)
-                + Q(name2)
-                + G(ow__right_parenthesis__colon__ow)
-                + G(comment_newline)
-            ),
-        )
-
-        MATCH(
-            'from7_1_match',
-            (
-                  G(name1) + P(G(ow_dot_ow) + G(name2))
-                + G(w_import_w) + G(name3)
-                + G(w_as_w) + G(name4)
-                + (G(ow_comma_ow) | G(ow_comment_newline))
-            ),
-        )
-
-        MATCH(
-            'from_2_match',
-            G(name1) + G(w_as_w) + G(name2) + (G(ow_comma_ow) | G(ow_comment_newline)),
-        )
-
-        FULL_MATCH('import7_match', G(name1) + G(ow_comment_newline))
-
-        FULL_MATCH(
-            'expression_match',
-            (
-                  G(name)
-                + P(G('left_parenthesis', ow__left_parenthesis__ow) + P(G(single_quote)) + G(OLD__right_parenthesis))
-                + G(ow_comment_newline)
-            ),
-        )
-
-
-        #
         #   Create ../Sapphire/Match.py
         #
-        create_match_code('../Sapphire/Match.py', '2017 Amit Green', 'Sapphire.Match')
+        create_match_code('../Sapphire/Match.py', '2017', 'Amit Green', 'Sapphire.Match')

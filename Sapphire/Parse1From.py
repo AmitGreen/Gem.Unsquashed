@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.Parse1From')
 def gem():
+    require_gem('Sapphire.BookcaseKeywordDualStatement')
+
+
     def parse1_statement_from_module(index):
         s = qs()
 
@@ -14,7 +17,7 @@ def gem():
         if m1 is none:
             raise_unknown_line()
 
-        module = conjure_identifier(m1.group())
+        module = conjure_name(m1.group())
         #</name1>
 
         #
@@ -42,10 +45,10 @@ def gem():
                 raise_unknown_line()
             #</name2>
 
-            module = MemberExpression_1(module, operator_dot, conjure_identifier(m1.group()))
+            module = conjure_member_expression(module, conjure_dot_name(operator_dot, conjure_name(m1.group())))
 
         wj(m2.end())
-        wk(KeywordImport(m2.group()))
+        wk(conjure_keyword_import(m2.group()))
 
         return module
         #</module>
@@ -62,7 +65,7 @@ def gem():
         if m1 is none:
             raise_unknown_line()
 
-        imported = conjure_identifier(m1.group())
+        imported = conjure_name(m1.group())
         #</name>
 
         #
@@ -77,7 +80,7 @@ def gem():
         #</as>
 
         if operator is none:
-            wk(conjure_token_newline(m2.group()))
+            wk(conjure_line_marker(m2.group()))
 
             return imported
 
@@ -97,7 +100,7 @@ def gem():
         if m3 is none:
             raise_unknown_line()
 
-        imported = FromAsFragment(imported, keyword_as, conjure_identifier(m3.group()))
+        imported = conjure_as_fragment(imported, keyword_as, conjure_name(m3.group()))
         #</name2>
 
         #
@@ -110,7 +113,7 @@ def gem():
         #</comma-or-newline>
 
         if m4.start('comma') is -1:
-            wk(conjure_token_newline(m4.group()))
+            wk(conjure_line_marker(m4.group()))
 
             return imported
 
@@ -121,16 +124,18 @@ def gem():
 
 
     @share
-    def parse1_statement_from(m1):
-        if m1.end('comment_newline') is not -1:
+    def parse1_statement_from(m):
+        if m.end('comment_newline') is not -1:
             raise_unknown_line()
 
-        keyword_from = KeywordFrom(m1.group())
+        j = m.end()
+
+        indented_keyword = evoke_indented_from(m.end('indented'), j)
 
         #
         #<module ... 'import'>
         #
-        module = parse1_statement_from_module(m1.end())
+        module = parse1_statement_from_module(j)
 
         keyword_import = qk()
 
@@ -147,8 +152,8 @@ def gem():
         wk(none)
         #<imported/>
 
-        if operator.is_token_newline:
-            return StatementFromImport(keyword_from, module, keyword_import, imported, operator)
+        if operator.is_line_marker:
+            return conjure_from_statement(indented_keyword, module, keyword_import, imported, operator)
 
         if not operator.is_comma:
             raise_unknown_line()
@@ -163,19 +168,20 @@ def gem():
         wk(none)
         #<imported/>
 
-        if operator_2.is_token_newline:
-            return StatementFromImport(
-                       keyword_from,
+        if operator_2.is_line_marker:
+            return conjure_from_statement(
+                       indented_keyword,
                        module,
                        keyword_import,
-                       CommaExpression_1(imported, operator, imported_2),
+                       conjure_comma_expression_1(imported, operator, imported_2),
                        operator_2,
                    )
 
         if not operator_2.is_comma:
             raise_unknown_line()
 
-        many = [imported, operator, imported_2, operator_2]
+        many       = [imported, imported_2]
+        many_frill = [operator, operator_2]
 
         while 7 is 7:
             many.append(parse1_statement_from_as())
@@ -184,16 +190,16 @@ def gem():
 
             wk(none)
 
-            if operator_7.is_token_newline:
-                return StatementFromImport(
-                           keyword_from,
+            if operator_7.is_line_marker:
+                return conjure_from_statement(
+                           indented_keyword,
                            module,
                            keyword_import,
-                           CommaExpression_Many(Tuple(many)),
+                           conjure_comma_expression_many(many, many_frill),
                            operator_7,
                        )
 
             if not operator_7.is_comma:
                 raise_unknown_line()
 
-            many.append(operator_7)
+            many_frill.append(operator_7)

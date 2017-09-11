@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.Parse1ExpressionStatement')
 def gem():
+    require_gem('Sapphire.BookcaseManyStatement')
+
+
     show = 0
 
 
@@ -17,20 +20,21 @@ def gem():
             newline = qn()
 
             if newline is not none:
-                return AssignStatement_1(indented, left, equal_sign, right, newline)
+                return conjure_assign_1(conjure_indentation(indented), left, equal_sign, right, newline)
 
             operator = tokenize_operator()
 
         if not operator.is_equal_sign:
-            my_line('indented: %r; left: %r; equal_sign: %r; right: %s; operator: %r; s: %s',
-                    indented, left, equal_sign, right, operator, portray_string(qs()[qj():]))
+            #my_line('indented: %r; left: %r; equal_sign: %r; right: %s; operator: %r; s: %s',
+            #        indented, left, equal_sign, right, operator, portray_string(qs()[qj():]))
 
             raise_unknown_line()
 
-        many = [AssignFragment(left, equal_sign), AssignFragment(right, operator)]
+        many       = [left, right]
+        many_frill = [equal_sign, operator]
 
         while 7 is 7:
-            right = parse1_ternary_expression_list()
+            many.append(parse1_ternary_expression_list())
 
             operator = qk()
 
@@ -40,15 +44,15 @@ def gem():
                 newline = qn()
 
                 if newline is not none:
-                    return AssignStatement_Many(indented, Tuple(many), right, newline)
+                    return conjure_assign_many(conjure_indentation(indented), many, many_frill, newline)
 
                 operator = tokenize_operator()
 
             if not operator.is_equal_sign:
-                my_line('right: %s; operator; %r; s: %s', right, operator, portray_string(qs()[qj():]))
+                #my_line('right: %s; operator; %r; s: %s', right, operator, portray_string(qs()[qj():]))
                 raise_unknown_line()
 
-            many.append(AssignFragment(right, operator))
+            many_frill.append(operator)
 
 
     def parse1_statement_modify__left__operator(indented, left, modify_operator):
@@ -57,15 +61,18 @@ def gem():
         newline = qn()
 
         if newline is not none:
-            return ModifyStatement(indented, left, modify_operator, right, newline)
+            return conjure_modify_statement(conjure_indentation(indented), left, modify_operator, right, newline)
 
-        my_line('indented: %r; left: %r; modify_operator: %r; right: %s; s: %s',
-                indented, left, modify_operator, right, portray_string(qs()[qj():]))
+        #my_line('indented: %r; left: %r; modify_operator: %r; right: %s; s: %s',
+        #        indented, left, modify_operator, right, portray_string(qs()[qj():]))
+
         raise_unknown_line()
 
 
     @share
     def parse1_statement_expression__atom(indented, left):
+        indentation = conjure_indentation(indented)
+
         if left.is_atom:
             pass
         elif left.is_keyword_not:
@@ -87,12 +94,12 @@ def gem():
             newline = qn()
 
             if newline is not none:
-                return StatementExpression(indented, left, newline)
+                return conjure_expression_statement(conjure_indentation(indented), left, newline)
 
             operator = tokenize_operator()
 
         if operator.is_postfix_operator:
-            left = parse1_postfix_expression__left_operator(left, operator, indented)
+            left = parse1_postfix_expression__left_operator(left, operator, indentation)
 
             if left.is_statement:
                 return left
@@ -103,7 +110,7 @@ def gem():
                 newline = qn()
 
                 if newline is not none:
-                    return StatementExpression(indented, left, newline)
+                    return conjure_expression_statement(conjure_indentation(indented), left, newline)
 
                 raise_unknown_line()
 
@@ -118,7 +125,7 @@ def gem():
                 newline = qn()
 
                 if newline is not none:
-                    return StatementExpression(indented, left, newline)
+                    return conjure_expression_statement(conjure_indentation(indented), left, newline)
 
                 raise_unknown_line()
 
@@ -130,5 +137,5 @@ def gem():
         if operator.is_modify_operator:
             return parse1_statement_modify__left__operator(indented, left, operator)
 
-        my_line('line: %d; operator: %s', ql(), operator)
+        #my_line('line: %d; operator: %s', ql(), operator)
         raise_unknown_line()

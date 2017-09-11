@@ -11,3 +11,4 @@ __pycache__/
 tmp/
 [xyz]
 [xyz][1-9]
+bin/.pyxie

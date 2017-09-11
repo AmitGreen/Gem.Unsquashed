@@ -7,6 +7,9 @@ def gem():
         __slots__ = (())
 
 
+        kt3 = kt2 = kq4 = kq3 = kq2 = none
+
+
         @static_method
         def __bool__():
             return false
@@ -21,6 +24,12 @@ def gem():
             __nonzero__ = __bool__
 
 
+    absent = Absent()
+
+
+    Absent.k3 = Absent.k2 = Absent.k1 = absent
+
+
     built_in(
-        'absent',   Absent(),
+        'absent',   absent,
     )

@@ -15,8 +15,8 @@ def gem():
     #
     PythonSystem    = __import__('sys')
     PythonTypes     = __import__('types')
-    is_python_2     = PythonSystem.version_info.major is 2
-    is_python_3     = PythonSystem.version_info.major is 3
+    is_python_2     = (PythonSystem.version_info.major is 2)
+    is_python_3     = (PythonSystem.version_info.major is 3)
     PythonBuiltIn   = __import__('__builtin__'  if is_python_2 else   'builtins')
     PythonException = (__import__('exceptions')   if is_python_2 else  PythonBuiltIn)
 
@@ -91,8 +91,8 @@ def gem():
     #   Store in python modules:
     #
     #       Gem                 (overwritten)
-    #       Gem.Core
-    #       Gem.Restricted
+    #       Gem.BuiltIn
+    #       Gem.Privileged
     #       Gem.Shared
     #
     for module in [Gem, GemBuiltIn, GemPrivileged, GemShared]:
@@ -385,7 +385,7 @@ def gem():
 
         thread_context = ThreadContext()
 
-        
+
         #
         #   Do not use 'hasattr' or 'getattr' here for multiple reasons:
         #
@@ -404,7 +404,7 @@ def gem():
                 assert '__traceback__'        not in e.__dict__
 
                 last_exception = thread_context.last_exception
-                
+
                 e.__cause__            = none
                 e.__context__          = (none   if e is last_exception else   last_exception)
                 e.__suppress_context__ = false
@@ -422,7 +422,7 @@ def gem():
                 assert '__traceback__'        not in e.__dict__
 
                 last_exception = thread_context.last_exception
-                
+
                 e.__context__          = (none if (e is last_exception) or (cause is last_exception) else   last_exception)
                 e.__suppress_context__ = true
                 e.__traceback__        = none
@@ -628,6 +628,7 @@ def gem():
         'intern_string',            intern_string,
         'length',                   length,
         'next_method',              next_method,
+        'privileged',               privileged,
         'raising_exception_from',   raising_exception_from,
         'raising_exception',        raising_exception,
 
@@ -710,7 +711,6 @@ def gem():
         #   Functions
         #
         'is_instance',              is_instance,
-        'privileged',               privileged,
         'rename_function',          rename_function,
     )
 
@@ -724,7 +724,7 @@ def gem():
     #
     #   Debugging
     #
-    if 0:
+    if 7:
         flush_standard_output = PythonSystem.stdout.flush
         write_standard_output = PythonSystem.stdout.write
 
@@ -773,6 +773,8 @@ def gem():
 
         Shared_Scope = parent_module.Shared.__dict__
 
+        #debug('child_module_name: %r', child_module_name)
+
         if child_module_name == 'Main':
             del Main.gem
 
@@ -789,9 +791,10 @@ def gem():
                 )(
                 )
 
-                main = parent_module.Shared.__dict__.pop('main')
+                arguments = PythonSystem.argv[1:]
+                main      = parent_module.Shared.__dict__.pop('main')
 
-                main()
+                main(arguments)
 
 
             return execute
@@ -816,11 +819,26 @@ def gem():
 
 
     #
+    #   fast_cache
+    #
+    fast_cache = gem_scope.get('fast_cache', 0)
+
+
+    if fast_cache is not 0:
+        del gem_scope['fast_cache']
+
+        fast_lookup = fast_cache.get
+    else:
+        def fast_lookup(module_name):
+            return none
+
+
+    #
     #   require_gem
     #
     if is_python_2:
         #
-        #   Python 2.0 method of loading a module with 'gem' pre-initialized
+        #   Python 2.* method of loading a module with 'gem' pre-initialized
         #
         #       This is messy -- see below for the Python 3.0 method which is much cleaner.
         #
@@ -840,6 +858,8 @@ def gem():
 
             #debug('require_gem: %r', module_name)
 
+            fast = fast_lookup(module_name)
+
             dot_index = module_name.rfind('.')
 
             if dot_index is not -1:
@@ -853,9 +873,9 @@ def gem():
             #
             #   Temporarily store our module in 'python_modules[module_name]'.
             #
-            #   This is needed in python 2.0, as the way to pass the 'pre-initialized' module to 'load_module'
+            #   This is needed in python 2.*, as the way to pass the 'pre-initialized' module to 'load_module'
             #
-            #       (In the cleaner python 3.0 version below, we pass the modules directly to 'exec_module'
+            #       (In the cleaner python 3.* version below, we pass the modules directly to 'exec_module'
             #       and thus do not need to store the module in 'python_modules[module_name]').
             #
             #   NOTE:
@@ -869,30 +889,38 @@ def gem():
             #
             store_python_module(module_name, module)
 
-            if dot_index is -1:
-                [f, pathname, description] = find_module(module_name)
+            if fast is not none:
+                debug('fast processing %s', module_name)
+
+                gem(module_name)(fast)
             else:
-                [f, pathname, description] = find_module(module_name[dot_index + 1:], parent_module.__path__)
+                if fast_cache:
+                    debug('slow processing %s', module_name)
 
-            #debug('%r: %r, %r, %r', module_name, f, pathname, description)
+                if dot_index is -1:
+                    [f, pathname, description] = find_module(module_name)
+                else:
+                    [f, pathname, description] = find_module(module_name[dot_index + 1:], parent_module.__path__)
 
-            #
-            #   CAREFUL here:
-            #       We *MUST* close 'f' if any exception is thrown.
-            #
-            #       So ASAP use 'f' within a 'with' clause (this ensures 'f' is always closed, whether
-            #       an exception is thrown or not)
-            #
-            if f is not none:
-                with f:
-                    module.gem = gem
+                #debug('%r: %r, %r, %r', module_name, f, pathname, description)
+
+                #
+                #   CAREFUL here:
+                #       We *MUST* close 'f' if any exception is thrown.
+                #
+                #       So ASAP use 'f' within a 'with' clause (this ensures 'f' is always closed, whether
+                #       an exception is thrown or not)
+                #
+                if f is not none:
+                    with f:
+                        module.gem = gem
+                        load_module(module_name, f, pathname, description)
+                else:
+                    if description[2] == PACKAGE_DIRECTORY:
+                        is_package = 7
+                        produce_export_and_share(module)
+
                     load_module(module_name, f, pathname, description)
-            else:
-                if description[2] == PACKAGE_DIRECTORY:
-                    is_package = 7
-                    produce_export_and_share(module)
-
-                load_module(module_name, f, pathname, description)
 
             #
             #   If this is a package: Keep this module
@@ -906,11 +934,9 @@ def gem():
                 store_gem_module(module_name, 0)
 
             return module
-
-
     else:
         #
-        #   Python 3.0 method of loading a module with 'gem' pre-initialized
+        #   Python 3.* method of loading a module with 'gem' pre-initialized
         #
         PythonImportUtility          = __import__('importlib.util').util
         ImportError                  = PythonBuiltIn.ImportError
@@ -976,5 +1002,8 @@ def gem():
     Main.gem = gem
 
 
-    del Gem.__builtins__
-    del Gem.__package__
+    if fast_cache is 0:
+        del Gem.__builtins__
+        del Gem.__package__
+
+    built_in('fast_cache', fast_cache)

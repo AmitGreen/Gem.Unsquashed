@@ -38,7 +38,7 @@ def gem():
             match_cache, match_insert_interned,
     ] = produce_cache_functions(
             'match', TremoliteMatch,
-            
+
             produce_cache           = true,
             produce_insert_interned = true,
         )

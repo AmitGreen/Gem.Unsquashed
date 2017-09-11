@@ -10,25 +10,12 @@ def gem():
         ))
 
 
-        is_comma                = false
-        is_identifier           = false
-        is_keyword              = false
-        is_right_parenthesis    = false
-        is_right_square_bracket = false
-
-
         def __init__(t, s):
-            assert type(s) is String
-
             t.s = s
 
 
         def __repr__(t):
-            return arrange('<%s %r>', t.display_name, t.s)
-
-
-        def display_full_token(t):
-            return arrange('<%s %s>', t.display_name, portray_string(t.s))
+            return arrange('<%s %r>', t.__class__.__name__, t.s)
 
 
         display_token = __repr__
@@ -40,35 +27,13 @@ def gem():
 
     @export
     class Identifier(Token):
-        __slots__ = (())
-
-
-        display_name                          = 'Identifier'
-        is__atom__or__special_operator        = true
-        is_atom                               = true
-        is_colon                              = false
-        is_identifier                         = true
-        is_right_brace                        = false
-        is__right_parenthesis__colon__newline = false
+        __slots__    = (())
+        display_name = 'Identifier'
 
 
         def display_token(t):
             return t.s
 
-
-    @export
-    class TokenIndented(Token):
-        display_name      = 'indented'
-        is_token_indented = true
-
-
-    class TokenWhitespace(Token):
-        display_name = 'whitespace'
-
-
-    @export
-    class UnknownLine(Token):
-        display_name = 'unknown-line'
 
 
     [
@@ -81,11 +46,7 @@ def gem():
         )
 
 
-    conjure_whitespace = produce_conjure_by_name('whitespace', TokenWhitespace)
-
-
     export(
         'conjure_identifier',   conjure_identifier,
-        'conjure_whitespace',   conjure_whitespace,
         'lookup_identifier',    lookup_identifier,
     )

@@ -1,12 +1,11 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Parse1From')
+@gem('Sapphire.Parse1Import')
 def gem():
     require_gem('Sapphire.Core')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.Match')
-    require_gem('Sapphire.Statement')
 
 
     def parse1_statement_import_module():
@@ -20,7 +19,7 @@ def gem():
         if m is none:
             raise_unknown_line()
 
-        module = conjure_identifier(m.group())
+        module = conjure_name(m.group())
 
         j = m.end()
 
@@ -63,10 +62,10 @@ def gem():
             wj(j)
             #</name>
 
-            module = MemberExpression_1(module, operator_dot, conjure_identifier(m.group()))
+            module = conjure_member_expression(module, conjure_dot_name(operator_dot, conjure_name(m.group())))
 
         if operator is none:
-            wk(conjure_token_newline(m.group()))
+            wk(conjure_line_marker(m.group()))
 
             return module
 
@@ -86,7 +85,7 @@ def gem():
         if m is none:
             raise_unknown_line()
 
-        module = ModuleAsFragment(module, keyword_as, conjure_identifier(m.group()))
+        module = conjure_as_fragment(module, keyword_as, conjure_name(m.group()))
 
         j = m.end()
 
@@ -104,7 +103,7 @@ def gem():
         #</comma-or-newline>
 
         if m.start('comma') is -1:
-            wk(conjure_token_newline(m.group()))
+            wk(conjure_line_marker(m.group()))
 
             return module
 
@@ -119,9 +118,9 @@ def gem():
         if m.end('comment_newline') is not -1:
             raise_unknown_line()
 
-        keyword_import = KeywordImport(m.group())
-
         j = m.end()
+
+        indented_keyword = evoke_indented_import(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -135,23 +134,28 @@ def gem():
         wk(none)
         #</module>
 
-        if operator.is_token_newline:
-            return StatementImport_1(keyword_import, module, operator)
+        if operator.is_line_marker:
+            return conjure_import_statement(indented_keyword, module, operator)
 
         if not operator.is_comma:
             raise_unknown_line()
 
-        many = [module, operator]
+        many       = [module]
+        many_frill = [operator]
 
         while 7 is 7:
             many.append(parse1_statement_import_module())
 
             operator = qk()
 
-            if operator.is_token_newline:
-                return StatementImport_Many(keyword_import, Tuple(many), operator)
+            if operator.is_line_marker:
+                return conjure_import_statement(
+                           indented_keyword,
+                           conjure_comma_expression_many(many, many_frill),
+                           operator,
+                       )
 
             if not operator.is_comma:
                 raise_unknown_line()
 
-            many.append(operator)
+            many_frill.append(operator)

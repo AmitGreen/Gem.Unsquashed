@@ -16,24 +16,20 @@ def gem():
     require_gem('Gem.System')
 
 
-    from Gem import create_DelayedFileOutput, encode_ascii, first_map_item
-    from Gem import iterate_items_sorted_by_key, iterate_values_sorted_by_key, lookup_ascii
-    from Gem import produce_cache_functions, python_version, read_text_from_path, unknown_ascii, view_items
+    from Gem import create_DelayedFileOutput, encode_ascii, first_map_item, lookup_ascii
+    from Gem import produce_cache_functions, python_version, read_text_from_path, unknown_ascii
 
 
     share(
         #
         #   Imported functions
         #
-        'create_DelayedFileOutput',         create_DelayedFileOutput,
-        'encode_ascii',                     encode_ascii,
-        'first_map_item',                   first_map_item,
-        'iterate_items_sorted_by_key',      iterate_items_sorted_by_key,
-        'iterate_values_sorted_by_key',     iterate_values_sorted_by_key,
-        'lookup_ascii',                     lookup_ascii,
-        'produce_cache_functions',          produce_cache_functions,
-        'read_text_from_path',              read_text_from_path,
-        'view_items',                       view_items,
+        'create_DelayedFileOutput',     create_DelayedFileOutput,
+        'encode_ascii',                 encode_ascii,
+        'first_map_item',               first_map_item,
+        'lookup_ascii',                 lookup_ascii,
+        'produce_cache_functions',      produce_cache_functions,
+        'read_text_from_path',          read_text_from_path,
 
 
         #

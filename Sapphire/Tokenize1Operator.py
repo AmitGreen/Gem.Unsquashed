@@ -8,7 +8,9 @@ def gem():
 
     @share
     def skip_tokenize_prefix():
-        parse_context.iterate_lines.next()
+        next = next_method(parse_context.iterate_lines)
+
+        next()
 
         m = next_nested_line_match(qs())
 
@@ -22,7 +24,7 @@ def gem():
         many = [qs()]
 
         while 7 is 7:
-            parse_context.iterate_lines.next()
+            next()
 
             s = qs()
             m = next_nested_line_match(s)
@@ -49,13 +51,12 @@ def gem():
 
         s = qs()
 
-        if show is 7:
-            my_line('d: %d; s: %s', qd(), portray_string(s[qj() : ]))
+        #my_line('d: %d; s: %s', qd(), portray_string(s[qj() : ]))
 
         m = operator_match(s, qj())
 
         if m is none:
-            my_line(portray_string(s[qj() : ]))
+            #my_line(portray_string(s[qj() : ]))
             raise_unknown_line()
 
         if m.end('comment_newline') is -1:
@@ -66,12 +67,12 @@ def gem():
                     d = qd()
 
                     if d is 0:
-                        my_line('d: %d; operator_s: %r; s: %s', d, operator_s, portray_string(s[qj() : ]))
+                        #my_line('d: %d; operator_s: %r; s: %s', d, operator_s, portray_string(s[qj() : ]))
                         raise_unknown_line()
 
                     operator_end = m.end('operator')
 
-                    r = find_operator_conjure_function(operator_s)(s[qi() : operator_end])
+                    r = conjure_action_word(operator_s, s[qi() : operator_end])
 
                     wd(d - 1)
                     wi(operator_end)
@@ -80,7 +81,8 @@ def gem():
                     return r
 
                 j = m.end()
-                r = find_operator_conjure_function(operator_s)(s[qi() : j])
+
+                r = conjure_action_word(operator_s, s[qi() : j])
 
                 wi(j)
                 wj(j)
@@ -88,74 +90,134 @@ def gem():
                 return r
 
             #
-            #<similiar-to: '{keyword_is,left_square_bracket}__ow' below>
+            #<similiar-to: 'keyword_is__ow' below>
             #
             #   Differences:
             #
             #       See each of them for documented differences
             #
             #   NOTE:
-            #       As this is an 'operator' the meaning of '()'  must be 'Arguments_0' instead of 'Tuple_0'
+            #       As this is an 'operator' the meaning of '()' must be 'Arguments_0' instead of 'Tuple_0'
             #       (Tuple_0 is an atom)
             #
             left_end = m.end('left_parenthesis__ow')
 
             if left_end is not -1:
-                left    = conjure_left_parenthesis(s[qi() : left_end])
-                right_s = m.group('right_parenthesis')
+                right_end = m.end('right_parenthesis')
 
-                if right_s is not none:
-                    right = conjure_right_parenthesis(right_s)
+                if right_end is not -1:
+                    r = evoke_arguments_0(left_end, right_end)
 
                     wi(m.end('right_parenthesis'))
                     wj(m.end())
 
-                    return Arguments_0(left, right)
+                    return r
 
-                j = m.end()
+                left = conjure_left_parenthesis(s[qi() : left_end])
 
                 wd(qd() + 1)
-                wi(j)
-                wj(j)
+                wi(left_end)
+                wj(left_end)
 
                 return left
             #</similiar-to>
 
-            #
-            #<similiar-to: {left_parenthesis__ow} above>
-            #
-            #   Differences:
-            #       Uses *square_bracket* instead of *parenthesis* 
-            #       Uses EmptyIndex       instead of Arguments_0
-            #
             left_end = m.end('left_square_bracket__ow')
 
             if left_end is not -1:
-                left    = conjure_left_square_bracket(s[qi() : left_end])
-                RSB_s = m.group('right_square_bracket')
+                tail_index__end = m.end('tail_index__ow')
 
-                if RSB_s is not none:
-                    right = conjure_right_square_bracket(RSB_s)
+                if tail_index__end is not -1:
+                    RSB_end = m.end('right_square_bracket')
 
-                    wi(m.end('right_square_bracket'))
+                    if RSB_end is not -1:
+                        r = evoke_all_index(left_end, tail_index__end, RSB_end)
+
+                        j = m.end()
+
+                        wi(RSB_end)
+                        wj(j)
+
+                        return r
+
+                    r = evoke__left_square_bracket__colon(left_end, tail_index__end)
+
+                    wd(qd() + 1)
+                    wi(tail_index__end)
                     wj(m.end())
 
-                    return EmptyIndex(left, right)
+                    return r
+
+                r = conjure_left_square_bracket(s[qi() : left_end])
+
+                wd(qd() + 1)
+                wi(left_end)
+                wj(left_end)
+
+                return r
+
+            if m.start('comma') is not -1:
+                suffix_start = m.start('comma_suffix')
+
+                if suffix_start is not -1:
+                    d = qd()
+
+                    if d is 0:
+                        raise_unknown_line()
+
+                    suffix_end = m.end('comma_suffix')
+
+                    r = find_evoke_comma_something(s[suffix_start])(suffix_start, suffix_end)
+
+                    wd(d - 1)
+                    wi(suffix_end)
+                    wj(m.end())
+
+                    return r
 
                 j = m.end()
 
-                wd(qd() + 1)
+                r = conjure_comma(s[qi() : j])
+
                 wi(j)
                 wj(j)
 
-                return left
-            #</similiar-to>
+                return r
+
+            if m.start('colon') is not -1:
+                suffix_start = m.start('head_index')
+
+                if suffix_start is not -1:
+                    d = qd()
+
+                    if d is 0:
+                        raise_unknown_line()
+
+                    suffix_end = m.end('head_index')
+
+                    r = evoke__colon__right_square_bracket(suffix_start, suffix_end)
+
+                    wd(d - 1)
+                    wi(suffix_end)
+                    wj(m.end())
+
+                    return r
+
+                j = m.end()
+
+                r = conjure_colon(s[qi() : j])
+
+                wi(j)
+                wj(j)
+
+                return r
 
             keyword_s = m.group('keyword')
 
             if keyword_s is not none:
                 j = m.end()
-                r = find_operator_conjure_function(keyword_s)(s[qi() : j])
+
+                r = conjure_action_word(keyword_s, s[qi() : j])
 
                 wi(j)
                 wj(j)
@@ -166,9 +228,9 @@ def gem():
             #<similiar-to: {left_parenthesis__ow} above>
             #
             #   Differences:
-            #       Uses keyword_is*  instead of left_parenthesis* 
-            #       Uses keyword_not* instead of right_parenthesis* 
-            #       Uses IsNot        instead of Arguments_0
+            #       Uses keyword_is*  instead of left_parenthesis*
+            #       Uses keyword_not* instead of right_parenthesis*
+            #       Uses Is_Not       instead of Arguments_0
             #
             #       Does not increment depth when parsing the 'is' keyword.
             #
@@ -185,29 +247,32 @@ def gem():
             #
             #           2.  The code below on setting 'wi' is different than the code above.
             #
-            #           3.  The 'return IsNot()' statement is also optimized since it is able to use 'right_s'
+            #           3.  The 'return Is_Not()' statement is also optimized since it is able to use 'right_s'
             #               to construct the 'not' keyword.
             #
             left_end = m.end('keyword_is__ow')
 
             if left_end is not -1:
-                left    = conjure_keyword_is(s[qi() : left_end])
-                right_s = m.group('is_not')
+                right_end = m.end('is_not')
 
-                if right_s is not none:
+                if right_end is not -1:
+                    r = evoke_is_not(left_end, right_end)
+
                     j = m.end()
 
                     wi(j)
                     wj(j)
 
-                    return IsNot(left, conjure_keyword_not(right_s))
+                    return r
+
+                r = conjure_keyword_is(s[qi() : left_end])
 
                 j = m.end()
 
                 wi(j)
                 wj(j)
 
-                return left
+                return r
             #</similiar-to>
 
 
@@ -217,28 +282,31 @@ def gem():
             #   Differences:
             #       Uses keyword_not* instead of keyword_is
             #       Uses keyword_in*  instead of keyword_in
-            #       Uses IsNot        instead of NotIn
+            #       Uses Not_In       instead of Is_Not
             #
             left_end = m.end('keyword_not__ow')
 
             if left_end is not -1:
-                left    = conjure_keyword_not(s[qi() : left_end])
-                right_s = m.group('not_in')
+                right_end = m.end('not_in')
 
-                if right_s is not none:
+                if right_end is not -1:
+                    r = evoke_not_in(left_end, right_end)
+
                     j = m.end()
 
                     wi(j)
                     wj(j)
 
-                    return NotIn(left, conjure_keyword_in(right_s))
+                    return r
+
+                r = conjure_keyword_not(s[qi() : left_end])
 
                 j = m.end()
 
                 wi(j)
                 wj(j)
 
-                return left
+                return r
             #</similiar-to>
 
             raise_unknown_line()
@@ -250,103 +318,166 @@ def gem():
         operator_s = m.group('operator')
 
         if operator_s is not none:
-            conjure = find_operator_conjure_function(operator_s)
-
-            d = qd()
-
-            if d is 0:
-                if conjure is conjure_colon:
-                    return conjure_colon_newline(s[qi() : ])
-
-                operator_end = m.end('operator')
-                wn(conjure_token_newline(s[operator_end : ]))
-
-                return conjure(s[qi():operator_end])
-
             if is_close_operator(operator_s) is 7:
+                d = qd()
+
                 if d is 1:
                     i = m.end('operator')
 
-                    wd0()
-                    wn(conjure_token_newline(s[i : ]))
+                    r = conjure_action_word(operator_s, s[qi() : i])
 
-                    return conjure(s[qi() : i])
+                    wd0()
+                    wn(conjure_line_marker(s[i : ]))
+
+                    return r
+
+                if d is 0:
+                    raise_unknown_line()
 
                 wd(d - 1)
+            elif qd() is 0:
+                operator_end = m.end('operator')
 
-            r = conjure(s[qi() : ])
+                r = conjure_action_word(operator_s, s[qi() : operator_end])
+
+                wn(conjure_line_marker(s[operator_end : ]))
+
+                return r
+
+            r = conjure_action_word__ends_in_newline(operator_s, s[qi() : ])
 
             skip_tokenize_prefix()
 
             return r
 
-        #
-        #<similiar-to: {left_square_bracket__ow} below>
-        #
-        #   Differences:
-        #       Uses *parenthesis* instead of *square_bracket*
-        #
         left_end = m.end('left_parenthesis__ow')
 
         if left_end is not -1:
             right_end = m.end('right_parenthesis')
 
             if right_end is not -1:
-                left = conjure_left_parenthesis(s[qi() : left_end])
+                d = qd()
+
+                r = evoke_arguments_0(left_end, (right_end   if d is 0 else   none))
 
                 if qd() is 0:
-                    right = conjure_right_parenthesis(s[left_end : right_end])
-
-                    wn(conjure_token_newline(s[right_end : ]))
+                    wn(conjure_line_marker(s[right_end : ]))
                 else:
-                    right = conjure_right_parenthesis(s[left_end : ])
-
                     skip_tokenize_prefix()
 
-                return Arguments_0(left, right)
+                return r
 
-            left = conjure_left_parenthesis(s[qi() : ])
+            left = conjure_left_parenthesis__ends_in_newline(s[qi() : ])
 
             skip_tokenize_prefix()
 
             wd(qd() + 1)
 
             return left
-        #</similiar-to>
 
-        #
-        #<similiar-to: {left_parenthesis__ow} below>
-        #
-        #   Differences:
-        #       Uses *square_bracket* instead of *parenthesis* 
-        #
         left_end = m.end('left_square_bracket__ow')
 
         if left_end is not -1:
-            right_end = m.end('right_square_bracket')
+            tail_index__end = m.end('tail_index__ow')
 
-            if right_end is not -1:
-                left = conjure_left_square_bracket(s[qi() : left_end])
+            if tail_index__end is not -1:
+                right_end = m.end('right_square_bracket')
 
-                if qd() is 0:
-                    right = conjure_right_square_bracket(s[left_end : right_end])
+                if right_end is not -1:
+                    if qd() is 0:
+                        r = evoke_all_index(left_end, tail_index__end, right_end)
 
-                    wn(conjure_token_newline(s[right_end : ]))
-                else:
-                    right = conjure_right_square_bracket(s[left_end : ])
+                        wn(conjure_line_marker(s[right_end : ]))
 
-                    skip_tokenize_prefix()
+                        return r
+                    else:
+                        r = evoke_all_index(left_end, tail_index__end, none)
 
-                return EmptyIndex(left, right)
+                        skip_tokenize_prefix()
 
-            left = conjure_left_square_bracket(s[qi() : ])
+                        return r
+
+                left = evoke__left_square_bracket__colon(left_end, none)
+            else:
+                left = conjure_left_square_bracket__ends_in_newline(s[qi() : ])
 
             skip_tokenize_prefix()
 
             wd(qd() + 1)
 
             return left
-        #</similiar-to>
+
+        if m.start('comma') is not -1:
+            suffix_start = m.start('comma_suffix')
+
+            if suffix_start is not -1:
+                d = qd()
+
+                if d is 1:
+                    suffix_end = m.end('comma_suffix')
+
+                    r = find_evoke_comma_something(s[suffix_start])(suffix_start, suffix_end)
+
+                    wd0()
+
+                    wn(conjure_line_marker(s[suffix_end : ]))
+
+                    return r
+
+                r = find_evoke_comma_something(s[suffix_start])(suffix_start, none)
+
+                assert d > 1
+
+                wd(d - 1)
+
+                skip_tokenize_prefix()
+
+                return r
+
+            if qd() is 0:
+                raise_unknown_line()
+
+            r = conjure_comma__ends_in_newline(s[qi() : ])
+
+            skip_tokenize_prefix()
+
+            return r
+
+        if m.start('colon') is not -1:
+            suffix_start = m.start('head_index')
+
+            if suffix_start is not -1:
+                d = qd()
+
+                if d is 1:
+                    suffix_end = m.end('head_index')
+
+                    r = evoke__colon__right_square_bracket(suffix_start, suffix_end)
+
+                    wd0()
+
+                    wn(conjure_line_marker(s[suffix_end : ]))
+
+                    return r
+
+                r = evoke__colon__right_square_bracket(suffix_start, none)
+
+                assert d > 1
+
+                wd(d - 1)
+
+                skip_tokenize_prefix()
+
+                return r
+
+            if qd() is 0:
+                return evoke_colon__line_marker(m.end('colon'))
+
+            r = conjure_colon__ends_in_newline(s[qi() : ])
+
+            skip_tokenize_prefix()
+
+            return r
 
         keyword_s = m.group('keyword')
 
@@ -354,13 +485,13 @@ def gem():
             if qd() is 0:
                 keyword_end = m.end('keyword')
 
-                r = find_operator_conjure_function(keyword_s)(s[qi() : keyword_end])
+                r = conjure_action_word(keyword_s, s[qi() : keyword_end])
 
-                wn(conjure_token_newline(s[keyword_end : ]))
+                wn(conjure_line_marker(s[keyword_end : ]))
 
                 return r
 
-            r = find_operator_conjure_function(keyword_s)(s[qi() : ])
+            r = conjure_action_word__ends_in_newline(keyword_s, s[qi() : ])
 
             skip_tokenize_prefix()
 

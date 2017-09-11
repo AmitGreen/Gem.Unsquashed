@@ -65,7 +65,7 @@ def gem():
 
             python_print_exception(e_type, e, e.__traceback__)
 
-            
+
         @export
         def print_exception_chain(e):
             flush_standard_output()

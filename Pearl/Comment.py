@@ -19,24 +19,10 @@ def gem():
 
 
     class TokenCommentNewline(Token):
-        __slots__                               = (())
-        display_name                            = 'comment-newline'
-        is_end_of_arithmetic_expression         = true
-        is_end_of_boolean_and_expression        = true
-        is_end_of_boolean_or_expression         = true
-        is_end_of_compare_expression            = true
-        is_end_of_comprehension_expression_list = true
-        is_end_of_comprehension_expression      = true
-        is_end_of_logical_and_expression        = true
-        is_end_of_logical_or_expression         = true
-        is_end_of_multiply_expression           = true
-        is_end_of_normal_expression_list        = true
-        is_end_of_normal_expression             = true
-        is_end_of_ternary_expression_list       = true
-        is_end_of_ternary_expression            = true
-        is_end_of_unary_expression              = true
-        is_token_comment                        = true
-        is_token_newline                        = true
+        __slots__        = (())
+        display_name     = 'comment-newline'
+        is_token_comment = true
+        is_token_newline = true
 
 
         def display_token(t):
@@ -44,22 +30,21 @@ def gem():
 
 
     class TokenNewline(Token):
-        display_name                            = 'newline'
-        is_end_of_arithmetic_expression         = true
-        is_end_of_boolean_and_expression        = true
-        is_end_of_boolean_or_expression         = true
-        is_end_of_compare_expression            = true
-        is_end_of_comprehension_expression_list = true
-        is_end_of_comprehension_expression      = true
-        is_end_of_logical_and_expression        = true
-        is_end_of_logical_or_expression         = true
-        is_end_of_multiply_expression           = true
-        is_end_of_normal_expression_list        = true
-        is_end_of_normal_expression             = true
-        is_end_of_ternary_expression_list       = true
-        is_end_of_ternary_expression            = true
-        is_end_of_unary_expression              = true
-        is_token_newline                        = true
+        display_name     = 'newline'
+        is_token_newline = true
+
+
+        def __init__(t, s):
+            assert (s.count('\n') == 1) and (s[-1] == '\n')
+
+            t.s = s
+
+
+        def count_newlines(t):
+            assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
+            assert (t.s.count('\n') is 1) and (t.s[-1] == '\n')
+
+            return 1
 
 
         def display_token(t):

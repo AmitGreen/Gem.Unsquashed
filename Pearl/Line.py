@@ -11,3 +11,4 @@ def gem():
     class EmptyLine(Token):
         __slots__    = (())
         display_name = 'empty-line'
+        indentation  = none

@@ -34,9 +34,10 @@ Main_py=../Beryl/Main.py
 Main_py=../Ivory/Main.py
 Main_py=../Tremolite/Main.py
 Main_py=../Quartz/Main.py
-Main_py=../Sapphire/Main.py
+#Main_py=../Dravite/Main.py
 #Main_py=../Topaz/Main.py
 #Main_py=test3.py
+Main_py=../Sapphire/Main.py
 
 show=2
 
@@ -44,6 +45,8 @@ command="python $Main_py"
 commandO="python -O $Main_py"
 command3="python3 $Main_py"
 command3O="python3 -O $Main_py"
+
+option="dev"
 
 cat >$tmp1 <<END
 AmitGreen
@@ -59,7 +62,7 @@ cat $show
 
 while :
 do
-    $command <$tmp1 >&$tmp2
+    $command $option <$tmp1 >&$tmp2
     if cmp -s $tmp2 2
     then
         :
@@ -72,10 +75,10 @@ do
         fi
     fi
 
-    $commandO <$tmp1 >&$tmp3
+    $commandO $option <$tmp1 >&$tmp3
     mv $tmp3 2o
 
-    $command3 <$tmp1 >&$tmp3
+    $command3 $option <$tmp1 >&$tmp3
     if cmp -s $tmp3 3
     then
         :
@@ -88,7 +91,7 @@ do
         fi
     fi
 
-    $command3O <$tmp1 >&$tmp3
+    $command3O $option <$tmp1 >&$tmp3
     mv $tmp3 3o
 
     sleep 0.01

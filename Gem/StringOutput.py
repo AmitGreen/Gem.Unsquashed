@@ -33,25 +33,31 @@ def gem():
 
             if e is none:
                 if t.ending is not none:
+                    if t.f.position is 1:
+                        t.f.line()
+
                     t.f.line(t.ending)
 
 
+    @export
     class StringOutput(Object):
         __slots__ = ((
             'f',                        #   StringIO
             'prefix',                   #   String
             'result',                   #   None | String
             '_blank',                   #   Integer
+            'position',                 #   Integer
             'write',                    #   Method
         ))
 
 
         def __init__(t, f):
-            t.f      = f
-            t.prefix = ''
-            t.result = none
-            t._blank = -1
-            t.write  = f.write
+            t.f        = f
+            t.prefix   = ''
+            t.result   = none
+            t._blank   = -1
+            t.position = 0
+            t.write    = f.write
 
 
         def __enter__(t):
@@ -66,16 +72,22 @@ def gem():
 
 
         def blank(t):
+            assert t.position is 0
+
             if t._blank is 0:
                 t._blank = 1
 
 
         def blank2(t):
+            assert t.position is 0
+
             if 0 <= t._blank < 2:
                 t._blank = 2
 
 
         def blank_suppress(t):
+            assert t.position is 0
+
             t._blank = -1
 
 
@@ -87,8 +99,9 @@ def gem():
                 f.close()
 
 
-        def indent(t, header, ending = none, prefix = 4):
-            t.line(header)
+        def indent(t, header = none, ending = none, prefix = 4):
+            if header is not none:
+                t.line(header)
 
             return Indent(t, ending, prefix * ' ')
 
@@ -101,7 +114,34 @@ def gem():
             return r
 
 
+        def partial(t, format = none, *arguments):
+            if t.position is 1:
+                t.write(format % arguments   if arguments else   format)
+                return
+
+            if (t._blank > 0):
+                t.write('\n' * t._blank + t.prefix + (format % arguments   if arguments else   format))
+                t._blank   = 0
+                t.position = 1
+                return
+
+            t.write(t.prefix + (format % arguments   if arguments else   format))
+            t._blank   = 0
+            t.position = 1
+
+
         def line(t, format = none, *arguments):
+            if t.position is 1:
+                if format is none:
+                    assert length(arguments) is 0
+
+                    t.write('\n')
+                else:
+                    t.write((format % arguments   if arguments else   format) + '\n')
+
+                t.position = 0
+                return
+
             if format is none:
                 assert length(arguments) is 0
 
@@ -110,15 +150,16 @@ def gem():
                 if t._blank > 0:
                     t._blank -= 1
 
+                t.position = 0
                 return
 
             if t._blank > 0:
                 t.write('\n' * t._blank + t.prefix + (format % arguments   if arguments else   format) + '\n')
-                t._blank = 0
+                t.position = t._blank = 0
                 return
 
             t.write(t.prefix + (format % arguments   if arguments else   format) + '\n')
-            t._blank = 0
+            t.position = t._blank = 0
 
 
     @export

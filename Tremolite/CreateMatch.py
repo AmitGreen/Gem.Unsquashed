@@ -7,7 +7,7 @@ def gem():
 
 
     @export
-    def create_match_code(path, copyright, module_name):
+    def create_match_code(path, year, author, module_name):
         notice        = []
         append_notice = notice.append
         found         = 0
@@ -30,7 +30,7 @@ def gem():
 
         with create_DelayedFileOutput(path) as f:
             f.line('#')
-            f.line('#   Copyright %s.  All rights reserved.', copyright)
+            f.line('#   Copyright (c) %s %s.  All rights reserved.', year, author)
             f.line('#')
             f.line('@gem(%r)', module_name)
 
@@ -192,7 +192,7 @@ def gem():
 
                 f.blank2()
 
-                total = maximum(length(v.name)    for v in iterate_values_sorted_by_key(match_cache))
+                total = maximum(length(v.name)   for v in iterate_values_sorted_by_key(match_cache))
                 total = (total + 8) &~ 3
 
                 with f.indent(
