@@ -42,14 +42,16 @@ def gem():
 
     @share
     class NegativeExpression(UnaryExpression):
-        __slots__    = (())
-        display_name = '-'
+        __slots__            = (())
+        display_name         = '-'
+        is_right_parenthesis = false
 
 
     @share
     class NotExpression(UnaryExpression):
-        __slots__    = (())
-        display_name = 'not'
+        __slots__            = (())
+        display_name         = 'not'
+        is_right_parenthesis = false
 
 
     @share

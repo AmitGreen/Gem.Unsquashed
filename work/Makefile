@@ -284,5 +284,10 @@ wc:
         $(WORK_FILES)
 
 test:
-	cat a.py ac.py ab.py bo.py ca.py cd.py ce.py co.py hma.py >test.py
+	cat \
+        a.py ac.py ab.py \
+        bo.py \
+        ca.py cd.py ce.py co.py \
+        de.py dfo.py di.py dm.py \
+        hma.py >test.py
 	bash run.sh

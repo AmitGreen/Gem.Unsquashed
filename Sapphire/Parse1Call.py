@@ -12,34 +12,13 @@ def gem():
 
 
     @share
-    def parse1_argument1__left(left):
-        assert qd() > 0
-        assert qk() is none
-        assert qn() is none
-
-        operator = tokenize_operator()
-
-        if operator.is_equal_sign:
-            if not left.is_identifier:
-                raise_unknown_line(1)
-
-            return KeywordArgument(left, operator, parse1_ternary_expression())
-
-        if operator.is_end_of_ternary_expression:
-            wk(operator)
-
-            return left
-
-        return parse1_ternary_expression__X__any_expression(left, operator)
-
-
-    @share
     def parse1_argument7__left(left):
-        assert qd() > 0
-        assert qk() is none
-        assert qn() is none
+        operator = qk()
 
-        operator = tokenize_operator()
+        if operator is none:
+            operator = tokenize_operator()
+        else:
+            wk(none)
 
         if operator.is_equal_sign:
             if not left.is_identifier:
@@ -62,16 +41,40 @@ def gem():
         if argument_1.is_right_parenthesis:
             return Arguments_0(left_parenthesis, argument_1)
 
-        argument_1 = parse1_argument1__left(argument_1)
         operator_1 = qk()
 
-        wk(none)
+        if operator_1 is none:
+            operator_1 = tokenize_operator()
+        else:
+            wk(none)
+
+        if operator_1.is_equal_sign:
+            if not left.is_identifier:
+                raise_unknown_line(1)
+
+            argument_1 = KeywordArgument(argument_1, operator_1, parse1_ternary_expression())
+
+            operator_1 = qk()
+
+            if operator_1 is none:
+                operator_1 = tokenize_operator()
+            else:
+                wk(none)
+        elif not operator_1.is_end_of_ternary_expression:
+            argument_1 = parse1_ternary_expression__X__any_expression(argument_1, operator_1)
+
+            operator_1 = qk()
+
+            if operator_1 is none:
+                operator_1 = tokenize_operator()
+            else:
+                wk(none)
 
         if operator_1.is_right_parenthesis:
             return Arguments_1(left_parenthesis, argument_1, operator_1)
 
         if not operator_1.is_comma:
-            raise_unknown_line(1)
+            raise_unknown_line(2)
 
         argument_2 = parse1_atom()
 
@@ -91,7 +94,7 @@ def gem():
             return Arguments_2(left_parenthesis, argument_1, operator_1, argument_2, operator_2)
 
         if not operator_2.is_comma:
-            raise_unknown_line(2)
+            raise_unknown_line(3)
 
         argument_3 = parse1_atom()
 
@@ -108,6 +111,7 @@ def gem():
 
         while 7 is 7:
             argument_3 = parse1_argument7__left(argument_3)
+
             operator_7 = qk()
 
             wk(none)
@@ -118,7 +122,7 @@ def gem():
                 return Arguments_Many(Tuple(many))
 
             if not operator_7.is_comma:
-                raise_unknown_line(3)
+                raise_unknown_line(4)
 
             many.append(argument_3)
 
