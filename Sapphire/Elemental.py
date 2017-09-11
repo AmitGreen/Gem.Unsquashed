@@ -27,6 +27,7 @@ def gem():
         is_end_of_compare_expression               = false
         is_end_of_comprehension_expression         = false
         is_end_of_comprehension_expression_list    = false
+        is_end_of_logical_and_expression           = false
         is_end_of_logical_or_expression            = false
         is_end_of_multiply_expression              = false
         is_end_of_normal_expression                = false
@@ -46,6 +47,7 @@ def gem():
         is_left_brace                              = false
         is_left_parenthesis                        = false
         is_left_square_bracket                     = false
+        is_logical_and_operator                    = false
         is_logical_or_operator                     = false
         is_minus_sign                              = false
         is_modify_operator                         = false
@@ -59,6 +61,7 @@ def gem():
         is_right_parenthesis                       = false
         is_right_square_bracket                    = false
         is_star_sign                               = false
+        is_tilde_sign                              = false
         is_token_newline                           = false
 
 
@@ -97,6 +100,7 @@ def gem():
         display_name                     = 'and'
         is_end_of_arithmetic_expression  = true
         is_end_of_compare_expression     = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
@@ -115,6 +119,7 @@ def gem():
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
         is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -152,6 +157,7 @@ def gem():
         is_end_of_boolean_and_expression = true
         is_end_of_boolean_or_expression  = true
         is_end_of_compare_expression     = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
@@ -192,6 +198,7 @@ def gem():
         is_end_of_boolean_and_expression  = true
         is_end_of_boolean_or_expression   = true
         is_end_of_compare_expression      = true
+        is_end_of_logical_and_expression  = true
         is_end_of_logical_or_expression   = true
         is_end_of_multiply_expression     = true
         is_end_of_normal_expression_list  = true
@@ -224,6 +231,7 @@ def gem():
         is_end_of_boolean_and_expression = true
         is_end_of_boolean_or_expression  = true
         is_end_of_compare_expression     = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
@@ -239,6 +247,7 @@ def gem():
         display_name                     = 'in'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
@@ -254,6 +263,7 @@ def gem():
         display_name                     = 'is'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
@@ -287,6 +297,7 @@ def gem():
         #
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
@@ -300,6 +311,7 @@ def gem():
         is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
         is_end_of_compare_expression     = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
@@ -372,6 +384,7 @@ def gem():
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
         is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -402,6 +415,7 @@ def gem():
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
         is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -421,6 +435,7 @@ def gem():
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
         is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -449,6 +464,7 @@ def gem():
         is_end_of_boolean_or_expression    = true
         is_end_of_comprehension_expression = true
         is_end_of_compare_expression       = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression    = true
         is_end_of_multiply_expression      = true
         is_end_of_normal_expression        = true
@@ -463,6 +479,7 @@ def gem():
         display_name                     = '=='
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
@@ -484,6 +501,7 @@ def gem():
         display_name                     = '!='
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
@@ -518,6 +536,7 @@ def gem():
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
         is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -535,6 +554,7 @@ def gem():
         display_name                     = '>'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
@@ -563,6 +583,7 @@ def gem():
         display_name                     = '>='
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
@@ -595,6 +616,7 @@ def gem():
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
         is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -647,6 +669,7 @@ def gem():
         display_name                     = '<'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
@@ -675,6 +698,7 @@ def gem():
         display_name                     = '<='
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_multiply_expression    = true
         is_end_of_normal_expression_list = true
@@ -698,14 +722,48 @@ def gem():
 
 
     @share
+    class OperatorLogicalAndSign(KeywordAndOperatorBase):
+        __slots__                        = (())
+        display_name                     = '&'
+        is_logical_and_operator          = true
+        is_end_of_unary_expression       = true
+        is_end_of_multiply_expression    = true
+        is_end_of_arithmetic_expression  = true
+        keyword                          = '&'
+
+
+    @share
     class OperatorLogicalOrSign(KeywordAndOperatorBase):
-        __slots__                       = (())
-        display_name                    = '|'
-        is_logical_or_operator          = true
-        is_end_of_unary_expression      = true
-        is_end_of_multiply_expression   = true
-        is_end_of_arithmetic_expression = true
-        keyword                         = '|'
+        __slots__                        = (())
+        display_name                     = '|'
+        is_logical_or_operator           = true
+        is_end_of_unary_expression       = true
+        is_end_of_multiply_expression    = true
+        is_end_of_arithmetic_expression  = true
+        is_end_of_logical_and_expression = true
+        keyword                          = '|'
+
+
+    class OperatorLogicalOrModify(KeywordAndOperatorBase):
+        __slots__                               = (())
+        display_name                            = '|='
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
+        is_end_of_logical_or_expression         = true
+        is_end_of_multiply_expression           = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
+        is_end_of_unary_expression              = true
+        is_equal_sign                           = true
+        is_modify_operator                      = true
+        keyword                                 = '|='
 
 
     @share
@@ -757,6 +815,7 @@ def gem():
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
         is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -781,6 +840,7 @@ def gem():
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
         is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -815,6 +875,7 @@ def gem():
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
         is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -846,6 +907,7 @@ def gem():
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
         is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -856,6 +918,14 @@ def gem():
         is_equal_sign                           = true
         is_modify_operator                      = true
         keyword                                 = '-='
+
+
+    @share
+    class OperatorTildeSign(KeywordAndOperatorBase):
+        __slots__     = (())
+        display_name  = '~'
+        is_tilde_sign = true
+        keyword       = '~'
 
 
     @share
@@ -913,6 +983,8 @@ def gem():
     conjure_left_square_bracket   = produce_conjure_by_name('operator-left-square-bracket',   OperatorLeftSquareBracket) 
     conjure_less_than_or_equal    = produce_conjure_by_name('operator-less-than-or-equal',    OperatorLessThanOrEqual) 
     conjure_less_than             = produce_conjure_by_name('operator-less-than',             OperatorLessThan) 
+    conjure_logical_and_sign      = produce_conjure_by_name('operator-logical-and-sign',      OperatorLogicalAndSign)
+    conjure_logical_or_modify     = produce_conjure_by_name('operator-logical-or-modify',     OperatorLogicalOrModify)
     conjure_logical_or_sign       = produce_conjure_by_name('operator-logical-or-sign',       OperatorLogicalOrSign)
     conjure_minus_sign            = produce_conjure_by_name('operator-minus-sign',            OperatorMinusSign) 
     conjure_percent_sign          = produce_conjure_by_name('operator-percent-sign',          OperatorPercentSign) 
@@ -923,6 +995,7 @@ def gem():
     conjure_right_square_bracket  = produce_conjure_by_name('operator-right-square-bracket',  OperatorRightSquareBracket) 
     conjure_star_sign             = produce_conjure_by_name('operator-star-sign',             OperatorStarSign) 
     conjure_subtract_modify       = produce_conjure_by_name('operator-subtract-modify',       OperatorSubtractModify) 
+    conjure_tilde_sign            = produce_conjure_by_name('operator-tilde-sign',            OperatorTildeSign) 
     conjure_try_colon             = produce_conjure_by_name('keyword-try-colon',              KeywordTryColon) 
 
 
@@ -964,6 +1037,7 @@ def gem():
 
     find_operator_conjure_function = {
                                          '!='   : conjure_compare_not_equal,
+                                         '&'    : conjure_logical_and_sign,
                                          '%'    : conjure_percent_sign,
                                          '('    : conjure_left_parenthesis,
                                          ')'    : conjure_right_parenthesis,
@@ -996,7 +1070,9 @@ def gem():
                                          '['    : conjure_left_square_bracket,
                                          ']'    : conjure_right_square_bracket,
                                          '|'    : conjure_logical_or_sign,
+                                         '|='   : conjure_logical_or_modify,
                                          '}'    : conjure_right_brace,
+                                         '~'    : conjure_tilde_sign,
                                      }.__getitem__
 
 

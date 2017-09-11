@@ -154,6 +154,12 @@ def gem():
 
 
     @share
+    class LogicalAndExpression_1(BinaryExpression):
+        __slots__    = (())
+        display_name = '&'
+
+
+    @share
     class LogicalOrExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = '|'

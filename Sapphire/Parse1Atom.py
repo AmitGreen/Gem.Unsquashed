@@ -291,23 +291,26 @@ def gem():
         if token.is__atom__or__special_operator:
             return token
 
+        if token.is_left_parenthesis:
+            return parse1__parenthesized_expression__left_parenthesis(token)
+
+        if token.is_left_square_bracket:
+            return parse1__list_expression__left_square_bracket(token)
+
+        if token.is_left_brace:
+            return parse1_map__left_brace(token)
+
         if token.is_keyword_not:
             return parse1_not_expression__operator(token)
 
         if token.is_minus_sign:
             return parse1_negative_expression__operator(token)
 
+        if token.is_tilde_sign:
+            return parse1_twos_complement_expression__operator(token)
+
         if token.is_star_sign:
             return TupleArgument(token, parse1_ternary_expression())
-
-        if token.is_left_brace:
-            return parse1_map__left_brace(token)
-
-        if token.is_left_parenthesis:
-            return parse1__parenthesized_expression__left_parenthesis(token)
-
-        if token.is_left_square_bracket:
-            return parse1__list_expression__left_square_bracket(token)
 
         my_line('token: %r', token)
         raise_unknown_line()

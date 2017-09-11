@@ -121,6 +121,7 @@ def gem():
         display_name                     = 'is not'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
@@ -139,6 +140,7 @@ def gem():
         display_name                     = 'not in'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
+        is_end_of_logical_and_expression = true
         is_end_of_logical_or_expression  = true
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true

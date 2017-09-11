@@ -52,6 +52,7 @@ def gem():
         left_parenthesis    = NAME('left_parenthesis',    '(')                                #   )
         left_square_bracket = NAME('left_square_bracket', '[')                                #   ]
         less_than_sign      = NAME('less_than_sign',      '<')
+        logical_and_sign    = NAME('logical_and_sign',    '&')
         logical_or_sign     = NAME('logical_or_sign',     '|')
         minus_sign          = NAME('minus_sign',          '-')
         not_equal           = NAME('not_equal',           '!=')
@@ -59,6 +60,7 @@ def gem():
         plus_sign           = NAME('plus_sign',           '+')
         slash_sign          = NAME('slash_sign',          '/')
         star_sign           = NAME('star',                '*')
+        tilde_sign          = NAME('tilde',               '~')
 
         name                = NAME('name',   letter_or_underscore + ZERO_OR_MORE(alphanumeric_or_underscore))
         number              = NAME('number', '0' | ANY_OF('1-9') + ZERO_OR_MORE(ANY_OF('0-9')))
@@ -181,7 +183,10 @@ def gem():
                             ) + ow + colon + ow
                           | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow
                           | G('atom', number | '@' | name) + ow
-                          | G('operator', ANY_OF(right_parenthesis, '-', right_square_bracket, right_brace)) + ow
+                          | G(
+                                'operator',
+                                ANY_OF(right_parenthesis, minus_sign, right_square_bracket, right_brace, tilde_sign)
+                            ) + ow
                           | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                           | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
                           | G(left_brace__ow)          + P(G(right_brace)          + ow)
@@ -198,7 +203,10 @@ def gem():
                 | G('atom', number | name) + ow
                 | G(
                       'operator',
-                      ANY_OF(right_parenthesis, star_sign, minus_sign, colon, right_square_bracket, right_brace),
+                      ANY_OF(
+                          right_parenthesis, star_sign, minus_sign, colon, right_square_bracket, right_brace,
+                          tilde_sign,
+                      ),
                   ) + ow
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
@@ -213,17 +221,16 @@ def gem():
                       'operator',
                        (
                              (
-                                   ANY_OF(percent_sign, plus_sign, minus_sign, equal_sign, logical_or_sign)
+                                   ANY_OF(
+                                       logical_and_sign, percent_sign, plus_sign, minus_sign, equal_sign,
+                                       logical_or_sign,
+                                   )
                                  | greater_than_sign + P(greater_than_sign)
                                  | less_than_sign    + P(less_than_sign)
                                  | star_sign         + P(star_sign)
                                  | slash_sign        + P(slash_sign)
                              ) + P(equal_sign)
-                           | ANY_OF(
-                                 colon, comma,
-                                 dot,
-                                 right_brace, right_parenthesis, right_square_bracket,
-                             )
+                           | ANY_OF(right_parenthesis, comma, dot, colon, right_square_bracket, right_brace)
                            | not_equal
                        ),
                   ) + ow

@@ -86,6 +86,12 @@ def gem():
         is_atom      = true
 
 
+    @share
+    class TwosComplementExpression(UnaryExpression):
+        __slots__    = (())
+        display_name = '~'
+
+
     Identifier .prefix_meta = PrefixIdentifier
     DoubleQuote.prefix_meta = PrefixAtom
     SingleQuote.prefix_meta = PrefixAtom

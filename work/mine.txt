@@ -20,9 +20,9 @@ rx.py -> ../Gem/RegularExpression.py
 so.py -> ../Gem/StringOutput.py
 ssio.py -> ../Gem/SimpleStringIO.py
 sy.py -> ../Gem/System.py
-
 tb.py -> ../Gem/Traceback.py
 tcm.py -> ../Tremolite/CreateMatch.py
+
 tco.py -> ../Tremolite/Core.py
 tma.py -> ../Tremolite/Main.py
 tmc.py -> ../Tremolite/Match.py

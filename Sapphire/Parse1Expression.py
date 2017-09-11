@@ -360,8 +360,13 @@ def gem():
     #   3.  Unary-Expression (Python 2.7.14rc1 grammer calls this 'factor')
     #
     @share
-    def parse1_negative_expression__operator(negative_operator):
-        return NegativeExpression(negative_operator, parse1_unary_expression())
+    def parse1_twos_complement_expression__operator(operator):
+        return TwosComplementExpression(operator, parse1_unary_expression())
+
+
+    @share
+    def parse1_negative_expression__operator(operator):
+        return NegativeExpression(operator, parse1_unary_expression())
 
 
     def parse1_unary_expression():
@@ -698,6 +703,154 @@ def gem():
     #
     #   7.  Logical-And-Expression (Python 2.7.14rc1 grammer calls this 'and_expr')
     #
+    def parse1_logical_and_expression__left_operator(left, logical_and_operator):
+        assert logical_and_operator.is_logical_and_operator
+
+        right = parse1_arithmetic_expression()
+
+        operator = qk()
+
+        if operator is none:
+            if qn() is not none:
+                return LogicalAndExpression_1(left, logical_and_operator, right)
+
+            operator = tokenize_operator()
+
+            if operator.is_end_of_logical_and_expression:
+                wk(operator)
+
+                return LogicalAndExpression_1(left, logical_and_operator, right)
+        else:
+            if operator.is_end_of_logical_and_expression:
+                return LogicalAndExpression_1(left, logical_and_operator, right)
+
+            wk(none)
+
+        if not operator.is_logical_and_operator:
+            raise_unknown_line()
+
+        many = [left, logical_and_operator, right, operator]
+
+        while 7 is 7:
+            many.append(parse1_arithmetic_expression())
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is not none:
+                    return LogicalAndExpression_Many(Tuple(many))
+
+                operator = tokenize_operator()
+
+                if operator.is_end_of_logical_and_expression:
+                    wk(operator)
+
+                    return LogicalAndExpression_Many(Tuple(many))
+            else:
+                if operator.is_end_of_logical_and_expression:
+                    return LogicalAndExpression_Many(Tuple(many))
+
+                wk(none)
+
+            if not operator.is_logical_and_operator:
+                raise_unknown_line()
+
+            many.append(operator)
+
+
+    @share
+    def parse1_logical_and_expression():
+        left = parse1_atom()
+
+        operator = qk()
+
+        if operator is not none:
+            if operator.is_end_of_logical_and_expression:
+                return left
+
+            wk(none)
+        else:
+            if qn() is not none:
+                return left
+
+            operator = tokenize_operator()
+
+            if operator.is_end_of_logical_and_expression:
+                wk(operator)
+
+                return left
+
+        if operator.is_postfix_operator:
+            left = parse1_postfix_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_logical_and_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_power_operator:
+            left = parse1_power_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_logical_and_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_multiply_operator:
+            left = parse1_multiply_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_logical_and_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_arithmetic_operator:
+            left = parse1_arithmetic_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_logical_and_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_logical_and_operator:
+            return parse1_logical_and_expression__left_operator(left, operator)
+
+        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        raise_unknown_line()
+
+
 
     #
     #   8.  Logical-Exclusive-Or-Expression (Python 2.7.14rc1 grammer calls this 'xor_expr')
@@ -709,7 +862,7 @@ def gem():
     def parse1_normal_expression__left_operator(left, logical_or_operator):
         assert logical_or_operator.is_logical_or_operator
 
-        right = parse1_arithmetic_expression()
+        right = parse1_logical_and_expression()
 
         operator = qk()
 
@@ -735,7 +888,7 @@ def gem():
         many = [left, logical_or_operator, right, operator]
 
         while 7 is 7:
-            many.append(parse1_arithmetic_expression())
+            many.append(parse1_logical_and_expression())
 
             operator = qk()
 
@@ -847,12 +1000,27 @@ def gem():
 
             wk(none)
 
+        if operator.is_logical_and_operator:
+            left = parse1_logical_and_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_logical_or_expression:
+                return left
+
+            wk(none)
+
         if operator.is_logical_or_operator:
             return parse1_normal_expression__left_operator(left, operator)
 
         my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line()
-
 
 
     #
@@ -991,6 +1159,22 @@ def gem():
 
         if operator.is_arithmetic_operator:
             left = parse1_arithmetic_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_compare_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_logical_and_operator:
+            left = parse1_logical_and_expression__left_operator(left, operator)
 
             operator = qk()
 
@@ -1173,6 +1357,22 @@ def gem():
 
         if operator.is_arithmetic_operator:
             left = parse1_arithmetic_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_boolean_and_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_logical_and_operator:
+            left = parse1_logical_and_expression__left_operator(left, operator)
 
             operator = qk()
 
@@ -1383,6 +1583,22 @@ def gem():
 
             wk(none)
 
+        if operator.is_logical_and_operator:
+            left = parse1_logical_and_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_boolean_and_expression:
+                return left
+
+            wk(none)
+
         if operator.is_logical_or_operator:
             left = parse1_normal_expression__left_operator(left, operator)
 
@@ -1520,6 +1736,22 @@ def gem():
 
         if operator.is_compare_operator:
             left = parse1_compare_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_ternary_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_logical_and_operator:
+            left = parse1_logical_and_expression__left_operator(left, operator)
 
             operator = qk()
 
@@ -1679,6 +1911,22 @@ def gem():
 
                 return left
 
+            if operator.is_end_of_ternary_expression_list:
+                return left
+
+            wk(none)
+
+        if operator.is_logical_and_operator:
+            left = parse1_logical_and_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+                    
             if operator.is_end_of_ternary_expression_list:
                 return left
 
@@ -1903,6 +2151,22 @@ def gem():
 
         if operator.is_compare_operator:
             left = parse1_compare_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_comprehension_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_logical_and_operator:
+            left = parse1_logical_and_expression__left_operator(left, operator)
 
             operator = qk()
 
