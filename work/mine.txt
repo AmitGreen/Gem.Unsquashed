@@ -41,9 +41,8 @@ hel.py -> ../Sapphire/Elemental.py
 hem.py -> ../Sapphire/ExpressionMany.py
 hj.py -> ../Sapphire/JoinedToken.py
 hk.py -> ../Sapphire/BookcaseExpression.py
-
-hmc.py -> ../Sapphire/Match.py
 hoe.py -> ../Sapphire/OtherExpression.py
+
 hpt.py -> ../Sapphire/Pattern.py
 hs.py -> ../Sapphire/Statement.py
 hu.py -> ../Sapphire/UnaryExpression.py
@@ -97,3 +96,5 @@ zpa.py -> ../Topaz/Path.py
 zps.py -> ../Topaz/PortrayString.py
 zpt.py -> ../Topaz/Pattern.py
 zso.py -> ../Topaz/StringOutput.py
+
+hmc.py -> ../Sapphire/Match.py

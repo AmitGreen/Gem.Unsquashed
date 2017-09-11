@@ -549,11 +549,12 @@ def gem():
 
             wk(none)
 
-        if not operator.is_multiply_operator:
-            my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line()
+        if operator.is_multiply_operator:
+            return parse1_multiply_expression__left_operator(left, operator)
 
-        return parse1_multiply_expression__left_operator(left, operator)
+        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        raise_unknown_line()
+
 
 
     #
@@ -683,11 +684,11 @@ def gem():
 
             wk(none)
 
-        if not operator.is_arithmetic_operator:
-            my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line()
+        if operator.is_arithmetic_operator:
+            return parse1_arithmetic_expression__left_operator(left, operator)
 
-        return parse1_arithmetic_expression__left_operator(left, operator)
+        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        raise_unknown_line()
 
 
     #
@@ -846,11 +847,12 @@ def gem():
 
             wk(none)
 
-        if not operator.is_logical_or_operator:
-            my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line()
+        if operator.is_logical_or_operator:
+            return parse1_normal_expression__left_operator(left, operator)
 
-        return parse1_normal_expression__left_operator(left, operator)
+        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        raise_unknown_line()
+
 
 
     #
@@ -1003,11 +1005,28 @@ def gem():
 
             wk(none)
 
-        if not operator.is_compare_operator:
-            my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line()
+        if operator.is_logical_or_operator:
+            left = parse1_normal_expression__left_operator(left, operator)
 
-        return parse1_compare_expression__left_operator(left, operator)
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_compare_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_compare_operator:
+            return parse1_compare_expression__left_operator(left, operator)
+
+        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        raise_unknown_line()
+
 
 
     #
@@ -1168,6 +1187,22 @@ def gem():
 
             wk(none)
 
+        if operator.is_logical_or_operator:
+            left = parse1_normal_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_boolean_and_expression:
+                return left
+
+            wk(none)
+
         if operator.is_compare_operator:
             left = parse1_compare_expression__left_operator(left, operator)
 
@@ -1184,11 +1219,12 @@ def gem():
 
             wk(none)
 
-        if not operator.is_keyword_and:
-            my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line()
+        if operator.is_keyword_and:
+            return parse1_boolean_and_expression__left_operator(left, operator)
 
-        return parse1_boolean_and_expression__left_operator(left, operator)
+        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        raise_unknown_line()
+
 
 
     #
@@ -1347,6 +1383,22 @@ def gem():
 
             wk(none)
 
+        if operator.is_logical_or_operator:
+            left = parse1_normal_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_boolean_or_expression:
+                return left
+
+            wk(none)
+
         if operator.is_keyword_and:
             left = parse1_boolean_and_expression__left_operator(left, operator)
 
@@ -1363,11 +1415,12 @@ def gem():
 
             wk(none)
 
-        if not operator.is_keyword_or:
-            my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line()
+        if operator.is_keyword_or:
+            return parse1_boolean_or_expression__left_operator(left, operator)
 
-        return parse1_boolean_or_expression__left_operator(left, operator)
+        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        raise_unknown_line()
+
 
 
     #
@@ -1467,6 +1520,22 @@ def gem():
 
         if operator.is_compare_operator:
             left = parse1_compare_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_ternary_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_logical_or_operator:
+            left = parse1_normal_expression__left_operator(left, operator)
 
             operator = qk()
 
@@ -1610,6 +1679,22 @@ def gem():
 
                 return left
 
+            if operator.is_end_of_ternary_expression_list:
+                return left
+
+            wk(none)
+
+        if operator.is_logical_or_operator:
+            left = parse1_normal_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+                    
             if operator.is_end_of_ternary_expression_list:
                 return left
 
@@ -1813,6 +1898,22 @@ def gem():
 
         if operator.is_compare_operator:
             left = parse1_compare_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_comprehension_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_logical_or_operator:
+            left = parse1_normal_expression__left_operator(left, operator)
 
             operator = qk()
 
