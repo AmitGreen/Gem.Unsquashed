@@ -74,10 +74,16 @@ def gem():
 
 
     @share
+    class TupleArgument(UnaryExpression):
+        __slots__    = (())
+        display_name = 'tuple-argument'
+
+
+    @share
     class TupleParameter(UnaryExpression):
-        __slots__                             = (())
-        display_name                          = 'tuple-parameter'
-        is_atom                               = true
+        __slots__    = (())
+        display_name = 'tuple-parameter'
+        is_atom      = true
 
 
     Identifier .prefix_meta = PrefixIdentifier

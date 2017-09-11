@@ -189,6 +189,9 @@ def gem():
             'right_operator',           #   Operator*
         ))
 
+        
+        is_right_parenthesis = false
+
 
         def __init__(t, left_operator, left, middle_operator, right, right_operator):
             t.left_operator   = left_operator

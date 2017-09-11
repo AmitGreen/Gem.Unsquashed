@@ -25,8 +25,8 @@ def gem():
         is_end_of_boolean_and_expression           = false
         is_end_of_boolean_or_expression            = false
         is_end_of_compare_expression               = false
-        is_end_of_comprehension_expression_list    = false
         is_end_of_comprehension_expression         = false
+        is_end_of_comprehension_expression_list    = false
         is_end_of_logical_or_expression            = false
         is_end_of_multiply_expression              = false
         is_end_of_normal_expression                = false
@@ -58,6 +58,7 @@ def gem():
         is__right_parenthesis__colon__newline      = false
         is_right_parenthesis                       = false
         is_right_square_bracket                    = false
+        is_star_sign                               = false
         is_token_newline                           = false
 
 
@@ -630,10 +631,24 @@ def gem():
 
 
     class OperatorModifyPlus(KeywordAndOperatorBase):
-        __slots__          = (())
-        display_name       = '+='
-        is_modify_operator = true
-        keyword            = '+='
+        __slots__                               = (())
+        display_name                            = '+='
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
+        is_end_of_logical_or_expression         = true
+        is_end_of_multiply_expression           = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
+        is_end_of_unary_expression              = true
+        is_equal_sign                           = true
+        is_modify_operator                      = true
+        keyword                                 = '+='
 
 
     @share
@@ -750,6 +765,7 @@ def gem():
         display_name               = '*'
         is_end_of_unary_expression = true
         is_multiply_operator       = true
+        is_star_sign               = true
         keyword                    = '*'
 
 

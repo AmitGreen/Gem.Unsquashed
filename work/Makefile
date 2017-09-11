@@ -295,6 +295,6 @@ test:
         hma.py h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py \
             h1za.py h1zh.py h1zn.py h1zo.py \
             h7pa.py h7pe.py \
-            hb.py hc.py hel.py hem.py \
+            hb.py hc.py hel.py hem.py hj.py hk.py \
             >test.py
 	bash run.sh

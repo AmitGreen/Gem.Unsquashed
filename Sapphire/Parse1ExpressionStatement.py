@@ -109,38 +109,8 @@ def gem():
 
             wk(none)
 
-        if operator.is_compare_operator:
-            left = parse1_compare_expression__left_operator(left, operator)
-
-            operator = qk()
-
-            if operator is none:
-                newline = qn()
-
-                if newline is not none:
-                    return StatementExpression(indented, left, newline)
-
-                raise_unknown_line()
-
-            wk(none)
-
-        if operator.is_keyword_or:
-            left = parse1_boolean_or_expression__left_operator(left, operator)
-
-            operator = qk()
-
-            if operator is none:
-                newline = qn()
-
-                if newline is not none:
-                    return StatementExpression(indented, left, newline)
-
-                raise_unknown_line()
-
-            wk(none)
-
-        if operator.is_keyword_if:
-            left = parse1_ternary_expression__left_operator(left, operator)
+        if not operator.is_end_of_ternary_expression_list:
+            left = parse1_ternary_expression_list__X_any_expresion(left, operator)
 
             operator = qk()
 

@@ -187,7 +187,10 @@ def gem():
             (
                   OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must preceed 'name'
                 | G('atom', number | name) + ow
-                | G('operator', ANY_OF(right_parenthesis, '-', ':', right_square_bracket, right_brace)) + ow
+                | G(
+                      'operator',
+                      ANY_OF(right_parenthesis, star_sign, minus_sign, colon, right_square_bracket, right_brace),
+                  ) + ow
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
                 | G(left_brace__ow)          + P(G(right_brace)          + ow)

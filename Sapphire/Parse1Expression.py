@@ -1550,27 +1550,7 @@ def gem():
     #   16.  Ternary-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist')
     #
     @share
-    def parse1_ternary_expression_list():
-        left = parse1_atom()
-
-        operator = qk()
-
-        if operator is not none:
-            if operator.is_end_of_ternary_expression_list:
-                return left
-
-            wk(none)
-        else:
-            if qn() is not none:
-                return left
-
-            operator = tokenize_operator()
-
-            if operator.is_end_of_ternary_expression_list:
-                wk(operator)
-
-                return left
-
+    def parse1_ternary_expression_list__X_any_expresion(left, operator):
         if operator.is_postfix_operator:
             left = parse1_postfix_expression__left_operator(left, operator)
 
@@ -1699,8 +1679,33 @@ def gem():
 
             wk(none)
 
-        my_line('left: %r; operator: %r', left, operator)
+        my_line('line: %d; left: %r; operator: %r', ql(), left, operator)
         raise_unknown_line()
+
+
+    @share
+    def parse1_ternary_expression_list():
+        left = parse1_atom()
+
+        operator = qk()
+
+        if operator is not none:
+            if operator.is_end_of_ternary_expression_list:
+                return left
+
+            wk(none)
+        else:
+            if qn() is not none:
+                return left
+
+            operator = tokenize_operator()
+
+            if operator.is_end_of_ternary_expression_list:
+                wk(operator)
+
+                return left
+
+        return parse1_ternary_expression_list__X_any_expresion(left, operator)
 
 
     #

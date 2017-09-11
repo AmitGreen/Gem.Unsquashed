@@ -297,6 +297,9 @@ def gem():
         if token.is_minus_sign:
             return parse1_negative_expression__operator(token)
 
+        if token.is_star_sign:
+            return TupleArgument(token, parse1_ternary_expression())
+
         if token.is_left_brace:
             return parse1_map__left_brace(token)
 
