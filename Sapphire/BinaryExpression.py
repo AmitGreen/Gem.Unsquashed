@@ -137,8 +137,9 @@ def gem():
 
     @share
     class MapElement(BinaryExpression):
-        __slots__    = (())
-        display_name = ':'
+        __slots__      = (())
+        display_name   = ':'
+        is_right_brace = false
 
 
     @share

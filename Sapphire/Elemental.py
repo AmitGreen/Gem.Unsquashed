@@ -601,6 +601,7 @@ def gem():
         __slots__                               = (())
         #  {
         display_name                            = '}'
+        is__atom__or__special_operator          = true
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
         is_end_of_boolean_or_expression         = true

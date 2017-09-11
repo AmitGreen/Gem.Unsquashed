@@ -71,6 +71,13 @@ def gem():
 
 
     @share
+    class Comma_RightBrace(BaseDualOperator):
+        __slots__    = (())
+        #   {
+        display_name = ',}'
+
+
+    @share
     class Comma_RightParenthesis(BaseDualOperator):
         __slots__    = (())
         #   (

@@ -3,11 +3,15 @@
 #
 @gem('Sapphire.Parse1Atom')
 def gem():
-    show = 0
+    show = 7
 
 
     @share
     def parse1_map_element():
+        if qk() is not none:
+            my_line('qk: %r', qk())
+            raise_unknown_line()
+
         token = parse1_atom()
 
         if token.is_right_brace:
@@ -46,6 +50,9 @@ def gem():
         #
         left = parse1_map_element()
 
+        if left.is_right_brace:
+            raise_unknown_line()
+
         operator = qk()
 
         if operator is none:
@@ -59,10 +66,17 @@ def gem():
         if not operator.is_comma:
             raise_unknown_line()
 
-        many = [left, operator]
+        many = [left_brace, left]
 
         while 7 is 7:
-            many.append(parse1_map_element())
+            token = parse1_map_element()
+
+            if token.is_right_brace:
+                many.append(Comma_RightBrace(operator, token))
+                return MapExpression_Many(Tuple(many))
+
+            many.append(operator)
+            many.append(token)
 
             operator = qk()
 
@@ -72,12 +86,11 @@ def gem():
             wk(none)
 
             if operator.is_right_brace:
-                return MapExpression_Many(left_brace, Tuple(many), operator)
+                many.append(operator)
+                return MapExpression_Many(Tuple(many))
 
             if not operator.is_comma:
                 raise_unknown_line()
-
-            many.append(operator)
 
 
     @share
@@ -293,4 +306,5 @@ def gem():
         if token.is_left_square_bracket:
             return parse1__list_expression__left_square_bracket(token)
 
+        my_line('token: %r', token)
         raise_unknown_line()

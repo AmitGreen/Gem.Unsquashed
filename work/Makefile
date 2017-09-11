@@ -290,6 +290,6 @@ test:
         ca.py cd.py ce.py co.py \
         de.py dfo.py di.py dm.py dr.py \
         ef.py en.py ex.py \
-        fo.py \
+        fo.py fs.py \
         hma.py >test.py
 	bash run.sh
