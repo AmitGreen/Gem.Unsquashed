@@ -29,6 +29,9 @@ def gem():
             return arrange('<call %s %s>', t.left.display_token(), t.arguments.display_token())
 
 
+        display_full_token = display_token
+
+
         def write(t, w):
             t.left     .write(w)
             t.arguments.write(w)

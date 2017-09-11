@@ -29,6 +29,12 @@ def gem():
                            t.many[0] .display_full_token(),
                            ' '.join(v.display_token()   for v in t.many[1:-1]),
                            t.many[-1].display_full_token())
+
+
+        def display_full_token(t):
+            return t.display_token()
+
+
         def write(t, w):
             for v in t.many:
                 v.write(w)
@@ -85,6 +91,12 @@ def gem():
                            t.many[0] .display_full_token(),
                            ' '.join(v.display_token()   for v in t.many[1:-1]),
                            t.many[-1].display_full_token())
+
+
+    @share
+    class LogicalOrExpression_Many(BaseExpression_Many):
+        __slots__    = (())
+        display_name = '|-*'
 
 
     @share
