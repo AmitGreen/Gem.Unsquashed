@@ -298,5 +298,8 @@ test:
             hb.py hc.py hel.py hem.py hj.py hk.py hoe.py hpt.py hs.py hu.py hx.py \
         im.py in.py io.py iv.py \
         jb.py \
+        m.py \
+        o.py \
+        pa2.py \
             >test.py
 	bash run.sh

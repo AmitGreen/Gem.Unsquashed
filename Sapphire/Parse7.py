@@ -169,7 +169,7 @@ def gem():
         if m is none:
             raise_unknown_line()
 
-        return ReturnExpression(
+        return ReturnStatement_1(
                    conjure_keyword_return(m0.group('indented') + m0.group('keyword__ow')),
                    parse7_expression(m),
                    conjure_token_newline(m.group('ow_comment_newline')),

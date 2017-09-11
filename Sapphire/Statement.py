@@ -7,46 +7,6 @@ def gem():
 
 
     @share
-    class Assert_2(Object):
-        __slots__ = ((
-            'keyword',                  #   KeywordAssert
-            'left',                     #   Expression
-            'comma',                    #   OperatorComma
-            'right',                    #   Expression
-            'newline',                  #   newline
-        ))
-
-
-        def __init__(t, keyword, left, comma, right, newline):
-            t.keyword = keyword
-            t.left    = left
-            t.comma   = comma
-            t.right   = right
-            t.newline = newline
-
-
-        def  __repr__(t):
-            return arrange('<Assert_2 %r %r %r %r>', t.keyword, t.left, t.comma, t.right, t.newline)
-
-
-        def display_token(t):
-            return arrange('<assert-2 %s %s %s %s %s>',
-                           t.keyword.display_token(),
-                           t.left   .display_token(),
-                           t.comma  .display_token(),
-                           t.right  .display_token(),
-                           t.newline.display_token())
-
-
-        def write(t, w):
-            w(t.keyword.s)
-            t.left .write(w)
-            t.comma.write(w)
-            t.right.write(w)
-            w(t.newline.s)
-
-
-    @share
     class AssignFragment(Object):
         __slots__ = ((
             'left',                     #   Expression+
@@ -563,7 +523,7 @@ def gem():
 
 
     @share
-    class KeywordExpressionStatement(Object):
+    class KeywordExpressionStatement_1(Object):
         __slots__ = ((
             'keyword',                  #   KeywordDelete | KeywordReturn
             'expression',               #   Expression
@@ -596,27 +556,86 @@ def gem():
 
 
     @share
-    class Assert_1(KeywordExpressionStatement):
+    class AssertStatement_1(KeywordExpressionStatement_1):
         __slots__    = (())
         display_name = 'assert'
 
 
     @share
-    class DeleteStatement_1(KeywordExpressionStatement):
+    class DeleteStatement_1(KeywordExpressionStatement_1):
         __slots__    = (())
         display_name = 'delete'
 
 
     @share
-    class RaiseExpression(KeywordExpressionStatement):
+    class RaiseStatement_1(KeywordExpressionStatement_1):
         __slots__    = (())
         display_name = 'raise'
 
 
     @share
-    class ReturnExpression(KeywordExpressionStatement):
+    class ReturnStatement_1(KeywordExpressionStatement_1):
         __slots__    = (())
         display_name = 'return'
+
+
+    @share
+    class YieldStatement(KeywordExpressionStatement_1):
+        __slots__    = (())
+        display_name = 'Yield'
+
+
+    class KeywordExpressionStatement_2(Object):
+        __slots__ = ((
+            'keyword',                  #   KeywordAssert
+            'left',                     #   Expression
+            'comma',                    #   OperatorComma
+            'right',                    #   Expression
+            'newline',                  #   newline
+        ))
+
+
+        def __init__(t, keyword, left, comma, right, newline):
+            t.keyword = keyword
+            t.left    = left
+            t.comma   = comma
+            t.right   = right
+            t.newline = newline
+
+
+        def  __repr__(t):
+            return arrange('<%s %r %r %r %r>',
+                           t.__class__.__nane__, t.keyword, t.left, t.comma, t.right, t.newline)
+
+
+        def display_token(t):
+            return arrange('<%s %s %s %s %s %s>',
+                           t.display_name,
+                           t.keyword.display_token(),
+                           t.left   .display_token(),
+                           t.comma  .display_token(),
+                           t.right  .display_token(),
+                           t.newline.display_token())
+
+
+        def write(t, w):
+            w(t.keyword.s)
+            t.left .write(w)
+            t.comma.write(w)
+            t.right.write(w)
+            w(t.newline.s)
+
+
+    @share
+    class AssertStatement_2(KeywordExpressionStatement_2):
+        __slots__    = (())
+        display_name = 'assert-2'
+
+
+    @share
+    class RaiseStatement_2(KeywordExpressionStatement_2):
+        __slots__    = (())
+        display_name = 'raise-2'
 
 
     @share
@@ -677,6 +696,56 @@ def gem():
             t.left_parenthesis        .write(w)
             t.argument_1              .write(w)
             t.right_parenthesis__colon.write(w)
+
+
+    @share
+    class RaiseStatement_3(Object):
+        __slots__ = ((
+            'keyword',                  #   KeywordAssert
+            'left',                     #   Expression
+            'comma_1',                  #   OperatorComma
+            'middle',                   #   Expression
+            'comma_2',                  #   OperatorComma
+            'right',                    #   Expression
+            'newline',                  #   newline
+        ))
+
+
+        def __init__(t, keyword, left, comma_1, middle, comma_2, right, newline):
+            t.keyword = keyword
+            t.left    = left
+            t.comma_1 = comma_1
+            t.middle  = middle
+            t.comma_2 = comma_2
+            t.right   = right
+            t.newline = newline
+
+
+        def  __repr__(t):
+            return arrange('<%s %r %r %r %r %r %r %r>',
+                           t.__class__.__name__, t.keyword, t.left, t.comma_1, t.middle, comma_2, t.right, t.newline)
+
+
+        def display_token(t):
+            return arrange('<%s %s %s %s %s %s %s %s>',
+                           t.display_name,
+                           t.keyword.display_token(),
+                           t.left   .display_token(),
+                           t.comma_1.display_token(),
+                           t.middle .display_token(),
+                           t.comma_2.display_token(),
+                           t.right  .display_token(),
+                           t.newline.display_token())
+
+
+        def write(t, w):
+            w(t.keyword.s)
+            t.left   .write(w)
+            t.comma_1.write(w)
+            t.middle .write(w)
+            t.comma_2.write(w)
+            t.right  .write(w)
+            w(t.newline.s)
 
 
     @share

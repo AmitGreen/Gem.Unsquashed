@@ -356,6 +356,12 @@ def gem():
             return t.s
 
 
+    @share
+    class KeywordYield(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'yield'
+        keyword      = 'yield'
+
 
     @export
     class OperatorAtSign(KeywordAndOperatorBase):
@@ -822,6 +828,7 @@ def gem():
     conjure_keyword_return       = produce_conjure_by_name('keyword-return',                KeywordReturn) 
     conjure_keyword_while        = produce_conjure_by_name('keyword-while',                 KeywordWhile) 
     conjure_keyword_with         = produce_conjure_by_name('keyword-with',                  KeywordWith) 
+    conjure_keyword_yield        = produce_conjure_by_name('keyword-yield',                 KeywordYield) 
     conjure_left_brace           = produce_conjure_by_name('operator-left-brace',           OperatorLeftBrace) 
     conjure_left_parenthesis     = produce_conjure_by_name('operator-left-parenthesis',     OperatorLeftParenthesis) 
     conjure_left_square_bracket  = produce_conjure_by_name('operator-left-square-bracket',  OperatorLeftSquareBracket) 
@@ -942,6 +949,7 @@ def gem():
         'conjure_keyword_return',           conjure_keyword_return,
         'conjure_keyword_while',            conjure_keyword_while,
         'conjure_keyword_with',             conjure_keyword_with,
+        'conjure_keyword_yield',            conjure_keyword_yield,
         'conjure_left_brace',               conjure_left_brace,
         'conjure_left_parenthesis',         conjure_left_parenthesis,
         'conjure_left_square_bracket',      conjure_left_square_bracket,

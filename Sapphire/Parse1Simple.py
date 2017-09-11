@@ -28,7 +28,7 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return Assert_1(keyword, left, newline)
+            return AssertStatement_1(keyword, left, newline)
 
         wk(none)
 
@@ -45,7 +45,7 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return Assert_2(keyword, left, operator, right, newline)
+            return AssertStatement_2(keyword, left, operator, right, newline)
 
         raise_unknown_line()
 
@@ -122,17 +122,52 @@ def gem():
         wi(j)
         wj(j)
 
-        right = parse1_normal_expression_list()
+        left = parse1_ternary_expression()
 
-        if qk() is not none:
+        operator = qk()
+
+        if operator is none:
+            newline = qn()
+
+            if newline is none:
+                raise_unknown_line()
+
+            return RaiseStatement_1(keyword, left, newline)
+
+        wk(none)
+
+        if not operator.is_comma:
             raise_unknown_line()
 
-        newline = qn()
+        middle = parse1_ternary_expression()
 
-        if newline is none:
+        operator_2 = qk()
+
+        if operator_2 is none:
+            newline = qn()
+
+            if newline is none:
+                raise_unknown_line()
+
+            return RaiseStatement_2(keyword, left, operator, middle, newline)
+
+        wk(none)
+
+        if not operator_2.is_comma:
             raise_unknown_line()
 
-        return RaiseExpression(keyword, right, newline)
+        right = parse1_ternary_expression()
+
+        if qk() is none:
+            newline = qn()
+
+            if newline is none:
+                raise_unknown_line()
+
+            return RaiseStatement_3(keyword, left, operator, middle, operator_2, right, newline)
+
+        raise_unknown_line()
+
 
 
     @share
@@ -158,4 +193,29 @@ def gem():
         if newline is none:
             raise_unknown_line()
 
-        return ReturnExpression(keyword, right, newline)
+        return ReturnStatement_1(keyword, right, newline)
+
+
+    @share
+    def parse1_statement_yield(m):
+        if m.end('newline') is not -1:
+            raise_unknown_line()
+
+        keyword = conjure_keyword_yield(m.group())
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
+
+        left = parse1_ternary_expression_list()
+
+        if qk() is not none:
+            raise_unknown_line()
+
+        newline = qn()
+
+        if newline is none:
+            raise_unknown_line()
+
+        return YieldStatement(keyword, left, newline)
