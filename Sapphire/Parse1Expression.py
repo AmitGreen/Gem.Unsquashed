@@ -139,9 +139,6 @@ def gem():
 
                             operator = tokenize_operator()
 
-                            if qn() is not none:
-                                raise_unknown_line()
-
                             if not operator.is_postfix_operator:
                                 wk(operator)
 
@@ -1709,3 +1706,173 @@ def gem():
     #
     #   17.  Comprehension-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist_comp')
     #
+    def parse1_comprehension_expression__left_operator(left, for_operator):
+        assert for_operator.is_keyword_for
+
+        middle = parse1_normal_expression_list()
+
+        in_operator = qk()
+
+        wk(none)
+
+        if not in_operator.is_keyword_in:
+            my_line('left: %r; for_operator: %r; middle: %r; in_operator: %r; s: %s',
+                    left, for_operator, middle, in_operator, portray_string(qs()[qj():]))
+
+            raise_unknown_line()
+
+        left = ComprehensionForExpression(left, for_operator, middle, in_operator, parse1_boolean_or_expression())
+
+        operator = qk()
+
+        if operator is none:
+            if qn() is none:
+                raise_unknown_line()
+
+            return left
+
+        if operator.is_end_of_comprehension_expression_list:
+            return left
+
+        wk(none)
+
+        raise_unknown_line
+
+
+
+    @share
+    def parse1_comprehension_expression__X__any_expression(left, operator):
+        if operator.is_postfix_operator:
+            left = parse1_postfix_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_comprehension_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_power_operator:
+            left = parse1_power_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_comprehension_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_multiply_operator:
+            left = parse1_multiply_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_comprehension_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_arithmetic_operator:
+            left = parse1_arithmetic_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_comprehension_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_compare_operator:
+            left = parse1_compare_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_comprehension_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_keyword_and:
+            left = parse1_boolean_and_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_comprehension_expression:
+                return left
+
+            wk(none)
+
+
+        if operator.is_keyword_or:
+            left = parse1_boolean_or_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_comprehension_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_keyword_if:
+            left = parse1_ternary_expression__left_operator(left, operator)
+
+            operator = qk()
+
+            if operator is none:
+                if qn() is none:
+                    raise_unknown_line()
+
+                return left
+
+            if operator.is_end_of_comprehension_expression:
+                return left
+
+            wk(none)
+
+        if operator.is_keyword_for:
+            return parse1_comprehension_expression__left_operator(left, operator)
+
+        my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
+        raise_unknown_line()

@@ -26,6 +26,7 @@ def gem():
         is_end_of_boolean_or_expression            = false
         is_end_of_compare_expression               = false
         is_end_of_comprehension_expression_list    = false
+        is_end_of_comprehension_expression         = false
         is_end_of_logical_or_expression            = false
         is_end_of_multiply_expression              = false
         is_end_of_normal_expression                = false
@@ -37,6 +38,7 @@ def gem():
         is_keyword_and                             = false
         is_keyword_as                              = false
         is_keyword_else                            = false
+        is_keyword_for                             = false
         is_keyword_if                              = false
         is_keyword_in                              = false
         is_keyword_not                             = false
@@ -111,6 +113,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -176,9 +179,21 @@ def gem():
 
 
     class KeywordFor(KeywordAndOperatorBase):
-        __slots__    = (())
-        display_name = 'for'
-        keyword      = 'for'
+        __slots__                         = (())
+        display_name                      = 'for'
+        is_end_of_arithmetic_expression   = true
+        is_end_of_boolean_and_expression  = true
+        is_end_of_boolean_or_expression   = true
+        is_end_of_compare_expression      = true
+        is_end_of_logical_or_expression   = true
+        is_end_of_multiply_expression     = true
+        is_end_of_normal_expression_list  = true
+        is_end_of_normal_expression       = true
+        is_end_of_ternary_expression      = true
+        is_end_of_ternary_expression_list = true        #   Not really, but for consistency
+        is_end_of_unary_expression        = true
+        is_keyword_for                    = true
+        keyword                           = 'for'
 
 
     @export
@@ -352,6 +367,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -370,6 +386,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -389,20 +406,21 @@ def gem():
 
 
     class OperatorComma(KeywordAndOperatorBase):
-        __slots__                        = (())
-        display_name                     = ','
-        is__comma__or__right_parenthesis = true
-        is_comma                         = true
-        is_end_of_arithmetic_expression  = true
-        is_end_of_boolean_and_expression = true
-        is_end_of_boolean_or_expression  = true
-        is_end_of_compare_expression     = true
-        is_end_of_logical_or_expression  = true
-        is_end_of_multiply_expression    = true
-        is_end_of_normal_expression      = true
-        is_end_of_ternary_expression     = true
-        is_end_of_unary_expression       = true
-        keyword                          = ','
+        __slots__                          = (())
+        display_name                       = ','
+        is__comma__or__right_parenthesis   = true
+        is_comma                           = true
+        is_end_of_arithmetic_expression    = true
+        is_end_of_boolean_and_expression   = true
+        is_end_of_boolean_or_expression    = true
+        is_end_of_comprehension_expression = true
+        is_end_of_compare_expression       = true
+        is_end_of_logical_or_expression    = true
+        is_end_of_multiply_expression      = true
+        is_end_of_normal_expression        = true
+        is_end_of_ternary_expression       = true
+        is_end_of_unary_expression         = true
+        keyword                            = ','
 
 
     @share
@@ -465,6 +483,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -513,6 +532,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -653,6 +673,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -676,6 +697,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -709,6 +731,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -851,6 +874,7 @@ def gem():
                                          'and'  : conjure_keyword_and,
                                          'as'   : conjure_keyword_as,
                                          'else' : conjure_keyword_else,
+                                         'for'  : conjure_keyword_for,
                                          'if'   : conjure_keyword_if,
                                          'in'   : conjure_keyword_in,
                                          'is'   : conjure_keyword_is,

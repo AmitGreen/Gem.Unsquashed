@@ -26,6 +26,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true
@@ -48,6 +49,7 @@ def gem():
         is_end_of_boolean_or_expression         = true
         is_end_of_compare_expression            = true
         is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
         is_end_of_logical_or_expression         = true
         is_end_of_multiply_expression           = true
         is_end_of_normal_expression_list        = true

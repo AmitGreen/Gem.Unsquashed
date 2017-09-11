@@ -460,7 +460,7 @@ def gem():
 
                 return r
 
-            wn(conjure_token_newline(s[m.end('atom') : ]))
+            wn(conjure_token_newline(s[m.end('quote') : ]))
 
             if qi() == qj():
                 return r

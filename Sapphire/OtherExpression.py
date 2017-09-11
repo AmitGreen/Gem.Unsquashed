@@ -284,6 +284,12 @@ def gem():
 
 
     @share
+    class ComprehensionForExpression(TripleExpression):
+        __slots__    = (())
+        display_name = 'comprehension-for'
+
+
+    @share
     class MemberExpression_2(TripleExpression):
         __slots__    = (())
         display_name = '.'

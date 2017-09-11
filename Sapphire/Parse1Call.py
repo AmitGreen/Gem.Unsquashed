@@ -60,15 +60,16 @@ def gem():
                 operator_1 = tokenize_operator()
             else:
                 wk(none)
-        elif not operator_1.is_end_of_ternary_expression:
-            argument_1 = parse1_ternary_expression__X__any_expression(argument_1, operator_1)
+        else:
+            if not operator_1.is_end_of_comprehension_expression:
+                argument_1 = parse1_comprehension_expression__X__any_expression(argument_1, operator_1)
 
-            operator_1 = qk()
+                operator_1 = qk()
 
-            if operator_1 is none:
-                operator_1 = tokenize_operator()
-            else:
-                wk(none)
+                if operator_1 is none:
+                    operator_1 = tokenize_operator()
+                else:
+                    wk(none)
 
         if operator_1.is_right_parenthesis:
             return Arguments_1(left_parenthesis, argument_1, operator_1)

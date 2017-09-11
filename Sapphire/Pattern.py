@@ -39,6 +39,7 @@ def gem():
         keyword_as          = NAME('as',                  'as')
         keyword_else        = NAME('else',                'else')
         keyword_except      = NAME('except',              'except')
+        keyword_for         = NAME('for',                 'for')
         keyword_if          = NAME('if',                  'if')
         keyword_import      = NAME('import',              'import')
         keyword_in          = NAME('in',                  'in')
@@ -222,6 +223,7 @@ def gem():
                             (
                                   'a' + (EXACT('nd') | 's')
                                 | keyword_else
+                                | keyword_for
                                 | 'i' + ANY_OF('f', 'n')
                                 | keyword_or
                             ),
