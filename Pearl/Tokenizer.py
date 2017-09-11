@@ -6,7 +6,6 @@ def gem():
     require_gem('Pearl.Core')
     require_gem('Pearl.Token')
 
-
     tokenizer = [none, 0, 0, 0, none, none, none]
 
     query = tokenizer.__getitem__
@@ -152,11 +151,12 @@ def gem():
     def raise_unknown_line():
         caller_frame = caller_frame_1()
         caller_name  = caller_frame.f_code.co_name
+        basename     = path_basename(caller_frame.f_code.co_filename)
 
-        line('%s #%s', caller_name, caller_frame.f_lineno)
+        line('%s#%s: %s', basename, caller_frame.f_lineno, caller_name)
 
         unknown_line_error = UnknownLineException(
-                                 arrange('parse incomplete %s #%d', caller_name, caller_frame.f_lineno),
+                                 arrange('parse incomplete: %s#%s: %s', basename, caller_frame.f_lineno, caller_name),
                                  UnknownLine(qs()),
                              )
 

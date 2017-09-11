@@ -12,7 +12,8 @@ def gem():
 
 
     from Gem import cadence_constructing, cadence_entered, cadence_exception, cadence_exited, cadence_initialized
-    from Gem import caller_frame_1, Exception, gem_global, produce_cache_functions, produce_conjure_by_name
+    from Gem import caller_frame_1, Exception, gem_global
+    from Gem import path_basename,  produce_cache_functions, produce_conjure_by_name
 
 
     share(
@@ -25,6 +26,7 @@ def gem():
         #   Functions
         #
         'caller_frame_1',               caller_frame_1,
+        'path_basename',                path_basename,
         'produce_cache_functions',      produce_cache_functions,
         'produce_conjure_by_name',      produce_conjure_by_name,
 

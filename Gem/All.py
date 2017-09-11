@@ -48,9 +48,9 @@ from    Gem                 import  Module                                  #   
 from    Gem                 import  my_name                                 #   Gem.System
 from    Gem                 import  N_N                                     #   Gem.PortrayString (Unit Testing only)
 from    Gem                 import  OSError                                 #   Gem.Exception
-from    Gem                 import  path_basename                           #   Gem.Exception
-from    Gem                 import  path_join                               #   Gem.Exception
-from    Gem                 import  path_split_extension                    #   Gem.Exception
+from    Gem                 import  path_basename                           #   Gem.Path
+from    Gem                 import  path_join                               #   Gem.Path
+from    Gem                 import  path_split_extension                    #   Gem.Path
 from    Gem                 import  PermissionError                         #   Gem.Exception
 from    Gem                 import  privileged_2                            #   Gem.Core
 from    Gem                 import  privileged                              #   Gem.Boot
