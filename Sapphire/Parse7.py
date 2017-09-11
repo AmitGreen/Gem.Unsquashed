@@ -143,7 +143,7 @@ def gem():
                        KeywordFrom(m0.group('indented') + m0.group('keyword__ow')),
                        module,
                        KeywordImport(w_import_w),
-                       CommaExpression(as_fragment, conjure_comma(comma), as_fragment_2),
+                       CommaExpression_1(as_fragment, conjure_comma(comma), as_fragment_2),
                        conjure_token_newline(m2.group('ow_comment_newline')),
                    )
 

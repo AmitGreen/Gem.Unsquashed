@@ -58,6 +58,12 @@ def gem():
 
 
     @share
+    class CommaExpression_Many(BaseExpression_Many):
+        __slots__    = (())
+        display_name = ',-*'
+
+
+    @share
     class CompareExpression_Many(BaseExpression_Many):
         __slots__ = (())
 

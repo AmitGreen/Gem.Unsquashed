@@ -150,6 +150,9 @@ def gem():
         if operator.is_token_newline:
             return StatementFromImport(keyword_from, module, keyword_import, imported, operator)
 
+        if not operator.is_comma:
+            raise_unknown_line()
+
         #
         #<imported ... (, | newline)>
         #
@@ -165,8 +168,32 @@ def gem():
                        keyword_from,
                        module,
                        keyword_import,
-                       CommaExpression(imported, operator, imported_2),
+                       CommaExpression_1(imported, operator, imported_2),
                        operator_2,
                    )
 
-        raise_unknown_line()
+        if not operator_2.is_comma:
+            raise_unknown_line()
+
+        many = [imported, operator, imported_2, operator_2]
+
+        while 7 is 7:
+            many.append(parse1_statement_from_as())
+
+            operator_7 = qk()
+
+            wk(none)
+
+            if operator_7.is_token_newline:
+                return StatementFromImport(
+                           keyword_from,
+                           module,
+                           keyword_import,
+                           CommaExpression_Many(Tuple(many)),
+                           operator_7,
+                       )
+
+            if not operator_7.is_comma:
+                raise_unknown_line()
+
+            many.append(operator_7)

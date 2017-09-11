@@ -88,7 +88,7 @@ def gem():
 
 
     @share
-    class CommaExpression(BinaryExpression):
+    class CommaExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = ','
 
