@@ -8,7 +8,7 @@ def gem():
 
     def parse1_condition_statement__X__m(m, conjure, MetaHeader, MetaStatement):
         if m.end('newline') is not -1:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         keyword_if = conjure(m.group())
 
@@ -27,21 +27,21 @@ def gem():
             operator = tokenize_operator()
 
         if qn() is not none:
-            raise_unknown_line(2)
+            raise_unknown_line()
             
         if operator.is_colon_newline:
             return MetaHeader(keyword_if, condition, operator)
 
         if not operator.is_colon:
-            raise_unknown_line(3)
+            raise_unknown_line()
 
         left = parse1_atom()
 
         if qn() is not none:
-            raise_unknown_line(4)
+            raise_unknown_line()
 
         if not left.is_atom:
-            raise_unknown_line(5)
+            raise_unknown_line()
 
         return MetaStatement(
                    keyword_if,
@@ -54,7 +54,7 @@ def gem():
     @share
     def parse1_statement_else_colon(m):
         if m.end('newline') is -1:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         return conjure_else_colon(m.group())
 
@@ -62,7 +62,7 @@ def gem():
     @share
     def parse1_statement_except_colon(m):
         if m.end('newline') is -1:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         return conjure_except_colon(m.group())
 
@@ -70,7 +70,7 @@ def gem():
     @share
     def parse1_statement_for(m):
         if m.end('newline') is not -1:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         keyword_for = conjure_keyword_for(m.group())
 
@@ -87,15 +87,15 @@ def gem():
             wk(none)
         else:
             if qn() is not none:
-                raise_unknown_line(2)
+                raise_unknown_line()
 
             operator = tokenize_operator()
 
             if qn() is not none:
-                raise_unknown_line(3)
+                raise_unknown_line()
 
         if not operator.is_keyword_in:
-            raise_unknown_line(4)
+            raise_unknown_line()
 
         right = parse1_ternary_expression_list()
 
@@ -105,15 +105,15 @@ def gem():
             wk(none)
         else:
             if qn() is not none:
-                raise_unknown_line(5)
+                raise_unknown_line()
 
             operator_2 = tokenize_operator()
 
             if qn() is not none:
-                raise_unknown_line(6)
+                raise_unknown_line()
 
         if not operator_2.is_colon_newline:
-            raise_unknown_line(7)
+            raise_unknown_line()
 
         return ForHeader(keyword_for, left, operator, right, operator_2)
 
@@ -126,7 +126,7 @@ def gem():
     @share
     def parse1_statement_try_colon(m):
         if m.end('newline') is -1:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         return conjure_try_colon(m.group())
 
@@ -139,7 +139,7 @@ def gem():
     @share
     def parse1_statement_with(m):
         if m.end('newline') is not -1:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         keyword_with = conjure_keyword_with(m.group())
 
@@ -151,7 +151,7 @@ def gem():
         left = parse1_atom()
 
         if qn() is not none:
-            raise_unknown_line(2)
+            raise_unknown_line()
 
         while 7 is 7:
             operator = tokenize_operator()
@@ -166,7 +166,7 @@ def gem():
             if operator.is_colon_newline:
                 return WithHeader_1(keyword_with, left, operator)
 
-            raise_unknown_line(3)
+            raise_unknown_line()
 
         right      = parse1_atom()
         operator_2 = tokenize_operator()
@@ -174,4 +174,4 @@ def gem():
         if operator_2.is_colon_newline:
             return WithHeader_2(keyword_with, left, operator, right, operator_2)
 
-        raise_unknown_line(4)
+        raise_unknown_line()

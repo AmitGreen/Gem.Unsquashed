@@ -149,13 +149,14 @@ def gem():
 
 
     @export
-    def raise_unknown_line(number):
-        caller_name = caller_frame_1().f_code.co_name
+    def raise_unknown_line():
+        caller_frame = caller_frame_1()
+        caller_name  = caller_frame.f_code.co_name
 
-        line('%s #%s', caller_name, number)
+        line('%s #%s', caller_name, caller_frame.f_lineno)
 
         unknown_line_error = UnknownLineException(
-                                 arrange('parse incomplete %s #%d', caller_name, number),
+                                 arrange('parse incomplete %s #%d', caller_name, caller_frame.f_lineno),
                                  UnknownLine(qs()),
                              )
 

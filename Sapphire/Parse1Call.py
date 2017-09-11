@@ -22,7 +22,7 @@ def gem():
 
         if operator.is_equal_sign:
             if not left.is_identifier:
-                raise_unknown_line(1)
+                raise_unknown_line()
 
             return KeywordArgument(left, operator, parse1_ternary_expression())
 
@@ -50,7 +50,7 @@ def gem():
 
         if operator_1.is_equal_sign:
             if not left.is_identifier:
-                raise_unknown_line(1)
+                raise_unknown_line()
 
             argument_1 = KeywordArgument(argument_1, operator_1, parse1_ternary_expression())
 
@@ -74,7 +74,7 @@ def gem():
             return Arguments_1(left_parenthesis, argument_1, operator_1)
 
         if not operator_1.is_comma:
-            raise_unknown_line(2)
+            raise_unknown_line()
 
         argument_2 = parse1_atom()
 
@@ -94,7 +94,7 @@ def gem():
             return Arguments_2(left_parenthesis, argument_1, operator_1, argument_2, operator_2)
 
         if not operator_2.is_comma:
-            raise_unknown_line(3)
+            raise_unknown_line()
 
         argument_3 = parse1_atom()
 
@@ -122,7 +122,7 @@ def gem():
                 return Arguments_Many(Tuple(many))
 
             if not operator_7.is_comma:
-                raise_unknown_line(4)
+                raise_unknown_line()
 
             many.append(argument_3)
 

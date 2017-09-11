@@ -25,7 +25,7 @@ def gem():
             my_line('indented: %r; left: %r; equal_sign: %r; right: %s; operator: %r; s: %s',
                     indented, left, equal_sign, right, operator, portray_string(qs()[qj():]))
 
-            raise_unknown_line(2)
+            raise_unknown_line()
 
         many = [AssignFragment(left, equal_sign), AssignFragment(right, operator)]
 
@@ -46,7 +46,7 @@ def gem():
 
             if not operator.is_equal_sign:
                 my_line('right: %s; operator; %r; s: %s', right, operator, portray_string(qs()[qj():]))
-                raise_unknown_line(3)
+                raise_unknown_line()
 
             many.append(AssignFragment(right, operator))
 
@@ -61,7 +61,7 @@ def gem():
 
         my_line('indented: %r; left: %r; modify_operator: %r; right: %s; s: %s',
                 indented, left, modify_operator, right, portray_string(qs()[qj():]))
-        raise_unknown_line(2)
+        raise_unknown_line()
 
 
     @share
@@ -77,7 +77,7 @@ def gem():
         elif left.is_left_square_bracket:
             left = parse1__list_expression__left_square_bracket(left)
         else:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         operator = qk()
 
@@ -105,7 +105,7 @@ def gem():
                 if newline is not none:
                     return StatementExpression(indented, left, newline)
 
-                raise_unknown_line(1)
+                raise_unknown_line()
 
             wk(none)
 
@@ -120,7 +120,7 @@ def gem():
                 if newline is not none:
                     return StatementExpression(indented, left, newline)
 
-                raise_unknown_line(2)
+                raise_unknown_line()
 
             wk(none)
 
@@ -135,7 +135,7 @@ def gem():
                 if newline is not none:
                     return StatementExpression(indented, left, newline)
 
-                raise_unknown_line(3)
+                raise_unknown_line()
 
             wk(none)
 
@@ -150,7 +150,7 @@ def gem():
                 if newline is not none:
                     return StatementExpression(indented, left, newline)
 
-                raise_unknown_line(4)
+                raise_unknown_line()
 
             wk(none)
 
@@ -161,4 +161,4 @@ def gem():
             return parse1_statement_modify__left__operator(indented, left, operator)
 
         my_line('operator: %s', operator)
-        raise_unknown_line(5)
+        raise_unknown_line()

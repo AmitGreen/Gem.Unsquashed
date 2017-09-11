@@ -18,7 +18,7 @@ def gem():
         m1 = name_match(s, index)
 
         if m1 is none:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         module = conjure_identifier(m1.group())
         #</name>
@@ -30,7 +30,7 @@ def gem():
             m2 = import_module_match1(s, m1.end())
 
             if m2 is none:
-                raise_unknown_line(2)
+                raise_unknown_line()
 
             operator = m2.group('operator')
 
@@ -45,7 +45,7 @@ def gem():
             m1 = name_match(s, m2.end())
 
             if m1 is none:
-                raise_unknown_line(3)
+                raise_unknown_line()
             #</name>
 
             module = MemberExpression_1(module, operator_dot, conjure_identifier(m1.group()))
@@ -70,7 +70,7 @@ def gem():
         m3 = name_match(s, m2.end())
 
         if m3 is none:
-            raise_unknown_line(4)
+            raise_unknown_line()
 
         module = ModuleAsFragment(module, keyword_as, conjure_identifier(m3.group()))
         #</name>
@@ -81,7 +81,7 @@ def gem():
         m4 = comma_or_newline_match1(s, m3.end())
 
         if m4 is none:
-            raise_unknown_line(5)
+            raise_unknown_line()
         #</comma-or-newline>
 
         if m4.start('comma') is -1:
@@ -98,7 +98,7 @@ def gem():
     @share
     def parse1_statement_import(m1):
         if m1.end('comment_newline') is not -1:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         keyword_import = KeywordImport(m1.group())
 
@@ -114,4 +114,4 @@ def gem():
         if operator.is_token_newline:
             return StatementImport(keyword_import, module, operator)
 
-        raise_unknown_line(2)
+        raise_unknown_line()

@@ -17,7 +17,7 @@ def gem():
         m = header_parenthesis_match1(s, qj())
 
         if m is none:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         right_parenthesis__start = m.start('right_parenthesis')
 
@@ -36,7 +36,7 @@ def gem():
                                conjure_colon_newline    (s[colon_start              :                         ]),
                            )
 
-                raise_unknown_line(2)
+                raise_unknown_line()
 
             r = conjure_left_parenthesis(s[qi() : ])
 
@@ -46,7 +46,7 @@ def gem():
             return r
 
         if right_parenthesis__start is not -1:
-            raise_unknown_line(3)
+            raise_unknown_line()
 
         j = m.end()
 
@@ -66,7 +66,7 @@ def gem():
 
         if m.start('colon') is not -1:
             if m.end('comment_newline') is -1:
-                raise_unknown_line(1)
+                raise_unknown_line()
 
             wd0()
 
@@ -100,13 +100,13 @@ def gem():
 
         if m is none:
             my_line(portray_string(qs()[qj() : ]))
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         name = m.group('name')
 
         if name is not none:
             if m.start('comment_newline') is not -1:
-                raise_unknown_line(2)
+                raise_unknown_line()
 
             r = conjure_identifier(name)
 
@@ -144,7 +144,7 @@ def gem():
         m = parameter_colon_newline_match(s, qj())
 
         if m is none:
-            raise_unknown_line(2)
+            raise_unknown_line()
 
         return conjure_colon_newline(s[qi() : ])
 
@@ -168,7 +168,7 @@ def gem():
         m = parameter_operator_match(s, qj())
 
         if m is none:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         equal_sign__end = m.end('equal_sign')
 
@@ -193,7 +193,7 @@ def gem():
             if comma_RP_end is not -1:
                 if m.start('comma_RP_colon') is not -1:
                     if m.end('comment_newline') is -1:
-                        raise_unknown_line(2)
+                        raise_unknown_line()
 
                     wd0()
 
@@ -205,7 +205,7 @@ def gem():
                                conjure_colon            (s[comma_RP_end   :               ])
                            )
 
-                raise_unknown_line(3)
+                raise_unknown_line()
 
             if m.end('comment_newline') is not -1:
                 r = conjure_comma(s[qi() :])

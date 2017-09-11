@@ -13,7 +13,7 @@ def gem():
         m = next_nested_line_match(qs())
 
         if m is none:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         if m.group('comment_newline') is none:
             wj(m.end())
@@ -28,7 +28,7 @@ def gem():
             m = next_nested_line_match(s)
 
             if m is none:
-                raise_unknown_line(2)
+                raise_unknown_line()
 
             if m.group('comment_newline') is none:
                 prefix = ''.join(many)
@@ -53,7 +53,7 @@ def gem():
 
         if m is none:
             my_line(portray_string(s[qj() : ]))
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         if m.end('comment_newline') is -1:
             operator_s = m.group('operator')
@@ -64,7 +64,7 @@ def gem():
 
                     if d is 0:
                         my_line('d: %d; operator_s: %r; s: %s', d, operator_s, portray_string(s[qj() : ]))
-                        raise_unknown_line(2)
+                        raise_unknown_line()
 
                     operator_end = m.end('operator')
 
@@ -238,7 +238,7 @@ def gem():
                 return left
             #</similiar-to>
 
-            raise_unknown_line(3)
+            raise_unknown_line()
 
 
         #
@@ -363,4 +363,4 @@ def gem():
 
             return r
 
-        raise_unknown_line(4)
+        raise_unknown_line()

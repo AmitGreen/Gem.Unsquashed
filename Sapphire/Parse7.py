@@ -46,7 +46,7 @@ def gem():
         m = class7_match(s, m0.end())
 
         if m is none:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         [
             name1, left_parenthesis, name2, right_parenthesis__colon, newline,
@@ -65,7 +65,7 @@ def gem():
         m = expression_match(s, m0.end())
 
         if m is none:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         return DecoratorHeader(
                    OperatorAtSign(m0.group('indented') + m0.group('keyword__ow')),
@@ -78,7 +78,7 @@ def gem():
         m = define7_match(s, m0.end())
 
         if m is none:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         [
             name1, left_parenthesis, name2, right_parenthesis__colon, comment_newline,
@@ -105,7 +105,7 @@ def gem():
         m = from7_1_match(s, m0.end())
 
         if m is none:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         [
                 name1, dot, name2, w_import_w, name3, w_as_w, name4, comma
@@ -130,7 +130,7 @@ def gem():
         m2 = from_2_match(s, m.end())
 
         if m2 is none:
-            return raise_unknown_line(2)
+            return raise_unknown_line()
 
         [
                 name1, w_as_w, name2, comma_2
@@ -154,7 +154,7 @@ def gem():
         m = import7_match(s, m0.end())
 
         if m is none:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         return StatementImport(
                    KeywordImport(m0.group('indented') + m0.group('keyword__ow')),
@@ -167,7 +167,7 @@ def gem():
         m = expression_match(s, m0.end())
 
         if m is none:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         return ReturnExpression(
                    conjure_keyword_return(m0.group('indented') + m0.group('keyword__ow')),
@@ -198,7 +198,7 @@ def gem():
             m = line7_match(s)
 
             if m is none:
-                raise_unknown_line(1)
+                raise_unknown_line()
 
             [keyword, name] = m.group('keyword', 'name')
 

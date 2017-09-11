@@ -33,7 +33,7 @@ def gem():
 
     def parse1_statement_decorator_header(m):
         if m.end('newline') is not -1:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         operator_at_sign = OperatorAtSign(m.group())
         s                = qs()
@@ -55,19 +55,19 @@ def gem():
             newline = qn()
 
             if newline is none:
-                raise_unknown_line(2)
+                raise_unknown_line()
 
             return DecoratorHeader(operator_at_sign, CallExpression(identifier, operator), newline)
 
         if not operator.is_left_parenthesis:
-            raise_unknown_line(3)
+            raise_unknown_line()
 
         call = parse1_call_expression__left__operator(identifier, operator)
 
         newline = qn()
 
         if newline is none:
-            raise_unknown_line(4)
+            raise_unknown_line()
 
         return DecoratorHeader(operator_at_sign, call, newline)
 
@@ -116,7 +116,7 @@ def gem():
                     m = line_match(s)
 
                     if m is none:
-                        raise_unknown_line(1)
+                        raise_unknown_line()
 
                     atom_s = m.group('atom')
 
@@ -183,7 +183,7 @@ def gem():
                     if newline is none:
                         assert comment is none
 
-                        raise_unknown_line(2)
+                        raise_unknown_line()
 
                     if comment is not none:
                         indented = m.group('indented')

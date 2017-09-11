@@ -234,7 +234,7 @@ def gem():
         m = statement_expression_match(s, m0.end())
 
         if m is none:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         [
                 dot, right, operator, name_0, number_0, single_quote_0, right_parenthesis,
@@ -283,7 +283,7 @@ def gem():
                                          s, m, SingleQuote(single_quote_0),
                                      )
             else:
-                raise_unknown_line(3)
+                raise_unknown_line()
 
                 assert 0, 'oops#16'
                 [arguments, index] = parse7_arguments__left_parenthesis(s, m)
@@ -293,7 +293,7 @@ def gem():
             m = statement_postfix_match(s, index)
 
             if m is none:
-                raise_unknown_line(4)
+                raise_unknown_line()
 
             ow_comment_newline = m.group('ow_comment_newline')
 

@@ -11,7 +11,7 @@ def gem():
         keyword = conjure_keyword_assert(m.group())
 
         if m.end('newline') is not -1:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         j = m.end()
 
@@ -21,12 +21,12 @@ def gem():
         right = parse1_ternary_expression()
 
         if qk() is not none:
-            raise_unknown_line(2)
+            raise_unknown_line()
 
         newline = qn()
 
         if newline is none:
-            raise_unknown_line(3)
+            raise_unknown_line()
 
         return Assert_1(keyword, right, newline)
 
@@ -34,7 +34,7 @@ def gem():
     @share
     def parse1_statement_delete(m):
         if m.end('newline') is not -1:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         keyword = conjure_keyword_delete(m.group())
 
@@ -51,14 +51,14 @@ def gem():
             newline = qn()
 
             if newline is none:
-                raise_unknown_line(2)
+                raise_unknown_line()
 
             return DeleteStatement_1(keyword, left, newline)
 
         wk(none)
 
         if not operator.is_comma:
-            raise_unknown_line(3)
+            raise_unknown_line()
 
         many = [left, operator]
 
@@ -71,14 +71,14 @@ def gem():
                 newline = qn()
 
                 if newline is none:
-                    raise_unknown_line(4)
+                    raise_unknown_line()
 
                 return DeleteStatement_Many(keyword, Tuple(many), newline)
 
             wk(none)
 
             if not operator.is_comma:
-                raise_unknown_line(5)
+                raise_unknown_line()
 
             many.append(operator)
 
@@ -86,7 +86,7 @@ def gem():
     @share
     def parse1_statement_pass(m):
         if m.end('newline') is -1:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         return StatementPass(m.group())
 
@@ -94,7 +94,7 @@ def gem():
     @share
     def parse1_statement_raise(m):
         if m.end('newline') is not -1:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         keyword = conjure_keyword_raise(m.group())
 
@@ -106,12 +106,12 @@ def gem():
         right = parse1_normal_expression_list()
 
         if qk() is not none:
-            raise_unknown_line(2)
+            raise_unknown_line()
 
         newline = qn()
 
         if newline is none:
-            raise_unknown_line(3)
+            raise_unknown_line()
 
         return RaiseExpression(keyword, right, newline)
 
@@ -132,11 +132,11 @@ def gem():
 
         if qk() is not none:
             #my_line('qk: %r; full: %s', qk(), portray_string(qs()))
-            raise_unknown_line(2)
+            raise_unknown_line()
 
         newline = qn()
 
         if newline is none:
-            raise_unknown_line(3)
+            raise_unknown_line()
 
         return ReturnExpression(keyword, right, newline)

@@ -61,7 +61,7 @@ def gem():
                     r = find_operator_conjure_function(operator_s)(s[qi() : operator_end])
 
                     if d is 0:
-                        raise_unknown_line(1)
+                        raise_unknown_line()
 
                     assert d > 0
 
@@ -182,7 +182,7 @@ def gem():
 
                 return r
 
-            raise_unknown_line(2)
+            raise_unknown_line()
 
         #
         #   Newline
@@ -468,4 +468,4 @@ def gem():
             return r.prefix_meta(conjure_whitespace(qs()[qi() : qj()]), r)
             #</similiar-to>
 
-        raise_unknown_line(3)
+        raise_unknown_line()

@@ -17,7 +17,7 @@ def gem():
 
         if operator is none:
             if qn() is not none:
-                raise_unknown_line(1)
+                raise_unknown_line()
 
             operator = tokenize_operator()
         else:
@@ -29,12 +29,12 @@ def gem():
             operator = qk()
 
             if operator is none:
-                raise_unknown_line(2)
+                raise_unknown_line()
 
             wk(none)
 
         if not operator.is_colon:
-            raise_unknown_line(3)
+            raise_unknown_line()
 
         return MapElement(token, operator, parse1_ternary_expression())
 
@@ -49,14 +49,14 @@ def gem():
         operator = qk()
 
         if operator is none:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         wk(none)
 
         if operator.is_right_brace:
             return MapExpression_1(left_brace, left, operator)
 
-        raise_unknown_line(2)
+        raise_unknown_line()
 
 
     @share
@@ -83,7 +83,7 @@ def gem():
             return ParenthesizedExpression(left_parenthesis, middle_1, operator_1)
 
         if not operator_1.is_comma:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         #
         #   2
@@ -105,7 +105,7 @@ def gem():
             return TupleExpression_2(left_parenthesis, middle_1, operator_1, middle_2, operator_2)
 
         if not operator_2.is_comma:
-            raise_unknown_line(2)
+            raise_unknown_line()
 
         #
         #   3
@@ -139,7 +139,7 @@ def gem():
                 return TupleExpression_Many(Tuple(many))
 
             if not operator_7.is_comma:
-                raise_unknown_line(3)
+                raise_unknown_line()
 
             middle_3 = parse1_atom()
 
@@ -174,7 +174,7 @@ def gem():
             return ListExpression_1(left_square_bracket, middle_1, operator_1)
 
         if not operator_1.is_comma:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         #
         #   2
@@ -196,7 +196,7 @@ def gem():
             return ListExpression_2(left_square_bracket, middle_1, operator_1, middle_2, operator_2)
 
         if not operator_2.is_comma:
-            raise_unknown_line(2)
+            raise_unknown_line()
 
         #
         #   3
@@ -230,7 +230,7 @@ def gem():
                 return ListExpression_Many(Tuple(many))
 
             if not operator_7.is_comma:
-                raise_unknown_line(3)
+                raise_unknown_line()
 
             middle_3 = parse1_atom()
 
@@ -250,7 +250,7 @@ def gem():
 
         if m is none:
             my_line('full: %r; s: %r', portray_string(qs()), portray_string(qs()[qj() :]))
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         token = analyze_atom(m)
 
@@ -272,4 +272,4 @@ def gem():
         if token.is_left_square_bracket:
             return parse1__list_expression__left_square_bracket(token)
 
-        raise_unknown_line(2)
+        raise_unknown_line()

@@ -49,7 +49,7 @@ def gem():
         m = name_ow_match(s, j)
 
         if m is none:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         if m.start('comment_newline') is not -1:
             return tokenize_name__X__newline(m)

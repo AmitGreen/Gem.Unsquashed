@@ -59,7 +59,7 @@ def gem():
 
                 if operator_2.is_dot:
                     if qn() is not none:
-                        raise_unknown_line(1)
+                        raise_unknown_line()
 
                     name_2 = tokenize_name()
 
@@ -70,7 +70,7 @@ def gem():
 
                     if operator_3.is_dot:
                         if qn() is not none:
-                            raise_unknown_line(2)
+                            raise_unknown_line()
 
                         name_3 = tokenize_name()
 
@@ -102,7 +102,7 @@ def gem():
                                 operator = tokenize_operator()
 
                                 if qn() is not none:
-                                    raise_unknown_line(3)
+                                    raise_unknown_line()
 
                                 if not operator.is_postfix_operator:
                                     wk(operator)
@@ -140,7 +140,7 @@ def gem():
                             operator = tokenize_operator()
 
                             if qn() is not none:
-                                raise_unknown_line(4)
+                                raise_unknown_line()
 
                             if not operator.is_postfix_operator:
                                 wk(operator)
@@ -168,7 +168,7 @@ def gem():
 
                         if newline is not none:
                             if qk() is not none:
-                                raise_unknown_line(5)
+                                raise_unknown_line()
 
                             return MethodCallStatement_1(indented, left, operator, name, operator_2, newline)
 
@@ -230,7 +230,7 @@ def gem():
 
             if operator.is_left_square_bracket:
                 if qn() is not none:
-                    raise_unknown_line(6)
+                    raise_unknown_line()
 
                 middle = parse1_atom()
 
@@ -243,7 +243,7 @@ def gem():
 
                     if operator_2 is none:
                         if qn() is not none:
-                            raise_unknown_line(7)
+                            raise_unknown_line()
 
                         operator_2 = tokenize_operator()
                     else:
@@ -252,13 +252,13 @@ def gem():
                     if operator_2.is_right_square_bracket:
                         left = IndexExpression(left, TailIndex(operator, middle, operator_2))
                     else:
-                        raise_unknown_line(8)
+                        raise_unknown_line()
                 else:
                     operator_2 = qk()
 
                     if operator_2 is none:
                         if qn() is not none:
-                            raise_unknown_line(9)
+                            raise_unknown_line()
 
                         operator_2 = tokenize_operator()
                     else:
@@ -270,7 +270,7 @@ def gem():
                         operator_2 = qk()
 
                         if operator_2 is none:
-                            raise_unknown_line(10)
+                            raise_unknown_line()
 
                         wk(none)
 
@@ -278,7 +278,7 @@ def gem():
                         left = IndexExpression(left, NormalIndex(operator, middle, operator_2))
                     elif operator_2.is_colon:
                         if qn() is not none:
-                            raise_unknown_line(11)
+                            raise_unknown_line()
 
                         middle_2 = parse1_atom()
 
@@ -296,7 +296,7 @@ def gem():
 
                             if operator_3 is none:
                                 if qn() is not none:
-                                    raise_unknown_line(12)
+                                    raise_unknown_line()
 
                                 operator_3 = tokenize_operator()
                             else:
@@ -308,19 +308,19 @@ def gem():
                                 operator_3 = qk()
 
                                 if operator_3 is none:
-                                    raise_unknown_line(13)
+                                    raise_unknown_line()
 
                                 wk(none)
 
                             if not operator_3.is_right_square_bracket:
-                                raise_unknown_line(14)
+                                raise_unknown_line()
 
                             left = IndexExpression(
                                        left,
                                        RangeIndex(operator, middle, operator_2, middle_2, operator_3),
                                    )
                     else:
-                        raise_unknown_line(15)
+                        raise_unknown_line()
 
                 if qn() is not none:
                     return left
@@ -345,7 +345,7 @@ def gem():
 
             assert operator.is_postfix_operator
 
-        raise_unknown_line(16)
+        raise_unknown_line()
 
 
     #
@@ -382,7 +382,7 @@ def gem():
             operator = tokenize_operator()
 
             if qk() is not none:
-                raise_unknown_line(1)
+                raise_unknown_line()
 
             if operator.is_end_of_unary_expression:
                 wk(operator)
@@ -400,7 +400,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line()
 
                 return left
 
@@ -416,7 +416,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line()
 
                 return left
 
@@ -432,7 +432,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(4)
+                    raise_unknown_line()
 
                 return left
 
@@ -441,7 +441,7 @@ def gem():
 
             wk(none)
 
-        raise_unknown_line(5)
+        raise_unknown_line()
 
 
     #
@@ -470,7 +470,7 @@ def gem():
             wk(none)
 
         if not operator.is_multiply_operator:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         many = [left, multiply_operator, right, operator]
 
@@ -496,7 +496,7 @@ def gem():
                 wk(none)
 
             if not operator.is_multiply_operator:
-                raise_unknown_line(2)
+                raise_unknown_line()
 
             many.append(operator)
 
@@ -529,7 +529,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(1)
+                    raise_unknown_line()
 
                 return left
 
@@ -545,7 +545,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line()
 
                 return left
 
@@ -556,7 +556,7 @@ def gem():
 
         if not operator.is_multiply_operator:
             my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line(3)
+            raise_unknown_line()
 
         return parse1_multiply_expression__left_operator(left, operator)
 
@@ -587,7 +587,7 @@ def gem():
             wk(none)
 
         if not operator.is_arithmetic_operator:
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         many = [left, add_operator, right, operator]
 
@@ -613,7 +613,7 @@ def gem():
                 wk(none)
 
             if not operator.is_arithmetic_operator:
-                raise_unknown_line(2)
+                raise_unknown_line()
 
             many.append(operator)
 
@@ -664,7 +664,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(1)
+                    raise_unknown_line()
 
                 return left
 
@@ -680,7 +680,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line()
 
                 return left
 
@@ -696,7 +696,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line()
 
                 return left
 
@@ -712,7 +712,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(4)
+                    raise_unknown_line()
 
                 return left
 
@@ -722,7 +722,7 @@ def gem():
             wk(none)
 
         my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-        raise_unknown_line(5)
+        raise_unknown_line()
 
 
     #
@@ -757,7 +757,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(1)
+                    raise_unknown_line()
 
                 return left
 
@@ -773,7 +773,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line()
 
                 return left
 
@@ -789,7 +789,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line()
 
                 return left
 
@@ -805,7 +805,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(4)
+                    raise_unknown_line()
 
                 return left
 
@@ -815,7 +815,7 @@ def gem():
             wk(none)
 
         my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-        raise_unknown_line(5)
+        raise_unknown_line()
 
 
     #
@@ -899,7 +899,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(1)
+                    raise_unknown_line()
 
                 return left
 
@@ -915,7 +915,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line()
 
                 return left
 
@@ -931,7 +931,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line()
 
                 return left
 
@@ -947,7 +947,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(4)
+                    raise_unknown_line()
 
                 return left
 
@@ -958,7 +958,7 @@ def gem():
 
         if not operator.is_compare_operator:
             my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line(5)
+            raise_unknown_line()
 
         return parse1_compare_expression__left_operator(left, operator)
 
@@ -989,7 +989,7 @@ def gem():
             operator = tokenize_operator()
 
             if qk() is not none:
-                raise_unknown_line(1)
+                raise_unknown_line()
 
             if operator.is_end_of_compare_expression:
                 wk(operator)
@@ -1001,7 +1001,7 @@ def gem():
             wk(none)
 
         my_line('right: %r; operator: %r; s: %s', right, operator, portray_string(qs()[qj():]))
-        raise_unknown_line(2)
+        raise_unknown_line()
 
 
     #
@@ -1055,7 +1055,7 @@ def gem():
                 wk(none)
 
             if not operator_7.is_keyword_and:
-                raise_unknown_line(1)
+                raise_unknown_line()
 
             many.append(operator_7)
 
@@ -1088,7 +1088,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(1)
+                    raise_unknown_line()
 
                 return left
 
@@ -1104,7 +1104,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line()
 
                 return left
 
@@ -1120,7 +1120,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line()
 
                 return left
 
@@ -1136,7 +1136,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(4)
+                    raise_unknown_line()
 
                 return left
 
@@ -1152,7 +1152,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(5)
+                    raise_unknown_line()
 
                 return left
 
@@ -1163,7 +1163,7 @@ def gem():
 
         if not operator.is_keyword_and:
             my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line(6)
+            raise_unknown_line()
 
         return parse1_boolean_and_expression__left_operator(left, operator)
 
@@ -1219,7 +1219,7 @@ def gem():
                 wk(none)
 
             if not operator_7.is_keyword_or:
-                raise_unknown_line(1)
+                raise_unknown_line()
 
             many.append(operator_7)
 
@@ -1252,7 +1252,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(1)
+                    raise_unknown_line()
 
                 return left
 
@@ -1268,7 +1268,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line()
 
                 return left
 
@@ -1284,7 +1284,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line()
 
                 return left
 
@@ -1300,7 +1300,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(4)
+                    raise_unknown_line()
 
                 return left
 
@@ -1316,7 +1316,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(5)
+                    raise_unknown_line()
 
                 return left
 
@@ -1332,7 +1332,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(6)
+                    raise_unknown_line()
 
                 return left
 
@@ -1343,7 +1343,7 @@ def gem():
 
         if not operator.is_keyword_or:
             my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-            raise_unknown_line(7)
+            raise_unknown_line()
 
         return parse1_boolean_or_expression__left_operator(left, operator)
 
@@ -1373,7 +1373,7 @@ def gem():
             my_line('left: %r; operator: %r; middle: %r; operator_2: %r; s: %s',
                     left, operator, middle, operator_2, portray_string(qs()[qj():]))
 
-            raise_unknown_line(1)
+            raise_unknown_line()
 
         return TernaryExpression(left, operator, middle, operator_2, parse1_ternary_expression())
 
@@ -1387,7 +1387,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(1)
+                    raise_unknown_line()
 
                 return left
 
@@ -1403,7 +1403,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line()
 
                 return left
 
@@ -1419,7 +1419,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line()
 
                 return left
 
@@ -1435,7 +1435,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(4)
+                    raise_unknown_line()
 
                 return left
 
@@ -1451,7 +1451,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(5)
+                    raise_unknown_line()
 
                 return left
 
@@ -1467,7 +1467,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(6)
+                    raise_unknown_line()
 
                 return left
 
@@ -1484,7 +1484,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(7)
+                    raise_unknown_line()
 
                 return left
 
@@ -1497,7 +1497,7 @@ def gem():
             return parse1_ternary_expression__left_operator(left, operator)
 
         my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
-        raise_unknown_line(8)
+        raise_unknown_line()
 
 
     @share
@@ -1557,7 +1557,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(1)
+                    raise_unknown_line()
 
                 return left
 
@@ -1573,7 +1573,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(2)
+                    raise_unknown_line()
 
                 return left
 
@@ -1589,7 +1589,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(3)
+                    raise_unknown_line()
 
                 return left
 
@@ -1605,7 +1605,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(4)
+                    raise_unknown_line()
 
                 return left
 
@@ -1621,7 +1621,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(5)
+                    raise_unknown_line()
 
                 return left
                     
@@ -1637,7 +1637,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(6)
+                    raise_unknown_line()
 
                 return left
 
@@ -1653,7 +1653,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(6)
+                    raise_unknown_line()
 
                 return left
 
@@ -1669,7 +1669,7 @@ def gem():
 
             if operator is none:
                 if qn() is none:
-                    raise_unknown_line(7)
+                    raise_unknown_line()
 
                 return left
 
@@ -1679,7 +1679,7 @@ def gem():
             wk(none)
 
         my_line('left: %r; operator: %r', left, operator)
-        raise_unknown_line(8)
+        raise_unknown_line()
 
 
     #
