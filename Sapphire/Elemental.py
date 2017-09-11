@@ -104,10 +104,22 @@ def gem():
 
 
     class KeywordAs(KeywordAndOperatorBase):
-        __slots__     = (())
-        display_name  = 'as'
-        is_keyword_as = true
-        keyword       = 'as'
+        __slots__                               = (())
+        display_name                            = 'as'
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_logical_or_expression         = true
+        is_end_of_multiply_expression           = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
+        is_end_of_unary_expression              = true
+        is_keyword_as                           = true
+        keyword                                 = 'as'
 
 
     class KeywordAssert(KeywordAndOperatorBase):
@@ -808,7 +820,7 @@ def gem():
                          'a' : conjure_identifier, 'b' : conjure_identifier, 'c' : conjure_identifier,
                          'd' : conjure_identifier, 'e' : conjure_identifier, 'f' : conjure_identifier,
                          'g' : conjure_identifier, 'h' : conjure_identifier, 'i' : conjure_identifier,
-                         'J' : conjure_identifier, 'k' : conjure_identifier, 'l' : conjure_identifier,
+                         'j' : conjure_identifier, 'k' : conjure_identifier, 'l' : conjure_identifier,
                          'm' : conjure_identifier, 'n' : conjure_identifier, 'o' : conjure_identifier,
                          'p' : conjure_identifier, 'q' : conjure_identifier, 'r' : conjure_identifier,
                          's' : conjure_identifier, 't' : conjure_identifier, 'u' : conjure_identifier,

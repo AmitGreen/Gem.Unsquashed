@@ -146,37 +146,38 @@ def gem():
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        keyword_with = conjure_keyword_with(m.group())
+        keyword = conjure_keyword_with(m.group())
 
         j = m.end()
 
         wi(j)
         wj(j)
 
-        left = parse1_atom()
+        left = parse1_ternary_expression()
 
-        if qn() is not none:
-            raise_unknown_line()
+        operator = qk()
 
-        while 7 is 7:
+        if operator is not none:
+            wk(none)
+        else:
             operator = tokenize_operator()
 
-            if operator.is_arguments_0:
-                left = CallExpression(left, operator)
-                continue
+        if operator.is_colon_newline:
+            return WithHeader_1(keyword, left, operator)
 
-            if operator.is_keyword_as:
-                break
-
-            if operator.is_colon_newline:
-                return WithHeader_1(keyword_with, left, operator)
-
+        if not operator.is_keyword_as:
             raise_unknown_line()
 
-        right      = parse1_atom()
-        operator_2 = tokenize_operator()
+        right = parse1_normal_expression()
+
+        operator_2 = qk()
+
+        if operator_2 is not none:
+            wk(none)
+        else:
+            operator_2 = tokenize_operator()
 
         if operator_2.is_colon_newline:
-            return WithHeader_2(keyword_with, left, operator, right, operator_2)
+            return WithHeader_2(keyword, left, operator, right, operator_2)
 
         raise_unknown_line()

@@ -7,6 +7,46 @@ def gem():
 
 
     @share
+    class Assert_2(Object):
+        __slots__ = ((
+            'keyword',                  #   KeywordAssert
+            'left',                     #   Expression
+            'comma',                    #   OperatorComma
+            'right',                    #   Expression
+            'newline',                  #   newline
+        ))
+
+
+        def __init__(t, keyword, left, comma, right, newline):
+            t.keyword = keyword
+            t.left    = left
+            t.comma   = comma
+            t.right   = right
+            t.newline = newline
+
+
+        def  __repr__(t):
+            return arrange('<Assert_2 %r %r %r %r>', t.keyword, t.left, t.comma, t.right, t.newline)
+
+
+        def display_token(t):
+            return arrange('<assert-2 %s %s %s %s %s>',
+                           t.keyword.display_token(),
+                           t.left   .display_token(),
+                           t.comma  .display_token(),
+                           t.right  .display_token(),
+                           t.newline.display_token())
+
+
+        def write(t, w):
+            w(t.keyword.s)
+            t.left .write(w)
+            t.comma.write(w)
+            t.right.write(w)
+            w(t.newline.s)
+
+
+    @share
     class AssignFragment(Object):
         __slots__ = ((
             'left',                     #   Expression+

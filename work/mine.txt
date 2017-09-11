@@ -22,7 +22,6 @@ gg.py -> ../Gem/Global.py
 h1pa.py -> ../Sapphire/Parse1Atom.py
 h1pc.py -> ../Sapphire/Parse1Call.py
 h1pe.py -> ../Sapphire/Parse1Expression.py
-
 h1pes.py -> ../Sapphire/Parse1ExpressionStatement.py
 h1pf.py -> ../Sapphire/Parse1Function.py
 h1pi.py -> ../Sapphire/Parse1Import.py
@@ -36,6 +35,7 @@ h1zn.py -> ../Sapphire/Tokenize1Name.py
 h1zo.py -> ../Sapphire/Tokenize1Operator.py
 h7pa.py -> ../Sapphire/Parse7.py
 h7pe.py -> ../Sapphire/Parse7Expression.py
+
 hb.py -> ../Sapphire/BinaryExpression.py
 hc.py -> ../Sapphire/Core.py
 hel.py -> ../Sapphire/Elemental.py
@@ -86,7 +86,6 @@ tma.py -> ../Tremolite/Main.py
 tmc.py -> ../Tremolite/Match.py
 tn.py -> ../Tremolite/Name.py
 tp.py -> ../Tremolite/Parse.py
-t.py -> test.py
 tu.py -> ../Tremolite/Build.py
 tw.py -> ../Tremolite/PatternWrapper.py
 tx.py -> ../Tremolite/Compile.py

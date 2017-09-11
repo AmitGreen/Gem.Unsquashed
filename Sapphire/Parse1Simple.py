@@ -18,17 +18,36 @@ def gem():
         wi(j)
         wj(j)
 
+        left = parse1_ternary_expression()
+
+        operator = qk()
+
+        if operator is none:
+            newline = qn()
+
+            if newline is none:
+                raise_unknown_line()
+
+            return Assert_1(keyword, left, newline)
+
+        wk(none)
+
+        if not operator.is_comma:
+            raise_unknown_line()
+
         right = parse1_ternary_expression()
 
-        if qk() is not none:
-            raise_unknown_line()
+        operator_2 = qk()
 
-        newline = qn()
+        if operator_2 is none:
+            newline = qn()
 
-        if newline is none:
-            raise_unknown_line()
+            if newline is none:
+                raise_unknown_line()
 
-        return Assert_1(keyword, right, newline)
+            return Assert_2(keyword, left, operator, right, newline)
+
+        raise_unknown_line()
 
 
     @share

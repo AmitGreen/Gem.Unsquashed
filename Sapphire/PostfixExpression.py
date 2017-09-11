@@ -13,6 +13,11 @@ def gem():
         ))
 
 
+        is__right_parenthesis__colon__newline = false
+        is_right_parenthesis                  = false
+        is_right_square_bracket               = false
+
+
         def __init__(t, left, operator):
             t.left     = left
             t.operator = operator
@@ -50,8 +55,6 @@ def gem():
         display_name                          = 'suffixed-atom'
         is__atom__or__special_operator        = true
         is_atom                               = true
-        is__right_parenthesis__colon__newline = false
-        is_right_parenthesis                  = false
 
 
     @share
@@ -61,8 +64,6 @@ def gem():
         is__atom__or__special_operator        = true
         is_atom                               = true
         is_identifier                         = true
-        is__right_parenthesis__colon__newline = false
-        is_right_parenthesis                  = false
 
 
     Identifier .suffix_meta = SuffixIdentifier
