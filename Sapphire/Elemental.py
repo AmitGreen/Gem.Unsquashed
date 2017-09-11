@@ -179,6 +179,12 @@ def gem():
         keyword      = 'except:'
 
 
+    class KeywordFinallyColon(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'finally:'
+        keyword      = 'finally:'
+
+
     class KeywordFor(KeywordAndOperatorBase):
         __slots__                         = (())
         display_name                      = 'for'
@@ -795,6 +801,7 @@ def gem():
     conjure_else_colon           = produce_conjure_by_name('keyword-else-colon',            KeywordElseColon) 
     conjure_equal_sign           = produce_conjure_by_name('operator-equal-sign',           OperatorEqualSign) 
     conjure_except_colon         = produce_conjure_by_name('keyword-except-colon',          KeywordExceptColon) 
+    conjure_finally_colon        = produce_conjure_by_name('keyword-finally-colon',         KeywordFinallyColon) 
     conjure_greater_than         = produce_conjure_by_name('operator-greater-than',         OperatorGreaterThan) 
     conjure_head_index           = produce_conjure_by_name('operator-head-index',           OperatorHeadIndex) 
     conjure_integer_divide       = produce_conjure_by_name('operator-integer-divide',       OperatorIntegerDivide) 
@@ -920,6 +927,7 @@ def gem():
         'conjure_else_colon',               conjure_else_colon,
         'conjure_equal_sign',               conjure_equal_sign,
         'conjure_except_colon',             conjure_except_colon,
+        'conjure_finally_colon',            conjure_finally_colon,
         'conjure_head_index',               conjure_head_index,
         'conjure_keyword_as',               conjure_keyword_as,
         'conjure_keyword_assert',           conjure_keyword_assert,

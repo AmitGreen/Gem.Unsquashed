@@ -73,6 +73,14 @@ def gem():
 
 
     @share
+    def parse1_statement_finally_colon(m):
+        if m.end('newline') is -1:
+            raise_unknown_line()
+
+        return conjure_finally_colon(m.group())
+
+
+    @share
     def parse1_statement_for(m):
         if m.end('newline') is not -1:
             raise_unknown_line()

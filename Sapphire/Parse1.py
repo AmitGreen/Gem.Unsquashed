@@ -73,9 +73,10 @@ def gem():
 
 
     find_parse1_colon_line = {
-                                 'else'   : parse1_statement_else_colon,
-                                 'except' : parse1_statement_except_colon,
-                                 'try'    : parse1_statement_try_colon,
+                                 'else'    : parse1_statement_else_colon,
+                                 'except'  : parse1_statement_except_colon,
+                                 'finally' : parse1_statement_finally_colon,
+                                 'try'     : parse1_statement_try_colon,
                              }.__getitem__
 
 

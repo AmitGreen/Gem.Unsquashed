@@ -130,5 +130,5 @@ def gem():
         if operator.is_modify_operator:
             return parse1_statement_modify__left__operator(indented, left, operator)
 
-        my_line('operator: %s', operator)
+        my_line('line: %d; operator: %s', ql(), operator)
         raise_unknown_line()

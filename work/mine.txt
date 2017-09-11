@@ -42,7 +42,6 @@ hem.py -> ../Sapphire/ExpressionMany.py
 hj.py -> ../Sapphire/JoinedToken.py
 hk.py -> ../Sapphire/BookcaseExpression.py
 hoe.py -> ../Sapphire/OtherExpression.py
-
 hpt.py -> ../Sapphire/Pattern.py
 hs.py -> ../Sapphire/Statement.py
 hu.py -> ../Sapphire/UnaryExpression.py
@@ -51,10 +50,8 @@ im.py -> ../Gem/Import.py
 in.py -> ../Gem/__init__.py
 io.py -> ../Gem/IO.py
 iv.py -> ../Ivory/Main.py
+
 jb.py -> ../Junk/Boot.py
-lr.txt -> ../OtherLicenses/README.txt
-l.txt -> log.txt
-m -> Makefile
 m.py -> ../Gem/Map.py
 o.py -> ../Gem/Output.py
 pa2.py -> ../Gem/Path2.py
@@ -80,7 +77,6 @@ sy.py -> ../Gem/System.py
 tb.py -> ../Gem/Traceback.py
 tcm.py -> ../Tremolite/CreateMatch.py
 tco.py -> ../Tremolite/Core.py
-tlp.txt -> ../Tremolite/LicenseTemplate.txt
 tma.py -> ../Tremolite/Main.py
 tmc.py -> ../Tremolite/Match.py
 tn.py -> ../Tremolite/Name.py

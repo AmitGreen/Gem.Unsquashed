@@ -112,10 +112,10 @@ def gem():
 
     @share
     def parse1_statement_raise(m):
-        if m.end('newline') is not -1:
-            raise_unknown_line()
-
         keyword = conjure_keyword_raise(m.group())
+
+        if m.end('newline') is not -1:
+            return keyword
 
         j = m.end()
 

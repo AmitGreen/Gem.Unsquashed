@@ -39,6 +39,7 @@ def gem():
         keyword_as          = NAME('as',                  'as')
         keyword_else        = NAME('else',                'else')
         keyword_except      = NAME('except',              'except')
+        keyword_finally     = NAME('finally',             'finally')
         keyword_for         = NAME('for',                 'for')
         keyword_if          = NAME('if',                  'if')
         keyword_import      = NAME('import',              'import')
@@ -169,8 +170,16 @@ def gem():
                 + Q(
                       'something',
                       (
-                            G('keyword', keyword_else | keyword_except | keyword_try) + ow + colon + ow
-                          | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must also preceed 'name'
+                            #
+                            #   Note:
+                            #       Both 'keyword' and 'quote' must preceed 'atom', since otherwise they would
+                            #       [partially] match 'atom'
+                            #
+                            G(
+                                'keyword',
+                                keyword_else | keyword_except | keyword_finally | keyword_try,
+                            ) + ow + colon + ow
+                          | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow
                           | G('atom', number | '@' | name) + ow
                           | G('operator', ANY_OF(right_parenthesis, '-', right_square_bracket, right_brace)) + ow
                           | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
