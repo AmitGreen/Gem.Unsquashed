@@ -156,7 +156,7 @@ def gem():
         if m is none:
             raise_unknown_line()
 
-        return StatementImport(
+        return StatementImport_1(
                    KeywordImport(m0.group('indented') + m0.group('keyword__ow')),
                    conjure_identifier(m.group('name1')),
                    conjure_token_newline(m.group('ow_comment_newline')),

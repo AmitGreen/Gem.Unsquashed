@@ -64,6 +64,12 @@ def gem():
 
 
     @share
+    class ComprehensionIfExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = 'comprehension-if'
+
+
+    @share
     class CompareContainsExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'in'

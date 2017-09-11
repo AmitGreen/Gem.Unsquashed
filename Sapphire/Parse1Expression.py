@@ -101,9 +101,6 @@ def gem():
 
                                 operator = tokenize_operator()
 
-                                if qn() is not none:
-                                    raise_unknown_line()
-
                                 if not operator.is_postfix_operator:
                                     wk(operator)
 
@@ -1796,38 +1793,43 @@ def gem():
     #
     #   17.  Comprehension-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist_comp')
     #
-    def parse1_comprehension_expression__left_operator(left, for_operator):
-        assert for_operator.is_keyword_for
+    def parse1_comprehension_expression__left_operator(left, operator):
+        assert operator.is_keyword_for
 
-        middle = parse1_normal_expression_list()
+        while 7 is 7:
+            if operator.is_keyword_for:
+                middle = parse1_normal_expression_list()
 
-        in_operator = qk()
+                in_operator = qk()
 
-        wk(none)
+                wk(none)
 
-        if not in_operator.is_keyword_in:
-            my_line('left: %r; for_operator: %r; middle: %r; in_operator: %r; s: %s',
-                    left, for_operator, middle, in_operator, portray_string(qs()[qj():]))
+                if not in_operator.is_keyword_in:
+                    my_line('left: %r; operator: %r; middle: %r; in_operator: %r; s: %s',
+                            left, operator, middle, in_operator, portray_string(qs()[qj():]))
 
-            raise_unknown_line()
+                    raise_unknown_line()
 
-        left = ComprehensionForExpression(left, for_operator, middle, in_operator, parse1_boolean_or_expression())
+                left = ComprehensionForExpression(left, operator, middle, in_operator, parse1_boolean_or_expression())
 
-        operator = qk()
+                operator = qk()
 
-        if operator is none:
-            if qn() is none:
-                raise_unknown_line()
+                if (operator is none) or (operator.is_end_of_comprehension_expression_list):
+                    return left
 
-            return left
+                wk(none)
 
-        if operator.is_end_of_comprehension_expression_list:
-            return left
+            if operator.is_keyword_if:
+                left = ComprehensionIfExpression(left, operator, parse1_boolean_or_expression())
 
-        wk(none)
+                operator = qk()
 
-        raise_unknown_line
+                if (operator is none) or (operator.is_end_of_comprehension_expression_list):
+                    return left
 
+                wk(none)
+
+            assert (operator.is_keyword_for) or (operator.is_keyword_if)
 
 
     @share

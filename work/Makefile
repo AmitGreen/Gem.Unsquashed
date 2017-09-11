@@ -297,5 +297,6 @@ test:
             h7pa.py h7pe.py \
             hb.py hc.py hel.py hem.py hj.py hk.py hoe.py hpt.py hs.py hu.py hx.py \
         im.py in.py io.py iv.py \
+        jb.py \
             >test.py
 	bash run.sh
