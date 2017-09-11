@@ -58,6 +58,12 @@ def gem():
 
 
     @share
+    class CommaExpression_1(BinaryExpression):
+        __slots__    = (())
+        display_name = ','
+
+
+    @share
     class CompareContainsExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'in'
@@ -82,15 +88,15 @@ def gem():
 
 
     @share
-    class CompareIdentityExpression(BinaryExpression):
+    class CompareGreaterThanExpression(BinaryExpression):
         __slots__    = (())
-        display_name = 'is'
+        display_name = '>'
 
 
     @share
-    class CommaExpression_1(BinaryExpression):
+    class CompareIdentityExpression(BinaryExpression):
         __slots__    = (())
-        display_name = ','
+        display_name = 'is'
 
 
     @share
@@ -186,6 +192,7 @@ def gem():
     OperatorCompareEqual   .expression_meta = CompareEqualExpression
     OperatorCompareNotEqual.expression_meta = CompareNotEqualExpression
     OperatorDivide         .expression_meta = DivideExpression
+    OperatorGreaterThan    .expression_meta = CompareGreaterThanExpression
     OperatorIntegerDivide  .expression_meta = IntegerDivideExpression
     OperatorLessThanOrEqual.expression_meta = LessThanOrEqualExpression
     OperatorMinusSign      .expression_meta = SubtractExpression

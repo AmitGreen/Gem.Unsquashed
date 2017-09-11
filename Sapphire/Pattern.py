@@ -35,6 +35,7 @@ def gem():
         compare_equal       = NAME('compare_equal',       '==')
         dot                 = NAME('dot',                 '.')
         equal_sign          = NAME('equal_sign',          '=')
+        greater_than_sign   = NAME('greater_than_sign',   '>')
         keyword_as          = NAME('as',                  'as')
         keyword_else        = NAME('else',                'else')
         keyword_except      = NAME('except',              'except')
@@ -199,16 +200,11 @@ def gem():
                       'operator',
                        (
                              (
-                                   ANY_OF(
-                                       percent_sign,
-                                       plus_sign,
-                                       minus_sign,
-                                       less_than_sign,
-                                       equal_sign,
-                                       logical_or_sign,
-                                   )
-                                 | star_sign  + P(star_sign)
-                                 | slash_sign + P(slash_sign)
+                                   ANY_OF(percent_sign, plus_sign, minus_sign, equal_sign, logical_or_sign)
+                                 | greater_than_sign + P(greater_than_sign)
+                                 | less_than_sign    + P(less_than_sign)
+                                 | star_sign         + P(star_sign)
+                                 | slash_sign        + P(slash_sign)
                              ) + P(equal_sign)
                            | ANY_OF(
                                  colon, comma,

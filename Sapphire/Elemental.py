@@ -464,6 +464,34 @@ def gem():
         keyword                                 = '='
 
 
+    @share
+    class OperatorGreaterThan(KeywordAndOperatorBase):
+        __slots__                        = (())
+        display_name                     = '>'
+        is_compare_operator              = true
+        is_end_of_arithmetic_expression  = true
+        is_end_of_logical_or_expression  = true
+        is_end_of_multiply_expression    = true
+        is_end_of_normal_expression_list = true
+        is_end_of_normal_expression      = true
+        is_end_of_unary_expression       = true
+        keyword                          = '>'
+
+
+        def __repr__(t):
+            if '\n' in t.s:
+                return arrange('{%s}', portray_string(t.s))
+
+            return arrange('{%s}', t.s)
+
+
+        def display_token(t):
+            if t.s == ' > ':
+                return '{>}'
+
+            return arrange('{%s %s}', t.display_name, portray_string(t.s))
+
+
     class OperatorHeadIndex(KeywordAndOperatorBase):
         __slots__                               = (())
         display_name                            = ':]'
@@ -716,14 +744,15 @@ def gem():
     conjure_else_colon           = produce_conjure_by_name('keyword-else-colon',            KeywordElseColon) 
     conjure_equal_sign           = produce_conjure_by_name('operator-equal-sign',           OperatorEqualSign) 
     conjure_except_colon         = produce_conjure_by_name('keyword-except-colon',          KeywordExceptColon) 
+    conjure_greater_than         = produce_conjure_by_name('operator-greater-than',         OperatorGreaterThan) 
     conjure_head_index           = produce_conjure_by_name('operator-head-index',           OperatorHeadIndex) 
     conjure_integer_divide       = produce_conjure_by_name('operator-integer-divide',       OperatorIntegerDivide) 
     conjure_keyword_and          = produce_conjure_by_name('keyword-and',                   KeywordAnd) 
     conjure_keyword_as           = produce_conjure_by_name('keyword-as',                    KeywordAs) 
     conjure_keyword_assert       = produce_conjure_by_name('keyword-assert',                KeywordAssert) 
     conjure_keyword_delete       = produce_conjure_by_name('keyword-delete',                KeywordDelete) 
-    conjure_keyword_else         = produce_conjure_by_name('keyword-else',                  KeywordElse) 
     conjure_keyword_else_if      = produce_conjure_by_name('keyword-else-if',               KeywordElseIf) 
+    conjure_keyword_else         = produce_conjure_by_name('keyword-else',                  KeywordElse) 
     conjure_keyword_for          = produce_conjure_by_name('keyword-for',                   KeywordFor) 
     conjure_keyword_function     = produce_conjure_by_name('keyword-function',              KeywordFunction) 
     conjure_keyword_if           = produce_conjure_by_name('keyword-if',                    KeywordIf) 
@@ -750,6 +779,7 @@ def gem():
     conjure_right_square_bracket = produce_conjure_by_name('operator-right-square-bracket', OperatorRightSquareBracket) 
     conjure_star_sign            = produce_conjure_by_name('operator-star-sign',            OperatorStarSign) 
     conjure_try_colon            = produce_conjure_by_name('keyword-try-colon',             KeywordTryColon) 
+
 
     find_atom_type = {
                          '"' : DoubleQuote,
@@ -805,6 +835,7 @@ def gem():
                                          '<='   : conjure_less_than_or_equal,
                                          '='    : conjure_equal_sign,
                                          '=='   : conjure_compare_equal,
+                                         '>'    : conjure_greater_than,
                                          'and'  : conjure_keyword_and,
                                          'as'   : conjure_keyword_as,
                                          'else' : conjure_keyword_else,
