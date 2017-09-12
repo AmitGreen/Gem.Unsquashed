@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse2')
 def gem():
-    show = 0
+    show = 7
 
 
     require_gem('Sapphire.Core')
@@ -31,12 +31,12 @@ def gem():
     require_gem('Sapphire.UnaryExpression')
 
 
-    find_parse1_colon_line = {
-                                 'else'    : parse1_statement_else_colon,
-                                 'except'  : parse1_statement_except_colon,
-                                 'finally' : parse1_statement_finally_colon,
-                                 'try'     : parse1_statement_try_colon,
-                             }.__getitem__
+    find_conjure_keyword_colon = {
+                                     'else'    : conjure_else_colon,
+                                     'except'  : conjure_except_colon,
+                                     'finally' : conjure_finally_colon,
+                                     'try'     : conjure_try_colon,
+                                 }.__getitem__
 
 
     lookup_parse1_line = {
@@ -120,10 +120,13 @@ def gem():
                     keyword = m.group('keyword')
 
                     if keyword is not none:
-                        append(find_parse1_colon_line(keyword)(m))
+                        if m.end('newline') is not -1:
+                            append(find_conjure_keyword_colon(keyword)(qs()))
 
-                        assert qd() is 0
-                        continue
+                            assert qd() is 0
+                            continue
+
+                        raise_unknown_line()
 
                     if m.start('something') is not -1:
                         j = m.end('indented')

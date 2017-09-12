@@ -3,9 +3,27 @@
 #
 @gem('Gem.System')
 def gem():
+    #
+    #   Types
+    #
+    Slice = PythonBuiltIn.slice
+
+
+    #
+    #   Values
+    #
+    maximum_integer = PythonSystem.maxint
+ 
+
+    #
+    #   Functions
+    #
     python_frame = PythonSystem._getframe
 
 
+    #
+    #   Functions with bound parameters
+    #
     caller_frame_0 = Method(python_frame, 0)
     caller_frame_1 = Method(python_frame, 1)
 
@@ -32,11 +50,12 @@ def gem():
                 )
 
         flush_standard_output()
- 
+
 
     export(
         'caller_frame_1',   caller_frame_1,
         'program_exit',     PythonSystem.exit,
         'python_frame',     PythonSystem._getframe,
         'python_version',   PythonSystem.version,
+        'slice_all',        Slice(0, maximum_integer),
     )

@@ -11,6 +11,12 @@ def gem():
     query = tokenizer.__getitem__
     write = tokenizer.__setitem__
 
+    line_tokens = []
+
+    la = line_tokens.append
+    lt = Method(Tuple, line_tokens)
+    lz = Method(line_tokens.__delitem__, slice_all)
+
     qs = Method(query, 0)
     qd = Method(query, 1)
     qi = Method(query, 2)
@@ -88,6 +94,7 @@ def gem():
                 if type(e) is not UnknownLineException:
                     return
 
+                lz()
                 wd0()
                 t.append(e.unknown_line)
 
@@ -140,6 +147,7 @@ def gem():
 
                 yield s
 
+            lz()
             wd0()
             ws(none)
             wi0()
@@ -172,6 +180,10 @@ def gem():
 
     export(
         'parse_context',    parse_context,
+
+        'la',               la,
+        'lt',               lt,
+        'lz',               lz,
 
         'qd',               qd,
         'qi',               qi,
