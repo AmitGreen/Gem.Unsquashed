@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse2')
 def gem():
-    show = 7
+    show = 0
 
 
     require_gem('Sapphire.Core')
@@ -38,6 +38,13 @@ def gem():
                                      'try'     : conjure_try_colon,
                                  }.__getitem__
 
+
+    find_parse1_colon_line = {
+                                 'else'    : parse1_statement_else_colon,
+                                 'except'  : parse1_statement_except_colon,
+                                 'finally' : parse1_statement_finally_colon,
+                                 'try'     : parse1_statement_try_colon,
+                             }.__getitem__
 
     lookup_parse1_line = {
                              '@'      : parse1_statement_decorator_header,
@@ -116,69 +123,122 @@ def gem():
 
                         assert qd() is 0
                         continue
+                    else:
+                        keyword = m.group('keyword')
 
-                    keyword = m.group('keyword')
+                        if keyword is not none:
+                            if m.end('newline') is not -1:
+                                append(find_conjure_keyword_colon(keyword)(qs()))
 
-                    if keyword is not none:
-                        if m.end('newline') is not -1:
-                            append(find_conjure_keyword_colon(keyword)(qs()))
+                                assert qd() is 0
+                                continue
+
+                            #append(find_parse1_colon_line(keyword)(m))
+                            #assert qd() is 0
+                            #continue
+                        elif m.start('something') is not -1:
+                            j = m.end('indented')
+
+                            wi(j)
+                            wj(j)
+
+                            append(
+                                parse1_statement_expression__atom(
+                                    m.group('indented'),
+                                    analyze_atom(m)
+                                ),
+                            )
 
                             assert qd() is 0
                             continue
+                        else:
+                            [comment, newline] = m.group('comment', 'newline')
+
+                            if newline is none:
+                                assert comment is none
+
+                                raise_unknown_line()
+                            elif comment is not none:
+                                indented = m.group('indented')
+
+                                if indented is '':
+                                    append(Comment(comment, newline))
+
+                                    continue
+
+                                append(IndentedComment(indented, comment, newline))
+                                continue
+                            else:
+                                append(EmptyLine(m.group()))
+                                continue
+
+                    j = m.end()
+
+                    wi(j)
+                    wj(j)
+
+                    while 7 is 7:
+                        m = atom_match(qs(), qj())
+
+                        if m is none:
+                            my_line('full: %r; s: %r', portray_string(qs()), portray_string(qs()[qj() :]))
+                            raise_unknown_line()
+
+                        token = analyze_atom(m)
+
+                        if token.has_newline:
+                            raise_unknown_line()
+
+                        la(token)
+
+                        my_line('qs: %r', portray_string(qs()))
+                        my_line('token: %r', token)
 
                         raise_unknown_line()
 
-                    if m.start('something') is not -1:
-                        j = m.end('indented')
 
-                        wi(j)
-                        wj(j)
+                    if token.is_atom:
+                        pass
 
-                        append(
-                            parse1_statement_expression__atom(
-                                m.group('indented'),
-                                analyze_atom(m)
-                            ),
-                        )
+                    if token.is_left_parenthesis:
+                        return parse1__parenthesized_expression__left_parenthesis(token)
 
-                        assert qd() is 0
-                        continue
+                    if token.is_left_square_bracket:
+                        return parse1__list_expression__left_square_bracket(token)
 
-                    [comment, newline] = m.group('comment', 'newline')
+                    if token.is_left_brace:
+                        return parse1_map__left_brace(token)
 
-                    if newline is none:
-                        assert comment is none
+                    if token.is_keyword_not:
+                        return parse1_not_expression__operator(token)
 
-                        raise_unknown_line()
+                    if token.is_minus_sign:
+                        return parse1_negative_expression__operator(token)
 
-                    if comment is not none:
-                        indented = m.group('indented')
+                    if token.is_tilde_sign:
+                        return parse1_twos_complement_expression__operator(token)
 
-                        if indented is '':
-                            append(Comment(comment, newline))
+                    if token.is_star_sign:
+                        return TupleArgument(token, parse1_ternary_expression())
 
-                            continue
+                    my_line('token: %r', token)
+                    raise_unknown_line()
 
-                        append(IndentedComment(indented, comment, newline))
-                        continue
+        if show:
+            for v in many:
+                line('%s', v.display_token())
 
-                    append(EmptyLine(m.group()))
+        with create_StringOutput() as f:
+            w = f.write
 
-                if show:
-                    for v in many:
-                        line('%s', v.display_token())
+            for v in many:
+                v.write(w)
 
-                with create_StringOutput() as f:
-                    w = f.write
+        if data != f.result:
+            with create_DelayedFileOutput('oops.txt') as oops:
+                oops.write(f.result)
 
-                    for v in many:
-                        v.write(w)
+            raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')
 
-                if data != f.result:
-                    with create_DelayedFileOutput('oops.txt') as oops:
-                        oops.write(f.result)
-
-                    raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')
-
-                line('Passed#2: identical dump from parse tree.  Total: %d line%s',
-                     length(many), (''   if length(many) is 0 else   's'))
+        line('Passed#2: identical dump from parse tree.  Total: %d line%s',
+             length(many), (''   if length(many) is 0 else   's'))

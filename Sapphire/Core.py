@@ -17,8 +17,8 @@ def gem():
 
     from Gem import create_DelayedFileOutput, create_StringOutput, produce_conjure_by_name
     from Gem import program_exit, read_text_from_path, print_exception_chain
-    from Pearl import conjure_identifier, conjure_token_newline, conjure_whitespace, Identifier, parse_context
-    from Pearl import qd, qi, qj, qk, ql, qn, qs, raise_unknown_line, Token
+    from Pearl import conjure_identifier, conjure_token_newline, conjure_whitespace, conjure_whitespace_line
+    from Pearl import Identifier, la, parse_context, qd, qi, qj, qk, ql, qn, qs, raise_unknown_line, Token
     from Pearl import wd, wd0, wd1, wi, wj, wk, wn, ws, z_initialize
 
 
@@ -36,11 +36,13 @@ def gem():
         'conjure_identifier',           conjure_identifier,
         'conjure_token_newline',        conjure_token_newline,
         'conjure_whitespace',           conjure_whitespace,
+        'conjure_whitespace_line',      conjure_whitespace_line,
         'create_DelayedFileOutput',     create_DelayedFileOutput,
         'create_StringOutput',          create_StringOutput,
+        'la',                           la,
         'print_exception_chain',        print_exception_chain,
-        'program_exit',                 program_exit,
         'produce_conjure_by_name',      produce_conjure_by_name,
+        'program_exit',                 program_exit,
         'qd',                           qd,
         'qi',                           qi,
         'qj',                           qj,
@@ -50,13 +52,13 @@ def gem():
         'qs',                           qs,
         'raise_unknown_line',           raise_unknown_line,
         'read_text_from_path',          read_text_from_path,
-        'wd',                           wd,
         'wd0',                          wd0,
         'wd1',                          wd1,
+        'wd',                           wd,
         'wi',                           wi,
         'wj',                           wj,
-        'wn',                           wn,
         'wk',                           wk,
+        'wn',                           wn,
         'ws',                           ws,
         'z_initialize',                 z_initialize,
 

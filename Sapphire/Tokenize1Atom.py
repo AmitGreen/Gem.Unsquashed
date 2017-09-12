@@ -42,7 +42,12 @@ def gem():
                 r = find_atom_type(atom_s[0])(atom_s)
 
                 if qi() != qj():
-                    r = r.prefix_meta(conjure_whitespace(qs()[qi() : qj()]), r)
+                    prefix = qs()[qi() : qj()]
+
+                    r = r.prefix_meta(
+                            (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
+                            r,
+                        )
 
                 wi(m.end('atom'))
                 wj(m.end())
@@ -175,7 +180,12 @@ def gem():
                 r = find_atom_type(s[quote_start])(s[j : quote_end])
 
                 if qi() != j:
-                    r = r.prefix_meta(conjure_whitespace(s[qi() : j]), r)
+                    prefix = s[qi() : j]
+
+                    r = r.prefix_meta(
+                            (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
+                            r,
+                        )
 
                 wi(quote_end)
                 wj(m.end())
@@ -219,13 +229,15 @@ def gem():
             #       Uses "qs()" intead of "s"
             #
             if qd() is not 0:
-                suffix = conjure_whitespace(qs()[m.end('atom') : ])
+                suffix = conjure_whitespace_line(qs()[m.end('atom') : ])
 
                 if qi() == qj():
                     r = r.suffix_meta(r, suffix)
                 else:
+                    prefix = qs()[qi() : qj()]
+
                     r = r.bookcase_meta(
-                            conjure_whitespace(qs()[qi() : qj()]),
+                            (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
                             r,
                             suffix,
                         )
@@ -239,7 +251,12 @@ def gem():
             if qi() == qj():
                 return r
 
-            return r.prefix_meta(conjure_whitespace(qs()[qi() : qj()]), r)
+            prefix = qs()[qi() : qj()]
+
+            return r.prefix_meta(
+                       (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
+                       r,
+                   )
             #</similiar-to>
 
         operator_s = m.group('operator')
@@ -445,13 +462,15 @@ def gem():
             #       Uses "s" intead of "qs()"
             #
             if qd() is not 0:
-                suffix = conjure_whitespace(s[quote_end : ])
+                suffix = conjure_whitespace_line(s[quote_end : ])
 
                 if qi() == qj():
                     r = r.suffix_meta(r, suffix)
                 else:
+                    prefix = s[qi() : qj()]
+
                     r = r.bookcase_meta(
-                            conjure_whitespace(s[qi() : qj()]),
+                            (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
                             r,
                             suffix,
                         )
@@ -465,7 +484,12 @@ def gem():
             if qi() == qj():
                 return r
 
-            return r.prefix_meta(conjure_whitespace(qs()[qi() : qj()]), r)
+            prefix = s[qi() : qj()]
+
+            return r.prefix_meta(
+                       (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
+                       r,
+                   )
             #</similiar-to>
 
         raise_unknown_line()

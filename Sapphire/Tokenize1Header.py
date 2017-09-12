@@ -114,7 +114,12 @@ def gem():
 
             if star_end is -1:
                 if qi() != j:
-                    r = PrefixIdentifier(conjure_whitespace(s[qi() : j]), r)
+                    prefix = s[qi() : j]
+
+                    r = PrefixIdentifier(
+                            (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
+                            r,
+                        )
 
                 wi(m.end('name'))
                 wj(m.end())
