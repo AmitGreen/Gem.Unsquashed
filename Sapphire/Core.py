@@ -66,5 +66,4 @@ def gem():
         #
         'parse_context',                parse_context,
         'tuple_of_2_nones',             ((none, none)),
-        'tuple_of_3_nones',             ((none, none, none)),
     )

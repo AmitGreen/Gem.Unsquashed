@@ -276,60 +276,6 @@ def gem():
 
 
         #
-        #   Expressions 7
-        #
-        MATCH(
-            'argument7_1_match',
-            (
-                  (G(name) | G(number) | G(single_quote))
-                + G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',', '[')) + OLD__middle_ow)        #   ]
-            )
-        )
-
-        MATCH(
-            'argument7_1A_match',
-            G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',', '[')) + OLD__middle_ow)              #   ]
-        )
-
-        MATCH(
-            'argument7_2_match',
-            (
-                  (G(name) | G(number) | G(single_quote))
-                + G('operator__ow', ow + G('operator', ANY_OF('(', ')', ',')) + OLD__middle_ow)
-            ),
-        )
-
-        MATCH(
-            'argument7_postfix_match',
-            G('operator__ow', ow + G('operator', ANY_OF(right_parenthesis, comma)) + OLD__middle_ow)
-        )
-
-        MATCH(
-            'index_1_match',
-            (
-                  (G(name) | G(number))
-                + G('operator__ow', ow + G('operator', ANY_OF(']')) + ow)
-            )
-        )
-
-        MATCH(
-            'statement_expression_match',
-            (
-                  P(G(ow_dot_ow) + G('right', name))
-                + G('operator__ow', ow + G('operator', ANY_OF('(')) + ow)
-                + P(G(name) | G(number) | G(single_quote))
-                + P(
-                        #   (
-                        G('right_parenthesis', ow + ')')
-                      + Q(ow_comment_newline)
-                  )
-            )
-        )
-
-        FULL_MATCH('statement_postfix_match', G(ow_comment_newline))
-
-
-        #
         #   Statements - Parse 1
         #
         MATCH(
@@ -404,68 +350,6 @@ def gem():
                         G('operator', period | keyword_as | comma) + ow
                       | comment_newline
                   )
-            ),
-        )
-
-
-        #
-        #   Statements - Parse 7
-        #
-        MATCH(
-            'line7_match',
-            G('indented', ow)
-                + (
-                        G__keyword__ow + Q('newline_1', LINEFEED)
-                      | G(name)
-                      | P(pound_G_comment) + G('newline_2', LINEFEED)
-                  )
-        )
-
-        FULL_MATCH(
-            'class7_match',
-            (
-                  G(name1)
-                + G('left_parenthesis', ow__left_parenthesis__ow)
-                + G(name2)
-                + G(ow__right_parenthesis__colon__ow)
-                + G(comment_newline)
-            ),
-        )
-
-        FULL_MATCH(
-            'define7_match',
-            (
-                  G(name1)
-                + G('left_parenthesis', ow__left_parenthesis__ow)
-                + Q(name2)
-                + G(ow__right_parenthesis__colon__ow)
-                + G(comment_newline)
-            ),
-        )
-
-        MATCH(
-            'from7_1_match',
-            (
-                  G(name1) + P(G(ow_dot_ow) + G(name2))
-                + G(w_import_w) + G(name3)
-                + G(w_as_w) + G(name4)
-                + (G(ow_comma_ow) | G(ow_comment_newline))
-            ),
-        )
-
-        MATCH(
-            'from_2_match',
-            G(name1) + G(w_as_w) + G(name2) + (G(ow_comma_ow) | G(ow_comment_newline)),
-        )
-
-        FULL_MATCH('import7_match', G(name1) + G(ow_comment_newline))
-
-        FULL_MATCH(
-            'expression_match',
-            (
-                  G(name)
-                + P(G('left_parenthesis', ow__left_parenthesis__ow) + P(G(single_quote)) + G(OLD__right_parenthesis))
-                + G(ow_comment_newline)
             ),
         )
 

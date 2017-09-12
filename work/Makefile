@@ -64,7 +64,7 @@ SAPPHIRE_FILES = \
     ../Sapphire/Parse1.py ../Sapphire/Parse1Atom.py ../Sapphire/Tokenize1Header.py ../Sapphire/Parse1Call.py \
         ../Sapphire/Parse1Complex.py ../Sapphire/Parse1Expression.py ../Sapphire/Parse1ExpressionStatement.py \
         ../Sapphire/Parse1From.py ../Sapphire/Parse1Function.py ../Sapphire/Parse1Import.py \
-        ../Sapphire/Parse1Simple.py ../Sapphire/Parse7.py ../Sapphire/Parse7Expression.py \
+        ../Sapphire/Parse1Simple.py \
         ../Sapphire/PostfixExpression.py \
     ../Sapphire/Pattern.py \
     ../Sapphire/Statement.py \
@@ -130,7 +130,6 @@ clean:
 	rm -f gd.py gg.py
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
-	rm -f   h7pa.py h7pe.py
 	rm -f   hb.py hc.py hel.py hem.py hj.py hk.py hma.py hmc.py hoe.py hpt.py hs.py hu.py hx.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
@@ -198,8 +197,6 @@ links:
 	ln -s ../Sapphire/Tokenize1Header.py            h1zh.py
 	ln -s ../Sapphire/Tokenize1Name.py              h1zn.py
 	ln -s ../Sapphire/Tokenize1Operator.py          h1zo.py
-	ln -s ../Sapphire/Parse7.py                     h7pa.py
-	ln -s ../Sapphire/Parse7Expression.py           h7pe.py
 	ln -s ../Sapphire/BinaryExpression.py           hb.py
 	ln -s ../Sapphire/Core.py                       hc.py
 	ln -s ../Sapphire/Elemental.py                  hel.py
