@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Parse1')
+@gem('Sapphire.Parse2')
 def gem():
     show = 0
 
@@ -62,7 +62,7 @@ def gem():
 
 
     @share
-    def parse1_python_from_path(path):
+    def parse2_python_from_path(path):
         data = read_text_from_path(path)
 
         parse_context = z_initialize(data)
@@ -177,5 +177,5 @@ def gem():
 
                     raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')
 
-                line('Passed#1: identical dump from parse tree.  Total: %d line%s',
+                line('Passed#2: identical dump from parse tree.  Total: %d line%s',
                      length(many), (''   if length(many) is 0 else   's'))

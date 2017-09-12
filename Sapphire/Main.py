@@ -25,7 +25,7 @@ def gem():
     require_gem('Sapphire.Pattern')
 
 
-    depth = 1
+    depth = 99
 
 
     @share
@@ -40,6 +40,11 @@ def gem():
                 require_gem('Sapphire.Parse1')                      #   Must be after 'create_sapphire_match'
 
                 parse1_python_from_path('test.py')
+
+            if (depth == 2) or (depth == 99):
+                require_gem('Sapphire.Parse2')                      #   Must be after 'create_sapphire_match'
+
+                parse2_python_from_path('test2.py')
         except:
             with except_any_clause() as e:
                 print_exception_chain(e)

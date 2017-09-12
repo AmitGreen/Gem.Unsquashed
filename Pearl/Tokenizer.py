@@ -68,7 +68,7 @@ def gem():
 
 
         def __enter__(t):
-            assert t.cadence.is_initialized_exited_or_exception
+            assert t.cadence.is_initialized_exited_exception_or_reuse
 
             t.cadence = cadence_entered
 
@@ -99,15 +99,20 @@ def gem():
 
             while t.cadence is not cadence_exited:
                 yield loop
+
                 loop += 1
 
 
         def reset(t, iterate_lines):
             assert t.cadence.is_initialized_exited_or_exception
 
+            t.cadence = cadence_exception
+
             del t.many[:]
 
             t.iterate_lines = iterate_lines
+
+            t.cadence = cadence_reuse
 
             return t
 
@@ -135,10 +140,10 @@ def gem():
 
                 yield s
 
-            wd(none)
+            wd0()
             ws(none)
-            wi(none)
-            wj(none)
+            wi0()
+            wj0()
             wl(none)
             wk(none)
             wn(none)

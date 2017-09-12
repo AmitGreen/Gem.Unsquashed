@@ -7,6 +7,48 @@ def gem():
 
 
     @share
+    def parse1_statement_decorator_header(m):
+        if m.end('newline') is not -1:
+            raise_unknown_line()
+
+        operator_at_sign = OperatorAtSign(m.group())
+        s                = qs()
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
+
+        identifier = tokenize_name()
+        newline    = qn()
+
+        if newline is not none:
+            return DecoratorHeader(operator_at_sign, identifier, newline)
+
+        operator = tokenize_operator()
+
+        if operator.is_arguments_0:
+            newline = qn()
+
+            if newline is none:
+                raise_unknown_line()
+
+            return DecoratorHeader(operator_at_sign, CallExpression(identifier, operator), newline)
+
+        if not operator.is_left_parenthesis:
+            raise_unknown_line()
+
+        call = parse1_call_expression__left__operator(identifier, operator)
+
+        newline = qn()
+
+        if newline is none:
+            raise_unknown_line()
+
+        return DecoratorHeader(operator_at_sign, call, newline)
+
+
+    @share
     def parse1_statement_assert(m):
         keyword = conjure_keyword_assert(m.group())
 

@@ -65,6 +65,7 @@ SAPPHIRE_FILES = \
         ../Sapphire/Parse1Complex.py ../Sapphire/Parse1Expression.py ../Sapphire/Parse1ExpressionStatement.py \
         ../Sapphire/Parse1From.py ../Sapphire/Parse1Function.py ../Sapphire/Parse1Import.py \
         ../Sapphire/Parse1Simple.py \
+        ../Sapphire/Parse2.py \
         ../Sapphire/PostfixExpression.py \
     ../Sapphire/Pattern.py \
     ../Sapphire/Statement.py \
@@ -130,6 +131,7 @@ clean:
 	rm -f gd.py gg.py
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
+	rm -f   h2p.py
 	rm -f   hb.py hc.py hel.py hem.py hj.py hk.py hma.py hmc.py hoe.py hpt.py hs.py hu.py hx.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
@@ -140,7 +142,7 @@ clean:
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
-	rm -f t.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
+	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f zc.py ze.py zj.py zm.py zpa.py zps.py zpt.py zso.py
 
 
@@ -197,6 +199,7 @@ links:
 	ln -s ../Sapphire/Tokenize1Header.py            h1zh.py
 	ln -s ../Sapphire/Tokenize1Name.py              h1zn.py
 	ln -s ../Sapphire/Tokenize1Operator.py          h1zo.py
+	ln -s ../Sapphire/Parse2.py                     h2p.py
 	ln -s ../Sapphire/BinaryExpression.py           hb.py
 	ln -s ../Sapphire/Core.py                       hc.py
 	ln -s ../Sapphire/Elemental.py                  hel.py
@@ -242,7 +245,8 @@ links:
 	ln -s ../Gem/StringOutput.py                    so.py
 	ln -s ../Gem/SimpleStringIO.py                  ssio.py
 	ln -s ../Gem/System.py                          sy.py
-	ln -s test.py                                   t.py
+	ln -s test2.py                                  t.py
+	ln -s test.py                                   t1.py
 	ln -s ../Gem/Traceback.py                       tb.py
 	ln -s ../Tremolite/CreateMatch.py               tcm.py
 	ln -s ../Tremolite/Core.py                      tco.py

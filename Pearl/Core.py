@@ -12,6 +12,7 @@ def gem():
 
 
     from Gem import cadence_constructing, cadence_entered, cadence_exception, cadence_exited, cadence_initialized
+    from Gem import cadence_reuse
     from Gem import caller_frame_1, Exception, gem_global
     from Gem import path_basename,  produce_cache_functions, produce_conjure_by_name
 
@@ -39,5 +40,6 @@ def gem():
         'cadence_exception',            cadence_exception,
         'cadence_exited',               cadence_exited,
         'cadence_initialized',          cadence_initialized,
+        'cadence_reuse',                cadence_reuse,
         'gem_global',                   gem_global,
     )
