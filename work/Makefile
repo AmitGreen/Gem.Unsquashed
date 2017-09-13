@@ -57,8 +57,8 @@ QUARTZ_FILES = \
 SAPPHIRE_FILES = \
     ../Sapphire/BinaryExpression.py ../Sapphire/BookcaseExpression.py \
     ../Sapphire/ConjureNewline.py ../Sapphire/Core.py ../Sapphire/CreateMeta.py \
+    ../Sapphire/DualToken.py \
     ../Sapphire/Elemental.py ../Sapphire/ExpressionMany.py \
-    ../Sapphire/JoinedToken.py \
     ../Sapphire/Main.py \
     ../Sapphire/OtherExpression.py \
     ../Sapphire/Parse1.py ../Sapphire/Parse1Atom.py ../Sapphire/Tokenize1Header.py ../Sapphire/Parse1Call.py \
@@ -133,7 +133,7 @@ clean:
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
 	rm -f   h2p.py
-	rm -f   hb.py hcm.py hcn.py hco.py hel.py hem.py hj.py hk.py hma.py hmc.py hoe.py hpt.py hs.py ht.py hu.py hx.py
+	rm -f   hb.py hcm.py hcn.py hco.py hd.py hel.py hem.py .py hk.py hma.py hmc.py hoe.py hpt.py hs.py ht.py hu.py hx.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
@@ -205,9 +205,9 @@ links:
 	ln -s ../Sapphire/CreateMeta.py                 hcm.py
 	ln -s ../Sapphire/ConjureNewline.py             hcn.py
 	ln -s ../Sapphire/Core.py                       hco.py
+	ln -s ../Sapphire/DualToken.py                  hd.py
 	ln -s ../Sapphire/Elemental.py                  hel.py
 	ln -s ../Sapphire/ExpressionMany.py             hem.py
-	ln -s ../Sapphire/JoinedToken.py                hj.py
 	ln -s ../Sapphire/BookcaseExpression.py         hk.py
 	ln -s ../Sapphire/Main.py                       hma.py
 	ln -s ../Sapphire/Match.py                      hmc.py

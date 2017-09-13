@@ -1,8 +1,11 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.JoinedToken')
+@gem('Sapphire.DualToken')
 def gem():
+    require_gem('Sapphire.Elemental')
+
+
     class BaseDualOperator(KeywordAndOperatorBase):
         __slots__ = ((
             'first',                    #   Operator+
@@ -182,39 +185,6 @@ def gem():
         t.newlines = newlines
 
 
-    def create_MetaWithNewline(Meta):
-        r = Meta.MetaWithNewline = Type(
-                                       arrange('%sWithNewline', Meta.__name__),
-                                       ((Meta,)),
-                                       {
-                                           '__slots__' : ((
-                                               'newlines',                 #   Integer { > 0 }
-                                               'ends_in_newline',          #   Boolean
-                                           )),
-
-                                           '__init__' : construct_dual_token_with_newlines,
-                                       },
-                                   )
-
-        return r
-
-
-    def create_Meta_Many(Meta):
-        r = Meta.Meta_Many = Type(
-                                 arrange('%s_Many', Meta.__name__),
-                                 ((Meta,)),
-                                 {
-                                     '__slots__' : ((
-                                         'newlines',                 #   Integer { > 1 }
-                                     )),
-
-                                     '__init__' : construct_dual_token_with_python_newline,
-                                 },
-                             )
-
-        return r
-
-
     def create_dual_token_with_newline(Meta, first, second):
         s = intern_string(first.s + second.s)
 
@@ -226,7 +196,7 @@ def gem():
         MetaWithNewline = Meta.MetaWithNewline
 
         if MetaWithNewline is 0:
-            MetaWithNewline = Meta.MetaWithNewline = create_MetaWithNewline(Meta)
+            MetaWithNewline = Meta.MetaWithNewline = create_MetaWithNewline(Meta, construct_dual_token_with_newlines)
 
         return MetaWithNewline(s, first, second, newlines, false)
 
@@ -242,7 +212,7 @@ def gem():
         Meta_Many = Meta.Meta_Many
 
         if Meta_Many is 0:
-            Meta_Many = Meta.Meta_Many = create_Meta_Many(Meta)
+            Meta_Many = Meta.Meta_Many = create_Meta_Many(Meta, construct_dual_token_with_python_newline)
 
         return Meta_Many(s, first, second, newlines)
 

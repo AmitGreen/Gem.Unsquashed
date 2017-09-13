@@ -3,8 +3,8 @@
 #
 @gem('Sapphire.Expression')
 def gem():
+    require_gem('Sapphire.DualToken')
     require_gem('Sapphire.Elemental')
-    require_gem('Sapphire.JoinedToken')
 
 
     class BinaryExpression(Object):
