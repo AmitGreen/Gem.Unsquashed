@@ -3,6 +3,13 @@
 #
 @gem('Sapphire.ConjureNewline')
 def gem():
+    require_gem('Sapphire.CreateMeta')
+
+
+    create_MetaWithNewline = Shared.create_MetaWithNewline      #   Due to 'privileged'
+    create_Meta_Many       = Shared.create_Meta_Many            #   Due to 'privileged'
+
+
     insert_operator_map                = {}
     insert_operator__with_newline__map = {}
     lookup_operator_map                = {}
@@ -25,39 +32,6 @@ def gem():
         t.s        = s
         t.newlines = newlines
         
-
-    def create_MetaWithNewline(Meta):
-        r = Meta.MetaWithNewline = Type(
-                                       arrange('%sWithNewline', Meta.__name__),
-                                       ((Meta,)),
-                                       {
-                                           '__slots__' : ((
-                                               'newlines',                 #   Integer { > 1 }
-                                               'ends_in_newline',          #   Boolean
-                                           )),
-
-                                           '__init__' : construct_token_with_newlines,
-                                       },
-                                   )
-
-        return r
-
-
-    def create_MetaPythonNewline_Many(Meta):
-        r = Meta.MetaWithNewline = Type(
-                                       arrange('%s_Many', Meta.__name__),
-                                       ((Meta,)),
-                                       {
-                                           '__slots__' : ((
-                                               'newlines',                 #   Integer { > 1 }
-                                           )),
-
-                                           '__init__' : construct_token_with_python_newline_many,
-                                       },
-                                   )
-
-        return r
-
 
     if __debug__:
         def raise_already_exists(name, s):
@@ -100,9 +74,11 @@ def gem():
 
                     return provide(
                                s,
-                               ( (Meta.MetaWithNewline) or (create_MetaWithNewline(Meta)) )(s, newlines, false),
+                               (
+                                     Meta.MetaWithNewline
+                                  or create_MetaWithNewline(Meta, construct_token_with_newlines)
+                               )(s, newlines, false),
                            )
-
 
 
                 insert.__name__ = arrange('insert_%s', name)
@@ -117,12 +93,14 @@ def gem():
                     if contains(s):
                         raise_already_exists(name, s)
 
-                    newlines = s.count('\n')
-                    s        = intern_string(s)
+                    s = intern_string(s)
 
                     return provide(
                                s,
-                               ( (Meta.MetaWithNewline) or (create_MetaWithNewline(Meta)) )(s, newlines, true),
+                               (
+                                     Meta.MetaWithNewline
+                                  or create_MetaWithNewline(Meta, construct_token_with_newlines)
+                               )(s, s.count('\n'), true),
                            )
 
 
@@ -138,7 +116,13 @@ def gem():
                     if newlines is 0:
                         return provide(s, Meta(s))
 
-                    return provide(s, (Meta or MetaWithNewline(Meta))(s, newlines, false))
+                    return provide(
+                               s,
+                               (
+                                     Meta.MetaWithNewline
+                                  or create_MetaWithNewline(Meta, construct_token_with_newlines)
+                               )(s, newlines, false),
+                           )
 
 
                 append(insert)
@@ -148,7 +132,13 @@ def gem():
                 def insert_with_newline(s):
                     s = intern_string(s)
 
-                    return provide(s, (Meta or MetaWithNewline(Meta))(s, s.count('\n'), true))
+                    return provide(
+                               s,
+                               (
+                                     Meta.MetaWithNewline
+                                  or create_MetaWithNewline(Meta, construct_token_with_newlines)
+                               )(s, s.count('\n'), true),
+                           )
 
 
                 append(insert_with_newline)
@@ -246,8 +236,11 @@ def gem():
 
             return provide(
                        s,
-                       ( (Meta.MetaWithNewline) or (create_MetaPythonNewline_Many(Meta)) )(s, newlines),
-                  )
+                       (
+                             Meta.Meta_Many
+                          or create_Meta_Many(Meta, construct_token_with_python_newline_many)
+                       )(s, s.count('\n'), true),
+                   )
 
 
         if __debug__:
