@@ -287,7 +287,9 @@ def gem():
             if qd() is 0:
                 operator_end = m.end('operator')
 
-                r = find_operator_conjure_function(operator_s)(qs()[qi() : operator_end])
+                s = qs()
+
+                r = find_operator_conjure_function(operator_s)(s[qi() : operator_end])
 
                 wn(conjure_token_newline(s[operator_end : ]))
 
@@ -339,7 +341,7 @@ def gem():
 
             wd(qd() + 1)
 
-            r = conjure_left_parenthesis(qs()[qi() : ])
+            r = conjure_left_parenthesis__with_newline(qs()[qi() : ])
 
             skip_tokenize_prefix()
 

@@ -135,8 +135,10 @@ def gem():
 
 
         def GENERATOR_next_line():
-            for line_number in iterate_range(maximum_i):
-                s = q_data(line_number)
+            line_number = 0
+
+            for s in data_lines:
+                line_number += 1
 
                 ws(s)
                 wi0()
@@ -166,10 +168,11 @@ def gem():
         caller_name  = caller_frame.f_code.co_name
         basename     = path_basename(caller_frame.f_code.co_filename)
 
-        line('%s#%s: %s', basename, caller_frame.f_lineno, caller_name)
+        line('%s#%s: %s; %d', basename, caller_frame.f_lineno, caller_name, ql())
 
         unknown_line_error = UnknownLineException(
-                                 arrange('parse incomplete: %s#%s: %s', basename, caller_frame.f_lineno, caller_name),
+                                 arrange('parse incomplete: %s#%s: %s; %d',
+                                         basename, caller_frame.f_lineno, caller_name, ql()),
                                  UnknownLine(qs()),
                              )
 

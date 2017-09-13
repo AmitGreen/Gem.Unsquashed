@@ -31,9 +31,9 @@ def gem():
                     right_parenthesis__start = m.start('right_parenthesis')
 
                     return ParameterColon_0_Newline(
-                               conjure_left_parenthesis (s[qi()                     : right_parenthesis__start]),
-                               conjure_right_parenthesis(s[right_parenthesis__start : colon_start             ]),
-                               conjure_colon_newline    (s[colon_start              :                         ]),
+                               conjure_left_parenthesis    (s[qi()                     : right_parenthesis__start]),
+                               conjure_right_parenthesis   (s[right_parenthesis__start : colon_start             ]),
+                               conjure_colon_python_newline(s[colon_start              :                         ]),
                            )
 
                 raise_unknown_line()
@@ -71,8 +71,8 @@ def gem():
             wd0()
 
             return RightParenthesis_Colon_Newline(
-                       conjure_right_parenthesis(s[qi()                   : right_parenthesis__end]),
-                       conjure_colon_newline    (s[right_parenthesis__end :                       ]),
+                       conjure_right_parenthesis   (s[qi()                   : right_parenthesis__end]),
+                       conjure_colon_python_newline(s[right_parenthesis__end :                       ]),
                    )
 
         if m.end('comment_newline') is -1:
@@ -151,7 +151,7 @@ def gem():
         if m is none:
             raise_unknown_line()
 
-        return conjure_colon_newline(s[qi() : ])
+        return conjure_colon_python_newline(s[qi() : ])
 
 
     def tokenize_nested__X__equal_sign__blankline():

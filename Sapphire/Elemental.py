@@ -434,7 +434,7 @@ def gem():
         keyword                                 = ':'
 
 
-    class OperatorColonNewline(KeywordAndOperatorBase):
+    class OperatorColonPythonNewline(KeywordAndOperatorBase):
         __slots__                               = (())
         is_colon_newline                        = true
         is_end_of_arithmetic_expression         = true
@@ -455,7 +455,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<OperatorColonNewline %s>', portray_raw_string(t.s))
+            return arrange('<OperatorColonPythonNewline %s>', portray_raw_string(t.s))
 
 
         def display_token(t):
@@ -952,8 +952,60 @@ def gem():
             return arrange('<%s>', t.s)
 
 
+    produce_operator_insert_and_lookup_maps(
+        ((
+             ((     '!=',       'compare_not_equal',        OperatorCompareNotEqual     )),
+             ((     '&',        'logical_and_sign',         OperatorLogicalAndSign      )),
+             ((     '%',        'percent_sign',             OperatorPercentSign         )),
+             ((     '(',        'left_parenthesis',         OperatorLeftParenthesis     )),
+             ((     ')',        'right_parenthesis',        OperatorRightParenthesis    )),
+             ((     '*',        'star_sign',                OperatorStarSign            )),
+             ((     '**',       'power_operator',           OperatorPower               )),
+             ((     '+',        'plus_sign',                OperatorPlusSign            )),
+             ((     '+=',       'add_modify',               OperatorAddModify           )),
+             ((     ',',        'comma',                    OperatorComma               )),
+             ((     '-',        'minus_sign',               OperatorMinusSign           )),
+             ((     '-=',       'subtract_modify',          OperatorSubtractModify      )),
+             ((     '.',        'dot',                      OperatorDot                 )),
+             ((     '/',        'divide',                   OperatorDivide              )),
+             ((     '//',       'integer_divide',           OperatorIntegerDivide       )),
+             ((     ':',        'colon',                    OperatorColon               )),
+             ((     '<',        'less_than',                OperatorLessThan            )),
+             ((     '<=',       'less_than_or_equal',       OperatorLessThanOrEqual     )),
+             ((     '=',        'equal_sign',               OperatorEqualSign           )),
+             ((     '==',       'compare_equal',            OperatorCompareEqual        )),
+             ((     '>',        'greater_than',             OperatorGreaterThan         )),
+             ((     '>=',       'greater_than_or_equal',    OperatorGreaterThanOrEqual  )),
+             ((     'and',      'keyword_and',              KeywordAnd                  )),
+             ((     'as',       'keyword_as',               KeywordAs                   )),
+             ((     'else',     'keyword_else',             KeywordElse                 )),
+             ((     'for',      'keyword_for',              KeywordFor                  )),
+             ((     'if',       'keyword_if',               KeywordIf                   )),
+             ((     'in',       'keyword_in',               KeywordIn                   )),
+             ((     'is',       'keyword_is',               KeywordIs                   )),
+             ((     'not',      'keyword_not',              KeywordNot                  )),
+             ((     'or',       'keyword_or',               KeywordOr                   )),
+             ((     '[',        'left_square_bracket',      OperatorLeftSquareBracket   )),
+             ((     ']',        'right_square_bracket',     OperatorRightSquareBracket  )),
+             ((     '|',        'logical_or_sign',          OperatorLogicalOrSign       )),
+             ((     '|=',       'logical_or_modify',        OperatorLogicalOrModify     )),
+             ((     '}',        'right_brace',              OperatorRightBrace          )),
+             ((     '~',        'tilde_sign',               OperatorTildeSign           )),
+        )),
+    )
+
+
+    del Shared.produce_operator_insert_and_lookup_maps
+
+
+    conjure_left_parenthesis               = produce_conjure_operator             ('(', 'left_parenthesis')
+    conjure_left_parenthesis__with_newline = produce_conjure_operator_with_newline('(', 'left_parenthesis')
+    conjure_right_parenthesis              = produce_conjure_operator             (')', 'right_parenthesis')
+
+    conjure_colon_python_newline = produce_conjure_operator_with_python_newline(':', 'colon', OperatorColonPythonNewline)
+
+
     conjure_add_modify            = produce_conjure_by_name('operator-add-modify',            OperatorAddModify) 
-    conjure_colon_newline         = produce_conjure_by_name('operator-colon-newline',         OperatorColonNewline) 
     conjure_colon                 = produce_conjure_by_name('operator-colon',                 OperatorColon) 
     conjure_comma                 = produce_conjure_by_name('operator-comma',                 OperatorComma) 
     conjure_compare_equal         = produce_conjure_by_name('operator-conmpare-equal',        OperatorCompareEqual) 
@@ -988,7 +1040,6 @@ def gem():
     conjure_keyword_with          = produce_conjure_by_name('keyword-with',                   KeywordWith) 
     conjure_keyword_yield         = produce_conjure_by_name('keyword-yield',                  KeywordYield) 
     conjure_left_brace            = produce_conjure_by_name('operator-left-brace',            OperatorLeftBrace) 
-    conjure_left_parenthesis      = produce_conjure_by_name('operator-left-parenthesis',      OperatorLeftParenthesis) 
     conjure_left_square_bracket   = produce_conjure_by_name('operator-left-square-bracket',   OperatorLeftSquareBracket) 
     conjure_less_than_or_equal    = produce_conjure_by_name('operator-less-than-or-equal',    OperatorLessThanOrEqual) 
     conjure_less_than             = produce_conjure_by_name('operator-less-than',             OperatorLessThan) 
@@ -1085,52 +1136,6 @@ def gem():
                                      }.__getitem__
 
 
-    produce_operator_insert_and_lookup_maps(
-        ((
-             ((     '!=',       'compare_not_equal',        OperatorCompareNotEqual     )),
-             ((     '&',        'logical_and_sign',         OperatorLogicalAndSign      )),
-             ((     '%',        'percent_sign',             OperatorPercentSign         )),
-             ((     '(',        'left_parenthesis',         OperatorLeftParenthesis     )),
-             ((     ')',        'right_parenthesis',        OperatorRightParenthesis    )),
-             ((     '*',        'star_sign',                OperatorStarSign            )),
-             ((     '**',       'power_operator',           OperatorPower               )),
-             ((     '+',        'plus_sign',                OperatorPlusSign            )),
-             ((     '+=',       'add_modify',               OperatorAddModify           )),
-             ((     ',',        'comma',                    OperatorComma               )),
-             ((     '-',        'minus_sign',               OperatorMinusSign           )),
-             ((     '-=',       'subtract_modify',          OperatorSubtractModify      )),
-             ((     '.',        'dot',                      OperatorDot                 )),
-             ((     '/',        'divide',                   OperatorDivide              )),
-             ((     '//',       'integer_divide',           OperatorIntegerDivide       )),
-             ((     ':',        'colon',                    OperatorColon               )),
-             ((     '<',        'less_than',                OperatorLessThan            )),
-             ((     '<=',       'less_than_or_equal',       OperatorLessThanOrEqual     )),
-             ((     '=',        'equal_sign',               OperatorEqualSign           )),
-             ((     '==',       'compare_equal',            OperatorCompareEqual        )),
-             ((     '>',        'greater_than',             OperatorGreaterThan         )),
-             ((     '>=',       'greater_than_or_equal',    OperatorGreaterThanOrEqual  )),
-             ((     'and',      'keyword_and',              KeywordAnd                  )),
-             ((     'as',       'keyword_as',               KeywordAs                   )),
-             ((     'else',     'keyword_else',             KeywordElse                 )),
-             ((     'for',      'keyword_for',              KeywordFor                  )),
-             ((     'if',       'keyword_if',               KeywordIf                   )),
-             ((     'in',       'keyword_in',               KeywordIn                   )),
-             ((     'is',       'keyword_is',               KeywordIs                   )),
-             ((     'not',      'keyword_not',              KeywordNot                  )),
-             ((     'or',       'keyword_or',               KeywordOr                   )),
-             ((     '[',        'left_square_bracket',      OperatorLeftSquareBracket   )),
-             ((     ']',        'right_square_bracket',     OperatorRightSquareBracket  )),
-             ((     '|',        'logical_or_sign',          OperatorLogicalOrSign       )),
-             ((     '|=',       'logical_or_modify',        OperatorLogicalOrModify     )),
-             ((     '}',        'right_brace',              OperatorRightBrace          )),
-             ((     '~',        'tilde_sign',               OperatorTildeSign           )),
-        )),
-    )
-
-
-    del Shared.produce_operator_insert_and_lookup_maps
-
-
     #   {[(
     is_close_operator = { ')' : 7, ']' : 7, '}' : 7 }.get
 
@@ -1146,43 +1151,44 @@ def gem():
 
 
     share(
-        'conjure_colon',                    conjure_colon,
-        'conjure_colon_newline',            conjure_colon_newline,
-        'conjure_comma',                    conjure_comma,
-        'conjure_dot',                      conjure_dot,
-        'conjure_else_colon',               conjure_else_colon,
-        'conjure_equal_sign',               conjure_equal_sign,
-        'conjure_except_colon',             conjure_except_colon,
-        'conjure_finally_colon',            conjure_finally_colon,
-        'conjure_head_index',               conjure_head_index,
-        'conjure_keyword_as',               conjure_keyword_as,
-        'conjure_keyword_assert',           conjure_keyword_assert,
-        'conjure_keyword_delete',           conjure_keyword_delete,
-        'conjure_keyword_else_if',          conjure_keyword_else_if,
-        'conjure_keyword_except',           conjure_keyword_except,
-        'conjure_keyword_for',              conjure_keyword_for,
-        'conjure_keyword_if',               conjure_keyword_if,
-        'conjure_keyword_in',               conjure_keyword_in,
-        'conjure_keyword_is',               conjure_keyword_is,
-        'conjure_keyword_not',              conjure_keyword_not,
-        'conjure_keyword_raise',            conjure_keyword_raise,
-        'conjure_keyword_return',           conjure_keyword_return,
-        'conjure_keyword_while',            conjure_keyword_while,
-        'conjure_keyword_with',             conjure_keyword_with,
-        'conjure_keyword_yield',            conjure_keyword_yield,
-        'conjure_left_brace',               conjure_left_brace,
-        'conjure_left_parenthesis',         conjure_left_parenthesis,
-        'conjure_left_square_bracket',      conjure_left_square_bracket,
-        'conjure_power_operator',           conjure_power_operator,
-        'conjure_right_brace',              conjure_right_brace,
-        'conjure_right_parenthesis',        conjure_right_parenthesis,
-        'conjure_right_square_bracket',     conjure_right_square_bracket,
-        'conjure_star_sign',                conjure_star_sign,
-        'conjure_try_colon',                conjure_try_colon,
-        'find_atom_type',                   find_atom_type,
-        'find_operator_conjure_function',   find_operator_conjure_function,
-        'is_close_operator',                is_close_operator,
-        'lookup_keyword_conjure_function',  lookup_keyword_conjure_function,
+        'conjure_colon',                            conjure_colon,
+        'conjure_colon_python_newline',             conjure_colon_python_newline,
+        'conjure_comma',                            conjure_comma,
+        'conjure_dot',                              conjure_dot,
+        'conjure_else_colon',                       conjure_else_colon,
+        'conjure_equal_sign',                       conjure_equal_sign,
+        'conjure_except_colon',                     conjure_except_colon,
+        'conjure_finally_colon',                    conjure_finally_colon,
+        'conjure_head_index',                       conjure_head_index,
+        'conjure_keyword_as',                       conjure_keyword_as,
+        'conjure_keyword_assert',                   conjure_keyword_assert,
+        'conjure_keyword_delete',                   conjure_keyword_delete,
+        'conjure_keyword_else_if',                  conjure_keyword_else_if,
+        'conjure_keyword_except',                   conjure_keyword_except,
+        'conjure_keyword_for',                      conjure_keyword_for,
+        'conjure_keyword_if',                       conjure_keyword_if,
+        'conjure_keyword_in',                       conjure_keyword_in,
+        'conjure_keyword_is',                       conjure_keyword_is,
+        'conjure_keyword_not',                      conjure_keyword_not,
+        'conjure_keyword_raise',                    conjure_keyword_raise,
+        'conjure_keyword_return',                   conjure_keyword_return,
+        'conjure_keyword_while',                    conjure_keyword_while,
+        'conjure_keyword_with',                     conjure_keyword_with,
+        'conjure_keyword_yield',                    conjure_keyword_yield,
+        'conjure_left_brace',                       conjure_left_brace,
+        'conjure_left_parenthesis',                 conjure_left_parenthesis,
+        'conjure_left_parenthesis__with_newline',   conjure_left_parenthesis__with_newline,
+        'conjure_left_square_bracket',              conjure_left_square_bracket,
+        'conjure_power_operator',                   conjure_power_operator,
+        'conjure_right_brace',                      conjure_right_brace,
+        'conjure_right_parenthesis',                conjure_right_parenthesis,
+        'conjure_right_square_bracket',             conjure_right_square_bracket,
+        'conjure_star_sign',                        conjure_star_sign,
+        'conjure_try_colon',                        conjure_try_colon,
+        'find_atom_type',                           find_atom_type,
+        'find_operator_conjure_function',           find_operator_conjure_function,
+        'is_close_operator',                        is_close_operator,
+        'lookup_keyword_conjure_function',          lookup_keyword_conjure_function,
 
         #
         #   Operator functions

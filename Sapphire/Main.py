@@ -25,7 +25,7 @@ def gem():
     require_gem('Sapphire.Pattern')
 
 
-    depth = 99
+    depth = 1
 
 
     @share

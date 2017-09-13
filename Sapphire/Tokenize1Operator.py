@@ -258,7 +258,7 @@ def gem():
 
             if d is 0:
                 if conjure is conjure_colon:
-                    return conjure_colon_newline(s[qi() : ])
+                    return conjure_colon_python_newline(s[qi() : ])
 
                 operator_end = m.end('operator')
                 wn(conjure_token_newline(s[operator_end : ]))
