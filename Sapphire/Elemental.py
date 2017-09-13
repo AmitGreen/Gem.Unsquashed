@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.Elemental')
 def gem():
+    require_gem('Sapphire.ConjureNewline')
     require_gem('Sapphire.Core')
 
 
@@ -63,6 +64,7 @@ def gem():
         is_star_sign                               = false
         is_tilde_sign                              = false
         is_token_newline                           = false
+        MetaWithNewline                            = 0
 
 
         def __repr__(t):
@@ -1083,6 +1085,52 @@ def gem():
                                      }.__getitem__
 
 
+    produce_operator_insert_and_lookup_maps(
+        ((
+             ((     '!=',       'compare_not_equal',        OperatorCompareNotEqual     )),
+             ((     '&',        'logical_and_sign',         OperatorLogicalAndSign      )),
+             ((     '%',        'percent_sign',             OperatorPercentSign         )),
+             ((     '(',        'left_parenthesis',         OperatorLeftParenthesis     )),
+             ((     ')',        'right_parenthesis',        OperatorRightParenthesis    )),
+             ((     '*',        'star_sign',                OperatorStarSign            )),
+             ((     '**',       'power_operator',           OperatorPower               )),
+             ((     '+',        'plus_sign',                OperatorPlusSign            )),
+             ((     '+=',       'add_modify',               OperatorAddModify           )),
+             ((     ',',        'comma',                    OperatorComma               )),
+             ((     '-',        'minus_sign',               OperatorMinusSign           )),
+             ((     '-=',       'subtract_modify',          OperatorSubtractModify      )),
+             ((     '.',        'dot',                      OperatorDot                 )),
+             ((     '/',        'divide',                   OperatorDivide              )),
+             ((     '//',       'integer_divide',           OperatorIntegerDivide       )),
+             ((     ':',        'colon',                    OperatorColon               )),
+             ((     '<',        'less_than',                OperatorLessThan            )),
+             ((     '<=',       'less_than_or_equal',       OperatorLessThanOrEqual     )),
+             ((     '=',        'equal_sign',               OperatorEqualSign           )),
+             ((     '==',       'compare_equal',            OperatorCompareEqual        )),
+             ((     '>',        'greater_than',             OperatorGreaterThan         )),
+             ((     '>=',       'greater_than_or_equal',    OperatorGreaterThanOrEqual  )),
+             ((     'and',      'keyword_and',              KeywordAnd                  )),
+             ((     'as',       'keyword_as',               KeywordAs                   )),
+             ((     'else',     'keyword_else',             KeywordElse                 )),
+             ((     'for',      'keyword_for',              KeywordFor                  )),
+             ((     'if',       'keyword_if',               KeywordIf                   )),
+             ((     'in',       'keyword_in',               KeywordIn                   )),
+             ((     'is',       'keyword_is',               KeywordIs                   )),
+             ((     'not',      'keyword_not',              KeywordNot                  )),
+             ((     'or',       'keyword_or',               KeywordOr                   )),
+             ((     '[',        'left_square_bracket',      OperatorLeftSquareBracket   )),
+             ((     ']',        'right_square_bracket',     OperatorRightSquareBracket  )),
+             ((     '|',        'logical_or_sign',          OperatorLogicalOrSign       )),
+             ((     '|=',       'logical_or_modify',        OperatorLogicalOrModify     )),
+             ((     '}',        'right_brace',              OperatorRightBrace          )),
+             ((     '~',        'tilde_sign',               OperatorTildeSign           )),
+        )),
+    )
+
+
+    del Shared.produce_operator_insert_and_lookup_maps
+
+
     #   {[(
     is_close_operator = { ')' : 7, ']' : 7, '}' : 7 }.get
 
@@ -1090,6 +1138,11 @@ def gem():
     lookup_keyword_conjure_function = {
                                           'not' : conjure_keyword_not,
                                       }.get
+
+
+    lookup_insert_operator               = insert_operator_map               .__getitem__
+    lookup_insert_operator__with_newline = insert_operator__with_newline__map.__getitem__
+    lookup_lookup_operator               = lookup_operator_map               .__getitem__
 
 
     share(
@@ -1130,4 +1183,14 @@ def gem():
         'find_operator_conjure_function',   find_operator_conjure_function,
         'is_close_operator',                is_close_operator,
         'lookup_keyword_conjure_function',  lookup_keyword_conjure_function,
+
+        #
+        #   Operator functions
+        #
+        'insert_colon_newline__with_newline',           lookup_insert_operator__with_newline(':'),
+        'insert_left_parenthesis',                      lookup_insert_operator('('),
+        'insert_right_parenthesis',                     lookup_insert_operator(')'),
+        'lookup_colon_newline',                         lookup_lookup_operator(':'),
+        'lookup_left_parenthesis',                      lookup_lookup_operator('('),
+        'lookup_right_parenthesis',                     lookup_lookup_operator(')'),
     )

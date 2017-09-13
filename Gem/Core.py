@@ -73,6 +73,7 @@ def gem():
         'Method',           PythonTypes.MethodType,
         'Object',           PythonBuiltIn.object,
         'Tuple',            PythonBuiltIn.tuple,
+        'Type',             PythonBuiltIn.type,
 
 
         #

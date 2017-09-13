@@ -56,7 +56,7 @@ QUARTZ_FILES = \
 
 SAPPHIRE_FILES = \
     ../Sapphire/BinaryExpression.py ../Sapphire/BookcaseExpression.py \
-    ../Sapphire/Core.py \
+    ../Sapphire/ConjureNewline.py ../Sapphire/Core.py \
     ../Sapphire/Elemental.py ../Sapphire/ExpressionMany.py \
     ../Sapphire/JoinedToken.py \
     ../Sapphire/Main.py \
@@ -132,7 +132,7 @@ clean:
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
 	rm -f   h2p.py
-	rm -f   hb.py hc.py hel.py hem.py hj.py hk.py hma.py hmc.py hoe.py hpt.py hs.py hu.py hx.py
+	rm -f   hb.py hcn.py hco.py hel.py hem.py hj.py hk.py hma.py hmc.py hoe.py hpt.py hs.py hu.py hx.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
@@ -201,7 +201,8 @@ links:
 	ln -s ../Sapphire/Tokenize1Operator.py          h1zo.py
 	ln -s ../Sapphire/Parse2.py                     h2p.py
 	ln -s ../Sapphire/BinaryExpression.py           hb.py
-	ln -s ../Sapphire/Core.py                       hc.py
+	ln -s ../Sapphire/ConjureNewline.py             hcn.py
+	ln -s ../Sapphire/Core.py                       hco.py
 	ln -s ../Sapphire/Elemental.py                  hel.py
 	ln -s ../Sapphire/ExpressionMany.py             hem.py
 	ln -s ../Sapphire/JoinedToken.py                hj.py

@@ -10,7 +10,7 @@ def gem():
         ))
 
 
-        has_newline             = false
+        ends_in_newline         = false
         is_comma                = false
         is_identifier           = false
         is_keyword              = false
@@ -19,6 +19,8 @@ def gem():
 
 
         def __init__(t, s):
+            assert '\n' not in s
+
             t.s = s
 
 
@@ -83,8 +85,16 @@ def gem():
 
     @export
     class UnknownLine(Token):
-        display_name = 'unknown-line'
-        has_newline  = true
+        display_name    = 'unknown-line'
+        ends_in_newline = true
+
+
+        def __init__(t, s):
+            assert '\n' not in s[:-1]
+            assert s[-1] == '\n'
+
+            t.s = s
+
 
 
     [

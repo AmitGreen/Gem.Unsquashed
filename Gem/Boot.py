@@ -628,6 +628,7 @@ def gem():
         'intern_string',            intern_string,
         'length',                   length,
         'next_method',              next_method,
+        'privileged',               privileged,
         'raising_exception_from',   raising_exception_from,
         'raising_exception',        raising_exception,
 
@@ -710,7 +711,6 @@ def gem():
         #   Functions
         #
         'is_instance',              is_instance,
-        'privileged',               privileged,
         'rename_function',          rename_function,
     )
 

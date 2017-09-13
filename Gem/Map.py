@@ -23,7 +23,7 @@ def gem():
             return iterate(view_items(mapping)).__next__()
 
 
-    @export
+    @built_in
     def iterate_items_sorted_by_key(mapping):
         value = mapping.__getitem__
 
