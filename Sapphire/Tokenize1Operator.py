@@ -307,7 +307,7 @@ def gem():
 
                 return Arguments_0(left, right)
 
-            left = conjure_left_parenthesis(s[qi() : ])
+            left = conjure_left_parenthesis__with_newline(s[qi() : ])
 
             skip_tokenize_prefix()
 

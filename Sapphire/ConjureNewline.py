@@ -13,11 +13,10 @@ def gem():
     lookup_operator              = lookup_operator_map               .__getitem__
 
 
-    def construct_token_with_newlines(t, s, newlines, ends_in_newline, ends_in_python_newline):
-        t.s                      = s
-        t.newlines               = newlines
-        t.ends_in_newline        = ends_in_newline
-        t.ends_in_python_newline = ends_in_python_newline
+    def construct_token_with_newlines(t, s, newlines, ends_in_newline):
+        t.s               = s
+        t.newlines        = newlines
+        t.ends_in_newline = ends_in_newline
 
 
     def construct_token_with_python_newline_many(t, s, newlines):
@@ -33,9 +32,8 @@ def gem():
                                        ((Meta,)),
                                        {
                                            '__slots__' : ((
-                                               'newlines',                 #   Integer
+                                               'newlines',                 #   Integer { > 1 }
                                                'ends_in_newline',          #   Boolean
-                                               'ends_in_python_newline',   #   Boolean
                                            )),
 
                                            '__init__' : construct_token_with_newlines,
@@ -51,7 +49,7 @@ def gem():
                                        ((Meta,)),
                                        {
                                            '__slots__' : ((
-                                               'newlines',                 #   Integer
+                                               'newlines',                 #   Integer { > 1 }
                                            )),
 
                                            '__init__' : construct_token_with_python_newline_many,
@@ -71,10 +69,9 @@ def gem():
     def produce_insert_and_lookup_token_functions(
             k, name, Meta,
             
-            produce_insert                     = false,
-            produce_insert_with_newline        = false,
-            produce_insert_with_python_newline = false,
-            produce_lookup                     = false,
+            produce_insert              = false,
+            produce_insert_with_newline = false,
+            produce_lookup              = false,
     ):
         r      = []
         append = r.append
@@ -90,7 +87,7 @@ def gem():
 
             if produce_insert:
                 def insert(s):
-#                   assert s[-1] != '\n'
+                    assert s[-1] != '\n'
 
                     if contains(s):
                         raise_already_exists(name, s)
@@ -103,7 +100,7 @@ def gem():
 
                     return provide(
                                s,
-                               ( (Meta.MetaWithNewline) or (create_MetaWithNewline(Meta)) )(s, newlines, false, false),
+                               ( (Meta.MetaWithNewline) or (create_MetaWithNewline(Meta)) )(s, newlines, false),
                            )
 
 
@@ -125,34 +122,13 @@ def gem():
 
                     return provide(
                                s,
-                               ( (Meta.MetaWithNewline) or (create_MetaWithNewline(Meta)) )(s, newlines, true, false),
+                               ( (Meta.MetaWithNewline) or (create_MetaWithNewline(Meta)) )(s, newlines, true),
                            )
 
 
                 insert_with_newline.__name__ = arrange('insert_%s__with_newline', name)
 
                 append(insert_with_newline)
-
-
-            if produce_insert_with_python_newline:
-                def insert_with_python_newline(s):
-                    assert s[-1] == '\n'
-
-                    if contains(s):
-                        raise_already_exists(name, s)
-
-                    newlines = s.count('\n')
-                    s        = intern_string(s)
-
-                    return provide(
-                               s,
-                               ( (Meta.MetaWithNewline) or (create_MetaWithNewline(Meta)) )(s, newlines, false, true),
-                           )
-
-
-                insert_with_python_newline.__name__ = arrange('insert_%s__with_python_newline', name)
-
-                append(insert_with_python_newline)
         else:
             if produce_insert:
                 def insert(s):
@@ -162,7 +138,7 @@ def gem():
                     if newlines is 0:
                         return provide(s, Meta(s))
 
-                    return provide(s, (Meta or MetaWithNewline(Meta))(s, newlines, False, False))
+                    return provide(s, (Meta or MetaWithNewline(Meta))(s, newlines, false))
 
 
                 append(insert)
@@ -172,20 +148,10 @@ def gem():
                 def insert_with_newline(s):
                     s = intern_string(s)
 
-                    return provide(s, (Meta or MetaWithNewline(Meta))(s, s.count('\n'), True, False))
+                    return provide(s, (Meta or MetaWithNewline(Meta))(s, s.count('\n'), true))
 
 
                 append(insert_with_newline)
-
-
-            if produce_insert_with_python_newline:
-                def insert_with_python_newline(s):
-                    s = intern_string(s)
-
-                    return provide(s, (Meta or MetaWithNewline(Meta))(s, s.count('\n'), True, True))
-
-
-                append(insert_with_python_newline)
 
 
         if produce_lookup:
@@ -233,7 +199,6 @@ def gem():
         if __debug__:
             conjure_operator.__name__ = intern_arrange('conjure_%s', name)
 
-
         return conjure_operator
 
 
@@ -252,7 +217,6 @@ def gem():
             conjure_operator.__name__ = intern_arrange('conjure_%s%swith_newline',
                                                        name,
                                                        ('__'   if '_' in name else   '_'))
-
 
         return conjure_operator
 
