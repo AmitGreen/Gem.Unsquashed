@@ -234,7 +234,7 @@ def gem():
                     if middle_2.is_right_square_bracket:
                         left = IndexExpression(left, AllIndex(operator, middle, middle_2))
                     else:
-                        operator = LeftSquareBracket_Colon(operator, middle)
+                        operator = conjure__left_square_bracket__colon(operator, middle)
 
                         operator_2 = qk()
 
@@ -285,7 +285,7 @@ def gem():
                                        HeadIndex(
                                            operator,
                                            middle,
-                                           Colon_RightSquareBracket(operator_2, middle_2),
+                                           conjure__colon__right_square_bracket(operator_2, middle_2),
                                        ),
                                    )
                         else:

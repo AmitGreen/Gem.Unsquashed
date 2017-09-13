@@ -67,7 +67,7 @@ def gem():
 
     @privileged
     def produce_insert_and_lookup_token_functions(
-            k, name, Meta,
+            name, Meta,
             
             produce_insert              = false,
             produce_insert_with_newline = false,
@@ -172,7 +172,7 @@ def gem():
             [
                     insert, insert_with_newline, lookup
             ] = produce_insert_and_lookup_token_functions(
-                    k, name, Meta,
+                    name, Meta,
 
                     produce_insert              = true,
                     produce_insert_with_newline = true,

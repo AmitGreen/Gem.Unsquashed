@@ -97,7 +97,7 @@ def gem():
             #       See each of them for documented differences
             #
             #   NOTE:
-            #       As this is an 'operator' the meaning of '()'  must be 'Arguments_0' instead of 'Tuple_0'
+            #       As this is an 'operator' the meaning of '()' must be 'Arguments_0' instead of 'Tuple_0'
             #       (Tuple_0 is an atom)
             #
             left_end = m.end('left_parenthesis__ow')
@@ -112,7 +112,7 @@ def gem():
                     wi(m.end('right_parenthesis'))
                     wj(m.end())
 
-                    return Arguments_0(left, right)
+                    return conjure_arguments_0(left, right)
 
                 j = m.end()
 
@@ -202,7 +202,7 @@ def gem():
                     wi(j)
                     wj(j)
 
-                    return IsNot(left, conjure_keyword_not(right_s))
+                    return conjure_is_not(left, conjure_keyword_not(right_s))
 
                 j = m.end()
 
@@ -219,7 +219,7 @@ def gem():
             #   Differences:
             #       Uses keyword_not* instead of keyword_is
             #       Uses keyword_in*  instead of keyword_in
-            #       Uses IsNot        instead of NotIn
+            #       Uses NotIn        instead of IsNot
             #
             left_end = m.end('keyword_not__ow')
 
@@ -233,7 +233,7 @@ def gem():
                     wi(j)
                     wj(j)
 
-                    return NotIn(left, conjure_keyword_in(right_s))
+                    return conjure_not_in(left, conjure_keyword_in(right_s))
 
                 j = m.end()
 
@@ -305,7 +305,7 @@ def gem():
 
                     skip_tokenize_prefix()
 
-                return Arguments_0(left, right)
+                return conjure_arguments_0(left, right)
 
             left = conjure_left_parenthesis__with_newline(s[qi() : ])
 

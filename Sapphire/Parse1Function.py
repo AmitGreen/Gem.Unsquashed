@@ -176,7 +176,10 @@ def gem():
                     raise_unknown_line()
 
                 if operator_7.is_right_parenthesis:
-                    operator_7 = RightParenthesis_Colon_Newline(operator_7, tokenize_parameter_colon_newline())
+                    operator_7 = conjure__right_parenthesis__colon__python_newline(
+                                     operator_7,
+                                     tokenize_parameter_colon_newline(),
+                                 )
 
             if operator_7.is__any__right_parenthesis__colon__newline:
                 if qn() is not none:

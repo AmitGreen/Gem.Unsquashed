@@ -3,9 +3,6 @@
 #
 @gem('Sapphire.JoinedToken')
 def gem():
-    construct_KeywordAndOperatorBase = KeywordAndOperatorBase.__init__
-
-
     class BaseDualOperator(KeywordAndOperatorBase):
         __slots__ = ((
             'first',                    #   Operator+
@@ -13,9 +10,16 @@ def gem():
         ))
 
 
-        def __init__(t, first, second):
-            construct_KeywordAndOperatorBase(t, first.s + second.s)
+        ends_in_python_newline = false
+        newlines               = 0
+        MetaWithNewline        = 0
 
+
+        def __init__(t, s, first, second):
+            assert '\n' not in s
+            assert s == first.s + second.s
+
+            t.s      = s
             t.first  = first
             t.second = second
 
@@ -54,7 +58,6 @@ def gem():
             w(t.first.s + t.second.s)
 
 
-    @share
     class Arguments_0(BaseDualOperator):
         __slots__                             = (())
         display_name                          = '(0)'
@@ -63,35 +66,30 @@ def gem():
         is_postfix_operator                   = true
 
 
-    @share
     class Colon_RightSquareBracket(BaseDualOperator):
         __slots__    = (())
         #   [
         display_name = ':]'
 
 
-    @share
     class Comma_RightBrace(BaseDualOperator):
         __slots__    = (())
         #   {
         display_name = ',}'
 
 
-    @share
     class Comma_RightParenthesis(BaseDualOperator):
         __slots__    = (())
         #   (
         display_name = ',)'
 
 
-    @share
     class Comma_RightSquareBracket(BaseDualOperator):
         __slots__    = (())
         #   [
         display_name = ',]'
 
 
-    @share
     class EmptyList(BaseDualOperator):
         __slots__                      = (())
         display_name                   = '[,]'
@@ -99,7 +97,6 @@ def gem():
         is_atom                        = true
 
 
-    @share
     class EmptyMap(BaseDualOperator):
         __slots__                      = (())
         display_name                   = '{:}'
@@ -107,7 +104,6 @@ def gem():
         is_atom                        = true
 
 
-    @share
     class EmptyTuple(BaseDualOperator):
         __slots__                      = (())
         display_name                   = '{,}'
@@ -128,7 +124,6 @@ def gem():
         is_end_of_unary_expression       = true
 
 
-    @share
     class LeftSquareBracket_Colon(BaseDualOperator):
         __slots__    = (())
         display_name = '[:'                             #   ]
@@ -147,82 +142,197 @@ def gem():
         is_end_of_unary_expression       = true
 
 
-    @share
-    class RightParenthesis_Colon_Newline(BaseDualOperator):
+    class RightParenthesis_Colon_PythonNewline(BaseDualOperator):
         __slots__                                  = (())
         display_name                               = r'):\n'
+        ends_in_python_newline                     = true
         is__any__right_parenthesis__colon__newline = true
         is__right_parenthesis__colon__newline      = true
+        Meta_Many                                  = 0
+        newlines                                   = 1
 
 
-    class BaseTripleOperator(KeywordAndOperatorBase):
-        __slots__ = ((
-            'first',         #   Operator+
-            'second',        #   Operator+
-            'third',         #   Operator+
-        ))
+        def __init__(t, s, first, second):
+            assert s.count('\n') is 1
+            assert s == first.s + second.s
 
-
-        def __init__(t, first, second, third):
-            construct_KeywordAndOperatorBase(t, first.s + second.s + third.s)
-
+            t.s      = s
             t.first  = first
             t.second = second
-            t.third  = third
 
 
-        def __repr__(t):
-            return arrange('<%s %r %r %r>',
-                           t.__class__.__name__, t.first, t.second, t.third)
+    def construct_dual_token_with_newlines(t, s, first, second, newlines, ends_in_newline):
+        assert newlines >= 1
+        assert ends_in_newline is (s[-1] is '\n')
+
+        t.s               = s
+        t.first           = first
+        t.second          = second
+        t.newlines        = newlines
+        t.ends_in_newline = ends_in_newline
 
 
-        def display_full_token(t):
-            display_name = t.display_name
-            first_s      = t.first.s
-            second_s     = t.second.s
+    def construct_dual_token_with_python_newline(t, s, first, second, newlines):
+        assert newlines >= 1
+        assert s[-1] is '\n'
 
-            return arrange('<%s <%s> <%s>>',
-                           display_name,
-                           portray_string(first_s)    if '\n' in first_s  else   first_s,
-                           portray_string(second_s)   if '\n' in second_s else   second_s)
-
-
-        def display_token(t):
-            display_name = t.display_name
-
-            if display_name == t.s:
-                return display_name
-
-            first_s  = t.first .s
-            second_s = t.second.s
-            third_s  = t.third .s
-
-            return arrange('<%s <%s> <%s> <%s>>',
-                           display_name,
-                           portray_string(first_s)    if '\n' in first_s  else   first_s,
-                           portray_string(second_s)   if '\n' in second_s else   second_s,
-                           portray_string(third_s)    if '\n' in third_s  else   third_s)
+        t.s        = s
+        t.first    = first
+        t.second   = second
+        t.newlines = newlines
 
 
-        def write(t, w):
-            w(t.first.s + t.second.s + t.third.s)
+    def create_MetaWithNewline(Meta):
+        r = Meta.MetaWithNewline = Type(
+                                       arrange('%sWithNewline', Meta.__name__),
+                                       ((Meta,)),
+                                       {
+                                           '__slots__' : ((
+                                               'newlines',                 #   Integer { > 0 }
+                                               'ends_in_newline',          #   Boolean
+                                           )),
+
+                                           '__init__' : construct_dual_token_with_newlines,
+                                       },
+                                   )
+
+        return r
 
 
-    @share
-    class AllIndex(BaseTripleOperator):
-        __slots__    = (())
-        display_name = '[:]'
+    def create_Meta_Many(Meta):
+        r = Meta.Meta_Many = Type(
+                                 arrange('%s_Many', Meta.__name__),
+                                 ((Meta,)),
+                                 {
+                                     '__slots__' : ((
+                                         'newlines',                 #   Integer { > 1 }
+                                     )),
+
+                                     '__init__' : construct_dual_token_with_python_newline,
+                                 },
+                             )
+
+        return r
 
 
-    @share
-    class Comma_RightParenthesis_Colon_Newline(BaseTripleOperator):
-        __slots__                                  = (())
-        display_name                               = r',):\n'
-        is__any__right_parenthesis__colon__newline = true
+    def create_dual_token_with_newline(Meta, first, second):
+        s = intern_string(first.s + second.s)
+
+        newlines = s.count('\n')
+
+        if newlines is 0:
+            return Meta(s, first, second)
+
+        MetaWithNewline = Meta.MetaWithNewline
+
+        if MetaWithNewline is 0:
+            MetaWithNewline = Meta.MetaWithNewline = create_MetaWithNewline(Meta)
+
+        return MetaWithNewline(s, first, second, newlines, false)
 
 
-    @share
-    class ParameterColon_0_Newline(BaseTripleOperator):
-        display_name                 = r'():\n'
-        is_any_parameter_colon_0     = true
-        is_parameter_colon_0_newline = true
+    def create_dual_token_with_python_newline(Meta, first, second):
+        s = intern_string(first.s + second.s)
+
+        newlines = s.count('\n')
+
+        if newlines is 1:
+            return Meta(s, first, second)
+
+        Meta_Many = Meta.Meta_Many
+
+        if Meta_Many is 0:
+            Meta_Many = Meta.Meta_Many = create_Meta_Many(Meta)
+
+        return Meta_Many(s, first, second, newlines)
+
+          
+    @privileged
+    def produce_conjure_dual_token(name, Meta, ends_in_python_newline = false):
+        assert type(ends_in_python_newline) is Boolean
+
+        cache     = {}
+        provide_1 = cache.setdefault
+        lookup_1  = cache.get
+        store_1   = cache.__setitem__
+
+        create_dual_token = (
+                create_dual_token_with_python_newline   if ends_in_python_newline else  
+                create_dual_token_with_newline
+            )
+
+
+        def conjure_dual_token(first, second):
+            v = lookup_1(first)
+
+            if v is none:
+                return provide_1(first, create_dual_token(Meta, first, second))
+
+            if type(v) is Map:
+                return (v.get(second)) or (v.setdefault(second, create_dual_token(Meta, first, second)))
+
+            if v.second is second:
+                return v
+
+            r = create_dual_token(Meta, first, second)
+
+            store_1(first, { v.second : v , second : r })
+
+            return r
+
+
+        if __debug__:
+            conjure_dual_token.__name__ = arrange('conjure_%s', name)
+
+
+        return conjure_dual_token
+
+
+    conjure_arguments_0 = produce_conjure_dual_token('arguments_0', Arguments_0)
+
+    conjure__colon__right_square_bracket = produce_conjure_dual_token(
+            'conjure__colon__right_square_bracket',
+            Colon_RightSquareBracket,
+        )
+
+    conjure__comma__right_brace       = produce_conjure_dual_token('comma__right_brace',       Comma_RightBrace)
+    conjure__comma__right_parenthesis = produce_conjure_dual_token('comma__right_parenthesis', Comma_RightParenthesis)
+
+    conjure__comma__right_square_bracket = produce_conjure_dual_token(
+            'comma__right_square_bracket',
+            Comma_RightSquareBracket,
+        )
+
+    conjure_empty_list  = produce_conjure_dual_token('empty_list',  EmptyList)
+    conjure_empty_map   = produce_conjure_dual_token('empty_map',   EmptyMap)
+    conjure_empty_tuple = produce_conjure_dual_token('empty_tuple', EmptyTuple)
+    conjure_is_not      = produce_conjure_dual_token('is_not',      IsNot)
+
+    conjure__left_square_bracket__colon = produce_conjure_dual_token(
+            'not_in',
+            LeftSquareBracket_Colon,
+        )
+
+    conjure_not_in = produce_conjure_dual_token('not_in', NotIn)
+
+    conjure__right_parenthesis__colon__python_newline = produce_conjure_dual_token(
+            'right_parenthesis__colon__python_newline',
+            RightParenthesis_Colon_PythonNewline,
+            true,
+        )
+
+
+    share(
+        'conjure_arguments_0',                                  conjure_arguments_0,
+        'conjure__colon__right_square_bracket',                 conjure__colon__right_square_bracket,
+        'conjure__comma__right_brace',                          conjure__comma__right_brace,
+        'conjure__comma__right_parenthesis',                    conjure__comma__right_parenthesis,
+        'conjure__comma__right_square_bracket',                 conjure__comma__right_square_bracket,
+        'conjure_empty_list',                                   conjure_empty_list,
+        'conjure_empty_map',                                    conjure_empty_map,
+        'conjure_empty_tuple',                                  conjure_empty_tuple,
+        'conjure_is_not',                                       conjure_is_not,
+        'conjure__left_square_bracket__colon',                  conjure__left_square_bracket__colon,
+        'conjure_not_in',                                       conjure_not_in,
+        'conjure__right_parenthesis__colon__python_newline',    conjure__right_parenthesis__colon__python_newline,
+    )

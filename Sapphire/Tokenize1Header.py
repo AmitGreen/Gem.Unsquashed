@@ -70,7 +70,7 @@ def gem():
 
             wd0()
 
-            return RightParenthesis_Colon_Newline(
+            return conjure__right_parenthesis__colon__python_newline(
                        conjure_right_parenthesis   (s[qi()                   : right_parenthesis__end]),
                        conjure_colon_python_newline(s[right_parenthesis__end :                       ]),
                    )

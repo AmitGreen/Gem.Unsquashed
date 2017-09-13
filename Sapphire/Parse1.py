@@ -7,6 +7,7 @@ def gem():
 
 
     require_gem('Sapphire.Core')
+
     require_gem('Sapphire.BinaryExpression')
     require_gem('Sapphire.BookcaseExpression')
     require_gem('Sapphire.ExpressionMany')
@@ -28,6 +29,7 @@ def gem():
     require_gem('Sapphire.Tokenize1Header')
     require_gem('Sapphire.Tokenize1Name')
     require_gem('Sapphire.Tokenize1Operator')
+    require_gem('Sapphire.TripleToken')
     require_gem('Sapphire.UnaryExpression')
 
 

@@ -39,7 +39,7 @@ def gem():
         argument_1 = parse1_atom()
 
         if argument_1.is_right_parenthesis:
-            return Arguments_0(left_parenthesis, argument_1)
+            return conjure_arguments_0(left_parenthesis, argument_1)
 
         operator_1 = qk()
 
@@ -83,7 +83,7 @@ def gem():
             return Arguments_1(
                        left_parenthesis,
                        argument_1,
-                       Comma_RightParenthesis(operator_1, argument_2),
+                       conjure__comma__right_parenthesis(operator_1, argument_2),
                    )
 
         argument_2 = parse1_argument7__left(argument_2)
@@ -105,7 +105,7 @@ def gem():
                        argument_1,
                        operator_1,
                        argument_2,
-                       Comma_RightParenthesis(operator_2, argument_3),
+                       conjure__comma__right_parenthesis(operator_2, argument_3),
                    )
 
         many = [left_parenthesis, argument_1, operator_1, argument_2, operator_2]
@@ -130,7 +130,7 @@ def gem():
             argument_3 = parse1_atom()
 
             if argument_3.is_right_parenthesis:
-                many.append(Comma_RightParenthesis(operator_7, argument_3))
+                many.append(conjure__comma__right_parenthesis(operator_7, argument_3))
                 return Arguments_Many(Tuple(many))
 
             many.append(operator_7)

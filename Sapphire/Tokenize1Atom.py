@@ -102,7 +102,10 @@ def gem():
                     wi(right_parenthesis__end)
                     wj(m.end())
 
-                    return EmptyTuple(left_parenthesis, conjure_right_parenthesis(m.group('right_parenthesis')))
+                    return conjure_empty_tuple(
+                               left_parenthesis,
+                               conjure_right_parenthesis(m.group('right_parenthesis')),
+                           )
 
                 j = m.end()
 
@@ -130,7 +133,7 @@ def gem():
                     wi(right_brace__end)
                     wj(m.end())
 
-                    return EmptyMap(left_brace, conjure_right_brace(m.group('right_brace')))
+                    return conjure_empty_map(left_brace, conjure_right_brace(m.group('right_brace')))
 
                 j = m.end()
 
@@ -158,7 +161,10 @@ def gem():
                     wi(right_square_bracket__end)
                     wj(m.end())
 
-                    return EmptyList(left_square_bracket, conjure_right_square_bracket(m.group('right_square_bracket')))
+                    return conjure_empty_list(
+                               left_square_bracket,
+                               conjure_right_square_bracket(m.group('right_square_bracket')),
+                           )
 
                 j = m.end()
 
@@ -321,7 +327,7 @@ def gem():
                 if qd() is 0:
                     right_parenthesis__end = m.end('right_parenthesis')
 
-                    r = EmptyTuple(
+                    r = conjure_empty_tuple(
                             left_parenthesis,
                             conjure_right_parenthesis(s[left_parenthesis__end : right_parenthesis__end])
                         )
@@ -330,7 +336,7 @@ def gem():
 
                     return r
 
-                r = EmptyTuple(
+                r = conjure_empty_tuple(
                         left_parenthesis,
                         conjure_right_parenthesis(s[left_parenthesis__end : ]),
                     )
@@ -368,7 +374,7 @@ def gem():
                 if qd() is 0:
                     right_brace__end = m.end('right_brace')
 
-                    r = EmptyMap(
+                    r = conjure_empty_map(
                             left_brace,
                             conjure_right_brace(s[left_brace__end : right_brace__end])
                         )
@@ -377,7 +383,7 @@ def gem():
 
                     return r
 
-                r = EmptyMap(
+                r = conjure_empty_map(
                         left_brace,
                         conjure_right_brace(s[left_brace__end : ]),
                     )
@@ -415,7 +421,7 @@ def gem():
                 if qd() is 0:
                     right_square_bracket__end = m.end('right_square_bracket')
 
-                    r = EmptyList(
+                    r = conjure_empty_list(
                             left_square_bracket,
                             conjure_right_square_bracket(s[left_square_bracket__end : right_square_bracket__end])
                         )
@@ -424,7 +430,7 @@ def gem():
 
                     return r
 
-                r = EmptyList(
+                r = conjure_empty_list(
                         left_square_bracket,
                         conjure_right_square_bracket(s[left_square_bracket__end : ]),
                     )
