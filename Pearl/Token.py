@@ -19,7 +19,7 @@ def gem():
 
 
         def __init__(t, s):
-            assert '\n' not in s
+#           assert '\n' not in s
 
             t.s = s
 

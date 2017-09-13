@@ -12,11 +12,19 @@ def gem():
     insert_operator_with_newline = insert_operator__with_newline__map.__getitem__
     lookup_operator              = lookup_operator_map               .__getitem__
 
+
     def construct_token_with_newlines(t, s, newlines, ends_in_newline, ends_in_python_newline):
         t.s                      = s
         t.newlines               = newlines
         t.ends_in_newline        = ends_in_newline
         t.ends_in_python_newline = ends_in_python_newline
+
+
+    def construct_token_with_python_newline_many(t, s, newlines):
+        assert newlines > 1
+
+        t.s        = s
+        t.newlines = newlines
         
 
     def create_MetaWithNewline(Meta):
@@ -35,6 +43,28 @@ def gem():
                                    )
 
         return r
+
+
+    def create_MetaPythonNewline_Many(Meta):
+        r = Meta.MetaWithNewline = Type(
+                                       arrange('%s_Many', Meta.__name__),
+                                       ((Meta,)),
+                                       {
+                                           '__slots__' : ((
+                                               'newlines',                 #   Integer
+                                           )),
+
+                                           '__init__' : construct_token_with_python_newline_many,
+                                       },
+                                   )
+
+        return r
+
+
+    if __debug__:
+        def raise_already_exists(name, s):
+            raise_runtime_error('cache %s: attempt to insert key %s (already has value %r)',
+                                name, portray_string(s), find(s))
 
 
     @privileged
@@ -58,17 +88,12 @@ def gem():
             contains = cache.__contains__
 
 
-            def raise_already_exists(s):
-                raise_runtime_error('cache %s: attempt to insert key %s (already has value %r)',
-                                    name, portray_string(s), find(s))
-
-
             if produce_insert:
                 def insert(s):
-                    assert s[-1] != '\n'
+#                   assert s[-1] != '\n'
 
                     if contains(s):
-                        raise_already_exists(s)
+                        raise_already_exists(name, s)
 
                     newlines = s.count('\n')
                     s        = intern_string(s)
@@ -93,7 +118,7 @@ def gem():
                     assert s[-1] == '\n'
 
                     if contains(s):
-                        raise_already_exists(s)
+                        raise_already_exists(name, s)
 
                     newlines = s.count('\n')
                     s        = intern_string(s)
@@ -114,7 +139,7 @@ def gem():
                     assert s[-1] == '\n'
 
                     if contains(s):
-                        raise_already_exists(s)
+                        raise_already_exists(name, s)
 
                     newlines = s.count('\n')
                     s        = intern_string(s)
@@ -235,27 +260,38 @@ def gem():
     @share
     @privileged
     def produce_conjure_operator_with_python_newline(k, name, Meta):
-        [
-                insert_with_python_newline, lookup,
-        ] = produce_insert_and_lookup_token_functions(
-                k, name, Meta,
-
-                produce_insert_with_newline = true,
-                produce_lookup              = true
-            )
+        cache   = {}
+        lookup  = cache.get
+        provide = cache.setdefault
+        find    = cache.__getitem__
 
 
-        def conjure_operator(s):
-            return (lookup(s)) or (insert_with_python_newline(s))
+        def conjure_with_python_newline(s):
+            r = lookup(s)
+
+            if r is not none:
+                return r
+
+            assert s[-1] == '\n'
+
+            newlines = s.count('\n')
+            s        = intern_string(s)
+
+            if newlines is 1:
+                return Meta(s)
+
+            return provide(
+                       s,
+                       ( (Meta.MetaWithNewline) or (create_MetaPythonNewline_Many(Meta)) )(s, newlines),
+                  )
 
 
         if __debug__:
-            conjure_operator.__name__ = intern_arrange('conjure_%s%swith_python_newline',
-                                                       name,
-                                                       ('__'   if '_' in name else   '_'))
+            conjure_with_python_newline.__name__ = intern_arrange('conjure_%s%swith_python_newline',
+                                                                  name,
+                                                                  ('__'   if '_' in name else   '_'))
 
-
-        return conjure_operator
+        return conjure_with_python_newline
 
 
 
