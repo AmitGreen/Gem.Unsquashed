@@ -108,8 +108,12 @@ def gem():
             return FunctionHeader(
                        keyword_function,
                        name,
-                       Comma_RightParenthesis_Colon_Newline(operator_1, token_1.first, token_1.second),
-                    )
+                       conjure__comma__right_parenthesis__colon__python_newline(
+                           operator_1,
+                           token_1.first,
+                           token_1.second,
+                       ),
+                   )
 
         if not token_1.is_atom:
             raise_unknown_line()
@@ -152,7 +156,11 @@ def gem():
                        ParameterColon_1(
                            operator_1,
                            token_1,
-                           Comma_RightParenthesis_Colon_Newline(operator_2, token_7.first, token_7.second),
+                           conjure__comma__right_parenthesis__colon__python_newline(
+                               operator_2,
+                               token_7.first,
+                               token_7.second,
+                           ),
                        ),
                    )
 
@@ -202,7 +210,13 @@ def gem():
                 raise_unknown_line()
 
             if token_7.is__right_parenthesis__colon__newline:
-                many.append(Comma_RightParenthesis_Colon_Newline(operator_7, token_7.first, token_7.second))
+                many.append(
+                    conjure__comma__right_parenthesis__colon__python_newline(
+                        operator_7,
+                        token_7.first,
+                        token_7.second,
+                    ),
+                )
 
                 return FunctionHeader(keyword_function, name, ParameterColon_Many(Tuple(many)))
 

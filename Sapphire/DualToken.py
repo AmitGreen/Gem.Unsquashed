@@ -158,6 +158,7 @@ def gem():
         def __init__(t, s, first, second):
             assert s.count('\n') is 1
             assert s == first.s + second.s
+            assert second.s[-1] == '\n'
 
             t.s      = s
             t.first  = first
@@ -166,7 +167,7 @@ def gem():
 
     def construct_dual_token_with_newlines(t, s, first, second, newlines, ends_in_newline):
         assert newlines >= 1
-        assert ends_in_newline is (s[-1] is '\n')
+        assert ends_in_newline is (s[-1] == '\n')
 
         t.s               = s
         t.first           = first
@@ -198,7 +199,7 @@ def gem():
         if MetaWithNewline is 0:
             MetaWithNewline = Meta.MetaWithNewline = create_MetaWithNewline(Meta, construct_dual_token_with_newlines)
 
-        return MetaWithNewline(s, first, second, newlines, false)
+        return MetaWithNewline(s, first, second, newlines, s[-1] == '\n')
 
 
     def create_dual_token_with_python_newline(Meta, first, second):
@@ -252,7 +253,7 @@ def gem():
 
 
         if __debug__:
-            conjure_dual_token.__name__ = arrange('conjure_%s', name)
+            conjure_dual_token.__name__ = intern_arrange('conjure_%s', name)
 
 
         return conjure_dual_token

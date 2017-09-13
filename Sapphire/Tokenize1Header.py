@@ -30,7 +30,7 @@ def gem():
                 if colon_start is not -1:
                     right_parenthesis__start = m.start('right_parenthesis')
 
-                    return ParameterColon_0_Newline(
+                    return conjure__parameter_0__colon_newline(
                                conjure_left_parenthesis    (s[qi()                     : right_parenthesis__start]),
                                conjure_right_parenthesis   (s[right_parenthesis__start : colon_start             ]),
                                conjure_colon_python_newline(s[colon_start              :                         ]),
@@ -204,7 +204,7 @@ def gem():
 
                     comma_RP_start = m.start('comma_RP')
 
-                    return Comma_RightParenthesis_Colon_Newline(
+                    return conjure__comma__right_parenthesis__colon__python_newline(
                                conjure_comma            (s[qi()           : comma_RP_start]),
                                conjure_right_parenthesis(s[comma_RP_start : comma_RP_end  ]),
                                conjure_colon            (s[comma_RP_end   :               ])

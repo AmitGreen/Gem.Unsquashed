@@ -232,7 +232,7 @@ def gem():
                     middle_2 = parse1_atom()
 
                     if middle_2.is_right_square_bracket:
-                        left = IndexExpression(left, AllIndex(operator, middle, middle_2))
+                        left = IndexExpression(left, conjure_all_index(operator, middle, middle_2))
                     else:
                         operator = conjure__left_square_bracket__colon(operator, middle)
 
