@@ -115,11 +115,9 @@ def gem():
 
                     return conjure_arguments_0(left, right)
 
-                j = m.end()
-
                 wd(qd() + 1)
-                wi(j)
-                wj(j)
+                wi(left_end)
+                wj(left_end)
 
                 return left
             #</similiar-to>
@@ -138,11 +136,13 @@ def gem():
             #       2.  There are two calls to "conjure_left_square_bracket" using two different tests
             #           where the '[' ends (again due to parsing of white-space after '[' .vs. ':')
             #
-            if m.start('left_square_bracket') is not -1:
+            left_end = m.end('left_square_bracket__ow')
+
+            if left_end is not -1:
+                left  = conjure_left_square_bracket(s[qi() : left_end])
                 RSB_s = m.group('right_square_bracket')
 
                 if RSB_s is not none:
-                    left  = conjure_left_square_bracket(s[qi() : m.start('right_square_bracket')])
                     right = conjure_right_square_bracket(RSB_s)
 
                     wi(m.end('right_square_bracket'))
@@ -150,15 +150,11 @@ def gem():
 
                     return EmptyIndex(left, right)
 
-                j = m.end()
-
-                r = conjure_left_square_bracket(s[qi() : j])
-
                 wd(qd() + 1)
-                wi(j)
-                wj(j)
+                wi(left_end)
+                wj(left_end)
 
-                return r
+                return left
             #</similiar-to>
 
             if m.start('colon') is not -1:
@@ -370,22 +366,21 @@ def gem():
         #
         #       2.  There are two calls to "conjure_left_square_bracket" using two different tests
         #           where the '[' ends (again due to parsing of white-space after '[' .vs. ':')
-        #   FIX: Not quite the same anymore
         #
-        if m.start('left_square_bracket') is not -1:
+        left_end = m.end('left_parenthesis__ow')
+
+        if left_end is not -1:
             right_end = m.end('right_square_bracket')
 
             if right_end is not -1:
-                right_start = m.start('right_square_bracket')
-
-                left = conjure_left_square_bracket(s[qi() : right_start])
+                left = conjure_left_square_bracket(s[qi() : left_end])
 
                 if qd() is 0:
-                    right = conjure_right_square_bracket(s[right_start : right_end])
+                    right = conjure_right_square_bracket(s[left_end : right_end])
 
                     wn(conjure_token_newline(s[right_end : ]))
                 else:
-                    right = conjure_right_square_bracket(s[right_start : ])
+                    right = conjure_right_square_bracket(s[left_end : ])
 
                     skip_tokenize_prefix()
 
