@@ -63,8 +63,10 @@ def gem():
 
 
     class AllIndex(BaseTripleOperator):
-        __slots__    = (())
-        display_name = '[:]'
+        __slots__           = (())
+        display_name        = '[:]'
+        is_all_index        = true
+        is_postfix_operator = true
 
 
     class Comma_RightParenthesis_Colon_PythonNewline(BaseTripleOperator):

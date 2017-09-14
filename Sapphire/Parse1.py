@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 0
+    show = 7
 
 
     require_gem('Sapphire.Core')

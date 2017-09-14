@@ -9,6 +9,7 @@ def gem():
 
     @share
     class KeywordAndOperatorBase(Token):
+        is_all_index                               = false
         is_any_parameter_colon_0                   = false
         is__any__right_parenthesis__colon__newline = false
         is_arguments_0                             = false

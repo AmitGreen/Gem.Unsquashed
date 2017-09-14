@@ -91,7 +91,7 @@ def gem():
                 return r
 
             #
-            #<similiar-to: '{keyword_is,left_square_bracket}__ow' below>
+            #<similiar-to: ''keyword_is__ow' below>
             #
             #   Differences:
             #
@@ -122,32 +122,27 @@ def gem():
                 return left
             #</similiar-to>
 
-            #
-            #<similiar-to: 'left_parenthesis__ow' above>
-            #
-            #   Differences:
-            #       Uses *square_bracket* instead of *parenthesis*
-            #       Uses EmptyIndex       instead of Arguments_0
-            #
-            #       Due to parsing of white-space after '[' .vs. ':':
-            #
-            #       1.  Initial test to enter this code is: "m.start('left_square_bracket')"
-            #
-            #       2.  There are two calls to "conjure_left_square_bracket" using two different tests
-            #           where the '[' ends (again due to parsing of white-space after '[' .vs. ':')
-            #
             left_end = m.end('left_square_bracket__ow')
 
             if left_end is not -1:
                 left            = conjure_left_square_bracket(s[qi() : left_end])
-                tail_index__end = m.end('tail_index')
+                tail_index__end = m.end('tail_index__ow')
 
                 if tail_index__end is not -1:
-                    colon = conjure_colon(s[left_end : tail_index__end])
-                    RSB_s = m.group('right_square_bracket')
+                    colon   = conjure_colon(s[left_end : tail_index__end])
+                    RSB_end = m.end('right_square_bracket')
 
-                    if RSB_s is not none:
-                        raise_unknown_line()
+                    if RSB_end is not -1:
+                        j = m.end()
+
+                        wi(RSB_end)
+                        wj(j)
+
+                        return conjure_all_index(
+                                   left,
+                                   colon,
+                                   conjure_right_square_bracket(s[tail_index__end : RSB_end]),
+                                )
 
                     wd(qd() + 1)
                     wi(tail_index__end)
@@ -155,24 +150,11 @@ def gem():
 
                     return conjure__left_square_bracket__colon(left, colon)
 
-                RSB_s = m.group('right_square_bracket')
-
-                assert RSB_s is none
-
-                if RSB_s is not none:
-                    right = conjure_right_square_bracket(RSB_s)
-
-                    wi(m.end('right_square_bracket'))
-                    wj(m.end())
-
-                    return EmptyIndex(left, right)
-
                 wd(qd() + 1)
                 wi(left_end)
                 wj(left_end)
 
                 return left
-            #</similiar-to>
 
             if m.start('colon') is not -1:
                 head_index__s = m.group('head_index')
@@ -335,12 +317,7 @@ def gem():
 
             return r
 
-        #
-        #<similiar-to: {left_square_bracket__ow} below>
-        #
-        #   Differences:
-        #       Uses *parenthesis* instead of *square_bracket*
-        #
+
         left_end = m.end('left_parenthesis__ow')
 
         if left_end is not -1:
@@ -367,50 +344,39 @@ def gem():
             wd(qd() + 1)
 
             return left
-        #</similiar-to>
 
-        #
-        #<similiar-to: 'left_parenthesis__ow' below>
-        #
-        #   Differences:
-        #       Uses *square_bracket* instead of *parenthesis*
-        #
-        #       Includes special handling for ':]' (under the <different-from /> section)
-        #
-        #       Due to parsing of white-space after '[' .vs. ':':
-        #
-        #       1.  Initial test to enter this code is: "m.start('left_square_bracket')"
-        #
-        #       2.  There are two calls to "conjure_left_square_bracket" using two different tests
-        #           where the '[' ends (again due to parsing of white-space after '[' .vs. ':')
-        #
-        left_end = m.end('left_parenthesis__ow')
+        left_end = m.end('left_square_bracket__ow')
 
         if left_end is not -1:
-            right_end = m.end('right_square_bracket')
+            tail_index__end = m.end('tail_index__ow')
 
-            if right_end is not -1:
-                left = conjure_left_square_bracket(s[qi() : left_end])
+            if tail_index__end is not -1:
+                left      = conjure_left_square_bracket(s[qi() : left_end])
+                right_end = m.end('right_square_bracket')
 
-                if qd() is 0:
-                    right = conjure_right_square_bracket(s[left_end : right_end])
+                if right_end is not -1:
+                    colon = conjure_colon(s[left_end : tail_index__end])
 
-                    wn(conjure_token_newline(s[right_end : ]))
-                else:
-                    right = conjure_right_square_bracket(s[left_end : ])
+                    if qd() is 0:
+                        right = conjure_right_square_bracket(s[tail_index__end : right_end])
 
-                    skip_tokenize_prefix()
+                        wn(conjure_token_newline(s[right_end : ]))
+                    else:
+                        right = conjure_right_square_bracket(s[tail_index__end : ])
 
-                return EmptyIndex(left, right)
+                        skip_tokenize_prefix()
 
-            left = conjure_left_square_bracket__with_newline(s[qi() : ])
+                    return conjure_all_index(left, colon, right)
+
+                left = conjure__left_square_bracket__colon(left, conjure_colon__with_newline(s[left_end : ]))
+            else:
+                left = conjure_left_square_bracket__with_newline(s[qi() : ])
 
             skip_tokenize_prefix()
 
             wd(qd() + 1)
 
             return left
-        #</similiar-to>
 
         if m.start('colon') is not -1:
             head_index__end = m.end('head_index')

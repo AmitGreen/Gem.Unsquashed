@@ -327,7 +327,7 @@ def gem():
                 middle_2 = parse1_atom()
 
                 if middle_2.is_right_square_bracket:
-                    left = IndexExpression(left, conjure_all_index(operator.first, operator.second, middle_2))
+                    operator = conjure_all_index(operator.first, operator.second, middle_2)
                 else:
                     operator_2 = qk()
 
@@ -343,6 +343,30 @@ def gem():
                         raise_unknown_line()
 
                     left = IndexExpression(left, TailIndex(operator, middle_2, operator_2))
+
+                    if qn() is not none:
+                        return left
+
+                    operator = qk()
+
+                    if operator is not none:
+                        if not operator.is_postfix_operator:
+                            return left
+
+                        wk(none)
+                    else:
+                        if qn() is not none:
+                            return left
+
+                        operator = tokenize_operator()
+
+                        if not operator.is_postfix_operator:
+                            wk(operator)
+
+                            return left
+
+            if operator.is_all_index:
+                left = IndexExpression(left, operator)
 
                 if qn() is not none:
                     return left
