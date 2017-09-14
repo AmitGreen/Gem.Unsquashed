@@ -204,7 +204,7 @@ def gem():
         __slots__ = ((
             'keyword',                  #   KeywordIf | KeywordWith
             'condition',                #   Expression
-            'colon_newline',            #   OperatorColonPythonNewline
+            'colon_newline',            #   OperatorColon_PythonNewline
         ))
 
 
@@ -512,7 +512,7 @@ def gem():
             'left',                     #   Expression
             'middle',                   #   KeywordAs | KeywordIn
             'right',                    #   Expression
-            'colon_newline',            #   OperatorColonPythonNewline
+            'colon_newline',            #   OperatorColon_PythonNewline
         ))
 
 

@@ -4,19 +4,19 @@
 @gem('Sapphire.CreateMeta')
 def gem():
     @share
-    def create_MetaWithNewline(Meta, constructor):
-        r = Meta.MetaWithNewline = Type(
-                                       arrange('%sWithNewline', Meta.__name__),
-                                       ((Meta,)),
-                                       {
-                                           '__slots__' : ((
-                                               'newlines',                 #   Integer { > 1 }
-                                               'ends_in_newline',          #   Boolean
-                                           )),
+    def create_Meta_WithNewlines(Meta, constructor):
+        r = Meta.Meta_WithNewlines = Type(
+                                         arrange('%sWithNewline', Meta.__name__),
+                                         ((Meta,)),
+                                         {
+                                             '__slots__' : ((
+                                                 'newlines',                 #   Integer { > 0 }
+                                                 'ends_in_newline',          #   Boolean
+                                             )),
 
-                                           '__init__' : constructor,
-                                       },
-                                   )
+                                             '__init__' : constructor,
+                                         },
+                                     )
 
         return r
 

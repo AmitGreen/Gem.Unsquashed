@@ -26,7 +26,7 @@ def gem():
 
         operator_1 = tokenize_header_parenthesis_atom()
 
-        if operator_1.is_any_parameter_colon_0:
+        if operator_1.is__parameter_0__colon__python_newline:
             if qn() is not none:
                 raise_unknown_line()
 
@@ -83,7 +83,7 @@ def gem():
 
         operator_1 = tokenize_header_parenthesis_atom()
 
-        if operator_1.is_any_parameter_colon_0:
+        if operator_1.is__parameter_0__colon__python_newline:
             if qn() is not none:
                 raise_unknown_line()
 

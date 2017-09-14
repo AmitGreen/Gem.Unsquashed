@@ -13,9 +13,9 @@ def gem():
         ))
 
 
-        ends_in_python_newline = false
-        newlines               = 0
-        MetaWithNewline        = 0
+        python_newline    = false
+        newlines          = 0
+        Meta_WithNewlines = 0
 
 
         def __init__(t, s, first, second):
@@ -165,11 +165,11 @@ def gem():
     class RightParenthesis_Colon_PythonNewline(BaseDualOperator):
         __slots__                                  = (())
         display_name                               = r'):\n'
-        ends_in_python_newline                     = true
         is__any__right_parenthesis__colon__newline = true
         is__right_parenthesis__colon__newline      = true
         Meta_Many                                  = 0
         newlines                                   = 1
+        python_newline                             = true
 
 
         def __init__(t, s, first, second):
@@ -182,7 +182,7 @@ def gem():
             t.second = second
 
 
-    def construct_dual_token_with_newlines(t, s, first, second, newlines, ends_in_newline):
+    def construct_dual_token__with_newlines(t, s, first, second, newlines, ends_in_newline):
         assert newlines >= 1
         assert ends_in_newline is (s[-1] == '\n')
 
@@ -193,7 +193,7 @@ def gem():
         t.ends_in_newline = ends_in_newline
 
 
-    def construct_dual_token_with_python_newline(t, s, first, second, newlines):
+    def construct_dual_token__python_newline(t, s, first, second, newlines):
         assert newlines >= 1
         assert s[-1] is '\n'
 
@@ -203,7 +203,7 @@ def gem():
         t.newlines = newlines
 
 
-    def create_dual_token_with_newline(Meta, first, second):
+    def create_dual_token__with_newlines(Meta, first, second):
         s = intern_string(first.s + second.s)
 
         newlines = s.count('\n')
@@ -211,15 +211,18 @@ def gem():
         if newlines is 0:
             return Meta(s, first, second)
 
-        MetaWithNewline = Meta.MetaWithNewline
+        Meta_WithNewlines = Meta.Meta_WithNewlines
 
-        if MetaWithNewline is 0:
-            MetaWithNewline = Meta.MetaWithNewline = create_MetaWithNewline(Meta, construct_dual_token_with_newlines)
+        if Meta_WithNewlines is 0:
+            Meta_WithNewlines = Meta.Meta_WithNewlines = create_Meta_WithNewlines(
+                    Meta,
+                    construct_dual_token__with_newlines,
+            )
 
-        return MetaWithNewline(s, first, second, newlines, s[-1] == '\n')
+        return Meta_WithNewlines(s, first, second, newlines, s[-1] == '\n')
 
 
-    def create_dual_token_with_python_newline(Meta, first, second):
+    def create_dual_token__python_newline(Meta, first, second):
         s = intern_string(first.s + second.s)
 
         newlines = s.count('\n')
@@ -230,14 +233,14 @@ def gem():
         Meta_Many = Meta.Meta_Many
 
         if Meta_Many is 0:
-            Meta_Many = Meta.Meta_Many = create_Meta_Many(Meta, construct_dual_token_with_python_newline)
+            Meta_Many = Meta.Meta_Many = create_Meta_Many(Meta, construct_dual_token__python_newline)
 
         return Meta_Many(s, first, second, newlines)
 
 
     @privileged
-    def produce_conjure_dual_token(name, Meta, ends_in_python_newline = false):
-        assert type(ends_in_python_newline) is Boolean
+    def produce_conjure_dual_token(name, Meta, python_newline = false):
+        assert type(python_newline) is Boolean
 
         cache     = {}
         provide_1 = cache.setdefault
@@ -245,8 +248,8 @@ def gem():
         store_1   = cache.__setitem__
 
         create_dual_token = (
-                create_dual_token_with_python_newline   if ends_in_python_newline else
-                create_dual_token_with_newline
+                create_dual_token__python_newline   if python_newline else
+                create_dual_token__with_newlines
             )
 
 

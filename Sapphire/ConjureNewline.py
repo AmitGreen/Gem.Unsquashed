@@ -6,18 +6,18 @@ def gem():
     require_gem('Sapphire.CreateMeta')
 
 
-    create_MetaWithNewline = Shared.create_MetaWithNewline      #   Due to 'privileged'
-    create_Meta_Many       = Shared.create_Meta_Many            #   Due to 'privileged'
+    create_Meta_WithNewlines = Shared.create_Meta_WithNewlines      #   Due to 'privileged'
+    create_Meta_Many         = Shared.create_Meta_Many              #   Due to 'privileged'
 
 
-    insert_operator_map                = {}
-    insert_operator__with_newline__map = {}
-    lookup_operator_map                = {}
+    insert_operator_map                 = {}
+    insert_operator__with_newlines__map = {}
+    lookup_operator_map                 = {}
 
 
-    find_insert_operator               = insert_operator_map               .__getitem__
-    find_insert_operator__with_newline = insert_operator__with_newline__map.__getitem__
-    find_lookup_operator               = lookup_operator_map               .__getitem__
+    find_insert_operator                = insert_operator_map                .__getitem__
+    find_insert_operator__with_newlines = insert_operator__with_newlines__map.__getitem__
+    find_lookup_operator                = lookup_operator_map                .__getitem__
 
 
     def construct_token_with_newlines(t, s, newlines, ends_in_newline):
@@ -26,7 +26,7 @@ def gem():
         t.ends_in_newline = ends_in_newline
 
 
-    def construct_token_with_python_newline_many(t, s, newlines):
+    def construct_token__python_newline__many(t, s, newlines):
         assert newlines > 1
 
         t.s        = s
@@ -43,9 +43,9 @@ def gem():
     def produce_insert_and_lookup_token_functions(
             name, Meta,
 
-            produce_insert              = false,
-            produce_insert_with_newline = false,
-            produce_lookup              = false,
+            produce_insert               = false,
+            produce_insert_with_newlines = false,
+            produce_lookup               = false,
     ):
         r      = []
         append = r.append
@@ -75,8 +75,8 @@ def gem():
                     return provide(
                                s,
                                (
-                                     Meta.MetaWithNewline
-                                  or create_MetaWithNewline(Meta, construct_token_with_newlines)
+                                     Meta.Meta_WithNewlines
+                                  or create_Meta_WithNewlines(Meta, construct_token_with_newlines)
                                )(s, newlines, false),
                            )
 
@@ -86,8 +86,8 @@ def gem():
                 append(insert)
 
 
-            if produce_insert_with_newline:
-                def insert_with_newline(s):
+            if produce_insert_with_newlines:
+                def insert_with_newlines(s):
                     assert s[-1] == '\n'
 
                     if contains(s):
@@ -98,15 +98,15 @@ def gem():
                     return provide(
                                s,
                                (
-                                     Meta.MetaWithNewline
-                                  or create_MetaWithNewline(Meta, construct_token_with_newlines)
+                                     Meta.Meta_WithNewlines
+                                  or create_Meta_WithNewlines(Meta, construct_token_with_newlines)
                                )(s, s.count('\n'), true),
                            )
 
 
-                insert_with_newline.__name__ = arrange('insert_%s__with_newline', name)
+                insert_with_newlines.__name__ = arrange('insert_%s__with_newlines', name)
 
-                append(insert_with_newline)
+                append(insert_with_newlines)
         else:
             if produce_insert:
                 def insert(s):
@@ -119,8 +119,8 @@ def gem():
                     return provide(
                                s,
                                (
-                                     Meta.MetaWithNewline
-                                  or create_MetaWithNewline(Meta, construct_token_with_newlines)
+                                     Meta.Meta_WithNewlines
+                                  or create_Meta_WithNewlines(Meta, construct_token_with_newlines)
                                )(s, newlines, false),
                            )
 
@@ -128,20 +128,20 @@ def gem():
                 append(insert)
 
 
-            if produce_insert_with_newline:
-                def insert_with_newline(s):
+            if produce_insert_with_newlines:
+                def insert_with_newlines(s):
                     s = intern_string(s)
 
                     return provide(
                                s,
                                (
-                                     Meta.MetaWithNewline
-                                  or create_MetaWithNewline(Meta, construct_token_with_newlines)
+                                     Meta.Meta_WithNewlines
+                                  or create_Meta_WithNewlines(Meta, construct_token_with_newlines)
                                )(s, s.count('\n'), true),
                            )
 
 
-                append(insert_with_newline)
+                append(insert_with_newlines)
 
 
         if produce_lookup:
@@ -153,25 +153,25 @@ def gem():
 
     @share
     def produce_operator_insert_and_lookup_maps(many):
-        store_insert              = insert_operator_map               .__setitem__
-        store_insert_with_newline = insert_operator__with_newline__map.__setitem__
-        store_lookup              = lookup_operator_map               .__setitem__
+        store_insert                = insert_operator_map                .__setitem__
+        store_insert__with_newlines = insert_operator__with_newlines__map.__setitem__
+        store_lookup                = lookup_operator_map                .__setitem__
 
 
         for [k, name, Meta] in many:
             [
-                    insert, insert_with_newline, lookup
+                    insert, insert_with_newlines, lookup
             ] = produce_insert_and_lookup_token_functions(
                     name, Meta,
 
-                    produce_insert              = true,
-                    produce_insert_with_newline = true,
-                    produce_lookup              = true
+                    produce_insert               = true,
+                    produce_insert_with_newlines = true,
+                    produce_lookup               = true
                 )
 
-            store_insert             (k, insert)
-            store_insert_with_newline(k, insert_with_newline)
-            store_lookup             (k, lookup)
+            store_insert               (k, insert)
+            store_insert__with_newlines(k, insert_with_newlines)
+            store_lookup               (k, lookup)
 
 
 
@@ -194,33 +194,31 @@ def gem():
 
     @share
     @privileged
-    def produce_conjure_operator_with_newline(k, name):
-        lookup              = find_lookup_operator(k)
-        insert_with_newline = find_insert_operator__with_newline(k)
+    def produce_conjure_operator__with_newlines(k, name):
+        lookup               = find_lookup_operator(k)
+        insert_with_newlines = find_insert_operator__with_newlines(k)
 
 
-        def conjure_operator(s):
-            return (lookup(s)) or (insert_with_newline(s))
+        def conjure_operator__with_newlines(s):
+            return (lookup(s)) or (insert_with_newlines(s))
 
 
         if __debug__:
-            conjure_operator.__name__ = intern_arrange('conjure_%s%swith_newline',
-                                                       name,
-                                                       ('__'   if '_' in name else   '_'))
+            conjure_operator__with_newlines.__name__ = intern_arrange('conjure_%s__swith_newlines', name)
 
-        return conjure_operator
+        return conjure_operator__with_newlines
 
 
     @share
     @privileged
-    def produce_conjure_operator_with_python_newline(k, name, Meta):
+    def produce_conjure_operator__python_newline(k, name, Meta):
         cache   = {}
         lookup  = cache.get
         provide = cache.setdefault
         find    = cache.__getitem__
 
 
-        def conjure_with_python_newline(s):
+        def conjure_token__python_newline(s):
             r = lookup(s)
 
             if r is not none:
@@ -238,25 +236,22 @@ def gem():
                        s,
                        (
                              Meta.Meta_Many
-                          or create_Meta_Many(Meta, construct_token_with_python_newline_many)
+                          or create_Meta_Many(Meta, construct_token__python_newline__many)
                        )(s, s.count('\n'), true),
                    )
 
 
         if __debug__:
-            conjure_with_python_newline.__name__ = intern_arrange('conjure_%s%swith_python_newline',
-                                                                  name,
-                                                                  ('__'   if '_' in name else   '_'))
+            conjure_token__python_newline.__name__ = intern_arrange('conjure_%s__python_newline', name)
 
-        return conjure_with_python_newline
+        return conjure_token__python_newline
 
 
 
     share(
         'find_insert_operator',                 find_insert_operator,
-        'find_insert_operator__with_newline',   find_insert_operator__with_newline,
+        'find_insert_operator__with_newlines',  find_insert_operator__with_newlines,
         'find_lookup_operator',                 find_lookup_operator,
         'insert_operator_map',                  insert_operator_map,
-        'insert_operator__with_newline__map',   insert_operator__with_newline__map,
         'lookup_operator_map',                  lookup_operator_map,
     )

@@ -11,11 +11,6 @@ def gem():
         ))
 
 
-        ends_in_python_newline = false
-        newlines               = 0
-        MetaWithNewline        = 0
-
-
         def __init__(t, s, first, second, third):
             assert '\n' not in s
             assert s == first.s + second.s + third.s
@@ -37,8 +32,8 @@ def gem():
 
             return arrange('<%s <%s> <%s>>',
                            display_name,
-                           portray_string(first_s)    if '\n' in first_s  else   first_s,
-                           portray_string(second_s)   if '\n' in second_s else   second_s)
+                           (portray_string(first_s)    if '\n' in first_s  else   first_s),
+                           (portray_string(second_s)   if '\n' in second_s else   second_s))
 
 
         def display_token(t):
@@ -53,9 +48,9 @@ def gem():
 
             return arrange('<%s <%s> <%s> <%s>>',
                            display_name,
-                           portray_string(first_s)    if '\n' in first_s  else   first_s,
-                           portray_string(second_s)   if '\n' in second_s else   second_s,
-                           portray_string(third_s)    if '\n' in third_s  else   third_s)
+                           (portray_string(first_s)    if '\n' in first_s  else   first_s),
+                           (portray_string(second_s)   if '\n' in second_s else   second_s),
+                           (portray_string(third_s)    if '\n' in third_s  else   third_s))
 
 
         def write(t, w):
@@ -77,18 +72,17 @@ def gem():
         newlines                                   = 1
 
 
-    class Parameter_0__Colon__Newline(BaseTripleOperator):
-        display_name                 = r'():\n'
-        is_any_parameter_colon_0     = true
-        is_parameter_colon_0_newline = true
-        Meta_Many                    = 0
-        newlines                     = 1
+    class Parameter_0__Colon__PythonNewline(BaseTripleOperator):
+        display_name                           = r'():\n'
+        is__parameter_0__colon__python_newline = true
+        Meta_Many                              = 0
+        newlines                               = 1
 
 
         def __init__(t, s, first, second, third):
             assert s.count('\n') is 1
             assert s == first.s + second.s + third.s
-            assert third.s[-1] is '\n'
+            assert third.s[-1] == '\n'
 
             t.s      = s
             t.first  = first
@@ -96,7 +90,7 @@ def gem():
             t.third  = third
 
 
-    def construct_triple_token_with_newlines(t, s, first, second, third, newlines, ends_in_newline):
+    def construct_triple_token__with_newlines(t, s, first, second, third, newlines, ends_in_newline):
         assert newlines >= 1
         assert ends_in_newline is (s[-1] == '\n')
 
@@ -108,7 +102,7 @@ def gem():
         t.ends_in_newline = ends_in_newline
 
 
-    def construct_triple_token_with_python_newline(t, s, first, second, third, newlines):
+    def construct_triple_token__python_newline(t, s, first, second, third, newlines):
         assert newlines >= 1
         assert s[-1] == '\n'
 
@@ -119,7 +113,7 @@ def gem():
         t.newlines = newlines
 
 
-    def create_triple_token_with_newline(Meta, first, second, third):
+    def create_triple_token__with_newlines(Meta, first, second, third):
         s = intern_string(first.s + second.s + third.s)
 
         newlines = s.count('\n')
@@ -127,15 +121,18 @@ def gem():
         if newlines is 0:
             return Meta(s, first, second, third)
 
-        MetaWithNewline = Meta.MetaWithNewline
+        Meta_WithNewlines = Meta.Meta_WithNewlines
 
-        if MetaWithNewline is 0:
-            MetaWithNewline = Meta.MetaWithNewline = create_MetaWithNewline(Meta, construct_triple_token_with_newlines)
+        if Meta_WithNewlines is 0:
+            Meta_WithNewlines = Meta.Meta_WithNewlines = create_Meta_WithNewlines(
+                    Meta,
+                    construct_triple_token__with_newlines,
+                )
 
-        return MetaWithNewline(s, first, second, third, newlines, s[-1] == '\n')
+        return Meta_WithNewlines(s, first, second, third, newlines, s[-1] == '\n')
 
 
-    def create_triple_token_with_python_newline(Meta, first, second, third):
+    def create_triple_token__python_newline(Meta, first, second, third):
         s = intern_string(first.s + second.s + third.s)
 
         newlines = s.count('\n')
@@ -146,14 +143,14 @@ def gem():
         Meta_Many = Meta.Meta_Many
 
         if Meta_Many is 0:
-            Meta_Many = Meta.Meta_Many = create_Meta_Many(Meta, construct_triple_token_with_python_newline)
+            Meta_Many = Meta.Meta_Many = create_Meta_Many(Meta, construct_triple_token__python_newline)
 
         return Meta_Many(s, first, second, third, newlines)
 
 
     @privileged
-    def produce_conjure_triple_token(name, Meta, ends_in_python_newline = false):
-        assert type(ends_in_python_newline) is Boolean
+    def produce_conjure_triple_token(name, Meta, python_newline = false):
+        assert type(python_newline) is Boolean
 
         cache     = {}
         provide_1 = cache.setdefault
@@ -161,8 +158,8 @@ def gem():
         store_1   = cache.__setitem__
 
         create_triple_token = (
-                create_triple_token_with_python_newline   if ends_in_python_newline else
-                create_triple_token_with_newline
+                create_triple_token__python_newline   if python_newline else
+                create_triple_token__with_newlines
             )
 
 
@@ -222,9 +219,10 @@ def gem():
             true,
         )
 
-    conjure__parameter_0__colon_newline = produce_conjure_triple_token(
+    conjure__parameter_0__colon__python_newline = produce_conjure_triple_token(
             'parameter_0__colon_newline',
-            Parameter_0__Colon__Newline,
+            Parameter_0__Colon__PythonNewline,
+            true,
         )
 
     share(
@@ -233,5 +231,5 @@ def gem():
         'conjure__comma__right_parenthesis__colon__python_newline',
             conjure__comma__right_parenthesis__colon__python_newline,
 
-        'conjure__parameter_0__colon_newline',  conjure__parameter_0__colon_newline,
+        'conjure__parameter_0__colon__python_newline',  conjure__parameter_0__colon__python_newline,
     )

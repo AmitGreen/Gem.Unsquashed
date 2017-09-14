@@ -311,7 +311,7 @@ def gem():
 
                 return r
 
-            r = conjure_operator_with_newline(operator_s, s[qi() : ])
+            r = conjure_operator__with_newlines(operator_s, s[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -337,7 +337,7 @@ def gem():
 
                 return conjure_arguments_0(left, right)
 
-            left = conjure_left_parenthesis__with_newline(s[qi() : ])
+            left = conjure_left_parenthesis__with_newlines(s[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -368,9 +368,9 @@ def gem():
 
                     return conjure_all_index(left, colon, right)
 
-                left = conjure__left_square_bracket__colon(left, conjure_colon__with_newline(s[left_end : ]))
+                left = conjure__left_square_bracket__colon(left, conjure_colon__with_newlines(s[left_end : ]))
             else:
-                left = conjure_left_square_bracket__with_newline(s[qi() : ])
+                left = conjure_left_square_bracket__with_newlines(s[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -406,7 +406,7 @@ def gem():
 
                 r = conjure__colon__right_square_bracket(
                         colon,
-                        conjure_right_square_bracket__with_newline(s[head_index__start : ])
+                        conjure_right_square_bracket__with_newlines(s[head_index__start : ])
                     )
 
                 skip_tokenize_prefix()
@@ -414,9 +414,9 @@ def gem():
                 return r
 
             if qd() is 0:
-                return conjure_colon_python_newline(s[qi() : ])
+                return conjure_colon__python_newline(s[qi() : ])
 
-            r = conjure_colon__with_newline(s[qi() : ])
+            r = conjure_colon__with_newlines(s[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -436,7 +436,7 @@ def gem():
 
                 return r
 
-            r = conjure_operator_with_newline(keyword_s, s[qi() : ])
+            r = conjure_operator__with_newlines(keyword_s, s[qi() : ])
 
             skip_tokenize_prefix()
 

@@ -284,7 +284,7 @@ def gem():
 
                 wd(d - 1)
 
-                r = conjure_operator_with_newline(operator_s, qs()[qi() : ])
+                r = conjure_operator__with_newlines(operator_s, qs()[qi() : ])
 
                 skip_tokenize_prefix()
 
@@ -301,7 +301,7 @@ def gem():
 
                 return r
 
-            r = conjure_operator_with_newline(operator_s, qs()[qi() : ])
+            r = conjure_operator__with_newlines(operator_s, qs()[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -347,7 +347,7 @@ def gem():
 
             wd(qd() + 1)
 
-            r = conjure_left_parenthesis__with_newline(qs()[qi() : ])
+            r = conjure_left_parenthesis__with_newlines(qs()[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -394,7 +394,7 @@ def gem():
 
             wd(qd() + 1)
 
-            r = conjure_left_brace__with_newline(qs()[qi() : ])
+            r = conjure_left_brace__with_newlines(qs()[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -441,7 +441,7 @@ def gem():
 
             wd(qd() + 1)
 
-            r = conjure_left_square_bracket__with_newline(qs()[qi() : ])
+            r = conjure_left_square_bracket__with_newlines(qs()[qi() : ])
 
             skip_tokenize_prefix()
 

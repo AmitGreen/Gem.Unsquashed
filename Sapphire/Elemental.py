@@ -10,7 +10,6 @@ def gem():
     @share
     class KeywordAndOperatorBase(Token):
         is_all_index                               = false
-        is_any_parameter_colon_0                   = false
         is__any__right_parenthesis__colon__newline = false
         is_arguments_0                             = false
         is__arguments_0__or__left_parenthesis      = false
@@ -55,7 +54,7 @@ def gem():
         is_minus_sign                              = false
         is_modify_operator                         = false
         is_multiply_operator                       = false
-        is_parameter_colon_0_newline               = false
+        is__parameter_0__colon__python_newline     = false
         is_postfix_operator                        = false
         is_power_operator                          = false
         is_right_brace                             = false
@@ -67,7 +66,7 @@ def gem():
         is_tail_index                              = false
         is_tilde_sign                              = false
         is_token_newline                           = false
-        MetaWithNewline                            = 0
+        Meta_WithNewlines                          = 0
 
 
         def __repr__(t):
@@ -437,7 +436,7 @@ def gem():
         keyword                                 = ':'
 
 
-    class OperatorColonPythonNewline(KeywordAndOperatorBase):
+    class OperatorColon_PythonNewline(KeywordAndOperatorBase):
         __slots__                               = (())
         is_colon_newline                        = true
         is_end_of_arithmetic_expression         = true
@@ -454,7 +453,7 @@ def gem():
         is_end_of_ternary_expression            = true
         is_end_of_ternary_expression_list       = true
         is_end_of_unary_expression              = true
-        keyword                                 = 'colon-newline'
+        keyword                                 = 'colon-python-newline'
         Meta_Many                               = 0
 
 
@@ -466,7 +465,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<OperatorColonPythonNewline %s>', portray_raw_string(t.s))
+            return arrange('<OperatorColon_PythonNewline %s>', portray_raw_string(t.s))
 
 
         def display_token(t):
@@ -1007,24 +1006,28 @@ def gem():
     conjure_right_square_bracket  = produce_conjure_operator(']',    'right_square_bracket')
     conjure_star_sign             = produce_conjure_operator('*',    'star_sign')
 
-    conjure_colon__with_newline = produce_conjure_operator_with_newline(':', 'colon')
+    conjure_colon__with_newlines = produce_conjure_operator__with_newlines(':', 'colon')
 
-    conjure_left_brace__with_newline = produce_conjure_operator_with_newline(
+    conjure_left_brace__with_newlines = produce_conjure_operator__with_newlines(
             '{',                        #   }
             'left_brace',
         )
 
-    conjure_left_parenthesis__with_newline = produce_conjure_operator_with_newline(
+    conjure_left_parenthesis__with_newlines = produce_conjure_operator__with_newlines(
             '(',                        #   )
             'left_parenthesis',
         )
 
-    conjure_left_square_bracket__with_newline = produce_conjure_operator_with_newline(
+    conjure_left_square_bracket__with_newlines = produce_conjure_operator__with_newlines(
             '[',                        #   ]
             'left_square_bracket',
         )
 
-    conjure_colon_python_newline = produce_conjure_operator_with_python_newline(':', 'colon', OperatorColonPythonNewline)
+    conjure_colon__python_newline = produce_conjure_operator__python_newline(
+            ':',
+            'colon',
+            OperatorColon_PythonNewline,
+        )
 
     #
     #   Fix these to have 'WithPythonNewline' version
@@ -1101,14 +1104,14 @@ def gem():
 
 
     @share
-    def conjure_operator_with_newline(partial, full):
-        return (find_lookup_operator(partial)(full)) or (find_insert_operator__with_newline(partial)(full))
+    def conjure_operator__with_newlines(partial, full):
+        return (find_lookup_operator(partial)(full)) or (find_insert_operator__with_newlines(partial)(full))
 
 
     share(
         'conjure_colon',                                conjure_colon,
-        'conjure_colon__with_newline',                  conjure_colon__with_newline,
-        'conjure_colon_python_newline',                 conjure_colon_python_newline,
+        'conjure_colon__with_newlines',                 conjure_colon__with_newlines,
+        'conjure_colon__python_newline',                conjure_colon__python_newline,
         'conjure_comma',                                conjure_comma,
         'conjure_dot',                                  conjure_dot,
         'conjure_else_colon',                           conjure_else_colon,
@@ -1131,11 +1134,11 @@ def gem():
         'conjure_keyword_with',                         conjure_keyword_with,
         'conjure_keyword_yield',                        conjure_keyword_yield,
         'conjure_left_brace',                           conjure_left_brace,
-        'conjure_left_brace__with_newline',             conjure_left_brace__with_newline,
+        'conjure_left_brace__with_newlines',            conjure_left_brace__with_newlines,
         'conjure_left_parenthesis',                     conjure_left_parenthesis,
-        'conjure_left_parenthesis__with_newline',       conjure_left_parenthesis__with_newline,
+        'conjure_left_parenthesis__with_newlines',      conjure_left_parenthesis__with_newlines,
         'conjure_left_square_bracket',                  conjure_left_square_bracket,
-        'conjure_left_square_bracket__with_newline',    conjure_left_square_bracket__with_newline,
+        'conjure_left_square_bracket__with_newlines',   conjure_left_square_bracket__with_newlines,
         'conjure_right_brace',                          conjure_right_brace,
         'conjure_right_parenthesis',                    conjure_right_parenthesis,
         'conjure_right_square_bracket',                 conjure_right_square_bracket,
@@ -1149,7 +1152,7 @@ def gem():
         #
         #   Operator functions
         #
-        'insert_colon_newline__with_newline',           find_insert_operator__with_newline(':'),
+        'insert_colon_newline__with_newlines',          find_insert_operator__with_newlines(':'),
         'insert_left_parenthesis',                      find_insert_operator('('),
         'insert_right_parenthesis',                     find_insert_operator(')'),
         'lookup_left_parenthesis',                      find_lookup_operator('('),
