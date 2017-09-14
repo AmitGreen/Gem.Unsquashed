@@ -425,8 +425,6 @@ def gem():
         keyword_s = m.group('keyword')
 
         if keyword_s is not none:
-            lookup = find_lookup_operator(keyword_s)
-
             if qd() is 0:
                 keyword_end = m.end('keyword')
 

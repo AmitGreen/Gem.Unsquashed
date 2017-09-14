@@ -1097,14 +1097,6 @@ def gem():
                                       }.get
 
 
-    #
-    #   Future inline conjure helper functions
-    #
-    @share
-    def conjure_operator__with_newlines(partial, full):
-        return (find_lookup_operator(partial)(full)) or (find_insert_operator__with_newlines(partial)(full))
-
-
     share(
         'conjure_colon',                                conjure_colon,
         'conjure_colon__ends_in_newline',               conjure_colon__ends_in_newline,
@@ -1146,13 +1138,4 @@ def gem():
         'is_close_operator',                            is_close_operator,
         'is_colon_7',                                   is_colon_7,
         'lookup_keyword_conjure_function',              lookup_keyword_conjure_function,
-
-        #
-        #   Operator functions
-        #
-        'insert_colon_newline__with_newlines',          find_insert_operator__with_newlines(':'),
-        'insert_left_parenthesis',                      find_insert_operator('('),
-        'insert_right_parenthesis',                     find_insert_operator(')'),
-        'lookup_left_parenthesis',                      find_lookup_operator('('),
-        'lookup_right_parenthesis',                     find_lookup_operator(')'),
     )
