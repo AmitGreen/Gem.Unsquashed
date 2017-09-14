@@ -73,7 +73,9 @@ def gem():
 
                     operator_end = m.end('operator')
 
-                    r = find_operator_conjure_function(operator_s)(s[qi() : operator_end])
+                    full = s[qi() : operator_end]
+
+                    r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator(operator_s)(full))
 
                     wd(d - 1)
                     wi(operator_end)
@@ -82,7 +84,10 @@ def gem():
                     return r
 
                 j = m.end()
-                r = find_operator_conjure_function(operator_s)(s[qi() : j])
+
+                full = s[qi() : j]
+
+                r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator(operator_s)(full))
 
                 wi(j)
                 wj(j)
@@ -157,7 +162,10 @@ def gem():
 
             if keyword_s is not none:
                 j = m.end()
-                r = find_operator_conjure_function(keyword_s)(s[qi() : j])
+
+                full = s[qi() : j]
+
+                r = (find_lookup_operator(keyword_s)(full)) or (find_insert_operator(keyword_s)(full))
 
                 wi(j)
                 wj(j)

@@ -63,7 +63,9 @@ def gem():
                     d            = qd()
                     operator_end = m.end('operator')
 
-                    r = find_operator_conjure_function(operator_s)(s[qi() : operator_end])
+                    full = s[qi() : operator_end]
+
+                    r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator(operator_s)(full))
 
                     if d is 0:
                         raise_unknown_line()
@@ -78,7 +80,9 @@ def gem():
 
                 j = m.end()
 
-                r = find_operator_conjure_function(operator_s)(s[qi() : j])
+                full = s[qi() : j]
+
+                r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator(operator_s)(full))
 
                 wi(j)
                 wj(j)
@@ -275,7 +279,9 @@ def gem():
                     operator_end = m.end('operator')
                     s            = qs()
 
-                    r = find_operator_conjure_function(operator_s)(s[qi() : operator_end])
+                    full = s[qi() : operator_end]
+
+                    r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator(operator_s)(full))
 
                     wd0()
                     wn(conjure_token_newline(s[operator_end : ]))
@@ -284,7 +290,9 @@ def gem():
 
                 wd(d - 1)
 
-                r = find_operator_conjure_function(operator_s)(qs()[qi() : ])
+                full = qs()[qi() : ]
+
+                r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator_with_newline(operator_s)(full))
 
                 skip_tokenize_prefix()
 
@@ -295,13 +303,17 @@ def gem():
 
                 s = qs()
 
-                r = find_operator_conjure_function(operator_s)(s[qi() : operator_end])
+                full = s[qi() : operator_end]
+
+                r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator(operator_s)(full))
 
                 wn(conjure_token_newline(s[operator_end : ]))
 
                 return r
 
-            r = find_operator_conjure_function(operator_s)(qs()[qi() : ])
+            full = qs()[qi() : ]
+
+            r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator_with_newline(operator_s)(full))
 
             skip_tokenize_prefix()
 
@@ -394,7 +406,7 @@ def gem():
 
             wd(qd() + 1)
 
-            r = conjure_left_brace(qs()[qi() : ])
+            r = conjure_left_brace__with_newline(qs()[qi() : ])
 
             skip_tokenize_prefix()
 
