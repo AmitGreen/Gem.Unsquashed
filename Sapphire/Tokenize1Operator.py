@@ -131,7 +131,12 @@ def gem():
             #       Uses *square_bracket* instead of *parenthesis*
             #       Uses EmptyIndex       instead of Arguments_0
             #
-            #   FIX:  Not quite similiar, needs fixing
+            #       Due to parsing of white-space after '[' .vs. ':':
+            #
+            #       1.  Initial test to enter this code is: "m.start('left_square_bracket')"
+            #
+            #       2.  There are two calls to "conjure_left_square_bracket" using two different tests
+            #           where the '[' ends (again due to parsing of white-space after '[' .vs. ':')
             #
             if m.start('left_square_bracket') is not -1:
                 RSB_s = m.group('right_square_bracket')
@@ -359,6 +364,12 @@ def gem():
         #
         #       Includes special handling for ':]' (under the <different-from /> section)
         #
+        #       Due to parsing of white-space after '[' .vs. ':':
+        #
+        #       1.  Initial test to enter this code is: "m.start('left_square_bracket')"
+        #
+        #       2.  There are two calls to "conjure_left_square_bracket" using two different tests
+        #           where the '[' ends (again due to parsing of white-space after '[' .vs. ':')
         #   FIX: Not quite the same anymore
         #
         if m.start('left_square_bracket') is not -1:
