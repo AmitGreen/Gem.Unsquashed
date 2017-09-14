@@ -139,8 +139,25 @@ def gem():
             left_end = m.end('left_square_bracket__ow')
 
             if left_end is not -1:
-                left  = conjure_left_square_bracket(s[qi() : left_end])
+                left            = conjure_left_square_bracket(s[qi() : left_end])
+                tail_index__end = m.end('tail_index')
+
+                if tail_index__end is not -1:
+                    colon = conjure_colon(s[left_end : tail_index__end])
+                    RSB_s = m.group('right_square_bracket')
+
+                    if RSB_s is not none:
+                        raise_unknown_line()
+
+                    wd(qd() + 1)
+                    wi(tail_index__end)
+                    wj(m.end())
+
+                    return conjure__left_square_bracket__colon(left, colon)
+
                 RSB_s = m.group('right_square_bracket')
+
+                assert RSB_s is none
 
                 if RSB_s is not none:
                     right = conjure_right_square_bracket(RSB_s)

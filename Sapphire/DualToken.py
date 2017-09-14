@@ -143,8 +143,10 @@ def gem():
 
 
     class LeftSquareBracket_Colon(BaseDualOperator):
-        __slots__    = (())
-        display_name = '[:'                             #   ]
+        __slots__           = (())
+        display_name        = '[:'                             #   ]
+        is_postfix_operator = true
+        is_tail_index       = true
 
 
     @share
@@ -295,7 +297,7 @@ def gem():
     conjure_is_not      = produce_conjure_dual_token('is_not',      IsNot)
 
     conjure__left_square_bracket__colon = produce_conjure_dual_token(
-            'not_in',
+            '[:',                           #   ]
             LeftSquareBracket_Colon,
         )
 

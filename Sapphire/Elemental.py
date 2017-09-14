@@ -63,6 +63,7 @@ def gem():
         is_right_parenthesis                       = false
         is_right_square_bracket                    = false
         is_star_sign                               = false
+        is_tail_index                              = false
         is_tilde_sign                              = false
         is_token_newline                           = false
         MetaWithNewline                            = 0

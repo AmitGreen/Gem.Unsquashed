@@ -229,27 +229,7 @@ def gem():
                 middle = parse1_atom()
 
                 if middle.is_colon:
-                    middle_2 = parse1_atom()
-
-                    if middle_2.is_right_square_bracket:
-                        left = IndexExpression(left, conjure_all_index(operator, middle, middle_2))
-                    else:
-                        operator = conjure__left_square_bracket__colon(operator, middle)
-
-                        operator_2 = qk()
-
-                        if operator_2 is none:
-                            if qn() is not none:
-                                raise_unknown_line()
-
-                            operator_2 = tokenize_operator()
-                        else:
-                            wk(none)
-
-                        if not operator_2.is_right_square_bracket:
-                            raise_unknown_line()
-
-                        left = IndexExpression(left, TailIndex(operator, middle_2, operator_2))
+                    operator = conjure__left_square_bracket__colon(operator, middle)
                 else:
                     operator_2 = qk()
 
@@ -321,6 +301,48 @@ def gem():
                     else:
                         my_line('operator_2: %r', operator_2)
                         raise_unknown_line()
+
+                    if qn() is not none:
+                        return left
+
+                    operator = qk()
+
+                    if operator is not none:
+                        if not operator.is_postfix_operator:
+                            return left
+
+                        wk(none)
+                    else:
+                        if qn() is not none:
+                            return left
+
+                        operator = tokenize_operator()
+
+                        if not operator.is_postfix_operator:
+                            wk(operator)
+
+                            return left
+
+            if operator.is_tail_index:
+                middle_2 = parse1_atom()
+
+                if middle_2.is_right_square_bracket:
+                    left = IndexExpression(left, conjure_all_index(operator.first, operator.second, middle_2))
+                else:
+                    operator_2 = qk()
+
+                    if operator_2 is none:
+                        if qn() is not none:
+                            raise_unknown_line()
+
+                        operator_2 = tokenize_operator()
+                    else:
+                        wk(none)
+
+                    if not operator_2.is_right_square_bracket:
+                        raise_unknown_line()
+
+                    left = IndexExpression(left, TailIndex(operator, middle_2, operator_2))
 
                 if qn() is not none:
                     return left
