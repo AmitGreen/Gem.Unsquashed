@@ -20,7 +20,7 @@ def gem():
     find_lookup_operator                = lookup_operator_map                .__getitem__
 
 
-    def construct_token_with_newlines(t, s, newlines, ends_in_newline):
+    def construct_token__with_newlines(t, s, newlines, ends_in_newline):
         t.s               = s
         t.newlines        = newlines
         t.ends_in_newline = ends_in_newline
@@ -76,7 +76,7 @@ def gem():
                                s,
                                (
                                      Meta.Meta_WithNewlines
-                                  or create_Meta_WithNewlines(Meta, construct_token_with_newlines)
+                                  or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
                                )(s, newlines, false),
                            )
 
@@ -99,7 +99,7 @@ def gem():
                                s,
                                (
                                      Meta.Meta_WithNewlines
-                                  or create_Meta_WithNewlines(Meta, construct_token_with_newlines)
+                                  or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
                                )(s, s.count('\n'), true),
                            )
 
@@ -120,7 +120,7 @@ def gem():
                                s,
                                (
                                      Meta.Meta_WithNewlines
-                                  or create_Meta_WithNewlines(Meta, construct_token_with_newlines)
+                                  or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
                                )(s, newlines, false),
                            )
 
@@ -136,7 +136,7 @@ def gem():
                                s,
                                (
                                      Meta.Meta_WithNewlines
-                                  or create_Meta_WithNewlines(Meta, construct_token_with_newlines)
+                                  or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
                                )(s, s.count('\n'), true),
                            )
 

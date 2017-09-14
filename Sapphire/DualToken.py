@@ -193,7 +193,7 @@ def gem():
         t.ends_in_newline = ends_in_newline
 
 
-    def construct_dual_token__python_newline(t, s, first, second, newlines):
+    def construct_dual_token__python_newline__many(t, s, first, second, newlines):
         assert newlines >= 1
         assert s[-1] is '\n'
 
@@ -233,7 +233,7 @@ def gem():
         Meta_Many = Meta.Meta_Many
 
         if Meta_Many is 0:
-            Meta_Many = Meta.Meta_Many = create_Meta_Many(Meta, construct_dual_token__python_newline)
+            Meta_Many = Meta.Meta_Many = create_Meta_Many(Meta, construct_dual_token__python_newline__many)
 
         return Meta_Many(s, first, second, newlines)
 
