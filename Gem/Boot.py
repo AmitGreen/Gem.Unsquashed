@@ -385,7 +385,7 @@ def gem():
 
         thread_context = ThreadContext()
 
-        
+
         #
         #   Do not use 'hasattr' or 'getattr' here for multiple reasons:
         #
@@ -404,7 +404,7 @@ def gem():
                 assert '__traceback__'        not in e.__dict__
 
                 last_exception = thread_context.last_exception
-                
+
                 e.__cause__            = none
                 e.__context__          = (none   if e is last_exception else   last_exception)
                 e.__suppress_context__ = false
@@ -422,7 +422,7 @@ def gem():
                 assert '__traceback__'        not in e.__dict__
 
                 last_exception = thread_context.last_exception
-                
+
                 e.__context__          = (none if (e is last_exception) or (cause is last_exception) else   last_exception)
                 e.__suppress_context__ = true
                 e.__traceback__        = none

@@ -32,7 +32,7 @@ def gem():
             return left
 
         return parse1_ternary_expression__X__any_expression(left, operator)
-    
+
 
     @share
     def parse1_arguments__left_parenthesis(left_parenthesis):

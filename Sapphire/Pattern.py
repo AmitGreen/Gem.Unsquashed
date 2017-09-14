@@ -74,7 +74,7 @@ def gem():
                                         (
                                               '"'
                                             + OPTIONAL(
-                                                    '"' 
+                                                    '"'
                                                   + ONE_OR_MORE(
                                                           PRINTABLE_MINUS('"', '\\')
                                                         | BACKSLASH + PRINTABLE
@@ -95,7 +95,7 @@ def gem():
                                         (
                                               "'"
                                             + OPTIONAL(
-                                                    "'" 
+                                                    "'"
                                                   + ONE_OR_MORE(
                                                           PRINTABLE_MINUS("'", '\\')
                                                         | BACKSLASH + PRINTABLE

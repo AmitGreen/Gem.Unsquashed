@@ -625,7 +625,7 @@ def gem():
     class OperatorHeadIndex(KeywordAndOperatorBase):
         __slots__                               = (())
         display_name                            = ':]'
-        is_colon                                = true
+#       is_colon                                = true
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
         is_end_of_boolean_or_expression         = true
@@ -1047,21 +1047,21 @@ def gem():
     #
     #   Fix these to have 'WithPythonNewline' version
     #
-    conjure_else_colon    = produce_conjure_by_name('keyword-else-colon',    KeywordElseColon) 
-    conjure_except_colon  = produce_conjure_by_name('keyword-except-colon',  KeywordExceptColon) 
-    conjure_finally_colon = produce_conjure_by_name('keyword-finally-colon', KeywordFinallyColon) 
-    conjure_try_colon     = produce_conjure_by_name('keyword-try-colon',     KeywordTryColon) 
+    conjure_else_colon    = produce_conjure_by_name('keyword-else-colon',    KeywordElseColon)
+    conjure_except_colon  = produce_conjure_by_name('keyword-except-colon',  KeywordExceptColon)
+    conjure_finally_colon = produce_conjure_by_name('keyword-finally-colon', KeywordFinallyColon)
+    conjure_try_colon     = produce_conjure_by_name('keyword-try-colon',     KeywordTryColon)
 
-    conjure_keyword_assert   = produce_conjure_by_name('keyword-assert',      KeywordAssert) 
-    conjure_keyword_delete   = produce_conjure_by_name('keyword-delete',      KeywordDelete) 
-    conjure_keyword_else_if  = produce_conjure_by_name('keyword-else-if',     KeywordElseIf) 
-    conjure_keyword_except   = produce_conjure_by_name('keyword-except',      KeywordExcept) 
-    conjure_keyword_function = produce_conjure_by_name('keyword-function',    KeywordFunction) 
-    conjure_keyword_raise    = produce_conjure_by_name('keyword-raise',       KeywordRaise) 
-    conjure_keyword_return   = produce_conjure_by_name('keyword-return',      KeywordReturn) 
-    conjure_keyword_while    = produce_conjure_by_name('keyword-while',       KeywordWhile) 
-    conjure_keyword_with     = produce_conjure_by_name('keyword-with',        KeywordWith) 
-    conjure_keyword_yield    = produce_conjure_by_name('keyword-yield',       KeywordYield) 
+    conjure_keyword_assert   = produce_conjure_by_name('keyword-assert',      KeywordAssert)
+    conjure_keyword_delete   = produce_conjure_by_name('keyword-delete',      KeywordDelete)
+    conjure_keyword_else_if  = produce_conjure_by_name('keyword-else-if',     KeywordElseIf)
+    conjure_keyword_except   = produce_conjure_by_name('keyword-except',      KeywordExcept)
+    conjure_keyword_function = produce_conjure_by_name('keyword-function',    KeywordFunction)
+    conjure_keyword_raise    = produce_conjure_by_name('keyword-raise',       KeywordRaise)
+    conjure_keyword_return   = produce_conjure_by_name('keyword-return',      KeywordReturn)
+    conjure_keyword_while    = produce_conjure_by_name('keyword-while',       KeywordWhile)
+    conjure_keyword_with     = produce_conjure_by_name('keyword-with',        KeywordWith)
+    conjure_keyword_yield    = produce_conjure_by_name('keyword-yield',       KeywordYield)
 
 
     find_atom_type = {
@@ -1109,10 +1109,6 @@ def gem():
                                       }.get
 
 
-    lookup_insert_operator               = insert_operator_map               .__getitem__
-    lookup_insert_operator__with_newline = insert_operator__with_newline__map.__getitem__
-
-
     share(
         'conjure_colon',                                conjure_colon,
         'conjure_colon_python_newline',                 conjure_colon_python_newline,
@@ -1157,9 +1153,9 @@ def gem():
         #   Operator functions
         #
         'lookup_colon',                                 find_lookup_operator(':'),
-        'insert_colon_newline__with_newline',           lookup_insert_operator__with_newline(':'),
-        'insert_left_parenthesis',                      lookup_insert_operator('('),
-        'insert_right_parenthesis',                     lookup_insert_operator(')'),
+        'insert_colon_newline__with_newline',           find_insert_operator__with_newline(':'),
+        'insert_left_parenthesis',                      find_insert_operator('('),
+        'insert_right_parenthesis',                     find_insert_operator(')'),
         'lookup_left_parenthesis',                      find_lookup_operator('('),
         'lookup_right_parenthesis',                     find_lookup_operator(')'),
     )

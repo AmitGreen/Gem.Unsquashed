@@ -159,7 +159,7 @@ def gem():
         store_1   = cache.__setitem__
 
         create_triple_token = (
-                create_triple_token_with_python_newline   if ends_in_python_newline else  
+                create_triple_token_with_python_newline   if ends_in_python_newline else
                 create_triple_token_with_newline
             )
 

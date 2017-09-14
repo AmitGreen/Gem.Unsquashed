@@ -94,7 +94,7 @@ def gem():
             #
             #   Differences:
             #       Uses '*parenthesis' instead of '*{brace,square_bracket}'
-            #       Uses 'EmptyTuple' instead of 'Empty{Map,List}' 
+            #       Uses 'EmptyTuple' instead of 'Empty{Map,List}'
             #
             left_parenthesis__end = m.end('left_parenthesis__ow')
 
@@ -124,7 +124,7 @@ def gem():
             #<similiar-to: 'left_parenthesis__end' above>
             #
             #   Differences:
-            #       Uses '*brace' instead of '*parenthesis' 
+            #       Uses '*brace' instead of '*parenthesis'
             #       Uses 'EmptyMap' instead of 'EmptyTuple'
             #
             left_brace__end = m.end('left_brace__ow')
@@ -152,7 +152,7 @@ def gem():
             #<similiar-to: 'left_parenthesis__end' above>
             #
             #   Differences:
-            #       Uses '*square_bracket' instead of '*parenthesis' 
+            #       Uses '*square_bracket' instead of '*parenthesis'
             #       Uses 'EmptyMap' instead of 'EmptyTuple'
             #
             left_square_bracket__end = m.end('left_square_bracket__ow')
@@ -292,7 +292,7 @@ def gem():
 
                 full = qs()[qi() : ]
 
-                r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator_with_newline(operator_s)(full))
+                r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator__with_newline(operator_s)(full))
 
                 skip_tokenize_prefix()
 
@@ -313,7 +313,7 @@ def gem():
 
             full = qs()[qi() : ]
 
-            r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator_with_newline(operator_s)(full))
+            r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator__with_newline(operator_s)(full))
 
             skip_tokenize_prefix()
 
@@ -370,7 +370,7 @@ def gem():
         #<same-as: 'left_parenthesis__end' above>
         #
         #   Differences:
-        #       Uses '*brace' instead of '*parenthesis' 
+        #       Uses '*brace' instead of '*parenthesis'
         #       Uses 'EmptyList' instead of 'EmptyTuple'
         #
         left_brace__end = m.end('left_brace__ow')
@@ -417,7 +417,7 @@ def gem():
         #<same-as: 'left_parenthesis__end' above>
         #
         #   Differences:
-        #       Uses '*square_bracket' instead of '*parenthesis' 
+        #       Uses '*square_bracket' instead of '*parenthesis'
         #       Uses 'EmptyList' instead of 'EmptyTuple'
         #
         left_square_bracket__end = m.end('left_square_bracket__ow')

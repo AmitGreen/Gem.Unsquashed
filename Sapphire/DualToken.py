@@ -70,9 +70,23 @@ def gem():
 
 
     class Colon_RightSquareBracket(BaseDualOperator):
-        __slots__    = (())
+        __slots__                               = (())
         #   [
-        display_name = ':]'
+        display_name                            = ':]'
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
+        is_end_of_logical_or_expression         = true
+        is_end_of_multiply_expression           = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
+        is_end_of_unary_expression              = true
 
 
     class Comma_RightBrace(BaseDualOperator):
@@ -217,7 +231,7 @@ def gem():
 
         return Meta_Many(s, first, second, newlines)
 
-          
+
     @privileged
     def produce_conjure_dual_token(name, Meta, ends_in_python_newline = false):
         assert type(ends_in_python_newline) is Boolean
@@ -228,7 +242,7 @@ def gem():
         store_1   = cache.__setitem__
 
         create_dual_token = (
-                create_dual_token_with_python_newline   if ends_in_python_newline else  
+                create_dual_token_with_python_newline   if ends_in_python_newline else
                 create_dual_token_with_newline
             )
 

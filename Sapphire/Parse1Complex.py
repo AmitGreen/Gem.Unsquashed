@@ -28,7 +28,7 @@ def gem():
 
         if qn() is not none:
             raise_unknown_line()
-            
+
         if operator.is_colon_newline:
             return MetaHeader(keyword_if, condition, operator)
 

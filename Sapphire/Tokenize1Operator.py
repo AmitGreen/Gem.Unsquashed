@@ -57,7 +57,7 @@ def gem():
         m = operator_match(s, qj())
 
         if m is none:
-            my_line(portray_string(s[qj() : ]))
+            #my_line(portray_string(s[qj() : ]))
             raise_unknown_line()
 
         if m.end('comment_newline') is -1:
@@ -68,7 +68,7 @@ def gem():
                     d = qd()
 
                     if d is 0:
-                        my_line('d: %d; operator_s: %r; s: %s', d, operator_s, portray_string(s[qj() : ]))
+                        #my_line('d: %d; operator_s: %r; s: %s', d, operator_s, portray_string(s[qj() : ]))
                         raise_unknown_line()
 
                     operator_end = m.end('operator')
@@ -132,7 +132,7 @@ def gem():
             #<similiar-to: {left_parenthesis__ow} above>
             #
             #   Differences:
-            #       Uses *square_bracket* instead of *parenthesis* 
+            #       Uses *square_bracket* instead of *parenthesis*
             #       Uses EmptyIndex       instead of Arguments_0
             #
             left_end = m.end('left_square_bracket__ow')
@@ -176,8 +176,8 @@ def gem():
             #<similiar-to: {left_parenthesis__ow} above>
             #
             #   Differences:
-            #       Uses keyword_is*  instead of left_parenthesis* 
-            #       Uses keyword_not* instead of right_parenthesis* 
+            #       Uses keyword_is*  instead of left_parenthesis*
+            #       Uses keyword_not* instead of right_parenthesis*
             #       Uses IsNot        instead of Arguments_0
             #
             #       Does not increment depth when parsing the 'is' keyword.
@@ -290,7 +290,7 @@ def gem():
 
             full = s[qi() : ]
 
-            r = (lookup(full)) or (find_insert_operator_with_newline(operator_s)(full))
+            r = (lookup(full)) or (find_insert_operator__with_newline(operator_s)(full))
 
             skip_tokenize_prefix()
 
@@ -334,7 +334,7 @@ def gem():
         #<similiar-to: {left_parenthesis__ow} below>
         #
         #   Differences:
-        #       Uses *square_bracket* instead of *parenthesis* 
+        #       Uses *square_bracket* instead of *parenthesis*
         #
         left_end = m.end('left_square_bracket__ow')
 
@@ -382,7 +382,7 @@ def gem():
 
             full = s[qi() : ]
 
-            r = (lookup(full)) or (find_insert_operator_with_newline(keyword_s)(full))
+            r = (lookup(full)) or (find_insert_operator__with_newline(keyword_s)(full))
 
             skip_tokenize_prefix()
 

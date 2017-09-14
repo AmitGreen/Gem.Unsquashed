@@ -1928,7 +1928,7 @@ def gem():
                     raise_unknown_line()
 
                 return left
-                    
+
             if operator.is_end_of_ternary_expression_list:
                 return left
 
@@ -1944,7 +1944,7 @@ def gem():
                     raise_unknown_line()
 
                 return left
-                    
+
             if operator.is_end_of_ternary_expression_list:
                 return left
 
@@ -1960,7 +1960,7 @@ def gem():
                     raise_unknown_line()
 
                 return left
-                    
+
             if operator.is_end_of_ternary_expression_list:
                 return left
 

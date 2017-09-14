@@ -189,7 +189,7 @@ def gem():
             'right_operator',           #   Operator*
         ))
 
-        
+
         is_right_parenthesis    = false
         is_right_square_bracket = false
 
