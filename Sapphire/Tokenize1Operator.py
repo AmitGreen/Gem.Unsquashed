@@ -73,7 +73,7 @@ def gem():
 
                     operator_end = m.end('operator')
 
-                    r = conjure_operator(operator_s, s[qi() : operator_end])
+                    r = conjure_action_word(operator_s, s[qi() : operator_end])
 
                     wd(d - 1)
                     wi(operator_end)
@@ -83,7 +83,7 @@ def gem():
 
                 j = m.end()
 
-                r = conjure_operator(operator_s, s[qi() : j])
+                r = conjure_action_word(operator_s, s[qi() : j])
 
                 wi(j)
                 wj(j)
@@ -190,7 +190,7 @@ def gem():
             if keyword_s is not none:
                 j = m.end()
 
-                r = conjure_operator(keyword_s, s[qi() : j])
+                r = conjure_action_word(keyword_s, s[qi() : j])
 
                 wi(j)
                 wj(j)
@@ -291,7 +291,7 @@ def gem():
                 if d is 1:
                     i = m.end('operator')
 
-                    r = conjure_operator(operator_s, s[qi() : i])
+                    r = conjure_action_word(operator_s, s[qi() : i])
 
                     wd0()
                     wn(conjure_token_newline(s[i : ]))
@@ -305,13 +305,13 @@ def gem():
             elif qd() is 0:
                 operator_end = m.end('operator')
 
-                r = conjure_operator(operator_s, s[qi() : operator_end])
+                r = conjure_action_word(operator_s, s[qi() : operator_end])
 
                 wn(conjure_token_newline(s[operator_end : ]))
 
                 return r
 
-            r = conjure_operator__with_newlines(operator_s, s[qi() : ])
+            r = conjure_action_word__ends_in_newline(operator_s, s[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -430,13 +430,13 @@ def gem():
             if qd() is 0:
                 keyword_end = m.end('keyword')
 
-                r = conjure_operator(keyword_s, s[qi() : keyword_end])
+                r = conjure_action_word(keyword_s, s[qi() : keyword_end])
 
                 wn(conjure_token_newline(s[keyword_end : ]))
 
                 return r
 
-            r = conjure_operator__with_newlines(keyword_s, s[qi() : ])
+            r = conjure_action_word__ends_in_newline(keyword_s, s[qi() : ])
 
             skip_tokenize_prefix()
 

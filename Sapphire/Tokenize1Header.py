@@ -213,7 +213,7 @@ def gem():
                 raise_unknown_line()
 
             if m.end('comment_newline') is not -1:
-                r = conjure_comma(s[qi() :])
+                r = conjure_comma__with_newlines(s[qi() :])
 
                 skip_tokenize_prefix()
 

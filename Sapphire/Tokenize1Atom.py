@@ -63,7 +63,7 @@ def gem():
                     d            = qd()
                     operator_end = m.end('operator')
 
-                    r = conjure_operator(operator_s, s[qi() : operator_end])
+                    r = conjure_action_word(operator_s, s[qi() : operator_end])
 
                     if d is 0:
                         raise_unknown_line()
@@ -78,7 +78,7 @@ def gem():
 
                 j = m.end()
 
-                r = conjure_operator(operator_s, s[qi() : j])
+                r = conjure_action_word(operator_s, s[qi() : j])
 
                 wi(j)
                 wj(j)
@@ -275,7 +275,7 @@ def gem():
                     operator_end = m.end('operator')
                     s            = qs()
 
-                    r = conjure_operator(operator_s, s[qi() : operator_end])
+                    r = conjure_action_word(operator_s, s[qi() : operator_end])
 
                     wd0()
                     wn(conjure_token_newline(s[operator_end : ]))
@@ -284,7 +284,7 @@ def gem():
 
                 wd(d - 1)
 
-                r = conjure_operator__with_newlines(operator_s, qs()[qi() : ])
+                r = conjure_action_word__ends_in_newline(operator_s, qs()[qi() : ])
 
                 skip_tokenize_prefix()
 
@@ -295,13 +295,13 @@ def gem():
 
                 s = qs()
 
-                r = conjure_operator(operator_s, s[qi() : operator_end])
+                r = conjure_action_word(operator_s, s[qi() : operator_end])
 
                 wn(conjure_token_newline(s[operator_end : ]))
 
                 return r
 
-            r = conjure_operator__with_newlines(operator_s, qs()[qi() : ])
+            r = conjure_action_word__ends_in_newline(operator_s, qs()[qi() : ])
 
             skip_tokenize_prefix()
 

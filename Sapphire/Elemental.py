@@ -1008,6 +1008,8 @@ def gem():
 
     conjure_colon__with_newlines = produce_conjure_operator__with_newlines(':', 'colon')
 
+    conjure_comma__with_newlines = produce_conjure_operator__with_newlines(',', 'comma')
+
     conjure_left_brace__with_newlines = produce_conjure_operator__with_newlines(
             '{',                        #   }
             'left_brace',
@@ -1099,11 +1101,6 @@ def gem():
     #   Future inline conjure helper functions
     #
     @share
-    def conjure_operator(partial, full):
-        return (find_lookup_operator(partial)(full)) or (find_insert_operator(partial)(full))
-
-
-    @share
     def conjure_operator__with_newlines(partial, full):
         return (find_lookup_operator(partial)(full)) or (find_insert_operator__with_newlines(partial)(full))
 
@@ -1113,6 +1110,7 @@ def gem():
         'conjure_colon__with_newlines',                 conjure_colon__with_newlines,
         'conjure_colon__python_newline',                conjure_colon__python_newline,
         'conjure_comma',                                conjure_comma,
+        'conjure_comma__with_newlines',                 conjure_comma__with_newlines,
         'conjure_dot',                                  conjure_dot,
         'conjure_else_colon',                           conjure_else_colon,
         'conjure_equal_sign',                           conjure_equal_sign,
