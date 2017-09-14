@@ -289,37 +289,33 @@ def gem():
         operator_s = m.group('operator')
 
         if operator_s is not none:
-            lookup = find_lookup_operator(operator_s)
-
-            d = qd()
-
-            if d is 0:
-                if lookup is lookup_colon:
-                    return conjure_colon_python_newline(s[qi() : ])
-
-                operator_end = m.end('operator')
-                wn(conjure_token_newline(s[operator_end : ]))
-
-                full = s[qi() : operator_end]
-
-                return (lookup(full)) or (find_insert_operator(operator_s)(full))
-
             if is_close_operator(operator_s) is 7:
+                d = qd()
+
                 if d is 1:
                     i = m.end('operator')
+
+                    r = conjure_operator(operator_s, s[qi() : i])
 
                     wd0()
                     wn(conjure_token_newline(s[i : ]))
 
-                    full = s[qi() : i]
+                    return r
 
-                    return (lookup(full)) or (find_insert_operator(operator_s)(full))
+                if d is 0:
+                    raise_unknown_line()
 
                 wd(d - 1)
+            elif qd() is 0:
+                operator_end = m.end('operator')
 
-            full = s[qi() : ]
+                r = conjure_operator(operator_s, s[qi() : operator_end])
 
-            r = (lookup(full)) or (find_insert_operator__with_newline(operator_s)(full))
+                wn(conjure_token_newline(s[operator_end : ]))
+
+                return r
+
+            r = conjure_operator_with_newline(operator_s, s[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -452,17 +448,13 @@ def gem():
             if qd() is 0:
                 keyword_end = m.end('keyword')
 
-                full = s[qi() : keyword_end]
-
-                r = (lookup(full)) or (find_insert_operator(keyword_s)(full))
+                r = conjure_operator(keyword_s, s[qi() : keyword_end])
 
                 wn(conjure_token_newline(s[keyword_end : ]))
 
                 return r
 
-            full = s[qi() : ]
-
-            r = (lookup(full)) or (find_insert_operator__with_newline(keyword_s)(full))
+            r = conjure_operator_with_newline(keyword_s, s[qi() : ])
 
             skip_tokenize_prefix()
 

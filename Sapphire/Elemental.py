@@ -1171,7 +1171,6 @@ def gem():
         #
         #   Operator functions
         #
-        'lookup_colon',                                 find_lookup_operator(':'),
         'insert_colon_newline__with_newline',           find_insert_operator__with_newline(':'),
         'insert_left_parenthesis',                      find_insert_operator('('),
         'insert_right_parenthesis',                     find_insert_operator(')'),
