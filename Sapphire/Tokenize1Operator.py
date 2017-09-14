@@ -162,21 +162,21 @@ def gem():
             #</similiar-to>
 
             if m.start('colon') is not -1:
-                RSB_s = m.group('right_square_bracket')
+                head_index__s = m.group('head_index')
 
-                if RSB_s is not none:
+                if head_index__s is not none:
                     d = qd()
 
                     if d is 0:
                         raise_unknown_line()
 
                     r = conjure__colon__right_square_bracket(
-                            conjure_colon(s[qi() : m.start('right_square_bracket')]),
-                            conjure_right_square_bracket(RSB_s),
+                            conjure_colon(s[qi() : m.start('head_index')]),
+                            conjure_right_square_bracket(head_index__s),
                         )
 
                     wd(d - 1)
-                    wi(m.end('right_square_bracket'))
+                    wi(m.end('head_index'))
                     wj(m.end())
 
                     return r
@@ -401,12 +401,12 @@ def gem():
         #</similiar-to>
 
         if m.start('colon') is not -1:
-            right_end = m.end('right_square_bracket')
+            head_index__end = m.end('head_index')
 
-            if right_end is not -1:
-                right_start = m.start('right_square_bracket')
+            if head_index__end is not -1:
+                head_index__start = m.start('head_index')
 
-                colon = conjure_colon(s[qi() : right_start])
+                colon = conjure_colon(s[qi() : head_index__start])
 
                 d = qd()
 
@@ -415,10 +415,10 @@ def gem():
 
                     r = conjure__colon__right_square_bracket(
                             colon,
-                            conjure_right_square_bracket(s[right_start : right_end])
+                            conjure_right_square_bracket(s[head_index__start : head_index__end])
                         )
 
-                    wn(conjure_token_newline(s[right_end : ]))
+                    wn(conjure_token_newline(s[head_index__end : ]))
 
                     return r
 
@@ -428,7 +428,7 @@ def gem():
 
                 r = conjure__colon__right_square_bracket(
                         colon,
-                        conjure_right_square_bracket__with_newline(s[right_start : ])
+                        conjure_right_square_bracket__with_newline(s[head_index__start : ])
                     )
 
                 skip_tokenize_prefix()

@@ -255,7 +255,8 @@ def gem():
                        ),
                   ) + ow
                 | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
-                | (G(left_square_bracket) + ow | G(colon) + ow) + P(G(right_square_bracket) + ow)
+                | G(left_square_bracket) + ow + P(G(right_square_bracket) + ow)
+                | G('colon', colon) + ow + P(G('head_index', right_square_bracket) + ow)
                 | (
                         G(
                             'keyword',
