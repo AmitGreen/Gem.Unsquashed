@@ -420,10 +420,21 @@ def gem():
     #   TODO:
     #       Answer this question: should this be combined with Pearl.EmptyLine? (either combine or explain why not)
     #
+    #       ANSWER: No, as this needs to handle python_newline, etc, properly
+    #
     @share
     class EmptyLine(Token):
-        __slots__    = (())
-        display_name = 'empty-line'
+        __slots__       = (())
+        display_name    = 'empty-line'
+        ends_in_newline = true
+        newlines        = 1
+
+
+        def __init__(t, s):
+            assert s[-1] == '\n'
+            assert s.count('\n') is 1
+
+            t.s = s
 
 
         def __repr__(t):

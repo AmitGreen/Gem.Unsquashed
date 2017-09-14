@@ -15,9 +15,9 @@ def gem():
     lookup_operator_map                = {}
 
 
-    insert_operator              = insert_operator_map               .__getitem__
-    insert_operator_with_newline = insert_operator__with_newline__map.__getitem__
-    lookup_operator              = lookup_operator_map               .__getitem__
+    find_insert_operator              = insert_operator_map               .__getitem__
+    find_insert_operator_with_newline = insert_operator__with_newline__map.__getitem__
+    find_lookup_operator              = lookup_operator_map               .__getitem__
 
 
     def construct_token_with_newlines(t, s, newlines, ends_in_newline):
@@ -178,8 +178,8 @@ def gem():
     @share
     @privileged
     def produce_conjure_operator(k, name):
-        lookup = lookup_operator(k)
-        insert = insert_operator(k)
+        lookup = find_lookup_operator(k)
+        insert = find_insert_operator(k)
 
 
         def conjure_operator(s):
@@ -195,8 +195,8 @@ def gem():
     @share
     @privileged
     def produce_conjure_operator_with_newline(k, name):
-        lookup              = lookup_operator(k)
-        insert_with_newline = insert_operator_with_newline(k)
+        lookup              = find_lookup_operator(k)
+        insert_with_newline = find_insert_operator_with_newline(k)
 
 
         def conjure_operator(s):
@@ -253,11 +253,10 @@ def gem():
 
 
     share(
+        'find_insert_operator',                 find_insert_operator,
+        'find_insert_operator_with_newline',    find_insert_operator_with_newline,
+        'find_lookup_operator',                 find_lookup_operator,
         'insert_operator_map',                  insert_operator_map,
         'insert_operator__with_newline__map',   insert_operator__with_newline__map,
         'lookup_operator_map',                  lookup_operator_map,
-
-        'insert_operator',                      insert_operator,
-        'insert_operator_with_newline',         insert_operator_with_newline,
-        'lookup_operator',                      lookup_operator,
     )

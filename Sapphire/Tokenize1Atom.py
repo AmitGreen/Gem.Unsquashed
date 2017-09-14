@@ -441,7 +441,7 @@ def gem():
 
             wd(qd() + 1)
 
-            r = conjure_left_square_bracket(qs()[qi() : ])
+            r = conjure_left_square_bracket__with_newline(qs()[qi() : ])
 
             skip_tokenize_prefix()
 
