@@ -63,9 +63,7 @@ def gem():
                     d            = qd()
                     operator_end = m.end('operator')
 
-                    full = s[qi() : operator_end]
-
-                    r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator(operator_s)(full))
+                    r = conjure_operator(operator_s, s[qi() : operator_end])
 
                     if d is 0:
                         raise_unknown_line()
@@ -80,9 +78,7 @@ def gem():
 
                 j = m.end()
 
-                full = s[qi() : j]
-
-                r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator(operator_s)(full))
+                r = conjure_operator(operator_s, s[qi() : j])
 
                 wi(j)
                 wj(j)
@@ -279,9 +275,7 @@ def gem():
                     operator_end = m.end('operator')
                     s            = qs()
 
-                    full = s[qi() : operator_end]
-
-                    r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator(operator_s)(full))
+                    r = conjure_operator(operator_s, s[qi() : operator_end])
 
                     wd0()
                     wn(conjure_token_newline(s[operator_end : ]))
@@ -290,9 +284,7 @@ def gem():
 
                 wd(d - 1)
 
-                full = qs()[qi() : ]
-
-                r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator__with_newline(operator_s)(full))
+                r = conjure_operator_with_newline(operator_s, qs()[qi() : ])
 
                 skip_tokenize_prefix()
 
@@ -303,17 +295,13 @@ def gem():
 
                 s = qs()
 
-                full = s[qi() : operator_end]
-
-                r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator(operator_s)(full))
+                r = conjure_operator(operator_s, s[qi() : operator_end])
 
                 wn(conjure_token_newline(s[operator_end : ]))
 
                 return r
 
-            full = qs()[qi() : ]
-
-            r = (find_lookup_operator(operator_s)(full)) or (find_insert_operator__with_newline(operator_s)(full))
+            r = conjure_operator_with_newline(operator_s, qs()[qi() : ])
 
             skip_tokenize_prefix()
 

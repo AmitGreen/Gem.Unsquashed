@@ -1109,6 +1109,19 @@ def gem():
                                       }.get
 
 
+    #
+    #   Future inline conjure helper functions
+    #
+    @share
+    def conjure_operator(partial, full):
+        return (find_lookup_operator(partial)(full)) or (find_insert_operator(partial)(full))
+
+
+    @share
+    def conjure_operator_with_newline(partial, full):
+        return (find_lookup_operator(partial)(full)) or (find_insert_operator__with_newline(partial)(full))
+
+
     share(
         'conjure_colon',                                conjure_colon,
         'conjure_colon_python_newline',                 conjure_colon_python_newline,
