@@ -18,6 +18,7 @@ def gem():
         is__atom__or__special_operator             = false
         is_colon                                   = false
         is_colon_newline                           = false
+        is__colon__right_square_bracket            = false
         is_comma                                   = false
         is__comma__or__right_parenthesis           = false
         is_compare_operator                        = false
@@ -1027,6 +1028,8 @@ def gem():
     conjure_right_square_bracket  = produce_conjure_operator(']',    'right_square_bracket')
     conjure_star_sign             = produce_conjure_operator('*',    'star_sign')
 
+    conjure_colon__with_newline = produce_conjure_operator_with_newline(':', 'colon')
+
     conjure_left_brace__with_newline = produce_conjure_operator_with_newline(
             '{',                        #   }
             'left_brace',
@@ -1101,6 +1104,7 @@ def gem():
 
 
     #   {[(
+    is_colon_7        = { ':' : 7 }.get
     is_close_operator = { ')' : 7, ']' : 7, '}' : 7 }.get
 
 
@@ -1124,6 +1128,7 @@ def gem():
 
     share(
         'conjure_colon',                                conjure_colon,
+        'conjure_colon__with_newline',                  conjure_colon__with_newline,
         'conjure_colon_python_newline',                 conjure_colon_python_newline,
         'conjure_comma',                                conjure_comma,
         'conjure_dot',                                  conjure_dot,
@@ -1160,6 +1165,7 @@ def gem():
         'conjure_try_colon',                            conjure_try_colon,
         'find_atom_type',                               find_atom_type,
         'is_close_operator',                            is_close_operator,
+        'is_colon_7',                                   is_colon_7,
         'lookup_keyword_conjure_function',              lookup_keyword_conjure_function,
 
         #

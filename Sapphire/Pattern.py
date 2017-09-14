@@ -250,12 +250,12 @@ def gem():
                                  | star_sign         + P(star_sign)
                                  | slash_sign        + P(slash_sign)
                              ) + P(equal_sign)
-                           | ANY_OF(right_parenthesis, comma, dot, colon, right_square_bracket, right_brace)
+                           | ANY_OF(right_parenthesis, comma, dot, right_square_bracket, right_brace)
                            | not_equal
                        ),
                   ) + ow
-                | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
-                | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
+                | G(left_parenthesis__ow) + P(G(right_parenthesis) + ow)
+                | G('LSB_or_colon', colon | left_square_bracket) + ow + P(G(right_square_bracket) + ow)
                 | (
                         G(
                             'keyword',

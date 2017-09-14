@@ -316,7 +316,10 @@ def gem():
                                        left,
                                        RangeIndex(operator, middle, operator_2, middle_2, operator_3),
                                    )
+                    elif operator_2.is__colon__right_square_bracket:
+                        left = IndexExpression(left, HeadIndex(operator, middle, operator_2))
                     else:
+                        my_line('operator_2: %r', operator_2)
                         raise_unknown_line()
 
                 if qn() is not none:

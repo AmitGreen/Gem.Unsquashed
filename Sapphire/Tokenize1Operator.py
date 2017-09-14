@@ -125,19 +125,52 @@ def gem():
             #</similiar-to>
 
             #
-            #<similiar-to: {left_parenthesis__ow} above>
+            #<similiar-to: 'left_parenthesis__ow' above>
             #
             #   Differences:
             #       Uses *square_bracket* instead of *parenthesis*
             #       Uses EmptyIndex       instead of Arguments_0
             #
-            left_end = m.end('left_square_bracket__ow')
+            #       Includes special handling for ':]' (under the <different-from /> section)
+            #
+            lsb_or_colon = m.group('LSB_or_colon')
 
-            if left_end is not -1:
-                left    = conjure_left_square_bracket(s[qi() : left_end])
+            if lsb_or_colon is not none:
                 RSB_s = m.group('right_square_bracket')
 
+                #
+                #<different-from: 'left_parenthesis__ow' above>
+                #
+                if is_colon_7(lsb_or_colon) is 7:
+                    if RSB_s is not none:
+                        d = qd()
+
+                        if d is 0:
+                            raise_unknown_line()
+
+                        r = conjure__colon__right_square_bracket(
+                                conjure_colon(s[qi() : m.start('right_square_bracket')]),
+                                conjure_right_square_bracket(RSB_s),
+                            )
+
+                        wd(d - 1)
+                        wi(m.end('right_square_bracket'))
+                        wj(m.end())
+
+                        return r
+
+                    j = m.end()
+
+                    r = conjure_colon(s[qi() : j])
+
+                    wi(j)
+                    wj(j)
+
+                    return r
+                #</different-from>
+
                 if RSB_s is not none:
+                    left  = conjure_left_square_bracket(s[qi() : m.start('right_square_bracket')])
                     right = conjure_right_square_bracket(RSB_s)
 
                     wi(m.end('right_square_bracket'))
@@ -147,11 +180,13 @@ def gem():
 
                 j = m.end()
 
+                r = conjure_left_square_bracket(s[qi() : j])
+
                 wd(qd() + 1)
                 wi(j)
                 wj(j)
 
-                return left
+                return r
             #</similiar-to>
 
             keyword_s = m.group('keyword')
@@ -325,25 +360,76 @@ def gem():
         #</similiar-to>
 
         #
-        #<similiar-to: {left_parenthesis__ow} below>
+        #<similiar-to: 'left_parenthesis__ow' below>
         #
         #   Differences:
         #       Uses *square_bracket* instead of *parenthesis*
         #
-        left_end = m.end('left_square_bracket__ow')
+        #       Includes special handling for ':]' (under the <different-from /> section)
+        #
+        #
+        lsb_or_colon = m.group('LSB_or_colon')
 
-        if left_end is not -1:
+        if lsb_or_colon is not none:
             right_end = m.end('right_square_bracket')
 
-            if right_end is not -1:
-                left = conjure_left_square_bracket(s[qi() : left_end])
+            #
+            #<different-from: 'left_parenthesis__ow' above>
+            #
+            if is_colon_7(lsb_or_colon) is 7:
+                if right_end is not -1:
+                    right_start = m.start('right_square_bracket')
+
+                    colon = conjure_colon(s[qi() : right_start])
+
+                    d = qd()
+
+                    if d is 1:
+                        wd0()
+
+                        r = conjure__colon__right_square_bracket(
+                                colon,
+                                conjure_right_square_bracket(s[right_start : right_end])
+                            )
+
+                        wn(conjure_token_newline(s[right_end : ]))
+
+                        return r
+
+                    assert d > 1
+
+                    wd(d - 1)
+
+                    r = conjure__colon__right_square_bracket(
+                            colon,
+                            conjure_right_square_bracket__with_newline(s[right_start : ])
+                        )
+
+                    skip_tokenize_prefix()
+
+                    return r
 
                 if qd() is 0:
-                    right = conjure_right_square_bracket(s[left_end : right_end])
+                    return conjure_colon_python_newline(s[qi() : ])
+
+                r = conjure_colon__with_newline(s[qi() : ])
+
+                skip_tokenize_prefix()
+
+                return r
+            #</different-from>
+
+            if right_end is not -1:
+                right_start = m.start('right_square_bracket')
+
+                left = conjure_left_square_bracket(s[qi() : right_start])
+
+                if qd() is 0:
+                    right = conjure_right_square_bracket(s[right_start : right_end])
 
                     wn(conjure_token_newline(s[right_end : ]))
                 else:
-                    right = conjure_right_square_bracket(s[left_end : ])
+                    right = conjure_right_square_bracket(s[right_start : ])
 
                     skip_tokenize_prefix()
 

@@ -73,6 +73,7 @@ def gem():
         __slots__                               = (())
         #   [
         display_name                            = ':]'
+        is__colon__right_square_bracket         = true
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
         is_end_of_boolean_or_expression         = true
