@@ -623,27 +623,6 @@ def gem():
             return arrange('{%s %s}', t.display_name, portray_string(t.s))
 
 
-    class OperatorHeadIndex(KeywordAndOperatorBase):
-        __slots__                               = (())
-        display_name                            = ':]'
-#       is_colon                                = true
-        is_end_of_arithmetic_expression         = true
-        is_end_of_boolean_and_expression        = true
-        is_end_of_boolean_or_expression         = true
-        is_end_of_compare_expression            = true
-        is_end_of_comprehension_expression_list = true
-        is_end_of_comprehension_expression      = true
-        is_end_of_logical_and_expression        = true
-        is_end_of_logical_or_expression         = true
-        is_end_of_multiply_expression           = true
-        is_end_of_normal_expression_list        = true
-        is_end_of_normal_expression             = true
-        is_end_of_ternary_expression_list       = true
-        is_end_of_ternary_expression            = true
-        is_end_of_unary_expression              = true
-        keyword                                 = ':]'
-
-
     @share
     class OperatorIntegerDivide(KeywordAndOperatorBase):
         __slots__                  = (())
@@ -979,7 +958,6 @@ def gem():
              ((     '/',        'divide',                   OperatorDivide              )),
              ((     '//',       'integer_divide',           OperatorIntegerDivide       )),
              ((     ':',        'colon',                    OperatorColon               )),
-             ((     ':]',       'head_index',               OperatorHeadIndex           )),     #   Todo: Convert to dual
              ((     '<',        'less_than',                OperatorLessThan            )),
              ((     '<=',       'less_than_or_equal',       OperatorLessThanOrEqual     )),
              ((     '=',        'equal_sign',               OperatorEqualSign           )),
@@ -1013,7 +991,6 @@ def gem():
     conjure_comma                 = produce_conjure_operator(',',    'comma')
     conjure_equal_sign            = produce_conjure_operator('=',    'equal_sign')
     conjure_dot                   = produce_conjure_operator('.',    'dot')
-    conjure_head_index            = produce_conjure_operator(':]',   'head_index')                  #   TODO: DualToken
     conjure_keyword_as            = produce_conjure_operator('as',   'keyword_as')
     conjure_keyword_for           = produce_conjure_operator('for',  'keyword_for')
     conjure_keyword_if            = produce_conjure_operator('if',   'keyword_if')
@@ -1136,7 +1113,6 @@ def gem():
         'conjure_equal_sign',                           conjure_equal_sign,
         'conjure_except_colon',                         conjure_except_colon,
         'conjure_finally_colon',                        conjure_finally_colon,
-        'conjure_head_index',                           conjure_head_index,
         'conjure_keyword_as',                           conjure_keyword_as,
         'conjure_keyword_assert',                       conjure_keyword_assert,
         'conjure_keyword_delete',                       conjure_keyword_delete,
