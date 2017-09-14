@@ -38,7 +38,7 @@ def gem():
 
                 raise_unknown_line()
 
-            r = conjure_left_parenthesis(s[qi() : ])
+            r = conjure_left_parenthesis__ends_in_newline(s[qi() : ])
 
             wd1()
             skip_tokenize_prefix()
@@ -213,7 +213,7 @@ def gem():
                 raise_unknown_line()
 
             if m.end('comment_newline') is not -1:
-                r = conjure_comma__with_newlines(s[qi() :])
+                r = conjure_comma__ends_in_newline(s[qi() :])
 
                 skip_tokenize_prefix()
 

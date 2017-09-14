@@ -988,39 +988,39 @@ def gem():
     del Shared.produce_operator_insert_and_lookup_maps
 
 
-    conjure_colon                 = produce_conjure_operator(':',    'colon')
-    conjure_comma                 = produce_conjure_operator(',',    'comma')
-    conjure_equal_sign            = produce_conjure_operator('=',    'equal_sign')
-    conjure_dot                   = produce_conjure_operator('.',    'dot')
-    conjure_keyword_as            = produce_conjure_operator('as',   'keyword_as')
-    conjure_keyword_for           = produce_conjure_operator('for',  'keyword_for')
-    conjure_keyword_if            = produce_conjure_operator('if',   'keyword_if')
-    conjure_keyword_in            = produce_conjure_operator('in',   'keyword_in')
-    conjure_keyword_is            = produce_conjure_operator('is',   'keyword_is')
-    conjure_keyword_not           = produce_conjure_operator('not',  'keyword_not')
-    conjure_left_brace            = produce_conjure_operator('{',    'left_brace')
-    conjure_left_parenthesis      = produce_conjure_operator('(',    'left_parenthesis')
-    conjure_left_square_bracket   = produce_conjure_operator('[',    'left_square_bracket')
-    conjure_right_brace           = produce_conjure_operator('}',    'right_brace')
-    conjure_right_parenthesis     = produce_conjure_operator(')',    'right_parenthesis')
-    conjure_right_square_bracket  = produce_conjure_operator(']',    'right_square_bracket')
-    conjure_star_sign             = produce_conjure_operator('*',    'star_sign')
+    conjure_colon                 = produce_conjure_action_word(':', 'colon')
+    conjure_comma                 = produce_conjure_action_word(',',    'comma')
+    conjure_equal_sign            = produce_conjure_action_word('=',    'equal_sign')
+    conjure_dot                   = produce_conjure_action_word('.',    'dot')
+    conjure_keyword_as            = produce_conjure_action_word('as',   'keyword_as')
+    conjure_keyword_for           = produce_conjure_action_word('for',  'keyword_for')
+    conjure_keyword_if            = produce_conjure_action_word('if',   'keyword_if')
+    conjure_keyword_in            = produce_conjure_action_word('in',   'keyword_in')
+    conjure_keyword_is            = produce_conjure_action_word('is',   'keyword_is')
+    conjure_keyword_not           = produce_conjure_action_word('not',  'keyword_not')
+    conjure_left_brace            = produce_conjure_action_word('{',    'left_brace')
+    conjure_left_parenthesis      = produce_conjure_action_word('(',    'left_parenthesis')
+    conjure_left_square_bracket   = produce_conjure_action_word('[',    'left_square_bracket')
+    conjure_right_brace           = produce_conjure_action_word('}',    'right_brace')
+    conjure_right_parenthesis     = produce_conjure_action_word(')',    'right_parenthesis')
+    conjure_right_square_bracket  = produce_conjure_action_word(']',    'right_square_bracket')
+    conjure_star_sign             = produce_conjure_action_word('*',    'star_sign')
 
-    conjure_colon__with_newlines = produce_conjure_operator__with_newlines(':', 'colon')
+    conjure_colon__ends_in_newline = produce_conjure_action_word__ends_in_newline(':', 'colon')
 
-    conjure_comma__with_newlines = produce_conjure_operator__with_newlines(',', 'comma')
+    conjure_comma__ends_in_newline = produce_conjure_action_word__ends_in_newline(',', 'comma')
 
-    conjure_left_brace__with_newlines = produce_conjure_operator__with_newlines(
+    conjure_left_brace__ends_in_newline = produce_conjure_action_word__ends_in_newline(
             '{',                        #   }
             'left_brace',
         )
 
-    conjure_left_parenthesis__with_newlines = produce_conjure_operator__with_newlines(
+    conjure_left_parenthesis__ends_in_newline = produce_conjure_action_word__ends_in_newline(
             '(',                        #   )
             'left_parenthesis',
         )
 
-    conjure_left_square_bracket__with_newlines = produce_conjure_operator__with_newlines(
+    conjure_left_square_bracket__ends_in_newline = produce_conjure_action_word__ends_in_newline(
             '[',                        #   ]
             'left_square_bracket',
         )
@@ -1107,10 +1107,10 @@ def gem():
 
     share(
         'conjure_colon',                                conjure_colon,
-        'conjure_colon__with_newlines',                 conjure_colon__with_newlines,
+        'conjure_colon__ends_in_newline',               conjure_colon__ends_in_newline,
         'conjure_colon__python_newline',                conjure_colon__python_newline,
         'conjure_comma',                                conjure_comma,
-        'conjure_comma__with_newlines',                 conjure_comma__with_newlines,
+        'conjure_comma__ends_in_newline',               conjure_comma__ends_in_newline,
         'conjure_dot',                                  conjure_dot,
         'conjure_else_colon',                           conjure_else_colon,
         'conjure_equal_sign',                           conjure_equal_sign,
@@ -1132,11 +1132,11 @@ def gem():
         'conjure_keyword_with',                         conjure_keyword_with,
         'conjure_keyword_yield',                        conjure_keyword_yield,
         'conjure_left_brace',                           conjure_left_brace,
-        'conjure_left_brace__with_newlines',            conjure_left_brace__with_newlines,
+        'conjure_left_brace__ends_in_newline',          conjure_left_brace__ends_in_newline,
         'conjure_left_parenthesis',                     conjure_left_parenthesis,
-        'conjure_left_parenthesis__with_newlines',      conjure_left_parenthesis__with_newlines,
+        'conjure_left_parenthesis__ends_in_newline',    conjure_left_parenthesis__ends_in_newline,
         'conjure_left_square_bracket',                  conjure_left_square_bracket,
-        'conjure_left_square_bracket__with_newlines',   conjure_left_square_bracket__with_newlines,
+        'conjure_left_square_bracket__ends_in_newline', conjure_left_square_bracket__ends_in_newline,
         'conjure_right_brace',                          conjure_right_brace,
         'conjure_right_parenthesis',                    conjure_right_parenthesis,
         'conjure_right_square_bracket',                 conjure_right_square_bracket,

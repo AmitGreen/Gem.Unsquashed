@@ -337,7 +337,7 @@ def gem():
 
                 return conjure_arguments_0(left, right)
 
-            left = conjure_left_parenthesis__with_newlines(s[qi() : ])
+            left = conjure_left_parenthesis__ends_in_newline(s[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -368,9 +368,9 @@ def gem():
 
                     return conjure_all_index(left, colon, right)
 
-                left = conjure__left_square_bracket__colon(left, conjure_colon__with_newlines(s[left_end : ]))
+                left = conjure__left_square_bracket__colon(left, conjure_colon__ends_in_newline(s[left_end : ]))
             else:
-                left = conjure_left_square_bracket__with_newlines(s[qi() : ])
+                left = conjure_left_square_bracket__ends_in_newline(s[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -416,7 +416,7 @@ def gem():
             if qd() is 0:
                 return conjure_colon__python_newline(s[qi() : ])
 
-            r = conjure_colon__with_newlines(s[qi() : ])
+            r = conjure_colon__ends_in_newline(s[qi() : ])
 
             skip_tokenize_prefix()
 

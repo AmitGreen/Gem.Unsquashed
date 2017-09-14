@@ -347,7 +347,7 @@ def gem():
 
             wd(qd() + 1)
 
-            r = conjure_left_parenthesis__with_newlines(qs()[qi() : ])
+            r = conjure_left_parenthesis__ends_in_newline(qs()[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -394,7 +394,7 @@ def gem():
 
             wd(qd() + 1)
 
-            r = conjure_left_brace__with_newlines(qs()[qi() : ])
+            r = conjure_left_brace__ends_in_newline(qs()[qi() : ])
 
             skip_tokenize_prefix()
 
@@ -441,7 +441,7 @@ def gem():
 
             wd(qd() + 1)
 
-            r = conjure_left_square_bracket__with_newlines(qs()[qi() : ])
+            r = conjure_left_square_bracket__ends_in_newline(qs()[qi() : ])
 
             skip_tokenize_prefix()
 

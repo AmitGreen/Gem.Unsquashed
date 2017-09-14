@@ -258,28 +258,11 @@ def gem():
             assert length(many) == length(action_word__Meta__cache)
 
 
-
     @share
     @privileged
-    def produce_conjure_operator(k, name):
-        lookup = find_lookup_operator(k)
-        insert = find_insert_operator(k)
-
-
-        def conjure_operator(s):
-            return (lookup(s)) or (insert(s))
-
-
-        if __debug__:
-            conjure_operator.__name__ = intern_arrange('conjure_%s', name)
-
-        return conjure_operator
-
-
-    @share
-    @privileged
-    def produce_conjure_action_word(k, full):
-        Meta = find_action_word__Meta(full)
+    def produce_conjure_action_word(k, name):
+        k    = intern_string(k)
+        Meta = find_action_word__Meta(k)
 
         def conjure_action_word(s):
             assert s[-1] != '\n'
@@ -295,13 +278,13 @@ def gem():
             if newlines is 0:
                 return provide_action_word(s, Meta(s))
 
-            Meta_WithNewlines = lookup_action_word__with_newlines__Meta(full)
+            Meta_WithNewlines = lookup_action_word__with_newlines__Meta(k)
 
             if Meta_WithNewlines is none:
-                Meta_WithNelines = provide_action_word__with_newlines__Meta(
-                                       intern_string(full),
-                                       create_Meta_WithNewlines(Meta, construct_token__with_newlines),
-                                   )
+                Meta_WithNewlines = provide_action_word__with_newlines__Meta(
+                                        k,
+                                        create_Meta_WithNewlines(Meta, construct_token__with_newlines),
+                                    )
 
             return provide_action_word(s, Meta_WithNewlines(s, newlines, false))
 
@@ -314,8 +297,9 @@ def gem():
 
     @share
     @privileged
-    def produce_conjure_action_word__ends_in_newline(k, full):
-        Meta = find_action_word__Meta(full)
+    def produce_conjure_action_word__ends_in_newline(k, name):
+        k    = intern_string(k)
+        Meta = find_action_word__Meta(k)
 
         def conjure_action_word__ends_in_newline(s):
             assert s[-1] == '\n'
@@ -327,13 +311,13 @@ def gem():
 
             s = intern_string(s)
 
-            Meta_WithNewlines = lookup_action_word__with_newlines__Meta(full)
+            Meta_WithNewlines = lookup_action_word__with_newlines__Meta(k)
 
             if Meta_WithNewlines is none:
-                Meta_WithNelines = provide_action_word__with_newlines__Meta(
-                                       intern_string(full),
-                                       create_Meta_WithNewlines(Meta, construct_token__with_newlines),
-                                   )
+                Meta_WithNewlines = provide_action_word__with_newlines__Meta(
+                                        k,
+                                        create_Meta_WithNewlines(Meta, construct_token__with_newlines),
+                                    )
 
             return provide_action_word(s, Meta_WithNewlines(s, s.count('\n'), true))
 
@@ -342,23 +326,6 @@ def gem():
             conjure_action_word__ends_in_newline.__name__ = intern_arrange('conjure_%s__ends_in_newline', name)
 
         return conjure_action_word__ends_in_newline
-
-
-    @share
-    @privileged
-    def produce_conjure_operator__with_newlines(k, name):
-        lookup               = find_lookup_operator(k)
-        insert_with_newlines = find_insert_operator__with_newlines(k)
-
-
-        def conjure_operator__with_newlines(s):
-            return (lookup(s)) or (insert_with_newlines(s))
-
-
-        if __debug__:
-            conjure_operator__with_newlines.__name__ = intern_arrange('conjure_%s__swith_newlines', name)
-
-        return conjure_operator__with_newlines
 
 
     @share
