@@ -68,14 +68,12 @@ def gem():
         __slots__                                  = (())
         display_name                               = r',):\n'
         is__any__right_parenthesis__colon__newline = true
-        Meta_Many                                  = 0
         newlines                                   = 1
 
 
     class Parameter_0__Colon__PythonNewline_1(BaseTripleOperator):
         display_name                           = r'():\n'
         is__parameter_0__colon__python_newline = true
-        Meta_Many                              = 0
         newlines                               = 1
 
 
@@ -121,15 +119,10 @@ def gem():
         if newlines is 0:
             return Meta(s, first, second, third)
 
-        Meta_WithNewlines = Meta.Meta_WithNewlines
-
-        if Meta_WithNewlines is 0:
-            Meta_WithNewlines = Meta.Meta_WithNewlines = create_Meta_WithNewlines(
-                    Meta,
-                    construct_triple_token__with_newlines,
-                )
-
-        return Meta_WithNewlines(s, first, second, third, newlines, s[-1] == '\n')
+        return (
+                     lookup_adjusted_meta(Meta)
+                  or create_Meta_WithNewlines(Meta, construct_triple_token__with_newlines)
+               )(s, first, second, third, newlines, s[-1] == '\n')
 
 
     def create_triple_token__python_newline(Meta, first, second, third):
@@ -140,12 +133,10 @@ def gem():
         if newlines is 1:
             return Meta(s, first, second, third)
 
-        Meta_Many = Meta.Meta_Many
-
-        if Meta_Many is 0:
-            Meta_Many = Meta.Meta_Many = create_Meta_Many(Meta, construct_triple_token__python_newline__many)
-
-        return Meta_Many(s, first, second, third, newlines)
+        return (
+                     lookup_adjusted_meta(Meta)
+                  or create_Meta_Many(Meta, construct_triple_token__python_newline__many)
+               )(s, first, second, third, newlines)
 
 
     @privileged

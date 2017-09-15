@@ -13,9 +13,8 @@ def gem():
         ))
 
 
-        python_newline    = false
-        newlines          = 0
-        Meta_WithNewlines = 0
+        python_newline = false
+        newlines       = 0
 
 
         def __init__(t, s, first, second):
@@ -167,7 +166,6 @@ def gem():
         display_name                               = r'):\n'
         is__any__right_parenthesis__colon__newline = true
         is__right_parenthesis__colon__newline      = true
-        Meta_Many                                  = 0
         newlines                                   = 1
         python_newline                             = true
 
@@ -211,15 +209,10 @@ def gem():
         if newlines is 0:
             return Meta(s, first, second)
 
-        Meta_WithNewlines = Meta.Meta_WithNewlines
-
-        if Meta_WithNewlines is 0:
-            Meta_WithNewlines = Meta.Meta_WithNewlines = create_Meta_WithNewlines(
-                    Meta,
-                    construct_dual_token__with_newlines,
-            )
-
-        return Meta_WithNewlines(s, first, second, newlines, s[-1] == '\n')
+        return (
+                     lookup_adjusted_meta(Meta)
+                  or create_Meta_WithNewlines(Meta, construct_dual_token__with_newlines)
+               )(s, first, second, newlines, s[-1] == '\n')
 
 
     def create_dual_token__python_newline(Meta, first, second):
@@ -230,12 +223,10 @@ def gem():
         if newlines is 1:
             return Meta(s, first, second)
 
-        Meta_Many = Meta.Meta_Many
-
-        if Meta_Many is 0:
-            Meta_Many = Meta.Meta_Many = create_Meta_Many(Meta, construct_dual_token__python_newline__many)
-
-        return Meta_Many(s, first, second, newlines)
+        return (
+                     lookup_adjusted_meta(Meta)
+                  or create_Meta_Many(Meta, construct_dual_token__python_newline__many)
+               )(s, first, second, newlines)
 
 
     @privileged

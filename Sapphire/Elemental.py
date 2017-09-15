@@ -66,7 +66,6 @@ def gem():
         is_tail_index                              = false
         is_tilde_sign                              = false
         is_token_newline                           = false
-        Meta_WithNewlines                          = 0
 
 
         def __repr__(t):
@@ -454,7 +453,6 @@ def gem():
         is_end_of_ternary_expression_list       = true
         is_end_of_unary_expression              = true
         keyword                                 = 'colon-python-newline'
-        Meta_Many                               = 0
 
 
         def __init__(t, s):
