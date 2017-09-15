@@ -363,10 +363,28 @@ def gem():
         keyword      = 'raise'
 
 
+    class KeywordRaise_LineMarker_1(KeywordAndOperatorBase):
+        __slots__       = (())
+        display_name    = r'raise\n'
+        ends_in_newline = true
+        keyword         = r'raise\n'
+        line_marker     = true
+        newlines        = 1
+
+
     class KeywordReturn(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'return'
         keyword      = 'return'
+
+
+    class KeywordReturn_LineMarker_1(KeywordAndOperatorBase):
+        __slots__       = (())
+        display_name    = r'return\n'
+        ends_in_newline = true
+        keyword         = r'return\n'
+        line_marker     = true
+        newlines        = 1
 
 
     class KeywordTryColon(KeywordAndOperatorBase):
@@ -1104,7 +1122,19 @@ def gem():
     conjure_keyword_except   = produce_conjure_action_word('keyword-except',   KeywordExcept)
     conjure_keyword_function = produce_conjure_action_word('keyword-function', KeywordFunction)
     conjure_keyword_raise    = produce_conjure_action_word('keyword-raise',    KeywordRaise)
+
+    conjure__raise__line_marker = produce_conjure_action_word__line_marker(
+            'keyword-raise-line-marker',
+            KeywordRaise_LineMarker_1,
+        )
+
     conjure_keyword_return   = produce_conjure_action_word('keyword-return',   KeywordReturn)
+
+    conjure__return__line_marker = produce_conjure_action_word__line_marker(
+            'keyword-return-line-marker',
+            KeywordReturn_LineMarker_1,
+        )
+
     conjure_keyword_while    = produce_conjure_action_word('keyword-while',    KeywordWhile)
     conjure_keyword_with     = produce_conjure_action_word('keyword-with',     KeywordWith)
     conjure_keyword_yield    = produce_conjure_action_word('keyword-yield',    KeywordYield)
@@ -1181,7 +1211,9 @@ def gem():
         'conjure_keyword_is',                           conjure_keyword_is,
         'conjure_keyword_not',                          conjure_keyword_not,
         'conjure_keyword_raise',                        conjure_keyword_raise,
+        'conjure__raise__line_marker',                  conjure__raise__line_marker,
         'conjure_keyword_return',                       conjure_keyword_return,
+        'conjure__return__line_marker',                 conjure__return__line_marker,
         'conjure_keyword_while',                        conjure_keyword_while,
         'conjure_keyword_with',                         conjure_keyword_with,
         'conjure_keyword_yield',                        conjure_keyword_yield,
