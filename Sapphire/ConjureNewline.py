@@ -8,24 +8,18 @@ def gem():
 
     create_Meta_WithNewlines = Shared.create_Meta_WithNewlines      #   Due to 'privileged'
     create_Meta_Many         = Shared.create_Meta_Many              #   Due to 'privileged'
+    lookup_adjusted_meta     = Shared.lookup_adjusted_meta          #   Due to 'privileged'
 
 
-    action_word__cache                       = {}
-    action_word__Meta__cache                 = {}
-    action_word__python_newline__cache       = {}
+    action_word__cache                 = {}
+    action_word__Meta__cache           = {}
+    action_word__python_newline__cache = {}
 
-    action_word__python_newline__Meta__cache = {}
-    action_word__with_newlines__Meta__cache  = action_word__python_newline__Meta__cache
-
-    find_action_word__Meta                    = action_word__Meta__cache                .__getitem__
-    lookup_action_word                        = action_word__cache                      .get
-    lookup_action_word__python_newline        = action_word__python_newline__cache      .get
-    lookup_action_word__python_newline__Meta  = action_word__python_newline__Meta__cache.get
-    lookup_action_word__with_newlines__Meta   = action_word__with_newlines__Meta__cache .get
-    provide_action_word                       = action_word__cache                      .setdefault
-    provide_action_word__python_newline       = action_word__python_newline__cache      .setdefault
-    provide_action_word__python_newline__Meta = action_word__python_newline__Meta__cache.setdefault
-    provide_action_word__with_newlines__Meta  = action_word__with_newlines__Meta__cache .setdefault
+    find_action_word__Meta              = action_word__Meta__cache                .__getitem__
+    lookup_action_word                  = action_word__cache                      .get
+    lookup_action_word__python_newline  = action_word__python_newline__cache      .get
+    provide_action_word                 = action_word__cache                      .setdefault
+    provide_action_word__python_newline = action_word__python_newline__cache      .setdefault
 
 
     def construct_token__with_newlines(t, s, newlines, ends_in_newline):
@@ -57,17 +51,13 @@ def gem():
         if newlines is 0:
             return provide_action_word(s, find_action_word__Meta(full)(s))
 
-        Meta_WithNewlines = lookup_action_word__with_newlines__Meta(full)
-
-        if Meta_WithNewlines is none:
-            Meta = find_action_word__Meta(full)
-
-            Meta_WithNewlines = provide_action_word__with_newlines__Meta(
-                                    Meta,
-                                    create_Meta_WithNewlines(Meta, construct_token__with_newlines),
-                                )
-
-        return provide_action_word(s, Meta_WithNewlines(s, newlines, false))
+        return provide_action_word(
+                   s,
+                   (
+                         lookup_adjusted_meta(full)
+                      or create_Meta_WithNewlines(find_action_word__Meta(full), construct_token__with_newlines)
+                   )(s, newlines, false),
+               )
 
 
     @share
@@ -81,17 +71,13 @@ def gem():
 
         s = intern_string(s)
 
-        Meta_WithNewlines = lookup_action_word__with_newlines__Meta(full)
-
-        if Meta_WithNewlines is none:
-            Meta = find_action_word__Meta(full)
-
-            Meta_WithNewlines = provide_action_word__with_newlines__Meta(
-                                    Meta,
-                                    create_Meta_WithNewlines(Meta, construct_token__with_newlines),
-                                )
-
-        return provide_action_word(s, Meta_WithNewlines(s, s.count('\n'), true))
+        return provide_action_word(
+                   s,
+                   (
+                         lookup_adjusted_meta(full)
+                      or create_Meta_WithNewlines(find_action_word__Meta(full), construct_token__with_newlines)
+                   )(s, s.count('\n'), true)
+               )
 
 
     @share
@@ -122,15 +108,13 @@ def gem():
             if newlines is 0:
                 return provide_action_word(s, Meta(s))
 
-            Meta_WithNewlines = lookup_action_word__with_newlines__Meta(Meta)
-
-            if Meta_WithNewlines is none:
-                Meta_WithNewlines = provide_action_word__with_newlines__Meta(
-                                        Meta,
-                                        create_Meta_WithNewlines(Meta, construct_token__with_newlines),
-                                    )
-
-            return provide_action_word(s, Meta_WithNewlines(s, newlines, false))
+            return provide_action_word(
+                       s,
+                       (
+                             lookup_adjusted_meta(Meta)
+                          or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
+                       )(s, s.count('\n'), false)
+                   )
 
 
         if __debug__:
@@ -152,15 +136,13 @@ def gem():
 
             s = intern_string(s)
 
-            Meta_WithNewlines = lookup_action_word__with_newlines__Meta(Meta)
-
-            if Meta_WithNewlines is none:
-                Meta_WithNewlines = provide_action_word__with_newlines__Meta(
-                                        Meta,
-                                        create_Meta_WithNewlines(Meta, construct_token__with_newlines),
-                                    )
-
-            return provide_action_word(s, Meta_WithNewlines(s, s.count('\n'), true))
+            return provide_action_word(
+                       s,
+                       (
+                             lookup_adjusted_meta(Meta)
+                          or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
+                       )(s, s.count('\n'), true)
+                   )
 
 
         if __debug__:
@@ -185,26 +167,18 @@ def gem():
             newlines = s.count('\n')
 
             if newlines is 1:
-                return Meta(s)
+                return provide_action_word__python_newline(s, Meta(s))
 
-            Meta_Many = lookup_action_word__python_newline__Meta(Meta)
-
-            if Meta_Many is none:
-                Meta_Many = provide_action_word__python_newline__Meta(
-                                Meta,
-                                create_Meta_Many(Meta, construct_token__python_newline__many),
-                            )
-
-            return provide_action_word__python_newline(s, Meta_Many(s, s.count('\n')))
+            return provide_action_word__python_newline(
+                       s,
+                       (
+                             lookup_adjusted_meta(Meta)
+                          or create_Meta_WithNewlines(Meta, construct_token__python_newline__many)
+                       )(s, s.count('\n'))
+                   )
 
 
         if __debug__:
             conjure_action_word__python_newline.__name__ = intern_arrange('conjure_%s__python_newline', name)
 
         return conjure_action_word__python_newline
-
-
-    @share
-    def dump_newline_meta_cache():
-        for k in iterate_values_sorted_by_key({ k.__name__ : k   for k in action_word__python_newline__Meta__cache }):
-            line('%30s : %s', k.__name__, action_word__python_newline__Meta__cache[k].__name__)
