@@ -67,13 +67,17 @@ def gem():
     class Comma_RightParenthesis_Colon_LineMarker_1(BaseTripleOperator):
         __slots__                                  = (())
         display_name                               = r',):\n'
+        ends_in_newline                            = true
         is__any__right_parenthesis__colon__newline = true
+        line_marker                                = true
         newlines                                   = 1
 
 
     class Parameter_0__Colon__LineMarker_1(BaseTripleOperator):
         display_name                        = r'():\n'
+        ends_in_newline                     = true
         is__parameter_0__colon__line_marker = true
+        line_marker                         = true
         newlines                            = 1
 
 

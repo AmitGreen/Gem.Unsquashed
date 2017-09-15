@@ -164,10 +164,11 @@ def gem():
     class RightParenthesis_Colon_LineMarker_1(BaseDualOperator):
         __slots__                                  = (())
         display_name                               = r'):\n'
+        ends_in_newline                            = true
         is__any__right_parenthesis__colon__newline = true
         is__right_parenthesis__colon__newline      = true
-        newlines                                   = 1
         line_marker                                = true
+        newlines                                   = 1
 
 
         def __init__(t, s, first, second):

@@ -176,6 +176,15 @@ def gem():
         keyword      = 'else:'
 
 
+    class KeywordElseColon_LineMarker_1(KeywordAndOperatorBase):
+        __slots__       = (())
+        display_name    = r'else:\n'
+        ends_in_newline = true
+        keyword         = r'else:\n'
+        line_marker     = true
+        newlines        = 1
+
+
     class KeywordElseIf(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'else-if'
@@ -452,7 +461,10 @@ def gem():
         is_end_of_ternary_expression            = true
         is_end_of_ternary_expression_list       = true
         is_end_of_unary_expression              = true
-        keyword                                 = 'colon-python-newline'
+        keyword                                 = r'colon:\n'
+        ends_in_newline                         = true
+        line_marker                             = true
+        newlines                                = 1
 
 
         def __init__(t, s):

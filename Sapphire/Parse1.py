@@ -182,6 +182,6 @@ def gem():
                 line('Passed#1: identical dump from parse tree.  Total: %d line%s',
                      length(many), (''   if length(many) is 0 else   's'))
 
-                if 7:
+                if 0:
                     #conjure_colon__line_marker('\n\n:\n')
                     dump_newline_meta_cache()
