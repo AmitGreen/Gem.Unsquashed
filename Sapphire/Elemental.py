@@ -941,70 +941,70 @@ def gem():
             return arrange('<%s>', t.s)
 
 
-    produce_operator_insert_and_lookup_maps(
+    initialize_action_word__Meta(
         ((
-             ((     '!=',       'compare_not_equal',        OperatorCompareNotEqual     )),
-             ((     '&',        'logical_and_sign',         OperatorLogicalAndSign      )),
-             ((     '%',        'percent_sign',             OperatorPercentSign         )),
-             ((     '(',        'left_parenthesis',         OperatorLeftParenthesis     )),
-             ((     ')',        'right_parenthesis',        OperatorRightParenthesis    )),
-             ((     '*',        'star_sign',                OperatorStarSign            )),
-             ((     '**',       'power_operator',           OperatorPower               )),
-             ((     '+',        'plus_sign',                OperatorPlusSign            )),
-             ((     '+=',       'add_modify',               OperatorAddModify           )),
-             ((     ',',        'comma',                    OperatorComma               )),
-             ((     '-',        'minus_sign',               OperatorMinusSign           )),
-             ((     '-=',       'subtract_modify',          OperatorSubtractModify      )),
-             ((     '.',        'dot',                      OperatorDot                 )),
-             ((     '/',        'divide',                   OperatorDivide              )),
-             ((     '//',       'integer_divide',           OperatorIntegerDivide       )),
-             ((     ':',        'colon',                    OperatorColon               )),
-             ((     '<',        'less_than',                OperatorLessThan            )),
-             ((     '<=',       'less_than_or_equal',       OperatorLessThanOrEqual     )),
-             ((     '=',        'equal_sign',               OperatorEqualSign           )),
-             ((     '==',       'compare_equal',            OperatorCompareEqual        )),
-             ((     '>',        'greater_than',             OperatorGreaterThan         )),
-             ((     '>=',       'greater_than_or_equal',    OperatorGreaterThanOrEqual  )),
-             ((     'and',      'keyword_and',              KeywordAnd                  )),
-             ((     'as',       'keyword_as',               KeywordAs                   )),
-             ((     'else',     'keyword_else',             KeywordElse                 )),
-             ((     'for',      'keyword_for',              KeywordFor                  )),
-             ((     'if',       'keyword_if',               KeywordIf                   )),
-             ((     'in',       'keyword_in',               KeywordIn                   )),
-             ((     'is',       'keyword_is',               KeywordIs                   )),
-             ((     'not',      'keyword_not',              KeywordNot                  )),
-             ((     'or',       'keyword_or',               KeywordOr                   )),
-             ((     '[',        'left_square_bracket',      OperatorLeftSquareBracket   )),
-             ((     ']',        'right_square_bracket',     OperatorRightSquareBracket  )),
-             ((     '{',        'left_brace',               OperatorLeftBrace           )),
-             ((     '|',        'logical_or_sign',          OperatorLogicalOrSign       )),
-             ((     '|=',       'logical_or_modify',        OperatorLogicalOrModify     )),
-             ((     '}',        'right_brace',              OperatorRightBrace          )),
-             ((     '~',        'tilde_sign',               OperatorTildeSign           )),
+             ((     '!=',       OperatorCompareNotEqual     )),
+             ((     '&',        OperatorLogicalAndSign      )),
+             ((     '%',        OperatorPercentSign         )),
+             ((     '(',        OperatorLeftParenthesis     )),
+             ((     ')',        OperatorRightParenthesis    )),
+             ((     '*',        OperatorStarSign            )),
+             ((     '**',       OperatorPower               )),
+             ((     '+',        OperatorPlusSign            )),
+             ((     '+=',       OperatorAddModify           )),
+             ((     ',',        OperatorComma               )),
+             ((     '-',        OperatorMinusSign           )),
+             ((     '-=',       OperatorSubtractModify      )),
+             ((     '.',        OperatorDot                 )),
+             ((     '/',        OperatorDivide              )),
+             ((     '//',       OperatorIntegerDivide       )),
+             ((     ':',        OperatorColon               )),
+             ((     '<',        OperatorLessThan            )),
+             ((     '<=',       OperatorLessThanOrEqual     )),
+             ((     '=',        OperatorEqualSign           )),
+             ((     '==',       OperatorCompareEqual        )),
+             ((     '>',        OperatorGreaterThan         )),
+             ((     '>=',       OperatorGreaterThanOrEqual  )),
+             ((     'and',      KeywordAnd                  )),
+             ((     'as',       KeywordAs                   )),
+             ((     'else',     KeywordElse                 )),
+             ((     'for',      KeywordFor                  )),
+             ((     'if',       KeywordIf                   )),
+             ((     'in',       KeywordIn                   )),
+             ((     'is',       KeywordIs                   )),
+             ((     'not',      KeywordNot                  )),
+             ((     'or',       KeywordOr                   )),
+             ((     '[',        OperatorLeftSquareBracket   )),
+             ((     ']',        OperatorRightSquareBracket  )),
+             ((     '{',        OperatorLeftBrace           )),
+             ((     '|',        OperatorLogicalOrSign       )),
+             ((     '|=',       OperatorLogicalOrModify     )),
+             ((     '}',        OperatorRightBrace          )),
+             ((     '~',        OperatorTildeSign           )),
         )),
     )
 
 
-    del Shared.produce_operator_insert_and_lookup_maps
+    del Shared.initialize_action_word__Meta
 
 
-    conjure_colon                 = produce_conjure_action_word(':', 'colon')
-    conjure_comma                 = produce_conjure_action_word(',',    'comma')
-    conjure_equal_sign            = produce_conjure_action_word('=',    'equal_sign')
-    conjure_dot                   = produce_conjure_action_word('.',    'dot')
-    conjure_keyword_as            = produce_conjure_action_word('as',   'keyword_as')
-    conjure_keyword_for           = produce_conjure_action_word('for',  'keyword_for')
-    conjure_keyword_if            = produce_conjure_action_word('if',   'keyword_if')
-    conjure_keyword_in            = produce_conjure_action_word('in',   'keyword_in')
-    conjure_keyword_is            = produce_conjure_action_word('is',   'keyword_is')
-    conjure_keyword_not           = produce_conjure_action_word('not',  'keyword_not')
-    conjure_left_brace            = produce_conjure_action_word('{',    'left_brace')
-    conjure_left_parenthesis      = produce_conjure_action_word('(',    'left_parenthesis')
-    conjure_left_square_bracket   = produce_conjure_action_word('[',    'left_square_bracket')
-    conjure_right_brace           = produce_conjure_action_word('}',    'right_brace')
-    conjure_right_parenthesis     = produce_conjure_action_word(')',    'right_parenthesis')
-    conjure_right_square_bracket  = produce_conjure_action_word(']',    'right_square_bracket')
-    conjure_star_sign             = produce_conjure_action_word('*',    'star_sign')
+    conjure_colon                 = produce_conjure_action_word('colon',                OperatorColon)
+    conjure_comma                 = produce_conjure_action_word('comma',                OperatorComma)
+    conjure_equal_sign            = produce_conjure_action_word('equal_sign',           OperatorEqualSign)
+    conjure_dot                   = produce_conjure_action_word('dot',                  OperatorDot)
+    conjure_keyword_as            = produce_conjure_action_word('keyword_as',           KeywordAs)
+    conjure_keyword_for           = produce_conjure_action_word('keyword_for',          KeywordFor)
+    conjure_keyword_if            = produce_conjure_action_word('keyword_if',           KeywordIf)
+    conjure_keyword_in            = produce_conjure_action_word('keyword_in',           KeywordIn)
+    conjure_keyword_is            = produce_conjure_action_word('keyword_is',           KeywordIs)
+    conjure_keyword_not           = produce_conjure_action_word('keyword_not',          KeywordNot)
+    conjure_left_brace            = produce_conjure_action_word('left_brace',           OperatorLeftBrace)
+    conjure_left_parenthesis      = produce_conjure_action_word('left_parenthesis',     OperatorLeftParenthesis)
+    conjure_left_square_bracket   = produce_conjure_action_word('left_square_bracket',  OperatorLeftSquareBracket)
+    conjure_right_brace           = produce_conjure_action_word('right_brace',          OperatorRightBrace)
+    conjure_right_parenthesis     = produce_conjure_action_word('right_parenthesis',    OperatorRightParenthesis)
+    conjure_right_square_bracket  = produce_conjure_action_word('right_square_bracket', OperatorRightBrace)
+    conjure_star_sign             = produce_conjure_action_word('star_sign',            OperatorStarSign)
 
     conjure_colon__ends_in_newline = produce_conjure_action_word__ends_in_newline('colon', OperatorColon)
 

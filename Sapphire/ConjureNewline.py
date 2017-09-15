@@ -40,12 +40,6 @@ def gem():
         t.newlines = newlines
 
 
-    if __debug__:
-        def raise_already_exists(name, s):
-            raise_runtime_error('cache %s: attempt to insert key %s (already has value %r)',
-                                name, portray_string(s), find(s))
-
-
     @share
     def conjure_action_word(full, s):
         assert s[-1] != '\n'
@@ -55,8 +49,9 @@ def gem():
         if r is not none:
             return r
 
+        s = intern_string(s)
+
         newlines = s.count('\n')
-        s        = intern_string(s)
 
         if newlines is 0:
             return provide_action_word(s, find_action_word__Meta(full)(s))
@@ -86,6 +81,8 @@ def gem():
         if r is not none:
             return r
 
+        s = intern_string(s)
+
         Meta_WithNewlines = lookup_action_word__with_newlines__Meta(full)
 
         if Meta_WithNewlines is none:
@@ -103,10 +100,10 @@ def gem():
 
 
     @share
-    def produce_operator_insert_and_lookup_maps(many):
+    def initialize_action_word__Meta(many):
         provide_action_word__Meta = action_word__Meta__cache.setdefault
 
-        for [k, name, Meta] in many:
+        for [k, Meta] in many:
             provide_action_word__Meta(k, Meta)
 
         assert length(many) == length(action_word__Meta__cache)
@@ -114,11 +111,7 @@ def gem():
 
     @share
     @privileged
-    def produce_conjure_action_word(k, name):
-        k    = intern_string(k)
-        Meta = find_action_word__Meta(k)
-
-
+    def produce_conjure_action_word(name, Meta):
         def conjure_action_word(s):
             assert s[-1] != '\n'
 
@@ -127,17 +120,18 @@ def gem():
             if r is not none:
                 return r
 
+            s = intern_string(s)
+
             newlines = s.count('\n')
-            s        = intern_string(s)
 
             if newlines is 0:
                 return provide_action_word(s, Meta(s))
 
-            Meta_WithNewlines = lookup_action_word__with_newlines__Meta(k)
+            Meta_WithNewlines = lookup_action_word__with_newlines__Meta(Meta)
 
             if Meta_WithNewlines is none:
                 Meta_WithNewlines = provide_action_word__with_newlines__Meta(
-                                        k,
+                                        Meta,
                                         create_Meta_WithNewlines(Meta, construct_token__with_newlines),
                                     )
 
@@ -191,8 +185,9 @@ def gem():
             if r is not none:
                 return r
 
+            s = intern_string(s)
+
             newlines = s.count('\n')
-            s        = intern_string(s)
 
             if newlines is 1:
                 return Meta(s)
@@ -212,41 +207,3 @@ def gem():
             conjure_action_word__python_newline.__name__ = intern_arrange('conjure_%s__python_newline', name)
 
         return conjure_action_word__python_newline
-
-
-    @share
-    @privileged
-    def produce_conjure_operator__python_newline(k, name, Meta):
-        cache   = {}
-        lookup  = cache.get
-        provide = cache.setdefault
-        find    = cache.__getitem__
-
-
-        def conjure_token__python_newline(s):
-            r = lookup(s)
-
-            if r is not none:
-                return r
-
-            assert s[-1] == '\n'
-
-            newlines = s.count('\n')
-            s        = intern_string(s)
-
-            if newlines is 1:
-                return Meta(s)
-
-            return provide(
-                       s,
-                       (
-                             Meta.Meta_Many
-                          or create_Meta_Many(Meta, construct_token__python_newline__many)
-                       )(s, s.count('\n'), true),
-                   )
-
-
-        if __debug__:
-            conjure_token__python_newline.__name__ = intern_arrange('conjure_%s__python_newline', name)
-
-        return conjure_token__python_newline
