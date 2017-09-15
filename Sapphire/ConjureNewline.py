@@ -11,15 +11,15 @@ def gem():
     lookup_adjusted_meta     = Shared.lookup_adjusted_meta          #   Due to 'privileged'
 
 
-    action_word__cache                 = {}
-    action_word__Meta__cache           = {}
-    action_word__python_newline__cache = {}
+    action_word__cache              = {}
+    action_word__Meta__cache        = {}
+    action_word__line_marker__cache = {}
 
-    find_action_word__Meta              = action_word__Meta__cache                .__getitem__
-    lookup_action_word                  = action_word__cache                      .get
-    lookup_action_word__python_newline  = action_word__python_newline__cache      .get
-    provide_action_word                 = action_word__cache                      .setdefault
-    provide_action_word__python_newline = action_word__python_newline__cache      .setdefault
+    find_action_word__Meta           = action_word__Meta__cache       .__getitem__
+    lookup_action_word               = action_word__cache             .get
+    lookup_action_word__line_marker  = action_word__line_marker__cache.get
+    provide_action_word              = action_word__cache             .setdefault
+    provide_action_word__line_marker = action_word__line_marker__cache.setdefault
 
 
     def construct_token__with_newlines(t, s, newlines, ends_in_newline):
@@ -28,7 +28,7 @@ def gem():
         t.ends_in_newline = ends_in_newline
 
 
-    def construct_token__python_newline__many(t, s, newlines):
+    def construct_token__line_marker__many(t, s, newlines):
         assert newlines > 1
 
         t.s        = s
@@ -158,11 +158,11 @@ def gem():
 
     @share
     @privileged
-    def produce_conjure_action_word__python_newline(name, Meta):
-        def conjure_action_word__python_newline(s):
+    def produce_conjure_action_word__line_marker(name, Meta):
+        def conjure_action_word__line_marker(s):
             assert s[-1] == '\n'
 
-            r = lookup_action_word__python_newline(s)
+            r = lookup_action_word__line_marker(s)
 
             if r is not none:
                 return r
@@ -172,18 +172,18 @@ def gem():
             newlines = s.count('\n')
 
             if newlines is 1:
-                return provide_action_word__python_newline(s, Meta(s))
+                return provide_action_word__line_marker(s, Meta(s))
 
-            return provide_action_word__python_newline(
+            return provide_action_word__line_marker(
                        s,
                        (
                              lookup_adjusted_meta(Meta)
-                          or create_Meta_Many(Meta, construct_token__python_newline__many)
+                          or create_Meta_Many(Meta, construct_token__line_marker__many)
                        )(s, s.count('\n'))
                    )
 
 
         if __debug__:
-            conjure_action_word__python_newline.__name__ = intern_arrange('conjure_%s__python_newline', name)
+            conjure_action_word__line_marker.__name__ = intern_arrange('conjure_%s__line_marker', name)
 
-        return conjure_action_word__python_newline
+        return conjure_action_word__line_marker

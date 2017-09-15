@@ -17,7 +17,7 @@ def gem():
         is_right_parenthesis    = false
         is_right_square_bracket = false
         newlines                = 0
-        python_newline          = false
+        line_marker             = false
 
 
         def __init__(t, s):

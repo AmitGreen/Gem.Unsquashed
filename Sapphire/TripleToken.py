@@ -64,17 +64,17 @@ def gem():
         is_postfix_operator = true
 
 
-    class Comma_RightParenthesis_Colon_PythonNewline_1(BaseTripleOperator):
+    class Comma_RightParenthesis_Colon_LineMarker_1(BaseTripleOperator):
         __slots__                                  = (())
         display_name                               = r',):\n'
         is__any__right_parenthesis__colon__newline = true
         newlines                                   = 1
 
 
-    class Parameter_0__Colon__PythonNewline_1(BaseTripleOperator):
-        display_name                           = r'():\n'
-        is__parameter_0__colon__python_newline = true
-        newlines                               = 1
+    class Parameter_0__Colon__LineMarker_1(BaseTripleOperator):
+        display_name                        = r'():\n'
+        is__parameter_0__colon__line_marker = true
+        newlines                            = 1
 
 
         def __init__(t, s, first, second, third):
@@ -100,7 +100,7 @@ def gem():
         t.ends_in_newline = ends_in_newline
 
 
-    def construct_triple_token__python_newline__many(t, s, first, second, third, newlines):
+    def construct_triple_token__line_marker__many(t, s, first, second, third, newlines):
         assert newlines >= 1
         assert s[-1] == '\n'
 
@@ -126,7 +126,7 @@ def gem():
                )
 
 
-    def create_triple_token__python_newline(Meta, first, second, third):
+    def create_triple_token__line_marker(Meta, first, second, third):
         s = intern_string(first.s + second.s + third.s)
 
         newlines = s.count('\n')
@@ -136,14 +136,14 @@ def gem():
                        if newlines is 1 else
                        (
                              lookup_adjusted_meta(Meta)
-                          or create_Meta_Many(Meta, construct_triple_token__python_newline__many)
+                          or create_Meta_Many(Meta, construct_triple_token__line_marker__many)
                        )(s, first, second, third, newlines)
                )
 
 
     @privileged
-    def produce_conjure_triple_token(name, Meta, python_newline = false):
-        assert type(python_newline) is Boolean
+    def produce_conjure_triple_token(name, Meta, line_marker = false):
+        assert type(line_marker) is Boolean
 
         cache     = {}
         provide_1 = cache.setdefault
@@ -151,7 +151,7 @@ def gem():
         store_1   = cache.__setitem__
 
         create_triple_token = (
-                create_triple_token__python_newline   if python_newline else
+                create_triple_token__line_marker   if line_marker else
                 create_triple_token__with_newlines
             )
 
@@ -206,23 +206,23 @@ def gem():
 
     conjure_all_index = produce_conjure_triple_token('all_index', AllIndex)
 
-    conjure__comma__right_parenthesis__colon__python_newline = produce_conjure_triple_token(
-            'comma__right_parenthesis__colon__python_newline',
-            Comma_RightParenthesis_Colon_PythonNewline_1,
+    conjure__comma__right_parenthesis__colon__line_marker = produce_conjure_triple_token(
+            'comma__right_parenthesis__colon__line_marker',
+            Comma_RightParenthesis_Colon_LineMarker_1,
             true,
         )
 
-    conjure__parameter_0__colon__python_newline = produce_conjure_triple_token(
+    conjure__parameter_0__colon__line_marker = produce_conjure_triple_token(
             'parameter_0__colon_newline',
-            Parameter_0__Colon__PythonNewline_1,
+            Parameter_0__Colon__LineMarker_1,
             true,
         )
 
     share(
         'conjure_all_index',    conjure_all_index,
 
-        'conjure__comma__right_parenthesis__colon__python_newline',
-            conjure__comma__right_parenthesis__colon__python_newline,
+        'conjure__comma__right_parenthesis__colon__line_marker',
+            conjure__comma__right_parenthesis__colon__line_marker,
 
-        'conjure__parameter_0__colon__python_newline',  conjure__parameter_0__colon__python_newline,
+        'conjure__parameter_0__colon__line_marker',  conjure__parameter_0__colon__line_marker,
     )

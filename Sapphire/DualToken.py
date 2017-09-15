@@ -13,8 +13,8 @@ def gem():
         ))
 
 
-        python_newline = false
-        newlines       = 0
+        line_marker = false
+        newlines    = 0
 
 
         def __init__(t, s, first, second):
@@ -161,13 +161,13 @@ def gem():
         is_end_of_unary_expression       = true
 
 
-    class RightParenthesis_Colon_PythonNewline_1(BaseDualOperator):
+    class RightParenthesis_Colon_LineMarker_1(BaseDualOperator):
         __slots__                                  = (())
         display_name                               = r'):\n'
         is__any__right_parenthesis__colon__newline = true
         is__right_parenthesis__colon__newline      = true
         newlines                                   = 1
-        python_newline                             = true
+        line_marker                                = true
 
 
         def __init__(t, s, first, second):
@@ -191,7 +191,7 @@ def gem():
         t.ends_in_newline = ends_in_newline
 
 
-    def construct_dual_token__python_newline__many(t, s, first, second, newlines):
+    def construct_dual_token__line_marker__many(t, s, first, second, newlines):
         assert newlines >= 1
         assert s[-1] == '\n'
 
@@ -216,7 +216,7 @@ def gem():
                )
 
 
-    def create_dual_token__python_newline(Meta, first, second):
+    def create_dual_token__line_marker(Meta, first, second):
         s = intern_string(first.s + second.s)
 
         newlines = s.count('\n')
@@ -226,14 +226,14 @@ def gem():
                        if newlines is 1 else
                        (
                              lookup_adjusted_meta(Meta)
-                          or create_Meta_Many(Meta, construct_dual_token__python_newline__many)
+                          or create_Meta_Many(Meta, construct_dual_token__line_marker__many)
                        )(s, first, second, newlines)
                )
 
 
     @privileged
-    def produce_conjure_dual_token(name, Meta, python_newline = false):
-        assert type(python_newline) is Boolean
+    def produce_conjure_dual_token(name, Meta, line_marker = false):
+        assert type(line_marker) is Boolean
 
         cache     = {}
         provide_1 = cache.setdefault
@@ -241,7 +241,7 @@ def gem():
         store_1   = cache.__setitem__
 
         create_dual_token = (
-                create_dual_token__python_newline   if python_newline else
+                create_dual_token__line_marker   if line_marker else
                 create_dual_token__with_newlines
             )
 
@@ -299,24 +299,24 @@ def gem():
 
     conjure_not_in = produce_conjure_dual_token('not_in', NotIn)
 
-    conjure__right_parenthesis__colon__python_newline = produce_conjure_dual_token(
-            'right_parenthesis__colon__python_newline',
-            RightParenthesis_Colon_PythonNewline_1,
+    conjure__right_parenthesis__colon__line_marker = produce_conjure_dual_token(
+            'right_parenthesis__colon__line_marker',
+            RightParenthesis_Colon_LineMarker_1,
             true,
         )
 
 
     share(
-        'conjure_arguments_0',                                  conjure_arguments_0,
-        'conjure__colon__right_square_bracket',                 conjure__colon__right_square_bracket,
-        'conjure__comma__right_brace',                          conjure__comma__right_brace,
-        'conjure__comma__right_parenthesis',                    conjure__comma__right_parenthesis,
-        'conjure__comma__right_square_bracket',                 conjure__comma__right_square_bracket,
-        'conjure_empty_list',                                   conjure_empty_list,
-        'conjure_empty_map',                                    conjure_empty_map,
-        'conjure_empty_tuple',                                  conjure_empty_tuple,
-        'conjure_is_not',                                       conjure_is_not,
-        'conjure__left_square_bracket__colon',                  conjure__left_square_bracket__colon,
-        'conjure_not_in',                                       conjure_not_in,
-        'conjure__right_parenthesis__colon__python_newline',    conjure__right_parenthesis__colon__python_newline,
+        'conjure_arguments_0',                              conjure_arguments_0,
+        'conjure__colon__right_square_bracket',             conjure__colon__right_square_bracket,
+        'conjure__comma__right_brace',                      conjure__comma__right_brace,
+        'conjure__comma__right_parenthesis',                conjure__comma__right_parenthesis,
+        'conjure__comma__right_square_bracket',             conjure__comma__right_square_bracket,
+        'conjure_empty_list',                               conjure_empty_list,
+        'conjure_empty_map',                                conjure_empty_map,
+        'conjure_empty_tuple',                              conjure_empty_tuple,
+        'conjure_is_not',                                   conjure_is_not,
+        'conjure__left_square_bracket__colon',              conjure__left_square_bracket__colon,
+        'conjure_not_in',                                   conjure_not_in,
+        'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
     )

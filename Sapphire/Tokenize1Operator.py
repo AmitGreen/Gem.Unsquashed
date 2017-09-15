@@ -414,7 +414,7 @@ def gem():
                 return r
 
             if qd() is 0:
-                return conjure_colon__python_newline(s[qi() : ])
+                return conjure_colon__line_marker(s[qi() : ])
 
             r = conjure_colon__ends_in_newline(s[qi() : ])
 

@@ -416,12 +416,6 @@ def gem():
             t.body.write(w)
 
 
-    #
-    #   TODO:
-    #       Answer this question: should this be combined with Pearl.EmptyLine? (either combine or explain why not)
-    #
-    #       ANSWER: No, as this needs to handle python_newline, etc, properly
-    #
     @share
     class EmptyLine(Token):
         __slots__       = (())

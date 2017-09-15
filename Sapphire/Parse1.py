@@ -183,5 +183,5 @@ def gem():
                      length(many), (''   if length(many) is 0 else   's'))
 
                 if 7:
-                    #conjure_colon__python_newline('\n\n:\n')
+                    #conjure_colon__line_marker('\n\n:\n')
                     dump_newline_meta_cache()

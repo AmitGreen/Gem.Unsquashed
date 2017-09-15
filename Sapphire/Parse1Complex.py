@@ -29,7 +29,7 @@ def gem():
         if qn() is not none:
             raise_unknown_line()
 
-        if operator.is_colon__python_newline:
+        if operator.is_colon__line_marker:
             return MetaHeader(keyword_if, condition, operator)
 
         if not operator.is_colon:
@@ -103,7 +103,7 @@ def gem():
         else:
             operator = tokenize_operator()
 
-        if operator.is_colon__python_newline:
+        if operator.is_colon__line_marker:
             return WithHeader_1(keyword, left, operator)
 
         if not operator.is_keyword_as:
@@ -118,7 +118,7 @@ def gem():
         else:
             operator_2 = tokenize_operator()
 
-        if operator_2.is_colon__python_newline:
+        if operator_2.is_colon__line_marker:
             return ExceptHeader_2(keyword, left, operator, right, operator_2)
 
         raise_unknown_line()
@@ -185,7 +185,7 @@ def gem():
             if qn() is not none:
                 raise_unknown_line()
 
-        if not operator_2.is_colon__python_newline:
+        if not operator_2.is_colon__line_marker:
             raise_unknown_line()
 
         return ForHeader(keyword_for, left, operator, right, operator_2)
@@ -230,7 +230,7 @@ def gem():
         else:
             operator = tokenize_operator()
 
-        if operator.is_colon__python_newline:
+        if operator.is_colon__line_marker:
             return WithHeader_1(keyword, left, operator)
 
         if not operator.is_keyword_as:
@@ -245,7 +245,7 @@ def gem():
         else:
             operator_2 = tokenize_operator()
 
-        if operator_2.is_colon__python_newline:
+        if operator_2.is_colon__line_marker:
             return WithHeader_2(keyword, left, operator, right, operator_2)
 
         raise_unknown_line()

@@ -26,7 +26,7 @@ def gem():
 
         operator_1 = tokenize_header_parenthesis_atom()
 
-        if operator_1.is__parameter_0__colon__python_newline:
+        if operator_1.is__parameter_0__colon__line_marker:
             if qn() is not none:
                 raise_unknown_line()
 
@@ -83,7 +83,7 @@ def gem():
 
         operator_1 = tokenize_header_parenthesis_atom()
 
-        if operator_1.is__parameter_0__colon__python_newline:
+        if operator_1.is__parameter_0__colon__line_marker:
             if qn() is not none:
                 raise_unknown_line()
 
@@ -108,7 +108,7 @@ def gem():
             return FunctionHeader(
                        keyword_function,
                        name,
-                       conjure__comma__right_parenthesis__colon__python_newline(
+                       conjure__comma__right_parenthesis__colon__line_marker(
                            operator_1,
                            token_1.first,
                            token_1.second,
@@ -156,7 +156,7 @@ def gem():
                        ParameterColon_1(
                            operator_1,
                            token_1,
-                           conjure__comma__right_parenthesis__colon__python_newline(
+                           conjure__comma__right_parenthesis__colon__line_marker(
                                operator_2,
                                token_7.first,
                                token_7.second,
@@ -184,7 +184,7 @@ def gem():
                     raise_unknown_line()
 
                 if operator_7.is_right_parenthesis:
-                    operator_7 = conjure__right_parenthesis__colon__python_newline(
+                    operator_7 = conjure__right_parenthesis__colon__line_marker(
                                      operator_7,
                                      tokenize_parameter_colon_newline(),
                                  )
@@ -211,7 +211,7 @@ def gem():
 
             if token_7.is__right_parenthesis__colon__newline:
                 many.append(
-                    conjure__comma__right_parenthesis__colon__python_newline(
+                    conjure__comma__right_parenthesis__colon__line_marker(
                         operator_7,
                         token_7.first,
                         token_7.second,

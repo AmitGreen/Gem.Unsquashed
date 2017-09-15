@@ -17,7 +17,7 @@ def gem():
         is_atom                                    = false
         is__atom__or__special_operator             = false
         is_colon                                   = false
-        is_colon__python_newline                   = false
+        is_colon__line_marker                      = false
         is__colon__right_square_bracket            = false
         is_comma                                   = false
         is__comma__or__right_parenthesis           = false
@@ -54,7 +54,7 @@ def gem():
         is_minus_sign                              = false
         is_modify_operator                         = false
         is_multiply_operator                       = false
-        is__parameter_0__colon__python_newline     = false
+        is__parameter_0__colon__line_marker        = false
         is_postfix_operator                        = false
         is_power_operator                          = false
         is_right_brace                             = false
@@ -435,9 +435,9 @@ def gem():
         keyword                                 = ':'
 
 
-    class OperatorColon_PythonNewline_1(KeywordAndOperatorBase):
+    class OperatorColon_LineMarker_1(KeywordAndOperatorBase):
         __slots__                               = (())
-        is_colon__python_newline                = true
+        is_colon__line_marker                   = true
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
         is_end_of_boolean_or_expression         = true
@@ -463,7 +463,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<OperatorColon_PythonNewline_1 %s>', portray_raw_string(t.s))
+            return arrange('<OperatorColon_LineMarker_1 %s>', portray_raw_string(t.s))
 
 
         def display_token(t):
@@ -1023,9 +1023,9 @@ def gem():
             OperatorLeftSquareBracket,
         )
 
-    conjure_colon__python_newline = produce_conjure_action_word__python_newline(
+    conjure_colon__line_marker = produce_conjure_action_word__line_marker(
             'colon',
-            OperatorColon_PythonNewline_1,
+            OperatorColon_LineMarker_1,
         )
 
     #
@@ -1097,7 +1097,7 @@ def gem():
     share(
         'conjure_colon',                                conjure_colon,
         'conjure_colon__ends_in_newline',               conjure_colon__ends_in_newline,
-        'conjure_colon__python_newline',                conjure_colon__python_newline,
+        'conjure_colon__line_marker',                   conjure_colon__line_marker,
         'conjure_comma',                                conjure_comma,
         'conjure_comma__ends_in_newline',               conjure_comma__ends_in_newline,
         'conjure_dot',                                  conjure_dot,
