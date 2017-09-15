@@ -203,10 +203,28 @@ def gem():
         keyword      = 'except:'
 
 
+    class KeywordExceptColon_LineMarker_1(KeywordAndOperatorBase):
+        __slots__       = (())
+        display_name    = r'except:\n'
+        ends_in_newline = true
+        keyword         = r'except:\n'
+        line_marker     = true
+        newlines        = 1
+
+
     class KeywordFinallyColon(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'finally:'
         keyword      = 'finally:'
+
+
+    class KeywordFinallyColon_LineMarker_1(KeywordAndOperatorBase):
+        __slots__       = (())
+        display_name    = r'finally:\n'
+        ends_in_newline = true
+        keyword         = r'finally:\n'
+        line_marker     = true
+        newlines        = 1
 
 
     class KeywordFor(KeywordAndOperatorBase):
@@ -355,6 +373,15 @@ def gem():
         __slots__    = (())
         display_name = 'try:'
         keyword      = 'try:'
+
+
+    class KeywordTryColon_LineMarker_1(KeywordAndOperatorBase):
+        __slots__       = (())
+        display_name    = r'try:\n'
+        ends_in_newline = true
+        keyword         = r'try:\n'
+        line_marker     = true
+        newlines        = 1
 
 
     class KeywordWhile(KeywordAndOperatorBase):
@@ -1043,21 +1070,44 @@ def gem():
     #
     #   Fix these to have 'WithPythonNewline' version
     #
-    conjure_else_colon    = produce_conjure_by_name('keyword-else-colon',    KeywordElseColon)
-    conjure_except_colon  = produce_conjure_by_name('keyword-except-colon',  KeywordExceptColon)
-    conjure_finally_colon = produce_conjure_by_name('keyword-finally-colon', KeywordFinallyColon)
-    conjure_try_colon     = produce_conjure_by_name('keyword-try-colon',     KeywordTryColon)
+    conjure_else_colon = produce_conjure_action_word('keyword-else-colon', KeywordElseColon)
 
-    conjure_keyword_assert   = produce_conjure_by_name('keyword-assert',      KeywordAssert)
-    conjure_keyword_delete   = produce_conjure_by_name('keyword-delete',      KeywordDelete)
-    conjure_keyword_else_if  = produce_conjure_by_name('keyword-else-if',     KeywordElseIf)
-    conjure_keyword_except   = produce_conjure_by_name('keyword-except',      KeywordExcept)
-    conjure_keyword_function = produce_conjure_by_name('keyword-function',    KeywordFunction)
-    conjure_keyword_raise    = produce_conjure_by_name('keyword-raise',       KeywordRaise)
-    conjure_keyword_return   = produce_conjure_by_name('keyword-return',      KeywordReturn)
-    conjure_keyword_while    = produce_conjure_by_name('keyword-while',       KeywordWhile)
-    conjure_keyword_with     = produce_conjure_by_name('keyword-with',        KeywordWith)
-    conjure_keyword_yield    = produce_conjure_by_name('keyword-yield',       KeywordYield)
+    conjure__else__colon__line_marker = produce_conjure_action_word__line_marker(
+            'keyword-else-colon-line-marker',
+            KeywordElseColon_LineMarker_1,
+        )
+
+    conjure_except_colon = produce_conjure_action_word('keyword-except-colon', KeywordExceptColon)
+
+    conjure__except__colon__line_marker = produce_conjure_action_word__line_marker(
+            'keyword-except-colon-line-marker',
+            KeywordExceptColon_LineMarker_1,
+        )
+
+    conjure_finally_colon = produce_conjure_action_word('keyword-finally-colon', KeywordFinallyColon)
+
+    conjure__finally__colon__line_marker = produce_conjure_action_word__line_marker(
+            'keyword-finally-colon-line-marker',
+            KeywordFinallyColon_LineMarker_1,
+        )
+
+    conjure_try_colon = produce_conjure_action_word('keyword-try-colon', KeywordTryColon)
+
+    conjure__try__colon__line_marker = produce_conjure_action_word__line_marker(
+            'keyword-try-colon-line-marker',
+            KeywordTryColon_LineMarker_1,
+        )
+
+    conjure_keyword_assert   = produce_conjure_action_word('keyword-assert',   KeywordAssert)
+    conjure_keyword_delete   = produce_conjure_action_word('keyword-delete',   KeywordDelete)
+    conjure_keyword_else_if  = produce_conjure_action_word('keyword-else-if',  KeywordElseIf)
+    conjure_keyword_except   = produce_conjure_action_word('keyword-except',   KeywordExcept)
+    conjure_keyword_function = produce_conjure_action_word('keyword-function', KeywordFunction)
+    conjure_keyword_raise    = produce_conjure_action_word('keyword-raise',    KeywordRaise)
+    conjure_keyword_return   = produce_conjure_action_word('keyword-return',   KeywordReturn)
+    conjure_keyword_while    = produce_conjure_action_word('keyword-while',    KeywordWhile)
+    conjure_keyword_with     = produce_conjure_action_word('keyword-with',     KeywordWith)
+    conjure_keyword_yield    = produce_conjure_action_word('keyword-yield',    KeywordYield)
 
 
     find_atom_type = {
@@ -1114,9 +1164,12 @@ def gem():
         'conjure_comma__ends_in_newline',               conjure_comma__ends_in_newline,
         'conjure_dot',                                  conjure_dot,
         'conjure_else_colon',                           conjure_else_colon,
+        'conjure__else__colon__line_marker',            conjure__else__colon__line_marker,
         'conjure_equal_sign',                           conjure_equal_sign,
         'conjure_except_colon',                         conjure_except_colon,
+        'conjure__except__colon__line_marker',          conjure__except__colon__line_marker,
         'conjure_finally_colon',                        conjure_finally_colon,
+        'conjure__finally__colon__line_marker',         conjure__finally__colon__line_marker,
         'conjure_keyword_as',                           conjure_keyword_as,
         'conjure_keyword_assert',                       conjure_keyword_assert,
         'conjure_keyword_delete',                       conjure_keyword_delete,
@@ -1143,6 +1196,7 @@ def gem():
         'conjure_right_square_bracket',                 conjure_right_square_bracket,
         'conjure_star_sign',                            conjure_star_sign,
         'conjure_try_colon',                            conjure_try_colon,
+        'conjure__try__colon__line_marker',             conjure__try__colon__line_marker,
         'find_atom_type',                               find_atom_type,
         'is_close_operator',                            is_close_operator,
         'is_colon_7',                                   is_colon_7,

@@ -53,10 +53,10 @@ def gem():
 
     @share
     def parse1_statement_else_colon(m):
-        keyword_colon = conjure_else_colon(m.group())
-
         if m.end('newline') is not -1:
-            return keyword_colon
+            return conjure__else__colon__line_marker(m.group())
+
+        keyword_colon = conjure_else_colon(m.group())
 
         j = m.end()
 
@@ -126,18 +126,18 @@ def gem():
 
     @share
     def parse1_statement_except_colon(m):
-        if m.end('newline') is -1:
-            raise_unknown_line()
+        if m.end('newline') is not -1:
+            return conjure__except__colon__line_marker(m.group())
 
-        return conjure_except_colon(m.group())
+        raise_unknown_line()
 
 
     @share
     def parse1_statement_finally_colon(m):
-        if m.end('newline') is -1:
-            raise_unknown_line()
+        if m.end('newline') is not -1:
+            return conjure__finally__colon__line_marker(m.group())
 
-        return conjure_finally_colon(m.group())
+        raise_unknown_line()
 
 
     @share
@@ -198,10 +198,10 @@ def gem():
 
     @share
     def parse1_statement_try_colon(m):
-        if m.end('newline') is -1:
-            raise_unknown_line()
+        if m.end('newline') is not -1:
+            return conjure__try__colon__line_marker(m.group())
 
-        return conjure_try_colon(m.group())
+        raise_unknown_line()
 
 
     @share
