@@ -1006,27 +1006,26 @@ def gem():
     conjure_right_square_bracket  = produce_conjure_action_word(']',    'right_square_bracket')
     conjure_star_sign             = produce_conjure_action_word('*',    'star_sign')
 
-    conjure_colon__ends_in_newline = produce_conjure_action_word__ends_in_newline(':', 'colon')
+    conjure_colon__ends_in_newline = produce_conjure_action_word__ends_in_newline('colon', OperatorColon)
 
-    conjure_comma__ends_in_newline = produce_conjure_action_word__ends_in_newline(',', 'comma')
+    conjure_comma__ends_in_newline = produce_conjure_action_word__ends_in_newline('comma', OperatorComma)
 
     conjure_left_brace__ends_in_newline = produce_conjure_action_word__ends_in_newline(
-            '{',                        #   }
             'left_brace',
+            OperatorLeftBrace,
         )
 
     conjure_left_parenthesis__ends_in_newline = produce_conjure_action_word__ends_in_newline(
-            '(',                        #   )
             'left_parenthesis',
+            OperatorLeftParenthesis,
         )
 
     conjure_left_square_bracket__ends_in_newline = produce_conjure_action_word__ends_in_newline(
-            '[',                        #   ]
             'left_square_bracket',
+            OperatorLeftSquareBracket,
         )
 
-    conjure_colon__python_newline = produce_conjure_operator__python_newline(
-            ':',
+    conjure_colon__python_newline = produce_conjure_action_word__python_newline(
             'colon',
             OperatorColon_PythonNewline,
         )
