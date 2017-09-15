@@ -17,7 +17,7 @@ def gem():
         is_atom                                    = false
         is__atom__or__special_operator             = false
         is_colon                                   = false
-        is_colon_newline                           = false
+        is_colon__python_newline                   = false
         is__colon__right_square_bracket            = false
         is_comma                                   = false
         is__comma__or__right_parenthesis           = false
@@ -438,7 +438,7 @@ def gem():
 
     class OperatorColon_PythonNewline(KeywordAndOperatorBase):
         __slots__                               = (())
-        is_colon_newline                        = true
+        is_colon__python_newline                = true
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
         is_end_of_boolean_or_expression         = true
