@@ -181,7 +181,7 @@ def gem():
                         m = atom_match(qs(), qj())
 
                         if m is none:
-                            my_line('full: %r; s: %r', portray_string(qs()), portray_string(qs()[qj() :]))
+                            #my_line('full: %r; s: %r', portray_string(qs()), portray_string(qs()[qj() :]))
                             raise_unknown_line()
 
                         token = analyze_atom(m)
@@ -191,8 +191,8 @@ def gem():
 
                         la(token)
 
-                        my_line('qs: %r', portray_string(qs()))
-                        my_line('token: %r', token)
+                        #my_line('qs: %r', portray_string(qs()))
+                        #my_line('token: %r', token)
 
                         raise_unknown_line()
 
@@ -221,7 +221,7 @@ def gem():
                     if token.is_star_sign:
                         return TupleArgument(token, parse1_ternary_expression())
 
-                    my_line('token: %r', token)
+                    #my_line('token: %r', token)
                     raise_unknown_line()
 
         if show:

@@ -9,7 +9,7 @@ def gem():
     @share
     def parse1_map_element():
         if qk() is not none:
-            my_line('qk: %r', qk())
+            #my_line('qk: %r', qk())
             raise_unknown_line()
 
         token = parse1_atom()
@@ -227,7 +227,7 @@ def gem():
             return ListExpression_1(left_square_bracket, middle_1, operator_1)
 
         if not operator_1.is_comma:
-            my_line('line: %d; middle_1: %r; operator_1: %r', ql(), middle_1, operator_1)
+            #my_line('line: %d; middle_1: %r; operator_1: %r', ql(), middle_1, operator_1)
             raise_unknown_line()
 
         #
@@ -307,7 +307,7 @@ def gem():
         m = atom_match(qs(), qj())
 
         if m is none:
-            my_line('full: %r; s: %r', portray_string(qs()), portray_string(qs()[qj() :]))
+            #my_line('full: %r; s: %r', portray_string(qs()), portray_string(qs()[qj() :]))
             raise_unknown_line()
 
         token = analyze_atom(m)
@@ -336,5 +336,5 @@ def gem():
         if token.is_star_sign:
             return TupleArgument(token, parse1_ternary_expression())
 
-        my_line('token: %r', token)
+        #my_line('token: %r', token)
         raise_unknown_line()

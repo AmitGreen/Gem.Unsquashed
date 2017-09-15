@@ -22,8 +22,8 @@ def gem():
             operator = tokenize_operator()
 
         if not operator.is_equal_sign:
-            my_line('indented: %r; left: %r; equal_sign: %r; right: %s; operator: %r; s: %s',
-                    indented, left, equal_sign, right, operator, portray_string(qs()[qj():]))
+            #my_line('indented: %r; left: %r; equal_sign: %r; right: %s; operator: %r; s: %s',
+            #        indented, left, equal_sign, right, operator, portray_string(qs()[qj():]))
 
             raise_unknown_line()
 
@@ -45,7 +45,7 @@ def gem():
                 operator = tokenize_operator()
 
             if not operator.is_equal_sign:
-                my_line('right: %s; operator; %r; s: %s', right, operator, portray_string(qs()[qj():]))
+                #my_line('right: %s; operator; %r; s: %s', right, operator, portray_string(qs()[qj():]))
                 raise_unknown_line()
 
             many.append(AssignFragment(right, operator))
@@ -59,8 +59,9 @@ def gem():
         if newline is not none:
             return ModifyStatement(indented, left, modify_operator, right, newline)
 
-        my_line('indented: %r; left: %r; modify_operator: %r; right: %s; s: %s',
-                indented, left, modify_operator, right, portray_string(qs()[qj():]))
+        #my_line('indented: %r; left: %r; modify_operator: %r; right: %s; s: %s',
+        #        indented, left, modify_operator, right, portray_string(qs()[qj():]))
+
         raise_unknown_line()
 
 
@@ -130,5 +131,5 @@ def gem():
         if operator.is_modify_operator:
             return parse1_statement_modify__left__operator(indented, left, operator)
 
-        my_line('line: %d; operator: %s', ql(), operator)
+        #my_line('line: %d; operator: %s', ql(), operator)
         raise_unknown_line()

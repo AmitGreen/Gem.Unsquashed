@@ -99,7 +99,7 @@ def gem():
         m = parameter_atom_match(s, j)
 
         if m is none:
-            my_line(portray_string(qs()[qj() : ]))
+            #my_line(portray_string(qs()[qj() : ]))
             raise_unknown_line()
 
         name = m.group('name')

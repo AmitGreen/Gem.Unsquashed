@@ -47,7 +47,7 @@ def gem():
         operator_2 = tokenize_parameter_operator()
 
         if not operator_2.is__any__right_parenthesis__colon__newline:
-            my_line('operator_2: %s', operator_2)
+            #my_line('operator_2: %s', operator_2)
             raise_unknown_line()
 
         if qn() is not none:
@@ -199,7 +199,7 @@ def gem():
                 return FunctionHeader(keyword_function, name, ParameterColon_Many(Tuple(many)))
 
             if not operator_7.is_comma:
-                my_line('operator_7: %s; full_line: %r', operator_7, portray_string(qs()))
+                #my_line('operator_7: %s; full_line: %r', operator_7, portray_string(qs()))
                 raise_unknown_line()
 
             many.append(token_7)
