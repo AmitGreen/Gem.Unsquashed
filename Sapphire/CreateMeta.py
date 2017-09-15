@@ -6,7 +6,7 @@ def gem():
     @share
     def create_Meta_WithNewlines(Meta, constructor):
         r = Meta.Meta_WithNewlines = Type(
-                                         arrange('%sWithNewline', Meta.__name__),
+                                         arrange('%s_WithNewlines', Meta.__name__),
                                          ((Meta,)),
                                          {
                                              '__slots__' : ((
@@ -23,8 +23,10 @@ def gem():
 
     @share
     def create_Meta_Many(Meta, constructor):
+        assert Meta.__name__.endswith('_1')
+
         r = Meta.Meta_Many = Type(
-                                 arrange('%s_Many', Meta.__name__),
+                                 arrange('%s_Many', Meta.__name__[:-2]),
                                  ((Meta,)),
                                  {
                                      '__slots__' : ((

@@ -13,8 +13,9 @@ def gem():
     action_word__cache                       = {}
     action_word__Meta__cache                 = {}
     action_word__python_newline__cache       = {}
+
     action_word__python_newline__Meta__cache = {}
-    action_word__with_newlines__Meta__cache  = {}
+    action_word__with_newlines__Meta__cache  = action_word__python_newline__Meta__cache
 
     find_action_word__Meta                    = action_word__Meta__cache                .__getitem__
     lookup_action_word                        = action_word__cache                      .get
@@ -59,14 +60,11 @@ def gem():
         Meta_WithNewlines = lookup_action_word__with_newlines__Meta(full)
 
         if Meta_WithNewlines is none:
-            full = intern_string(full)
+            Meta = find_action_word__Meta(full)
 
             Meta_WithNewlines = provide_action_word__with_newlines__Meta(
-                                    full,
-                                    create_Meta_WithNewlines(
-                                        find_action_word__Meta(full),
-                                        construct_token__with_newlines,
-                                    ),
+                                    Meta,
+                                    create_Meta_WithNewlines(Meta, construct_token__with_newlines),
                                 )
 
         return provide_action_word(s, Meta_WithNewlines(s, newlines, false))
@@ -86,14 +84,11 @@ def gem():
         Meta_WithNewlines = lookup_action_word__with_newlines__Meta(full)
 
         if Meta_WithNewlines is none:
-            full = intern_string(full)
+            Meta = find_action_word__Meta(full)
 
             Meta_WithNewlines = provide_action_word__with_newlines__Meta(
-                                    full,
-                                    create_Meta_WithNewlines(
-                                        find_action_word__Meta(full),
-                                        construct_token__with_newlines,
-                                    ),
+                                    Meta,
+                                    create_Meta_WithNewlines(Meta, construct_token__with_newlines),
                                 )
 
         return provide_action_word(s, Meta_WithNewlines(s, s.count('\n'), true))
@@ -207,3 +202,9 @@ def gem():
             conjure_action_word__python_newline.__name__ = intern_arrange('conjure_%s__python_newline', name)
 
         return conjure_action_word__python_newline
+
+
+    @share
+    def dump_newline_meta_cache():
+        for k in iterate_values_sorted_by_key({ k.__name__ : k   for k in action_word__python_newline__Meta__cache }):
+            line('%30s : %s', k.__name__, action_word__python_newline__Meta__cache[k].__name__)

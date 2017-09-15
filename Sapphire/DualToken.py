@@ -162,7 +162,7 @@ def gem():
         is_end_of_unary_expression       = true
 
 
-    class RightParenthesis_Colon_PythonNewline(BaseDualOperator):
+    class RightParenthesis_Colon_PythonNewline_1(BaseDualOperator):
         __slots__                                  = (())
         display_name                               = r'):\n'
         is__any__right_parenthesis__colon__newline = true
@@ -195,7 +195,7 @@ def gem():
 
     def construct_dual_token__python_newline__many(t, s, first, second, newlines):
         assert newlines >= 1
-        assert s[-1] is '\n'
+        assert s[-1] == '\n'
 
         t.s        = s
         t.first    = first
@@ -308,7 +308,7 @@ def gem():
 
     conjure__right_parenthesis__colon__python_newline = produce_conjure_dual_token(
             'right_parenthesis__colon__python_newline',
-            RightParenthesis_Colon_PythonNewline,
+            RightParenthesis_Colon_PythonNewline_1,
             true,
         )
 

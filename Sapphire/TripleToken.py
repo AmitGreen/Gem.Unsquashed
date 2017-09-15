@@ -64,7 +64,7 @@ def gem():
         is_postfix_operator = true
 
 
-    class Comma_RightParenthesis_Colon_PythonNewline(BaseTripleOperator):
+    class Comma_RightParenthesis_Colon_PythonNewline_1(BaseTripleOperator):
         __slots__                                  = (())
         display_name                               = r',):\n'
         is__any__right_parenthesis__colon__newline = true
@@ -72,7 +72,7 @@ def gem():
         newlines                                   = 1
 
 
-    class Parameter_0__Colon__PythonNewline(BaseTripleOperator):
+    class Parameter_0__Colon__PythonNewline_1(BaseTripleOperator):
         display_name                           = r'():\n'
         is__parameter_0__colon__python_newline = true
         Meta_Many                              = 0
@@ -215,13 +215,13 @@ def gem():
 
     conjure__comma__right_parenthesis__colon__python_newline = produce_conjure_triple_token(
             'comma__right_parenthesis__colon__python_newline',
-            Comma_RightParenthesis_Colon_PythonNewline,
+            Comma_RightParenthesis_Colon_PythonNewline_1,
             true,
         )
 
     conjure__parameter_0__colon__python_newline = produce_conjure_triple_token(
             'parameter_0__colon_newline',
-            Parameter_0__Colon__PythonNewline,
+            Parameter_0__Colon__PythonNewline_1,
             true,
         )
 

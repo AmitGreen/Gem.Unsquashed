@@ -436,7 +436,7 @@ def gem():
         keyword                                 = ':'
 
 
-    class OperatorColon_PythonNewline(KeywordAndOperatorBase):
+    class OperatorColon_PythonNewline_1(KeywordAndOperatorBase):
         __slots__                               = (())
         is_colon__python_newline                = true
         is_end_of_arithmetic_expression         = true
@@ -465,7 +465,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<OperatorColon_PythonNewline %s>', portray_raw_string(t.s))
+            return arrange('<OperatorColon_PythonNewline_1 %s>', portray_raw_string(t.s))
 
 
         def display_token(t):
@@ -1027,7 +1027,7 @@ def gem():
 
     conjure_colon__python_newline = produce_conjure_action_word__python_newline(
             'colon',
-            OperatorColon_PythonNewline,
+            OperatorColon_PythonNewline_1,
         )
 
     #

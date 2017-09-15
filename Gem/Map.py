@@ -31,7 +31,7 @@ def gem():
             yield (( k, value(k) ))
 
 
-    @export
+    @built_in
     def iterate_values_sorted_by_key(mapping):
         value = mapping.__getitem__
 
