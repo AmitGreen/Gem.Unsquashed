@@ -31,6 +31,7 @@ def gem():
     require_gem('Sapphire.Tokenize1Operator')
     require_gem('Sapphire.TripleToken')
     require_gem('Sapphire.UnaryExpression')
+    require_gem('Sapphire.Whitespace')
 
 
     find_parse1_colon_line = {
@@ -182,6 +183,6 @@ def gem():
                 line('Passed#1: identical dump from parse tree.  Total: %d line%s',
                      length(many), (''   if length(many) is 0 else   's'))
 
-                if 0:
+                if 1:
                     #conjure_colon__line_marker('\n\n:\n')
                     dump_newline_meta_cache()

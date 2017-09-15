@@ -212,7 +212,7 @@ def gem():
                        if newlines is 0 else
                            (
                                  lookup_adjusted_meta(Meta)
-                              or create_Meta_WithNewlines(Meta, construct_dual_token__with_newlines)
+                              or create_ActionWord_WithNewlines(Meta, construct_dual_token__with_newlines)
                            )(s, first, second, newlines, s[-1] == '\n')
                )
 
@@ -227,7 +227,7 @@ def gem():
                        if newlines is 1 else
                        (
                              lookup_adjusted_meta(Meta)
-                          or create_Meta_Many(Meta, construct_dual_token__line_marker__many)
+                          or create_ActionWord_LineMarker_Many(Meta, construct_dual_token__line_marker__many)
                        )(s, first, second, newlines)
                )
 

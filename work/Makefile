@@ -71,7 +71,8 @@ SAPPHIRE_FILES = \
     ../Sapphire/Statement.py \
     ../Sapphire/Tokenize1Atom.py ../Sapphire/Tokenize1Name.py ../Sapphire/Tokenize1Operator.py \
       ../Sapphire/TripleToken.py \
-    ../Sapphire/UnaryExpression.py
+    ../Sapphire/UnaryExpression.py \
+    ../Sapphire/Whitespace.py
     #
     #   Excludes:
     #       ../Sapphire/Match.py
@@ -133,7 +134,8 @@ clean:
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
 	rm -f   h2p.py
-	rm -f   hb.py hcm.py hco.py hd.py hel.py hem.py hj.py py hk.py hma.py hmc.py hoe.py hpt.py hs.py ht.py hu.py hx.py
+	rm -f   hb.py hcm.py hco.py hd.py hel.py hem.py hj.py py hk.py
+	rm -f   hma.py hmc.py hoe.py hpt.py hs.py ht.py hu.py hw.py hx.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
@@ -216,6 +218,7 @@ links:
 	ln -s ../Sapphire/Statement.py                  hs.py
 	ln -s ../Sapphire/TripleToken.py                ht.py
 	ln -s ../Sapphire/UnaryExpression.py            hu.py
+	ln -s ../Sapphire/Whitespace.py                 hw.py
 	ln -s ../Sapphire/PostfixExpression.py          hx.py
 	ln -s ../Gem/__init__.py                        in.py
 	ln -s ../Gem/Import.py                          im.py

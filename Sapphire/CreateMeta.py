@@ -10,46 +10,43 @@ def gem():
 
 
     @share
-    def create_Meta_WithNewlines(Meta, constructor):
+    def create_ActionWord_WithNewlines(Meta, constructor):
         assert lookup_adjusted_meta(Meta) is none
 
-        return provide_adjusted_meta(
-                   Meta,
-                   Type(
-                       arrange('%s_WithNewlines', Meta.__name__),
-                       ((Meta,)),
-                       {
-                           '__slots__' : ((
-                               'newlines',                 #   Integer { > 0 }
-                               'ends_in_newline',          #   Boolean
-                           )),
 
-                           '__init__' : constructor,
-                       },
-                    ),
-                )
+        class ActionWord_WithNewlines(Meta):
+            __slots__ = ((
+                'newlines',                                 #   Integer > 0
+                'ends_in_newline',                          #   Boolean
+            ))
+
+            __init__ = constructor
+
+
+        if __debug__:
+            ActionWord_WithNewlines.__name__ = intern_arrange('%s_WithNewlines', Meta.__name__)
+
+        return provide_adjusted_meta(Meta, ActionWord_WithNewlines)
 
 
     @share
-    def create_Meta_Many(Meta, constructor):
+    def create_ActionWord_LineMarker_Many(Meta, constructor):
         assert Meta.__name__.endswith('_1')
         assert lookup_adjusted_meta(Meta) is none
 
-        return provide_adjusted_meta(
-                   Meta,
-                   Type(
-                       arrange('%s_Many', Meta.__name__[:-2]),
-                       ((Meta,)),
-                       {
-                           '__slots__' : ((
-                               'newlines',                 #   Integer { > 1 }
-                           )),
 
-                           '__init__' : constructor
-                       },
-                   ),
-                )
+        class Actionword_LineMarker_Many(Meta):
+            __slots__ = ((
+                'newlines',                                 #   Integer > 1
+            ))
 
+            __init__ = constructor
+
+
+        if __debug__:
+            Actionword_LineMarker_Many.__name__ = intern_arrange('%s_Many', Meta.__name__[:-2])
+
+        return provide_adjusted_meta(Meta, Actionword_LineMarker_Many)
 
 
     @share

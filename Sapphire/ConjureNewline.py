@@ -6,9 +6,9 @@ def gem():
     require_gem('Sapphire.CreateMeta')
 
 
-    create_Meta_WithNewlines = Shared.create_Meta_WithNewlines      #   Due to 'privileged'
-    create_Meta_Many         = Shared.create_Meta_Many              #   Due to 'privileged'
-    lookup_adjusted_meta     = Shared.lookup_adjusted_meta          #   Due to 'privileged'
+    create_ActionWord_WithNewlines    = Shared.create_ActionWord_WithNewlines      #   Due to 'privileged'
+    create_ActionWord_LineMarker_Many = Shared.create_ActionWord_LineMarker_Many   #   Due to 'privileged'
+    lookup_adjusted_meta              = Shared.lookup_adjusted_meta          #   Due to 'privileged'
 
 
     action_word__cache              = {}
@@ -56,7 +56,7 @@ def gem():
                            if newlines is 0 else
                                (
                                       lookup_adjusted_meta(Meta)
-                                   or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
+                                   or create_ActionWord_WithNewlines(Meta, construct_token__with_newlines)
                                 )(s, newlines, false)
                    ),
                )
@@ -79,7 +79,7 @@ def gem():
                    s,
                    (
                          lookup_adjusted_meta(Meta)
-                      or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
+                      or create_ActionWord_WithNewlines(Meta, construct_token__with_newlines)
                    )(s, s.count('\n'), true)
                )
 
@@ -116,7 +116,7 @@ def gem():
                                if newlines is 0 else
                                    (
                                          lookup_adjusted_meta(Meta)
-                                      or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
+                                      or create_ActionWord_WithNewlines(Meta, construct_token__with_newlines)
                                    )(s, newlines, false)
                        ),
                    )
@@ -145,7 +145,7 @@ def gem():
                        s,
                        (
                              lookup_adjusted_meta(Meta)
-                          or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
+                          or create_ActionWord_WithNewlines(Meta, construct_token__with_newlines)
                        )(s, s.count('\n'), true)
                    )
 
@@ -178,7 +178,7 @@ def gem():
                        s,
                        (
                              lookup_adjusted_meta(Meta)
-                          or create_Meta_Many(Meta, construct_token__line_marker__many)
+                          or create_ActionWord_LineMarker_Many(Meta, construct_token__line_marker__many)
                        )(s, s.count('\n'))
                    )
 
