@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Elemental')
 def gem():
-    require_gem('Sapphire.ConjureNewline')
+    require_gem('Sapphire.ActionWord')
     require_gem('Sapphire.Core')
 
 

@@ -1,19 +1,19 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.ConjureNewline')
+@gem('Sapphire.ActionWord')
 def gem():
     require_gem('Sapphire.CreateMeta')
 
 
-    create_ActionWord_WithNewlines    = Shared.create_ActionWord_WithNewlines      #   Due to 'privileged'
-    create_ActionWord_LineMarker_Many = Shared.create_ActionWord_LineMarker_Many   #   Due to 'privileged'
-    lookup_adjusted_meta              = Shared.lookup_adjusted_meta          #   Due to 'privileged'
+    create_ActionWord_WithNewlines    = Shared.create_ActionWord_WithNewlines       #   Due to 'privileged'
+    create_ActionWord_LineMarker_Many = Shared.create_ActionWord_LineMarker_Many    #   Due to 'privileged'
+    lookup_adjusted_meta              = Shared.lookup_adjusted_meta                 #   Due to 'privileged'
 
 
-    action_word__cache              = {}
-    action_word__Meta__cache        = {}
-    action_word__line_marker__cache = {}
+    action_word__cache              = {}        #   Map { String : ActionWord }
+    action_word__Meta__cache        = {}        #   Map { String : Meta }
+    action_word__line_marker__cache = {}        #   Map { String : ActionWord_LineMarker_* }
 
     find_action_word__Meta           = action_word__Meta__cache       .__getitem__
     lookup_action_word               = action_word__cache             .get
@@ -171,15 +171,16 @@ def gem():
 
             newlines = s.count('\n')
 
-            if newlines is 1:
-                return provide_action_word__line_marker(s, Meta(s))
-
             return provide_action_word__line_marker(
                        s,
                        (
-                             lookup_adjusted_meta(Meta)
-                          or create_ActionWord_LineMarker_Many(Meta, construct_token__line_marker__many)
-                       )(s, s.count('\n'))
+                           provide_action_word__line_marker(s, Meta(s))
+                               if newlines is 1 else
+                                   (
+                                         lookup_adjusted_meta(Meta)
+                                      or create_ActionWord_LineMarker_Many(Meta, construct_token__line_marker__many)
+                                   )(s, s.count('\n'))
+                       ),
                    )
 
 
