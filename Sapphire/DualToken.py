@@ -206,13 +206,14 @@ def gem():
 
         newlines = s.count('\n')
 
-        if newlines is 0:
-            return Meta(s, first, second)
-
         return (
-                     lookup_adjusted_meta(Meta)
-                  or create_Meta_WithNewlines(Meta, construct_dual_token__with_newlines)
-               )(s, first, second, newlines, s[-1] == '\n')
+                   Meta(s, first, second)
+                       if newlines is 0 else
+                           (
+                                 lookup_adjusted_meta(Meta)
+                              or create_Meta_WithNewlines(Meta, construct_dual_token__with_newlines)
+                           )(s, first, second, newlines, s[-1] == '\n')
+               )
 
 
     def create_dual_token__python_newline(Meta, first, second):
@@ -220,13 +221,14 @@ def gem():
 
         newlines = s.count('\n')
 
-        if newlines is 1:
-            return Meta(s, first, second)
-
         return (
-                     lookup_adjusted_meta(Meta)
-                  or create_Meta_Many(Meta, construct_dual_token__python_newline__many)
-               )(s, first, second, newlines)
+                   Meta(s, first, second)
+                       if newlines is 1 else
+                       (
+                             lookup_adjusted_meta(Meta)
+                          or create_Meta_Many(Meta, construct_dual_token__python_newline__many)
+                       )(s, first, second, newlines)
+               )
 
 
     @privileged

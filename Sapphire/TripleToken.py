@@ -116,13 +116,14 @@ def gem():
 
         newlines = s.count('\n')
 
-        if newlines is 0:
-            return Meta(s, first, second, third)
-
         return (
-                     lookup_adjusted_meta(Meta)
-                  or create_Meta_WithNewlines(Meta, construct_triple_token__with_newlines)
-               )(s, first, second, third, newlines, s[-1] == '\n')
+                   Meta(s, first, second, third)
+                       if newlines is 0 else
+                           (
+                                 lookup_adjusted_meta(Meta)
+                              or create_Meta_WithNewlines(Meta, construct_triple_token__with_newlines)
+                           )(s, first, second, third, newlines, s[-1] == '\n')
+               )
 
 
     def create_triple_token__python_newline(Meta, first, second, third):
@@ -130,13 +131,14 @@ def gem():
 
         newlines = s.count('\n')
 
-        if newlines is 1:
-            return Meta(s, first, second, third)
-
         return (
-                     lookup_adjusted_meta(Meta)
-                  or create_Meta_Many(Meta, construct_triple_token__python_newline__many)
-               )(s, first, second, third, newlines)
+                   Meta(s, first, second, third)
+                       if newlines is 1 else
+                       (
+                             lookup_adjusted_meta(Meta)
+                          or create_Meta_Many(Meta, construct_triple_token__python_newline__many)
+                       )(s, first, second, third, newlines)
+               )
 
 
     @privileged

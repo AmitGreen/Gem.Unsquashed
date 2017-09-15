@@ -46,17 +46,19 @@ def gem():
 
         s = intern_string(s)
 
+        Meta     = find_action_word__Meta(full)
         newlines = s.count('\n')
-
-        if newlines is 0:
-            return provide_action_word(s, find_action_word__Meta(full)(s))
 
         return provide_action_word(
                    s,
                    (
-                         lookup_adjusted_meta(full)
-                      or create_Meta_WithNewlines(find_action_word__Meta(full), construct_token__with_newlines)
-                   )(s, newlines, false),
+                       provide_action_word(s, Meta(s))
+                           if newlines is 0 else
+                               (
+                                      lookup_adjusted_meta(Meta)
+                                   or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
+                                )(s, newlines, false)
+                   ),
                )
 
 
@@ -71,11 +73,13 @@ def gem():
 
         s = intern_string(s)
 
+        Meta = find_action_word__Meta(full)
+
         return provide_action_word(
                    s,
                    (
-                         lookup_adjusted_meta(full)
-                      or create_Meta_WithNewlines(find_action_word__Meta(full), construct_token__with_newlines)
+                         lookup_adjusted_meta(Meta)
+                      or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
                    )(s, s.count('\n'), true)
                )
 
@@ -105,15 +109,16 @@ def gem():
 
             newlines = s.count('\n')
 
-            if newlines is 0:
-                return provide_action_word(s, Meta(s))
-
             return provide_action_word(
                        s,
                        (
-                             lookup_adjusted_meta(Meta)
-                          or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
-                       )(s, s.count('\n'), false)
+                           Meta(s)
+                               if newlines is 0 else
+                                   (
+                                         lookup_adjusted_meta(Meta)
+                                      or create_Meta_WithNewlines(Meta, construct_token__with_newlines)
+                                   )(s, newlines, false)
+                       ),
                    )
 
 
@@ -173,7 +178,7 @@ def gem():
                        s,
                        (
                              lookup_adjusted_meta(Meta)
-                          or create_Meta_WithNewlines(Meta, construct_token__python_newline__many)
+                          or create_Meta_Many(Meta, construct_token__python_newline__many)
                        )(s, s.count('\n'))
                    )
 
