@@ -596,31 +596,31 @@ def gem():
     @share
     class AssertStatement_1(KeywordExpressionStatement_1):
         __slots__    = (())
-        display_name = 'assert'
+        display_name = 'assert-statement-1'
 
 
     @share
     class DeleteStatement_1(KeywordExpressionStatement_1):
         __slots__    = (())
-        display_name = 'delete'
+        display_name = 'delete-statement-1'
 
 
     @share
     class RaiseStatement_1(KeywordExpressionStatement_1):
         __slots__    = (())
-        display_name = 'raise'
+        display_name = 'raise-statement-1'
 
 
     @share
     class ReturnStatement_1(KeywordExpressionStatement_1):
         __slots__    = (())
-        display_name = 'return'
+        display_name = 'return-statement-1'
 
 
     @share
     class YieldStatement(KeywordExpressionStatement_1):
         __slots__    = (())
-        display_name = 'Yield'
+        display_name = 'yield-statement'
 
 
     class KeywordExpressionStatement_2(Object):
@@ -667,13 +667,13 @@ def gem():
     @share
     class AssertStatement_2(KeywordExpressionStatement_2):
         __slots__    = (())
-        display_name = 'assert-2'
+        display_name = 'assert-statement-2'
 
 
     @share
     class RaiseStatement_2(KeywordExpressionStatement_2):
         __slots__    = (())
-        display_name = 'raise-2'
+        display_name = 'raise-statement-2'
 
 
     @share

@@ -54,20 +54,21 @@ def gem():
 
 
     if __debug__:
-        def dump_cache(cache):
-            for k in sorted_list(v.s   for v in view_values(cache)):
-                line('%s:', portray_string(k))
-                line('  %r', cache[k])
+        def dump_cache(name, cache):
+            if cache:
+                line()
+                line('===  %s  ===', name)
+
+                for k in sorted_list(v.s   for v in view_values(cache)):
+                    line('%s:', portray_string(k))
+                    line('  %r', cache[k])
 
 
         @share
         def dump_token_caches():
-            line('===  Arguments_0  ===')
-            dump_cache(arguments_0_token_cache)
-
-            line()
-            line('===  Line_Marker  ===')
-            dump_cache(line_marker_token_cache)
+            dump_cache('arguments_0',  arguments_0_token_cache)
+            dump_cache('line_marker',  line_marker_token_cache)
+            dump_cache('normal_token', normal_token_cache)
 
 
     share(

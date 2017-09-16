@@ -76,10 +76,7 @@ def gem():
 
 
         def __repr__(t):
-            if '\n' in t.s:
-                return arrange('<%s %s>', t.__class__.__name__, portray_string(t.s))
-
-            return arrange('<%s %s>', t.__class__.__name__, t.s)
+            return arrange('<%s %s>', t.__class__.__name__, portray_string(t.s))
 
 
         def display_token(t):
