@@ -6,8 +6,9 @@ def gem():
     require_gem('Sapphire.Elemental')
 
 
-    lookup_adjusted_meta           = Shared.lookup_adjusted_meta            #   Due to privileged
     create_ActionWord_WithNewlines = Shared.create_ActionWord_WithNewlines  #   Due to privileged
+    lookup_adjusted_meta           = Shared.lookup_adjusted_meta            #   Due to privileged
+    qs                             = Shared.qs                              #   Due to privileged
 
 
     def construct_dual_operator__line_marker_1(t, s, first, second):
@@ -323,6 +324,52 @@ def gem():
 
 
     @privileged
+    def produce_conjure_dual_token__NEW(
+            name, Meta, lookup, provide, conjure_first, conjure_second,
+            
+            line_marker = false,
+    ):
+        assert type(line_marker) is Boolean
+
+        create_dual_token__NEW = (
+                create_dual_token__line_marker__NEW   if line_marker else
+                create_dual_token__with_newlines__NEW
+            )
+
+
+        def conjure_dual_token(left, middle, end):
+            s = qs()
+
+            dual_s = s[left : end]
+
+            r = lookup(dual_s)
+           
+            if r is not none:
+                assert type(r) is Meta
+
+                return r
+
+            dual_s = intern_string(dual_s)
+
+            return provide(
+                       dual_s,
+                       create_dual_token__NEW(
+                           Meta,
+                           dual_s,
+                           conjure_first (s[left   : middle]),
+                           conjure_second(s[middle : end   ]),
+                       ),
+                   )
+
+
+        if __debug__:
+            conjure_dual_token.__name__ = intern_arrange('conjure_%s', name)
+
+
+        return conjure_dual_token
+
+
+    @privileged
     def produce_evoke_dual_token(name, Meta, lookup, provide):
         def evoke_dual_token(first, second):
             s = first.s + second.s
@@ -400,20 +447,25 @@ def gem():
             true,
         )
 
+    #===  NEW  ===
+
+
+    conjure_is_not = produce_conjure_dual_token__NEW(
+                        'is_not',
+                        IsNot,
+                        lookup_normal_token,
+                        provide_normal_token,
+                        conjure_keyword_is,
+                        conjure_keyword_not,
+                    )
+
+
     evoke_arguments_0 = produce_evoke_dual_token(
                              'arguments_0',
                              Arguments_0,
                              lookup_arguments_0_token,
                              provide_arguments_0_token,
                          )
-
-    insert_is_not = produce_insert_dual_token(
-                        'is_not',
-                        IsNot,
-                        lookup_normal_token,
-                        provide_normal_token,
-                    )
-
 
     insert_return__line_marker = produce_insert_dual_token(
                                     'return__line_marker',
@@ -437,6 +489,6 @@ def gem():
         'conjure_not_in',                                   conjure_not_in,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
         'evoke_arguments_0',                                evoke_arguments_0,
-        'insert_is_not',                                    insert_is_not,
         'insert_return__line_marker',                       insert_return__line_marker,
+        'conjure_is_not',                                   conjure_is_not,
     )

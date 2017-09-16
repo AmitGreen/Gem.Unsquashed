@@ -229,16 +229,7 @@ def gem():
                 right_end = m.end('is_not')
 
                 if right_end is not -1:
-                    dual_s = s[qi() : right_end]
-
-                    r = (
-                               lookup_normal_token(dual_s)
-                            or insert_is_not(
-                                   dual_s,
-                                   conjure_keyword_is (s[qi()     : left_end ]),
-                                   conjure_keyword_not(s[left_end : right_end]),
-                               )
-                        )
+                    r = conjure_is_not(qi(), left_end, right_end)
 
                     j = m.end()
 
