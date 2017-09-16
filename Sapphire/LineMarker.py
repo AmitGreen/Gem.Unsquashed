@@ -4,15 +4,12 @@
 @gem('Sapphire.LineMarker')
 def gem():
     require_gem('Sapphire.CreateMeta')
+    require_gem('Sapphire.TokenCache')
 
 
     create_ActionWord_LineMarker_Many = Shared.create_ActionWord_LineMarker_Many    #   Due to 'privileged'
-
-
-    line_marker_cache = {}                          #   Map { String : ActionWord_LineMarker_* | LineMarker }
-
-    lookup_line_marker  = line_marker_cache.get
-    provide_line_marker = line_marker_cache.setdefault
+    lookup_line_marker_token          = Shared.lookup_line_marker_token             #   Due to 'privileged'
+    provide_line_marker_token         = Shared.provide_line_marker_token            #   Due to 'privileged'
 
 
     def construct_token__line_marker__many(t, s, newlines):
@@ -38,21 +35,14 @@ def gem():
 
     @share
     def conjure_line_marker(s):
-        r = lookup_line_marker(s)
+        r = lookup_line_marker_token(s)
 
         if r is not none:
             return r
 
         s = intern_string(s)
 
-        return provide_line_marker(s, LineMarker(s))
-
-
-    if __debug__:
-        @share
-        def dump_line_markers():
-            for k in sorted_list(v.s   for v in view_values(line_marker_cache)):
-                line('%r', line_marker_cache[k])
+        return provide_line_marker_token(s, LineMarker(s))
 
 
     @share
@@ -61,7 +51,7 @@ def gem():
         def conjure_action_word__line_marker(s):
             assert s[-1] == '\n'
 
-            r = lookup_line_marker(s)
+            r = lookup_line_marker_token(s)
 
             if r is not none:
                 return r
@@ -70,7 +60,7 @@ def gem():
 
             newlines = s.count('\n')
 
-            return provide_line_marker(
+            return provide_line_marker_token(
                        s,
                        (
                            Meta(s)

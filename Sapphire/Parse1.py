@@ -26,6 +26,7 @@ def gem():
     require_gem('Sapphire.Parse1Simple')
     require_gem('Sapphire.PostfixExpression')
     require_gem('Sapphire.Statement')
+    require_gem('Sapphire.TokenCache')
     require_gem('Sapphire.Tokenize1Atom')
     require_gem('Sapphire.Tokenize1Header')
     require_gem('Sapphire.Tokenize1Name')

@@ -71,7 +71,8 @@ SAPPHIRE_FILES = \
         ../Sapphire/PostfixExpression.py \
     ../Sapphire/Pattern.py \
     ../Sapphire/Statement.py \
-    ../Sapphire/Tokenize1Atom.py ../Sapphire/Tokenize1Name.py ../Sapphire/Tokenize1Operator.py \
+    ../Sapphire/TokenCache.py \
+      ../Sapphire/Tokenize1Atom.py ../Sapphire/Tokenize1Name.py ../Sapphire/Tokenize1Operator.py \
       ../Sapphire/TripleToken.py \
     ../Sapphire/UnaryExpression.py \
     ../Sapphire/Whitespace.py
@@ -135,9 +136,9 @@ clean:
 	rm -f gd.py gg.py
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
-	rm -f   h2p.py
+	rm -f   h2p.py h3.py
 	rm -f   ha.py hb.py hcm.py hco.py hd.py hel.py hem.py .py py hk.py hl.py
-	rm -f   hma.py hmc.py hoe.py hpt.py hs.py ht.py hu.py hw.py hx.py
+	rm -f   hma.py hmc.py hoe.py hpt.py hs.py htc.py hu.py hw.py hx.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
@@ -205,6 +206,7 @@ links:
 	ln -s ../Sapphire/Tokenize1Name.py              h1zn.py
 	ln -s ../Sapphire/Tokenize1Operator.py          h1zo.py
 	ln -s ../Sapphire/Parse2.py                     h2p.py
+	ln -s ../Sapphire/TripleToken.py                h3.py
 	ln -s ../Sapphire/ActionWord.py                 ha.py
 	ln -s ../Sapphire/BinaryExpression.py           hb.py
 	ln -s ../Sapphire/CreateMeta.py                 hcm.py
@@ -219,7 +221,7 @@ links:
 	ln -s ../Sapphire/OtherExpression.py            hoe.py
 	ln -s ../Sapphire/Pattern.py                    hpt.py
 	ln -s ../Sapphire/Statement.py                  hs.py
-	ln -s ../Sapphire/TripleToken.py                ht.py
+	ln -s ../Sapphire/TokenCache.py                 htc.py
 	ln -s ../Sapphire/UnaryExpression.py            hu.py
 	ln -s ../Sapphire/Whitespace.py                 hw.py
 	ln -s ../Sapphire/PostfixExpression.py          hx.py
