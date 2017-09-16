@@ -28,7 +28,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<%s %r>', t.display_name, t.s)
+            return arrange('<%s %r>', t.__class__.__name__, t.s)
 
 
         def display_full_token(t):

@@ -77,9 +77,9 @@ def gem():
 
         def __repr__(t):
             if '\n' in t.s:
-                return arrange('<%s>', portray_string(t.s))
+                return arrange('<%s %s>', t.__class__.__name__, portray_string(t.s))
 
-            return arrange('<%s>', t.s)
+            return arrange('<%s %s>', t.__class__.__name__, t.s)
 
 
         def display_token(t):
@@ -395,18 +395,6 @@ def gem():
         __slots__    = (())
         display_name = 'return'
         keyword      = 'return'
-
-
-    class KeywordReturn_LineMarker_1(KeywordAndOperatorBase):
-        __slots__       = (())
-        display_name    = r'return\n'
-        ends_in_newline = true
-        keyword         = r'return\n'
-        line_marker     = true
-        newlines        = 1
-
-
-        __init__ = construct_action_word__line_marker_1
 
 
     class KeywordTryColon(KeywordAndOperatorBase):
@@ -1152,11 +1140,6 @@ def gem():
 
     conjure_keyword_return   = produce_conjure_action_word('keyword-return',   KeywordReturn)
 
-    conjure__return__line_marker = produce_conjure_action_word__line_marker(
-            'keyword-return-line-marker',
-            KeywordReturn_LineMarker_1,
-        )
-
     conjure_keyword_while    = produce_conjure_action_word('keyword-while',    KeywordWhile)
     conjure_keyword_with     = produce_conjure_action_word('keyword-with',     KeywordWith)
     conjure_keyword_yield    = produce_conjure_action_word('keyword-yield',    KeywordYield)
@@ -1235,7 +1218,6 @@ def gem():
         'conjure_keyword_raise',                        conjure_keyword_raise,
         'conjure__raise__line_marker',                  conjure__raise__line_marker,
         'conjure_keyword_return',                       conjure_keyword_return,
-        'conjure__return__line_marker',                 conjure__return__line_marker,
         'conjure_keyword_while',                        conjure_keyword_while,
         'conjure_keyword_with',                         conjure_keyword_with,
         'conjure_keyword_yield',                        conjure_keyword_yield,

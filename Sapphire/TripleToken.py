@@ -24,6 +24,7 @@ def gem():
 
 
         def __init__(t, s, first, second, third):
+            assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
             assert '\n' not in s
             assert s == first.s + second.s + third.s
 
@@ -102,6 +103,7 @@ def gem():
     def construct_triple_token__with_newlines(t, s, first, second, third, newlines, ends_in_newline):
         assert newlines >= 1
         assert ends_in_newline is (s[-1] == '\n')
+        assert t.line_marker is false
 
         t.s               = s
         t.first           = first
@@ -112,8 +114,7 @@ def gem():
 
 
     def construct_triple_token__line_marker__many(t, s, first, second, third, newlines):
-        assert newlines >= 1
-        assert s[-1] == '\n'
+        assert (t.ends_in_newline is t.line_marker is true) and (newlines >= 1) and (s[-1] == '\n')
 
         t.s        = s
         t.first    = first

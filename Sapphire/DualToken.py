@@ -6,6 +6,17 @@ def gem():
     require_gem('Sapphire.Elemental')
 
 
+    def construct_dual_operator__line_marker_1(t, s, first, second):
+        assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
+        assert s.count('\n') is 1
+        assert s == first.s + second.s
+        assert second.s[-1] == '\n'
+
+        t.s      = s
+        t.first  = first
+        t.second = second
+
+
     class BaseDualOperator(KeywordAndOperatorBase):
         __slots__ = ((
             'first',                    #   Operator+
@@ -13,11 +24,8 @@ def gem():
         ))
 
 
-        line_marker = false
-        newlines    = 0
-
-
         def __init__(t, s, first, second):
+            assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
             assert '\n' not in s
             assert s == first.s + second.s
 
@@ -161,6 +169,17 @@ def gem():
         is_end_of_unary_expression       = true
 
 
+    class KeywordReturn_LineMarker_1(BaseDualOperator):
+        __slots__                                  = (())
+        display_name                               = r'return\n'
+        ends_in_newline                            = true
+        line_marker                                = true
+        newlines                                   = 1
+
+
+        __init__ = construct_dual_operator__line_marker_1
+
+
     class RightParenthesis_Colon_LineMarker_1(BaseDualOperator):
         __slots__                                  = (())
         display_name                               = r'):\n'
@@ -171,20 +190,13 @@ def gem():
         newlines                                   = 1
 
 
-        def __init__(t, s, first, second):
-            assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
-            assert s.count('\n') is 1
-            assert s == first.s + second.s
-            assert second.s[-1] == '\n'
-
-            t.s      = s
-            t.first  = first
-            t.second = second
+        __init__ = construct_dual_operator__line_marker_1
 
 
     def construct_dual_token__with_newlines(t, s, first, second, newlines, ends_in_newline):
-        assert newlines >= 1
         assert ends_in_newline is (s[-1] == '\n')
+        assert newlines >= 1
+        assert t.line_marker is false
 
         t.s               = s
         t.first           = first
@@ -194,8 +206,7 @@ def gem():
 
 
     def construct_dual_token__line_marker__many(t, s, first, second, newlines):
-        assert newlines >= 1
-        assert s[-1] == '\n'
+        assert (t.ends_in_newline is t.line_marker is true) and (newlines >= 1) and (s[-1] == '\n')
 
         t.s        = s
         t.first    = first
@@ -237,6 +248,9 @@ def gem():
     def produce_conjure_dual_token(name, Meta, line_marker = false):
         assert type(line_marker) is Boolean
 
+        #
+        #   FIX: Should use the a single dual cache
+        #
         cache     = {}
         provide_1 = cache.setdefault
         lookup_1  = cache.get
@@ -301,6 +315,13 @@ def gem():
 
     conjure_not_in = produce_conjure_dual_token('not_in', NotIn)
 
+    conjure_return__line_marker = produce_conjure_dual_token(
+            'return__line_marker',
+            KeywordReturn_LineMarker_1,
+            true,
+        )
+
+
     conjure__right_parenthesis__colon__line_marker = produce_conjure_dual_token(
             'right_parenthesis__colon__line_marker',
             RightParenthesis_Colon_LineMarker_1,
@@ -320,5 +341,6 @@ def gem():
         'conjure_is_not',                                   conjure_is_not,
         'conjure__left_square_bracket__colon',              conjure__left_square_bracket__colon,
         'conjure_not_in',                                   conjure_not_in,
+        'conjure_return__line_marker',                      conjure_return__line_marker,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
     )

@@ -9,17 +9,6 @@ def gem():
         is_token_indented = true
 
 
-    class TokenLineMarker(Token):
-        display_name = 'line-marker'
-
-
-        def __init__(t, s):
-            assert s.count('\n') == 1
-            assert s[-1] == '\n'
-
-            t.s = s
-
-
     class TokenWhitespace(Token):
         display_name = 'whitespace'
 

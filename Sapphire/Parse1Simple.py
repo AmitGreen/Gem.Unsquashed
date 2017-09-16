@@ -214,7 +214,13 @@ def gem():
     @share
     def parse1_statement_return(m):
         if m.end('newline') is not -1:
-            return conjure__return__line_marker(m.group())
+            atom_end = m.end('atom')
+            s        = qs()
+
+            return conjure_return__line_marker(
+                       conjure_keyword_return(s[         : atom_end]),
+                       conjure_line_marker   (s[atom_end :         ]),
+                   )
 
         keyword = conjure_keyword_return(m.group())
 

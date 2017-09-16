@@ -9,10 +9,10 @@ def gem():
     create_ActionWord_LineMarker_Many = Shared.create_ActionWord_LineMarker_Many    #   Due to 'privileged'
 
 
-    action_word__line_marker__cache = {}        #   Map { String : ActionWord_LineMarker_* }
+    line_marker_cache = {}                          #   Map { String : ActionWord_LineMarker_* | LineMarker }
 
-    lookup_action_word__line_marker  = action_word__line_marker__cache.get
-    provide_action_word__line_marker = action_word__line_marker__cache.setdefault
+    lookup_line_marker  = line_marker_cache.get
+    provide_line_marker = line_marker_cache.setdefault
 
 
     def construct_token__line_marker__many(t, s, newlines):
@@ -22,13 +22,46 @@ def gem():
         t.newlines = newlines
 
 
+    class LineMarker(Token):
+        display_name    = 'line-marker'
+        ends_in_newline = true
+        line_marker     = true
+        newlines        = 1
+
+
+        def __init__(t, s):
+            assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
+            assert (s.count('\n') == 1) and (s[-1] == '\n')
+
+            t.s = s
+
+
+    @share
+    def conjure_line_marker(s):
+        r = lookup_line_marker(s)
+
+        if r is not none:
+            return r
+
+        s = intern_string(s)
+
+        return provide_line_marker(s, LineMarker(s))
+
+
+    if __debug__:
+        @share
+        def dump_line_markers():
+            for k in sorted_list(v.s   for v in view_values(line_marker_cache)):
+                line('%r', line_marker_cache[k])
+
+
     @share
     @privileged
     def produce_conjure_action_word__line_marker(name, Meta):
         def conjure_action_word__line_marker(s):
             assert s[-1] == '\n'
 
-            r = lookup_action_word__line_marker(s)
+            r = lookup_line_marker(s)
 
             if r is not none:
                 return r
@@ -37,7 +70,7 @@ def gem():
 
             newlines = s.count('\n')
 
-            return provide_action_word__line_marker(
+            return provide_line_marker(
                        s,
                        (
                            Meta(s)

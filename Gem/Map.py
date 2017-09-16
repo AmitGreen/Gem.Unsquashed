@@ -10,7 +10,8 @@ def gem():
     #       (Deals with the annoyance of .viewitems method named .viewitems in Python 2.0, but .items in
     #       Python 3.0)
     #
-    view_items = (Map.viewitems   if is_python_2 else  Map.items)
+    view_items =  (Map.viewitems    if is_python_2 else  Map.items)
+    view_values = (Map.viewvalues   if is_python_2 else  Map.values)
 
 
     if is_python_2:
@@ -45,6 +46,10 @@ def gem():
 
         return Tuple(value(k)   for k in sorted_list(mapping))
 
+
+    built_in(
+        'view_values',  view_values,
+    )
 
     export(
         'view_items',   view_items,
