@@ -7,6 +7,13 @@ def gem():
     require_gem('Sapphire.LineMarker')
 
 
+    def construct_action_word__line_marker_1(t, s):
+        assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
+        assert (s.count('\n') is 1) and (s[-1] == '\n')
+
+        t.s = s
+
+
     @share
     class KeywordAndOperatorBase(Token):
         is_all_index                               = false
@@ -185,6 +192,9 @@ def gem():
         newlines        = 1
 
 
+        __init__ = construct_action_word__line_marker_1
+
+
     class KeywordElseIf(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'else-if'
@@ -212,6 +222,9 @@ def gem():
         newlines        = 1
 
 
+        __init__ = construct_action_word__line_marker_1
+
+
     class KeywordFinallyColon(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'finally:'
@@ -225,6 +238,9 @@ def gem():
         keyword         = r'finally:\n'
         line_marker     = true
         newlines        = 1
+
+
+        __init__ = construct_action_word__line_marker_1
 
 
     class KeywordFor(KeywordAndOperatorBase):
@@ -372,6 +388,9 @@ def gem():
         newlines        = 1
 
 
+        __init__ = construct_action_word__line_marker_1
+
+
     class KeywordReturn(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'return'
@@ -387,6 +406,9 @@ def gem():
         newlines        = 1
 
 
+        __init__ = construct_action_word__line_marker_1
+
+
     class KeywordTryColon(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'try:'
@@ -400,6 +422,9 @@ def gem():
         keyword         = r'try:\n'
         line_marker     = true
         newlines        = 1
+
+
+        __init__ = construct_action_word__line_marker_1
 
 
     class KeywordWhile(KeywordAndOperatorBase):
@@ -512,11 +537,8 @@ def gem():
         newlines                                = 1
 
 
-        def __init__(t, s):
-            assert s[-1] == '\n'
-            assert s.count('\n') is 1
+        __init__ = construct_action_word__line_marker_1
 
-            t.s = s
 
 
         def __repr__(t):

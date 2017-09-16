@@ -16,7 +16,7 @@ def gem():
 
 
     def construct_token__line_marker__many(t, s, newlines):
-        assert newlines > 1
+        assert (t.ends_in_newline is t.line_marker is true) and (newlines > 1)
 
         t.s        = s
         t.newlines = newlines

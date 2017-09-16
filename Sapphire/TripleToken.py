@@ -3,6 +3,18 @@
 #
 @gem('Sapphire.TripleToken')
 def gem():
+    def construct_triple_operator__line_marker_1(t, s, first, second, third):
+        assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
+        assert s.count('\n') is 1
+        assert s == first.s + second.s + third.s
+        assert third.s[-1] == '\n'
+
+        t.s      = s
+        t.first  = first
+        t.second = second
+        t.third  = third
+
+
     class BaseTripleOperator(KeywordAndOperatorBase):
         __slots__ = ((
             'first',         #   Operator+
@@ -73,6 +85,9 @@ def gem():
         newlines                                   = 1
 
 
+        __init__ = construct_triple_operator__line_marker_1
+
+
     class Parameter_0__Colon__LineMarker_1(BaseTripleOperator):
         display_name                        = r'():\n'
         ends_in_newline                     = true
@@ -81,15 +96,7 @@ def gem():
         newlines                            = 1
 
 
-        def __init__(t, s, first, second, third):
-            assert s.count('\n') is 1
-            assert s == first.s + second.s + third.s
-            assert third.s[-1] == '\n'
-
-            t.s      = s
-            t.first  = first
-            t.second = second
-            t.third  = third
+        __init__ = construct_triple_operator__line_marker_1
 
 
     def construct_triple_token__with_newlines(t, s, first, second, third, newlines, ends_in_newline):

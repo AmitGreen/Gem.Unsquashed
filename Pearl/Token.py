@@ -21,6 +21,7 @@ def gem():
 
 
         def __init__(t, s):
+            assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
 #           assert '\n' not in s
 
             t.s = s

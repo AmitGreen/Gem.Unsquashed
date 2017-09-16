@@ -172,6 +172,7 @@ def gem():
 
 
         def __init__(t, s, first, second):
+            assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
             assert s.count('\n') is 1
             assert s == first.s + second.s
             assert second.s[-1] == '\n'
