@@ -217,9 +217,13 @@ def gem():
             atom_end = m.end('atom')
             s        = qs()
 
-            return conjure_return__line_marker(
-                       conjure_keyword_return(s[         : atom_end]),
-                       conjure_line_marker   (s[atom_end :         ]),
+            return (
+                           lookup_line_marker(s)
+                        or insert_return__line_marker(
+                               s,
+                               conjure_keyword_return(s[         : atom_end]),
+                               conjure_line_marker   (s[atom_end :         ]),
+                           )
                    )
 
         keyword = conjure_keyword_return(m.group())

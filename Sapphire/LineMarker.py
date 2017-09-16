@@ -8,7 +8,7 @@ def gem():
 
 
     create_ActionWord_LineMarker_Many = Shared.create_ActionWord_LineMarker_Many    #   Due to 'privileged'
-    lookup_line_marker_token          = Shared.lookup_line_marker_token             #   Due to 'privileged'
+    lookup_line_marker                = Shared.lookup_line_marker                   #   Due to 'privileged'
     provide_line_marker_token         = Shared.provide_line_marker_token            #   Due to 'privileged'
 
 
@@ -35,7 +35,7 @@ def gem():
 
     @share
     def conjure_line_marker(s):
-        r = lookup_line_marker_token(s)
+        r = lookup_line_marker(s)
 
         if r is not none:
             return r
@@ -51,7 +51,7 @@ def gem():
         def conjure_action_word__line_marker(s):
             assert s[-1] == '\n'
 
-            r = lookup_line_marker_token(s)
+            r = lookup_line_marker(s)
 
             if r is not none:
                 return r

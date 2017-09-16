@@ -41,7 +41,7 @@ def gem():
     lookup_arguments_0_token = arguments_0_token_cache.get
     lookup_indentation_token = indentation_token_cache.get
     lookup_join_token        = join_token_cache       .get
-    lookup_line_marker_token = line_marker_token_cache.get
+    lookup_line_marker       = line_marker_token_cache.get
     lookup_normal_token      = normal_token_cache     .get
     lookup_parameter_token   = parameter_token_cache  .get
 
@@ -62,14 +62,19 @@ def gem():
 
         @share
         def dump_token_caches():
+            line('===  Arguments_0  ===')
             dump_cache(arguments_0_token_cache)
+
+            line()
+            line('===  Line_Marker  ===')
+            dump_cache(line_marker_token_cache)
 
 
     share(
         'lookup_arguments_0_token',     lookup_arguments_0_token,
         'lookup_indentation_token',     lookup_indentation_token,
         'lookup_join_token',            lookup_join_token,
-        'lookup_line_marker_token',     lookup_line_marker_token,
+        'lookup_line_marker',           lookup_line_marker,
         'lookup_normal_token',          lookup_normal_token,
         'lookup_parameter_token',       lookup_parameter_token,
         'provide_arguments_0_token',    provide_arguments_0_token,

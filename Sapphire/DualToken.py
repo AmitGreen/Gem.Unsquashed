@@ -233,8 +233,38 @@ def gem():
                )
 
 
+    def create_dual_token__with_newlines__NEW(Meta, s, first, second):
+        assert s == first.s + second.s
+
+        newlines = s.count('\n')
+
+        return (
+                   Meta(s, first, second)
+                       if newlines is 0 else
+                           (
+                                 lookup_adjusted_meta(Meta)
+                              or create_ActionWord_WithNewlines(Meta, construct_dual_token__with_newlines)
+                           )(s, first, second, newlines, s[-1] == '\n')
+               )
+
+
     def create_dual_token__line_marker(Meta, first, second):
         s = intern_string(first.s + second.s)
+
+        newlines = s.count('\n')
+
+        return (
+                   Meta(s, first, second)
+                       if newlines is 1 else
+                       (
+                             lookup_adjusted_meta(Meta)
+                          or create_ActionWord_LineMarker_Many(Meta, construct_dual_token__line_marker__many)
+                       )(s, first, second, newlines)
+               )
+
+
+    def create_dual_token__line_marker__NEW(Meta, s, first, second):
+        assert (s == first.s + second.s) and (s[-1] == '\n')
 
         newlines = s.count('\n')
 
@@ -306,47 +336,31 @@ def gem():
 
             s = intern_string(s)
 
-            newlines = s.count('\n')
-
-            return provide(
-                       s,
-                       (
-                           Meta(s, first, second)
-                               if newlines is 0 else
-                                   (
-                                         lookup_adjusted_meta(Meta)
-                                      or create_ActionWord_WithNewlines(Meta, construct_dual_token__with_newlines)
-                                   )(s, first, second, newlines, s[-1] == '\n')
-                       ),
-                  )
+            return provide(s, create_dual_token__with_newlines__NEW(Meta, s, first, second))
 
 
         if __debug__:
-            evoke_dual_token.__name__ = intern_arrange('insert_%s', name)
+            evoke_dual_token.__name__ = intern_arrange('evoke_%s', name)
 
         return evoke_dual_token
 
 
     @privileged
-    def produce_insert_dual_token(name, Meta, lookup, provide):
+    def produce_insert_dual_token(name, Meta, lookup, provide, line_marker = false):
+        assert type(line_marker) is Boolean
+
+        create_dual_token__NEW = (
+                create_dual_token__line_marker__NEW   if line_marker else
+                create_dual_token__with_newlines__NEW
+            )
+
+
         def insert_dual_token(s, first, second):
             assert (s == first.s + second.s) and (lookup(s) is none)
 
             s = intern_string(s)
 
-            newlines = s.count('\n')
-
-            return provide(
-                       s,
-                       (
-                           Meta(s, first, second)
-                               if newlines is 0 else
-                                   (
-                                         lookup_adjusted_meta(Meta)
-                                      or create_ActionWord_WithNewlines(Meta, construct_dual_token__with_newlines)
-                                   )(s, first, second, newlines, s[-1] == '\n')
-                       ),
-                  )
+            return provide(s, create_dual_token__NEW(Meta, s, first, second))
 
 
         if __debug__:
@@ -402,6 +416,14 @@ def gem():
                              provide_arguments_0_token,
                          )
 
+    insert_return__line_marker = produce_insert_dual_token(
+                                    'return__line_marker',
+                                    KeywordReturn_LineMarker_1,
+                                    lookup_line_marker,
+                                    provide_line_marker_token,
+                                    line_marker = true,
+                                 )
+
 
     share(
         'conjure_arguments_0',                              conjure_arguments_0,
@@ -418,4 +440,5 @@ def gem():
         'conjure_return__line_marker',                      conjure_return__line_marker,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
         'evoke_arguments_0',                                evoke_arguments_0,
+        'insert_return__line_marker',                       insert_return__line_marker,
     )
