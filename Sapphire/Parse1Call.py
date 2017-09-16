@@ -39,7 +39,7 @@ def gem():
         argument_1 = parse1_atom()
 
         if argument_1.is_right_parenthesis:
-            return conjure_arguments_0(left_parenthesis, argument_1)
+            return evoke_arguments_0(left_parenthesis, argument_1)
 
         operator_1 = qk()
 

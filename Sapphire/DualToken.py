@@ -6,6 +6,10 @@ def gem():
     require_gem('Sapphire.Elemental')
 
 
+    lookup_adjusted_meta           = Shared.lookup_adjusted_meta            #   Due to privileged
+    create_ActionWord_WithNewlines = Shared.create_ActionWord_WithNewlines  #   Due to privileged
+
+
     def construct_dual_operator__line_marker_1(t, s, first, second):
         assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
         assert s.count('\n') is 1
@@ -288,6 +292,69 @@ def gem():
         return conjure_dual_token
 
 
+    @privileged
+    def produce_evoke_dual_token(name, Meta, lookup, provide):
+        def evoke_dual_token(first, second):
+            s = first.s + second.s
+
+            r = lookup(s)
+
+            if r is not none:
+                assert (r.first is first) and (r.second is second)
+
+                return r
+
+            s = intern_string(s)
+
+            newlines = s.count('\n')
+
+            return provide(
+                       s,
+                       (
+                           Meta(s, first, second)
+                               if newlines is 0 else
+                                   (
+                                         lookup_adjusted_meta(Meta)
+                                      or create_ActionWord_WithNewlines(Meta, construct_dual_token__with_newlines)
+                                   )(s, first, second, newlines, s[-1] == '\n')
+                       ),
+                  )
+
+
+        if __debug__:
+            evoke_dual_token.__name__ = intern_arrange('insert_%s', name)
+
+        return evoke_dual_token
+
+
+    @privileged
+    def produce_insert_dual_token(name, Meta, lookup, provide):
+        def insert_dual_token(s, first, second):
+            assert (s == first.s + second.s) and (lookup(s) is none)
+
+            s = intern_string(s)
+
+            newlines = s.count('\n')
+
+            return provide(
+                       s,
+                       (
+                           Meta(s, first, second)
+                               if newlines is 0 else
+                                   (
+                                         lookup_adjusted_meta(Meta)
+                                      or create_ActionWord_WithNewlines(Meta, construct_dual_token__with_newlines)
+                                   )(s, first, second, newlines, s[-1] == '\n')
+                       ),
+                  )
+
+
+        if __debug__:
+            insert_dual_token.__name__ = intern_arrange('insert_%s', name)
+
+        return insert_dual_token
+
+
     conjure_arguments_0 = produce_conjure_dual_token('arguments_0', Arguments_0)
 
     conjure__colon__right_square_bracket = produce_conjure_dual_token(
@@ -328,6 +395,13 @@ def gem():
             true,
         )
 
+    evoke_arguments_0 = produce_evoke_dual_token(
+                             'arguments_0',
+                             Arguments_0,
+                             lookup_arguments_0_token,
+                             provide_arguments_0_token,
+                         )
+
 
     share(
         'conjure_arguments_0',                              conjure_arguments_0,
@@ -343,4 +417,5 @@ def gem():
         'conjure_not_in',                                   conjure_not_in,
         'conjure_return__line_marker',                      conjure_return__line_marker,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
+        'evoke_arguments_0',                                evoke_arguments_0,
     )

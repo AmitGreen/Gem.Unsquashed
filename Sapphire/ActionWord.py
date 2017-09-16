@@ -4,18 +4,19 @@
 @gem('Sapphire.ActionWord')
 def gem():
     require_gem('Sapphire.CreateMeta')
+    require_gem('Sapphire.TokenCache')
 
 
     create_ActionWord_WithNewlines = Shared.create_ActionWord_WithNewlines       #   Due to 'privileged'
     lookup_adjusted_meta           = Shared.lookup_adjusted_meta                 #   Due to 'privileged'
 
+    lookup_action_word  = lookup_normal_token
+    provide_action_word = provide_normal_token
 
-    action_word__cache       = {}                   #   Map { String : ActionWord }
+
     action_word__Meta__cache = {}                   #   Map { String : Meta }
 
     find_action_word__Meta = action_word__Meta__cache.__getitem__
-    lookup_action_word     = action_word__cache      .get
-    provide_action_word    = action_word__cache      .setdefault
 
 
     def construct_token__with_newlines(t, s, newlines, ends_in_newline):

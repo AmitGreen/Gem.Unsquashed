@@ -6,7 +6,7 @@ def gem():
     #
     #   Different token caches are needed to distinguish identical characters that appear in different contexts:
     #
-    #       argument_token_cache        - '()' that is used as function arguments.
+    #       arguments_0_token_cache     - '()' that is used as function arguments.
     #
     #       indentation_token_cache     - White space at beginning of a line that is considered indentation.
     #
@@ -31,21 +31,21 @@ def gem():
     #   
     #       parameter_token_cache       - '()' that is used as function parameters.
     #
-    argument_token_cache    = {}
+    arguments_0_token_cache = {}
     indentation_token_cache = {}
     join_token_cache        = {}
     line_marker_token_cache = {}
     normal_token_cache      = {}
     parameter_token_cache   = {}
 
-    lookup_argument_token    = argument_token_cache   .get
+    lookup_arguments_0_token = arguments_0_token_cache.get
     lookup_indentation_token = indentation_token_cache.get
     lookup_join_token        = join_token_cache       .get
     lookup_line_marker_token = line_marker_token_cache.get
     lookup_normal_token      = normal_token_cache     .get
     lookup_parameter_token   = parameter_token_cache  .get
-    lookup_argument_token    = argument_token_cache   .get
 
+    provide_arguments_0_token = arguments_0_token_cache.setdefault
     provide_indentation_token = indentation_token_cache.setdefault
     provide_join_token        = join_token_cache       .setdefault
     provide_line_marker_token = line_marker_token_cache.setdefault
@@ -54,20 +54,25 @@ def gem():
 
 
     if __debug__:
+        def dump_cache(cache):
+            for k in sorted_list(v.s   for v in view_values(cache)):
+                line('%s:', portray_string(k))
+                line('  %r', cache[k])
+
+
         @share
-        def dump_line_markers():
-            for k in sorted_list(v.s   for v in view_values(line_marker_token_cache)):
-                line('%r', line_marker_token_cache[k])
+        def dump_token_caches():
+            dump_cache(arguments_0_token_cache)
 
 
     share(
-        'lookup_argument_token',        lookup_argument_token,
+        'lookup_arguments_0_token',     lookup_arguments_0_token,
         'lookup_indentation_token',     lookup_indentation_token,
         'lookup_join_token',            lookup_join_token,
         'lookup_line_marker_token',     lookup_line_marker_token,
         'lookup_normal_token',          lookup_normal_token,
         'lookup_parameter_token',       lookup_parameter_token,
-        'lookup_argument_token',        lookup_argument_token,
+        'provide_arguments_0_token',    provide_arguments_0_token,
         'provide_indentation_token',    provide_indentation_token,
         'provide_join_token',           provide_join_token,
         'provide_line_marker_token',    provide_line_marker_token,
