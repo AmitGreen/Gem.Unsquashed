@@ -1072,6 +1072,16 @@ def gem():
 
     conjure_comma__ends_in_newline = produce_conjure_action_word__ends_in_newline('comma', OperatorComma)
 
+    conjure_keyword_in__ends_in_newline = produce_conjure_action_word__ends_in_newline(
+            'keyword_in',
+            KeywordIn,
+        )
+
+    conjure_keyword_not__ends_in_newline = produce_conjure_action_word__ends_in_newline(
+            'keyword_not',
+            KeywordNot,
+        )
+
     conjure_left_brace__ends_in_newline = produce_conjure_action_word__ends_in_newline(
             'left_brace',
             OperatorLeftBrace,
@@ -1090,6 +1100,11 @@ def gem():
     conjure_colon__line_marker = produce_conjure_action_word__line_marker(
             'colon',
             OperatorColon_LineMarker_1,
+        )
+
+    conjure_right_parenthesis__ends_in_newline = produce_conjure_action_word__ends_in_newline(
+            'right_parenthesis',
+            OperatorRightParenthesis,
         )
 
     #
@@ -1210,10 +1225,11 @@ def gem():
         'conjure_keyword_for',                          conjure_keyword_for,
         'conjure_keyword_if',                           conjure_keyword_if,
         'conjure_keyword_in',                           conjure_keyword_in,
+        'conjure_keyword_in__ends_in_newline',          conjure_keyword_in__ends_in_newline,
         'conjure_keyword_is',                           conjure_keyword_is,
         'conjure_keyword_not',                          conjure_keyword_not,
+        'conjure_keyword_not__ends_in_newline',         conjure_keyword_not__ends_in_newline,
         'conjure_keyword_raise',                        conjure_keyword_raise,
-        'conjure__raise__line_marker',                  conjure__raise__line_marker,
         'conjure_keyword_return',                       conjure_keyword_return,
         'conjure_keyword_while',                        conjure_keyword_while,
         'conjure_keyword_with',                         conjure_keyword_with,
@@ -1224,8 +1240,10 @@ def gem():
         'conjure_left_parenthesis__ends_in_newline',    conjure_left_parenthesis__ends_in_newline,
         'conjure_left_square_bracket',                  conjure_left_square_bracket,
         'conjure_left_square_bracket__ends_in_newline', conjure_left_square_bracket__ends_in_newline,
+        'conjure__raise__line_marker',                  conjure__raise__line_marker,
         'conjure_right_brace',                          conjure_right_brace,
         'conjure_right_parenthesis',                    conjure_right_parenthesis,
+        'conjure_right_parenthesis__ends_in_newline',   conjure_right_parenthesis__ends_in_newline,
         'conjure_right_square_bracket',                 conjure_right_square_bracket,
         'conjure_star_sign',                            conjure_star_sign,
         'conjure_try_colon',                            conjure_try_colon,

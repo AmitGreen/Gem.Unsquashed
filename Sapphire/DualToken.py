@@ -8,6 +8,7 @@ def gem():
 
     create_ActionWord_WithNewlines = Shared.create_ActionWord_WithNewlines  #   Due to privileged
     lookup_adjusted_meta           = Shared.lookup_adjusted_meta            #   Due to privileged
+    qi                             = Shared.qi                              #   Due to privileged
     qs                             = Shared.qs                              #   Due to privileged
 
 
@@ -325,7 +326,7 @@ def gem():
 
     @privileged
     def produce_conjure_dual_token__NEW(
-            name, Meta, lookup, provide, conjure_first, conjure_second,
+            name, Meta, lookup, provide, conjure_first, conjure_second, conjure_second__ends_in_newline,
             
             line_marker = false,
     ):
@@ -337,10 +338,11 @@ def gem():
             )
 
 
-        def conjure_dual_token(left, middle, end):
+        def conjure_dual_token(middle, end):
+            i = qi()
             s = qs()
 
-            dual_s = s[left : end]
+            dual_s = s[i : end]
 
             r = lookup(dual_s)
            
@@ -356,8 +358,8 @@ def gem():
                        create_dual_token__NEW(
                            Meta,
                            dual_s,
-                           conjure_first (s[left   : middle]),
-                           conjure_second(s[middle : end   ]),
+                           conjure_first(s[i : middle]),
+                           (conjure_second__ends_in_newline   if end is none else   conjure_second)(s[middle : end]),
                        ),
                    )
 
@@ -416,7 +418,7 @@ def gem():
         return insert_dual_token
 
 
-    conjure_arguments_0 = produce_conjure_dual_token('arguments_0', Arguments_0)
+    #===  OLD  ===
 
     conjure__colon__right_square_bracket = produce_conjure_dual_token(
             'conjure__colon__right_square_bracket',
@@ -439,8 +441,6 @@ def gem():
             LeftSquareBracket_Colon,
         )
 
-    conjure_not_in = produce_conjure_dual_token('not_in', NotIn)
-
     conjure__right_parenthesis__colon__line_marker = produce_conjure_dual_token(
             'right_parenthesis__colon__line_marker',
             RightParenthesis_Colon_LineMarker_1,
@@ -449,6 +449,15 @@ def gem():
 
     #===  NEW  ===
 
+    conjure_arguments_0 = produce_conjure_dual_token__NEW(
+                              'arguments_0',
+                              Arguments_0,
+                              lookup_arguments_0_token,
+                              provide_arguments_0_token,
+                              conjure_left_parenthesis,
+                              conjure_right_parenthesis,
+                              conjure_right_parenthesis__ends_in_newline,
+                          )
 
     conjure_is_not = produce_conjure_dual_token__NEW(
                         'is_not',
@@ -457,8 +466,18 @@ def gem():
                         provide_normal_token,
                         conjure_keyword_is,
                         conjure_keyword_not,
+                        conjure_keyword_not__ends_in_newline,
                     )
 
+    conjure_not_in = produce_conjure_dual_token__NEW(
+                        'not_in',
+                        NotIn,
+                        lookup_normal_token,
+                        provide_normal_token,
+                        conjure_keyword_not,
+                        conjure_keyword_in,
+                        conjure_keyword_in__ends_in_newline,
+                    )
 
     evoke_arguments_0 = produce_evoke_dual_token(
                              'arguments_0',
@@ -486,9 +505,10 @@ def gem():
         'conjure_empty_map',                                conjure_empty_map,
         'conjure_empty_tuple',                              conjure_empty_tuple,
         'conjure__left_square_bracket__colon',              conjure__left_square_bracket__colon,
-        'conjure_not_in',                                   conjure_not_in,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
+
+        'conjure_is_not',                                   conjure_is_not,
+        'conjure_not_in',                                   conjure_not_in,
         'evoke_arguments_0',                                evoke_arguments_0,
         'insert_return__line_marker',                       insert_return__line_marker,
-        'conjure_is_not',                                   conjure_is_not,
     )

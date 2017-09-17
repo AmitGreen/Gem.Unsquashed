@@ -91,7 +91,7 @@ def gem():
                 return r
 
             #
-            #<similiar-to: ''keyword_is__ow' below>
+            #<similiar-to: 'keyword_is__ow' below>
             #
             #   Differences:
             #
@@ -104,16 +104,17 @@ def gem():
             left_end = m.end('left_parenthesis__ow')
 
             if left_end is not -1:
-                left    = conjure_left_parenthesis(s[qi() : left_end])
-                right_s = m.group('right_parenthesis')
+                right_end = m.end('right_parenthesis')
 
-                if right_s is not none:
-                    right = conjure_right_parenthesis(right_s)
+                if right_end is not -1:
+                    r = conjure_arguments_0(left_end, right_end)
 
                     wi(m.end('right_parenthesis'))
                     wj(m.end())
 
-                    return conjure_arguments_0(left, right)
+                    return r
+
+                left = conjure_left_parenthesis(s[qi() : left_end])
 
                 wd(qd() + 1)
                 wi(left_end)
@@ -229,7 +230,7 @@ def gem():
                 right_end = m.end('is_not')
 
                 if right_end is not -1:
-                    r = conjure_is_not(qi(), left_end, right_end)
+                    r = conjure_is_not(left_end, right_end)
 
                     j = m.end()
 
@@ -260,23 +261,26 @@ def gem():
             left_end = m.end('keyword_not__ow')
 
             if left_end is not -1:
-                left    = conjure_keyword_not(s[qi() : left_end])
-                right_s = m.group('not_in')
+                right_end = m.end('not_in')
 
-                if right_s is not none:
+                if right_end is not -1:
+                    r = conjure_not_in(left_end, right_end)
+
                     j = m.end()
 
                     wi(j)
                     wj(j)
 
-                    return conjure_not_in(left, conjure_keyword_in(right_s))
+                    return r
+
+                r = conjure_keyword_not(s[qi() : left_end])
 
                 j = m.end()
 
                 wi(j)
                 wj(j)
 
-                return left
+                return r
             #</similiar-to>
 
             raise_unknown_line()
@@ -320,25 +324,22 @@ def gem():
 
             return r
 
-
         left_end = m.end('left_parenthesis__ow')
 
         if left_end is not -1:
             right_end = m.end('right_parenthesis')
 
             if right_end is not -1:
-                left = conjure_left_parenthesis(s[qi() : left_end])
+                d = qd()
+
+                r = conjure_arguments_0(left_end, (right_end   if d is 0 else   none))
 
                 if qd() is 0:
-                    right = conjure_right_parenthesis(s[left_end : right_end])
-
                     wn(conjure_token_newline(s[right_end : ]))
                 else:
-                    right = conjure_right_parenthesis(s[left_end : ])
-
                     skip_tokenize_prefix()
 
-                return conjure_arguments_0(left, right)
+                return r
 
             left = conjure_left_parenthesis__ends_in_newline(s[qi() : ])
 
