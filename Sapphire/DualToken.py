@@ -347,7 +347,7 @@ def gem():
             r = lookup(dual_s)
            
             if r is not none:
-                assert type(r) is Meta
+                assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
                 return r
 
@@ -433,8 +433,6 @@ def gem():
             Comma_RightSquareBracket,
         )
 
-    conjure_empty_list  = produce_conjure_dual_token('empty_list',  EmptyList)
-
     conjure__right_parenthesis__colon__line_marker = produce_conjure_dual_token(
             'right_parenthesis__colon__line_marker',
             RightParenthesis_Colon_LineMarker_1,
@@ -453,15 +451,25 @@ def gem():
                               conjure_right_parenthesis__ends_in_newline,
                           )
 
+    conjure_empty_list = produce_conjure_dual_token__NEW(
+                             '[]',
+                             EmptyList,
+                             lookup_normal_token,
+                             provide_normal_token,
+                             conjure_left_square_bracket,
+                             conjure_right_square_bracket,
+                             conjure_right_square_bracket__ends_in_newline,
+                         )
+
     conjure_empty_map = produce_conjure_dual_token__NEW(
-                              '{}',
-                              EmptyMap,
-                              lookup_normal_token,
-                              provide_normal_token,
-                              conjure_left_brace,
-                              conjure_right_brace,
-                              conjure_right_brace__ends_in_newline,
-                          )
+                            '{}',
+                            EmptyMap,
+                            lookup_normal_token,
+                            provide_normal_token,
+                            conjure_left_brace,
+                            conjure_right_brace,
+                            conjure_right_brace__ends_in_newline,
+                        )
 
     conjure_empty_tuple = produce_conjure_dual_token__NEW(
                               '()',
@@ -510,11 +518,14 @@ def gem():
                              provide_arguments_0_token,
                          )
 
+    evoke_empty_list = produce_evoke_dual_token('[]', EmptyList, lookup_normal_token, provide_normal_token)
+    evoke_empty_map  = produce_evoke_dual_token('{}', EmptyMap,  lookup_normal_token, provide_normal_token)
+
     evoke__left_square_bracket__colon = produce_evoke_dual_token(
                                             '[:',                           #   ]
                                             LeftSquareBracket_Colon,
-                                            lookup_arguments_0_token,
-                                            provide_arguments_0_token,
+                                            lookup_normal_token,
+                                            provide_normal_token,
                                         )
 
     insert_return__line_marker = produce_insert_dual_token(
@@ -532,15 +543,16 @@ def gem():
         'conjure__comma__right_brace',                      conjure__comma__right_brace,
         'conjure__comma__right_parenthesis',                conjure__comma__right_parenthesis,
         'conjure__comma__right_square_bracket',             conjure__comma__right_square_bracket,
-        'conjure_empty_list',                               conjure_empty_list,
-        'conjure_empty_map',                                conjure_empty_map,
-        'conjure_empty_tuple',                              conjure_empty_tuple,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
 
+        'conjure_empty_list',                               conjure_empty_list,
+        'conjure_empty_tuple',                              conjure_empty_tuple,
         'conjure_is_not',                                   conjure_is_not,
         'conjure__left_square_bracket__colon',              conjure__left_square_bracket__colon,
         'conjure_not_in',                                   conjure_not_in,
         'evoke_arguments_0',                                evoke_arguments_0,
+        'evoke_empty_list',                                 evoke_empty_list,
+        'evoke_empty_map',                                  evoke_empty_map,
         'evoke__left_square_bracket__colon',                evoke__left_square_bracket__colon,
         'insert_return__line_marker',                       insert_return__line_marker,
     )

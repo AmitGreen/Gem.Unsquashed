@@ -129,7 +129,7 @@ def gem():
                 right_end = m.end('right_brace')
 
                 if right_end is not -1:
-                    r = conjure_empty_tuple(left_end, right_end)
+                    r = conjure_empty_map(left_end, right_end)
 
                     wi(right_end)
                     wj(m.end())
@@ -154,20 +154,20 @@ def gem():
             #       Uses '*square_bracket' instead of '*parenthesis'
             #       Uses 'EmptyMap' instead of 'EmptyTuple'
             #
-            left_square_bracket__end = m.end('left_square_bracket__ow')
+            left_end = m.end('left_square_bracket__ow')
 
-            if left_square_bracket__end is not -1:
-                left_square_bracket       = conjure_left_square_bracket(qs()[qi() : left_square_bracket__end])
-                right_square_bracket__end = m.end('right_square_bracket')
+            if left_end is not -1:
+                right_end = m.end('right_square_bracket')
 
-                if right_square_bracket__end is not -1:
-                    wi(right_square_bracket__end)
+                if right_end is not -1:
+                    r = conjure_empty_list(left_end, right_end)
+
+                    wi(right_end)
                     wj(m.end())
 
-                    return conjure_empty_list(
-                               left_square_bracket,
-                               conjure_right_square_bracket(m.group('right_square_bracket')),
-                           )
+                    return r
+
+                r = conjure_left_square_bracket(qs()[qi() : left_end])
 
                 j = m.end()
 
@@ -175,8 +175,7 @@ def gem():
                 wi(j)
                 wj(j)
 
-                #my_line('d: %d; left_square_bracket: %r', qd(), left_square_bracket)
-                return left_square_bracket
+                return r
             #</similiar-to>
 
             quote_start = m.start('quote')
@@ -360,14 +359,12 @@ def gem():
             right_end = m.end('right_brace')
 
             if right_end is not -1:
-                s = qs()
-
                 if qd() is 0:
                     right_end = m.end('right_brace')
 
                     r = conjure_empty_map(left_end, right_end)
 
-                    wn(conjure_token_newline(s[right_end : ]))
+                    wn(conjure_token_newline(qs()[right_end : ]))
 
                     return r
 
@@ -393,32 +390,22 @@ def gem():
         #       Uses '*square_bracket' instead of '*parenthesis'
         #       Uses 'EmptyList' instead of 'EmptyTuple'
         #
-        left_square_bracket__end = m.end('left_square_bracket__ow')
+        left_end = m.end('left_square_bracket__ow')
 
-        if left_square_bracket__end is not -1:
-            right_square_bracket__end = m.end('right_square_bracket')
+        if left_end is not -1:
+            right_end = m.end('right_square_bracket')
 
-            if right_square_bracket__end is not -1:
-                s = qs()
-
-                left_square_bracket = conjure_left_square_bracket(s[qi() : left_square_bracket__end])
-
+            if right_end is not -1:
                 if qd() is 0:
-                    right_square_bracket__end = m.end('right_square_bracket')
+                    right_end = m.end('right_square_bracket')
 
-                    r = conjure_empty_list(
-                            left_square_bracket,
-                            conjure_right_square_bracket(s[left_square_bracket__end : right_square_bracket__end])
-                        )
+                    r = conjure_empty_list(left_end, right_end)
 
-                    wn(conjure_token_newline(s[right_square_bracket__end : ]))
+                    wn(conjure_token_newline(qs()[right_end : ]))
 
                     return r
 
-                r = conjure_empty_list(
-                        left_square_bracket,
-                        conjure_right_square_bracket(s[left_square_bracket__end : ]),
-                    )
+                r = conjure_empty_list(left_end, none)
 
                 skip_tokenize_prefix()
 

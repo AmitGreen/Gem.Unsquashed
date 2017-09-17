@@ -51,7 +51,7 @@ def gem():
         left = parse1_map_element()
 
         if left.is_right_brace:
-            raise_unknown_line()
+            return evoke_empty_map(left_brace, left)
 
         operator = qk()
 
@@ -210,10 +210,8 @@ def gem():
         #
         middle_1 = parse1_atom()
 
-
-        #
-        #   TODO: Need to handle a ']' here
-        #
+        if middle_1.is_right_square_bracket:
+            return evoke_empty_list(left_square_bracket, middle_1)
 
         operator_1 = tokenize_operator()
 
