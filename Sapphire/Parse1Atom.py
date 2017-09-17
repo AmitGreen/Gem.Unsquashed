@@ -237,7 +237,7 @@ def gem():
             return ListExpression_1(
                        left_square_bracket,
                        middle_1,
-                       conjure__comma__right_square_bracket(operator_1, middle_2),
+                       evoke__comma__right_square_bracket(operator_1, middle_2),
                    )
 
         operator_2 = tokenize_operator()
@@ -265,7 +265,7 @@ def gem():
                        middle_1,
                        operator_1,
                        middle_2,
-                       conjure__comma__right_square_bracket(operator_2, middle_3),
+                       evoke__comma__right_square_bracket(operator_2, middle_3),
                    )
 
         many = [left_square_bracket, middle_1, operator_1, middle_2, operator_2]
@@ -291,7 +291,7 @@ def gem():
             middle_3 = parse1_atom()
 
             if middle_3.is_right_square_bracket:
-                many.append(conjure__comma__right_square_bracket(operator_7, middle_3))
+                many.append(evoke__comma__right_square_bracket(operator_7, middle_3))
                 return ListExpression_Many(Tuple(many))
 
             many.append(operator_7)
