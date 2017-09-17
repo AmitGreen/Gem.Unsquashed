@@ -131,6 +131,12 @@ def gem():
         if operator_1.is_right_parenthesis:
             return ParenthesizedExpression(left_parenthesis, middle_1, operator_1)
 
+        #
+        #RENAME TO: is_comma_right_parenthesis
+        #
+        if operator_1.is__optional_comma__right_parenthesis:
+            return TupleExpression_1(left_parenthesis, middle_1, operator_1)
+
         if not operator_1.is_comma:
             raise_unknown_line()
 
@@ -143,7 +149,7 @@ def gem():
             return TupleExpression_1(
                        left_parenthesis,
                        middle_1,
-                       conjure__comma__right_parenthesis(operator_1, middle_2),
+                       evoke__comma__right_parenthesis(operator_1, middle_2),
                    )
 
         operator_2 = tokenize_operator()
@@ -154,7 +160,7 @@ def gem():
             operator_2 = qk()
             wk(none)
 
-        if operator_2.is_right_parenthesis:
+        if operator_2.is__optional_comma__right_parenthesis:
             return TupleExpression_2(left_parenthesis, middle_1, operator_1, middle_2, operator_2)
 
         if not operator_2.is_comma:
@@ -171,7 +177,7 @@ def gem():
                        middle_1,
                        operator_1,
                        middle_2,
-                       conjure__comma__right_parenthesis(operator_2, middle_3),
+                       evoke__comma__right_parenthesis(operator_2, middle_3),
                    )
 
         many = [left_parenthesis, middle_1, operator_1, middle_2, operator_2]
@@ -187,7 +193,7 @@ def gem():
 
             many.append(middle_3)
 
-            if operator_7.is_right_parenthesis:
+            if operator_7.is__optional_comma__right_parenthesis:
                 many.append(operator_7)
                 return TupleExpression_Many(Tuple(many))
 
@@ -197,7 +203,7 @@ def gem():
             middle_3 = parse1_atom()
 
             if middle_3.is_right_parenthesis:
-                many.append(conjure__comma__right_parenthesis(operator_7, middle_3))
+                many.append(evoke__comma__right_parenthesis(operator_7, middle_3))
                 return TupleExpression_Many(Tuple(many))
 
             many.append(operator_7)
@@ -221,7 +227,7 @@ def gem():
             operator_1 = qk()
             wk(none)
 
-        if operator_1.is_right_square_bracket:
+        if operator_1.is__optional_comma__right_square_bracket:
             return ListExpression_1(left_square_bracket, middle_1, operator_1)
 
         if not operator_1.is_comma:
@@ -248,7 +254,7 @@ def gem():
             operator_2 = qk()
             wk(none)
 
-        if operator_2.is_right_square_bracket:
+        if operator_2.is__optional_comma__right_square_bracket:
             return ListExpression_2(left_square_bracket, middle_1, operator_1, middle_2, operator_2)
 
         if not operator_2.is_comma:
@@ -281,7 +287,7 @@ def gem():
 
             many.append(middle_3)
 
-            if operator_7.is_right_square_bracket:
+            if operator_7.is__optional_comma__right_square_bracket:
                 many.append(operator_7)
                 return ListExpression_Many(Tuple(many))
 

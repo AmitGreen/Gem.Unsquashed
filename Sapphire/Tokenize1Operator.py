@@ -160,6 +160,37 @@ def gem():
 
                 return r
 
+            if m.start('comma') is not -1:
+                comma_suffix__end = m.end('comma_suffix')
+
+                if comma_suffix__end is not -1:
+                    d = qd()
+
+                    if d is 0:
+                        raise_unknown_line()
+
+                    comma_suffix__start = m.start('comma_suffix')
+
+                    r = find_conjure_comma_something(s[comma_suffix__start])(
+                            comma_suffix__start,
+                            comma_suffix__end,
+                        )
+
+                    wd(d - 1)
+                    wi(comma_suffix__end)
+                    wj(m.end())
+
+                    return r
+
+                j = m.end()
+
+                r = conjure_comma(s[qi() : j])
+
+                wi(j)
+                wj(j)
+
+                return r
+
             if m.start('colon') is not -1:
                 head_index__s = m.group('head_index')
 
@@ -384,6 +415,42 @@ def gem():
             wd(qd() + 1)
 
             return left
+
+        if m.start('comma') is not -1:
+            suffix_start = m.start('comma_suffix')
+
+            if suffix_start is not -1:
+                d = qd()
+
+                if d is 1:
+                    suffix_end = m.end('comma_suffix')
+
+                    r = find_conjure_comma_something(s[suffix_start])(suffix_start, suffix_end)
+
+                    wd0()
+
+                    wn(conjure_token_newline(s[suffix_end : ]))
+
+                    return r
+
+                r = find_conjure_comma_something(s[suffix_start])(suffix_start, none)
+
+                assert d > 1
+
+                wd(d - 1)
+
+                skip_tokenize_prefix()
+
+                return r
+
+            if qd() is 0:
+                raise_unknown_line()
+
+            r = conjure_comma__ends_in_newline(s[qi() : ])
+
+            skip_tokenize_prefix()
+
+            return r
 
         if m.start('colon') is not -1:
             head_index__end = m.end('head_index')

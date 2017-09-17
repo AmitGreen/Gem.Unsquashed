@@ -86,7 +86,7 @@ def gem():
         __slots__                               = (())
         #   [
         display_name                            = ':]'
-        is__colon__right_square_bracket         = true
+        is_colon__right_square_bracket          = true
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
         is_end_of_boolean_or_expression         = true
@@ -110,15 +110,39 @@ def gem():
 
 
     class Comma_RightParenthesis(BaseDualOperator):
-        __slots__    = (())
+        __slots__                             = (())
         #   (
-        display_name = ',)'
+        display_name                          = ',)'
+        is_end_of_arithmetic_expression       = true
+        is_end_of_boolean_and_expression      = true
+        is_end_of_boolean_or_expression       = true
+        is_end_of_compare_expression          = true
+        is_end_of_comprehension_expression    = true
+        is_end_of_logical_and_expression      = true
+        is_end_of_logical_or_expression       = true
+        is_end_of_multiply_expression         = true
+        is_end_of_normal_expression           = true
+        is_end_of_ternary_expression          = true
+        is_end_of_unary_expression            = true
+        is__optional_comma__right_parenthesis = true
 
 
     class Comma_RightSquareBracket(BaseDualOperator):
-        __slots__    = (())
+        __slots__                                = (())
         #   [
-        display_name = ',]'
+        display_name                             = ',]'
+        is_end_of_arithmetic_expression          = true
+        is_end_of_boolean_and_expression         = true
+        is_end_of_boolean_or_expression          = true
+        is_end_of_compare_expression             = true
+        is_end_of_comprehension_expression       = true
+        is_end_of_logical_and_expression         = true
+        is_end_of_logical_or_expression          = true
+        is_end_of_multiply_expression            = true
+        is_end_of_normal_expression              = true
+        is_end_of_ternary_expression             = true
+        is_end_of_unary_expression               = true
+        is__optional_comma__right_square_bracket = true
 
 
     class EmptyList(BaseDualOperator):
@@ -426,7 +450,6 @@ def gem():
         )
 
     conjure__comma__right_brace       = produce_conjure_dual_token('comma__right_brace',       Comma_RightBrace)
-    conjure__comma__right_parenthesis = produce_conjure_dual_token('comma__right_parenthesis', Comma_RightParenthesis)
 
     conjure__right_parenthesis__colon__line_marker = produce_conjure_dual_token(
             'right_parenthesis__colon__line_marker',
@@ -455,6 +478,16 @@ def gem():
                                                conjure_right_square_bracket,
                                                conjure_right_square_bracket__ends_in_newline,
                                            )
+
+    conjure__comma__right_parenthesis = produce_conjure_dual_token__NEW(
+                                            'comma__right_parenthesis',
+                                            Comma_RightParenthesis,
+                                            lookup_normal_token,
+                                            provide_normal_token,
+                                            conjure_comma,
+                                            conjure_right_parenthesis,
+                                            conjure_right_parenthesis__ends_in_newline,
+                                        )
 
     conjure_empty_list = produce_conjure_dual_token__NEW(
                              '[]',
@@ -523,6 +556,13 @@ def gem():
                              provide_arguments_0_token,
                          )
 
+    evoke__comma__right_parenthesis = produce_evoke_dual_token(
+                                             'comma__right_parenthesis',
+                                             Comma_RightParenthesis,
+                                             lookup_normal_token,
+                                             provide_normal_token,
+                                         )
+
     evoke__comma__right_square_bracket = produce_evoke_dual_token(
                                              'comma__right_square_bracket',
                                              Comma_RightSquareBracket,
@@ -549,6 +589,15 @@ def gem():
                                  )
 
 
+    find_conjure_comma_something = {
+                                       #   (
+                                       ')' : conjure__comma__right_parenthesis,
+
+                                       #   [
+                                       ']' : conjure__comma__right_square_bracket,
+                                   }.__getitem__
+
+
     share(
         'conjure_arguments_0',                              conjure_arguments_0,
         'conjure__colon__right_square_bracket',             conjure__colon__right_square_bracket,
@@ -556,16 +605,18 @@ def gem():
         'conjure__comma__right_parenthesis',                conjure__comma__right_parenthesis,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
 
-        'conjure__comma__right_square_bracket',             conjure__comma__right_square_bracket,
         'conjure_empty_list',                               conjure_empty_list,
+        'conjure_empty_map',                                conjure_empty_map,
         'conjure_empty_tuple',                              conjure_empty_tuple,
         'conjure_is_not',                                   conjure_is_not,
         'conjure__left_square_bracket__colon',              conjure__left_square_bracket__colon,
         'conjure_not_in',                                   conjure_not_in,
         'evoke_arguments_0',                                evoke_arguments_0,
+        'evoke__comma__right_parenthesis',                  evoke__comma__right_parenthesis,
         'evoke__comma__right_square_bracket',               evoke__comma__right_square_bracket,
         'evoke_empty_list',                                 evoke_empty_list,
         'evoke_empty_map',                                  evoke_empty_map,
         'evoke__left_square_bracket__colon',                evoke__left_square_bracket__colon,
+        'find_conjure_comma_something',                     find_conjure_comma_something,
         'insert_return__line_marker',                       insert_return__line_marker,
     )

@@ -25,9 +25,10 @@ def gem():
         is__atom__or__special_operator             = false
         is_colon                                   = false
         is_colon__line_marker                      = false
-        is__colon__right_square_bracket            = false
+        is_colon__right_square_bracket             = false
         is_comma                                   = false
         is__comma__or__right_parenthesis           = false
+        is_comma__right_square_bracket             = false
         is_compare_operator                        = false
         is_dot                                     = false
         is_end_of_arithmetic_expression            = false
@@ -61,6 +62,8 @@ def gem():
         is_minus_sign                              = false
         is_modify_operator                         = false
         is_multiply_operator                       = false
+        is__optional_comma__right_parenthesis      = false
+        is__optional_comma__right_square_bracket   = false
         is__parameter_0__colon__line_marker        = false
         is_postfix_operator                        = false
         is_power_operator                          = false
@@ -907,6 +910,7 @@ def gem():
         is_end_of_ternary_expression_list       = true
         is_end_of_ternary_expression            = true
         is_end_of_unary_expression              = true
+        is__optional_comma__right_parenthesis   = true
         is_right_parenthesis                    = true
         #  (
         keyword                                 = ')'
@@ -924,27 +928,28 @@ def gem():
 
     @export
     class OperatorRightSquareBracket(KeywordAndOperatorBase):
-        __slots__                               = (())
+        __slots__                                = (())
         #   [
-        display_name                            = ']'
-        is__atom__or__special_operator          = true
-        is_end_of_arithmetic_expression         = true
-        is_end_of_boolean_and_expression        = true
-        is_end_of_boolean_or_expression         = true
-        is_end_of_compare_expression            = true
-        is_end_of_comprehension_expression_list = true
-        is_end_of_comprehension_expression      = true
-        is_end_of_logical_and_expression        = true
-        is_end_of_logical_or_expression         = true
-        is_end_of_multiply_expression           = true
-        is_end_of_normal_expression_list        = true
-        is_end_of_normal_expression             = true
-        is_end_of_ternary_expression_list       = true
-        is_end_of_ternary_expression            = true
-        is_end_of_unary_expression              = true
-        is_right_square_bracket                 = true
+        display_name                             = ']'
+        is__optional_comma__right_square_bracket = true
+        is__atom__or__special_operator           = true
+        is_end_of_arithmetic_expression          = true
+        is_end_of_boolean_and_expression         = true
+        is_end_of_boolean_or_expression          = true
+        is_end_of_compare_expression             = true
+        is_end_of_comprehension_expression_list  = true
+        is_end_of_comprehension_expression       = true
+        is_end_of_logical_and_expression         = true
+        is_end_of_logical_or_expression          = true
+        is_end_of_multiply_expression            = true
+        is_end_of_normal_expression_list         = true
+        is_end_of_normal_expression              = true
+        is_end_of_ternary_expression_list        = true
+        is_end_of_ternary_expression             = true
+        is_end_of_unary_expression               = true
+        is_right_square_bracket                  = true
         #   [
-        keyword                                 = ']'
+        keyword                                  = ']'
 
 
     @share
@@ -1199,9 +1204,10 @@ def gem():
                      }.__getitem__
 
 
-    #   {[(
-    is_colon_7        = { ':' : 7 }.get
-    is_close_operator = { ')' : 7, ']' : 7, '}' : 7 }.get
+    #   {[((
+    is_right_parenthesis_7  = { ')' : 7 }.get
+    is_colon_7              = { ':' : 7 }.get
+    is_close_operator       = { ')' : 7, ']' : 7, '}' : 7 }.get
 
 
     lookup_keyword_conjure_function = {
@@ -1246,18 +1252,19 @@ def gem():
         'conjure_left_parenthesis__ends_in_newline',        conjure_left_parenthesis__ends_in_newline,
         'conjure_left_square_bracket',                      conjure_left_square_bracket,
         'conjure_left_square_bracket__ends_in_newline',     conjure_left_square_bracket__ends_in_newline,
-        'conjure_right_square_bracket__ends_in_newline',    conjure_right_square_bracket__ends_in_newline,
         'conjure__raise__line_marker',                      conjure__raise__line_marker,
         'conjure_right_brace',                              conjure_right_brace,
         'conjure_right_brace__ends_in_newline',             conjure_right_brace__ends_in_newline,
         'conjure_right_parenthesis',                        conjure_right_parenthesis,
         'conjure_right_parenthesis__ends_in_newline',       conjure_right_parenthesis__ends_in_newline,
         'conjure_right_square_bracket',                     conjure_right_square_bracket,
+        'conjure_right_square_bracket__ends_in_newline',    conjure_right_square_bracket__ends_in_newline,
         'conjure_star_sign',                                conjure_star_sign,
         'conjure_try_colon',                                conjure_try_colon,
         'conjure__try__colon__line_marker',                 conjure__try__colon__line_marker,
         'find_atom_type',                                   find_atom_type,
         'is_close_operator',                                is_close_operator,
         'is_colon_7',                                       is_colon_7,
+        'is_right_parenthesis_7',                           is_right_parenthesis_7,
         'lookup_keyword_conjure_function',                  lookup_keyword_conjure_function,
     )

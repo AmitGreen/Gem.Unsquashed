@@ -71,10 +71,11 @@ def gem():
                 else:
                     wk(none)
 
-        if operator_1.is_right_parenthesis:
+        if operator_1.is__optional_comma__right_parenthesis:
             return Arguments_1(left_parenthesis, argument_1, operator_1)
 
         if not operator_1.is_comma:
+            #my_line('operator_1: %r', operator_1)
             raise_unknown_line()
 
         argument_2 = parse1_atom()
@@ -83,7 +84,7 @@ def gem():
             return Arguments_1(
                        left_parenthesis,
                        argument_1,
-                       conjure__comma__right_parenthesis(operator_1, argument_2),
+                       evoke__comma__right_parenthesis(operator_1, argument_2),
                    )
 
         argument_2 = parse1_argument7__left(argument_2)
@@ -91,7 +92,7 @@ def gem():
 
         wk(none)
 
-        if operator_2.is_right_parenthesis:
+        if operator_2.is__optional_comma__right_parenthesis:
             return Arguments_2(left_parenthesis, argument_1, operator_1, argument_2, operator_2)
 
         if not operator_2.is_comma:
@@ -105,7 +106,7 @@ def gem():
                        argument_1,
                        operator_1,
                        argument_2,
-                       conjure__comma__right_parenthesis(operator_2, argument_3),
+                       evoke__comma__right_parenthesis(operator_2, argument_3),
                    )
 
         many = [left_parenthesis, argument_1, operator_1, argument_2, operator_2]
@@ -117,7 +118,7 @@ def gem():
 
             wk(none)
 
-            if operator_7.is_right_parenthesis:
+            if operator_7.is__optional_comma__right_parenthesis:
                 many.append(argument_3)
                 many.append(operator_7)
                 return Arguments_Many(Tuple(many))
@@ -130,7 +131,7 @@ def gem():
             argument_3 = parse1_atom()
 
             if argument_3.is_right_parenthesis:
-                many.append(conjure__comma__right_parenthesis(operator_7, argument_3))
+                many.append(evoke__comma__right_parenthesis(operator_7, argument_3))
                 return Arguments_Many(Tuple(many))
 
             many.append(operator_7)
