@@ -95,17 +95,17 @@ def gem():
             left_parenthesis__end = m.end('left_parenthesis__ow')
 
             if left_parenthesis__end is not -1:
-                left_parenthesis       = conjure_left_parenthesis(qs()[qi() : left_parenthesis__end])
                 right_parenthesis__end = m.end('right_parenthesis')
 
                 if right_parenthesis__end is not -1:
+                    r =  conjure_empty_tuple(left_parenthesis__end, right_parenthesis__end)
+
                     wi(right_parenthesis__end)
                     wj(m.end())
 
-                    return conjure_empty_tuple(
-                               left_parenthesis,
-                               conjure_right_parenthesis(m.group('right_parenthesis')),
-                           )
+                    return r
+
+                r = conjure_left_parenthesis(qs()[qi() : left_parenthesis__end])
 
                 j = m.end()
 
@@ -113,7 +113,7 @@ def gem():
                 wi(j)
                 wj(j)
 
-                return left_parenthesis
+                return r
             #</similiar-to>
 
             #
@@ -320,26 +320,16 @@ def gem():
             right_parenthesis__end = m.end('right_parenthesis')
 
             if right_parenthesis__end is not -1:
-                s = qs()
-
-                left_parenthesis = conjure_left_parenthesis(s[qi() : left_parenthesis__end])
-
                 if qd() is 0:
                     right_parenthesis__end = m.end('right_parenthesis')
 
-                    r = conjure_empty_tuple(
-                            left_parenthesis,
-                            conjure_right_parenthesis(s[left_parenthesis__end : right_parenthesis__end])
-                        )
+                    r = conjure_empty_tuple(left_parenthesis__end, right_parenthesis__end)
 
-                    wn(conjure_token_newline(s[right_parenthesis__end : ]))
+                    wn(conjure_token_newline(qs()[right_parenthesis__end : ]))
 
                     return r
 
-                r = conjure_empty_tuple(
-                        left_parenthesis,
-                        conjure_right_parenthesis(s[left_parenthesis__end : ]),
-                    )
+                r = conjure_empty_tuple(left_parenthesis__end, none)
 
                 skip_tokenize_prefix()
 

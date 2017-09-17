@@ -455,6 +455,16 @@ def gem():
                               conjure_right_parenthesis__ends_in_newline,
                           )
 
+    conjure_empty_tuple = produce_conjure_dual_token__NEW(
+                              '()',
+                              EmptyTuple,
+                              lookup_normal_token,
+                              provide_normal_token,
+                              conjure_left_parenthesis,
+                              conjure_right_parenthesis,
+                              conjure_right_parenthesis__ends_in_newline,
+                          )
+
     conjure_is_not = produce_conjure_dual_token__NEW(
                         'is_not',
                         IsNot,
@@ -492,6 +502,13 @@ def gem():
                              provide_arguments_0_token,
                          )
 
+    evoke__left_square_bracket__colon = produce_evoke_dual_token(
+                                            '[:',                           #   ]
+                                            LeftSquareBracket_Colon,
+                                            lookup_arguments_0_token,
+                                            provide_arguments_0_token,
+                                        )
+
     insert_return__line_marker = produce_insert_dual_token(
                                     'return__line_marker',
                                     KeywordReturn_LineMarker_1,
@@ -510,11 +527,12 @@ def gem():
         'conjure_empty_list',                               conjure_empty_list,
         'conjure_empty_map',                                conjure_empty_map,
         'conjure_empty_tuple',                              conjure_empty_tuple,
-        'conjure__left_square_bracket__colon',              conjure__left_square_bracket__colon,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
 
         'conjure_is_not',                                   conjure_is_not,
+        'conjure__left_square_bracket__colon',              conjure__left_square_bracket__colon,
         'conjure_not_in',                                   conjure_not_in,
         'evoke_arguments_0',                                evoke_arguments_0,
+        'evoke__left_square_bracket__colon',                evoke__left_square_bracket__colon,
         'insert_return__line_marker',                       insert_return__line_marker,
     )
