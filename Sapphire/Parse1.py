@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 7
+    show = 0
 
 
     require_gem('Sapphire.Core')
@@ -186,5 +186,4 @@ def gem():
                      length(many), (''   if length(many) is 0 else   's'))
 
                 #conjure_colon__line_marker('\n\n:\n')
-                #dump_newline_meta_cache()
-                dump_token_caches()
+                #dump_token_caches()

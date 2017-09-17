@@ -1056,7 +1056,6 @@ def gem():
     conjure_keyword_for = produce_conjure_action_word('keyword_for', KeywordFor)
     conjure_keyword_if  = produce_conjure_action_word('keyword_if',  KeywordIf)
     conjure_keyword_is  = produce_conjure_action_word('keyword_is',  KeywordIs)
-    conjure_right_brace = produce_conjure_action_word('right_brace', OperatorRightBrace)
     conjure_star_sign   = produce_conjure_action_word('star_sign',   OperatorStarSign)
 
     [
@@ -1091,6 +1090,10 @@ def gem():
             'colon',
             OperatorColon_LineMarker_1,
         )
+
+    [
+        conjure_right_brace, conjure_right_brace__ends_in_newline,
+    ] = produce_conjure_action_word('right_brace', OperatorRightBrace, produce_ends_in_newline = true)
 
     [
         conjure_right_parenthesis, conjure_right_parenthesis__ends_in_newline,
@@ -1245,6 +1248,7 @@ def gem():
         'conjure_left_square_bracket__ends_in_newline', conjure_left_square_bracket__ends_in_newline,
         'conjure__raise__line_marker',                  conjure__raise__line_marker,
         'conjure_right_brace',                          conjure_right_brace,
+        'conjure_right_brace__ends_in_newline',         conjure_right_brace__ends_in_newline,
         'conjure_right_parenthesis',                    conjure_right_parenthesis,
         'conjure_right_parenthesis__ends_in_newline',   conjure_right_parenthesis__ends_in_newline,
         'conjure_right_square_bracket',                 conjure_right_square_bracket,

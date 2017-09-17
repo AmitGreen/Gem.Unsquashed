@@ -92,20 +92,20 @@ def gem():
             #       Uses '*parenthesis' instead of '*{brace,square_bracket}'
             #       Uses 'EmptyTuple' instead of 'Empty{Map,List}'
             #
-            left_parenthesis__end = m.end('left_parenthesis__ow')
+            left_end = m.end('left_parenthesis__ow')
 
-            if left_parenthesis__end is not -1:
-                right_parenthesis__end = m.end('right_parenthesis')
+            if left_end is not -1:
+                right_end = m.end('right_parenthesis')
 
-                if right_parenthesis__end is not -1:
-                    r =  conjure_empty_tuple(left_parenthesis__end, right_parenthesis__end)
+                if right_end is not -1:
+                    r = conjure_empty_tuple(left_end, right_end)
 
-                    wi(right_parenthesis__end)
+                    wi(right_end)
                     wj(m.end())
 
                     return r
 
-                r = conjure_left_parenthesis(qs()[qi() : left_parenthesis__end])
+                r = conjure_left_parenthesis(qs()[qi() : left_end])
 
                 j = m.end()
 
@@ -123,17 +123,20 @@ def gem():
             #       Uses '*brace' instead of '*parenthesis'
             #       Uses 'EmptyMap' instead of 'EmptyTuple'
             #
-            left_brace__end = m.end('left_brace__ow')
+            left_end = m.end('left_brace__ow')
 
-            if left_brace__end is not -1:
-                left_brace       = conjure_left_brace(qs()[qi() : left_brace__end])
-                right_brace__end = m.end('right_brace')
+            if left_end is not -1:
+                right_end = m.end('right_brace')
 
-                if right_brace__end is not -1:
-                    wi(right_brace__end)
+                if right_end is not -1:
+                    r = conjure_empty_tuple(left_end, right_end)
+
+                    wi(right_end)
                     wj(m.end())
 
-                    return conjure_empty_map(left_brace, conjure_right_brace(m.group('right_brace')))
+                    return r
+
+                r = conjure_left_brace(qs()[qi() : left_end])
 
                 j = m.end()
 
@@ -141,7 +144,7 @@ def gem():
                 wi(j)
                 wj(j)
 
-                return left_brace
+                return r
             #</similiar-to>
 
             #
@@ -314,22 +317,22 @@ def gem():
         #       Uses '*parenthesis' instead of '*brace'
         #       Uses 'EmptyTuple' instead of 'Empty{Map,List}'
         #
-        left_parenthesis__end = m.end('left_parenthesis__ow')
+        left_end = m.end('left_parenthesis__ow')
 
-        if left_parenthesis__end is not -1:
-            right_parenthesis__end = m.end('right_parenthesis')
+        if left_end is not -1:
+            right_end = m.end('right_parenthesis')
 
-            if right_parenthesis__end is not -1:
+            if right_end is not -1:
                 if qd() is 0:
-                    right_parenthesis__end = m.end('right_parenthesis')
+                    right_end = m.end('right_parenthesis')
 
-                    r = conjure_empty_tuple(left_parenthesis__end, right_parenthesis__end)
+                    r = conjure_empty_tuple(left_end, right_end)
 
-                    wn(conjure_token_newline(qs()[right_parenthesis__end : ]))
+                    wn(conjure_token_newline(qs()[right_end : ]))
 
                     return r
 
-                r = conjure_empty_tuple(left_parenthesis__end, none)
+                r = conjure_empty_tuple(left_end, none)
 
                 skip_tokenize_prefix()
 
@@ -351,32 +354,24 @@ def gem():
         #       Uses '*brace' instead of '*parenthesis'
         #       Uses 'EmptyList' instead of 'EmptyTuple'
         #
-        left_brace__end = m.end('left_brace__ow')
+        left_end = m.end('left_brace__ow')
 
-        if left_brace__end is not -1:
-            right_brace__end = m.end('right_brace')
+        if left_end is not -1:
+            right_end = m.end('right_brace')
 
-            if right_brace__end is not -1:
+            if right_end is not -1:
                 s = qs()
 
-                left_brace = conjure_left_brace(s[qi() : left_brace__end])
-
                 if qd() is 0:
-                    right_brace__end = m.end('right_brace')
+                    right_end = m.end('right_brace')
 
-                    r = conjure_empty_map(
-                            left_brace,
-                            conjure_right_brace(s[left_brace__end : right_brace__end])
-                        )
+                    r = conjure_empty_map(left_end, right_end)
 
-                    wn(conjure_token_newline(s[right_brace__end : ]))
+                    wn(conjure_token_newline(s[right_end : ]))
 
                     return r
 
-                r = conjure_empty_map(
-                        left_brace,
-                        conjure_right_brace(s[left_brace__end : ]),
-                    )
+                r = conjure_empty_map(left_brace, none)
 
                 skip_tokenize_prefix()
 
