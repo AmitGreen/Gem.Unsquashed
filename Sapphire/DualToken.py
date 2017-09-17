@@ -436,10 +436,6 @@ def gem():
     conjure_empty_list  = produce_conjure_dual_token('empty_list',  EmptyList)
     conjure_empty_map   = produce_conjure_dual_token('empty_map',   EmptyMap)
     conjure_empty_tuple = produce_conjure_dual_token('empty_tuple', EmptyTuple)
-    conjure__left_square_bracket__colon = produce_conjure_dual_token(
-            '[:',                           #   ]
-            LeftSquareBracket_Colon,
-        )
 
     conjure__right_parenthesis__colon__line_marker = produce_conjure_dual_token(
             'right_parenthesis__colon__line_marker',
@@ -468,6 +464,16 @@ def gem():
                         conjure_keyword_not,
                         conjure_keyword_not__ends_in_newline,
                     )
+
+    conjure__left_square_bracket__colon = produce_conjure_dual_token__NEW(
+                                              '[:',                           #   ]
+                                              LeftSquareBracket_Colon,
+                                              lookup_normal_token,
+                                              provide_normal_token,
+                                              conjure_left_square_bracket,
+                                              conjure_colon,
+                                              conjure_colon__ends_in_newline,
+                                          )
 
     conjure_not_in = produce_conjure_dual_token__NEW(
                         'not_in',

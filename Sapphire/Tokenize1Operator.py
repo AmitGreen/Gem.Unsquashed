@@ -51,8 +51,7 @@ def gem():
 
         s = qs()
 
-        if show is 7:
-            my_line('d: %d; s: %s', qd(), portray_string(s[qj() : ]))
+        #my_line('d: %d; s: %s', qd(), portray_string(s[qj() : ]))
 
         m = operator_match(s, qj())
 
@@ -126,36 +125,40 @@ def gem():
             left_end = m.end('left_square_bracket__ow')
 
             if left_end is not -1:
-                left            = conjure_left_square_bracket(s[qi() : left_end])
                 tail_index__end = m.end('tail_index__ow')
 
                 if tail_index__end is not -1:
-                    colon   = conjure_colon(s[left_end : tail_index__end])
                     RSB_end = m.end('right_square_bracket')
 
                     if RSB_end is not -1:
+                        r = conjure_all_index(
+                                conjure_left_square_bracket (s[qi()            : left_end       ]),
+                                conjure_colon               (s[left_end        : tail_index__end]),
+                                conjure_right_square_bracket(s[tail_index__end : RSB_end        ]),
+                            )
+
                         j = m.end()
 
                         wi(RSB_end)
                         wj(j)
 
-                        return conjure_all_index(
-                                   left,
-                                   colon,
-                                   conjure_right_square_bracket(s[tail_index__end : RSB_end]),
-                                )
+                        return r
+
+                    r = conjure__left_square_bracket__colon(left_end, tail_index__end)
 
                     wd(qd() + 1)
                     wi(tail_index__end)
                     wj(m.end())
 
-                    return conjure__left_square_bracket__colon(left, colon)
+                    return r
+
+                r = conjure_left_square_bracket(s[qi() : left_end])
 
                 wd(qd() + 1)
                 wi(left_end)
                 wj(left_end)
 
-                return left
+                return r
 
             if m.start('colon') is not -1:
                 head_index__s = m.group('head_index')

@@ -229,7 +229,7 @@ def gem():
                 middle = parse1_atom()
 
                 if middle.is_colon:
-                    operator = conjure__left_square_bracket__colon(operator, middle)
+                    operator = evoke__left_square_bracket__colon(operator, middle)
                 else:
                     operator_2 = qk()
 
