@@ -449,8 +449,6 @@ def gem():
             Colon_RightSquareBracket,
         )
 
-    conjure__comma__right_brace       = produce_conjure_dual_token('comma__right_brace',       Comma_RightBrace)
-
     conjure__right_parenthesis__colon__line_marker = produce_conjure_dual_token(
             'right_parenthesis__colon__line_marker',
             RightParenthesis_Colon_LineMarker_1,
@@ -468,6 +466,16 @@ def gem():
                               conjure_right_parenthesis,
                               conjure_right_parenthesis__ends_in_newline,
                           )
+
+    conjure__comma__right_brace = produce_conjure_dual_token__NEW(
+                                      'comma__right_brace',
+                                      Comma_RightBrace,
+                                      lookup_normal_token,
+                                      provide_normal_token,
+                                      conjure_comma,
+                                      conjure_right_brace,
+                                      conjure_right_brace__ends_in_newline,
+                                  )
 
     conjure__comma__right_square_bracket = produce_conjure_dual_token__NEW(
                                                'comma__right_square_bracket',
@@ -556,12 +564,19 @@ def gem():
                              provide_arguments_0_token,
                          )
 
+    evoke__comma__right_brace = produce_evoke_dual_token(
+                                    'comma__right_brace',
+                                    Comma_RightBrace,
+                                    lookup_normal_token,
+                                    provide_normal_token,
+                                )
+
     evoke__comma__right_parenthesis = produce_evoke_dual_token(
-                                             'comma__right_parenthesis',
-                                             Comma_RightParenthesis,
-                                             lookup_normal_token,
-                                             provide_normal_token,
-                                         )
+                                          'comma__right_parenthesis',
+                                          Comma_RightParenthesis,
+                                          lookup_normal_token,
+                                          provide_normal_token,
+                                      )
 
     evoke__comma__right_square_bracket = produce_evoke_dual_token(
                                              'comma__right_square_bracket',
@@ -599,12 +614,12 @@ def gem():
 
 
     share(
-        'conjure_arguments_0',                              conjure_arguments_0,
         'conjure__colon__right_square_bracket',             conjure__colon__right_square_bracket,
         'conjure__comma__right_brace',                      conjure__comma__right_brace,
-        'conjure__comma__right_parenthesis',                conjure__comma__right_parenthesis,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
 
+        'conjure_arguments_0',                              conjure_arguments_0,
+        'conjure__comma__right_parenthesis',                conjure__comma__right_parenthesis,
         'conjure_empty_list',                               conjure_empty_list,
         'conjure_empty_map',                                conjure_empty_map,
         'conjure_empty_tuple',                              conjure_empty_tuple,
@@ -612,6 +627,7 @@ def gem():
         'conjure__left_square_bracket__colon',              conjure__left_square_bracket__colon,
         'conjure_not_in',                                   conjure_not_in,
         'evoke_arguments_0',                                evoke_arguments_0,
+        'evoke__comma__right_brace',                        evoke__comma__right_brace,
         'evoke__comma__right_parenthesis',                  evoke__comma__right_parenthesis,
         'evoke__comma__right_square_bracket',               evoke__comma__right_square_bracket,
         'evoke_empty_list',                                 evoke_empty_list,

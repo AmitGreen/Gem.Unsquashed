@@ -82,7 +82,7 @@ def gem():
             token = parse1_map_element()
 
             if token.is_right_brace:
-                many.append(conjure__comma__right_brace(operator, token))
+                many.append(evoke__comma__right_brace(operator, token))
                 return MapExpression_Many(Tuple(many))
 
             many.append(operator)
