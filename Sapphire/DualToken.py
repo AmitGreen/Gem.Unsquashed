@@ -444,11 +444,6 @@ def gem():
 
     #===  OLD  ===
 
-    conjure__colon__right_square_bracket = produce_conjure_dual_token(
-            'conjure__colon__right_square_bracket',
-            Colon_RightSquareBracket,
-        )
-
     conjure__right_parenthesis__colon__line_marker = produce_conjure_dual_token(
             'right_parenthesis__colon__line_marker',
             RightParenthesis_Colon_LineMarker_1,
@@ -456,6 +451,16 @@ def gem():
         )
 
     #===  NEW  ===
+
+    conjure__colon__right_square_bracket = produce_conjure_dual_token__NEW(
+                                               'colon__right_square_bracket',
+                                               Colon_RightSquareBracket,
+                                               lookup_normal_token,
+                                               provide_normal_token,
+                                               conjure_colon,
+                                               conjure_right_square_bracket,
+                                               conjure_right_square_bracket__ends_in_newline,
+                                           )
 
     conjure_arguments_0 = produce_conjure_dual_token__NEW(
                               'arguments_0',
@@ -564,6 +569,13 @@ def gem():
                              provide_arguments_0_token,
                          )
 
+    evoke__colon__right_square_bracket = produce_evoke_dual_token(
+                                             'colon__right_square_bracket',
+                                             Colon_RightSquareBracket,
+                                             lookup_normal_token,
+                                             provide_normal_token,
+                                         )
+
     evoke__comma__right_brace = produce_evoke_dual_token(
                                     'comma__right_brace',
                                     Comma_RightBrace,
@@ -614,11 +626,11 @@ def gem():
 
 
     share(
-        'conjure__colon__right_square_bracket',             conjure__colon__right_square_bracket,
         'conjure__comma__right_brace',                      conjure__comma__right_brace,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
 
         'conjure_arguments_0',                              conjure_arguments_0,
+        'conjure__colon__right_square_bracket',             conjure__colon__right_square_bracket,
         'conjure__comma__right_parenthesis',                conjure__comma__right_parenthesis,
         'conjure_empty_list',                               conjure_empty_list,
         'conjure_empty_map',                                conjure_empty_map,

@@ -265,7 +265,7 @@ def gem():
                                        HeadIndex(
                                            operator,
                                            middle,
-                                           conjure__colon__right_square_bracket(operator_2, middle_2),
+                                           evoke__colon__right_square_bracket(operator_2, middle_2),
                                        ),
                                    )
                         else:

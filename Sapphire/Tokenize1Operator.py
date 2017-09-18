@@ -161,23 +161,20 @@ def gem():
                 return r
 
             if m.start('comma') is not -1:
-                comma_suffix__end = m.end('comma_suffix')
+                suffix_start = m.start('comma_suffix')
 
-                if comma_suffix__end is not -1:
+                if suffix_start is not -1:
                     d = qd()
 
                     if d is 0:
                         raise_unknown_line()
 
-                    comma_suffix__start = m.start('comma_suffix')
+                    suffix_end = m.end('comma_suffix')
 
-                    r = find_conjure_comma_something(s[comma_suffix__start])(
-                            comma_suffix__start,
-                            comma_suffix__end,
-                        )
+                    r = find_conjure_comma_something(s[suffix_start])(suffix_start, suffix_end)
 
                     wd(d - 1)
-                    wi(comma_suffix__end)
+                    wi(suffix_end)
                     wj(m.end())
 
                     return r
@@ -192,21 +189,20 @@ def gem():
                 return r
 
             if m.start('colon') is not -1:
-                head_index__s = m.group('head_index')
+                suffix_start = m.start('head_index')
 
-                if head_index__s is not none:
+                if suffix_start is not -1:
                     d = qd()
 
                     if d is 0:
                         raise_unknown_line()
 
-                    r = conjure__colon__right_square_bracket(
-                            conjure_colon(s[qi() : m.start('head_index')]),
-                            conjure_right_square_bracket(head_index__s),
-                        )
+                    suffix_end = m.end('head_index')
+
+                    r = conjure__colon__right_square_bracket(suffix_start, suffix_end)
 
                     wd(d - 1)
-                    wi(m.end('head_index'))
+                    wi(suffix_end)
                     wj(m.end())
 
                     return r
@@ -453,35 +449,27 @@ def gem():
             return r
 
         if m.start('colon') is not -1:
-            head_index__end = m.end('head_index')
+            suffix_start = m.start('head_index')
 
-            if head_index__end is not -1:
-                head_index__start = m.start('head_index')
-
-                colon = conjure_colon(s[qi() : head_index__start])
-
+            if suffix_start is not -1:
                 d = qd()
 
                 if d is 1:
+                    suffix_end = m.end('head_index')
+
+                    r = conjure__colon__right_square_bracket(suffix_start, suffix_end)
+
                     wd0()
 
-                    r = conjure__colon__right_square_bracket(
-                            colon,
-                            conjure_right_square_bracket(s[head_index__start : head_index__end])
-                        )
-
-                    wn(conjure_token_newline(s[head_index__end : ]))
+                    wn(conjure_token_newline(s[suffix_end : ]))
 
                     return r
+
+                r = conjure__colon__right_square_bracket(suffix_start, none)
 
                 assert d > 1
 
                 wd(d - 1)
-
-                r = conjure__colon__right_square_bracket(
-                        colon,
-                        conjure_right_square_bracket__with_newlines(s[head_index__start : ])
-                    )
 
                 skip_tokenize_prefix()
 
