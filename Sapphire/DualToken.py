@@ -12,15 +12,50 @@ def gem():
     qs                             = Shared.qs                              #   Due to privileged
 
 
+    def construct_dual_token(t, s, first, second):
+        assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
+        assert s == first.s + second.s
+        assert '\n' not in s
+
+        t.s      = s
+        t.first  = first
+        t.second = second
+
+
+    def construct_dual_token__with_newlines(t, s, first, second, newlines, ends_in_newline):
+        assert t.line_marker is false
+        assert s == first.s + second.s
+        assert ends_in_newline is (second.s[-1] == '\n')
+        assert newlines >= 1
+
+        t.s               = s
+        t.first           = first
+        t.second          = second
+        t.newlines        = newlines
+        t.ends_in_newline = ends_in_newline
+
+
     def construct_dual_operator__line_marker_1(t, s, first, second):
         assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
-        assert s.count('\n') is 1
         assert s == first.s + second.s
+        assert s.count('\n') is 1
         assert second.s[-1] == '\n'
 
         t.s      = s
         t.first  = first
         t.second = second
+
+
+    def construct_dual_token__line_marker__many(t, s, first, second, newlines):
+        assert (t.ends_in_newline is t.line_marker is true) and (newlines >= 1)
+        assert s == first.s + second.s
+        assert s.count('\n') == newlines
+        assert second.s[-1] == '\n'
+
+        t.s        = s
+        t.first    = first
+        t.second   = second
+        t.newlines = newlines
 
 
     class BaseDualOperator(KeywordAndOperatorBase):
@@ -223,28 +258,7 @@ def gem():
         __init__ = construct_dual_operator__line_marker_1
 
 
-    def construct_dual_token__with_newlines(t, s, first, second, newlines, ends_in_newline):
-        assert ends_in_newline is (s[-1] == '\n')
-        assert newlines >= 1
-        assert t.line_marker is false
-
-        t.s               = s
-        t.first           = first
-        t.second          = second
-        t.newlines        = newlines
-        t.ends_in_newline = ends_in_newline
-
-
-    def construct_dual_token__line_marker__many(t, s, first, second, newlines):
-        assert (t.ends_in_newline is t.line_marker is true) and (newlines >= 1) and (s[-1] == '\n')
-
-        t.s        = s
-        t.first    = first
-        t.second   = second
-        t.newlines = newlines
-
-
-    def create_dual_token__with_newlines(Meta, first, second):
+    def create_dual_token__with_newlines__OLD(Meta, first, second):
         s = intern_string(first.s + second.s)
 
         newlines = s.count('\n')
@@ -274,7 +288,7 @@ def gem():
                )
 
 
-    def create_dual_token__line_marker(Meta, first, second):
+    def create_dual_token__line_marker__OLD(Meta, first, second):
         s = intern_string(first.s + second.s)
 
         newlines = s.count('\n')
@@ -305,7 +319,7 @@ def gem():
 
 
     @privileged
-    def produce_conjure_dual_token(name, Meta, line_marker = false):
+    def produce_conjure_dual_token__OLD(name, Meta, line_marker = false):
         assert type(line_marker) is Boolean
 
         #
@@ -317,8 +331,8 @@ def gem():
         store_1   = cache.__setitem__
 
         create_dual_token = (
-                create_dual_token__line_marker   if line_marker else
-                create_dual_token__with_newlines
+                create_dual_token__line_marker__OLD   if line_marker else
+                create_dual_token__with_newlines__OLD
             )
 
 
@@ -444,7 +458,7 @@ def gem():
 
     #===  OLD  ===
 
-    conjure__right_parenthesis__colon__line_marker = produce_conjure_dual_token(
+    conjure__right_parenthesis__colon__line_marker = produce_conjure_dual_token__OLD(
             'right_parenthesis__colon__line_marker',
             RightParenthesis_Colon_LineMarker_1,
             true,
@@ -626,11 +640,11 @@ def gem():
 
 
     share(
-        'conjure__comma__right_brace',                      conjure__comma__right_brace,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
 
         'conjure_arguments_0',                              conjure_arguments_0,
         'conjure__colon__right_square_bracket',             conjure__colon__right_square_bracket,
+        'conjure__comma__right_brace',                      conjure__comma__right_brace,
         'conjure__comma__right_parenthesis',                conjure__comma__right_parenthesis,
         'conjure_empty_list',                               conjure_empty_list,
         'conjure_empty_map',                                conjure_empty_map,

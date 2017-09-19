@@ -3,16 +3,54 @@
 #
 @gem('Sapphire.TripleToken')
 def gem():
+    def construct_triple_token(t, s, first, second, third):
+        assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
+        assert s == first.s + second.s + third.s
+        assert '\n' not in s
+
+        t.s      = s
+        t.first  = first
+        t.second = second
+        t.third  = third
+
+
+    def construct_triple_token__with_newlines(t, s, first, second, third, newlines, ends_in_newline):
+        assert t.line_marker is false
+        assert s == first.s + second.s + third.s
+        assert ends_in_newline is (third.s[-1] == '\n')
+        assert newlines >= 1
+
+        t.s               = s
+        t.first           = first
+        t.second          = second
+        t.third           = third
+        t.newlines        = newlines
+        t.ends_in_newline = ends_in_newline
+
+
     def construct_triple_operator__line_marker_1(t, s, first, second, third):
         assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
-        assert s.count('\n') is 1
         assert s == first.s + second.s + third.s
+        assert s.count('\n') is 1
         assert third.s[-1] == '\n'
 
         t.s      = s
         t.first  = first
         t.second = second
         t.third  = third
+
+
+    def construct_triple_token__line_marker__many(t, s, first, second, third, newlines):
+        assert (t.ends_in_newline is t.line_marker is true) and (newlines > 1)
+        assert s == first.s + second.s + third.s
+        assert s.count('\n') == newlines
+        assert third.s[-1] == '\n'
+
+        t.s        = s
+        t.first    = first
+        t.second   = second
+        t.third    = third
+        t.newlines = newlines
 
 
     class BaseTripleOperator(KeywordAndOperatorBase):
@@ -23,15 +61,7 @@ def gem():
         ))
 
 
-        def __init__(t, s, first, second, third):
-            assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
-            assert '\n' not in s
-            assert s == first.s + second.s + third.s
-
-            t.s      = s
-            t.first  = first
-            t.second = second
-            t.third  = third
+        __init__ = construct_triple_token
 
 
         def __repr__(t):
@@ -98,29 +128,6 @@ def gem():
 
 
         __init__ = construct_triple_operator__line_marker_1
-
-
-    def construct_triple_token__with_newlines(t, s, first, second, third, newlines, ends_in_newline):
-        assert newlines >= 1
-        assert ends_in_newline is (s[-1] == '\n')
-        assert t.line_marker is false
-
-        t.s               = s
-        t.first           = first
-        t.second          = second
-        t.third           = third
-        t.newlines        = newlines
-        t.ends_in_newline = ends_in_newline
-
-
-    def construct_triple_token__line_marker__many(t, s, first, second, third, newlines):
-        assert (t.ends_in_newline is t.line_marker is true) and (newlines >= 1) and (s[-1] == '\n')
-
-        t.s        = s
-        t.first    = first
-        t.second   = second
-        t.third    = third
-        t.newlines = newlines
 
 
     def create_triple_token__with_newlines(Meta, first, second, third):
