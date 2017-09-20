@@ -48,7 +48,7 @@ def gem():
     provide_arguments_0_token = arguments_0_token_cache.setdefault
     provide_indentation_token = indentation_token_cache.setdefault
     provide_join_token        = join_token_cache       .setdefault
-    provide_line_marker_token = line_marker_token_cache.setdefault
+    provide_line_marker       = line_marker_token_cache.setdefault
     provide_normal_token      = normal_token_cache     .setdefault
     provide_parameter_token   = parameter_token_cache  .setdefault
 
@@ -81,7 +81,7 @@ def gem():
         'provide_arguments_0_token',    provide_arguments_0_token,
         'provide_indentation_token',    provide_indentation_token,
         'provide_join_token',           provide_join_token,
-        'provide_line_marker_token',    provide_line_marker_token,
+        'provide_line_marker',          provide_line_marker,
         'provide_normal_token',         provide_normal_token,
         'provide_parameter_token',      provide_parameter_token,
     )

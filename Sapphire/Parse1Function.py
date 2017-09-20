@@ -184,10 +184,9 @@ def gem():
                     raise_unknown_line()
 
                 if operator_7.is_right_parenthesis:
-                    operator_7 = conjure__right_parenthesis__colon__line_marker(
-                                     operator_7,
-                                     tokenize_parameter_colon_newline(),
-                                 )
+                    [colon, line_marker] = tokenize_parameter_colon_newline()
+
+                    operator_7 = evoke__right_parenthesis__colon__line_marker(operator_7, colon, line_marker)
 
             if operator_7.is__any__right_parenthesis__colon__newline:
                 if qn() is not none:
@@ -214,7 +213,10 @@ def gem():
                     conjure__comma__right_parenthesis__colon__line_marker(
                         operator_7,
                         token_7.first,
-                        token_7.second,
+                        #
+                        #   TODO: Fix later when this becomes a quadruple token
+                        #
+                        conjure_colon__line_marker(token_7.second.s + token_7.third.s),
                     ),
                 )
 

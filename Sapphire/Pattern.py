@@ -313,7 +313,7 @@ def gem():
 
         FULL_MATCH(
             'parameter_colon_newline_match',
-            colon + ow + comment_newline,
+            G(colon) + ow + comment_newline,
         )
 
 

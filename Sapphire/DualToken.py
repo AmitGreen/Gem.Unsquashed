@@ -258,7 +258,10 @@ def gem():
         __init__ = construct_dual_operator__line_marker_1
 
 
-    def create_dual_token__with_newlines__OLD(Meta, first, second):
+    #
+    #   ===  OLD  ===
+    #
+    def OLD__create_dual_token__with_newlines(Meta, first, second):
         s = intern_string(first.s + second.s)
 
         newlines = s.count('\n')
@@ -273,38 +276,8 @@ def gem():
                )
 
 
-    def create_dual_token__with_newlines__NEW(Meta, s, first, second):
-        assert s == first.s + second.s
-
-        newlines = s.count('\n')
-
-        return (
-                   Meta(s, first, second)
-                       if newlines is 0 else
-                           (
-                                 lookup_adjusted_meta(Meta)
-                              or create_ActionWord_WithNewlines(Meta, construct_dual_token__with_newlines)
-                           )(s, first, second, newlines, s[-1] == '\n')
-               )
-
-
-    def create_dual_token__line_marker__OLD(Meta, first, second):
+    def OLD__create_dual_token__line_marker(Meta, first, second):
         s = intern_string(first.s + second.s)
-
-        newlines = s.count('\n')
-
-        return (
-                   Meta(s, first, second)
-                       if newlines is 1 else
-                       (
-                             lookup_adjusted_meta(Meta)
-                          or create_ActionWord_LineMarker_Many(Meta, construct_dual_token__line_marker__many)
-                       )(s, first, second, newlines)
-               )
-
-
-    def create_dual_token__line_marker__NEW(Meta, s, first, second):
-        assert (s == first.s + second.s) and (s[-1] == '\n')
 
         newlines = s.count('\n')
 
@@ -319,7 +292,7 @@ def gem():
 
 
     @privileged
-    def produce_conjure_dual_token__OLD(name, Meta, line_marker = false):
+    def OLD__produce_conjure_dual_token(name, Meta, line_marker = false):
         assert type(line_marker) is Boolean
 
         #
@@ -331,8 +304,8 @@ def gem():
         store_1   = cache.__setitem__
 
         create_dual_token = (
-                create_dual_token__line_marker__OLD   if line_marker else
-                create_dual_token__with_newlines__OLD
+                OLD__create_dual_token__line_marker   if line_marker else
+                OLD__create_dual_token__with_newlines
             )
 
 
@@ -362,25 +335,61 @@ def gem():
         return conjure_dual_token
 
 
+    conjure__right_parenthesis__colon__line_marker = OLD__produce_conjure_dual_token(
+            'right_parenthesis__colon__line_marker',
+            RightParenthesis_Colon_LineMarker_1,
+            true,
+        )
+
+    #
+    #   ===  NEW  ===
+    #
+    def create_dual_token__with_newlines(Meta, s, first, second):
+        assert s == first.s + second.s
+
+        newlines = s.count('\n')
+
+        return (
+                   Meta(s, first, second)
+                       if newlines is 0 else
+                           (
+                                 lookup_adjusted_meta(Meta)
+                              or create_ActionWord_WithNewlines(Meta, construct_dual_token__with_newlines)
+                           )(s, first, second, newlines, s[-1] == '\n')
+               )
+
+
+    def create_dual_token__line_marker(Meta, s, first, second):
+        assert (s == first.s + second.s) and (s[-1] == '\n')
+
+        newlines = s.count('\n')
+
+        return (
+                   Meta(s, first, second)
+                       if newlines is 1 else
+                       (
+                             lookup_adjusted_meta(Meta)
+                          or create_ActionWord_LineMarker_Many(Meta, construct_dual_token__line_marker__many)
+                       )(s, first, second, newlines)
+               )
+
+
     @privileged
-    def produce_conjure_dual_token__NEW(
+    def produce_conjure_dual_token(
             name, Meta, lookup, provide, conjure_first, conjure_second, conjure_second__ends_in_newline,
             
             line_marker = false,
     ):
         assert type(line_marker) is Boolean
 
-        create_dual_token__NEW = (
-                create_dual_token__line_marker__NEW   if line_marker else
-                create_dual_token__with_newlines__NEW
+        create_dual_token = (
+                create_dual_token__line_marker   if line_marker else
+                create_dual_token__with_newlines
             )
 
 
         def conjure_dual_token(middle, end):
-            i = qi()
-            s = qs()
-
-            dual_s = s[i : end]
+            dual_s = qs()[qi() : end]
 
             r = lookup(dual_s)
            
@@ -390,13 +399,14 @@ def gem():
                 return r
 
             dual_s = intern_string(dual_s)
+            s      = qs()
 
             return provide(
                        dual_s,
-                       create_dual_token__NEW(
+                       create_dual_token(
                            Meta,
                            dual_s,
-                           conjure_first(s[i : middle]),
+                           conjure_first(s[qi() : middle]),
                            (conjure_second__ends_in_newline   if end is none else   conjure_second)(s[middle : end]),
                        ),
                    )
@@ -423,7 +433,7 @@ def gem():
 
             s = intern_string(s)
 
-            return provide(s, create_dual_token__with_newlines__NEW(Meta, s, first, second))
+            return provide(s, create_dual_token__with_newlines(Meta, s, first, second))
 
 
         if __debug__:
@@ -436,9 +446,9 @@ def gem():
     def produce_insert_dual_token(name, Meta, lookup, provide, line_marker = false):
         assert type(line_marker) is Boolean
 
-        create_dual_token__NEW = (
-                create_dual_token__line_marker__NEW   if line_marker else
-                create_dual_token__with_newlines__NEW
+        create_dual_token = (
+                create_dual_token__line_marker   if line_marker else
+                create_dual_token__with_newlines
             )
 
 
@@ -447,7 +457,7 @@ def gem():
 
             s = intern_string(s)
 
-            return provide(s, create_dual_token__NEW(Meta, s, first, second))
+            return provide(s, create_dual_token(Meta, s, first, second))
 
 
         if __debug__:
@@ -456,17 +466,7 @@ def gem():
         return insert_dual_token
 
 
-    #===  OLD  ===
-
-    conjure__right_parenthesis__colon__line_marker = produce_conjure_dual_token__OLD(
-            'right_parenthesis__colon__line_marker',
-            RightParenthesis_Colon_LineMarker_1,
-            true,
-        )
-
-    #===  NEW  ===
-
-    conjure__colon__right_square_bracket = produce_conjure_dual_token__NEW(
+    conjure__colon__right_square_bracket = produce_conjure_dual_token(
                                                'colon__right_square_bracket',
                                                Colon_RightSquareBracket,
                                                lookup_normal_token,
@@ -476,7 +476,7 @@ def gem():
                                                conjure_right_square_bracket__ends_in_newline,
                                            )
 
-    conjure_arguments_0 = produce_conjure_dual_token__NEW(
+    conjure_arguments_0 = produce_conjure_dual_token(
                               'arguments_0',
                               Arguments_0,
                               lookup_arguments_0_token,
@@ -486,7 +486,7 @@ def gem():
                               conjure_right_parenthesis__ends_in_newline,
                           )
 
-    conjure__comma__right_brace = produce_conjure_dual_token__NEW(
+    conjure__comma__right_brace = produce_conjure_dual_token(
                                       'comma__right_brace',
                                       Comma_RightBrace,
                                       lookup_normal_token,
@@ -496,7 +496,7 @@ def gem():
                                       conjure_right_brace__ends_in_newline,
                                   )
 
-    conjure__comma__right_square_bracket = produce_conjure_dual_token__NEW(
+    conjure__comma__right_square_bracket = produce_conjure_dual_token(
                                                'comma__right_square_bracket',
                                                Comma_RightSquareBracket,
                                                lookup_normal_token,
@@ -506,7 +506,7 @@ def gem():
                                                conjure_right_square_bracket__ends_in_newline,
                                            )
 
-    conjure__comma__right_parenthesis = produce_conjure_dual_token__NEW(
+    conjure__comma__right_parenthesis = produce_conjure_dual_token(
                                             'comma__right_parenthesis',
                                             Comma_RightParenthesis,
                                             lookup_normal_token,
@@ -516,7 +516,7 @@ def gem():
                                             conjure_right_parenthesis__ends_in_newline,
                                         )
 
-    conjure_empty_list = produce_conjure_dual_token__NEW(
+    conjure_empty_list = produce_conjure_dual_token(
                              '[]',
                              EmptyList,
                              lookup_normal_token,
@@ -526,7 +526,7 @@ def gem():
                              conjure_right_square_bracket__ends_in_newline,
                          )
 
-    conjure_empty_map = produce_conjure_dual_token__NEW(
+    conjure_empty_map = produce_conjure_dual_token(
                             '{}',
                             EmptyMap,
                             lookup_normal_token,
@@ -536,7 +536,7 @@ def gem():
                             conjure_right_brace__ends_in_newline,
                         )
 
-    conjure_empty_tuple = produce_conjure_dual_token__NEW(
+    conjure_empty_tuple = produce_conjure_dual_token(
                               '()',
                               EmptyTuple,
                               lookup_normal_token,
@@ -546,7 +546,7 @@ def gem():
                               conjure_right_parenthesis__ends_in_newline,
                           )
 
-    conjure_is_not = produce_conjure_dual_token__NEW(
+    conjure_is_not = produce_conjure_dual_token(
                         'is_not',
                         IsNot,
                         lookup_normal_token,
@@ -556,7 +556,7 @@ def gem():
                         conjure_keyword_not__ends_in_newline,
                     )
 
-    conjure__left_square_bracket__colon = produce_conjure_dual_token__NEW(
+    conjure__left_square_bracket__colon = produce_conjure_dual_token(
                                               '[:',                           #   ]
                                               LeftSquareBracket_Colon,
                                               lookup_normal_token,
@@ -566,7 +566,7 @@ def gem():
                                               conjure_colon__ends_in_newline,
                                           )
 
-    conjure_not_in = produce_conjure_dual_token__NEW(
+    conjure_not_in = produce_conjure_dual_token(
                         'not_in',
                         NotIn,
                         lookup_normal_token,
@@ -625,7 +625,7 @@ def gem():
                                     'return__line_marker',
                                     KeywordReturn_LineMarker_1,
                                     lookup_line_marker,
-                                    provide_line_marker_token,
+                                    provide_line_marker,
                                     line_marker = true,
                                  )
 
@@ -640,7 +640,7 @@ def gem():
 
 
     share(
-        'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
+#       'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
 
         'conjure_arguments_0',                              conjure_arguments_0,
         'conjure__colon__right_square_bracket',             conjure__colon__right_square_bracket,

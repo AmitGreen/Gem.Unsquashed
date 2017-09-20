@@ -70,10 +70,7 @@ def gem():
 
             wd0()
 
-            return conjure__right_parenthesis__colon__line_marker(
-                       conjure_right_parenthesis (s[qi()                   : right_parenthesis__end]),
-                       conjure_colon__line_marker(s[right_parenthesis__end :                       ]),
-                   )
+            return conjure__right_parenthesis__colon__line_marker(right_parenthesis__end, m.end('colon'))
 
         if m.end('comment_newline') is -1:
             return conjure_right_parenthesis(s[qi() :])
@@ -138,6 +135,9 @@ def gem():
         return tokenize_parameter_operator__X__right_parenthesis(m)
 
 
+    #
+    #   TODO: FIX THIS - need to name it differently, etc (should not be returning two tokens like this).
+    #
     @share
     def tokenize_parameter_colon_newline():
         assert qd() is 0
@@ -151,7 +151,12 @@ def gem():
         if m is none:
             raise_unknown_line()
 
-        return conjure_colon__line_marker(s[qi() : ])
+        colon_end = m.end('colon')
+
+        return ((
+                   conjure_colon      (s[qi()      : colon_end]),
+                   conjure_line_marker(s[colon_end :          ]),
+               ))
 
 
     def tokenize_nested__X__equal_sign__blankline():

@@ -7,9 +7,9 @@ def gem():
     require_gem('Sapphire.TokenCache')
 
 
-    create_ActionWord_LineMarker_Many = Shared.create_ActionWord_LineMarker_Many    #   Due to 'privileged'
-    lookup_line_marker                = Shared.lookup_line_marker                   #   Due to 'privileged'
-    provide_line_marker_token         = Shared.provide_line_marker_token            #   Due to 'privileged'
+    create_ActionWord_LineMarker_Many = Shared.create_ActionWord_LineMarker_Many    #   Due to privileged
+    lookup_line_marker                = Shared.lookup_line_marker                   #   Due to privileged
+    provide_line_marker               = Shared.provide_line_marker                  #   Due to privileged
 
 
     def construct_token__line_marker__many(t, s, newlines):
@@ -42,7 +42,7 @@ def gem():
 
         s = intern_string(s)
 
-        return provide_line_marker_token(s, LineMarker(s))
+        return provide_line_marker(s, LineMarker(s))
 
 
     @share
@@ -60,7 +60,7 @@ def gem():
 
             newlines = s.count('\n')
 
-            return provide_line_marker_token(
+            return provide_line_marker(
                        s,
                        (
                            Meta(s)

@@ -3,6 +3,13 @@
 #
 @gem('Sapphire.TripleToken')
 def gem():
+    conjure_line_marker = Shared.conjure_line_marker        #   Due to privileged
+    lookup_line_marker  = Shared.lookup_line_marker         #   Due to privileged
+    provide_line_marker = Shared.provide_line_marker        #   Due to privileged
+    qi                  = Shared.qi                         #   Due to privileged
+    qs                  = Shared.qs                         #   Due to privileged
+
+
     def construct_triple_token(t, s, first, second, third):
         assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
         assert s == first.s + second.s + third.s
@@ -130,7 +137,23 @@ def gem():
         __init__ = construct_triple_operator__line_marker_1
 
 
-    def create_triple_token__with_newlines(Meta, first, second, third):
+    class RightParenthesis_Colon_LineMarker_1(BaseTripleOperator):
+        __slots__                                  = (())
+        display_name                               = r'):\n'
+        ends_in_newline                            = true
+        is__any__right_parenthesis__colon__newline = true
+        is__right_parenthesis__colon__newline      = true
+        line_marker                                = true
+        newlines                                   = 1
+
+
+        __init__ = construct_triple_operator__line_marker_1
+
+
+    #
+    #   ===  OLD  ===
+    #
+    def OLD__create_triple_token__with_newlines(Meta, first, second, third):
         s = intern_string(first.s + second.s + third.s)
 
         newlines = s.count('\n')
@@ -145,7 +168,7 @@ def gem():
                )
 
 
-    def create_triple_token__line_marker(Meta, first, second, third):
+    def OLD__create_triple_token__line_marker(Meta, first, second, third):
         s = intern_string(first.s + second.s + third.s)
 
         newlines = s.count('\n')
@@ -161,7 +184,7 @@ def gem():
 
 
     @privileged
-    def produce_conjure_triple_token(name, Meta, line_marker = false):
+    def OLD__produce_conjure_triple_token(name, Meta, line_marker = false):
         assert type(line_marker) is Boolean
 
         cache     = {}
@@ -170,8 +193,8 @@ def gem():
         store_1   = cache.__setitem__
 
         create_triple_token = (
-                create_triple_token__line_marker   if line_marker else
-                create_triple_token__with_newlines
+                OLD__create_triple_token__line_marker   if line_marker else
+                OLD__create_triple_token__with_newlines
             )
 
 
@@ -223,25 +246,189 @@ def gem():
         return conjure_triple_token
 
 
-    conjure_all_index = produce_conjure_triple_token('all_index', AllIndex)
+    conjure_all_index = OLD__produce_conjure_triple_token('all_index', AllIndex)
 
-    conjure__comma__right_parenthesis__colon__line_marker = produce_conjure_triple_token(
+    conjure__comma__right_parenthesis__colon__line_marker = OLD__produce_conjure_triple_token(
             'comma__right_parenthesis__colon__line_marker',
             Comma_RightParenthesis_Colon_LineMarker_1,
             true,
         )
 
-    conjure__parameter_0__colon__line_marker = produce_conjure_triple_token(
+    conjure__parameter_0__colon__line_marker = OLD__produce_conjure_triple_token(
             'parameter_0__colon_newline',
             Parameter_0__Colon__LineMarker_1,
             true,
         )
 
+    #
+    #   ===  NEW  ===
+    #
+    def create_triple_token__with_newlines(Meta, s, first, second, third):
+        assert s == first.s + second.s + third.s
+
+        newlines = s.count('\n')
+
+        return (
+                   Meta(s, first, second, third)
+                       if newlines is 0 else
+                           (
+                                 lookup_adjusted_meta(Meta)
+                              or create_ActionWord_WithNewlines(Meta, construct_triple_token__with_newlines)
+                           )(s, first, second, newlines, third, s[-1] == '\n')
+               )
+
+
+    def create_triple_token__line_marker(Meta, s, first, second, third):
+        assert (s == first.s + second.s + third.s) and (s[-1] == '\n')
+
+        newlines = s.count('\n')
+
+        return (
+                   Meta(s, first, second, third)
+                       if newlines is 1 else
+                       (
+                             lookup_adjusted_meta(Meta)
+                          or create_ActionWord_LineMarker_Many(Meta, construct_triple_token__line_marker__many)
+                       )(s, first, second, third, newlines)
+               )
+
+
+    @privileged
+    def produce_conjure_triple_token(
+            name, Meta, lookup, provide, conjure_first, conjure_second, conjure_third, conjure_third__ends_in_newline,
+            
+            line_marker = false,
+    ):
+        assert type(line_marker) is Boolean
+
+        create_triple_token = (
+                create_triple_token__line_marker   if line_marker else
+                create_triple_token__with_newlines
+            )
+
+
+        def conjure_triple_token(middle_1, middle_2, end):
+            triple_s = qs()[qi() : end]
+
+            r = lookup(triple_s)
+           
+            if r is not none:
+                assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
+
+                return r
+
+            s        = qs()
+            triple_s = intern_string(triple_s)
+
+            return provide(
+                       triple_s,
+                       create_triple_token(
+                           Meta,
+                           triple_s,
+                           conjure_first (s[qi()     : middle_1]),
+                           conjure_second(s[middle_1 : middle_2]),
+                           (conjure_third__ends_in_newline   if end is none else   conjure_third)(s[middle_2 : end]),
+                       ),
+                   )
+
+
+        if __debug__:
+            conjure_triple_token.__name__ = intern_arrange('conjure_%s', name)
+
+
+        return conjure_triple_token
+
+
+    @privileged
+    def produce_evoke_triple_token__line_marker(name, Meta):
+        def evoke_triple_token__line_marker(first, second, third):
+            s = first.s + second.s + third.s
+
+            r = lookup_line_marker(s)
+
+            if r is not none:
+                assert (r.first is first) and (r.second is second) and (r.third is third)
+
+                return r
+
+            s = intern_string(s)
+
+            return provide_line_marker(s, create_triple_token__line_marker(Meta, s, first, second, third))
+
+
+        if __debug__:
+            evoke_triple_token__line_marker.__name__ = intern_arrange('evoke_%s__line_marker', name)
+
+        return evoke_triple_token__line_marker
+
+
+
+    @privileged
+    def produce_conjure_triple_token__line_marker(name, Meta, conjure_first, conjure_second):
+        def conjure_triple_token__line_marker(middle_1, middle_2):
+            assert qi() < middle_1 < middle_2
+
+            triple_s = qs()[qi() : ]
+
+            r = lookup_line_marker(triple_s)
+           
+            if r is not none:
+                assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
+
+                return r
+
+            s        = qs()
+            triple_s = intern_string(triple_s)
+
+            return provide_line_marker(
+                       triple_s,
+                       create_triple_token__line_marker(
+                           Meta,
+                           triple_s,
+                           conjure_first      (s[qi()     : middle_1]),
+                           conjure_second     (s[middle_1 : middle_2]),
+                           conjure_line_marker(s[middle_2 :         ]),
+                       ),
+                   )
+
+
+        if __debug__:
+            conjure_triple_token__line_marker.__name__ = intern_arrange('conjure_%s__line_marker', name)
+
+
+        return conjure_triple_token__line_marker
+
+
+    conjure__right_parenthesis__colon__line_marker = produce_conjure_triple_token__line_marker(
+                                                         'right_parenthesis__colon__line_marker',
+                                                         RightParenthesis_Colon_LineMarker_1,
+                                                         conjure_right_parenthesis,
+                                                         conjure_colon,
+                                                     )
+
+    evoke__right_parenthesis__colon__line_marker = produce_evoke_triple_token__line_marker(
+                                                        'right_parenthesis__colon__line_marker',
+                                                        RightParenthesis_Colon_LineMarker_1,
+                                                    )
+
+
+    #
+    #   ===  SHARE  ===
+    #
     share(
+        #
+        #   ===  OLD  ===
+        #
         'conjure_all_index',    conjure_all_index,
 
         'conjure__comma__right_parenthesis__colon__line_marker',
             conjure__comma__right_parenthesis__colon__line_marker,
 
         'conjure__parameter_0__colon__line_marker',  conjure__parameter_0__colon__line_marker,
+
+        #
+        #   ===  NEW  ===
+        #
+        'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
+        'evoke__right_parenthesis__colon__line_marker',     evoke__right_parenthesis__colon__line_marker,
     )
