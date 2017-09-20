@@ -235,11 +235,11 @@ def gem():
 
 
     class KeywordReturn_LineMarker_1(BaseDualOperator):
-        __slots__                                  = (())
-        display_name                               = r'return\n'
-        ends_in_newline                            = true
-        line_marker                                = true
-        newlines                                   = 1
+        __slots__       = (())
+        display_name    = r'return\n'
+        ends_in_newline = true
+        line_marker     = true
+        newlines        = 1
 
 
         __init__ = construct_dual_operator__line_marker_1
@@ -258,92 +258,6 @@ def gem():
         __init__ = construct_dual_operator__line_marker_1
 
 
-    #
-    #   ===  OLD  ===
-    #
-    def OLD__create_dual_token__with_newlines(Meta, first, second):
-        s = intern_string(first.s + second.s)
-
-        newlines = s.count('\n')
-
-        return (
-                   Meta(s, first, second)
-                       if newlines is 0 else
-                           (
-                                 lookup_adjusted_meta(Meta)
-                              or create_ActionWord_WithNewlines(Meta, construct_dual_token__with_newlines)
-                           )(s, first, second, newlines, s[-1] == '\n')
-               )
-
-
-    def OLD__create_dual_token__line_marker(Meta, first, second):
-        s = intern_string(first.s + second.s)
-
-        newlines = s.count('\n')
-
-        return (
-                   Meta(s, first, second)
-                       if newlines is 1 else
-                       (
-                             lookup_adjusted_meta(Meta)
-                          or create_ActionWord_LineMarker_Many(Meta, construct_dual_token__line_marker__many)
-                       )(s, first, second, newlines)
-               )
-
-
-    @privileged
-    def OLD__produce_conjure_dual_token(name, Meta, line_marker = false):
-        assert type(line_marker) is Boolean
-
-        #
-        #   FIX: Should use the a single dual cache
-        #
-        cache     = {}
-        provide_1 = cache.setdefault
-        lookup_1  = cache.get
-        store_1   = cache.__setitem__
-
-        create_dual_token = (
-                OLD__create_dual_token__line_marker   if line_marker else
-                OLD__create_dual_token__with_newlines
-            )
-
-
-        def conjure_dual_token(first, second):
-            v = lookup_1(first)
-
-            if v is none:
-                return provide_1(first, create_dual_token(Meta, first, second))
-
-            if type(v) is Map:
-                return (v.get(second)) or (v.setdefault(second, create_dual_token(Meta, first, second)))
-
-            if v.second is second:
-                return v
-
-            r = create_dual_token(Meta, first, second)
-
-            store_1(first, { v.second : v , second : r })
-
-            return r
-
-
-        if __debug__:
-            conjure_dual_token.__name__ = intern_arrange('conjure_%s', name)
-
-
-        return conjure_dual_token
-
-
-    conjure__right_parenthesis__colon__line_marker = OLD__produce_conjure_dual_token(
-            'right_parenthesis__colon__line_marker',
-            RightParenthesis_Colon_LineMarker_1,
-            true,
-        )
-
-    #
-    #   ===  NEW  ===
-    #
     def create_dual_token__with_newlines(Meta, s, first, second):
         assert s == first.s + second.s
 
@@ -577,11 +491,11 @@ def gem():
                     )
 
     evoke_arguments_0 = produce_evoke_dual_token(
-                             'arguments_0',
-                             Arguments_0,
-                             lookup_arguments_0_token,
-                             provide_arguments_0_token,
-                         )
+                            'arguments_0',
+                            Arguments_0,
+                            lookup_arguments_0_token,
+                            provide_arguments_0_token,
+                        )
 
     evoke__colon__right_square_bracket = produce_evoke_dual_token(
                                              'colon__right_square_bracket',
@@ -640,8 +554,6 @@ def gem():
 
 
     share(
-#       'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
-
         'conjure_arguments_0',                              conjure_arguments_0,
         'conjure__colon__right_square_bracket',             conjure__colon__right_square_bracket,
         'conjure__comma__right_brace',                      conjure__comma__right_brace,
