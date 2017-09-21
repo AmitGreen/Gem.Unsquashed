@@ -44,7 +44,7 @@ def gem():
                 if qi() != qj():
                     prefix = qs()[qi() : qj()]
 
-                    r = r.prefix_meta(
+                    r = r.evoke_whitespace_atom(
                             (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
                             r,
                         )
@@ -190,7 +190,7 @@ def gem():
                 if qi() != j:
                     prefix = s[qi() : j]
 
-                    r = r.prefix_meta(
+                    r = r.evoke_whitespace_atom(
                             (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
                             r,
                         )
@@ -240,7 +240,7 @@ def gem():
                 suffix = conjure_whitespace_line(qs()[m.end('atom') : ])
 
                 if qi() == qj():
-                    r = r.suffix_meta(r, suffix)
+                    r = r.evoke_atom_whitespace(r, suffix)
                 else:
                     prefix = qs()[qi() : qj()]
 
@@ -261,7 +261,7 @@ def gem():
 
             prefix = qs()[qi() : qj()]
 
-            return r.prefix_meta(
+            return r.evoke_whitespace_atom(
                        (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
                        r,
                    )
@@ -445,7 +445,7 @@ def gem():
                 suffix = conjure_whitespace_line(s[quote_end : ])
 
                 if qi() == qj():
-                    r = r.suffix_meta(r, suffix)
+                    r = r.evoke_atom_whitespace(r, suffix)
                 else:
                     prefix = s[qi() : qj()]
 
@@ -466,7 +466,7 @@ def gem():
 
             prefix = s[qi() : qj()]
 
-            return r.prefix_meta(
+            return r.evoke_whitespace_atom(
                        (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
                        r,
                    )

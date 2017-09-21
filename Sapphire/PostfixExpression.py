@@ -3,9 +3,6 @@
 #
 @gem('Sapphire.Expression')
 def gem():
-    require_gem('Sapphire.Elemental')
-
-
     class PostfixExpression(Object):
         __slots__ = ((
             'left',                     #   Expression
@@ -16,6 +13,7 @@ def gem():
         is__right_parenthesis__colon__newline = false
         is_right_parenthesis                  = false
         is_right_square_bracket               = false
+        is_statement                          = false
 
 
         def __init__(t, left, operator):
@@ -45,19 +43,4 @@ def gem():
     @share
     class IndexExpression(PostfixExpression):
         __slots__    = (())
-        display_name = []
-        is_statement = false
-
-
-    if 0:
-        @share
-        class SuffixAtom(PostfixExpression):
-            __slots__                             = (())
-            display_name                          = 'suffixed-atom'
-            is__atom__or__special_operator        = true
-            is_atom                               = true
-
-
-        DoubleQuote.suffix_meta = SuffixAtom
-        SingleQuote.suffix_meta = SuffixAtom
-        Number     .suffix_meta = SuffixAtom
+        display_name = '[]'

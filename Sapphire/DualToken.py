@@ -273,6 +273,21 @@ def gem():
         __init__ = construct_dual_operator__line_marker_1
 
 
+    class WhitespaceAtom(BaseDualOperator):
+        __slots__                      = (())
+        display_name                   = 'whitespace-atom'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+
+
+    class WhitespaceIdentifier(BaseDualOperator):
+        __slots__                      = (())
+        display_name                   = 'whitespace-identifier'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+        is_identifier                  = true
+
+
     def create_dual_token__with_newlines(Meta, s, a, b):
         assert s == a.s + b.s
 
@@ -546,6 +561,9 @@ def gem():
                                             LeftSquareBracket_Colon,
                                         )
 
+    evoke_whitespace_atom       = produce_evoke_dual_token('whitespace-atom',       WhitespaceAtom)
+    evoke_whitespace_identifier = produce_evoke_dual_token('whitespace-identifier', WhitespaceIdentifier)
+
     insert_return__line_marker = produce_insert_dual_token(
                                     'return__line_marker',
                                     KeywordReturn_LineMarker_1,
@@ -564,32 +582,40 @@ def gem():
 
 
     static_evoke_atom_whitespace = static_method(evoke_atom_whitespace)
+    static_evoke_whitespace_atom = static_method(evoke_whitespace_atom)
 
-    DoubleQuote.suffix_meta = static_evoke_atom_whitespace
-    SingleQuote.suffix_meta = static_evoke_atom_whitespace
-    Number     .suffix_meta = static_evoke_atom_whitespace
-    Identifier .suffix_meta = static_method(evoke_identifier_whitespace)
+    DoubleQuote.evoke_atom_whitespace = static_evoke_atom_whitespace
+    SingleQuote.evoke_atom_whitespace = static_evoke_atom_whitespace
+    Number     .evoke_atom_whitespace = static_evoke_atom_whitespace
+    Identifier .evoke_atom_whitespace = static_method(evoke_identifier_whitespace)
+
+    Identifier .evoke_whitespace_atom = static_method(evoke_whitespace_identifier)
+    DoubleQuote.evoke_whitespace_atom = static_evoke_whitespace_atom
+    SingleQuote.evoke_whitespace_atom = static_evoke_whitespace_atom
+    Number     .evoke_whitespace_atom = static_evoke_whitespace_atom
 
 
     share(
-        'conjure_arguments_0',                              conjure_arguments_0,
-        'conjure__colon__right_square_bracket',             conjure__colon__right_square_bracket,
-        'conjure__comma__right_brace',                      conjure__comma__right_brace,
-        'conjure__comma__right_parenthesis',                conjure__comma__right_parenthesis,
-        'conjure_empty_list',                               conjure_empty_list,
-        'conjure_empty_map',                                conjure_empty_map,
-        'conjure_empty_tuple',                              conjure_empty_tuple,
-        'conjure_is_not',                                   conjure_is_not,
-        'conjure__left_square_bracket__colon',              conjure__left_square_bracket__colon,
-        'conjure_not_in',                                   conjure_not_in,
-        'evoke_arguments_0',                                evoke_arguments_0,
-        'evoke__comma__right_brace',                        evoke__comma__right_brace,
-        'evoke__comma__right_parenthesis',                  evoke__comma__right_parenthesis,
-        'evoke__comma__right_square_bracket',               evoke__comma__right_square_bracket,
-        'evoke_empty_list',                                 evoke_empty_list,
-        'evoke_empty_map',                                  evoke_empty_map,
-        'evoke_identifier_whitespace',                      evoke_identifier_whitespace,
-        'evoke__left_square_bracket__colon',                evoke__left_square_bracket__colon,
-        'find_conjure_comma_something',                     find_conjure_comma_something,
-        'insert_return__line_marker',                       insert_return__line_marker,
+        'conjure_arguments_0',                      conjure_arguments_0,
+        'conjure__colon__right_square_bracket',     conjure__colon__right_square_bracket,
+        'conjure__comma__right_brace',              conjure__comma__right_brace,
+        'conjure__comma__right_parenthesis',        conjure__comma__right_parenthesis,
+        'conjure_empty_list',                       conjure_empty_list,
+        'conjure_empty_map',                        conjure_empty_map,
+        'conjure_empty_tuple',                      conjure_empty_tuple,
+        'conjure_is_not',                           conjure_is_not,
+        'conjure__left_square_bracket__colon',      conjure__left_square_bracket__colon,
+        'conjure_not_in',                           conjure_not_in,
+        'evoke_arguments_0',                        evoke_arguments_0,
+        'evoke__comma__right_brace',                evoke__comma__right_brace,
+        'evoke__comma__right_parenthesis',          evoke__comma__right_parenthesis,
+        'evoke__comma__right_square_bracket',       evoke__comma__right_square_bracket,
+        'evoke_empty_list',                         evoke_empty_list,
+        'evoke_empty_map',                          evoke_empty_map,
+        'evoke_identifier_whitespace',              evoke_identifier_whitespace,
+        'evoke__left_square_bracket__colon',        evoke__left_square_bracket__colon,
+        'evoke_whitespace_identifier',              evoke_whitespace_identifier,
+        'evoke_whitespace_identifier',              evoke_whitespace_identifier,
+        'find_conjure_comma_something',             find_conjure_comma_something,
+        'insert_return__line_marker',               insert_return__line_marker,
     )

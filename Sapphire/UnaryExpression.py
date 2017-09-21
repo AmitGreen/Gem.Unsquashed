@@ -3,9 +3,6 @@
 #
 @gem('Sapphire.Expression')
 def gem():
-    require_gem('Sapphire.Elemental')
-
-
     class UnaryExpression(Object):
         __slots__ = ((
             'operator',                 #   Operator*
@@ -57,32 +54,15 @@ def gem():
 
 
     @share
-    class PrefixAtom(UnaryExpression):
-        __slots__                             = (())
-        display_name                          = 'prefixed-atom'
-        is__atom__or__special_operator        = true
-        is_atom                               = true
-
-
-    @share
-    class PrefixIdentifier(UnaryExpression):
-        __slots__                             = (())
-        display_name                          = 'prefixed-identifier'
-        is__atom__or__special_operator        = true
-        is_atom                               = true
-        is_identifier                         = true
-
-
-    @share
-    class TupleArgument(UnaryExpression):
+    class StarArgument(UnaryExpression):
         __slots__    = (())
-        display_name = 'tuple-argument'
+        display_name = '*-argument'
 
 
     @share
-    class TupleParameter(UnaryExpression):
+    class StarParameter(UnaryExpression):
         __slots__    = (())
-        display_name = 'tuple-parameter'
+        display_name = '*-parameter'
         is_atom      = true
 
 
@@ -91,8 +71,3 @@ def gem():
         __slots__    = (())
         display_name = '~'
 
-
-    Identifier .prefix_meta = PrefixIdentifier
-    DoubleQuote.prefix_meta = PrefixAtom
-    SingleQuote.prefix_meta = PrefixAtom
-    Number     .prefix_meta = PrefixAtom

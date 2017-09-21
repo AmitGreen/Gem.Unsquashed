@@ -109,7 +109,7 @@ def gem():
                 if qi() != j:
                     prefix = s[qi() : j]
 
-                    r = PrefixIdentifier(
+                    r = evoke_whitespace_identifier(
                             (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
                             r,
                         )
@@ -119,7 +119,7 @@ def gem():
 
                 return r
 
-            r = TupleParameter(conjure_star_sign(s[qi() : star_end]), r)
+            r = StarParameter(conjure_star_sign(s[qi() : star_end]), r)
 
             j = m.end()
 

@@ -39,7 +39,7 @@ def gem():
 
         prefix = s[qi() : j]
 
-        return PrefixIdentifier(
+        return evoke_whitespace_identifier(
                    (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
                    r,
                )
@@ -66,7 +66,7 @@ def gem():
         r = conjure_identifier(s[j : name_end])
 
         if qi() != j:
-            r = PrefixIdentifier(conjure_whitespace(s[qi() : j]), r)
+            r = evoke_whitespace_identifier(conjure_whitespace(s[qi() : j]), r)
 
         wi(name_end)
         wj(m.end())
