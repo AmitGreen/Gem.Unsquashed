@@ -327,7 +327,7 @@ def gem():
                 middle_2 = parse1_atom()
 
                 if middle_2.is_right_square_bracket:
-                    operator = conjure_all_index(operator.first, operator.second, middle_2)
+                    operator = evoke_all_index(operator.first, operator.second, middle_2)
                 else:
                     operator_2 = qk()
 

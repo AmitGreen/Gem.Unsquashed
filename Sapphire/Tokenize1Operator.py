@@ -131,11 +131,7 @@ def gem():
                     RSB_end = m.end('right_square_bracket')
 
                     if RSB_end is not -1:
-                        r = conjure_all_index(
-                                conjure_left_square_bracket (s[qi()            : left_end       ]),
-                                conjure_colon               (s[left_end        : tail_index__end]),
-                                conjure_right_square_bracket(s[tail_index__end : RSB_end        ]),
-                            )
+                        r = conjure_all_index(left_end, tail_index__end, RSB_end)
 
                         j = m.end()
 
@@ -385,24 +381,23 @@ def gem():
             tail_index__end = m.end('tail_index__ow')
 
             if tail_index__end is not -1:
-                left      = conjure_left_square_bracket(s[qi() : left_end])
                 right_end = m.end('right_square_bracket')
 
                 if right_end is not -1:
-                    colon = conjure_colon(s[left_end : tail_index__end])
-
                     if qd() is 0:
-                        right = conjure_right_square_bracket(s[tail_index__end : right_end])
+                        r = conjure_all_index(left_end, tail_index__end, right_end)
 
                         wn(conjure_token_newline(s[right_end : ]))
+
+                        return r
                     else:
-                        right = conjure_right_square_bracket(s[tail_index__end : ])
+                        r = conjure_all_index(left_end, tail_index__end, none)
 
                         skip_tokenize_prefix()
 
-                    return conjure_all_index(left, colon, right)
+                        return r
 
-                left = conjure__left_square_bracket__colon(left, conjure_colon__ends_in_newline(s[left_end : ]))
+                left = conjure__left_square_bracket__colon(left_end, none)
             else:
                 left = conjure_left_square_bracket__ends_in_newline(s[qi() : ])
 

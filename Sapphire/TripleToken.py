@@ -3,11 +3,13 @@
 #
 @gem('Sapphire.TripleToken')
 def gem():
-    conjure_line_marker = Shared.conjure_line_marker        #   Due to privileged
-    lookup_line_marker  = Shared.lookup_line_marker         #   Due to privileged
-    provide_line_marker = Shared.provide_line_marker        #   Due to privileged
-    qi                  = Shared.qi                         #   Due to privileged
-    qs                  = Shared.qs                         #   Due to privileged
+    conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged
+    lookup_line_marker   = Shared.lookup_line_marker        #   Due to privileged
+    lookup_normal_token  = Shared.lookup_normal_token       #   Due to privileged
+    provide_normal_token = Shared.provide_normal_token      #   Due to privileged
+    provide_line_marker  = Shared.provide_line_marker       #   Due to privileged
+    qi                   = Shared.qi                        #   Due to privileged
+    qs                   = Shared.qs                        #   Due to privileged
 
 
     def construct_triple_token(t, s, first, second, third):
@@ -246,8 +248,6 @@ def gem():
         return conjure_triple_token
 
 
-    conjure_all_index = OLD__produce_conjure_triple_token('all_index', AllIndex)
-
     conjure__comma__right_parenthesis__colon__line_marker = OLD__produce_conjure_triple_token(
             'comma__right_parenthesis__colon__line_marker',
             Comma_RightParenthesis_Colon_LineMarker_1,
@@ -274,7 +274,7 @@ def gem():
                            (
                                  lookup_adjusted_meta(Meta)
                               or create_ActionWord_WithNewlines(Meta, construct_triple_token__with_newlines)
-                           )(s, first, second, newlines, third, s[-1] == '\n')
+                           )(s, first, second, third, newlines, s[-1] == '\n')
                )
 
 
@@ -340,30 +340,6 @@ def gem():
 
 
     @privileged
-    def produce_evoke_triple_token__line_marker(name, Meta):
-        def evoke_triple_token__line_marker(first, second, third):
-            s = first.s + second.s + third.s
-
-            r = lookup_line_marker(s)
-
-            if r is not none:
-                assert (r.first is first) and (r.second is second) and (r.third is third)
-
-                return r
-
-            s = intern_string(s)
-
-            return provide_line_marker(s, create_triple_token__line_marker(Meta, s, first, second, third))
-
-
-        if __debug__:
-            evoke_triple_token__line_marker.__name__ = intern_arrange('evoke_%s__line_marker', name)
-
-        return evoke_triple_token__line_marker
-
-
-
-    @privileged
     def produce_conjure_triple_token__line_marker(name, Meta, conjure_first, conjure_second):
         def conjure_triple_token__line_marker(middle_1, middle_2):
             assert qi() < middle_1 < middle_2
@@ -399,6 +375,57 @@ def gem():
         return conjure_triple_token__line_marker
 
 
+    @privileged
+    def produce_evoke_triple_token(
+            name, Meta,
+            
+            lookup      = lookup_normal_token,
+            provide     = provide_normal_token,
+            line_marker = false
+    ):
+        if line_marker:
+            assert (lookup is lookup_normal_token) and (provide is provide_normal_token)
+
+            create_triple_token = create_triple_token__line_marker
+            lookup              = lookup_line_marker
+            provide             = provide_line_marker
+        else:
+            create_triple_token = create_triple_token__with_newlines
+
+
+        def evoke_triple_token(first, second, third):
+            s = first.s + second.s + third.s
+
+            r = lookup(s)
+
+            if r is not none:
+                assert (r.first is first) and (r.second is second) and (r.third is third)
+
+                return r
+
+            s = intern_string(s)
+
+            return provide(s, create_triple_token(Meta, s, first, second, third))
+
+
+        if __debug__:
+            evoke_triple_token.__name__ = intern_arrange('evoke_%s', name)
+
+        return evoke_triple_token
+
+
+    conjure_all_index = produce_conjure_triple_token(
+                            'all_index',
+                            AllIndex,
+                            lookup_normal_token,
+                            provide_normal_token,
+                            conjure_left_square_bracket,
+                            conjure_colon,
+                            conjure_right_square_bracket,
+                            conjure_right_square_bracket__ends_in_newline,
+                        )
+
+
     conjure__right_parenthesis__colon__line_marker = produce_conjure_triple_token__line_marker(
                                                          'right_parenthesis__colon__line_marker',
                                                          RightParenthesis_Colon_LineMarker_1,
@@ -406,9 +433,14 @@ def gem():
                                                          conjure_colon,
                                                      )
 
-    evoke__right_parenthesis__colon__line_marker = produce_evoke_triple_token__line_marker(
+    evoke_all_index = produce_evoke_triple_token('all_index', AllIndex)
+
+
+    evoke__right_parenthesis__colon__line_marker = produce_evoke_triple_token(
                                                         'right_parenthesis__colon__line_marker',
                                                         RightParenthesis_Colon_LineMarker_1,
+
+                                                        line_marker = true
                                                     )
 
 
@@ -426,9 +458,11 @@ def gem():
 
         'conjure__parameter_0__colon__line_marker',  conjure__parameter_0__colon__line_marker,
 
+
         #
         #   ===  NEW  ===
         #
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
+        'evoke_all_index',                                  evoke_all_index,
         'evoke__right_parenthesis__colon__line_marker',     evoke__right_parenthesis__colon__line_marker,
     )
