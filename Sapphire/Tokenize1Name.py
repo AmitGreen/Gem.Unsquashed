@@ -18,7 +18,7 @@ def gem():
             suffix = conjure_whitespace_line(s[name_end : ])
 
             if qi() == qj():
-                r = SuffixIdentifier(r, suffix)
+                r = evoke_identifier_whitespace(r, suffix)
             else:
                 prefix = s[qi() : qj()]
 

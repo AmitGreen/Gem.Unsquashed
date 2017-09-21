@@ -45,8 +45,8 @@ def gem():
         assert s.count('\n') is 1
         assert b.s[-1] == '\n'
 
-        t.s      = s
-        t.a  = a
+        t.s = s
+        t.a = a
         t.b = b
 
 
@@ -201,10 +201,18 @@ def gem():
         is_atom                        = true
 
 
+    class IdentifierWhitespace(BaseDualOperator):
+        __slots__                      = (())
+        display_name                   = 'identifier-whitespace'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+        is_identifier                  = true
+
+
     @share
     class IsNot(BaseDualOperator):
         __slots__                        = (())
-        display_name                     = 'is not'
+        display_name                     = 'is-not'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
         is_end_of_logical_and_expression = true
@@ -224,7 +232,7 @@ def gem():
     @share
     class NotIn(BaseDualOperator):
         __slots__                        = (())
-        display_name                     = 'not in'
+        display_name                     = 'not-in'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
         is_end_of_logical_and_expression = true
@@ -517,8 +525,9 @@ def gem():
                                              Comma_RightSquareBracket,
                                          )
 
-    evoke_empty_list = produce_evoke_dual_token('[]', EmptyList)
-    evoke_empty_map  = produce_evoke_dual_token('{}', EmptyMap)
+    evoke_empty_list            = produce_evoke_dual_token('[]',                    EmptyList)
+    evoke_empty_map             = produce_evoke_dual_token('{}',                    EmptyMap)
+    evoke_identifier_whitespace = produce_evoke_dual_token('identifier-whitespace', IdentifierWhitespace)
 
     evoke__left_square_bracket__colon = produce_evoke_dual_token(
                                             '[:',                           #   ]
@@ -542,6 +551,9 @@ def gem():
                                    }.__getitem__
 
 
+    Identifier.suffix_meta = static_method(evoke_identifier_whitespace)
+
+
     share(
         'conjure_arguments_0',                              conjure_arguments_0,
         'conjure__colon__right_square_bracket',             conjure__colon__right_square_bracket,
@@ -559,6 +571,7 @@ def gem():
         'evoke__comma__right_square_bracket',               evoke__comma__right_square_bracket,
         'evoke_empty_list',                                 evoke_empty_list,
         'evoke_empty_map',                                  evoke_empty_map,
+        'evoke_identifier_whitespace',                      evoke_identifier_whitespace,
         'evoke__left_square_bracket__colon',                evoke__left_square_bracket__colon,
         'find_conjure_comma_something',                     find_conjure_comma_something,
         'insert_return__line_marker',                       insert_return__line_marker,

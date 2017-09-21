@@ -57,16 +57,6 @@ def gem():
         is_atom                               = true
 
 
-    @share
-    class SuffixIdentifier(PostfixExpression):
-        __slots__                             = (())
-        display_name                          = 'suffixed-identifier'
-        is__atom__or__special_operator        = true
-        is_atom                               = true
-        is_identifier                         = true
-
-
-    Identifier .suffix_meta = SuffixIdentifier
     DoubleQuote.suffix_meta = SuffixAtom
     SingleQuote.suffix_meta = SuffixAtom
     Number     .suffix_meta = SuffixAtom

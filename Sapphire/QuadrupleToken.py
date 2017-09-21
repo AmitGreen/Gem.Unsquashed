@@ -110,7 +110,7 @@ def gem():
             c_s = t.c.s
             d_s = t.d.s
 
-            return arrange('<%s <%s> <%s> <%s>>',
+            return arrange('<%s <%s> <%s> <%s> <%s>>',
                            display_name,
                            (portray_string(a_s)   if '\n' in a_s else   a_s),
                            (portray_string(b_s)   if '\n' in b_s else   b_s),
