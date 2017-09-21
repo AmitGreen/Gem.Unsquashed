@@ -8,6 +8,10 @@ def gem():
 
     create_ActionWord_WithNewlines = Shared.create_ActionWord_WithNewlines  #   Due to privileged
     lookup_adjusted_meta           = Shared.lookup_adjusted_meta            #   Due to privileged
+    lookup_line_marker             = Shared.lookup_line_marker              #   Due to privileged
+    lookup_normal_token            = Shared.lookup_normal_token             #   Due to privileged
+    provide_line_marker            = Shared.provide_line_marker             #   Due to privileged
+    provide_normal_token           = Shared.provide_normal_token            #   Due to privileged
     qi                             = Shared.qi                              #   Due to privileged
     qs                             = Shared.qs                              #   Due to privileged
 
@@ -290,16 +294,22 @@ def gem():
 
     @privileged
     def produce_conjure_dual_token(
-            name, Meta, lookup, provide, conjure_first, conjure_second, conjure_second__ends_in_newline,
+            name, Meta, conjure_first, conjure_second, conjure_second__ends_in_newline,
             
+            lookup      = lookup_normal_token,
+            provide     = provide_normal_token,
             line_marker = false,
     ):
         assert type(line_marker) is Boolean
 
-        create_dual_token = (
-                create_dual_token__line_marker   if line_marker else
-                create_dual_token__with_newlines
-            )
+        if line_marker:
+            assert (lookup is lookup_normal_token) and (provide is provide_normal_token)
+
+            create_dual_token = create_dual_token__line_marker
+            lookup            = lookup_line_marker
+            provide           = provide_line_marker
+        else:
+            create_dual_token = create_dual_token__with_newlines
 
 
         def conjure_dual_token(middle, end):
@@ -334,7 +344,12 @@ def gem():
 
 
     @privileged
-    def produce_evoke_dual_token(name, Meta, lookup, provide):
+    def produce_evoke_dual_token(
+            name, Meta,
+            
+            lookup  = lookup_normal_token,
+            provide = provide_normal_token,
+    ):
         def evoke_dual_token(first, second):
             s = first.s + second.s
 
@@ -357,13 +372,23 @@ def gem():
 
 
     @privileged
-    def produce_insert_dual_token(name, Meta, lookup, provide, line_marker = false):
+    def produce_insert_dual_token(
+            name, Meta,
+            
+            lookup      = lookup_normal_token,
+            provide     = provide_normal_token,
+            line_marker = false,
+    ):
         assert type(line_marker) is Boolean
 
-        create_dual_token = (
-                create_dual_token__line_marker   if line_marker else
-                create_dual_token__with_newlines
-            )
+        if line_marker:
+            assert (lookup is lookup_normal_token) and (provide is provide_normal_token)
+
+            create_dual_token = create_dual_token__line_marker
+            lookup            = lookup_line_marker
+            provide           = provide_line_marker
+        else:
+            create_dual_token = create_dual_token__with_newlines
 
 
         def insert_dual_token(s, first, second):
@@ -383,8 +408,6 @@ def gem():
     conjure__colon__right_square_bracket = produce_conjure_dual_token(
                                                'colon__right_square_bracket',
                                                Colon_RightSquareBracket,
-                                               lookup_normal_token,
-                                               provide_normal_token,
                                                conjure_colon,
                                                conjure_right_square_bracket,
                                                conjure_right_square_bracket__ends_in_newline,
@@ -393,18 +416,17 @@ def gem():
     conjure_arguments_0 = produce_conjure_dual_token(
                               'arguments_0',
                               Arguments_0,
-                              lookup_arguments_0_token,
-                              provide_arguments_0_token,
                               conjure_left_parenthesis,
                               conjure_right_parenthesis,
                               conjure_right_parenthesis__ends_in_newline,
+
+                              lookup  = lookup_arguments_0_token,
+                              provide = provide_arguments_0_token,
                           )
 
     conjure__comma__right_brace = produce_conjure_dual_token(
                                       'comma__right_brace',
                                       Comma_RightBrace,
-                                      lookup_normal_token,
-                                      provide_normal_token,
                                       conjure_comma,
                                       conjure_right_brace,
                                       conjure_right_brace__ends_in_newline,
@@ -413,8 +435,6 @@ def gem():
     conjure__comma__right_square_bracket = produce_conjure_dual_token(
                                                'comma__right_square_bracket',
                                                Comma_RightSquareBracket,
-                                               lookup_normal_token,
-                                               provide_normal_token,
                                                conjure_comma,
                                                conjure_right_square_bracket,
                                                conjure_right_square_bracket__ends_in_newline,
@@ -423,8 +443,6 @@ def gem():
     conjure__comma__right_parenthesis = produce_conjure_dual_token(
                                             'comma__right_parenthesis',
                                             Comma_RightParenthesis,
-                                            lookup_normal_token,
-                                            provide_normal_token,
                                             conjure_comma,
                                             conjure_right_parenthesis,
                                             conjure_right_parenthesis__ends_in_newline,
@@ -433,8 +451,6 @@ def gem():
     conjure_empty_list = produce_conjure_dual_token(
                              '[]',
                              EmptyList,
-                             lookup_normal_token,
-                             provide_normal_token,
                              conjure_left_square_bracket,
                              conjure_right_square_bracket,
                              conjure_right_square_bracket__ends_in_newline,
@@ -443,8 +459,6 @@ def gem():
     conjure_empty_map = produce_conjure_dual_token(
                             '{}',
                             EmptyMap,
-                            lookup_normal_token,
-                            provide_normal_token,
                             conjure_left_brace,
                             conjure_right_brace,
                             conjure_right_brace__ends_in_newline,
@@ -453,8 +467,6 @@ def gem():
     conjure_empty_tuple = produce_conjure_dual_token(
                               '()',
                               EmptyTuple,
-                              lookup_normal_token,
-                              provide_normal_token,
                               conjure_left_parenthesis,
                               conjure_right_parenthesis,
                               conjure_right_parenthesis__ends_in_newline,
@@ -463,8 +475,6 @@ def gem():
     conjure_is_not = produce_conjure_dual_token(
                         'is_not',
                         IsNot,
-                        lookup_normal_token,
-                        provide_normal_token,
                         conjure_keyword_is,
                         conjure_keyword_not,
                         conjure_keyword_not__ends_in_newline,
@@ -473,8 +483,6 @@ def gem():
     conjure__left_square_bracket__colon = produce_conjure_dual_token(
                                               '[:',                           #   ]
                                               LeftSquareBracket_Colon,
-                                              lookup_normal_token,
-                                              provide_normal_token,
                                               conjure_left_square_bracket,
                                               conjure_colon,
                                               conjure_colon__ends_in_newline,
@@ -483,8 +491,6 @@ def gem():
     conjure_not_in = produce_conjure_dual_token(
                         'not_in',
                         NotIn,
-                        lookup_normal_token,
-                        provide_normal_token,
                         conjure_keyword_not,
                         conjure_keyword_in,
                         conjure_keyword_in__ends_in_newline,
@@ -493,53 +499,43 @@ def gem():
     evoke_arguments_0 = produce_evoke_dual_token(
                             'arguments_0',
                             Arguments_0,
-                            lookup_arguments_0_token,
-                            provide_arguments_0_token,
+
+                            lookup  = lookup_arguments_0_token,
+                            provide = provide_arguments_0_token,
                         )
 
     evoke__colon__right_square_bracket = produce_evoke_dual_token(
                                              'colon__right_square_bracket',
                                              Colon_RightSquareBracket,
-                                             lookup_normal_token,
-                                             provide_normal_token,
                                          )
 
     evoke__comma__right_brace = produce_evoke_dual_token(
                                     'comma__right_brace',
                                     Comma_RightBrace,
-                                    lookup_normal_token,
-                                    provide_normal_token,
                                 )
 
     evoke__comma__right_parenthesis = produce_evoke_dual_token(
                                           'comma__right_parenthesis',
                                           Comma_RightParenthesis,
-                                          lookup_normal_token,
-                                          provide_normal_token,
                                       )
 
     evoke__comma__right_square_bracket = produce_evoke_dual_token(
                                              'comma__right_square_bracket',
                                              Comma_RightSquareBracket,
-                                             lookup_normal_token,
-                                             provide_normal_token,
                                          )
 
-    evoke_empty_list = produce_evoke_dual_token('[]', EmptyList, lookup_normal_token, provide_normal_token)
-    evoke_empty_map  = produce_evoke_dual_token('{}', EmptyMap,  lookup_normal_token, provide_normal_token)
+    evoke_empty_list = produce_evoke_dual_token('[]', EmptyList)
+    evoke_empty_map  = produce_evoke_dual_token('{}', EmptyMap)
 
     evoke__left_square_bracket__colon = produce_evoke_dual_token(
                                             '[:',                           #   ]
                                             LeftSquareBracket_Colon,
-                                            lookup_normal_token,
-                                            provide_normal_token,
                                         )
 
     insert_return__line_marker = produce_insert_dual_token(
                                     'return__line_marker',
                                     KeywordReturn_LineMarker_1,
-                                    lookup_line_marker,
-                                    provide_line_marker,
+
                                     line_marker = true,
                                  )
 

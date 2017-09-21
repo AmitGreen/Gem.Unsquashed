@@ -6,8 +6,8 @@ def gem():
     conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged
     lookup_line_marker   = Shared.lookup_line_marker        #   Due to privileged
     lookup_normal_token  = Shared.lookup_normal_token       #   Due to privileged
-    provide_normal_token = Shared.provide_normal_token      #   Due to privileged
     provide_line_marker  = Shared.provide_line_marker       #   Due to privileged
+    provide_normal_token = Shared.provide_normal_token      #   Due to privileged
     qi                   = Shared.qi                        #   Due to privileged
     qs                   = Shared.qs                        #   Due to privileged
 
@@ -295,41 +295,71 @@ def gem():
 
     @privileged
     def produce_conjure_triple_token(
-            name, Meta, lookup, provide, conjure_first, conjure_second, conjure_third, conjure_third__ends_in_newline,
+            name, Meta, conjure_first, conjure_second,
             
-            line_marker = false,
+            conjure_third                  = absent,
+            conjure_third__ends_in_newline = absent,
+            lookup                         = lookup_normal_token,
+            provide                        = provide_normal_token,
+            line_marker                    = false,
     ):
         assert type(line_marker) is Boolean
 
-        create_triple_token = (
-                create_triple_token__line_marker   if line_marker else
-                create_triple_token__with_newlines
-            )
+
+        if line_marker:
+            assert (lookup is lookup_normal_token) and (provide is provide_normal_token)
+            assert (conjure_third is conjure_third__ends_in_newline is absent)
 
 
-        def conjure_triple_token(middle_1, middle_2, end):
-            triple_s = qs()[qi() : end]
+            def conjure_triple_token(middle_1, middle_2):
+                assert qi() < middle_1 < middle_2
 
-            r = lookup(triple_s)
-           
-            if r is not none:
-                assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
+                triple_s = qs()[qi() : ]
 
-                return r
+                r = lookup_line_marker(triple_s)
+               
+                if r is not none:
+                    assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
-            s        = qs()
-            triple_s = intern_string(triple_s)
+                    return r
 
-            return provide(
-                       triple_s,
-                       create_triple_token(
-                           Meta,
+                s        = qs()
+                triple_s = intern_string(triple_s)
+
+                return provide_line_marker(
                            triple_s,
-                           conjure_first (s[qi()     : middle_1]),
-                           conjure_second(s[middle_1 : middle_2]),
-                           (conjure_third__ends_in_newline   if end is none else   conjure_third)(s[middle_2 : end]),
-                       ),
-                   )
+                           create_triple_token__line_marker(
+                               Meta,
+                               triple_s,
+                               conjure_first      (s[qi()     : middle_1]),
+                               conjure_second     (s[middle_1 : middle_2]),
+                               conjure_line_marker(s[middle_2 :         ]),
+                           ),
+                       )
+        else:
+            def conjure_triple_token(middle_1, middle_2, end):
+                triple_s = qs()[qi() : end]
+
+                r = lookup(triple_s)
+               
+                if r is not none:
+                    assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
+
+                    return r
+
+                s        = qs()
+                triple_s = intern_string(triple_s)
+
+                return provide(
+                           triple_s,
+                           create_triple_token(
+                               Meta,
+                               triple_s,
+                               conjure_first (s[qi()     : middle_1]),
+                               conjure_second(s[middle_1 : middle_2]),
+                               (conjure_third__ends_in_newline   if end is none else   conjure_third)(s[middle_2 : end]),
+                           ),
+                       )
 
 
         if __debug__:
@@ -337,42 +367,6 @@ def gem():
 
 
         return conjure_triple_token
-
-
-    @privileged
-    def produce_conjure_triple_token__line_marker(name, Meta, conjure_first, conjure_second):
-        def conjure_triple_token__line_marker(middle_1, middle_2):
-            assert qi() < middle_1 < middle_2
-
-            triple_s = qs()[qi() : ]
-
-            r = lookup_line_marker(triple_s)
-           
-            if r is not none:
-                assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
-
-                return r
-
-            s        = qs()
-            triple_s = intern_string(triple_s)
-
-            return provide_line_marker(
-                       triple_s,
-                       create_triple_token__line_marker(
-                           Meta,
-                           triple_s,
-                           conjure_first      (s[qi()     : middle_1]),
-                           conjure_second     (s[middle_1 : middle_2]),
-                           conjure_line_marker(s[middle_2 :         ]),
-                       ),
-                   )
-
-
-        if __debug__:
-            conjure_triple_token__line_marker.__name__ = intern_arrange('conjure_%s__line_marker', name)
-
-
-        return conjure_triple_token__line_marker
 
 
     @privileged
@@ -417,8 +411,6 @@ def gem():
     conjure_all_index = produce_conjure_triple_token(
                             'all_index',
                             AllIndex,
-                            lookup_normal_token,
-                            provide_normal_token,
                             conjure_left_square_bracket,
                             conjure_colon,
                             conjure_right_square_bracket,
@@ -426,11 +418,13 @@ def gem():
                         )
 
 
-    conjure__right_parenthesis__colon__line_marker = produce_conjure_triple_token__line_marker(
+    conjure__right_parenthesis__colon__line_marker = produce_conjure_triple_token(
                                                          'right_parenthesis__colon__line_marker',
                                                          RightParenthesis_Colon_LineMarker_1,
                                                          conjure_right_parenthesis,
                                                          conjure_colon,
+
+                                                         line_marker = true,
                                                      )
 
     evoke_all_index = produce_evoke_triple_token('all_index', AllIndex)
