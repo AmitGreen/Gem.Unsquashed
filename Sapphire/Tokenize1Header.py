@@ -210,9 +210,9 @@ def gem():
                     comma_RP_start = m.start('comma_RP')
 
                     return conjure__comma__right_parenthesis__colon__line_marker(
-                               conjure_comma            (s[qi()           : comma_RP_start]),
-                               conjure_right_parenthesis(s[comma_RP_start : comma_RP_end  ]),
-                               conjure_colon            (s[comma_RP_end   :               ])
+                               comma_RP_start,
+                               comma_RP_end,
+                               m.end('comma_RP_colon'),
                            )
 
                 raise_unknown_line()

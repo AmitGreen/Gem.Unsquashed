@@ -105,13 +105,15 @@ def gem():
             raise_unknown_line()
 
         if token_1.is__right_parenthesis__colon__newline:
+            assert 0 # FIX THIS
             return FunctionHeader(
                        keyword_function,
                        name,
-                       conjure__comma__right_parenthesis__colon__line_marker(
+                       evoke__comma__right_parenthesis__colon__line_marker(
                            operator_1,
                            token_1.first,
                            token_1.second,
+                           token_1.third,
                        ),
                    )
 
@@ -156,10 +158,11 @@ def gem():
                        ParameterColon_1(
                            operator_1,
                            token_1,
-                           conjure__comma__right_parenthesis__colon__line_marker(
+                           evoke__comma__right_parenthesis__colon__line_marker(
                                operator_2,
                                token_7.first,
                                token_7.second,
+                               token_7.third,
                            ),
                        ),
                    )
@@ -210,13 +213,11 @@ def gem():
 
             if token_7.is__right_parenthesis__colon__newline:
                 many.append(
-                    conjure__comma__right_parenthesis__colon__line_marker(
+                    evoke__comma__right_parenthesis__colon__line_marker(
                         operator_7,
                         token_7.first,
-                        #
-                        #   TODO: Fix later when this becomes a quadruple token
-                        #
-                        conjure_colon__line_marker(token_7.second.s + token_7.third.s),
+                        token_7.second,
+                        token_7.third,
                     ),
                 )
 

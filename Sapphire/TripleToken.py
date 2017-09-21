@@ -4,6 +4,7 @@
 @gem('Sapphire.TripleToken')
 def gem():
     conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged
+    lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   Due to privileged
     lookup_line_marker   = Shared.lookup_line_marker        #   Due to privileged
     lookup_normal_token  = Shared.lookup_normal_token       #   Due to privileged
     provide_line_marker  = Shared.provide_line_marker       #   Due to privileged
@@ -114,18 +115,6 @@ def gem():
         display_name        = '[:]'
         is_all_index        = true
         is_postfix_operator = true
-
-
-    class Comma_RightParenthesis_Colon_LineMarker_1(BaseTripleOperator):
-        __slots__                                  = (())
-        display_name                               = r'):\n'
-        ends_in_newline                            = true
-        is__any__right_parenthesis__colon__newline = true
-        line_marker                                = true
-        newlines                                   = 1
-
-
-        __init__ = construct_triple_operator__line_marker_1
 
 
     class Parameter_0__Colon__LineMarker_1(BaseTripleOperator):
@@ -247,12 +236,6 @@ def gem():
 
         return conjure_triple_token
 
-
-    conjure__comma__right_parenthesis__colon__line_marker = OLD__produce_conjure_triple_token(
-            'comma__right_parenthesis__colon__line_marker',
-            Comma_RightParenthesis_Colon_LineMarker_1,
-            true,
-        )
 
     conjure__parameter_0__colon__line_marker = OLD__produce_conjure_triple_token(
             'parameter_0__colon_newline',
@@ -445,17 +428,13 @@ def gem():
         #
         #   ===  OLD  ===
         #
-        'conjure_all_index',    conjure_all_index,
-
-        'conjure__comma__right_parenthesis__colon__line_marker',
-            conjure__comma__right_parenthesis__colon__line_marker,
-
         'conjure__parameter_0__colon__line_marker',  conjure__parameter_0__colon__line_marker,
 
 
         #
         #   ===  NEW  ===
         #
+        'conjure_all_index',                                conjure_all_index,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
         'evoke_all_index',                                  evoke_all_index,
         'evoke__right_parenthesis__colon__line_marker',     evoke__right_parenthesis__colon__line_marker,
