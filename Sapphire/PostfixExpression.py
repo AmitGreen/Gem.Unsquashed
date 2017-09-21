@@ -49,14 +49,15 @@ def gem():
         is_statement = false
 
 
-    @share
-    class SuffixAtom(PostfixExpression):
-        __slots__                             = (())
-        display_name                          = 'suffixed-atom'
-        is__atom__or__special_operator        = true
-        is_atom                               = true
+    if 0:
+        @share
+        class SuffixAtom(PostfixExpression):
+            __slots__                             = (())
+            display_name                          = 'suffixed-atom'
+            is__atom__or__special_operator        = true
+            is_atom                               = true
 
 
-    DoubleQuote.suffix_meta = SuffixAtom
-    SingleQuote.suffix_meta = SuffixAtom
-    Number     .suffix_meta = SuffixAtom
+        DoubleQuote.suffix_meta = SuffixAtom
+        SingleQuote.suffix_meta = SuffixAtom
+        Number     .suffix_meta = SuffixAtom

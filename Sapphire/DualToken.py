@@ -117,6 +117,13 @@ def gem():
         is_postfix_operator                   = true
 
 
+    class AtomWhitespace(BaseDualOperator):
+        __slots__                      = (())
+        display_name                   = 'atom-whitespace'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+
+
     class Colon_RightSquareBracket(BaseDualOperator):
         __slots__                               = (())
         #   [
@@ -360,6 +367,9 @@ def gem():
             r = lookup(s)
 
             if r is not none:
+                if not ((r.a is a) and (r.b is b)):
+                    my_line('s: %r; a: %r; b: %r; r: %r; T1: %r; T2: %r', s, a, b, r, r.a is a, r.b is b)
+
                 assert (r.a is a) and (r.b is b)
 
                 return r
@@ -508,6 +518,8 @@ def gem():
                             provide = provide_arguments_0_token,
                         )
 
+    evoke_atom_whitespace = produce_evoke_dual_token('atom-whitespace', AtomWhitespace)
+
     evoke__colon__right_square_bracket = produce_evoke_dual_token(
                                              'colon__right_square_bracket',
                                              Colon_RightSquareBracket,
@@ -551,7 +563,12 @@ def gem():
                                    }.__getitem__
 
 
-    Identifier.suffix_meta = static_method(evoke_identifier_whitespace)
+    static_evoke_atom_whitespace = static_method(evoke_atom_whitespace)
+
+    DoubleQuote.suffix_meta = static_evoke_atom_whitespace
+    SingleQuote.suffix_meta = static_evoke_atom_whitespace
+    Number     .suffix_meta = static_evoke_atom_whitespace
+    Identifier .suffix_meta = static_method(evoke_identifier_whitespace)
 
 
     share(

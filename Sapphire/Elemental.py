@@ -89,22 +89,6 @@ def gem():
             return arrange('<%s %s>', t.display_name, portray_string(t.s))
 
 
-    @share
-    class DoubleQuote(Token):
-        __slots__                      = (())
-        display_name                   = '"'
-        is__atom__or__special_operator = true
-        is_atom                        = true
-        is_colon                       = false
-        is_right_brace                 = false
-        is_right_parenthesis           = false
-        is_right_square_bracket        = false
-
-
-        def display_token(t):
-            return arrange('<%s>', t.s)
-
-
     class KeywordAnd(KeywordAndOperatorBase):
         __slots__                        = (())
         display_name                     = 'and'
@@ -426,22 +410,6 @@ def gem():
         __slots__    = (())
         display_name = 'with'
         keyword      = 'with'
-
-
-    @share
-    class Number(Token):
-        __slots__                      = (())
-        display_name                   = 'number'
-        is__atom__or__special_operator = true
-        is_atom                        = true
-        is_colon                       = false
-        is_right_brace                 = false
-        is_right_parenthesis           = false
-        is_right_square_bracket        = false
-
-
-        def display_token(t):
-            return t.s
 
 
     @share
@@ -992,22 +960,6 @@ def gem():
         keyword       = '~'
 
 
-    @share
-    class SingleQuote(Token):
-        __slots__                      = (())
-        display_name                   = "'"
-        is__atom__or__special_operator = true
-        is_atom                        = true
-        is_colon                       = false
-        is_right_brace                 = false
-        is_right_parenthesis           = false
-        is_right_square_bracket        = false
-
-
-        def display_token(t):
-            return arrange('<%s>', t.s)
-
-
     initialize_action_word__Meta(
         ((
              ((     '!=',       OperatorCompareNotEqual     )),
@@ -1169,15 +1121,16 @@ def gem():
 
 
     find_atom_type = {
-                         '"' : DoubleQuote,
-                         "'" : SingleQuote,
+                         '"' : conjure_double_quote,
+                         "'" : conjure_single_quote,
 
                          #   (
                          ')' : conjure_right_parenthesis,
-                         '.' : Number,
+                         '.' : conjure_number,
 
-                         '0' : Number, '1' : Number, '2' : Number, '3' : Number, '4' : Number,
-                         '5' : Number, '6' : Number, '7' : Number, '8' : Number, '9' : Number,
+                         '0' : conjure_number, '1' : conjure_number, '2' : conjure_number, '3' : conjure_number,
+                         '4' : conjure_number, '5' : conjure_number, '6' : conjure_number, '7' : conjure_number,
+                         '8' : conjure_number, '9' : conjure_number,
 
                          'A' : conjure_identifier, 'B' : conjure_identifier, 'C' : conjure_identifier,
                          'D' : conjure_identifier, 'E' : conjure_identifier, 'F' : conjure_identifier,
