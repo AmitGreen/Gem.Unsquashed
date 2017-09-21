@@ -110,9 +110,9 @@ def gem():
                        name,
                        evoke__parameter_0__colon__line_marker(
                            operator_1,
-                           token_1.first,
-                           token_1.second,
-                           token_1.third,
+                           token_1.a,
+                           token_1.b,
+                           token_1.c,
                        ),
                    )
 
@@ -159,9 +159,9 @@ def gem():
                            token_1,
                            evoke__comma__right_parenthesis__colon__line_marker(
                                operator_2,
-                               token_7.first,
-                               token_7.second,
-                               token_7.third,
+                               token_7.a,
+                               token_7.b,
+                               token_7.c,
                            ),
                        ),
                    )

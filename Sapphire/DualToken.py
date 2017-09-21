@@ -16,82 +16,82 @@ def gem():
     qs                             = Shared.qs                              #   Due to privileged
 
 
-    def construct_dual_token(t, s, first, second):
+    def construct_dual_token(t, s, a, b):
         assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
-        assert s == first.s + second.s
+        assert s == a.s + b.s
         assert '\n' not in s
 
-        t.s      = s
-        t.first  = first
-        t.second = second
+        t.s = s
+        t.a = a
+        t.b = b
 
 
-    def construct_dual_token__with_newlines(t, s, first, second, newlines, ends_in_newline):
+    def construct_dual_token__with_newlines(t, s, a, b, newlines, ends_in_newline):
         assert t.line_marker is false
-        assert s == first.s + second.s
-        assert ends_in_newline is (second.s[-1] == '\n')
+        assert s == a.s + b.s
+        assert ends_in_newline is (b.s[-1] == '\n')
         assert newlines >= 1
 
         t.s               = s
-        t.first           = first
-        t.second          = second
+        t.a               = a
+        t.b               = b
         t.newlines        = newlines
         t.ends_in_newline = ends_in_newline
 
 
-    def construct_dual_operator__line_marker_1(t, s, first, second):
+    def construct_dual_operator__line_marker_1(t, s, a, b):
         assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
-        assert s == first.s + second.s
+        assert s == a.s + b.s
         assert s.count('\n') is 1
-        assert second.s[-1] == '\n'
+        assert b.s[-1] == '\n'
 
         t.s      = s
-        t.first  = first
-        t.second = second
+        t.a  = a
+        t.b = b
 
 
-    def construct_dual_token__line_marker__many(t, s, first, second, newlines):
+    def construct_dual_token__line_marker__many(t, s, a, b, newlines):
         assert (t.ends_in_newline is t.line_marker is true) and (newlines >= 1)
-        assert s == first.s + second.s
+        assert s == a.s + b.s
         assert s.count('\n') == newlines
-        assert second.s[-1] == '\n'
+        assert b.s[-1] == '\n'
 
         t.s        = s
-        t.first    = first
-        t.second   = second
+        t.a        = a
+        t.b        = b
         t.newlines = newlines
 
 
     class BaseDualOperator(KeywordAndOperatorBase):
         __slots__ = ((
-            'first',                    #   Operator+
-            'second',                   #   Operator+
+            'a',                        #   Operator+
+            'b',                        #   Operator+
         ))
 
 
-        def __init__(t, s, first, second):
+        def __init__(t, s, a, b):
             assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
             assert '\n' not in s
-            assert s == first.s + second.s
+            assert s == a.s + b.s
 
-            t.s      = s
-            t.first  = first
-            t.second = second
+            t.s = s
+            t.a = a
+            t.b = b
 
 
         def __repr__(t):
-            return arrange('<%s %r %r>', t.__class__.__name__, t.first, t.second)
+            return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.b)
 
 
         def display_full_token(t):
             display_name = t.display_name
-            first_s      = t.first.s
-            second_s     = t.second.s
+            a_s          = t.a.s
+            b_s          = t.b.s
 
             return arrange('<%s <%s> <%s>>',
                            display_name,
-                           portray_string(first_s)    if '\n' in first_s  else   first_s,
-                           portray_string(second_s)   if '\n' in second_s else   second_s)
+                           portray_string(a_s)   if '\n' in a_s else   a_s,
+                           portray_string(b_s)   if '\n' in b_s else   b_s)
 
 
         def display_token(t):
@@ -100,17 +100,13 @@ def gem():
             if display_name == t.s:
                 return display_name
 
-            first_s  = t.first .s
-            second_s = t.second.s
+            a_s = t.a.s
+            b_s = t.b.s
 
             return arrange('<%s <%s> <%s>>',
                            display_name,
-                           portray_string(first_s)    if '\n' in first_s  else   first_s,
-                           portray_string(second_s)   if '\n' in second_s else   second_s)
-
-
-        def write(t, w):
-            w(t.first.s + t.second.s)
+                           portray_string(a_s)   if '\n' in a_s else   a_s,
+                           portray_string(b_s)   if '\n' in b_s else   b_s)
 
 
     class Arguments_0(BaseDualOperator):
@@ -262,33 +258,33 @@ def gem():
         __init__ = construct_dual_operator__line_marker_1
 
 
-    def create_dual_token__with_newlines(Meta, s, first, second):
-        assert s == first.s + second.s
+    def create_dual_token__with_newlines(Meta, s, a, b):
+        assert s == a.s + b.s
 
         newlines = s.count('\n')
 
         return (
-                   Meta(s, first, second)
+                   Meta(s, a, b)
                        if newlines is 0 else
                            (
                                  lookup_adjusted_meta(Meta)
                               or create_ActionWord_WithNewlines(Meta, construct_dual_token__with_newlines)
-                           )(s, first, second, newlines, s[-1] == '\n')
+                           )(s, a, b, newlines, s[-1] == '\n')
                )
 
 
-    def create_dual_token__line_marker(Meta, s, first, second):
-        assert (s == first.s + second.s) and (s[-1] == '\n')
+    def create_dual_token__line_marker(Meta, s, a, b):
+        assert (s == a.s + b.s) and (s[-1] == '\n')
 
         newlines = s.count('\n')
 
         return (
-                   Meta(s, first, second)
+                   Meta(s, a, b)
                        if newlines is 1 else
                        (
                              lookup_adjusted_meta(Meta)
                           or create_ActionWord_LineMarker_Many(Meta, construct_dual_token__line_marker__many)
-                       )(s, first, second, newlines)
+                       )(s, a, b, newlines)
                )
 
 
@@ -313,23 +309,23 @@ def gem():
 
 
         def conjure_dual_token(middle, end):
-            dual_s = qs()[qi() : end]
+            full = qs()[qi() : end]
 
-            r = lookup(dual_s)
+            r = lookup(full)
            
             if r is not none:
                 assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
                 return r
 
-            dual_s = intern_string(dual_s)
-            s      = qs()
+            full = intern_string(full)
+            s    = qs()
 
             return provide(
-                       dual_s,
+                       full,
                        create_dual_token(
                            Meta,
-                           dual_s,
+                           full,
                            conjure_first(s[qi() : middle]),
                            (conjure_second__ends_in_newline   if end is none else   conjure_second)(s[middle : end]),
                        ),
@@ -350,19 +346,19 @@ def gem():
             lookup  = lookup_normal_token,
             provide = provide_normal_token,
     ):
-        def evoke_dual_token(first, second):
-            s = first.s + second.s
+        def evoke_dual_token(a, b):
+            s = a.s + b.s
 
             r = lookup(s)
 
             if r is not none:
-                assert (r.first is first) and (r.second is second)
+                assert (r.a is a) and (r.b is b)
 
                 return r
 
             s = intern_string(s)
 
-            return provide(s, create_dual_token__with_newlines(Meta, s, first, second))
+            return provide(s, create_dual_token__with_newlines(Meta, s, a, b))
 
 
         if __debug__:
@@ -391,12 +387,12 @@ def gem():
             create_dual_token = create_dual_token__with_newlines
 
 
-        def insert_dual_token(s, first, second):
-            assert (s == first.s + second.s) and (lookup(s) is none)
+        def insert_dual_token(s, a, b):
+            assert (s == a.s + b.s) and (lookup(s) is none)
 
             s = intern_string(s)
 
-            return provide(s, create_dual_token(Meta, s, first, second))
+            return provide(s, create_dual_token(Meta, s, a, b))
 
 
         if __debug__:
@@ -509,10 +505,7 @@ def gem():
                                              Colon_RightSquareBracket,
                                          )
 
-    evoke__comma__right_brace = produce_evoke_dual_token(
-                                    'comma__right_brace',
-                                    Comma_RightBrace,
-                                )
+    evoke__comma__right_brace = produce_evoke_dual_token('comma__right_brace', Comma_RightBrace)
 
     evoke__comma__right_parenthesis = produce_evoke_dual_token(
                                           'comma__right_parenthesis',
