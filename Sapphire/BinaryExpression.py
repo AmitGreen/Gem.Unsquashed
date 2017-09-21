@@ -209,10 +209,10 @@ def gem():
         display_name = '-'
 
 
-    IsNot                     .expression_meta = CompareDifferentExpression
+    Is_Not                    .expression_meta = CompareDifferentExpression
     KeywordIn                 .expression_meta = CompareContainsExpression
     KeywordIs                 .expression_meta = CompareIdentityExpression
-    NotIn                     .expression_meta = CompareExcludeExpression
+    Not_In                    .expression_meta = CompareExcludeExpression
     OperatorCompareEqual      .expression_meta = CompareEqualExpression
     OperatorCompareNotEqual   .expression_meta = CompareNotEqualExpression
     OperatorDivide            .expression_meta = DivideExpression

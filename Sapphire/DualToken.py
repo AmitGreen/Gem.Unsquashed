@@ -117,7 +117,7 @@ def gem():
         is_postfix_operator                   = true
 
 
-    class AtomWhitespace(BaseDualOperator):
+    class Atom_Whitespace(BaseDualOperator):
         __slots__                      = (())
         display_name                   = 'atom-whitespace'
         is__atom__or__special_operator = true
@@ -208,7 +208,7 @@ def gem():
         is_atom                        = true
 
 
-    class IdentifierWhitespace(BaseDualOperator):
+    class Identifier_Whitespace(BaseDualOperator):
         __slots__                      = (())
         display_name                   = 'identifier-whitespace'
         is__atom__or__special_operator = true
@@ -217,7 +217,7 @@ def gem():
 
 
     @share
-    class IsNot(BaseDualOperator):
+    class Is_Not(BaseDualOperator):
         __slots__                        = (())
         display_name                     = 'is-not'
         is_compare_operator              = true
@@ -237,7 +237,7 @@ def gem():
 
 
     @share
-    class NotIn(BaseDualOperator):
+    class Not_In(BaseDualOperator):
         __slots__                        = (())
         display_name                     = 'not-in'
         is_compare_operator              = true
@@ -273,14 +273,14 @@ def gem():
         __init__ = construct_dual_operator__line_marker_1
 
 
-    class WhitespaceAtom(BaseDualOperator):
+    class Whitespace_Atom(BaseDualOperator):
         __slots__                      = (())
         display_name                   = 'whitespace-atom'
         is__atom__or__special_operator = true
         is_atom                        = true
 
 
-    class WhitespaceIdentifier(BaseDualOperator):
+    class Whitespace_Identifier(BaseDualOperator):
         __slots__                      = (())
         display_name                   = 'whitespace-identifier'
         is__atom__or__special_operator = true
@@ -503,7 +503,7 @@ def gem():
 
     conjure_is_not = produce_conjure_dual_token(
                         'is_not',
-                        IsNot,
+                        Is_Not,
                         conjure_keyword_is,
                         conjure_keyword_not,
                         conjure_keyword_not__ends_in_newline,
@@ -519,7 +519,7 @@ def gem():
 
     conjure_not_in = produce_conjure_dual_token(
                         'not_in',
-                        NotIn,
+                        Not_In,
                         conjure_keyword_not,
                         conjure_keyword_in,
                         conjure_keyword_in__ends_in_newline,
@@ -533,7 +533,7 @@ def gem():
                             provide = provide_arguments_0_token,
                         )
 
-    evoke_atom_whitespace = produce_evoke_dual_token('atom-whitespace', AtomWhitespace)
+    evoke_atom_whitespace = produce_evoke_dual_token('atom-whitespace', Atom_Whitespace)
 
     evoke__colon__right_square_bracket = produce_evoke_dual_token(
                                              'colon__right_square_bracket',
@@ -554,15 +554,15 @@ def gem():
 
     evoke_empty_list            = produce_evoke_dual_token('[]',                    EmptyList)
     evoke_empty_map             = produce_evoke_dual_token('{}',                    EmptyMap)
-    evoke_identifier_whitespace = produce_evoke_dual_token('identifier-whitespace', IdentifierWhitespace)
+    evoke_identifier_whitespace = produce_evoke_dual_token('identifier-whitespace', Identifier_Whitespace)
 
     evoke__left_square_bracket__colon = produce_evoke_dual_token(
                                             '[:',                           #   ]
                                             LeftSquareBracket_Colon,
                                         )
 
-    evoke_whitespace_atom       = produce_evoke_dual_token('whitespace-atom',       WhitespaceAtom)
-    evoke_whitespace_identifier = produce_evoke_dual_token('whitespace-identifier', WhitespaceIdentifier)
+    evoke_whitespace_atom       = produce_evoke_dual_token('whitespace-atom',       Whitespace_Atom)
+    evoke_whitespace_identifier = produce_evoke_dual_token('whitespace-identifier', Whitespace_Identifier)
 
     insert_return__line_marker = produce_insert_dual_token(
                                     'return__line_marker',

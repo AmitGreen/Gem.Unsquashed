@@ -230,7 +230,7 @@ def gem():
             #   Differences:
             #       Uses keyword_is*  instead of left_parenthesis*
             #       Uses keyword_not* instead of right_parenthesis*
-            #       Uses IsNot        instead of Arguments_0
+            #       Uses Is_Not       instead of Arguments_0
             #
             #       Does not increment depth when parsing the 'is' keyword.
             #
@@ -247,7 +247,7 @@ def gem():
             #
             #           2.  The code below on setting 'wi' is different than the code above.
             #
-            #           3.  The 'return IsNot()' statement is also optimized since it is able to use 'right_s'
+            #           3.  The 'return Is_Not()' statement is also optimized since it is able to use 'right_s'
             #               to construct the 'not' keyword.
             #
             left_end = m.end('keyword_is__ow')
@@ -282,7 +282,7 @@ def gem():
             #   Differences:
             #       Uses keyword_not* instead of keyword_is
             #       Uses keyword_in*  instead of keyword_in
-            #       Uses NotIn        instead of IsNot
+            #       Uses Not_In       instead of Is_Not
             #
             left_end = m.end('keyword_not__ow')
 
