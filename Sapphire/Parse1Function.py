@@ -214,9 +214,9 @@ def gem():
                 many.append(
                     evoke__comma__right_parenthesis__colon__line_marker(
                         operator_7,
-                        token_7.first,
-                        token_7.second,
-                        token_7.third,
+                        token_7.a,
+                        token_7.b,
+                        token_7.c,
                     ),
                 )
 

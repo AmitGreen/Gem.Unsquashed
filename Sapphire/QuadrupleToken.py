@@ -190,55 +190,57 @@ def gem():
             assert (conjure_d is conjure_d__ends_in_newline is absent)
 
 
-            def conjure_quadruple_token(middle_1, middle_2, middle_3):
-                assert qi() < middle_1 < middle_2
+            def conjure_quadruple_token(a_end, b_end, c_end):
+                assert qi() < a_end < b_end < c_end
 
-                quadruple_s = qs()[qi() : ]
+                full = qs()[qi() : ]
 
-                r = lookup_line_marker(quadruple_s)
+                r = lookup_line_marker(full)
                
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
                     return r
 
-                s        = qs()
-                quadruple_s = intern_string(quadruple_s)
+                full = intern_string(full)
+                s    = qs()
 
                 return provide_line_marker(
-                           quadruple_s,
+                           full,
                            create_quadruple_token__line_marker(
                                Meta,
-                               quadruple_s,
-                               conjure_a          (s[qi()     : middle_1]),
-                               conjure_b          (s[middle_1 : middle_2]),
-                               conjure_c          (s[middle_2 : middle_3]),
-                               conjure_line_marker(s[middle_3 :         ]),
+                               full,
+                               conjure_a          (s[qi()  : a_end]),
+                               conjure_b          (s[a_end : b_end]),
+                               conjure_c          (s[b_end : c_end]),
+                               conjure_line_marker(s[c_end :      ]),
                            ),
                        )
         else:
-            def conjure_quadruple_token(middle_1, middle_2, middle_3, end):
-                quadruple_s = qs()[qi() : end]
+            def conjure_quadruple_token(a_end, b_end, c_end, d_end):
+                assert qi() < a_end < b_end < c_end < d_end
 
-                r = lookup(quadruple_s)
+                full = qs()[qi() : d_end]
+
+                r = lookup(full)
                
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
                     return r
 
-                s        = qs()
-                quadruple_s = intern_string(quadruple_s)
+                full = intern_string(full)
+                s    = qs()
 
                 return provide(
-                           quadruple_s,
+                           full,
                            create_quadruple_token(
                                Meta,
-                               quadruple_s,
-                               conjure_a(s[qi()     : middle_1]),
-                               conjure_b(s[middle_1 : middle_2]),
-                               conjure_c(s[middle_2 : middle_3]),
-                               (conjure_d__ends_in_newline   if end is none else   conjure_d)(s[middle_3 : end]),
+                               full,
+                               conjure_a(s[qi()  : a_end]),
+                               conjure_b(s[a_end : b_end]),
+                               conjure_c(s[b_end : c_end]),
+                               (conjure_d__ends_in_newline   if d_end is none else   conjure_d)(s[c_end : d_end]),
                            ),
                        )
 

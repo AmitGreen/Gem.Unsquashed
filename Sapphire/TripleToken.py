@@ -13,61 +13,61 @@ def gem():
     qs                   = Shared.qs                        #   Due to privileged
 
 
-    def construct_triple_token(t, s, first, second, third):
+    def construct_triple_token(t, s, a, b, c):
         assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
-        assert s == first.s + second.s + third.s
+        assert s == a.s + b.s + c.s
         assert '\n' not in s
 
         t.s      = s
-        t.first  = first
-        t.second = second
-        t.third  = third
+        t.a  = a
+        t.b = b
+        t.c  = c
 
 
-    def construct_triple_token__with_newlines(t, s, first, second, third, newlines, ends_in_newline):
+    def construct_triple_token__with_newlines(t, s, a, b, c, newlines, ends_in_newline):
         assert t.line_marker is false
-        assert s == first.s + second.s + third.s
-        assert ends_in_newline is (third.s[-1] == '\n')
+        assert s == a.s + b.s + c.s
+        assert ends_in_newline is (c.s[-1] == '\n')
         assert newlines >= 1
 
         t.s               = s
-        t.first           = first
-        t.second          = second
-        t.third           = third
+        t.a           = a
+        t.b          = b
+        t.c           = c
         t.newlines        = newlines
         t.ends_in_newline = ends_in_newline
 
 
-    def construct_triple_operator__line_marker_1(t, s, first, second, third):
+    def construct_triple_operator__line_marker_1(t, s, a, b, c):
         assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
-        assert s == first.s + second.s + third.s
+        assert s == a.s + b.s + c.s
         assert s.count('\n') is 1
-        assert third.s[-1] == '\n'
+        assert c.s[-1] == '\n'
 
         t.s      = s
-        t.first  = first
-        t.second = second
-        t.third  = third
+        t.a  = a
+        t.b = b
+        t.c  = c
 
 
-    def construct_triple_token__line_marker__many(t, s, first, second, third, newlines):
+    def construct_triple_token__line_marker__many(t, s, a, b, c, newlines):
         assert (t.ends_in_newline is t.line_marker is true) and (newlines > 1)
-        assert s == first.s + second.s + third.s
+        assert s == a.s + b.s + c.s
         assert s.count('\n') == newlines
-        assert third.s[-1] == '\n'
+        assert c.s[-1] == '\n'
 
         t.s        = s
-        t.first    = first
-        t.second   = second
-        t.third    = third
+        t.a    = a
+        t.b   = b
+        t.c    = c
         t.newlines = newlines
 
 
     class BaseTripleOperator(KeywordAndOperatorBase):
         __slots__ = ((
-            'first',         #   Operator+
-            'second',        #   Operator+
-            'third',         #   Operator+
+            'a',         #   Operator+
+            'b',        #   Operator+
+            'c',         #   Operator+
         ))
 
 
@@ -75,18 +75,20 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<%s %r %r %r>', t.__class__.__name__, t.first, t.second, t.third)
+            return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.c)
 
 
         def display_full_token(t):
             display_name = t.display_name
-            first_s      = t.first.s
-            second_s     = t.second.s
+            a_s          = t.a.s
+            b_s          = t.b.s
+            c_s          = t.c.s
 
-            return arrange('<%s <%s> <%s>>',
+            return arrange('<%s <%s> <%s> <%s>>',
                            display_name,
-                           (portray_string(first_s)    if '\n' in first_s  else   first_s),
-                           (portray_string(second_s)   if '\n' in second_s else   second_s))
+                           (portray_string(a_s)   if '\n' in a_s else   a_s),
+                           (portray_string(b_s)   if '\n' in b_s else   b_s),
+                           (portray_string(c_s)   if '\n' in c_s else   c_s))
 
 
         def display_token(t):
@@ -95,19 +97,15 @@ def gem():
             if display_name == t.s:
                 return display_name
 
-            first_s  = t.first .s
-            second_s = t.second.s
-            third_s  = t.third .s
+            a_s = t.a.s
+            b_s = t.b.s
+            c_s = t.c.s
 
             return arrange('<%s <%s> <%s> <%s>>',
                            display_name,
-                           (portray_string(first_s)    if '\n' in first_s  else   first_s),
-                           (portray_string(second_s)   if '\n' in second_s else   second_s),
-                           (portray_string(third_s)    if '\n' in third_s  else   third_s))
-
-
-        def write(t, w):
-            w(t.first.s + t.second.s + t.third.s)
+                           (portray_string(a_s)   if '\n' in a_s else   a_s),
+                           (portray_string(b_s)   if '\n' in b_s else   b_s),
+                           (portray_string(c_s)   if '\n' in c_s else   c_s))
 
 
     class AllIndex(BaseTripleOperator):
@@ -130,56 +128,56 @@ def gem():
         __init__ = construct_triple_operator__line_marker_1
 
 
-    def create_triple_token__with_newlines(Meta, s, first, second, third):
-        assert s == first.s + second.s + third.s
+    def create_triple_token__with_newlines(Meta, s, a, b, c):
+        assert s == a.s + b.s + c.s
 
         newlines = s.count('\n')
 
         return (
-                   Meta(s, first, second, third)
+                   Meta(s, a, b, c)
                        if newlines is 0 else
                            (
                                  lookup_adjusted_meta(Meta)
                               or create_ActionWord_WithNewlines(Meta, construct_triple_token__with_newlines)
-                           )(s, first, second, third, newlines, s[-1] == '\n')
+                           )(s, a, b, c, newlines, s[-1] == '\n')
                )
 
 
-    def create_triple_token__line_marker(Meta, s, first, second, third):
-        assert (s == first.s + second.s + third.s) and (s[-1] == '\n')
+    def create_triple_token__line_marker(Meta, s, a, b, c):
+        assert (s == a.s + b.s + c.s) and (s[-1] == '\n')
 
         newlines = s.count('\n')
 
         return (
-                   Meta(s, first, second, third)
+                   Meta(s, a, b, c)
                        if newlines is 1 else
                        (
                              lookup_adjusted_meta(Meta)
                           or create_ActionWord_LineMarker_Many(Meta, construct_triple_token__line_marker__many)
-                       )(s, first, second, third, newlines)
+                       )(s, a, b, c, newlines)
                )
 
 
     @privileged
     def produce_conjure_triple_token(
-            name, Meta, conjure_first, conjure_second,
+            name, Meta, conjure_a, conjure_b,
             
-            conjure_third                  = absent,
-            conjure_third__ends_in_newline = absent,
-            lookup                         = lookup_normal_token,
-            provide                        = provide_normal_token,
-            line_marker                    = false,
+            conjure_c                  = absent,
+            conjure_c__ends_in_newline = absent,
+            lookup                     = lookup_normal_token,
+            provide                    = provide_normal_token,
+            line_marker                = false,
     ):
         assert type(line_marker) is Boolean
 
 
         if line_marker:
             assert (lookup is lookup_normal_token) and (provide is provide_normal_token)
-            assert (conjure_third is conjure_third__ends_in_newline is absent)
+            assert (conjure_c is conjure_c__ends_in_newline is absent)
 
 
-            def conjure_triple_token(middle_1, middle_2):
-                assert qi() < middle_1 < middle_2
+            def conjure_triple_token(a_end, b_end):
+                assert qi() < a_end < b_end
 
                 triple_s = qs()[qi() : ]
 
@@ -198,33 +196,35 @@ def gem():
                            create_triple_token__line_marker(
                                Meta,
                                triple_s,
-                               conjure_first      (s[qi()     : middle_1]),
-                               conjure_second     (s[middle_1 : middle_2]),
-                               conjure_line_marker(s[middle_2 :         ]),
+                               conjure_a          (s[qi()  : a_end]),
+                               conjure_b          (s[a_end : b_end]),
+                               conjure_line_marker(s[b_end :      ]),
                            ),
                        )
         else:
-            def conjure_triple_token(middle_1, middle_2, end):
-                triple_s = qs()[qi() : end]
+            def conjure_triple_token(a_end, b_end, c_end):
+                assert qi() < a_end < b_end
 
-                r = lookup(triple_s)
+                full = qs()[qi() : c_end]
+
+                r = lookup(full)
                
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
                     return r
 
-                s        = qs()
-                triple_s = intern_string(triple_s)
+                full = intern_string(full)
+                s    = qs()
 
                 return provide(
-                           triple_s,
+                           full,
                            create_triple_token(
                                Meta,
-                               triple_s,
-                               conjure_first (s[qi()     : middle_1]),
-                               conjure_second(s[middle_1 : middle_2]),
-                               (conjure_third__ends_in_newline   if end is none else   conjure_third)(s[middle_2 : end]),
+                               full,
+                               conjure_a(s[qi()  : a_end]),
+                               conjure_b(s[a_end : b_end]),
+                               (conjure_c__ends_in_newline   if c_end is none else   conjure_c)(s[b_end : c_end]),
                            ),
                        )
 
@@ -254,19 +254,19 @@ def gem():
             create_triple_token = create_triple_token__with_newlines
 
 
-        def evoke_triple_token(first, second, third):
-            s = first.s + second.s + third.s
+        def evoke_triple_token(a, b, c):
+            s = a.s + b.s + c.s
 
             r = lookup(s)
 
             if r is not none:
-                assert (r.first is first) and (r.second is second) and (r.third is third)
+                assert (r.a is a) and (r.b is b) and (r.c is c)
 
                 return r
 
             s = intern_string(s)
 
-            return provide(s, create_triple_token(Meta, s, first, second, third))
+            return provide(s, create_triple_token(Meta, s, a, b, c))
 
 
         if __debug__:
