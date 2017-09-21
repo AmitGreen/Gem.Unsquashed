@@ -117,17 +117,6 @@ def gem():
         is_postfix_operator = true
 
 
-    class Parameter_0__Colon__LineMarker_1(BaseTripleOperator):
-        display_name                        = r'():\n'
-        ends_in_newline                     = true
-        is__parameter_0__colon__line_marker = true
-        line_marker                         = true
-        newlines                            = 1
-
-
-        __init__ = construct_triple_operator__line_marker_1
-
-
     class RightParenthesis_Colon_LineMarker_1(BaseTripleOperator):
         __slots__                                  = (())
         display_name                               = r'):\n'
@@ -141,111 +130,6 @@ def gem():
         __init__ = construct_triple_operator__line_marker_1
 
 
-    #
-    #   ===  OLD  ===
-    #
-    def OLD__create_triple_token__with_newlines(Meta, first, second, third):
-        s = intern_string(first.s + second.s + third.s)
-
-        newlines = s.count('\n')
-
-        return (
-                   Meta(s, first, second, third)
-                       if newlines is 0 else
-                           (
-                                 lookup_adjusted_meta(Meta)
-                              or create_ActionWord_WithNewlines(Meta, construct_triple_token__with_newlines)
-                           )(s, first, second, third, newlines, s[-1] == '\n')
-               )
-
-
-    def OLD__create_triple_token__line_marker(Meta, first, second, third):
-        s = intern_string(first.s + second.s + third.s)
-
-        newlines = s.count('\n')
-
-        return (
-                   Meta(s, first, second, third)
-                       if newlines is 1 else
-                       (
-                             lookup_adjusted_meta(Meta)
-                          or create_ActionWord_LineMarker_Many(Meta, construct_triple_token__line_marker__many)
-                       )(s, first, second, third, newlines)
-               )
-
-
-    @privileged
-    def OLD__produce_conjure_triple_token(name, Meta, line_marker = false):
-        assert type(line_marker) is Boolean
-
-        cache     = {}
-        provide_1 = cache.setdefault
-        lookup_1  = cache.get
-        store_1   = cache.__setitem__
-
-        create_triple_token = (
-                OLD__create_triple_token__line_marker   if line_marker else
-                OLD__create_triple_token__with_newlines
-            )
-
-
-        def conjure_triple_token(first, second, third):
-            v = lookup_1(first)
-
-            if v is none:
-                return provide_1(first, create_triple_token(Meta, first, second, third))
-
-            if type(v) is Map:
-                w = v.get(second)
-
-                if w is none:
-                    return v.setdefault(second, create_triple_token(Meta, first, second, third))
-
-                if type(w) is Map:
-                    return (w.get(third)) or (w.setdefault(third, create_triple_token(Meta, first, second, third)))
-
-                if w.third is third:
-                    return w
-
-                r = create_triple_token(Meta, first, second, third)
-
-                v[second] = { w.third : v, third : r }
-
-                return r
-
-            if v.second is second:
-                if v.third is third:
-                    return v
-
-                r = create_triple_token(Meta, first, second, third)
-
-                store_1(first, { second : { third : v, third: r } })
-
-                return r
-
-            r = create_triple_token(Meta, first, second, third)
-
-            store_1(first, { v.second : v , second : r })
-
-            return r
-
-
-        if __debug__:
-            conjure_triple_token.__name__ = intern_arrange('conjure_%s', name)
-
-
-        return conjure_triple_token
-
-
-    conjure__parameter_0__colon__line_marker = OLD__produce_conjure_triple_token(
-            'parameter_0__colon_newline',
-            Parameter_0__Colon__LineMarker_1,
-            true,
-        )
-
-    #
-    #   ===  NEW  ===
-    #
     def create_triple_token__with_newlines(Meta, s, first, second, third):
         assert s == first.s + second.s + third.s
 
@@ -421,19 +305,7 @@ def gem():
                                                     )
 
 
-    #
-    #   ===  SHARE  ===
-    #
     share(
-        #
-        #   ===  OLD  ===
-        #
-        'conjure__parameter_0__colon__line_marker',  conjure__parameter_0__colon__line_marker,
-
-
-        #
-        #   ===  NEW  ===
-        #
         'conjure_all_index',                                conjure_all_index,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
         'evoke_all_index',                                  evoke_all_index,

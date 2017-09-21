@@ -19,21 +19,17 @@ def gem():
         if m is none:
             raise_unknown_line()
 
-        right_parenthesis__start = m.start('right_parenthesis')
+        RP_end = m.end('right_parenthesis')
 
         if m.start('comment_newline') is not -1:
-            right_parenthesis__start = m.start('right_parenthesis')
+            if RP_end is not -1:
+                colon_end = m.end('colon')
 
-            if right_parenthesis__start is not -1:
-                colon_start = m.start('colon')
-
-                if colon_start is not -1:
-                    right_parenthesis__start = m.start('right_parenthesis')
-
+                if colon_end is not -1:
                     return conjure__parameter_0__colon__line_marker(
-                               conjure_left_parenthesis  (s[qi()                     : right_parenthesis__start]),
-                               conjure_right_parenthesis (s[right_parenthesis__start : colon_start             ]),
-                               conjure_colon__line_marker(s[colon_start              :                         ]),
+                               m.start('right_parenthesis'),
+                               RP_end,
+                               colon_end,
                            )
 
                 raise_unknown_line()
@@ -45,7 +41,7 @@ def gem():
 
             return r
 
-        if right_parenthesis__start is not -1:
+        if RP_end is not -1:
             raise_unknown_line()
 
         j = m.end()

@@ -130,6 +130,17 @@ def gem():
         __init__ = construct_quadruple_operator__line_marker_1
 
 
+    class Parameter_0__Colon__LineMarker_1(BaseQuadrupleOperator):
+        display_name                        = r'():\n'
+        ends_in_newline                     = true
+        is__parameter_0__colon__line_marker = true
+        line_marker                         = true
+        newlines                            = 1
+
+
+        __init__ = construct_quadruple_operator__line_marker_1
+
+
     if 0:
         def create_quadruple_token__with_newlines(Meta, s, a, b, c, d):
             assert s == a.s + b.s + c.s + d.s
@@ -187,8 +198,6 @@ def gem():
                 r = lookup_line_marker(quadruple_s)
                
                 if r is not none:
-                    my_line('r: %r; quadruple_s: %r', r, quadruple_s)
-
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
                     return r
@@ -290,9 +299,26 @@ def gem():
             line_marker = true,
         )
 
+    conjure__parameter_0__colon__line_marker = produce_conjure_quadruple_token(
+            'parameter_0__colon_newline',
+            Parameter_0__Colon__LineMarker_1,
+            conjure_left_parenthesis,
+            conjure_right_parenthesis,
+            conjure_colon,
+
+            line_marker = true,
+        )
+
     evoke__comma__right_parenthesis__colon__line_marker = produce_evoke_quadruple_token(
             'comma__right_parenthesis__colon__line_marker',
             Comma_RightParenthesis_Colon_LineMarker_1,
+
+            line_marker = true,
+        )
+
+    evoke__parameter_0__colon__line_marker = produce_evoke_quadruple_token(
+            'parameter_0__colon_newline',
+            Parameter_0__Colon__LineMarker_1,
 
             line_marker = true,
         )
@@ -302,5 +328,7 @@ def gem():
         'conjure__comma__right_parenthesis__colon__line_marker',
             conjure__comma__right_parenthesis__colon__line_marker,
 
+        'conjure__parameter_0__colon__line_marker',             conjure__parameter_0__colon__line_marker,
         'evoke__comma__right_parenthesis__colon__line_marker',  evoke__comma__right_parenthesis__colon__line_marker,
+        'evoke__parameter_0__colon__line_marker',               evoke__parameter_0__colon__line_marker,
     )

@@ -105,11 +105,10 @@ def gem():
             raise_unknown_line()
 
         if token_1.is__right_parenthesis__colon__newline:
-            assert 0 # FIX THIS
             return FunctionHeader(
                        keyword_function,
                        name,
-                       evoke__comma__right_parenthesis__colon__line_marker(
+                       evoke__parameter_0__colon__line_marker(
                            operator_1,
                            token_1.first,
                            token_1.second,
