@@ -135,9 +135,9 @@ def gem():
         is_atom                        = true
 
 
-    class Whitespace_Identifier_Whitespace(BaseTripleOperator):
+    class Whitespace_Name_Whitespace(BaseTripleOperator):
         __slots__                      = (())
-        display_name                   = 'whitespace+identifier+whitespace'
+        display_name                   = 'whitespace+name+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
         is_identifier                  = true
@@ -318,14 +318,14 @@ def gem():
                                                        conjure_whitespace__ends_in_newline,
                                                    )
 
-    conjure_whitespace_identifier_whitespace = produce_conjure_triple_token(
-                                                   'whitespace+identifier+whitespace',
-                                                   Whitespace_Identifier_Whitespace,
-                                                   conjure_whitespace,
-                                                   conjure_identifier,
-                                                   conjure_whitespace,
-                                                   conjure_whitespace__ends_in_newline,
-                                               )
+    conjure_whitespace_name_whitespace = produce_conjure_triple_token(
+                                             'whitespace+name+whitespace',
+                                             Whitespace_Name_Whitespace,
+                                             conjure_whitespace,
+                                             conjure_name,
+                                             conjure_whitespace,
+                                             conjure_whitespace__ends_in_newline,
+                                         )
 
     conjure_whitespace_number_whitespace = produce_conjure_triple_token(
                                                'whitespace+number+whitespace',
@@ -366,34 +366,34 @@ def gem():
             '6' : conjure_whitespace_number_whitespace, '7' : conjure_whitespace_number_whitespace,
             '8' : conjure_whitespace_number_whitespace, '9' : conjure_whitespace_number_whitespace,
 
-            'A' : conjure_whitespace_identifier_whitespace, 'B' : conjure_whitespace_identifier_whitespace,
-            'C' : conjure_whitespace_identifier_whitespace, 'D' : conjure_whitespace_identifier_whitespace,
-            'E' : conjure_whitespace_identifier_whitespace, 'F' : conjure_whitespace_identifier_whitespace,
-            'G' : conjure_whitespace_identifier_whitespace, 'H' : conjure_whitespace_identifier_whitespace,
-            'I' : conjure_whitespace_identifier_whitespace, 'J' : conjure_whitespace_identifier_whitespace,
-            'K' : conjure_whitespace_identifier_whitespace, 'L' : conjure_whitespace_identifier_whitespace,
-            'M' : conjure_whitespace_identifier_whitespace, 'N' : conjure_whitespace_identifier_whitespace,
-            'O' : conjure_whitespace_identifier_whitespace, 'P' : conjure_whitespace_identifier_whitespace,
-            'Q' : conjure_whitespace_identifier_whitespace, 'R' : conjure_whitespace_identifier_whitespace,
-            'S' : conjure_whitespace_identifier_whitespace, 'T' : conjure_whitespace_identifier_whitespace,
-            'U' : conjure_whitespace_identifier_whitespace, 'V' : conjure_whitespace_identifier_whitespace,
-            'W' : conjure_whitespace_identifier_whitespace, 'X' : conjure_whitespace_identifier_whitespace,
-            'Y' : conjure_whitespace_identifier_whitespace, 'Z' : conjure_whitespace_identifier_whitespace,
-            '_' : conjure_whitespace_identifier_whitespace,
+            'A' : conjure_whitespace_name_whitespace, 'B' : conjure_whitespace_name_whitespace,
+            'C' : conjure_whitespace_name_whitespace, 'D' : conjure_whitespace_name_whitespace,
+            'E' : conjure_whitespace_name_whitespace, 'F' : conjure_whitespace_name_whitespace,
+            'G' : conjure_whitespace_name_whitespace, 'H' : conjure_whitespace_name_whitespace,
+            'I' : conjure_whitespace_name_whitespace, 'J' : conjure_whitespace_name_whitespace,
+            'K' : conjure_whitespace_name_whitespace, 'L' : conjure_whitespace_name_whitespace,
+            'M' : conjure_whitespace_name_whitespace, 'N' : conjure_whitespace_name_whitespace,
+            'O' : conjure_whitespace_name_whitespace, 'P' : conjure_whitespace_name_whitespace,
+            'Q' : conjure_whitespace_name_whitespace, 'R' : conjure_whitespace_name_whitespace,
+            'S' : conjure_whitespace_name_whitespace, 'T' : conjure_whitespace_name_whitespace,
+            'U' : conjure_whitespace_name_whitespace, 'V' : conjure_whitespace_name_whitespace,
+            'W' : conjure_whitespace_name_whitespace, 'X' : conjure_whitespace_name_whitespace,
+            'Y' : conjure_whitespace_name_whitespace, 'Z' : conjure_whitespace_name_whitespace,
+            '_' : conjure_whitespace_name_whitespace,
 
-            'a' : conjure_whitespace_identifier_whitespace, 'b' : conjure_whitespace_identifier_whitespace,
-            'c' : conjure_whitespace_identifier_whitespace, 'd' : conjure_whitespace_identifier_whitespace,
-            'e' : conjure_whitespace_identifier_whitespace, 'f' : conjure_whitespace_identifier_whitespace,
-            'g' : conjure_whitespace_identifier_whitespace, 'h' : conjure_whitespace_identifier_whitespace,
-            'i' : conjure_whitespace_identifier_whitespace, 'j' : conjure_whitespace_identifier_whitespace,
-            'k' : conjure_whitespace_identifier_whitespace, 'l' : conjure_whitespace_identifier_whitespace,
-            'm' : conjure_whitespace_identifier_whitespace, 'n' : conjure_whitespace_identifier_whitespace,
-            'o' : conjure_whitespace_identifier_whitespace, 'p' : conjure_whitespace_identifier_whitespace,
-            'q' : conjure_whitespace_identifier_whitespace, 'r' : conjure_whitespace_identifier_whitespace,
-            's' : conjure_whitespace_identifier_whitespace, 't' : conjure_whitespace_identifier_whitespace,
-            'u' : conjure_whitespace_identifier_whitespace, 'v' : conjure_whitespace_identifier_whitespace,
-            'w' : conjure_whitespace_identifier_whitespace, 'x' : conjure_whitespace_identifier_whitespace,
-            'y' : conjure_whitespace_identifier_whitespace, 'z' : conjure_whitespace_identifier_whitespace,
+            'a' : conjure_whitespace_name_whitespace, 'b' : conjure_whitespace_name_whitespace,
+            'c' : conjure_whitespace_name_whitespace, 'd' : conjure_whitespace_name_whitespace,
+            'e' : conjure_whitespace_name_whitespace, 'f' : conjure_whitespace_name_whitespace,
+            'g' : conjure_whitespace_name_whitespace, 'h' : conjure_whitespace_name_whitespace,
+            'i' : conjure_whitespace_name_whitespace, 'j' : conjure_whitespace_name_whitespace,
+            'k' : conjure_whitespace_name_whitespace, 'l' : conjure_whitespace_name_whitespace,
+            'm' : conjure_whitespace_name_whitespace, 'n' : conjure_whitespace_name_whitespace,
+            'o' : conjure_whitespace_name_whitespace, 'p' : conjure_whitespace_name_whitespace,
+            'q' : conjure_whitespace_name_whitespace, 'r' : conjure_whitespace_name_whitespace,
+            's' : conjure_whitespace_name_whitespace, 't' : conjure_whitespace_name_whitespace,
+            'u' : conjure_whitespace_name_whitespace, 'v' : conjure_whitespace_name_whitespace,
+            'w' : conjure_whitespace_name_whitespace, 'x' : conjure_whitespace_name_whitespace,
+            'y' : conjure_whitespace_name_whitespace, 'z' : conjure_whitespace_name_whitespace,
         }.__getitem__
 
 

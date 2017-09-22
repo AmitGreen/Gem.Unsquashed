@@ -1121,40 +1121,34 @@ def gem():
 
 
     find_atom_type = {
-                         '"' : conjure_double_quote,
-                         "'" : conjure_single_quote,
+            '"' : conjure_double_quote,
+            "'" : conjure_single_quote,
 
-                         #   (
-                         ')' : conjure_right_parenthesis,
-                         '.' : conjure_number,
+            #   (
+            ')' : conjure_right_parenthesis,
+            '.' : conjure_number,
 
-                         '0' : conjure_number, '1' : conjure_number, '2' : conjure_number, '3' : conjure_number,
-                         '4' : conjure_number, '5' : conjure_number, '6' : conjure_number, '7' : conjure_number,
-                         '8' : conjure_number, '9' : conjure_number,
+            '0' : conjure_number, '1' : conjure_number, '2' : conjure_number, '3' : conjure_number,
+            '4' : conjure_number, '5' : conjure_number, '6' : conjure_number, '7' : conjure_number,
+            '8' : conjure_number, '9' : conjure_number,
 
-                         'A' : conjure_identifier, 'B' : conjure_identifier, 'C' : conjure_identifier,
-                         'D' : conjure_identifier, 'E' : conjure_identifier, 'F' : conjure_identifier,
-                         'G' : conjure_identifier, 'H' : conjure_identifier, 'I' : conjure_identifier,
-                         'J' : conjure_identifier, 'K' : conjure_identifier, 'L' : conjure_identifier,
-                         'M' : conjure_identifier, 'N' : conjure_identifier, 'O' : conjure_identifier,
-                         'P' : conjure_identifier, 'Q' : conjure_identifier, 'R' : conjure_identifier,
-                         'S' : conjure_identifier, 'T' : conjure_identifier, 'U' : conjure_identifier,
-                         'V' : conjure_identifier, 'W' : conjure_identifier, 'X' : conjure_identifier,
-                         'Y' : conjure_identifier, 'Z' : conjure_identifier, '_' : conjure_identifier,
+            'A' : conjure_name, 'B' : conjure_name, 'C' : conjure_name, 'D' : conjure_name, 'E' : conjure_name,
+            'F' : conjure_name, 'G' : conjure_name, 'H' : conjure_name, 'I' : conjure_name, 'J' : conjure_name,
+            'K' : conjure_name, 'L' : conjure_name, 'M' : conjure_name, 'N' : conjure_name, 'O' : conjure_name,
+            'P' : conjure_name, 'Q' : conjure_name, 'R' : conjure_name, 'S' : conjure_name, 'T' : conjure_name,
+            'U' : conjure_name, 'V' : conjure_name, 'W' : conjure_name, 'X' : conjure_name, 'Y' : conjure_name,
+            'Z' : conjure_name, '_' : conjure_name, 
 
-                         #  [
-                         ']' : conjure_right_square_bracket,
+            #  [
+            ']' : conjure_right_square_bracket,
 
-                         'a' : conjure_identifier, 'b' : conjure_identifier, 'c' : conjure_identifier,
-                         'd' : conjure_identifier, 'e' : conjure_identifier, 'f' : conjure_identifier,
-                         'g' : conjure_identifier, 'h' : conjure_identifier, 'i' : conjure_identifier,
-                         'j' : conjure_identifier, 'k' : conjure_identifier, 'l' : conjure_identifier,
-                         'm' : conjure_identifier, 'n' : conjure_identifier, 'o' : conjure_identifier,
-                         'p' : conjure_identifier, 'q' : conjure_identifier, 'r' : conjure_identifier,
-                         's' : conjure_identifier, 't' : conjure_identifier, 'u' : conjure_identifier,
-                         'v' : conjure_identifier, 'w' : conjure_identifier, 'x' : conjure_identifier,
-                         'y' : conjure_identifier, 'z' : conjure_identifier,
-                     }.__getitem__
+            'a' : conjure_name, 'b' : conjure_name, 'c' : conjure_name, 'd' : conjure_name, 'e' : conjure_name,
+            'f' : conjure_name, 'g' : conjure_name, 'h' : conjure_name, 'i' : conjure_name, 'j' : conjure_name,
+            'k' : conjure_name, 'l' : conjure_name, 'm' : conjure_name, 'n' : conjure_name, 'o' : conjure_name,
+            'p' : conjure_name, 'q' : conjure_name, 'r' : conjure_name, 's' : conjure_name, 't' : conjure_name,
+            'u' : conjure_name, 'v' : conjure_name, 'w' : conjure_name, 'x' : conjure_name, 'y' : conjure_name,
+            'z' : conjure_name,
+        }.__getitem__
 
 
     #   {[((

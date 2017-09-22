@@ -14,7 +14,7 @@ def gem():
         if m1 is none:
             raise_unknown_line()
 
-        module = conjure_identifier(m1.group())
+        module = conjure_name(m1.group())
         #</name1>
 
         #
@@ -42,7 +42,7 @@ def gem():
                 raise_unknown_line()
             #</name2>
 
-            module = MemberExpression_1(module, operator_dot, conjure_identifier(m1.group()))
+            module = MemberExpression_1(module, operator_dot, conjure_name(m1.group()))
 
         wj(m2.end())
         wk(KeywordImport(m2.group()))
@@ -62,7 +62,7 @@ def gem():
         if m1 is none:
             raise_unknown_line()
 
-        imported = conjure_identifier(m1.group())
+        imported = conjure_name(m1.group())
         #</name>
 
         #
@@ -97,7 +97,7 @@ def gem():
         if m3 is none:
             raise_unknown_line()
 
-        imported = FromAsFragment(imported, keyword_as, conjure_identifier(m3.group()))
+        imported = FromAsFragment(imported, keyword_as, conjure_name(m3.group()))
         #</name2>
 
         #

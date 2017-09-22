@@ -19,11 +19,11 @@ def gem():
         wi(j)
         wj(j)
 
-        identifier = tokenize_name()
-        newline    = qn()
+        name    = tokenize_name()
+        newline = qn()
 
         if newline is not none:
-            return DecoratorHeader(operator_at_sign, identifier, newline)
+            return DecoratorHeader(operator_at_sign, name, newline)
 
         operator = tokenize_operator()
 
@@ -33,12 +33,12 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return DecoratorHeader(operator_at_sign, CallExpression(identifier, operator), newline)
+            return DecoratorHeader(operator_at_sign, CallExpression(name, operator), newline)
 
         if not operator.is_left_parenthesis:
             raise_unknown_line()
 
-        call = parse1_call_expression__left__operator(identifier, operator)
+        call = parse1_call_expression__left__operator(name, operator)
 
         newline = qn()
 

@@ -9,9 +9,9 @@ def gem():
     def tokenize_name__X__newline(m):
         if qd() is not 0:
             if qi() == qj():
-                r = conjure_identifier_whitespace(m.end('name'), none)
+                r = conjure_name_whitespace(m.end('name'), none)
             else:
-                r = conjure_whitespace_identifier_whitespace(qj(), m.end('name'), none)
+                r = conjure_whitespace_name_whitespace(qj(), m.end('name'), none)
 
             skip_tokenize_prefix()
 
@@ -22,9 +22,9 @@ def gem():
         s        = qs()
 
         if qi() == j:
-            r = conjure_identifier(s[j : name_end])
+            r = conjure_name(s[j : name_end])
         else:
-            r = conjure_whitespace_identifier(j, name_end)
+            r = conjure_whitespace_name(j, name_end)
         
         wn(conjure_token_newline(s[name_end : ]))
 
@@ -49,7 +49,7 @@ def gem():
 
         name_end = m.end('name')
 
-        r = conjure_identifier(s[j : name_end])
+        r = conjure_name(s[j : name_end])
 
         if qi() != j:
             r = evoke_whitespace_identifier(conjure_whitespace(s[qi() : j]), r)

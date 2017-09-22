@@ -104,7 +104,7 @@ def gem():
                             append(
                                 StatementExpression(
                                     m.group('indented'),
-                                    conjure_identifier(atom_s),
+                                    conjure_name(atom_s),
                                     conjure_token_newline(s[m.end('atom'):]),
                                 ),
                             )
@@ -118,7 +118,7 @@ def gem():
                         append(
                             parse1_statement_expression__atom(
                                 m.group('indented'),
-                                conjure_identifier(atom_s),
+                                conjure_name(atom_s),
                             ),
                         )
 

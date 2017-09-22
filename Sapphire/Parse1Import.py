@@ -20,7 +20,7 @@ def gem():
         if m is none:
             raise_unknown_line()
 
-        module = conjure_identifier(m.group())
+        module = conjure_name(m.group())
 
         j = m.end()
 
@@ -63,7 +63,7 @@ def gem():
             wj(j)
             #</name>
 
-            module = MemberExpression_1(module, operator_dot, conjure_identifier(m.group()))
+            module = MemberExpression_1(module, operator_dot, conjure_name(m.group()))
 
         if operator is none:
             wk(conjure_token_newline(m.group()))
@@ -86,7 +86,7 @@ def gem():
         if m is none:
             raise_unknown_line()
 
-        module = ModuleAsFragment(module, keyword_as, conjure_identifier(m.group()))
+        module = ModuleAsFragment(module, keyword_as, conjure_name(m.group()))
 
         j = m.end()
 

@@ -86,14 +86,14 @@ def gem():
 
 
     conjure_double_quote = produce_conjure_atom('double-quote', DoubleQuote)
-    conjure_identifier   = produce_conjure_atom('identifier',   Identifier)
+    conjure_name         = produce_conjure_atom('name',         Identifier)
     conjure_number       = produce_conjure_atom('number',       Number)
     conjure_single_quote = produce_conjure_atom('single-quote', SingleQuote)
 
 
     share(
         'conjure_double_quote',     conjure_double_quote,
-        'conjure_identifier',       conjure_identifier,
+        'conjure_name',             conjure_name,
         'conjure_number',           conjure_number,
         'conjure_single_quote',     conjure_single_quote,
     )

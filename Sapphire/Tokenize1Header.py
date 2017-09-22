@@ -107,21 +107,21 @@ def gem():
                 if qi() != j:
                     name_end = m.end('name')
 
-                    r = conjure_whitespace_identifier(j, name_end)
+                    r = conjure_whitespace_name(j, name_end)
 
                     wi(name_end)
                     wj(m.end())
 
                     return r
 
-                r = conjure_identifier(name)
+                r = conjure_name(name)
 
                 wi(m.end('name'))
                 wj(m.end())
 
                 return r
 
-            r = StarParameter(conjure_star_sign(s[qi() : star_end]), conjure_identifier(name))
+            r = StarParameter(conjure_star_sign(s[qi() : star_end]), conjure_name(name))
 
             j = m.end()
 
