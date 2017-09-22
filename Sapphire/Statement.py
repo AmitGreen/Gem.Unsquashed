@@ -4,10 +4,11 @@
 @gem('Sapphire.Statement')
 def gem():
     require_gem('Sapphire.Core')
+    require_gem('Sapphire.Tree')
 
 
     @share
-    class AssignFragment(Object):
+    class AssignFragment(SapphireTrunk):
         __slots__ = ((
             'left',                     #   Expression+
             'assign_operator',          #   OperatorEqualSign
@@ -34,7 +35,7 @@ def gem():
 
 
     @share
-    class AssignStatement_Many(Object):
+    class AssignStatement_Many(SapphireTrunk):
         __slot__ = ((
             'indented',                 #   String+
             'left_many',                #   Tuple of AssignFragment
@@ -74,7 +75,7 @@ def gem():
 
 
     @share
-    class ChangeStatement(Object):
+    class ChangeStatement(SapphireTrunk):
         __slot__ = ((
             'indented',                 #   String+
             'left',                     #   Expression
@@ -129,7 +130,7 @@ def gem():
         display_name = 'modify-statement'
 
 
-    class ClassOrFunctionHeaderBase(Object):
+    class ClassOrFunctionHeaderBase(SapphireTrunk):
         __slots__ = ((
             'keyword',                  #   KeywordClass | KeywordFunction
             'name',                     #   String
@@ -173,7 +174,7 @@ def gem():
 
 
     @share
-    class Comment(Object):
+    class Comment(SapphireTrunk):
         __slots__ = ((
             'comment',                  #   Comment
             'newline',                  #   String
@@ -200,7 +201,7 @@ def gem():
 
 
     @share
-    class ConditionHeader(Object):
+    class ConditionHeader(SapphireTrunk):
         __slots__ = ((
             'keyword',                  #   KeywordIf | KeywordWith
             'condition',                #   Expression
@@ -258,7 +259,7 @@ def gem():
 
 
     @share
-    class ConditionStatement(Object):
+    class ConditionStatement(SapphireTrunk):
         __slots__ = ((
             'keyword',                  #   KeywordIf | KeywordWhile
             'condition',                #   Expression
@@ -314,7 +315,7 @@ def gem():
 
 
     @share
-    class DeleteStatement_Many(Object):
+    class DeleteStatement_Many(SapphireTrunk):
         __slots__ = ((
             'keyword',                  #   KeywordDelete
             'many',                     #   Tuple of (Expression | OperatorComma)
@@ -352,7 +353,7 @@ def gem():
 
 
     @share
-    class DecoratorHeader(Object):
+    class DecoratorHeader(SapphireTrunk):
         __slots__ = ((
             'operator_decorator',       #   OperatorAtSign
             'expresssion',              #   Any
@@ -389,7 +390,7 @@ def gem():
 
 
     @share
-    class ElseStatement(Object):
+    class ElseStatement(SapphireTrunk):
         __slots__ = ((
             'keyword_colon',            #   KeywordElseColon
             'body',                     #   *Statement
@@ -439,7 +440,7 @@ def gem():
 
 
     @share
-    class FromAsFragment(Object):
+    class FromAsFragment(SapphireTrunk):
         __slots__ = ((
             'left_name',                #   String+
             'keyword_as',               #   KeywordAs
@@ -472,7 +473,7 @@ def gem():
 
 
     @share
-    class IndentedComment(Object):
+    class IndentedComment(SapphireTrunk):
         __slots__ = ((
             'indented',                 #   String
             'comment',                  #   Comment
@@ -500,7 +501,7 @@ def gem():
             w(t.indented + '#' + t.comment + t.newline)
 
 
-    class KeywordBinaryStatement(Object):
+    class KeywordBinaryStatement(SapphireTrunk):
         __slots__ = ((
             'keyword',                  #   KeywordFor | KeywordWith
             'left',                     #   Expression
@@ -561,7 +562,7 @@ def gem():
 
 
     @share
-    class KeywordExpressionStatement_1(Object):
+    class KeywordExpressionStatement_1(SapphireTrunk):
         __slots__ = ((
             'keyword',                  #   KeywordDelete | KeywordReturn
             'expression',               #   Expression
@@ -623,7 +624,7 @@ def gem():
         display_name = 'yield-statement'
 
 
-    class KeywordExpressionStatement_2(Object):
+    class KeywordExpressionStatement_2(SapphireTrunk):
         __slots__ = ((
             'keyword',                  #   KeywordAssert
             'left',                     #   Expression
@@ -677,7 +678,7 @@ def gem():
 
 
     @share
-    class ModuleAsFragment(Object):
+    class ModuleAsFragment(SapphireTrunk):
         __slots__ = ((
             'module',                   #   Expression
             'keyword_as',               #   KeywordAs
@@ -704,7 +705,7 @@ def gem():
 
 
     @share
-    class ParameterColon_1(Object):
+    class ParameterColon_1(SapphireTrunk):
         __slots__ = ((
             'left_parenthesis',             #   OperatorLeftParenthesis
             'argument_1',                   #   Expression*
@@ -737,7 +738,7 @@ def gem():
 
 
     @share
-    class RaiseStatement_3(Object):
+    class RaiseStatement_3(SapphireTrunk):
         __slots__ = ((
             'keyword',                  #   KeywordAssert
             'left',                     #   Expression
@@ -786,7 +787,7 @@ def gem():
 
 
     @share
-    class StatementCall(Object):
+    class StatementCall(SapphireTrunk):
         __slot__ = ((
             'indented',                 #   String+
             'left',                     #   Expression
@@ -824,7 +825,7 @@ def gem():
 
 
     @share
-    class StatementExpression(Object):
+    class StatementExpression(SapphireTrunk):
         __slot__ = ((
             'indented',                 #   String+
             'expression',               #   Expression
@@ -855,7 +856,7 @@ def gem():
 
 
     @share
-    class StatementFromImport(Object):
+    class StatementFromImport(SapphireTrunk):
         __slots__ = ((
             'keyword_from',             #   KeywordFrom
             'module',                   #   String+
@@ -898,7 +899,7 @@ def gem():
 
 
     @share
-    class MethodCallStatement_1(Object):
+    class MethodCallStatement_1(SapphireTrunk):
         __slot__ = ((
             'indented',                 #   String+
             'left',                     #   Expression
@@ -946,7 +947,7 @@ def gem():
 
 
     @share
-    class MethodCallStatement_2(Object):
+    class MethodCallStatement_2(SapphireTrunk):
         __slot__ = ((
             'indented',                 #   String+
             'left',                     #   Expression
@@ -1002,7 +1003,7 @@ def gem():
 
 
     @share
-    class StatementImport_1(Object):
+    class StatementImport_1(SapphireTrunk):
         __slots__ = ((
             'keyword_import',           #   KeywordImport
             'module',                   #   String+
@@ -1034,7 +1035,7 @@ def gem():
 
 
     @share
-    class StatementImport_Many(Object):
+    class StatementImport_Many(SapphireTrunk):
         __slots__ = ((
             'keyword_import',           #   KeywordImport
             'module_many',              #   Tuple of String

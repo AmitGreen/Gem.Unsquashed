@@ -5,9 +5,10 @@
 def gem():
     require_gem('Sapphire.DualToken')
     require_gem('Sapphire.Elemental')
+    require_gem('Sapphire.Tree')
 
 
-    class BinaryExpression(Object):
+    class BinaryExpression(SapphireTrunk):
         __slots__ = ((
             'left',                     #   Expression
             'operator',                 #   Operator*

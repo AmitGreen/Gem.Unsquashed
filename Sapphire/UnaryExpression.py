@@ -3,7 +3,10 @@
 #
 @gem('Sapphire.Expression')
 def gem():
-    class UnaryExpression(Object):
+    require_gem('Sapphire.Tree')
+
+
+    class UnaryExpression(SapphireTrunk):
         __slots__ = ((
             'operator',                 #   Operator*
             'right',                    #   Expression

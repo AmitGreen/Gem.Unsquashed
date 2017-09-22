@@ -3,14 +3,14 @@
 #
 @gem('Sapphire.Expression')
 def gem():
+    require_gem('Sapphire.Tree')
+
+
     @share
-    class BaseExpression_Many(Object):
+    class BaseExpression_Many(SapphireTrunk):
         __slots__ = ((
             'many',                     #   Tuple of *
         ))
-
-        is_right_parenthesis    = false
-        is_right_square_bracket = false
 
 
         def __init__(t, many):

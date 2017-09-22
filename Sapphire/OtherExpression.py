@@ -3,7 +3,10 @@
 #
 @gem('Sapphire.OtherExpression')
 def gem():
-    class TripleExpression(Object):
+    require_gem('Sapphire.Tree')
+
+
+    class TripleExpression(SapphireTrunk):
         __slots__ = ((
             'left',                     #   Expression*
             'left_operator',            #   Operator*

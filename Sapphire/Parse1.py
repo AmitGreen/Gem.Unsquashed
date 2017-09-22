@@ -34,6 +34,7 @@ def gem():
     require_gem('Sapphire.Tokenize1Header')
     require_gem('Sapphire.Tokenize1Name')
     require_gem('Sapphire.Tokenize1Operator')
+    require_gem('Sapphire.Tree')
     require_gem('Sapphire.TripleToken')
     require_gem('Sapphire.UnaryExpression')
     require_gem('Sapphire.Whitespace')

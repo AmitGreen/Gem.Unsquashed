@@ -3,17 +3,11 @@
 #
 @gem('Sapphire.Expression')
 def gem():
-    class PostfixExpression(Object):
+    class PostfixExpression(SapphireTrunk):
         __slots__ = ((
             'left',                     #   Expression
             'postfix',                  #   Operator*
         ))
-
-
-        is__right_parenthesis__colon__newline = false
-        is_right_parenthesis                  = false
-        is_right_square_bracket               = false
-        is_statement                          = false
 
 
         def __init__(t, left, postfix):
@@ -27,9 +21,6 @@ def gem():
 
         def display_token(t):
             return arrange('<%s %s %s>', t.display_name, t.left.display_token(), t.postfix.display_token())
-
-
-        display_full_token = display_token
 
 
         def write(t, w):
@@ -56,14 +47,11 @@ def gem():
 
 
     @share
-    class SimpleMemberExpression(Object):
+    class SimpleMemberExpression(SapphireTrunk):
         __slots__ = ((
             'left',                     #   Expression
             'postfix',                  #   DotName
         ))
-
-
-        is_statement = false
 
 
         def __init__(t, left, postfix):
@@ -77,9 +65,6 @@ def gem():
 
         def display_token(t):
             return arrange('<member %s %s>', t.left.display_token(), t.postfix.display_token())
-
-
-        display_full_token = display_token
 
 
         def write(t, w):
