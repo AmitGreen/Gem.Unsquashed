@@ -120,7 +120,7 @@ def gem():
 
     class Atom_Whitespace(BaseDualOperator):
         __slots__                      = (())
-        display_name                   = 'atom-whitespace'
+        display_name                   = 'atom+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
 
@@ -211,7 +211,7 @@ def gem():
 
     class Identifier_Whitespace(BaseDualOperator):
         __slots__                      = (())
-        display_name                   = 'identifier-whitespace'
+        display_name                   = 'identifier+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
         is_identifier                  = true
@@ -339,28 +339,59 @@ def gem():
             create_dual_token = create_dual_token__with_newlines
 
 
-        def conjure_dual_token(middle, end):
-            full = qs()[qi() : end]
+        if conjure_second__ends_in_newline is none:
+            def conjure_dual_token(middle, end):
+                assert qi() < middle < end
 
-            r = lookup(full)
-           
-            if r is not none:
-                assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
+                full = qs()[qi() : end]
 
-                return r
+                r = lookup(full)
+               
+                if r is not none:
+                    assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
-            full = intern_string(full)
-            s    = qs()
+                    return r
 
-            return provide(
-                       full,
-                       create_dual_token(
-                           Meta,
+                full = intern_string(full)
+                s    = qs()
+
+                return provide(
                            full,
-                           conjure_first(s[qi() : middle]),
-                           (conjure_second__ends_in_newline   if end is none else   conjure_second)(s[middle : end]),
-                       ),
-                   )
+                           create_dual_token(
+                               Meta,
+                               full,
+                               conjure_first (s[qi()   : middle]),
+                               conjure_second(s[middle : end   ]),
+                           ),
+                       )
+        else:
+            def conjure_dual_token(middle, end):
+                if end is none:
+                    assert qi() < middle
+                else:
+                    assert qi() < middle < end
+
+                full = qs()[qi() : end]
+
+                r = lookup(full)
+               
+                if r is not none:
+                    assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
+
+                    return r
+
+                full = intern_string(full)
+                s    = qs()
+
+                return provide(
+                           full,
+                           create_dual_token(
+                               Meta,
+                               full,
+                               conjure_first(s[qi() : middle]),
+                               (conjure_second__ends_in_newline   if end is none else   conjure_second)(s[middle : end]),
+                           ),
+                       )
 
 
         if __debug__:
@@ -479,7 +510,7 @@ def gem():
                                         )
 
     conjure__double_quote__whitespace = produce_conjure_dual_token(
-                                            'double-quote-whitespace',
+                                            'double-quote+whitespace',
                                             Atom_Whitespace,
                                             conjure_double_quote,
                                             conjure_whitespace,
@@ -511,7 +542,7 @@ def gem():
                           )
 
     conjure_identifier_whitespace = produce_conjure_dual_token(
-                                        'identifier-whitespace',
+                                        'identifier+whitespace',
                                         Identifier_Whitespace,
                                         conjure_identifier,
                                         conjure_whitespace,
@@ -519,7 +550,7 @@ def gem():
                                     )
 
     conjure_number_whitespace = produce_conjure_dual_token(
-                                   'number-whitespace',
+                                   'number+whitespace',
                                    Atom_Whitespace,
                                    conjure_number,
                                    conjure_whitespace,
@@ -551,12 +582,44 @@ def gem():
                     )
 
     conjure__single_quote__whitespace = produce_conjure_dual_token(
-                                            'single-quote-whitespace',
+                                            'single-quote+whitespace',
                                             Atom_Whitespace,
                                             conjure_single_quote,
                                             conjure_whitespace,
                                             conjure_whitespace__ends_in_newline,
                                         )
+
+    conjure_whitespace__double_quote = produce_conjure_dual_token(
+                                           'whitespace+double-quote',
+                                           Whitespace_Atom,
+                                           conjure_whitespace,
+                                           conjure_double_quote,
+                                           none,
+                                       )
+
+    conjure_whitespace_identifier = produce_conjure_dual_token(
+                                        'whitespace+identifier',
+                                        Whitespace_Identifier,
+                                        conjure_whitespace,
+                                        conjure_identifier,
+                                        none,
+                                    )
+
+    conjure_whitespace_number = produce_conjure_dual_token(
+                                    'whitespace+number',
+                                    Whitespace_Atom,
+                                    conjure_whitespace,
+                                    conjure_number,
+                                    none,
+                                )
+
+    conjure_whitespace__single_quote = produce_conjure_dual_token(
+                                          'whitespace+single-quote',
+                                          Whitespace_Atom,
+                                          conjure_whitespace,
+                                          conjure_single_quote,
+                                          none,
+                                       )
 
     evoke_arguments_0 = produce_evoke_dual_token(
                             'arguments_0',
@@ -585,15 +648,12 @@ def gem():
 
     evoke_empty_list            = produce_evoke_dual_token('[]',                    EmptyList)
     evoke_empty_map             = produce_evoke_dual_token('{}',                    EmptyMap)
-    evoke_identifier_whitespace = produce_evoke_dual_token('identifier-whitespace', Identifier_Whitespace)
+    evoke_identifier_whitespace = produce_evoke_dual_token('identifier+whitespace', Identifier_Whitespace)
 
     evoke__left_square_bracket__colon = produce_evoke_dual_token(
                                             '[:',                           #   ]
                                             LeftSquareBracket_Colon,
                                         )
-
-    evoke_whitespace_atom       = produce_evoke_dual_token('whitespace-atom',       Whitespace_Atom)
-    evoke_whitespace_identifier = produce_evoke_dual_token('whitespace-identifier', Whitespace_Identifier)
 
     insert_return__line_marker = produce_insert_dual_token(
                                     'return__line_marker',
@@ -652,12 +712,46 @@ def gem():
                                        'y' : conjure_identifier_whitespace, 'z' : conjure_identifier_whitespace,
                                     }.__getitem__
 
-    static_evoke_whitespace_atom = static_method(evoke_whitespace_atom)
+    find_conjure_whitespace_atom = {
+                                       '"' : conjure_whitespace__double_quote,
+                                       "'" : conjure_whitespace__single_quote,
 
-    Identifier .evoke_whitespace_atom = static_method(evoke_whitespace_identifier)
-    DoubleQuote.evoke_whitespace_atom = static_evoke_whitespace_atom
-    SingleQuote.evoke_whitespace_atom = static_evoke_whitespace_atom
-    Number     .evoke_whitespace_atom = static_evoke_whitespace_atom
+                                       '.' : conjure_whitespace_number,
+                                       '0' : conjure_whitespace_number, '1' : conjure_whitespace_number,
+                                       '2' : conjure_whitespace_number, '3' : conjure_whitespace_number,
+                                       '4' : conjure_whitespace_number, '5' : conjure_whitespace_number,
+                                       '6' : conjure_whitespace_number, '7' : conjure_whitespace_number,
+                                       '8' : conjure_whitespace_number, '9' : conjure_whitespace_number,
+
+                                       'A' : conjure_whitespace_identifier, 'B' : conjure_whitespace_identifier,
+                                       'C' : conjure_whitespace_identifier, 'D' : conjure_whitespace_identifier,
+                                       'E' : conjure_whitespace_identifier, 'F' : conjure_whitespace_identifier,
+                                       'G' : conjure_whitespace_identifier, 'H' : conjure_whitespace_identifier,
+                                       'I' : conjure_whitespace_identifier, 'J' : conjure_whitespace_identifier,
+                                       'K' : conjure_whitespace_identifier, 'L' : conjure_whitespace_identifier,
+                                       'M' : conjure_whitespace_identifier, 'N' : conjure_whitespace_identifier,
+                                       'O' : conjure_whitespace_identifier, 'P' : conjure_whitespace_identifier,
+                                       'Q' : conjure_whitespace_identifier, 'R' : conjure_whitespace_identifier,
+                                       'S' : conjure_whitespace_identifier, 'T' : conjure_whitespace_identifier,
+                                       'U' : conjure_whitespace_identifier, 'V' : conjure_whitespace_identifier,
+                                       'W' : conjure_whitespace_identifier, 'X' : conjure_whitespace_identifier,
+                                       'Y' : conjure_whitespace_identifier, 'Z' : conjure_whitespace_identifier,
+                                       '_' : conjure_whitespace_identifier,
+
+                                       'a' : conjure_whitespace_identifier, 'b' : conjure_whitespace_identifier,
+                                       'c' : conjure_whitespace_identifier, 'd' : conjure_whitespace_identifier,
+                                       'e' : conjure_whitespace_identifier, 'f' : conjure_whitespace_identifier,
+                                       'g' : conjure_whitespace_identifier, 'h' : conjure_whitespace_identifier,
+                                       'i' : conjure_whitespace_identifier, 'j' : conjure_whitespace_identifier,
+                                       'k' : conjure_whitespace_identifier, 'l' : conjure_whitespace_identifier,
+                                       'm' : conjure_whitespace_identifier, 'n' : conjure_whitespace_identifier,
+                                       'o' : conjure_whitespace_identifier, 'p' : conjure_whitespace_identifier,
+                                       'q' : conjure_whitespace_identifier, 'r' : conjure_whitespace_identifier,
+                                       's' : conjure_whitespace_identifier, 't' : conjure_whitespace_identifier,
+                                       'u' : conjure_whitespace_identifier, 'v' : conjure_whitespace_identifier,
+                                       'w' : conjure_whitespace_identifier, 'x' : conjure_whitespace_identifier,
+                                       'y' : conjure_whitespace_identifier, 'z' : conjure_whitespace_identifier,
+                                    }.__getitem__
 
 
     share(
@@ -680,9 +774,9 @@ def gem():
         'evoke_empty_map',                          evoke_empty_map,
         'evoke_identifier_whitespace',              evoke_identifier_whitespace,
         'evoke__left_square_bracket__colon',        evoke__left_square_bracket__colon,
-        'evoke_whitespace_identifier',              evoke_whitespace_identifier,
-        'evoke_whitespace_identifier',              evoke_whitespace_identifier,
         'find_conjure_atom_whitespace',             find_conjure_atom_whitespace,
         'find_conjure_comma_something',             find_conjure_comma_something,
+        'find_conjure_whitespace_atom',             find_conjure_whitespace_atom,
         'insert_return__line_marker',               insert_return__line_marker,
+        'conjure_whitespace_identifier',            conjure_whitespace_identifier,
     )

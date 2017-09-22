@@ -101,25 +101,27 @@ def gem():
             if m.start('comment_newline') is not -1:
                 raise_unknown_line()
 
-            r = conjure_identifier(name)
-
             star_end = m.end('star')
 
             if star_end is -1:
                 if qi() != j:
-                    prefix = s[qi() : j]
+                    name_end = m.end('name')
 
-                    r = evoke_whitespace_identifier(
-                            (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
-                            r,
-                        )
+                    r = conjure_whitespace_identifier(j, name_end)
+
+                    wi(name_end)
+                    wj(m.end())
+
+                    return r
+
+                r = conjure_identifier(name)
 
                 wi(m.end('name'))
                 wj(m.end())
 
                 return r
 
-            r = StarParameter(conjure_star_sign(s[qi() : star_end]), r)
+            r = StarParameter(conjure_star_sign(s[qi() : star_end]), conjure_identifier(name))
 
             j = m.end()
 

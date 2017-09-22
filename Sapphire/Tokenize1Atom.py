@@ -39,17 +39,14 @@ def gem():
 
                     return r
 
-                r = find_atom_type(atom_s[0])(atom_s)
+                atom_end = m.end('atom')
 
                 if qi() != qj():
-                    prefix = qs()[qi() : qj()]
+                    r = find_conjure_whitespace_atom(atom_s[0])(qj(), atom_end)
+                else:
+                    r = find_atom_type(atom_s[0])(atom_s)
 
-                    r = r.evoke_whitespace_atom(
-                            (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
-                            r,
-                        )
-
-                wi(m.end('atom'))
+                wi(atom_end)
                 wj(m.end())
 
                 return r
@@ -181,19 +178,15 @@ def gem():
             quote_start = m.start('quote')
 
             if quote_start is not -1:
-                quote_end = m.end('quote')
                 j         = qj()
-                s         = qs()
-
-                r = find_atom_type(s[quote_start])(s[j : quote_end])
+                quote_end = m.end('quote')
 
                 if qi() != j:
-                    prefix = s[qi() : j]
+                    r = find_conjure_whitespace_atom(qs()[quote_start])(j, quote_end)
+                else:
+                    s = qs()
 
-                    r = r.evoke_whitespace_atom(
-                            (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
-                            r,
-                        )
+                    r = find_atom_type(s[quote_start])(s[j : quote_end])
 
                 wi(quote_end)
                 wj(m.end())
@@ -256,19 +249,16 @@ def gem():
 
                 return r
 
-            r = find_atom_type(atom_s[0])(atom_s)
-
-            wn(conjure_token_newline(qs()[m.end('atom') : ]))
+            atom_end = m.end('atom')
 
             if qi() == qj():
-                return r
+                r = find_atom_type(atom_s[0])(atom_s)
+            else:
+                r = find_conjure_whitespace_atom(atom_s[0])(qj(), m.end('atom'))
 
-            prefix = qs()[qi() : qj()]
+            wn(conjure_token_newline(qs()[atom_end : ]))
 
-            return r.evoke_whitespace_atom(
-                       (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
-                       r,
-                   )
+            return r
             #</similiar-to>
 
         operator_s = m.group('operator')
@@ -436,7 +426,6 @@ def gem():
             #       In the code below: Use 'qj()' instead of "m.start('quote')" to be sure to pick up any letters
             #       prefixing the quote, such as r'prefixed'
             #
-            r = find_atom_type(s[quote_start])(s[qj() : quote_end])
 
             #
             #<similiar-to: {atom_s} above>
@@ -468,19 +457,16 @@ def gem():
 
                 return r
 
-            r = find_atom_type(s[quote_start])(s[qj() : quote_end])
+            j = qj()
+
+            if qi() == qj():
+                r = find_atom_type(s[quote_start])(s[j : quote_end])
+            else:
+                r = find_conjure_whitespace_atom(s[quote_start])(j, quote_end)
 
             wn(conjure_token_newline(s[m.end('quote') : ]))
 
-            if qi() == qj():
-                return r
-
-            prefix = s[qi() : qj()]
-
-            return r.evoke_whitespace_atom(
-                       (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
-                       r,
-                   )
+            return r
             #</similiar-to>
 
         raise_unknown_line()
