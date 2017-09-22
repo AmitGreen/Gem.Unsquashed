@@ -17,7 +17,7 @@ def gem():
 
 
     from Gem import create_DelayedFileOutput, encode_ascii, first_map_item, lookup_ascii
-    from Gem import produce_cache_functions, python_version, read_text_from_path, unknown_ascii, view_items
+    from Gem import produce_cache_functions, python_version, read_text_from_path, unknown_ascii
 
 
     share(
@@ -30,7 +30,6 @@ def gem():
         'lookup_ascii',                 lookup_ascii,
         'produce_cache_functions',      produce_cache_functions,
         'read_text_from_path',          read_text_from_path,
-        'view_items',                   view_items,
 
 
         #

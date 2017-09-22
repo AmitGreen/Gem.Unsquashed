@@ -48,9 +48,6 @@ def gem():
 
 
     built_in(
-        'view_values',  view_values,
-    )
-
-    export(
         'view_items',   view_items,
+        'view_values',  view_values,
     )

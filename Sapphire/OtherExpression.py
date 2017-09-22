@@ -3,40 +3,6 @@
 #
 @gem('Sapphire.OtherExpression')
 def gem():
-    @share
-    class CallExpression(Object):
-        __slot__ = ((
-            'left',                         #   Expression
-            'arguments',                    #   Arguments*
-        ))
-
-
-        is_statement = false
-
-
-        def __init__(t, left, arguments):
-            assert type(arguments) is not String
-
-            t.left      = left
-            t.arguments = arguments
-
-
-        def __repr__(t):
-            return arrange('<CallExpression %r %r>', t.left, t.arguments)
-
-
-        def display_token(t):
-            return arrange('<call %s %s>', t.left.display_token(), t.arguments.display_token())
-
-
-        display_full_token = display_token
-
-
-        def write(t, w):
-            t.left     .write(w)
-            t.arguments.write(w)
-
-
     @export
     class MemberExpression_3(Object):
         __slots__ = ((

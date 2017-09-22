@@ -188,6 +188,13 @@ def gem():
         is__optional_comma__right_square_bracket = true
 
 
+    class Dot_Name(BaseDualOperator):
+        __slots__           = (())
+        #   [
+        display_name        = '.name'
+        is_postfix_operator = true
+
+
     class EmptyList(BaseDualOperator):
         __slots__                      = (())
         display_name                   = '[,]'
@@ -491,8 +498,9 @@ def gem():
                                                Comma_RightSquareBracket,
                                            )
 
-    conjure_empty_list = produce_conjure_dual_token('[]', EmptyList)
-    conjure_empty_map  = produce_conjure_dual_token('{}', EmptyMap)
+    conjure_dot_name   = produce_conjure_dual_token('.name', Dot_Name)
+    conjure_empty_list = produce_conjure_dual_token('[]',    EmptyList)
+    conjure_empty_map  = produce_conjure_dual_token('{}',    EmptyMap)
 
     conjure__left_square_bracket__colon = produce_conjure_dual_token(
                                               '[:',                           #   ]
@@ -738,6 +746,7 @@ def gem():
         'conjure__comma__right_brace',              conjure__comma__right_brace,
         'conjure__comma__right_parenthesis',        conjure__comma__right_parenthesis,
         'conjure__comma__right_square_bracket',     conjure__comma__right_square_bracket,
+        'conjure_dot_name',                         conjure_dot_name,
         'conjure_empty_list',                       conjure_empty_list,
         'conjure_empty_map',                        conjure_empty_map,
         'conjure__left_square_bracket__colon',      conjure__left_square_bracket__colon,
