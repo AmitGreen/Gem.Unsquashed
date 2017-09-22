@@ -26,7 +26,7 @@ def gem():
                 colon_end = m.end('colon')
 
                 if colon_end is not -1:
-                    return conjure__parameter_0__colon__line_marker(
+                    return evoke__parameter_0__colon__line_marker(
                                m.start('right_parenthesis'),
                                RP_end,
                                colon_end,
@@ -66,7 +66,7 @@ def gem():
 
             wd0()
 
-            return conjure__right_parenthesis__colon__line_marker(right_parenthesis__end, m.end('colon'))
+            return evoke__right_parenthesis__colon__line_marker(right_parenthesis__end, m.end('colon'))
 
         if m.end('comment_newline') is -1:
             return conjure_right_parenthesis(s[qi() :])
@@ -107,7 +107,7 @@ def gem():
                 if qi() != j:
                     name_end = m.end('name')
 
-                    r = conjure_whitespace_name(j, name_end)
+                    r = evoke_whitespace_name(j, name_end)
 
                     wi(name_end)
                     wj(m.end())
@@ -207,7 +207,7 @@ def gem():
 
                     comma_RP_start = m.start('comma_RP')
 
-                    return conjure__comma__right_parenthesis__colon__line_marker(
+                    return evoke__comma__right_parenthesis__colon__line_marker(
                                comma_RP_start,
                                comma_RP_end,
                                m.end('comma_RP_colon'),

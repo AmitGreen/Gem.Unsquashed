@@ -174,6 +174,45 @@ def gem():
 
     @privileged
     def produce_conjure_quadruple_token(
+            name, Meta,
+            
+            lookup      = lookup_normal_token,
+            provide     = provide_normal_token,
+            line_marker = false
+    ):
+        if line_marker:
+            assert (lookup is lookup_normal_token) and (provide is provide_normal_token)
+
+            create_quadruple_token = create_quadruple_token__line_marker
+            lookup                 = lookup_line_marker
+            provide                = provide_line_marker
+        else:
+            create_quadruple_token = create_quadruple_token__with_newlines
+
+
+        def conjure_quadruple_token(a, b, c, d):
+            s = a.s + b.s + c.s + d.s
+
+            r = lookup(s)
+
+            if r is not none:
+                assert (r.a is a) and (r.b is b) and (r.c is c) and (r.d is d)
+
+                return r
+
+            s = intern_string(s)
+
+            return provide(s, create_quadruple_token(Meta, s, a, b, c, d))
+
+
+        if __debug__:
+            conjure_quadruple_token.__name__ = intern_arrange('conjure_%s', name)
+
+        return conjure_quadruple_token
+
+
+    @privileged
+    def produce_evoke_quadruple_token(
             name, Meta, conjure_a, conjure_b, conjure_c,
             
             conjure_d                  = absent,
@@ -190,7 +229,7 @@ def gem():
             assert (conjure_d is conjure_d__ends_in_newline is absent)
 
 
-            def conjure_quadruple_token(a_end, b_end, c_end):
+            def evoke_quadruple_token(a_end, b_end, c_end):
                 assert qi() < a_end < b_end < c_end
 
                 full = qs()[qi() : ]
@@ -217,7 +256,7 @@ def gem():
                            ),
                        )
         else:
-            def conjure_quadruple_token(a_end, b_end, c_end, d_end):
+            def evoke_quadruple_token(a_end, b_end, c_end, d_end):
                 assert qi() < a_end < b_end < c_end < d_end
 
                 full = qs()[qi() : d_end]
@@ -246,52 +285,27 @@ def gem():
 
 
         if __debug__:
-            conjure_quadruple_token.__name__ = intern_arrange('conjure_%s', name)
-
-
-        return conjure_quadruple_token
-
-
-    @privileged
-    def produce_evoke_quadruple_token(
-            name, Meta,
-            
-            lookup      = lookup_normal_token,
-            provide     = provide_normal_token,
-            line_marker = false
-    ):
-        if line_marker:
-            assert (lookup is lookup_normal_token) and (provide is provide_normal_token)
-
-            create_quadruple_token = create_quadruple_token__line_marker
-            lookup                 = lookup_line_marker
-            provide                = provide_line_marker
-        else:
-            create_quadruple_token = create_quadruple_token__with_newlines
-
-
-        def evoke_quadruple_token(a, b, c, d):
-            s = a.s + b.s + c.s + d.s
-
-            r = lookup(s)
-
-            if r is not none:
-                assert (r.a is a) and (r.b is b) and (r.c is c) and (r.d is d)
-
-                return r
-
-            s = intern_string(s)
-
-            return provide(s, create_quadruple_token(Meta, s, a, b, c, d))
-
-
-        if __debug__:
             evoke_quadruple_token.__name__ = intern_arrange('evoke_%s', name)
+
 
         return evoke_quadruple_token
 
 
     conjure__comma__right_parenthesis__colon__line_marker = produce_conjure_quadruple_token(
+            'comma__right_parenthesis__colon__line_marker',
+            Comma_RightParenthesis_Colon_LineMarker_1,
+
+            line_marker = true,
+        )
+
+    conjure__parameter_0__colon__line_marker = produce_conjure_quadruple_token(
+            'parameter_0__colon_newline',
+            Parameter_0__Colon__LineMarker_1,
+
+            line_marker = true,
+        )
+
+    evoke__comma__right_parenthesis__colon__line_marker = produce_evoke_quadruple_token(
             'comma__right_parenthesis__colon__line_marker',
             Comma_RightParenthesis_Colon_LineMarker_1,
             conjure_comma,
@@ -301,7 +315,7 @@ def gem():
             line_marker = true,
         )
 
-    conjure__parameter_0__colon__line_marker = produce_conjure_quadruple_token(
+    evoke__parameter_0__colon__line_marker = produce_evoke_quadruple_token(
             'parameter_0__colon_newline',
             Parameter_0__Colon__LineMarker_1,
             conjure_left_parenthesis,
@@ -310,21 +324,6 @@ def gem():
 
             line_marker = true,
         )
-
-    evoke__comma__right_parenthesis__colon__line_marker = produce_evoke_quadruple_token(
-            'comma__right_parenthesis__colon__line_marker',
-            Comma_RightParenthesis_Colon_LineMarker_1,
-
-            line_marker = true,
-        )
-
-    evoke__parameter_0__colon__line_marker = produce_evoke_quadruple_token(
-            'parameter_0__colon_newline',
-            Parameter_0__Colon__LineMarker_1,
-
-            line_marker = true,
-        )
-
 
     share(
         'conjure__comma__right_parenthesis__colon__line_marker',

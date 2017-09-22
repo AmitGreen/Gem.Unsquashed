@@ -229,7 +229,7 @@ def gem():
                 middle = parse1_atom()
 
                 if middle.is_colon:
-                    operator = evoke__left_square_bracket__colon(operator, middle)
+                    operator = conjure__left_square_bracket__colon(operator, middle)
                 else:
                     operator_2 = qk()
 
@@ -265,7 +265,7 @@ def gem():
                                        HeadIndex(
                                            operator,
                                            middle,
-                                           evoke__colon__right_square_bracket(operator_2, middle_2),
+                                           conjure__colon__right_square_bracket(operator_2, middle_2),
                                        ),
                                    )
                         else:
@@ -327,7 +327,7 @@ def gem():
                 middle_2 = parse1_atom()
 
                 if middle_2.is_right_square_bracket:
-                    operator = evoke_all_index(operator.a, operator.b, middle_2)
+                    operator = conjure_all_index(operator.a, operator.b, middle_2)
                 else:
                     operator_2 = qk()
 

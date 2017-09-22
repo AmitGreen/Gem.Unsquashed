@@ -42,7 +42,7 @@ def gem():
                 atom_end = m.end('atom')
 
                 if qi() != qj():
-                    r = find_conjure_whitespace_atom(atom_s[0])(qj(), atom_end)
+                    r = find_evoke_whitespace_atom(atom_s[0])(qj(), atom_end)
                 else:
                     r = find_atom_type(atom_s[0])(atom_s)
 
@@ -95,7 +95,7 @@ def gem():
                 right_end = m.end('right_parenthesis')
 
                 if right_end is not -1:
-                    r = conjure_empty_tuple(left_end, right_end)
+                    r = evoke_empty_tuple(left_end, right_end)
 
                     wi(right_end)
                     wj(m.end())
@@ -126,7 +126,7 @@ def gem():
                 right_end = m.end('right_brace')
 
                 if right_end is not -1:
-                    r = conjure_empty_map(left_end, right_end)
+                    r = evoke_empty_map(left_end, right_end)
 
                     wi(right_end)
                     wj(m.end())
@@ -157,7 +157,7 @@ def gem():
                 right_end = m.end('right_square_bracket')
 
                 if right_end is not -1:
-                    r = conjure_empty_list(left_end, right_end)
+                    r = evoke_empty_list(left_end, right_end)
 
                     wi(right_end)
                     wj(m.end())
@@ -182,7 +182,7 @@ def gem():
                 quote_end = m.end('quote')
 
                 if qi() != j:
-                    r = find_conjure_whitespace_atom(qs()[quote_start])(j, quote_end)
+                    r = find_evoke_whitespace_atom(qs()[quote_start])(j, quote_end)
                 else:
                     s = qs()
 
@@ -229,9 +229,9 @@ def gem():
             #
             if qd() is not 0:
                 if qi() == qj():
-                    r = find_conjure_atom_whitespace(atom_s[0])(m.end('atom'), none)
+                    r = find_evoke_atom_whitespace(atom_s[0])(m.end('atom'), none)
                 else:
-                    r = find_conjure_whitespace_atom_whitespace(atom_s[0])(qj(), m.end('atom'), none)
+                    r = find_evoke_whitespace_atom_whitespace(atom_s[0])(qj(), m.end('atom'), none)
 
                 skip_tokenize_prefix()
 
@@ -242,7 +242,7 @@ def gem():
             if qi() == qj():
                 r = find_atom_type(atom_s[0])(atom_s)
             else:
-                r = find_conjure_whitespace_atom(atom_s[0])(qj(), m.end('atom'))
+                r = find_evoke_whitespace_atom(atom_s[0])(qj(), m.end('atom'))
 
             wn(conjure_token_newline(qs()[atom_end : ]))
 
@@ -307,13 +307,13 @@ def gem():
                 if qd() is 0:
                     right_end = m.end('right_parenthesis')
 
-                    r = conjure_empty_tuple(left_end, right_end)
+                    r = evoke_empty_tuple(left_end, right_end)
 
                     wn(conjure_token_newline(qs()[right_end : ]))
 
                     return r
 
-                r = conjure_empty_tuple(left_end, none)
+                r = evoke_empty_tuple(left_end, none)
 
                 skip_tokenize_prefix()
 
@@ -344,13 +344,13 @@ def gem():
                 if qd() is 0:
                     right_end = m.end('right_brace')
 
-                    r = conjure_empty_map(left_end, right_end)
+                    r = evoke_empty_map(left_end, right_end)
 
                     wn(conjure_token_newline(qs()[right_end : ]))
 
                     return r
 
-                r = conjure_empty_map(left_brace, none)
+                r = evoke_empty_map(left_brace, none)
 
                 skip_tokenize_prefix()
 
@@ -381,13 +381,13 @@ def gem():
                 if qd() is 0:
                     right_end = m.end('right_square_bracket')
 
-                    r = conjure_empty_list(left_end, right_end)
+                    r = evoke_empty_list(left_end, right_end)
 
                     wn(conjure_token_newline(qs()[right_end : ]))
 
                     return r
 
-                r = conjure_empty_list(left_end, none)
+                r = evoke_empty_list(left_end, none)
 
                 skip_tokenize_prefix()
 
@@ -422,9 +422,9 @@ def gem():
             #
             if qd() is not 0:
                 if qi() == qj():
-                    r = find_conjure_atom_whitespace(qs()[quote_start])(m.end('quote'), none)
+                    r = find_evoke_atom_whitespace(qs()[quote_start])(m.end('quote'), none)
                 else:
-                    r = find_conjure_whitespace_atom_whitespace(qs()[quote_start])(qj(), m.end('quote'), none)
+                    r = find_evoke_whitespace_atom_whitespace(qs()[quote_start])(qj(), m.end('quote'), none)
 
                 skip_tokenize_prefix()
 
@@ -437,7 +437,7 @@ def gem():
             if qi() == qj():
                 r = find_atom_type(s[quote_start])(s[j : quote_end])
             else:
-                r = find_conjure_whitespace_atom(s[quote_start])(j, quote_end)
+                r = find_evoke_whitespace_atom(s[quote_start])(j, quote_end)
 
             wn(conjure_token_newline(s[m.end('quote') : ]))
 

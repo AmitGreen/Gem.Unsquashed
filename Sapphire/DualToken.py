@@ -321,6 +321,37 @@ def gem():
 
     @privileged
     def produce_conjure_dual_token(
+            name, Meta,
+            
+            lookup  = lookup_normal_token,
+            provide = provide_normal_token,
+    ):
+        def conjure_dual_token(a, b):
+            s = a.s + b.s
+
+            r = lookup(s)
+
+            if r is not none:
+                if not ((r.a is a) and (r.b is b)):
+                    my_line('s: %r; a: %r; b: %r; r: %r; T1: %r; T2: %r', s, a, b, r, r.a is a, r.b is b)
+
+                assert (r.a is a) and (r.b is b)
+
+                return r
+
+            s = intern_string(s)
+
+            return provide(s, create_dual_token__with_newlines(Meta, s, a, b))
+
+
+        if __debug__:
+            conjure_dual_token.__name__ = intern_arrange('conjure_%s', name)
+
+        return conjure_dual_token
+
+
+    @privileged
+    def produce_evoke_dual_token(
             name, Meta, conjure_first, conjure_second, conjure_second__ends_in_newline,
             
             lookup      = lookup_normal_token,
@@ -340,7 +371,7 @@ def gem():
 
 
         if conjure_second__ends_in_newline is none:
-            def conjure_dual_token(middle, end):
+            def evoke_dual_token(middle, end):
                 assert qi() < middle < end
 
                 full = qs()[qi() : end]
@@ -365,7 +396,7 @@ def gem():
                            ),
                        )
         else:
-            def conjure_dual_token(middle, end):
+            def evoke_dual_token(middle, end):
                 if end is none:
                     assert qi() < middle
                 else:
@@ -395,39 +426,8 @@ def gem():
 
 
         if __debug__:
-            conjure_dual_token.__name__ = intern_arrange('conjure_%s', name)
-
-
-        return conjure_dual_token
-
-
-    @privileged
-    def produce_evoke_dual_token(
-            name, Meta,
-            
-            lookup  = lookup_normal_token,
-            provide = provide_normal_token,
-    ):
-        def evoke_dual_token(a, b):
-            s = a.s + b.s
-
-            r = lookup(s)
-
-            if r is not none:
-                if not ((r.a is a) and (r.b is b)):
-                    my_line('s: %r; a: %r; b: %r; r: %r; T1: %r; T2: %r', s, a, b, r, r.a is a, r.b is b)
-
-                assert (r.a is a) and (r.b is b)
-
-                return r
-
-            s = intern_string(s)
-
-            return provide(s, create_dual_token__with_newlines(Meta, s, a, b))
-
-
-        if __debug__:
             evoke_dual_token.__name__ = intern_arrange('evoke_%s', name)
+
 
         return evoke_dual_token
 
@@ -466,164 +466,45 @@ def gem():
         return insert_dual_token
 
 
-    conjure__colon__right_square_bracket = produce_conjure_dual_token(
-                                               'colon__right_square_bracket',
-                                               Colon_RightSquareBracket,
-                                               conjure_colon,
-                                               conjure_right_square_bracket,
-                                               conjure_right_square_bracket__ends_in_newline,
-                                           )
-
     conjure_arguments_0 = produce_conjure_dual_token(
                               'arguments_0',
                               Arguments_0,
-                              conjure_left_parenthesis,
-                              conjure_right_parenthesis,
-                              conjure_right_parenthesis__ends_in_newline,
 
                               lookup  = lookup_arguments_0_token,
                               provide = provide_arguments_0_token,
                           )
 
-    conjure__comma__right_brace = produce_conjure_dual_token(
-                                      'comma__right_brace',
-                                      Comma_RightBrace,
-                                      conjure_comma,
-                                      conjure_right_brace,
-                                      conjure_right_brace__ends_in_newline,
-                                  )
-
-    conjure__comma__right_square_bracket = produce_conjure_dual_token(
-                                               'comma__right_square_bracket',
-                                               Comma_RightSquareBracket,
-                                               conjure_comma,
-                                               conjure_right_square_bracket,
-                                               conjure_right_square_bracket__ends_in_newline,
+    conjure__colon__right_square_bracket = produce_conjure_dual_token(
+                                               'colon__right_square_bracket',
+                                               Colon_RightSquareBracket,
                                            )
+
+    conjure__comma__right_brace = produce_conjure_dual_token('comma__right_brace', Comma_RightBrace)
 
     conjure__comma__right_parenthesis = produce_conjure_dual_token(
                                             'comma__right_parenthesis',
                                             Comma_RightParenthesis,
-                                            conjure_comma,
-                                            conjure_right_parenthesis,
-                                            conjure_right_parenthesis__ends_in_newline,
                                         )
 
-    conjure__double_quote__whitespace = produce_conjure_dual_token(
-                                            'double-quote+whitespace',
-                                            Atom_Whitespace,
-                                            conjure_double_quote,
-                                            conjure_whitespace,
-                                            conjure_whitespace__ends_in_newline,
-                                        )
+    conjure__comma__right_square_bracket = produce_conjure_dual_token(
+                                               'comma__right_square_bracket',
+                                               Comma_RightSquareBracket,
+                                           )
 
-    conjure_empty_list = produce_conjure_dual_token(
-                             '[]',
-                             EmptyList,
-                             conjure_left_square_bracket,
-                             conjure_right_square_bracket,
-                             conjure_right_square_bracket__ends_in_newline,
-                         )
-
-    conjure_empty_map = produce_conjure_dual_token(
-                            '{}',
-                            EmptyMap,
-                            conjure_left_brace,
-                            conjure_right_brace,
-                            conjure_right_brace__ends_in_newline,
-                        )
-
-    conjure_empty_tuple = produce_conjure_dual_token(
-                              '()',
-                              EmptyTuple,
-                              conjure_left_parenthesis,
-                              conjure_right_parenthesis,
-                              conjure_right_parenthesis__ends_in_newline,
-                          )
-
-    conjure_name_whitespace = produce_conjure_dual_token(
-                                  'name+whitespace',
-                                  Name_Whitespace,
-                                  conjure_name,
-                                  conjure_whitespace,
-                                  conjure_whitespace__ends_in_newline,
-                              )
-
-    conjure_number_whitespace = produce_conjure_dual_token(
-                                   'number+whitespace',
-                                   Atom_Whitespace,
-                                   conjure_number,
-                                   conjure_whitespace,
-                                   conjure_whitespace__ends_in_newline,
-                                )
-
-    conjure_is_not = produce_conjure_dual_token(
-                        'is_not',
-                        Is_Not,
-                        conjure_keyword_is,
-                        conjure_keyword_not,
-                        conjure_keyword_not__ends_in_newline,
-                    )
+    conjure_empty_list = produce_conjure_dual_token('[]', EmptyList)
+    conjure_empty_map  = produce_conjure_dual_token('{}', EmptyMap)
 
     conjure__left_square_bracket__colon = produce_conjure_dual_token(
                                               '[:',                           #   ]
                                               LeftSquareBracket_Colon,
-                                              conjure_left_square_bracket,
-                                              conjure_colon,
-                                              conjure_colon__ends_in_newline,
                                           )
-
-    conjure_not_in = produce_conjure_dual_token(
-                        'not_in',
-                        Not_In,
-                        conjure_keyword_not,
-                        conjure_keyword_in,
-                        conjure_keyword_in__ends_in_newline,
-                    )
-
-    conjure__single_quote__whitespace = produce_conjure_dual_token(
-                                            'single-quote+whitespace',
-                                            Atom_Whitespace,
-                                            conjure_single_quote,
-                                            conjure_whitespace,
-                                            conjure_whitespace__ends_in_newline,
-                                        )
-
-    conjure_whitespace__double_quote = produce_conjure_dual_token(
-                                           'whitespace+double-quote',
-                                           Whitespace_Atom,
-                                           conjure_whitespace,
-                                           conjure_double_quote,
-                                           none,
-                                       )
-
-    conjure_whitespace_name = produce_conjure_dual_token(
-                                  'whitespace+name',
-                                  Whitespace_Name,
-                                  conjure_whitespace,
-                                  conjure_name,
-                                  none,
-                              )
-
-    conjure_whitespace_number = produce_conjure_dual_token(
-                                    'whitespace+number',
-                                    Whitespace_Atom,
-                                    conjure_whitespace,
-                                    conjure_number,
-                                    none,
-                                )
-
-    conjure_whitespace__single_quote = produce_conjure_dual_token(
-                                           'whitespace+single-quote',
-                                           Whitespace_Atom,
-                                           conjure_whitespace,
-                                           conjure_single_quote,
-                                           none,
-                                       )
 
     evoke_arguments_0 = produce_evoke_dual_token(
                             'arguments_0',
                             Arguments_0,
+                            conjure_left_parenthesis,
+                            conjure_right_parenthesis,
+                            conjure_right_parenthesis__ends_in_newline,
 
                             lookup  = lookup_arguments_0_token,
                             provide = provide_arguments_0_token,
@@ -632,27 +513,146 @@ def gem():
     evoke__colon__right_square_bracket = produce_evoke_dual_token(
                                              'colon__right_square_bracket',
                                              Colon_RightSquareBracket,
+                                             conjure_colon,
+                                             conjure_right_square_bracket,
+                                             conjure_right_square_bracket__ends_in_newline,
                                          )
 
-    evoke__comma__right_brace = produce_evoke_dual_token('comma__right_brace', Comma_RightBrace)
+    evoke__comma__right_brace = produce_evoke_dual_token(
+                                    'comma__right_brace',
+                                    Comma_RightBrace,
+                                    conjure_comma,
+                                    conjure_right_brace,
+                                    conjure_right_brace__ends_in_newline,
+                                )
 
     evoke__comma__right_parenthesis = produce_evoke_dual_token(
                                           'comma__right_parenthesis',
                                           Comma_RightParenthesis,
+                                          conjure_comma,
+                                          conjure_right_parenthesis,
+                                          conjure_right_parenthesis__ends_in_newline,
                                       )
 
     evoke__comma__right_square_bracket = produce_evoke_dual_token(
                                              'comma__right_square_bracket',
                                              Comma_RightSquareBracket,
+                                             conjure_comma,
+                                             conjure_right_square_bracket,
+                                             conjure_right_square_bracket__ends_in_newline,
                                          )
 
-    evoke_empty_list = produce_evoke_dual_token('[]', EmptyList)
-    evoke_empty_map  = produce_evoke_dual_token('{}', EmptyMap)
+    evoke__double_quote__whitespace = produce_evoke_dual_token(
+                                          'double-quote+whitespace',
+                                          Atom_Whitespace,
+                                          conjure_double_quote,
+                                          conjure_whitespace,
+                                          conjure_whitespace__ends_in_newline,
+                                      )
+
+    evoke_empty_list = produce_evoke_dual_token(
+                           '[]',
+                           EmptyList,
+                           conjure_left_square_bracket,
+                           conjure_right_square_bracket,
+                           conjure_right_square_bracket__ends_in_newline,
+                       )
+
+    evoke_empty_map = produce_evoke_dual_token(
+                          '{}',
+                          EmptyMap,
+                          conjure_left_brace,
+                          conjure_right_brace,
+                          conjure_right_brace__ends_in_newline,
+                      )
+
+    evoke_empty_tuple = produce_evoke_dual_token(
+                            '()',
+                            EmptyTuple,
+                            conjure_left_parenthesis,
+                            conjure_right_parenthesis,
+                            conjure_right_parenthesis__ends_in_newline,
+                        )
+
+    evoke_name_whitespace = produce_evoke_dual_token(
+                                'name+whitespace',
+                                Name_Whitespace,
+                                conjure_name,
+                                conjure_whitespace,
+                                conjure_whitespace__ends_in_newline,
+                            )
+
+    evoke_number_whitespace = produce_evoke_dual_token(
+                                  'number+whitespace',
+                                  Atom_Whitespace,
+                                  conjure_number,
+                                  conjure_whitespace,
+                                  conjure_whitespace__ends_in_newline,
+                              )
+
+    evoke_is_not = produce_evoke_dual_token(
+                       'is_not',
+                       Is_Not,
+                       conjure_keyword_is,
+                       conjure_keyword_not,
+                       conjure_keyword_not__ends_in_newline,
+                   )
 
     evoke__left_square_bracket__colon = produce_evoke_dual_token(
                                             '[:',                           #   ]
                                             LeftSquareBracket_Colon,
+                                            conjure_left_square_bracket,
+                                            conjure_colon,
+                                            conjure_colon__ends_in_newline,
                                         )
+
+    evoke_not_in = produce_evoke_dual_token(
+                       'not_in',
+                       Not_In,
+                       conjure_keyword_not,
+                       conjure_keyword_in,
+                       conjure_keyword_in__ends_in_newline,
+                   )
+
+    evoke__single_quote__whitespace = produce_evoke_dual_token(
+                                          'single-quote+whitespace',
+                                          Atom_Whitespace,
+                                          conjure_single_quote,
+                                          conjure_whitespace,
+                                          conjure_whitespace__ends_in_newline,
+                                      )
+
+    evoke_whitespace__double_quote = produce_evoke_dual_token(
+                                         'whitespace+double-quote',
+                                         Whitespace_Atom,
+                                         conjure_whitespace,
+                                         conjure_double_quote,
+                                         none,
+                                     )
+
+    evoke_whitespace_name = produce_evoke_dual_token(
+                                'whitespace+name',
+                                Whitespace_Name,
+                                conjure_whitespace,
+                                conjure_name,
+                                none,
+                            )
+
+    evoke_whitespace_number = produce_evoke_dual_token(
+                                  'whitespace+number',
+                                  Whitespace_Atom,
+                                  conjure_whitespace,
+                                  conjure_number,
+                                  none,
+                              )
+
+    evoke_whitespace__single_quote = produce_evoke_dual_token(
+                                         'whitespace+single-quote',
+                                         Whitespace_Atom,
+                                         conjure_whitespace,
+                                         conjure_single_quote,
+                                         none,
+                                     )
 
     insert_return__line_marker = produce_insert_dual_token(
                                     'return__line_marker',
@@ -662,99 +662,99 @@ def gem():
                                  )
 
 
-    find_conjure_comma_something = {
-                                       #   (
-                                       ')' : conjure__comma__right_parenthesis,
+    find_evoke_comma_something = {
+                                     #   (
+                                     ')' : evoke__comma__right_parenthesis,
 
-                                       #   [
-                                       ']' : conjure__comma__right_square_bracket,
-                                   }.__getitem__
+                                     #   [
+                                     ']' : evoke__comma__right_square_bracket,
+                                 }.__getitem__
 
-    find_conjure_atom_whitespace = {
-            '"' : conjure__double_quote__whitespace,
-            "'" : conjure__single_quote__whitespace,
+    find_evoke_atom_whitespace = {
+            '"' : evoke__double_quote__whitespace,
+            "'" : evoke__single_quote__whitespace,
 
-            '.' : conjure_number_whitespace,
-            '0' : conjure_number_whitespace, '1' : conjure_number_whitespace, '2' : conjure_number_whitespace,
-            '3' : conjure_number_whitespace, '4' : conjure_number_whitespace, '5' : conjure_number_whitespace,
-            '6' : conjure_number_whitespace, '7' : conjure_number_whitespace, '8' : conjure_number_whitespace,
-            '9' : conjure_number_whitespace,
+            '.' : evoke_number_whitespace,
+            '0' : evoke_number_whitespace, '1' : evoke_number_whitespace, '2' : evoke_number_whitespace,
+            '3' : evoke_number_whitespace, '4' : evoke_number_whitespace, '5' : evoke_number_whitespace,
+            '6' : evoke_number_whitespace, '7' : evoke_number_whitespace, '8' : evoke_number_whitespace,
+            '9' : evoke_number_whitespace,
 
-            'A' : conjure_name_whitespace, 'B' : conjure_name_whitespace, 'C' : conjure_name_whitespace,
-            'D' : conjure_name_whitespace, 'E' : conjure_name_whitespace, 'F' : conjure_name_whitespace,
-            'G' : conjure_name_whitespace, 'H' : conjure_name_whitespace, 'I' : conjure_name_whitespace,
-            'J' : conjure_name_whitespace, 'K' : conjure_name_whitespace, 'L' : conjure_name_whitespace,
-            'M' : conjure_name_whitespace, 'N' : conjure_name_whitespace, 'O' : conjure_name_whitespace,
-            'P' : conjure_name_whitespace, 'Q' : conjure_name_whitespace, 'R' : conjure_name_whitespace,
-            'S' : conjure_name_whitespace, 'T' : conjure_name_whitespace, 'U' : conjure_name_whitespace,
-            'V' : conjure_name_whitespace, 'W' : conjure_name_whitespace, 'X' : conjure_name_whitespace,
-            'Y' : conjure_name_whitespace, 'Z' : conjure_name_whitespace, '_' : conjure_name_whitespace,
+            'A' : evoke_name_whitespace, 'B' : evoke_name_whitespace, 'C' : evoke_name_whitespace,
+            'D' : evoke_name_whitespace, 'E' : evoke_name_whitespace, 'F' : evoke_name_whitespace,
+            'G' : evoke_name_whitespace, 'H' : evoke_name_whitespace, 'I' : evoke_name_whitespace,
+            'J' : evoke_name_whitespace, 'K' : evoke_name_whitespace, 'L' : evoke_name_whitespace,
+            'M' : evoke_name_whitespace, 'N' : evoke_name_whitespace, 'O' : evoke_name_whitespace,
+            'P' : evoke_name_whitespace, 'Q' : evoke_name_whitespace, 'R' : evoke_name_whitespace,
+            'S' : evoke_name_whitespace, 'T' : evoke_name_whitespace, 'U' : evoke_name_whitespace,
+            'V' : evoke_name_whitespace, 'W' : evoke_name_whitespace, 'X' : evoke_name_whitespace,
+            'Y' : evoke_name_whitespace, 'Z' : evoke_name_whitespace, '_' : evoke_name_whitespace,
 
-            'a' : conjure_name_whitespace, 'b' : conjure_name_whitespace, 'c' : conjure_name_whitespace,
-            'd' : conjure_name_whitespace, 'e' : conjure_name_whitespace, 'f' : conjure_name_whitespace,
-            'g' : conjure_name_whitespace, 'h' : conjure_name_whitespace, 'i' : conjure_name_whitespace,
-            'j' : conjure_name_whitespace, 'k' : conjure_name_whitespace, 'l' : conjure_name_whitespace,
-            'm' : conjure_name_whitespace, 'n' : conjure_name_whitespace, 'o' : conjure_name_whitespace,
-            'p' : conjure_name_whitespace, 'q' : conjure_name_whitespace, 'r' : conjure_name_whitespace,
-            's' : conjure_name_whitespace, 't' : conjure_name_whitespace, 'u' : conjure_name_whitespace,
-            'v' : conjure_name_whitespace, 'w' : conjure_name_whitespace, 'x' : conjure_name_whitespace,
-            'y' : conjure_name_whitespace, 'z' : conjure_name_whitespace,
+            'a' : evoke_name_whitespace, 'b' : evoke_name_whitespace, 'c' : evoke_name_whitespace,
+            'd' : evoke_name_whitespace, 'e' : evoke_name_whitespace, 'f' : evoke_name_whitespace,
+            'g' : evoke_name_whitespace, 'h' : evoke_name_whitespace, 'i' : evoke_name_whitespace,
+            'j' : evoke_name_whitespace, 'k' : evoke_name_whitespace, 'l' : evoke_name_whitespace,
+            'm' : evoke_name_whitespace, 'n' : evoke_name_whitespace, 'o' : evoke_name_whitespace,
+            'p' : evoke_name_whitespace, 'q' : evoke_name_whitespace, 'r' : evoke_name_whitespace,
+            's' : evoke_name_whitespace, 't' : evoke_name_whitespace, 'u' : evoke_name_whitespace,
+            'v' : evoke_name_whitespace, 'w' : evoke_name_whitespace, 'x' : evoke_name_whitespace,
+            'y' : evoke_name_whitespace, 'z' : evoke_name_whitespace,
         }.__getitem__
 
-    find_conjure_whitespace_atom = {
-            '"' : conjure_whitespace__double_quote,
-            "'" : conjure_whitespace__single_quote,
+    find_evoke_whitespace_atom = {
+            '"' : evoke_whitespace__double_quote,
+            "'" : evoke_whitespace__single_quote,
 
-            '.' : conjure_whitespace_number,
-            '0' : conjure_whitespace_number, '1' : conjure_whitespace_number, '2' : conjure_whitespace_number,
-            '3' : conjure_whitespace_number, '4' : conjure_whitespace_number, '5' : conjure_whitespace_number,
-            '6' : conjure_whitespace_number, '7' : conjure_whitespace_number, '8' : conjure_whitespace_number,
-            '9' : conjure_whitespace_number,
+            '.' : evoke_whitespace_number,
+            '0' : evoke_whitespace_number, '1' : evoke_whitespace_number, '2' : evoke_whitespace_number,
+            '3' : evoke_whitespace_number, '4' : evoke_whitespace_number, '5' : evoke_whitespace_number,
+            '6' : evoke_whitespace_number, '7' : evoke_whitespace_number, '8' : evoke_whitespace_number,
+            '9' : evoke_whitespace_number,
 
-            'A' : conjure_whitespace_name, 'B' : conjure_whitespace_name, 'C' : conjure_whitespace_name,
-            'D' : conjure_whitespace_name, 'E' : conjure_whitespace_name, 'F' : conjure_whitespace_name,
-            'G' : conjure_whitespace_name, 'H' : conjure_whitespace_name, 'I' : conjure_whitespace_name,
-            'J' : conjure_whitespace_name, 'K' : conjure_whitespace_name, 'L' : conjure_whitespace_name,
-            'M' : conjure_whitespace_name, 'N' : conjure_whitespace_name, 'O' : conjure_whitespace_name,
-            'P' : conjure_whitespace_name, 'Q' : conjure_whitespace_name, 'R' : conjure_whitespace_name,
-            'S' : conjure_whitespace_name, 'T' : conjure_whitespace_name, 'U' : conjure_whitespace_name,
-            'V' : conjure_whitespace_name, 'W' : conjure_whitespace_name, 'X' : conjure_whitespace_name,
-            'Y' : conjure_whitespace_name, 'Z' : conjure_whitespace_name, '_' : conjure_whitespace_name,
+            'A' : evoke_whitespace_name, 'B' : evoke_whitespace_name, 'C' : evoke_whitespace_name,
+            'D' : evoke_whitespace_name, 'E' : evoke_whitespace_name, 'F' : evoke_whitespace_name,
+            'G' : evoke_whitespace_name, 'H' : evoke_whitespace_name, 'I' : evoke_whitespace_name,
+            'J' : evoke_whitespace_name, 'K' : evoke_whitespace_name, 'L' : evoke_whitespace_name,
+            'M' : evoke_whitespace_name, 'N' : evoke_whitespace_name, 'O' : evoke_whitespace_name,
+            'P' : evoke_whitespace_name, 'Q' : evoke_whitespace_name, 'R' : evoke_whitespace_name,
+            'S' : evoke_whitespace_name, 'T' : evoke_whitespace_name, 'U' : evoke_whitespace_name,
+            'V' : evoke_whitespace_name, 'W' : evoke_whitespace_name, 'X' : evoke_whitespace_name,
+            'Y' : evoke_whitespace_name, 'Z' : evoke_whitespace_name, '_' : evoke_whitespace_name,
 
-            'a' : conjure_whitespace_name, 'b' : conjure_whitespace_name, 'c' : conjure_whitespace_name,
-            'd' : conjure_whitespace_name, 'e' : conjure_whitespace_name, 'f' : conjure_whitespace_name,
-            'g' : conjure_whitespace_name, 'h' : conjure_whitespace_name, 'i' : conjure_whitespace_name,
-            'j' : conjure_whitespace_name, 'k' : conjure_whitespace_name, 'l' : conjure_whitespace_name,
-            'm' : conjure_whitespace_name, 'n' : conjure_whitespace_name, 'o' : conjure_whitespace_name,
-            'p' : conjure_whitespace_name, 'q' : conjure_whitespace_name, 'r' : conjure_whitespace_name,
-            's' : conjure_whitespace_name, 't' : conjure_whitespace_name, 'u' : conjure_whitespace_name,
-            'v' : conjure_whitespace_name, 'w' : conjure_whitespace_name, 'x' : conjure_whitespace_name,
-            'y' : conjure_whitespace_name, 'z' : conjure_whitespace_name,
+            'a' : evoke_whitespace_name, 'b' : evoke_whitespace_name, 'c' : evoke_whitespace_name,
+            'd' : evoke_whitespace_name, 'e' : evoke_whitespace_name, 'f' : evoke_whitespace_name,
+            'g' : evoke_whitespace_name, 'h' : evoke_whitespace_name, 'i' : evoke_whitespace_name,
+            'j' : evoke_whitespace_name, 'k' : evoke_whitespace_name, 'l' : evoke_whitespace_name,
+            'm' : evoke_whitespace_name, 'n' : evoke_whitespace_name, 'o' : evoke_whitespace_name,
+            'p' : evoke_whitespace_name, 'q' : evoke_whitespace_name, 'r' : evoke_whitespace_name,
+            's' : evoke_whitespace_name, 't' : evoke_whitespace_name, 'u' : evoke_whitespace_name,
+            'v' : evoke_whitespace_name, 'w' : evoke_whitespace_name, 'x' : evoke_whitespace_name,
+            'y' : evoke_whitespace_name, 'z' : evoke_whitespace_name,
         }.__getitem__
 
 
     share(
         'conjure_arguments_0',                      conjure_arguments_0,
-        'conjure__colon__right_square_bracket',     conjure__colon__right_square_bracket,
         'conjure__comma__right_brace',              conjure__comma__right_brace,
         'conjure__comma__right_parenthesis',        conjure__comma__right_parenthesis,
+        'conjure__comma__right_square_bracket',     conjure__comma__right_square_bracket,
         'conjure_empty_list',                       conjure_empty_list,
         'conjure_empty_map',                        conjure_empty_map,
-        'conjure_empty_tuple',                      conjure_empty_tuple,
-        'conjure_is_not',                           conjure_is_not,
         'conjure__left_square_bracket__colon',      conjure__left_square_bracket__colon,
-        'conjure_name_whitespace',                  conjure_name_whitespace,
-        'conjure_not_in',                           conjure_not_in,
-        'conjure_whitespace_name',                  conjure_whitespace_name,
         'evoke_arguments_0',                        evoke_arguments_0,
+        'evoke__colon__right_square_bracket',       evoke__colon__right_square_bracket,
         'evoke__comma__right_brace',                evoke__comma__right_brace,
         'evoke__comma__right_parenthesis',          evoke__comma__right_parenthesis,
-        'evoke__comma__right_square_bracket',       evoke__comma__right_square_bracket,
         'evoke_empty_list',                         evoke_empty_list,
         'evoke_empty_map',                          evoke_empty_map,
+        'evoke_empty_tuple',                        evoke_empty_tuple,
+        'evoke_is_not',                             evoke_is_not,
         'evoke__left_square_bracket__colon',        evoke__left_square_bracket__colon,
-        'find_conjure_atom_whitespace',             find_conjure_atom_whitespace,
-        'find_conjure_comma_something',             find_conjure_comma_something,
-        'find_conjure_whitespace_atom',             find_conjure_whitespace_atom,
+        'evoke_name_whitespace',                    evoke_name_whitespace,
+        'evoke_not_in',                             evoke_not_in,
+        'evoke_whitespace_name',                    evoke_whitespace_name,
+        'find_evoke_atom_whitespace',               find_evoke_atom_whitespace,
+        'find_evoke_comma_something',               find_evoke_comma_something,
+        'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
         'insert_return__line_marker',               insert_return__line_marker,
     )

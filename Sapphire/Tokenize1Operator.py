@@ -106,7 +106,7 @@ def gem():
                 right_end = m.end('right_parenthesis')
 
                 if right_end is not -1:
-                    r = conjure_arguments_0(left_end, right_end)
+                    r = evoke_arguments_0(left_end, right_end)
 
                     wi(m.end('right_parenthesis'))
                     wj(m.end())
@@ -131,7 +131,7 @@ def gem():
                     RSB_end = m.end('right_square_bracket')
 
                     if RSB_end is not -1:
-                        r = conjure_all_index(left_end, tail_index__end, RSB_end)
+                        r = evoke_all_index(left_end, tail_index__end, RSB_end)
 
                         j = m.end()
 
@@ -140,7 +140,7 @@ def gem():
 
                         return r
 
-                    r = conjure__left_square_bracket__colon(left_end, tail_index__end)
+                    r = evoke__left_square_bracket__colon(left_end, tail_index__end)
 
                     wd(qd() + 1)
                     wi(tail_index__end)
@@ -167,7 +167,7 @@ def gem():
 
                     suffix_end = m.end('comma_suffix')
 
-                    r = find_conjure_comma_something(s[suffix_start])(suffix_start, suffix_end)
+                    r = find_evoke_comma_something(s[suffix_start])(suffix_start, suffix_end)
 
                     wd(d - 1)
                     wi(suffix_end)
@@ -195,7 +195,7 @@ def gem():
 
                     suffix_end = m.end('head_index')
 
-                    r = conjure__colon__right_square_bracket(suffix_start, suffix_end)
+                    r = evoke__colon__right_square_bracket(suffix_start, suffix_end)
 
                     wd(d - 1)
                     wi(suffix_end)
@@ -256,7 +256,7 @@ def gem():
                 right_end = m.end('is_not')
 
                 if right_end is not -1:
-                    r = conjure_is_not(left_end, right_end)
+                    r = evoke_is_not(left_end, right_end)
 
                     j = m.end()
 
@@ -290,7 +290,7 @@ def gem():
                 right_end = m.end('not_in')
 
                 if right_end is not -1:
-                    r = conjure_not_in(left_end, right_end)
+                    r = evoke_not_in(left_end, right_end)
 
                     j = m.end()
 
@@ -358,7 +358,7 @@ def gem():
             if right_end is not -1:
                 d = qd()
 
-                r = conjure_arguments_0(left_end, (right_end   if d is 0 else   none))
+                r = evoke_arguments_0(left_end, (right_end   if d is 0 else   none))
 
                 if qd() is 0:
                     wn(conjure_token_newline(s[right_end : ]))
@@ -385,19 +385,19 @@ def gem():
 
                 if right_end is not -1:
                     if qd() is 0:
-                        r = conjure_all_index(left_end, tail_index__end, right_end)
+                        r = evoke_all_index(left_end, tail_index__end, right_end)
 
                         wn(conjure_token_newline(s[right_end : ]))
 
                         return r
                     else:
-                        r = conjure_all_index(left_end, tail_index__end, none)
+                        r = evoke_all_index(left_end, tail_index__end, none)
 
                         skip_tokenize_prefix()
 
                         return r
 
-                left = conjure__left_square_bracket__colon(left_end, none)
+                left = evoke__left_square_bracket__colon(left_end, none)
             else:
                 left = conjure_left_square_bracket__ends_in_newline(s[qi() : ])
 
@@ -416,7 +416,7 @@ def gem():
                 if d is 1:
                     suffix_end = m.end('comma_suffix')
 
-                    r = find_conjure_comma_something(s[suffix_start])(suffix_start, suffix_end)
+                    r = find_evoke_comma_something(s[suffix_start])(suffix_start, suffix_end)
 
                     wd0()
 
@@ -424,7 +424,7 @@ def gem():
 
                     return r
 
-                r = find_conjure_comma_something(s[suffix_start])(suffix_start, none)
+                r = find_evoke_comma_something(s[suffix_start])(suffix_start, none)
 
                 assert d > 1
 
@@ -452,7 +452,7 @@ def gem():
                 if d is 1:
                     suffix_end = m.end('head_index')
 
-                    r = conjure__colon__right_square_bracket(suffix_start, suffix_end)
+                    r = evoke__colon__right_square_bracket(suffix_start, suffix_end)
 
                     wd0()
 
@@ -460,7 +460,7 @@ def gem():
 
                     return r
 
-                r = conjure__colon__right_square_bracket(suffix_start, none)
+                r = evoke__colon__right_square_bracket(suffix_start, none)
 
                 assert d > 1
 

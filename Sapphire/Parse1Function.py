@@ -108,7 +108,7 @@ def gem():
             return FunctionHeader(
                        keyword_function,
                        name,
-                       evoke__parameter_0__colon__line_marker(
+                       conjure__parameter_0__colon__line_marker(
                            operator_1,
                            token_1.a,
                            token_1.b,
@@ -188,7 +188,7 @@ def gem():
                 if operator_7.is_right_parenthesis:
                     [colon, line_marker] = tokenize_parameter_colon_newline()
 
-                    operator_7 = evoke__right_parenthesis__colon__line_marker(operator_7, colon, line_marker)
+                    operator_7 = conjure__right_parenthesis__colon__line_marker(operator_7, colon, line_marker)
 
             if operator_7.is__any__right_parenthesis__colon__newline:
                 if qn() is not none:
@@ -212,7 +212,7 @@ def gem():
 
             if token_7.is__right_parenthesis__colon__newline:
                 many.append(
-                    evoke__comma__right_parenthesis__colon__line_marker(
+                    conjure__comma__right_parenthesis__colon__line_marker(
                         operator_7,
                         token_7.a,
                         token_7.b,
