@@ -226,7 +226,7 @@ def gem():
                         wk(none)
 
                     if operator_2.is_right_square_bracket:
-                        left = IndexExpression(left, NormalIndex(operator, middle, operator_2))
+                        left = IndexExpression(left, conjure_normal_index(operator, middle, operator_2))
                     elif operator_2.is_colon:
                         if qn() is not none:
                             raise_unknown_line()

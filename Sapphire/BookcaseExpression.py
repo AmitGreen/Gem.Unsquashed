@@ -14,6 +14,15 @@ def gem():
     provide_adjusted_meta               = Shared.provide_adjusted_meta                  #   Due to privileged
 
 
+    LP  = conjure_left_parenthesis    ('(')
+    LSB = conjure_left_square_bracket ('[')
+    RP  = conjure_right_parenthesis   (')')
+    RSB = conjure_right_square_bracket(']')
+
+    LP_RP   = conjure_dual_frill(LP,  RP)
+    LSB_RSB = conjure_dual_frill(LSB, RSB)
+
+
     class BookcaseExpression_New(SapphireTrunk):
         __slots__ = ((
             'middle',                   #   Expression+
@@ -45,25 +54,19 @@ def gem():
     class Arguments_1(BookcaseExpression_New):
         __slots__    = (())
         display_name = '(1)'
-        frill        = conjure_dual_frill(conjure_left_parenthesis('('), conjure_right_parenthesis(')'))
+        frill        = LP_RP
 
 
     class HeadIndex(BookcaseExpression_New):
         __slots__    = (())
         display_name = 'head-index'
-        frill        = conjure_dual_frill(
-                           conjure_left_square_bracket('['),
-                           conjure__colon__right_square_bracket(conjure_colon(':'), conjure_right_square_bracket(']')),
-                       )
+        frill        = conjure_dual_frill(LSB, conjure__colon__right_square_bracket(conjure_colon(':'), RSB))
 
 
     class ListExpression_1(BookcaseExpression_New):
         __slots__                      = (())
         display_name                   = '[1]'
-        frill                          = conjure_dual_frill(
-                                             conjure_left_square_bracket ('['),
-                                             conjure_right_square_bracket(']'),
-                                         )
+        frill                          = LSB_RSB
         is__atom__or__special_operator = true
         is_atom                        = true
 
@@ -72,6 +75,20 @@ def gem():
         __slots__                      = (())
         display_name                   = '{1}'
         frill                          = conjure_dual_frill(conjure_left_brace ('{'), conjure_right_brace('}'))
+        is__atom__or__special_operator = true
+        is_atom                        = true
+
+
+    class NormalIndex(BookcaseExpression_New):
+        __slots__    = (())
+        display_name = 'index'
+        frill        = LSB_RSB
+
+
+    class ParenthesizedExpression(BookcaseExpression_New):
+        __slots__                      = (())
+        display_name                   = '()'
+        frill                          = LP_RP
         is__atom__or__special_operator = true
         is_atom                        = true
 
@@ -157,6 +174,12 @@ def gem():
         conjure_map_expression_1, dump_map_expression_1_cache,
     ] = produce_conjure_bookcase_expression('map-expression-1', MapExpression_1)
 
+    [conjure_normal_index, dump_normal_index_cache] = produce_conjure_bookcase_expression('normal-index', NormalIndex)
+
+    [
+        conjure_parenthesized_expression, dump_parenthesized_expression_cache,
+    ] = produce_conjure_bookcase_expression('parenthesized-expression', ParenthesizedExpression)
+
 
     class BookcaseExpression(SapphireTrunk):
         __slots__ = ((
@@ -191,24 +214,6 @@ def gem():
             w(t.left.s)
             t.middle.write(w)
             t.right .write(w)
-
-
-    @share
-    class NormalIndex(BookcaseExpression):
-        __slots__    = (())
-        a_name       = '['
-        b_name       = ']'
-        display_name = 'index'
-
-
-    @share
-    class ParenthesizedExpression(BookcaseExpression):
-        __slots__                      = (())
-        a_name                         = '('
-        b_name                         = ')'
-        display_name                   = '()'
-        is__atom__or__special_operator = true
-        is_atom                        = true
 
 
     @share
@@ -333,17 +338,21 @@ def gem():
 
 
     share(
-        'conjure_arguments_1',          conjure_arguments_1,
-        'conjure_head_index',           conjure_head_index,
-        'conjure_list_expression_1',    conjure_list_expression_1,
-        'conjure_map_expression_1',     conjure_map_expression_1,
+        'conjure_arguments_1',                  conjure_arguments_1,
+        'conjure_head_index',                   conjure_head_index,
+        'conjure_list_expression_1',            conjure_list_expression_1,
+        'conjure_map_expression_1',             conjure_map_expression_1,
+        'conjure_normal_index',                 conjure_normal_index,
+        'conjure_parenthesized_expression',     conjure_parenthesized_expression,
     )
 
 
     if __debug__:
         share(
-            'dump_arguments_1_cache',           dump_arguments_1_cache,
-            'dump_head_index_cache',            dump_head_index_cache,
-            'dump_list_expression_1_cache',     dump_list_expression_1_cache,
-            'dump_map_expression_1_cache',      dump_map_expression_1_cache,
+            'dump_arguments_1_cache',               dump_arguments_1_cache,
+            'dump_head_index_cache',                dump_head_index_cache,
+            'dump_list_expression_1_cache',         dump_list_expression_1_cache,
+            'dump_map_expression_1_cache',          dump_map_expression_1_cache,
+            'dump_normal_index_cache',              dump_normal_index_cache,
+            'dump_parenthesized_expression_cache',  dump_parenthesized_expression_cache,
         )

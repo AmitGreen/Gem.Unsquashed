@@ -196,4 +196,6 @@ def gem():
                 #dump_arguments_1_cache()
                 #dump_head_index_cache()
                 #dump_list_expression_1_cache()
-                dump_map_expression_1_cache()
+                #dump_map_expression_1_cache()
+                #dump_normal_index_cache()
+                #dump_parenthesized_expression_cache()

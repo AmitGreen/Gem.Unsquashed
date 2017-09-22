@@ -129,7 +129,7 @@ def gem():
             wk(none)
 
         if operator_1.is_right_parenthesis:
-            return ParenthesizedExpression(left_parenthesis, middle_1, operator_1)
+            return conjure_parenthesized_expression(left_parenthesis, middle_1, operator_1)
 
         #
         #RENAME TO: is_comma_right_parenthesis
