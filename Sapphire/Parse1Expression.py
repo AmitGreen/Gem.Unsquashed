@@ -64,7 +64,13 @@ def gem():
                     name_2 = tokenize_name()
 
                     if qn() is not none:
-                        return MemberExpression_2(left, operator, name, operator_2, name_2)
+                        return conjure_simple_member_expression(
+                                   left,
+                                   conjure_dot_name_pair(
+                                       conjure_dot_name(operator,   name),
+                                       conjure_dot_name(operator_2, name_2),
+                                   ),
+                               )
 
                     operator_3 = tokenize_operator()
 
@@ -141,14 +147,21 @@ def gem():
 
                                 return left
 
-                    elif operator_3.is_postfix_operator:
-                        left = MemberExpression_2(left, operator, name, operator_2, name_2)
+                    else:
+                        left = conjure_simple_member_expression(
+                                   left,
+                                   conjure_dot_name_pair(
+                                       conjure_dot_name(operator,   name),
+                                       conjure_dot_name(operator_2, name_2),
+                                   ),
+                               )
+
+                        if not operator_3.is_postfix_operator:
+                            wk(operator_3)
+
+                            return left
 
                         operator = operator_3
-                    else:
-                        wk(operator_3)
-
-                        return MemberExpression_2(left, operator, name, operator_2, name_2)
 
                 elif operator_2.is__arguments_0__or__left_parenthesis:
                     if operator_2.is_left_parenthesis:

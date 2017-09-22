@@ -261,13 +261,6 @@ def gem():
 
 
     @share
-    class MemberExpression_2(TripleExpression):
-        __slots__    = (())
-        display_name = '.'
-        is_statement = false
-
-
-    @share
     class TernaryExpression(TripleExpression):
         __slots__    = (())
         display_name = '?:'

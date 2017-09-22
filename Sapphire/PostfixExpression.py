@@ -70,7 +70,7 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<%s %s %s>', t.display_name, t.left.display_token(), t.postfix.display_token())
+            return arrange('<member %s %s>', t.left.display_token(), t.postfix.display_token())
 
 
         display_full_token = display_token
