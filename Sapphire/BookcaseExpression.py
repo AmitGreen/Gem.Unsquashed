@@ -48,6 +48,15 @@ def gem():
         display_name = '(1)'
 
 
+    class HeadIndex(BookcaseExpression_New):
+        __slots__    = (())
+        frill        = conjure_dual_frill(
+                           conjure_left_square_bracket('['),
+                           conjure__colon__right_square_bracket(conjure_colon(':'), conjure_right_square_bracket(']')),
+                       )
+        display_name = 'head-index'
+
+
     @privileged
     def produce_conjure_bookcase_expression(name, Meta):
         cache   = {}
@@ -92,8 +101,11 @@ def gem():
             return r
 
 
-        if __debug__:
-            conjure_bookcase_expression.__name__ = intern_arrange('conjure_%s', name)
+        if not __debug__:
+            return ((conjure_bookcase_expression, none))
+
+
+        conjure_bookcase_expression.__name__ = intern_arrange('conjure_%s', name)
 
 
         def dump_bookcase_expression_cache():
@@ -116,6 +128,7 @@ def gem():
 
 
     [conjure_arguments_1, dump_arguments_1_cache] = produce_conjure_bookcase_expression('arguments-1', Arguments_1)
+    [conjure_head_index,  dump_head_index_cache]  = produce_conjure_bookcase_expression('head-index',  HeadIndex)
 
 
     class BookcaseExpression(SapphireTrunk):
@@ -151,14 +164,6 @@ def gem():
             w(t.left.s)
             t.middle.write(w)
             t.right .write(w)
-
-
-    @share
-    class HeadIndex(BookcaseExpression):
-        __slots__    = (())
-        a_name       = '['
-        b_name       = ':]'
-        display_name = 'head-index'
 
 
     @share
@@ -323,10 +328,12 @@ def gem():
 
     share(
         'conjure_arguments_1',  conjure_arguments_1,
+        'conjure_head_index',   conjure_head_index,
     )
 
 
     if __debug__:
         share(
             'dump_arguments_1_cache',   dump_arguments_1_cache,
+            'dump_head_index_cache',    dump_head_index_cache,
         )

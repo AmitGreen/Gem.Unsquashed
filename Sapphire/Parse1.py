@@ -194,3 +194,4 @@ def gem():
                 #dump_token_caches()
                 #dump_member_expression_cache()
                 #dump_arguments_1_cache()
+                #dump_head_index_cache()

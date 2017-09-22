@@ -750,6 +750,7 @@ def gem():
 
     share(
         'conjure_arguments_0',                      conjure_arguments_0,
+        'conjure__colon__right_square_bracket',     conjure__colon__right_square_bracket,
         'conjure__comma__right_brace',              conjure__comma__right_brace,
         'conjure__comma__right_parenthesis',        conjure__comma__right_parenthesis,
         'conjure__comma__right_square_bracket',     conjure__comma__right_square_bracket,
