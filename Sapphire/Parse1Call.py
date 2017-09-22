@@ -72,7 +72,7 @@ def gem():
                     wk(none)
 
         if operator_1.is__optional_comma__right_parenthesis:
-            return Arguments_1(left_parenthesis, argument_1, operator_1)
+            return conjure_arguments_1(left_parenthesis, argument_1, operator_1)
 
         if not operator_1.is_comma:
             #my_line('operator_1: %r', operator_1)
@@ -81,7 +81,7 @@ def gem():
         argument_2 = parse1_atom()
 
         if argument_2.is_right_parenthesis:
-            return Arguments_1(
+            return conjure_arguments_1(
                        left_parenthesis,
                        argument_1,
                        conjure__comma__right_parenthesis(operator_1, argument_2),

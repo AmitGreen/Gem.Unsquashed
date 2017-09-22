@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 7
+    show = 0
 
 
     require_gem('Sapphire.Core')
@@ -12,6 +12,7 @@ def gem():
     require_gem('Sapphire.Atom')
     require_gem('Sapphire.BinaryExpression')
     require_gem('Sapphire.BookcaseExpression')
+    require_gem('Sapphire.DualFrill')
     require_gem('Sapphire.DualToken')
     require_gem('Sapphire.ExpressionMany')
     require_gem('Sapphire.LineMarker')
@@ -192,3 +193,4 @@ def gem():
                 #conjure_colon__line_marker('\n\n:\n')
                 #dump_token_caches()
                 #dump_member_expression_cache()
+                #dump_arguments_1_cache()

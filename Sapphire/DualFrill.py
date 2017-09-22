@@ -29,11 +29,8 @@ def gem():
     def conjure_dual_frill(a, b):
         first = lookup_dual_frill(a, absent)
 
-        if first is none:
-            return provide_dual_frill(a, DualFrill(a, b))
-
         if first.__class__ is Map:
-            return (first.get(a)) or (first.setdefault(a, DualFrill(a, b)))
+            return (first.get(b)) or (first.setdefault(b, DualFrill(a, b)))
 
         if first.b is b:
             return first
@@ -50,12 +47,13 @@ def gem():
         line('===  dual_frill_cache  ===')
 
         for [k, v] in iterate_items_sorted_by_key(dual_frill_cache):
-            if v.__class__ is Map:
-                line('%s:', k)
+            line('%s:', k)
 
+            if v.__class__ is Map:
                 for [k2, w2] in view_items(v):
-                    line('  %s: %s', k2, w2)
+                    line('  %s:', k2)
+                    line('    %s', w2)
 
                 continue
 
-            line('%s: %s', k, v)
+            line('  %s', v)

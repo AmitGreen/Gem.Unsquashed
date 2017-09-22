@@ -50,6 +50,42 @@ def gem():
 
 
     @share
+    def create_BookcaseExpression_WithFrill(Meta):
+        assert lookup_adjusted_meta(Meta) is none
+
+
+        class BookcaseExpression_WithFrill(Meta):
+            __slots__ = ((
+                'frill',                #   DualFrill
+            ))
+
+
+            def __init__(t, middle, frill):
+                t.middle = middle
+                t.frill  = frill
+
+            def __repr__(t):
+                return arrange('<%s %r %r>', t.__class__.__name__, t.middle, t.frill)
+
+
+            def display_token(t):
+                frill = t.frill
+
+                return arrange('<%s %s %s %s>',
+                               t.display_name,
+                               frill.a .display_token(),
+                               t.middle.display_token(),
+                               frill.b .display_token())
+
+
+        if __debug__:
+            BookcaseExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
+
+
+        return provide_adjusted_meta(Meta, BookcaseExpression_WithFrill)
+
+
+    @share
     def dump_newline_meta_cache():
         for k in iterate_values_sorted_by_key({ k.__name__ : k   for k in adjusted_meta_cache }):
             line('%s:', k.__name__)
@@ -58,4 +94,5 @@ def gem():
 
     share(
         'lookup_adjusted_meta',     lookup_adjusted_meta,
+        'provide_adjusted_meta',    provide_adjusted_meta,
     )

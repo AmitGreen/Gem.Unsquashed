@@ -7,7 +7,7 @@ def gem():
         __slots__ = (())
 
 
-        b = none
+        middle = b = none
 
 
         @static_method

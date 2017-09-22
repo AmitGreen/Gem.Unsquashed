@@ -3,7 +3,119 @@
 #
 @gem('Sapphire.Expression')
 def gem():
+    require_gem('Sapphire.CreateMeta')
+    require_gem('Sapphire.DualFrill')
     require_gem('Sapphire.Elemental')
+
+
+    conjure_dual_frill                  = Shared.conjure_dual_frill                     #   Due to privileged
+    create_BookcaseExpression_WithFrill = Shared.create_BookcaseExpression_WithFrill    #   Due to privileged
+    lookup_adjusted_meta                = Shared.lookup_adjusted_meta                   #   Due to privileged
+    provide_adjusted_meta               = Shared.provide_adjusted_meta                  #   Due to privileged
+
+
+    class BookcaseExpression_New(SapphireTrunk):
+        __slots__ = ((
+            'middle',                   #   Expression+
+        ))
+
+
+        def __init__(t, middle):
+            t.middle = middle
+
+
+        def __repr__(t):
+            return arrange('<%s %r>', t.__class__.__name__, t.middle)
+
+
+        def display_token(t):
+            frill = t.frill
+
+            return arrange('<%s %s %s %s>', t.display_name, frill.a, t.middle.display_token(), frill.b)
+
+
+        def write(t, w):
+            frill = t.frill
+
+            w(frill.a.s)
+            t.middle.write(w)
+            w(frill.b.s)
+
+
+    class Arguments_1(BookcaseExpression_New):
+        __slots__    = (())
+        frill        = conjure_dual_frill(conjure_left_parenthesis('('), conjure_right_parenthesis(')'))
+        display_name = '(1)'
+
+
+    @privileged
+    def produce_conjure_bookcase_expression(name, Meta):
+        cache   = {}
+        lookup  = cache.get
+        provide = cache.setdefault
+        store   = cache.__setitem__
+
+        frill_a = Meta.frill.a
+        frill_b = Meta.frill.b
+
+
+        def conjure_bookcase_expression(a, middle, b):
+            if (a is frill_a) and (b is frill_b):
+                return (lookup(middle)) or (provide(middle, Meta(middle)))
+
+            frill = conjure_dual_frill(a, b)
+
+            assert frill.a is a
+            assert frill.b is b
+
+            first = lookup(frill, absent)
+
+            if first.__class__ is Map:
+                return (
+                              first.get(middle)
+                           or first.setdefault(
+                                  middle,
+                                  (
+                                         lookup_adjusted_meta(Meta)
+                                      or create_BookcaseExpression_WithFrill(Meta)
+                                  )(middle, frill),
+                              )
+                       )
+
+            if first.middle is middle:
+                return first
+
+            r = ((lookup_adjusted_meta(Meta)) or (create_BookcaseExpression_WithFrill(Meta)))(middle, frill)
+
+            store(frill, (r   if first is absent else   { first.middle : first, middle : r }))
+
+            return r
+
+
+        if __debug__:
+            conjure_bookcase_expression.__name__ = intern_arrange('conjure_%s', name)
+
+
+        def dump_bookcase_expression_cache():
+            line('===  %s_cache   ===', name)
+
+            for [k, v] in iterate_items_sorted_by_key(cache):
+                line('%s:', k)
+
+                if v.__class__ is Map:
+                    for [k2, w2] in view_items(v):
+                        line('  %s:', k2)
+                        line('    %s', w2)
+
+                    continue
+
+                line('  %s', v)
+
+
+        return ((conjure_bookcase_expression, dump_bookcase_expression_cache))
+
+
+    [conjure_arguments_1, dump_arguments_1_cache] = produce_conjure_bookcase_expression('arguments-1', Arguments_1)
 
 
     class BookcaseExpression(SapphireTrunk):
@@ -39,14 +151,6 @@ def gem():
             w(t.left.s)
             t.middle.write(w)
             t.right .write(w)
-
-
-    @share
-    class Arguments_1(BookcaseExpression):
-        __slots__    = (())
-        a_name       = '('
-        b_name       = ')'
-        display_name = '(1)'
 
 
     @share
@@ -150,7 +254,7 @@ def gem():
                 b_name = t.b_name
 
                 if ' ' in b_name:
-                    b_name = '<' + b_name + '>',
+                    b_name = '<' + b_name + '>'
 
                 return arrange('<%s %s %s %s %s %s>',
                                t.display_name,
@@ -215,3 +319,14 @@ def gem():
         display_name                   = '{,2}'
         is__atom__or__special_operator = true
         is_atom                        = true
+
+
+    share(
+        'conjure_arguments_1',  conjure_arguments_1,
+    )
+
+
+    if __debug__:
+        share(
+            'dump_arguments_1_cache',   dump_arguments_1_cache,
+        )
