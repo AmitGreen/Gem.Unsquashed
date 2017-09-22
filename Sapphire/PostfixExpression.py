@@ -50,6 +50,12 @@ def gem():
 
 
     @share
+    class MethodCallExpression(PostfixExpression):
+        __slot__     = (())
+        display_name = 'method-call'
+
+
+    @share
     class SimpleMemberExpression(Object):
         __slots__ = ((
             'left',                     #   Expression

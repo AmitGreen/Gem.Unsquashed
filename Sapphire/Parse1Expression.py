@@ -99,7 +99,17 @@ def gem():
 
                                 operator_4 = parse1_arguments__left_parenthesis(operator_4)
 
-                            left = MethodCall_3(left, operator, name, operator_2, name_2, operator_3, name_3, operator_4)
+                            left = MethodCallExpression(
+                                       conjure_simple_member_expression(
+                                           left,
+                                           conjure_dot_name_triplet(
+                                               conjure_dot_name(operator,   name),
+                                               conjure_dot_name(operator_2, name_2),
+                                               conjure_dot_name(operator_3, name_3),
+                                           ),
+                                       ),
+                                       operator_4,
+                                   )
 
                             operator = qk()
 
@@ -142,7 +152,16 @@ def gem():
 
                             operator_3 = parse1_arguments__left_parenthesis(operator_3)
 
-                        left = MethodCall_2(left, operator, name, operator_2, name_2, operator_3)
+                        left = MethodCallExpression(
+                                   conjure_simple_member_expression(
+                                       left,
+                                       conjure_dot_name_pair(
+                                           conjure_dot_name(operator,   name),
+                                           conjure_dot_name(operator_2, name_2),
+                                       ),
+                                   ),
+                                   operator_3,
+                               )
 
                         operator = qk()
 
@@ -194,7 +213,10 @@ def gem():
 
                             return MethodCallStatement_1(indented, left, operator, name, operator_2, newline)
 
-                    left = MethodCall_1(left, operator, name, operator_2)
+                    left = MethodCallExpression(
+                               conjure_simple_member_expression(left, conjure_dot_name(operator, name)),
+                               operator_2,
+                           )
 
                     operator = qk()
 
