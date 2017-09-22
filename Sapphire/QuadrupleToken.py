@@ -130,6 +130,13 @@ def gem():
         __init__ = construct_quadruple_operator__line_marker_1
 
 
+    class DotNameQuadruplet(BaseQuadrupleOperator):
+        __slots__           = (())
+        #   [
+        display_name        = '.name-quadruplet'
+        is_postfix_operator = true
+
+
     class Parameter_0__Colon__LineMarker_1(BaseQuadrupleOperator):
         display_name                        = r'():\n'
         ends_in_newline                     = true
@@ -141,20 +148,19 @@ def gem():
         __init__ = construct_quadruple_operator__line_marker_1
 
 
-    if 0:
-        def create_quadruple_token__with_newlines(Meta, s, a, b, c, d):
-            assert s == a.s + b.s + c.s + d.s
+    def create_quadruple_token__with_newlines(Meta, s, a, b, c, d):
+        assert s == a.s + b.s + c.s + d.s
 
-            newlines = s.count('\n')
+        newlines = s.count('\n')
 
-            return (
-                       Meta(s, a, b, c, d)
-                           if newlines is 0 else
-                               (
-                                     lookup_adjusted_meta(Meta)
-                                  or create_ActionWord_WithNewlines(Meta, construct_quadruple_token__with_newlines)
-                               )(s, a, b, c, d, newlines, s[-1] == '\n')
-                   )
+        return (
+                   Meta(s, a, b, c, d)
+                       if newlines is 0 else
+                           (
+                                 lookup_adjusted_meta(Meta)
+                              or create_ActionWord_WithNewlines(Meta, construct_quadruple_token__with_newlines)
+                           )(s, a, b, c, d, newlines, s[-1] == '\n')
+               )
 
 
     def create_quadruple_token__line_marker(Meta, s, a, b, c, d):
@@ -298,6 +304,8 @@ def gem():
             line_marker = true,
         )
 
+    conjure_dot_name_quadruplet = produce_conjure_quadruple_token('.name-quadruplet', DotNameQuadruplet)
+
     conjure__parameter_0__colon__line_marker = produce_conjure_quadruple_token(
             'parameter_0__colon_newline',
             Parameter_0__Colon__LineMarker_1,
@@ -329,6 +337,7 @@ def gem():
         'conjure__comma__right_parenthesis__colon__line_marker',
             conjure__comma__right_parenthesis__colon__line_marker,
 
+        'conjure_dot_name_quadruplet',                          conjure_dot_name_quadruplet,
         'conjure__parameter_0__colon__line_marker',             conjure__parameter_0__colon__line_marker,
         'evoke__comma__right_parenthesis__colon__line_marker',  evoke__comma__right_parenthesis__colon__line_marker,
         'evoke__parameter_0__colon__line_marker',               evoke__parameter_0__colon__line_marker,
