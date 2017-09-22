@@ -71,7 +71,7 @@ def gem():
                 wk(none)
 
         if operator.is_right_brace:
-            return MapExpression_1(left_brace, left, operator)
+            return conjure_map_expression_1(left_brace, left, operator)
 
         if not operator.is_comma:
             raise_unknown_line()
@@ -228,7 +228,7 @@ def gem():
             wk(none)
 
         if operator_1.is__optional_comma__right_square_bracket:
-            return ListExpression_1(left_square_bracket, middle_1, operator_1)
+            return conjure_list_expression_1(left_square_bracket, middle_1, operator_1)
 
         if not operator_1.is_comma:
             #my_line('line: %d; middle_1: %r; operator_1: %r', ql(), middle_1, operator_1)
@@ -240,7 +240,7 @@ def gem():
         middle_2 = parse1_atom()
 
         if middle_2.is_right_square_bracket:
-            return ListExpression_1(
+            return conjure_list_expression_1(
                        left_square_bracket,
                        middle_1,
                        conjure__comma__right_square_bracket(operator_1, middle_2),

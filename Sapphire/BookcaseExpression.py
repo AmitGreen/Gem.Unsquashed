@@ -44,17 +44,36 @@ def gem():
 
     class Arguments_1(BookcaseExpression_New):
         __slots__    = (())
-        frill        = conjure_dual_frill(conjure_left_parenthesis('('), conjure_right_parenthesis(')'))
         display_name = '(1)'
+        frill        = conjure_dual_frill(conjure_left_parenthesis('('), conjure_right_parenthesis(')'))
 
 
     class HeadIndex(BookcaseExpression_New):
         __slots__    = (())
+        display_name = 'head-index'
         frill        = conjure_dual_frill(
                            conjure_left_square_bracket('['),
                            conjure__colon__right_square_bracket(conjure_colon(':'), conjure_right_square_bracket(']')),
                        )
-        display_name = 'head-index'
+
+
+    class ListExpression_1(BookcaseExpression_New):
+        __slots__                      = (())
+        display_name                   = '[1]'
+        frill                          = conjure_dual_frill(
+                                             conjure_left_square_bracket ('['),
+                                             conjure_right_square_bracket(']'),
+                                         )
+        is__atom__or__special_operator = true
+        is_atom                        = true
+
+
+    class MapExpression_1(BookcaseExpression_New):
+        __slots__                      = (())
+        display_name                   = '{1}'
+        frill                          = conjure_dual_frill(conjure_left_brace ('{'), conjure_right_brace('}'))
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
     @privileged
@@ -130,6 +149,14 @@ def gem():
     [conjure_arguments_1, dump_arguments_1_cache] = produce_conjure_bookcase_expression('arguments-1', Arguments_1)
     [conjure_head_index,  dump_head_index_cache]  = produce_conjure_bookcase_expression('head-index',  HeadIndex)
 
+    [
+        conjure_list_expression_1, dump_list_expression_1_cache,
+    ] = produce_conjure_bookcase_expression('list-expression-1', ListExpression_1)
+
+    [
+        conjure_map_expression_1, dump_map_expression_1_cache,
+    ] = produce_conjure_bookcase_expression('map-expression-1', MapExpression_1)
+
 
     class BookcaseExpression(SapphireTrunk):
         __slots__ = ((
@@ -164,27 +191,6 @@ def gem():
             w(t.left.s)
             t.middle.write(w)
             t.right .write(w)
-
-
-    @share
-    class ListExpression_1(BookcaseExpression):
-        __slots__                      = (())
-        a_name                         = '['
-        b_name                         = ']'
-        display_name                   = '[1]'
-        is__atom__or__special_operator = true
-        is_atom                        = true
-
-
-
-    @share
-    class MapExpression_1(BookcaseExpression):
-        __slots__                      = (())
-        a_name                         = '{'
-        b_name                         = '}'
-        display_name                   = '{1}'
-        is__atom__or__special_operator = true
-        is_atom                        = true
 
 
     @share
@@ -327,13 +333,17 @@ def gem():
 
 
     share(
-        'conjure_arguments_1',  conjure_arguments_1,
-        'conjure_head_index',   conjure_head_index,
+        'conjure_arguments_1',          conjure_arguments_1,
+        'conjure_head_index',           conjure_head_index,
+        'conjure_list_expression_1',    conjure_list_expression_1,
+        'conjure_map_expression_1',     conjure_map_expression_1,
     )
 
 
     if __debug__:
         share(
-            'dump_arguments_1_cache',   dump_arguments_1_cache,
-            'dump_head_index_cache',    dump_head_index_cache,
+            'dump_arguments_1_cache',           dump_arguments_1_cache,
+            'dump_head_index_cache',            dump_head_index_cache,
+            'dump_list_expression_1_cache',     dump_list_expression_1_cache,
+            'dump_map_expression_1_cache',      dump_map_expression_1_cache,
         )
