@@ -199,3 +199,4 @@ def gem():
                 #dump_map_expression_1_cache()
                 #dump_normal_index_cache()
                 #dump_parenthesized_expression_cache()
+                #dump_tail_index_cache()

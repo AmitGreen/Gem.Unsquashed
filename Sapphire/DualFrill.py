@@ -19,6 +19,11 @@ def gem():
             return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.b)
 
 
+        def display_token(t):
+            return arrange('<dual-frill %s %s>', t.a.display_token(), t.b.display_token())
+
+
+
     dual_frill_cache   = {}
     lookup_dual_frill  = dual_frill_cache.get
     provide_dual_frill = dual_frill_cache.setdefault

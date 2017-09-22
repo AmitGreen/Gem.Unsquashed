@@ -40,7 +40,11 @@ def gem():
         def display_token(t):
             frill = t.frill
 
-            return arrange('<%s %s %s %s>', t.display_name, frill.a, t.middle.display_token(), frill.b)
+            return arrange('<%s %s %s %s>',
+                           t.display_name,
+                           frill.a .display_token(),
+                           t.middle.display_token(),
+                           frill.b .display_token())
 
 
         def write(t, w):
@@ -91,6 +95,12 @@ def gem():
         frill                          = LP_RP
         is__atom__or__special_operator = true
         is_atom                        = true
+
+
+    class TailIndex(BookcaseExpression_New):
+        __slots__    = (())
+        display_name = 'tail-index'
+        frill        = conjure_dual_frill(conjure__left_square_bracket__colon(LSB, conjure_colon(':')), RSB)
 
 
     @privileged
@@ -148,16 +158,16 @@ def gem():
             line('===  %s_cache   ===', name)
 
             for [k, v] in iterate_items_sorted_by_key(cache):
-                line('%s:', k)
+                line('%s:', k.display_token())
 
                 if v.__class__ is Map:
                     for [k2, w2] in view_items(v):
-                        line('  %s:', k2)
-                        line('    %s', w2)
+                        line('  %s:', k2.display_token())
+                        line('    %s', w2.display_token())
 
                     continue
 
-                line('  %s', v)
+                line('  %s', v.display_token())
 
 
         return ((conjure_bookcase_expression, dump_bookcase_expression_cache))
@@ -179,6 +189,8 @@ def gem():
     [
         conjure_parenthesized_expression, dump_parenthesized_expression_cache,
     ] = produce_conjure_bookcase_expression('parenthesized-expression', ParenthesizedExpression)
+
+    [conjure_tail_index, dump_tail_index_cache] = produce_conjure_bookcase_expression('tail-index', TailIndex)
 
 
     class BookcaseExpression(SapphireTrunk):
@@ -214,14 +226,6 @@ def gem():
             w(t.left.s)
             t.middle.write(w)
             t.right .write(w)
-
-
-    @share
-    class TailIndex(BookcaseExpression):
-        __slots__    = (())
-        a_name       = '[:'
-        b_name       = ']'
-        display_name = 'tail-index'
 
 
     @share
@@ -344,6 +348,7 @@ def gem():
         'conjure_map_expression_1',             conjure_map_expression_1,
         'conjure_normal_index',                 conjure_normal_index,
         'conjure_parenthesized_expression',     conjure_parenthesized_expression,
+        'conjure_tail_index',                   conjure_tail_index,
     )
 
 
@@ -355,4 +360,5 @@ def gem():
             'dump_map_expression_1_cache',          dump_map_expression_1_cache,
             'dump_normal_index_cache',              dump_normal_index_cache,
             'dump_parenthesized_expression_cache',  dump_parenthesized_expression_cache,
+            'dump_tail_index_cache',                dump_tail_index_cache,
         )

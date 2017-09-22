@@ -316,7 +316,7 @@ def gem():
                     if not operator_2.is_right_square_bracket:
                         raise_unknown_line()
 
-                    left = IndexExpression(left, TailIndex(operator, middle_2, operator_2))
+                    left = IndexExpression(left, conjure_tail_index(operator, middle_2, operator_2))
 
                     if qn() is not none:
                         return left
