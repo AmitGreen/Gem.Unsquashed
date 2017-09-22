@@ -25,6 +25,9 @@ def gem():
 
 
         def display_token(t):
+            if (t.left.s == t.a_name) and (t.right.s == t.b_name):
+                return arrange('<%s %s %s %s>', t.display_name, t.a_name, t.middle.display_token(), t.b_name)
+
             return arrange('<%s %s %s %s>',
                            t.display_name,
                            t.left  .display_token(),
@@ -41,112 +44,71 @@ def gem():
     @share
     class Arguments_1(BookcaseExpression):
         __slots__    = (())
+        a_name       = '('
+        b_name       = ')'
         display_name = '(1)'
 
 
     @share
     class HeadIndex(BookcaseExpression):
-        __slots__ = (())
-
-
-        def display_token(t):
-            if (t.left.s == '[') and (t.right.s == ':]'):
-                return arrange('<head-index [ %s :]>', t.middle.display_token())
-
-            return arrange('<head-index %s %s %s>',
-                           t.left  .display_token(),
-                           t.middle.display_token(),
-                           t.right .display_token())
+        __slots__    = (())
+        a_name       = '['
+        b_name       = ':]'
+        display_name = 'head-index'
 
 
     @share
     class ListExpression_1(BookcaseExpression):
         __slots__                      = (())
+        a_name                         = '['
+        b_name                         = ']'
         display_name                   = '[1]'
         is__atom__or__special_operator = true
         is_atom                        = true
 
 
-        def display_token(t):
-            if t.left.s == '[' and t.right.s == ']':
-                return arrange('[%s]', t.middle.display_token())
-
-            return arrange('<%s %s %s>',
-                           t.left  .display_token(),
-                           t.middle.display_token(),
-                           t.right .display_token())
-
 
     @share
     class MapExpression_1(BookcaseExpression):
         __slots__                      = (())
+        a_name                         = '{'
+        b_name                         = '}'
         display_name                   = '{1}'
         is__atom__or__special_operator = true
         is_atom                        = true
 
 
-        def display_token(t):
-            if t.left.s == '{' and t.right.s == '}':
-                return arrange('{%s}', t.middle.display_token())
-
-            return arrange('<%s %s %s>',
-                           t.left  .display_token(),
-                           t.middle.display_token(),
-                           t.right .display_token())
-
-
     @share
     class NormalIndex(BookcaseExpression):
         __slots__    = (())
+        a_name       = '['
+        b_name       = ']'
         display_name = 'index'
-
-
-        def display_token(t):
-            if (t.left.s == '[') and (t.right.s == ']'):
-                return arrange('<%s [ %s ]>', t.display_name, t.middle.display_token())
-
-            return arrange('<%s %s %s %s>',
-                           t.display_name,
-                           t.left  .display_token(),
-                           t.middle.display_token(),
-                           t.right .display_token())
 
 
     @share
     class ParenthesizedExpression(BookcaseExpression):
         __slots__                      = (())
+        a_name                         = '('
+        b_name                         = ')'
         display_name                   = '()'
         is__atom__or__special_operator = true
         is_atom                        = true
 
 
-        def display_token(t):
-            if t.left.s == '(' and t.right.s == ')':
-                return arrange('(%s)', t.middle.display_token())
-
-            return arrange('(%s %s %s)',
-                           t.left  .display_token(),
-                           t.middle.display_token(),
-                           t.right .display_token())
-
-
     @share
     class TailIndex(BookcaseExpression):
-        __slots__ = (())
+        __slots__    = (())
+        a_name       = '[:'
+        b_name       = ']'
+        display_name = 'tail-index'
 
-
-        def display_token(t):
-            if (t.left.s == '[:') and (t.right.s == ']'):
-                return arrange('<tail-index [: %s ]>', t.middle.display_token())
-
-            return arrange('<tail-index %s %s %s>',
-                           t.left  .display_token(),
-                           t.middle.display_token(),
-                           t.right .display_token())
 
     @share
     class TupleExpression_1(BookcaseExpression):
         __slots__                      = (())
+        a_name                         = '('
+        b_name                         = ')'
         display_name                   = '{,}'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -180,6 +142,24 @@ def gem():
 
 
         def display_token(t):
+            if (
+                    t.left_operator  .s == t.a_name
+                and t.middle_operator.s == t.b_name
+                and t.right_operator .s == t.c_name
+            ):
+                b_name = t.b_name
+
+                if ' ' in b_name:
+                    b_name = '<' + b_name + '>',
+
+                return arrange('<%s %s %s %s %s %s>',
+                               t.display_name,
+                               t.a_name,
+                               t.left .display_token(),
+                               b_name,
+                               t.right.display_token(),
+                               t.c_name)
+
             return arrange('<%s %s %s %s %s %s>',
                            t.display_name,
                            t.left_operator  .display_token(),
@@ -200,56 +180,38 @@ def gem():
     @share
     class Arguments_2(BookcasedDualExpression):
         __slots__    = (())
+        a_name       = '('
+        b_name       = ', '
+        c_name       = ')'
         display_name = '(2)'
 
 
     @share
     class ListExpression_2(BookcasedDualExpression):
         __slots__                      = (())
+        a_name                         = '['
+        b_name                         = ', '
+        c_name                         = ']'
+        display_name                   = '[2]'
         is__atom__or__special_operator = true
         is_atom                        = true
-
-
-        def display_token(t):
-            if t.left_operator.s == '[' and t.right_operator.s == ']':
-                return arrange('<[2] %s %s %s>',
-                               t.left           .display_token(),
-                               t.middle_operator.display_token(),
-                               t.right          .display_token())
-
-
-            return arrange('<[2] %s %s %s %s %s>',
-                           t.left_operator  .display_full_token(),
-                           t.left           .display_token(),
-                           t.middle_operator.display_token(),
-                           t.right          .display_token(),
-                           t.right_operator .display_full_token())
 
 
     @share
     class RangeIndex(BookcasedDualExpression):
         __slots__    = (())
+        a_name       = '['
+        b_name       = ':'
+        c_name       = ']'
         display_name = 'range-index'
 
 
     @share
     class TupleExpression_2(BookcasedDualExpression):
         __slots__                      = (())
+        a_name                         = '('
+        b_name                         = ', '
+        c_name                         = ')'
+        display_name                   = '{,2}'
         is__atom__or__special_operator = true
         is_atom                        = true
-
-
-        def display_token(t):
-            if t.left_operator.s == '(' and t.right_operator.s == ')':
-                return arrange('({,2} %s %s %s)',
-                               t.left           .display_token(),
-                               t.middle_operator.display_token(),
-                               t.right          .display_token())
-
-
-            return arrange('({,2} %s %s %s %s %s)',
-                           t.left_operator  .display_full_token(),
-                           t.left           .display_token(),
-                           t.middle_operator.display_token(),
-                           t.right          .display_token(),
-                           t.right_operator .display_full_token())

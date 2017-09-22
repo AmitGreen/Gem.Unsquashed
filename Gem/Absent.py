@@ -7,6 +7,9 @@ def gem():
         __slots__ = (())
 
 
+        b = none
+
+
         @static_method
         def __bool__():
             return false
@@ -21,6 +24,9 @@ def gem():
             __nonzero__ = __bool__
 
 
+    absent = Absent()
+
+
     built_in(
-        'absent',   Absent(),
+        'absent',   absent,
     )
