@@ -3,61 +3,6 @@
 #
 @gem('Sapphire.OtherExpression')
 def gem():
-    @export
-    class MemberExpression_3(Object):
-        __slots__ = ((
-            'first',                    #   Expression*
-            'first_operator',           #   Operator*
-            'second',                   #   Expression*
-            'second_operator',          #   Operator*
-            'third',                    #   Expression*
-            'third_operator',           #   Operator*
-            'fourth',                   #   Expression*
-        ))
-
-
-        is_statement = false
-
-
-        def __init__(t, first, first_operator, second, second_operator, third, third_operator, fourth):
-            t.first           = first
-            t.first_operator  = first_operator
-            t.second          = second
-            t.second_operator = second_operator
-            t.third           = third
-            t.third_operator  = third_operator
-            t.fourth          = fourth
-
-
-        def __repr__(t):
-            return arrange('<MemberExpression_3 %r %r %r %r %r %r %r>',
-                           t.first,  t.first_operator,
-                           t.second, t.second_operator,
-                           t.third,  t.third_operator,
-                           t.fourth)
-
-
-        def display_token(t):
-            return arrange('<.-3 %s %s %s %s %s %s %s>',
-                           t.first          .display_token(),
-                           t.first_operator .display_token(),
-                           t.second         .display_token(),
-                           t.second_operator.display_token(),
-                           t.third          .display_token(),
-                           t.third_operator .display_token(),
-                           t.fourth         .display_token())
-
-
-        def write(t, w):
-            t.first          .write(w)
-            t.first_operator .write(w)
-            t.second         .write(w)
-            t.second_operator.write(w)
-            t.third          .write(w)
-            t.third_operator .write(w)
-            t.fourth         .write(w)
-
-
     @share
     class MethodCall_1(Object):
         __slot__ = ((

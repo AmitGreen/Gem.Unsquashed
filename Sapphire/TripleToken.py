@@ -115,6 +115,13 @@ def gem():
         is_postfix_operator = true
 
 
+    class DotNameTriplet(BaseTripleOperator):
+        __slots__           = (())
+        #   [
+        display_name        = '.name-triplet'
+        is_postfix_operator = true
+
+
     class RightParenthesis_Colon_LineMarker_1(BaseTripleOperator):
         __slots__                                  = (())
         display_name                               = r'):\n'
@@ -290,7 +297,8 @@ def gem():
         return evoke_triple_token
 
 
-    conjure_all_index = produce_conjure_triple_token('all_index', AllIndex)
+    conjure_all_index        = produce_conjure_triple_token('all_index',     AllIndex)
+    conjure_dot_name_triplet = produce_conjure_triple_token('.name-triplet', DotNameTriplet)
 
     conjure__right_parenthesis__colon__line_marker = produce_conjure_triple_token(
                                                          'right_parenthesis__colon__line_marker',
@@ -398,6 +406,7 @@ def gem():
 
     share(
         'conjure_all_index',                                conjure_all_index,
+        'conjure_dot_name_triplet',                         conjure_dot_name_triplet,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
         'evoke_all_index',                                  evoke_all_index,
         'evoke__right_parenthesis__colon__line_marker',     evoke__right_parenthesis__colon__line_marker,

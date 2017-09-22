@@ -81,7 +81,14 @@ def gem():
                         name_3 = tokenize_name()
 
                         if qn() is not none:
-                            return MemberExpression_3(left, operator, name, operator_2, name_2, operator_3, name_3)
+                            return conjure_simple_member_expression(
+                                       left,
+                                       conjure_dot_name_triplet(
+                                           conjure_dot_name(operator,   name),
+                                           conjure_dot_name(operator_2, name_2),
+                                           conjure_dot_name(operator_3, name_3),
+                                       ),
+                                   )
 
                         operator_4 = tokenize_operator()
 
@@ -111,14 +118,22 @@ def gem():
                                     wk(operator)
 
                                     return left
-                        elif operator_4.is_postfix_operator:
-                            left = MemberExpression_3(left, operator, name, operator_2, name_2, operator_3, name_3)
+                        else:
+                            left = conjure_simple_member_expression(
+                                       left,
+                                       conjure_dot_name_triplet(
+                                           conjure_dot_name(operator,   name),
+                                           conjure_dot_name(operator_2, name_2),
+                                           conjure_dot_name(operator_3, name_3),
+                                       ),
+                                   )
+
+                            if not operator_4.is_postfix_operator:
+                                wk(operator_4)
+
+                                return left
 
                             operator = operator_4
-                        else:
-                            wk(operator_4)
-
-                            return MemberExpression_3(left, operator, name, operator_2, name_2, operator_3, name_3)
 
                     elif operator_3.is__arguments_0__or__left_parenthesis:
                         if operator_3.is_left_parenthesis:
