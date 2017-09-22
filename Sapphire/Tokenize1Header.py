@@ -110,7 +110,7 @@ def gem():
                     prefix = s[qi() : j]
 
                     r = evoke_whitespace_identifier(
-                            (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
+                            (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
                             r,
                         )
 

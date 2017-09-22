@@ -15,16 +15,15 @@ def gem():
         r = conjure_identifier(s[j : name_end])
 
         if qd() is not 0:
-            suffix = conjure_whitespace_line(s[name_end : ])
-
             if qi() == qj():
-                r = evoke_identifier_whitespace(r, suffix)
+                r = conjure_identifier_whitespace(name_end, none)
             else:
                 prefix = s[qi() : qj()]
+                suffix = conjure_whitespace__ends_in_newline(s[name_end : ])
 
                 r = BookcaseIdentifier(
-                        (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
-                        r,
+                        (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
+                        conjure_identifier(s[j : name_end]),
                         suffix,
                     )
 
@@ -32,6 +31,8 @@ def gem():
 
             return r
 
+        r = conjure_identifier(s[j : name_end])
+        
         wn(conjure_token_newline(s[name_end : ]))
 
         if qi() == j:
@@ -40,7 +41,7 @@ def gem():
         prefix = s[qi() : j]
 
         return evoke_whitespace_identifier(
-                   (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
+                   (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
                    r,
                )
 

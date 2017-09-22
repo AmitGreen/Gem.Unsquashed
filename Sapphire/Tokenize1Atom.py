@@ -45,7 +45,7 @@ def gem():
                     prefix = qs()[qi() : qj()]
 
                     r = r.evoke_whitespace_atom(
-                            (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
+                            (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
                             r,
                         )
 
@@ -191,7 +191,7 @@ def gem():
                     prefix = s[qi() : j]
 
                     r = r.evoke_whitespace_atom(
-                            (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
+                            (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
                             r,
                         )
 
@@ -226,8 +226,6 @@ def gem():
 
                 return r
 
-            r = find_atom_type(atom_s[0])(atom_s)
-
             #
             #<similiar-to: {quote_s} below>
             #
@@ -237,22 +235,28 @@ def gem():
             #       Uses "qs()" intead of "s"
             #
             if qd() is not 0:
-                suffix = conjure_whitespace_line(qs()[m.end('atom') : ])
-
                 if qi() == qj():
-                    r = r.evoke_atom_whitespace(r, suffix)
-                else:
-                    prefix = qs()[qi() : qj()]
+                    r = find_conjure_atom_whitespace(atom_s[0])(m.end('atom'), none)
 
-                    r = r.bookcase_meta(
-                            (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
-                            r,
-                            suffix,
-                        )
+                    skip_tokenize_prefix()
+
+                    return r
+
+                prefix = qs()[qi() : qj()]
+                r      = find_atom_type(atom_s[0])(atom_s)
+                suffix = conjure_whitespace__ends_in_newline(qs()[m.end('atom') : ])
+
+                r = r.bookcase_meta(
+                        (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
+                        r,
+                        suffix,
+                    )
 
                 skip_tokenize_prefix()
 
                 return r
+
+            r = find_atom_type(atom_s[0])(atom_s)
 
             wn(conjure_token_newline(qs()[m.end('atom') : ]))
 
@@ -262,7 +266,7 @@ def gem():
             prefix = qs()[qi() : qj()]
 
             return r.evoke_whitespace_atom(
-                       (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
+                       (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
                        r,
                    )
             #</similiar-to>
@@ -429,7 +433,8 @@ def gem():
             #
             #   NOTE:
             #
-            #       Use 'qj()' here to be sure to pick up any letters prefixing the quote, such as r'prefixed'
+            #       In the code below: Use 'qj()' instead of "m.start('quote')" to be sure to pick up any letters
+            #       prefixing the quote, such as r'prefixed'
             #
             r = find_atom_type(s[quote_start])(s[qj() : quote_end])
 
@@ -442,22 +447,28 @@ def gem():
             #       Uses "s" intead of "qs()"
             #
             if qd() is not 0:
-                suffix = conjure_whitespace_line(s[quote_end : ])
-
                 if qi() == qj():
-                    r = r.evoke_atom_whitespace(r, suffix)
-                else:
-                    prefix = s[qi() : qj()]
+                    r = find_conjure_atom_whitespace(s[quote_start])(m.end('quote'), none)
 
-                    r = r.bookcase_meta(
-                            (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
-                            r,
-                            suffix,
-                        )
+                    skip_tokenize_prefix()
+
+                    return r
+
+                prefix = s[qi() : qj()]
+                r      = find_atom_type(s[quote_start])(s[qj() : quote_end])
+                suffix = conjure_whitespace__ends_in_newline(s[quote_end : ])
+
+                r = r.bookcase_meta(
+                        (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
+                        r,
+                        suffix,
+                    )
 
                 skip_tokenize_prefix()
 
                 return r
+
+            r = find_atom_type(s[quote_start])(s[qj() : quote_end])
 
             wn(conjure_token_newline(s[m.end('quote') : ]))
 
@@ -467,7 +478,7 @@ def gem():
             prefix = s[qi() : qj()]
 
             return r.evoke_whitespace_atom(
-                       (conjure_whitespace_line   if '\n' in prefix else   conjure_whitespace)(prefix),
+                       (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
                        r,
                    )
             #</similiar-to>

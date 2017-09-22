@@ -128,6 +128,13 @@ def gem():
         __init__ = construct_triple_operator__line_marker_1
 
 
+    class Whitespace_Identifier_Whitespace(BaseTripleOperator):
+        __slots__                      = (())
+        display_name                   = 'whitespace-identifier-whitespace'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+
+
     def create_triple_token__with_newlines(Meta, s, a, b, c):
         assert s == a.s + b.s + c.s
 

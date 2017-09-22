@@ -19,21 +19,12 @@ def gem():
             t.s = s
 
 
-    class TokenWhitespaceLine(Token):
-        display_name = 'whitespace-line'
-
-
-        def __init__(t, s):
-            assert '\n' in s
-
-            t.s = s
-
-
-    conjure_whitespace      = produce_conjure_by_name('whitespace',      TokenWhitespace)
-    conjure_whitespace_line = produce_conjure_by_name('whitespace_line', TokenWhitespaceLine)
+    [
+            conjure_whitespace, conjure_whitespace__ends_in_newline,
+    ] = produce_conjure_action_word('whitespace', TokenWhitespace, produce_ends_in_newline = true)
 
 
     share(
-        'conjure_whitespace',       conjure_whitespace,
-        'conjure_whitespace_line',  conjure_whitespace_line,
+        'conjure_whitespace',                   conjure_whitespace,
+        'conjure_whitespace__ends_in_newline',  conjure_whitespace__ends_in_newline,
     )
