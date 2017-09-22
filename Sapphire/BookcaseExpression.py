@@ -6,16 +6,12 @@ def gem():
     require_gem('Sapphire.Elemental')
 
 
-    class BookcaseExpression(Object):
+    class BookcaseExpression(SapphireTrunk):
         __slots__ = ((
             'left',                     #   Operator+
             'middle',                   #   Expression+
             'right',                    #   Operator+
         ))
-
-        is__right_parenthesis__colon__newline = false
-        is_right_parenthesis                  = false
-        is_right_square_bracket               = false
 
 
         def __init__(t, left, middle, right):
@@ -34,9 +30,6 @@ def gem():
                            t.left  .display_token(),
                            t.middle.display_token(),
                            t.right .display_token())
-
-
-        display_full_token = display_token
 
 
         def write(t, w):

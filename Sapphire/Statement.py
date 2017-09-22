@@ -4,6 +4,7 @@
 @gem('Sapphire.Statement')
 def gem():
     require_gem('Sapphire.Core')
+    require_gem('Sapphire.PostfixExpression')
     require_gem('Sapphire.Tree')
 
 
@@ -72,6 +73,60 @@ def gem():
 
             t.right.write(w)
             w(t.newline.s)
+
+
+    @share
+    class CallStatementBase(SapphireTrunk):
+        __slot__ = ((
+            'indented',                 #   String+
+            'left',                     #   Expression
+            'arguments',                #   Arguments*
+            'newline',                  #   String+
+        ))
+
+
+        is_statement = true
+
+
+        def __init__(t, indented, left, arguments, newline):
+            assert newline.is_token_newline
+
+            t.indented  = indented
+            t.left      = left
+            t.arguments = arguments
+            t.newline   = newline
+
+
+        def __repr__(t):
+            return arrange('<%s %r %r %r %r>', t.__class__.__name__, t.indented, t.left, t.arguments, t.newline)
+
+
+        def display_token(t):
+            return arrange('<%s %s %s %s %s>',
+                           t.display_name,
+                           portray_string(t.indented),
+                           t.left     .display_token(),
+                           t.arguments.display_token(),
+                           t.newline  .display_token())
+
+
+        def write(t, w):
+            w(t.indented)
+            t.left     .write(w)
+            t.arguments.write(w)
+            w(t.newline.s)
+
+
+    @share
+    class CallStatement(CallStatementBase):
+        __slot__     = (())
+        display_name = 'call-statement'
+
+
+    @share
+    class MethodCallStatement(CallStatementBase):
+        __slot__     = (())
+        display_name = 'method-call-statement'
 
 
     @share
@@ -787,44 +842,6 @@ def gem():
 
 
     @share
-    class StatementCall(SapphireTrunk):
-        __slot__ = ((
-            'indented',                 #   String+
-            'left',                     #   Expression
-            'arguments',                #   Arguments*
-            'newline',                  #   String+
-        ))
-
-
-        def __init__(t, indented, left, arguments, newline):
-            assert newline.is_token_newline
-
-            t.indented  = indented
-            t.left      = left
-            t.arguments = arguments
-            t.newline   = newline
-
-
-        def __repr__(t):
-            return arrange('<StatementCall %r %r %r %r>', t.indented, t.left, t.arguments, t.newline)
-
-
-        def display_token(t):
-            return arrange('<call-statement %s %s %s %s>',
-                           portray_string(t.indented),
-                           t.left     .display_token(),
-                           t.arguments.display_token(),
-                           t.newline  .display_token())
-
-
-        def write(t, w):
-            w(t.indented)
-            t.left     .write(w)
-            t.arguments.write(w)
-            w(t.newline.s)
-
-
-    @share
     class StatementExpression(SapphireTrunk):
         __slot__ = ((
             'indented',                 #   String+
@@ -896,110 +913,6 @@ def gem():
             w(t.keyword_import.s)
             t.imported.write(w)
             w(t.newline.s)
-
-
-    @share
-    class MethodCallStatement_1(SapphireTrunk):
-        __slot__ = ((
-            'indented',                 #   String+
-            'left',                     #   Expression
-            'dot',                      #   OperatorDot
-            'right',                    #   Identifier
-            'arguments',                #   Arguments*
-            'newline',                  #   String+
-        ))
-
-
-        is_statement = true
-
-
-        def __init__(t, indented, left, dot, right, arguments, newline):
-            t.indented  = indented
-            t.left      = left
-            t.dot       = dot
-            t.right     = right
-            t.arguments = arguments
-            t.newline   = newline
-
-
-        def __repr__(t):
-            return arrange('<MethodCallStatement_1 %r %r %r %r %r %r>',
-                           t.indented, t.left, t.dot, t.right, t.arguments, t.newline)
-
-
-        def display_token(t):
-            return arrange('<method-call-statement-1 %s %s %s %s %s %s>',
-                           portray_string(t.indented),
-                           t.left.display_token(),
-                           t.dot.display_token(),
-                           t.right.display_token(),
-                           t.arguments.display_token(),
-                           t.newline.display_token())
-
-
-        def write(t, w):
-            w(t.indented)
-            t.left.write(w)
-            t.dot.write(w)
-            t.right.write(w)
-            t.arguments.write(w)
-            t.newline.write(w)
-
-
-    @share
-    class MethodCallStatement_2(SapphireTrunk):
-        __slot__ = ((
-            'indented',                 #   String+
-            'left',                     #   Expression
-            'dot_1',                    #   OperatorDot
-            'middle',                   #   Identifier
-            'dot_2',                    #   OperatorDot
-            'right',                    #   Identifier
-            'arguments',                #   Arguments*
-            'newline',                  #   String+
-        ))
-
-
-        is_statement = true
-
-
-        def __init__(t, indented, left, dot_1, middle, dot_2, right, arguments, newline):
-            t.indented  = indented
-            t.left      = left
-            t.dot_1     = dot_1
-            t.middle    = middle
-            t.dot_2     = dot_2
-            t.right     = right
-            t.arguments = arguments
-            t.newline   = newline
-
-
-        def __repr__(t):
-            return arrange('<MethodCallStatement_2 %r %r %r %r %r %r %r %r>',
-                           t.indented, t.left, t.dot_1, t.middle, t.dot_2, t.right, t.arguments, t.newline)
-
-
-        def display_token(t):
-            return arrange('<method-call-statement-2 %s %s %s %s %s %s %s %s>',
-                           portray_string(t.indented),
-                           t.left     .display_token(),
-                           t.dot_1    .display_token(),
-                           t.middle   .display_token(),
-                           t.dot_2    .display_token(),
-                           t.right    .display_token(),
-                           t.arguments.display_token(),
-                           t.newline  .display_token())
-
-
-        def write(t, w):
-            w(t.indented)
-            t.left     .write(w)
-            t.dot_1    .write(w)
-            t.middle   .write(w)
-            t.dot_2    .write(w)
-            t.right    .write(w)
-            t.arguments.write(w)
-            t.newline  .write(w)
 
 
     @share
@@ -1084,3 +997,8 @@ def gem():
         __slots__    = (())
         display_name = 'return'
         keyword      = 'return'
+
+
+    SapphireTrunk   .call_statement = CallStatement
+    MemberExpression.call_statement = MethodCallStatement
+    Token           .call_statement = CallStatement

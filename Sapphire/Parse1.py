@@ -191,4 +191,4 @@ def gem():
 
                 #conjure_colon__line_marker('\n\n:\n')
                 #dump_token_caches()
-                #dump_simple_member_expression_cache()
+                #dump_member_expression_cache()

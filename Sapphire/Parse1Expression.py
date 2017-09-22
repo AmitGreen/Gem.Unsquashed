@@ -53,7 +53,7 @@ def gem():
                 name = tokenize_name()
 
                 if qn() is not none:
-                    return conjure_simple_member_expression(left, conjure_dot_name(operator, name))
+                    return conjure_member_expression(left, conjure_dot_name(operator, name))
 
                 operator_2 = tokenize_operator()
 
@@ -64,7 +64,7 @@ def gem():
                     name_2 = tokenize_name()
 
                     if qn() is not none:
-                        return conjure_simple_member_expression(
+                        return conjure_member_expression(
                                    left,
                                    conjure_dot_name_pair(
                                        conjure_dot_name(operator,   name),
@@ -80,109 +80,29 @@ def gem():
 
                         name_3 = tokenize_name()
 
+                        left = conjure_member_expression(
+                                   left,
+                                   conjure_dot_name_triplet(
+                                       conjure_dot_name(operator,   name),
+                                       conjure_dot_name(operator_2, name_2),
+                                       conjure_dot_name(operator_3, name_3),
+                                   ),
+                               )
+
                         if qn() is not none:
-                            return conjure_simple_member_expression(
-                                       left,
-                                       conjure_dot_name_triplet(
-                                           conjure_dot_name(operator,   name),
-                                           conjure_dot_name(operator_2, name_2),
-                                           conjure_dot_name(operator_3, name_3),
-                                       ),
-                                   )
+                            return left
 
                         operator_4 = tokenize_operator()
 
-                        if operator_4.is__arguments_0__or__left_parenthesis:
-                            if operator_4.is_left_parenthesis:
-                                assert qd() > 0
-                                assert qn() is none
+                        if not operator_4.is_postfix_operator:
+                            wk(operator_4)
 
-                                operator_4 = parse1_arguments__left_parenthesis(operator_4)
+                            return left
 
-                            left = MethodCallExpression(
-                                       conjure_simple_member_expression(
-                                           left,
-                                           conjure_dot_name_triplet(
-                                               conjure_dot_name(operator,   name),
-                                               conjure_dot_name(operator_2, name_2),
-                                               conjure_dot_name(operator_3, name_3),
-                                           ),
-                                       ),
-                                       operator_4,
-                                   )
-
-                            operator = qk()
-
-                            if operator is not none:
-                                if not operator.is_postfix_operator:
-                                    return left
-
-                                wk(none)
-                            else:
-                                if qn() is not none:
-                                    return left
-
-                                operator = tokenize_operator()
-
-                                if not operator.is_postfix_operator:
-                                    wk(operator)
-
-                                    return left
-                        else:
-                            left = conjure_simple_member_expression(
-                                       left,
-                                       conjure_dot_name_triplet(
-                                           conjure_dot_name(operator,   name),
-                                           conjure_dot_name(operator_2, name_2),
-                                           conjure_dot_name(operator_3, name_3),
-                                       ),
-                                   )
-
-                            if not operator_4.is_postfix_operator:
-                                wk(operator_4)
-
-                                return left
-
-                            operator = operator_4
-
-                    elif operator_3.is__arguments_0__or__left_parenthesis:
-                        if operator_3.is_left_parenthesis:
-                            assert qd() > 0
-                            assert qn() is none
-
-                            operator_3 = parse1_arguments__left_parenthesis(operator_3)
-
-                        left = MethodCallExpression(
-                                   conjure_simple_member_expression(
-                                       left,
-                                       conjure_dot_name_pair(
-                                           conjure_dot_name(operator,   name),
-                                           conjure_dot_name(operator_2, name_2),
-                                       ),
-                                   ),
-                                   operator_3,
-                               )
-
-                        operator = qk()
-
-                        if operator is not none:
-                            if not operator.is_postfix_operator:
-                                return left
-
-                            wk(none)
-                        else:
-                            if qn() is not none:
-                                return left
-
-                            operator = tokenize_operator()
-
-                            if not operator.is_postfix_operator:
-                                wk(operator)
-
-                                return left
+                        operator = operator_4
 
                     else:
-                        left = conjure_simple_member_expression(
+                        left = conjure_member_expression(
                                    left,
                                    conjure_dot_name_pair(
                                        conjure_dot_name(operator,   name),
@@ -197,53 +117,14 @@ def gem():
 
                         operator = operator_3
 
-                elif operator_2.is__arguments_0__or__left_parenthesis:
-                    if operator_2.is_left_parenthesis:
-                        assert qd() > 0
-                        assert qn() is none
-
-                        operator_2 = parse1_arguments__left_parenthesis(operator_2)
-
-                    if indented is not 0:
-                        newline = qn()
-
-                        if newline is not none:
-                            if qk() is not none:
-                                raise_unknown_line()
-
-                            return MethodCallStatement_1(indented, left, operator, name, operator_2, newline)
-
-                    left = MethodCallExpression(
-                               conjure_simple_member_expression(left, conjure_dot_name(operator, name)),
-                               operator_2,
-                           )
-
-                    operator = qk()
-
-                    if operator is not none:
-                        if not operator.is_postfix_operator:
-                            return left
-
-                        wk(none)
-                    else:
-                        if qn() is not none:
-                            return left
-
-                        operator = tokenize_operator()
-
-                        if not operator.is_postfix_operator:
-                            wk(operator)
-
-                            return left
-
                 elif operator_2.is_postfix_operator:
-                    left = conjure_simple_member_expression(left, conjure_dot_name(operator, name))
+                    left = conjure_member_expression(left, conjure_dot_name(operator, name))
 
                     operator = operator_2
                 else:
                     wk(operator_2)
 
-                    return conjure_simple_member_expression(left, conjure_dot_name(operator, name))
+                    return conjure_member_expression(left, conjure_dot_name(operator, name))
 
             if operator.is__arguments_0__or__left_parenthesis:
                 if operator.is_left_parenthesis:
@@ -252,7 +133,14 @@ def gem():
 
                     operator = parse1_arguments__left_parenthesis(operator)
 
-                left = CallExpression(left, operator)
+                newline = qn()
+
+                if (indented is not 0) and (newline is not none) and (qk() is none):
+                    wn(none)
+
+                    return left.call_statement(indented, left, operator, newline)
+
+                left = left.call_expression(left, operator)
 
                 operator = qk()
 
@@ -262,7 +150,7 @@ def gem():
 
                     wk(none)
                 else:
-                    if qn() is not none:
+                    if newline is not none:
                         return left
 
                     operator = tokenize_operator()

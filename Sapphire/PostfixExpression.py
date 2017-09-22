@@ -47,7 +47,7 @@ def gem():
 
 
     @share
-    class SimpleMemberExpression(SapphireTrunk):
+    class MemberExpression(SapphireTrunk):
         __slots__ = ((
             'left',                     #   Expression
             'postfix',                  #   DotName
@@ -72,37 +72,42 @@ def gem():
             w(t.postfix.s)
 
 
-    simple_member_expression_cache   = {}
-    lookup_simple_member_expression  = simple_member_expression_cache.get
-    provide_simple_member_expression = simple_member_expression_cache.setdefault
-    store_simple_member_expression   = simple_member_expression_cache.__setitem__
+    SapphireTrunk   .call_expression = CallExpression
+    MemberExpression.call_expression = MethodCallExpression
+    Token           .call_expression = CallExpression
+
+
+    member_expression_cache   = {}
+    lookup_member_expression  = member_expression_cache.get
+    provide_member_expression = member_expression_cache.setdefault
+    store_member_expression   = member_expression_cache.__setitem__
 
 
     @share
-    def conjure_simple_member_expression(left, postfix):
-        first = lookup_simple_member_expression(postfix)
+    def conjure_member_expression(left, postfix):
+        first = lookup_member_expression(postfix)
 
         if first is none:
-            return provide_simple_member_expression(postfix, SimpleMemberExpression(left, postfix))
+            return provide_member_expression(postfix, MemberExpression(left, postfix))
 
         if first.__class__ is Map:
-            return (first.get(left)) or (first.setdefault(left, SimpleMemberExpression(left, postfix)))
+            return (first.get(left)) or (first.setdefault(left, MemberExpression(left, postfix)))
 
         if first.left is left:
             return first
 
-        r = SimpleMemberExpression(left, postfix)
+        r = MemberExpression(left, postfix)
 
-        store_simple_member_expression(postfix, { first.left : first, left : r })
+        store_member_expression(postfix, { first.left : first, left : r })
 
         return r
 
 
     @share
-    def dump_simple_member_expression_cache():
-        line('===  simple_member_expression_cache  ===')
+    def dump_member_expression_cache():
+        line('===  member_expression_cache  ===')
 
-        for [k, v] in iterate_items_sorted_by_key(simple_member_expression_cache):
+        for [k, v] in iterate_items_sorted_by_key(member_expression_cache):
             if v.__class__ is Map:
                 line('%s:', k)
 

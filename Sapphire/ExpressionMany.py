@@ -31,10 +31,6 @@ def gem():
                            t.many[-1].display_full_token())
 
 
-        def display_full_token(t):
-            return t.display_token()
-
-
         def write(t, w):
             for v in t.many:
                 v.write(w)
