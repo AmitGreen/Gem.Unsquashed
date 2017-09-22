@@ -135,7 +135,7 @@ def gem():
         #RENAME TO: is_comma_right_parenthesis
         #
         if operator_1.is__optional_comma__right_parenthesis:
-            return TupleExpression_1(left_parenthesis, middle_1, operator_1)
+            return conjure_tuple_expression_1(left_parenthesis, middle_1, operator_1)
 
         if not operator_1.is_comma:
             raise_unknown_line()
@@ -146,7 +146,7 @@ def gem():
         middle_2 = parse1_atom()
 
         if middle_2.is_right_parenthesis:
-            return TupleExpression_1(
+            return conjure_tuple_expression_1(
                        left_parenthesis,
                        middle_1,
                        conjure__comma__right_parenthesis(operator_1, middle_2),

@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Expression')
+@gem('Sapphire.BookcaseExpression')
 def gem():
     require_gem('Sapphire.CreateMeta')
     require_gem('Sapphire.DualFrill')
@@ -23,7 +23,7 @@ def gem():
     LSB_RSB = conjure_dual_frill(LSB, RSB)
 
 
-    class BookcaseExpression_New(SapphireTrunk):
+    class BookcaseExpression(SapphireTrunk):
         __slots__ = ((
             'middle',                   #   Expression+
         ))
@@ -38,13 +38,7 @@ def gem():
 
 
         def display_token(t):
-            frill = t.frill
-
-            return arrange('<%s %s %s %s>',
-                           t.display_name,
-                           frill.a .display_token(),
-                           t.middle.display_token(),
-                           frill.b .display_token())
+            return arrange('<%s %s>', t.display_name, t.middle.display_token())
 
 
         def write(t, w):
@@ -55,19 +49,19 @@ def gem():
             w(frill.b.s)
 
 
-    class Arguments_1(BookcaseExpression_New):
+    class Arguments_1(BookcaseExpression):
         __slots__    = (())
         display_name = '(1)'
         frill        = LP_RP
 
 
-    class HeadIndex(BookcaseExpression_New):
+    class HeadIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'head-index'
         frill        = conjure_dual_frill(LSB, conjure__colon__right_square_bracket(conjure_colon(':'), RSB))
 
 
-    class ListExpression_1(BookcaseExpression_New):
+    class ListExpression_1(BookcaseExpression):
         __slots__                      = (())
         display_name                   = '[1]'
         frill                          = LSB_RSB
@@ -75,7 +69,7 @@ def gem():
         is_atom                        = true
 
 
-    class MapExpression_1(BookcaseExpression_New):
+    class MapExpression_1(BookcaseExpression):
         __slots__                      = (())
         display_name                   = '{1}'
         frill                          = conjure_dual_frill(conjure_left_brace ('{'), conjure_right_brace('}'))
@@ -83,13 +77,13 @@ def gem():
         is_atom                        = true
 
 
-    class NormalIndex(BookcaseExpression_New):
+    class NormalIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'index'
         frill        = LSB_RSB
 
 
-    class ParenthesizedExpression(BookcaseExpression_New):
+    class ParenthesizedExpression(BookcaseExpression):
         __slots__                      = (())
         display_name                   = '()'
         frill                          = LP_RP
@@ -97,10 +91,18 @@ def gem():
         is_atom                        = true
 
 
-    class TailIndex(BookcaseExpression_New):
+    class TailIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'tail-index'
         frill        = conjure_dual_frill(conjure__left_square_bracket__colon(LSB, conjure_colon(':')), RSB)
+
+
+    class TupleExpression_1(BookcaseExpression):
+        __slots__                      = (())
+        display_name                   = '{,}'
+        frill                          = conjure_dual_frill(LP, conjure__comma__right_parenthesis(conjure_comma(','), RP))
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
     @privileged
@@ -192,153 +194,9 @@ def gem():
 
     [conjure_tail_index, dump_tail_index_cache] = produce_conjure_bookcase_expression('tail-index', TailIndex)
 
-
-    class BookcaseExpression(SapphireTrunk):
-        __slots__ = ((
-            'left',                     #   Operator+
-            'middle',                   #   Expression+
-            'right',                    #   Operator+
-        ))
-
-
-        def __init__(t, left, middle, right):
-            t.left   = left
-            t.middle = middle
-            t.right  = right
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r %r>', t.__class__.__name__, t.left, t.middle, t.right)
-
-
-        def display_token(t):
-            if (t.left.s == t.a_name) and (t.right.s == t.b_name):
-                return arrange('<%s %s %s %s>', t.display_name, t.a_name, t.middle.display_token(), t.b_name)
-
-            return arrange('<%s %s %s %s>',
-                           t.display_name,
-                           t.left  .display_token(),
-                           t.middle.display_token(),
-                           t.right .display_token())
-
-
-        def write(t, w):
-            w(t.left.s)
-            t.middle.write(w)
-            t.right .write(w)
-
-
-    @share
-    class TupleExpression_1(BookcaseExpression):
-        __slots__                      = (())
-        a_name                         = '('
-        b_name                         = ')'
-        display_name                   = '{,}'
-        is__atom__or__special_operator = true
-        is_atom                        = true
-
-
-    class BookcasedDualExpression(Object):
-        __slots__ = ((
-            'left_operator',            #   Operator*
-            'left',                     #   Expression*
-            'middle_operator',          #   Operator*
-            'right',                    #   Expression*
-            'right_operator',           #   Operator*
-        ))
-
-
-        is_right_parenthesis    = false
-        is_right_square_bracket = false
-
-
-        def __init__(t, left_operator, left, middle_operator, right, right_operator):
-            t.left_operator   = left_operator
-            t.left            = left
-            t.middle_operator = middle_operator
-            t.right           = right
-            t.right_operator  = right_operator
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r %r %r %r>',
-                           t.__class__.__name__, t.left_operator, t.left, t.middle_operator, t.right, t.right_operator)
-
-
-        def display_token(t):
-            if (
-                    t.left_operator  .s == t.a_name
-                and t.middle_operator.s == t.b_name
-                and t.right_operator .s == t.c_name
-            ):
-                b_name = t.b_name
-
-                if ' ' in b_name:
-                    b_name = '<' + b_name + '>'
-
-                return arrange('<%s %s %s %s %s %s>',
-                               t.display_name,
-                               t.a_name,
-                               t.left .display_token(),
-                               b_name,
-                               t.right.display_token(),
-                               t.c_name)
-
-            return arrange('<%s %s %s %s %s %s>',
-                           t.display_name,
-                           t.left_operator  .display_token(),
-                           t.left           .display_token(),
-                           t.middle_operator.display_token(),
-                           t.right          .display_token(),
-                           t.right_operator .display_token())
-
-
-        def write(t, w):
-            t.left_operator  .write(w)
-            t.left           .write(w)
-            t.middle_operator.write(w)
-            t.right          .write(w)
-            t.right_operator .write(w)
-
-
-    @share
-    class Arguments_2(BookcasedDualExpression):
-        __slots__    = (())
-        a_name       = '('
-        b_name       = ', '
-        c_name       = ')'
-        display_name = '(2)'
-
-
-    @share
-    class ListExpression_2(BookcasedDualExpression):
-        __slots__                      = (())
-        a_name                         = '['
-        b_name                         = ', '
-        c_name                         = ']'
-        display_name                   = '[2]'
-        is__atom__or__special_operator = true
-        is_atom                        = true
-
-
-    @share
-    class RangeIndex(BookcasedDualExpression):
-        __slots__    = (())
-        a_name       = '['
-        b_name       = ':'
-        c_name       = ']'
-        display_name = 'range-index'
-
-
-    @share
-    class TupleExpression_2(BookcasedDualExpression):
-        __slots__                      = (())
-        a_name                         = '('
-        b_name                         = ', '
-        c_name                         = ')'
-        display_name                   = '{,2}'
-        is__atom__or__special_operator = true
-        is_atom                        = true
+    [
+        conjure_tuple_expression_1, dump_tuple_expression_1_cache,
+    ] = produce_conjure_bookcase_expression('tuple-expression-1', TupleExpression_1)
 
 
     share(
@@ -349,6 +207,7 @@ def gem():
         'conjure_normal_index',                 conjure_normal_index,
         'conjure_parenthesized_expression',     conjure_parenthesized_expression,
         'conjure_tail_index',                   conjure_tail_index,
+        'conjure_tuple_expression_1',           conjure_tuple_expression_1,
     )
 
 
@@ -361,4 +220,5 @@ def gem():
             'dump_normal_index_cache',              dump_normal_index_cache,
             'dump_parenthesized_expression_cache',  dump_parenthesized_expression_cache,
             'dump_tail_index_cache',                dump_tail_index_cache,
+            'dump_tuple_expression_1_cache',        dump_tuple_expression_1_cache,
         )

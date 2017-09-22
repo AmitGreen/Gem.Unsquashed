@@ -11,6 +11,7 @@ def gem():
     require_gem('Sapphire.ActionWord')
     require_gem('Sapphire.Atom')
     require_gem('Sapphire.BinaryExpression')
+    require_gem('Sapphire.BookcaseDualExpression')
     require_gem('Sapphire.BookcaseExpression')
     require_gem('Sapphire.DualFrill')
     require_gem('Sapphire.DualToken')
@@ -200,3 +201,4 @@ def gem():
                 #dump_normal_index_cache()
                 #dump_parenthesized_expression_cache()
                 #dump_tail_index_cache()
+                #dump_tuple_expression_1_cache()
