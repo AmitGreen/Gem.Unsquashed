@@ -80,26 +80,61 @@ def gem():
 
                         name_3 = tokenize_name()
 
-                        left = conjure_member_expression(
-                                   left,
-                                   conjure_dot_name_triplet(
-                                       conjure_dot_name(operator,   name),
-                                       conjure_dot_name(operator_2, name_2),
-                                       conjure_dot_name(operator_3, name_3),
-                                   ),
-                               )
-
                         if qn() is not none:
-                            return left
+                            return conjure_member_expression(
+                                       left,
+                                       conjure_dot_name_triplet(
+                                           conjure_dot_name(operator,   name),
+                                           conjure_dot_name(operator_2, name_2),
+                                           conjure_dot_name(operator_3, name_3),
+                                       ),
+                                   )
 
                         operator_4 = tokenize_operator()
 
-                        if not operator_4.is_postfix_operator:
-                            wk(operator_4)
+                        if operator_4.is_dot:
+                            if qn() is not none:
+                                raise_unknown_line()
 
-                            return left
+                            name_4 = tokenize_name()
 
-                        operator = operator_4
+                            left = conjure_member_expression(
+                                       left,
+                                       conjure_dot_name_quadruplet(
+                                           conjure_dot_name(operator,   name),
+                                           conjure_dot_name(operator_2, name_2),
+                                           conjure_dot_name(operator_3, name_3),
+                                           conjure_dot_name(operator_4, name_4),
+                                       ),
+                                   )
+
+                            if qn() is not none:
+                                return left
+
+                            operator_5 = tokenize_operator()
+
+                            if not operator_5.is_postfix_operator:
+                                wk(operator_5)
+
+                                return left
+
+                            operator = operator_5
+                        else:
+                            left = conjure_member_expression(
+                                       left,
+                                       conjure_dot_name_triplet(
+                                           conjure_dot_name(operator,   name),
+                                           conjure_dot_name(operator_2, name_2),
+                                           conjure_dot_name(operator_3, name_3),
+                                       ),
+                                   )
+
+                            if not operator_4.is_postfix_operator:
+                                wk(operator_4)
+
+                                return left
+
+                            operator = operator_4
 
                     else:
                         left = conjure_member_expression(
@@ -117,14 +152,15 @@ def gem():
 
                         operator = operator_3
 
-                elif operator_2.is_postfix_operator:
+                else:
                     left = conjure_member_expression(left, conjure_dot_name(operator, name))
 
-                    operator = operator_2
-                else:
-                    wk(operator_2)
+                    if not operator_2.is_postfix_operator:
+                        wk(operator_2)
 
-                    return conjure_member_expression(left, conjure_dot_name(operator, name))
+                        return left
+
+                    operator = operator_2
 
             if operator.is__arguments_0__or__left_parenthesis:
                 if operator.is_left_parenthesis:
