@@ -230,20 +230,8 @@ def gem():
             if qd() is not 0:
                 if qi() == qj():
                     r = find_conjure_atom_whitespace(atom_s[0])(m.end('atom'), none)
-
-                    skip_tokenize_prefix()
-
-                    return r
-
-                prefix = qs()[qi() : qj()]
-                r      = find_atom_type(atom_s[0])(atom_s)
-                suffix = conjure_whitespace__ends_in_newline(qs()[m.end('atom') : ])
-
-                r = r.bookcase_meta(
-                        (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
-                        r,
-                        suffix,
-                    )
+                else:
+                    r = find_conjure_whitespace_atom_whitespace(atom_s[0])(qj(), m.end('atom'), none)
 
                 skip_tokenize_prefix()
 
@@ -417,9 +405,6 @@ def gem():
         quote_start = m.start('quote')
 
         if quote_start is not -1:
-            quote_end = m.end('quote')
-            s         = qs()
-
             #
             #   NOTE:
             #
@@ -437,27 +422,17 @@ def gem():
             #
             if qd() is not 0:
                 if qi() == qj():
-                    r = find_conjure_atom_whitespace(s[quote_start])(m.end('quote'), none)
-
-                    skip_tokenize_prefix()
-
-                    return r
-
-                prefix = s[qi() : qj()]
-                r      = find_atom_type(s[quote_start])(s[qj() : quote_end])
-                suffix = conjure_whitespace__ends_in_newline(s[quote_end : ])
-
-                r = r.bookcase_meta(
-                        (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
-                        r,
-                        suffix,
-                    )
+                    r = find_conjure_atom_whitespace(qs()[quote_start])(m.end('quote'), none)
+                else:
+                    r = find_conjure_whitespace_atom_whitespace(qs()[quote_start])(qj(), m.end('quote'), none)
 
                 skip_tokenize_prefix()
 
                 return r
 
-            j = qj()
+            j         = qj()
+            quote_end = m.end('quote')
+            s         = qs()
 
             if qi() == qj():
                 r = find_atom_type(s[quote_start])(s[j : quote_end])

@@ -46,27 +46,6 @@ def gem():
 
 
     @share
-    class BookcaseAtom(BookcaseExpression):
-        __slots__    = (())
-        display_name = 'bookcased-atom'
-
-
-        is__atom__or__special_operator = true
-        is_atom                        = true
-
-
-    @share
-    class BookcaseIdentifier(BookcaseExpression):
-        __slots__    = (())
-        display_name = 'bookcased-identifier'
-
-
-        is__atom__or__special_operator = true
-        is_atom                        = true
-        is_identifier                  = true
-
-
-    @share
     class Arguments_1(BookcaseExpression):
         __slots__    = (())
         display_name = '(1)'
@@ -281,9 +260,3 @@ def gem():
                            t.middle_operator.display_token(),
                            t.right          .display_token(),
                            t.right_operator .display_full_token())
-
-
-    Identifier .bookcase_meta = BookcaseIdentifier
-    DoubleQuote.bookcase_meta = BookcaseAtom
-    SingleQuote.bookcase_meta = BookcaseAtom
-    Number     .bookcase_meta = BookcaseAtom

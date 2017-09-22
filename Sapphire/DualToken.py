@@ -614,11 +614,11 @@ def gem():
                                 )
 
     conjure_whitespace__single_quote = produce_conjure_dual_token(
-                                          'whitespace+single-quote',
-                                          Whitespace_Atom,
-                                          conjure_whitespace,
-                                          conjure_single_quote,
-                                          none,
+                                           'whitespace+single-quote',
+                                           Whitespace_Atom,
+                                           conjure_whitespace,
+                                           conjure_single_quote,
+                                           none,
                                        )
 
     evoke_arguments_0 = produce_evoke_dual_token(

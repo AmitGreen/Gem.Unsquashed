@@ -234,7 +234,7 @@ def gem():
 
                 return provide(
                            full,
-                           create_quadruple_token(
+                           create_quadruple_token__with_newlines(
                                Meta,
                                full,
                                conjure_a(s[qi()  : a_end]),

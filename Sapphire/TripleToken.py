@@ -128,11 +128,19 @@ def gem():
         __init__ = construct_triple_operator__line_marker_1
 
 
-    class Whitespace_Identifier_Whitespace(BaseTripleOperator):
+    class Whitespace_Atom_Whitespace(BaseTripleOperator):
         __slots__                      = (())
-        display_name                   = 'whitespace-identifier-whitespace'
+        display_name                   = 'whitespace+atom+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
+
+
+    class Whitespace_Identifier_Whitespace(BaseTripleOperator):
+        __slots__                      = (())
+        display_name                   = 'whitespace+identifier+whitespace'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+        is_identifier                  = true
 
 
     def create_triple_token__with_newlines(Meta, s, a, b, c):
@@ -226,7 +234,7 @@ def gem():
 
                 return provide(
                            full,
-                           create_triple_token(
+                           create_triple_token__with_newlines(
                                Meta,
                                full,
                                conjure_a(s[qi()  : a_end]),
@@ -301,6 +309,42 @@ def gem():
                                                          line_marker = true,
                                                      )
 
+    conjure_whitespace__double_quote__whitespace = produce_conjure_triple_token(
+                                                       'whitespace+double-quote+whitespace',
+                                                       Whitespace_Atom_Whitespace,
+                                                       conjure_whitespace,
+                                                       conjure_double_quote,
+                                                       conjure_whitespace,
+                                                       conjure_whitespace__ends_in_newline,
+                                                   )
+
+    conjure_whitespace_identifier_whitespace = produce_conjure_triple_token(
+                                                   'whitespace+identifier+whitespace',
+                                                   Whitespace_Identifier_Whitespace,
+                                                   conjure_whitespace,
+                                                   conjure_identifier,
+                                                   conjure_whitespace,
+                                                   conjure_whitespace__ends_in_newline,
+                                               )
+
+    conjure_whitespace_number_whitespace = produce_conjure_triple_token(
+                                               'whitespace+number+whitespace',
+                                               Whitespace_Atom_Whitespace,
+                                               conjure_whitespace,
+                                               conjure_number,
+                                               conjure_whitespace,
+                                               conjure_whitespace__ends_in_newline,
+                                           )
+
+    conjure_whitespace__single_quote__whitespace = produce_conjure_triple_token(
+                                                       'whitespace+single-quote+whitespace',
+                                                       Whitespace_Atom_Whitespace,
+                                                       conjure_whitespace,
+                                                       conjure_single_quote,
+                                                       conjure_whitespace,
+                                                       conjure_whitespace__ends_in_newline,
+                                                   )
+
     evoke_all_index = produce_evoke_triple_token('all_index', AllIndex)
 
 
@@ -311,10 +355,52 @@ def gem():
                                                         line_marker = true
                                                     )
 
+    find_conjure_whitespace_atom_whitespace = {
+            '"' : conjure_whitespace__double_quote__whitespace,
+            "'" : conjure_whitespace__single_quote__whitespace,
+
+            '.' : conjure_whitespace_number_whitespace,
+            '0' : conjure_whitespace_number_whitespace, '1' : conjure_whitespace_number_whitespace,
+            '2' : conjure_whitespace_number_whitespace, '3' : conjure_whitespace_number_whitespace,
+            '4' : conjure_whitespace_number_whitespace, '5' : conjure_whitespace_number_whitespace,
+            '6' : conjure_whitespace_number_whitespace, '7' : conjure_whitespace_number_whitespace,
+            '8' : conjure_whitespace_number_whitespace, '9' : conjure_whitespace_number_whitespace,
+
+            'A' : conjure_whitespace_identifier_whitespace, 'B' : conjure_whitespace_identifier_whitespace,
+            'C' : conjure_whitespace_identifier_whitespace, 'D' : conjure_whitespace_identifier_whitespace,
+            'E' : conjure_whitespace_identifier_whitespace, 'F' : conjure_whitespace_identifier_whitespace,
+            'G' : conjure_whitespace_identifier_whitespace, 'H' : conjure_whitespace_identifier_whitespace,
+            'I' : conjure_whitespace_identifier_whitespace, 'J' : conjure_whitespace_identifier_whitespace,
+            'K' : conjure_whitespace_identifier_whitespace, 'L' : conjure_whitespace_identifier_whitespace,
+            'M' : conjure_whitespace_identifier_whitespace, 'N' : conjure_whitespace_identifier_whitespace,
+            'O' : conjure_whitespace_identifier_whitespace, 'P' : conjure_whitespace_identifier_whitespace,
+            'Q' : conjure_whitespace_identifier_whitespace, 'R' : conjure_whitespace_identifier_whitespace,
+            'S' : conjure_whitespace_identifier_whitespace, 'T' : conjure_whitespace_identifier_whitespace,
+            'U' : conjure_whitespace_identifier_whitespace, 'V' : conjure_whitespace_identifier_whitespace,
+            'W' : conjure_whitespace_identifier_whitespace, 'X' : conjure_whitespace_identifier_whitespace,
+            'Y' : conjure_whitespace_identifier_whitespace, 'Z' : conjure_whitespace_identifier_whitespace,
+            '_' : conjure_whitespace_identifier_whitespace,
+
+            'a' : conjure_whitespace_identifier_whitespace, 'b' : conjure_whitespace_identifier_whitespace,
+            'c' : conjure_whitespace_identifier_whitespace, 'd' : conjure_whitespace_identifier_whitespace,
+            'e' : conjure_whitespace_identifier_whitespace, 'f' : conjure_whitespace_identifier_whitespace,
+            'g' : conjure_whitespace_identifier_whitespace, 'h' : conjure_whitespace_identifier_whitespace,
+            'i' : conjure_whitespace_identifier_whitespace, 'j' : conjure_whitespace_identifier_whitespace,
+            'k' : conjure_whitespace_identifier_whitespace, 'l' : conjure_whitespace_identifier_whitespace,
+            'm' : conjure_whitespace_identifier_whitespace, 'n' : conjure_whitespace_identifier_whitespace,
+            'o' : conjure_whitespace_identifier_whitespace, 'p' : conjure_whitespace_identifier_whitespace,
+            'q' : conjure_whitespace_identifier_whitespace, 'r' : conjure_whitespace_identifier_whitespace,
+            's' : conjure_whitespace_identifier_whitespace, 't' : conjure_whitespace_identifier_whitespace,
+            'u' : conjure_whitespace_identifier_whitespace, 'v' : conjure_whitespace_identifier_whitespace,
+            'w' : conjure_whitespace_identifier_whitespace, 'x' : conjure_whitespace_identifier_whitespace,
+            'y' : conjure_whitespace_identifier_whitespace, 'z' : conjure_whitespace_identifier_whitespace,
+        }.__getitem__
+
 
     share(
         'conjure_all_index',                                conjure_all_index,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
         'evoke_all_index',                                  evoke_all_index,
         'evoke__right_parenthesis__colon__line_marker',     evoke__right_parenthesis__colon__line_marker,
+        'find_conjure_whitespace_atom_whitespace',          find_conjure_whitespace_atom_whitespace,
     )

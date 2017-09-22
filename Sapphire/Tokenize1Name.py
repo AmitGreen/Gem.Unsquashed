@@ -7,43 +7,28 @@ def gem():
 
 
     def tokenize_name__X__newline(m):
-        j = qj()
-        s = qs()
-
-        name_end = m.end('name')
-
-        r = conjure_identifier(s[j : name_end])
-
         if qd() is not 0:
             if qi() == qj():
-                r = conjure_identifier_whitespace(name_end, none)
+                r = conjure_identifier_whitespace(m.end('name'), none)
             else:
-                prefix = s[qi() : qj()]
-                suffix = conjure_whitespace__ends_in_newline(s[name_end : ])
-
-                r = BookcaseIdentifier(
-                        (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
-                        conjure_identifier(s[j : name_end]),
-                        suffix,
-                    )
+                r = conjure_whitespace_identifier_whitespace(qj(), m.end('name'), none)
 
             skip_tokenize_prefix()
 
             return r
 
-        r = conjure_identifier(s[j : name_end])
+        j        = qj()
+        name_end = m.end('name')
+        s        = qs()
+
+        if qi() == j:
+            r = conjure_identifier(s[j : name_end])
+        else:
+            r = conjure_whitespace_identifier(j, name_end)
         
         wn(conjure_token_newline(s[name_end : ]))
 
-        if qi() == j:
-            return r
-
-        prefix = s[qi() : j]
-
-        return evoke_whitespace_identifier(
-                   (conjure_whitespace__ends_in_newline   if prefix[-1] == '\n' else   conjure_whitespace)(prefix),
-                   r,
-               )
+        return r
 
 
     @share
