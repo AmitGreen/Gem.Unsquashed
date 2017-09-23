@@ -178,7 +178,7 @@ def gem():
             return r
 
 
-        if not __debug__:
+        if __debug__:
             conjure_bookcase_expression.__name__ = intern_arrange('conjure_%s', name)
 
             cache_many.append( ((name, cache)) )

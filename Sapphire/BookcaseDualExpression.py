@@ -151,10 +151,6 @@ def gem():
 
             frill = conjure_triple_frill(frill_a, frill_b, frill_c)
 
-            assert frill.a is frill_a
-            assert frill.b is frill_b
-            assert frill.c is frill_c
-
             first = lookup(frill, absent)
 
             if first.__class__ is Map:

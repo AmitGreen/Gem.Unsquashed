@@ -389,7 +389,7 @@ def gem():
 
     @share
     def parse1_negative_expression__operator(operator):
-        return NegativeExpression(operator, parse1_unary_expression())
+        return conjure_negative_expression(operator, parse1_unary_expression())
 
 
     def parse1_unary_expression():

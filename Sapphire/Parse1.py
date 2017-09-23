@@ -202,3 +202,4 @@ def gem():
                 #dump_member_expression_cache()
                 #dump_bookcase_expression_cache_many()
                 #dump_bookcase_dual_expression_cache_many()
+                dump_unary_expression_cache_many()

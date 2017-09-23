@@ -85,10 +85,7 @@ def gem():
 
     @share
     def conjure_member_expression(left, postfix):
-        first = lookup_member_expression(postfix)
-
-        if first is none:
-            return provide_member_expression(postfix, MemberExpression(left, postfix))
+        first = lookup_member_expression(postfix, absent)
 
         if first.__class__ is Map:
             return (first.get(left)) or (first.setdefault(left, MemberExpression(left, postfix)))
@@ -98,7 +95,7 @@ def gem():
 
         r = MemberExpression(left, postfix)
 
-        store_member_expression(postfix, { first.left : first, left : r })
+        store_member_expression(postfix, (r   if first is absent else   { first.left : first, left : r }))
 
         return r
 
