@@ -17,9 +17,11 @@ def gem():
         cache_many = []
 
 
-    LP          = conjure_left_parenthesis ('(')
-    COMMA_SPACE = conjure_comma            (', ')
-    RP          = conjure_right_parenthesis(')')
+    COMMA_SPACE = conjure_comma               (', ')
+    LP          = conjure_left_parenthesis    ('(')
+    LSB         = conjure_left_square_bracket ('[')
+    RP          = conjure_right_parenthesis   (')')
+    RSB         = conjure_right_square_bracket(']')
 
 
     class BookcaseDualExpression_New(SapphireTrunk):
@@ -56,6 +58,14 @@ def gem():
         __slots__    = (())
         display_name = '(2)'
         frill        = conjure_triple_frill(LP, COMMA_SPACE, RP)
+
+
+    class ListExpression_2(BookcaseDualExpression_New):
+        __slots__                      = (())
+        display_name                   = '[2]'
+        frill                          = conjure_triple_frill(LSB, COMMA_SPACE, RSB)
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
     @privileged
@@ -129,7 +139,7 @@ def gem():
             return r
 
 
-        if not __debug__:
+        if __debug__:
             conjure_bookcase_dual_expression.__name__ = intern_arrange('conjure_%s', name)
 
             cache_many.append( ((name, cache)) )
@@ -137,7 +147,8 @@ def gem():
         return conjure_bookcase_dual_expression
 
 
-    conjure_arguments_2 = produce_conjure_bookcase_dual_expression('arguments-2', Arguments_2)
+    conjure_arguments_2       = produce_conjure_bookcase_dual_expression('arguments-2',       Arguments_2)
+    conjure_list_expression_2 = produce_conjure_bookcase_dual_expression('list_Expression-2', ListExpression_2)
 
 
     class BookcaseDualExpression(Object):
@@ -204,26 +215,6 @@ def gem():
 
 
     @share
-    class Arguments_2(BookcaseDualExpression):
-        __slots__    = (())
-        a_name       = '('
-        b_name       = ', '
-        c_name       = ')'
-        display_name = '(2)'
-
-
-    @share
-    class ListExpression_2(BookcaseDualExpression):
-        __slots__                      = (())
-        a_name                         = '['
-        b_name                         = ', '
-        c_name                         = ']'
-        display_name                   = '[2]'
-        is__atom__or__special_operator = true
-        is_atom                        = true
-
-
-    @share
     class RangeIndex(BookcaseDualExpression):
         __slots__    = (())
         a_name       = '['
@@ -243,6 +234,14 @@ def gem():
         is_atom                        = true
 
 
+    if __debug__:
+        @share
+        def dump_bookcase_dual_expression_cache_many():
+            for [name, cache] in cache_many:
+                dump_cache(arrange('%s_cache', name), cache)
+
+
     share(
-        'conjure_arguments_2',  conjure_arguments_2,
+        'conjure_arguments_2',          conjure_arguments_2,
+        'conjure_list_expression_2',    conjure_list_expression_2,
     )

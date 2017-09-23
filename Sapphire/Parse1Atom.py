@@ -255,7 +255,7 @@ def gem():
             wk(none)
 
         if operator_2.is__optional_comma__right_square_bracket:
-            return ListExpression_2(left_square_bracket, middle_1, operator_1, middle_2, operator_2)
+            return conjure_list_expression_2(left_square_bracket, middle_1, operator_1, middle_2, operator_2)
 
         if not operator_2.is_comma:
             raise_unknown_line()
@@ -266,7 +266,7 @@ def gem():
         middle_3 = parse1_atom()
 
         if middle_3.is_right_square_bracket:
-            return ListExpression_2(
+            return conjure_list_expression_2(
                        left_square_bracket,
                        middle_1,
                        operator_1,
