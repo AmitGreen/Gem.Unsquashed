@@ -1253,7 +1253,7 @@ def gem():
     def parse1_not_expression__operator(not_operator):
         assert not_operator.is_keyword_not
 
-        return NotExpression(not_operator, parse1_compare_expression()) #   Temporary until handle 'not' atom itself
+        return conjure_not_expression(not_operator, parse1_compare_expression()) #   Temporary until handle 'not' atom itself
 
 
     #

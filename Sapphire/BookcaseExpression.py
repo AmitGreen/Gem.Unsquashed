@@ -117,7 +117,7 @@ def gem():
 
     class NormalIndex(BookcaseExpression):
         __slots__    = (())
-        display_name = 'index'
+        display_name = 'normal-index'
         frill        = LSB_RSB
 
 

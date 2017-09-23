@@ -114,7 +114,14 @@ def gem():
         frill        = conjure_action_word('-', '-')
 
 
+    class NotExpression(UnaryExpression_New):
+        __slots__    = (())
+        display_name = 'not'
+        frill        = conjure_keyword_not('not ')
+
+
     conjure_negative_expression = produce_conjure_unary_expression('negative', NegativeExpression)
+    conjure_not_expression      = produce_conjure_unary_expression('not',      NotExpression)
 
 
     class UnaryExpression(SapphireTrunk):
@@ -186,4 +193,5 @@ def gem():
 
     share(
         'conjure_negative_expression',  conjure_negative_expression,
+        'conjure_not_expression',       conjure_not_expression,
     )
