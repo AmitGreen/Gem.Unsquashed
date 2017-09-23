@@ -24,7 +24,7 @@ def gem():
             if not left.is_identifier:
                 raise_unknown_line()
 
-            return KeywordArgument(left, operator, parse1_ternary_expression())
+            return conjure_keyword_argument(left, operator, parse1_ternary_expression())
 
         if operator.is_end_of_ternary_expression:
             wk(operator)
@@ -52,7 +52,7 @@ def gem():
             if not left.is_identifier:
                 raise_unknown_line()
 
-            argument_1 = KeywordArgument(argument_1, operator_1, parse1_ternary_expression())
+            argument_1 = conjure_keyword_argument(argument_1, operator_1, parse1_ternary_expression())
 
             operator_1 = qk()
 

@@ -735,17 +735,17 @@ def gem():
 
         if operator is none:
             if qn() is not none:
-                return LogicalAndExpression_1(left, logical_and_operator, right)
+                return conjure_logical_and_expression(left, logical_and_operator, right)
 
             operator = tokenize_operator()
 
             if operator.is_end_of_logical_and_expression:
                 wk(operator)
 
-                return LogicalAndExpression_1(left, logical_and_operator, right)
+                return conjure_logical_and_expression(left, logical_and_operator, right)
         else:
             if operator.is_end_of_logical_and_expression:
-                return LogicalAndExpression_1(left, logical_and_operator, right)
+                return conjure_logical_and_expression(left, logical_and_operator, right)
 
             wk(none)
 
@@ -891,17 +891,17 @@ def gem():
 
         if operator is none:
             if qn() is not none:
-                return LogicalOrExpression_1(left, logical_or_operator, right)
+                return conjure_logical_or_expression(left, logical_or_operator, right)
 
             operator = tokenize_operator()
 
             if operator.is_end_of_logical_or_expression:
                 wk(operator)
 
-                return LogicalOrExpression_1(left, logical_or_operator, right)
+                return conjure_logical_or_expression(left, logical_or_operator, right)
         else:
             if operator.is_end_of_logical_or_expression:
-                return LogicalOrExpression_1(left, logical_or_operator, right)
+                return conjure_logical_or_expression(left, logical_or_operator, right)
 
             wk(none)
 

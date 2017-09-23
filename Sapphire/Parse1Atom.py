@@ -40,7 +40,7 @@ def gem():
         if not operator.is_colon:
             raise_unknown_line()
 
-        return MapElement(token, operator, parse1_ternary_expression())
+        return conjure_map_element(token, operator, parse1_ternary_expression())
 
 
     @share

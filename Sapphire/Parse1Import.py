@@ -63,7 +63,7 @@ def gem():
             wj(j)
             #</name>
 
-            module = MemberExpression_1(module, operator_dot, conjure_name(m.group()))
+            module = conjure_member_expression(module, conjure_dot_name(operator_dot, conjure_name(m.group())))
 
         if operator is none:
             wk(conjure_token_newline(m.group()))
