@@ -5,28 +5,30 @@
 def gem():
     adjusted_meta_cache = {}
 
-    lookup_adjusted_meta  = adjusted_meta_cache.get
-    provide_adjusted_meta = adjusted_meta_cache.setdefault
+    lookup_adjusted_meta = adjusted_meta_cache.get
+    store_adjusted_meta  = adjusted_meta_cache.__setitem__
 
 
     @share
-    def create_ActionWord_WithNewlines(Meta, constructor):
-        assert lookup_adjusted_meta(Meta) is none
+    def conjure_ActionWord_WithNewlines(Meta, constructor):
+        ActionWord_WithNewlines = lookup_adjusted_meta(Meta)
+
+        if ActionWord_WithNewlines is none:
+            class ActionWord_WithNewlines(Meta):
+                __slots__ = ((
+                    'newlines',                                 #   Integer > 0
+                    'ends_in_newline',                          #   Boolean
+                ))
+
+                __init__ = constructor
 
 
-        class ActionWord_WithNewlines(Meta):
-            __slots__ = ((
-                'newlines',                                 #   Integer > 0
-                'ends_in_newline',                          #   Boolean
-            ))
+            if __debug__:
+                ActionWord_WithNewlines.__name__ = intern_arrange('%s_WithNewlines', Meta.__name__)
 
-            __init__ = constructor
+            store_adjusted_meta(Meta, ActionWord_WithNewlines)
 
-
-        if __debug__:
-            ActionWord_WithNewlines.__name__ = intern_arrange('%s_WithNewlines', Meta.__name__)
-
-        return provide_adjusted_meta(Meta, ActionWord_WithNewlines)
+        return ActionWord_WithNewlines
 
 
     @share
@@ -47,7 +49,7 @@ def gem():
             if __debug__:
                 Actionword_LineMarker_Many.__name__ = intern_arrange('%s_Many', Meta.__name__[:-2])
 
-            provide_adjusted_meta(Meta, Actionword_LineMarker_Many)
+            store_adjusted_meta(Meta, Actionword_LineMarker_Many)
 
         return Actionword_LineMarker_Many
 
@@ -88,7 +90,7 @@ def gem():
             if __debug__:
                 BookcaseDualExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
 
-            provide_adjusted_meta(Meta, BookcaseDualExpression_WithFrill)
+            store_adjusted_meta(Meta, BookcaseDualExpression_WithFrill)
 
         return BookcaseDualExpression_WithFrill(a, b, frill)
 
@@ -125,7 +127,7 @@ def gem():
             if __debug__:
                 BookcaseExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
 
-            provide_adjusted_meta(Meta, BookcaseExpression_WithFrill)
+            store_adjusted_meta(Meta, BookcaseExpression_WithFrill)
 
         return BookcaseExpression_WithFrill(a, frill)
 
@@ -139,5 +141,4 @@ def gem():
 
     share(
         'lookup_adjusted_meta',     lookup_adjusted_meta,
-        'provide_adjusted_meta',    provide_adjusted_meta,
     )

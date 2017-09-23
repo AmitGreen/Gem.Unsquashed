@@ -7,14 +7,14 @@ def gem():
     require_gem('Sapphire.Whitespace')
 
 
-    create_ActionWord_WithNewlines = Shared.create_ActionWord_WithNewlines  #   Due to privileged
-    lookup_adjusted_meta           = Shared.lookup_adjusted_meta            #   Due to privileged
-    lookup_line_marker             = Shared.lookup_line_marker              #   Due to privileged
-    lookup_normal_token            = Shared.lookup_normal_token             #   Due to privileged
-    provide_line_marker            = Shared.provide_line_marker             #   Due to privileged
-    provide_normal_token           = Shared.provide_normal_token            #   Due to privileged
-    qi                             = Shared.qi                              #   Due to privileged
-    qs                             = Shared.qs                              #   Due to privileged
+    conjure_ActionWord_WithNewlines = Shared.conjure_ActionWord_WithNewlines    #   Due to privileged
+    lookup_adjusted_meta            = Shared.lookup_adjusted_meta               #   Due to privileged
+    lookup_line_marker              = Shared.lookup_line_marker                 #   Due to privileged
+    lookup_normal_token             = Shared.lookup_normal_token                #   Due to privileged
+    provide_line_marker             = Shared.provide_line_marker                #   Due to privileged
+    provide_normal_token            = Shared.provide_normal_token               #   Due to privileged
+    qi                              = Shared.qi                                 #   Due to privileged
+    qs                              = Shared.qs                                 #   Due to privileged
 
 
     def construct_dual_token(t, s, a, b):
@@ -310,9 +310,8 @@ def gem():
         return (
                    Meta(s, a, b)
                        if newlines is 0 else
-                           (
-                                 lookup_adjusted_meta(Meta)
-                              or create_ActionWord_WithNewlines(Meta, construct_dual_token__with_newlines)
+                           conjure_ActionWord_WithNewlines(
+                                Meta, construct_dual_token__with_newlines,
                            )(s, a, b, newlines, s[-1] == '\n')
                )
 

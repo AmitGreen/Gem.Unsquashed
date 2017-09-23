@@ -11,7 +11,6 @@ def gem():
     conjure_dual_frill                   = Shared.conjure_dual_frill                    #   Due to privileged
     conjure_BookcaseExpression_WithFrill = Shared.conjure_BookcaseExpression_WithFrill  #   Due to privileged
     lookup_adjusted_meta                 = Shared.lookup_adjusted_meta                  #   Due to privileged
-    provide_adjusted_meta                = Shared.provide_adjusted_meta                 #   Due to privileged
 
 
     if __debug__:

@@ -158,9 +158,8 @@ def gem():
         return (
                    Meta(s, a, b, c)
                        if newlines is 0 else
-                           (
-                                 lookup_adjusted_meta(Meta)
-                              or create_ActionWord_WithNewlines(Meta, construct_triple_token__with_newlines)
+                           conjure_ActionWord_WithNewlines(
+                               Meta, construct_triple_token__with_newlines,
                            )(s, a, b, c, newlines, s[-1] == '\n')
                )
 

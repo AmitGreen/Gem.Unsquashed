@@ -7,8 +7,8 @@ def gem():
     require_gem('Sapphire.TokenCache')
 
 
-    create_ActionWord_WithNewlines = Shared.create_ActionWord_WithNewlines       #   Due to 'privileged'
-    lookup_adjusted_meta           = Shared.lookup_adjusted_meta                 #   Due to 'privileged'
+    conjure_ActionWord_WithNewlines = Shared.conjure_ActionWord_WithNewlines     #   Due to 'privileged'
+    lookup_adjusted_meta            = Shared.lookup_adjusted_meta                #   Due to 'privileged'
 
     lookup_action_word  = lookup_normal_token
     provide_action_word = provide_normal_token
@@ -44,10 +44,9 @@ def gem():
                    (
                        provide_action_word(s, Meta(s))
                            if newlines is 0 else
-                               (
-                                      lookup_adjusted_meta(Meta)
-                                   or create_ActionWord_WithNewlines(Meta, construct_token__with_newlines)
-                                )(s, newlines, false)
+                               conjure_ActionWord_WithNewlines(
+                                   Meta, construct_token__with_newlines,
+                               )(s, newlines, false)
                    ),
                )
 
@@ -67,9 +66,8 @@ def gem():
 
         return provide_action_word(
                    s,
-                   (
-                         lookup_adjusted_meta(Meta)
-                      or create_ActionWord_WithNewlines(Meta, construct_token__with_newlines)
+                   conjure_ActionWord_WithNewlines(
+                       Meta, construct_token__with_newlines,
                    )(s, s.count('\n'), true)
                )
 
@@ -109,9 +107,8 @@ def gem():
                        (
                            Meta(s)
                                if newlines is 0 else
-                                   (
-                                         lookup_adjusted_meta(Meta)
-                                      or create_ActionWord_WithNewlines(Meta, construct_token__with_newlines)
+                                   conjure_ActionWord_WithNewlines(
+                                       Meta, construct_token__with_newlines,
                                    )(s, newlines, false)
                        ),
                    )
@@ -137,9 +134,8 @@ def gem():
 
             return provide_action_word(
                        s,
-                       (
-                             lookup_adjusted_meta(Meta)
-                          or create_ActionWord_WithNewlines(Meta, construct_token__with_newlines)
+                       conjure_ActionWord_WithNewlines(
+                           Meta, construct_token__with_newlines,
                        )(s, s.count('\n'), true)
                    )
 
