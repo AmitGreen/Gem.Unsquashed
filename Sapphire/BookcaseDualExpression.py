@@ -8,9 +8,7 @@ def gem():
     require_gem('Sapphire.TripleFrill')
 
 
-    conjure_triple_frill                     = Shared.conjure_triple_frill                      #   Due to privileged
-    conjure_BookcaseDualExpression_WithFrill = Shared.conjure_BookcaseDualExpression_WithFrill  #   Due to privileged
-    lookup_adjusted_meta                     = Shared.lookup_adjusted_meta                      #   Due to privileged
+    conjure_triple_frill = Shared.conjure_triple_frill                      #   Due to privileged
 
 
     if __debug__:
@@ -52,6 +50,47 @@ def gem():
             w(frill.b.s)
             t.b.write(w)
             w(frill.c.s)
+
+
+    @share
+    def conjure_BookcaseDualExpression_WithFrill(Meta, a, b, frill):
+        BookcaseDualExpression_WithFrill = lookup_adjusted_meta(Meta)
+
+        if BookcaseDualExpression_WithFrill is none:
+            class BookcaseDualExpression_WithFrill(Meta):
+                __slots__ = ((
+                    'frill',                #   TripleFrill
+                ))
+
+
+                def __init__(t, a, b, frill):
+                    t.a     = a
+                    t.b     = b
+                    t.frill = frill
+
+
+                def __repr__(t):
+                    return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.frill)
+
+
+                def display_token(t):
+                    frill = t.frill
+
+                    return arrange('<%s %s %s %s %s %s>',
+                                   t.display_name,
+                                   frill.a.display_token(),
+                                   t.a    .display_token(),
+                                   frill.b.display_token(),
+                                   t.b    .display_token(),
+                                   frill.c.display_token())
+
+
+            if __debug__:
+                BookcaseDualExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
+
+            store_adjusted_meta(Meta, BookcaseDualExpression_WithFrill)
+
+        return BookcaseDualExpression_WithFrill(a, b, frill)
 
 
     class Arguments_2(BookcaseDualExpression):

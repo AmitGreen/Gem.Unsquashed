@@ -8,9 +8,7 @@ def gem():
     require_gem('Sapphire.Elemental')
 
 
-    conjure_dual_frill                   = Shared.conjure_dual_frill                    #   Due to privileged
-    conjure_BookcaseExpression_WithFrill = Shared.conjure_BookcaseExpression_WithFrill  #   Due to privileged
-    lookup_adjusted_meta                 = Shared.lookup_adjusted_meta                  #   Due to privileged
+    conjure_dual_frill = Shared.conjure_dual_frill      #   Due to privileged
 
 
     if __debug__:
@@ -50,6 +48,43 @@ def gem():
             w(frill.a.s)
             t.a.write(w)
             w(frill.b.s)
+
+
+    def conjure_BookcaseExpression_WithFrill(Meta, a, frill):
+        BookcaseExpression_WithFrill = lookup_adjusted_meta(Meta)
+
+        if BookcaseExpression_WithFrill is none:
+            class BookcaseExpression_WithFrill(Meta):
+                __slots__ = ((
+                    'frill',                #   DualFrill
+                ))
+
+
+                def __init__(t, a, frill):
+                    t.a     = a
+                    t.frill = frill
+
+
+                def __repr__(t):
+                    return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.frill)
+
+
+                def display_token(t):
+                    frill = t.frill
+
+                    return arrange('<%s %s %s %s>',
+                                   t.display_name,
+                                   frill.a.display_token(),
+                                   t.a    .display_token(),
+                                   frill.b.display_token())
+
+
+            if __debug__:
+                BookcaseExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
+
+            store_adjusted_meta(Meta, BookcaseExpression_WithFrill)
+
+        return BookcaseExpression_WithFrill(a, frill)
 
 
     class Arguments_1(BookcaseExpression):

@@ -55,84 +55,6 @@ def gem():
 
 
     @share
-    def conjure_BookcaseDualExpression_WithFrill(Meta, a, b, frill):
-        BookcaseDualExpression_WithFrill = lookup_adjusted_meta(Meta)
-
-        if BookcaseDualExpression_WithFrill is none:
-            class BookcaseDualExpression_WithFrill(Meta):
-                __slots__ = ((
-                    'frill',                #   TripleFrill
-                ))
-
-
-                def __init__(t, a, b, frill):
-                    t.a     = a
-                    t.b     = b
-                    t.frill = frill
-
-
-                def __repr__(t):
-                    return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.frill)
-
-
-                def display_token(t):
-                    frill = t.frill
-
-                    return arrange('<%s %s %s %s %s %s>',
-                                   t.display_name,
-                                   frill.a.display_token(),
-                                   t.a    .display_token(),
-                                   frill.b.display_token(),
-                                   t.b    .display_token(),
-                                   frill.c.display_token())
-
-
-            if __debug__:
-                BookcaseDualExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
-
-            store_adjusted_meta(Meta, BookcaseDualExpression_WithFrill)
-
-        return BookcaseDualExpression_WithFrill(a, b, frill)
-
-
-    @share
-    def conjure_BookcaseExpression_WithFrill(Meta, a, frill):
-        BookcaseExpression_WithFrill = lookup_adjusted_meta(Meta)
-
-        if BookcaseExpression_WithFrill is none:
-            class BookcaseExpression_WithFrill(Meta):
-                __slots__ = ((
-                    'frill',                #   DualFrill
-                ))
-
-
-                def __init__(t, a, frill):
-                    t.a     = a
-                    t.frill = frill
-
-                def __repr__(t):
-                    return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.frill)
-
-
-                def display_token(t):
-                    frill = t.frill
-
-                    return arrange('<%s %s %s %s>',
-                                   t.display_name,
-                                   frill.a.display_token(),
-                                   t.a    .display_token(),
-                                   frill.b.display_token())
-
-
-            if __debug__:
-                BookcaseExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
-
-            store_adjusted_meta(Meta, BookcaseExpression_WithFrill)
-
-        return BookcaseExpression_WithFrill(a, frill)
-
-
-    @share
     def dump_newline_meta_cache():
         for k in iterate_values_sorted_by_key({ k.__name__ : k   for k in adjusted_meta_cache }):
             line('%s:', k.__name__)
@@ -141,4 +63,5 @@ def gem():
 
     share(
         'lookup_adjusted_meta',     lookup_adjusted_meta,
+        'store_adjusted_meta',      store_adjusted_meta,
     )
