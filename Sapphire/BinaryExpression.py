@@ -440,7 +440,7 @@ def gem():
     if __debug__:
         @share
         def dump_binary_expression_cache_many():
-            for [name, cache] in cache_many[-1:]:
+            for [name, cache] in cache_many:
                 dump_cache(arrange('%s-cache', name), cache)
 
 

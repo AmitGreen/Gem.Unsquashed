@@ -205,7 +205,7 @@ def gem():
             return arrange('<%s %s %s>',
                            t.__class__.__name__,
                            portray_string(t.regular_expression),
-                           ' '.join((portray_string(v)   if type(v) is String else   portray(v))  for v in t.many))
+                           ' '.join((portray_string(v)   if type(v) is String else   portray(v))   for v in t.many))
 
 
     class TremoliteAdd(TremoliteMany):
@@ -238,7 +238,7 @@ def gem():
         def __repr__(t):
             return arrange('<TremoliteAnyOf %s %s>',
                            portray_string(t.regular_expression),
-                           ' '.join(portray_string(v)  for v in t.many))
+                           ' '.join(portray_string(v)   for v in t.many))
 
 
     class TremoliteOr(TremoliteMany):

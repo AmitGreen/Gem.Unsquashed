@@ -2086,7 +2086,7 @@ def gem():
 
                     raise_unknown_line()
 
-                left = ComprehensionForExpression(left, operator, middle, in_operator, parse1_boolean_or_expression())
+                left = conjure_comprehension_for(left, operator, middle, in_operator, parse1_boolean_or_expression())
 
                 operator = qk()
 

@@ -192,7 +192,7 @@ def gem():
 
                 f.blank2()
 
-                total = maximum(length(v.name)    for v in iterate_values_sorted_by_key(match_cache))
+                total = maximum(length(v.name)   for v in iterate_values_sorted_by_key(match_cache))
                 total = (total + 8) &~ 3
 
                 with f.indent(
