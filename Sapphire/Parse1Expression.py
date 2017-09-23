@@ -268,7 +268,7 @@ def gem():
 
                             left = IndexExpression(
                                        left,
-                                       RangeIndex(operator, middle, operator_2, middle_2, operator_3),
+                                       conjure_range_index(operator, middle, operator_2, middle_2, operator_3),
                                    )
                     elif operator_2.is_colon__right_square_bracket:
                         left = IndexExpression(left, conjure_head_index(operator, middle, operator_2))
