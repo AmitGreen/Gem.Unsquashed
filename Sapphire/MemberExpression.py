@@ -32,9 +32,12 @@ def gem():
             w(t.postfix.s)
 
 
-    SapphireTrunk   .call_expression = CallExpression
-    MemberExpression.call_expression = MethodCallExpression
-    Token           .call_expression = CallExpression
+    static_produce_call_expression = static_method(produce_call_expression)
+
+
+    SapphireTrunk   .call_expression = static_produce_call_expression
+    MemberExpression.call_expression = static_method(produce_method_call_expression)
+    Token           .call_expression = static_produce_call_expression
 
 
     member_expression_cache   = {}

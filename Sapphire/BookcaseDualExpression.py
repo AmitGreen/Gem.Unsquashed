@@ -123,10 +123,9 @@ def gem():
 
     @privileged
     def produce_conjure_bookcase_dual_expression(name, Meta):
-        cache   = {}
-        lookup  = cache.get
-        provide = cache.setdefault
-        store   = cache.__setitem__
+        cache  = {}
+        lookup = cache.get
+        store  = cache.__setitem__
 
         meta_frill_a = Meta.frill.a
         meta_frill_b = Meta.frill.b

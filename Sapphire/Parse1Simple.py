@@ -33,7 +33,7 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return DecoratorHeader(operator_at_sign, CallExpression(name, operator), newline)
+            return DecoratorHeader(operator_at_sign, produce_call_expression(name, operator), newline)
 
         if not operator.is_left_parenthesis:
             raise_unknown_line()

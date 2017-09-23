@@ -226,7 +226,7 @@ def gem():
                         wk(none)
 
                     if operator_2.is_right_square_bracket:
-                        left = IndexExpression(left, conjure_normal_index(operator, middle, operator_2))
+                        left = produce_index_expression(left, conjure_normal_index(operator, middle, operator_2))
                     elif operator_2.is_colon:
                         if qn() is not none:
                             raise_unknown_line()
@@ -234,7 +234,7 @@ def gem():
                         middle_2 = parse1_atom()
 
                         if middle_2.is_right_square_bracket:
-                            left = IndexExpression(
+                            left = produce_index_expression(
                                        left,
                                        conjure_head_index(
                                            operator,
@@ -266,12 +266,12 @@ def gem():
                             if not operator_3.is_right_square_bracket:
                                 raise_unknown_line()
 
-                            left = IndexExpression(
+                            left = produce_index_expression(
                                        left,
                                        conjure_range_index(operator, middle, operator_2, middle_2, operator_3),
                                    )
                     elif operator_2.is_colon__right_square_bracket:
-                        left = IndexExpression(left, conjure_head_index(operator, middle, operator_2))
+                        left = produce_index_expression(left, conjure_head_index(operator, middle, operator_2))
                     else:
                         my_line('operator_2: %r', operator_2)
                         raise_unknown_line()
@@ -316,7 +316,7 @@ def gem():
                     if not operator_2.is_right_square_bracket:
                         raise_unknown_line()
 
-                    left = IndexExpression(left, conjure_tail_index(operator, middle_2, operator_2))
+                    left = produce_index_expression(left, conjure_tail_index(operator, middle_2, operator_2))
 
                     if qn() is not none:
                         return left
@@ -340,7 +340,7 @@ def gem():
                             return left
 
             if operator.is_all_index:
-                left = IndexExpression(left, operator)
+                left = produce_index_expression(left, operator)
 
                 if qn() is not none:
                     return left

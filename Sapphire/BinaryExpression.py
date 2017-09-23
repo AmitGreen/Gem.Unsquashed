@@ -113,10 +113,9 @@ def gem():
 
     @privileged
     def produce_conjure_binary_expression(name, Meta):
-        cache   = {}
-        lookup  = cache.get
-        provide = cache.setdefault
-        store   = cache.__setitem__
+        cache  = {}
+        lookup = cache.get
+        store  = cache.__setitem__
 
         meta_frill = Meta.frill
 
