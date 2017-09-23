@@ -8,8 +8,8 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    lookup_adjusted_meta = Shared.lookup_adjusted_meta
-    store_adjusted_meta  = Shared.store_adjusted_meta
+    lookup_adjusted_meta = Shared.lookup_adjusted_meta          #   Due to privileged
+    store_adjusted_meta  = Shared.store_adjusted_meta           #   Due to privileged
 
 
     if __debug__:
@@ -18,6 +18,7 @@ def gem():
 
     def portray_frill(t):
         return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.frill, t.b)
+
 
     def portray_frill_with_braces(t):
         return arrange('{%s+frill %r %r %r}', t.__class__.__name__, t.a, t.frill, t.b)
@@ -46,7 +47,7 @@ def gem():
         return arrange('{%s %s %s}', t.display_name, t.a.display_token(), t.b.display_token())
 
 
-    class BinaryExpression_New(SapphireTrunk):
+    class BinaryExpression(SapphireTrunk):
         __slots__ = ((
             'a',                        #   Expression
             'b',                        #   Expression
@@ -181,37 +182,37 @@ def gem():
         return conjure_binary_expression
 
 
-    class AddExpression(BinaryExpression_New):
+    class AddExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'add'
         frill        = conjure_action_word('+', ' + ')
 
 
-    class AndExpression_1(BinaryExpression_New):
+    class AndExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = 'and-1'
         frill        = conjure_action_word('and', ' and ')
 
 
-    class CommaExpression_1(BinaryExpression_New):
+    class CommaExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = ','
         frill        = conjure_comma(', ')
 
 
-    class ComprehensionIfExpression(BinaryExpression_New):
+    class ComprehensionIfExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'comprehension-if'
         frill        = conjure_keyword_if(' if ')
 
 
-    class CompareContainsExpression(BinaryExpression_New):
+    class CompareContainsExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'in'
         frill        = conjure_keyword_in(' in ')
 
 
-    class CompareEqualExpression(BinaryExpression_New):
+    class CompareEqualExpression(BinaryExpression):
         __slots__    = (())
         display_name = '=='
         frill        = conjure_action_word('==', ' == ')
@@ -221,7 +222,7 @@ def gem():
         display_token = display_token__with_braces
 
 
-    class CompareDifferentExpression(BinaryExpression_New):
+    class CompareDifferentExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'is-not'
         frill        = conjure_is_not(conjure_keyword_is(' is '), conjure_keyword_not('not '))
@@ -230,7 +231,7 @@ def gem():
     del Shared.conjure_is_not
 
 
-    class CompareExcludeExpression(BinaryExpression_New):
+    class CompareExcludeExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'not-in'
         frill        = conjure_not_in(conjure_keyword_is(' not '), conjure_keyword_not('in '))
@@ -239,7 +240,7 @@ def gem():
     del Shared.conjure_not_in
 
 
-    class CompareGreaterThanExpression(BinaryExpression_New):
+    class CompareGreaterThanExpression(BinaryExpression):
         __slots__    = (())
         display_name = '>'
         frill        = conjure_action_word('>', ' > ')
@@ -249,7 +250,7 @@ def gem():
         display_token = display_token__with_braces
 
 
-    class CompareGreaterThanOrEqualExpression(BinaryExpression_New):
+    class CompareGreaterThanOrEqualExpression(BinaryExpression):
         __slots__    = (())
         display_name = '>='
         frill        = conjure_action_word('>=', ' >= ')
@@ -259,13 +260,13 @@ def gem():
         display_token = display_token__with_braces
 
 
-    class CompareIdentityExpression(BinaryExpression_New):
+    class CompareIdentityExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'is'
         frill        = conjure_keyword_is(' is ')
 
 
-    class CompareLessThanExpression(BinaryExpression_New):
+    class CompareLessThanExpression(BinaryExpression):
         __slots__    = (())
         display_name = '<'
         frill        = conjure_action_word('<', ' < ')
@@ -275,7 +276,7 @@ def gem():
         display_token = display_token__with_braces
 
 
-    class CompareLessThanOrEqualExpression(BinaryExpression_New):
+    class CompareLessThanOrEqualExpression(BinaryExpression):
         __slots__    = (())
         display_name = '<='
         frill        = conjure_action_word('<=', ' <= ')
@@ -285,7 +286,7 @@ def gem():
         display_token = display_token__with_braces
 
 
-    class CompareNotEqualExpression(BinaryExpression_New):
+    class CompareNotEqualExpression(BinaryExpression):
         __slots__    = (())
         display_name = '!='
         frill        = conjure_action_word('!=', ' != ')
@@ -295,7 +296,7 @@ def gem():
         display_token = display_token__with_braces
 
 
-    class DivideExpression(BinaryExpression_New):
+    class DivideExpression(BinaryExpression):
         __slots__    = (())
         display_name = '/'
         frill        = conjure_action_word('/', ' / ') 
@@ -305,7 +306,7 @@ def gem():
         display_token = display_token__with_braces
 
 
-    class IntegerDivideExpression(BinaryExpression_New):
+    class IntegerDivideExpression(BinaryExpression):
         __slots__    = (())
         display_name = '//'
         frill        = conjure_action_word('//', ' // ') 
@@ -315,35 +316,65 @@ def gem():
         display_token = display_token__with_braces
 
 
-    class KeywordArgument(BinaryExpression_New):
+    class KeywordArgument(BinaryExpression):
         __slots__    = (())
         display_name = 'keyword-argument'
         frill        = conjure_action_word('=', ' = ')
 
 
-    class KeywordParameter(BinaryExpression_New):
+    class KeywordParameter(BinaryExpression):
         __slots__    = (())
         display_name = 'keyword-parameter'
         frill        = conjure_action_word('=', ' = ')
 
 
-    class LogicalAndExpression_1(BinaryExpression_New):
+    class LogicalAndExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = '&'
         frill        = conjure_action_word('&', ' & ')
 
 
-    class LogicalOrExpression_1(BinaryExpression_New):
+    class LogicalOrExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = '|'
         frill        = conjure_action_word('|', ' | ')
 
 
-    class MapElement(BinaryExpression_New):
+    class MapElement(BinaryExpression):
         __slots__      = (())
         display_name   = ':'
         frill          = conjure_action_word(':', ' : ')
         is_right_brace = false
+
+
+    class ModulusExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = '%'
+        frill        = conjure_action_word('%', ' % ')
+
+
+    class MultiplyExpression_1(BinaryExpression):
+        __slots__    = (())
+        display_name = '*'
+        frill        = conjure_action_word('*', ' * ')
+
+
+    class OrExpression_1(BinaryExpression):
+        __slots__    = (())
+        display_name = 'or'
+        frill        = conjure_action_word('or', ' or ')
+
+
+    class PowerExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = 'power'
+        frill        = conjure_action_word('**', ' ** ')
+
+
+    class SubtractExpression(BinaryExpression):
+        __slots__    = (())
+        display_name = '-'
+        frill        = conjure_action_word('-', ' - ')
 
 
     conjure_add_expression     = produce_conjure_binary_expression('add',               AddExpression)
@@ -381,71 +412,11 @@ def gem():
     conjure_logical_and_expression    = produce_conjure_binary_expression('logical-and-1',     LogicalAndExpression_1)
     conjure_logical_or_expression     = produce_conjure_binary_expression('logical-or-1',      LogicalOrExpression_1)
     conjure_map_element               = produce_conjure_binary_expression('map-element',       MapElement)
-
-
-    class BinaryExpression(SapphireTrunk):
-        __slots__ = ((
-            'left',                     #   Expression
-            'operator',                 #   Operator*
-            'right',                    #   Expression
-        ))
-
-
-        def __init__(t, left, operator, right):
-            assert type(left)  is not String
-            assert type(right) is not String
-
-            t.left     = left
-            t.operator = operator
-            t.right    = right
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r %r>', t.__class__.__name__, t.left, t.operator, t.right)
-
-
-        def display_token(t):
-            return arrange('<%s %s %s %s>',
-                           t.display_name,
-                           t.left    .display_token(),
-                           t.operator.display_token(),
-                           t.right   .display_token())
-
-
-        def write(t, w):
-            t.left    .write(w)
-            t.operator.write(w)
-            t.right   .write(w)
-
-
-    @share
-    class ModulusExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = '%'
-
-
-    @share
-    class MultiplyExpression_1(BinaryExpression):
-        __slots__    = (())
-        display_name = '*'
-
-
-    @share
-    class OrExpression_1(BinaryExpression):
-        __slots__    = (())
-        display_name = 'or'
-
-
-    @share
-    class PowerExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = 'power'
-
-
-    @share
-    class SubtractExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = '-'
+    conjure_modulus_expression        = produce_conjure_binary_expression('modulus',           ModulusExpression)
+    conjure_multiple_expression_1     = produce_conjure_binary_expression('multiply-1',        MultiplyExpression_1)
+    conjure_or_expression_1           = produce_conjure_binary_expression('or-1',              OrExpression_1)
+    conjure_power_expression          = produce_conjure_binary_expression('power',             PowerExpression)
+    conjure_subtract_expression       = produce_conjure_binary_expression('subtract',          SubtractExpression)
 
 
     Is_Not                    .expression_meta = static_method(conjure_compare_different)
@@ -460,17 +431,17 @@ def gem():
     OperatorIntegerDivide     .expression_meta = static_method(conjure_integer_divide_expression)
     OperatorLessThan          .expression_meta = static_method(conjure_compare_less_than)
     OperatorLessThanOrEqual   .expression_meta = static_method(conjure_compare_less_than_or_equal)
-    OperatorMinusSign         .expression_meta = SubtractExpression
-    OperatorPercentSign       .expression_meta = ModulusExpression
+    OperatorMinusSign         .expression_meta = static_method(conjure_subtract_expression)
+    OperatorPercentSign       .expression_meta = static_method(conjure_modulus_expression)
     OperatorPlusSign          .expression_meta = static_method(conjure_add_expression)
-    OperatorStarSign          .expression_meta = MultiplyExpression_1
+    OperatorStarSign          .expression_meta = static_method(conjure_multiple_expression_1)
 
 
     if __debug__:
         @share
         def dump_binary_expression_cache_many():
-            for [name, cache] in cache_many:
-                dump_cache(arrange('%s_cache', name), cache)
+            for [name, cache] in cache_many[-1:]:
+                dump_cache(arrange('%s-cache', name), cache)
 
 
     share(
@@ -482,4 +453,7 @@ def gem():
         'conjure_logical_and_expression',   conjure_logical_and_expression,
         'conjure_logical_or_expression',    conjure_logical_or_expression,
         'conjure_map_element',              conjure_map_element,
+        'conjure_modulus_expression',       conjure_modulus_expression,
+        'conjure_or_expression_1',          conjure_or_expression_1,
+        'conjure_power_expression',         conjure_power_expression,
     )

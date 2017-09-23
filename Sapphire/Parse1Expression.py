@@ -376,7 +376,7 @@ def gem():
     #           |   postfix-expression '**' unary-expression
     #
     def parse1_power_expression__left_operator(left, power_operator):
-        return PowerExpression(left, power_operator, parse1_unary_expression())
+        return conjure_power_expression(left, power_operator, parse1_unary_expression())
 
 
     #
@@ -1464,17 +1464,17 @@ def gem():
 
         if operator_2 is none:
             if qn() is not none:
-                return OrExpression_1(left, operator, right)
+                return conjure_or_expression_1(left, operator, right)
 
             operator_2 = tokenize_operator()
 
             if operator_2.is_end_of_boolean_or_expression:
                 wk(operator_2)
 
-                return OrExpression_1(left, operator, right)
+                return conjure_or_expression_1(left, operator, right)
         else:
             if operator_2.is_end_of_boolean_or_expression:
-                return OrExpression_1(left, operator, right)
+                return conjure_or_expression_1(left, operator, right)
 
             wk(none)
 
