@@ -126,63 +126,24 @@ def gem():
         frill        = conjure_star_sign('*')
 
 
-    conjure_negative_expression = produce_conjure_unary_expression('negative',   NegativeExpression)
-    conjure_not_expression      = produce_conjure_unary_expression('not',        NotExpression)
-    conjure_star_argument       = produce_conjure_unary_expression('*-argument', StarArgument)
-
-
-    class UnaryExpression(SapphireTrunk):
-        __slots__ = ((
-            'operator',                 #   Operator*
-            'right',                    #   Expression
-        ))
-
-
-        is_colon                              = false
-        is_right_brace                        = false
-        is__right_parenthesis__colon__newline = false
-        is_right_parenthesis                  = false
-        is_right_square_bracket               = false
-
-
-        def __init__(t, operator, right):
-            t.operator = operator
-            t.right    = right
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r>', t.__class__.__name__, t.operator, t.right)
-
-
-        def display_token(t):
-            return arrange('<%s %s %s>',
-                           t.display_name,
-                           t.operator.display_token(),
-                           t.right   .display_token())
-
-
-        def write(t, w):
-            t.operator.write(w)
-            t.right   .write(w)
-
-
-    @share
-    class StarArgument(UnaryExpression):
-        __slots__    = (())
-        display_name = '*-argument'
-
-
-    @share
-    class StarParameter(UnaryExpression):
+    class StarParameter(UnaryExpression_New):
         __slots__    = (())
         display_name = '*-parameter'
+        frill        = conjure_star_sign('*')
         is_atom      = true
 
 
-    @share
-    class TwosComplementExpression(UnaryExpression):
+    class TwosComplementExpression(UnaryExpression_New):
         __slots__    = (())
         display_name = '~'
+        frill        = conjure_action_word('~', '~')
+
+
+    conjure_negative_expression = produce_conjure_unary_expression('negative',        NegativeExpression)
+    conjure_not_expression      = produce_conjure_unary_expression('not',             NotExpression)
+    conjure_star_argument       = produce_conjure_unary_expression('*-argument',      StarArgument)
+    conjure_star_parameter      = produce_conjure_unary_expression('*-parameter',     StarParameter)
+    conjure_twos_complement     = produce_conjure_unary_expression('twos-complement', TwosComplementExpression)
 
 
     if __debug__:
@@ -196,4 +157,6 @@ def gem():
         'conjure_negative_expression',  conjure_negative_expression,
         'conjure_not_expression',       conjure_not_expression,
         'conjure_star_argument',        conjure_star_argument,
+        'conjure_star_parameter',       conjure_star_parameter,
+        'conjure_twos_complement',      conjure_twos_complement,
     )

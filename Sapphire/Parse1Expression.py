@@ -384,7 +384,7 @@ def gem():
     #
     @share
     def parse1_twos_complement_expression__operator(operator):
-        return TwosComplementExpression(operator, parse1_unary_expression())
+        return conjure_twos_complement(operator, parse1_unary_expression())
 
 
     @share

@@ -121,7 +121,7 @@ def gem():
 
                 return r
 
-            r = StarParameter(conjure_star_sign(s[qi() : star_end]), conjure_name(name))
+            r = conjure_star_parameter(conjure_star_sign(s[qi() : star_end]), conjure_name(name))
 
             j = m.end()
 
