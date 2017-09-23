@@ -47,7 +47,7 @@ def gem():
 
             r = TripleFrill(a, b, c)
 
-            second[b] = (r   if second is absent else   { second.c : second, c : r })
+            first[b] = (r   if second is absent else   { second.c : second, c : r })
 
             return r
 
