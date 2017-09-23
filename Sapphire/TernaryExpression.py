@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.OtherExpression')
+@gem('Sapphire.TernaryExpression')
 def gem():
     require_gem('Sapphire.Tree')
 
@@ -15,7 +15,7 @@ def gem():
         cache_many = []
 
 
-    class TripleExpression_New(SapphireTrunk):
+    class TripleExpression(SapphireTrunk):
         __slots__ = ((
             'a',                        #   Expression*
             'b',                        #   Expression*
@@ -52,11 +52,11 @@ def gem():
 
 
     @share
-    def conjure_TernaryExpression_WithFrill(Meta, a, b, c, frill):
-        TernaryExpression_WithFrill = lookup_adjusted_meta(Meta)
+    def conjure_TripleExpression_WithFrill(Meta, a, b, c, frill):
+        TripleExpression_WithFrill = lookup_adjusted_meta(Meta)
 
-        if TernaryExpression_WithFrill is none:
-            class TernaryExpression_WithFrill(Meta):
+        if TripleExpression_WithFrill is none:
+            class TripleExpression_WithFrill(Meta):
                 __slots__ = ((
                     'frill',                #   DualFrill
                 ))
@@ -86,15 +86,15 @@ def gem():
 
 
             if __debug__:
-                TernaryExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
+                TripleExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
 
-            store_adjusted_meta(Meta, TernaryExpression_WithFrill)
+            store_adjusted_meta(Meta, TripleExpression_WithFrill)
 
-        return TernaryExpression_WithFrill(a, b, c, frill)
+        return TripleExpression_WithFrill(a, b, c, frill)
 
 
     @privileged
-    def produce_conjure_ternary_expression(name, Meta):
+    def produce_conjure_triple_expression(name, Meta):
         cache   = {}
         lookup  = cache.get
         provide = cache.setdefault
@@ -104,7 +104,7 @@ def gem():
         meta_frill_b = Meta.frill.b
 
 
-        def conjure_ternary_expression(a, frill_a, b, frill_b, c):
+        def conjure_triple_expression(a, frill_a, b, frill_b, c):
             if (frill_a is meta_frill_a) and (frill_b is meta_frill_b):
                 first = lookup(a, absent)
 
@@ -155,13 +155,13 @@ def gem():
                     if third.__class__ is Map:
                         return (
                                       third.get(c)
-                                   or third.setdefault(c, conjure_TernaryExpression_WithFrill(Meta, a, b, c, frill))
+                                   or third.setdefault(c, conjure_TripleExpression_WithFrill(Meta, a, b, c, frill))
                                )
 
                     if third.c is c:
                         return third
 
-                    r = conjure_TernaryExpression_WithFrill(Meta, a, b, c, frill)
+                    r = conjure_TripleExpression_WithFrill(Meta, a, b, c, frill)
 
                     second[b] = (r   if third is absent else   { third.c : third, c : r })
 
@@ -171,13 +171,13 @@ def gem():
                     if second.c is c:
                         return second
 
-                    r = conjure_TernaryExpression_WithFrill(Meta, a, b, c, frill)
+                    r = conjure_TripleExpression_WithFrill(Meta, a, b, c, frill)
 
                     first[a] = { b : { second.c : second, c : r } }
 
                     return r
 
-                r = conjure_TernaryExpression_WithFrill(Meta, a, b, c, frill)
+                r = conjure_TripleExpression_WithFrill(Meta, a, b, c, frill)
 
                 first[a] = (r   if second is absent else   { second.b : second, b : r })
 
@@ -188,19 +188,19 @@ def gem():
                     if first.c is c:
                         return first
 
-                    r = conjure_TernaryExpression_WithFrill(Meta, a, b, c, frill)
+                    r = conjure_TripleExpression_WithFrill(Meta, a, b, c, frill)
 
                     store(frill, { a : { b : { first.c : first, c : r } } })
 
                     return r
 
-                r = conjure_TernaryExpression_WithFrill(Meta, a, b, c, frill)
+                r = conjure_TripleExpression_WithFrill(Meta, a, b, c, frill)
 
                 store(frill, { a : { first.b : first, b : r } })
 
                 return r
 
-            r = conjure_TernaryExpression_WithFrill(Meta, a, b, c, frill)
+            r = conjure_TripleExpression_WithFrill(Meta, a, b, c, frill)
 
             store(frill, (r   if first is absent else   { first.a : first, a : r }))
 
@@ -208,67 +208,27 @@ def gem():
 
 
         if __debug__:
-            conjure_ternary_expression.__name__ = intern_arrange('conjure_%s', name)
+            conjure_triple_expression.__name__ = intern_arrange('conjure_%s', name)
 
             cache_many.append( ((name, cache)) )
 
-        return conjure_ternary_expression
+        return conjure_triple_expression
 
 
-    class ComprehensionForExpression(TripleExpression_New):
+    class ComprehensionForExpression(TripleExpression):
         __slots__    = (())
         display_name = 'comprehension-for'
         frill        = conjure_dual_frill(conjure_keyword_for(' for '), conjure_keyword_in(' in '))
 
 
-    conjure_comprehension_for = produce_conjure_ternary_expression('comprehension-for', ComprehensionForExpression)
-
-
-    class TripleExpression(SapphireTrunk):
-        __slots__ = ((
-            'left',                     #   Expression*
-            'left_operator',            #   Operator*
-            'middle',                   #   Expression*
-            'right_operator',           #   Operator*
-            'right',                    #   Expression*
-        ))
-
-
-        def __init__(t, left, left_operator, middle, right_operator, right):
-            t.left           = left
-            t.left_operator  = left_operator
-            t.middle         = middle
-            t.right_operator = right_operator
-            t.right          = right
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r %r %r %r>',
-                           t.__class__.__name__, t.left, t.left_operator, t.middle, t.right_operator, t.right)
-
-
-        def display_token(t):
-            return arrange('<%s %s %s %s %s %s>',
-                           t.display_name,
-                           t.left          .display_token(),
-                           t.left_operator .display_token(),
-                           t.middle        .display_token(),
-                           t.right_operator.display_token(),
-                           t.right         .display_token())
-
-
-        def write(t, w):
-            t.left          .write(w)
-            t.left_operator .write(w)
-            t.middle        .write(w)
-            t.right_operator.write(w)
-            t.right         .write(w)
-
-
-    @share
     class TernaryExpression(TripleExpression):
         __slots__    = (())
         display_name = '?:'
+        frill        = conjure_dual_frill(conjure_keyword_if(' if '), conjure_action_word('else', ' else '))
+
+
+    conjure_comprehension_for  = produce_conjure_triple_expression('comprehension-for',  ComprehensionForExpression)
+    conjure_ternary_expression = produce_conjure_triple_expression('ternary-expression', TernaryExpression)
 
 
     if __debug__:
@@ -280,4 +240,5 @@ def gem():
 
     share(
         'conjure_comprehension_for',    conjure_comprehension_for,
+        'conjure_ternary_expression',   conjure_ternary_expression,
     )

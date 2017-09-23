@@ -10,8 +10,8 @@ def gem():
     #       (Deals with the annoyance of .viewitems method named .viewitems in Python 2.0, but .items in
     #       Python 3.0)
     #
-    view_items =  (Map.viewitems    if is_python_2 else  Map.items)
-    view_values = (Map.viewvalues   if is_python_2 else  Map.values)
+    view_items =  (Map.viewitems    if is_python_2 else   Map.items)
+    view_values = (Map.viewvalues   if is_python_2 else   Map.values)
 
 
     if is_python_2:

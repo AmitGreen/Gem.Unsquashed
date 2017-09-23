@@ -110,8 +110,8 @@ def gem():
             t.rq = (rq) or (ra)
 
             t.favorite_3 = F3
-            t.end_C = (1  if F3 is -1 else   0)
-            t.end_S = (1  if F3 is 1  else   0)
+            t.end_C = (1   if F3 is -1 else   0)
+            t.end_S = (1   if F3 is 1  else   0)
 
 
     state = PortrayStringState

@@ -62,7 +62,6 @@ SAPPHIRE_FILES = \
     ../Sapphire/Elemental.py ../Sapphire/ExpressionMany.py \
     ../Sapphire/LineMarker.py \
     ../Sapphire/Main.py \
-    ../Sapphire/OtherExpression.py \
     ../Sapphire/Parse1.py ../Sapphire/Parse1Atom.py ../Sapphire/Tokenize1Header.py ../Sapphire/Parse1Call.py \
         ../Sapphire/Parse1Complex.py ../Sapphire/Parse1Expression.py ../Sapphire/Parse1ExpressionStatement.py \
         ../Sapphire/Parse1From.py ../Sapphire/Parse1Function.py ../Sapphire/Parse1Import.py \
@@ -72,7 +71,7 @@ SAPPHIRE_FILES = \
     ../Sapphire/Pattern.py \
     ../Sapphire/QuadrupleToken.py \
     ../Sapphire/Statement.py \
-    ../Sapphire/TokenCache.py \
+    ../Sapphire/TernaryExpression.py ../Sapphire/TokenCache.py \
       ../Sapphire/Tokenize1Atom.py ../Sapphire/Tokenize1Name.py ../Sapphire/Tokenize1Operator.py \
       ../Sapphire/Tree.py ../Sapphire/TripleFrill.py ../Sapphire/TripleToken.py \
     ../Sapphire/UnaryExpression.py \
@@ -137,9 +136,9 @@ clean:
 	rm -f gd.py gg.py
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
-	rm -f   h2f.py h2p.py h3f.py h2t.py h3t.py h4t.py
+	rm -f   h2f.py h2p.py he3.py h3f.py h2t.py h3t.py h4t.py
 	rm -f   hat.py haw.py hb.py hcm.py hco.py hd.py hel.py hem.py .py py hk.py hkd.py hl.py
-	rm -f   hma.py hmc.py hoe.py hpt.py hs.py htc.py htr.py hu.py hw.py hx.py
+	rm -f   hma.py hmc.py .py hpt.py hs.py htc.py htr.py hu.py hw.py hx.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
@@ -209,6 +208,7 @@ links:
 	ln -s ../Sapphire/Parse2.py                     h2p.py
 	ln -s ../Sapphire/DualFrill.py                  h2f.py
 	ln -s ../Sapphire/DualToken.py                  h2t.py
+	ln -s ../Sapphire/TernaryExpression.py          h3e.py
 	ln -s ../Sapphire/TripleFrill.py                h3f.py
 	ln -s ../Sapphire/TripleToken.py                h3t.py
 	ln -s ../Sapphire/QuadrupleToken.py             h4t.py
@@ -225,7 +225,6 @@ links:
 	ln -s ../Sapphire/LineMarker.py                 hl.py
 	ln -s ../Sapphire/Main.py                       hma.py
 	ln -s ../Sapphire/Match.py                      hmc.py
-	ln -s ../Sapphire/OtherExpression.py            hoe.py
 	ln -s ../Sapphire/Pattern.py                    hpt.py
 	ln -s ../Sapphire/Statement.py                  hs.py
 	ln -s ../Sapphire/TokenCache.py                 htc.py

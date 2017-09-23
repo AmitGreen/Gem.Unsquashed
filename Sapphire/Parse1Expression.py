@@ -1690,7 +1690,7 @@ def gem():
 
             raise_unknown_line()
 
-        return TernaryExpression(left, operator, middle, operator_2, parse1_ternary_expression())
+        return conjure_ternary_expression(left, operator, middle, operator_2, parse1_ternary_expression())
 
 
     @share

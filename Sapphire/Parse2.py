@@ -7,13 +7,13 @@ def gem():
 
 
     require_gem('Sapphire.Core')
+
     require_gem('Sapphire.BinaryExpression')
     require_gem('Sapphire.BookcaseDualExpression')
     require_gem('Sapphire.BookcaseExpression')
     require_gem('Sapphire.DualToken')
     require_gem('Sapphire.ExpressionMany')
     require_gem('Sapphire.Match')
-    require_gem('Sapphire.OtherExpression')
     require_gem('Sapphire.Parse1Atom')
     require_gem('Sapphire.Parse1Call')
     require_gem('Sapphire.Parse1Complex')
@@ -25,6 +25,7 @@ def gem():
     require_gem('Sapphire.Parse1Simple')
     require_gem('Sapphire.PostfixExpression')
     require_gem('Sapphire.Statement')
+    require_gem('Sapphire.TernaryExpression')
     require_gem('Sapphire.Tokenize1Atom')
     require_gem('Sapphire.Tokenize1Header')
     require_gem('Sapphire.Tokenize1Name')
