@@ -506,11 +506,15 @@ def gem():
     conjure_dot_name_pair = produce_conjure_dual_token('.name-pair', DotNamePair)
     conjure_empty_list    = produce_conjure_dual_token('[]',         EmptyList)
     conjure_empty_map     = produce_conjure_dual_token('{}',         EmptyMap)
+    conjure_is_not        = produce_conjure_dual_token('is-not',     Is_Not)
 
     conjure__left_square_bracket__colon = produce_conjure_dual_token(
                                               '[:',                           #   ]
                                               LeftSquareBracket_Colon,
                                           )
+
+    conjure_not_in = produce_conjure_dual_token('not-in', Not_In)
+
 
     evoke_arguments_0 = produce_evoke_dual_token(
                             'arguments_0',
@@ -756,7 +760,9 @@ def gem():
         'conjure_dot_name_pair',                    conjure_dot_name_pair,
         'conjure_empty_list',                       conjure_empty_list,
         'conjure_empty_map',                        conjure_empty_map,
+        'conjure_is_not',                           conjure_is_not,
         'conjure__left_square_bracket__colon',      conjure__left_square_bracket__colon,
+        'conjure_not_in',                           conjure_not_in,
         'evoke_arguments_0',                        evoke_arguments_0,
         'evoke__colon__right_square_bracket',       evoke__colon__right_square_bracket,
         'evoke__comma__right_brace',                evoke__comma__right_brace,

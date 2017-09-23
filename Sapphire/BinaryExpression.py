@@ -151,7 +151,62 @@ def gem():
         frill        = conjure_action_word('+', ' + ')
 
 
-    conjure_add_expression = produce_conjure_binary_expression('add', AddExpression)
+    class AndExpression_1(BinaryExpression_New):
+        __slots__    = (())
+        display_name = 'and-1'
+        frill        = conjure_action_word('and', ' and ')
+
+
+    class CommaExpression_1(BinaryExpression_New):
+        __slots__    = (())
+        display_name = ','
+        frill        = conjure_comma(', ')
+
+
+    class ComprehensionIfExpression(BinaryExpression_New):
+        __slots__    = (())
+        display_name = 'comprehension-if'
+        frill        = conjure_keyword_if(' if ')
+
+
+    class CompareContainsExpression(BinaryExpression_New):
+        __slots__    = (())
+        display_name = 'in'
+        frill        = conjure_keyword_in(' in ')
+
+
+    class CompareEqualExpression(BinaryExpression_New):
+        __slots__    = (())
+        display_name = '=='
+        frill        = conjure_action_word('==', ' == ')
+
+
+    class CompareDifferentExpression(BinaryExpression_New):
+        __slots__    = (())
+        display_name = 'is-not'
+        frill        = conjure_is_not(conjure_keyword_is(' is '), conjure_keyword_not('not '))
+
+
+    del Shared.conjure_is_not
+
+
+    class CompareExcludeExpression(BinaryExpression_New):
+        __slots__    = (())
+        display_name = 'not-in'
+        frill        = conjure_not_in(conjure_keyword_is(' not '), conjure_keyword_not('in '))
+
+
+    del Shared.conjure_not_in
+
+
+    conjure_add_expression     = produce_conjure_binary_expression('add',               AddExpression)
+    conjure_and_expression_1   = produce_conjure_binary_expression('and-1',             AndExpression_1)
+    conjure_comma_expression_1 = produce_conjure_binary_expression('comma-1',           CommaExpression_1)
+    conjure_comprehension_if   = produce_conjure_binary_expression('comprehension-if',  ComprehensionIfExpression)
+    conjure_compare_contains   = produce_conjure_binary_expression('compare-contains',  CompareContainsExpression)
+    conjure_compare_equal      = produce_conjure_binary_expression('compare-equal',     CompareEqualExpression)
+    conjure_compare_different  = produce_conjure_binary_expression('compare-different', CompareDifferentExpression)
+    conjure_compare_exclude    = produce_conjure_binary_expression('compare-exclude',   CompareExcludeExpression)
 
 
     class BinaryExpression(SapphireTrunk):
@@ -187,54 +242,6 @@ def gem():
             t.left    .write(w)
             t.operator.write(w)
             t.right   .write(w)
-
-
-    @share
-    class AddExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = '+'
-
-
-    @share
-    class AndExpression_1(BinaryExpression):
-        __slots__    = (())
-        display_name = 'and'
-
-
-    @share
-    class CommaExpression_1(BinaryExpression):
-        __slots__    = (())
-        display_name = ','
-
-
-    @share
-    class ComprehensionIfExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = 'comprehension-if'
-
-
-    @share
-    class CompareContainsExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = 'in'
-
-
-    @share
-    class CompareEqualExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = '=='
-
-
-    @share
-    class CompareDifferentExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = 'is-not'
-
-
-    @share
-    class CompareExcludeExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = 'not-in'
 
 
     @share
@@ -353,11 +360,11 @@ def gem():
         display_name = '-'
 
 
-    Is_Not                    .expression_meta = CompareDifferentExpression
-    KeywordIn                 .expression_meta = CompareContainsExpression
+    Is_Not                    .expression_meta = static_method(conjure_compare_different)
+    KeywordIn                 .expression_meta = static_method(conjure_compare_contains)
     KeywordIs                 .expression_meta = CompareIdentityExpression
-    Not_In                    .expression_meta = CompareExcludeExpression
-    OperatorCompareEqual      .expression_meta = CompareEqualExpression
+    Not_In                    .expression_meta = static_method(conjure_compare_exclude)
+    OperatorCompareEqual      .expression_meta = static_method(conjure_compare_equal)
     OperatorCompareNotEqual   .expression_meta = CompareNotEqualExpression
     OperatorDivide            .expression_meta = DivideExpression
     OperatorGreaterThan       .expression_meta = CompareGreaterThanExpression
@@ -376,3 +383,10 @@ def gem():
         def dump_binary_expression_cache_many():
             for [name, cache] in cache_many:
                 dump_cache(arrange('%s_cache', name), cache)
+
+
+    share(
+        'conjure_and_expression_1',     conjure_and_expression_1,
+        'conjure_comma_expression_1',   conjure_comma_expression_1,
+        'conjure_comprehension_if',     conjure_comprehension_if,
+    )

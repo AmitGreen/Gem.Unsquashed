@@ -1268,17 +1268,17 @@ def gem():
 
         if operator_2 is none:
             if qn() is not none:
-                return AndExpression_1(left, operator, right)
+                return conjure_and_expression_1(left, operator, right)
 
             operator_2 = tokenize_operator()
 
             if operator_2.is_end_of_boolean_and_expression:
                 wk(operator_2)
 
-                return AndExpression_1(left, operator, right)
+                return conjure_and_expression_1(left, operator, right)
         else:
             if operator_2.is_end_of_boolean_and_expression:
-                return AndExpression_1(left, operator, right)
+                return conjure_and_expression_1(left, operator, right)
 
             wk(none)
 
@@ -2096,7 +2096,7 @@ def gem():
                 wk(none)
 
             if operator.is_keyword_if:
-                left = ComprehensionIfExpression(left, operator, parse1_boolean_or_expression())
+                left = conjure_comprehension_if(left, operator, parse1_boolean_or_expression())
 
                 operator = qk()
 
