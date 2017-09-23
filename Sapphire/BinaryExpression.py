@@ -8,8 +8,42 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
+    lookup_adjusted_meta = Shared.lookup_adjusted_meta
+    store_adjusted_meta  = Shared.store_adjusted_meta
+
+
     if __debug__:
         cache_many = []
+
+
+    def portray_frill(t):
+        return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.frill, t.b)
+
+    def portray_frill_with_braces(t):
+        return arrange('{%s+frill %r %r %r}', t.__class__.__name__, t.a, t.frill, t.b)
+
+
+    def portray_with_braces(t):
+        return arrange('{%s %r %r}', t.__class__.__name__, t.a, t.b)
+
+
+    def display_token__frill(t):
+        return arrange('<%s+frill %s %s %s>',
+                       t.display_name,
+                       t.a    .display_token(),
+                       t.frill.display_token(),
+                       t.b    .display_token())
+
+    def display_token__frill_with_braces(t):
+        return arrange('{%s+frill %s %s %s}',
+                       t.display_name,
+                       t.a    .display_token(),
+                       t.frill.display_token(),
+                       t.b    .display_token())
+
+
+    def display_token__with_braces(t):
+        return arrange('{%s %s %s}', t.display_name, t.a.display_token(), t.b.display_token())
 
 
     class BinaryExpression_New(SapphireTrunk):
@@ -38,6 +72,7 @@ def gem():
             t.b.write(w)
 
 
+    @privileged
     def conjure_BinaryExpression_WithFrill(Meta, a, frill, b):
         BinaryExpression_WithFrill = lookup_adjusted_meta(Meta)
 
@@ -54,16 +89,17 @@ def gem():
                     t.b     = b
 
 
-                def __repr__(t):
-                    return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.frill, t.b)
+                __repr__ = (
+                               portray_frill_with_braces   if Meta.__repr__.im_func is portray_with_braces else
+                               portray_frill
+                           )
 
 
-                def display_token(t):
-                    return arrange('<%s+frill %s %s %s>',
-                                   t.display_name,
-                                   t.a    .display_token(),
-                                   t.frill.display_token(),
-                                   t.b    .display_token())
+                display_token = (
+                                    display_token__frill_with_braces
+                                        if Meta.display_token.im_func is display_token__with_braces else
+                                            display_token__frill
+                                )
 
 
             if __debug__:
@@ -199,6 +235,17 @@ def gem():
     del Shared.conjure_not_in
 
 
+    class CompareGreaterThanExpression(BinaryExpression_New):
+        __slots__     = (())
+        display_name  = '>'
+        frill = conjure_action_word('>', ' > ')
+
+        __repr__ = portray_with_braces
+
+        display_token = display_token__with_braces
+
+
+
     conjure_add_expression     = produce_conjure_binary_expression('add',               AddExpression)
     conjure_and_expression_1   = produce_conjure_binary_expression('and-1',             AndExpression_1)
     conjure_comma_expression_1 = produce_conjure_binary_expression('comma-1',           CommaExpression_1)
@@ -208,6 +255,10 @@ def gem():
     conjure_compare_different  = produce_conjure_binary_expression('compare-different', CompareDifferentExpression)
     conjure_compare_exclude    = produce_conjure_binary_expression('compare-exclude',   CompareExcludeExpression)
 
+    conjure_compare_greater_than = produce_conjure_binary_expression(
+                                       'compare-greater-than',
+                                       CompareGreaterThanExpression,
+                                   )
 
     class BinaryExpression(SapphireTrunk):
         __slots__ = ((
@@ -242,12 +293,6 @@ def gem():
             t.left    .write(w)
             t.operator.write(w)
             t.right   .write(w)
-
-
-    @share
-    class CompareGreaterThanExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = '>'
 
 
     @share
@@ -367,7 +412,7 @@ def gem():
     OperatorCompareEqual      .expression_meta = static_method(conjure_compare_equal)
     OperatorCompareNotEqual   .expression_meta = CompareNotEqualExpression
     OperatorDivide            .expression_meta = DivideExpression
-    OperatorGreaterThan       .expression_meta = CompareGreaterThanExpression
+    OperatorGreaterThan       .expression_meta = static_method(conjure_compare_greater_than)
     OperatorGreaterThanOrEqual.expression_meta = CompareGreaterThanOrEqualExpression
     OperatorIntegerDivide     .expression_meta = IntegerDivideExpression
     OperatorLessThan          .expression_meta = LessThanExpression
