@@ -1,13 +1,65 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Expression')
+@gem('Sapphire.BookcaseDual')
 def gem():
     require_gem('Sapphire.CreateMeta')
     require_gem('Sapphire.Elemental')
+    require_gem('Sapphire.TripleFrill')
 
 
-    class BookcasedDualExpression(Object):
+    conjure_triple_frill                    = Shared.conjure_triple_frill                       #   Due to privileged
+    create_BookcaseDualExpression_WithFrill = Shared.create_BookcaseDualExpression_WithFrill    #   Due to privileged
+    lookup_adjusted_meta                    = Shared.lookup_adjusted_meta                       #   Due to privileged
+    provide_adjusted_meta                   = Shared.provide_adjusted_meta                      #   Due to privileged
+
+
+    if __debug__:
+        cache_many = []
+
+
+    LP          = conjure_left_parenthesis ('(')
+    COMMA_SPACE = conjure_comma            (', ')
+    RP          = conjure_right_parenthesis(')')
+
+
+    class BookcaseDualExpression_New(SapphireTrunk):
+        __slots__ = ((
+            'a',                    #   Expression+
+            'b',                    #   Expression+
+        ))
+
+
+        def __init__(t, a, b):
+            t.a = a
+            t.b = b
+
+
+        def __repr__(t):
+            return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.b)
+
+
+        def display_token(t):
+            return arrange('<%s %s %s>', t.display_name, t.a.display_token(), t.b.display_token())
+
+
+        def write(t, w):
+            frill = t.frill
+
+            w(frill.a.s)
+            t.a.write(w)
+            w(frill.b.s)
+            t.b.write(w)
+            w(frill.b.s)
+
+
+    class Arguments_2(BookcaseDualExpression_New):
+        __slots__    = (())
+        display_name = '(2)'
+        frill        = conjure_triple_frill(LP, COMMA_SPACE, RP)
+
+
+    class BookcaseDualExpression(Object):
         __slots__ = ((
             'left_operator',            #   Operator*
             'left',                     #   Expression*
@@ -70,8 +122,96 @@ def gem():
             t.right_operator .write(w)
 
 
+    @privileged
+    def produce_conjure_bookcase_dual_expression(name, Meta):
+        cache   = {}
+        lookup  = cache.get
+        provide = cache.setdefault
+        store   = cache.__setitem__
+
+        meta_frill_a = Meta.frill.a
+        meta_frill_b = Meta.frill.b
+        meta_frill_c = Meta.frill.c
+
+
+        def conjure_bookcase_dual_expression(frill_a, a, frill_b, b, frill_c):
+            if (frill_a is meta_frill_a) and (frill_b is meta_frill_b) and (frill_c is meta_frill_c):
+                first = lookup(a, absent)
+
+                if first.__class__ is Map:
+                    return (first.get(b)) or (first.setdefault(b, BookcaseDualExpression_New(a, b)))
+
+                if first.b is b:
+                    return first
+
+                r = BookcaseDualExpression_New(a, b)
+
+                store(a, (r   if first is absent else   { first.b : first, b : r }))
+
+                return r
+
+            frill = conjure_triple_frill(frill_a, frill_b, frill_c)
+
+            assert frill.a is frill_a
+            assert frill.b is frill_b
+            assert frill.c is frill_c
+
+            first = lookup(frill, absent)
+
+            if first.__class__ is Map:
+                second = first.get(a, absent)
+
+                if second.__class__ is Map:
+                    return (
+                                  second.get(b)
+                               or second.setdefault(
+                                      b,
+                                      (
+                                             lookup_adjusted_meta(Meta)
+                                          or create_BookcaseDualExpression_WithFrill(Meta)
+                                      )(a, b, frill),
+                                  )
+                           )
+
+                if second.b is b:
+                    return second
+
+                r = (
+                           lookup_adjusted_meta(Meta)
+                        or create_BookcaseDualExpression_WithFrill(Meta)
+                    )(a, b, frill)
+
+                second[a] = (r   if second is absent else   { second.b : second, b : r })
+
+                return r
+
+            if first.a is a:
+                if first.b is b:
+                    return first
+
+                r = ((lookup_adjusted_meta(Meta)) or (create_BookcaseDualExpression_WithFrill(Meta)))(a, b, frill)
+
+                store(frill, { a : { first.b : first, b : r } })
+
+                return r
+
+            r = ((lookup_adjusted_meta(Meta)) or (create_BookcaseDualExpression_WithFrill(Meta)))(a, b, frill)
+
+            store(frill, (r   if first is absent else   { first.a : first, left : r }))
+
+            return r
+
+
+        if not __debug__:
+            conjure_bookcase_dual_expression.__name__ = intern_arrange('conjure_%s', name)
+
+            cache_many.append( ((name, cache)) )
+
+        return conjure_bookcase_dual_expression
+
+
     @share
-    class Arguments_2(BookcasedDualExpression):
+    class Arguments_2(BookcaseDualExpression):
         __slots__    = (())
         a_name       = '('
         b_name       = ', '
@@ -80,7 +220,7 @@ def gem():
 
 
     @share
-    class ListExpression_2(BookcasedDualExpression):
+    class ListExpression_2(BookcaseDualExpression):
         __slots__                      = (())
         a_name                         = '['
         b_name                         = ', '
@@ -91,7 +231,7 @@ def gem():
 
 
     @share
-    class RangeIndex(BookcasedDualExpression):
+    class RangeIndex(BookcaseDualExpression):
         __slots__    = (())
         a_name       = '['
         b_name       = ':'
@@ -100,7 +240,7 @@ def gem():
 
 
     @share
-    class TupleExpression_2(BookcasedDualExpression):
+    class TupleExpression_2(BookcaseDualExpression):
         __slots__                      = (())
         a_name                         = '('
         b_name                         = ', '

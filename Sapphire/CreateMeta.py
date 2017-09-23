@@ -50,6 +50,46 @@ def gem():
 
 
     @share
+    def create_BookcaseDualExpression_WithFrill(Meta):
+        assert lookup_adjusted_meta(Meta) is none
+
+
+        class BookcaseDualExpression_WithFrill(Meta):
+            __slots__ = ((
+                'frill',                #   TripleFrill
+            ))
+
+
+            def __init__(t, a, b, frill):
+                t.a     = a
+                t.b     = b
+                t.frill = frill
+
+
+            def __repr__(t):
+                return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.frill)
+
+
+            def display_token(t):
+                frill = t.frill
+
+                return arrange('<%s %s %s %s %s %s>',
+                               t.display_name,
+                               frill.a.display_token(),
+                               t.a    .display_token(),
+                               frill.b.display_token(),
+                               t.b    .display_token(),
+                               frill.c.display_token())
+
+
+        if __debug__:
+            BookcaseDualExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
+
+
+        return provide_adjusted_meta(Meta, BookcaseDualExpression_WithFrill)
+
+
+    @share
     def create_BookcaseExpression_WithFrill(Meta):
         assert lookup_adjusted_meta(Meta) is none
 
@@ -60,12 +100,12 @@ def gem():
             ))
 
 
-            def __init__(t, middle, frill):
-                t.middle = middle
-                t.frill  = frill
+            def __init__(t, a, frill):
+                t.a     = a
+                t.frill = frill
 
             def __repr__(t):
-                return arrange('<%s %r %r>', t.__class__.__name__, t.middle, t.frill)
+                return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.frill)
 
 
             def display_token(t):
@@ -73,9 +113,9 @@ def gem():
 
                 return arrange('<%s %s %s %s>',
                                t.display_name,
-                               frill.a .display_token(),
-                               t.middle.display_token(),
-                               frill.b .display_token())
+                               frill.a.display_token(),
+                               t.a    .display_token(),
+                               frill.b.display_token())
 
 
         if __debug__:

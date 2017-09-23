@@ -74,7 +74,7 @@ SAPPHIRE_FILES = \
     ../Sapphire/Statement.py \
     ../Sapphire/TokenCache.py \
       ../Sapphire/Tokenize1Atom.py ../Sapphire/Tokenize1Name.py ../Sapphire/Tokenize1Operator.py \
-      ../Sapphire/Tree.py ../Sapphire/TripleToken.py \
+      ../Sapphire/Tree.py ../Sapphire/TripleFrill.py ../Sapphire/TripleToken.py \
     ../Sapphire/UnaryExpression.py \
     ../Sapphire/Whitespace.py
     #
@@ -137,7 +137,7 @@ clean:
 	rm -f gd.py gg.py
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
-	rm -f   h2p.py h2f.py h2t.py h3t.py h4t.py
+	rm -f   h2f.py h2p.py h3f.py h2t.py h3t.py h4t.py
 	rm -f   hat.py haw.py hb.py hcm.py hco.py hd.py hel.py hem.py .py py hk.py hkd.py hl.py
 	rm -f   hma.py hmc.py hoe.py hpt.py hs.py htc.py htr.py hu.py hw.py hx.py
 	rm -f in.py im.py io.py iv.py
@@ -209,6 +209,7 @@ links:
 	ln -s ../Sapphire/Parse2.py                     h2p.py
 	ln -s ../Sapphire/DualFrill.py                  h2f.py
 	ln -s ../Sapphire/DualToken.py                  h2t.py
+	ln -s ../Sapphire/TripleFrill.py                h3f.py
 	ln -s ../Sapphire/TripleToken.py                h3t.py
 	ln -s ../Sapphire/QuadrupleToken.py             h4t.py
 	ln -s ../Sapphire/Atom.py                       hat.py

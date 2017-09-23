@@ -29,27 +29,27 @@ def gem():
 
     class BookcaseExpression(SapphireTrunk):
         __slots__ = ((
-            'middle',                   #   Expression+
+            'a',                        #   Expression+
         ))
 
 
-        def __init__(t, middle):
-            t.middle = middle
+        def __init__(t, a):
+            t.a = a
 
 
         def __repr__(t):
-            return arrange('<%s %r>', t.__class__.__name__, t.middle)
+            return arrange('<%s %r>', t.__class__.__name__, t.a)
 
 
         def display_token(t):
-            return arrange('<%s %s>', t.display_name, t.middle.display_token())
+            return arrange('<%s %s>', t.display_name, t.a.display_token())
 
 
         def write(t, w):
             frill = t.frill
 
             w(frill.a.s)
-            t.middle.write(w)
+            t.a.write(w)
             w(frill.b.s)
 
 
@@ -116,39 +116,36 @@ def gem():
         provide = cache.setdefault
         store   = cache.__setitem__
 
-        frill_a = Meta.frill.a
-        frill_b = Meta.frill.b
+        meta_frill_a = Meta.frill.a
+        meta_frill_b = Meta.frill.b
 
 
-        def conjure_bookcase_expression(a, middle, b):
-            if (a is frill_a) and (b is frill_b):
-                return (lookup(middle)) or (provide(middle, Meta(middle)))
+        def conjure_bookcase_expression(frill_a, a, frill_b):
+            if (frill_a is meta_frill_a) and (frill_b is meta_frill_b):
+                return (lookup(a)) or (provide(a, Meta(a)))
 
-            frill = conjure_dual_frill(a, b)
-
-            assert frill.a is a
-            assert frill.b is b
+            frill = conjure_dual_frill(frill_a, frill_b)
 
             first = lookup(frill, absent)
 
             if first.__class__ is Map:
                 return (
-                              first.get(middle)
+                              first.get(a)
                            or first.setdefault(
-                                  middle,
+                                  a,
                                   (
                                          lookup_adjusted_meta(Meta)
                                       or create_BookcaseExpression_WithFrill(Meta)
-                                  )(middle, frill),
+                                  )(a, frill),
                               )
                        )
 
-            if first.middle is middle:
+            if first.a is a:
                 return first
 
-            r = ((lookup_adjusted_meta(Meta)) or (create_BookcaseExpression_WithFrill(Meta)))(middle, frill)
+            r = ((lookup_adjusted_meta(Meta)) or (create_BookcaseExpression_WithFrill(Meta)))(a, frill)
 
-            store(frill, (r   if first is absent else   { first.middle : first, middle : r }))
+            store(frill, (r   if first is absent else   { first.a : first, a : r }))
 
             return r
 

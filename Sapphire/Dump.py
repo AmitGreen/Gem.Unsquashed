@@ -13,6 +13,14 @@ def gem():
             if v.__class__ is Map:
                 for [k2, w] in iterate_items_sorted_by_key(v):
                     line('  %s:', k2.display_token())
+
+                    if w.__class__ is Map:
+                        for [k3, x] in iterate_items_sorted_by_key(w):
+                            line('    %s:', k3.display_token())
+                            line('      %s', x.display_token())
+
+                        continue
+
                     line('    %s', w.display_token())
 
                 continue
