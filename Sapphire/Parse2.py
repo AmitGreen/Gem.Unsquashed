@@ -220,7 +220,7 @@ def gem():
                         return parse1_twos_complement_expression__operator(token)
 
                     if token.is_star_sign:
-                        return StarArgument(token, parse1_ternary_expression())
+                        return conjure_star_argument(token, parse1_ternary_expression())
 
                     #my_line('token: %r', token)
                     raise_unknown_line()

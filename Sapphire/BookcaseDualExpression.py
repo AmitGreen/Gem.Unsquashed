@@ -76,7 +76,7 @@ def gem():
                 def display_token(t):
                     frill = t.frill
 
-                    return arrange('<%s %s %s %s %s %s>',
+                    return arrange('<%s+frill %s %s %s %s %s>',
                                    t.display_name,
                                    frill.a.display_token(),
                                    t.a    .display_token(),

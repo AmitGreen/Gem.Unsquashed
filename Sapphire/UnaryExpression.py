@@ -57,7 +57,7 @@ def gem():
 
 
                 def display_token(t):
-                    return arrange('<%s %s %s>', t.display_name, t.frill.display_token(), t.a.display_token())
+                    return arrange('<%s+frill %s %s>', t.display_name, t.frill.display_token(), t.a.display_token())
 
 
             if __debug__:
@@ -120,8 +120,15 @@ def gem():
         frill        = conjure_keyword_not('not ')
 
 
-    conjure_negative_expression = produce_conjure_unary_expression('negative', NegativeExpression)
-    conjure_not_expression      = produce_conjure_unary_expression('not',      NotExpression)
+    class StarArgument(UnaryExpression_New):
+        __slots__    = (())
+        display_name = '*-argument'
+        frill        = conjure_star_sign('*')
+
+
+    conjure_negative_expression = produce_conjure_unary_expression('negative',   NegativeExpression)
+    conjure_not_expression      = produce_conjure_unary_expression('not',        NotExpression)
+    conjure_star_argument       = produce_conjure_unary_expression('*-argument', StarArgument)
 
 
     class UnaryExpression(SapphireTrunk):
@@ -160,12 +167,6 @@ def gem():
 
 
     @share
-    class NotExpression(UnaryExpression):
-        __slots__    = (())
-        display_name = 'not'
-
-
-    @share
     class StarArgument(UnaryExpression):
         __slots__    = (())
         display_name = '*-argument'
@@ -194,4 +195,5 @@ def gem():
     share(
         'conjure_negative_expression',  conjure_negative_expression,
         'conjure_not_expression',       conjure_not_expression,
+        'conjure_star_argument',        conjure_star_argument,
     )
