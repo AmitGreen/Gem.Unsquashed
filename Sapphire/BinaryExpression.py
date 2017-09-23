@@ -216,6 +216,10 @@ def gem():
         display_name = '=='
         frill        = conjure_action_word('==', ' == ')
 
+        __repr__ = portray_with_braces
+
+        display_token = display_token__with_braces
+
 
     class CompareDifferentExpression(BinaryExpression_New):
         __slots__    = (())
@@ -236,14 +240,39 @@ def gem():
 
 
     class CompareGreaterThanExpression(BinaryExpression_New):
-        __slots__     = (())
-        display_name  = '>'
-        frill = conjure_action_word('>', ' > ')
+        __slots__    = (())
+        display_name = '>'
+        frill        = conjure_action_word('>', ' > ')
 
         __repr__ = portray_with_braces
 
         display_token = display_token__with_braces
 
+
+    class CompareGreaterThanOrEqualExpression(BinaryExpression_New):
+        __slots__    = (())
+        display_name = '>='
+        frill        = conjure_action_word('>=', ' >= ')
+
+        __repr__ = portray_with_braces
+
+        display_token = display_token__with_braces
+
+
+    class CompareIdentityExpression(BinaryExpression_New):
+        __slots__    = (())
+        display_name = 'is'
+        frill        = conjure_keyword_is(' is ')
+
+
+    class CompareNotEqualExpression(BinaryExpression_New):
+        __slots__    = (())
+        display_name = '!='
+        frill        = conjure_action_word('!=', ' != ')
+
+        __repr__ = portray_with_braces
+
+        display_token = display_token__with_braces
 
 
     conjure_add_expression     = produce_conjure_binary_expression('add',               AddExpression)
@@ -259,6 +288,15 @@ def gem():
                                        'compare-greater-than',
                                        CompareGreaterThanExpression,
                                    )
+
+    conjure_compare_greater_than_or_equal = produce_conjure_binary_expression(
+                                                'compare-greater-than-or-equal',
+                                                CompareGreaterThanOrEqualExpression,
+                                            )
+
+    conjure_compare_identity  = produce_conjure_binary_expression('compare-identity',  CompareIdentityExpression)
+    conjure_compare_not_equal = produce_conjure_binary_expression('compare-not-equal', CompareNotEqualExpression)
+
 
     class BinaryExpression(SapphireTrunk):
         __slots__ = ((
@@ -293,24 +331,6 @@ def gem():
             t.left    .write(w)
             t.operator.write(w)
             t.right   .write(w)
-
-
-    @share
-    class CompareGreaterThanOrEqualExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = '>='
-
-
-    @share
-    class CompareIdentityExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = 'is'
-
-
-    @share
-    class CompareNotEqualExpression(BinaryExpression):
-        __slots__    = (())
-        display_name = '!='
 
 
     @share
@@ -407,13 +427,13 @@ def gem():
 
     Is_Not                    .expression_meta = static_method(conjure_compare_different)
     KeywordIn                 .expression_meta = static_method(conjure_compare_contains)
-    KeywordIs                 .expression_meta = CompareIdentityExpression
+    KeywordIs                 .expression_meta = static_method(conjure_compare_identity)
     Not_In                    .expression_meta = static_method(conjure_compare_exclude)
     OperatorCompareEqual      .expression_meta = static_method(conjure_compare_equal)
-    OperatorCompareNotEqual   .expression_meta = CompareNotEqualExpression
+    OperatorCompareNotEqual   .expression_meta = static_method(conjure_compare_not_equal)
     OperatorDivide            .expression_meta = DivideExpression
     OperatorGreaterThan       .expression_meta = static_method(conjure_compare_greater_than)
-    OperatorGreaterThanOrEqual.expression_meta = CompareGreaterThanOrEqualExpression
+    OperatorGreaterThanOrEqual.expression_meta = static_method(conjure_compare_greater_than_or_equal)
     OperatorIntegerDivide     .expression_meta = IntegerDivideExpression
     OperatorLessThan          .expression_meta = LessThanExpression
     OperatorLessThanOrEqual   .expression_meta = LessThanOrEqualExpression
