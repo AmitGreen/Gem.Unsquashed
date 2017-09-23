@@ -8,10 +8,10 @@ def gem():
     require_gem('Sapphire.TripleFrill')
 
 
-    conjure_triple_frill                    = Shared.conjure_triple_frill                       #   Due to privileged
-    create_BookcaseDualExpression_WithFrill = Shared.create_BookcaseDualExpression_WithFrill    #   Due to privileged
-    lookup_adjusted_meta                    = Shared.lookup_adjusted_meta                       #   Due to privileged
-    provide_adjusted_meta                   = Shared.provide_adjusted_meta                      #   Due to privileged
+    conjure_triple_frill                     = Shared.conjure_triple_frill                      #   Due to privileged
+    conjure_BookcaseDualExpression_WithFrill = Shared.conjure_BookcaseDualExpression_WithFrill  #   Due to privileged
+    lookup_adjusted_meta                     = Shared.lookup_adjusted_meta                      #   Due to privileged
+    provide_adjusted_meta                    = Shared.provide_adjusted_meta                     #   Due to privileged
 
 
     if __debug__:
@@ -164,22 +164,13 @@ def gem():
                 if second.__class__ is Map:
                     return (
                                   second.get(b)
-                               or second.setdefault(
-                                      b,
-                                      (
-                                             lookup_adjusted_meta(Meta)
-                                          or create_BookcaseDualExpression_WithFrill(Meta)
-                                      )(a, b, frill),
-                                  )
+                               or second.setdefault(b, conjure_BookcaseDualExpression_WithFrill(Meta, a, b, frill))
                            )
 
                 if second.b is b:
                     return second
 
-                r = (
-                           lookup_adjusted_meta(Meta)
-                        or create_BookcaseDualExpression_WithFrill(Meta)
-                    )(a, b, frill)
+                r = conjure_BookcaseDualExpression_WithFrill(Meta, a, b, frill)
 
                 second[a] = (r   if second is absent else   { second.b : second, b : r })
 
@@ -189,13 +180,13 @@ def gem():
                 if first.b is b:
                     return first
 
-                r = ((lookup_adjusted_meta(Meta)) or (create_BookcaseDualExpression_WithFrill(Meta)))(a, b, frill)
+                r = conjure_BookcaseDualExpression_WithFrill(Meta, a, b, frill)
 
                 store(frill, { a : { first.b : first, b : r } })
 
                 return r
 
-            r = ((lookup_adjusted_meta(Meta)) or (create_BookcaseDualExpression_WithFrill(Meta)))(a, b, frill)
+            r = conjure_BookcaseDualExpression_WithFrill(Meta, a, b, frill)
 
             store(frill, (r   if first is absent else   { first.a : first, left : r }))
 

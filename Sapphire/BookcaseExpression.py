@@ -8,10 +8,10 @@ def gem():
     require_gem('Sapphire.Elemental')
 
 
-    conjure_dual_frill                  = Shared.conjure_dual_frill                     #   Due to privileged
-    create_BookcaseExpression_WithFrill = Shared.create_BookcaseExpression_WithFrill    #   Due to privileged
-    lookup_adjusted_meta                = Shared.lookup_adjusted_meta                   #   Due to privileged
-    provide_adjusted_meta               = Shared.provide_adjusted_meta                  #   Due to privileged
+    conjure_dual_frill                   = Shared.conjure_dual_frill                    #   Due to privileged
+    conjure_BookcaseExpression_WithFrill = Shared.conjure_BookcaseExpression_WithFrill  #   Due to privileged
+    lookup_adjusted_meta                 = Shared.lookup_adjusted_meta                  #   Due to privileged
+    provide_adjusted_meta                = Shared.provide_adjusted_meta                 #   Due to privileged
 
 
     if __debug__:
@@ -131,19 +131,13 @@ def gem():
             if first.__class__ is Map:
                 return (
                               first.get(a)
-                           or first.setdefault(
-                                  a,
-                                  (
-                                         lookup_adjusted_meta(Meta)
-                                      or create_BookcaseExpression_WithFrill(Meta)
-                                  )(a, frill),
-                              )
+                           or first.setdefault(a, conjure_BookcaseExpression_WithFrill(Meta, a, frill))
                        )
 
             if first.a is a:
                 return first
 
-            r = ((lookup_adjusted_meta(Meta)) or (create_BookcaseExpression_WithFrill(Meta)))(a, frill)
+            r = conjure_BookcaseExpression_WithFrill(Meta, a, frill)
 
             store(frill, (r   if first is absent else   { first.a : first, a : r }))
 

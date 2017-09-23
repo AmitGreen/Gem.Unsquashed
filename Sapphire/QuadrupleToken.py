@@ -171,10 +171,9 @@ def gem():
         return (
                    Meta(s, a, b, c, d)
                        if newlines is 1 else
-                       (
-                             lookup_adjusted_meta(Meta)
-                          or create_ActionWord_LineMarker_Many(Meta, construct_quadruple_token__line_marker__many)
-                       )(s, a, b, c, d, newlines)
+                           conjure_ActionWord_LineMarker_Many(
+                               Meta, construct_quadruple_token__line_marker__many,
+                           )(s, a, b, c, d, newlines)
                )
 
 

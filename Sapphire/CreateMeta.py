@@ -30,99 +30,104 @@ def gem():
 
 
     @share
-    def create_ActionWord_LineMarker_Many(Meta, constructor):
+    def conjure_ActionWord_LineMarker_Many(Meta, constructor):
         assert Meta.__name__.endswith('_1')
-        assert lookup_adjusted_meta(Meta) is none
+
+        Actionword_LineMarker_Many = lookup_adjusted_meta(Meta)
+
+        if Actionword_LineMarker_Many is none:
+            class Actionword_LineMarker_Many(Meta):
+                __slots__ = ((
+                    'newlines',                                 #   Integer > 1
+                ))
+
+                __init__ = constructor
 
 
-        class Actionword_LineMarker_Many(Meta):
-            __slots__ = ((
-                'newlines',                                 #   Integer > 1
-            ))
+            if __debug__:
+                Actionword_LineMarker_Many.__name__ = intern_arrange('%s_Many', Meta.__name__[:-2])
 
-            __init__ = constructor
+            provide_adjusted_meta(Meta, Actionword_LineMarker_Many)
 
-
-        if __debug__:
-            Actionword_LineMarker_Many.__name__ = intern_arrange('%s_Many', Meta.__name__[:-2])
-
-        return provide_adjusted_meta(Meta, Actionword_LineMarker_Many)
-
-
-    @share
-    def create_BookcaseDualExpression_WithFrill(Meta):
-        assert lookup_adjusted_meta(Meta) is none
-
-
-        class BookcaseDualExpression_WithFrill(Meta):
-            __slots__ = ((
-                'frill',                #   TripleFrill
-            ))
-
-
-            def __init__(t, a, b, frill):
-                t.a     = a
-                t.b     = b
-                t.frill = frill
-
-
-            def __repr__(t):
-                return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.frill)
-
-
-            def display_token(t):
-                frill = t.frill
-
-                return arrange('<%s %s %s %s %s %s>',
-                               t.display_name,
-                               frill.a.display_token(),
-                               t.a    .display_token(),
-                               frill.b.display_token(),
-                               t.b    .display_token(),
-                               frill.c.display_token())
-
-
-        if __debug__:
-            BookcaseDualExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
-
-
-        return provide_adjusted_meta(Meta, BookcaseDualExpression_WithFrill)
+        return Actionword_LineMarker_Many
 
 
     @share
-    def create_BookcaseExpression_WithFrill(Meta):
-        assert lookup_adjusted_meta(Meta) is none
+    def conjure_BookcaseDualExpression_WithFrill(Meta, a, b, frill):
+        BookcaseDualExpression_WithFrill = lookup_adjusted_meta(Meta)
+
+        if BookcaseDualExpression_WithFrill is none:
+            class BookcaseDualExpression_WithFrill(Meta):
+                __slots__ = ((
+                    'frill',                #   TripleFrill
+                ))
 
 
-        class BookcaseExpression_WithFrill(Meta):
-            __slots__ = ((
-                'frill',                #   DualFrill
-            ))
+                def __init__(t, a, b, frill):
+                    t.a     = a
+                    t.b     = b
+                    t.frill = frill
 
 
-            def __init__(t, a, frill):
-                t.a     = a
-                t.frill = frill
-
-            def __repr__(t):
-                return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.frill)
+                def __repr__(t):
+                    return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.frill)
 
 
-            def display_token(t):
-                frill = t.frill
+                def display_token(t):
+                    frill = t.frill
 
-                return arrange('<%s %s %s %s>',
-                               t.display_name,
-                               frill.a.display_token(),
-                               t.a    .display_token(),
-                               frill.b.display_token())
-
-
-        if __debug__:
-            BookcaseExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
+                    return arrange('<%s %s %s %s %s %s>',
+                                   t.display_name,
+                                   frill.a.display_token(),
+                                   t.a    .display_token(),
+                                   frill.b.display_token(),
+                                   t.b    .display_token(),
+                                   frill.c.display_token())
 
 
-        return provide_adjusted_meta(Meta, BookcaseExpression_WithFrill)
+            if __debug__:
+                BookcaseDualExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
+
+            provide_adjusted_meta(Meta, BookcaseDualExpression_WithFrill)
+
+        return BookcaseDualExpression_WithFrill(a, b, frill)
+
+
+    @share
+    def conjure_BookcaseExpression_WithFrill(Meta, a, frill):
+        BookcaseExpression_WithFrill = lookup_adjusted_meta(Meta)
+
+        if BookcaseExpression_WithFrill is none:
+            class BookcaseExpression_WithFrill(Meta):
+                __slots__ = ((
+                    'frill',                #   DualFrill
+                ))
+
+
+                def __init__(t, a, frill):
+                    t.a     = a
+                    t.frill = frill
+
+                def __repr__(t):
+                    return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.frill)
+
+
+                def display_token(t):
+                    frill = t.frill
+
+                    return arrange('<%s %s %s %s>',
+                                   t.display_name,
+                                   frill.a.display_token(),
+                                   t.a    .display_token(),
+                                   frill.b.display_token())
+
+
+            if __debug__:
+                BookcaseExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
+
+            provide_adjusted_meta(Meta, BookcaseExpression_WithFrill)
+
+        return BookcaseExpression_WithFrill(a, frill)
 
 
     @share
