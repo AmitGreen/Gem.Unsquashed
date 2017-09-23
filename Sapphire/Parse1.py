@@ -18,6 +18,7 @@ def gem():
     require_gem('Sapphire.ExpressionMany')
     require_gem('Sapphire.LineMarker')
     require_gem('Sapphire.Match')
+    require_gem('Sapphire.MemberExpression')
     require_gem('Sapphire.Parse1Atom')
     require_gem('Sapphire.Parse1Call')
     require_gem('Sapphire.Parse1Complex')

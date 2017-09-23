@@ -3,6 +3,77 @@
 #
 @gem('Sapphire.Expression')
 def gem():
+    @privileged
+    def produce_conjure_postfix_expression(name, Meta):
+        cache   = {}
+        lookup  = cache.get
+        provide = cache.setdefault
+        store   = cache.__setitem__
+
+        meta_frill = Meta.frill
+
+
+        def conjure_binary_expression(a, frill, b):
+            if frill is meta_frill:
+                first = lookup(a, absent)
+
+                if first.__class__ is Map:
+                    return (first.get(b)) or (first.setdefault(b, Meta(a, b)))
+
+                if first.b is b:
+                    return first
+
+                r = Meta(a, b)
+
+                store(a, (r   if first is absent else   { first.b : first, b : r }))
+
+                return r
+
+            first = lookup(frill, absent)
+
+            if first.__class__ is Map:
+                second = first.get(a, absent)
+
+                if second.__class__ is Map:
+                    return (
+                                  second.get(b)
+                               or second.setdefault(b, conjure_BinaryExpression_WithFrill(Meta, a, frill, b))
+                           )
+
+                if second.b is b:
+                    return second
+
+                r = conjure_BinaryExpression_WithFrill(Meta, a, frill, b)
+
+                first[a] = (r   if second is absent else   { second.b : second, b : r })
+
+                return r
+
+            if first.a is a:
+                if first.b is b:
+                    return first
+
+                r = conjure_BinaryExpression_WithFrill(Meta, a, frill, b)
+
+                store(frill, { a : { first.b : first, b : r } })
+
+                return r
+
+            r = conjure_BinaryExpression_WithFrill(Meta, a, frill, b)
+
+            store(frill, (r   if first is absent else   { first.a : first, a : r }))
+
+            return r
+
+
+        if __debug__:
+            conjure_binary_expression.__name__ = intern_arrange('conjure_%s', name)
+
+            cache_many.append( ((name, cache)) )
+
+        return conjure_binary_expression
+
+
     class PostfixExpression(SapphireTrunk):
         __slots__ = ((
             'left',                     #   Expression
@@ -44,62 +115,3 @@ def gem():
     class MethodCallExpression(PostfixExpression):
         __slot__     = (())
         display_name = 'method-call'
-
-
-    @share
-    class MemberExpression(SapphireTrunk):
-        __slots__ = ((
-            'left',                     #   Expression
-            'postfix',                  #   DotName
-        ))
-
-
-        def __init__(t, left, postfix):
-            t.left    = left
-            t.postfix = postfix
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r>', t.__class__.__name__, t.left, t.postfix)
-
-
-        def display_token(t):
-            return arrange('<member %s %s>', t.left.display_token(), t.postfix.display_token())
-
-
-        def write(t, w):
-            t.left.write(w)
-            w(t.postfix.s)
-
-
-    SapphireTrunk   .call_expression = CallExpression
-    MemberExpression.call_expression = MethodCallExpression
-    Token           .call_expression = CallExpression
-
-
-    member_expression_cache   = {}
-    lookup_member_expression  = member_expression_cache.get
-    provide_member_expression = member_expression_cache.setdefault
-    store_member_expression   = member_expression_cache.__setitem__
-
-
-    @share
-    def conjure_member_expression(left, postfix):
-        first = lookup_member_expression(postfix, absent)
-
-        if first.__class__ is Map:
-            return (first.get(left)) or (first.setdefault(left, MemberExpression(left, postfix)))
-
-        if first.left is left:
-            return first
-
-        r = MemberExpression(left, postfix)
-
-        store_member_expression(postfix, (r   if first is absent else   { first.left : first, left : r }))
-
-        return r
-
-
-    @share
-    def dump_member_expression_cache():
-        dump_cache('member_expression_cache', member_expression_cache)
