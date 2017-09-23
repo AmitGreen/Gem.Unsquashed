@@ -42,23 +42,11 @@ def gem():
 
         r = DualFrill(a, b)
 
-        store_dual_frill(a, { first.b : first, b : r })
+        store_dual_frill(a, (r   if first is absent else   { first.b : first, b : r }))
 
         return r
 
 
     @share
     def dump_dual_frill_cache():
-        line('===  dual_frill_cache  ===')
-
-        for [k, v] in iterate_items_sorted_by_key(dual_frill_cache):
-            line('%s:', k)
-
-            if v.__class__ is Map:
-                for [k2, w2] in view_items(v):
-                    line('  %s:', k2)
-                    line('    %s', w2)
-
-                continue
-
-            line('  %s', v)
+        dump_cache('dual_frill_cache', dual_frill_cache)

@@ -58,7 +58,7 @@ SAPPHIRE_FILES = \
     ../Sapphire/ActionWord.py ../Sapphire/Atom.py \
     ../Sapphire/BinaryExpression.py ../Sapphire/BookcaseDualExpression.py ../Sapphire/BookcaseExpression.py \
     ../Sapphire/Core.py ../Sapphire/CreateMeta.py \
-    ../Sapphire/DualFrill.py ../Sapphire/DualToken.py \
+    ../Sapphire/DualFrill.py ../Sapphire/DualToken.py ../Sapphire/Dump.py \
     ../Sapphire/Elemental.py ../Sapphire/ExpressionMany.py \
     ../Sapphire/LineMarker.py \
     ../Sapphire/Main.py \
@@ -138,7 +138,7 @@ clean:
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
 	rm -f   h2p.py h2f.py h2t.py h3t.py h4t.py
-	rm -f   hat.py haw.py hb.py hcm.py hco.py hel.py hem.py .py py hk.py hkd.py hl.py
+	rm -f   hat.py haw.py hb.py hcm.py hco.py hd.py hel.py hem.py .py py hk.py hkd.py hl.py
 	rm -f   hma.py hmc.py hoe.py hpt.py hs.py htc.py htr.py hu.py hw.py hx.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
@@ -216,6 +216,7 @@ links:
 	ln -s ../Sapphire/BinaryExpression.py           hb.py
 	ln -s ../Sapphire/CreateMeta.py                 hcm.py
 	ln -s ../Sapphire/Core.py                       hco.py
+	ln -s ../Sapphire/Dump.py                       hd.py
 	ln -s ../Sapphire/Elemental.py                  hel.py
 	ln -s ../Sapphire/ExpressionMany.py             hem.py
 	ln -s ../Sapphire/BookcaseExpression.py         hk.py

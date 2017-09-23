@@ -105,15 +105,4 @@ def gem():
 
     @share
     def dump_member_expression_cache():
-        line('===  member_expression_cache  ===')
-
-        for [k, v] in iterate_items_sorted_by_key(member_expression_cache):
-            if v.__class__ is Map:
-                line('%s:', k)
-
-                for [k2, w2] in view_items(v):
-                    line('  %s: %s', k2, w2)
-
-                continue
-
-            line('%s: %s', k, v)
+        dump_cache('member_expression_cache', member_expression_cache)

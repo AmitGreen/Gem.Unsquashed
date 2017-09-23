@@ -42,6 +42,10 @@ def gem():
     require_gem('Sapphire.Whitespace')
 
 
+    if __debug__:
+        require_gem('Sapphire.Dump')
+
+
     find_parse1_colon_line = {
                                  'else'    : parse1_statement_else_colon,
                                  'except'  : parse1_statement_except_colon,
@@ -192,13 +196,7 @@ def gem():
                      length(many), (''   if length(many) is 0 else   's'))
 
                 #conjure_colon__line_marker('\n\n:\n')
+                #dump_dual_frill_cache()
                 #dump_token_caches()
                 #dump_member_expression_cache()
-                #dump_arguments_1_cache()
-                #dump_head_index_cache()
-                #dump_list_expression_1_cache()
-                #dump_map_expression_1_cache()
-                #dump_normal_index_cache()
-                #dump_parenthesized_expression_cache()
-                #dump_tail_index_cache()
-                #dump_tuple_expression_1_cache()
+                #dump_bookcase_expression_cache_many()

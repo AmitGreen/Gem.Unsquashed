@@ -99,7 +99,7 @@ def gem():
             display_name = t.display_name
 
             if display_name == t.s:
-                return display_name
+                return arrange('<%s>', display_name)
 
             a_s = t.a.s
             b_s = t.b.s

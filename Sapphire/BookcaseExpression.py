@@ -14,6 +14,10 @@ def gem():
     provide_adjusted_meta               = Shared.provide_adjusted_meta                  #   Due to privileged
 
 
+    if __debug__:
+        cache_many = []
+
+
     LP  = conjure_left_parenthesis    ('(')
     LSB = conjure_left_square_bracket ('[')
     RP  = conjure_right_parenthesis   (')')
@@ -150,53 +154,34 @@ def gem():
 
 
         if not __debug__:
-            return ((conjure_bookcase_expression, none))
+            conjure_bookcase_expression.__name__ = intern_arrange('conjure_%s', name)
+
+            cache_many.append( ((name, cache)) )
+
+        return conjure_bookcase_expression
 
 
-        conjure_bookcase_expression.__name__ = intern_arrange('conjure_%s', name)
+    conjure_arguments_1       = produce_conjure_bookcase_expression('arguments-1',       Arguments_1)
+    conjure_head_index        = produce_conjure_bookcase_expression('head-index',        HeadIndex)
+    conjure_list_expression_1 = produce_conjure_bookcase_expression('list-expression-1', ListExpression_1)
+    conjure_map_expression_1  = produce_conjure_bookcase_expression('map-expression-1',  MapExpression_1)
+    conjure_normal_index      = produce_conjure_bookcase_expression('normal-index',      NormalIndex)
+
+    conjure_parenthesized_expression = produce_conjure_bookcase_expression(
+                                           'parenthesized-expression',
+                                           ParenthesizedExpression,
+                                       )
+
+    conjure_tail_index         = produce_conjure_bookcase_expression('tail-index',         TailIndex)
+    conjure_tuple_expression_1 = produce_conjure_bookcase_expression('tuple-expression-1', TupleExpression_1)
 
 
-        def dump_bookcase_expression_cache():
-            line('===  %s_cache   ===', name)
 
-            for [k, v] in iterate_items_sorted_by_key(cache):
-                line('%s:', k.display_token())
-
-                if v.__class__ is Map:
-                    for [k2, w2] in view_items(v):
-                        line('  %s:', k2.display_token())
-                        line('    %s', w2.display_token())
-
-                    continue
-
-                line('  %s', v.display_token())
-
-
-        return ((conjure_bookcase_expression, dump_bookcase_expression_cache))
-
-
-    [conjure_arguments_1, dump_arguments_1_cache] = produce_conjure_bookcase_expression('arguments-1', Arguments_1)
-    [conjure_head_index,  dump_head_index_cache]  = produce_conjure_bookcase_expression('head-index',  HeadIndex)
-
-    [
-        conjure_list_expression_1, dump_list_expression_1_cache,
-    ] = produce_conjure_bookcase_expression('list-expression-1', ListExpression_1)
-
-    [
-        conjure_map_expression_1, dump_map_expression_1_cache,
-    ] = produce_conjure_bookcase_expression('map-expression-1', MapExpression_1)
-
-    [conjure_normal_index, dump_normal_index_cache] = produce_conjure_bookcase_expression('normal-index', NormalIndex)
-
-    [
-        conjure_parenthesized_expression, dump_parenthesized_expression_cache,
-    ] = produce_conjure_bookcase_expression('parenthesized-expression', ParenthesizedExpression)
-
-    [conjure_tail_index, dump_tail_index_cache] = produce_conjure_bookcase_expression('tail-index', TailIndex)
-
-    [
-        conjure_tuple_expression_1, dump_tuple_expression_1_cache,
-    ] = produce_conjure_bookcase_expression('tuple-expression-1', TupleExpression_1)
+    if __debug__:
+        @share
+        def dump_bookcase_expression_cache_many():
+            for [name, cache] in cache_many:
+                dump_cache(arrange('%s_cache', name), cache)
 
 
     share(
@@ -209,16 +194,3 @@ def gem():
         'conjure_tail_index',                   conjure_tail_index,
         'conjure_tuple_expression_1',           conjure_tuple_expression_1,
     )
-
-
-    if __debug__:
-        share(
-            'dump_arguments_1_cache',               dump_arguments_1_cache,
-            'dump_head_index_cache',                dump_head_index_cache,
-            'dump_list_expression_1_cache',         dump_list_expression_1_cache,
-            'dump_map_expression_1_cache',          dump_map_expression_1_cache,
-            'dump_normal_index_cache',              dump_normal_index_cache,
-            'dump_parenthesized_expression_cache',  dump_parenthesized_expression_cache,
-            'dump_tail_index_cache',                dump_tail_index_cache,
-            'dump_tuple_expression_1_cache',        dump_tuple_expression_1_cache,
-        )
