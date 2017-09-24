@@ -820,7 +820,7 @@ def gem():
     #
     if is_python_2:
         #
-        #   Python 2.0 method of loading a module with 'gem' pre-initialized
+        #   Python 2.* method of loading a module with 'gem' pre-initialized
         #
         #       This is messy -- see below for the Python 3.0 method which is much cleaner.
         #
@@ -853,9 +853,9 @@ def gem():
             #
             #   Temporarily store our module in 'python_modules[module_name]'.
             #
-            #   This is needed in python 2.0, as the way to pass the 'pre-initialized' module to 'load_module'
+            #   This is needed in python 2.*, as the way to pass the 'pre-initialized' module to 'load_module'
             #
-            #       (In the cleaner python 3.0 version below, we pass the modules directly to 'exec_module'
+            #       (In the cleaner python 3.* version below, we pass the modules directly to 'exec_module'
             #       and thus do not need to store the module in 'python_modules[module_name]').
             #
             #   NOTE:
@@ -906,11 +906,9 @@ def gem():
                 store_gem_module(module_name, 0)
 
             return module
-
-
     else:
         #
-        #   Python 3.0 method of loading a module with 'gem' pre-initialized
+        #   Python 3.* method of loading a module with 'gem' pre-initialized
         #
         PythonImportUtility          = __import__('importlib.util').util
         ImportError                  = PythonBuiltIn.ImportError
