@@ -10,12 +10,6 @@ def gem():
 
 
     #
-    #   Values
-    #
-    maximum_integer = PythonSystem.maxint
-
-
-    #
     #   Functions
     #
     python_frame = PythonSystem._getframe
@@ -57,5 +51,5 @@ def gem():
         'program_exit',     PythonSystem.exit,
         'python_frame',     PythonSystem._getframe,
         'python_version',   PythonSystem.version,
-        'slice_all',        Slice(0, maximum_integer),
+        'slice_all',        Slice(none, none),
     )

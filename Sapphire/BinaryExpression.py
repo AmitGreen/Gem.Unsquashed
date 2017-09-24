@@ -73,6 +73,15 @@ def gem():
             t.b.write(w)
 
 
+    if is_python_2:
+        @privileged
+        def method_is_function(method, f):
+            return method.im_func is f
+    else:
+        def method_is_function(method, f):
+            return method is f
+
+
     @privileged
     def conjure_BinaryExpression_WithFrill(Meta, a, frill, b):
         BinaryExpression_WithFrill = lookup_adjusted_meta(Meta)
@@ -91,14 +100,15 @@ def gem():
 
 
                 __repr__ = (
-                               portray_frill_with_braces   if Meta.__repr__.im_func is portray_with_braces else
-                               portray_frill
+                               portray_frill_with_braces
+                                   if method_is_function(Meta.__repr__, portray_with_braces) else
+                                       portray_frill
                            )
 
 
                 display_token = (
                                     display_token__frill_with_braces
-                                        if Meta.display_token.im_func is display_token__with_braces else
+                                        if method_is_function(Meta.display_token, display_token__with_braces) else
                                             display_token__frill
                                 )
 
