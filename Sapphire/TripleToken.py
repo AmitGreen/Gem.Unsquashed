@@ -108,49 +108,6 @@ def gem():
                            (portray_string(c_s)   if '\n' in c_s else   c_s))
 
 
-    class AllIndex(BaseTripleOperator):
-        __slots__           = (())
-        display_name        = '[:]'
-        is_all_index        = true
-        is_postfix_operator = true
-
-
-    class DotNameTriplet(BaseTripleOperator):
-        __slots__           = (())
-        #   [
-        display_name        = '.name-triplet'
-        is_postfix_operator = true
-
-
-    class RightParenthesis_Colon_LineMarker_1(BaseTripleOperator):
-        __slots__                                  = (())
-        display_name                               = r'):\n'
-        ends_in_newline                            = true
-        is__any__right_parenthesis__colon__newline = true
-        is__right_parenthesis__colon__newline      = true
-        line_marker                                = true
-        newlines                                   = 1
-
-
-        __init__       = construct_triple_operator__line_marker_1
-        count_newlines = count_newlines__line_marker
-
-
-    class Whitespace_Atom_Whitespace(BaseTripleOperator):
-        __slots__                      = (())
-        display_name                   = 'whitespace+atom+whitespace'
-        is__atom__or__special_operator = true
-        is_atom                        = true
-
-
-    class Whitespace_Name_Whitespace(BaseTripleOperator):
-        __slots__                      = (())
-        display_name                   = 'whitespace+name+whitespace'
-        is__atom__or__special_operator = true
-        is_atom                        = true
-        is_identifier                  = true
-
-
     def create_triple_token__with_newlines(Meta, s, a, b, c):
         assert s == a.s + b.s + c.s
 
@@ -294,6 +251,49 @@ def gem():
 
 
         return evoke_triple_token
+
+
+    class AllIndex(BaseTripleOperator):
+        __slots__           = (())
+        display_name        = '[:]'
+        is_all_index        = true
+        is_postfix_operator = true
+
+
+    class DotNameTriplet(BaseTripleOperator):
+        __slots__           = (())
+        #   [
+        display_name        = '.name-triplet'
+        is_postfix_operator = true
+
+
+    class RightParenthesis_Colon_LineMarker_1(BaseTripleOperator):
+        __slots__                                  = (())
+        display_name                               = r'):\n'
+        ends_in_newline                            = true
+        is__any__right_parenthesis__colon__newline = true
+        is__right_parenthesis__colon__newline      = true
+        line_marker                                = true
+        newlines                                   = 1
+
+
+        __init__       = construct_triple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
+
+
+    class Whitespace_Atom_Whitespace(BaseTripleOperator):
+        __slots__                      = (())
+        display_name                   = 'whitespace+atom+whitespace'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+
+
+    class Whitespace_Name_Whitespace(BaseTripleOperator):
+        __slots__                      = (())
+        display_name                   = 'whitespace+name+whitespace'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+        is_identifier                  = true
 
 
     conjure_all_index        = produce_conjure_triple_token('all_index',     AllIndex)

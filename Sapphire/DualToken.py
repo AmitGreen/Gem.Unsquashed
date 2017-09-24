@@ -7,13 +7,14 @@ def gem():
     require_gem('Sapphire.Whitespace')
 
 
-    lookup_adjusted_meta = Shared.lookup_adjusted_meta               #   Due to privileged
-    lookup_line_marker   = Shared.lookup_line_marker                 #   Due to privileged
-    lookup_normal_token  = Shared.lookup_normal_token                #   Due to privileged
-    provide_line_marker  = Shared.provide_line_marker                #   Due to privileged
-    provide_normal_token = Shared.provide_normal_token               #   Due to privileged
-    qi                   = Shared.qi                                 #   Due to privileged
-    qs                   = Shared.qs                                 #   Due to privileged
+    conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged
+    lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   Due to privileged
+    lookup_line_marker   = Shared.lookup_line_marker        #   Due to privileged
+    lookup_normal_token  = Shared.lookup_normal_token       #   Due to privileged
+    provide_line_marker  = Shared.provide_line_marker       #   Due to privileged
+    provide_normal_token = Shared.provide_normal_token      #   Due to privileged
+    qi                   = Shared.qi                        #   Due to privileged
+    qs                   = Shared.qs                        #   Due to privileged
 
 
     def construct_dual_token(t, s, a, b):
@@ -107,6 +108,181 @@ def gem():
                            display_name,
                            portray_string(a_s)   if '\n' in a_s else   a_s,
                            portray_string(b_s)   if '\n' in b_s else   b_s)
+
+
+    def create_dual_token__with_newlines(Meta, s, a, b):
+        assert s == a.s + b.s
+
+        newlines = s.count('\n')
+
+        return (
+                   Meta(s, a, b)
+                       if newlines is 0 else
+                           conjure_ActionWord_WithNewlines(
+                                Meta, construct_dual_token__with_newlines,
+                           )(s, a, b, s[-1] == '\n', newlines)
+               )
+
+
+    def create_dual_token__line_marker(Meta, s, a, b):
+        assert (s == a.s + b.s) and (s[-1] == '\n')
+
+        newlines = s.count('\n')
+
+        return (
+                   Meta(s, a, b)
+                       if newlines is 1 else
+                           conjure_ActionWord_LineMarker_Many(
+                                Meta, construct_dual_token__line_marker__many
+                           )(s, a, b, newlines)
+               )
+
+
+    @privileged
+    def produce_conjure_dual_token(
+            name, Meta,
+            
+            lookup      = lookup_normal_token,
+            provide     = provide_normal_token,
+            line_marker = false
+    ):
+        if line_marker:
+            assert (lookup is lookup_normal_token) and (provide is provide_normal_token)
+
+            create_dual_token = create_dual_token__line_marker
+            lookup            = lookup_line_marker
+            provide           = provide_line_marker
+        else:
+            create_dual_token = create_dual_token__with_newlines
+
+
+        def conjure_dual_token(a, b):
+            s = a.s + b.s
+
+            r = lookup(s)
+
+            if r is not none:
+                if not ((r.a is a) and (r.b is b)):
+                    my_line('s: %r; a: %r; b: %r; r: %r; T1: %r; T2: %r', s, a, b, r, r.a is a, r.b is b)
+
+                assert (r.a is a) and (r.b is b)
+
+                return r
+
+            s = intern_string(s)
+
+            return provide(s, create_dual_token__with_newlines(Meta, s, a, b))
+
+
+        if __debug__:
+            conjure_dual_token.__name__ = intern_arrange('conjure_%s', name)
+
+        return conjure_dual_token
+
+
+    @privileged
+    def produce_evoke_dual_token(
+            name, Meta, conjure_first,
+            
+            conjure_second                  = absent,
+            conjure_second__ends_in_newline = absent,
+            lookup                          = lookup_normal_token,
+            provide                         = provide_normal_token,
+            line_marker                     = false,
+    ):
+        assert type(line_marker) is Boolean
+
+        if line_marker:
+            assert (conjure_second is conjure_second__ends_in_newline is absent)
+            assert (lookup is lookup_normal_token) and (provide is provide_normal_token)
+        else:
+            assert conjure_second is not absent
+
+        if line_marker:
+            def evoke_dual_token(a_end):
+                assert qi() < a_end
+
+                full_s = qs()[qi() : ]
+
+                r = lookup_line_marker(full_s)
+               
+                if r is not none:
+                    assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
+
+                    return r
+
+                s      = qs()
+                full_s = intern_string(full_s)
+
+                return provide_line_marker(
+                           full_s,
+                           create_dual_token__line_marker(
+                               Meta,
+                               full_s,
+                               conjure_first      (s[qi()  : a_end]),
+                               conjure_line_marker(s[a_end :      ]),
+                           ),
+                       )
+        elif conjure_second__ends_in_newline is absent:
+            def evoke_dual_token(middle, end):
+                assert qi() < middle < end
+
+                full = qs()[qi() : end]
+
+                r = lookup(full)
+               
+                if r is not none:
+                    assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
+
+                    return r
+
+                full = intern_string(full)
+                s    = qs()
+
+                return provide(
+                           full,
+                           create_dual_token__with_newlines(
+                               Meta,
+                               full,
+                               conjure_first (s[qi()   : middle]),
+                               conjure_second(s[middle : end   ]),
+                           ),
+                       )
+        else:
+            def evoke_dual_token(middle, end):
+                if end is none:
+                    assert qi() < middle
+                else:
+                    assert qi() < middle < end
+
+                full = qs()[qi() : end]
+
+                r = lookup(full)
+               
+                if r is not none:
+                    assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
+
+                    return r
+
+                full = intern_string(full)
+                s    = qs()
+
+                return provide(
+                           full,
+                           create_dual_token__with_newlines(
+                               Meta,
+                               full,
+                               conjure_first(s[qi() : middle]),
+                               (conjure_second__ends_in_newline   if end is none else   conjure_second)(s[middle : end]),
+                           ),
+                       )
+
+
+        if __debug__:
+            evoke_dual_token.__name__ = intern_arrange('evoke_%s', name)
+
+
+        return evoke_dual_token
 
 
     class Arguments_0(BaseDualOperator):
@@ -262,6 +438,18 @@ def gem():
         is_end_of_unary_expression       = true
 
 
+    class KeywordPass_LineMarker_1(BaseDualOperator):
+        __slots__       = (())
+        display_name    = r'pass\n'
+        ends_in_newline = true
+        line_marker     = true
+        newlines        = 1
+
+
+        __init__       = construct_dual_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
+
+
     class KeywordReturn_LineMarker_1(BaseDualOperator):
         __slots__       = (())
         display_name    = r'return\n'
@@ -315,181 +503,6 @@ def gem():
         count_newlines = count_newlines__line_marker
 
 
-    def create_dual_token__with_newlines(Meta, s, a, b):
-        assert s == a.s + b.s
-
-        newlines = s.count('\n')
-
-        return (
-                   Meta(s, a, b)
-                       if newlines is 0 else
-                           conjure_ActionWord_WithNewlines(
-                                Meta, construct_dual_token__with_newlines,
-                           )(s, a, b, s[-1] == '\n', newlines)
-               )
-
-
-    def create_dual_token__line_marker(Meta, s, a, b):
-        assert (s == a.s + b.s) and (s[-1] == '\n')
-
-        newlines = s.count('\n')
-
-        return (
-                   Meta(s, a, b)
-                       if newlines is 1 else
-                           conjure_ActionWord_LineMarker_Many(
-                                Meta, construct_dual_token__line_marker__many
-                           )(s, a, b, newlines)
-               )
-
-
-    @privileged
-    def produce_conjure_dual_token(
-            name, Meta,
-            
-            lookup  = lookup_normal_token,
-            provide = provide_normal_token,
-    ):
-        def conjure_dual_token(a, b):
-            s = a.s + b.s
-
-            r = lookup(s)
-
-            if r is not none:
-                if not ((r.a is a) and (r.b is b)):
-                    my_line('s: %r; a: %r; b: %r; r: %r; T1: %r; T2: %r', s, a, b, r, r.a is a, r.b is b)
-
-                assert (r.a is a) and (r.b is b)
-
-                return r
-
-            s = intern_string(s)
-
-            return provide(s, create_dual_token__with_newlines(Meta, s, a, b))
-
-
-        if __debug__:
-            conjure_dual_token.__name__ = intern_arrange('conjure_%s', name)
-
-        return conjure_dual_token
-
-
-    @privileged
-    def produce_evoke_dual_token(
-            name, Meta, conjure_first, conjure_second, conjure_second__ends_in_newline,
-            
-            lookup      = lookup_normal_token,
-            provide     = provide_normal_token,
-            line_marker = false,
-    ):
-        assert type(line_marker) is Boolean
-
-        if line_marker:
-            assert (lookup is lookup_normal_token) and (provide is provide_normal_token)
-
-            create_dual_token = create_dual_token__line_marker
-            lookup            = lookup_line_marker
-            provide           = provide_line_marker
-        else:
-            create_dual_token = create_dual_token__with_newlines
-
-
-        if conjure_second__ends_in_newline is none:
-            def evoke_dual_token(middle, end):
-                assert qi() < middle < end
-
-                full = qs()[qi() : end]
-
-                r = lookup(full)
-               
-                if r is not none:
-                    assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
-
-                    return r
-
-                full = intern_string(full)
-                s    = qs()
-
-                return provide(
-                           full,
-                           create_dual_token(
-                               Meta,
-                               full,
-                               conjure_first (s[qi()   : middle]),
-                               conjure_second(s[middle : end   ]),
-                           ),
-                       )
-        else:
-            def evoke_dual_token(middle, end):
-                if end is none:
-                    assert qi() < middle
-                else:
-                    assert qi() < middle < end
-
-                full = qs()[qi() : end]
-
-                r = lookup(full)
-               
-                if r is not none:
-                    assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
-
-                    return r
-
-                full = intern_string(full)
-                s    = qs()
-
-                return provide(
-                           full,
-                           create_dual_token(
-                               Meta,
-                               full,
-                               conjure_first(s[qi() : middle]),
-                               (conjure_second__ends_in_newline   if end is none else   conjure_second)(s[middle : end]),
-                           ),
-                       )
-
-
-        if __debug__:
-            evoke_dual_token.__name__ = intern_arrange('evoke_%s', name)
-
-
-        return evoke_dual_token
-
-
-    @privileged
-    def produce_insert_dual_token(
-            name, Meta,
-            
-            lookup      = lookup_normal_token,
-            provide     = provide_normal_token,
-            line_marker = false,
-    ):
-        assert type(line_marker) is Boolean
-
-        if line_marker:
-            assert (lookup is lookup_normal_token) and (provide is provide_normal_token)
-
-            create_dual_token = create_dual_token__line_marker
-            lookup            = lookup_line_marker
-            provide           = provide_line_marker
-        else:
-            create_dual_token = create_dual_token__with_newlines
-
-
-        def insert_dual_token(s, a, b):
-            assert (s == a.s + b.s) and (lookup(s) is none)
-
-            s = intern_string(s)
-
-            return provide(s, create_dual_token(Meta, s, a, b))
-
-
-        if __debug__:
-            insert_dual_token.__name__ = intern_arrange('insert_%s', name)
-
-        return insert_dual_token
-
-
     conjure_arguments_0 = produce_conjure_dual_token(
                               'arguments_0',
                               Arguments_0,
@@ -527,7 +540,6 @@ def gem():
                                           )
 
     conjure_not_in = produce_conjure_dual_token('not-in', Not_In)
-
 
     evoke_arguments_0 = produce_evoke_dual_token(
                             'arguments_0',
@@ -644,6 +656,22 @@ def gem():
                        conjure_keyword_in__ends_in_newline,
                    )
 
+    evoke_pass__line_marker = produce_evoke_dual_token(
+                                  'pass__line_marker',
+                                  KeywordPass_LineMarker_1,
+                                  conjure_keyword_return,
+
+                                  line_marker = true,
+                              )
+
+    evoke_return__line_marker = produce_evoke_dual_token(
+                                    'return__line_marker',
+                                    KeywordReturn_LineMarker_1,
+                                    conjure_keyword_return,
+
+                                    line_marker = true,
+                                )
+
     evoke__single_quote__whitespace = produce_evoke_dual_token(
                                           'single-quote+whitespace',
                                           Atom_Whitespace,
@@ -684,17 +712,10 @@ def gem():
                                          none,
                                      )
 
-    insert_return__line_marker = produce_insert_dual_token(
-                                    'return__line_marker',
-                                    KeywordReturn_LineMarker_1,
-
-                                    line_marker = true,
-                                 )
-
-
-    insert_yield__line_marker = produce_insert_dual_token(
+    evoke_yield__line_marker = produce_evoke_dual_token(
                                     'yield__line_marker',
                                     KeywordYield_LineMarker_1,
+                                    conjure_keyword_yield,
 
                                     line_marker = true,
                                  )
@@ -795,10 +816,11 @@ def gem():
         'evoke__left_square_bracket__colon',        evoke__left_square_bracket__colon,
         'evoke_name_whitespace',                    evoke_name_whitespace,
         'evoke_not_in',                             evoke_not_in,
+        'evoke_pass__line_marker',                  evoke_pass__line_marker,
+        'evoke_return__line_marker',                evoke_return__line_marker,
         'evoke_whitespace_name',                    evoke_whitespace_name,
+        'evoke_yield__line_marker',                 evoke_yield__line_marker,
         'find_evoke_atom_whitespace',               find_evoke_atom_whitespace,
         'find_evoke_comma_something',               find_evoke_comma_something,
         'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
-        'insert_return__line_marker',               insert_return__line_marker,
-        'insert_yield__line_marker',                insert_yield__line_marker,
     )

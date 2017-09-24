@@ -18,6 +18,10 @@ def gem():
             return arrange('<%s %s>', t.__class__.__name__, ' '.join(portray(v)   for v in t))
 
 
+        def count_newlines(t):
+            return sum(v.count_newlines()   for v in t)
+
+
         def display_token(t):
             return arrange('<many-frill %s>', ' '.join(v.display_token()   for v in t))
 

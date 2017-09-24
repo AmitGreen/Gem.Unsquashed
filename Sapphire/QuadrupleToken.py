@@ -118,38 +118,6 @@ def gem():
                            (portray_string(d_s)   if '\n' in d_s else   d_s))
 
 
-    class Comma_RightParenthesis_Colon_LineMarker_1(BaseQuadrupleOperator):
-        __slots__                                  = (())
-        display_name                               = r',):\n'
-        ends_in_newline                            = true
-        is__any__right_parenthesis__colon__newline = true
-        line_marker                                = true
-        newlines                                   = 1
-
-
-        __init__       = construct_quadruple_operator__line_marker_1
-        count_newlines = count_newlines__line_marker
-
-
-    class DotNameQuadruplet(BaseQuadrupleOperator):
-        __slots__           = (())
-        #   [
-        display_name        = '.name-quadruplet'
-        is_postfix_operator = true
-
-
-    class Parameter_0__Colon__LineMarker_1(BaseQuadrupleOperator):
-        display_name                        = r'():\n'
-        ends_in_newline                     = true
-        is__parameter_0__colon__line_marker = true
-        line_marker                         = true
-        newlines                            = 1
-
-
-        __init__       = construct_quadruple_operator__line_marker_1
-        count_newlines = count_newlines__line_marker
-
-
     def create_quadruple_token__with_newlines(Meta, s, a, b, c, d):
         assert s == a.s + b.s + c.s + d.s
 
@@ -295,6 +263,38 @@ def gem():
 
 
         return evoke_quadruple_token
+
+
+    class Comma_RightParenthesis_Colon_LineMarker_1(BaseQuadrupleOperator):
+        __slots__                                  = (())
+        display_name                               = r',):\n'
+        ends_in_newline                            = true
+        is__any__right_parenthesis__colon__newline = true
+        line_marker                                = true
+        newlines                                   = 1
+
+
+        __init__       = construct_quadruple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
+
+
+    class DotNameQuadruplet(BaseQuadrupleOperator):
+        __slots__           = (())
+        #   [
+        display_name        = '.name-quadruplet'
+        is_postfix_operator = true
+
+
+    class Parameter_0__Colon__LineMarker_1(BaseQuadrupleOperator):
+        display_name                        = r'():\n'
+        ends_in_newline                     = true
+        is__parameter_0__colon__line_marker = true
+        line_marker                         = true
+        newlines                            = 1
+
+
+        __init__       = construct_quadruple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
     conjure__comma__right_parenthesis__colon__line_marker = produce_conjure_quadruple_token(

@@ -149,7 +149,7 @@ def gem():
         if m.end('newline') is -1:
             raise_unknown_line()
 
-        return StatementPass(m.group())
+        return evoke_pass__line_marker(m.end('atom'))
 
 
     @share
@@ -214,17 +214,7 @@ def gem():
     @share
     def parse1_statement_return(m):
         if m.end('newline') is not -1:
-            atom_end = m.end('atom')
-            s        = qs()
-
-            return (
-                           lookup_line_marker(s)
-                        or insert_return__line_marker(
-                               s,
-                               conjure_keyword_return(s[         : atom_end]),
-                               conjure_line_marker   (s[atom_end :         ]),
-                           )
-                   )
+            return evoke_return__line_marker(m.end('atom'))
 
         keyword = conjure_keyword_return(m.group())
 
@@ -250,17 +240,7 @@ def gem():
     @share
     def parse1_statement_yield(m):
         if m.end('newline') is not -1:
-            atom_end = m.end('atom')
-            s        = qs()
-
-            return (
-                           lookup_line_marker(s)
-                        or insert_yield__line_marker(
-                               s,
-                               conjure_keyword_yield(s[         : atom_end]),
-                               conjure_line_marker  (s[atom_end :         ]),
-                           )
-                   )
+            return evoke_yield__line_marker(m.end('atom'))
 
         keyword = conjure_keyword_yield(m.group())
 

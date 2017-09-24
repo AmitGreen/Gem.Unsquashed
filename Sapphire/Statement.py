@@ -379,6 +379,15 @@ def gem():
                            t.__class__.__name__, t.keyword, t.condition, t.colon, t.body)
 
 
+        def count_newlines(t):
+            return (
+                         t.keyword  .count_newlines()
+                       + t.condition.count_newlines()
+                       + t.colon    .count_newlines()
+                       + t.body     .count_newlines()
+                   )
+
+
         def display_token(t):
             return arrange('<%s <%s> %s %s %s>',
                            t.display_name,
@@ -433,6 +442,14 @@ def gem():
                            t.keyword,
                            ' '.join(portray(v)   for v in t.many),
                            t.newline)
+
+
+        def count_newlines(t):
+            return (
+                         t.keyword.count_newlines()
+                       + sum(v    .count_newlines()   for v in t.many)
+                       + t.newline.count_newlines()
+                   )
 
 
         def display_token(t):
@@ -507,6 +524,10 @@ def gem():
             return arrange('<ElseStatement %r %r>', t.keyword_colon, t.body)
 
 
+        def count_newlines(t):
+            return t.keyword_colon.count_newlines() + t.body.count_newlines()
+
+
         def display_token(t):
             return arrange('<else-statement <%s> %s>',
                            t.keyword_colon.s,
@@ -569,6 +590,10 @@ def gem():
             return arrange('<FromAsFragment %s %s %s>', t.left_name, t.keyword_as, t.right_name)
 
 
+        def count_newlines(t):
+            return t.left_name.count_newlines() + t.keyword_as.count_newlines() + t.right_name.count_newlines()
+
+
         def display_token(t):
             return arrange('<as %s <%s> %s>',
                            t.left_name .display_token(),
@@ -593,6 +618,13 @@ def gem():
             t.indented = indented
             t.comment  = comment
             t.newline  = newline
+
+
+        def count_newlines(t):
+            assert (t.indented.count('\n') is t.comment.count('\n') is 0)
+            assert (t.newline.count('\n') is 1) and (t.newline[-1] == '\n')
+
+            return 1
 
 
         def __repr__(t):
@@ -631,6 +663,16 @@ def gem():
             return arrange('<%s %r %r %r %r %r>',
                            t.__class__.__name__,
                            t.keyword, t.left, t.middle, t.right, t.colon_newline)
+
+
+        def count_newlines(t):
+            return (
+                         t.keyword      .count_newlines()
+                       + t.left         .count_newlines()
+                       + t.middle       .count_newlines()
+                       + t.right        .count_newlines()
+                       + t.colon_newline.count_newlines()
+                   )
 
 
         def display_token(t):
@@ -888,6 +930,18 @@ def gem():
                            t.keyword, t.left, t.comma_1, t.middle, comma_2, t.right, t.newline)
 
 
+        def count_newlines(t):
+            return (
+                         t.keyword .count_newlines()
+                       + t.left    .count_newlines()
+                       + t.comma_1 .count_newlines()
+                       + t.middle  .count_newlines()
+                       + t.comma_2 .count_newlines()
+                       + t.right   .count_newlines()
+                       + t.newline .count_newlines()
+                   )
+
+
         def display_token(t):
             return arrange('<raise-3 %s %s %s %s %s %s %s>',
                            t.keyword.display_token(),
@@ -914,7 +968,7 @@ def gem():
         __slot__ = ((
             'indented',                 #   String+
             'expression',               #   Expression
-            'newline',                  #   String+
+            'newline',                  #   NewlineToken
         ))
 
 
@@ -926,6 +980,12 @@ def gem():
 
         def __repr__(t):
             return arrange('<StatementExpression %r %r %r>', t.indented, t.expression, t.newline)
+
+
+        def count_newlines(t):
+            assert '\n' not in t.indented
+
+            return t.expression.count_newlines() + t.newline.count_newlines()
 
 
         def display_token(t):
@@ -1013,6 +1073,10 @@ def gem():
             return arrange('<StatementImport %r %r %r>', t.keyword_import, t.module, t.newline)
 
 
+        def count_newlines(t):
+            return t.keyword_import.count_newlines() + t.module.count_newlines() + t.newline.count_newlines()
+
+
         def display_token(t):
             return arrange('<import %s %s %s>',
                            t.keyword_import.display_token(),
@@ -1062,13 +1126,6 @@ def gem():
                     v.write(w)
 
             w(t.newline.s)
-
-
-    @share
-    class StatementPass(Token):
-        __slots__    = (())
-        display_name = 'pass'
-        keyword      = 'pass'
 
 
     @share
