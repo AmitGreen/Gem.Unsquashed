@@ -614,7 +614,8 @@ def gem():
         if not operator.is_arithmetic_operator:
             raise_unknown_line()
 
-        many = [left, add_operator, right, operator]
+        many       = [left, right]
+        many_frill = [add_operator, operator]
 
         while 7 is 7:
             many.append(parse1_multiply_expression())
@@ -623,24 +624,25 @@ def gem():
 
             if operator is none:
                 if qn() is not none:
-                    return ArithmeticExpression_Many(Tuple(many))
+                    break
 
                 operator = tokenize_operator()
 
                 if operator.is_end_of_arithmetic_expression:
                     wk(operator)
-
-                    return ArithmeticExpression_Many(Tuple(many))
+                    break
             else:
                 if operator.is_end_of_arithmetic_expression:
-                    return ArithmeticExpression_Many(Tuple(many))
+                    break
 
                 wk(none)
 
             if not operator.is_arithmetic_operator:
                 raise_unknown_line()
 
-            many.append(operator)
+            many_frill.append(operator)
+
+        return conjure_arithmetic_expression_many(many, many_frill)
 
 
     def parse1_arithmetic_expression():
