@@ -250,7 +250,17 @@ def gem():
     @share
     def parse1_statement_yield(m):
         if m.end('newline') is not -1:
-            raise_unknown_line()
+            atom_end = m.end('atom')
+            s        = qs()
+
+            return (
+                           lookup_line_marker(s)
+                        or insert_yield__line_marker(
+                               s,
+                               conjure_keyword_yield(s[         : atom_end]),
+                               conjure_line_marker  (s[atom_end :         ]),
+                           )
+                   )
 
         keyword = conjure_keyword_yield(m.group())
 

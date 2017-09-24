@@ -302,6 +302,17 @@ def gem():
         is_identifier                  = true
 
 
+    class KeywordYield_LineMarker_1(BaseDualOperator):
+        __slots__       = (())
+        display_name    = r'yield\n'
+        ends_in_newline = true
+        line_marker     = true
+        newlines        = 1
+
+
+        __init__ = construct_dual_operator__line_marker_1
+
+
     def create_dual_token__with_newlines(Meta, s, a, b):
         assert s == a.s + b.s
 
@@ -679,6 +690,14 @@ def gem():
                                  )
 
 
+    insert_yield__line_marker = produce_insert_dual_token(
+                                    'yield__line_marker',
+                                    KeywordYield_LineMarker_1,
+
+                                    line_marker = true,
+                                 )
+
+
     find_evoke_comma_something = {
                                      #   (
                                      ')' : evoke__comma__right_parenthesis,
@@ -779,4 +798,5 @@ def gem():
         'find_evoke_comma_something',               find_evoke_comma_something,
         'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
         'insert_return__line_marker',               insert_return__line_marker,
+        'insert_yield__line_marker',                insert_yield__line_marker,
     )
