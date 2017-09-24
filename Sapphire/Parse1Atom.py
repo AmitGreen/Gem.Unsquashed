@@ -283,7 +283,8 @@ def gem():
                        conjure__comma__right_square_bracket(operator_2, middle_3),
                    )
 
-        many = [left_square_bracket, middle_1, operator_1, middle_2, operator_2]
+        many       = [middle_1, middle_2]
+        many_frill = [operator_1, operator_2]
 
         while 7 is 7:
             operator_7 = tokenize_operator()
@@ -297,8 +298,7 @@ def gem():
             many.append(middle_3)
 
             if operator_7.is__optional_comma__right_square_bracket:
-                many.append(operator_7)
-                return ListExpression_Many(Tuple(many))
+                return conjure_list_expression_many(left_square_bracket, many, many_frill, operator_7)
 
             if not operator_7.is_comma:
                 raise_unknown_line()
@@ -306,10 +306,14 @@ def gem():
             middle_3 = parse1_atom()
 
             if middle_3.is_right_square_bracket:
-                many.append(conjure__comma__right_square_bracket(operator_7, middle_3))
-                return ListExpression_Many(Tuple(many))
+                return conjure_list_expression_many(
+                           left_square_bracket,
+                           many,
+                           many_frill,
+                           conjure__comma__right_square_bracket(operator_7, middle_3),
+                       )
 
-            many.append(operator_7)
+            many_frill.append(operator_7)
 
 
     @share
