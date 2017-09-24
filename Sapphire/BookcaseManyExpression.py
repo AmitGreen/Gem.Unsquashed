@@ -154,10 +154,18 @@ def gem():
         display_name = '(*):'
 
 
-    conjure_arguments_many       = produce_conjure_bookcase_many_expression('arguments-many',       Arguments_Many)
-    conjure_list_expression_many = produce_conjure_bookcase_many_expression('list-expression-many', ListExpression_Many)
-    conjure_map_expression_many  = produce_conjure_bookcase_many_expression('map-expression-many',  MapExpression_Many)
-    conjure_parameter_colon_many = produce_conjure_bookcase_many_expression('parameter-colon-many', ParameterColon_Many)
+    class TupleExpression_Many(BookcaseManyExpression):
+        __slots__                      = (())
+        display_name                   = '{,*,}'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+
+
+    conjure_arguments_many        = produce_conjure_bookcase_many_expression('arguments-many',        Arguments_Many)
+    conjure_list_expression_many  = produce_conjure_bookcase_many_expression('list-expression-many',  ListExpression_Many)
+    conjure_map_expression_many   = produce_conjure_bookcase_many_expression('map-expression-many',   MapExpression_Many)
+    conjure_parameter_colon_many  = produce_conjure_bookcase_many_expression('parameter-colon-many',  ParameterColon_Many)
+    conjure_tuple_expression_many = produce_conjure_bookcase_many_expression('tuple-expression-many', TupleExpression_Many)
 
 
     if __debug__:
@@ -172,4 +180,5 @@ def gem():
         'conjure_list_expression_many',     conjure_list_expression_many,
         'conjure_map_expression_many',      conjure_map_expression_many,
         'conjure_parameter_colon_many',     conjure_parameter_colon_many,
+        'conjure_tuple_expression_many',    conjure_tuple_expression_many,
     )

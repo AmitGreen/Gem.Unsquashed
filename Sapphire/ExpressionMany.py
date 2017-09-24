@@ -88,24 +88,3 @@ def gem():
     class OrExpression_Many(BaseExpression_Many):
         __slots__    = (())
         display_name = 'or-*'
-
-
-    @share
-    class TupleExpression_Many(BaseExpression_Many):
-        __slots__ = (())
-
-
-        is__atom__or__special_operator = true
-        is_atom                        = true
-
-
-        def display_token(t):
-            many = t.many
-
-            if (many[0].s == '(') and (many[-1].s == ')'):
-                return arrange('({,*} %s)', ' '.join(v.display_token()   for v in t.many[1:-1]))
-
-            return arrange('({,*} %s %s %s)',
-                           t.many[0] .display_full_token(),
-                           ' '.join(v.display_token()   for v in t.many[1:-1]),
-                           t.many[-1].display_full_token())
