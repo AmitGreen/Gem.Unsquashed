@@ -55,12 +55,6 @@ def gem():
 
 
     @share
-    class LogicalOrExpression_Many(BaseExpression_Many):
-        __slots__    = (())
-        display_name = '|-*'
-
-
-    @share
     class MultiplyExpression_Many(BaseExpression_Many):
         __slots__    = (())
         display_name = 'multiply-*'

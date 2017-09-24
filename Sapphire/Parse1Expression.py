@@ -910,7 +910,8 @@ def gem():
         if not operator.is_logical_or_operator:
             raise_unknown_line()
 
-        many = [left, logical_or_operator, right, operator]
+        many       = [left, right]
+        many_frill = [logical_or_operator, operator]
 
         while 7 is 7:
             many.append(parse1_logical_and_expression())
@@ -919,24 +920,25 @@ def gem():
 
             if operator is none:
                 if qn() is not none:
-                    return LogicalOrExpression_Many(Tuple(many))
+                    break
 
                 operator = tokenize_operator()
 
                 if operator.is_end_of_logical_or_expression:
                     wk(operator)
-
-                    return LogicalOrExpression_Many(Tuple(many))
+                    break
             else:
                 if operator.is_end_of_logical_or_expression:
-                    return LogicalOrExpression_Many(Tuple(many))
+                    break
 
                 wk(none)
 
             if not operator.is_logical_or_operator:
                 raise_unknown_line()
 
-            many.append(operator)
+            many_frill.append(operator)
+
+        return conjure_logical_or_expression_many(many, many_frill)
 
 
     @share
