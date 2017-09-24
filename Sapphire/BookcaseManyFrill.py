@@ -3,6 +3,12 @@
 #
 @gem('Sapphire.BookcaseManyFrill')
 def gem():
+    #
+    #   NOTE:
+    #       This is pretty similiar to 'TripleFrill', but the code is clearer with making
+    #       this is a seperate class and using .begin, .many & .end for the members
+    #       (instead of .a, .b, & .c as in TripleFrill)
+    #
     class BookcaseManyFrill(Object):
         __slots__ = ((
             'begin',                    #   Token+
@@ -32,6 +38,11 @@ def gem():
     store  = cache.__setitem__
 
 
+    #
+    #   NOTE:
+    #       The order of the keys for map lookup is: many, begin, end
+    #       (instead of the more normal order: begin, many, end)
+    #
     @share
     def conjure_bookcase_many_frill(begin, list, end):
         many = conjure_many_frill(list)

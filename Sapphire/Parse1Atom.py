@@ -76,18 +76,15 @@ def gem():
         if not operator.is_comma:
             raise_unknown_line()
 
-        many = [left_brace, left]
+        token = parse1_map_element()
+
+        if token.is_right_brace:
+            return conjure_map_expression_1(left_brace, left, conjure__comma__right_brace(operator, token))
+
+        many       = [left, token]
+        many_frill = [operator]
 
         while 7 is 7:
-            token = parse1_map_element()
-
-            if token.is_right_brace:
-                many.append(conjure__comma__right_brace(operator, token))
-                return MapExpression_Many(Tuple(many))
-
-            many.append(operator)
-            many.append(token)
-
             operator = qk()
 
             if operator is none:
@@ -96,11 +93,23 @@ def gem():
             wk(none)
 
             if operator.is_right_brace:
-                many.append(operator)
-                return MapExpression_Many(Tuple(many))
+                return conjure_map_expression_many(left_brace, many, many_frill, operator)
 
             if not operator.is_comma:
                 raise_unknown_line()
+
+            token = parse1_map_element()
+
+            if token.is_right_brace:
+                return conjure_map_expression_many(
+                           left_brace,
+                           many,
+                           many_frill,
+                           conjure__comma__right_brace(operator, token),
+                       )
+
+            many_frill.append(operator)
+            many.append(token)
 
 
     @share

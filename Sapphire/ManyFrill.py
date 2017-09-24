@@ -32,6 +32,11 @@ def gem():
     def conjure_many_frill(many):
         total = length(many)
 
+        if total is 1:
+            assert many[0].frill_estimate is 1
+
+            return many[0]
+
         if total is 2:
             return conjure_dual_frill(many[0], many[1])
 

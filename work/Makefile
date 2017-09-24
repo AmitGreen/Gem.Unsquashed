@@ -62,7 +62,7 @@ SAPPHIRE_FILES = \
     ../Sapphire/DualFrill.py ../Sapphire/DualToken.py ../Sapphire/Dump.py \
     ../Sapphire/Elemental.py ../Sapphire/ExpressionMany.py \
     ../Sapphire/LineMarker.py \
-    ../Sapphire/Main.py ../Sapphire/ManyExpression.py ../Sapphire/ManyFrill.py ../Sapphire/MemberExpression.py \
+    ../Sapphire/Main.py ../Sapphire/ManyFrill.py ../Sapphire/MemberExpression.py \
     ../Sapphire/Parse1.py ../Sapphire/Parse1Atom.py ../Sapphire/Tokenize1Header.py ../Sapphire/Parse1Call.py \
         ../Sapphire/Parse1Complex.py ../Sapphire/Parse1Expression.py ../Sapphire/Parse1ExpressionStatement.py \
         ../Sapphire/Parse1From.py ../Sapphire/Parse1Function.py ../Sapphire/Parse1Import.py \
@@ -74,7 +74,7 @@ SAPPHIRE_FILES = \
     ../Sapphire/Statement.py \
     ../Sapphire/TernaryExpression.py ../Sapphire/TokenCache.py \
       ../Sapphire/Tokenize1Atom.py ../Sapphire/Tokenize1Name.py ../Sapphire/Tokenize1Operator.py \
-      ../Sapphire/Tree.py ../Sapphire/TripleFrill.py ../Sapphire/TripleToken.py \
+      ../Sapphire/Tree.py ../Sapphire/TripleFrill.py ../Sapphire/TripleToken.py ../Sapphire/TupleOfExpression.py \
     ../Sapphire/UnaryExpression.py \
     ../Sapphire/Whitespace.py
     #
@@ -139,7 +139,7 @@ clean:
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
 	rm -f   h2f.py h2p.py h3e.py h3f.py h2t.py h3t.py h4t.py
 	rm -f   hat.py haw.py hb.py hcm.py hco.py hd.py hel.py hem.py .py py hk.py hkd.py hkf.py hkm.py hl.py
-	rm -f   hma.py hmc.py hme.py hmf.py hpt.py hs.py htc.py htr.py hu.py hw.py hx.py hy.py
+	rm -f   hma.py hmc.py hme.py hmf.py hpt.py hs.py htc.py hto.py htr.py hu.py hw.py hx.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
@@ -233,11 +233,11 @@ links:
 	ln -s ../Sapphire/Pattern.py                    hpt.py
 	ln -s ../Sapphire/Statement.py                  hs.py
 	ln -s ../Sapphire/TokenCache.py                 htc.py
+	ln -s ../Sapphire/TupleOfExpression.py          hto.py
 	ln -s ../Sapphire/Tree.py                       htr.py
 	ln -s ../Sapphire/UnaryExpression.py            hu.py
 	ln -s ../Sapphire/Whitespace.py                 hw.py
 	ln -s ../Sapphire/PostfixExpression.py          hx.py
-	ln -s ../Sapphire/ManyExpression.py             hy.py
 	ln -s ../Gem/__init__.py                        in.py
 	ln -s ../Gem/Import.py                          im.py
 	ln -s ../Ivory/Main.py                          iv.py

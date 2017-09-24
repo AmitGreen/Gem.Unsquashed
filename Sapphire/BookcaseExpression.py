@@ -152,7 +152,7 @@ def gem():
 
     class MapExpression_1(BookcaseExpression):
         __slots__                      = (())
-        display_name                   = '{1}'
+        display_name                   = '{:1:}'
         frill                          = conjure_dual_frill(conjure_left_brace ('{'), conjure_right_brace('}'))
         is__atom__or__special_operator = true
         is_atom                        = true

@@ -4,11 +4,11 @@
 @gem('Sapphire.BookcaseManyExpression')
 def gem():
     require_gem('Sapphire.BookcaseManyFrill')
-    require_gem('Sapphire.ManyExpression')
+    require_gem('Sapphire.TupleOfExpression')
 
 
     conjure_bookcase_many_frill = Shared.conjure_bookcase_many_frill    #   Due to privileged
-    conjure_many_expression     = Shared.conjure_many_expression        #   Due to privileged
+    tuple_of_many_expression    = Shared.tuple_of_many_expression       #   Due to privileged
 
 
     if __debug__:
@@ -17,7 +17,7 @@ def gem():
 
     class BookcaseManyExpression(SapphireTrunk):
         __slots__ = ((
-            'many',                     #   Tuple of Expression+
+            'many',                     #   TupleOfExpression+
             'frill',                    #   ManyFrill
         ))
 
@@ -44,15 +44,33 @@ def gem():
 
             frill_many = frill.many
 
+            frill_estimate = frill_many.frill_estimate
+
             w(frill.begin.s)
 
-            if frill_many.frill_estimate is 2:
+            if frill_estimate is 1:
+                assert length(many) is 2
+
+                many[0].write(w)
+                w(frill_many.s)
+                many[1].write(w)
+                w(frill.end.s)
+                return
+
+            if frill_estimate is 2:
+                assert length(many) is 3
+
                 many[0].write(w)
                 w(frill_many.a.s)
                 many[1].write(w)
                 w(frill_many.b.s)
                 many[2].write(w)
-            elif frill_many.frill_estimate is 3:
+                w(frill.end.s)
+                return
+
+            if frill_estimate is 3:
+                assert length(many) is 4
+
                 many[0].write(w)
                 w(frill_many.a.s)
                 many[1].write(w)
@@ -60,15 +78,17 @@ def gem():
                 many[2].write(w)
                 w(frill_many.c.s)
                 many[3].write(w)
-            else:
-                iterator         = iterate(many)
-                write_frill_many = next_method(frill_many.iterate_write(w))
+                w(frill.end.s)
+                return
 
-                next_method(iterator)().write(w)
+            iterator         = iterate(many)
+            write_frill_many = next_method(frill_many.iterate_write(w))
 
-                for v in iterator:
-                    write_frill_many()
-                    v.write(w)
+            next_method(iterator)().write(w)
+
+            for v in iterator:
+                write_frill_many()
+                v.write(w)
 
             w(frill.end.s)
 
@@ -84,7 +104,7 @@ def gem():
         #       Reversed from normal: uses 'frill' as the first map index & 'many' as the second map index.
         #
         def conjure_bookcase_many_expression(begin, list, frill_list, end):
-            many  = conjure_many_expression(list)
+            many  = tuple_of_many_expression(list)
             frill = conjure_bookcase_many_frill(begin, frill_list, end)
 
             first = lookup(frill, absent)
@@ -115,16 +135,25 @@ def gem():
         display_name = 'arguments-many'
 
 
-    conjure_arguments_many = produce_conjure_bookcase_many_expression('arguments-many', Arguments_Many)
+    class MapExpression_Many(BookcaseManyExpression):
+        __slots__                      = (())
+        display_name                   = '{:*:}'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+
+
+    conjure_arguments_many      = produce_conjure_bookcase_many_expression('arguments-many',      Arguments_Many)
+    conjure_map_expression_many = produce_conjure_bookcase_many_expression('map-expression-many', MapExpression_Many)
 
 
     if __debug__:
         @share
         def dump_bookcase_many_cache_many():
-            for [name, cache] in cache_many:
+            for [name, cache] in cache_many[-1:]:
                 dump_cache(arrange('%s_cache', name), cache)
 
 
     share(
-        'conjure_arguments_many',   conjure_arguments_many,
+        'conjure_arguments_many',       conjure_arguments_many,
+        'conjure_map_expression_many',  conjure_map_expression_many,
     )

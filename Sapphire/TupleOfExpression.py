@@ -1,13 +1,13 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.ManyExpression')
+@gem('Sapphire.TupleOfExpression')
 def gem():
     cache   = {}
     provide = cache.setdefault
 
 
-    class ManyExpression(Tuple):
+    class TupleOfExpression(Tuple):
         __slots__ = (())
 
 
@@ -20,13 +20,13 @@ def gem():
 
 
     @share
-    def conjure_many_expression(many):
-        r = ManyExpression(many)
+    def tuple_of_many_expression(many):
+        r = TupleOfExpression(many)
 
         return provide(r, r)
 
 
     if __debug__:
         @share
-        def dump_many_expression_cache():
-            dump_cache('many-expression', cache)
+        def dump_tuple_of_expression_cache():
+            dump_cache('tuple-of-expression', cache)
