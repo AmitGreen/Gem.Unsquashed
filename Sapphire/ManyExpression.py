@@ -136,15 +136,33 @@ def gem():
         display_name = ',-*'
 
 
+    class CompareExpression_Many(ManyExpression):
+        __slots__    = (())
+        display_name = 'compare-*'
+
+
     class LogicalOrExpression_Many(ManyExpression):
         __slots__    = (())
         display_name = '|-*'
 
 
+    class MultiplyExpression_Many(ManyExpression):
+        __slots__    = (())
+        display_name = 'multiply-*'
+
+
+    class OrExpression_Many(ManyExpression):
+        __slots__    = (())
+        display_name = 'or-*'
+
+
     conjure_and_expression_many        = produce_conjure_many_expression('and-many',        AndExpression_Many)
     conjure_arithmetic_expression_many = produce_conjure_many_expression('arithmetic-many', ArithmeticExpression_Many)
     conjure_comma_expression_many      = produce_conjure_many_expression('comma-many',      CommaExpression_Many)
+    conjure_compare_expression_many    = produce_conjure_many_expression('compare-many',    CompareExpression_Many)
     conjure_logical_or_expression_many = produce_conjure_many_expression('logical_or-many', LogicalOrExpression_Many)
+    conjure_multiply_expression_many   = produce_conjure_many_expression('multiply-many',   MultiplyExpression_Many)
+    conjure_or_expression_many         = produce_conjure_many_expression('or-many',         OrExpression_Many)
 
 
     if __debug__:
@@ -158,5 +176,8 @@ def gem():
         'conjure_and_expression_many',          conjure_and_expression_many,
         'conjure_arithmetic_expression_many',   conjure_arithmetic_expression_many,
         'conjure_comma_expression_many',        conjure_comma_expression_many,
+        'conjure_compare_expression_many',      conjure_compare_expression_many,
         'conjure_logical_or_expression_many',   conjure_logical_or_expression_many,
+        'conjure_multiply_expression_many',     conjure_multiply_expression_many,
+        'conjure_or_expression_many',           conjure_or_expression_many,
     )

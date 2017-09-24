@@ -12,7 +12,6 @@ def gem():
     require_gem('Sapphire.BookcaseDualExpression')
     require_gem('Sapphire.BookcaseExpression')
     require_gem('Sapphire.DualToken')
-    require_gem('Sapphire.ExpressionMany')
     require_gem('Sapphire.Match')
     require_gem('Sapphire.Parse1Atom')
     require_gem('Sapphire.Parse1Call')

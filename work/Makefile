@@ -60,7 +60,7 @@ SAPPHIRE_FILES = \
         ../Sapphire/BookcaseManyExpression.py ../Sapphire/BookcaseManyFrill.py \
     ../Sapphire/Core.py ../Sapphire/CreateMeta.py \
     ../Sapphire/DualFrill.py ../Sapphire/DualToken.py ../Sapphire/Dump.py \
-    ../Sapphire/Elemental.py ../Sapphire/ExpressionMany.py \
+    ../Sapphire/Elemental.py \
     ../Sapphire/LineMarker.py \
     ../Sapphire/Main.py ../Sapphire/ManyExpression.py ../Sapphire/ManyFrill.py ../Sapphire/MemberExpression.py \
     ../Sapphire/Parse1.py ../Sapphire/Parse1Atom.py ../Sapphire/Tokenize1Header.py ../Sapphire/Parse1Call.py \
@@ -138,7 +138,7 @@ clean:
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
 	rm -f   h2f.py h2p.py h3e.py h3f.py h2t.py h3t.py h4t.py
-	rm -f   hat.py haw.py hb.py hcm.py hco.py hd.py hel.py hem.py .py py hk.py hkd.py hkf.py hkm.py hl.py
+	rm -f   hat.py haw.py hb.py hcm.py hco.py hd.py hel.py hk.py hkd.py hkf.py hkm.py hl.py
 	rm -f   hma.py hmc.py hme.py hmf.py hpt.py hs.py htc.py hto.py htr.py hu.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
@@ -220,7 +220,6 @@ links:
 	ln -s ../Sapphire/Core.py                       hco.py
 	ln -s ../Sapphire/Dump.py                       hd.py
 	ln -s ../Sapphire/Elemental.py                  hel.py
-	ln -s ../Sapphire/ExpressionMany.py             hem.py
 	ln -s ../Sapphire/BookcaseExpression.py         hk.py
 	ln -s ../Sapphire/BookcaseDualExpression.py     hkd.py
 	ln -s ../Sapphire/BookcaseManyFrill.py          hkf.py

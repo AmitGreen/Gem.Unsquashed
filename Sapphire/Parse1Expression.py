@@ -495,7 +495,8 @@ def gem():
         if not operator.is_multiply_operator:
             raise_unknown_line()
 
-        many = [left, multiply_operator, right, operator]
+        many       = [left, right]
+        many_frill = [multiply_operator, operator]
 
         while 7 is 7:
             many.append(parse1_unary_expression())
@@ -504,17 +505,16 @@ def gem():
 
             if operator is none:
                 if qn() is not none:
-                    return MultiplyExpression_Many(Tuple(many))
+                    break
 
                 operator = tokenize_operator()
 
                 if operator.is_end_of_multiply_expression:
                     wk(operator)
-
-                    return MultiplyExpression_Many(Tuple(many))
+                    break
             else:
                 if operator.is_end_of_multiply_expression:
-                    return MultiplyExpression_Many(Tuple(many))
+                    break
 
                 wk(none)
 
@@ -522,6 +522,8 @@ def gem():
                 raise_unknown_line()
 
             many.append(operator)
+
+        return conjure_multiply_expression_many(many, many_frill)
 
 
     def parse1_multiply_expression():
@@ -1089,7 +1091,8 @@ def gem():
 
             wk(none)
 
-        many = [left, compare_operator, right, operator]
+        many       = [left, right]
+        many_frill = [compare_operator, operator]
 
         while 7 is 7:
             many.append(parse1_normal_expression())
@@ -1098,21 +1101,22 @@ def gem():
 
             if operator is none:
                 if qn() is not none:
-                    return CompareExpression_Many(Tuple(many))
+                    break
 
                 operator = tokenize_operator()
 
                 if operator.is_end_of_compare_expression:
                     wk(operator)
-
-                    return CompareExpression_Many(Tuple(many))
+                    break
             else:
                 if operator.is_end_of_compare_expression:
-                    return CompareExpression_Many(Tuple(many))
+                    break
 
                 wk(none)
 
-            many.append(operator)
+            many_frill.append(operator)
+
+        return conjure_compare_expression_many(many, many_frill)
 
 
     def parse1_compare_expression():
@@ -1483,7 +1487,8 @@ def gem():
 
             wk(none)
 
-        many = [left, operator, right, operator_2]
+        many       = [left, right]
+        many_frill = [operator, operator_2]
 
         while 7 is 7:
             many.append(parse1_boolean_and_expression())
@@ -1492,24 +1497,25 @@ def gem():
 
             if operator_7 is none:
                 if qn() is not none:
-                    return OrExpression_Many(Tuple(many))
+                    break
 
                 operator_7 = tokenize_operator()
 
                 if operator_7.is_end_of_boolean_or_expression:
                     wk(operator_7)
-
-                    return OrExpression_Many(Tuple(many))
+                    break
             else:
                 if operator_7.is_end_of_boolean_or_expression:
-                    return OrExpression_Many(Tuple(many))
+                    break
 
                 wk(none)
 
             if not operator_7.is_keyword_or:
                 raise_unknown_line()
 
-            many.append(operator_7)
+            many_frill.append(operator_7)
+
+        return conjure_or_expression_many(many, many_frill)
 
 
     def parse1_boolean_or_expression():
