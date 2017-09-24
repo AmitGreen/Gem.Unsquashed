@@ -175,7 +175,8 @@ def gem():
         if not operator_2.is_comma:
             raise_unknown_line()
 
-        many = [imported, operator, imported_2, operator_2]
+        many       = [imported, imported_2]
+        many_frill = [operator, operator_2]
 
         while 7 is 7:
             many.append(parse1_statement_from_as())
@@ -189,11 +190,11 @@ def gem():
                            keyword_from,
                            module,
                            keyword_import,
-                           CommaExpression_Many(Tuple(many)),
+                           conjure_comma_expression_many(many, many_frill),
                            operator_7,
                        )
 
             if not operator_7.is_comma:
                 raise_unknown_line()
 
-            many.append(operator_7)
+            many_frill.append(operator_7)

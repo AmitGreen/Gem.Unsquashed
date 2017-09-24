@@ -131,8 +131,14 @@ def gem():
         display_name = 'arithmetic-*'
 
 
+    class CommaExpression_Many(ManyExpression):
+        __slots__    = (())
+        display_name = ',-*'
+
+
     conjure_and_expression_many        = produce_conjure_many_expression('and-many',        AndExpression_Many)
     conjure_arithmetic_expression_many = produce_conjure_many_expression('arithmetic-many', ArithmeticExpression_Many)
+    conjure_comma_expression_many      = produce_conjure_many_expression('comma-many',      CommaExpression_Many)
 
 
     if __debug__:
@@ -145,4 +151,5 @@ def gem():
     share(
         'conjure_and_expression_many',          conjure_and_expression_many,
         'conjure_arithmetic_expression_many',   conjure_arithmetic_expression_many,
+        'conjure_comma_expression_many',        conjure_comma_expression_many,
     )
