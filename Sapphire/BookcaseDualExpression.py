@@ -93,34 +93,6 @@ def gem():
         return BookcaseDualExpression_WithFrill(a, b, frill)
 
 
-    class Arguments_2(BookcaseDualExpression):
-        __slots__    = (())
-        display_name = '(2)'
-        frill        = conjure_triple_frill(LP, COMMA_SPACE, RP)
-
-
-    class ListExpression_2(BookcaseDualExpression):
-        __slots__                      = (())
-        display_name                   = '[2]'
-        frill                          = conjure_triple_frill(LSB, COMMA_SPACE, RSB)
-        is__atom__or__special_operator = true
-        is_atom                        = true
-
-
-    class RangeIndex(BookcaseDualExpression):
-        __slots__    = (())
-        display_name = 'range-index'
-        frill        = conjure_triple_frill(LSB, conjure_colon(' : '), RSB)
-
-
-    class TupleExpression_2(BookcaseDualExpression):
-        __slots__                      = (())
-        display_name                   = '{,2}'
-        frill                          = conjure_triple_frill(LP, COMMA_SPACE, RP)
-        is__atom__or__special_operator = true
-        is_atom                        = true
-
-
     @privileged
     def produce_conjure_bookcase_dual_expression(name, Meta):
         cache  = {}
@@ -193,6 +165,34 @@ def gem():
             cache_many.append( ((name, cache)) )
 
         return conjure_bookcase_dual_expression
+
+
+    class Arguments_2(BookcaseDualExpression):
+        __slots__    = (())
+        display_name = '(2)'
+        frill        = conjure_triple_frill(LP, COMMA_SPACE, RP)
+
+
+    class ListExpression_2(BookcaseDualExpression):
+        __slots__                      = (())
+        display_name                   = '[2]'
+        frill                          = conjure_triple_frill(LSB, COMMA_SPACE, RSB)
+        is__atom__or__special_operator = true
+        is_atom                        = true
+
+
+    class RangeIndex(BookcaseDualExpression):
+        __slots__    = (())
+        display_name = 'range-index'
+        frill        = conjure_triple_frill(LSB, conjure_colon(' : '), RSB)
+
+
+    class TupleExpression_2(BookcaseDualExpression):
+        __slots__                      = (())
+        display_name                   = '{,2}'
+        frill                          = conjure_triple_frill(LP, COMMA_SPACE, RP)
+        is__atom__or__special_operator = true
+        is_atom                        = true
 
 
     conjure_arguments_2        = produce_conjure_bookcase_dual_expression('arguments-2',        Arguments_2)

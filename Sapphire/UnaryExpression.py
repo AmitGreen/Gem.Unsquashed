@@ -10,7 +10,7 @@ def gem():
         cache_many = []
 
 
-    class UnaryExpression_New(SapphireTrunk):
+    class UnaryExpression(SapphireTrunk):
         __slots__ = ((
             'a',                        #   Expression
         ))
@@ -108,32 +108,32 @@ def gem():
         return conjure_unary_expression
 
 
-    class NegativeExpression(UnaryExpression_New):
+    class NegativeExpression(UnaryExpression):
         __slots__    = (())
         display_name = '-'
         frill        = conjure_action_word('-', '-')
 
 
-    class NotExpression(UnaryExpression_New):
+    class NotExpression(UnaryExpression):
         __slots__    = (())
         display_name = 'not'
         frill        = conjure_keyword_not('not ')
 
 
-    class StarArgument(UnaryExpression_New):
+    class StarArgument(UnaryExpression):
         __slots__    = (())
         display_name = '*-argument'
         frill        = conjure_star_sign('*')
 
 
-    class StarParameter(UnaryExpression_New):
+    class StarParameter(UnaryExpression):
         __slots__    = (())
         display_name = '*-parameter'
         frill        = conjure_star_sign('*')
         is_atom      = true
 
 
-    class TwosComplementExpression(UnaryExpression_New):
+    class TwosComplementExpression(UnaryExpression):
         __slots__    = (())
         display_name = '~'
         frill        = conjure_action_word('~', '~')

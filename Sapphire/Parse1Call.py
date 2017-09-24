@@ -109,29 +109,30 @@ def gem():
                        conjure__comma__right_parenthesis(operator_2, argument_3),
                    )
 
-        many = [left_parenthesis, argument_1, operator_1, argument_2, operator_2]
+        frill_many = [operator_1, operator_2]
+        many       = [argument_1, argument_2]
 
         while 7 is 7:
-            argument_3 = parse1_argument7__left(argument_3)
+            many.append(parse1_argument7__left(argument_3))
 
             operator_7 = qk()
 
             wk(none)
 
             if operator_7.is__optional_comma__right_parenthesis:
-                many.append(argument_3)
-                many.append(operator_7)
-                return Arguments_Many(Tuple(many))
+                return conjure_arguments_many(left_parenthesis, many, frill_many, operator_7)
 
             if not operator_7.is_comma:
                 raise_unknown_line()
 
-            many.append(argument_3)
-
             argument_3 = parse1_atom()
 
             if argument_3.is_right_parenthesis:
-                many.append(conjure__comma__right_parenthesis(operator_7, argument_3))
-                return Arguments_Many(Tuple(many))
+                return conjure_arguments_many(
+                           left_parenthesis,
+                           many,
+                           frill_many,
+                           conjure__comma__right_parenthesis(operator_7, argument_3),
+                       )
 
-            many.append(operator_7)
+            frill_many.append(operator_7)

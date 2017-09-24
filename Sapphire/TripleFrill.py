@@ -11,6 +11,9 @@ def gem():
         ))
 
 
+        frill_estimate = 3
+
+
         def __init__(t, a, b, c):
             t.a = a
             t.b = b

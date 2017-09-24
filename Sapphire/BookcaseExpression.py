@@ -87,6 +87,49 @@ def gem():
         return BookcaseExpression_WithFrill(a, frill)
 
 
+    @privileged
+    def produce_conjure_bookcase_expression(name, Meta):
+        cache   = {}
+        lookup  = cache.get
+        provide = cache.setdefault
+        store   = cache.__setitem__
+
+        meta_frill_a = Meta.frill.a
+        meta_frill_b = Meta.frill.b
+
+
+        def conjure_bookcase_expression(frill_a, a, frill_b):
+            if (frill_a is meta_frill_a) and (frill_b is meta_frill_b):
+                return (lookup(a)) or (provide(a, Meta(a)))
+
+            frill = conjure_dual_frill(frill_a, frill_b)
+
+            first = lookup(frill, absent)
+
+            if first.__class__ is Map:
+                return (
+                              first.get(a)
+                           or first.setdefault(a, conjure_BookcaseExpression_WithFrill(Meta, a, frill))
+                       )
+
+            if first.a is a:
+                return first
+
+            r = conjure_BookcaseExpression_WithFrill(Meta, a, frill)
+
+            store(frill, (r   if first is absent else   { first.a : first, a : r }))
+
+            return r
+
+
+        if __debug__:
+            conjure_bookcase_expression.__name__ = intern_arrange('conjure_%s', name)
+
+            cache_many.append( ((name, cache)) )
+
+        return conjure_bookcase_expression
+
+
     class Arguments_1(BookcaseExpression):
         __slots__    = (())
         display_name = '(1)'
@@ -141,49 +184,6 @@ def gem():
         frill                          = conjure_dual_frill(LP, conjure__comma__right_parenthesis(conjure_comma(','), RP))
         is__atom__or__special_operator = true
         is_atom                        = true
-
-
-    @privileged
-    def produce_conjure_bookcase_expression(name, Meta):
-        cache   = {}
-        lookup  = cache.get
-        provide = cache.setdefault
-        store   = cache.__setitem__
-
-        meta_frill_a = Meta.frill.a
-        meta_frill_b = Meta.frill.b
-
-
-        def conjure_bookcase_expression(frill_a, a, frill_b):
-            if (frill_a is meta_frill_a) and (frill_b is meta_frill_b):
-                return (lookup(a)) or (provide(a, Meta(a)))
-
-            frill = conjure_dual_frill(frill_a, frill_b)
-
-            first = lookup(frill, absent)
-
-            if first.__class__ is Map:
-                return (
-                              first.get(a)
-                           or first.setdefault(a, conjure_BookcaseExpression_WithFrill(Meta, a, frill))
-                       )
-
-            if first.a is a:
-                return first
-
-            r = conjure_BookcaseExpression_WithFrill(Meta, a, frill)
-
-            store(frill, (r   if first is absent else   { first.a : first, a : r }))
-
-            return r
-
-
-        if __debug__:
-            conjure_bookcase_expression.__name__ = intern_arrange('conjure_%s', name)
-
-            cache_many.append( ((name, cache)) )
-
-        return conjure_bookcase_expression
 
 
     conjure_arguments_1       = produce_conjure_bookcase_expression('arguments-1',       Arguments_1)
