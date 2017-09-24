@@ -70,9 +70,11 @@ def gem():
 
 
     @export
-    class UnknownLine(Token):
+    class UnknownLine(Object):
         display_name    = 'unknown-line'
         ends_in_newline = true
+        newlines        = 1
+        line_marker     = true
 
 
         def __init__(t, s):
@@ -80,7 +82,6 @@ def gem():
             assert s[-1] == '\n'
 
             t.s = s
-
 
 
     [

@@ -18,7 +18,7 @@ def gem():
     from Gem import create_DelayedFileOutput, create_StringOutput, produce_conjure_by_name
     from Gem import program_exit, read_text_from_path, print_exception_chain
     from Pearl import conjure_token_newline
-    from Pearl import Identifier, la, parse_context, qd, qi, qj, qk, ql, qn, qs, raise_unknown_line, Token
+    from Pearl import la, parse_context, qd, qi, qj, qk, ql, qn, qs, raise_unknown_line, Token
     from Pearl import wd, wd0, wd1, wi, wj, wk, wn, ws, z_initialize
 
 
@@ -26,7 +26,6 @@ def gem():
         #
         #   Classes
         #
-        'Identifier',                   Identifier,
         'Token',                        Token,
 
 

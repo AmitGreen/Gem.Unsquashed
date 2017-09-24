@@ -185,20 +185,21 @@ def gem():
                     for v in many:
                         line('%s', v.display_token())
 
-                with create_StringOutput() as f:
-                    w = f.write
+                if "test identical output":
+                    with create_StringOutput() as f:
+                        w = f.write
 
-                    for v in many:
-                        v.write(w)
+                        for v in many:
+                            v.write(w)
 
-                if data != f.result:
-                    with create_DelayedFileOutput('oops.txt') as oops:
-                        oops.write(f.result)
+                    if data != f.result:
+                        with create_DelayedFileOutput('oops.txt') as oops:
+                            oops.write(f.result)
 
-                    raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')
+                        raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')
 
-                line('Passed#1: Identical dump from parse tree.  Total: %d line%s',
-                     length(many), (''   if length(many) is 0 else   's'))
+                    line('Passed#1: Identical dump from parse tree.  Total: %d line%s',
+                         length(many), (''   if length(many) is 0 else   's'))
 
                 #conjure_colon__line_marker('\n\n:\n')
                 #dump_dual_frill_cache()
@@ -216,13 +217,18 @@ def gem():
                 #dump_many_frill_cache()
                 #dump_many_expression_cache_many()
 
-                total = 0
+                if "test count newlines":
+                    total = 0
 
-                for v in many:
-                    total += v.count_newlines()
+                    for v in many:
+                        total += v.count_newlines()
 
-                if total != length(parse_context.data_lines):
-                    raise_runtime_error('mismatch on counted lines (counted: %d; expected: %d)',
-                                        total, length(parse_context.data_lines))
-                                    
-                line('Passed#2: Total counted lines %d matches input', total)
+                    if total != length(parse_context.data_lines):
+                        raise_runtime_error('mismatch on counted lines (counted: %d; expected: %d)',
+                                            total, length(parse_context.data_lines))
+                                        
+                    line('Passed#2: Total counted lines %d matches input', total)
+
+                if "test identation" and 0:
+                    for v in many:
+                        v.indented
