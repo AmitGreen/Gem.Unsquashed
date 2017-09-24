@@ -149,9 +149,15 @@ def gem():
         is_atom                        = true
 
 
+    class ParameterColon_Many(BookcaseManyExpression):
+        __slots__    = (())
+        display_name = '(*):'
+
+
     conjure_arguments_many       = produce_conjure_bookcase_many_expression('arguments-many',       Arguments_Many)
     conjure_list_expression_many = produce_conjure_bookcase_many_expression('list-expression-many', ListExpression_Many)
     conjure_map_expression_many  = produce_conjure_bookcase_many_expression('map-expression-many',  MapExpression_Many)
+    conjure_parameter_colon_many = produce_conjure_bookcase_many_expression('parameter-colon-many', ParameterColon_Many)
 
 
     if __debug__:
@@ -162,7 +168,8 @@ def gem():
 
 
     share(
-        'conjure_arguments_many',       conjure_arguments_many,
-        'conjure_list_expression_many', conjure_list_expression_many,
-        'conjure_map_expression_many',  conjure_map_expression_many,
+        'conjure_arguments_many',           conjure_arguments_many,
+        'conjure_list_expression_many',     conjure_list_expression_many,
+        'conjure_map_expression_many',      conjure_map_expression_many,
+        'conjure_parameter_colon_many',     conjure_parameter_colon_many,
     )

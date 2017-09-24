@@ -169,7 +169,8 @@ def gem():
         if not token_7.is_atom:
             raise_unknown_line()
 
-        many = [operator_1, token_1, operator_2]
+        many       = [token_1]
+        many_frill = [operator_2]
 
         while 7 is 7:
             operator_7 = tokenize_parameter_operator()
@@ -190,20 +191,21 @@ def gem():
 
                     operator_7 = conjure__right_parenthesis__colon__line_marker(operator_7, colon, line_marker)
 
+            many.append(token_7)
+
             if operator_7.is__any__right_parenthesis__colon__newline:
                 if qn() is not none:
                     raise_unknown_line()
 
-                many.append(token_7)
-                many.append(operator_7)
-
-                return FunctionHeader(keyword_function, name, ParameterColon_Many(Tuple(many)))
+                return FunctionHeader(
+                           keyword_function,
+                           name,
+                           conjure_parameter_colon_many(operator_1, many, many_frill, operator_7),
+                       )
 
             if not operator_7.is_comma:
                 #my_line('operator_7: %s; full_line: %r', operator_7, portray_string(qs()))
                 raise_unknown_line()
-
-            many.append(token_7)
 
             token_7 = tokenize_parameter_atom()
 
@@ -211,18 +213,23 @@ def gem():
                 raise_unknown_line()
 
             if token_7.is__right_parenthesis__colon__newline:
-                many.append(
-                    conjure__comma__right_parenthesis__colon__line_marker(
-                        operator_7,
-                        token_7.a,
-                        token_7.b,
-                        token_7.c,
-                    ),
-                )
-
-                return FunctionHeader(keyword_function, name, ParameterColon_Many(Tuple(many)))
+                return FunctionHeader(
+                           keyword_function,
+                           name,
+                           conjure_parameter_colon_many(
+                               operator_1,
+                               many,
+                               many_frill,
+                               conjure__comma__right_parenthesis__colon__line_marker(
+                                   operator_7,
+                                   token_7.a,
+                                   token_7.b,
+                                   token_7.c,
+                               ),
+                           ),
+                       )
 
             if not token_7.is_atom:
                 raise_unknown_line()
 
-            many.append(operator_7)
+            many_frill.append(operator_7)
