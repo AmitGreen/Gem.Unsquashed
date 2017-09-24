@@ -197,7 +197,7 @@ def gem():
 
                     raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')
 
-                line('Passed#1: identical dump from parse tree.  Total: %d line%s',
+                line('Passed#1: Identical dump from parse tree.  Total: %d line%s',
                      length(many), (''   if length(many) is 0 else   's'))
 
                 #conjure_colon__line_marker('\n\n:\n')
@@ -216,10 +216,13 @@ def gem():
                 #dump_many_frill_cache()
                 #dump_many_expression_cache_many()
 
-                if 0:
-                    total = 0
+                total = 0
 
-                    for v in many:
-                        total += v.count_newlines()
+                for v in many:
+                    total += v.count_newlines()
 
-                    line('Total: %d', total)
+                if total != length(parse_context.data_lines):
+                    raise_runtime_error('mismatch on counted lines (counted: %d; expected: %d)',
+                                        total, length(parse_context.data_lines))
+                                    
+                line('Passed#2: Total counted lines %d matches input', total)

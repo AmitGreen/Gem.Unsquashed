@@ -91,6 +91,7 @@ def gem():
         'property',         PythonBuiltIn.property,
         'sorted_list',      PythonBuiltIn.sorted,
         'static_method',    PythonBuiltIn.staticmethod,
+        'sum',              PythonBuiltIn.sum,
         'type',             PythonBuiltIn.type,
 
         #

@@ -57,6 +57,7 @@ def gem():
     class ParseContext(Object):
         __slots__ = ((
             'cadence',                  #   Cadence
+            'data_lines',               #   Tuple of *
             'iterate_lines',            #   None | Generator
             'many',                     #   Tuple of *
             'append',                   #   Method
@@ -110,13 +111,14 @@ def gem():
                 loop += 1
 
 
-        def reset(t, iterate_lines):
+        def reset(t, data_lines, iterate_lines):
             assert t.cadence.is_initialized_exited_or_exception
 
             t.cadence = cadence_exception
 
             del t.many[:]
 
+            t.data_lines    = data_lines
             t.iterate_lines = iterate_lines
 
             t.cadence = cadence_reuse
@@ -129,7 +131,7 @@ def gem():
 
     @export
     def z_initialize(data):
-        data_lines = data.splitlines(true)
+        data_lines = Tuple(data.splitlines(true))
         maximum_i  = length(data_lines)
         q_data     = data_lines.__getitem__
 
@@ -159,7 +161,7 @@ def gem():
             wn(none)
 
 
-        return parse_context.reset(GENERATOR_next_line())
+        return parse_context.reset(data_lines, GENERATOR_next_line())
 
 
     @export

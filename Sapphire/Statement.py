@@ -25,6 +25,10 @@ def gem():
             return arrange('<AssignFragment %r %r>', t.left, t.assign_operator)
 
 
+        def count_newlines(t):
+            return t.left.count_newlines() + t.assign_operator.count_newlines()
+
+
         def display_token(t):
             return arrange('<assign-fragment %s %s>', t.left.display_token(), t.assign_operator.display_token())
 
@@ -55,6 +59,16 @@ def gem():
         def __repr__(t):
             return arrange('<AssignStatementMany %r <%r> %r r %r>',
                            t.indented, ' '.join(portray(v)   for v in t.left_many), t.right, t.newline)
+
+
+        def count_newlines(t):
+            assert '\n' not in t.indented
+
+            return (
+                         sum(v     .count_newlines()   for v in t.left_many)
+                       + t.right   .count_newlines()
+                       + t.newline .count_newlines()
+                   )
 
 
         def display_token(t):
@@ -299,6 +313,10 @@ def gem():
         def  __repr__(t):
             return arrange('<%s %r %r %r>',
                            t.__class__.__name__, t.keyword, t.condition, t.colon_newline)
+
+
+        def count_newlines(t):
+            return t.keyword.count_newlines() + t.condition.count_newlines() + t.colon_newline.count_newlines()
 
 
         def display_token(t):
