@@ -215,3 +215,11 @@ def gem():
                 #dump_tuple_of_expression_cache()
                 #dump_many_frill_cache()
                 #dump_many_expression_cache_many()
+
+                if 0:
+                    total = 0
+
+                    for v in many:
+                        total += v.count_newlines()
+
+                    line('Total: %d', total)

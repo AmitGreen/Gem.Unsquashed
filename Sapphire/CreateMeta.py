@@ -10,17 +10,34 @@ def gem():
 
 
     @share
+    def count_newlines__line_marker(t):
+        assert (t.ends_in_newline is t.line_marker is true)
+        assert t.s[-1] == '\n'
+        assert t.newlines == t.s.count('\n')
+
+        return t.newlines
+
+
+    @share
     def conjure_ActionWord_WithNewlines(Meta, constructor):
         ActionWord_WithNewlines = lookup_adjusted_meta(Meta)
 
         if ActionWord_WithNewlines is none:
             class ActionWord_WithNewlines(Meta):
                 __slots__ = ((
-                    'newlines',                                 #   Integer > 0
                     'ends_in_newline',                          #   Boolean
+                    'newlines',                                 #   Integer > 0
                 ))
 
                 __init__ = constructor
+
+
+                def count_newlines(t):
+                    assert t.ends_in_newline is (t.s[-1] == '\n')
+                    assert t.line_marker is false
+                    assert t.newlines == t.s.count('\n')
+
+                    return t.newlines
 
 
             if __debug__:
@@ -44,6 +61,7 @@ def gem():
                 ))
 
                 __init__ = constructor
+
 
 
             if __debug__:

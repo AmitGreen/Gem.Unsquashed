@@ -45,7 +45,7 @@ def gem():
 
     class TokenNewline(Token):
         display_name                            = 'newline'
-        ends_in_newline                         = 1
+        ends_in_newline                         = true
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
         is_end_of_boolean_or_expression         = true
@@ -61,13 +61,21 @@ def gem():
         is_end_of_ternary_expression            = true
         is_end_of_unary_expression              = true
         is_token_newline                        = true
+        line_marker                             = true
+        newlines                                = 1
 
 
         def __init__(t, s):
-            assert '\n' not in s[:-1]
-            assert s[-1] == '\n'
+            assert (s.count('\n') == 1) and (s[-1] == '\n')
 
             t.s = s
+
+
+        def count_newlines(t):
+            assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
+            assert (t.s.count('\n') is 1) and (t.s[-1] == '\n')
+
+            return 1
 
 
         def display_token(t):

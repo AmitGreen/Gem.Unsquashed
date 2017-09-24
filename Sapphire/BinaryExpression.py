@@ -63,6 +63,10 @@ def gem():
             return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.b)
 
 
+        def count_newlines(t):
+            return t.a.count_newlines() + t.b.count_newlines()
+
+
         def display_token(t):
             return arrange('<%s %s %s>', t.display_name, t.a.display_token(), t.b.display_token())
 
@@ -104,6 +108,10 @@ def gem():
                                    if method_is_function(Meta.__repr__, portray_with_braces) else
                                        portray_frill
                            )
+
+
+                def count_newlines(t):
+                    return t.a.count_newlines() + t.b.count_newlines() + t.frill.count_newlines()
 
 
                 display_token = (

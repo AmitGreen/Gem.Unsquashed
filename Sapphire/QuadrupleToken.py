@@ -26,7 +26,7 @@ def gem():
 
 
     if 0:
-        def construct_quadruple_token__with_newlines(t, s, a, b, c, d, newlines, ends_in_newline):
+        def construct_quadruple_token__with_newlines(t, s, a, b, c, d, ends_in_newline, newlines):
             assert t.line_marker is false
             assert s == a.s + b.s + c.s + d.s
             assert ends_in_newline is (d.s[-1] == '\n')
@@ -37,8 +37,8 @@ def gem():
             t.b               = b
             t.c               = c
             t.d               = d
-            t.newlines        = newlines
             t.ends_in_newline = ends_in_newline
+            t.newlines        = newlines
 
 
     def construct_quadruple_operator__line_marker_1(t, s, a, b, c, d):
@@ -127,7 +127,8 @@ def gem():
         newlines                                   = 1
 
 
-        __init__ = construct_quadruple_operator__line_marker_1
+        __init__       = construct_quadruple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
     class DotNameQuadruplet(BaseQuadrupleOperator):
@@ -145,7 +146,8 @@ def gem():
         newlines                            = 1
 
 
-        __init__ = construct_quadruple_operator__line_marker_1
+        __init__       = construct_quadruple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
     def create_quadruple_token__with_newlines(Meta, s, a, b, c, d):
@@ -158,7 +160,7 @@ def gem():
                        if newlines is 0 else
                            conjure_ActionWord_WithNewlines(
                                Meta, construct_quadruple_token__with_newlines,
-                           )(s, a, b, c, d, newlines, s[-1] == '\n')
+                           )(s, a, b, c, d, s[-1] == '\n', newlines)
                )
 
 

@@ -24,6 +24,10 @@ def gem():
             return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.c)
 
 
+        def count_newlines(t):
+            return t.a.count_newlines() + t.b.count_newlines() + t.c.count_newlines()
+
+
         def display_token(t):
             return arrange('<triple-frill %s %s %s>', t.a.display_token(), t.b.display_token(), t.c.display_token())
 

@@ -23,6 +23,10 @@ def gem():
             t.end   = end
 
 
+        def count_newlines(t):
+            return t.begin.count_newlines() + t.many.count_newlines() + t.end.count_newlines()
+
+
         def __repr__(t):
             return arrange('<%s %r %r %r>', t.__class__.__name__, t.begin, t.many, t.end)
 

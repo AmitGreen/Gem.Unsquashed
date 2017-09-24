@@ -31,6 +31,15 @@ def gem():
             return arrange('<%s %r>', t.__class__.__name__, t.s)
 
 
+        def count_newlines(t):
+            if not ((t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)):
+                my_line('t: %r', t)
+
+            assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
+
+            return 0
+
+            
         def display_full_token(t):
             return arrange('<%s %s>', t.display_name, portray_string(t.s))
 

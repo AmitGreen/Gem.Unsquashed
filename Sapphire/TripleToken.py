@@ -18,24 +18,24 @@ def gem():
         assert s == a.s + b.s + c.s
         assert '\n' not in s
 
-        t.s      = s
-        t.a  = a
+        t.s = s
+        t.a = a
         t.b = b
-        t.c  = c
+        t.c = c
 
 
-    def construct_triple_token__with_newlines(t, s, a, b, c, newlines, ends_in_newline):
+    def construct_triple_token__with_newlines(t, s, a, b, c, ends_in_newline, newlines):
         assert t.line_marker is false
         assert s == a.s + b.s + c.s
         assert ends_in_newline is (c.s[-1] == '\n')
         assert newlines >= 1
 
         t.s               = s
-        t.a           = a
-        t.b          = b
-        t.c           = c
-        t.newlines        = newlines
+        t.a               = a
+        t.b               = b
+        t.c               = c
         t.ends_in_newline = ends_in_newline
+        t.newlines        = newlines
 
 
     def construct_triple_operator__line_marker_1(t, s, a, b, c):
@@ -44,10 +44,10 @@ def gem():
         assert s.count('\n') is 1
         assert c.s[-1] == '\n'
 
-        t.s      = s
-        t.a  = a
+        t.s = s
+        t.a = a
         t.b = b
-        t.c  = c
+        t.c = c
 
 
     def construct_triple_token__line_marker__many(t, s, a, b, c, newlines):
@@ -57,17 +57,17 @@ def gem():
         assert c.s[-1] == '\n'
 
         t.s        = s
-        t.a    = a
-        t.b   = b
-        t.c    = c
+        t.a        = a
+        t.b        = b
+        t.c        = c
         t.newlines = newlines
 
 
     class BaseTripleOperator(KeywordAndOperatorBase):
         __slots__ = ((
-            'a',         #   Operator+
-            'b',        #   Operator+
-            'c',         #   Operator+
+            'a',                        #   Operator+
+            'b',                        #   Operator+
+            'c',                        #   Operator+
         ))
 
 
@@ -132,7 +132,8 @@ def gem():
         newlines                                   = 1
 
 
-        __init__ = construct_triple_operator__line_marker_1
+        __init__       = construct_triple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
     class Whitespace_Atom_Whitespace(BaseTripleOperator):
@@ -160,7 +161,7 @@ def gem():
                        if newlines is 0 else
                            conjure_ActionWord_WithNewlines(
                                Meta, construct_triple_token__with_newlines,
-                           )(s, a, b, c, newlines, s[-1] == '\n')
+                           )(s, a, b, c, s[-1] == '\n', newlines)
                )
 
 

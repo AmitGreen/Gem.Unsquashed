@@ -15,6 +15,15 @@ def gem():
             return arrange('<%s %s>', t.__class__.__name__, ' '.join(portray(v)   for v in t))
 
 
+        def count_newlines(t):
+            total = 0
+
+            for v in t:
+                total += v.count_newlines()
+
+            return total
+
+
         def display_token(t):
             return arrange('<many-expression %s>', ' '.join(v.display_token()   for v in t))
 

@@ -19,10 +19,10 @@ def gem():
     find_action_word__Meta = action_word__Meta__cache.__getitem__
 
 
-    def construct_token__with_newlines(t, s, newlines, ends_in_newline):
+    def construct_token__with_newlines(t, s, ends_in_newline, newlines):
         t.s               = s
-        t.newlines        = newlines
         t.ends_in_newline = ends_in_newline
+        t.newlines        = newlines
 
 
     @share
@@ -46,7 +46,7 @@ def gem():
                            if newlines is 0 else
                                conjure_ActionWord_WithNewlines(
                                    Meta, construct_token__with_newlines,
-                               )(s, newlines, false)
+                               )(s, false, newlines)
                    ),
                )
 
@@ -68,7 +68,7 @@ def gem():
                    s,
                    conjure_ActionWord_WithNewlines(
                        Meta, construct_token__with_newlines,
-                   )(s, s.count('\n'), true)
+                   )(s, true, s.count('\n'))
                )
 
 
@@ -109,7 +109,7 @@ def gem():
                                if newlines is 0 else
                                    conjure_ActionWord_WithNewlines(
                                        Meta, construct_token__with_newlines,
-                                   )(s, newlines, false)
+                                   )(s, false, newlines)
                        ),
                    )
 
@@ -136,7 +136,7 @@ def gem():
                        s,
                        conjure_ActionWord_WithNewlines(
                            Meta, construct_token__with_newlines,
-                       )(s, s.count('\n'), true)
+                       )(s, true, s.count('\n'))
                    )
 
 

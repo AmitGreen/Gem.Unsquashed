@@ -23,6 +23,10 @@ def gem():
             return arrange('<%s %r %r>', t.__class__.__name__, t.left, t.postfix)
 
 
+        def count_newlines(t):
+            return t.left.count_newlines() + t.postfix.count_newlines()
+
+
         def display_token(t):
             return arrange('<member %s %s>', t.left.display_token(), t.postfix.display_token())
 

@@ -176,7 +176,8 @@ def gem():
         newlines        = 1
 
 
-        __init__ = construct_action_word__line_marker_1
+        __init__       = construct_action_word__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
     class KeywordElseIf(KeywordAndOperatorBase):
@@ -206,7 +207,8 @@ def gem():
         newlines        = 1
 
 
-        __init__ = construct_action_word__line_marker_1
+        __init__       = construct_action_word__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
     class KeywordFinallyColon(KeywordAndOperatorBase):
@@ -224,7 +226,8 @@ def gem():
         newlines        = 1
 
 
-        __init__ = construct_action_word__line_marker_1
+        __init__       = construct_action_word__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
     class KeywordFor(KeywordAndOperatorBase):
@@ -372,7 +375,8 @@ def gem():
         newlines        = 1
 
 
-        __init__ = construct_action_word__line_marker_1
+        __init__       = construct_action_word__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
     class KeywordReturn(KeywordAndOperatorBase):
@@ -396,7 +400,8 @@ def gem():
         newlines        = 1
 
 
-        __init__ = construct_action_word__line_marker_1
+        __init__       = construct_action_word__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
     class KeywordWhile(KeywordAndOperatorBase):
@@ -493,8 +498,8 @@ def gem():
         newlines                                = 1
 
 
-        __init__ = construct_action_word__line_marker_1
-
+        __init__       = construct_action_word__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
         def __repr__(t):

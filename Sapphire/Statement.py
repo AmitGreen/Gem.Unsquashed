@@ -101,6 +101,12 @@ def gem():
             return arrange('<%s %r %r %r %r>', t.__class__.__name__, t.indented, t.left, t.arguments, t.newline)
 
 
+        def count_newlines(t):
+            assert '\n' not in t.indented
+
+            return t.left.count_newlines() + t.arguments.count_newlines() + t.newline.count_newlines()
+
+
         def display_token(t):
             return arrange('<%s %s %s %s %s>',
                            t.display_name,
@@ -141,8 +147,6 @@ def gem():
 
 
         def __init__(t, indented, left, operator, right, newline):
-            assert newline.is_token_newline
-
             t.indented = indented
             t.left     = left
             t.operator = operator
@@ -153,6 +157,17 @@ def gem():
         def __repr__(t):
             return arrange('<%s %r %r %r %r %r>',
                            t.__class__.__name__, t.indented, t.left, t.operator, t.right, t.newline)
+
+
+        def count_newlines(t):
+            assert '\n' not in t.indented
+
+            return (
+                         t.left    .count_newlines()
+                       + t.operator.count_newlines()
+                       + t.right   .count_newlines()
+                       + t.newline .count_newlines()
+                   )
 
 
         def display_token(t):
@@ -203,6 +218,10 @@ def gem():
             return arrange('<%s %s %r %r>', t.__class__.__name__, t.keyword, t.name, t.parameters_colon)
 
 
+        def count_newlines(t):
+            return t.keyword.count_newlines() + t.name.count_newlines() + t.parameters_colon.count_newlines()
+
+
         def display_token(t):
             return arrange('<%s <%s> %s %s>',
                            t.display_name,
@@ -246,6 +265,13 @@ def gem():
                 return arrange('<# %r>', t.newline)
 
             return arrange('<# %r %r>', t.comment, t.newline)
+
+
+        def count_newlines(t):
+            assert '\n' not in t.comment
+            assert (t.newline.count('\n') is 1) and (t.newline[-1] == '\n')
+
+            return 1
 
 
         display_token = __repr__
@@ -411,36 +437,38 @@ def gem():
     class DecoratorHeader(SapphireTrunk):
         __slots__ = ((
             'operator_decorator',       #   OperatorAtSign
-            'expresssion',              #   Any
-            'newline',                  #   String
+            'expression',               #   Any
+            'newline',                  #   LineMarker
         ))
 
 
-        def __init__(t, operator_decorator, expresssion, newline):
-            assert newline.is_token_newline
-
+        def __init__(t, operator_decorator, expression, newline):
             t.operator_decorator = operator_decorator
-            t.expresssion        = expresssion
+            t.expression         = expression
             t.newline            = newline
 
 
         def  __repr__(t):
-            return arrange('<DecoratorHeader %r %r %r>', t.operator_decorator, t.expresssion, t.newline)
+            return arrange('<DecoratorHeader %r %r %r>', t.operator_decorator, t.expression, t.newline)
 
 
-        def  display_token(t):
+        def count_newlines(t):
+            return t.operator_decorator.count_newlines() + t.expression.count_newlines() + t.newline.count_newlines()
+
+
+        def display_token(t):
             if t.operator_decorator.s == '@':
-                return arrange('<@ %s %s>', t.expresssion.display_token(), t.newline.display_token())
+                return arrange('<@ %s %s>', t.expression.display_token(), t.newline.display_token())
 
             return arrange('<@ %s %s %s>',
                            portray_string(t.operator_decorator.s),
-                           t.expresssion.display_token(),
+                           t.expression.display_token(),
                            t.newline.display_token())
 
 
         def write(t, w):
             w(t.operator_decorator.s)
-            t.expresssion.write(w)
+            t.expression.write(w)
             w(t.newline.s)
 
 
@@ -492,6 +520,13 @@ def gem():
                 return '<EmptyLine>'
 
             return arrange('<EmptyLine %r>', t.s)
+
+
+        def count_newlines(t):
+            assert (t.ends_in_newline is true) and (t.newlines is 1) and (t.line_marker is false)
+            assert (t.s.count('\n') is 1) and (t.s[-1] == '\n')
+
+            return 1
 
 
     @share
@@ -621,7 +656,7 @@ def gem():
         __slots__ = ((
             'keyword',                  #   KeywordDelete | KeywordReturn
             'expression',               #   Expression
-            'newline',                  #   newline
+            'newline',                  #   TokenNewline
         ))
 
 
@@ -633,6 +668,10 @@ def gem():
 
         def  __repr__(t):
             return arrange('<%s %r %r %r>', t.__class__.__name__, t.keyword, t.expression, t.newline)
+
+
+        def count_newlines(t):
+            return t.keyword.count_newlines() + t.expression.count_newlines() + t.newline.count_newlines()
 
 
         def display_token(t):
@@ -759,6 +798,9 @@ def gem():
             w(t.keyword_as.s + t.right_name.s)
 
 
+    #
+    #   TODO: Update this to a BookcaseExpression
+    #
     @share
     class ParameterColon_1(SapphireTrunk):
         __slots__ = ((
@@ -777,6 +819,14 @@ def gem():
         def  __repr__(t):
             return arrange('<(1): %r %r %r>',
                            t.left_parenthesis, t.argument_1, t.right_parenthesis__colon)
+
+
+        def count_newlines(t):
+            return (
+                         t.left_parenthesis        .count_newlines()
+                       + t.argument_1              .count_newlines()
+                       + t.right_parenthesis__colon.count_newlines()
+                   )
 
 
         def  display_token(t):
@@ -879,7 +929,7 @@ def gem():
             'module',                   #   String+
             'keyword_import',           #   KeywordImport
             'imported',                 #   String+ | FromAsFragment
-            'newline',                  #   String+
+            'newline',                  #   TokenNewline
         ))
 
 
@@ -897,6 +947,17 @@ def gem():
         def __repr__(t):
             return arrange('<StatementFrom %r %r %r %r %r>',
                            t.keyword_from, t.module, t.keyword_import, t.imported, t.newline)
+
+
+        def count_newlines(t):
+            return (
+                         t.keyword_from  .count_newlines()
+                       + t.module        .count_newlines()
+                       + t.keyword_import.count_newlines()
+                       + t.imported      .count_newlines()
+                       + t.newline       .count_newlines()
+                   )
+
 
         def display_token(t):
             return arrange('<from <%s> %s <%s> %s %s>',

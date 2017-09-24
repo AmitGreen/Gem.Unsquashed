@@ -7,14 +7,13 @@ def gem():
     require_gem('Sapphire.Whitespace')
 
 
-    conjure_ActionWord_WithNewlines = Shared.conjure_ActionWord_WithNewlines    #   Due to privileged
-    lookup_adjusted_meta            = Shared.lookup_adjusted_meta               #   Due to privileged
-    lookup_line_marker              = Shared.lookup_line_marker                 #   Due to privileged
-    lookup_normal_token             = Shared.lookup_normal_token                #   Due to privileged
-    provide_line_marker             = Shared.provide_line_marker                #   Due to privileged
-    provide_normal_token            = Shared.provide_normal_token               #   Due to privileged
-    qi                              = Shared.qi                                 #   Due to privileged
-    qs                              = Shared.qs                                 #   Due to privileged
+    lookup_adjusted_meta = Shared.lookup_adjusted_meta               #   Due to privileged
+    lookup_line_marker   = Shared.lookup_line_marker                 #   Due to privileged
+    lookup_normal_token  = Shared.lookup_normal_token                #   Due to privileged
+    provide_line_marker  = Shared.provide_line_marker                #   Due to privileged
+    provide_normal_token = Shared.provide_normal_token               #   Due to privileged
+    qi                   = Shared.qi                                 #   Due to privileged
+    qs                   = Shared.qs                                 #   Due to privileged
 
 
     def construct_dual_token(t, s, a, b):
@@ -27,7 +26,7 @@ def gem():
         t.b = b
 
 
-    def construct_dual_token__with_newlines(t, s, a, b, newlines, ends_in_newline):
+    def construct_dual_token__with_newlines(t, s, a, b, ends_in_newline, newlines):
         assert t.line_marker is false
         assert s == a.s + b.s
         assert ends_in_newline is (b.s[-1] == '\n')
@@ -36,8 +35,8 @@ def gem():
         t.s               = s
         t.a               = a
         t.b               = b
-        t.newlines        = newlines
         t.ends_in_newline = ends_in_newline
+        t.newlines        = newlines
 
 
     def construct_dual_operator__line_marker_1(t, s, a, b):
@@ -271,7 +270,8 @@ def gem():
         newlines        = 1
 
 
-        __init__ = construct_dual_operator__line_marker_1
+        __init__       = construct_dual_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
     class RightParenthesis_Colon_LineMarker_1(BaseDualOperator):
@@ -284,7 +284,8 @@ def gem():
         newlines                                   = 1
 
 
-        __init__ = construct_dual_operator__line_marker_1
+        __init__       = construct_dual_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
     class Whitespace_Atom(BaseDualOperator):
@@ -310,7 +311,8 @@ def gem():
         newlines        = 1
 
 
-        __init__ = construct_dual_operator__line_marker_1
+        __init__       = construct_dual_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
     def create_dual_token__with_newlines(Meta, s, a, b):
@@ -323,7 +325,7 @@ def gem():
                        if newlines is 0 else
                            conjure_ActionWord_WithNewlines(
                                 Meta, construct_dual_token__with_newlines,
-                           )(s, a, b, newlines, s[-1] == '\n')
+                           )(s, a, b, s[-1] == '\n', newlines)
                )
 
 
