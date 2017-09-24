@@ -18,7 +18,7 @@ def gem():
     class BookcaseManyExpression(SapphireTrunk):
         __slots__ = ((
             'many',                     #   TupleOfExpression+
-            'frill',                    #   ManyFrill
+            'frill',                    #   BookcaseManyFrill
         ))
 
 
@@ -170,7 +170,7 @@ def gem():
 
     if __debug__:
         @share
-        def dump_bookcase_many_cache_many():
+        def dump_bookcase_many_expression_cache_many():
             for [name, cache] in cache_many[-1:]:
                 dump_cache(arrange('%s_cache', name), cache)
 

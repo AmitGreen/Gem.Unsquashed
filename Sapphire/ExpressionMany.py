@@ -37,12 +37,6 @@ def gem():
 
 
     @share
-    class AndExpression_Many(BaseExpression_Many):
-        __slots__    = (())
-        display_name = 'and-*'
-
-
-    @share
     class ArithmeticExpression_Many(BaseExpression_Many):
         __slots__    = (())
         display_name = 'arithmetic-*'
