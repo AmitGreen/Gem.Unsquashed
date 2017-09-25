@@ -4,12 +4,12 @@
 @gem('Sapphire.Whitespace')
 def gem():
     @export
-    class TokenIndented(Token):
+    class TokenIndented(SapphireToken):
         display_name      = 'indented'
         is_token_indented = true
 
 
-    class TokenWhitespace(Token):
+    class TokenWhitespace(SapphireToken):
         display_name = 'whitespace'
 
 

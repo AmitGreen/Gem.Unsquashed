@@ -4,7 +4,7 @@
 @gem('Pearl.Tokenizer')
 def gem():
     require_gem('Pearl.Core')
-    require_gem('Pearl.Token')
+
 
     tokenizer = [none, 0, 0, 0, none, none, none]
 
@@ -124,6 +124,20 @@ def gem():
             t.cadence = cadence_reuse
 
             return t
+
+
+    class UnknownLine(Object):
+        display_name    = 'unknown-line'
+        ends_in_newline = true
+        newlines        = 1
+        line_marker     = true
+
+
+        def __init__(t, s):
+            assert '\n' not in s[:-1]
+            assert s[-1] == '\n'
+
+            t.s = s
 
 
     parse_context = ParseContext()

@@ -5,8 +5,8 @@
 def gem():
     class DualFrill(Object):
         __slots__ = ((
-            'a',                        #   Token+
-            'b',                        #   Token+
+            'a',                        #   SapphireToken+
+            'b',                        #   SapphireToken+
         ))
 
 

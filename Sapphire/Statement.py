@@ -538,7 +538,7 @@ def gem():
 
 
     @share
-    class EmptyLine(Token):
+    class EmptyLine(SapphireToken):
         __slots__       = (())
         display_name    = 'empty-line'
         ends_in_newline = true
@@ -714,7 +714,7 @@ def gem():
         __slots__ = ((
             'keyword',                  #   KeywordDelete | KeywordReturn
             'expression',               #   Expression
-            'newline',                  #   TokenNewline
+            'newline',                  #   LineMarker
         ))
 
 
@@ -1005,7 +1005,7 @@ def gem():
             'module',                   #   String+
             'keyword_import',           #   KeywordImport
             'imported',                 #   String+ | FromAsFragment
-            'newline',                  #   TokenNewline
+            'newline',                  #   LineMarker
         ))
 
 
@@ -1123,13 +1123,6 @@ def gem():
             w(t.newline.s)
 
 
-    @share
-    class StatementReturn(Token):
-        __slots__    = (())
-        display_name = 'return'
-        keyword      = 'return'
-
-
-    SapphireTrunk   .call_statement = CallStatement
     MemberExpression.call_statement = MethodCallStatement
-    Token           .call_statement = CallStatement
+    SapphireToken   .call_statement = CallStatement
+    SapphireTrunk   .call_statement = CallStatement

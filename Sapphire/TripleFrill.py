@@ -5,9 +5,9 @@
 def gem():
     class TripleFrill(Object):
         __slots__ = ((
-            'a',                        #   Token+
-            'b',                        #   Token+
-            'c',                        #   Token+
+            'a',                        #   SapphireToken+
+            'b',                        #   SapphireToken+
+            'c',                        #   SapphireToken+
         ))
 
 

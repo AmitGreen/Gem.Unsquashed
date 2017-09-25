@@ -19,7 +19,7 @@ def gem():
         t.newlines = newlines
 
 
-    class LineMarker(Token):
+    class LineMarker(SapphireToken):
         display_name                            = 'line-marker'
         ends_in_newline                         = true
         is_end_of_arithmetic_expression         = true

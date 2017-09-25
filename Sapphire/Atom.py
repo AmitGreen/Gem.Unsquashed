@@ -10,8 +10,56 @@ def gem():
     provide_atom = provide_normal_token
 
 
+    @export
+    class SapphireToken(Object):
+        __slots__ = ((
+            's',
+        ))
+
+
+        ends_in_newline         = false
+        is_comma                = false
+        is_identifier           = false
+        is_keyword              = false
+        is_right_parenthesis    = false
+        is_right_square_bracket = false
+        newlines                = 0
+        line_marker             = false
+
+
+        def __init__(t, s):
+            assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
+            assert '\n' not in s
+
+            t.s = s
+
+
+        def __repr__(t):
+            return arrange('<%s %r>', t.__class__.__name__, t.s)
+
+
+        def count_newlines(t):
+            if not ((t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)):
+                my_line('t: %r', t)
+
+            assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
+
+            return 0
+
+            
+        def display_full_token(t):
+            return arrange('<%s %s>', t.display_name, portray_string(t.s))
+
+
+        display_token = __repr__
+
+
+        def write(t, w):
+            w(t.s)
+
+
     @share
-    class DoubleQuote(Token):
+    class DoubleQuote(SapphireToken):
         __slots__                      = (())
         display_name                   = '"'
         is__atom__or__special_operator = true
@@ -27,7 +75,7 @@ def gem():
 
 
     @share
-    class Identifier(Token):
+    class Identifier(SapphireToken):
         __slots__                             = (())
         display_name                          = 'Identifier'
         is__atom__or__special_operator        = true
@@ -43,7 +91,7 @@ def gem():
 
 
     @share
-    class Number(Token):
+    class Number(SapphireToken):
         __slots__                      = (())
         display_name                   = 'number'
         is__atom__or__special_operator = true
@@ -59,7 +107,7 @@ def gem():
 
 
     @share
-    class SingleQuote(Token):
+    class SingleQuote(SapphireToken):
         __slots__                      = (())
         display_name                   = "'"
         is__atom__or__special_operator = true
