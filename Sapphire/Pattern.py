@@ -10,7 +10,7 @@ def gem():
 
 
     from Tremolite import create_match_code, ANY_OF, BACKSLASH, DOT, EMPTY, END_OF_PATTERN, EXACT
-    from Tremolite import G, LINEFEED, MATCH, NAME, NAMED_GROUP, NOT_FOLLOWED_BY
+    from Tremolite import G, LINEFEED, MATCH, NAME, NAMED_GROUP, NOT_ANY_OF, NOT_FOLLOWED_BY
     from Tremolite import ONE_OR_MORE, OPTIONAL, PRINTABLE, PRINTABLE_MINUS, Q, ZERO_OR_MORE
 
 
@@ -212,7 +212,15 @@ def gem():
                           | G(left_brace__ow)          + P(G(right_brace)          + ow)
                       ),
                   )
-                + Q('comment_newline', P(pound_G_comment) + G('newline', LINEFEED))
+                + Q(
+                      'comment_newline',
+                      P(
+                            '#'
+                          + G('comment', ZERO_OR_MORE(ow + ONE_OR_MORE(NOT_ANY_OF('\x00-\x1F', ' '))))
+                          + ow
+                      )
+                      + G('newline', LINEFEED)
+                  )
             ),
         )
 

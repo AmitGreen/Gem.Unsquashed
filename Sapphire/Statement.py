@@ -260,40 +260,6 @@ def gem():
 
 
     @share
-    class CommentLine(SapphireTrunk):
-        __slots__ = ((
-            'comment',                  #   Comment
-            'newline',                  #   String
-        ))
-
-
-        def __init__(t, comment, newline):
-            t.comment = comment
-            t.newline = newline
-
-
-        def __repr__(t):
-            if t.comment is '':
-                return arrange('<# %r>', t.newline)
-
-            return arrange('<# %r %r>', t.comment, t.newline)
-
-
-        def count_newlines(t):
-            assert '\n' not in t.comment
-            assert (t.newline.count('\n') is 1) and (t.newline[-1] == '\n')
-
-            return 1
-
-
-        display_token = __repr__
-
-
-        def write(t, w):
-            w('#' + t.comment + t.newline)
-
-
-    @share
     class ConditionHeader(SapphireTrunk):
         __slots__ = ((
             'keyword',                  #   KeywordIf | KeywordWith

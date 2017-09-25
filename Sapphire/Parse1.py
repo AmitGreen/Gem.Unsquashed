@@ -161,23 +161,28 @@ def gem():
                         assert qd() is 0
                         continue
 
-                    [comment, newline] = m.group('comment', 'newline')
+                    comment_end = m.end('comment')
 
-                    if newline is none:
-                        assert comment is none
+                    if comment_end is not -1:
+                        indented_end = m.end('indented')
 
-                        raise_unknown_line()
+                        if indented_end is 0:
+                            s = qs()
 
-                    if comment is not none:
-                        indented = m.group('indented')
-
-                        if indented is '':
-                            append(CommentLine(comment, newline))
+                            append(
+                                conjure_comment_line(
+                                    s[1           : comment_end],
+                                    s[comment_end :            ],
+                                )
+                            )
 
                             continue
 
-                        append(IndentedComment(indented, comment, newline))
+                        append(IndentedComment(m.group('indented'), m.group('comment'), qs()[m.end('comment') : ]))
                         continue
+
+                    if m.end('newline') is -1:
+                        raise_unknown_line()
 
                     append(conjure_empty_line(m.group()))
 
@@ -232,4 +237,4 @@ def gem():
                 #dump_tuple_of_expression_cache()
                 #dump_many_frill_cache()
                 #dump_many_expression_cache_many()
-                dump_empty_line_cache()
+                #dump_empty_line_cache()

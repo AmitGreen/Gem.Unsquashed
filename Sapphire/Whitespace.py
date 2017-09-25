@@ -3,14 +3,86 @@
 #
 @gem('Sapphire.Whitespace')
 def gem():
-    empty_line_cache   = {}
-    lookup_empty_line  = empty_line_cache.get
-    provide_empty_line = empty_line_cache.setdefault
+    if __debug__:
+        cache_many = []
+
+
+    comment_line_cache   = {}
+    lookup_comment_line  = comment_line_cache.get
+    provide_comment_line = comment_line_cache.setdefault
+    store_comment_line   = comment_line_cache.__setitem__
+
+
+    empty_line_cache     = {}
+    lookup_empty_line    = empty_line_cache.get
+    provide_empty_line   = empty_line_cache.setdefault
+
+
+    class CommentLine(String):
+        __slots__       = (())
+        ends_in_newline = true
+        line_marker     = false
+        newlines        = 1
+
+
+        def __repr__(t):
+            return arrange('<CommentLine %s>', portray_string(t))
+
+
+        def count_newlines(t):
+            assert '\n' not in t
+
+            return 1
+
+
+        def display_token(t):
+            if t is comment_line:
+                return '<#>'
+
+            return arrange('<# %s>', portray_string(t))
+
+
+        def write(t, w):
+            w('#' + t + '\n')
+
+
+    class CommentLine_WithTrailingSpaces(SapphireToken):
+        __slots__ = ((
+            'comment',                  #   CommentLine
+            'newline',                  #   EmptyLine
+        ))
+
+
+        ends_in_newline = true
+        newlines        = 1
+
+
+        def __init__(t, comment, newline):
+            t.comment = comment
+            t.newline = newline
+
+
+        def __repr__(t):
+            return arrange('<CommentLineWithTrailingSpaces %s %r>', portray_string(t.comment), t.newline)
+
+
+        def count_newlines(t):
+            assert (t.ends_in_newline is true) and (t.line_marker is false) and (t.newlines is 1)
+            assert ('\n' not in t.comment) and (t.newline.count_newlines() is 1)
+
+            return 1
+
+
+        def display_token(t):
+            return arrange('<# %s %s>', portray_string(t.comment), portray_string(t.newline))
+
+
+        def write(t, w):
+            w('#' + t.comment + t.newline)
 
 
     class EmptyLine(String):
         __slots__       = (())
-        display_name    = 'empty-line'
         ends_in_newline = true
         line_marker     = false
         newlines        = 1
@@ -54,6 +126,51 @@ def gem():
             t.s = s
 
 
+    def conjure_simple_comment_line(comment):
+        r = lookup_comment_line(comment)
+
+        if r is not none:
+            return r
+
+        r = CommentLine(comment)
+
+        return provide_comment_line(r, r)
+
+
+    def conjure_comment_line(comment, newline):
+        if newline == '\n':
+            return conjure_simple_comment_line(comment)
+
+        #
+        #   NOTE:
+        #       Map order is reverse here, first newline, then comment
+        #
+        first = lookup_comment_line(newline, absent)
+
+        if first.__class__ is Map:
+            r = first.get(comment)
+
+            if r is not none:
+                return r
+
+            comment = conjure_simple_comment_line(comment)
+            newline = conjure_empty_line(newline)
+
+            return first.setdefault(comment, CommentLine_WithTrailingSpaces(comment, newline))
+
+        if first.comment == comment:
+            return first
+
+        comment = conjure_simple_comment_line(comment)
+        newline = conjure_empty_line(newline)
+
+        r = CommentLine_WithTrailingSpaces(comment, newline)
+
+        store_comment_line(newline, (r   if first is absent else   { first.comment : first, comment : r }))
+
+        return r
+
+
     def conjure_empty_line(s):
         r = lookup_empty_line(s)
 
@@ -65,7 +182,8 @@ def gem():
         return provide_empty_line(r, r)
 
 
-    empty_line = conjure_empty_line('\n')
+    comment_line = conjure_comment_line('', '\n')
+    empty_line   = conjure_empty_line('\n')
 
 
     [
@@ -76,10 +194,12 @@ def gem():
     if __debug__:
         @share
         def dump_empty_line_cache():
-            dump_cache('empty_line', empty_line_cache)
+            dump_cache('comment-line-cache', comment_line_cache)
+            dump_cache('empty-line-cache',   empty_line_cache)
 
 
     share(
+        'conjure_comment_line',                 conjure_comment_line,
         'conjure_empty_line',                   conjure_empty_line,
         'conjure_whitespace',                   conjure_whitespace,
         'conjure_whitespace__ends_in_newline',  conjure_whitespace__ends_in_newline,
