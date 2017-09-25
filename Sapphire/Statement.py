@@ -538,35 +538,6 @@ def gem():
 
 
     @share
-    class EmptyLine(SapphireToken):
-        __slots__       = (())
-        display_name    = 'empty-line'
-        ends_in_newline = true
-        newlines        = 1
-
-
-        def __init__(t, s):
-            assert s[-1] == '\n'
-            assert s.count('\n') is 1
-
-            t.s = s
-
-
-        def __repr__(t):
-            if t.s is '':
-                return '<EmptyLine>'
-
-            return arrange('<EmptyLine %r>', t.s)
-
-
-        def count_newlines(t):
-            assert (t.ends_in_newline is true) and (t.newlines is 1) and (t.line_marker is false)
-            assert (t.s.count('\n') is 1) and (t.s[-1] == '\n')
-
-            return 1
-
-
-    @share
     class FromAsFragment(SapphireTrunk):
         __slots__ = ((
             'left_name',                #   String+

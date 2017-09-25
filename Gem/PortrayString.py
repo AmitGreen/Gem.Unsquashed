@@ -598,7 +598,7 @@ def gem():
             if not a.is_portray_boring:
                 break
 
-            overall  = N
+            overall = N
         else:
             #line('portray_string(%r): simple', s)
 
@@ -652,10 +652,10 @@ def gem():
             if a.is_apostrophe:
                 #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.A.name, state.name, state.A.name)
 
-                raw_state   = raw_state.A
-                state       = state.A
-                favorite   -= 1
-                C          += state.favorite_3
+                raw_state = raw_state.A
+                state     = state.A
+                favorite -= 1
+                C        += state.favorite_3
                 continue
 
             if a.is_backslash:
@@ -670,10 +670,10 @@ def gem():
             if a.is_quotation_mark:
                 #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.Q.name, state.name, state.Q.name)
 
-                raw_state   = raw_state.Q
-                state       = state.Q
-                favorite   += 1
-                S          -= state.favorite_3
+                raw_state = raw_state.Q
+                state     = state.Q
+                favorite += 1
+                S        -= state.favorite_3
                 continue
 
             assert not a.is_printable

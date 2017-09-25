@@ -179,7 +179,7 @@ def gem():
                         append(IndentedComment(indented, comment, newline))
                         continue
 
-                    append(EmptyLine(m.group()))
+                    append(conjure_empty_line(m.group()))
 
                 if show:
                     for v in many:
@@ -201,22 +201,6 @@ def gem():
                     line('Passed#1: Identical dump from parse tree.  Total: %d line%s',
                          length(many), (''   if length(many) is 0 else   's'))
 
-                #conjure_colon__line_marker('\n\n:\n')
-                #dump_dual_frill_cache()
-                #dump_token_caches()
-                #dump_member_expression_cache()
-                #dump_bookcase_expression_cache_many()
-                #dump_bookcase_dual_expression_cache_many()
-                #dump_unary_expression_cache_many()
-                #dump_binary_expression_cache_many()
-                #dump_ternary_expression_cache_many()
-                #dump_postfix_expression_cache()
-                #dump_bookcase_many_frill_cache()
-                #dump_bookcase_many_expression_cache_many()
-                #dump_tuple_of_expression_cache()
-                #dump_many_frill_cache()
-                #dump_many_expression_cache_many()
-
                 if "test count newlines":
                     total = 0
 
@@ -232,3 +216,20 @@ def gem():
                 if "test identation" and 0:
                     for v in many:
                         v.indented
+
+                #conjure_colon__line_marker('\n\n:\n')
+                #dump_dual_frill_cache()
+                #dump_token_caches()
+                #dump_member_expression_cache()
+                #dump_bookcase_expression_cache_many()
+                #dump_bookcase_dual_expression_cache_many()
+                #dump_unary_expression_cache_many()
+                #dump_binary_expression_cache_many()
+                #dump_ternary_expression_cache_many()
+                #dump_postfix_expression_cache()
+                #dump_bookcase_many_frill_cache()
+                #dump_bookcase_many_expression_cache_many()
+                #dump_tuple_of_expression_cache()
+                #dump_many_frill_cache()
+                #dump_many_expression_cache_many()
+                dump_empty_line_cache()

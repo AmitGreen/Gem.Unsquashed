@@ -170,7 +170,7 @@ def gem():
                                 append(IndentedComment(indented, comment, newline))
                                 continue
                             else:
-                                append(EmptyLine(m.group()))
+                                append(conjure_empty_line(m.group()))
                                 continue
 
                     j = m.end()
