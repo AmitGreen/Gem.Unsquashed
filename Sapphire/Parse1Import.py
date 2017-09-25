@@ -119,7 +119,7 @@ def gem():
         if m.end('comment_newline') is not -1:
             raise_unknown_line()
 
-        keyword_import = KeywordImport(m.group())
+        keyword_import = conjure_keyword_import(m.group())
 
         j = m.end()
 

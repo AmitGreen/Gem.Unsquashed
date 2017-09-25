@@ -110,6 +110,21 @@ def gem():
             w(t)
 
 
+    class Identation(SapphireToken):
+        __slots__ = ((
+            'total',                    #   Integer {> 0}
+        ))
+
+
+        def __init__(t, s):
+            assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
+            assert '\n' not in s
+            assert s is intern_string(s)
+
+            t.s     = intern_string(s)
+            t.total = length(s)
+
+
     @export
     class TokenIndented(SapphireToken):
         display_name      = 'indented'
@@ -124,6 +139,17 @@ def gem():
             assert '\n' not in s
 
             t.s = s
+
+
+    def conjure_identation(s):
+        r = lookup_indentation_token(s)
+
+        if r is not none:
+            return r
+
+        s = intern_string(s)
+
+        return provide_indentation_token(s, Identation(s))
 
 
     def conjure_comment_line(comment):
@@ -200,6 +226,7 @@ def gem():
         'conjure_comment_line',                         conjure_comment_line,
         'conjure_comment_line_with_trailing_spaces',    conjure_comment_line_with_trailing_spaces,
         'conjure_empty_line',                           conjure_empty_line,
+        'conjure_identation',                           conjure_identation,
         'conjure_whitespace',                           conjure_whitespace,
         'conjure_whitespace__ends_in_newline',          conjure_whitespace__ends_in_newline,
     )

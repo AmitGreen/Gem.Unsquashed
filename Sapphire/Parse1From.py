@@ -45,7 +45,7 @@ def gem():
             module = conjure_member_expression(module, conjure_dot_name(operator_dot, conjure_name(m1.group())))
 
         wj(m2.end())
-        wk(KeywordImport(m2.group()))
+        wk(conjure_keyword_import(m2.group()))
 
         return module
         #</module>
@@ -125,7 +125,7 @@ def gem():
         if m1.end('comment_newline') is not -1:
             raise_unknown_line()
 
-        keyword_from = KeywordFrom(m1.group())
+        keyword_from = conjure_keyword_from(m1.group())
 
         #
         #<module ... 'import'>

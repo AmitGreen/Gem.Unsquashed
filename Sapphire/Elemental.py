@@ -131,7 +131,6 @@ def gem():
         keyword      = 'assert'
 
 
-    @export
     class KeywordClass(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'class'
@@ -249,14 +248,12 @@ def gem():
         keyword                           = 'for'
 
 
-    @export
     class KeywordFrom(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'from'
         keyword      = 'from'
 
 
-    @export
     class KeywordFunction(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'function'
@@ -311,7 +308,6 @@ def gem():
         keyword                          = 'is'
 
 
-    @export
     class KeywordImport(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'import'
@@ -446,7 +442,6 @@ def gem():
         keyword                                 = '+='
 
 
-    @export
     class OperatorAtSign(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = '@'
@@ -1013,13 +1008,17 @@ def gem():
     del Shared.initialize_action_word__Meta
 
 
-    conjure_equal_sign  = produce_conjure_action_word('equal_sign',  OperatorEqualSign)
-    conjure_dot         = produce_conjure_action_word('dot',         OperatorDot)
-    conjure_keyword_as  = produce_conjure_action_word('keyword_as',  KeywordAs)
-    conjure_keyword_for = produce_conjure_action_word('keyword_for', KeywordFor)
-    conjure_keyword_if  = produce_conjure_action_word('keyword_if',  KeywordIf)
-    conjure_keyword_is  = produce_conjure_action_word('keyword_is',  KeywordIs)
-    conjure_star_sign   = produce_conjure_action_word('star_sign',   OperatorStarSign)
+    conjure_at_sign        = produce_conjure_action_word('at_sign',        OperatorAtSign)
+    conjure_dot            = produce_conjure_action_word('dot',            OperatorDot)
+    conjure_equal_sign     = produce_conjure_action_word('equal_sign',     OperatorEqualSign)
+    conjure_keyword_as     = produce_conjure_action_word('keyword_as',     KeywordAs)
+    conjure_keyword_class  = produce_conjure_action_word('keyword_class',  KeywordClass)
+    conjure_keyword_for    = produce_conjure_action_word('keyword_for',    KeywordFor)
+    conjure_keyword_from   = produce_conjure_action_word('keyword_from',   KeywordFrom)
+    conjure_keyword_if     = produce_conjure_action_word('keyword_if',     KeywordIf)
+    conjure_keyword_import = produce_conjure_action_word('keyword_import', KeywordImport)
+    conjure_keyword_is     = produce_conjure_action_word('keyword_is',     KeywordIs)
+    conjure_star_sign      = produce_conjure_action_word('star_sign',      OperatorStarSign)
 
     [
             conjure_colon, conjure_colon__ends_in_newline,
@@ -1169,6 +1168,7 @@ def gem():
 
 
     share(
+        'conjure_at_sign',                                  conjure_at_sign,
         'conjure_colon',                                    conjure_colon,
         'conjure_colon__ends_in_newline',                   conjure_colon__ends_in_newline,
         'conjure_colon__line_marker',                       conjure_colon__line_marker,
@@ -1184,11 +1184,15 @@ def gem():
         'conjure__finally__colon__line_marker',             conjure__finally__colon__line_marker,
         'conjure_keyword_as',                               conjure_keyword_as,
         'conjure_keyword_assert',                           conjure_keyword_assert,
+        'conjure_keyword_class',                            conjure_keyword_class,
         'conjure_keyword_delete',                           conjure_keyword_delete,
         'conjure_keyword_else_if',                          conjure_keyword_else_if,
         'conjure_keyword_except',                           conjure_keyword_except,
         'conjure_keyword_for',                              conjure_keyword_for,
+        'conjure_keyword_from',                             conjure_keyword_from,
+        'conjure_keyword_function',                         conjure_keyword_function,
         'conjure_keyword_if',                               conjure_keyword_if,
+        'conjure_keyword_import',                           conjure_keyword_import,
         'conjure_keyword_in',                               conjure_keyword_in,
         'conjure_keyword_in__ends_in_newline',              conjure_keyword_in__ends_in_newline,
         'conjure_keyword_is',                               conjure_keyword_is,

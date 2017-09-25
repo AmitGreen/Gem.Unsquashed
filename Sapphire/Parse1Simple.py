@@ -11,7 +11,7 @@ def gem():
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        operator_at_sign = OperatorAtSign(m.group())
+        operator_at_sign = conjure_at_sign(m.group())
         s                = qs()
 
         j = m.end()

@@ -8,7 +8,7 @@ def gem():
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        keyword_class = KeywordClass(m.group())
+        keyword_class = conjure_keyword_class(m.group())
 
         j = m.end()
 
@@ -65,7 +65,7 @@ def gem():
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        keyword_function = KeywordFunction(m.group())
+        keyword_function = conjure_keyword_function(m.group())
 
         j = m.end()
 
