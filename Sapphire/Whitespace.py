@@ -126,7 +126,7 @@ def gem():
             t.s = s
 
 
-    def conjure_simple_comment_line(comment):
+    def conjure_comment_line(comment):
         r = lookup_comment_line(comment)
 
         if r is not none:
@@ -137,9 +137,8 @@ def gem():
         return provide_comment_line(r, r)
 
 
-    def conjure_comment_line(comment, newline):
-        if newline == '\n':
-            return conjure_simple_comment_line(comment)
+    def conjure_comment_line_with_trailing_spaces(comment, newline):
+        assert newline != '\n'
 
         #
         #   NOTE:
@@ -153,15 +152,14 @@ def gem():
             if r is not none:
                 return r
 
-            comment = conjure_simple_comment_line(comment)
+            comment = conjure_comment_line(comment)
             newline = conjure_empty_line(newline)
 
             return first.setdefault(comment, CommentLine_WithTrailingSpaces(comment, newline))
 
         if first.comment == comment:
             return first
-
-        comment = conjure_simple_comment_line(comment)
+        comment = conjure_comment_line(comment)
         newline = conjure_empty_line(newline)
 
         r = CommentLine_WithTrailingSpaces(comment, newline)
@@ -182,7 +180,7 @@ def gem():
         return provide_empty_line(r, r)
 
 
-    comment_line = conjure_comment_line('', '\n')
+    comment_line = conjure_comment_line('\n')
     empty_line   = conjure_empty_line('\n')
 
 
@@ -199,8 +197,9 @@ def gem():
 
 
     share(
-        'conjure_comment_line',                 conjure_comment_line,
-        'conjure_empty_line',                   conjure_empty_line,
-        'conjure_whitespace',                   conjure_whitespace,
-        'conjure_whitespace__ends_in_newline',  conjure_whitespace__ends_in_newline,
+        'conjure_comment_line',                         conjure_comment_line,
+        'conjure_comment_line_with_trailing_spaces',    conjure_comment_line_with_trailing_spaces,
+        'conjure_empty_line',                           conjure_empty_line,
+        'conjure_whitespace',                           conjure_whitespace,
+        'conjure_whitespace__ends_in_newline',          conjure_whitespace__ends_in_newline,
     )

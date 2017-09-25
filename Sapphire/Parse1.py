@@ -169,11 +169,13 @@ def gem():
                         if indented_end is 0:
                             s = qs()
 
+                            comment = s[1           : comment_end]       #   Use '1' to ignore the leading '#'
+                            newline = s[comment_end :            ]
+
                             append(
-                                conjure_comment_line(
-                                    s[1           : comment_end],
-                                    s[comment_end :            ],
-                                )
+                                conjure_comment_line(comment)
+                                    if newline == '\n' else
+                                        conjure_comment_line_with_trailing_spaces(comment, newline)
                             )
 
                             continue
