@@ -214,7 +214,7 @@ def gem():
     @share
     def parse1_statement_return(m):
         if m.end('newline') is not -1:
-            return evoke_return__line_marker(m.end('atom'))
+            return evoke_indented__return__line_marker(m.end('indented'), m.end('atom'))
 
         keyword = conjure_keyword_return(m.group())
 

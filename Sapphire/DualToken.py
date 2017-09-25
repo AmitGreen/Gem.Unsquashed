@@ -450,18 +450,6 @@ def gem():
         count_newlines = count_newlines__line_marker
 
 
-    class KeywordReturn_LineMarker_1(BaseDualOperator):
-        __slots__       = (())
-        display_name    = r'return\n'
-        ends_in_newline = true
-        line_marker     = true
-        newlines        = 1
-
-
-        __init__       = construct_dual_operator__line_marker_1
-        count_newlines = count_newlines__line_marker
-
-
     class RightParenthesis_Colon_LineMarker_1(BaseDualOperator):
         __slots__                                  = (())
         display_name                               = r'):\n'
@@ -664,14 +652,6 @@ def gem():
                                   line_marker = true,
                               )
 
-    evoke_return__line_marker = produce_evoke_dual_token(
-                                    'return__line_marker',
-                                    KeywordReturn_LineMarker_1,
-                                    conjure_keyword_return,
-
-                                    line_marker = true,
-                                )
-
     evoke__single_quote__whitespace = produce_evoke_dual_token(
                                           'single-quote+whitespace',
                                           Atom_Whitespace,
@@ -817,7 +797,6 @@ def gem():
         'evoke_name_whitespace',                    evoke_name_whitespace,
         'evoke_not_in',                             evoke_not_in,
         'evoke_pass__line_marker',                  evoke_pass__line_marker,
-        'evoke_return__line_marker',                evoke_return__line_marker,
         'evoke_whitespace_name',                    evoke_whitespace_name,
         'evoke_yield__line_marker',                 evoke_yield__line_marker,
         'find_evoke_atom_whitespace',               find_evoke_atom_whitespace,

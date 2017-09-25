@@ -97,15 +97,21 @@ def gem():
             if display_name == t.s:
                 return display_name
 
-            a_s = t.a.s
-            b_s = t.b.s
-            c_s = t.c.s
+            a = t.a
 
-            return arrange('<%s <%s> <%s> <%s>>',
+            if a.is_token_indentation:
+                return arrange('<%+d %s %s %s>',
+                               a.total,
+                               display_name,
+                               t.b.display_short_token(),
+                               t.c.display_short_token())
+
+
+            return arrange('<%s %s %s %s>',
                            display_name,
-                           (portray_string(a_s)   if '\n' in a_s else   a_s),
-                           (portray_string(b_s)   if '\n' in b_s else   b_s),
-                           (portray_string(c_s)   if '\n' in c_s else   c_s))
+                           a  .display_short_token(),
+                           t.b.display_short_token(),
+                           t.c.display_short_token())
 
 
     def create_triple_token__with_newlines(Meta, s, a, b, c):
@@ -267,6 +273,18 @@ def gem():
         is_postfix_operator = true
 
 
+    class Indented_KeywordReturn_LineMarker_1(BaseTripleOperator):
+        __slots__       = (())
+        display_name    = r'return\n'
+        ends_in_newline = true
+        indentation     = BaseTripleOperator.a
+        line_marker     = true
+        newlines        = 1
+
+        __init__       = construct_triple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
+
+
     class RightParenthesis_Colon_LineMarker_1(BaseTripleOperator):
         __slots__                                  = (())
         display_name                               = r'):\n'
@@ -275,7 +293,6 @@ def gem():
         is__right_parenthesis__colon__newline      = true
         line_marker                                = true
         newlines                                   = 1
-
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
@@ -314,6 +331,16 @@ def gem():
                           conjure_right_square_bracket,
                           conjure_right_square_bracket__ends_in_newline,
                       )
+
+
+    evoke_indented__return__line_marker = produce_evoke_triple_token(
+                                              'indented__return__line_marker',
+                                              Indented_KeywordReturn_LineMarker_1,
+                                              conjure_indentation,
+                                              conjure_keyword_return,
+
+                                              line_marker = true,
+                                          )
 
 
     evoke__right_parenthesis__colon__line_marker = produce_evoke_triple_token(
@@ -408,6 +435,7 @@ def gem():
         'conjure_dot_name_triplet',                         conjure_dot_name_triplet,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
         'evoke_all_index',                                  evoke_all_index,
+        'evoke_indented__return__line_marker',              evoke_indented__return__line_marker,
         'evoke__right_parenthesis__colon__line_marker',     evoke__right_parenthesis__colon__line_marker,
         'find_evoke_whitespace_atom_whitespace',            find_evoke_whitespace_atom_whitespace,
     )

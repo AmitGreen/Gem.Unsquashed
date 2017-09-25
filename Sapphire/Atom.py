@@ -23,8 +23,9 @@ def gem():
         is_keyword              = false
         is_right_parenthesis    = false
         is_right_square_bracket = false
-        newlines                = 0
+        is_token_indentation    = false
         line_marker             = false
+        newlines                = 0
 
 
         def __init__(t, s):
@@ -42,6 +43,10 @@ def gem():
             return 0
 
             
+        def display_short_token(t):
+            return arrange('{%s}', portray_string(t.s)[1:-1])
+
+
         def display_full_token(t):
             return arrange('<%s %s>', t.display_name, portray_string(t.s))
 

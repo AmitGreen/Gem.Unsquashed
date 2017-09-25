@@ -15,8 +15,7 @@ def gem():
         ))
 
 
-        display_name      = 'indented'
-        is_token_indented = true
+        is_token_indentation = true
 
 
         def __init__(t, s):
@@ -31,11 +30,15 @@ def gem():
             return 0
 
 
+        def display_short_token(t):
+            return arrange('{+%d}', t.total)
+
+
         def display_token(t):
             if t.total is 0:
-                return '<+0>'
+                return '{+0}'
 
-            return arrange('<+%d %s>', t.total, portray_string(t.s))
+            return arrange('{+%d %s}', t.total, portray_string(t.s))
 
 
     def conjure_indentation(s):

@@ -82,6 +82,10 @@ def gem():
             return arrange('<%s %s>', t.__class__.__name__, portray_string(t.s))
 
 
+        def display_short_token(t):
+            return arrange('{%s}', portray_string(t.s)[1:-1])
+
+
         def display_token(t):
             if t.s == t.display_name:
                 return arrange('<%s>', t.display_name)

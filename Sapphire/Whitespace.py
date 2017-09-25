@@ -18,7 +18,7 @@ def gem():
     class EmptyLine(String):
         __slots__       = (())
         ends_in_newline = true
-        indented        = empty_indentation
+        indentation     = empty_indentation
         line_marker     = false
         newlines        = 1
 

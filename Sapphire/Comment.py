@@ -19,7 +19,7 @@ def gem():
     class CommentLine(String):
         __slots__       = (())
         ends_in_newline = true
-        indented        = empty_indentation
+        indentation     = empty_indentation
         line_marker     = false
         newlines        = 1
 
@@ -53,7 +53,7 @@ def gem():
 
 
         ends_in_newline = true
-        indented        = empty_indentation
+        indentation     = empty_indentation
         newlines        = 1
 
 
@@ -83,7 +83,7 @@ def gem():
 
     class IndentedCommentLine(SapphireToken):
         __slots__ = ((
-            'indented',                 #   Indentation
+            'indentation',              #   Indentation
             'comment',                  #   CommentLine
         ))
 
@@ -92,33 +92,33 @@ def gem():
         newlines        = 1
 
 
-        def __init__(t, indented, comment):
-            t.indented = indented
-            t.comment  = comment
+        def __init__(t, indentation, comment):
+            t.indentation = indentation
+            t.comment     = comment
 
 
         def __repr__(t):
-            return arrange('<IndentedCommentLine +%d %r>', t.indented.total, portray_string(t.comment))
+            return arrange('<IndentedCommentLine +%d %r>', t.indentation.total, portray_string(t.comment))
 
 
         def count_newlines(t):
             assert (t.ends_in_newline is true) and (t.line_marker is false) and (t.newlines is 1)
-            assert (t.indented.count_newlines() is 0) and ('\n' not in t.comment)
+            assert (t.indentation.count_newlines() is 0) and ('\n' not in t.comment)
 
             return 1
 
 
         def display_token(t):
-            return arrange('<#+%d %s>', t.indented.total, portray_string(t.comment))
+            return arrange('<#+%d %s>', t.indentation.total, portray_string(t.comment))
 
 
         def write(t, w):
-            w(t.indented.s + '#' + t.comment + '\n')
+            w(t.indentation.s + '#' + t.comment + '\n')
 
 
     class IndentedCommentLine_WithTrailer(SapphireToken):
         __slots__ = ((
-            'indented',                 #   Indentation
+            'indentation',              #   Indentation
             'comment',                  #   CommentLine
             'newline',                  #   EmptyLine
         ))
@@ -128,31 +128,31 @@ def gem():
         newlines        = 1
 
 
-        def __init__(t, indented, comment, newline):
-            t.indented = indented
-            t.comment  = comment
-            t.newline  = newline
+        def __init__(t, indentation, comment, newline):
+            t.indentation = indentation
+            t.comment     = comment
+            t.newline     = newline
 
 
         def __repr__(t):
             return arrange('<IndentedCommentLine_WithTrailer +%d %s %s>',
-                           t.indented.total, portray_string(t.comment), portray_string(t.newline))
+                           t.indentation.total, portray_string(t.comment), portray_string(t.newline))
 
 
         def count_newlines(t):
             assert (t.ends_in_newline is true) and (t.line_marker is false) and (t.newlines is 1)
-            assert (t.indented.count_newlines() is 0) and ('\n' not in t.comment)
+            assert (t.indentation.count_newlines() is 0) and ('\n' not in t.comment)
             assert t.newline.count_newlines() is 1
 
             return 1
 
 
         def display_token(t):
-            return arrange('<#+%d %s %s>', t.indented.total, portray_string(t.comment), portray_string(t.newline))
+            return arrange('<#+%d %s %s>', t.indentation.total, portray_string(t.comment), portray_string(t.newline))
 
 
         def write(t, w):
-            w(t.indented.s + '#' + t.comment + t.newline)
+            w(t.indentation.s + '#' + t.comment + t.newline)
 
 
     def conjure_comment_line(comment):

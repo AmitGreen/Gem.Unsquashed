@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 0
+    show = 1
 
 
     require_gem('Sapphire.Core')
@@ -206,9 +206,9 @@ def gem():
                                         
                     line('Passed#2: Total counted lines %d matches input', total)
 
-                if "test identation" and 0:
+                if "test identation" and 7:
                     for v in many:
-                        v.indented
+                        v.indentation
 
                 #conjure_colon__line_marker('\n\n:\n')
                 #dump_binary_expression_cache_many()
