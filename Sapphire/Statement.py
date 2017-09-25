@@ -260,7 +260,7 @@ def gem():
 
 
     @share
-    class Comment(SapphireTrunk):
+    class CommentLine(SapphireTrunk):
         __slots__ = ((
             'comment',                  #   Comment
             'newline',                  #   String

@@ -172,7 +172,7 @@ def gem():
                         indented = m.group('indented')
 
                         if indented is '':
-                            append(Comment(comment, newline))
+                            append(CommentLine(comment, newline))
 
                             continue
 

@@ -10,7 +10,6 @@ def gem():
     require_gem('Gem.StringOutput')
     require_gem('Gem.System')
     require_gem('Gem.Traceback')
-    require_gem('Pearl.Comment')
     require_gem('Pearl.Tokenizer')
 
 
