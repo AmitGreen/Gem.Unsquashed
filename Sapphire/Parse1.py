@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 0
+    show = 7
 
 
     require_gem('Sapphire.Core')
@@ -165,23 +165,7 @@ def gem():
                     comment_end = m.end('comment')
 
                     if comment_end is not -1:
-                        indented_end = m.end('indented')
-
-                        if indented_end is 0:
-                            s = qs()
-
-                            comment = s[1           : comment_end]       #   Use '1' to ignore the leading '#'
-                            newline = s[comment_end :            ]
-
-                            append(
-                                conjure_comment_line(comment)
-                                    if newline == '\n' else
-                                        conjure_comment_line_with_trailing_spaces(comment, newline)
-                            )
-
-                            continue
-
-                        append(IndentedComment(m.group('indented'), m.group('comment'), qs()[m.end('comment') : ]))
+                        append(conjure_any_comment_line(m.end('indented'), comment_end))
                         continue
 
                     if m.end('newline') is -1:
@@ -240,5 +224,5 @@ def gem():
                 #dump_tuple_of_expression_cache()
                 #dump_many_frill_cache()
                 #dump_many_expression_cache_many()
-                #dump_empty_line_cache()
+                dump_empty_line_cache()
                 dump_indentation_cache()

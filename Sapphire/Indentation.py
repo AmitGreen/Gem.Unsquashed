@@ -26,9 +26,16 @@ def gem():
 
         def count_newlines(t):
             assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
-            assert '\n' not in s
+            assert '\n' not in t.s
 
             return 0
+
+
+        def display_token(t):
+            if t.total is 0:
+                return '<+0>'
+
+            return arrange('<+%d %s>', t.total, portray_string(t.s))
 
 
     def conjure_indentation(s):

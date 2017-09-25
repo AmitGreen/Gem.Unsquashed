@@ -24,8 +24,8 @@ def gem():
     class CommentLine(String):
         __slots__       = (())
         ends_in_newline = true
+        indented        = empty_indentation
         line_marker     = false
-        indentation     = empty_indentation
         newlines        = 1
 
 
@@ -57,8 +57,8 @@ def gem():
         ))
 
 
-        indentation     = empty_indentation
         ends_in_newline = true
+        indented        = empty_indentation
         newlines        = 1
 
 
@@ -89,7 +89,7 @@ def gem():
     class EmptyLine(String):
         __slots__       = (())
         ends_in_newline = true
-        indentation     = empty_indentation
+        indented        = empty_indentation
         line_marker     = false
         newlines        = 1
 
@@ -116,6 +116,41 @@ def gem():
             w(t)
 
 
+    class IndentedCommentLine(SapphireToken):
+        __slots__ = ((
+            'indented',                 #   Indentation
+            'comment',                  #   CommentLine
+        ))
+
+
+        ends_in_newline = true
+        newlines        = 1
+
+
+        def __init__(t, indented, comment):
+            t.indented = indented
+            t.comment  = comment
+
+
+        def __repr__(t):
+            return arrange('<IndentedCommentLine %s %r>', portray_string(t.indented), portray_string(t.comment))
+
+
+        def count_newlines(t):
+            assert (t.ends_in_newline is true) and (t.line_marker is false) and (t.newlines is 1)
+            assert (t.indented.count_newlines() is 0) and ('\n' not in t.comment)
+
+            return 1
+
+
+        def display_token(t):
+            return arrange('<#+%d %s>', t.indented.total, portray_string(t.comment))
+
+
+        def write(t, w):
+            w(t.indented.s + '#' + t.comment + '\n')
+
+
     class TokenWhitespace(SapphireToken):
         display_name = 'whitespace'
 
@@ -137,36 +172,39 @@ def gem():
         return provide_comment_line(r, r)
 
 
-    def conjure_comment_line_with_trailing_spaces(comment, newline):
-        assert newline != '\n'
+    def conjure_any_comment_line(indentation_end, comment_end):
+        r = lookup_comment_line(qs())
 
-        #
-        #   NOTE:
-        #       Map order is reverse here, first newline, then comment
-        #
-        first = lookup_comment_line(newline, absent)
+        if r is not none:
+            return r
 
-        if first.__class__ is Map:
-            r = first.get(comment)
+        s = intern_string(qs())
 
-            if r is not none:
-                return r
+        if indentation_end is 0:
+            comment = s[1           : comment_end]
+            newline = s[comment_end :            ]
 
-            comment = conjure_comment_line(comment)
-            newline = conjure_empty_line(newline)
+            if newline == '\n':
+                return provide_comment_line(s, conjure_comment_line(comment))
 
-            return first.setdefault(comment, CommentLine_WithTrailingSpaces(comment, newline))
+            return provide_comment_line(
+                       s,
+                       CommentLine_WithTrailingSpaces(conjure_comment_line(comment), conjure_empty_line(newline)),
+                   )
 
-        if first.comment == comment:
-            return first
-        comment = conjure_comment_line(comment)
-        newline = conjure_empty_line(newline)
 
-        r = CommentLine_WithTrailingSpaces(comment, newline)
 
-        store_comment_line(newline, (r   if first is absent else   { first.comment : first, comment : r }))
+        indentation = s[                    : indentation_end]
+        comment     = s[indentation_end + 1 : comment_end    ]
+        newline     = s[comment_end         :                ]
 
-        return r
+        if newline != '\n':
+            raise_unknown_line()
+
+        return provide_comment_line(
+                   s,
+                   IndentedCommentLine(conjure_indentation(indentation), conjure_comment_line(comment)),
+               )
 
 
     def conjure_empty_line(s):
@@ -180,7 +218,7 @@ def gem():
         return provide_empty_line(r, r)
 
 
-    empty_comment_line = conjure_comment_line('\n')
+    empty_comment_line = conjure_comment_line('')
     empty_line         = conjure_empty_line('\n')
 
 
@@ -197,9 +235,8 @@ def gem():
 
 
     share(
-        'conjure_comment_line',                         conjure_comment_line,
-        'conjure_comment_line_with_trailing_spaces',    conjure_comment_line_with_trailing_spaces,
-        'conjure_empty_line',                           conjure_empty_line,
-        'conjure_whitespace',                           conjure_whitespace,
-        'conjure_whitespace__ends_in_newline',          conjure_whitespace__ends_in_newline,
+        'conjure_any_comment_line',             conjure_any_comment_line,
+        'conjure_empty_line',                   conjure_empty_line,
+        'conjure_whitespace',                   conjure_whitespace,
+        'conjure_whitespace__ends_in_newline',  conjure_whitespace__ends_in_newline,
     )
