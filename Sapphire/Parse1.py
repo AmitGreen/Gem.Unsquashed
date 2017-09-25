@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse1')
 def gem():
-    show = 7
+    show = 0
 
 
     require_gem('Sapphire.Core')
@@ -15,6 +15,7 @@ def gem():
     require_gem('Sapphire.BookcaseExpression')
     require_gem('Sapphire.BookcaseManyExpression')
     require_gem('Sapphire.BookcaseManyFrill')
+    require_gem('Sapphire.Comment')
     require_gem('Sapphire.DualFrill')
     require_gem('Sapphire.DualToken')
     require_gem('Sapphire.Indentation')
@@ -210,19 +211,20 @@ def gem():
                         v.indented
 
                 #conjure_colon__line_marker('\n\n:\n')
-                #dump_dual_frill_cache()
-                #dump_token_caches()
-                #dump_member_expression_cache()
-                #dump_bookcase_expression_cache_many()
-                #dump_bookcase_dual_expression_cache_many()
-                #dump_unary_expression_cache_many()
                 #dump_binary_expression_cache_many()
-                #dump_ternary_expression_cache_many()
-                #dump_postfix_expression_cache()
-                #dump_bookcase_many_frill_cache()
+                #dump_bookcase_dual_expression_cache_many()
+                #dump_bookcase_expression_cache_many()
                 #dump_bookcase_many_expression_cache_many()
-                #dump_tuple_of_expression_cache()
-                #dump_many_frill_cache()
+                #dump_bookcase_many_frill_cache()
+                #dump_dual_frill_cache()
                 #dump_many_expression_cache_many()
-                dump_empty_line_cache()
+                #dump_many_frill_cache()
+                #dump_member_expression_cache()
+                #dump_postfix_expression_cache()
+                #dump_ternary_expression_cache_many()
+                #dump_token_caches()
+                #dump_tuple_of_expression_cache()
+                #dump_unary_expression_cache_many()
+                #dump_empty_line_cache()
                 dump_indentation_cache()
+                dump_comment_line_cache()
