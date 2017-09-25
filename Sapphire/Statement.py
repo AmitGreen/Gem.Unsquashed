@@ -103,8 +103,6 @@ def gem():
 
 
         def __init__(t, indented, left, arguments, newline):
-            assert newline.is_token_newline
-
             t.indented  = indented
             t.left      = left
             t.arguments = arguments
@@ -1012,9 +1010,6 @@ def gem():
 
 
         def __init__(t, keyword_from, module, keyword_import, imported, newline):
-            assert type(module) is not String
-            assert newline.is_token_newline
-
             t.keyword_from   = keyword_from
             t.module         = module
             t.keyword_import = keyword_import

@@ -209,7 +209,7 @@ def gem():
 
                     r = conjure(atom_s)(qs()[qi() : atom_end])
 
-                    wn(conjure_token_newline(s[atom_end : ]))
+                    wn(conjure_line_marker(s[atom_end : ]))
 
                     return r
 
@@ -244,7 +244,7 @@ def gem():
             else:
                 r = find_evoke_whitespace_atom(atom_s[0])(qj(), m.end('atom'))
 
-            wn(conjure_token_newline(qs()[atom_end : ]))
+            wn(conjure_line_marker(qs()[atom_end : ]))
 
             return r
             #</similiar-to>
@@ -262,7 +262,7 @@ def gem():
                     r = conjure_action_word(operator_s, s[qi() : operator_end])
 
                     wd0()
-                    wn(conjure_token_newline(s[operator_end : ]))
+                    wn(conjure_line_marker(s[operator_end : ]))
 
                     return r
 
@@ -281,7 +281,7 @@ def gem():
 
                 r = conjure_action_word(operator_s, s[qi() : operator_end])
 
-                wn(conjure_token_newline(s[operator_end : ]))
+                wn(conjure_line_marker(s[operator_end : ]))
 
                 return r
 
@@ -309,7 +309,7 @@ def gem():
 
                     r = evoke_empty_tuple(left_end, right_end)
 
-                    wn(conjure_token_newline(qs()[right_end : ]))
+                    wn(conjure_line_marker(qs()[right_end : ]))
 
                     return r
 
@@ -346,7 +346,7 @@ def gem():
 
                     r = evoke_empty_map(left_end, right_end)
 
-                    wn(conjure_token_newline(qs()[right_end : ]))
+                    wn(conjure_line_marker(qs()[right_end : ]))
 
                     return r
 
@@ -383,7 +383,7 @@ def gem():
 
                     r = evoke_empty_list(left_end, right_end)
 
-                    wn(conjure_token_newline(qs()[right_end : ]))
+                    wn(conjure_line_marker(qs()[right_end : ]))
 
                     return r
 
@@ -439,7 +439,7 @@ def gem():
             else:
                 r = find_evoke_whitespace_atom(s[quote_start])(j, quote_end)
 
-            wn(conjure_token_newline(s[m.end('quote') : ]))
+            wn(conjure_line_marker(s[m.end('quote') : ]))
 
             return r
             #</similiar-to>

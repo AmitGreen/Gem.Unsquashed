@@ -327,7 +327,7 @@ def gem():
                     r = conjure_action_word(operator_s, s[qi() : i])
 
                     wd0()
-                    wn(conjure_token_newline(s[i : ]))
+                    wn(conjure_line_marker(s[i : ]))
 
                     return r
 
@@ -340,7 +340,7 @@ def gem():
 
                 r = conjure_action_word(operator_s, s[qi() : operator_end])
 
-                wn(conjure_token_newline(s[operator_end : ]))
+                wn(conjure_line_marker(s[operator_end : ]))
 
                 return r
 
@@ -361,7 +361,7 @@ def gem():
                 r = evoke_arguments_0(left_end, (right_end   if d is 0 else   none))
 
                 if qd() is 0:
-                    wn(conjure_token_newline(s[right_end : ]))
+                    wn(conjure_line_marker(s[right_end : ]))
                 else:
                     skip_tokenize_prefix()
 
@@ -387,7 +387,7 @@ def gem():
                     if qd() is 0:
                         r = evoke_all_index(left_end, tail_index__end, right_end)
 
-                        wn(conjure_token_newline(s[right_end : ]))
+                        wn(conjure_line_marker(s[right_end : ]))
 
                         return r
                     else:
@@ -420,7 +420,7 @@ def gem():
 
                     wd0()
 
-                    wn(conjure_token_newline(s[suffix_end : ]))
+                    wn(conjure_line_marker(s[suffix_end : ]))
 
                     return r
 
@@ -456,7 +456,7 @@ def gem():
 
                     wd0()
 
-                    wn(conjure_token_newline(s[suffix_end : ]))
+                    wn(conjure_line_marker(s[suffix_end : ]))
 
                     return r
 
@@ -487,7 +487,7 @@ def gem():
 
                 r = conjure_action_word(keyword_s, s[qi() : keyword_end])
 
-                wn(conjure_token_newline(s[keyword_end : ]))
+                wn(conjure_line_marker(s[keyword_end : ]))
 
                 return r
 

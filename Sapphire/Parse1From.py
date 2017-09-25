@@ -77,7 +77,7 @@ def gem():
         #</as>
 
         if operator is none:
-            wk(conjure_token_newline(m2.group()))
+            wk(conjure_line_marker(m2.group()))
 
             return imported
 
@@ -110,7 +110,7 @@ def gem():
         #</comma-or-newline>
 
         if m4.start('comma') is -1:
-            wk(conjure_token_newline(m4.group()))
+            wk(conjure_line_marker(m4.group()))
 
             return imported
 
@@ -147,7 +147,7 @@ def gem():
         wk(none)
         #<imported/>
 
-        if operator.is_token_newline:
+        if operator.is_line_marker:
             return StatementFromImport(keyword_from, module, keyword_import, imported, operator)
 
         if not operator.is_comma:
@@ -163,7 +163,7 @@ def gem():
         wk(none)
         #<imported/>
 
-        if operator_2.is_token_newline:
+        if operator_2.is_line_marker:
             return StatementFromImport(
                        keyword_from,
                        module,
@@ -185,7 +185,7 @@ def gem():
 
             wk(none)
 
-            if operator_7.is_token_newline:
+            if operator_7.is_line_marker:
                 return StatementFromImport(
                            keyword_from,
                            module,

@@ -117,7 +117,7 @@ def gem():
                                 StatementExpression(
                                     m.group('indented'),
                                     conjure_name(atom_s),
-                                    conjure_token_newline(s[m.end('atom'):]),
+                                    conjure_line_marker(s[m.end('atom'):]),
                                 ),
                             )
 

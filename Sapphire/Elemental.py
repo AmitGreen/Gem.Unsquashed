@@ -57,6 +57,7 @@ def gem():
         is_left_brace                              = false
         is_left_parenthesis                        = false
         is_left_square_bracket                     = false
+        is_line_marker                             = false
         is_logical_and_operator                    = false
         is_logical_or_operator                     = false
         is_minus_sign                              = false
@@ -75,7 +76,6 @@ def gem():
         is_star_sign                               = false
         is_tail_index                              = false
         is_tilde_sign                              = false
-        is_token_newline                           = false
 
 
         def __repr__(t):

@@ -66,7 +66,7 @@ def gem():
             module = conjure_member_expression(module, conjure_dot_name(operator_dot, conjure_name(m.group())))
 
         if operator is none:
-            wk(conjure_token_newline(m.group()))
+            wk(conjure_line_marker(m.group()))
 
             return module
 
@@ -104,7 +104,7 @@ def gem():
         #</comma-or-newline>
 
         if m.start('comma') is -1:
-            wk(conjure_token_newline(m.group()))
+            wk(conjure_line_marker(m.group()))
 
             return module
 
@@ -135,7 +135,7 @@ def gem():
         wk(none)
         #</module>
 
-        if operator.is_token_newline:
+        if operator.is_line_marker:
             return StatementImport_1(keyword_import, module, operator)
 
         if not operator.is_comma:
@@ -148,7 +148,7 @@ def gem():
 
             operator = qk()
 
-            if operator.is_token_newline:
+            if operator.is_line_marker:
                 return StatementImport_Many(keyword_import, Tuple(many), operator)
 
             if not operator.is_comma:
