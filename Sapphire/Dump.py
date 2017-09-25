@@ -8,7 +8,7 @@ def gem():
         line('===  %s  ===', name)
 
         for [k, v] in iterate_items_sorted_by_key(cache):
-            line('%s:', k.display_token())
+            line('%s:', (portray_string(k)  if k.__class__ is String else   k.display_token()))
 
             if v.__class__ is Map:
                 for [k2, w] in iterate_items_sorted_by_key(v):

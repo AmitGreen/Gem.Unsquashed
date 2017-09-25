@@ -17,6 +17,7 @@ def gem():
     require_gem('Sapphire.BookcaseManyFrill')
     require_gem('Sapphire.DualFrill')
     require_gem('Sapphire.DualToken')
+    require_gem('Sapphire.Indentation')
     require_gem('Sapphire.LineMarker')
     require_gem('Sapphire.ManyExpression')
     require_gem('Sapphire.ManyFrill')
@@ -240,3 +241,4 @@ def gem():
                 #dump_many_frill_cache()
                 #dump_many_expression_cache_many()
                 #dump_empty_line_cache()
+                dump_indentation_cache()
