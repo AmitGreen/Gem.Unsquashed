@@ -360,6 +360,12 @@ def gem():
         keyword                          = 'or'
 
 
+    class KeywordPass(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'pass'
+        keyword      = 'pass'
+
+
     class KeywordRaise(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'raise'
@@ -1115,6 +1121,7 @@ def gem():
     conjure_keyword_else_if  = produce_conjure_action_word('keyword-else-if',  KeywordElseIf)
     conjure_keyword_except   = produce_conjure_action_word('keyword-except',   KeywordExcept)
     conjure_keyword_function = produce_conjure_action_word('keyword-function', KeywordFunction)
+    conjure_keyword_pass     = produce_conjure_action_word('keyword-pass',     KeywordPass)
     conjure_keyword_raise    = produce_conjure_action_word('keyword-raise',    KeywordRaise)
 
     conjure__raise__line_marker = produce_conjure_action_word__line_marker(
@@ -1202,6 +1209,7 @@ def gem():
         'conjure_keyword_is',                               conjure_keyword_is,
         'conjure_keyword_not',                              conjure_keyword_not,
         'conjure_keyword_not__ends_in_newline',             conjure_keyword_not__ends_in_newline,
+        'conjure_keyword_pass',                             conjure_keyword_pass,
         'conjure_keyword_raise',                            conjure_keyword_raise,
         'conjure_keyword_return',                           conjure_keyword_return,
         'conjure_keyword_while',                            conjure_keyword_while,

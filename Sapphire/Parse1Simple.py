@@ -149,7 +149,7 @@ def gem():
         if m.end('newline') is -1:
             raise_unknown_line()
 
-        return evoke_pass__line_marker(m.end('atom'))
+        return evoke_indented__pass__line_marker(m.end('indented'), m.end('atom'))
 
 
     @share
@@ -240,7 +240,7 @@ def gem():
     @share
     def parse1_statement_yield(m):
         if m.end('newline') is not -1:
-            return evoke_yield__line_marker(m.end('atom'))
+            return evoke_indented__yield__line_marker(m.end('indented'), m.end('atom'))
 
         keyword = conjure_keyword_yield(m.group())
 

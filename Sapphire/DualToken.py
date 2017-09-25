@@ -438,18 +438,6 @@ def gem():
         is_end_of_unary_expression       = true
 
 
-    class KeywordPass_LineMarker_1(BaseDualOperator):
-        __slots__       = (())
-        display_name    = r'pass\n'
-        ends_in_newline = true
-        line_marker     = true
-        newlines        = 1
-
-
-        __init__       = construct_dual_operator__line_marker_1
-        count_newlines = count_newlines__line_marker
-
-
     class RightParenthesis_Colon_LineMarker_1(BaseDualOperator):
         __slots__                                  = (())
         display_name                               = r'):\n'
@@ -477,18 +465,6 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
         is_identifier                  = true
-
-
-    class KeywordYield_LineMarker_1(BaseDualOperator):
-        __slots__       = (())
-        display_name    = r'yield\n'
-        ends_in_newline = true
-        line_marker     = true
-        newlines        = 1
-
-
-        __init__       = construct_dual_operator__line_marker_1
-        count_newlines = count_newlines__line_marker
 
 
     conjure_arguments_0 = produce_conjure_dual_token(
@@ -644,14 +620,6 @@ def gem():
                        conjure_keyword_in__ends_in_newline,
                    )
 
-    evoke_pass__line_marker = produce_evoke_dual_token(
-                                  'pass__line_marker',
-                                  KeywordPass_LineMarker_1,
-                                  conjure_keyword_return,
-
-                                  line_marker = true,
-                              )
-
     evoke__single_quote__whitespace = produce_evoke_dual_token(
                                           'single-quote+whitespace',
                                           Atom_Whitespace,
@@ -691,15 +659,6 @@ def gem():
                                          conjure_single_quote,
                                          none,
                                      )
-
-    evoke_yield__line_marker = produce_evoke_dual_token(
-                                    'yield__line_marker',
-                                    KeywordYield_LineMarker_1,
-                                    conjure_keyword_yield,
-
-                                    line_marker = true,
-                                 )
-
 
     find_evoke_comma_something = {
                                      #   (
@@ -796,9 +755,7 @@ def gem():
         'evoke__left_square_bracket__colon',        evoke__left_square_bracket__colon,
         'evoke_name_whitespace',                    evoke_name_whitespace,
         'evoke_not_in',                             evoke_not_in,
-        'evoke_pass__line_marker',                  evoke_pass__line_marker,
         'evoke_whitespace_name',                    evoke_whitespace_name,
-        'evoke_yield__line_marker',                 evoke_yield__line_marker,
         'find_evoke_atom_whitespace',               find_evoke_atom_whitespace,
         'find_evoke_comma_something',               find_evoke_comma_something,
         'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
