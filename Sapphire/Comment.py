@@ -45,7 +45,7 @@ def gem():
             w('#' + t + '\n')
 
 
-    class CommentLine_WithTrailingSpaces(SapphireToken):
+    class CommentLine_WithTrailer(SapphireToken):
         __slots__ = ((
             'comment',                  #   CommentLine
             'newline',                  #   EmptyLine
@@ -63,7 +63,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<CommentLineWithTrailingSpaces %s %r>', portray_string(t.comment), t.newline)
+            return arrange('<CommentLineWithTrailer %s %r>', portray_string(t.comment), t.newline)
 
 
         def count_newlines(t):
@@ -98,7 +98,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<IndentedCommentLine %s %r>', portray_string(t.indented), portray_string(t.comment))
+            return arrange('<IndentedCommentLine +%d %r>', t.indented.total, portray_string(t.comment))
 
 
         def count_newlines(t):
@@ -114,6 +114,45 @@ def gem():
 
         def write(t, w):
             w(t.indented.s + '#' + t.comment + '\n')
+
+
+    class IndentedCommentLine_WithTrailer(SapphireToken):
+        __slots__ = ((
+            'indented',                 #   Indentation
+            'comment',                  #   CommentLine
+            'newline',                  #   EmptyLine
+        ))
+
+
+        ends_in_newline = true
+        newlines        = 1
+
+
+        def __init__(t, indented, comment, newline):
+            t.indented = indented
+            t.comment  = comment
+            t.newline  = newline
+
+
+        def __repr__(t):
+            return arrange('<IndentedCommentLine_WithTrailer +%d %s %s>',
+                           t.indented.total, portray_string(t.comment), portray_string(t.newline))
+
+
+        def count_newlines(t):
+            assert (t.ends_in_newline is true) and (t.line_marker is false) and (t.newlines is 1)
+            assert (t.indented.count_newlines() is 0) and ('\n' not in t.comment)
+            assert t.newline.count_newlines() is 1
+
+            return 1
+
+
+        def display_token(t):
+            return arrange('<#+%d %s %s>', t.indented.total, portray_string(t.comment), portray_string(t.newline))
+
+
+        def write(t, w):
+            w(t.indented.s + '#' + t.comment + t.newline)
 
 
     def conjure_comment_line(comment):
@@ -135,30 +174,23 @@ def gem():
 
         s = intern_string(qs())
 
+        comment = conjure_comment_line(s[indentation_end + 1 : comment_end])
+        newline =                      s[comment_end         :            ]
+
         if indentation_end is 0:
-            comment = s[1           : comment_end]
-            newline = s[comment_end :            ]
-
             if newline == '\n':
-                return provide_comment_line(s, conjure_comment_line(comment))
+                return provide_comment_line(s, comment)
 
-            return provide_comment_line(
-                       s,
-                       CommentLine_WithTrailingSpaces(conjure_comment_line(comment), conjure_empty_line(newline)),
-                   )
+            return provide_comment_line(s, CommentLine_WithTrailer(comment, conjure_empty_line(newline)))
 
+        indentation = conjure_indentation(s[ : indentation_end])
 
-
-        indentation = s[                    : indentation_end]
-        comment     = s[indentation_end + 1 : comment_end    ]
-        newline     = s[comment_end         :                ]
-
-        if newline != '\n':
-            raise_unknown_line()
+        if newline == '\n':
+            return provide_comment_line(s, IndentedCommentLine(indentation, comment))
 
         return provide_comment_line(
                    s,
-                   IndentedCommentLine(conjure_indentation(indentation), conjure_comment_line(comment)),
+                   IndentedCommentLine_WithTrailer(indentation, comment, conjure_empty_line(newline)),
                )
 
 

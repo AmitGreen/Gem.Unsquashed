@@ -134,10 +134,25 @@ def gem():
 
 
         def __init__(t, s):
-            assert '\n' not in s[:-1]
-            assert s[-1] == '\n'
-
             t.s = s
+
+
+        def count_newlines(t):
+            assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
+            assert (t.s.count('\n') is 1) and (t.s[-1] == '\n')
+
+            return 1
+
+
+        def __repr__(t):
+            return arrange('<UnknownLine %s>', portray_string(t.s))
+
+
+        display_token = __repr__
+
+
+        def write(t, w):
+            w(t.s)
 
 
     parse_context = ParseContext()

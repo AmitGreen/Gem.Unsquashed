@@ -226,5 +226,5 @@ def gem():
                 #dump_tuple_of_expression_cache()
                 #dump_unary_expression_cache_many()
                 #dump_empty_line_cache()
-                dump_indentation_cache()
-                dump_comment_line_cache()
+                #dump_indentation_cache()
+                #dump_comment_line_cache()
