@@ -129,7 +129,7 @@ def gem():
             if (frill_a is meta_frill_a) and (frill_b is meta_frill_b) and (frill_c is meta_frill_c):
                 return conjure_dual(a, b)
 
-            return conjure_triple(a, conjure_triple_frill(frill_a, frill_b, frill_c), b)
+            return conjure_triple(a, b, conjure_triple_frill(frill_a, frill_b, frill_c))
 
 
         if __debug__:

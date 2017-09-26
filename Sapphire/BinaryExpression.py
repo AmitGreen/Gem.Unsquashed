@@ -135,7 +135,7 @@ def gem():
         lookup = cache.get
         store  = cache.__setitem__
 
-        conjure_dual   = produce_dual_cache_functions(name + '__X__dual', Meta, cache, lookup, store)
+        conjure_dual   = produce_dual_cache_functions(name + '__X2', Meta, cache, lookup, store)
         conjure_triple = produce_triple_cache_WithFrill(name, Meta, conjure_BinaryExpression_WithFrill, cache, lookup, store)
 
         meta_frill = Meta.frill
@@ -145,7 +145,7 @@ def gem():
             if frill is meta_frill:
                 return conjure_dual(a, b)
 
-            return conjure_triple(a, frill, b)
+            return conjure_triple(a, b, frill)
 
 
         if __debug__:

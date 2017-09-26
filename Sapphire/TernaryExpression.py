@@ -6,9 +6,11 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    conjure_dual_frill   = Shared.conjure_dual_frill            #   Due to privileged
-    lookup_adjusted_meta = Shared.lookup_adjusted_meta          #   Due to privileged
-    store_adjusted_meta  = Shared.store_adjusted_meta           #   Due to privileged
+    conjure_dual_frill                = Shared.conjure_dual_frill                   #   Due to privileged
+    lookup_adjusted_meta              = Shared.lookup_adjusted_meta                 #   Due to privileged
+    produce_quadruple_cache_WithFrill = Shared.produce_quadruple_cache_WithFrill    #   Due to privileged
+    produce_triple_cache_functions    = Shared.produce_triple_cache_functions       #   Due to privileged
+    store_adjusted_meta               = Shared.store_adjusted_meta                  #   Due to privileged
 
 
     if __debug__:
@@ -112,111 +114,26 @@ def gem():
         lookup = cache.get
         store  = cache.__setitem__
 
+        conjure_triple = produce_triple_cache_functions(name + '__X3', Meta, cache, lookup, store)
+
+        conjure_quadruple = produce_quadruple_cache_WithFrill(
+                                name + '__X4',
+                                Meta,
+                                conjure_TripleExpression_WithFrill,
+                                cache,
+                                lookup,
+                                store
+                            )
+
         meta_frill_a = Meta.frill.a
         meta_frill_b = Meta.frill.b
 
 
         def conjure_triple_expression(a, frill_a, b, frill_b, c):
             if (frill_a is meta_frill_a) and (frill_b is meta_frill_b):
-                first = lookup(a, absent)
+                return conjure_triple(a, b, c)
 
-                if first.__class__ is Map:
-                    second = first.get(b, absent)
-
-                    if second.__class__ is Map:
-                        return (
-                                      second.get(c)
-                                   or second.setdefault(c, Meta(a, b, c))
-                               )
-
-                    if second.c is c:
-                        return second
-
-                    r = Meta(a, b, c)
-
-                    first[b] = (r   if second is absent else   { second.c : second, c : r })
-
-                    return r
-
-                if first.b is b:
-                    if first.c is c:
-                        return first
-
-                    r = Meta(a, b, c)
-
-                    store(a, { b : { first.c : first, c : r } })
-
-                    return r
-
-                r = Meta(a, b, c)
-
-                store(a, (r   if first is absent else   { first.a : first, a : r }))
-
-                return r
-
-            frill = conjure_dual_frill(frill_a, frill_b)
-
-            first = lookup(frill, absent)
-
-            if first.__class__ is Map:
-                second = first.get(a, absent)
-
-                if second.__class__ is Map:
-                    third = first.get(b, absent)
-
-                    if third.__class__ is Map:
-                        return (
-                                      third.get(c)
-                                   or third.setdefault(c, conjure_TripleExpression_WithFrill(Meta, a, b, c, frill))
-                               )
-
-                    if third.c is c:
-                        return third
-
-                    r = conjure_TripleExpression_WithFrill(Meta, a, b, c, frill)
-
-                    second[b] = (r   if third is absent else   { third.c : third, c : r })
-
-                    return r
-
-                if second.b is b:
-                    if second.c is c:
-                        return second
-
-                    r = conjure_TripleExpression_WithFrill(Meta, a, b, c, frill)
-
-                    first[a] = { b : { second.c : second, c : r } }
-
-                    return r
-
-                r = conjure_TripleExpression_WithFrill(Meta, a, b, c, frill)
-
-                first[a] = (r   if second is absent else   { second.b : second, b : r })
-
-                return r
-
-            if first.a is a:
-                if first.b is b:
-                    if first.c is c:
-                        return first
-
-                    r = conjure_TripleExpression_WithFrill(Meta, a, b, c, frill)
-
-                    store(frill, { a : { b : { first.c : first, c : r } } })
-
-                    return r
-
-                r = conjure_TripleExpression_WithFrill(Meta, a, b, c, frill)
-
-                store(frill, { a : { first.b : first, b : r } })
-
-                return r
-
-            r = conjure_TripleExpression_WithFrill(Meta, a, b, c, frill)
-
-            store(frill, (r   if first is absent else   { first.a : first, a : r }))
-
-            return r
+            return conjure_quadruple(a, b, c, conjure_dual_frill(frill_a, frill_b))
 
 
         if __debug__:
