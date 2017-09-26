@@ -9,6 +9,10 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
+    produce_dual_cache_functions   = Shared.produce_dual_cache_functions        #   Due to privileged
+    produce_triple_cache_WithFrill = Shared.produce_triple_cache_WithFrill      #   Due to privileged
+
+
     if __debug__:
         cache_many = []
 
@@ -83,7 +87,7 @@ def gem():
             return method is f
 
 
-    def conjure_BinaryExpression_WithFrill(Meta, a, frill, b):
+    def conjure_BinaryExpression_WithFrill(Meta, a, b, frill):
         BinaryExpression_WithFrill = lookup_adjusted_meta(Meta)
 
         if BinaryExpression_WithFrill is none:
@@ -125,13 +129,31 @@ def gem():
         return BinaryExpression_WithFrill(a, frill, b)
 
 
+    @privileged
     def produce_conjure_binary_expression(name, Meta):
-        cache = {}
+        cache  = {}
+        lookup = cache.get
+        store  = cache.__setitem__
+
+        conjure_dual   = produce_dual_cache_functions(name + '__X__dual', Meta, cache, lookup, store)
+        conjure_triple = produce_triple_cache_WithFrill(name, Meta, conjure_BinaryExpression_WithFrill, cache, lookup, store)
+
+        meta_frill = Meta.frill
+
+
+        def conjure_binary_expression(a, frill, b):
+            if frill is meta_frill:
+                return conjure_dual(a, b)
+
+            return conjure_triple(a, frill, b)
+
 
         if __debug__:
+            conjure_binary_expression.__name__ = intern_arrange('conjure_%s', name)
+
             cache_many.append( ((name, cache)) )
 
-        return produce_triple_cache_WithFrill(name, Meta, conjure_BinaryExpression_WithFrill)
+        return conjure_binary_expression
 
 
     class AddExpression(BinaryExpression):

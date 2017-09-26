@@ -27,14 +27,7 @@ def gem():
             store = cache.__setitem__
 
 
-        conjure_dual = produce_dual_cache_functions(name + '__X__dual', Meta, cache, lookup, store)
-        meta_frill   = Meta.frill
-
-
         def conjure_triple(a, frill, b):
-            if frill is meta_frill:
-                return conjure_dual(a, b)
-
             #
             #   This is pretty much the same as produce_triple_cache_functions with the following changes:
             #
@@ -42,7 +35,7 @@ def gem():
             #
             #       2.  Instead of "Meta(a, b, c)" it creates a dynamic class as follows:
             #
-            #               "conjure_Meta_WithFrill(Meta, a, frill, b)"
+            #               "conjure_Meta_WithFrill(Meta, a, b, frill)"
             #
             first = lookup(frill, absent)
 
@@ -50,12 +43,12 @@ def gem():
                 second = first.get(a, absent)
 
                 if second.__class__ is Map:
-                    return (second.get(b)) or (second.setdefault(b, conjure_Meta_WithFrill(Meta, a, frill, b)))
+                    return (second.get(b)) or (second.setdefault(b, conjure_Meta_WithFrill(Meta, a, b, frill)))
 
                 if second.b is b:
                     return second
 
-                r = conjure_Meta_WithFrill(Meta, a, frill, b)
+                r = conjure_Meta_WithFrill(Meta, a, b, frill)
 
                 first[a] = (r   if second is absent else   { second.b : second, b : r })
 
@@ -65,13 +58,13 @@ def gem():
                 if first.b is b:
                     return first
 
-                r = conjure_Meta_WithFrill(Meta, a, frill, b)
+                r = conjure_Meta_WithFrill(Meta, a, b, frill)
 
                 store(frill, { first.a : { first.b : first, b : r } })
 
                 return r
 
-            r = conjure_Meta_WithFrill(Meta, a, frill, b)
+            r = conjure_Meta_WithFrill(Meta, a, b, frill)
 
             store(frill, (r   if first is absent else   { first.a : first, a : r }))
 
