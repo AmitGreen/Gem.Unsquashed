@@ -5,61 +5,6 @@
 def gem():
     @share
     @privileged
-    def produce_dual_cache_WithFrill(
-            name,
-            Meta,
-            conjure_Meta_WithFrill,
-
-            cache  = absent,
-            lookup = absent,
-            store  = absent
-    ):
-        if cache is absent:
-            cache = {}
-
-        if lookup is absent:
-            lookup = cache.get
-
-        if store is absent:
-            store = cache.__setitem__
-
-
-        def conjure_dual(a, frill):
-            #
-            #   This is pretty much the same as produce_dual_cache with the following changes:
-            #
-            #       1.  Order is .frill, .a (intead of .a, .b)
-            #
-            #       2.  Instead of "Meta(a, b)" it creates a dynamic class as follows:
-            #
-            #               "conjure_Meta_WithFrill(Meta, a, frill)"
-            #
-            first = lookup(frill, absent)
-
-            if first.__class__ is Map:
-                return (
-                              first.get(a)
-                           or first.setdefault(a, conjure_Meta_WithFrill(Meta, a, frill))
-                       )
-
-            if first.a is a:
-                return first
-
-            r = conjure_Meta_WithFrill(Meta, a, frill)
-
-            store(frill, (r   if first is absent else   { first.a : first, a : r }))
-
-            return r
-
-
-        if __debug__:
-            conjure_dual.__name__ = intern_arrange('conjure_%s', name)
-
-        return conjure_dual
-
-
-    @share
-    @privileged
     def produce_quadruple_cache_WithFrill(
             name,
             Meta,

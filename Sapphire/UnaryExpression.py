@@ -6,7 +6,9 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    produce_dual_cache_WithFrill = Shared.produce_dual_cache_WithFrill      #   Due to privileged
+    lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   Due to privileged
+    produce_dual_cache   = Shared.produce_dual_cache        #   Due to privileged
+    store_adjusted_meta  = Shared.store_adjusted_meta       #   Due to privileged
 
 
     if __debug__:
@@ -44,41 +46,6 @@ def gem():
             t.a.write(w)
 
 
-    def conjure_UnaryExpression_WithFrill(Meta, a, frill):
-        UnaryExpression_WithFrill = lookup_adjusted_meta(Meta)
-
-        if UnaryExpression_WithFrill is none:
-            class UnaryExpression_WithFrill(Meta):
-                __slots__ = ((
-                    'frill',                #   Operator*
-                ))
-
-
-                def __init__(t, frill, a):
-                    t.frill = frill
-                    t.a     = a
-
-
-                def __repr__(t):
-                    return arrange('<%s %r %r>', t.__class__.__name__, t.frill, t.a)
-
-
-                def count_newlines(t):
-                    return t.a.count_newlines() + t.frill.count_newlines()
-
-
-                def display_token(t):
-                    return arrange('<%s+frill %s %s>', t.display_name, t.frill.display_token(), t.a.display_token())
-
-
-            if __debug__:
-                UnaryExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
-
-            store_adjusted_meta(Meta, UnaryExpression_WithFrill)
-
-        return UnaryExpression_WithFrill(frill, a)
-
-
     @privileged
     def produce_conjure_unary_expression(name, Meta):
         cache   = {}
@@ -86,9 +53,49 @@ def gem():
         provide = cache.setdefault
         store   = cache.__setitem__
 
-        conjure_dual = produce_dual_cache_WithFrill(
+
+        def conjure_UnaryExpression_WithFrill(frill, a):
+            UnaryExpression_WithFrill = lookup_adjusted_meta(Meta)
+
+            if UnaryExpression_WithFrill is none:
+                class UnaryExpression_WithFrill(Meta):
+                    __slots__ = ((
+                        'frill',                #   Operator*
+                    ))
+
+
+                    def __init__(t, frill, a):
+                        t.frill = frill
+                        t.a     = a
+
+
+                    def __repr__(t):
+                        return arrange('<%s %r %r>', t.__class__.__name__, t.frill, t.a)
+
+
+                    def count_newlines(t):
+                        return t.a.count_newlines() + t.frill.count_newlines()
+
+
+                    def display_token(t):
+                        return arrange('<%s+frill %s %s>', t.display_name, t.frill.display_token(), t.a.display_token())
+
+
+                UnaryExpression_WithFrill.kd1 = UnaryExpression_WithFrill.frill
+                UnaryExpression_WithFrill.kd2 = UnaryExpression_WithFrill.a
+
+
+                if __debug__:
+                    UnaryExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
+
+                store_adjusted_meta(Meta, UnaryExpression_WithFrill)
+
+            return UnaryExpression_WithFrill(frill, a)
+
+
+
+        conjure_dual = produce_dual_cache(
                            name + '__X2',
-                           Meta,
                            conjure_UnaryExpression_WithFrill,
                            cache,
                            lookup,
@@ -102,7 +109,7 @@ def gem():
             if frill is meta_frill:
                 return (lookup(a)) or (provide(a, Meta(a)))
 
-            return conjure_dual(a, frill)
+            return conjure_dual(frill, a)
 
 
         if __debug__:
