@@ -27,6 +27,7 @@ def gem():
     LSB_RSB = conjure_dual_frill(LSB, RSB)
 
 
+    @share
     class BookcaseExpression(SapphireTrunk):
         __slots__ = ((
             'a',                        #   Expression+
@@ -42,7 +43,7 @@ def gem():
 
 
         def count_newlines(t):
-            return t.a.count_newlines()
+            return t.a.count_newlines() + t.frill.count_newlines()
 
 
         def display_token(t):
@@ -60,6 +61,7 @@ def gem():
     BookcaseExpression.kd2 = BookcaseExpression.a
 
 
+    @share
     @privileged
     def produce_conjure_bookcase_expression(name, Meta):
         cache   = {}
@@ -207,7 +209,6 @@ def gem():
 
     conjure_tail_index         = produce_conjure_bookcase_expression('tail-index',         TailIndex)
     conjure_tuple_expression_1 = produce_conjure_bookcase_expression('tuple-expression-1', TupleExpression_1)
-
 
 
     if __debug__:

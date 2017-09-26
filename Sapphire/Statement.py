@@ -433,45 +433,6 @@ def gem():
 
 
     @share
-    class DecoratorHeader(SapphireTrunk):
-        __slots__ = ((
-            'operator_decorator',       #   OperatorAtSign
-            'expression',               #   Any
-            'newline',                  #   LineMarker
-        ))
-
-
-        def __init__(t, operator_decorator, expression, newline):
-            t.operator_decorator = operator_decorator
-            t.expression         = expression
-            t.newline            = newline
-
-
-        def  __repr__(t):
-            return arrange('<DecoratorHeader %r %r %r>', t.operator_decorator, t.expression, t.newline)
-
-
-        def count_newlines(t):
-            return t.operator_decorator.count_newlines() + t.expression.count_newlines() + t.newline.count_newlines()
-
-
-        def display_token(t):
-            if t.operator_decorator.s == '@':
-                return arrange('<@ %s %s>', t.expression.display_token(), t.newline.display_token())
-
-            return arrange('<@ %s %s %s>',
-                           portray_string(t.operator_decorator.s),
-                           t.expression.display_token(),
-                           t.newline.display_token())
-
-
-        def write(t, w):
-            w(t.operator_decorator.s)
-            t.expression.write(w)
-            w(t.newline.s)
-
-
-    @share
     class ElseStatement(SapphireTrunk):
         __slots__ = ((
             'keyword_colon',            #   KeywordElseColon

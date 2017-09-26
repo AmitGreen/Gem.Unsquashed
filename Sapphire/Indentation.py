@@ -3,12 +3,6 @@
 #
 @gem('Sapphire.Indentation')
 def gem():
-    indentation_cache = {}
-
-    lookup_indentation  = indentation_cache.get
-    provide_indentation = indentation_cache.setdefault
-
-
     class Indentation(SapphireToken):
         __slots__ = ((
             'total',                    #   Integer {> 0}

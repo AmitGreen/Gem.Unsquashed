@@ -98,3 +98,11 @@ def gem():
             conjure_action_word__line_marker.__name__ = intern_arrange('conjure_%s__line_marker', name)
 
         return conjure_action_word__line_marker
+
+
+    empty_line_marker = conjure_line_marker('\n')
+
+
+    share(
+        'empty_line_marker',    empty_line_marker,
+    )

@@ -220,9 +220,12 @@ def gem():
                                conjure_line_marker(s[a_end :      ]),
                            ),
                        )
-        elif conjure_second__ends_in_newline is absent:
+        elif conjure_second__ends_in_newline is none:
             def evoke_dual_token(middle, end):
-                assert qi() < middle < end
+                #
+                #   Indentation tokens may have 0 length, hence 'qi() <= middle'
+                #
+                assert qi() <= middle < end
 
                 full = qs()[qi() : end]
 
@@ -246,6 +249,8 @@ def gem():
                            ),
                        )
         else:
+            assert conjure_second__ends_in_newline is not absent
+
             def evoke_dual_token(middle, end):
                 if end is none:
                     assert qi() < middle
@@ -394,6 +399,11 @@ def gem():
         is_atom                        = true
 
 
+    class Indented_Token(BaseDualOperator):
+        __slots__    = (())
+        display_name = 'indented-token'
+
+
     @share
     class Is_Not(BaseDualOperator):
         __slots__                        = (())
@@ -493,7 +503,16 @@ def gem():
     conjure_dot_name_pair = produce_conjure_dual_token('.name-pair', DotNamePair)
     conjure_empty_list    = produce_conjure_dual_token('[]',         EmptyList)
     conjure_empty_map     = produce_conjure_dual_token('{}',         EmptyMap)
-    conjure_is_not        = produce_conjure_dual_token('is-not',     Is_Not)
+
+    conjure_indented_token = produce_conjure_dual_token(
+                                 'indented-token',
+                                 Indented_Token,
+
+                                 lookup  = lookup_indentation,
+                                 provide = provide_indentation,
+                             )
+
+    conjure_is_not = produce_conjure_dual_token('is-not',     Is_Not)
 
     conjure__left_square_bracket__colon = produce_conjure_dual_token(
                                               '[:',                           #   ]
@@ -576,6 +595,17 @@ def gem():
                             conjure_right_parenthesis,
                             conjure_right_parenthesis__ends_in_newline,
                         )
+
+    evoke_indented__at_sign = produce_evoke_dual_token(
+                                  'indented-at-sign',
+                                  Indented_Token,
+                                  conjure_indentation,
+                                  conjure_at_sign,
+                                  none,
+
+                                  lookup  = lookup_indentation,
+                                  provide = provide_indentation,
+                              )
 
     evoke_name_whitespace = produce_evoke_dual_token(
                                 'name+whitespace',
@@ -748,6 +778,7 @@ def gem():
         'evoke_empty_list',                         evoke_empty_list,
         'evoke_empty_map',                          evoke_empty_map,
         'evoke_empty_tuple',                        evoke_empty_tuple,
+        'evoke_indented__at_sign',                  evoke_indented__at_sign,
         'evoke_is_not',                             evoke_is_not,
         'evoke__left_square_bracket__colon',        evoke__left_square_bracket__colon,
         'evoke_name_whitespace',                    evoke_name_whitespace,
@@ -756,4 +787,5 @@ def gem():
         'find_evoke_atom_whitespace',               find_evoke_atom_whitespace,
         'find_evoke_comma_something',               find_evoke_comma_something,
         'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
+        'conjure_indented_token',                   conjure_indented_token,
     )

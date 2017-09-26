@@ -11,10 +11,9 @@ def gem():
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        operator_at_sign = conjure_at_sign(m.group())
-        s                = qs()
-
         j = m.end()
+
+        indentation__at_sign = evoke_indented__at_sign(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -23,7 +22,7 @@ def gem():
         newline = qn()
 
         if newline is not none:
-            return DecoratorHeader(operator_at_sign, name, newline)
+            return conjure_decorator_header(indentation__at_sign, name, newline)
 
         operator = tokenize_operator()
 
@@ -33,7 +32,7 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return DecoratorHeader(operator_at_sign, produce_call_expression(name, operator), newline)
+            return conjure_decorator_header(indentation__at_sign, produce_call_expression(name, operator), newline)
 
         if not operator.is_left_parenthesis:
             raise_unknown_line()
@@ -45,7 +44,7 @@ def gem():
         if newline is none:
             raise_unknown_line()
 
-        return DecoratorHeader(operator_at_sign, call, newline)
+        return conjure_decorator_header(indentation__at_sign, call, newline)
 
 
     @share
