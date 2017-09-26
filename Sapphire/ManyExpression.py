@@ -7,8 +7,8 @@ def gem():
     require_gem('Sapphire.TupleOfExpression')
 
 
-    conjure_many_frill       = Shared.conjure_many_frill                #   Due to privileged
-    tuple_of_many_expression = Shared.tuple_of_many_expression          #   Due to privileged
+    conjure_many_frill               = Shared.conjure_many_frill                #   Due to privileged
+    conjure_tuple_of_many_expression = Shared.conjure_tuple_of_many_expression  #   Due to privileged
 
 
     if __debug__:
@@ -99,7 +99,7 @@ def gem():
         #       Reversed from normal: uses 'frill' as the first map index & 'many' as the second map index.
         #
         def conjure_many_expression(list, frill_list):
-            many  = tuple_of_many_expression(list)
+            many  = conjure_tuple_of_many_expression(list)
             frill = conjure_many_frill(frill_list)
 
             first = lookup(frill, absent)

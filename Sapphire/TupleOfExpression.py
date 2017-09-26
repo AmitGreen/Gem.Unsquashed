@@ -29,7 +29,7 @@ def gem():
 
 
     @share
-    def tuple_of_many_expression(many):
+    def conjure_tuple_of_many_expression(many):
         r = TupleOfExpression(many)
 
         return provide(r, r)
