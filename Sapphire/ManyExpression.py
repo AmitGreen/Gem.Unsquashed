@@ -9,6 +9,7 @@ def gem():
 
     conjure_many_frill               = Shared.conjure_many_frill                #   Due to privileged
     conjure_tuple_of_many_expression = Shared.conjure_tuple_of_many_expression  #   Due to privileged
+    produce_dual_cache               = Shared.produce_dual_cache                #   Due to privileged
 
 
     if __debug__:
@@ -17,18 +18,18 @@ def gem():
 
     class ManyExpression(SapphireTrunk):
         __slots__ = ((
-            'many',                     #   TupleOfExpression+
             'frill',                    #   BookcaseManyFrill
+            'many',                     #   TupleOfExpression+
         ))
 
 
-        def __init__(t, many, frill):
-            t.many  = many
+        def __init__(t, frill, many):
             t.frill = frill
+            t.many  = many
 
 
         def __repr__(t):
-            return arrange('<%s %s %r>', t.__class__.__name__, ' '.join(portray(v)   for v in t.many), t.frill)
+            return arrange('<%s %s %r>', t.__class__.__name__, t.frill, ' '.join(portray(v)   for v in t.many))
 
 
         def count_newlines(t):
@@ -38,8 +39,8 @@ def gem():
         def display_token(t):
             return arrange('<%s %s %s>',
                            t.display_name,
-                           ' '.join(v.display_token()   for v in t.many),
-                           t.frill.display_token())
+                           t.frill.display_token(),
+                           ' '.join(v.display_token()   for v in t.many))
 
 
         def write(t, w):
@@ -88,33 +89,21 @@ def gem():
                 v.write(w)
 
 
+    ManyExpression.kd1 = ManyExpression.frill
+    ManyExpression.kd2 = ManyExpression.many
+
+
     @privileged
     def produce_conjure_many_expression(name, Meta):
         cache  = {}
         lookup = cache.get
         store  = cache.__setitem__
 
-        #
-        #   NOTE:
-        #       Reversed from normal: uses 'frill' as the first map index & 'many' as the second map index.
-        #
+        conjure_dual = produce_dual_cache(name + '__X2', Meta, cache)
+
+
         def conjure_many_expression(list, frill_list):
-            many  = conjure_tuple_of_many_expression(list)
-            frill = conjure_many_frill(frill_list)
-
-            first = lookup(frill, absent)
-
-            if first.__class__ is Map:
-                return (first.get(many)) or (first.setdefault(many, Meta(many, frill)))
-
-            if first.many is many:
-                return first
-
-            r = Meta(many, frill)
-
-            store(frill, (r   if first is absent else   { first.many : first, many : r }))
-
-            return r
+            return conjure_dual(conjure_many_frill(frill_list), conjure_tuple_of_many_expression(list))
 
 
         if __debug__:
