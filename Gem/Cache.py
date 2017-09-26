@@ -126,3 +126,59 @@ def gem():
             conjure_dual.__name__ = intern_arrange('conjure_%s', name)
 
         return conjure_dual
+
+
+    @export
+    @privileged
+    def produce_triple_cache_functions(
+            name,
+            Meta,
+
+            cache = absent,
+    ):
+        if cache is absent:
+            cache = {}
+
+        lookup = cache.get
+        store  = cache.__setitem__
+
+
+        def conjure_triple(a, b, c):
+            first = lookup(a, absent)
+
+            if first.__class__ is Map:
+                second = first.get(b, absent)
+
+                if second.__class__ is Map:
+                    return (second.get(c)) or (second.setdefault(c, Meta(a, b, c)))
+
+                if second.c is c:
+                    return second
+
+                r = Meta(a, b, c)
+
+                first[b] = (r   if second is absent else   { second.c : second, c : r })
+
+                return r
+
+            if first.b is b:
+                if first.c is c:
+                    return first
+
+                r = Meta(a, b, c)
+
+                store(a, { first.b : { first.c : first, c : r } })
+
+                return r
+
+            r = Meta(a, b, c)
+
+            store(a, (r   if first is absent else   { first.b : first, b : r }))
+
+            return r
+
+
+        if __debug__:
+            conjure_triple.__name__ = intern_arrange('conjure_%s', name)
+
+        return conjure_triple
