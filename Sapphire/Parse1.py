@@ -15,6 +15,7 @@ def gem():
     require_gem('Sapphire.BookcaseExpression')
     require_gem('Sapphire.BookcaseManyExpression')
     require_gem('Sapphire.BookcaseManyFrill')
+    require_gem('Sapphire.Cache')
     require_gem('Sapphire.Comment')
     require_gem('Sapphire.DualFrill')
     require_gem('Sapphire.DualToken')

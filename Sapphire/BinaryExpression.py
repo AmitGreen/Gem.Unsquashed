@@ -3,12 +3,10 @@
 #
 @gem('Sapphire.Expression')
 def gem():
+    require_gem('Sapphire.Cache')
     require_gem('Sapphire.DualToken')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.Tree')
-
-
-    produce_dual_cache_functions = Shared.produce_dual_cache_functions      #   Due to privileged
 
 
     if __debug__:
@@ -127,73 +125,13 @@ def gem():
         return BinaryExpression_WithFrill(a, frill, b)
 
 
-    @privileged
     def produce_conjure_binary_expression(name, Meta):
-        cache  = {}
-        lookup = cache.get
-        store  = cache.__setitem__
-
-        meta_frill   = Meta.frill
-        conjure_dual = produce_dual_cache_functions(name + '__X__dual', Meta, cache)
-
-
-        def conjure_binary_expression(a, frill, b):
-            if frill is meta_frill:
-                return conjure_dual(a, b)
-
-            #
-            #   Same as result from 'produce_triple_cache_functions' but with the following differences:
-            #
-            #       1.  Using:  .frill, .a, .b instead of .a, .b, & .c
-            #
-            #       2.  Uses conjure_BinaryExpression_WithFrill(Meta, a, frill, b) instead of 'Meta(a, frill, b)'
-            #           (i.e.: create the meta class dynamically)
-            #
-            #           This could be optimzied, and will in the future, the real issue is #1 above
-            #
-            first = lookup(frill, absent)
-
-            if first.__class__ is Map:
-                second = first.get(a, absent)
-
-                if second.__class__ is Map:
-                    return (
-                                  second.get(b)
-                               or second.setdefault(b, conjure_BinaryExpression_WithFrill(Meta, a, frill, b))
-                           )
-
-                if second.b is b:
-                    return second
-
-                r = conjure_BinaryExpression_WithFrill(Meta, a, frill, b)
-
-                first[a] = (r   if second is absent else   { second.b : second, b : r })
-
-                return r
-
-            if first.a is a:
-                if first.b is b:
-                    return first
-
-                r = conjure_BinaryExpression_WithFrill(Meta, a, frill, b)
-
-                store(frill, { a : { first.b : first, b : r } })
-
-                return r
-
-            r = conjure_BinaryExpression_WithFrill(Meta, a, frill, b)
-
-            store(frill, (r   if first is absent else   { first.a : first, a : r }))
-
-            return r
-
+        cache = {}
 
         if __debug__:
-            conjure_binary_expression.__name__ = intern_arrange('conjure_%s', name)
-
             cache_many.append( ((name, cache)) )
 
-        return conjure_binary_expression
+        return produce_triple_cache_WithFrill(name, Meta, conjure_BinaryExpression_WithFrill)
 
 
     class AddExpression(BinaryExpression):

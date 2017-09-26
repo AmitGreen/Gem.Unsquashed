@@ -97,13 +97,18 @@ def gem():
             name,
             Meta,
 
-            cache = absent,
+            cache  = absent,
+            lookup = absent,
+            store  = absent,
     ):
         if cache is absent:
             cache = {}
 
-        lookup = cache.get
-        store  = cache.__setitem__
+        if lookup is absent:
+            lookup = cache.get
+
+        if store is absent:
+            store = cache.__setitem__
 
 
         def conjure_dual(a, b):
@@ -134,13 +139,18 @@ def gem():
             name,
             Meta,
 
-            cache = absent,
+            cache  = absent,
+            lookup = absent,
+            store  = absent,
     ):
         if cache is absent:
             cache = {}
 
-        lookup = cache.get
-        store  = cache.__setitem__
+        if lookup is absent:
+            lookup = cache.get
+
+        if store is absent:
+            store = cache.__setitem__
 
 
         def conjure_triple(a, b, c):
