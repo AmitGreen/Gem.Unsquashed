@@ -8,9 +8,11 @@ def gem():
     require_gem('Sapphire.TripleFrill')
 
 
-    conjure_triple_frill           = Shared.conjure_triple_frill                #   Due to privileged
-    produce_dual_cache             = Shared.produce_dual_cache                  #   Due to privileged
-    produce_triple_cache_WithFrill = Shared.produce_triple_cache_WithFrill      #   Due to privileged
+    conjure_triple_frill = Shared.conjure_triple_frill      #   Due to privileged
+    lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   Due to privileged
+    produce_dual_cache   = Shared.produce_dual_cache        #   Due to privileged
+    produce_triple_cache = Shared.produce_triple_cache      #   Due to privileged
+    store_adjusted_meta  = Shared.store_adjusted_meta       #   Due to privileged
 
 
     if __debug__:
@@ -65,62 +67,64 @@ def gem():
     BookcaseDualExpression.kt3 = BookcaseDualExpression.b
 
 
-    @share
-    def conjure_BookcaseDualExpression_WithFrill(Meta, a, b, frill):
-        BookcaseDualExpression_WithFrill = lookup_adjusted_meta(Meta)
-
-        if BookcaseDualExpression_WithFrill is none:
-            class BookcaseDualExpression_WithFrill(Meta):
-                __slots__ = ((
-                    'frill',                #   TripleFrill
-                ))
-
-
-                def __init__(t, a, b, frill):
-                    t.a     = a
-                    t.b     = b
-                    t.frill = frill
-
-
-                def __repr__(t):
-                    return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.frill)
-
-
-                def count_newlines(t):
-                    return t.a.count_newlines() + t.b.count_newlines() + t.frill.count_newlines()
-
-
-                def display_token(t):
-                    frill = t.frill
-
-                    return arrange('<%s+frill %s %s %s %s %s>',
-                                   t.display_name,
-                                   frill.a.display_token(),
-                                   t.a    .display_token(),
-                                   frill.b.display_token(),
-                                   t.b    .display_token(),
-                                   frill.c.display_token())
-
-
-            if __debug__:
-                BookcaseDualExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
-
-            store_adjusted_meta(Meta, BookcaseDualExpression_WithFrill)
-
-        return BookcaseDualExpression_WithFrill(a, b, frill)
-
-
     @privileged
     def produce_conjure_bookcase_dual_expression(name, Meta):
         cache  = {}
         lookup = cache.get
         store  = cache.__setitem__
 
+
+        def conjure_BookcaseDualExpression_WithFrill(frill, a, b):
+            BookcaseDualExpression_WithFrill = lookup_adjusted_meta(Meta)
+
+            if BookcaseDualExpression_WithFrill is none:
+                class BookcaseDualExpression_WithFrill(Meta):
+                    __slots__ = ((
+                        'frill',                #   TripleFrill
+                    ))
+
+
+                    def __init__(t, a, b, frill):
+                        t.a     = a
+                        t.b     = b
+                        t.frill = frill
+
+
+                    def __repr__(t):
+                        return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.frill)
+
+
+                    def count_newlines(t):
+                        return t.a.count_newlines() + t.b.count_newlines() + t.frill.count_newlines()
+
+
+                    def display_token(t):
+                        frill = t.frill
+
+                        return arrange('<%s+frill %s %s %s %s %s>',
+                                       t.display_name,
+                                       frill.a.display_token(),
+                                       t.a    .display_token(),
+                                       frill.b.display_token(),
+                                       t.b    .display_token(),
+                                       frill.c.display_token())
+
+
+                BookcaseDualExpression_WithFrill.kt1 = BookcaseDualExpression_WithFrill.frill
+
+
+                if __debug__:
+                    BookcaseDualExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
+
+                store_adjusted_meta(Meta, BookcaseDualExpression_WithFrill)
+
+            return BookcaseDualExpression_WithFrill(a, b, frill)
+
+
         conjure_dual = produce_dual_cache(name + '__X2', Meta, cache, lookup, store)
 
-        conjure_triple = produce_triple_cache_WithFrill(
+        conjure_triple = produce_triple_cache(
                              name + '__X3',
-                             Meta,
                              conjure_BookcaseDualExpression_WithFrill,
                              cache,
                              lookup,
@@ -136,7 +140,7 @@ def gem():
             if (frill_a is meta_frill_a) and (frill_b is meta_frill_b) and (frill_c is meta_frill_c):
                 return conjure_dual(a, b)
 
-            return conjure_triple(a, b, conjure_triple_frill(frill_a, frill_b, frill_c))
+            return conjure_triple(conjure_triple_frill(frill_a, frill_b, frill_c), a, b)
 
 
         if __debug__:
