@@ -6,11 +6,11 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    conjure_dual_frill                = Shared.conjure_dual_frill                   #   Due to privileged
-    lookup_adjusted_meta              = Shared.lookup_adjusted_meta                 #   Due to privileged
-    produce_quadruple_cache_WithFrill = Shared.produce_quadruple_cache_WithFrill    #   Due to privileged
-    produce_triple_cache              = Shared.produce_triple_cache                 #   Due to privileged
-    store_adjusted_meta               = Shared.store_adjusted_meta                  #   Due to privileged
+    conjure_dual_frill      = Shared.conjure_dual_frill         #   Due to privileged
+    lookup_adjusted_meta    = Shared.lookup_adjusted_meta       #   Due to privileged
+    produce_quadruple_cache = Shared.produce_quadruple_cache    #   Due to privileged
+    produce_triple_cache    = Shared.produce_triple_cache       #   Due to privileged
+    store_adjusted_meta     = Shared.store_adjusted_meta        #   Due to privileged
 
 
     if __debug__:
@@ -57,60 +57,13 @@ def gem():
             t.c.write(w)
 
 
+    TripleExpression.kq2 = TripleExpression.a
+    TripleExpression.kq3 = TripleExpression.b
+    TripleExpression.kq4 = TripleExpression.c
+
     TripleExpression.kt1 = TripleExpression.a
     TripleExpression.kt2 = TripleExpression.b
     TripleExpression.kt3 = TripleExpression.c
-
-
-    @share
-    def conjure_TripleExpression_WithFrill(Meta, a, b, c, frill):
-        TripleExpression_WithFrill = lookup_adjusted_meta(Meta)
-
-        if TripleExpression_WithFrill is none:
-            class TripleExpression_WithFrill(Meta):
-                __slots__ = ((
-                    'frill',                #   DualFrill
-                ))
-
-
-                def __init__(t, a, b, c, frill):
-                    t.a     = a
-                    t.b     = b
-                    t.c     = c
-                    t.frill = frill
-
-
-                def __repr__(t):
-                    return arrange('<%s %r %r %r %r>', t.__class__.__name__, t.a, t.b, t.c, t.frill)
-
-
-                def count_newlines(t):
-                    return (
-                                 t.a    .count_newlines()
-                               + t.b    .count_newlines()
-                               + t.c    .count_newlines()
-                               + t.frill.count_newlines()
-                           )
-
-
-                def display_token(t):
-                    frill = t.frill
-
-                    return arrange('<%s+frill %s %s %s %s %s>',
-                                   t.display_name,
-                                   t.a    .display_token(),
-                                   frill.a.display_token(),
-                                   t.b    .display_token(),
-                                   frill.b.display_token(),
-                                   t.c    .display_token())
-
-
-            if __debug__:
-                TripleExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
-
-            store_adjusted_meta(Meta, TripleExpression_WithFrill)
-
-        return TripleExpression_WithFrill(a, b, c, frill)
 
 
     @privileged
@@ -119,11 +72,63 @@ def gem():
         lookup = cache.get
         store  = cache.__setitem__
 
+
+        def conjure_TripleExpression_WithFrill(frill, a, b, c):
+            TripleExpression_WithFrill = lookup_adjusted_meta(Meta)
+
+            if TripleExpression_WithFrill is none:
+                class TripleExpression_WithFrill(Meta):
+                    __slots__ = ((
+                        'frill',                #   DualFrill
+                    ))
+
+
+                    def __init__(t, a, b, c, frill):
+                        t.a     = a
+                        t.b     = b
+                        t.c     = c
+                        t.frill = frill
+
+
+                    def __repr__(t):
+                        return arrange('<%s %r %r %r %r>', t.__class__.__name__, t.a, t.b, t.c, t.frill)
+
+
+                    def count_newlines(t):
+                        return (
+                                     t.a    .count_newlines()
+                                   + t.b    .count_newlines()
+                                   + t.c    .count_newlines()
+                                   + t.frill.count_newlines()
+                               )
+
+
+                    def display_token(t):
+                        frill = t.frill
+
+                        return arrange('<%s+frill %s %s %s %s %s>',
+                                       t.display_name,
+                                       t.a    .display_token(),
+                                       frill.a.display_token(),
+                                       t.b    .display_token(),
+                                       frill.b.display_token(),
+                                       t.c    .display_token())
+
+
+                TripleExpression_WithFrill.kq1 = TripleExpression_WithFrill.frill
+
+                if __debug__:
+                    TripleExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
+
+                store_adjusted_meta(Meta, TripleExpression_WithFrill)
+
+            return TripleExpression_WithFrill(a, b, c, frill)
+
+
         conjure_triple = produce_triple_cache(name + '__X3', Meta, cache, lookup, store)
 
-        conjure_quadruple = produce_quadruple_cache_WithFrill(
+        conjure_quadruple = produce_quadruple_cache(
                                 name + '__X4',
-                                Meta,
                                 conjure_TripleExpression_WithFrill,
                                 cache,
                                 lookup,
@@ -138,7 +143,7 @@ def gem():
             if (frill_a is meta_frill_a) and (frill_b is meta_frill_b):
                 return conjure_triple(a, b, c)
 
-            return conjure_quadruple(a, b, c, conjure_dual_frill(frill_a, frill_b))
+            return conjure_quadruple(conjure_dual_frill(frill_a, frill_b), a, b, c)
 
 
         if __debug__:
