@@ -7,8 +7,8 @@ def gem():
 
 
     @export
-    def produce_conjure_by_name(name, meta):
-        [conjure_by_name] = produce_cache_functions(name, meta, produce_conjure_by_name = true)
+    def produce_conjure_by_name(name, Meta):
+        [conjure_by_name] = produce_cache_functions(name, Meta, produce_conjure_by_name = true)
 
         return conjure_by_name
 
@@ -17,7 +17,7 @@ def gem():
     @privileged
     def produce_cache_functions(
             name,
-            meta                    = absent,
+            Meta                    = absent,
             produce_cache           = false,
             produce_conjure_by_name = false,
             produce_find            = false,
@@ -42,7 +42,7 @@ def gem():
             append(cache)
 
         if produce_conjure_by_name:
-            assert meta is not absent
+            assert Meta is not absent
 
 
             def conjure_by_name(k):
@@ -53,7 +53,7 @@ def gem():
 
                 interned_k = intern_string(k)
 
-                return provide(interned_k, meta(interned_k))
+                return provide(interned_k, Meta(interned_k))
 
 
             if __debug__:
@@ -89,3 +89,40 @@ def gem():
             append(lookup)
 
         return Tuple(result)
+
+
+    @export
+    @privileged
+    def produce_dual_cache_functions(
+            name,
+            Meta,
+
+            cache = absent,
+    ):
+        if cache is absent:
+            cache = {}
+
+        lookup = cache.get
+        store  = cache.__setitem__
+
+
+        def conjure_dual(a, b):
+            first = lookup(a, absent)
+
+            if first.__class__ is Map:
+                return (first.get(b)) or (first.setdefault(b, Meta(a, b)))
+
+            if first.b is b:
+                return first
+
+            r = Meta(a, b)
+
+            store(a, (r   if first is absent else   { first.b : first, b : r }))
+
+            return r
+
+
+        if __debug__:
+            conjure_dual.__name__ = intern_arrange('conjure_%s', name)
+
+        return conjure_dual

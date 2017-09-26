@@ -31,29 +31,16 @@ def gem():
 
 
 
-    dual_frill_cache   = {}
-    lookup_dual_frill  = dual_frill_cache.get
-    provide_dual_frill = dual_frill_cache.setdefault
-    store_dual_frill   = dual_frill_cache.__setitem__
+    dual_frill_cache = {}
 
-
-    @share
-    def conjure_dual_frill(a, b):
-        first = lookup_dual_frill(a, absent)
-
-        if first.__class__ is Map:
-            return (first.get(b)) or (first.setdefault(b, DualFrill(a, b)))
-
-        if first.b is b:
-            return first
-
-        r = DualFrill(a, b)
-
-        store_dual_frill(a, (r   if first is absent else   { first.b : first, b : r }))
-
-        return r
+    conjure_dual_frill = produce_dual_cache_functions('dual_frill', DualFrill, dual_frill_cache)
 
 
     @share
     def dump_dual_frill_cache():
         dump_cache('dual_frill_cache', dual_frill_cache)
+
+
+    share(
+        'conjure_dual_frill',   conjure_dual_frill,
+    )

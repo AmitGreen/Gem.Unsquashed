@@ -162,9 +162,6 @@ def gem():
             r = lookup(s)
 
             if r is not none:
-                if not ((r.a is a) and (r.b is b)):
-                    my_line('s: %r; a: %r; b: %r; r: %r; T1: %r; T2: %r', s, a, b, r, r.a is a, r.b is b)
-
                 assert (r.a is a) and (r.b is b)
 
                 return r
