@@ -109,10 +109,10 @@ def gem():
         conjure_dual = produce_dual_cache(name + '__X2', Meta, cache)
 
 
-        def conjure_bookcase_many_expression(begin, list, frill_list, end):
+        def conjure_bookcase_many_expression(begin, many, frill_many, end):
             return conjure_dual(
-                       conjure_bookcase_many_frill(begin, frill_list, end),
-                       conjure_tuple_of_many_expression(list),
+                       conjure_bookcase_many_frill(begin, frill_many, end),
+                       conjure_tuple_of_many_expression(many),
                    )
 
 

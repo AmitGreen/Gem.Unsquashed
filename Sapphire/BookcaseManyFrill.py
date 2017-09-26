@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.BookcaseManyFrill')
 def gem():
+    bookcase_many_frill_cache = {}
+
+
     #
     #   NOTE:
     #       This is pretty similiar to 'TripleFrill', but the code is clearer with making
@@ -36,53 +39,25 @@ def gem():
                            t.begin.display_token(), t.many.display_token(), t.end.display_token())
 
 
+    BookcaseManyFrill.kt1 = BookcaseManyFrill.many          #   First (instead of second) on purpose
+    BookcaseManyFrill.kt2 = BookcaseManyFrill.begin         #   Second (instead of first) on purpose
+    BookcaseManyFrill.kt3 = BookcaseManyFrill.end
 
-    cache  = {}
-    lookup = cache.get
-    store  = cache.__setitem__
+
+    def create_bookcase_many_frill(many, begin, end):       #   First & Second parameters flipped on purpose
+        return BookcaseManyFrill(begin, many, end)
 
 
-    #
-    #   NOTE:
-    #       The order of the keys for map lookup is: many, begin, end
-    #       (instead of the more normal order: begin, many, end)
-    #
+    conjure_bookcase_many_frill__X3 = produce_triple_cache(
+                                          'bookcase_many_frill__X3',
+                                          create_bookcase_many_frill,
+                                          bookcase_many_frill_cache,
+                                      )
+
+
     @share
     def conjure_bookcase_many_frill(begin, list, end):
-        many = conjure_many_frill(list)
-
-        first = lookup(many, absent)
-
-        if first.__class__ is Map:
-            second = first.get(begin, absent)
-
-            if second.__class__ is Map:
-                return (second.get(end)) or (second.setdefault(end, BookcaseManyFrill(begin, many, end)))
-
-            if second.end is end:
-                return second
-
-            r = BookcaseManyFrill(begin, many, end)
-
-            first[begin] = (r   if second is absent else   { second.end : second, end : r })
-
-            return r
-
-        if first.begin is begin:
-            if first.end is end:
-                return first
-
-            r = BookcaseManyFrill(begin, many, end)
-
-            store(many, { first.begin : { first.end : first, end : r } })
-
-            return r
-
-        r = BookcaseManyFrill(begin, many, end)
-
-        store(many, (r   if first is absent else   { first.begin : first, begin : r }))
-
-        return r
+        return conjure_bookcase_many_frill__X3(conjure_many_frill(list), begin, end)
 
 
     @share

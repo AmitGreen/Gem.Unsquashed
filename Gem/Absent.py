@@ -7,7 +7,7 @@ def gem():
         __slots__ = (())
 
 
-        many = left = kt3 = kt2 = kq4 = kq3 = kq2 = kd2 = end = comment = begin = none
+        kt3 = kt2 = kq4 = kq3 = kq2 = kd2 = many = none
 
 
         @static_method
