@@ -41,7 +41,7 @@ def gem():
 
     @share
     class AssignStatement_Many(SapphireTrunk):
-        __slot__ = ((
+        __slots__ = ((
             'indented',                 #   String+
             'left_many',                #   Tuple of AssignFragment
             'right',                    #   Expression
@@ -91,65 +91,72 @@ def gem():
 
     @share
     class CallStatementBase(SapphireTrunk):
-        __slot__ = ((
-            'indented',                 #   String+
+        __slots__ = ((
+            'frill',                    #   DualFrill
             'left',                     #   Expression
             'arguments',                #   Arguments*
-            'newline',                  #   String+
         ))
 
 
         is_statement = true
 
 
-        def __init__(t, indented, left, arguments, newline):
-            t.indented  = indented
+        def __init__(t, frill, left, arguments):
+            t.frill     = frill
             t.left      = left
             t.arguments = arguments
-            t.newline   = newline
 
 
         def __repr__(t):
-            return arrange('<%s %r %r %r %r>', t.__class__.__name__, t.indented, t.left, t.arguments, t.newline)
+            return arrange('<%s %r %r %r %r>', t.__class__.__name__, t.frill, t.left, t.arguments)
 
 
         def count_newlines(t):
-            assert '\n' not in t.indented
+            return t.frill.count_newlines() + t.left.count_newlines() + t.arguments.count_newlines()
 
-            return t.left.count_newlines() + t.arguments.count_newlines() + t.newline.count_newlines()
+
+        @property
+        def indentation(t):
+            return t.frill.a
 
 
         def display_token(t):
-            return arrange('<%s %s %s %s %s>',
+            return arrange('<%s %s %s %s>',
                            t.display_name,
-                           portray_string(t.indented),
+                           t.frill    .display_token(),
                            t.left     .display_token(),
-                           t.arguments.display_token(),
-                           t.newline  .display_token())
+                           t.arguments.display_token())
 
 
         def write(t, w):
-            w(t.indented)
+            frill = t.frill
+
+            w(frill.a.s)
             t.left     .write(w)
             t.arguments.write(w)
-            w(t.newline.s)
+            w(frill.b.s)
+
+
+    CallStatementBase.kt1 = CallStatementBase.frill
+    CallStatementBase.kt2 = CallStatementBase.left
+    CallStatementBase.kt3 = CallStatementBase.arguments
 
 
     @share
     class CallStatement(CallStatementBase):
-        __slot__     = (())
+        __slots__    = (())
         display_name = 'call-statement'
 
 
     @share
     class MethodCallStatement(CallStatementBase):
-        __slot__     = (())
+        __slots__    = (())
         display_name = 'method-call-statement'
 
 
     @share
     class ChangeStatement(SapphireTrunk):
-        __slot__ = ((
+        __slots__ = ((
             'indented',                 #   String+
             'left',                     #   Expression
             'operator',                 #   Operator+
@@ -252,7 +259,11 @@ def gem():
             t.parameters_colon.write(w)
 
 
-    @share
+    ClassOrFunctionHeaderBase.kt1 = ClassOrFunctionHeaderBase.keyword
+    ClassOrFunctionHeaderBase.kt2 = ClassOrFunctionHeaderBase.name
+    ClassOrFunctionHeaderBase.kt3 = ClassOrFunctionHeaderBase.parameters_colon
+
+
     class ClassHeader(ClassOrFunctionHeaderBase):
         __slots__    = (())
         display_name = 'class-header'
@@ -261,9 +272,6 @@ def gem():
     class FunctionHeader(ClassOrFunctionHeaderBase):
         __slots__    = (())
         display_name = 'function-header'
-
-
-    conjure_function_header = produce_triple_cache('funtion-header', FunctionHeader)
 
 
     @share
@@ -868,7 +876,7 @@ def gem():
 
     @share
     class StatementExpression(SapphireTrunk):
-        __slot__ = ((
+        __slots__ = ((
             'indented',                 #   String+
             'expression',               #   Expression
             'newline',                  #   NewlineToken
@@ -1028,11 +1036,20 @@ def gem():
             w(t.newline.s)
 
 
-    MemberExpression.call_statement = MethodCallStatement
-    SapphireToken   .call_statement = CallStatement
-    SapphireTrunk   .call_statement = CallStatement
+    conjure_call_statement        = produce_triple_cache('call-statement',        CallStatement)
+    conjure_class_header          = produce_triple_cache('class-header',          ClassHeader)
+    conjure_function_header       = produce_triple_cache('function-header',       FunctionHeader)
+    conjure_method_call_statement = produce_triple_cache('method-call-statement', MethodCallStatement)
+
+
+    static_conjure_call_statement = static_method(conjure_call_statement)
+
+    MemberExpression.call_statement = static_method(conjure_method_call_statement)
+    SapphireToken   .call_statement = static_conjure_call_statement
+    SapphireTrunk   .call_statement = static_conjure_call_statement
 
 
     share(
+        'conjure_class_header',     conjure_class_header,
         'conjure_function_header',  conjure_function_header,
     )

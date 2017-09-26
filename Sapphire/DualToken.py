@@ -611,6 +611,17 @@ def gem():
                                   provide = provide_indentation,
                               )
 
+    evoke_indented__keyword_class = produce_evoke_dual_token(
+                                        'indented-function',
+                                        Indented_Token,
+                                        conjure_indentation,
+                                        conjure_keyword_class,
+                                        none,
+
+                                        lookup  = lookup_indentation,
+                                        provide = provide_indentation,
+                                    )
+
     evoke_indented__keyword_function = produce_evoke_dual_token(
                                            'indented-function',
                                            Indented_Token,
@@ -804,4 +815,5 @@ def gem():
         'find_evoke_atom_whitespace',               find_evoke_atom_whitespace,
         'find_evoke_comma_something',               find_evoke_comma_something,
         'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
+        'evoke_indented__keyword_class',            evoke_indented__keyword_class,
     )

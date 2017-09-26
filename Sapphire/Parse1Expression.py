@@ -43,7 +43,7 @@ def gem():
     #           | [ternary-expression] ':' [ternary-expression] ':' [ternary-expression]
     #
     @share
-    def parse1_postfix_expression__left_operator(left, operator, indented = 0):
+    def parse1_postfix_expression__left_operator(left, operator, indentation = 0):
         assert operator.is_postfix_operator
 
         while 7 is 7:
@@ -171,10 +171,10 @@ def gem():
 
                 newline = qn()
 
-                if (indented is not 0) and (newline is not none) and (qk() is none):
+                if (indentation is not 0) and (newline is not none) and (qk() is none):
                     wn(none)
 
-                    return left.call_statement(indented, left, operator, newline)
+                    return left.call_statement(conjure_indented_token(indentation, newline), left, operator)
 
                 left = left.call_expression(left, operator)
 

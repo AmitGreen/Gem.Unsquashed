@@ -64,7 +64,7 @@ def gem():
 
 
     class CallExpression(PostfixExpression):
-        __slot__     = (())
+        __slots__    = (())
         display_name = 'call'
 
 
@@ -74,7 +74,7 @@ def gem():
 
 
     class MethodCallExpression(PostfixExpression):
-        __slot__     = (())
+        __slots__    = (())
         display_name = 'method-call'
 
 

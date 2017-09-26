@@ -67,6 +67,8 @@ def gem():
 
     @share
     def parse1_statement_expression__atom(indented, left):
+        indentation = conjure_indentation(indented)
+
         if left.is_atom:
             pass
         elif left.is_keyword_not:
@@ -93,7 +95,7 @@ def gem():
             operator = tokenize_operator()
 
         if operator.is_postfix_operator:
-            left = parse1_postfix_expression__left_operator(left, operator, indented)
+            left = parse1_postfix_expression__left_operator(left, operator, indentation)
 
             if left.is_statement:
                 return left
