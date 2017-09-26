@@ -3,7 +3,6 @@
 #
 @gem('Sapphire.Expression')
 def gem():
-    require_gem('Sapphire.Cache')
     require_gem('Sapphire.DualToken')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.Tree')

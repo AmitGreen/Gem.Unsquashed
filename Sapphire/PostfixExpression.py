@@ -3,9 +3,10 @@
 #
 @gem('Sapphire.Expression')
 def gem():
-    postfix_cache  = {}
-    lookup_postfix = postfix_cache.get
-    store_postfix  = postfix_cache.__setitem__
+    postfix_cache = {}
+
+
+    produce_dual_cache = Shared.produce_dual_cache              #   Due to privileged
 
 
     class PostfixExpression(SapphireTrunk):
@@ -37,30 +38,27 @@ def gem():
             t.b.write(w)
 
 
+    PostfixExpression.kd1 = PostfixExpression.b         #   Reverse order on purpose
+    PostfixExpression.kd2 = PostfixExpression.a         #   Reverse order on purpose
+
+
     @privileged
     def produce_conjure_postfix_expression(name, Meta):
-        #
-        #   NOTE:
-        #       Reversed from normal: uses 'b' as the first map index & 'a' as the second map index.
-        #
+        def create_postfix_expression(b, a):            #   Reverse order on purpose
+            return Meta(a, b)
+
+
+        conjure_dual = produce_dual_cache(name + '__X2', create_postfix_expression, postfix_cache)
+
+
         def conjure_postfix_expression(a, b):
-            first = lookup_postfix(b, absent)
-
-            if first.__class__ is Map:
-                return (first.get(a)) or (first.setdefault(a, Meta(a, b)))
-
-            if first.a is a:
-                return first
-
-            r = Meta(a, b)
-
-            store_postfix(b, (r   if first is absent else   { first.a : first, a : r }))
-
-            return r
+            return conjure_dual(b, a)                   #   Reverse order on purpose
 
 
         if __debug__:
-            conjure_postfix_expression.__name__ = intern_arrange('conjure_%s', name)
+            create_postfix_expression .__name__ = arrange('create_%s', name)
+            conjure_postfix_expression.__name__ = arrange('conjure_%s', name)
+
 
         return conjure_postfix_expression
 
