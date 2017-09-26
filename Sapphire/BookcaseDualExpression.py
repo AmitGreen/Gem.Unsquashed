@@ -8,7 +8,8 @@ def gem():
     require_gem('Sapphire.TripleFrill')
 
 
-    conjure_triple_frill = Shared.conjure_triple_frill                      #   Due to privileged
+    conjure_triple_frill         = Shared.conjure_triple_frill              #   Due to privileged
+    produce_dual_cache_functions = Shared.produce_dual_cache_functions      #   Due to privileged
 
 
     if __debug__:
@@ -111,22 +112,12 @@ def gem():
         meta_frill_b = Meta.frill.b
         meta_frill_c = Meta.frill.c
 
+        conjure_dual = produce_dual_cache_functions(name + '__X__dual', Meta, cache)
+
 
         def conjure_bookcase_dual_expression(frill_a, a, frill_b, b, frill_c):
             if (frill_a is meta_frill_a) and (frill_b is meta_frill_b) and (frill_c is meta_frill_c):
-                first = lookup(a, absent)
-
-                if first.__class__ is Map:
-                    return (first.get(b)) or (first.setdefault(b, Meta(a, b)))
-
-                if first.b is b:
-                    return first
-
-                r = Meta(a, b)
-
-                store(a, (r   if first is absent else   { first.b : first, b : r }))
-
-                return r
+                return conjure_dual(a, b)
 
             frill = conjure_triple_frill(frill_a, frill_b, frill_c)
 

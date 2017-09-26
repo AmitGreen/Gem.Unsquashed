@@ -8,8 +8,7 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    lookup_adjusted_meta = Shared.lookup_adjusted_meta          #   Due to privileged
-    store_adjusted_meta  = Shared.store_adjusted_meta           #   Due to privileged
+    produce_dual_cache_functions = Shared.produce_dual_cache_functions      #   Due to privileged
 
 
     if __debug__:
@@ -86,7 +85,6 @@ def gem():
             return method is f
 
 
-    @privileged
     def conjure_BinaryExpression_WithFrill(Meta, a, frill, b):
         BinaryExpression_WithFrill = lookup_adjusted_meta(Meta)
 
@@ -135,25 +133,24 @@ def gem():
         lookup = cache.get
         store  = cache.__setitem__
 
-        meta_frill = Meta.frill
+        meta_frill   = Meta.frill
+        conjure_dual = produce_dual_cache_functions(name + '__X__dual', Meta, cache)
 
 
         def conjure_binary_expression(a, frill, b):
             if frill is meta_frill:
-                first = lookup(a, absent)
+                return conjure_dual(a, b)
 
-                if first.__class__ is Map:
-                    return (first.get(b)) or (first.setdefault(b, Meta(a, b)))
-
-                if first.b is b:
-                    return first
-
-                r = Meta(a, b)
-
-                store(a, (r   if first is absent else   { first.b : first, b : r }))
-
-                return r
-
+            #
+            #   Same as result from 'produce_triple_cache_functions' but with the following differences:
+            #
+            #       1.  Using:  .frill, .a, .b instead of .a, .b, & .c
+            #
+            #       2.  Uses conjure_BinaryExpression_WithFrill(Meta, a, frill, b) instead of 'Meta(a, frill, b)'
+            #           (i.e.: create the meta class dynamically)
+            #
+            #           This could be optimzied, and will in the future, the real issue is #1 above
+            #
             first = lookup(frill, absent)
 
             if first.__class__ is Map:
