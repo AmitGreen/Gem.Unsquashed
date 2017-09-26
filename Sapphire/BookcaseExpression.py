@@ -7,8 +7,8 @@ def gem():
     require_gem('Sapphire.DualFrill')
     require_gem('Sapphire.Elemental')
 
-
-    conjure_dual_frill = Shared.conjure_dual_frill      #   Due to privileged
+    conjure_dual_frill           = Shared.conjure_dual_frill                #   Due to privileged
+    produce_dual_cache_WithFrill = Shared.produce_dual_cache_WithFrill      #   Due to privileged
 
 
     if __debug__:
@@ -102,6 +102,15 @@ def gem():
         provide = cache.setdefault
         store   = cache.__setitem__
 
+        conjure_dual = produce_dual_cache_WithFrill(
+                           name + '__X2',
+                           Meta,
+                           conjure_BookcaseExpression_WithFrill,
+                           cache,
+                           lookup,
+                           store,
+                       )
+
         meta_frill_a = Meta.frill.a
         meta_frill_b = Meta.frill.b
 
@@ -110,24 +119,7 @@ def gem():
             if (frill_a is meta_frill_a) and (frill_b is meta_frill_b):
                 return (lookup(a)) or (provide(a, Meta(a)))
 
-            frill = conjure_dual_frill(frill_a, frill_b)
-
-            first = lookup(frill, absent)
-
-            if first.__class__ is Map:
-                return (
-                              first.get(a)
-                           or first.setdefault(a, conjure_BookcaseExpression_WithFrill(Meta, a, frill))
-                       )
-
-            if first.a is a:
-                return first
-
-            r = conjure_BookcaseExpression_WithFrill(Meta, a, frill)
-
-            store(frill, (r   if first is absent else   { first.a : first, a : r }))
-
-            return r
+            return conjure_dual(a, conjure_dual_frill(frill_a, frill_b))
 
 
         if __debug__:

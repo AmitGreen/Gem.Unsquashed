@@ -36,6 +36,10 @@ def gem():
             w(t.postfix.s)
 
 
+    MemberExpression.a = MemberExpression.left
+    MemberExpression.b = MemberExpression.postfix
+
+
     static_produce_call_expression = static_method(produce_call_expression)
 
 
@@ -44,29 +48,17 @@ def gem():
     SapphireTrunk   .call_expression = static_produce_call_expression
 
 
-    member_expression_cache   = {}
-    lookup_member_expression  = member_expression_cache.get
-    provide_member_expression = member_expression_cache.setdefault
-    store_member_expression   = member_expression_cache.__setitem__
+    member_expression_cache = {}
 
 
-    @share
-    def conjure_member_expression(left, postfix):
-        first = lookup_member_expression(postfix, absent)
-
-        if first.__class__ is Map:
-            return (first.get(left)) or (first.setdefault(left, MemberExpression(left, postfix)))
-
-        if first.left is left:
-            return first
-
-        r = MemberExpression(left, postfix)
-
-        store_member_expression(postfix, (r   if first is absent else   { first.left : first, left : r }))
-
-        return r
+    conjure_member_expression = produce_dual_cache_functions('member-expession', MemberExpression, member_expression_cache)
 
 
     @share
     def dump_member_expression_cache():
         dump_cache('member_expression_cache', member_expression_cache)
+
+
+    share(
+        'conjure_member_expression',    conjure_member_expression,
+    )
