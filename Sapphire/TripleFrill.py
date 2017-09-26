@@ -32,6 +32,11 @@ def gem():
             return arrange('<triple-frill %s %s %s>', t.a.display_token(), t.b.display_token(), t.c.display_token())
 
 
+    TripleFrill.kt1 = TripleFrill.a
+    TripleFrill.kt2 = TripleFrill.b
+    TripleFrill.kt3 = TripleFrill.c
+
+
     triple_frill_cache = {}
 
     conjure_triple_frill = produce_triple_cache_functions('triple_frill', TripleFrill, triple_frill_cache)

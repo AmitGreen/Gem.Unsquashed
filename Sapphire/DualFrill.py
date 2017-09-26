@@ -29,11 +29,14 @@ def gem():
         def display_token(t):
             return arrange('<dual-frill %s %s>', t.a.display_token(), t.b.display_token())
 
+ 
+    DualFrill.kd1 = DualFrill.a
+    DualFrill.kd2 = DualFrill.b
 
 
     dual_frill_cache = {}
 
-    conjure_dual_frill = produce_dual_cache_functions('dual_frill', DualFrill, dual_frill_cache)
+    conjure_dual_frill = produce_dual_cache('dual_frill', DualFrill, dual_frill_cache)
 
 
     @share

@@ -36,8 +36,8 @@ def gem():
             w(t.postfix.s)
 
 
-    MemberExpression.a = MemberExpression.left
-    MemberExpression.b = MemberExpression.postfix
+    MemberExpression.kd1 = MemberExpression.left
+    MemberExpression.kd2 = MemberExpression.postfix
 
 
     static_produce_call_expression = static_method(produce_call_expression)
@@ -51,7 +51,7 @@ def gem():
     member_expression_cache = {}
 
 
-    conjure_member_expression = produce_dual_cache_functions('member-expession', MemberExpression, member_expression_cache)
+    conjure_member_expression = produce_dual_cache('member-expession', MemberExpression, member_expression_cache)
 
 
     @share

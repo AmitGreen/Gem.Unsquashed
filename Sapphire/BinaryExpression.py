@@ -9,7 +9,7 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    produce_dual_cache_functions   = Shared.produce_dual_cache_functions        #   Due to privileged
+    produce_dual_cache             = Shared.produce_dual_cache                  #   Due to privileged
     produce_triple_cache_WithFrill = Shared.produce_triple_cache_WithFrill      #   Due to privileged
 
 
@@ -78,6 +78,10 @@ def gem():
             t.b.write(w)
 
 
+    BinaryExpression.kd1 = BinaryExpression.a
+    BinaryExpression.kd2 = BinaryExpression.b
+
+
     if is_python_2:
         @privileged
         def method_is_function(method, f):
@@ -135,7 +139,7 @@ def gem():
         lookup = cache.get
         store  = cache.__setitem__
 
-        conjure_dual = produce_dual_cache_functions(name + '__X2', Meta, cache, lookup, store)
+        conjure_dual = produce_dual_cache(name + '__X2', Meta, cache, lookup, store)
 
         conjure_triple = produce_triple_cache_WithFrill(
                              name + '__X3',

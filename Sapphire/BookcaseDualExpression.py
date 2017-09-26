@@ -9,7 +9,7 @@ def gem():
 
 
     conjure_triple_frill           = Shared.conjure_triple_frill                #   Due to privileged
-    produce_dual_cache_functions   = Shared.produce_dual_cache_functions        #   Due to privileged
+    produce_dual_cache             = Shared.produce_dual_cache                  #   Due to privileged
     produce_triple_cache_WithFrill = Shared.produce_triple_cache_WithFrill      #   Due to privileged
 
 
@@ -56,6 +56,10 @@ def gem():
             w(frill.b.s)
             t.b.write(w)
             w(frill.c.s)
+ 
+ 
+    BookcaseDualExpression.kd1 = BookcaseDualExpression.a
+    BookcaseDualExpression.kd2 = BookcaseDualExpression.b
 
 
     @share
@@ -109,7 +113,7 @@ def gem():
         lookup = cache.get
         store  = cache.__setitem__
 
-        conjure_dual = produce_dual_cache_functions(name + '__X2', Meta, cache, lookup, store)
+        conjure_dual = produce_dual_cache(name + '__X2', Meta, cache, lookup, store)
 
         conjure_triple = produce_triple_cache_WithFrill(
                              name + '__X3',

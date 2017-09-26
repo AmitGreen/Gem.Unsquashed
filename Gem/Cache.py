@@ -93,7 +93,7 @@ def gem():
 
     @export
     @privileged
-    def produce_dual_cache_functions(
+    def produce_dual_cache(
             name,
             Meta,
 
@@ -111,18 +111,18 @@ def gem():
             store = cache.__setitem__
 
 
-        def conjure_dual(a, b):
-            first = lookup(a, absent)
+        def conjure_dual(kd1, kd2):
+            first = lookup(kd1, absent)
 
             if first.__class__ is Map:
-                return (first.get(b)) or (first.setdefault(b, Meta(a, b)))
+                return (first.get(kd2)) or (first.setdefault(kd2, Meta(kd1, kd2)))
 
-            if first.b is b:
+            if first.kd2 is kd2:
                 return first
 
-            r = Meta(a, b)
+            r = Meta(kd1, kd2)
 
-            store(a, (r   if first is absent else   { first.b : first, b : r }))
+            store(kd1, (r   if first is absent else   { first.kd2 : first, kd2 : r }))
 
             return r
 
@@ -153,37 +153,37 @@ def gem():
             store = cache.__setitem__
 
 
-        def conjure_triple(a, b, c):
-            first = lookup(a, absent)
+        def conjure_triple(kt1, kt2, kt3):
+            first = lookup(kt1, absent)
 
             if first.__class__ is Map:
-                second = first.get(b, absent)
+                second = first.get(kt2, absent)
 
                 if second.__class__ is Map:
-                    return (second.get(c)) or (second.setdefault(c, Meta(a, b, c)))
+                    return (second.get(kt3)) or (second.setdefault(kt3, Meta(kt1, kt2, kt3)))
 
-                if second.c is c:
+                if second.kt3 is kt3:
                     return second
 
-                r = Meta(a, b, c)
+                r = Meta(kt1, kt2, kt3)
 
-                first[b] = (r   if second is absent else   { second.c : second, c : r })
+                first[kt2] = (r   if second is absent else   { second.kt3 : second, kt3 : r })
 
                 return r
 
-            if first.b is b:
-                if first.c is c:
+            if first.kt2 is kt2:
+                if first.kt3 is kt3:
                     return first
 
-                r = Meta(a, b, c)
+                r = Meta(kt1, kt2, kt3)
 
-                store(a, { first.b : { first.c : first, c : r } })
+                store(kt1, { first.kt2 : { first.kt3 : first, kt3 : r } })
 
                 return r
 
-            r = Meta(a, b, c)
+            r = Meta(kt1, kt2, kt3)
 
-            store(a, (r   if first is absent else   { first.b : first, b : r }))
+            store(kt1, (r   if first is absent else   { first.kt2 : first, kt2 : r }))
 
             return r
 

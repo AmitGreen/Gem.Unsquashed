@@ -87,6 +87,10 @@ def gem():
                                    frill.b.display_token())
 
 
+            BookcaseExpression_WithFrill.kd1 = BookcaseExpression_WithFrill.frill
+            BookcaseExpression_WithFrill.kd2 = BookcaseExpression_WithFrill.a
+
+
             if __debug__:
                 BookcaseExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
 

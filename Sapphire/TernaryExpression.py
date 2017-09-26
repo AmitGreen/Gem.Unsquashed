@@ -57,6 +57,11 @@ def gem():
             t.c.write(w)
 
 
+    TripleExpression.kt1 = TripleExpression.a
+    TripleExpression.kt2 = TripleExpression.b
+    TripleExpression.kt3 = TripleExpression.c
+
+
     @share
     def conjure_TripleExpression_WithFrill(Meta, a, b, c, frill):
         TripleExpression_WithFrill = lookup_adjusted_meta(Meta)

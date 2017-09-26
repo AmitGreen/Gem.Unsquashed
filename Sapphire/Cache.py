@@ -3,9 +3,6 @@
 #
 @gem('Sapphire.Cache')
 def gem():
-    produce_dual_cache_functions = Shared.produce_dual_cache_functions      #   Due to privileged
-
-
     @share
     @privileged
     def produce_dual_cache_WithFrill(
@@ -29,7 +26,7 @@ def gem():
 
         def conjure_dual(a, frill):
             #
-            #   This is pretty much the same as produce_dual_cache_functions with the following changes:
+            #   This is pretty much the same as produce_dual_cache with the following changes:
             #
             #       1.  Order is .frill, .a (intead of .a, .b)
             #
