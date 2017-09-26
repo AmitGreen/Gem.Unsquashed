@@ -9,7 +9,7 @@ def gem():
     conjure_dual_frill                = Shared.conjure_dual_frill                   #   Due to privileged
     lookup_adjusted_meta              = Shared.lookup_adjusted_meta                 #   Due to privileged
     produce_quadruple_cache_WithFrill = Shared.produce_quadruple_cache_WithFrill    #   Due to privileged
-    produce_triple_cache_functions    = Shared.produce_triple_cache_functions       #   Due to privileged
+    produce_triple_cache              = Shared.produce_triple_cache                 #   Due to privileged
     store_adjusted_meta               = Shared.store_adjusted_meta                  #   Due to privileged
 
 
@@ -119,7 +119,7 @@ def gem():
         lookup = cache.get
         store  = cache.__setitem__
 
-        conjure_triple = produce_triple_cache_functions(name + '__X3', Meta, cache, lookup, store)
+        conjure_triple = produce_triple_cache(name + '__X3', Meta, cache, lookup, store)
 
         conjure_quadruple = produce_quadruple_cache_WithFrill(
                                 name + '__X4',

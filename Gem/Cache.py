@@ -135,7 +135,7 @@ def gem():
 
     @export
     @privileged
-    def produce_triple_cache_functions(
+    def produce_triple_cache(
             name,
             Meta,
 

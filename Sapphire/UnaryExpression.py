@@ -46,6 +46,9 @@ def gem():
             t.a.write(w)
 
 
+    UnaryExpression.kd2 = UnaryExpression.a
+
+
     @privileged
     def produce_conjure_unary_expression(name, Meta):
         cache   = {}
@@ -82,7 +85,6 @@ def gem():
 
 
                 UnaryExpression_WithFrill.kd1 = UnaryExpression_WithFrill.frill
-                UnaryExpression_WithFrill.kd2 = UnaryExpression_WithFrill.a
 
 
                 if __debug__:

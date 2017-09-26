@@ -57,6 +57,9 @@ def gem():
             w(frill.b.s)
 
 
+    BookcaseExpression.kd2 = BookcaseExpression.a
+
+
     @privileged
     def produce_conjure_bookcase_expression(name, Meta):
         cache   = {}
@@ -98,7 +101,6 @@ def gem():
 
 
                 BookcaseExpression_WithFrill.kd1 = BookcaseExpression_WithFrill.frill
-                BookcaseExpression_WithFrill.kd2 = BookcaseExpression_WithFrill.a
 
 
                 if __debug__:

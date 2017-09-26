@@ -9,8 +9,10 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    produce_dual_cache             = Shared.produce_dual_cache                  #   Due to privileged
-    produce_triple_cache_WithFrill = Shared.produce_triple_cache_WithFrill      #   Due to privileged
+    lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   Due to privileged
+    produce_dual_cache   = Shared.produce_dual_cache        #   Due to privileged
+    produce_triple_cache = Shared.produce_triple_cache      #   Due to privileged
+    store_adjusted_meta  = Shared.store_adjusted_meta       #   Due to privileged
 
 
     if __debug__:
@@ -81,6 +83,9 @@ def gem():
     BinaryExpression.kd1 = BinaryExpression.a
     BinaryExpression.kd2 = BinaryExpression.b
 
+    BinaryExpression.kt2 = BinaryExpression.a
+    BinaryExpression.kt3 = BinaryExpression.b
+
 
     if is_python_2:
         @privileged
@@ -91,59 +96,62 @@ def gem():
             return method is f
 
 
-    def conjure_BinaryExpression_WithFrill(Meta, a, b, frill):
-        BinaryExpression_WithFrill = lookup_adjusted_meta(Meta)
-
-        if BinaryExpression_WithFrill is none:
-            class BinaryExpression_WithFrill(Meta):
-                __slots__ = ((
-                    'frill',                #   Operator*
-                ))
-
-
-                def __init__(t, a, frill, b):
-                    t.a     = a
-                    t.frill = frill
-                    t.b     = b
-
-
-                __repr__ = (
-                               portray_frill_with_braces
-                                   if method_is_function(Meta.__repr__, portray_with_braces) else
-                                       portray_frill
-                           )
-
-
-                def count_newlines(t):
-                    return t.a.count_newlines() + t.b.count_newlines() + t.frill.count_newlines()
-
-
-                display_token = (
-                                    display_token__frill_with_braces
-                                        if method_is_function(Meta.display_token, display_token__with_braces) else
-                                            display_token__frill
-                                )
-
-
-            if __debug__:
-                BinaryExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
-
-            store_adjusted_meta(Meta, BinaryExpression_WithFrill)
-
-        return BinaryExpression_WithFrill(a, frill, b)
-
-
     @privileged
     def produce_conjure_binary_expression(name, Meta):
         cache  = {}
         lookup = cache.get
         store  = cache.__setitem__
 
+
+        def conjure_BinaryExpression_WithFrill(frill, a, b):
+            BinaryExpression_WithFrill = lookup_adjusted_meta(Meta)
+
+            if BinaryExpression_WithFrill is none:
+                class BinaryExpression_WithFrill(Meta):
+                    __slots__ = ((
+                        'frill',                #   Operator*
+                    ))
+
+
+                    def __init__(t, a, frill, b):
+                        t.a     = a
+                        t.frill = frill
+                        t.b     = b
+
+
+                    __repr__ = (
+                                   portray_frill_with_braces
+                                       if method_is_function(Meta.__repr__, portray_with_braces) else
+                                           portray_frill
+                               )
+
+
+                    def count_newlines(t):
+                        return t.a.count_newlines() + t.b.count_newlines() + t.frill.count_newlines()
+
+
+                    display_token = (
+                                        display_token__frill_with_braces
+                                            if method_is_function(Meta.display_token, display_token__with_braces) else
+                                                display_token__frill
+                                    )
+
+
+                BinaryExpression_WithFrill.kt1 = BinaryExpression_WithFrill.frill
+
+
+                if __debug__:
+                    BinaryExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
+
+                store_adjusted_meta(Meta, BinaryExpression_WithFrill)
+
+            return BinaryExpression_WithFrill(a, frill, b)
+
+
         conjure_dual = produce_dual_cache(name + '__X2', Meta, cache, lookup, store)
 
-        conjure_triple = produce_triple_cache_WithFrill(
+        conjure_triple = produce_triple_cache(
                              name + '__X3',
-                             Meta,
                              conjure_BinaryExpression_WithFrill,
                              cache,
                              lookup,
@@ -157,7 +165,7 @@ def gem():
             if frill is meta_frill:
                 return conjure_dual(a, b)
 
-            return conjure_triple(a, b, frill)
+            return conjure_triple(frill, a, b)
 
 
         if __debug__:

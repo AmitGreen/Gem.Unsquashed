@@ -126,7 +126,7 @@ def gem():
 
         def conjure_triple(a, b, frill):
             #
-            #   This is pretty much the same as produce_triple_cache_functions with the following changes:
+            #   This is pretty much the same as produce_triple_cache with the following changes:
             #
             #       1.  Order is .frill, .a, .b (intead of .a, .b, .c)
             #

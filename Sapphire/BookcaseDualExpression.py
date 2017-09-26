@@ -61,6 +61,9 @@ def gem():
     BookcaseDualExpression.kd1 = BookcaseDualExpression.a
     BookcaseDualExpression.kd2 = BookcaseDualExpression.b
 
+    BookcaseDualExpression.kt2 = BookcaseDualExpression.a
+    BookcaseDualExpression.kt3 = BookcaseDualExpression.b
+
 
     @share
     def conjure_BookcaseDualExpression_WithFrill(Meta, a, b, frill):
