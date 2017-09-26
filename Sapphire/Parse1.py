@@ -209,7 +209,7 @@ def gem():
 
                 if "test identation" and 7:
                     for v in many:
-                        v.indentation
+                        line('+%d %s', v.indentation.total, v.display_token())
 
                 #conjure_colon__line_marker('\n\n:\n')
                 #dump_binary_expression_cache_many()

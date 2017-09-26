@@ -235,13 +235,18 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<%s <%s> %s %s>',
+            return arrange('<%s %s %s %s>',
                            t.display_name,
-                           t.keyword.s,
+                           t.keyword         .display_token(),
                            t.name            .display_token(),
                            t.parameters_colon.display_token())
 
 
+        @property
+        def indentation(t):
+            return t.keyword.a
+
+            
         def write(t, w):
             w(t.keyword.s + t.name.s)
             t.parameters_colon.write(w)
@@ -250,13 +255,15 @@ def gem():
     @share
     class ClassHeader(ClassOrFunctionHeaderBase):
         __slots__    = (())
-        display_name = 'class'
+        display_name = 'class-header'
 
 
-    @share
     class FunctionHeader(ClassOrFunctionHeaderBase):
         __slots__    = (())
-        display_name = 'function'
+        display_name = 'function-header'
+
+
+    conjure_function_header = produce_triple_cache('funtion-header', FunctionHeader)
 
 
     @share
@@ -1024,3 +1031,8 @@ def gem():
     MemberExpression.call_statement = MethodCallStatement
     SapphireToken   .call_statement = CallStatement
     SapphireTrunk   .call_statement = CallStatement
+
+
+    share(
+        'conjure_function_header',  conjure_function_header,
+    )

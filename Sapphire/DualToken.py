@@ -404,6 +404,10 @@ def gem():
         display_name = 'indented-token'
 
 
+        def display_token(t):
+            return arrange('<+%d {%s}>', t.a.total, portray_string(t.b.s)[1:-1])
+
+
     @share
     class Is_Not(BaseDualOperator):
         __slots__                        = (())
@@ -607,6 +611,17 @@ def gem():
                                   provide = provide_indentation,
                               )
 
+    evoke_indented__keyword_function = produce_evoke_dual_token(
+                                           'indented-function',
+                                           Indented_Token,
+                                           conjure_indentation,
+                                           conjure_keyword_function,
+                                           none,
+
+                                           lookup  = lookup_indentation,
+                                           provide = provide_indentation,
+                                       )
+
     evoke_name_whitespace = produce_evoke_dual_token(
                                 'name+whitespace',
                                 Name_Whitespace,
@@ -768,6 +783,7 @@ def gem():
         'conjure_dot_name_pair',                    conjure_dot_name_pair,
         'conjure_empty_list',                       conjure_empty_list,
         'conjure_empty_map',                        conjure_empty_map,
+        'conjure_indented_token',                   conjure_indented_token,
         'conjure_is_not',                           conjure_is_not,
         'conjure__left_square_bracket__colon',      conjure__left_square_bracket__colon,
         'conjure_not_in',                           conjure_not_in,
@@ -779,6 +795,7 @@ def gem():
         'evoke_empty_map',                          evoke_empty_map,
         'evoke_empty_tuple',                        evoke_empty_tuple,
         'evoke_indented__at_sign',                  evoke_indented__at_sign,
+        'evoke_indented__keyword_function',         evoke_indented__keyword_function,
         'evoke_is_not',                             evoke_is_not,
         'evoke__left_square_bracket__colon',        evoke__left_square_bracket__colon,
         'evoke_name_whitespace',                    evoke_name_whitespace,
@@ -787,5 +804,4 @@ def gem():
         'find_evoke_atom_whitespace',               find_evoke_atom_whitespace,
         'find_evoke_comma_something',               find_evoke_comma_something,
         'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
-        'conjure_indented_token',                   conjure_indented_token,
     )

@@ -65,9 +65,9 @@ def gem():
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        keyword_function = conjure_keyword_function(m.group())
-
         j = m.end()
+
+        indented__keyword_function = evoke_indented__keyword_function(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -87,7 +87,7 @@ def gem():
             if qn() is not none:
                 raise_unknown_line()
 
-            return FunctionHeader(keyword_function, name, operator_1)
+            return conjure_function_header(indented__keyword_function, name, operator_1)
 
         if not operator_1.is_left_parenthesis:
             raise_unknown_line()
@@ -105,8 +105,8 @@ def gem():
             raise_unknown_line()
 
         if token_1.is__right_parenthesis__colon__newline:
-            return FunctionHeader(
-                       keyword_function,
+            return conjure_function_header(
+                       indented__keyword_function,
                        name,
                        conjure__parameter_0__colon__line_marker(
                            operator_1,
@@ -125,8 +125,8 @@ def gem():
             if qn() is not none:
                 raise_unknown_line()
 
-            return FunctionHeader(
-                       keyword_function,
+            return conjure_function_header(
+                       indented__keyword_function,
                        name,
                        ParameterColon_1(operator_1, token_1, operator_2),
                    )
@@ -151,8 +151,8 @@ def gem():
             raise_unknown_line()
 
         if token_7.is__right_parenthesis__colon__newline:
-            return FunctionHeader(
-                       keyword_function,
+            return conjure_function_header(
+                       indented__keyword_function,
                        name,
                        ParameterColon_1(
                            operator_1,
@@ -197,8 +197,8 @@ def gem():
                 if qn() is not none:
                     raise_unknown_line()
 
-                return FunctionHeader(
-                           keyword_function,
+                return conjure_function_header(
+                           indented__keyword_function,
                            name,
                            conjure_parameter_colon_many(operator_1, many, many_frill, operator_7),
                        )
@@ -213,8 +213,8 @@ def gem():
                 raise_unknown_line()
 
             if token_7.is__right_parenthesis__colon__newline:
-                return FunctionHeader(
-                           keyword_function,
+                return conjure_function_header(
+                           indented__keyword_function,
                            name,
                            conjure_parameter_colon_many(
                                operator_1,
