@@ -7,8 +7,11 @@ def gem():
     require_gem('Sapphire.DualFrill')
     require_gem('Sapphire.Elemental')
 
-    conjure_dual_frill           = Shared.conjure_dual_frill                #   Due to privileged
-    produce_dual_cache_WithFrill = Shared.produce_dual_cache_WithFrill      #   Due to privileged
+
+    conjure_dual_frill   = Shared.conjure_dual_frill    #   Due to privileged
+    lookup_adjusted_meta = Shared.lookup_adjusted_meta  #   Due to privileged
+    produce_dual_cache   = Shared.produce_dual_cache    #   Due to privileged
+    store_adjusted_meta  = Shared.store_adjusted_meta   #   Due to privileged
 
 
     if __debug__:
@@ -54,51 +57,6 @@ def gem():
             w(frill.b.s)
 
 
-    def conjure_BookcaseExpression_WithFrill(Meta, a, frill):
-        BookcaseExpression_WithFrill = lookup_adjusted_meta(Meta)
-
-        if BookcaseExpression_WithFrill is none:
-            class BookcaseExpression_WithFrill(Meta):
-                __slots__ = ((
-                    'frill',                #   DualFrill
-                ))
-
-
-                def __init__(t, a, frill):
-                    t.a     = a
-                    t.frill = frill
-
-
-                def __repr__(t):
-                    return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.frill)
-
-
-                def count_newlines(t):
-                    return t.a.count_newlines() + t.frill.count_newlines()
-
-
-                def display_token(t):
-                    frill = t.frill
-
-                    return arrange('<%s+frill %s %s %s>',
-                                   t.display_name,
-                                   frill.a.display_token(),
-                                   t.a    .display_token(),
-                                   frill.b.display_token())
-
-
-            BookcaseExpression_WithFrill.kd1 = BookcaseExpression_WithFrill.frill
-            BookcaseExpression_WithFrill.kd2 = BookcaseExpression_WithFrill.a
-
-
-            if __debug__:
-                BookcaseExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
-
-            store_adjusted_meta(Meta, BookcaseExpression_WithFrill)
-
-        return BookcaseExpression_WithFrill(a, frill)
-
-
     @privileged
     def produce_conjure_bookcase_expression(name, Meta):
         cache   = {}
@@ -106,9 +64,53 @@ def gem():
         provide = cache.setdefault
         store   = cache.__setitem__
 
-        conjure_dual = produce_dual_cache_WithFrill(
+        def conjure_BookcaseExpression_WithFrill(frill, a):
+            BookcaseExpression_WithFrill = lookup_adjusted_meta(Meta)
+
+            if BookcaseExpression_WithFrill is none:
+                class BookcaseExpression_WithFrill(Meta):
+                    __slots__ = ((
+                        'frill',                #   DualFrill
+                    ))
+
+
+                    def __init__(t, a, frill):
+                        t.a     = a
+                        t.frill = frill
+
+
+                    def __repr__(t):
+                        return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.frill)
+
+
+                    def count_newlines(t):
+                        return t.a.count_newlines() + t.frill.count_newlines()
+
+
+                    def display_token(t):
+                        frill = t.frill
+
+                        return arrange('<%s+frill %s %s %s>',
+                                       t.display_name,
+                                       frill.a.display_token(),
+                                       t.a    .display_token(),
+                                       frill.b.display_token())
+
+
+                BookcaseExpression_WithFrill.kd1 = BookcaseExpression_WithFrill.frill
+                BookcaseExpression_WithFrill.kd2 = BookcaseExpression_WithFrill.a
+
+
+                if __debug__:
+                    BookcaseExpression_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
+
+                store_adjusted_meta(Meta, BookcaseExpression_WithFrill)
+
+            return BookcaseExpression_WithFrill(a, frill)
+
+
+        conjure_dual = produce_dual_cache(
                            name + '__X2',
-                           Meta,
                            conjure_BookcaseExpression_WithFrill,
                            cache,
                            lookup,
@@ -123,7 +125,7 @@ def gem():
             if (frill_a is meta_frill_a) and (frill_b is meta_frill_b):
                 return (lookup(a)) or (provide(a, Meta(a)))
 
-            return conjure_dual(a, conjure_dual_frill(frill_a, frill_b))
+            return conjure_dual(conjure_dual_frill(frill_a, frill_b), a)
 
 
         if __debug__:
