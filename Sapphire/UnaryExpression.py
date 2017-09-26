@@ -6,6 +6,9 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
+    produce_dual_cache_WithFrill = Shared.produce_dual_cache_WithFrill      #   Due to privileged
+
+
     if __debug__:
         cache_many = []
 
@@ -41,7 +44,7 @@ def gem():
             t.a.write(w)
 
 
-    def conjure_UnaryExpression_WithFrill(Meta, frill, a):
+    def conjure_UnaryExpression_WithFrill(Meta, a, frill):
         UnaryExpression_WithFrill = lookup_adjusted_meta(Meta)
 
         if UnaryExpression_WithFrill is none:
@@ -83,6 +86,15 @@ def gem():
         provide = cache.setdefault
         store   = cache.__setitem__
 
+        conjure_dual = produce_dual_cache_WithFrill(
+                           name + '__X2',
+                           Meta,
+                           conjure_UnaryExpression_WithFrill,
+                           cache,
+                           lookup,
+                           store,
+                       )
+
         meta_frill = Meta.frill
 
 
@@ -90,22 +102,7 @@ def gem():
             if frill is meta_frill:
                 return (lookup(a)) or (provide(a, Meta(a)))
 
-            first = lookup(frill, absent)
-
-            if first.__class__ is Map:
-                return (
-                              first.get(a)
-                           or first.setdefault(a, conjure_UnaryExpression_WithFrill(Meta, frill, a))
-                       )
-
-            if first.a is a:
-                return first
-
-            r = conjure_UnaryExpression_WithFrill(Meta, frill, a)
-
-            store(frill, (r   if first is absent else   { first.a : first, a : r }))
-
-            return r
+            return conjure_dual(a, frill)
 
 
         if __debug__:
