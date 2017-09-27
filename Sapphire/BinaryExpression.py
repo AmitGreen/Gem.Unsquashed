@@ -9,7 +9,7 @@ def gem():
 
 
     lookup_adjusted_meta      = Shared.lookup_adjusted_meta         #   Due to privileged
-    produce_dual_cache__12N   = Shared.produce_dual_cache__12N      #   Due to privileged
+    produce_dual_cache        = Shared.produce_dual_cache           #   Due to privileged
     produce_triple_cache__312 = Shared.produce_triple_cache__312    #   Due to privileged
     store_adjusted_meta       = Shared.store_adjusted_meta          #   Due to privileged
 
@@ -147,7 +147,7 @@ def gem():
             return BinaryExpression_WithFrill(a, frill, b)
 
 
-        conjure_dual   = produce_dual_cache__12N  (name, Meta,                               cache, lookup, store)
+        conjure_dual   = produce_dual_cache       (name, Meta,                               cache, lookup, store)
         conjure_triple = produce_triple_cache__312(name, conjure_BinaryExpression_WithFrill, cache, lookup, store)
 
         meta_frill = Meta.frill

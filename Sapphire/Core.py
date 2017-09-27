@@ -14,7 +14,7 @@ def gem():
 
 
     from Gem import create_DelayedFileOutput, create_StringOutput, print_exception_chain, produce_conjure_by_name
-    from Gem import produce_dual_cache, produce_dual_cache__12N, produce_dual_cache__21, produce_conjure_quadruple__4123
+    from Gem import produce_dual_cache, produce_dual_cache__21, produce_conjure_quadruple__4123
     from Gem import produce_triple_cache, produce_triple_cache__213, produce_triple_cache__312
     from Gem import program_exit, read_text_from_path
     from Pearl import la, parse_context, qd, qi, qj, qk, ql, qn, qs, raise_unknown_line
@@ -30,7 +30,6 @@ def gem():
         'la',                               la,
         'print_exception_chain',            print_exception_chain,
         'produce_conjure_by_name',          produce_conjure_by_name,
-        'produce_dual_cache__12N',          produce_dual_cache__12N,
         'produce_dual_cache__21',           produce_dual_cache__21,
         'produce_dual_cache',               produce_dual_cache,
         'produce_conjure_quadruple__4123',  produce_conjure_quadruple__4123,
