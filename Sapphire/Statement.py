@@ -137,9 +137,9 @@ def gem():
             w(frill.b.s)
 
 
-    CallStatementBase.kt1 = CallStatementBase.frill
-    CallStatementBase.kt2 = CallStatementBase.left
-    CallStatementBase.kt3 = CallStatementBase.arguments
+    CallStatementBase.k1 = CallStatementBase.frill
+    CallStatementBase.k2 = CallStatementBase.left
+    CallStatementBase.k3 = CallStatementBase.arguments
 
 
     @share
@@ -259,9 +259,9 @@ def gem():
             t.parameters_colon.write(w)
 
 
-    ClassOrFunctionHeaderBase.kt1 = ClassOrFunctionHeaderBase.keyword
-    ClassOrFunctionHeaderBase.kt2 = ClassOrFunctionHeaderBase.name
-    ClassOrFunctionHeaderBase.kt3 = ClassOrFunctionHeaderBase.parameters_colon
+    ClassOrFunctionHeaderBase.k1 = ClassOrFunctionHeaderBase.keyword
+    ClassOrFunctionHeaderBase.k2 = ClassOrFunctionHeaderBase.name
+    ClassOrFunctionHeaderBase.k3 = ClassOrFunctionHeaderBase.parameters_colon
 
 
     class ClassHeader(ClassOrFunctionHeaderBase):
@@ -1036,10 +1036,10 @@ def gem():
             w(t.newline.s)
 
 
-    conjure_call_statement        = produce_triple_cache('call-statement',        CallStatement)
-    conjure_class_header          = produce_triple_cache('class-header',          ClassHeader)
-    conjure_function_header       = produce_triple_cache('function-header',       FunctionHeader)
-    conjure_method_call_statement = produce_triple_cache('method-call-statement', MethodCallStatement)
+    conjure_call_statement        = produce_triple_cache__312('call-statement',        CallStatement)
+    conjure_class_header          = produce_triple_cache__312('class-header',          ClassHeader)
+    conjure_function_header       = produce_triple_cache__312('function-header',       FunctionHeader)
+    conjure_method_call_statement = produce_triple_cache__312('method-call-statement', MethodCallStatement)
 
 
     static_conjure_call_statement = static_method(conjure_call_statement)

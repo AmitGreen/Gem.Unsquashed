@@ -61,9 +61,9 @@ def gem():
     TripleExpression.kq3 = TripleExpression.b
     TripleExpression.kq4 = TripleExpression.c
 
-    TripleExpression.kt1 = TripleExpression.a
-    TripleExpression.kt2 = TripleExpression.b
-    TripleExpression.kt3 = TripleExpression.c
+    TripleExpression.k1 = TripleExpression.a
+    TripleExpression.k2 = TripleExpression.b
+    TripleExpression.k3 = TripleExpression.c
 
 
     @privileged

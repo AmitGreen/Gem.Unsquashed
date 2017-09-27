@@ -355,37 +355,37 @@ def gem():
             store = cache.__setitem__
 
 
-        def conjure_triple(kt1, kt2, kt3):
-            first = lookup(kt1, absent)
+        def conjure_triple(k1, k2, k3):
+            first = lookup(k1, absent)
 
             if first.__class__ is Map:
-                second = first.get(kt2, absent)
+                second = first.get(k2, absent)
 
                 if second.__class__ is Map:
-                    return (second.get(kt3)) or (second.setdefault(kt3, Meta(kt1, kt2, kt3)))
+                    return (second.get(k3)) or (second.setdefault(k3, Meta(k1, k2, k3)))
 
-                if second.kt3 is kt3:
+                if second.k3 is k3:
                     return second
 
-                r = Meta(kt1, kt2, kt3)
+                r = Meta(k1, k2, k3)
 
-                first[kt2] = (r   if second is absent else   { second.kt3 : second, kt3 : r })
+                first[k2] = (r   if second is absent else   { second.k3 : second, k3 : r })
 
                 return r
 
-            if first.kt2 is kt2:
-                if first.kt3 is kt3:
+            if first.k2 is k2:
+                if first.k3 is k3:
                     return first
 
-                r = Meta(kt1, kt2, kt3)
+                r = Meta(k1, k2, k3)
 
-                store(kt1, { first.kt2 : { first.kt3 : first, kt3 : r } })
+                store(k1, { first.k2 : { first.k3 : first, k3 : r } })
 
                 return r
 
-            r = Meta(kt1, kt2, kt3)
+            r = Meta(k1, k2, k3)
 
-            store(kt1, (r   if first is absent else   { first.kt2 : first, kt2 : r }))
+            store(k1, (r   if first is absent else   { first.k2 : first, k2 : r }))
 
             return r
 
