@@ -60,8 +60,8 @@ def gem():
             w(frill.c.s)
  
  
-    BookcaseDualExpression.kd1 = BookcaseDualExpression.a
-    BookcaseDualExpression.kd2 = BookcaseDualExpression.b
+    #BookcaseDualExpression.k1 = BookcaseDualExpression.a
+    BookcaseDualExpression.k2 = BookcaseDualExpression.b
 
     BookcaseDualExpression.kt2 = BookcaseDualExpression.a
     BookcaseDualExpression.kt3 = BookcaseDualExpression.b

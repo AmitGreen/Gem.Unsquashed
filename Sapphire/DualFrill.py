@@ -30,8 +30,8 @@ def gem():
             return arrange('<dual-frill %s %s>', t.a.display_token(), t.b.display_token())
 
  
-    DualFrill.kd1 = DualFrill.a
-    DualFrill.kd2 = DualFrill.b
+    #DualFrill.k1 = DualFrill.a
+    DualFrill.k2 = DualFrill.b
 
 
     dual_frill_cache = {}

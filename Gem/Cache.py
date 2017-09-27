@@ -111,18 +111,18 @@ def gem():
             store = cache.__setitem__
 
 
-        def conjure_dual(kd1, kd2):
-            first = lookup(kd1, absent)
+        def conjure_dual(k1, k2):
+            first = lookup(k1, absent)
 
             if first.__class__ is Map:
-                return (first.get(kd2)) or (first.setdefault(kd2, Meta(kd1, kd2)))
+                return (first.get(k2)) or (first.setdefault(k2, Meta(k1, k2)))
 
-            if first.kd2 is kd2:
+            if first.k2 is k2:
                 return first
 
-            r = Meta(kd1, kd2)
+            r = Meta(k1, k2)
 
-            store(kd1, (r   if first is absent else   { first.kd2 : first, kd2 : r }))
+            store(k1, (r   if first is absent else   { first.k2 : first, k2 : r }))
 
             return r
 
@@ -131,6 +131,48 @@ def gem():
             conjure_dual.__name__ = intern_arrange('conjure_%s', name)
 
         return conjure_dual
+
+
+    @export
+    @privileged
+    def produce_dual_cache__21(
+            name,
+            Meta,
+
+            cache  = absent,
+            lookup = absent,
+            store  = absent,
+    ):
+        if cache is absent:
+            cache = {}
+
+        if lookup is absent:
+            lookup = cache.get
+
+        if store is absent:
+            store = cache.__setitem__
+
+
+        def conjure_dual__21(k1, k2):
+            first = lookup(k2, absent)
+
+            if first.__class__ is Map:
+                return (first.get(k1)) or (first.setdefault(k1, Meta(k1, k2)))
+
+            if first.k1 is k1:
+                return first
+
+            r = Meta(k1, k2)
+
+            store(k2, (r   if first is absent else   { first.k1 : first, k1 : r }))
+
+            return r
+
+
+        if __debug__:
+            conjure_dual__21.__name__ = intern_arrange('conjure_%s__21', name)
+
+        return conjure_dual__21
 
 
     @export

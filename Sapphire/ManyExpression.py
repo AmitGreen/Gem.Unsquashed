@@ -89,8 +89,8 @@ def gem():
                 v.write(w)
 
 
-    ManyExpression.kd1 = ManyExpression.frill
-    ManyExpression.kd2 = ManyExpression.many
+    #ManyExpression.k1 = ManyExpression.frill
+    ManyExpression.k2 = ManyExpression.many
 
 
     @privileged

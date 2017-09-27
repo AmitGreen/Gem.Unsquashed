@@ -36,8 +36,8 @@ def gem():
             w(t.postfix.s)
 
 
-    MemberExpression.kd1 = MemberExpression.left
-    MemberExpression.kd2 = MemberExpression.postfix
+    #MemberExpression.k1 = MemberExpression.left
+    MemberExpression.k2 = MemberExpression.postfix
 
 
     static_produce_call_expression = static_method(produce_call_expression)

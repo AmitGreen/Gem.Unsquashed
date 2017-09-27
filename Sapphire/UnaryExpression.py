@@ -6,9 +6,9 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   Due to privileged
-    produce_dual_cache   = Shared.produce_dual_cache        #   Due to privileged
-    store_adjusted_meta  = Shared.store_adjusted_meta       #   Due to privileged
+    lookup_adjusted_meta   = Shared.lookup_adjusted_meta        #   Due to privileged
+    produce_dual_cache__21 = Shared.produce_dual_cache__21      #   Due to privileged
+    store_adjusted_meta    = Shared.store_adjusted_meta         #   Due to privileged
 
 
     if __debug__:
@@ -46,7 +46,7 @@ def gem():
             t.a.write(w)
 
 
-    UnaryExpression.kd2 = UnaryExpression.a
+    UnaryExpression.k1 = UnaryExpression.a
 
 
     @privileged
@@ -57,7 +57,7 @@ def gem():
         store   = cache.__setitem__
 
 
-        def conjure_UnaryExpression_WithFrill(frill, a):
+        def conjure_UnaryExpression_WithFrill(a, frill):
             UnaryExpression_WithFrill = lookup_adjusted_meta(Meta)
 
             if UnaryExpression_WithFrill is none:
@@ -84,7 +84,7 @@ def gem():
                         return arrange('<%s+frill %s %s>', t.display_name, t.frill.display_token(), t.a.display_token())
 
 
-                UnaryExpression_WithFrill.kd1 = UnaryExpression_WithFrill.frill
+                #UnaryExpression_WithFrill.k2 = UnaryExpression_WithFrill.frill
 
 
                 if __debug__:
@@ -96,13 +96,13 @@ def gem():
 
 
 
-        conjure_dual = produce_dual_cache(
-                           name + '__X2',
-                           conjure_UnaryExpression_WithFrill,
-                           cache,
-                           lookup,
-                           store,
-                       )
+        conjure_dual__21 = produce_dual_cache__21(
+                               name + '__X2',
+                               conjure_UnaryExpression_WithFrill,
+                               cache,
+                               lookup,
+                               store,
+                           )
 
         meta_frill = Meta.frill
 
@@ -111,7 +111,7 @@ def gem():
             if frill is meta_frill:
                 return (lookup(a)) or (provide(a, Meta(a)))
 
-            return conjure_dual(frill, a)
+            return conjure_dual__21(a, frill)
 
 
         if __debug__:

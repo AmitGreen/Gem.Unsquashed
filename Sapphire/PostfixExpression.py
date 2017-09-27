@@ -38,29 +38,11 @@ def gem():
             t.b.write(w)
 
 
-    PostfixExpression.kd1 = PostfixExpression.b         #   Reverse order on purpose
-    PostfixExpression.kd2 = PostfixExpression.a         #   Reverse order on purpose
+    PostfixExpression.k1 = PostfixExpression.a
+    #PostfixExpression.k2 = PostfixExpression.b
 
 
-    @privileged
-    def produce_conjure_postfix_expression(name, Meta):
-        def create_postfix_expression(b, a):            #   Reverse order on purpose
-            return Meta(a, b)
-
-
-        conjure_dual = produce_dual_cache(name + '__X2', create_postfix_expression, postfix_cache)
-
-
-        def conjure_postfix_expression(a, b):
-            return conjure_dual(b, a)                   #   Reverse order on purpose
-
-
-        if __debug__:
-            create_postfix_expression .__name__ = arrange('create_%s', name)
-            conjure_postfix_expression.__name__ = arrange('conjure_%s', name)
-
-
-        return conjure_postfix_expression
+    produce_conjure_postfix_expression = produce_dual_cache__21
 
 
     class CallExpression(PostfixExpression):

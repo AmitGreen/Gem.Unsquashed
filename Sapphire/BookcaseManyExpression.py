@@ -98,8 +98,8 @@ def gem():
             w(frill.end.s)
 
 
-    BookcaseManyExpression.kd1 = BookcaseManyExpression.frill
-    BookcaseManyExpression.kd2 = BookcaseManyExpression.many
+    #BookcaseManyExpression.k1 = BookcaseManyExpression.frill
+    BookcaseManyExpression.k2 = BookcaseManyExpression.many
 
 
     @privileged

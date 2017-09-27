@@ -79,8 +79,8 @@ def gem():
             t.b.write(w)
 
 
-    BinaryExpression.kd1 = BinaryExpression.a
-    BinaryExpression.kd2 = BinaryExpression.b
+    #BinaryExpression.k1 = BinaryExpression.a
+    BinaryExpression.k2 = BinaryExpression.b
 
     BinaryExpression.kt2 = BinaryExpression.a
     BinaryExpression.kt3 = BinaryExpression.b
