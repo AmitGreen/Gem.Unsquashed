@@ -133,9 +133,14 @@ def gem():
         return conjure_dual
 
 
+    #
+    #   NOTE:
+    #       This is really 'produce_triple_cache' with 'k3' set to 'none' for key searches
+    #       {The invisible it not use in initializing members, which are intiailized "Meta(k1, k2)"}
+    #
     @export
     @privileged
-    def produce_dual_cache__12A(
+    def produce_dual_cache__12N(
             name,
             Meta,
 
@@ -153,31 +158,35 @@ def gem():
             store = cache.__setitem__
 
 
-        def conjure_dual__12A(k1, k2):
+        def conjure_dual__12N(k1, k2):
             first = lookup(k1, absent)
-
+            
             if first.__class__ is Map:
                 second = first.get(k2, absent)
 
                 if second.__class__ is Map:
-                    return (second.get(absent)) or (second.setdefault(absent, Meta(k1, k2)))
+                    return (second.get(none)) or (second.setdefault(none, Meta(k1, k2)))
 
-                if second.k3 is absent:
+                if second.k3 is none:
+                    assert type(second) is Meta
+
                     return second
 
                 r = Meta(k1, k2)
 
-                first[k2] = (r   if second is absent else   { second.k3 : second, absent : r })
+                first[k2] = (r   if second is absent else   { second.k3 : second, none : r })
 
                 return r
 
             if first.k2 is k2:
-                if first.k3 is absent:
+                if first.k3 is none:
+                    assert type(first) is Meta
+
                     return first
 
                 r = Meta(k1, k2)
 
-                store(k1, { first.k2 : { first.k3 : first, absent : r } })
+                store(k1, { first.k2 : { first.k3 : first, none : r } })
 
                 return r
 
@@ -189,9 +198,9 @@ def gem():
 
 
         if __debug__:
-            conjure_dual__12A.__name__ = intern_arrange('conjure_%s__12A', name)
+            conjure_dual__12N.__name__ = intern_arrange('conjure_%s__12N', name)
 
-        return conjure_dual__12A
+        return conjure_dual__12N
 
 
     @export
@@ -377,6 +386,67 @@ def gem():
             r = Meta(kt1, kt2, kt3)
 
             store(kt1, (r   if first is absent else   { first.kt2 : first, kt2 : r }))
+
+            return r
+
+
+        if __debug__:
+            conjure_triple.__name__ = intern_arrange('conjure_%s', name)
+
+        return conjure_triple
+
+
+    @export
+    @privileged
+    def produce_triple_cache__312(
+            name,
+            Meta,
+
+            cache  = absent,
+            lookup = absent,
+            store  = absent,
+    ):
+        if cache is absent:
+            cache = {}
+
+        if lookup is absent:
+            lookup = cache.get
+
+        if store is absent:
+            store = cache.__setitem__
+
+
+        def conjure_triple(k1, k2, k3):
+            first = lookup(k3, absent)
+
+            if first.__class__ is Map:
+                second = first.get(k1, absent)
+
+                if second.__class__ is Map:
+                    return (second.get(k2)) or (second.setdefault(k2, Meta(k1, k2, k3)))
+
+                if second.k2 is k2:
+                    return second
+
+                r = Meta(k1, k2, k3)
+
+                first[k1] = (r   if second is absent else   { second.k2 : second, k2 : r })
+
+                return r
+
+            if first.k1 is k1:
+                if first.k2 is k2:
+                    return first
+
+                r = Meta(k1, k2, k3)
+
+                store(k3, { first.k1 : { first.k2 : first, k2 : r } })
+
+                return r
+
+            r = Meta(k1, k2, k3)
+
+            store(k3, (r   if first is absent else   { first.k1 : first, k1 : r }))
 
             return r
 

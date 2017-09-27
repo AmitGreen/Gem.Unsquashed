@@ -8,10 +8,10 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    lookup_adjusted_meta    = Shared.lookup_adjusted_meta           #   Due to privileged
-    produce_dual_cache__12A = Shared.produce_dual_cache__12A        #   Due to privileged
-    produce_triple_cache    = Shared.produce_triple_cache           #   Due to privileged
-    store_adjusted_meta     = Shared.store_adjusted_meta            #   Due to privileged
+    lookup_adjusted_meta      = Shared.lookup_adjusted_meta         #   Due to privileged
+    produce_dual_cache__12N   = Shared.produce_dual_cache__12N      #   Due to privileged
+    produce_triple_cache__312 = Shared.produce_triple_cache__312    #   Due to privileged
+    store_adjusted_meta       = Shared.store_adjusted_meta          #   Due to privileged
 
 
     if __debug__:
@@ -56,8 +56,7 @@ def gem():
         ))
 
 
-        k3  = absent
-        kt3 = absent
+        k3  = none
 
 
         def __init__(t, a, b):
@@ -83,11 +82,8 @@ def gem():
             t.b.write(w)
 
 
-    #BinaryExpression.k1 = BinaryExpression.a
+    BinaryExpression.k1 = BinaryExpression.a
     BinaryExpression.k2 = BinaryExpression.b
-
-    BinaryExpression.kt1 = BinaryExpression.a
-    BinaryExpression.kt2 = BinaryExpression.b
 
 
     if is_python_2:
@@ -141,7 +137,6 @@ def gem():
 
 
                 BinaryExpression_WithFrill.k3  = BinaryExpression_WithFrill.frill
-                BinaryExpression_WithFrill.kt3 = BinaryExpression_WithFrill.frill
 
 
                 if __debug__:
@@ -152,15 +147,8 @@ def gem():
             return BinaryExpression_WithFrill(a, frill, b)
 
 
-        conjure_dual = produce_dual_cache__12A(name, Meta, cache, lookup, store)
-
-        conjure_triple = produce_triple_cache(
-                             name + '__X3',
-                             conjure_BinaryExpression_WithFrill,
-                             cache,
-                             lookup,
-                             store,
-                         )
+        conjure_dual   = produce_dual_cache__12N  (name, Meta,                               cache, lookup, store)
+        conjure_triple = produce_triple_cache__312(name, conjure_BinaryExpression_WithFrill, cache, lookup, store)
 
         meta_frill = Meta.frill
 

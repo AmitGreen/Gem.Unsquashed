@@ -7,7 +7,7 @@ def gem():
         __slots__ = (())
 
 
-        kt3 = kt2 = kq4 = kq3 = kq2 = k3 = k2 = k1 = none
+        kt3 = kt2 = kq4 = kq3 = kq2 = none
 
 
         @static_method
@@ -25,6 +25,9 @@ def gem():
 
 
     absent = Absent()
+
+
+    Absent.k3 = Absent.k2 = Absent.k1 = absent
 
 
     built_in(
