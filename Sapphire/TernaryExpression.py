@@ -6,11 +6,11 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    conjure_dual_frill      = Shared.conjure_dual_frill         #   Due to privileged
-    lookup_adjusted_meta    = Shared.lookup_adjusted_meta       #   Due to privileged
-    produce_quadruple_cache = Shared.produce_quadruple_cache    #   Due to privileged
-    produce_triple_cache    = Shared.produce_triple_cache       #   Due to privileged
-    store_adjusted_meta     = Shared.store_adjusted_meta        #   Due to privileged
+    conjure_dual_frill              = Shared.conjure_dual_frill                 #   Due to privileged
+    lookup_adjusted_meta            = Shared.lookup_adjusted_meta               #   Due to privileged
+    produce_conjure_quadruple__4123 = Shared.produce_conjure_quadruple__4123    #   Due to privileged
+    produce_triple_cache            = Shared.produce_triple_cache               #   Due to privileged
+    store_adjusted_meta             = Shared.store_adjusted_meta                #   Due to privileged
 
 
     if __debug__:
@@ -73,7 +73,7 @@ def gem():
         store  = cache.__setitem__
 
 
-        def conjure_TripleExpression_WithFrill(frill, a, b, c):
+        def conjure_Meta_WithFrill(a, b, c, frill):
             TripleExpression_WithFrill = lookup_adjusted_meta(Meta)
 
             if TripleExpression_WithFrill is none:
@@ -125,15 +125,8 @@ def gem():
             return TripleExpression_WithFrill(a, b, c, frill)
 
 
-        conjure_triple = produce_triple_cache(name + '__X3', Meta, cache, lookup, store)
-
-        conjure_quadruple = produce_quadruple_cache(
-                                name + '__X4',
-                                conjure_TripleExpression_WithFrill,
-                                cache,
-                                lookup,
-                                store
-                            )
+        conjure_triple    = produce_triple_cache           (name + '__X3', Meta, cache, lookup, store)
+        conjure_quadruple = produce_conjure_quadruple__4123(name, conjure_Meta_WithFrill, cache, lookup, store)
 
         meta_frill_a = Meta.frill.a
         meta_frill_b = Meta.frill.b
@@ -143,7 +136,7 @@ def gem():
             if (frill_a is meta_frill_a) and (frill_b is meta_frill_b):
                 return conjure_triple(a, b, c)
 
-            return conjure_quadruple(conjure_dual_frill(frill_a, frill_b), a, b, c)
+            return conjure_quadruple(a, b, c, conjure_dual_frill(frill_a, frill_b))
 
 
         if __debug__:

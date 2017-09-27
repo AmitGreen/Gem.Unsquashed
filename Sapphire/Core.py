@@ -14,7 +14,7 @@ def gem():
 
 
     from Gem import create_DelayedFileOutput, create_StringOutput, print_exception_chain, produce_conjure_by_name
-    from Gem import produce_dual_cache, produce_dual_cache__12N, produce_dual_cache__21, produce_quadruple_cache
+    from Gem import produce_dual_cache, produce_dual_cache__12N, produce_dual_cache__21, produce_conjure_quadruple__4123
     from Gem import produce_triple_cache, produce_triple_cache__213, produce_triple_cache__312
     from Gem import program_exit, read_text_from_path
     from Pearl import la, parse_context, qd, qi, qj, qk, ql, qn, qs, raise_unknown_line
@@ -25,37 +25,37 @@ def gem():
         #
         #   Imported functions
         #
-        'create_DelayedFileOutput',     create_DelayedFileOutput,
-        'create_StringOutput',          create_StringOutput,
-        'la',                           la,
-        'print_exception_chain',        print_exception_chain,
-        'produce_conjure_by_name',      produce_conjure_by_name,
-        'produce_dual_cache__12N',      produce_dual_cache__12N,
-        'produce_dual_cache__21',       produce_dual_cache__21,
-        'produce_dual_cache',           produce_dual_cache,
-        'produce_quadruple_cache',      produce_quadruple_cache,
-        'produce_triple_cache',         produce_triple_cache,
-        'produce_triple_cache__213',    produce_triple_cache__213,
-        'produce_triple_cache__312',    produce_triple_cache__312,
-        'program_exit',                 program_exit,
-        'qd',                           qd,
-        'qi',                           qi,
-        'qj',                           qj,
-        'qk',                           qk,
-        'ql',                           ql,
-        'qn',                           qn,
-        'qs',                           qs,
-        'raise_unknown_line',           raise_unknown_line,
-        'read_text_from_path',          read_text_from_path,
-        'wd0',                          wd0,
-        'wd1',                          wd1,
-        'wd',                           wd,
-        'wi',                           wi,
-        'wj',                           wj,
-        'wk',                           wk,
-        'wn',                           wn,
-        'ws',                           ws,
-        'z_initialize',                 z_initialize,
+        'create_DelayedFileOutput',         create_DelayedFileOutput,
+        'create_StringOutput',              create_StringOutput,
+        'la',                               la,
+        'print_exception_chain',            print_exception_chain,
+        'produce_conjure_by_name',          produce_conjure_by_name,
+        'produce_dual_cache__12N',          produce_dual_cache__12N,
+        'produce_dual_cache__21',           produce_dual_cache__21,
+        'produce_dual_cache',               produce_dual_cache,
+        'produce_conjure_quadruple__4123',  produce_conjure_quadruple__4123,
+        'produce_triple_cache',             produce_triple_cache,
+        'produce_triple_cache__213',        produce_triple_cache__213,
+        'produce_triple_cache__312',        produce_triple_cache__312,
+        'program_exit',                     program_exit,
+        'qd',                               qd,
+        'qi',                               qi,
+        'qj',                               qj,
+        'qk',                               qk,
+        'ql',                               ql,
+        'qn',                               qn,
+        'qs',                               qs,
+        'raise_unknown_line',               raise_unknown_line,
+        'read_text_from_path',              read_text_from_path,
+        'wd0',                              wd0,
+        'wd1',                              wd1,
+        'wd',                               wd,
+        'wi',                               wi,
+        'wj',                               wj,
+        'wk',                               wk,
+        'wn',                               wn,
+        'ws',                               ws,
+        'z_initialize',                     z_initialize,
 
 
         #
