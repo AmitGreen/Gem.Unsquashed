@@ -398,6 +398,67 @@ def gem():
 
     @export
     @privileged
+    def produce_triple_cache__213(
+            name,
+            Meta,
+
+            cache  = absent,
+            lookup = absent,
+            store  = absent,
+    ):
+        if cache is absent:
+            cache = {}
+
+        if lookup is absent:
+            lookup = cache.get
+
+        if store is absent:
+            store = cache.__setitem__
+
+
+        def conjure_triple__213(k1, k2, k3):
+            first = lookup(k2, absent)
+
+            if first.__class__ is Map:
+                second = first.get(k1, absent)
+
+                if second.__class__ is Map:
+                    return (second.get(k3)) or (second.setdefault(k3, Meta(k1, k2, k3)))
+
+                if second.k3 is k3:
+                    return second
+
+                r = Meta(k1, k2, k3)
+
+                first[k1] = (r   if second is absent else   { second.k3 : second, k3 : r })
+
+                return r
+
+            if first.k1 is k1:
+                if first.k3 is k3:
+                    return first
+
+                r = Meta(k1, k2, k3)
+
+                store(k2, { first.k1 : { first.k3 : first, k3 : r } })
+
+                return r
+
+            r = Meta(k1, k2, k3)
+
+            store(k2, (r   if first is absent else   { first.k1 : first, k1 : r }))
+
+            return r
+
+
+        if __debug__:
+            conjure_triple__213.__name__ = intern_arrange('conjure_%s__213', name)
+
+        return conjure_triple__213
+
+
+    @export
+    @privileged
     def produce_triple_cache__312(
             name,
             Meta,
