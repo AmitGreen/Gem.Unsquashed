@@ -135,6 +135,67 @@ def gem():
 
     @export
     @privileged
+    def produce_dual_cache__12A(
+            name,
+            Meta,
+
+            cache  = absent,
+            lookup = absent,
+            store  = absent,
+    ):
+        if cache is absent:
+            cache = {}
+
+        if lookup is absent:
+            lookup = cache.get
+
+        if store is absent:
+            store = cache.__setitem__
+
+
+        def conjure_dual__12A(k1, k2):
+            first = lookup(k1, absent)
+
+            if first.__class__ is Map:
+                second = first.get(k2, absent)
+
+                if second.__class__ is Map:
+                    return (second.get(absent)) or (second.setdefault(absent, Meta(k1, k2)))
+
+                if second.k3 is absent:
+                    return second
+
+                r = Meta(k1, k2)
+
+                first[k2] = (r   if second is absent else   { second.k3 : second, absent : r })
+
+                return r
+
+            if first.k2 is k2:
+                if first.k3 is absent:
+                    return first
+
+                r = Meta(k1, k2)
+
+                store(k1, { first.k2 : { first.k3 : first, absent : r } })
+
+                return r
+
+            r = Meta(k1, k2)
+
+            store(k1, (r   if first is absent else   { first.k2 : first, k2 : r }))
+
+            return r
+
+
+        if __debug__:
+            conjure_dual__12A.__name__ = intern_arrange('conjure_%s__12A', name)
+
+        return conjure_dual__12A
+
+
+    @export
+    @privileged
     def produce_dual_cache__21(
             name,
             Meta,
