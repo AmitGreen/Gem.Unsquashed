@@ -110,12 +110,6 @@ def gem():
 
 
     @share
-    class IfHeader(ConditionHeader):
-        __slots__    = (())
-        display_name = 'if'
-
-
-    @share
     class WithHeader_1(ConditionHeader):
         __slots__    = (())
         display_name = 'with'

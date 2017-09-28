@@ -230,6 +230,6 @@ def gem():
                 #dump_tuple_of_expression_cache()
                 #dump_unary_expression_cache_many()
 
-                if "test identation" and 7:
+                if "test identation" and 0:
                     for v in many:
                         line('+%d %s', v.indentation.total, v.display_token())

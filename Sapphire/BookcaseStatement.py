@@ -42,6 +42,15 @@ def gem():
                        )
 
 
+    class IfHeader(KeywordExpressionStatement_1):
+        __slots__    = (())
+        display_name = 'if-header'
+        frill        = conjure_dual_frill(
+                           conjure_indented_token(empty_indentation, conjure_keyword_return('if ')),
+                           empty_line_marker,
+                       )
+
+
     class ImportStatement(KeywordExpressionStatement_1):
         __slots__    = (())
         display_name = 'import-statement'
@@ -70,6 +79,7 @@ def gem():
 
 
     conjure_decorator_header = produce_conjure_bookcase_expression('decorator-header', DecoratorHeader)
+    conjure_if_header        = produce_conjure_bookcase_expression('if-header',        IfHeader)
     conjure_import_statement = produce_conjure_bookcase_expression('import-statement', ImportStatement)
     conjure_return_statement = produce_conjure_bookcase_expression('return-statement', ReturnStatement)
     conjure_while_header     = produce_conjure_bookcase_expression('while-header',     WhileHeader)
@@ -77,6 +87,7 @@ def gem():
 
     share(
         'conjure_decorator_header',     conjure_decorator_header,
+        'conjure_if_header',            conjure_if_header,
         'conjure_import_statement',     conjure_import_statement,
         'conjure_return_statement',     conjure_return_statement,
         'conjure_while_header',         conjure_while_header,
