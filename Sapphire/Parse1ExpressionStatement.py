@@ -17,7 +17,7 @@ def gem():
             newline = qn()
 
             if newline is not none:
-                return AssignStatement_1(indented, left, equal_sign, right, newline)
+                return conjure_assign_1(conjure_indentation(indented), left, equal_sign, right, newline)
 
             operator = tokenize_operator()
 

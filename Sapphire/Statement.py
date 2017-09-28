@@ -141,12 +141,6 @@ def gem():
 
 
     @share
-    class AssignStatement_1(ChangeStatement):
-        __slots__    = (())
-        display_name = '='
-
-
-    @share
     class ModifyStatement(ChangeStatement):
         __slots__    = (())
         display_name = 'modify-statement'

@@ -55,6 +55,10 @@ def gem():
             return 1
 
 
+        def display_token(t):
+            return arrange('<line-marker %s>', portray_string(t.s))
+
+
     @share
     def conjure_line_marker(s):
         r = lookup_line_marker(s)
