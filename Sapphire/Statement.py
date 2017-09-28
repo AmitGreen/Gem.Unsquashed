@@ -123,7 +123,8 @@ def gem():
         def display_token(t):
             frill = t.frill
 
-            return arrange('<+%d %s %s %s>',
+            return arrange('<%s +%d %s %s %s>',
+                           t.display_name,
                            frill.a.total,
                            t.left     .display_token(),
                            t.arguments.display_token(),
@@ -246,9 +247,9 @@ def gem():
         def display_token(t):
             keyword = t.keyword
 
-            return arrange('<+%d %s %s %s %s>',
-                           keyword.a.total,
+            return arrange('<%s +%d %s %s %s>',
                            t.display_name,
+                           keyword.a.total,
                            keyword.b         .display_token(),
                            t.name            .display_token(),
                            t.parameters_colon.display_token())

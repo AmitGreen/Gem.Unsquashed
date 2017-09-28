@@ -22,7 +22,7 @@ def gem():
 
 
     #
-    #   line
+    #   line & partial
     #
     flush_standard_output = PythonSystem.stdout.flush
     write_standard_output = PythonSystem.stdout.write
@@ -44,6 +44,20 @@ def gem():
     def partial(format, *arguments):
         write_standard_output(format % arguments   if arguments else   format)
         flush_standard_output()
+
+
+    #
+    #   method_is_function
+    #
+    if is_python_2:
+        @built_in
+        @privileged
+        def method_is_function(method, f):
+            return method.im_func is f
+    else:
+        @built_in
+        def method_is_function(method, f):
+            return method is f
 
 
     #

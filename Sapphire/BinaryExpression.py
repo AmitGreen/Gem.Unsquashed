@@ -86,15 +86,6 @@ def gem():
     BinaryExpression.k2 = BinaryExpression.b
 
 
-    if is_python_2:
-        @privileged
-        def method_is_function(method, f):
-            return method.im_func is f
-    else:
-        def method_is_function(method, f):
-            return method is f
-
-
     @privileged
     def produce_conjure_binary_expression(name, Meta):
         cache  = {}

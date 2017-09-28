@@ -27,6 +27,10 @@ def gem():
     LSB_RSB = conjure_dual_frill(LSB, RSB)
 
 
+    def display_token__bookcase_expression(t):
+        return arrange('<%s %s>', t.display_name, t.a.display_token())
+
+
     @share
     class BookcaseExpression(SapphireTrunk):
         __slots__ = ((
@@ -46,8 +50,7 @@ def gem():
             return t.a.count_newlines() + t.frill.count_newlines()
 
 
-        def display_token(t):
-            return arrange('<%s %s>', t.display_name, t.a.display_token())
+        display_token = display_token__bookcase_expression
 
 
         def write(t, w):
@@ -92,14 +95,26 @@ def gem():
                         return t.a.count_newlines() + t.frill.count_newlines()
 
 
-                    def display_token(t):
-                        frill = t.frill
+                    if method_is_function(Meta.display_token, display_token__bookcase_expression):
+                        def display_token(t):
+                            frill = t.frill
 
-                        return arrange('<%s+frill %s %s %s>',
-                                       t.display_name,
-                                       frill.a.display_token(),
-                                       t.a    .display_token(),
-                                       frill.b.display_token())
+                            return arrange('<%s+frill %s %s %s>',
+                                           t.display_name,
+                                           frill.a.display_token(),
+                                           t.a    .display_token(),
+                                           frill.b.display_token())
+                    else:
+                        def display_token(t):
+                            frill   = t.frill
+                            frill_a = frill.a
+
+                            return arrange('<%s+frill +%d %s %s %s>',
+                                           t.display_name,
+                                           frill_a.a.total,
+                                           frill.a.b.display_token(),
+                                           t.a    .display_token(),
+                                           frill.b.display_token())
 
 
                 #BookcaseExpression_WithFrill.k2 = BookcaseExpression_WithFrill.frill

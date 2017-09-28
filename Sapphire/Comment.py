@@ -109,7 +109,7 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<#+%d %s>', t.indentation.total, portray_string(t.comment))
+            return arrange('<# +%d %s>', t.indentation.total, portray_string(t.comment))
 
 
         def write(t, w):
@@ -148,7 +148,7 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<#+%d %s %s>', t.indentation.total, portray_string(t.comment), portray_string(t.newline))
+            return arrange('<# +%d %s %s>', t.indentation.total, portray_string(t.comment), portray_string(t.newline))
 
 
         def write(t, w):

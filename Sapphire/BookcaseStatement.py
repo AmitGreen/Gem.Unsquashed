@@ -10,9 +10,9 @@ def gem():
         def display_token(t):
             frill = t.frill
 
-            return arrange('<+%d %s %s %s %s>',
-                           frill.a.a.total,
+            return arrange('<%s +%d %s %s %s>',
                            t.display_name,
+                           frill.a.a.total,
                            frill.a.b.display_token(),
                            t.a.display_token(),
                            frill.b.display_token())
@@ -32,17 +32,17 @@ def gem():
                        )
 
 
-    class ReturnStatement_1(KeywordExpressionStatement_1):
+    class ReturnStatement(KeywordExpressionStatement_1):
         __slots__    = (())
-        display_name = 'return-statement-1'
+        display_name = 'return-statement'
         frill        = conjure_dual_frill(
-                           conjure_indented_token(empty_indentation, conjure_keyword_return('return')),
+                           conjure_indented_token(conjure_indentation('    '), conjure_keyword_return('return ')),
                            empty_line_marker,
                        )
 
 
     conjure_decorator_header   = produce_conjure_bookcase_expression('decorator-header', DecoratorHeader)
-    conjure_return_statement_1 = produce_conjure_bookcase_expression('return-1',         ReturnStatement_1)
+    conjure_return_statement_1 = produce_conjure_bookcase_expression('return-statement', ReturnStatement)
 
 
     share(

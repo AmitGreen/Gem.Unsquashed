@@ -86,11 +86,7 @@ def gem():
             return arrange('{%s}', portray_string(t.s)[1:-1])
 
 
-        def display_token(t):
-            if t.s == t.display_name:
-                return arrange('<%s>', t.display_name)
-
-            return arrange('<%s %s>', t.display_name, portray_string(t.s))
+        display_token = display_short_token
 
 
     class KeywordAnd(KeywordAndOperatorBase):
