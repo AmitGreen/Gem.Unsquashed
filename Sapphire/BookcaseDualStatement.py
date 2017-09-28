@@ -78,17 +78,29 @@ def gem():
         __slots__    = (())
         display_name = 'from-statement'
         frill        = conjure_triple_frill(
-                           conjure_indented_token(conjure_indentation('    '), conjure_keyword_return('from ')),
+                           conjure_indented_token(empty_indentation, conjure_keyword_from('from ')),
                            conjure_keyword_import(' import '),
                            empty_line_marker,
                        )
 
 
+    class WithHeader_2(KeywordDualExpressionStatement):
+        __slots__    = (())
+        display_name = 'with-header-2'
+        frill        = conjure_triple_frill(
+                           conjure_indented_token(empty_indentation, conjure_keyword_with('with ')),
+                           conjure_keyword_as(' as '),
+                           conjure_colon__line_marker(':\n'),
+                       )
+
+
     conjure_assign_1       = produce_conjure_bookcase_dual_expression('assign-1',       StatementAssign_1)
     conjure_from_statement = produce_conjure_bookcase_dual_expression('from-statement', StatementFromImport)
+    conjure_with_header_2  = produce_conjure_bookcase_dual_expression('with-header-2',  WithHeader_2)
 
 
     share(
         'conjure_assign_1',         conjure_assign_1,
         'conjure_from_statement',   conjure_from_statement,
+        'conjure_with_header_2',    conjure_with_header_2,
     )

@@ -47,7 +47,7 @@ def gem():
         display_name = 'if-header'
         frill        = conjure_dual_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_return('if ')),
-                           empty_line_marker,
+                           conjure_colon__line_marker(':\n'),
                        )
 
 
@@ -74,7 +74,7 @@ def gem():
         display_name = 'while-header'
         frill        = conjure_dual_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_return('while ')),
-                           empty_line_marker,
+                           conjure_colon__line_marker(':\n'),
                        )
 
 

@@ -396,12 +396,6 @@ def gem():
 
 
     @share
-    class WithHeader_2(KeywordBinaryStatement):
-        __slots__    = (())
-        display_name = 'with'
-
-
-    @share
     class KeywordExpressionStatement_1(SapphireTrunk):
         __slots__ = ((
             'keyword',                  #   KeywordDelete | KeywordReturn

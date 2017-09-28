@@ -681,12 +681,23 @@ def gem():
                                'indented-while',
                                Indented_Token,
                                conjure_indentation,
-                               conjure_keyword_return,
+                               conjure_keyword_while,
                                none,
 
                                lookup  = lookup_indentation,
                                provide = provide_indentation,
                            )
+
+    evoke_indented_with = produce_evoke_dual_token(
+                              'indented-with',
+                              Indented_Token,
+                              conjure_indentation,
+                              conjure_keyword_with,
+                              none,
+
+                              lookup  = lookup_indentation,
+                              provide = provide_indentation,
+                          )
 
     evoke_name_whitespace = produce_evoke_dual_token(
                                 'name+whitespace',
@@ -868,6 +879,7 @@ def gem():
         'evoke_indented_import',                    evoke_indented_import,
         'evoke_indented_return',                    evoke_indented_return,
         'evoke_indented_while',                     evoke_indented_while,
+        'evoke_indented_with',                      evoke_indented_with,
         'evoke_is_not',                             evoke_is_not,
         'evoke__left_square_bracket__colon',        evoke__left_square_bracket__colon,
         'evoke_name_whitespace',                    evoke_name_whitespace,
