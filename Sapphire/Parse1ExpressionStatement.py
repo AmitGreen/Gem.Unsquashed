@@ -27,10 +27,11 @@ def gem():
 
             raise_unknown_line()
 
-        many = [AssignFragment(left, equal_sign), AssignFragment(right, operator)]
+        many       = [left, right]
+        many_frill = [equal_sign, operator]
 
         while 7 is 7:
-            right = parse1_ternary_expression_list()
+            many.append(parse1_ternary_expression_list())
 
             operator = qk()
 
@@ -40,7 +41,7 @@ def gem():
                 newline = qn()
 
                 if newline is not none:
-                    return AssignStatement_Many(indented, Tuple(many), right, newline)
+                    return conjure_assign_many(conjure_indentation(indented), many, many_frill, newline)
 
                 operator = tokenize_operator()
 
@@ -48,7 +49,7 @@ def gem():
                 #my_line('right: %s; operator; %r; s: %s', right, operator, portray_string(qs()[qj():]))
                 raise_unknown_line()
 
-            many.append(AssignFragment(right, operator))
+            many_frill.append(operator)
 
 
     def parse1_statement_modify__left__operator(indented, left, modify_operator):

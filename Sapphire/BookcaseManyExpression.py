@@ -16,6 +16,7 @@ def gem():
         cache_many = []
 
 
+    @share
     class BookcaseManyExpression(SapphireTrunk):
         __slots__ = ((
             'frill',                    #   BookcaseManyFrill
@@ -102,6 +103,7 @@ def gem():
     BookcaseManyExpression.k2 = BookcaseManyExpression.many
 
 
+    @share
     @privileged
     def produce_conjure_bookcase_many_expression(name, Meta):
         cache = {}
