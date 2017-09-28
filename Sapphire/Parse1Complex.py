@@ -149,7 +149,7 @@ def gem():
             operator = tokenize_operator()
 
         if operator.is_colon__line_marker:
-            return WithHeader_1(keyword, left, operator)
+            return ExceptHeader_1(keyword, left, operator)
 
         if not operator.is_keyword_as:
             raise_unknown_line()
@@ -276,7 +276,7 @@ def gem():
             operator = tokenize_operator()
 
         if operator.is_colon__line_marker:
-            return WithHeader_1(indented_keyword, left, operator)
+            return conjure_with_header_1(indented_keyword, left, operator)
 
         if not operator.is_keyword_as:
             raise_unknown_line()

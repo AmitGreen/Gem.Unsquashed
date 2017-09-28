@@ -110,12 +110,6 @@ def gem():
 
 
     @share
-    class WithHeader_1(ConditionHeader):
-        __slots__    = (())
-        display_name = 'with'
-
-
-    @share
     class ConditionStatement(SapphireTrunk):
         __slots__ = ((
             'keyword',                  #   KeywordIf | KeywordWhile

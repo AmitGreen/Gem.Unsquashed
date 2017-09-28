@@ -73,7 +73,16 @@ def gem():
         __slots__    = (())
         display_name = 'while-header'
         frill        = conjure_dual_frill(
-                           conjure_indented_token(empty_indentation, conjure_keyword_return('while ')),
+                           conjure_indented_token(empty_indentation, conjure_keyword_while('while ')),
+                           conjure_colon__line_marker(':\n'),
+                       )
+
+
+    class WithHeader_1(KeywordExpressionStatement_1):
+        __slots__    = (())
+        display_name = 'with-header-1'
+        frill        = conjure_dual_frill(
+                           conjure_indented_token(empty_indentation, conjure_keyword_with('with ')),
                            conjure_colon__line_marker(':\n'),
                        )
 
@@ -83,6 +92,7 @@ def gem():
     conjure_import_statement = produce_conjure_bookcase_expression('import-statement', ImportStatement)
     conjure_return_statement = produce_conjure_bookcase_expression('return-statement', ReturnStatement)
     conjure_while_header     = produce_conjure_bookcase_expression('while-header',     WhileHeader)
+    conjure_with_header_1    = produce_conjure_bookcase_expression('while-header',     WithHeader_1)
 
 
     share(
@@ -91,4 +101,5 @@ def gem():
         'conjure_import_statement',     conjure_import_statement,
         'conjure_return_statement',     conjure_return_statement,
         'conjure_while_header',         conjure_while_header,
+        'conjure_with_header_1',        conjure_with_header_1,
     )
