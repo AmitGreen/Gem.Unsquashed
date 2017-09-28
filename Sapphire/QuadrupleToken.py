@@ -213,7 +213,10 @@ def gem():
 
 
             def evoke_quadruple_token(a_end, b_end, c_end):
-                assert qi() < a_end < b_end < c_end
+                #
+                #   Note: 'qi() <= a_end', since for indented token there might be no indentation
+                #
+                assert qi() <= a_end < b_end < c_end
 
                 full = qs()[qi() : ]
 
@@ -294,6 +297,21 @@ def gem():
         is_postfix_operator = true
 
 
+    class Indented_Else_Colon_LineMarker(BaseQuadrupleOperator):
+        __slots__       = (())
+        display_name    = 'else'
+        ends_in_newline = true
+        keyword         = 'else'
+        line_marker     = true
+        newlines        = 1
+
+
+        __init__       = construct_quadruple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
+        display_token  = display_token__indented__keyword__colon__line_marker
+        indentation    = BaseQuadrupleOperator.a
+
+
     class Indented_Except_Colon_LineMarker(BaseQuadrupleOperator):
         __slots__       = (())
         display_name    = 'except'
@@ -362,6 +380,16 @@ def gem():
             line_marker = true,
         )
 
+    evoke_indented__else__colon__line_marker = produce_evoke_quadruple_token(
+            'indented__else__colon__line_marker',
+            Indented_Else_Colon_LineMarker,
+            conjure_indentation,
+            conjure_keyword_else,
+            conjure_colon,
+
+            line_marker = true,
+        )
+
     evoke_indented__except__colon__line_marker = produce_evoke_quadruple_token(
             'indented__except__colon__line_marker',
             Indented_Except_Colon_LineMarker,
@@ -399,6 +427,7 @@ def gem():
         'conjure_dot_name_quadruplet',                          conjure_dot_name_quadruplet,
         'conjure__parameter_0__colon__line_marker',             conjure__parameter_0__colon__line_marker,
         'evoke__comma__right_parenthesis__colon__line_marker',  evoke__comma__right_parenthesis__colon__line_marker,
+        'evoke_indented__else__colon__line_marker',             evoke_indented__else__colon__line_marker,
         'evoke_indented__except__colon__line_marker',           evoke_indented__except__colon__line_marker,
         'evoke_indented__try__colon__line_marker',              evoke_indented__try__colon__line_marker,
         'evoke__parameter_0__colon__line_marker',               evoke__parameter_0__colon__line_marker,

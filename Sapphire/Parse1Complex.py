@@ -99,7 +99,7 @@ def gem():
     @share
     def parse1_statement_else_colon(m):
         if m.end('newline') is not -1:
-            return conjure__else__colon__line_marker(m.group())
+            return evoke_indented__else__colon__line_marker(m.end('indented'), m.start('colon'), m.end('colon'))
 
         keyword_colon = conjure_else_colon(m.group())
 

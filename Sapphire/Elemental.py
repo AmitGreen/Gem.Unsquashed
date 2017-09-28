@@ -166,19 +166,6 @@ def gem():
         keyword      = 'else:'
 
 
-    class KeywordElseColon_LineMarker_1(KeywordAndOperatorBase):
-        __slots__       = (())
-        display_name    = r'else:\n'
-        ends_in_newline = true
-        keyword         = r'else:\n'
-        line_marker     = true
-        newlines        = 1
-
-
-        __init__       = construct_action_word__line_marker_1
-        count_newlines = count_newlines__line_marker
-
-
     class KeywordElseIf(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'else-if'
@@ -1066,11 +1053,6 @@ def gem():
     #
     conjure_else_colon = produce_conjure_action_word('keyword-else-colon', KeywordElseColon)
 
-    conjure__else__colon__line_marker = produce_conjure_action_word__line_marker(
-            'keyword-else-colon-line-marker',
-            KeywordElseColon_LineMarker_1,
-        )
-
     conjure_except_colon = produce_conjure_action_word('keyword-except-colon', KeywordExceptColon)
 
     conjure_finally_colon = produce_conjure_action_word('keyword-finally-colon', KeywordFinallyColon)
@@ -1084,6 +1066,7 @@ def gem():
 
     conjure_keyword_assert   = produce_conjure_action_word('keyword-assert',   KeywordAssert)
     conjure_keyword_delete   = produce_conjure_action_word('keyword-delete',   KeywordDelete)
+    conjure_keyword_else     = produce_conjure_action_word('keyword-else',     KeywordElse)
     conjure_keyword_else_if  = produce_conjure_action_word('keyword-else-if',  KeywordElseIf)
     conjure_keyword_except   = produce_conjure_action_word('keyword-except',   KeywordExcept)
     conjure_keyword_function = produce_conjure_action_word('keyword-function', KeywordFunction)
@@ -1153,7 +1136,6 @@ def gem():
         'conjure_comma__ends_in_newline',                   conjure_comma__ends_in_newline,
         'conjure_dot',                                      conjure_dot,
         'conjure_else_colon',                               conjure_else_colon,
-        'conjure__else__colon__line_marker',                conjure__else__colon__line_marker,
         'conjure_equal_sign',                               conjure_equal_sign,
         'conjure_except_colon',                             conjure_except_colon,
         'conjure_finally_colon',                            conjure_finally_colon,
@@ -1162,6 +1144,7 @@ def gem():
         'conjure_keyword_assert',                           conjure_keyword_assert,
         'conjure_keyword_class',                            conjure_keyword_class,
         'conjure_keyword_delete',                           conjure_keyword_delete,
+        'conjure_keyword_else',                             conjure_keyword_else,
         'conjure_keyword_else_if',                          conjure_keyword_else_if,
         'conjure_keyword_except',                           conjure_keyword_except,
         'conjure_keyword_for',                              conjure_keyword_for,
