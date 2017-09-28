@@ -121,11 +121,13 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<%s %s %s %s>',
-                           t.display_name,
-                           t.frill    .display_token(),
+            frill = t.frill
+
+            return arrange('<+%d %s %s %s>',
+                           frill.a.total,
                            t.left     .display_token(),
-                           t.arguments.display_token())
+                           t.arguments.display_token(),
+                           frill.b    .display_token())
 
 
         def write(t, w):
@@ -242,9 +244,12 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<%s %s %s %s>',
+            keyword = t.keyword
+
+            return arrange('<+%d %s %s %s %s>',
+                           keyword.a.total,
                            t.display_name,
-                           t.keyword         .display_token(),
+                           keyword.b         .display_token(),
                            t.name            .display_token(),
                            t.parameters_colon.display_token())
 
@@ -675,12 +680,6 @@ def gem():
     class RaiseStatement_1(KeywordExpressionStatement_1):
         __slots__    = (())
         display_name = 'raise-statement-1'
-
-
-    @share
-    class ReturnStatement_1(KeywordExpressionStatement_1):
-        __slots__    = (())
-        display_name = 'return-statement-1'
 
 
     @share

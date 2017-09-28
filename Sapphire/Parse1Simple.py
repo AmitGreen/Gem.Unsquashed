@@ -215,9 +215,9 @@ def gem():
         if m.end('newline') is not -1:
             return evoke_indented__return__line_marker(m.end('indented'), m.end('atom'))
 
-        keyword = conjure_keyword_return(m.group())
-
         j = m.end()
+
+        keyword = evoke_indented__keyword_return(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -233,7 +233,7 @@ def gem():
         if newline is none:
             raise_unknown_line()
 
-        return ReturnStatement_1(keyword, right, newline)
+        return conjure_return_statement_1(keyword, right, newline)
 
 
     @share

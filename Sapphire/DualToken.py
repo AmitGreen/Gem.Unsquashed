@@ -633,6 +633,17 @@ def gem():
                                            provide = provide_indentation,
                                        )
 
+    evoke_indented__keyword_return = produce_evoke_dual_token(
+                                         'indented-return',
+                                         Indented_Token,
+                                         conjure_indentation,
+                                         conjure_keyword_return,
+                                         none,
+
+                                         lookup  = lookup_indentation,
+                                         provide = provide_indentation,
+                                     )
+
     evoke_name_whitespace = produce_evoke_dual_token(
                                 'name+whitespace',
                                 Name_Whitespace,
@@ -807,6 +818,7 @@ def gem():
         'evoke_empty_tuple',                        evoke_empty_tuple,
         'evoke_indented__at_sign',                  evoke_indented__at_sign,
         'evoke_indented__keyword_function',         evoke_indented__keyword_function,
+        'evoke_indented__keyword_return',           evoke_indented__keyword_return,
         'evoke_is_not',                             evoke_is_not,
         'evoke__left_square_bracket__colon',        evoke__left_square_bracket__colon,
         'evoke_name_whitespace',                    evoke_name_whitespace,
