@@ -127,7 +127,7 @@ def gem():
 
         j = m.end()
 
-        indented_keyword = evoke_indented__keyword_from(m.end('indented'), j)
+        indented_keyword = evoke_indented_from(m.end('indented'), j)
 
         #
         #<module ... 'import'>

@@ -614,33 +614,6 @@ def gem():
         display_name = 'raise-statement-2'
 
 
-    @share
-    class ModuleAsFragment(SapphireTrunk):
-        __slots__ = ((
-            'module',                   #   Expression
-            'keyword_as',               #   KeywordAs
-            'right_name',               #   String+
-        ))
-
-
-        def __init__(t, module, keyword_as, right_name):
-            assert type(module)  is not String
-            assert type(right_name) is not String
-
-            t.module     = module
-            t.keyword_as = keyword_as
-            t.right_name = right_name
-
-
-        def __repr__(t):
-            return arrange('<ModuleAsFragment %s %s %s>', t.module, t.keyword_as, t.right_name)
-
-
-        def write(t, w):
-            t.module.write(w)
-            w(t.keyword_as.s + t.right_name.s)
-
-
     #
     #   TODO: Update this to a BookcaseExpression
     #
@@ -780,78 +753,4 @@ def gem():
         def write(t, w):
             w(t.indented)
             t.expression.write(w)
-            w(t.newline.s)
-
-
-    @share
-    class StatementImport_1(SapphireTrunk):
-        __slots__ = ((
-            'keyword_import',           #   KeywordImport
-            'module',                   #   String+
-            'newline',                  #   String+
-        ))
-
-
-        def __init__(t, keyword_import, module, newline):
-            t.keyword_import = keyword_import
-            t.module         = module
-            t.newline        = newline
-
-
-        def __repr__(t):
-            return arrange('<StatementImport %r %r %r>', t.keyword_import, t.module, t.newline)
-
-
-        def count_newlines(t):
-            return t.keyword_import.count_newlines() + t.module.count_newlines() + t.newline.count_newlines()
-
-
-        def display_token(t):
-            return arrange('<import %s %s %s>',
-                           t.keyword_import.display_token(),
-                           t.module        .display_token(),
-                           t.newline       .display_token())
-
-
-        def write(t, w):
-            w(t.keyword_import.s)
-            t.module.write(w)
-            w(t.newline.s)
-
-
-    @share
-    class StatementImport_Many(SapphireTrunk):
-        __slots__ = ((
-            'keyword_import',           #   KeywordImport
-            'module_many',              #   Tuple of String
-            'newline',                  #   String+
-        ))
-
-
-        def __init__(t, keyword_import, module_many, newline):
-            t.keyword_import = keyword_import
-            t.module_many    = module_many
-            t.newline        = newline
-
-
-        def __repr__(t):
-            return arrange('<StatementImport %r %r %r>', t.keyword_import, t.module_many, t.newline)
-
-
-        def display_token(t):
-            return arrange('<import %s <%s> %s>',
-                           t.keyword_import.display_token(),
-                           ' '.join(portray(v)   for v in t.module_many),
-                           t.newline       .display_token())
-
-
-        def write(t, w):
-            w(t.keyword_import.s)
-
-            for v in t.module_many:
-                if type(v) is String:
-                    w(v)
-                else:
-                    v.write(w)
-
             w(t.newline.s)

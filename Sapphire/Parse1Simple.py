@@ -217,7 +217,7 @@ def gem():
 
         j = m.end()
 
-        keyword = evoke_indented__keyword_return(m.end('indented'), j)
+        keyword = evoke_indented_return(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -233,7 +233,7 @@ def gem():
         if newline is none:
             raise_unknown_line()
 
-        return conjure_return_statement_1(keyword, right, newline)
+        return conjure_return_statement(keyword, right, newline)
 
 
     @share

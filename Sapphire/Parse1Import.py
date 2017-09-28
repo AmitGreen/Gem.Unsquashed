@@ -86,7 +86,7 @@ def gem():
         if m is none:
             raise_unknown_line()
 
-        module = ModuleAsFragment(module, keyword_as, conjure_name(m.group()))
+        module = conjure_module_as_fragment(module, keyword_as, conjure_name(m.group()))
 
         j = m.end()
 
@@ -119,9 +119,9 @@ def gem():
         if m.end('comment_newline') is not -1:
             raise_unknown_line()
 
-        keyword_import = conjure_keyword_import(m.group())
-
         j = m.end()
+
+        indented_keyword = evoke_indented_import(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -136,12 +136,13 @@ def gem():
         #</module>
 
         if operator.is_line_marker:
-            return StatementImport_1(keyword_import, module, operator)
+            return conjure_import_statement(indented_keyword, module, operator)
 
         if not operator.is_comma:
             raise_unknown_line()
 
-        many = [module, operator]
+        many       = [module]
+        many_frill = [operator]
 
         while 7 is 7:
             many.append(parse1_statement_import_module())
@@ -149,9 +150,13 @@ def gem():
             operator = qk()
 
             if operator.is_line_marker:
-                return StatementImport_Many(keyword_import, Tuple(many), operator)
+                return conjure_import_statement(
+                           indented_keyword,
+                           conjure_comma_expression_many(many, many_frill),
+                           operator,
+                       )
 
             if not operator.is_comma:
                 raise_unknown_line()
 
-            many.append(operator)
+            many_frill.append(operator)

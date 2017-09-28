@@ -611,49 +611,60 @@ def gem():
                                   provide = provide_indentation,
                               )
 
-    evoke_indented__keyword_class = produce_evoke_dual_token(
-                                        'indented-function',
-                                        Indented_Token,
-                                        conjure_indentation,
-                                        conjure_keyword_class,
-                                        none,
+    evoke_indented_class = produce_evoke_dual_token(
+                               'indented-function',
+                               Indented_Token,
+                               conjure_indentation,
+                               conjure_keyword_class,
+                               none,
 
-                                        lookup  = lookup_indentation,
-                                        provide = provide_indentation,
-                                    )
+                               lookup  = lookup_indentation,
+                               provide = provide_indentation,
+                           )
 
-    evoke_indented__keyword_from = produce_evoke_dual_token(
-                                         'indented-from',
-                                         Indented_Token,
-                                         conjure_indentation,
-                                         conjure_keyword_from,
-                                         none,
+    evoke_indented_from = produce_evoke_dual_token(
+                              'indented-from',
+                              Indented_Token,
+                              conjure_indentation,
+                              conjure_keyword_from,
+                              none,
 
-                                         lookup  = lookup_indentation,
-                                         provide = provide_indentation,
-                                     )
+                              lookup  = lookup_indentation,
+                              provide = provide_indentation,
+                          )
 
-    evoke_indented__keyword_function = produce_evoke_dual_token(
-                                           'indented-function',
-                                           Indented_Token,
-                                           conjure_indentation,
-                                           conjure_keyword_function,
-                                           none,
+    evoke_indented_function = produce_evoke_dual_token(
+                                  'indented-function',
+                                  Indented_Token,
+                                  conjure_indentation,
+                                  conjure_keyword_function,
+                                  none,
 
-                                           lookup  = lookup_indentation,
-                                           provide = provide_indentation,
-                                       )
+                                  lookup  = lookup_indentation,
+                                  provide = provide_indentation,
+                              )
 
-    evoke_indented__keyword_return = produce_evoke_dual_token(
-                                         'indented-return',
-                                         Indented_Token,
-                                         conjure_indentation,
-                                         conjure_keyword_return,
-                                         none,
+    evoke_indented_import = produce_evoke_dual_token(
+                                'indented-import',
+                                Indented_Token,
+                                conjure_indentation,
+                                conjure_keyword_import,
+                                none,
 
-                                         lookup  = lookup_indentation,
-                                         provide = provide_indentation,
-                                     )
+                                lookup  = lookup_indentation,
+                                provide = provide_indentation,
+                            )
+
+    evoke_indented_return = produce_evoke_dual_token(
+                                'indented-return',
+                                Indented_Token,
+                                conjure_indentation,
+                                conjure_keyword_return,
+                                none,
+
+                                lookup  = lookup_indentation,
+                                provide = provide_indentation,
+                            )
 
     evoke_name_whitespace = produce_evoke_dual_token(
                                 'name+whitespace',
@@ -828,8 +839,11 @@ def gem():
         'evoke_empty_map',                          evoke_empty_map,
         'evoke_empty_tuple',                        evoke_empty_tuple,
         'evoke_indented__at_sign',                  evoke_indented__at_sign,
-        'evoke_indented__keyword_function',         evoke_indented__keyword_function,
-        'evoke_indented__keyword_return',           evoke_indented__keyword_return,
+        'evoke_indented_class',                     evoke_indented_class,
+        'evoke_indented_from',                      evoke_indented_from,
+        'evoke_indented_function',                  evoke_indented_function,
+        'evoke_indented_import',                    evoke_indented_import,
+        'evoke_indented_return',                    evoke_indented_return,
         'evoke_is_not',                             evoke_is_not,
         'evoke__left_square_bracket__colon',        evoke__left_square_bracket__colon,
         'evoke_name_whitespace',                    evoke_name_whitespace,
@@ -838,6 +852,4 @@ def gem():
         'find_evoke_atom_whitespace',               find_evoke_atom_whitespace,
         'find_evoke_comma_something',               find_evoke_comma_something,
         'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
-        'evoke_indented__keyword_class',            evoke_indented__keyword_class,
-        'evoke_indented__keyword_from',             evoke_indented__keyword_from,
     )

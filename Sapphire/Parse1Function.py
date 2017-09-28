@@ -10,7 +10,7 @@ def gem():
 
         j = m.end()
 
-        indented__keyword = evoke_indented__keyword_class(m.end('indented'), j)
+        indented__keyword = evoke_indented_class(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -67,7 +67,7 @@ def gem():
 
         j = m.end()
 
-        indented__keyword = evoke_indented__keyword_function(m.end('indented'), j)
+        indented__keyword = evoke_indented_function(m.end('indented'), j)
 
         wi(j)
         wj(j)

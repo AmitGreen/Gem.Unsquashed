@@ -12,6 +12,7 @@ def gem():
     require_gem('Sapphire.Atom')
     require_gem('Sapphire.BinaryExpression')
     require_gem('Sapphire.BookcaseDualExpression')
+    require_gem('Sapphire.BookcaseDualStatement')
     require_gem('Sapphire.BookcaseExpression')
     require_gem('Sapphire.BookcaseManyExpression')
     require_gem('Sapphire.BookcaseManyFrill')
@@ -209,7 +210,7 @@ def gem():
                                         
                     line('Passed#2: Total counted lines %d matches input', total)
 
-                if "test identation" and 7:
+                if "test identation" and 0:
                     for v in many:
                         line('+%d %s', v.indentation.total, v.display_token())
 
