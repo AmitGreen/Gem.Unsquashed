@@ -3,16 +3,39 @@
 #
 @gem('Sapphire.BookcaseStatement')
 def gem():
+    class ExpressionStatement(BookcaseExpression):
+        __slots__ = (())
+        frill     = conjure_dual_frill(empty_indentation, empty_line_marker)
+
+
+        def display_token(t):
+            return arrange('<expression-statement +%d %s>',
+                           t.frill.a.total,
+                           t.a.display_token())
+
+
+        def display_token__frill(t):
+            frill = t.frill
+
+            return arrange('<expression-statement+frill +%d %s %s>',
+                           frill.a.total,
+                           t.a    .display_token(),
+                           frill.b.display_token())
+
+
+        @property
+        def indentation(t):
+            return t.frill.a
+
+
     class KeywordExpressionStatement(BookcaseExpression):
         __slots__ = (())
 
 
         def display_token(t):
-            frill = t.frill
-
             return arrange('<%s +%d %s>',
                            t.display_name,
-                           frill.a.a.total,
+                           t.frill.a.a.total,
                            t.a.display_token())
 
 
@@ -96,6 +119,15 @@ def gem():
                        )
 
 
+    #
+    #  Derived from BookcaseExpression
+    #
+    conjure_expression_statement = produce_conjure_bookcase_expression('expression-statement', ExpressionStatement)
+
+
+    #
+    #  Derived from KeywordExpressionStatement
+    #
     conjure_decorator_header = produce_conjure_bookcase_expression('decorator-header', DecoratorHeader)
     conjure_except_header_1  = produce_conjure_bookcase_expression('except-header-1',  ExceptHeader_1)
     conjure_if_header        = produce_conjure_bookcase_expression('if-header',        IfHeader)
@@ -106,11 +138,12 @@ def gem():
 
 
     share(
-        'conjure_decorator_header',     conjure_decorator_header,
-        'conjure_except_header_1',      conjure_except_header_1,
-        'conjure_if_header',            conjure_if_header,
-        'conjure_import_statement',     conjure_import_statement,
-        'conjure_return_statement',     conjure_return_statement,
-        'conjure_while_header',         conjure_while_header,
-        'conjure_with_header_1',        conjure_with_header_1,
+        'conjure_decorator_header',         conjure_decorator_header,
+        'conjure_expression_statement',     conjure_expression_statement,
+        'conjure_except_header_1',          conjure_except_header_1,
+        'conjure_if_header',                conjure_if_header,
+        'conjure_import_statement',         conjure_import_statement,
+        'conjure_return_statement',         conjure_return_statement,
+        'conjure_while_header',             conjure_while_header,
+        'conjure_with_header_1',            conjure_with_header_1,
     )

@@ -121,8 +121,8 @@ def gem():
 
                         if m.start('comment_newline') is not -1:
                             append(
-                                StatementExpression(
-                                    m.group('indented'),
+                                conjure_expression_statement(
+                                    conjure_indentation(m.group('indented')),
                                     conjure_name(atom_s),
                                     conjure_line_marker(s[m.end('atom'):]),
                                 ),

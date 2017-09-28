@@ -91,7 +91,7 @@ def gem():
             newline = qn()
 
             if newline is not none:
-                return StatementExpression(indented, left, newline)
+                return conjure_expression_statement(conjure_indentation(indented), left, newline)
 
             operator = tokenize_operator()
 
@@ -107,7 +107,7 @@ def gem():
                 newline = qn()
 
                 if newline is not none:
-                    return StatementExpression(indented, left, newline)
+                    return conjure_expression_statement(conjure_indentation(indented), left, newline)
 
                 raise_unknown_line()
 
@@ -122,7 +122,7 @@ def gem():
                 newline = qn()
 
                 if newline is not none:
-                    return StatementExpression(indented, left, newline)
+                    return conjure_expression_statement(conjure_indentation(indented), left, newline)
 
                 raise_unknown_line()
 
