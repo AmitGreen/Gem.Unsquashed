@@ -64,6 +64,16 @@ def gem():
             return t.frill.a.a
 
 
+    class ExceptHeader_2(KeywordDualExpressionStatement):
+        __slots__    = (())
+        display_name = 'except-header-2'
+        frill        = conjure_triple_frill(
+                           conjure_indented_token(empty_indentation, conjure_keyword_except('except ')),
+                           conjure_keyword_as(' as '),
+                           conjure_colon__line_marker(':\n'),
+                       )
+
+
     class StatementAssign_1(DualExpressionStatement):
         __slots__    = (())
         display_name = 'assign-statement'
@@ -94,13 +104,15 @@ def gem():
                        )
 
 
-    conjure_assign_1       = produce_conjure_bookcase_dual_expression('assign-1',       StatementAssign_1)
-    conjure_from_statement = produce_conjure_bookcase_dual_expression('from-statement', StatementFromImport)
-    conjure_with_header_2  = produce_conjure_bookcase_dual_expression('with-header-2',  WithHeader_2)
+    conjure_assign_1        = produce_conjure_bookcase_dual_expression('assign-1',       StatementAssign_1)
+    conjure_except_header_2 = produce_conjure_bookcase_dual_expression('assign-1',       ExceptHeader_2)
+    conjure_from_statement  = produce_conjure_bookcase_dual_expression('from-statement', StatementFromImport)
+    conjure_with_header_2   = produce_conjure_bookcase_dual_expression('with-header-2',  WithHeader_2)
 
 
     share(
         'conjure_assign_1',         conjure_assign_1,
+        'conjure_except_header_2',  conjure_except_header_2,
         'conjure_from_statement',   conjure_from_statement,
         'conjure_with_header_2',    conjure_with_header_2,
     )

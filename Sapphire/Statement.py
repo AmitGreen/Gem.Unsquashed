@@ -378,12 +378,6 @@ def gem():
 
 
     @share
-    class ExceptHeader_2(KeywordBinaryStatement):
-        __slots__    = (())
-        display_name = 'except'
-
-
-    @share
     class ForHeader(KeywordBinaryStatement):
         __slots__    = (())
         display_name = 'for'

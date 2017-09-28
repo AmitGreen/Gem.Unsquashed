@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.BookcaseStatement')
 def gem():
-    class KeywordExpressionStatement_1(BookcaseExpression):
+    class KeywordExpressionStatement(BookcaseExpression):
         __slots__ = (())
 
 
@@ -33,7 +33,7 @@ def gem():
             return t.frill.a.a
 
 
-    class DecoratorHeader(KeywordExpressionStatement_1):
+    class DecoratorHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = '@-header'
         frill        = conjure_dual_frill(
@@ -42,16 +42,25 @@ def gem():
                        )
 
 
-    class IfHeader(KeywordExpressionStatement_1):
+    class ExceptHeader_1(KeywordExpressionStatement):
         __slots__    = (())
-        display_name = 'if-header'
+        display_name = 'except-header-1'
         frill        = conjure_dual_frill(
-                           conjure_indented_token(empty_indentation, conjure_keyword_return('if ')),
+                           conjure_indented_token(empty_indentation, conjure_keyword_except('except ')),
                            conjure_colon__line_marker(':\n'),
                        )
 
 
-    class ImportStatement(KeywordExpressionStatement_1):
+    class IfHeader(KeywordExpressionStatement):
+        __slots__    = (())
+        display_name = 'if-header'
+        frill        = conjure_dual_frill(
+                           conjure_indented_token(empty_indentation, conjure_keyword_if('if ')),
+                           conjure_colon__line_marker(':\n'),
+                       )
+
+
+    class ImportStatement(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'import-statement'
         frill        = conjure_dual_frill(
@@ -60,7 +69,7 @@ def gem():
                        )
 
 
-    class ReturnStatement(KeywordExpressionStatement_1):
+    class ReturnStatement(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'return-statement'
         frill        = conjure_dual_frill(
@@ -69,7 +78,7 @@ def gem():
                        )
 
 
-    class WhileHeader(KeywordExpressionStatement_1):
+    class WhileHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'while-header'
         frill        = conjure_dual_frill(
@@ -78,7 +87,7 @@ def gem():
                        )
 
 
-    class WithHeader_1(KeywordExpressionStatement_1):
+    class WithHeader_1(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'with-header-1'
         frill        = conjure_dual_frill(
@@ -88,15 +97,17 @@ def gem():
 
 
     conjure_decorator_header = produce_conjure_bookcase_expression('decorator-header', DecoratorHeader)
+    conjure_except_header_1  = produce_conjure_bookcase_expression('except-header-1',  ExceptHeader_1)
     conjure_if_header        = produce_conjure_bookcase_expression('if-header',        IfHeader)
     conjure_import_statement = produce_conjure_bookcase_expression('import-statement', ImportStatement)
     conjure_return_statement = produce_conjure_bookcase_expression('return-statement', ReturnStatement)
     conjure_while_header     = produce_conjure_bookcase_expression('while-header',     WhileHeader)
-    conjure_with_header_1    = produce_conjure_bookcase_expression('while-header',     WithHeader_1)
+    conjure_with_header_1    = produce_conjure_bookcase_expression('with-header-1',    WithHeader_1)
 
 
     share(
         'conjure_decorator_header',     conjure_decorator_header,
+        'conjure_except_header_1',      conjure_except_header_1,
         'conjure_if_header',            conjure_if_header,
         'conjure_import_statement',     conjure_import_statement,
         'conjure_return_statement',     conjure_return_statement,

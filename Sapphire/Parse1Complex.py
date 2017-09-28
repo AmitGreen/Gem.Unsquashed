@@ -132,9 +132,9 @@ def gem():
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        keyword = conjure_keyword_except(m.group())
-
         j = m.end()
+
+        indented_keyword = evoke_indented_except(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -149,7 +149,7 @@ def gem():
             operator = tokenize_operator()
 
         if operator.is_colon__line_marker:
-            return ExceptHeader_1(keyword, left, operator)
+            return conjure_except_header_1(indented_keyword, left, operator)
 
         if not operator.is_keyword_as:
             raise_unknown_line()
@@ -164,7 +164,7 @@ def gem():
             operator_2 = tokenize_operator()
 
         if operator_2.is_colon__line_marker:
-            return ExceptHeader_2(keyword, left, operator, right, operator_2)
+            return conjure_except_header_2(indented_keyword, left, operator, right, operator_2)
 
         raise_unknown_line()
 
