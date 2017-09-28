@@ -74,6 +74,16 @@ def gem():
                        )
 
 
+    class ForHeader(KeywordDualExpressionStatement):
+        __slots__    = (())
+        display_name = 'for-header'
+        frill        = conjure_triple_frill(
+                           conjure_indented_token(empty_indentation, conjure_keyword_for('for ')),
+                           conjure_keyword_in(' in '),
+                           conjure_colon__line_marker(':\n'),
+                       )
+
+
     class StatementAssign_1(DualExpressionStatement):
         __slots__    = (())
         display_name = 'assign-statement'
@@ -106,6 +116,7 @@ def gem():
 
     conjure_assign_1        = produce_conjure_bookcase_dual_expression('assign-1',       StatementAssign_1)
     conjure_except_header_2 = produce_conjure_bookcase_dual_expression('assign-1',       ExceptHeader_2)
+    conjure_for_header      = produce_conjure_bookcase_dual_expression('for-header',     ForHeader)
     conjure_from_statement  = produce_conjure_bookcase_dual_expression('from-statement', StatementFromImport)
     conjure_with_header_2   = produce_conjure_bookcase_dual_expression('with-header-2',  WithHeader_2)
 
@@ -113,6 +124,7 @@ def gem():
     share(
         'conjure_assign_1',         conjure_assign_1,
         'conjure_except_header_2',  conjure_except_header_2,
+        'conjure_for_header',       conjure_for_header,
         'conjure_from_statement',   conjure_from_statement,
         'conjure_with_header_2',    conjure_with_header_2,
     )

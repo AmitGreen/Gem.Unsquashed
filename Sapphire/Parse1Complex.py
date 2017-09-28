@@ -190,9 +190,9 @@ def gem():
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        keyword_for = conjure_keyword_for(m.group())
-
         j = m.end()
+
+        indented_keyword = evoke_indented_for(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -233,7 +233,7 @@ def gem():
         if not operator_2.is_colon__line_marker:
             raise_unknown_line()
 
-        return ForHeader(keyword_for, left, operator, right, operator_2)
+        return conjure_for_header(indented_keyword, left, operator, right, operator_2)
 
 
     @share
