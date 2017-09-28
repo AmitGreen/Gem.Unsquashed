@@ -197,19 +197,6 @@ def gem():
         keyword      = 'except:'
 
 
-    class KeywordExceptColon_LineMarker_1(KeywordAndOperatorBase):
-        __slots__       = (())
-        display_name    = r'except:\n'
-        ends_in_newline = true
-        keyword         = r'except:\n'
-        line_marker     = true
-        newlines        = 1
-
-
-        __init__       = construct_action_word__line_marker_1
-        count_newlines = count_newlines__line_marker
-
-
     class KeywordFinallyColon(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'finally:'
@@ -1086,11 +1073,6 @@ def gem():
 
     conjure_except_colon = produce_conjure_action_word('keyword-except-colon', KeywordExceptColon)
 
-    conjure__except__colon__line_marker = produce_conjure_action_word__line_marker(
-            'keyword-except-colon-line-marker',
-            KeywordExceptColon_LineMarker_1,
-        )
-
     conjure_finally_colon = produce_conjure_action_word('keyword-finally-colon', KeywordFinallyColon)
 
     conjure__finally__colon__line_marker = produce_conjure_action_word__line_marker(
@@ -1174,7 +1156,6 @@ def gem():
         'conjure__else__colon__line_marker',                conjure__else__colon__line_marker,
         'conjure_equal_sign',                               conjure_equal_sign,
         'conjure_except_colon',                             conjure_except_colon,
-        'conjure__except__colon__line_marker',              conjure__except__colon__line_marker,
         'conjure_finally_colon',                            conjure_finally_colon,
         'conjure__finally__colon__line_marker',             conjure__finally__colon__line_marker,
         'conjure_keyword_as',                               conjure_keyword_as,

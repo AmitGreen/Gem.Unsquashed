@@ -68,6 +68,15 @@ def gem():
         t.newlines = newlines
 
 
+    def display_token__indented__keyword__colon__line_marker(t):
+        return arrange('<%s +%d %s %s %s>',
+                       t.display_name,
+                       t.a.total,
+                       t.b.display_token(),
+                       t.c.display_token(),
+                       t.d.display_token())
+
+
     class BaseQuadrupleOperator(KeywordAndOperatorBase):
         __slots__ = ((
             'a',                        #   Operator+
@@ -285,26 +294,34 @@ def gem():
         is_postfix_operator = true
 
 
-    class Indented_Try_Colon_LineMarker(BaseQuadrupleOperator):
+    class Indented_Except_Colon_LineMarker(BaseQuadrupleOperator):
         __slots__       = (())
-        display_name    = r'indented-try:\n'
+        display_name    = 'except'
         ends_in_newline = true
-        keyword         = r'indented-try:\n'
+        keyword         = 'except'
         line_marker     = true
         newlines        = 1
 
 
         __init__       = construct_quadruple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
+        display_token  = display_token__indented__keyword__colon__line_marker
         indentation    = BaseQuadrupleOperator.a
 
 
-        def display_token(t):
-            return arrange('<try +%d %s %s %s>',
-                           t.a.total,
-                           t.b.display_token(),
-                           t.c.display_token(),
-                           t.d.display_token())
+    class Indented_Try_Colon_LineMarker(BaseQuadrupleOperator):
+        __slots__       = (())
+        display_name    = 'try'
+        ends_in_newline = true
+        keyword         = 'try'
+        line_marker     = true
+        newlines        = 1
+
+
+        __init__       = construct_quadruple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
+        display_token  = display_token__indented__keyword__colon__line_marker
+        indentation    = BaseQuadrupleOperator.a
 
 
     class Parameter_0__Colon__LineMarker_1(BaseQuadrupleOperator):
@@ -345,6 +362,16 @@ def gem():
             line_marker = true,
         )
 
+    evoke_indented__except__colon__line_marker = produce_evoke_quadruple_token(
+            'indented__except__colon__line_marker',
+            Indented_Except_Colon_LineMarker,
+            conjure_indentation,
+            conjure_keyword_except,
+            conjure_colon,
+
+            line_marker = true,
+        )
+
     evoke_indented__try__colon__line_marker = produce_evoke_quadruple_token(
             'indented__try__colon__line_marker',
             Indented_Try_Colon_LineMarker,
@@ -372,6 +399,7 @@ def gem():
         'conjure_dot_name_quadruplet',                          conjure_dot_name_quadruplet,
         'conjure__parameter_0__colon__line_marker',             conjure__parameter_0__colon__line_marker,
         'evoke__comma__right_parenthesis__colon__line_marker',  evoke__comma__right_parenthesis__colon__line_marker,
+        'evoke_indented__except__colon__line_marker',           evoke_indented__except__colon__line_marker,
         'evoke_indented__try__colon__line_marker',              evoke_indented__try__colon__line_marker,
         'evoke__parameter_0__colon__line_marker',               evoke__parameter_0__colon__line_marker,
     )
