@@ -6,7 +6,7 @@ def gem():
     postfix_cache = {}
 
 
-    produce_dual_cache = Shared.produce_dual_cache              #   Due to privileged
+    produce_conjure_dual = Shared.produce_conjure_dual      #   Due to privileged
 
 
     class PostfixExpression(SapphireTrunk):
@@ -42,7 +42,7 @@ def gem():
     #PostfixExpression.k2 = PostfixExpression.b
 
 
-    produce_conjure_postfix_expression = produce_dual_cache__21
+    produce_conjure_postfix_expression = produce_conjure_dual__21
 
 
     class CallExpression(PostfixExpression):

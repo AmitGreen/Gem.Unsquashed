@@ -8,11 +8,11 @@ def gem():
     require_gem('Sapphire.TripleFrill')
 
 
-    conjure_triple_frill      = Shared.conjure_triple_frill         #   Due to privileged
-    lookup_adjusted_meta      = Shared.lookup_adjusted_meta         #   Due to privileged
-    produce_dual_cache        = Shared.produce_dual_cache           #   Due to privileged
-    produce_triple_cache__312 = Shared.produce_triple_cache__312    #   Due to privileged
-    store_adjusted_meta       = Shared.store_adjusted_meta          #   Due to privileged
+    conjure_triple_frill        = Shared.conjure_triple_frill           #   Due to privileged
+    lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   Due to privileged
+    produce_conjure_dual        = Shared.produce_conjure_dual           #   Due to privileged
+    produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   Due to privileged
+    store_adjusted_meta         = Shared.store_adjusted_meta            #   Due to privileged
 
 
     if __debug__:
@@ -121,8 +121,8 @@ def gem():
             return BookcaseDualExpression_WithFrill(a, b, frill)
 
 
-        conjure_dual   = produce_dual_cache       (name, Meta,                   cache, lookup, store)
-        conjure_triple = produce_triple_cache__312(name, conjure_Meta_WithFrill, cache, lookup, store)
+        conjure_dual   = produce_conjure_dual       (name, Meta,                   cache, lookup, store)
+        conjure_triple = produce_conjure_triple__312(name, conjure_Meta_WithFrill, cache, lookup, store)
 
         meta_frill_a = Meta.frill.a
         meta_frill_b = Meta.frill.b

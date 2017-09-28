@@ -1036,10 +1036,10 @@ def gem():
             w(t.newline.s)
 
 
-    conjure_call_statement        = produce_triple_cache__312('call-statement',        CallStatement)
-    conjure_class_header          = produce_triple_cache__312('class-header',          ClassHeader)
-    conjure_function_header       = produce_triple_cache__312('function-header',       FunctionHeader)
-    conjure_method_call_statement = produce_triple_cache__312('method-call-statement', MethodCallStatement)
+    conjure_call_statement        = produce_conjure_triple__312('call-statement',        CallStatement)
+    conjure_class_header          = produce_conjure_triple__312('class-header',          ClassHeader)
+    conjure_function_header       = produce_conjure_triple__312('function-header',       FunctionHeader)
+    conjure_method_call_statement = produce_conjure_triple__312('method-call-statement', MethodCallStatement)
 
 
     static_conjure_call_statement = static_method(conjure_call_statement)

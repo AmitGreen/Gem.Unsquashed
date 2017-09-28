@@ -51,7 +51,7 @@ def gem():
     member_expression_cache = {}
 
 
-    conjure_member_expression = produce_dual_cache('member-expession', MemberExpression, member_expression_cache)
+    conjure_member_expression = produce_conjure_dual('member-expession', MemberExpression, member_expression_cache)
 
 
     @share

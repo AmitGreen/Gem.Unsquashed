@@ -9,7 +9,7 @@ def gem():
 
     conjure_many_frill               = Shared.conjure_many_frill                #   Due to privileged
     conjure_tuple_of_many_expression = Shared.conjure_tuple_of_many_expression  #   Due to privileged
-    produce_dual_cache               = Shared.produce_dual_cache                #   Due to privileged
+    produce_conjure_dual             = Shared.produce_conjure_dual              #   Due to privileged
 
 
     if __debug__:
@@ -99,7 +99,7 @@ def gem():
         lookup = cache.get
         store  = cache.__setitem__
 
-        conjure_dual = produce_dual_cache(name + '__X2', Meta, cache)
+        conjure_dual = produce_conjure_dual(name + '__X2', Meta, cache)
 
 
         def conjure_many_expression(list, frill_list):

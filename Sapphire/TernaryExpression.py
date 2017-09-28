@@ -9,7 +9,7 @@ def gem():
     conjure_dual_frill              = Shared.conjure_dual_frill                 #   Due to privileged
     lookup_adjusted_meta            = Shared.lookup_adjusted_meta               #   Due to privileged
     produce_conjure_quadruple__4123 = Shared.produce_conjure_quadruple__4123    #   Due to privileged
-    produce_triple_cache            = Shared.produce_triple_cache               #   Due to privileged
+    produce_conjure_triple          = Shared.produce_conjure_triple             #   Due to privileged
     store_adjusted_meta             = Shared.store_adjusted_meta                #   Due to privileged
 
 
@@ -125,7 +125,7 @@ def gem():
             return TripleExpression_WithFrill(a, b, c, frill)
 
 
-        conjure_triple    = produce_triple_cache           (name + '__X3', Meta, cache, lookup, store)
+        conjure_triple    = produce_conjure_triple         (name + '__X3', Meta, cache, lookup, store)
         conjure_quadruple = produce_conjure_quadruple__4123(name, conjure_Meta_WithFrill, cache, lookup, store)
 
         meta_frill_a = Meta.frill.a

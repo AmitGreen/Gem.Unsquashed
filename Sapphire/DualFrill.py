@@ -36,7 +36,7 @@ def gem():
 
     dual_frill_cache = {}
 
-    conjure_dual_frill = produce_dual_cache('dual_frill', DualFrill, dual_frill_cache)
+    conjure_dual_frill = produce_conjure_dual('dual_frill', DualFrill, dual_frill_cache)
 
 
     @share

@@ -6,9 +6,9 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    lookup_adjusted_meta   = Shared.lookup_adjusted_meta        #   Due to privileged
-    produce_dual_cache__21 = Shared.produce_dual_cache__21      #   Due to privileged
-    store_adjusted_meta    = Shared.store_adjusted_meta         #   Due to privileged
+    lookup_adjusted_meta     = Shared.lookup_adjusted_meta          #   Due to privileged
+    produce_conjure_dual__21 = Shared.produce_conjure_dual__21      #   Due to privileged
+    store_adjusted_meta      = Shared.store_adjusted_meta           #   Due to privileged
 
 
     if __debug__:
@@ -96,7 +96,7 @@ def gem():
 
 
 
-        conjure_dual__21 = produce_dual_cache__21(
+        conjure_dual__21 = produce_conjure_dual__21(
                                name + '__X2',
                                conjure_UnaryExpression_WithFrill,
                                cache,

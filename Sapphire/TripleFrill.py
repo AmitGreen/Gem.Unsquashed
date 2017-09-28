@@ -39,7 +39,7 @@ def gem():
 
     triple_frill_cache = {}
 
-    conjure_triple_frill = produce_triple_cache('triple_frill', TripleFrill, triple_frill_cache)
+    conjure_triple_frill = produce_conjure_triple('triple_frill', TripleFrill, triple_frill_cache)
 
 
     @share

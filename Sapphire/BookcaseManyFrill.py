@@ -44,7 +44,7 @@ def gem():
     BookcaseManyFrill.k3 = BookcaseManyFrill.end
 
 
-    conjure_bookcase_many_frill__213 = produce_triple_cache__213(
+    conjure_bookcase_many_frill__213 = produce_conjure_triple__213(
                                            'bookcase_many_frill__213',
                                            BookcaseManyFrill,
                                            bookcase_many_frill_cache,

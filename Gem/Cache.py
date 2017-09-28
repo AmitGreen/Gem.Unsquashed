@@ -7,13 +7,6 @@ def gem():
 
 
     @export
-    def produce_conjure_by_name(name, Meta):
-        [conjure_by_name] = produce_cache_functions(name, Meta, produce_conjure_by_name = true)
-
-        return conjure_by_name
-
-
-    @export
     @privileged
     def produce_cache_functions(
             name,
@@ -92,8 +85,15 @@ def gem():
 
 
     @export
+    def produce_conjure_by_name(name, Meta):
+        [conjure_by_name] = produce_cache_functions(name, Meta, produce_conjure_by_name = true)
+
+        return conjure_by_name
+
+
+    @export
     @privileged
-    def produce_dual_cache(
+    def produce_conjure_dual(
             name,
             Meta,
 
@@ -135,7 +135,7 @@ def gem():
 
     @export
     @privileged
-    def produce_dual_cache__21(
+    def produce_conjure_dual__21(
             name,
             Meta,
 
@@ -267,7 +267,7 @@ def gem():
 
     @export
     @privileged
-    def produce_triple_cache(
+    def produce_conjure_triple(
             name,
             Meta,
 
@@ -328,7 +328,7 @@ def gem():
 
     @export
     @privileged
-    def produce_triple_cache__213(
+    def produce_conjure_triple__213(
             name,
             Meta,
 
@@ -389,7 +389,7 @@ def gem():
 
     @export
     @privileged
-    def produce_triple_cache__312(
+    def produce_conjure_triple__312(
             name,
             Meta,
 
