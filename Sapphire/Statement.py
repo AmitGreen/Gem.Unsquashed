@@ -116,12 +116,6 @@ def gem():
 
 
     @share
-    class WhileHeader(ConditionHeader):
-        __slots__    = (())
-        display_name = 'while'
-
-
-    @share
     class WithHeader_1(ConditionHeader):
         __slots__    = (())
         display_name = 'with'

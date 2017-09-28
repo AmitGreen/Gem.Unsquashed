@@ -285,6 +285,28 @@ def gem():
         is_postfix_operator = true
 
 
+    class Indented_Try_Colon_LineMarker(BaseQuadrupleOperator):
+        __slots__       = (())
+        display_name    = r'indented-try:\n'
+        ends_in_newline = true
+        keyword         = r'indented-try:\n'
+        line_marker     = true
+        newlines        = 1
+
+
+        __init__       = construct_quadruple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
+        indentation    = BaseQuadrupleOperator.a
+
+
+        def display_token(t):
+            return arrange('<try +%d %s %s %s>',
+                           t.a.total,
+                           t.b.display_token(),
+                           t.c.display_token(),
+                           t.d.display_token())
+
+
     class Parameter_0__Colon__LineMarker_1(BaseQuadrupleOperator):
         display_name                        = r'():\n'
         ends_in_newline                     = true
@@ -323,6 +345,16 @@ def gem():
             line_marker = true,
         )
 
+    evoke_indented__try__colon__line_marker = produce_evoke_quadruple_token(
+            'indented__try__colon__line_marker',
+            Indented_Try_Colon_LineMarker,
+            conjure_indentation,
+            conjure_keyword_try,
+            conjure_colon,
+
+            line_marker = true,
+        )
+
     evoke__parameter_0__colon__line_marker = produce_evoke_quadruple_token(
             'parameter_0__colon_newline',
             Parameter_0__Colon__LineMarker_1,
@@ -340,5 +372,6 @@ def gem():
         'conjure_dot_name_quadruplet',                          conjure_dot_name_quadruplet,
         'conjure__parameter_0__colon__line_marker',             conjure__parameter_0__colon__line_marker,
         'evoke__comma__right_parenthesis__colon__line_marker',  evoke__comma__right_parenthesis__colon__line_marker,
+        'evoke_indented__try__colon__line_marker',              evoke_indented__try__colon__line_marker,
         'evoke__parameter_0__colon__line_marker',               evoke__parameter_0__colon__line_marker,
     )

@@ -60,13 +60,24 @@ def gem():
                        )
 
 
-    conjure_decorator_header = produce_conjure_bookcase_expression     ('decorator-header', DecoratorHeader)
-    conjure_import_statement = produce_conjure_bookcase_expression     ('import-statement', ImportStatement)
-    conjure_return_statement = produce_conjure_bookcase_expression     ('return-statement', ReturnStatement)
+    class WhileHeader(KeywordExpressionStatement_1):
+        __slots__    = (())
+        display_name = 'while-header'
+        frill        = conjure_dual_frill(
+                           conjure_indented_token(empty_indentation, conjure_keyword_return('while ')),
+                           empty_line_marker,
+                       )
+
+
+    conjure_decorator_header = produce_conjure_bookcase_expression('decorator-header', DecoratorHeader)
+    conjure_import_statement = produce_conjure_bookcase_expression('import-statement', ImportStatement)
+    conjure_return_statement = produce_conjure_bookcase_expression('return-statement', ReturnStatement)
+    conjure_while_header     = produce_conjure_bookcase_expression('while-header',     WhileHeader)
 
 
     share(
         'conjure_decorator_header',     conjure_decorator_header,
         'conjure_import_statement',     conjure_import_statement,
         'conjure_return_statement',     conjure_return_statement,
+        'conjure_while_header',         conjure_while_header,
     )

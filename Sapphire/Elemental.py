@@ -387,23 +387,16 @@ def gem():
         keyword      = 'return'
 
 
+    class KeywordTry(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'try'
+        keyword      = 'try'
+
+
     class KeywordTryColon(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'try:'
         keyword      = 'try:'
-
-
-    class KeywordTryColon_LineMarker_1(KeywordAndOperatorBase):
-        __slots__       = (())
-        display_name    = r'try:\n'
-        ends_in_newline = true
-        keyword         = r'try:\n'
-        line_marker     = true
-        newlines        = 1
-
-
-        __init__       = construct_action_word__line_marker_1
-        count_newlines = count_newlines__line_marker
 
 
     class KeywordWhile(KeywordAndOperatorBase):
@@ -1107,11 +1100,6 @@ def gem():
 
     conjure_try_colon = produce_conjure_action_word('keyword-try-colon', KeywordTryColon)
 
-    conjure__try__colon__line_marker = produce_conjure_action_word__line_marker(
-            'keyword-try-colon-line-marker',
-            KeywordTryColon_LineMarker_1,
-        )
-
     conjure_keyword_assert   = produce_conjure_action_word('keyword-assert',   KeywordAssert)
     conjure_keyword_delete   = produce_conjure_action_word('keyword-delete',   KeywordDelete)
     conjure_keyword_else_if  = produce_conjure_action_word('keyword-else-if',  KeywordElseIf)
@@ -1125,11 +1113,11 @@ def gem():
             KeywordRaise_LineMarker_1,
         )
 
-    conjure_keyword_return   = produce_conjure_action_word('keyword-return',   KeywordReturn)
-
-    conjure_keyword_while    = produce_conjure_action_word('keyword-while',    KeywordWhile)
-    conjure_keyword_with     = produce_conjure_action_word('keyword-with',     KeywordWith)
-    conjure_keyword_yield    = produce_conjure_action_word('keyword-yield',    KeywordYield)
+    conjure_keyword_return = produce_conjure_action_word('keyword-return', KeywordReturn)
+    conjure_keyword_try    = produce_conjure_action_word('keyword-try',    KeywordTry)
+    conjure_keyword_while  = produce_conjure_action_word('keyword-while',  KeywordWhile)
+    conjure_keyword_with   = produce_conjure_action_word('keyword-with',   KeywordWith)
+    conjure_keyword_yield  = produce_conjure_action_word('keyword-yield',  KeywordYield)
 
 
     find_atom_type = {
@@ -1208,6 +1196,7 @@ def gem():
         'conjure_keyword_pass',                             conjure_keyword_pass,
         'conjure_keyword_raise',                            conjure_keyword_raise,
         'conjure_keyword_return',                           conjure_keyword_return,
+        'conjure_keyword_try',                              conjure_keyword_try,
         'conjure_keyword_while',                            conjure_keyword_while,
         'conjure_keyword_with',                             conjure_keyword_with,
         'conjure_keyword_yield',                            conjure_keyword_yield,
@@ -1226,7 +1215,6 @@ def gem():
         'conjure_right_square_bracket__ends_in_newline',    conjure_right_square_bracket__ends_in_newline,
         'conjure_star_sign',                                conjure_star_sign,
         'conjure_try_colon',                                conjure_try_colon,
-        'conjure__try__colon__line_marker',                 conjure__try__colon__line_marker,
         'find_atom_type',                                   find_atom_type,
         'is_close_operator',                                is_close_operator,
         'is_colon_7',                                       is_colon_7,

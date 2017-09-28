@@ -10,7 +10,7 @@ def gem():
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        keyword_if = conjure(m.group())
+        keyword = conjure(m.group())
 
         j = m.end()
 
@@ -30,7 +30,7 @@ def gem():
             raise_unknown_line()
 
         if operator.is_colon__line_marker:
-            return MetaHeader(keyword_if, condition, operator)
+            return MetaHeader(keyword, condition, operator)
 
         if not operator.is_colon:
             raise_unknown_line()
@@ -44,7 +44,52 @@ def gem():
             raise_unknown_line()
 
         return MetaStatement(
-                   keyword_if,
+                   keyword,
+                   condition,
+                   operator,
+                   parse1_statement_expression__atom('', left),
+               )
+
+
+    def parse1_condition_statement__X__m2(m, conjure, conjure_header, MetaStatement):
+        if m.end('newline') is not -1:
+            raise_unknown_line()
+
+        j = m.end()
+
+        indented_keyword = conjure(m.end('indented'), j)
+
+        wi(j)
+        wj(j)
+
+        condition = parse1_ternary_expression()
+
+        operator = qk()
+
+        if operator is not none:
+            wk(none)
+        else:
+            operator = tokenize_operator()
+
+        if qn() is not none:
+            raise_unknown_line()
+
+        if operator.is_colon__line_marker:
+            return conjure_header(indented_keyword, condition, operator)
+
+        if not operator.is_colon:
+            raise_unknown_line()
+
+        left = parse1_atom()
+
+        if qn() is not none:
+            raise_unknown_line()
+
+        if not left.is_atom:
+            raise_unknown_line()
+
+        return MetaStatement(
+                   indented_keyword,
                    condition,
                    operator,
                    parse1_statement_expression__atom('', left),
@@ -199,14 +244,14 @@ def gem():
     @share
     def parse1_statement_try_colon(m):
         if m.end('newline') is not -1:
-            return conjure__try__colon__line_marker(m.group())
+            return evoke_indented__try__colon__line_marker(m.end('indented'), m.start('colon'), m.end('colon'))
 
         raise_unknown_line()
 
 
     @share
     def parse1_statement_while(m):
-        return parse1_condition_statement__X__m(m, conjure_keyword_while, WhileHeader, WhileStatement)
+        return parse1_condition_statement__X__m2(m, evoke_indented_while, conjure_while_header, WhileStatement)
 
 
     @share

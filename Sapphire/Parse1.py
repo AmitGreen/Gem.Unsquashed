@@ -211,17 +211,16 @@ def gem():
                                         
                     line('Passed#2: Total counted lines %d matches input', total)
 
-                if "test identation" and 0:
-                    for v in many:
-                        line('+%d %s', v.indentation.total, v.display_token())
-
                 #conjure_colon__line_marker('\n\n:\n')
                 #dump_binary_expression_cache_many()
                 #dump_bookcase_dual_expression_cache_many()
                 #dump_bookcase_expression_cache_many()
                 #dump_bookcase_many_expression_cache_many()
                 #dump_bookcase_many_frill_cache()
+                #dump_comment_line_cache()
                 #dump_dual_frill_cache()
+                #dump_empty_line_cache()
+                #dump_indentation_cache()
                 #dump_many_expression_cache_many()
                 #dump_many_frill_cache()
                 #dump_member_expression_cache()
@@ -230,6 +229,7 @@ def gem():
                 #dump_token_caches()
                 #dump_tuple_of_expression_cache()
                 #dump_unary_expression_cache_many()
-                #dump_empty_line_cache()
-                #dump_indentation_cache()
-                #dump_comment_line_cache()
+
+                if "test identation" and 7:
+                    for v in many:
+                        line('+%d %s', v.indentation.total, v.display_token())

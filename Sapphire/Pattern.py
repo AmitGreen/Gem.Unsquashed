@@ -200,7 +200,7 @@ def gem():
                             G(
                                 'keyword',
                                 keyword_else | keyword_except | keyword_finally | keyword_try,
-                            ) + ow + colon + ow
+                            ) + ow + G(colon) + ow
                           | OPTIONAL('r') + G('quote', double_quote | single_quote) + ow
                           | G('atom', number | '@' | name) + ow
                           | G(
