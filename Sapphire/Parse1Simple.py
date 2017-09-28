@@ -49,12 +49,12 @@ def gem():
 
     @share
     def parse1_statement_assert(m):
-        keyword = conjure_keyword_assert(m.group())
-
         if m.end('newline') is not -1:
             raise_unknown_line()
 
         j = m.end()
+
+        indented_keyword = evoke_indented_assert(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -69,7 +69,7 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return AssertStatement_1(keyword, left, newline)
+            return conjure_assert_statement_1(indented_keyword, left, newline)
 
         wk(none)
 
@@ -86,7 +86,7 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return AssertStatement_2(keyword, left, operator, right, newline)
+            return AssertStatement_2(indented_keyword, left, operator, right, newline)
 
         raise_unknown_line()
 

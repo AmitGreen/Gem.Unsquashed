@@ -600,6 +600,17 @@ def gem():
                             conjure_right_parenthesis__ends_in_newline,
                         )
 
+    evoke_indented_assert = produce_evoke_dual_token(
+                                'indented-assert',
+                                Indented_Token,
+                                conjure_indentation,
+                                conjure_keyword_assert,
+                                none,
+
+                                lookup  = lookup_indentation,
+                                provide = provide_indentation,
+                            )
+
     evoke_indented__at_sign = produce_evoke_dual_token(
                                   'indented-at-sign',
                                   Indented_Token,
@@ -612,7 +623,7 @@ def gem():
                               )
 
     evoke_indented_class = produce_evoke_dual_token(
-                               'indented-function',
+                               'indented-class',
                                Indented_Token,
                                conjure_indentation,
                                conjure_keyword_class,
@@ -645,7 +656,7 @@ def gem():
                           )
 
     evoke_indented_for = produce_evoke_dual_token(
-                             'indented-function',
+                             'indented-for',
                              Indented_Token,
                              conjure_indentation,
                              conjure_keyword_for,
@@ -893,11 +904,12 @@ def gem():
         'evoke_empty_list',                         evoke_empty_list,
         'evoke_empty_map',                          evoke_empty_map,
         'evoke_empty_tuple',                        evoke_empty_tuple,
+        'evoke_indented_assert',                    evoke_indented_assert,
         'evoke_indented__at_sign',                  evoke_indented__at_sign,
         'evoke_indented_class',                     evoke_indented_class,
         'evoke_indented_except',                    evoke_indented_except,
-        'evoke_indented_from',                      evoke_indented_from,
         'evoke_indented_for',                       evoke_indented_for,
+        'evoke_indented_from',                      evoke_indented_from,
         'evoke_indented_function',                  evoke_indented_function,
         'evoke_indented_if',                        evoke_indented_if,
         'evoke_indented_import',                    evoke_indented_import,

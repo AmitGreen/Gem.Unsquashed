@@ -363,12 +363,6 @@ def gem():
 
 
     @share
-    class AssertStatement_1(KeywordExpressionStatement_1):
-        __slots__    = (())
-        display_name = 'assert-statement-1'
-
-
-    @share
     class DeleteStatement_1(KeywordExpressionStatement_1):
         __slots__    = (())
         display_name = 'delete-statement-1'

@@ -56,6 +56,15 @@ def gem():
             return t.frill.a.a
 
 
+    class AssertStatement_1(KeywordExpressionStatement):
+        __slots__    = (())
+        display_name = 'assert-1'
+        frill        = conjure_dual_frill(
+                           conjure_indented_token(empty_indentation, conjure_keyword_assert('assert ')),
+                           empty_line_marker,
+                       )
+
+
     class DecoratorHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = '@-header'
@@ -128,16 +137,18 @@ def gem():
     #
     #  Derived from KeywordExpressionStatement
     #
-    conjure_decorator_header = produce_conjure_bookcase_expression('decorator-header', DecoratorHeader)
-    conjure_except_header_1  = produce_conjure_bookcase_expression('except-header-1',  ExceptHeader_1)
-    conjure_if_header        = produce_conjure_bookcase_expression('if-header',        IfHeader)
-    conjure_import_statement = produce_conjure_bookcase_expression('import-statement', ImportStatement)
-    conjure_return_statement = produce_conjure_bookcase_expression('return-statement', ReturnStatement)
-    conjure_while_header     = produce_conjure_bookcase_expression('while-header',     WhileHeader)
-    conjure_with_header_1    = produce_conjure_bookcase_expression('with-header-1',    WithHeader_1)
+    conjure_assert_statement_1 = produce_conjure_bookcase_expression('assert-statement-1', AssertStatement_1)
+    conjure_decorator_header   = produce_conjure_bookcase_expression('decorator-header',   DecoratorHeader)
+    conjure_except_header_1    = produce_conjure_bookcase_expression('except-header-1',    ExceptHeader_1)
+    conjure_if_header          = produce_conjure_bookcase_expression('if-header',          IfHeader)
+    conjure_import_statement   = produce_conjure_bookcase_expression('import-statement',   ImportStatement)
+    conjure_return_statement   = produce_conjure_bookcase_expression('return-statement',   ReturnStatement)
+    conjure_while_header       = produce_conjure_bookcase_expression('while-header',       WhileHeader)
+    conjure_with_header_1      = produce_conjure_bookcase_expression('with-header-1',      WithHeader_1)
 
 
     share(
+        'conjure_assert_statement_1',       conjure_assert_statement_1,
         'conjure_decorator_header',         conjure_decorator_header,
         'conjure_expression_statement',     conjure_expression_statement,
         'conjure_except_header_1',          conjure_except_header_1,
