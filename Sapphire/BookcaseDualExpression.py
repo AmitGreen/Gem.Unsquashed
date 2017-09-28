@@ -26,6 +26,7 @@ def gem():
     RSB         = conjure_right_square_bracket(']')
 
 
+    @share
     class BookcaseDualExpression(SapphireTrunk):
         __slots__ = ((
             'a',                    #   Expression+
@@ -46,7 +47,7 @@ def gem():
 
 
         def count_newlines(t):
-            return t.a.count_newlines() + t.b.count_newlines()
+            return t.a.count_newlines() + t.b.count_newlines() + t.frill.count_newlines()
 
 
         def display_token(t):
@@ -67,6 +68,7 @@ def gem():
     BookcaseDualExpression.k2 = BookcaseDualExpression.b
 
 
+    @share
     @privileged
     def produce_conjure_bookcase_dual_expression(name, Meta):
         cache  = {}
@@ -98,16 +100,19 @@ def gem():
                         return t.a.count_newlines() + t.b.count_newlines() + t.frill.count_newlines()
 
 
-                    def display_token(t):
-                        frill = t.frill
+                    display_token = attribute(Meta, 'display_token__frill', none)
 
-                        return arrange('<%s+frill %s %s %s %s %s>',
-                                       t.display_name,
-                                       frill.a.display_token(),
-                                       t.a    .display_token(),
-                                       frill.b.display_token(),
-                                       t.b    .display_token(),
-                                       frill.c.display_token())
+                    if display_token is none:
+                        def display_token(t):
+                            frill = t.frill
+
+                            return arrange('<%s+frill %s %s %s %s %s>',
+                                           t.display_name,
+                                           frill.a.display_token(),
+                                           t.a    .display_token(),
+                                           frill.b.display_token(),
+                                           t.b    .display_token(),
+                                           frill.c.display_token())
 
 
                 BookcaseDualExpression_WithFrill.k3 = BookcaseDualExpression_WithFrill.frill

@@ -121,16 +121,18 @@ def gem():
 
 
     @share
-    def parse1_statement_from(m1):
-        if m1.end('comment_newline') is not -1:
+    def parse1_statement_from(m):
+        if m.end('comment_newline') is not -1:
             raise_unknown_line()
 
-        keyword_from = conjure_keyword_from(m1.group())
+        j = m.end()
+
+        indented_keyword = evoke_indented__keyword_from(m.end('indented'), j)
 
         #
         #<module ... 'import'>
         #
-        module = parse1_statement_from_module(m1.end())
+        module = parse1_statement_from_module(j)
 
         keyword_import = qk()
 
@@ -148,7 +150,7 @@ def gem():
         #<imported/>
 
         if operator.is_line_marker:
-            return StatementFromImport(keyword_from, module, keyword_import, imported, operator)
+            return conjure_from_statement(indented_keyword, module, keyword_import, imported, operator)
 
         if not operator.is_comma:
             raise_unknown_line()
@@ -164,8 +166,8 @@ def gem():
         #<imported/>
 
         if operator_2.is_line_marker:
-            return StatementFromImport(
-                       keyword_from,
+            return conjure_from_statement(
+                       indented_keyword,
                        module,
                        keyword_import,
                        conjure_comma_expression_1(imported, operator, imported_2),
@@ -186,8 +188,8 @@ def gem():
             wk(none)
 
             if operator_7.is_line_marker:
-                return StatementFromImport(
-                           keyword_from,
+                return conjure_from_statement(
+                           indented_keyword,
                            module,
                            keyword_import,
                            conjure_comma_expression_many(many, many_frill),

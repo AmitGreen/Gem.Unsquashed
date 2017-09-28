@@ -93,6 +93,7 @@ def gem():
         #
         #   Functions
         #
+        'attribute',        PythonBuiltIn.getattr,
         'character',        PythonBuiltIn.chr,
         'enumerate',        PythonBuiltIn.enumerate,
         'globals',          PythonBuiltIn.globals,

@@ -20,6 +20,7 @@ def gem():
     require_gem('Sapphire.Comment')
     require_gem('Sapphire.DualFrill')
     require_gem('Sapphire.DualToken')
+    require_gem('Sapphire.HeaderStatement')
     require_gem('Sapphire.Indentation')
     require_gem('Sapphire.LineMarker')
     require_gem('Sapphire.ManyExpression')
@@ -208,7 +209,7 @@ def gem():
                                         
                     line('Passed#2: Total counted lines %d matches input', total)
 
-                if "test identation" and 0:
+                if "test identation" and 7:
                     for v in many:
                         line('+%d %s', v.indentation.total, v.display_token())
 
