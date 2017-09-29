@@ -97,7 +97,7 @@ def gem():
         if m3 is none:
             raise_unknown_line()
 
-        imported = FromAsFragment(imported, keyword_as, conjure_name(m3.group()))
+        imported = conjure_as_fragment(imported, keyword_as, conjure_name(m3.group()))
         #</name2>
 
         #

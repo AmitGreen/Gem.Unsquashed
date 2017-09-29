@@ -171,6 +171,12 @@ def gem():
         frill        = conjure_action_word('and', ' and ')
 
 
+    class AsFragment(BinaryExpression):
+        __slots__      = (())
+        display_name   = 'as-fragment'
+        frill          = conjure_action_word('as', ' as ')
+
+
     class CommaExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = ','
@@ -323,12 +329,6 @@ def gem():
         frill        = conjure_action_word(':', ' : ')
 
 
-    class ModuleAsFragment(BinaryExpression):
-        __slots__      = (())
-        display_name   = 'as-fragment'
-        frill          = conjure_action_word('as', ' as ')
-
-
     class ModulusExpression(BinaryExpression):
         __slots__    = (())
         display_name = '%'
@@ -361,6 +361,7 @@ def gem():
 
     conjure_add_expression     = produce_conjure_binary_expression('add',               AddExpression)
     conjure_and_expression_1   = produce_conjure_binary_expression('and-1',             AndExpression_1)
+    conjure_as_fragment        = produce_conjure_binary_expression('as-fragment',       AsFragment)
     conjure_comma_expression_1 = produce_conjure_binary_expression('comma-1',           CommaExpression_1)
     conjure_comprehension_if   = produce_conjure_binary_expression('comprehension-if',  ComprehensionIfExpression)
     conjure_compare_contains   = produce_conjure_binary_expression('compare-contains',  CompareContainsExpression)
@@ -394,7 +395,6 @@ def gem():
     conjure_logical_and_expression    = produce_conjure_binary_expression('logical-and-1',      LogicalAndExpression_1)
     conjure_logical_or_expression     = produce_conjure_binary_expression('logical-or-1',       LogicalOrExpression_1)
     conjure_map_element               = produce_conjure_binary_expression('map-element',        MapElement)
-    conjure_module_as_fragment        = produce_conjure_binary_expression('module-as-fragment', ModuleAsFragment)
     conjure_modulus_expression        = produce_conjure_binary_expression('modulus',            ModulusExpression)
     conjure_multiple_expression_1     = produce_conjure_binary_expression('multiply-1',         MultiplyExpression_1)
     conjure_or_expression_1           = produce_conjure_binary_expression('or-1',               OrExpression_1)
@@ -436,7 +436,7 @@ def gem():
         'conjure_logical_and_expression',   conjure_logical_and_expression,
         'conjure_logical_or_expression',    conjure_logical_or_expression,
         'conjure_map_element',              conjure_map_element,
-        'conjure_module_as_fragment',       conjure_module_as_fragment,
+        'conjure_as_fragment',              conjure_as_fragment,
         'conjure_modulus_expression',       conjure_modulus_expression,
         'conjure_or_expression_1',          conjure_or_expression_1,
         'conjure_power_expression',         conjure_power_expression,

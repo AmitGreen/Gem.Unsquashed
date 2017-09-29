@@ -64,6 +64,16 @@ def gem():
             return t.frill.a.a
 
 
+    class AssertStatement_2(KeywordDualExpressionStatement):
+        __slots__    = (())
+        display_name = 'assert-2'
+        frill        = conjure_triple_frill(
+                           conjure_indented_token(empty_indentation, conjure_keyword_assert('assert ')),
+                           conjure_comma(', '),
+                           empty_line_marker,
+                       )
+
+
     class ExceptHeader_2(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'except-header-2'
@@ -124,15 +134,17 @@ def gem():
                        )
 
 
-    conjure_assign_1          = produce_conjure_bookcase_dual_expression('assign-1',          StatementAssign_1)
-    conjure_except_header_2   = produce_conjure_bookcase_dual_expression('assign-1',          ExceptHeader_2)
-    conjure_for_header        = produce_conjure_bookcase_dual_expression('for-header',        ForHeader)
-    conjure_from_statement    = produce_conjure_bookcase_dual_expression('from-statement',    StatementFromImport)
-    conjure_raise_statement_2 = produce_conjure_bookcase_dual_expression('raise-statement-2', RaiseStatement_2)
-    conjure_with_header_2     = produce_conjure_bookcase_dual_expression('with-header-2',     WithHeader_2)
+    conjure_assert_statement_2 = produce_conjure_bookcase_dual_expression('assert-statement-2', AssertStatement_2)
+    conjure_assign_1           = produce_conjure_bookcase_dual_expression('assign-1',           StatementAssign_1)
+    conjure_except_header_2    = produce_conjure_bookcase_dual_expression('assign-1',           ExceptHeader_2)
+    conjure_for_header         = produce_conjure_bookcase_dual_expression('for-header',         ForHeader)
+    conjure_from_statement     = produce_conjure_bookcase_dual_expression('from-statement',     StatementFromImport)
+    conjure_raise_statement_2  = produce_conjure_bookcase_dual_expression('raise-statement-2',  RaiseStatement_2)
+    conjure_with_header_2      = produce_conjure_bookcase_dual_expression('with-header-2',      WithHeader_2)
 
 
     share(
+        'conjure_assert_statement_2',   conjure_assert_statement_2,
         'conjure_assign_1',             conjure_assign_1,
         'conjure_except_header_2',      conjure_except_header_2,
         'conjure_for_header',           conjure_for_header,

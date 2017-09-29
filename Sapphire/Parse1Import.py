@@ -86,7 +86,7 @@ def gem():
         if m is none:
             raise_unknown_line()
 
-        module = conjure_module_as_fragment(module, keyword_as, conjure_name(m.group()))
+        module = conjure_as_fragment(module, keyword_as, conjure_name(m.group()))
 
         j = m.end()
 

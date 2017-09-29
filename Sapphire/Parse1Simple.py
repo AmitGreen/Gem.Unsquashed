@@ -86,7 +86,7 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return AssertStatement_2(indented_keyword, left, operator, right, newline)
+            return conjure_assert_statement_2(indented_keyword, left, operator, right, newline)
 
         raise_unknown_line()
 
