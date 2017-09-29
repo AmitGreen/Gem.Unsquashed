@@ -208,12 +208,6 @@ def gem():
 
 
     @share
-    class RaiseStatement_1(KeywordExpressionStatement_1):
-        __slots__    = (())
-        display_name = 'raise-statement-1'
-
-
-    @share
     class YieldStatement(KeywordExpressionStatement_1):
         __slots__    = (())
         display_name = 'yield-statement'
@@ -264,12 +258,6 @@ def gem():
     class AssertStatement_2(KeywordExpressionStatement_2):
         __slots__    = (())
         display_name = 'assert-statement-2'
-
-
-    @share
-    class RaiseStatement_2(KeywordExpressionStatement_2):
-        __slots__    = (())
-        display_name = 'raise-statement-2'
 
 
     #

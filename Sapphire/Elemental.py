@@ -342,19 +342,6 @@ def gem():
         keyword      = 'raise'
 
 
-    class KeywordRaise_LineMarker_1(KeywordAndOperatorBase):
-        __slots__       = (())
-        display_name    = r'raise\n'
-        ends_in_newline = true
-        keyword         = r'raise\n'
-        line_marker     = true
-        newlines        = 1
-
-
-        __init__       = construct_action_word__line_marker_1
-        count_newlines = count_newlines__line_marker
-
-
     class KeywordReturn(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'return'
@@ -1072,17 +1059,11 @@ def gem():
     conjure_keyword_function = produce_conjure_action_word('keyword-function', KeywordFunction)
     conjure_keyword_pass     = produce_conjure_action_word('keyword-pass',     KeywordPass)
     conjure_keyword_raise    = produce_conjure_action_word('keyword-raise',    KeywordRaise)
-
-    conjure__raise__line_marker = produce_conjure_action_word__line_marker(
-            'keyword-raise-line-marker',
-            KeywordRaise_LineMarker_1,
-        )
-
-    conjure_keyword_return = produce_conjure_action_word('keyword-return', KeywordReturn)
-    conjure_keyword_try    = produce_conjure_action_word('keyword-try',    KeywordTry)
-    conjure_keyword_while  = produce_conjure_action_word('keyword-while',  KeywordWhile)
-    conjure_keyword_with   = produce_conjure_action_word('keyword-with',   KeywordWith)
-    conjure_keyword_yield  = produce_conjure_action_word('keyword-yield',  KeywordYield)
+    conjure_keyword_return   = produce_conjure_action_word('keyword-return',   KeywordReturn)
+    conjure_keyword_try      = produce_conjure_action_word('keyword-try',      KeywordTry)
+    conjure_keyword_while    = produce_conjure_action_word('keyword-while',    KeywordWhile)
+    conjure_keyword_with     = produce_conjure_action_word('keyword-with',     KeywordWith)
+    conjure_keyword_yield    = produce_conjure_action_word('keyword-yield',    KeywordYield)
 
 
     find_atom_type = {
@@ -1170,7 +1151,6 @@ def gem():
         'conjure_left_parenthesis__ends_in_newline',        conjure_left_parenthesis__ends_in_newline,
         'conjure_left_square_bracket',                      conjure_left_square_bracket,
         'conjure_left_square_bracket__ends_in_newline',     conjure_left_square_bracket__ends_in_newline,
-        'conjure__raise__line_marker',                      conjure__raise__line_marker,
         'conjure_right_brace',                              conjure_right_brace,
         'conjure_right_brace__ends_in_newline',             conjure_right_brace__ends_in_newline,
         'conjure_right_parenthesis',                        conjure_right_parenthesis,

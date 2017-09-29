@@ -155,11 +155,11 @@ def gem():
     @share
     def parse1_statement_raise(m):
         if m.end('newline') is not -1:
-            return conjure__raise__line_marker(m.group())
-
-        keyword = conjure_keyword_raise(m.group())
+            return evoke_indented__raise__line_marker(m.end('indented'), m.end('atom'))
 
         j = m.end()
+
+        indented_keyword = evoke_indented_raise(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -174,7 +174,7 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return RaiseStatement_1(keyword, left, newline)
+            return conjure_raise_statement_1(indented_keyword, left, newline)
 
         wk(none)
 
@@ -191,7 +191,7 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return RaiseStatement_2(keyword, left, operator, middle, newline)
+            return conjure_raise_statement_2(indented_keyword, left, operator, middle, newline)
 
         wk(none)
 
@@ -206,7 +206,7 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return RaiseStatement_3(keyword, left, operator, middle, operator_2, right, newline)
+            return RaiseStatement_3(indented_keyword, left, operator, middle, operator_2, right, newline)
 
         raise_unknown_line()
 
@@ -218,7 +218,7 @@ def gem():
 
         j = m.end()
 
-        keyword = evoke_indented_return(m.end('indented'), j)
+        indented_keyword = evoke_indented_return(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -234,7 +234,7 @@ def gem():
         if newline is none:
             raise_unknown_line()
 
-        return conjure_return_statement(keyword, right, newline)
+        return conjure_return_statement(indented_keyword, right, newline)
 
 
     @share

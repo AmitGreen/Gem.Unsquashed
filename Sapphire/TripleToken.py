@@ -200,7 +200,10 @@ def gem():
 
 
             def evoke_triple_token(a_end, b_end):
-                assert qi() < a_end < b_end
+                #
+                #   For an indented token with 0 indentation 'qi() == a_end'
+                #
+                assert qi() <= a_end < b_end
 
                 triple_s = qs()[qi() : ]
 
@@ -275,7 +278,19 @@ def gem():
 
     class Indented_KeywordPass_LineMarker_1(BaseTripleOperator):
         __slots__       = (())
-        display_name    = r'pass\n'
+        display_name    = r'indented-pass\n'
+        ends_in_newline = true
+        indentation     = BaseTripleOperator.a
+        line_marker     = true
+        newlines        = 1
+
+        __init__       = construct_triple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
+
+
+    class Indented_KeywordRaise_LineMarker_1(BaseTripleOperator):
+        __slots__       = (())
+        display_name    = r'indented-raise\n'
         ends_in_newline = true
         indentation     = BaseTripleOperator.a
         line_marker     = true
@@ -287,7 +302,7 @@ def gem():
 
     class Indented_KeywordReturn_LineMarker_1(BaseTripleOperator):
         __slots__       = (())
-        display_name    = r'return\n'
+        display_name    = r'indented-return\n'
         ends_in_newline = true
         indentation     = BaseTripleOperator.a
         line_marker     = true
@@ -299,7 +314,7 @@ def gem():
 
     class Indented_KeywordYield_LineMarker_1(BaseTripleOperator):
         __slots__       = (())
-        display_name    = r'yield\n'
+        display_name    = r'indented-yield\n'
         ends_in_newline = true
         indentation     = BaseTripleOperator.a
         line_marker     = true
@@ -365,6 +380,15 @@ def gem():
 
                                             line_marker = true,
                                         )
+
+    evoke_indented__raise__line_marker = produce_evoke_triple_token(
+                                             'indented__raise__line_marker',
+                                             Indented_KeywordRaise_LineMarker_1,
+                                             conjure_indentation,
+                                             conjure_keyword_return,
+
+                                             line_marker = true,
+                                         )
 
     evoke_indented__return__line_marker = produce_evoke_triple_token(
                                               'indented__return__line_marker',
@@ -478,6 +502,7 @@ def gem():
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
         'evoke_all_index',                                  evoke_all_index,
         'evoke_indented__pass__line_marker',                evoke_indented__pass__line_marker,
+        'evoke_indented__raise__line_marker',               evoke_indented__raise__line_marker,
         'evoke_indented__return__line_marker',              evoke_indented__return__line_marker,
         'evoke_indented__yield__line_marker',               evoke_indented__yield__line_marker,
         'evoke__right_parenthesis__colon__line_marker',     evoke__right_parenthesis__colon__line_marker,

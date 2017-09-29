@@ -721,6 +721,17 @@ def gem():
                                 provide = provide_indentation,
                             )
 
+    evoke_indented_raise = produce_evoke_dual_token(
+                               'indented-raise',
+                               Indented_Token,
+                               conjure_indentation,
+                               conjure_keyword_raise,
+                               none,
+
+                               lookup  = lookup_indentation,
+                               provide = provide_indentation,
+                           )
+
     evoke_indented_return = produce_evoke_dual_token(
                                 'indented-return',
                                 Indented_Token,
@@ -937,6 +948,7 @@ def gem():
         'evoke_indented_function',                  evoke_indented_function,
         'evoke_indented_if',                        evoke_indented_if,
         'evoke_indented_import',                    evoke_indented_import,
+        'evoke_indented_raise',                     evoke_indented_raise,
         'evoke_indented_return',                    evoke_indented_return,
         'evoke_indented_while',                     evoke_indented_while,
         'evoke_indented_with',                      evoke_indented_with,

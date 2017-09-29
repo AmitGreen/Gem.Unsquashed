@@ -119,6 +119,15 @@ def gem():
                        )
 
 
+    class RaiseStatement_1(KeywordExpressionStatement):
+        __slots__    = (())
+        display_name = 'raise-statement'
+        frill        = conjure_dual_frill(
+                           conjure_indented_token(conjure_indentation('    '), conjure_keyword_raise('raise ')),
+                           empty_line_marker,
+                       )
+
+
     class ReturnStatement(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'return-statement'
@@ -162,6 +171,7 @@ def gem():
     conjure_except_header_1    = produce_conjure_bookcase_expression('except-header-1',    ExceptHeader_1)
     conjure_if_header          = produce_conjure_bookcase_expression('if-header',          IfHeader)
     conjure_import_statement   = produce_conjure_bookcase_expression('import-statement',   ImportStatement)
+    conjure_raise_statement_1  = produce_conjure_bookcase_expression('raise-statement-1',  RaiseStatement_1)
     conjure_return_statement   = produce_conjure_bookcase_expression('return-statement',   ReturnStatement)
     conjure_while_header       = produce_conjure_bookcase_expression('while-header',       WhileHeader)
     conjure_with_header_1      = produce_conjure_bookcase_expression('with-header-1',      WithHeader_1)
@@ -176,6 +186,7 @@ def gem():
         'conjure_expression_statement',     conjure_expression_statement,
         'conjure_if_header',                conjure_if_header,
         'conjure_import_statement',         conjure_import_statement,
+        'conjure_raise_statement_1',        conjure_raise_statement_1,
         'conjure_return_statement',         conjure_return_statement,
         'conjure_while_header',             conjure_while_header,
         'conjure_with_header_1',            conjure_with_header_1,
