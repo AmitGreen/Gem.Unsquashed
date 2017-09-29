@@ -140,7 +140,7 @@ def gem():
     @share
     def parse1_statement_finally_colon(m):
         if m.end('newline') is not -1:
-            return conjure__finally__colon__line_marker(m.group())
+            return evoke_indented__finally__colon__line_marker(m.end('indented'), m.start('colon'), m.end('colon'))
 
         raise_unknown_line()
 

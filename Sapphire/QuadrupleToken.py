@@ -327,6 +327,21 @@ def gem():
         indentation    = BaseQuadrupleOperator.a
 
 
+    class Indented_Finally_Colon_LineMarker(BaseQuadrupleOperator):
+        __slots__       = (())
+        display_name    = 'finally'
+        ends_in_newline = true
+        keyword         = 'finally'
+        line_marker     = true
+        newlines        = 1
+
+
+        __init__       = construct_quadruple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
+        display_token  = display_token__indented__keyword__colon__line_marker
+        indentation    = BaseQuadrupleOperator.a
+
+
     class Indented_Try_Colon_LineMarker(BaseQuadrupleOperator):
         __slots__       = (())
         display_name    = 'try'
@@ -400,6 +415,16 @@ def gem():
             line_marker = true,
         )
 
+    evoke_indented__finally__colon__line_marker = produce_evoke_quadruple_token(
+            'indented__finally__colon__line_marker',
+            Indented_Finally_Colon_LineMarker,
+            conjure_indentation,
+            conjure_keyword_finally,
+            conjure_colon,
+
+            line_marker = true,
+        )
+
     evoke_indented__try__colon__line_marker = produce_evoke_quadruple_token(
             'indented__try__colon__line_marker',
             Indented_Try_Colon_LineMarker,
@@ -429,6 +454,7 @@ def gem():
         'evoke__comma__right_parenthesis__colon__line_marker',  evoke__comma__right_parenthesis__colon__line_marker,
         'evoke_indented__else__colon__line_marker',             evoke_indented__else__colon__line_marker,
         'evoke_indented__except__colon__line_marker',           evoke_indented__except__colon__line_marker,
+        'evoke_indented__finally__colon__line_marker',          evoke_indented__finally__colon__line_marker,
         'evoke_indented__try__colon__line_marker',              evoke_indented__try__colon__line_marker,
         'evoke__parameter_0__colon__line_marker',               evoke__parameter_0__colon__line_marker,
     )
