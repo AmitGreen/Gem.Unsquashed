@@ -242,9 +242,9 @@ def gem():
         if m.end('newline') is not -1:
             return evoke_indented__yield__line_marker(m.end('indented'), m.end('atom'))
 
-        keyword = conjure_keyword_yield(m.group())
-
         j = m.end()
+
+        indented_keyword = evoke_indented_yield(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -259,4 +259,4 @@ def gem():
         if newline is none:
             raise_unknown_line()
 
-        return YieldStatement(keyword, left, newline)
+        return conjure_yield_statement_1(indented_keyword, left, newline)

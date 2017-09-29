@@ -170,49 +170,6 @@ def gem():
             w(t.indented + '#' + t.comment + t.newline)
 
 
-    @share
-    class KeywordExpressionStatement_1(SapphireTrunk):
-        __slots__ = ((
-            'keyword',                  #   KeywordDelete | KeywordReturn
-            'expression',               #   Expression
-            'newline',                  #   LineMarker
-        ))
-
-
-        def __init__(t, keyword, expression, newline):
-            t.keyword    = keyword
-            t.expression = expression
-            t.newline    = newline
-
-
-        def  __repr__(t):
-            return arrange('<%s %r %r %r>', t.__class__.__name__, t.keyword, t.expression, t.newline)
-
-
-        def count_newlines(t):
-            return t.keyword.count_newlines() + t.expression.count_newlines() + t.newline.count_newlines()
-
-
-        def display_token(t):
-            return arrange('<%s %s %s %s>',
-                           t.display_name,
-                           t.keyword   .display_token(),
-                           t.expression.display_token(),
-                           t.newline   .display_token())
-
-
-        def write(t, w):
-            w(t.keyword.s)
-            t.expression.write(w)
-            w(t.newline.s)
-
-
-    @share
-    class YieldStatement(KeywordExpressionStatement_1):
-        __slots__    = (())
-        display_name = 'yield-statement'
-
-
     class KeywordExpressionStatement_2(SapphireTrunk):
         __slots__ = ((
             'keyword',                  #   KeywordAssert

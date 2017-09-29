@@ -155,6 +155,15 @@ def gem():
                        )
 
 
+    class YieldStatement_1(KeywordExpressionStatement):
+        __slots__    = (())
+        display_name = 'yield-statement-1'
+        frill        = conjure_dual_frill(
+                           conjure_indented_token(conjure_indentation('    '), conjure_keyword_yield('yield ')),
+                           empty_line_marker,
+                       )
+
+
     #
     #  Derived from BookcaseExpression
     #
@@ -175,6 +184,7 @@ def gem():
     conjure_return_statement   = produce_conjure_bookcase_expression('return-statement',   ReturnStatement)
     conjure_while_header       = produce_conjure_bookcase_expression('while-header',       WhileHeader)
     conjure_with_header_1      = produce_conjure_bookcase_expression('with-header-1',      WithHeader_1)
+    conjure_yield_statement_1  = produce_conjure_bookcase_expression('yield_statement_1',  YieldStatement_1)
 
 
     share(
@@ -190,4 +200,5 @@ def gem():
         'conjure_return_statement',         conjure_return_statement,
         'conjure_while_header',             conjure_while_header,
         'conjure_with_header_1',            conjure_with_header_1,
+        'conjure_yield_statement_1',        conjure_yield_statement_1,
     )
