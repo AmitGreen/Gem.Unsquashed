@@ -184,7 +184,7 @@ def gem():
     conjure_return_statement   = produce_conjure_bookcase_expression('return-statement',   ReturnStatement)
     conjure_while_header       = produce_conjure_bookcase_expression('while-header',       WhileHeader)
     conjure_with_header_1      = produce_conjure_bookcase_expression('with-header-1',      WithHeader_1)
-    conjure_yield_statement_1  = produce_conjure_bookcase_expression('yield_statement_1',  YieldStatement_1)
+    conjure_yield_statement_1  = produce_conjure_bookcase_expression('yield-statement-1',  YieldStatement_1)
 
 
     share(

@@ -149,7 +149,7 @@ def gem():
     conjure_except_header_2    = produce_conjure_bookcase_dual_expression('assign-1',           ExceptHeader_2)
     conjure_for_header         = produce_conjure_bookcase_dual_expression('for-header',         ForHeader)
     conjure_from_statement     = produce_conjure_bookcase_dual_expression('from-statement',     StatementFromImport)
-    conjure_modify_statement   = produce_conjure_bookcase_dual_expression('modify_statement',   ModifyStatement)
+    conjure_modify_statement   = produce_conjure_bookcase_dual_expression('modify-statement',   ModifyStatement)
     conjure_raise_statement_2  = produce_conjure_bookcase_dual_expression('raise-statement-2',  RaiseStatement_2)
     conjure_with_header_2      = produce_conjure_bookcase_dual_expression('with-header-2',      WithHeader_2)
 

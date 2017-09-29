@@ -34,10 +34,7 @@ def gem():
                                        )
 
 
-    if __debug__:
-        @share
-        def dump_tuple_of_expression_cache():
-            dump_cache('tuple-of-expression', tuple_of_expression_cache)
+    append_cache('tuple-of-expression', tuple_of_expression_cache)
 
 
     share(

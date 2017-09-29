@@ -49,12 +49,6 @@ def gem():
     empty_indentation = conjure_indentation('')
 
 
-    if __debug__:
-        @share
-        def dump_indentation_cache():
-            dump_cache('indentation-cache', indentation_cache)
-
-
     share(
         'conjure_indentation',  conjure_indentation,
         'empty_indentation',    empty_indentation,

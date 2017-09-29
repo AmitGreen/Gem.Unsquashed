@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.TripleFrill')
 def gem():
+    triple_frill_cache = {}
+
+
     class TripleFrill(Object):
         __slots__ = ((
             'a',                        #   SapphireToken+
@@ -37,14 +40,10 @@ def gem():
     TripleFrill.k3 = TripleFrill.c
 
 
-    triple_frill_cache = {}
-
     conjure_triple_frill = produce_conjure_triple('triple_frill', TripleFrill, triple_frill_cache)
 
 
-    @share
-    def dump_triple_frill_cache():
-        dump_cache('triple_frill_cache', triple_frill_cache)
+    append_cache('triple-frill', triple_frill_cache)
 
 
     share(

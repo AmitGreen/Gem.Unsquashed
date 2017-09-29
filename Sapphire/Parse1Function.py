@@ -121,16 +121,6 @@ def gem():
 
         operator_2 = tokenize_parameter_operator()
 
-        if operator_2.is__any__right_parenthesis__colon__newline:
-            if qn() is not none:
-                raise_unknown_line()
-
-            return conjure_function_header(
-                       indented__keyword,
-                       name,
-                       conjure__parameter_1__colon__line_marker(operator_1, token_1, operator_2),
-                   )
-
         if operator_2.is_equal_sign:
             value = parse1_ternary_expression()
 
@@ -142,7 +132,23 @@ def gem():
             if operator_2 is none:
                 raise_unknown_line()
 
+        if operator_2.is_right_parenthesis:
+            [colon, line_marker] = tokenize_parameter_colon_newline()
+
+            operator_2 = conjure__right_parenthesis__colon__line_marker(operator_2, colon, line_marker)
+
+        if operator_2.is__any__right_parenthesis__colon__newline:
+            if qn() is not none:
+                raise_unknown_line()
+
+            return conjure_function_header(
+                       indented__keyword,
+                       name,
+                       conjure__parameter_1__colon__line_marker(operator_1, token_1, operator_2),
+                   )
+
         if not operator_2.is_comma:
+            my_line('operator_2: %r', operator_2)
             raise_unknown_line()
 
         token_7 = tokenize_parameter_atom()

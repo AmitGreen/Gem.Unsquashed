@@ -65,10 +65,7 @@ def gem():
     produce_method_call_expression = produce_conjure_postfix_expression('call-method', MethodCallExpression)
 
 
-    if __debug__:
-        @share
-        def dump_postfix_expression_cache():
-            dump_cache('postfix-cache', postfix_cache)
+    append_cache('postfix', postfix_cache)
 
 
     share(

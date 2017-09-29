@@ -6,15 +6,12 @@ def gem():
     require_gem('Sapphire.DualToken')
 
 
-    conjure_dual_frill          = Shared.conjure_dual_frill           #   Due to privileged
+    append_cache                = Shared.append_cache                   #   Due to privileged
+    conjure_dual_frill          = Shared.conjure_dual_frill             #   Due to privileged
     lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   Due to privileged
     produce_conjure_dual        = Shared.produce_conjure_dual           #   Due to privileged
     produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   Due to privileged
     store_adjusted_meta         = Shared.store_adjusted_meta            #   Due to privileged
-
-
-    if __debug__:
-        cache_many = []
 
 
     class ConditionStatement(SapphireTrunk):
@@ -134,7 +131,7 @@ def gem():
         if __debug__:
             conjure_condition_statement.__name__ = intern_arrange('conjure_%s', name)
 
-            cache_many.append( ((name, cache)) )
+            append_cache(name, cache)
 
         return conjure_condition_statement
 
@@ -168,13 +165,6 @@ def gem():
     conjure_else_if_statement = produce_conjure_condition_statement('else-if-statement', ElseIfStatement)
     conjure_if_statement      = produce_conjure_condition_statement('if-statement',      IfStatement)
     conjure_while_statement   = produce_conjure_condition_statement('while-statement',   WhileStatement)
-
-
-    if __debug__:
-        @share
-        def dump_condition_statement_cache_many():
-            for [name, cache] in cache_many:
-                dump_cache(arrange('%s_cache', name), cache)
 
 
     share(

@@ -6,6 +6,9 @@ def gem():
     require_gem('Sapphire.PostfixExpression')
 
 
+    member_expression_cache = {}
+
+
     @share
     class MemberExpression(SapphireTrunk):
         __slots__ = ((
@@ -48,15 +51,10 @@ def gem():
     SapphireTrunk   .call_expression = static_produce_call_expression
 
 
-    member_expression_cache = {}
-
-
     conjure_member_expression = produce_conjure_dual('member-expession', MemberExpression, member_expression_cache)
 
 
-    @share
-    def dump_member_expression_cache():
-        dump_cache('member_expression_cache', member_expression_cache)
+    append_cache('member-expression', member_expression_cache)
 
 
     share(

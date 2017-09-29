@@ -77,10 +77,7 @@ def gem():
     ] = produce_conjure_action_word('whitespace', TokenWhitespace, produce_ends_in_newline = true)
 
 
-    if __debug__:
-        @share
-        def dump_empty_line_cache():
-            dump_cache('empty-line-cache',   empty_line_cache)
+    append_cache('empty-line', empty_line_cache)
 
 
     share(

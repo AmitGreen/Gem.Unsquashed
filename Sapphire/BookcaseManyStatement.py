@@ -44,8 +44,8 @@ def gem():
                            frill.end   .display_token())
 
 
-    conjure_assign_many = produce_conjure_bookcase_many_expression('assign-many', AssignStatment_Many)
-    conjure_delete_many = produce_conjure_bookcase_many_expression('delete-many', DeleteStatement_Many)
+    conjure_assign_many = produce_conjure_bookcase_many_expression('assign-*', AssignStatment_Many)
+    conjure_delete_many = produce_conjure_bookcase_many_expression('delete-*', DeleteStatement_Many)
 
 
     share(

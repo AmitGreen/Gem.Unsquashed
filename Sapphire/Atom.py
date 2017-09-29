@@ -17,15 +17,18 @@ def gem():
         ))
 
 
-        ends_in_newline         = false
-        is_comma                = false
-        is_identifier           = false
-        is_keyword              = false
-        is_right_parenthesis    = false
-        is_right_square_bracket = false
-        is_token_indentation    = false
-        line_marker             = false
-        newlines                = 0
+        ends_in_newline            = false
+        is_comma                   = false
+        is_comment_line            = false
+        is_comment__or__empty_line = false
+        is_end_of_data             = false
+        is_identifier              = false
+        is_keyword                 = false
+        is_right_parenthesis       = false
+        is_right_square_bracket    = false
+        is_token_indentation       = false
+        line_marker                = false
+        newlines                   = 0
 
 
         def __init__(t, s):

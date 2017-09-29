@@ -3,19 +3,17 @@
 #
 @gem('Sapphire.BinaryExpression')
 def gem():
+    require_gem('Sapphire.Cache')
     require_gem('Sapphire.DualToken')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.Tree')
 
 
+    append_cache                = Shared.append_cache                   #   Due to privileged
     lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   Due to privileged
     produce_conjure_dual        = Shared.produce_conjure_dual           #   Due to privileged
     produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   Due to privileged
     store_adjusted_meta         = Shared.store_adjusted_meta            #   Due to privileged
-
-
-    if __debug__:
-        cache_many = []
 
 
     def portray_frill(t):
@@ -154,7 +152,7 @@ def gem():
         if __debug__:
             conjure_binary_expression.__name__ = intern_arrange('conjure_%s', name)
 
-            cache_many.append( ((name, cache)) )
+            append_cache(name, cache)
 
         return conjure_binary_expression
 
@@ -418,13 +416,6 @@ def gem():
     OperatorPercentSign       .expression_meta = static_method(conjure_modulus_expression)
     OperatorPlusSign          .expression_meta = static_method(conjure_add_expression)
     OperatorStarSign          .expression_meta = static_method(conjure_multiple_expression_1)
-
-
-    if __debug__:
-        @share
-        def dump_binary_expression_cache_many():
-            for [name, cache] in cache_many:
-                dump_cache(arrange('%s-cache', name), cache)
 
 
     share(

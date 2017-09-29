@@ -6,10 +6,6 @@ def gem():
     require_gem('Sapphire.Indentation')
 
 
-    if __debug__:
-        cache_many = []
-
-
     comment_line_cache   = {}
     lookup_comment_line  = comment_line_cache.get
     provide_comment_line = comment_line_cache.setdefault
@@ -208,10 +204,7 @@ def gem():
     empty_comment_line = conjure_comment_line('')
 
 
-    if __debug__:
-        @share
-        def dump_comment_line_cache():
-            dump_cache('comment-line-cache', comment_line_cache)
+    append_cache('comment-line', comment_line_cache)
 
 
     share(

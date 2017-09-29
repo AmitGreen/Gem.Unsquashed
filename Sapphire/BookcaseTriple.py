@@ -6,15 +6,12 @@ def gem():
     require_gem('Sapphire.QuadrupleFrill')
 
 
+    append_cache                    = Shared.append_cache                       #   Due to privileged
     conjure_quadruple_frill         = Shared.conjure_quadruple_frill            #   Due to privileged
     lookup_adjusted_meta            = Shared.lookup_adjusted_meta               #   Due to privileged
     produce_conjure_triple          = Shared.produce_conjure_triple             #   Due to privileged
     produce_conjure_quadruple__4123 = Shared.produce_conjure_quadruple__4123    #   Due to privileged
     store_adjusted_meta             = Shared.store_adjusted_meta                #   Due to privileged
-
-
-    if __debug__:
-        cache_many = []
 
 
     @share
@@ -157,7 +154,7 @@ def gem():
         if __debug__:
             conjure_bookcase_triple.__name__ = intern_arrange('conjure_%s', name)
 
-            cache_many.append( ((name, cache)) )
+            append_cache(name, cache)
 
         return conjure_bookcase_triple
 
@@ -179,13 +176,6 @@ def gem():
 
 
     conjure_raise_statement_3 = produce_conjure_bookcase_triple_expression('raise-statement-3', RaiseStatement_3)
-
-
-    if __debug__:
-        @share
-        def dump_bookcase_triple_expression_cache_many():
-            for [name, cache] in cache_many:
-                dump_cache(arrange('%s_cache', name), cache)
 
 
     share(

@@ -6,6 +6,9 @@ def gem():
     show = 0
 
 
+    require_gem('Sapphire.Cache')
+
+
     @share
     def parse3_python(path, data, data_lines, data_many):
         def show_indentation():
@@ -100,3 +103,5 @@ def gem():
         parse_lines()
         test_identical_output()
         test_count_newlines()
+
+        #dump_caches()

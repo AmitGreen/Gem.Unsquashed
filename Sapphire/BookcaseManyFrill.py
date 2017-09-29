@@ -51,11 +51,9 @@ def gem():
                                        )
 
 
+    append_cache('bookcase-*-frill', bookcase_many_frill_cache)
+
+
     @share
     def conjure_bookcase_many_frill(begin, list, end):
         return conjure_bookcase_many_frill__213(begin, conjure_many_frill(list), end)
-
-
-    @share
-    def dump_bookcase_many_frill_cache():
-        dump_cache('bookcase-many-frill-cache', cache)

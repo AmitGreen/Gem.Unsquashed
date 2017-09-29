@@ -3,6 +3,8 @@
 #
 @gem('Sapphire.DualFrill')
 def gem():
+    dual_frill_cache = {}
+
     class DualFrill(Object):
         __slots__ = ((
             'a',                        #   SapphireToken+
@@ -34,14 +36,10 @@ def gem():
     DualFrill.k2 = DualFrill.b
 
 
-    dual_frill_cache = {}
-
     conjure_dual_frill = produce_conjure_dual('dual_frill', DualFrill, dual_frill_cache)
 
 
-    @share
-    def dump_dual_frill_cache():
-        dump_cache('dual_frill_cache', dual_frill_cache)
+    append_cache('dual-frill', dual_frill_cache)
 
 
     share(

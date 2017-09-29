@@ -8,15 +8,12 @@ def gem():
     require_gem('Sapphire.TripleFrill')
 
 
+    append_cache                = Shared.append_cache                   #   Due to privileged
     conjure_triple_frill        = Shared.conjure_triple_frill           #   Due to privileged
     lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   Due to privileged
     produce_conjure_dual        = Shared.produce_conjure_dual           #   Due to privileged
     produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   Due to privileged
     store_adjusted_meta         = Shared.store_adjusted_meta            #   Due to privileged
-
-
-    if __debug__:
-        cache_many = []
 
 
     COMMA_SPACE = conjure_comma               (', ')
@@ -140,7 +137,7 @@ def gem():
         if __debug__:
             conjure_bookcase_dual_expression.__name__ = intern_arrange('conjure_%s', name)
 
-            cache_many.append( ((name, cache)) )
+            append_cache(name, cache)
 
         return conjure_bookcase_dual_expression
 
@@ -177,13 +174,6 @@ def gem():
     conjure_list_expression_2  = produce_conjure_bookcase_dual_expression('list-expression-2',  ListExpression_2)
     conjure_range_index        = produce_conjure_bookcase_dual_expression('range-index',        RangeIndex)
     conjure_tuple_expression_2 = produce_conjure_bookcase_dual_expression('tuple-expression-2', TupleExpression_2)
-
-
-    if __debug__:
-        @share
-        def dump_bookcase_dual_expression_cache_many():
-            for [name, cache] in cache_many:
-                dump_cache(arrange('%s_cache', name), cache)
 
 
     share(

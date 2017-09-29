@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.TokenCache')
 def gem():
+    require_gem('Sapphire.Cache')
+
+
     #
     #   Different token caches are needed to distinguish identical characters that appear in different contexts:
     #
@@ -57,6 +60,14 @@ def gem():
     provide_line_marker       = line_marker_token_cache.setdefault
     provide_normal_token      = normal_token_cache     .setdefault
     provide_parameter_token   = parameter_token_cache  .setdefault
+
+
+    append_cache('arguments-0-token', arguments_0_token_cache)
+    append_cache('indentation',       indentation_cache)
+    append_cache('join-token',        join_token_cache)
+    append_cache('line-marker-token', line_marker_token_cache)
+    append_cache('normal-token',      normal_token_cache)
+    append_cache('parameter-token',   parameter_token_cache)
 
 
     if __debug__:

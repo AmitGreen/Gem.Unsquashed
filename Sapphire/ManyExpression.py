@@ -7,6 +7,7 @@ def gem():
     require_gem('Sapphire.TupleOfExpression')
 
 
+    append_cache                     = Shared.append_cache                      #   Due to privileged
     conjure_many_frill               = Shared.conjure_many_frill                #   Due to privileged
     conjure_tuple_of_many_expression = Shared.conjure_tuple_of_many_expression  #   Due to privileged
     produce_conjure_dual             = Shared.produce_conjure_dual              #   Due to privileged
@@ -123,7 +124,7 @@ def gem():
         if __debug__:
             conjure_many_expression.__name__ = intern_arrange('conjure_%s', name)
 
-            cache_many.append( ((name, cache)) )
+            append_cache(name, cache)
 
         return conjure_many_expression
 
@@ -163,20 +164,13 @@ def gem():
         display_name = 'or-*'
 
 
-    conjure_and_expression_many        = produce_conjure_many_expression('and-many',        AndExpression_Many)
-    conjure_arithmetic_expression_many = produce_conjure_many_expression('arithmetic-many', ArithmeticExpression_Many)
-    conjure_comma_expression_many      = produce_conjure_many_expression('comma-many',      CommaExpression_Many)
-    conjure_compare_expression_many    = produce_conjure_many_expression('compare-many',    CompareExpression_Many)
-    conjure_logical_or_expression_many = produce_conjure_many_expression('logical_or-many', LogicalOrExpression_Many)
-    conjure_multiply_expression_many   = produce_conjure_many_expression('multiply-many',   MultiplyExpression_Many)
-    conjure_or_expression_many         = produce_conjure_many_expression('or-many',         OrExpression_Many)
-
-
-    if __debug__:
-        @share
-        def dump_many_expression_cache_many():
-            for [name, cache] in cache_many[-1:]:
-                dump_cache(arrange('%s_cache', name), cache)
+    conjure_and_expression_many        = produce_conjure_many_expression('and-*',        AndExpression_Many)
+    conjure_arithmetic_expression_many = produce_conjure_many_expression('arithmetic-*', ArithmeticExpression_Many)
+    conjure_comma_expression_many      = produce_conjure_many_expression('comma-*',      CommaExpression_Many)
+    conjure_compare_expression_many    = produce_conjure_many_expression('compare-*',    CompareExpression_Many)
+    conjure_logical_or_expression_many = produce_conjure_many_expression('logical-or-*', LogicalOrExpression_Many)
+    conjure_multiply_expression_many   = produce_conjure_many_expression('multiply-*',   MultiplyExpression_Many)
+    conjure_or_expression_many         = produce_conjure_many_expression('or-*',         OrExpression_Many)
 
 
     share(

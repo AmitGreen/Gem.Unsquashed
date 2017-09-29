@@ -6,6 +6,7 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
+    append_cache             = Shared.append_cache                  #   Due to privileged
     lookup_adjusted_meta     = Shared.lookup_adjusted_meta          #   Due to privileged
     produce_conjure_dual__21 = Shared.produce_conjure_dual__21      #   Due to privileged
     store_adjusted_meta      = Shared.store_adjusted_meta           #   Due to privileged
@@ -121,7 +122,7 @@ def gem():
         if __debug__:
             conjure_unary_expression.__name__ = intern_arrange('conjure_%s', name)
 
-            cache_many.append( ((name, cache)) )
+            append_cache(name, cache)
 
         return conjure_unary_expression
 
@@ -162,13 +163,6 @@ def gem():
     conjure_star_argument       = produce_conjure_unary_expression('*-argument',      StarArgument)
     conjure_star_parameter      = produce_conjure_unary_expression('*-parameter',     StarParameter)
     conjure_twos_complement     = produce_conjure_unary_expression('twos-complement', TwosComplementExpression)
-
-
-    if __debug__:
-        @share
-        def dump_unary_expression_cache_many():
-            for [name, cache] in cache_many:
-                dump_cache(arrange('%s_cache', name), cache)
 
 
     share(

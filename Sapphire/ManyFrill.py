@@ -57,7 +57,4 @@ def gem():
         return provide(r, r)
 
 
-    if __debug__:
-        @share
-        def dump_many_frill_cache():
-            dump_cache('many-frill-cache', cache)
+    append_cache('many-frill', cache)

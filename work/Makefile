@@ -60,9 +60,9 @@ SAPPHIRE_FILES = \
         ../Sapphire/BookcaseExpression.py ../Sapphire/BookcaseManyExpression.py ../Sapphire/BookcaseManyFrill.py \
         ../Sapphire/BookcaseManyStatement.py ../Sapphire/BookcaseStatement.py \
         ../Sapphire/BookcaseTriple.py \
-    ../Sapphire/CallStatement.py ../Sapphire/Comment.py ../Sapphire/ConditionStatement.py ../Sapphire/Core.py \
-        ../Sapphire/CreateMeta.py \
-    ../Sapphire/DualFrill.py ../Sapphire/DualToken.py ../Sapphire/Dump.py \
+    ../Sapphire/Cache.py ../Sapphire/CallStatement.py ../Sapphire/Comment.py ../Sapphire/ConditionStatement.py \
+        ../Sapphire/Core.py ../Sapphire/CreateMeta.py \
+    ../Sapphire/DualFrill.py ../Sapphire/DualToken.py \
     ../Sapphire/Elemental.py \
     ../Sapphire/HeaderStatement.py \
     ../Sapphire/Indentation.py \
@@ -76,7 +76,8 @@ SAPPHIRE_FILES = \
         ../Sapphire/PostfixExpression.py \
     ../Sapphire/Pattern.py \
     ../Sapphire/QuadrupleFrill.py ../Sapphire/QuadrupleToken.py \
-    ../Sapphire/TernaryExpression.py ../Sapphire/TokenCache.py \
+    ../Sapphire/Suite.py \
+    ../Sapphire/TernaryExpression.py ../Sapphire/TokenCache.py ../Sapphire/TokenTuple.py \
       ../Sapphire/Tokenize1Atom.py ../Sapphire/Tokenize1Name.py ../Sapphire/Tokenize1Operator.py \
       ../Sapphire/Tree.py ../Sapphire/TripleFrill.py ../Sapphire/TripleToken.py ../Sapphire/TupleOfExpression.py \
     ../Sapphire/UnaryExpression.py ../Sapphire/UnaryStatement.py \
@@ -142,9 +143,9 @@ clean:
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
 	rm -f   h2f.py h2p.py h3e.py h3f.py h2t.py h4f.py h3t.py h3p.py h4t.py
-	rm -f   hat.py haw.py hb.py hcc.py hcd.py hcm.py hco.py hcs.py hd.py hel.py hh.py
+	rm -f   hat.py haw.py hb.py hca.py hcc.py hcd.py hcm.py hco.py hcs.py hel.py hh.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkm.py hkms.py hks.py hkt.py hi.py hl.py hma.py hmc.py hme.py hmf.py
-	rm -f   hpt.py htc.py hto.py htr.py hu.py hus.py hw.py hx.py hy.py
+	rm -f   hpt.py hs.py htc.py hto.py htr.py htt.py hu.py hus.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
@@ -223,12 +224,12 @@ links:
 	ln -s ../Sapphire/Atom.py                       hat.py
 	ln -s ../Sapphire/ActionWord.py                 haw.py
 	ln -s ../Sapphire/BinaryExpression.py           hb.py
+	ln -s ../Sapphire/Cache.py                      hca.py
 	ln -s ../Sapphire/CreateMeta.py                 hcc.py
 	ln -s ../Sapphire/ConditionStatement.py         hcd.py
 	ln -s ../Sapphire/Comment.py                    hcm.py
 	ln -s ../Sapphire/Core.py                       hco.py
 	ln -s ../Sapphire/CallStatement.py              hcs.py
-	ln -s ../Sapphire/Dump.py                       hd.py
 	ln -s ../Sapphire/Elemental.py                  hel.py
 	ln -s ../Sapphire/HeaderStatement.py            hh.py
 	ln -s ../Sapphire/BookcaseExpression.py         hk.py
@@ -246,9 +247,11 @@ links:
 	ln -s ../Sapphire/MemberExpression.py           hme.py
 	ln -s ../Sapphire/ManyFrill.py                  hmf.py
 	ln -s ../Sapphire/Pattern.py                    hpt.py
+	ln -s ../Sapphire/Suite.py                      hs.py
 	ln -s ../Sapphire/TokenCache.py                 htc.py
 	ln -s ../Sapphire/TupleOfExpression.py          hto.py
 	ln -s ../Sapphire/Tree.py                       htr.py
+	ln -s ../Sapphire/TokenTuple.py                 htt.py
 	ln -s ../Sapphire/UnaryExpression.py            hu.py
 	ln -s ../Sapphire/UnaryStatement.py             hus.py
 	ln -s ../Sapphire/Whitespace.py                 hw.py

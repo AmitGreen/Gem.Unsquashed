@@ -8,15 +8,11 @@ def gem():
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.TripleToken')
 
-
+    append_cache             = Shared.append_cache                  #   Due to privileged
     conjure_dual_frill       = Shared.conjure_dual_frill            #   Due to privileged
     lookup_adjusted_meta     = Shared.lookup_adjusted_meta          #   Due to privileged
     produce_conjure_dual__21 = Shared.produce_conjure_dual__21      #   Due to privileged
     store_adjusted_meta      = Shared.store_adjusted_meta           #   Due to privileged
-
-
-    if __debug__:
-        cache_many = []
 
 
     LP  = conjure_left_parenthesis    ('(')
@@ -135,7 +131,7 @@ def gem():
         if __debug__:
             conjure_bookcase_expression.__name__ = intern_arrange('conjure_%s', name)
 
-            cache_many.append( ((name, cache)) )
+            append_cache(name, cache)
 
         return conjure_bookcase_expression
 
@@ -221,13 +217,6 @@ def gem():
 
     conjure_tail_index         = produce_conjure_bookcase_expression('tail-index',         TailIndex)
     conjure_tuple_expression_1 = produce_conjure_bookcase_expression('tuple-expression-1', TupleExpression_1)
-
-
-    if __debug__:
-        @share
-        def dump_bookcase_expression_cache_many():
-            for [name, cache] in cache_many:
-                dump_cache(arrange('%s_cache', name), cache)
 
 
     share(

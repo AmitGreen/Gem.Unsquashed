@@ -8,7 +8,6 @@ def gem():
 
     require_gem('Sapphire.Core')
 
-    require_gem('Sapphire.ActionWord')
     require_gem('Sapphire.Atom')
     require_gem('Sapphire.BinaryExpression')
     require_gem('Sapphire.BookcaseDualExpression')
@@ -55,10 +54,6 @@ def gem():
     require_gem('Sapphire.UnaryExpression')
     require_gem('Sapphire.UnaryStatement')
     require_gem('Sapphire.Whitespace')
-
-
-    if __debug__:
-        require_gem('Sapphire.Dump')
 
 
     find_parse1_colon_line = {
@@ -181,24 +176,5 @@ def gem():
                         raise_unknown_line()
 
                     append(conjure_empty_line(m.group()))
-
-                #conjure_colon__line_marker('\n\n:\n')
-                #dump_binary_expression_cache_many()
-                #dump_bookcase_dual_expression_cache_many()
-                #dump_bookcase_expression_cache_many()
-                #dump_bookcase_many_expression_cache_many()
-                #dump_bookcase_many_frill_cache()
-                #dump_comment_line_cache()
-                #dump_dual_frill_cache()
-                #dump_empty_line_cache()
-                #dump_indentation_cache()
-                #dump_many_expression_cache_many()
-                #dump_many_frill_cache()
-                #dump_member_expression_cache()
-                #dump_postfix_expression_cache()
-                #dump_ternary_expression_cache_many()
-                #dump_token_caches()
-                #dump_tuple_of_expression_cache()
-                #dump_unary_expression_cache_many()
 
         return ((data, parse_context.data_lines, many))
