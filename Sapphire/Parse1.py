@@ -20,6 +20,7 @@ def gem():
     require_gem('Sapphire.BookcaseStatement')
     require_gem('Sapphire.CallStatement')
     require_gem('Sapphire.Comment')
+    require_gem('Sapphire.ConditionStatement')
     require_gem('Sapphire.DualFrill')
     require_gem('Sapphire.DualToken')
     require_gem('Sapphire.HeaderStatement')

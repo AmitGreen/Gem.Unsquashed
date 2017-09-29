@@ -6,58 +6,13 @@ def gem():
     show = 0
 
 
-    def parse1_condition_statement__X__m(m, conjure, MetaHeader, MetaStatement):
-        if m.end('newline') is not -1:
-            raise_unknown_line()
-
-        keyword = conjure(m.group())
-
-        j = m.end()
-
-        wi(j)
-        wj(j)
-
-        condition = parse1_ternary_expression()
-
-        operator = qk()
-
-        if operator is not none:
-            wk(none)
-        else:
-            operator = tokenize_operator()
-
-        if qn() is not none:
-            raise_unknown_line()
-
-        if operator.is_colon__line_marker:
-            return MetaHeader(keyword, condition, operator)
-
-        if not operator.is_colon:
-            raise_unknown_line()
-
-        left = parse1_atom()
-
-        if qn() is not none:
-            raise_unknown_line()
-
-        if not left.is_atom:
-            raise_unknown_line()
-
-        return MetaStatement(
-                   keyword,
-                   condition,
-                   operator,
-                   parse1_statement_expression__atom('', left),
-               )
-
-
-    def parse1_condition_statement__X__m2(m, conjure_indented_keyword, evoke_header, MetaStatement):
+    def parse1_condition_statement__X__m(m, conjure_indented_keyword, evoke_header, MetaStatement):
         if m.end('newline') is not -1:
             raise_unknown_line()
 
         j = m.end()
 
-        indented_keyword = conjure_indented_keyword(m.end('indented'), j)
+        indented_keyword = evoke_indented_else_if(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -124,7 +79,7 @@ def gem():
 
     @share
     def parse1_statement_else_if(m):
-        return parse1_condition_statement__X__m(m, conjure_keyword_else_if, ElseIfHeader, ElseIfStatement)
+        return parse1_condition_statement__X__m(m, conjure_keyword_else_if, ElseIfHeader, conjure_else_if_statement)
 
 
     @share
@@ -238,7 +193,7 @@ def gem():
 
     @share
     def parse1_statement_if(m):
-        return parse1_condition_statement__X__m2(m, evoke_indented_if, conjure_if_header, IfStatement)
+        return parse1_condition_statement__X__m(m, evoke_indented_if, conjure_if_header, conjure_if_statement)
 
 
     @share
@@ -251,7 +206,7 @@ def gem():
 
     @share
     def parse1_statement_while(m):
-        return parse1_condition_statement__X__m2(m, evoke_indented_while, conjure_while_header, WhileStatement)
+        return parse1_condition_statement__X__m(m, evoke_indented_while, conjure_while_header, conjure_while_statement)
 
 
     @share
