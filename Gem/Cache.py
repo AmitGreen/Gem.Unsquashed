@@ -389,6 +389,34 @@ def gem():
 
     @export
     @privileged
+    def produce_conjure_tuple(
+            name,
+            Meta,
+
+            cache   = absent,
+            provide = absent,
+    ):
+        if cache is absent:
+            cache = {}
+
+        if provide is absent:
+            provide = cache.setdefault
+
+
+        def conjure_tuple(many):
+            r = Meta(many)
+
+            return provide(r, r)
+
+
+        if __debug__:
+            conjure_tuple.__name__ = intern_arrange('conjure_%s', name)
+
+        return conjure_tuple
+
+
+    @export
+    @privileged
     def produce_conjure_triple__312(
             name,
             Meta,

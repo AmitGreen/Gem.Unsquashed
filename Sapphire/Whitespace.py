@@ -16,12 +16,14 @@ def gem():
 
 
     class EmptyLine(String):
-        __slots__       = (())
-        ends_in_newline = true
-        indentation     = empty_indentation
-        is_blank_line   = true
-        line_marker     = false
-        newlines        = 1
+        __slots__                  = (())
+        ends_in_newline            = true
+        indentation                = empty_indentation
+        is_comment_line            = false
+        is_comment__or__empty_line = false
+        is_end_of_data             = false
+        line_marker                = false
+        newlines                   = 1
 
 
         def __repr__(t):

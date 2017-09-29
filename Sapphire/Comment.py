@@ -17,12 +17,14 @@ def gem():
 
 
     class CommentLine(String):
-        __slots__       = (())
-        ends_in_newline = true
-        is_blank_line   = true
-        indentation     = empty_indentation
-        line_marker     = false
-        newlines        = 1
+        __slots__                  = (())
+        ends_in_newline            = true
+        is_comment_line            = true
+        is_comment__or__empty_line = true
+        is_end_of_data             = false
+        indentation                = empty_indentation
+        line_marker                = false
+        newlines                   = 1
 
 
         def __repr__(t):
@@ -53,10 +55,12 @@ def gem():
         ))
 
 
-        ends_in_newline = true
-        indentation     = empty_indentation
-        is_blank_line   = true
-        newlines        = 1
+        ends_in_newline            = true
+        indentation                = empty_indentation
+        is_comment_line            = true
+        is_comment__or__empty_line = true
+        is_end_of_data             = false
+        newlines                   = 1
 
 
         def __init__(t, comment, newline):
@@ -90,9 +94,11 @@ def gem():
         ))
 
 
-        ends_in_newline = true
-        is_blank_line   = true
-        newlines        = 1
+        ends_in_newline            = true
+        is_comment_line            = true
+        is_comment__or__empty_line = true
+        is_end_of_data             = false
+        newlines                   = 1
 
 
         def __init__(t, indentation, comment):
@@ -127,9 +133,10 @@ def gem():
         ))
 
 
-        ends_in_newline = true
-        is_blank_line   = true
-        newlines        = 1
+        ends_in_newline            = true
+        is_comment_line            = true
+        is_comment__or__empty_line = true
+        newlines                   = 1
 
 
         def __init__(t, indentation, comment, newline):

@@ -74,6 +74,17 @@ def gem():
             return arrange('<%s>', t.s)
 
 
+    class EndOfData(SapphireToken):
+        __slots__                  = (())
+        is_comment_line            = false
+        is_comment__or__empty_line = false
+        is_end_of_data             = true
+
+
+        def __repr__(t):
+            return t.s
+
+
     @share
     class Identifier(SapphireToken):
         __slots__                             = (())
@@ -155,9 +166,13 @@ def gem():
     conjure_single_quote = produce_conjure_atom('single-quote', SingleQuote)
 
 
+    end_of_data = EndOfData(intern_string('<end-of-data>'))
+
+
     share(
         'conjure_double_quote',     conjure_double_quote,
         'conjure_name',             conjure_name,
         'conjure_number',           conjure_number,
         'conjure_single_quote',     conjure_single_quote,
+        'end_of_data',              end_of_data,
     )

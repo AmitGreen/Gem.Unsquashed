@@ -3,8 +3,7 @@
 #
 @gem('Sapphire.TupleOfExpression')
 def gem():
-    cache   = {}
-    provide = cache.setdefault
+    tuple_of_expression_cache = {}
 
 
     class TupleOfExpression(Tuple):
@@ -28,14 +27,19 @@ def gem():
             return arrange('<many-expression %s>', ' '.join(v.display_token()   for v in t))
 
 
-    @share
-    def conjure_tuple_of_many_expression(many):
-        r = TupleOfExpression(many)
-
-        return provide(r, r)
+    conjure_tuple_of_many_expression = produce_conjure_tuple(
+                                           'many-expression',
+                                           TupleOfExpression,
+                                           tuple_of_expression_cache,
+                                       )
 
 
     if __debug__:
         @share
         def dump_tuple_of_expression_cache():
-            dump_cache('tuple-of-expression', cache)
+            dump_cache('tuple-of-expression', tuple_of_expression_cache)
+
+
+    share(
+        'conjure_tuple_of_many_expression',     conjure_tuple_of_many_expression,
+    )
