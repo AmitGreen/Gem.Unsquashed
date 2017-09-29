@@ -79,6 +79,20 @@ def gem():
                 many[3].write(w)
                 return
 
+            if frill_estimate is 4:
+                assert length(many) is 5
+
+                many[0].write(w)
+                w(frill.a.s)
+                many[1].write(w)
+                w(frill.b.s)
+                many[2].write(w)
+                w(frill.c.s)
+                many[3].write(w)
+                w(frill.d.s)
+                many[4].write(w)
+                return
+
             iterator    = iterate(many)
             write_frill = next_method(frill.iterate_write(w))
 
