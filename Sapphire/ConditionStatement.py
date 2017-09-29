@@ -64,6 +64,10 @@ def gem():
             t.body     .write(w)
 
 
+    ConditionStatement.k1 = ConditionStatement.condition
+    ConditionStatement.k2 = ConditionStatement.body
+
+
     @share
     @privileged
     def produce_conjure_condition_statement(name, Meta):
@@ -116,7 +120,7 @@ def gem():
                 if __debug__:
                     ConditionStatement_WithFrill.__name__ = intern_arrange('%s_WithFrill', Meta.__name__)
 
-                store_adjusted_meta(Meta, ConditionStatement_WithFrill.k3)
+                store_adjusted_meta(Meta, ConditionStatement_WithFrill)
 
             return ConditionStatement_WithFrill(condition, body, frill)
 

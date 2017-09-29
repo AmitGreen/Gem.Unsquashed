@@ -66,50 +66,6 @@ def gem():
 
 
     @share
-    class ConditionHeader(SapphireTrunk):
-        __slots__ = ((
-            'keyword',                  #   KeywordIf | KeywordWith
-            'condition',                #   Expression
-            'colon_newline',            #   OperatorColon_PythonNewline
-        ))
-
-
-        def __init__(t, keyword, condition, colon_newline):
-            t.keyword       = keyword
-            t.condition     = condition
-            t.colon_newline = colon_newline
-
-
-        def  __repr__(t):
-            return arrange('<%s %r %r %r>',
-                           t.__class__.__name__, t.keyword, t.condition, t.colon_newline)
-
-
-        def count_newlines(t):
-            return t.keyword.count_newlines() + t.condition.count_newlines() + t.colon_newline.count_newlines()
-
-
-        def display_token(t):
-            return arrange('<%s <%s> %s %s>',
-                           t.display_name,
-                           t.keyword      .s,
-                           t.condition    .display_token(),
-                           t.colon_newline.display_token())
-
-
-        def write(t, w):
-            w(t.keyword.s)
-            t.condition.write(w)
-            w(t.colon_newline.s)
-
-
-    @share
-    class ElseIfHeader(ConditionHeader):
-        __slots__    = (())
-        display_name = 'else-if'
-
-
-    @share
     class DeleteStatement_Many(SapphireTrunk):
         __slots__ = ((
             'keyword',                  #   KeywordDelete

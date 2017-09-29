@@ -74,6 +74,15 @@ def gem():
                        )
 
 
+    class ElseIfHeader(KeywordExpressionStatement):
+        __slots__    = (())
+        display_name = 'else-if-header'
+        frill        = conjure_dual_frill(
+                           conjure_indented_token(empty_indentation, conjure_keyword_else_if('elif ')),
+                           conjure_colon__line_marker(':\n'),
+                       )
+
+
     class ExceptHeader_1(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'except-header-1'
@@ -139,6 +148,7 @@ def gem():
     #
     conjure_assert_statement_1 = produce_conjure_bookcase_expression('assert-statement-1', AssertStatement_1)
     conjure_decorator_header   = produce_conjure_bookcase_expression('decorator-header',   DecoratorHeader)
+    conjure_else_if_header     = produce_conjure_bookcase_expression('else-if-header',     ElseIfHeader)
     conjure_except_header_1    = produce_conjure_bookcase_expression('except-header-1',    ExceptHeader_1)
     conjure_if_header          = produce_conjure_bookcase_expression('if-header',          IfHeader)
     conjure_import_statement   = produce_conjure_bookcase_expression('import-statement',   ImportStatement)
@@ -150,8 +160,9 @@ def gem():
     share(
         'conjure_assert_statement_1',       conjure_assert_statement_1,
         'conjure_decorator_header',         conjure_decorator_header,
-        'conjure_expression_statement',     conjure_expression_statement,
+        'conjure_else_if_header',           conjure_else_if_header,
         'conjure_except_header_1',          conjure_except_header_1,
+        'conjure_expression_statement',     conjure_expression_statement,
         'conjure_if_header',                conjure_if_header,
         'conjure_import_statement',         conjure_import_statement,
         'conjure_return_statement',         conjure_return_statement,
