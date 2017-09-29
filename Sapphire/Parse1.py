@@ -15,9 +15,10 @@ def gem():
     require_gem('Sapphire.BookcaseDualStatement')
     require_gem('Sapphire.BookcaseExpression')
     require_gem('Sapphire.BookcaseManyExpression')
-    require_gem('Sapphire.BookcaseManyStatement')
     require_gem('Sapphire.BookcaseManyFrill')
+    require_gem('Sapphire.BookcaseManyStatement')
     require_gem('Sapphire.BookcaseStatement')
+    require_gem('Sapphire.BookcaseTriple')
     require_gem('Sapphire.CallStatement')
     require_gem('Sapphire.Comment')
     require_gem('Sapphire.ConditionStatement')
@@ -40,6 +41,7 @@ def gem():
     require_gem('Sapphire.Parse1Import')
     require_gem('Sapphire.Parse1Simple')
     require_gem('Sapphire.PostfixExpression')
+    require_gem('Sapphire.QuadrupleFrill')
     require_gem('Sapphire.QuadrupleToken')
     require_gem('Sapphire.Statement')
     require_gem('Sapphire.TernaryExpression')
@@ -231,6 +233,6 @@ def gem():
                 #dump_tuple_of_expression_cache()
                 #dump_unary_expression_cache_many()
 
-                if "test identation" and 0:
+                if "test identation" and 7:
                     for v in many:
                         line('+%d %s', v.indentation.total, v.display_token())

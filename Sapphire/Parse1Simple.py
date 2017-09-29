@@ -206,7 +206,7 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return RaiseStatement_3(indented_keyword, left, operator, middle, operator_2, right, newline)
+            return conjure_raise_statement_3(indented_keyword, left, operator, middle, operator_2, right, newline)
 
         raise_unknown_line()
 

@@ -35,11 +35,7 @@ def gem():
 
 
         def count_newlines(t):
-            return (
-                         t.condition.count_newlines()
-                       + t.body     .count_newlines()
-                       + t.frill    .count_newlines()
-                   )
+            return t.condition.count_newlines() + t.body.count_newlines() + t.frill.count_newlines()
 
 
         def display_token(t):
@@ -94,10 +90,6 @@ def gem():
 
                     def __repr__(t):
                         return arrange('<%s %r %r %r>', t.__class__.__name__, t.frill, t.condition, t.body)
-
-
-                    def count_newlines(t):
-                        return t.frill.count_newlines() + t.condition.count_newlines() + t.body.count_newlines()
 
 
                     def display_token(t):

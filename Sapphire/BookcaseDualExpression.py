@@ -96,10 +96,6 @@ def gem():
                         return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.frill)
 
 
-                    def count_newlines(t):
-                        return t.a.count_newlines() + t.b.count_newlines() + t.frill.count_newlines()
-
-
                     display_token = attribute(Meta, 'display_token__frill', none)
 
                     if display_token is none:
