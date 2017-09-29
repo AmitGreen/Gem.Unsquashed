@@ -66,52 +66,6 @@ def gem():
 
 
     @share
-    class DeleteStatement_Many(SapphireTrunk):
-        __slots__ = ((
-            'keyword',                  #   KeywordDelete
-            'many',                     #   Tuple of (Expression | OperatorComma)
-            'newline',                  #   newline
-        ))
-
-
-        def __init__(t, keyword, many, newline):
-            t.keyword = keyword
-            t.many    = many
-            t.newline = newline
-
-
-        def  __repr__(t):
-            return arrange('<DeleteStatement_Many %r <%r> %r>',
-                           t.keyword,
-                           ' '.join(portray(v)   for v in t.many),
-                           t.newline)
-
-
-        def count_newlines(t):
-            return (
-                         t.keyword.count_newlines()
-                       + sum(v    .count_newlines()   for v in t.many)
-                       + t.newline.count_newlines()
-                   )
-
-
-        def display_token(t):
-            return arrange('<delete-* %s <%s> %s>',
-                           t.keyword.display_token(),
-                           ' '.join(v.display_token()   for v in t.many),
-                           t.newline.display_token())
-
-
-        def write(t, w):
-            w(t.keyword.s)
-
-            for v in t.many:
-                v.write(w)
-
-            w(t.newline.s)
-
-
-    @share
     class ElseStatement(SapphireTrunk):
         __slots__ = ((
             'keyword_colon',            #   KeywordElseColon

@@ -120,7 +120,8 @@ def gem():
         if not operator.is_comma:
             raise_unknown_line()
 
-        many = [left, operator]
+        many       = [left]
+        many_frill = [operator]
 
         while 7 is 7:
             many.append(parse1_normal_expression())
@@ -133,14 +134,14 @@ def gem():
                 if newline is none:
                     raise_unknown_line()
 
-                return DeleteStatement_Many(indented_keyword, Tuple(many), newline)
+                return conjure_delete_many(indented_keyword, many, many_frill, newline)
 
             wk(none)
 
             if not operator.is_comma:
                 raise_unknown_line()
 
-            many.append(operator)
+            many_frill.append(operator)
 
 
     @share
