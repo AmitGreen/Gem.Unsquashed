@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.Parse1ExpressionStatement')
 def gem():
+    require_gem('Sapphire.BookcaseManyStatement')
+
+
     show = 0
 
 

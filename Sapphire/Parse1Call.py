@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.Parse1Call')
 def gem():
+    require_gem('Sapphire.CallStatement')
+
+
     show = 0
 
 

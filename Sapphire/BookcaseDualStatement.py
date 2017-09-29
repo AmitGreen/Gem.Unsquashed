@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.BookcaseDualStatement')
 def gem():
+    require_gem('Sapphire.BookcaseDualExpression')
+
+
     class DualExpressionStatement(BookcaseDualExpression):
         __slots__ = (())
 

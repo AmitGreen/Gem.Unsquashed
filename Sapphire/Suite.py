@@ -3,41 +3,19 @@
 #
 @gem('Sapphire.Suite')
 def gem():
-    suite_cache = {}
+    comment_suite_cache = {}
 
 
-    class CommentSuite(Tuple):
+    class CommentSuite(TokenTuple):
         __slots__ = (())
 
 
-        def __repr__(t):
-            return arrange('<%s %s>', t.__class__.__name__, ' '.join(portray(v)   for v in t))
+    conjure_comment_suite = produce_conjure_tuple('comment-*', CommentSuite, comment_suite_cache)
 
 
-        def count_newlines(t):
-            total = 0
-
-            for v in t:
-                total += v.count_newlines()
-
-            return total
-
-
-        def display_token(t):
-            return arrange('<comment-suite %s>', ' '.join(v.display_token()   for v in t))
-
-
-        def write(t, v):
-            for v in t:
-                v.write(w)
-
-
-    conjure_comment_suit = produce_conjure_tuple('comment-suite', CommentSuite, suite_cache)
-
-
-    append_cache('suite', suite_cache)
+    append_cache('comment-suite', comment_suite_cache)
 
 
     share(
-        'conjure_comment_suit',     conjure_comment_suit,
+        'conjure_comment_suite',    conjure_comment_suite,
     )

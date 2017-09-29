@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.CallStatement')
 def gem():
+    require_gem('Sapphire.BookcaseExpression')
     require_gem('Sapphire.MemberExpression')
     require_gem('Sapphire.Tree')
 

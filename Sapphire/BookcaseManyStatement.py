@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.BookcaseManyStatement')
 def gem():
+    require_gem('Sapphire.BookcaseManyExpression')
+
+
     class AssignStatment_Many(BookcaseManyExpression):
         __slots__    = (())
 

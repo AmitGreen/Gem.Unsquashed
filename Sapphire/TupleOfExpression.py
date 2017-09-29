@@ -3,28 +3,15 @@
 #
 @gem('Sapphire.TupleOfExpression')
 def gem():
+    require_gem('Sapphire.TokenTuple')
+
+
     tuple_of_expression_cache = {}
 
 
-    class TupleOfExpression(Tuple):
-        __slots__ = (())
-
-
-        def __repr__(t):
-            return arrange('<%s %s>', t.__class__.__name__, ' '.join(portray(v)   for v in t))
-
-
-        def count_newlines(t):
-            total = 0
-
-            for v in t:
-                total += v.count_newlines()
-
-            return total
-
-
-        def display_token(t):
-            return arrange('<many-expression %s>', ' '.join(v.display_token()   for v in t))
+    class TupleOfExpression(TokenTuple):
+        __slots__    = (())
+        display_name = 'expression-*'
 
 
     conjure_tuple_of_many_expression = produce_conjure_tuple(

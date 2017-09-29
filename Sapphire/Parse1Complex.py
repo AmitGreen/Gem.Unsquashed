@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.Parse1Complex')
 def gem():
+    require_gem('Sapphire.ConditionStatement')
+
+
     show = 0
 
 

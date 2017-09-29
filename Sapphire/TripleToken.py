@@ -3,6 +3,10 @@
 #
 @gem('Sapphire.TripleToken')
 def gem():
+    require_gem('Sapphire.Whitespace')
+    require_gem('Sapphire.Elemental')
+
+
     conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged
     lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   Due to privileged
     lookup_line_marker   = Shared.lookup_line_marker        #   Due to privileged

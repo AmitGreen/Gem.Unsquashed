@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.BookcaseManyFrill')
 def gem():
+    require_gem('Sapphire.ManyExpression')
+
+
     bookcase_many_frill_cache = {}
 
 

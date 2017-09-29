@@ -5,8 +5,11 @@
 def gem():
     require_gem('Sapphire.CreateMeta')
     require_gem('Sapphire.DualFrill')
+    require_gem('Sapphire.DualToken')
     require_gem('Sapphire.Elemental')
+    require_gem('Sapphire.Tree')
     require_gem('Sapphire.TripleToken')
+
 
     append_cache             = Shared.append_cache                  #   Due to privileged
     conjure_dual_frill       = Shared.conjure_dual_frill            #   Due to privileged

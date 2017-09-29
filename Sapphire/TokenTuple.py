@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.TokenTuple')
 def gem():
+    @share
     class TokenTuple(Tuple):
         __slots__ = (())
 
@@ -12,12 +13,7 @@ def gem():
 
 
         def count_newlines(t):
-            total = 0
-
-            for v in t:
-                total += v.count_newlines()
-
-            return total
+            return sum(v.count_newlines()   for v in t)
 
 
         def display_token(t):

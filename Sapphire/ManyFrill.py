@@ -3,27 +3,18 @@
 #
 @gem('Sapphire.ManyFrill')
 def gem():
-    cache   = {}
-    provide = cache.setdefault
+    require_gem('Sapphire.TokenTuple')
 
 
-    class ManyFrill(Tuple):
+    many_frill_cache   = {}
+    provide_many_frill = many_frill_cache.setdefault
+
+
+    class ManyFrill(TokenTuple):
         __slots__ = (())
 
 
         frill_estimate = 7
-
-
-        def __repr__(t):
-            return arrange('<%s %s>', t.__class__.__name__, ' '.join(portray(v)   for v in t))
-
-
-        def count_newlines(t):
-            return sum(v.count_newlines()   for v in t)
-
-
-        def display_token(t):
-            return arrange('<many-frill %s>', ' '.join(v.display_token()   for v in t))
 
 
         def iterate_write(t, w):
@@ -54,7 +45,7 @@ def gem():
 
         r = ManyFrill(many)
 
-        return provide(r, r)
+        return provide_many_frill(r, r)
 
 
-    append_cache('many-frill', cache)
+    append_cache('many-frill', many_frill_cache)

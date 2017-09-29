@@ -3,6 +3,10 @@
 #
 @gem('Sapphire.Parse1Function')
 def gem():
+    require_gem('Sapphire.BookcaseDualStatement')
+    require_gem('Sapphire.HeaderStatement')
+
+
     @share
     def parse1_statement_class_header(m):
         if m.end('newline') is not -1:

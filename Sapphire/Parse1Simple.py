@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.Parse1Simple')
 def gem():
+    require_gem('Sapphire.BookcaseStatement')
+
+
     show = 7
 
 

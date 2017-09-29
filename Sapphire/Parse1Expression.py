@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.Parse1Expression')
 def gem():
+    require_gem('Sapphire.TernaryExpression')
+
+
     show = 0
 
 
