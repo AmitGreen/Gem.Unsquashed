@@ -66,38 +66,6 @@ def gem():
 
 
     @share
-    class ElseStatement(SapphireTrunk):
-        __slots__ = ((
-            'keyword_colon',            #   KeywordElseColon
-            'body',                     #   *Statement
-        ))
-
-
-        def __init__(t, keyword_colon, body):
-            t.keyword_colon = keyword_colon
-            t.body          = body
-
-
-        def  __repr__(t):
-            return arrange('<ElseStatement %r %r>', t.keyword_colon, t.body)
-
-
-        def count_newlines(t):
-            return t.keyword_colon.count_newlines() + t.body.count_newlines()
-
-
-        def display_token(t):
-            return arrange('<else-statement <%s> %s>',
-                           t.keyword_colon.s,
-                           t.body.display_token())
-
-
-        def write(t, w):
-            w(t.keyword_colon.s)
-            t.body.write(w)
-
-
-    @share
     class FromAsFragment(SapphireTrunk):
         __slots__ = ((
             'left_name',                #   String+
@@ -132,42 +100,6 @@ def gem():
 
         def write(t, w):
             w(t.left_name.s + t.keyword_as.s + t.right_name.s)
-
-
-    @share
-    class IndentedComment(SapphireTrunk):
-        __slots__ = ((
-            'indented',                 #   String
-            'comment',                  #   Comment
-            'newline',                  #   String
-        ))
-
-
-        def __init__(t, indented, comment, newline):
-            t.indented = indented
-            t.comment  = comment
-            t.newline  = newline
-
-
-        def count_newlines(t):
-            assert (t.indented.count('\n') is t.comment.count('\n') is 0)
-            assert (t.newline.count('\n') is 1) and (t.newline[-1] == '\n')
-
-            return 1
-
-
-        def __repr__(t):
-            if t.comment is '':
-                return arrange('<+# %r %r>', t.indented, t.newline)
-
-            return arrange('<+# %r %r %r>', t.indented, t.comment, t.newline)
-
-
-        display_token = __repr__
-
-
-        def write(t, w):
-            w(t.indented + '#' + t.comment + t.newline)
 
 
     class KeywordExpressionStatement_2(SapphireTrunk):

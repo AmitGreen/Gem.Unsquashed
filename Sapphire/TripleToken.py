@@ -229,7 +229,10 @@ def gem():
                        )
         else:
             def evoke_triple_token(a_end, b_end, c_end):
-                assert qi() < a_end < b_end
+                #
+                #   For empty indentation: "qi() == a_end"
+                #
+                assert qi() <= a_end < b_end
 
                 full = qs()[qi() : c_end]
 
@@ -274,6 +277,12 @@ def gem():
         #   [
         display_name        = '.name-triplet'
         is_postfix_operator = true
+
+
+    class Indented_Else_Colon(BaseTripleOperator):
+        __slots__    = (())
+        display_name = r'indented-else:'
+        indentation  = BaseTripleOperator.a
 
 
     class Indented_KeywordPass_LineMarker_1(BaseTripleOperator):
@@ -352,8 +361,9 @@ def gem():
         is_identifier                  = true
 
 
-    conjure_all_index        = produce_conjure_triple_token('all_index',     AllIndex)
-    conjure_dot_name_triplet = produce_conjure_triple_token('.name-triplet', DotNameTriplet)
+    conjure_all_index           = produce_conjure_triple_token('all_index',           AllIndex)
+    conjure_dot_name_triplet    = produce_conjure_triple_token('.name-triplet',       DotNameTriplet)
+    conjure_indented_else_colon = produce_conjure_triple_token('indented-else-colon', Indented_Else_Colon)
 
     conjure__right_parenthesis__colon__line_marker = produce_conjure_triple_token(
                                                          'right_parenthesis__colon__line_marker',
@@ -371,6 +381,15 @@ def gem():
                           conjure_right_square_bracket__ends_in_newline,
                       )
 
+
+    evoke_indented_else_colon = produce_evoke_triple_token(
+                                    'indented_else_colon',
+                                    Indented_Else_Colon,
+                                    conjure_indentation,
+                                    conjure_keyword_else,
+                                    conjure_colon,
+                                    conjure_colon__ends_in_newline,
+                                )
 
     evoke_indented__pass__line_marker = produce_evoke_triple_token(
                                             'indented__pass__line_marker',
@@ -499,8 +518,10 @@ def gem():
     share(
         'conjure_all_index',                                conjure_all_index,
         'conjure_dot_name_triplet',                         conjure_dot_name_triplet,
+        'conjure_indented_else_colon',                      conjure_indented_else_colon,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
         'evoke_all_index',                                  evoke_all_index,
+        'evoke_indented_else_colon',                        evoke_indented_else_colon,
         'evoke_indented__pass__line_marker',                evoke_indented__pass__line_marker,
         'evoke_indented__raise__line_marker',               evoke_indented__raise__line_marker,
         'evoke_indented__return__line_marker',              evoke_indented__return__line_marker,

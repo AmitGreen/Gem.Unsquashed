@@ -33,7 +33,7 @@ def gem():
 
 
     find_conjure_keyword_colon = {
-                                     'else'    : conjure_else_colon,
+                                     'else'    : conjure_indented_else_colon,
                                      'except'  : conjure_except_colon,
                                      'finally' : conjure_finally_colon,
                                      'try'     : conjure_try_colon,
@@ -153,25 +153,17 @@ def gem():
                             assert qd() is 0
                             continue
                         else:
-                            [comment, newline] = m.group('comment', 'newline')
+                            comment_end = m.end('comment')
 
-                            if newline is none:
-                                assert comment is none
+                            if comment_end is not -1:
+                                append(conjure_any_comment_line(m.end('indented'), comment_end))
+                                continue
 
+                            if m.end('newline') is -1:
                                 raise_unknown_line()
-                            elif comment is not none:
-                                indented = m.group('indented')
 
-                                if indented is '':
-                                    append(Comment(comment, newline))
-
-                                    continue
-
-                                append(IndentedComment(indented, comment, newline))
-                                continue
-                            else:
-                                append(conjure_empty_line(m.group()))
-                                continue
+                            append(conjure_empty_line(m.group()))
+                            continue
 
                     j = m.end()
 

@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Expression')
+@gem('Sapphire.UnaryExpression')
 def gem():
     require_gem('Sapphire.Tree')
 
@@ -15,14 +15,14 @@ def gem():
         cache_many = []
 
 
+    @share
     class UnaryExpression(SapphireTrunk):
         __slots__ = ((
             'a',                        #   Expression
         ))
 
 
-        is_colon       = false
-        is_right_brace = false
+        is_colon = false
 
 
         def __init__(t, a):
@@ -49,6 +49,7 @@ def gem():
     UnaryExpression.k1 = UnaryExpression.a
 
 
+    @share
     @privileged
     def produce_conjure_unary_expression(name, Meta):
         cache   = {}
@@ -80,8 +81,11 @@ def gem():
                         return t.a.count_newlines() + t.frill.count_newlines()
 
 
-                    def display_token(t):
-                        return arrange('<%s+frill %s %s>', t.display_name, t.frill.display_token(), t.a.display_token())
+                    display_token = attribute(Meta, 'display_token__frill', none)
+
+                    if display_token is none:
+                        def display_token(t):
+                            return arrange('<%s+frill %s %s>', t.display_name, t.frill.display_token(), t.a.display_token())
 
 
                 #UnaryExpression_WithFrill.k2 = UnaryExpression_WithFrill.frill

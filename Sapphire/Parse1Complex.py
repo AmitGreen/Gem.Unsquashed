@@ -56,9 +56,9 @@ def gem():
         if m.end('newline') is not -1:
             return evoke_indented__else__colon__line_marker(m.end('indented'), m.start('colon'), m.end('colon'))
 
-        keyword_colon = conjure_else_colon(m.group())
-
         j = m.end()
+
+        keyword = evoke_indented_else_colon(m.end('indented'), m.start('colon'), j)
 
         wi(j)
         wj(j)
@@ -71,10 +71,7 @@ def gem():
         if not left.is_atom:
             raise_unknown_line()
 
-        return ElseStatement(
-                   keyword_colon,
-                   parse1_statement_expression__atom('', left),
-               )
+        return conjure_else_statement(keyword, parse1_statement_expression__atom('', left))
 
 
     @share
