@@ -96,9 +96,9 @@ def gem():
         if m.end('newline') is not -1:
             raise_unknown_line()
 
-        keyword = conjure_keyword_delete(m.group())
-
         j = m.end()
+
+        indented_keyword = evoke_indented_delete(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -113,7 +113,7 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return DeleteStatement_1(keyword, left, newline)
+            return conjure_delete_header(indented_keyword, left, newline)
 
         wk(none)
 
@@ -133,7 +133,7 @@ def gem():
                 if newline is none:
                     raise_unknown_line()
 
-                return DeleteStatement_Many(keyword, Tuple(many), newline)
+                return DeleteStatement_Many(indented_keyword, Tuple(many), newline)
 
             wk(none)
 

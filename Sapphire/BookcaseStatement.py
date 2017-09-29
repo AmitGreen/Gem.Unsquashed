@@ -74,6 +74,15 @@ def gem():
                        )
 
 
+    class DeleteStatement_1(KeywordExpressionStatement):
+        __slots__    = (())
+        display_name = 'delete-statement-1'
+        frill        = conjure_dual_frill(
+                           conjure_indented_token(empty_indentation, conjure_keyword_delete('del ')),
+                           empty_line_marker,
+                       )
+
+
     class ElseIfHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'else-if-header'
@@ -148,6 +157,7 @@ def gem():
     #
     conjure_assert_statement_1 = produce_conjure_bookcase_expression('assert-statement-1', AssertStatement_1)
     conjure_decorator_header   = produce_conjure_bookcase_expression('decorator-header',   DecoratorHeader)
+    conjure_delete_header      = produce_conjure_bookcase_expression('delete-header',      DeleteStatement_1)
     conjure_else_if_header     = produce_conjure_bookcase_expression('else-if-header',     ElseIfHeader)
     conjure_except_header_1    = produce_conjure_bookcase_expression('except-header-1',    ExceptHeader_1)
     conjure_if_header          = produce_conjure_bookcase_expression('if-header',          IfHeader)
@@ -160,6 +170,7 @@ def gem():
     share(
         'conjure_assert_statement_1',       conjure_assert_statement_1,
         'conjure_decorator_header',         conjure_decorator_header,
+        'conjure_delete_header',            conjure_delete_header,
         'conjure_else_if_header',           conjure_else_if_header,
         'conjure_except_header_1',          conjure_except_header_1,
         'conjure_expression_statement',     conjure_expression_statement,

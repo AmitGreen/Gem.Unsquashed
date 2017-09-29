@@ -254,12 +254,6 @@ def gem():
 
 
     @share
-    class DeleteStatement_1(KeywordExpressionStatement_1):
-        __slots__    = (())
-        display_name = 'delete-statement-1'
-
-
-    @share
     class RaiseStatement_1(KeywordExpressionStatement_1):
         __slots__    = (())
         display_name = 'raise-statement-1'
