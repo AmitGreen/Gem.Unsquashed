@@ -449,20 +449,6 @@ def gem():
         is_end_of_unary_expression       = true
 
 
-    class RightParenthesis_Colon_LineMarker_1(BaseDualOperator):
-        __slots__                                  = (())
-        display_name                               = r'):\n'
-        ends_in_newline                            = true
-        is__any__right_parenthesis__colon__newline = true
-        is__right_parenthesis__colon__newline      = true
-        line_marker                                = true
-        newlines                                   = 1
-
-
-        __init__       = construct_dual_operator__line_marker_1
-        count_newlines = count_newlines__line_marker
-
-
     class Whitespace_Atom(BaseDualOperator):
         __slots__                      = (())
         display_name                   = 'whitespace+atom'

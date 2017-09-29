@@ -6,6 +6,7 @@ def gem():
     require_gem('Sapphire.CreateMeta')
     require_gem('Sapphire.DualFrill')
     require_gem('Sapphire.Elemental')
+    require_gem('Sapphire.TripleToken')
 
 
     conjure_dual_frill       = Shared.conjure_dual_frill            #   Due to privileged
@@ -181,6 +182,12 @@ def gem():
         is_atom                        = true
 
 
+    class Parameter_1__Colon__LineMarker_1(BookcaseExpression):
+        __slots__    = (())
+        display_name = 'parameter-1--colon--line-marker-1'
+        frill        = conjure__right_parenthesis__colon__line_marker(LP, conjure_colon(':'), empty_line_marker)
+
+
     class TailIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'tail-index'
@@ -206,6 +213,12 @@ def gem():
                                            ParenthesizedExpression,
                                        )
 
+    conjure__parameter_1__colon__line_marker = produce_conjure_bookcase_expression(
+                                                   'parameter-colon-1',
+                                                   Parameter_1__Colon__LineMarker_1,
+                                               )
+
+
     conjure_tail_index         = produce_conjure_bookcase_expression('tail-index',         TailIndex)
     conjure_tuple_expression_1 = produce_conjure_bookcase_expression('tuple-expression-1', TupleExpression_1)
 
@@ -218,12 +231,13 @@ def gem():
 
 
     share(
-        'conjure_arguments_1',                  conjure_arguments_1,
-        'conjure_head_index',                   conjure_head_index,
-        'conjure_list_expression_1',            conjure_list_expression_1,
-        'conjure_map_expression_1',             conjure_map_expression_1,
-        'conjure_normal_index',                 conjure_normal_index,
-        'conjure_parenthesized_expression',     conjure_parenthesized_expression,
-        'conjure_tail_index',                   conjure_tail_index,
-        'conjure_tuple_expression_1',           conjure_tuple_expression_1,
+        'conjure_arguments_1',                      conjure_arguments_1,
+        'conjure_head_index',                       conjure_head_index,
+        'conjure_list_expression_1',                conjure_list_expression_1,
+        'conjure_map_expression_1',                 conjure_map_expression_1,
+        'conjure_normal_index',                     conjure_normal_index,
+        'conjure__parameter_1__colon__line_marker', conjure__parameter_1__colon__line_marker,
+        'conjure_parenthesized_expression',         conjure_parenthesized_expression,
+        'conjure_tail_index',                       conjure_tail_index,
+        'conjure_tuple_expression_1',               conjure_tuple_expression_1,
     )

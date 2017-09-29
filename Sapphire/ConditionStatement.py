@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Statement')
+@gem('Sapphire.ConditionStatement')
 def gem():
     require_gem('Sapphire.DualToken')
 

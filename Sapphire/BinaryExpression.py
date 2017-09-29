@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Expression')
+@gem('Sapphire.BinaryExpression')
 def gem():
     require_gem('Sapphire.DualToken')
     require_gem('Sapphire.Elemental')

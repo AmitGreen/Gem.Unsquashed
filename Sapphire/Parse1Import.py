@@ -6,7 +6,6 @@ def gem():
     require_gem('Sapphire.Core')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.Match')
-    require_gem('Sapphire.Statement')
 
 
     def parse1_statement_import_module():

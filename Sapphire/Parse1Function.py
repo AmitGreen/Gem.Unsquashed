@@ -56,7 +56,7 @@ def gem():
         return conjure_class_header(
                    indented__keyword,
                    name,
-                   ParameterColon_1(operator_1, parameter_1, operator_2),
+                   conjure__parameter_1__colon__line_marker(operator_1, parameter_1, operator_2),
                )
 
 
@@ -128,7 +128,7 @@ def gem():
             return conjure_function_header(
                        indented__keyword,
                        name,
-                       ParameterColon_1(operator_1, token_1, operator_2),
+                       conjure__parameter_1__colon__line_marker(operator_1, token_1, operator_2),
                    )
 
         if operator_2.is_equal_sign:
@@ -154,7 +154,7 @@ def gem():
             return conjure_function_header(
                        indented__keyword,
                        name,
-                       ParameterColon_1(
+                       conjure__parameter_1__colon__line_marker(
                            operator_1,
                            token_1,
                            evoke__comma__right_parenthesis__colon__line_marker(
