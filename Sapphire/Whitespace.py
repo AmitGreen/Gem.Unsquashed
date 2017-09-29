@@ -19,6 +19,7 @@ def gem():
         __slots__       = (())
         ends_in_newline = true
         indentation     = empty_indentation
+        is_blank_line   = true
         line_marker     = false
         newlines        = 1
 

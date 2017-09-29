@@ -8,7 +8,12 @@ def gem():
 
     @share
     def parse3_python(data, data_lines, many):
-        if "test identical output":
+        def show_indentation():
+            for v in many:
+                line('+%d %s', v.indentation.total, v.display_token())
+
+
+        def test_identical_output():
             with create_StringOutput() as f:
                 w = f.write
 
@@ -24,7 +29,8 @@ def gem():
             line('Passed#1: Identical dump from parse tree.  Total: %d line%s',
                  length(many), (''   if length(many) is 0 else   's'))
 
-        if "test count newlines":
+
+        def test_count_newlines():
             total = 0
 
             for v in many:
@@ -36,6 +42,18 @@ def gem():
                                 
             line('Passed#2: Total counted lines %d matches input', total)
 
-        if show:
-            for v in many:
-                line('+%d %s', v.indentation.total, v.display_token())
+
+        def parse_lines():
+            for v in iterator:
+                if v.is_blank_line:
+                    pass
+
+        test_identical_output()
+        test_count_newlines()
+
+        if show is 7:
+            show_indentation()
+
+        iterator = iterate(many)
+
+        parse_lines()

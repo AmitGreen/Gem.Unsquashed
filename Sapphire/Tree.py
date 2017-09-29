@@ -8,6 +8,7 @@ def gem():
         __slots__ = (())
 
 
+        is_blank_line                         = false
         is__right_parenthesis__colon__newline = false
         is_right_brace                        = false
         is_right_parenthesis                  = false

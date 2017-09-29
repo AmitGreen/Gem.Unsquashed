@@ -19,6 +19,7 @@ def gem():
     class CommentLine(String):
         __slots__       = (())
         ends_in_newline = true
+        is_blank_line   = true
         indentation     = empty_indentation
         line_marker     = false
         newlines        = 1
@@ -54,6 +55,7 @@ def gem():
 
         ends_in_newline = true
         indentation     = empty_indentation
+        is_blank_line   = true
         newlines        = 1
 
 
@@ -89,6 +91,7 @@ def gem():
 
 
         ends_in_newline = true
+        is_blank_line   = true
         newlines        = 1
 
 
@@ -125,6 +128,7 @@ def gem():
 
 
         ends_in_newline = true
+        is_blank_line   = true
         newlines        = 1
 
 
