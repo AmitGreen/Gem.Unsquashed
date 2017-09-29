@@ -182,34 +182,6 @@ def gem():
 
                     append(conjure_empty_line(m.group()))
 
-                if "test identical output":
-                    with create_StringOutput() as f:
-                        w = f.write
-
-                        for v in many:
-                            v.write(w)
-
-                    if data != f.result:
-                        with create_DelayedFileOutput('oops.txt') as oops:
-                            oops.write(f.result)
-
-                        raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')
-
-                    line('Passed#1: Identical dump from parse tree.  Total: %d line%s',
-                         length(many), (''   if length(many) is 0 else   's'))
-
-                if "test count newlines":
-                    total = 0
-
-                    for v in many:
-                        total += v.count_newlines()
-
-                    if total != length(parse_context.data_lines):
-                        raise_runtime_error('mismatch on counted lines (counted: %d; expected: %d)',
-                                            total, length(parse_context.data_lines))
-                                        
-                    line('Passed#2: Total counted lines %d matches input', total)
-
                 #conjure_colon__line_marker('\n\n:\n')
                 #dump_binary_expression_cache_many()
                 #dump_bookcase_dual_expression_cache_many()
@@ -229,6 +201,4 @@ def gem():
                 #dump_tuple_of_expression_cache()
                 #dump_unary_expression_cache_many()
 
-                if show:
-                    for v in many:
-                        line('+%d %s', v.indentation.total, v.display_token())
+        return ((data, parse_context.data_lines, many))

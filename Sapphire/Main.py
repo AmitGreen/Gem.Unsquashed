@@ -38,8 +38,11 @@ def gem():
 
             if (depth == 1) or (depth == 99):
                 require_gem('Sapphire.Parse1')                      #   Must be after 'create_sapphire_match'
+                require_gem('Sapphire.Parse3')
 
-                parse1_python_from_path('test.py')
+                [data, data_lines, many] = parse1_python_from_path('test.py')
+
+                parse3_python(data, data_lines, many)
 
             if (depth == 2) or (depth == 99):
                 require_gem('Sapphire.Parse2')                      #   Must be after 'create_sapphire_match'
