@@ -58,7 +58,7 @@ def gem():
         newline = qn()
 
         if newline is not none:
-            return ModifyStatement(indented, left, modify_operator, right, newline)
+            return conjure_modify_statement(conjure_indentation(indented), left, modify_operator, right, newline)
 
         #my_line('indented: %r; left: %r; modify_operator: %r; right: %s; s: %s',
         #        indented, left, modify_operator, right, portray_string(qs()[qj():]))

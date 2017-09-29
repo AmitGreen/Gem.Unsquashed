@@ -74,6 +74,16 @@ def gem():
                        )
 
 
+    class AssignStatement_1(DualExpressionStatement):
+        __slots__    = (())
+        display_name = 'assign-1'
+        frill        = conjure_triple_frill(
+                           empty_indentation,
+                           conjure_equal_sign(' = '),
+                           empty_line_marker,
+                       )
+
+
     class ExceptHeader_2(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'except-header-2'
@@ -94,12 +104,12 @@ def gem():
                        )
 
 
-    class StatementAssign_1(DualExpressionStatement):
+    class ModifyStatement(DualExpressionStatement):
         __slots__    = (())
-        display_name = 'assign-statement'
+        display_name = 'modify-statement'
         frill        = conjure_triple_frill(
                            empty_indentation,
-                           conjure_equal_sign(' = '),
+                           conjure_action_word('+=', ' += '),
                            empty_line_marker,
                        )
 
@@ -135,10 +145,11 @@ def gem():
 
 
     conjure_assert_statement_2 = produce_conjure_bookcase_dual_expression('assert-statement-2', AssertStatement_2)
-    conjure_assign_1           = produce_conjure_bookcase_dual_expression('assign-1',           StatementAssign_1)
+    conjure_assign_1           = produce_conjure_bookcase_dual_expression('assign-1',           AssignStatement_1)
     conjure_except_header_2    = produce_conjure_bookcase_dual_expression('assign-1',           ExceptHeader_2)
     conjure_for_header         = produce_conjure_bookcase_dual_expression('for-header',         ForHeader)
     conjure_from_statement     = produce_conjure_bookcase_dual_expression('from-statement',     StatementFromImport)
+    conjure_modify_statement   = produce_conjure_bookcase_dual_expression('modify_statement',   ModifyStatement)
     conjure_raise_statement_2  = produce_conjure_bookcase_dual_expression('raise-statement-2',  RaiseStatement_2)
     conjure_with_header_2      = produce_conjure_bookcase_dual_expression('with-header-2',      WithHeader_2)
 
@@ -149,6 +160,7 @@ def gem():
         'conjure_except_header_2',      conjure_except_header_2,
         'conjure_for_header',           conjure_for_header,
         'conjure_from_statement',       conjure_from_statement,
+        'conjure_modify_statement',     conjure_modify_statement,
         'conjure_raise_statement_2',    conjure_raise_statement_2,
         'conjure_with_header_2',        conjure_with_header_2,
     )

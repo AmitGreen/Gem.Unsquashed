@@ -390,7 +390,6 @@ def gem():
         is_end_of_ternary_expression_list       = true
         is_end_of_ternary_expression            = true
         is_end_of_unary_expression              = true
-        is_equal_sign                           = true
         is_modify_operator                      = true
         keyword                                 = '+='
 
@@ -745,7 +744,6 @@ def gem():
         is_end_of_ternary_expression_list       = true
         is_end_of_ternary_expression            = true
         is_end_of_unary_expression              = true
-        is_equal_sign                           = true
         is_modify_operator                      = true
         keyword                                 = '|='
 
@@ -901,7 +899,6 @@ def gem():
         is_end_of_ternary_expression_list       = true
         is_end_of_ternary_expression            = true
         is_end_of_unary_expression              = true
-        is_equal_sign                           = true
         is_modify_operator                      = true
         keyword                                 = '-='
 
