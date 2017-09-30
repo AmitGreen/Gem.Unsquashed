@@ -43,6 +43,27 @@ def gem():
                            t.body     .display_token())
 
 
+        def dump_token(t, newline = true):
+            assert newline is true
+
+            frill       = t.frill
+            frill_a     = frill.a
+            indentation = frill_a.a
+
+            partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+            frill.a.b.dump_token()
+            t.condition.dump_token()
+            frill.b.dump_token()
+            r = t.body.dump_token(false)
+
+            if (r) and (newline):
+                line('>')
+                return false
+
+            partial('>')
+            return r
+
+
         @property
         def indentation(t):
             return t.frill.a.a

@@ -43,12 +43,33 @@ def gem():
             frill   = t.frill
             frill_a = frill.a
 
-            return arrange('<%s+frill +%d %s %s %s>',
+            return arrange('%s<%s+frill +%d %s %s %s>',
+                           frill_a.s,
                            t.display_name,
                            frill_a.a.total,
                            frill.a.b.display_token(),
                            t.a    .display_token(),
                            frill.b.display_token())
+
+
+        def dump_token(t, newline = true):
+            assert newline is true
+
+            frill       = t.frill
+            frill_a     = frill.a
+            indentation = frill_a.a
+
+            partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+            frill.a.b.dump_token()
+            t.a.dump_token()
+            r = frill.b.dump_token(false)
+
+            if (r) and (newline):
+                line('>')
+                return false
+
+            partial('>')
+            return r
 
 
         @property

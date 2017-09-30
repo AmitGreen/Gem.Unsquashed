@@ -49,6 +49,23 @@ def gem():
                            frill.b    .display_token())
 
 
+        def dump_token(t, newline = true):
+            frill       = t.frill
+            indentation = frill.a
+
+            partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+            t.left.dump_token()
+            t.arguments.dump_token()
+            r = frill.b.dump_token(false)
+
+            if (r) and (newline):
+                line('>')
+                return false
+
+            partial('>')
+            return r
+
+
         def write(t, w):
             frill = t.frill
 

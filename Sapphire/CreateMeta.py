@@ -19,6 +19,17 @@ def gem():
 
 
     @share
+    def dump_token__line_marker(t, newline = true):
+        partial('{%s}', portray_string(t.s)[1:-1])
+
+        if newline:
+            line()
+            return false
+
+        return true
+
+
+    @share
     def conjure_ActionWord_WithNewlines(Meta, constructor):
         ActionWord_WithNewlines = lookup_adjusted_meta(Meta)
 

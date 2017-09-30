@@ -3,10 +3,10 @@
 #
 @gem('Sapphire.Parse3')
 def gem():
-    show = 0
+    show = 7
 
 
-    require_gem('Sapphire.Cache')
+    require_gem('Sapphire.Suite')
 
 
     @share
@@ -14,6 +14,13 @@ def gem():
         def show_indentation():
             for v in data_many:
                 line('+%d %s', v.indentation.total, v.display_token())
+
+
+        def show_all():
+            for v in many:
+                r = v.dump_token()
+
+                assert not r
 
 
         def test_identical_output():
@@ -46,7 +53,7 @@ def gem():
             line('Passed#2: Total counted lines %d matches input', total)
 
 
-        if show is 7:
+        if show is 5:
             show_indentation()
 
 
@@ -82,16 +89,15 @@ def gem():
 
                                     break
 
-                                for x in comments:
-                                    append(x)
+                                append(conjure_comment_suite(comments))
                             else:
                                 append(v)
-                                append(w)
-                                continue
+
+                                v = w
                         else:
                             append(v)
-                            append(w)
-                            continue
+
+                            v = w
 
                 if v.is_end_of_data:
                     break
@@ -103,5 +109,8 @@ def gem():
         parse_lines()
         test_identical_output()
         test_count_newlines()
+
+        if show is 7:
+            show_all()
 
         #dump_caches()

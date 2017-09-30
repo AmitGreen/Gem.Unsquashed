@@ -20,6 +20,6 @@ def gem():
             return arrange('<%s %s>', t.display_name, ' '.join(v.display_token()   for v in t))
 
 
-        def write(t, v):
+        def write(t, w):
             for v in t:
                 v.write(w)

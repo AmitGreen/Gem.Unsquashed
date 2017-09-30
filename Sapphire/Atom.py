@@ -54,6 +54,18 @@ def gem():
             return arrange('<%s %s>', t.display_name, portray_string(t.s))
 
 
+        def dump_token(t, newline = 0):
+            if not ((t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)):
+                line()
+                line('===')
+                my_line('%r: t', t)
+                line('===')
+
+            assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
+
+            partial('{%s}', portray_string(t.s)[1:-1])
+
+
         display_token = __repr__
 
 

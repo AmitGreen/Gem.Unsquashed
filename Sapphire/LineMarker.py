@@ -59,6 +59,19 @@ def gem():
             return arrange('<line-marker %s>', portray_string(t.s))
 
 
+        def dump_token(t, newline = true):
+            assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
+            assert (t.s.count('\n') == 1) and (t.s[-1] == '\n')
+
+            partial('{%s}', portray_string(t.s)[1:-1])
+
+            if newline:
+                line()
+                return false
+
+            return true
+
+
     @share
     def conjure_line_marker(s):
         r = lookup_line_marker(s)

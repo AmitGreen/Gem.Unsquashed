@@ -23,7 +23,6 @@ def gem():
     require_gem('Sapphire.Parse1Import')
     require_gem('Sapphire.Parse1Simple')
     require_gem('Sapphire.PostfixExpression')
-    require_gem('Sapphire.TernaryExpression')
     require_gem('Sapphire.Tokenize1Atom')
     require_gem('Sapphire.Tokenize1Header')
     require_gem('Sapphire.Tokenize1Name')

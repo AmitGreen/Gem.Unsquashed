@@ -30,6 +30,25 @@ def gem():
                            frill.c.display_token())
 
 
+        def dump_token(t, newline = true):
+            frill = t.frill
+
+            indentation = frill.a
+
+            partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+            t.a.dump_token()
+            frill.b.dump_token()
+            t.b.dump_token()
+            r = frill.c.dump_token(false)
+
+            if (r) and (newline):
+                line('>')
+                return false
+
+            partial('>')
+            return r
+
+
         @property
         def indentation(t):
             return t.frill.a
@@ -60,6 +79,27 @@ def gem():
                            frill.b  .display_token(),
                            t.b      .display_token(),
                            frill.c  .display_token())
+
+
+        def dump_token(t, newline = true):
+            frill = t.frill
+
+            frill_a     = frill.a
+            indentation = frill_a.a
+
+            partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+            frill_a.b.dump_token()
+            t.a.dump_token()
+            frill.b.dump_token()
+            t.b.dump_token()
+            r = frill.c.dump_token(false)
+
+            if (r) and (newline):
+                line('>')
+                return false
+
+            partial('>')
+            return r
 
 
         @property

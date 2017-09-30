@@ -39,6 +39,25 @@ def gem():
                            t.parameters_colon.display_token())
 
 
+        def dump_token(t, newline = true):
+            assert newline is true
+
+            keyword     = t.keyword
+            indentation = keyword.a
+
+            partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+            keyword.b.dump_token()
+            t.name.dump_token()
+            r = t.parameters_colon.dump_token(false)
+
+            if (r) and (newline):
+                line('>')
+                return false
+
+            partial('>')
+            return r
+
+
         @property
         def indentation(t):
             return t.keyword.a

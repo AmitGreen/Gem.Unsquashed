@@ -68,6 +68,22 @@ def gem():
         t.newlines = newlines
 
 
+    def dump_token__indented__keyword__colon__line_marker(t, newline = true):
+        indentation = t.a
+
+        partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+        t.b.dump_token()
+        t.c.dump_token()
+        r = t.d.dump_token(false)
+
+        if (r) and (newline):
+            line('>')
+            return false
+
+        partial('>')
+        return r
+
+
     def display_token__indented__keyword__colon__line_marker(t):
         return arrange('<%s +%d %s %s %s>',
                        t.display_name,
@@ -288,6 +304,7 @@ def gem():
 
         __init__       = construct_quadruple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
+        dump_token     = dump_token__line_marker
 
 
     class DotNameQuadruplet(BaseQuadrupleOperator):
@@ -309,6 +326,7 @@ def gem():
         __init__       = construct_quadruple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
         display_token  = display_token__indented__keyword__colon__line_marker
+        dump_token     = dump_token__indented__keyword__colon__line_marker
         indentation    = BaseQuadrupleOperator.a
 
 
@@ -324,6 +342,7 @@ def gem():
         __init__       = construct_quadruple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
         display_token  = display_token__indented__keyword__colon__line_marker
+        dump_token     = dump_token__indented__keyword__colon__line_marker
         indentation    = BaseQuadrupleOperator.a
 
 
@@ -339,6 +358,7 @@ def gem():
         __init__       = construct_quadruple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
         display_token  = display_token__indented__keyword__colon__line_marker
+        dump_token     = dump_token__indented__keyword__colon__line_marker
         indentation    = BaseQuadrupleOperator.a
 
 
@@ -354,6 +374,7 @@ def gem():
         __init__       = construct_quadruple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
         display_token  = display_token__indented__keyword__colon__line_marker
+        dump_token     = dump_token__indented__keyword__colon__line_marker
         indentation    = BaseQuadrupleOperator.a
 
 
@@ -367,6 +388,7 @@ def gem():
 
         __init__       = construct_quadruple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
+        dump_token     = dump_token__line_marker
 
 
     conjure__comma__right_parenthesis__colon__line_marker = produce_conjure_quadruple_token(
