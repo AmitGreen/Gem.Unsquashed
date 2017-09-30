@@ -4,6 +4,7 @@
 @gem('Sapphire.Parse1Complex')
 def gem():
     require_gem('Sapphire.ConditionStatement')
+    require_gem('Sapphire.UnaryStatement')
 
 
     show = 0

@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.ManyFrill')
 def gem():
+    require_gem('Sapphire.QuadrupleFrill')
     require_gem('Sapphire.TokenTuple')
 
 

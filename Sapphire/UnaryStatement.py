@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.UnaryStatement')
 def gem():
+    require_gem('Sapphire.UnaryExpression')
+
+
     class ElseStatement(UnaryExpression):
         __slots__    = (())
         display_name = 'else-statement'
