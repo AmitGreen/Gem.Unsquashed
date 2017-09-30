@@ -47,30 +47,53 @@ def gem():
             return t.frill.a
 
 
-    class KeywordExpressionStatement(BookcaseExpression):
+    class CommentedKeywordExpressionStatement(BookcaseExpression):
         __slots__           = (())
         is_statement_header = false
         is_statement        = true
 
 
         def display_token(t):
-            return arrange('<%s +%d %s>',
+            frill   = t.frill
+            frill_a = frill.a
+            comment = frill_a.comment
+
+            if comment is no_comment:
+                return arrange('<%s +%d %s>',
+                               t.display_name,
+                               frill_a.indentation.total,
+                               t.a.display_token())
+
+            return arrange('<%s +%d %s %s>',
                            t.display_name,
-                           t.frill.a.a.total,
+                           frill_a.indentation.total,
+                           comment.display_token(),
                            t.a.display_token())
 
 
         def display_token__frill(t):
-            frill   = t.frill
-            frill_a = frill.a
+            frill       = t.frill
+            frill_a     = frill.a
+            comment     = frill_a.comment
+            indentation = frill_a.indentation
 
-            return arrange('%s<%s+frill +%d %s %s %s>',
-                           frill_a.s,
+            if comment is no_comment:
+                return arrange('%s<%s+frill +%d %s %s %s>',
+                               indentation.s,
+                               t.display_name,
+                               indentation.total,
+                               frill_a.keyword.display_token(),
+                               t.a            .display_token(),
+                               frill.b        .display_token())
+
+            return arrange('%s<%s+frill +%d %s %s %s %s %s>',
+                           indentation.s,
                            t.display_name,
-                           frill_a.a.total,
-                           frill.a.b.display_token(),
-                           t.a    .display_token(),
-                           frill.b.display_token())
+                           indentation.total,
+                           comment        .display_token(),
+                           frill_a.keyword.display_token(),
+                           t.a            .display_token(),
+                           frill.b        .display_token())
 
 
         def dump_token(t, newline = true):
@@ -78,10 +101,14 @@ def gem():
 
             frill       = t.frill
             frill_a     = frill.a
-            indentation = frill_a.a
+            comment     = frill_a.comment
+            indentation = frill_a.indentation
+
+            if comment is not no_comment:
+                frill_a.comment.dump_token()
 
             partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
-            frill.a.b.dump_token()
+            frill.a.keyword.dump_token()
             t.a.dump_token()
             r = frill.b.dump_token(false)
 
@@ -95,10 +122,10 @@ def gem():
 
         @property
         def indentation(t):
-            return t.frill.a.a
+            return t.frill.a.indentation
 
 
-    class AssertStatement_1(KeywordExpressionStatement):
+    class AssertStatement_1(CommentedKeywordExpressionStatement):
         __slots__    = (())
         display_name = 'assert-1'
         frill        = conjure_dual_frill(
@@ -107,7 +134,7 @@ def gem():
                        )
 
 
-    class DecoratorHeader(KeywordExpressionStatement):
+    class DecoratorHeader(CommentedKeywordExpressionStatement):
         __slots__    = (())
         display_name = '@-header'
         frill        = conjure_dual_frill(
@@ -119,7 +146,7 @@ def gem():
         is_statement_header = true
 
 
-    class DeleteStatement_1(KeywordExpressionStatement):
+    class DeleteStatement_1(CommentedKeywordExpressionStatement):
         __slots__    = (())
         display_name = 'delete-statement-1'
         frill        = conjure_dual_frill(
@@ -128,7 +155,7 @@ def gem():
                        )
 
 
-    class ElseIfHeader(KeywordExpressionStatement):
+    class ElseIfHeader(CommentedKeywordExpressionStatement):
         __slots__    = (())
         display_name = 'else-if-header'
         frill        = conjure_dual_frill(
@@ -140,7 +167,7 @@ def gem():
         is_statement_header = true
 
 
-    class ExceptHeader_1(KeywordExpressionStatement):
+    class ExceptHeader_1(CommentedKeywordExpressionStatement):
         __slots__    = (())
         display_name = 'except-header-1'
         frill        = conjure_dual_frill(
@@ -152,7 +179,7 @@ def gem():
         is_statement_header = true
 
 
-    class IfHeader(KeywordExpressionStatement):
+    class IfHeader(CommentedKeywordExpressionStatement):
         __slots__    = (())
         display_name = 'if-header'
         frill        = conjure_dual_frill(
@@ -164,7 +191,7 @@ def gem():
         is_statement_header = true
 
 
-    class ImportStatement(KeywordExpressionStatement):
+    class ImportStatement(CommentedKeywordExpressionStatement):
         __slots__    = (())
         display_name = 'import-statement'
         frill        = conjure_dual_frill(
@@ -173,7 +200,7 @@ def gem():
                        )
 
 
-    class RaiseStatement_1(KeywordExpressionStatement):
+    class RaiseStatement_1(CommentedKeywordExpressionStatement):
         __slots__    = (())
         display_name = 'raise-statement'
         frill        = conjure_dual_frill(
@@ -182,7 +209,7 @@ def gem():
                        )
 
 
-    class ReturnStatement(KeywordExpressionStatement):
+    class ReturnStatement(CommentedKeywordExpressionStatement):
         __slots__    = (())
         display_name = 'return-statement'
         frill        = conjure_dual_frill(
@@ -191,7 +218,7 @@ def gem():
                        )
 
 
-    class WhileHeader(KeywordExpressionStatement):
+    class WhileHeader(CommentedKeywordExpressionStatement):
         __slots__    = (())
         display_name = 'while-header'
         frill        = conjure_dual_frill(
@@ -203,7 +230,7 @@ def gem():
         is_statement_header = true
 
 
-    class WithHeader_1(KeywordExpressionStatement):
+    class WithHeader_1(CommentedKeywordExpressionStatement):
         __slots__    = (())
         display_name = 'with-header-1'
         frill        = conjure_dual_frill(
@@ -215,7 +242,7 @@ def gem():
         is_statement_header = true
 
 
-    class YieldStatement_1(KeywordExpressionStatement):
+    class YieldStatement_1(CommentedKeywordExpressionStatement):
         __slots__    = (())
         display_name = 'yield-statement-1'
         frill        = conjure_dual_frill(
@@ -231,7 +258,7 @@ def gem():
 
 
     #
-    #  Derived from KeywordExpressionStatement
+    #  Derived from CommentedKeywordExpressionStatement
     #
     conjure_assert_statement_1 = produce_conjure_bookcase_expression('assert-statement-1', AssertStatement_1)
     conjure_decorator_header   = produce_conjure_bookcase_expression('decorator-header',   DecoratorHeader)

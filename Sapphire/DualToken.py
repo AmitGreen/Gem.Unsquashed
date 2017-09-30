@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.DualToken')
 def gem():
+    require_gem('Sapphire.Comment')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.Whitespace')
 
@@ -402,6 +403,11 @@ def gem():
     class Indented_Token(BaseDualOperator):
         __slots__    = (())
         display_name = 'indented-token'
+
+
+        comment     = no_comment
+        indentation = BaseDualOperator.a
+        keyword     = BaseDualOperator.b
 
 
         def display_token(t):

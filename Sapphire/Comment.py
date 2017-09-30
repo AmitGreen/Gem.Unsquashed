@@ -183,6 +183,23 @@ def gem():
         dump_token = dump_token__comment
 
 
+
+    class NoComment(SapphireToken):
+        __slots__ = (())
+
+
+        @static_method
+        def __repr__():
+            return '<no-comment>'
+
+
+        display_token = __repr__
+
+
+        def dump_token(t, newline = true):
+            line('<no-comment>')
+
+
     def conjure_comment_line(comment):
         r = lookup_comment_line(comment)
 
@@ -223,11 +240,13 @@ def gem():
 
 
     empty_comment_line = conjure_comment_line('')
+    no_comment         = NoComment('')
 
 
     append_cache('comment-line', comment_line_cache)
 
 
     share(
-        'conjure_any_comment_line', conjure_any_comment_line,
+        'conjure_any_comment_line',     conjure_any_comment_line,
+        'no_comment',                   no_comment,
     )
