@@ -67,6 +67,21 @@ def gem():
         t.newlines = newlines
 
 
+    def dump_token__indented__keyword__line_marker(t, newline = true):
+        indentation = t.a
+
+        partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+        t.b.dump_token()
+        r = t.c.dump_token(false)
+
+        if (r) and (newline):
+            line('>')
+            return false
+
+        partial('>')
+        return r
+
+
     class BaseTripleOperator(KeywordAndOperatorBase):
         __slots__ = ((
             'a',                        #   Operator+
@@ -289,6 +304,32 @@ def gem():
         indentation  = BaseTripleOperator.a
 
 
+    class Indented_KeywordBreak_LineMarker_1(BaseTripleOperator):
+        __slots__       = (())
+        display_name    = r'indented-break\n'
+        ends_in_newline = true
+        indentation     = BaseTripleOperator.a
+        line_marker     = true
+        newlines        = 1
+
+        __init__       = construct_triple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
+        dump_token     = dump_token__indented__keyword__line_marker
+
+
+    class Indented_KeywordContinue_LineMarker_1(BaseTripleOperator):
+        __slots__       = (())
+        display_name    = r'indented-continue\n'
+        ends_in_newline = true
+        indentation     = BaseTripleOperator.a
+        line_marker     = true
+        newlines        = 1
+
+        __init__       = construct_triple_operator__line_marker_1
+        count_newlines = count_newlines__line_marker
+        dump_token     = dump_token__indented__keyword__line_marker
+
+
     class Indented_KeywordPass_LineMarker_1(BaseTripleOperator):
         __slots__       = (())
         display_name    = r'indented-pass\n'
@@ -299,6 +340,7 @@ def gem():
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
+        dump_token     = dump_token__indented__keyword__line_marker
 
 
     class Indented_KeywordRaise_LineMarker_1(BaseTripleOperator):
@@ -385,6 +427,24 @@ def gem():
                           conjure_right_square_bracket__ends_in_newline,
                       )
 
+
+    evoke_indented__break__line_marker = produce_evoke_triple_token(
+                                             'indented__break__line_marker',
+                                             Indented_KeywordBreak_LineMarker_1,
+                                             conjure_indentation,
+                                             conjure_keyword_break,
+
+                                             line_marker = true,
+                                         )
+
+    evoke_indented__continue__line_marker = produce_evoke_triple_token(
+                                                'indented__continue__line_marker',
+                                                Indented_KeywordContinue_LineMarker_1,
+                                                conjure_indentation,
+                                                conjure_keyword_continue,
+
+                                                line_marker = true,
+                                            )
 
     evoke_indented_else_colon = produce_evoke_triple_token(
                                     'indented_else_colon',
@@ -525,6 +585,8 @@ def gem():
         'conjure_indented_else_colon',                      conjure_indented_else_colon,
         'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
         'evoke_all_index',                                  evoke_all_index,
+        'evoke_indented__break__line_marker',               evoke_indented__break__line_marker,
+        'evoke_indented__continue__line_marker',            evoke_indented__continue__line_marker,
         'evoke_indented_else_colon',                        evoke_indented_else_colon,
         'evoke_indented__pass__line_marker',                evoke_indented__pass__line_marker,
         'evoke_indented__raise__line_marker',               evoke_indented__raise__line_marker,

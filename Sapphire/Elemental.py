@@ -131,10 +131,22 @@ def gem():
         keyword      = 'assert'
 
 
+    class KeywordBreak(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'break'
+        keyword      = 'break'
+
+
     class KeywordClass(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'class'
         keyword      = 'class'
+
+
+    class KeywordContinue(KeywordAndOperatorBase):
+        __slots__    = (())
+        display_name = 'continue'
+        keyword      = 'continue'
 
 
     class KeywordDelete(KeywordAndOperatorBase):
@@ -958,18 +970,20 @@ def gem():
     del Shared.initialize_action_word__Meta
 
 
-    conjure_at_sign         = produce_conjure_action_word('at_sign',         OperatorAtSign)
-    conjure_dot             = produce_conjure_action_word('dot',             OperatorDot)
-    conjure_equal_sign      = produce_conjure_action_word('equal_sign',      OperatorEqualSign)
-    conjure_keyword_as      = produce_conjure_action_word('keyword_as',      KeywordAs)
-    conjure_keyword_class   = produce_conjure_action_word('keyword_class',   KeywordClass)
-    conjure_keyword_finally = produce_conjure_action_word('keyword_finally', KeywordFinally)
-    conjure_keyword_for     = produce_conjure_action_word('keyword_for',     KeywordFor)
-    conjure_keyword_from    = produce_conjure_action_word('keyword_from',    KeywordFrom)
-    conjure_keyword_if      = produce_conjure_action_word('keyword_if',      KeywordIf)
-    conjure_keyword_import  = produce_conjure_action_word('keyword_import',  KeywordImport)
-    conjure_keyword_is      = produce_conjure_action_word('keyword_is',      KeywordIs)
-    conjure_star_sign       = produce_conjure_action_word('star_sign',       OperatorStarSign)
+    conjure_at_sign          = produce_conjure_action_word('at_sign',          OperatorAtSign)
+    conjure_dot              = produce_conjure_action_word('dot',              OperatorDot)
+    conjure_equal_sign       = produce_conjure_action_word('equal_sign',       OperatorEqualSign)
+    conjure_keyword_as       = produce_conjure_action_word('keyword_as',       KeywordAs)
+    conjure_keyword_break    = produce_conjure_action_word('keyword_break',    KeywordBreak)
+    conjure_keyword_class    = produce_conjure_action_word('keyword_class',    KeywordClass)
+    conjure_keyword_continue = produce_conjure_action_word('keyword_continue', KeywordContinue)
+    conjure_keyword_finally  = produce_conjure_action_word('keyword_finally',  KeywordFinally)
+    conjure_keyword_for      = produce_conjure_action_word('keyword_for',      KeywordFor)
+    conjure_keyword_from     = produce_conjure_action_word('keyword_from',     KeywordFrom)
+    conjure_keyword_if       = produce_conjure_action_word('keyword_if',       KeywordIf)
+    conjure_keyword_import   = produce_conjure_action_word('keyword_import',   KeywordImport)
+    conjure_keyword_is       = produce_conjure_action_word('keyword_is',       KeywordIs)
+    conjure_star_sign        = produce_conjure_action_word('star_sign',        OperatorStarSign)
 
     [
             conjure_colon, conjure_colon__ends_in_newline,
@@ -1104,7 +1118,9 @@ def gem():
         'conjure_finally_colon',                            conjure_finally_colon,
         'conjure_keyword_as',                               conjure_keyword_as,
         'conjure_keyword_assert',                           conjure_keyword_assert,
+        'conjure_keyword_break',                            conjure_keyword_break,
         'conjure_keyword_class',                            conjure_keyword_class,
+        'conjure_keyword_continue',                         conjure_keyword_continue,
         'conjure_keyword_delete',                           conjure_keyword_delete,
         'conjure_keyword_else',                             conjure_keyword_else,
         'conjure_keyword_else_if',                          conjure_keyword_else_if,

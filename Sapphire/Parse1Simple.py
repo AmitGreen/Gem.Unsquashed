@@ -11,6 +11,22 @@ def gem():
 
 
     @share
+    def parse1_statement_break(m):
+        if m.end('newline') is -1:
+            raise_unknown_line()
+
+        return evoke_indented__break__line_marker(m.end('indented'), m.end('atom'))
+
+
+    @share
+    def parse1_statement_continue(m):
+        if m.end('newline') is -1:
+            raise_unknown_line()
+
+        return evoke_indented__continue__line_marker(m.end('indented'), m.end('atom'))
+
+
+    @share
     def parse1_statement_decorator_header(m):
         if m.end('newline') is not -1:
             raise_unknown_line()

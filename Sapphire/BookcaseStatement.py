@@ -4,8 +4,9 @@
 @gem('Sapphire.BookcaseStatement')
 def gem():
     class ExpressionStatement(BookcaseExpression):
-        __slots__ = (())
-        frill     = conjure_dual_frill(empty_indentation, empty_line_marker)
+        __slots__    = (())
+        display_name = 'expression-statement'
+        frill        = conjure_dual_frill(empty_indentation, empty_line_marker)
 
 
         def display_token(t):
@@ -21,6 +22,22 @@ def gem():
                            frill.a.total,
                            t.a    .display_token(),
                            frill.b.display_token())
+
+
+        def dump_token(t, newline = true):
+            frill       = t.frill
+            indentation = frill.a
+
+            partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+            t.a.dump_token()
+            r = frill.b.dump_token(false)
+
+            if (r) and (newline):
+                line('>')
+                return false
+
+            partial('>')
+            return r
 
 
         @property
