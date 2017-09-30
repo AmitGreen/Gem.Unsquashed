@@ -299,7 +299,6 @@ def gem():
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
-        dump_token     = dump_token__line_marker
 
 
     class Indented_KeywordRaise_LineMarker_1(BaseTripleOperator):
@@ -324,7 +323,6 @@ def gem():
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
-        dump_token     = dump_token__line_marker
 
 
     class Indented_KeywordYield_LineMarker_1(BaseTripleOperator):
@@ -337,7 +335,6 @@ def gem():
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
-        dump_token     = dump_token__line_marker
 
 
     class RightParenthesis_Colon_LineMarker_1(BaseTripleOperator):
@@ -351,7 +348,6 @@ def gem():
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
-        dump_token     = dump_token__line_marker
 
 
     class Whitespace_Atom_Whitespace(BaseTripleOperator):

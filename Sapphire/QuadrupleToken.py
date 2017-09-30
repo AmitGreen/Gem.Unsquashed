@@ -304,7 +304,6 @@ def gem():
 
         __init__       = construct_quadruple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
-        dump_token     = dump_token__line_marker
 
 
     class DotNameQuadruplet(BaseQuadrupleOperator):
@@ -388,7 +387,6 @@ def gem():
 
         __init__       = construct_quadruple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
-        dump_token     = dump_token__line_marker
 
 
     conjure__comma__right_parenthesis__colon__line_marker = produce_conjure_quadruple_token(

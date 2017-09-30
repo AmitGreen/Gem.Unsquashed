@@ -51,9 +51,13 @@ def gem():
 
 
         def dump_token(t, newline = true):
+            frill = t.frill
+
             partial('<%s ', t.display_name)
 
-            r = t.a.dump_token(false)
+            frill.a.dump_token()
+            t.a.dump_token()
+            r = frill.b.dump_token(false)
 
             if (r) and (newline):
                 line('>')
@@ -154,7 +158,7 @@ def gem():
 
     class Arguments_1(BookcaseExpression):
         __slots__    = (())
-        display_name = '(1)'
+        display_name = 'arguments-(1)'
         frill        = LP_RP
 
 
@@ -196,7 +200,7 @@ def gem():
 
     class Parameter_1__Colon__LineMarker_1(BookcaseExpression):
         __slots__    = (())
-        display_name = 'parameter-1--colon--line-marker-1'
+        display_name = r'parameter-(1):\n'
         frill        = conjure__right_parenthesis__colon__line_marker(LP, conjure_colon(':'), empty_line_marker)
 
 

@@ -45,7 +45,7 @@ def gem():
 
             return 0
 
-            
+
         def display_short_token(t):
             return arrange('{%s}', portray_string(t.s)[1:-1])
 
@@ -54,16 +54,38 @@ def gem():
             return arrange('<%s %s>', t.display_name, portray_string(t.s))
 
 
-        def dump_token(t, newline = 0):
-            if not ((t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)):
-                line()
-                line('===')
-                my_line('%r: t', t)
-                line('===')
+        def dump_token(t, newline = true):
+            if t.ends_in_newline:
+                if t.newlines is 1:
+                    partial('{%s}', portray_string(t.s)[1:-1])
+                else:
+                    many = t.s.splitlines(true)
 
-            assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
+                    partial('{')
 
-            partial('{%s}', portray_string(t.s)[1:-1])
+                    for s in many[:-1]:
+                        line(portray_string(s)[1:-1])
+
+                    partial('%s}', portray_string(many[-1])[1:-1])
+
+                if newline:
+                    line()
+                    return false
+
+                return true
+
+            if t.newlines is 0:
+                partial('{%s}', portray_string(t.s)[1:-1])
+                return
+
+            many = t.s.splitlines(true)
+
+            partial('{')
+
+            for s in many[:-1]:
+                line(portray_string(s)[1:-1])
+
+            partial('%s}', portray_string(many[-1])[1:-1])
 
 
         display_token = __repr__
