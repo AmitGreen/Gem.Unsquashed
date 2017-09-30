@@ -53,6 +53,26 @@ def gem():
                            t.b.display_token())
 
 
+        def dump_token(t, newline = true):
+            frill = t.frill
+
+            partial('<%s ', t.display_name)
+            frill.a.dump_token()
+            t.a.dump_token()
+            frill.b.dump_token()
+            t.b.dump_token()
+            frill.c.dump_token()
+            t.c.dump_token()
+            r = frill.d.dump_token(false)
+
+            if (r) and (newline):
+                line('>')
+                return false
+
+            partial('>')
+            return r
+
+
         def write(t, w):
             frill = t.frill
 

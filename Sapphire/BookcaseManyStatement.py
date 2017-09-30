@@ -6,16 +6,13 @@ def gem():
     require_gem('Sapphire.BookcaseManyExpression')
 
 
-    def dump_token__bookcase_many_statement(t, newline = true):
+    def dump_token__X__many(t, newline = true):
         frill = t.frill
         many  = t.many
 
-        indentation = frill.begin
-        frill_many  = frill.many
+        frill_many = frill.many
 
         frill_estimate = frill_many.frill_estimate
-
-        partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
 
         if frill_estimate is 1:
             assert length(many) is 2
@@ -93,11 +90,17 @@ def gem():
                            frill.end.display_token())
 
 
-        dump_token = dump_token__bookcase_many_statement
+        def dump_token(t, newline = true):
+            indentation = t.frill.begin
+
+            partial('%s<assign-* +%d ', indentation.s, indentation.total)
+
+            return dump_token__X__many(t, newline)
 
 
     class DeleteStatement_Many(BookcaseManyExpression):
         __slots__    = (())
+        display_name = 'delete-*'
 
 
         @property
@@ -118,7 +121,14 @@ def gem():
                            frill.end    .display_token())
 
 
-        dump_token = dump_token__bookcase_many_statement
+        def dump_token(t, newline = true):
+            frill_begin = t.frill.begin
+            indentation = frill_begin.a
+
+            partial('%s<delete-* +%d ', indentation.s, indentation.total)
+            frill_begin.b.dump_token()
+
+            return dump_token__X__many(t, newline)
 
 
     conjure_assign_many = produce_conjure_bookcase_many_expression('assign-*', AssignStatment_Many)

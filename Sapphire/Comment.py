@@ -59,7 +59,8 @@ def gem():
         newlines                   = 1
 
 
-        def __init__(t, comment, newline):
+        def __init__(t, s, comment, newline):
+            t.s       = s
             t.comment = comment
             t.newline = newline
 
@@ -79,10 +80,6 @@ def gem():
             return arrange('<# %s %s>', portray_string(t.comment), portray_string(t.newline))
 
 
-        def write(t, w):
-            w('#' + t.comment + t.newline)
-
-
     class IndentedCommentLine(SapphireToken):
         __slots__ = ((
             'indentation',              #   Indentation
@@ -97,7 +94,8 @@ def gem():
         newlines                   = 1
 
 
-        def __init__(t, indentation, comment):
+        def __init__(t, s, indentation, comment):
+            t.s           = s
             t.indentation = indentation
             t.comment     = comment
 
@@ -117,10 +115,6 @@ def gem():
             return arrange('<# +%d %s>', t.indentation.total, portray_string(t.comment))
 
 
-        def write(t, w):
-            w(t.indentation.s + '#' + t.comment + '\n')
-
-
     class IndentedCommentLine_WithTrailer(SapphireToken):
         __slots__ = ((
             'indentation',              #   Indentation
@@ -135,7 +129,8 @@ def gem():
         newlines                   = 1
 
 
-        def __init__(t, indentation, comment, newline):
+        def __init__(t, s, indentation, comment, newline):
+            t.s           = s
             t.indentation = indentation
             t.comment     = comment
             t.newline     = newline
@@ -156,10 +151,6 @@ def gem():
 
         def display_token(t):
             return arrange('<# +%d %s %s>', t.indentation.total, portray_string(t.comment), portray_string(t.newline))
-
-
-        def write(t, w):
-            w(t.indentation.s + '#' + t.comment + t.newline)
 
 
     def conjure_comment_line(comment):
@@ -188,16 +179,16 @@ def gem():
             if newline == '\n':
                 return provide_comment_line(s, comment)
 
-            return provide_comment_line(s, CommentLine_WithTrailer(comment, conjure_empty_line(newline)))
+            return provide_comment_line(s, CommentLine_WithTrailer(s, comment, conjure_empty_line(newline)))
 
         indentation = conjure_indentation(s[ : indentation_end])
 
         if newline == '\n':
-            return provide_comment_line(s, IndentedCommentLine(indentation, comment))
+            return provide_comment_line(s, IndentedCommentLine(s, indentation, comment))
 
         return provide_comment_line(
                    s,
-                   IndentedCommentLine_WithTrailer(indentation, comment, conjure_empty_line(newline)),
+                   IndentedCommentLine_WithTrailer(s, indentation, comment, conjure_empty_line(newline)),
                )
 
 

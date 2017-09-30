@@ -86,7 +86,7 @@ def gem():
                 many[2].dump_token()
                 frill.c.dump_token()
                 many[3].dump_token()
-                frill.many.dump_token()
+                frill.d.dump_token()
                 r = many[4].dump_token(false)
             else:
                 iterator   = iterate(many)
