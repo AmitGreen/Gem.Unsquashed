@@ -7,8 +7,15 @@ def gem():
 
 
     class CommentSuite(TokenTuple):
-        __slots__    = (())
-        display_name = 'comment-*'
+        __slots__           = (())
+        display_name        = 'comment-*'
+        is_statement        = true
+        is_statement_header = false
+
+
+        @property
+        def indentation(t):
+            return t[0].indentation
 
 
         def dump_token(t, newline = true):
@@ -19,9 +26,10 @@ def gem():
             line('%s<comment-* +%d', indentation.s, indentation.total)
 
             for v in t:
-                line('%*s%s', indentation.total + 2, '', v.display_token())
+                partial('%s  ', indentation.s)
+                v.dump_token()
 
-            line('>')
+            line('%s>', indentation.s)
 
 
     conjure_comment_suite = produce_conjure_tuple('comment-*', CommentSuite, comment_suite_cache)

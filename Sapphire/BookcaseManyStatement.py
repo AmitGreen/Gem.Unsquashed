@@ -71,8 +71,10 @@ def gem():
 
 
     class AssignStatment_Many(BookcaseManyExpression):
-        __slots__    = (())
-        display_name = 'assign-*'
+        __slots__           = (())
+        display_name        = 'assign-*'
+        is_statement        = true
+        is_statement_header = false
 
 
         @property
@@ -99,8 +101,10 @@ def gem():
 
 
     class DeleteStatement_Many(BookcaseManyExpression):
-        __slots__    = (())
-        display_name = 'delete-*'
+        __slots__           = (())
+        display_name        = 'delete-*'
+        is_statement        = true
+        is_statement_header = false
 
 
         @property

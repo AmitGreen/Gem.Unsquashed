@@ -44,6 +44,9 @@ def gem():
             total = 0
 
             for v in many:
+                v.is_statement                  #   Test this exists
+                v.is_statement_header           #   Test this exists
+
                 total += v.count_newlines()
 
             if total != length(data_lines):
@@ -69,38 +72,48 @@ def gem():
         append = many.append
 
 
+        def parse_comments(a):
+            indentation = a.indentation
+            v           = next_line()
+
+            if v.is_comment__or__empty_line:
+                if (v.is_comment_line) and (indentation is v.indentation):
+                    comments = [a, v]
+
+                    while 7 is 7:
+                        v = next_line()
+
+                        if v.is_comment__or__empty_line:
+                            if (v.is_comment_line) and (indentation is v.indentation):
+                                comments.append(v)
+                                continue
+
+                        break
+
+                    append(conjure_comment_suite(comments))
+                else:
+                    append(a)
+            else:
+                append(a)
+
+            return v
+
+
         def parse_lines():
             for v in data_iterator:
                 if v.is_comment__or__empty_line:
                     if v.is_comment_line:
-                        w = next_line()
-
-                        if w.is_comment__or__empty_line:
-                            if w.is_comment_line:
-                                comments = [v, w]
-
-                                while 7 is 7:
-                                    v = next_line()
-
-                                    if v.is_comment__or__empty_line:
-                                        if v.is_comment_line:
-                                            comments.append(v)
-                                            continue
-
-                                    break
-
-                                append(conjure_comment_suite(comments))
-                            else:
-                                append(v)
-
-                                v = w
-                        else:
-                            append(v)
-
-                            v = w
+                        v = parse_comments(v)
 
                 if v.is_end_of_data:
                     break
+
+                if 0:
+                    if v.indentation.total != 0:
+                        raise_runtime_error('unexpected indentation %d (expected 0): %r', v.indentation.total, v)
+
+                if v.is_statement_header:
+                    pass
 
                 append(v)
             else:

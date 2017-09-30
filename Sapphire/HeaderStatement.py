@@ -14,6 +14,10 @@ def gem():
         ))
 
 
+        is_statement_header = true
+        is_statement        = false
+
+
         def __init__(t, keyword, name, parameters_colon):
             t.keyword          = keyword
             t.name             = name

@@ -314,12 +314,14 @@ def gem():
 
 
     class Indented_Else_Colon_LineMarker(BaseQuadrupleOperator):
-        __slots__       = (())
-        display_name    = 'else'
-        ends_in_newline = true
-        keyword         = 'else'
-        line_marker     = true
-        newlines        = 1
+        __slots__           = (())
+        display_name        = 'else'
+        ends_in_newline     = true
+        is_statement        = false
+        is_statement_header = true
+        keyword             = 'else'
+        line_marker         = true
+        newlines            = 1
 
 
         __init__       = construct_quadruple_operator__line_marker_1
@@ -330,12 +332,14 @@ def gem():
 
 
     class Indented_Except_Colon_LineMarker(BaseQuadrupleOperator):
-        __slots__       = (())
-        display_name    = 'except'
-        ends_in_newline = true
-        keyword         = 'except'
-        line_marker     = true
-        newlines        = 1
+        __slots__           = (())
+        display_name        = 'except'
+        ends_in_newline     = true
+        is_statement        = false
+        is_statement_header = true
+        keyword             = 'except'
+        line_marker         = true
+        newlines            = 1
 
 
         __init__       = construct_quadruple_operator__line_marker_1
@@ -346,12 +350,14 @@ def gem():
 
 
     class Indented_Finally_Colon_LineMarker(BaseQuadrupleOperator):
-        __slots__       = (())
-        display_name    = 'finally'
-        ends_in_newline = true
-        keyword         = 'finally'
-        line_marker     = true
-        newlines        = 1
+        __slots__           = (())
+        display_name        = 'finally'
+        ends_in_newline     = true
+        is_statement        = false
+        is_statement_header = true
+        keyword             = 'finally'
+        line_marker         = true
+        newlines            = 1
 
 
         __init__       = construct_quadruple_operator__line_marker_1
@@ -362,12 +368,14 @@ def gem():
 
 
     class Indented_Try_Colon_LineMarker(BaseQuadrupleOperator):
-        __slots__       = (())
-        display_name    = 'try'
-        ends_in_newline = true
-        keyword         = 'try'
-        line_marker     = true
-        newlines        = 1
+        __slots__           = (())
+        display_name        = 'try'
+        ends_in_newline     = true
+        is_statement        = false
+        is_statement_header = true
+        keyword             = 'try'
+        line_marker         = true
+        newlines            = 1
 
 
         __init__       = construct_quadruple_operator__line_marker_1

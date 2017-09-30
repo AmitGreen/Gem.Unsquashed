@@ -22,6 +22,8 @@ def gem():
         is_comment_line            = false
         is_comment__or__empty_line = false
         is_end_of_data             = false
+        is_statement               = false
+        is_statement_header        = false
         line_marker                = false
         newlines                   = 1
 

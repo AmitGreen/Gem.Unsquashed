@@ -12,13 +12,25 @@ def gem():
     store_comment_line   = comment_line_cache.__setitem__
 
 
+    def dump_token__comment(t, newline = true):
+        partial(t.display_token())
+
+        if newline:
+            line()
+            return false
+
+        return true
+
+
     class CommentLine(String):
         __slots__                  = (())
         ends_in_newline            = true
+        indentation                = empty_indentation
         is_comment_line            = true
         is_comment__or__empty_line = true
         is_end_of_data             = false
-        indentation                = empty_indentation
+        is_statement               = false
+        is_statement_header        = false
         line_marker                = false
         newlines                   = 1
 
@@ -40,6 +52,9 @@ def gem():
             return arrange('<# %s>', portray_string(t))
 
 
+        dump_token = dump_token__comment
+
+
         def write(t, w):
             w('#' + t + '\n')
 
@@ -56,6 +71,8 @@ def gem():
         is_comment_line            = true
         is_comment__or__empty_line = true
         is_end_of_data             = false
+        is_statement               = false
+        is_statement_header        = false
         newlines                   = 1
 
 
@@ -80,6 +97,9 @@ def gem():
             return arrange('<# %s %s>', portray_string(t.comment), portray_string(t.newline))
 
 
+        dump_token = dump_token__comment
+
+
     class IndentedCommentLine(SapphireToken):
         __slots__ = ((
             'indentation',              #   Indentation
@@ -91,6 +111,8 @@ def gem():
         is_comment_line            = true
         is_comment__or__empty_line = true
         is_end_of_data             = false
+        is_statement               = false
+        is_statement_header        = false
         newlines                   = 1
 
 
@@ -115,6 +137,9 @@ def gem():
             return arrange('<# +%d %s>', t.indentation.total, portray_string(t.comment))
 
 
+        dump_token = dump_token__comment
+
+
     class IndentedCommentLine_WithTrailer(SapphireToken):
         __slots__ = ((
             'indentation',              #   Indentation
@@ -126,6 +151,8 @@ def gem():
         ends_in_newline            = true
         is_comment_line            = true
         is_comment__or__empty_line = true
+        is_statement               = false
+        is_statement_header        = false
         newlines                   = 1
 
 
@@ -151,6 +178,9 @@ def gem():
 
         def display_token(t):
             return arrange('<# +%d %s %s>', t.indentation.total, portray_string(t.comment), portray_string(t.newline))
+
+
+        dump_token = dump_token__comment
 
 
     def conjure_comment_line(comment):

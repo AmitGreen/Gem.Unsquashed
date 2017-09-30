@@ -16,7 +16,8 @@ def gem():
         ))
 
 
-        is_statement = true
+        is_statement_header = false
+        is_statement        = true
 
 
         def __init__(t, frill, left, arguments):
@@ -26,7 +27,7 @@ def gem():
 
 
         def __repr__(t):
-            return arrange('<%s %r %r %r %r>', t.__class__.__name__, t.frill, t.left, t.arguments)
+            return arrange('<%s %r %r %r>', t.__class__.__name__, t.frill, t.left, t.arguments)
 
 
         def count_newlines(t):

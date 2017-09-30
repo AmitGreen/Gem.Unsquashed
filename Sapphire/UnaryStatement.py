@@ -15,6 +15,9 @@ def gem():
                            conjure_colon(': '),
                        )
 
+        is_statement        = true
+        is_statement_header = false
+
 
         def display_token__frill(t):
             frill = t.frill

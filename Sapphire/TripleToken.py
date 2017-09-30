@@ -305,12 +305,14 @@ def gem():
 
 
     class Indented_KeywordBreak_LineMarker_1(BaseTripleOperator):
-        __slots__       = (())
-        display_name    = r'indented-break\n'
-        ends_in_newline = true
-        indentation     = BaseTripleOperator.a
-        line_marker     = true
-        newlines        = 1
+        __slots__           = (())
+        display_name        = r'indented-break\n'
+        ends_in_newline     = true
+        indentation         = BaseTripleOperator.a
+        is_statement_header = false
+        is_statement        = true
+        line_marker         = true
+        newlines            = 1
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
@@ -318,12 +320,14 @@ def gem():
 
 
     class Indented_KeywordContinue_LineMarker_1(BaseTripleOperator):
-        __slots__       = (())
-        display_name    = r'indented-continue\n'
-        ends_in_newline = true
-        indentation     = BaseTripleOperator.a
-        line_marker     = true
-        newlines        = 1
+        __slots__           = (())
+        display_name        = r'indented-continue\n'
+        ends_in_newline     = true
+        indentation         = BaseTripleOperator.a
+        is_statement_header = false
+        is_statement        = true
+        line_marker         = true
+        newlines            = 1
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
@@ -331,12 +335,14 @@ def gem():
 
 
     class Indented_KeywordPass_LineMarker_1(BaseTripleOperator):
-        __slots__       = (())
-        display_name    = r'indented-pass\n'
-        ends_in_newline = true
-        indentation     = BaseTripleOperator.a
-        line_marker     = true
-        newlines        = 1
+        __slots__           = (())
+        display_name        = r'indented-pass\n'
+        ends_in_newline     = true
+        indentation         = BaseTripleOperator.a
+        is_statement_header = false
+        is_statement        = true
+        line_marker         = true
+        newlines            = 1
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
@@ -344,36 +350,42 @@ def gem():
 
 
     class Indented_KeywordRaise_LineMarker_1(BaseTripleOperator):
-        __slots__       = (())
-        display_name    = r'indented-raise\n'
-        ends_in_newline = true
-        indentation     = BaseTripleOperator.a
-        line_marker     = true
-        newlines        = 1
+        __slots__           = (())
+        display_name        = r'indented-raise\n'
+        ends_in_newline     = true
+        indentation         = BaseTripleOperator.a
+        is_statement_header = false
+        is_statement        = true
+        line_marker         = true
+        newlines            = 1
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
 
 
     class Indented_KeywordReturn_LineMarker_1(BaseTripleOperator):
-        __slots__       = (())
-        display_name    = r'indented-return\n'
-        ends_in_newline = true
-        indentation     = BaseTripleOperator.a
-        line_marker     = true
-        newlines        = 1
+        __slots__           = (())
+        display_name        = r'indented-return\n'
+        ends_in_newline     = true
+        indentation         = BaseTripleOperator.a
+        is_statement_header = false
+        is_statement        = true
+        line_marker         = true
+        newlines            = 1
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
 
 
     class Indented_KeywordYield_LineMarker_1(BaseTripleOperator):
-        __slots__       = (())
-        display_name    = r'indented-yield\n'
-        ends_in_newline = true
-        indentation     = BaseTripleOperator.a
-        line_marker     = true
-        newlines        = 1
+        __slots__           = (())
+        display_name        = r'indented-yield\n'
+        ends_in_newline     = true
+        indentation         = BaseTripleOperator.a
+        is_statement_header = false
+        is_statement        = true
+        line_marker         = true
+        newlines            = 1
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker

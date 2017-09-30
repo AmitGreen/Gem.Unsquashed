@@ -10,6 +10,10 @@ def gem():
         __slots__ = (())
 
 
+        is_statement_header = false
+        is_statement        = true
+
+
         def display_token(t):
             return arrange('<%s +%d %s %s>',
                            t.display_name,
@@ -56,6 +60,10 @@ def gem():
 
     class KeywordDualExpressionStatement(BookcaseDualExpression):
         __slots__ = (())
+
+
+        is_statement_header = false
+        is_statement        = true
 
 
         def display_token(t):
@@ -136,6 +144,9 @@ def gem():
                            conjure_colon__line_marker(':\n'),
                        )
 
+        is_statement        = false
+        is_statement_header = true
+
 
     class ForHeader(KeywordDualExpressionStatement):
         __slots__    = (())
@@ -145,6 +156,9 @@ def gem():
                            conjure_keyword_in(' in '),
                            conjure_colon__line_marker(':\n'),
                        )
+
+        is_statement        = false
+        is_statement_header = true
 
 
     class ModifyStatement(DualExpressionStatement):
@@ -185,6 +199,9 @@ def gem():
                            conjure_keyword_as(' as '),
                            conjure_colon__line_marker(':\n'),
                        )
+
+        is_statement        = false
+        is_statement_header = true
 
 
     conjure_assert_statement_2 = produce_conjure_bookcase_dual_expression('assert-statement-2', AssertStatement_2)

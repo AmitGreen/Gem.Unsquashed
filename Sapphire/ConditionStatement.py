@@ -21,6 +21,10 @@ def gem():
         ))
 
 
+        is_statement        = true
+        is_statement_header = false
+
+
         def __init__(t, condition, body):
             t.condition = condition
             t.body      = body

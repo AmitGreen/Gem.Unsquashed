@@ -4,9 +4,11 @@
 @gem('Sapphire.BookcaseStatement')
 def gem():
     class ExpressionStatement(BookcaseExpression):
-        __slots__    = (())
-        display_name = 'expression-statement'
-        frill        = conjure_dual_frill(empty_indentation, empty_line_marker)
+        __slots__           = (())
+        display_name        = 'expression-statement'
+        frill               = conjure_dual_frill(empty_indentation, empty_line_marker)
+        is_statement_header = false
+        is_statement        = true
 
 
         def display_token(t):
@@ -46,7 +48,9 @@ def gem():
 
 
     class KeywordExpressionStatement(BookcaseExpression):
-        __slots__ = (())
+        __slots__           = (())
+        is_statement_header = false
+        is_statement        = true
 
 
         def display_token(t):
@@ -109,7 +113,10 @@ def gem():
         frill        = conjure_dual_frill(
                            conjure_indented_token(empty_indentation, conjure_at_sign('@')),
                            empty_line_marker,
-                       )
+                          )
+
+        is_statement        = false
+        is_statement_header = true
 
 
     class DeleteStatement_1(KeywordExpressionStatement):
@@ -129,6 +136,9 @@ def gem():
                            conjure_colon__line_marker(':\n'),
                        )
 
+        is_statement        = false
+        is_statement_header = true
+
 
     class ExceptHeader_1(KeywordExpressionStatement):
         __slots__    = (())
@@ -138,6 +148,9 @@ def gem():
                            conjure_colon__line_marker(':\n'),
                        )
 
+        is_statement        = false
+        is_statement_header = true
+
 
     class IfHeader(KeywordExpressionStatement):
         __slots__    = (())
@@ -146,6 +159,9 @@ def gem():
                            conjure_indented_token(empty_indentation, conjure_keyword_if('if ')),
                            conjure_colon__line_marker(':\n'),
                        )
+
+        is_statement        = false
+        is_statement_header = true
 
 
     class ImportStatement(KeywordExpressionStatement):
@@ -183,6 +199,9 @@ def gem():
                            conjure_colon__line_marker(':\n'),
                        )
 
+        is_statement        = false
+        is_statement_header = true
+
 
     class WithHeader_1(KeywordExpressionStatement):
         __slots__    = (())
@@ -191,6 +210,9 @@ def gem():
                            conjure_indented_token(empty_indentation, conjure_keyword_with('with ')),
                            conjure_colon__line_marker(':\n'),
                        )
+
+        is_statement        = false
+        is_statement_header = true
 
 
     class YieldStatement_1(KeywordExpressionStatement):
