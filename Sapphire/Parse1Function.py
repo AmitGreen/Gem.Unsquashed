@@ -30,11 +30,8 @@ def gem():
 
         operator_1 = tokenize_header_parenthesis_atom()
 
-        if operator_1.is__parameter_0__colon__line_marker:
-            if qn() is not none:
-                raise_unknown_line()
-
-            return conjure_class_header(indented__keyword, name, operator_1)
+        if operator_1.is_parameters_0:
+            return conjure_class_header(indented__keyword, name, operator_1, tokenize_parameter_colon_newline())
 
         if not operator_1.is_left_parenthesis:
             raise_unknown_line()
@@ -70,8 +67,12 @@ def gem():
             raise_unknown_line()
 
         j = m.end()
+        s = qs()
 
-        indented__keyword = evoke_indented_function(m.end('indented'), j)
+        indentation_end = m.end('indented')
+
+        indentation = conjure_indentation     (s[                : indentation_end])
+        keyword     = conjure_keyword_function(s[indentation_end : j              ])
 
         wi(j)
         wj(j)
@@ -87,11 +88,8 @@ def gem():
 
         operator_1 = tokenize_header_parenthesis_atom()
 
-        if operator_1.is__parameter_0__colon__line_marker:
-            if qn() is not none:
-                raise_unknown_line()
-
-            return conjure_function_header(indented__keyword, name, operator_1)
+        if operator_1.is_parameters_0:
+            return conjure_function_header(indentation, keyword, name, operator_1, tokenize_parameter_colon_newline())
 
         if not operator_1.is_left_parenthesis:
             raise_unknown_line()

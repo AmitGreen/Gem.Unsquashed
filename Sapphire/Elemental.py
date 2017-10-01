@@ -66,7 +66,7 @@ def gem():
         is_multiply_operator                       = false
         is__optional_comma__right_parenthesis      = false
         is__optional_comma__right_square_bracket   = false
-        is__parameter_0__colon__line_marker        = false
+        is_parameters_0                            = false
         is_postfix_operator                        = false
         is_power_operator                          = false
         is_right_brace                             = false

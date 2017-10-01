@@ -126,33 +126,33 @@ def gem():
             return t
 
 
-    class UnknownLine(Object):
-        display_name    = 'unknown-line'
-        ends_in_newline = true
-        newlines        = 1
-        line_marker     = true
-
-
-        def __init__(t, s):
-            t.s = s
+    class UnknownLine(String):
+        __slots__           = (())
+        display_name        = 'unknown-line'
+        ends_in_newline     = true
+        is_end_of_data      = false
+        is_statement_header = false
+        is_statement        = true
+        line_marker         = true
+        newlines            = 1
 
 
         def count_newlines(t):
             assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
-            assert (t.s.count('\n') is 1) and (t.s[-1] == '\n')
+            assert (t.count('\n') is 1) and (t[-1] == '\n')
 
             return 1
 
 
         def __repr__(t):
-            return arrange('<UnknownLine %s>', portray_string(t.s))
+            return arrange('<UnknownLine %s>', portray_string(t))
 
 
         display_token = __repr__
 
 
         def write(t, w):
-            w(t.s)
+            w(t)
 
 
     parse_context = ParseContext()

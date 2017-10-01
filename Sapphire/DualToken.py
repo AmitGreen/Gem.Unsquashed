@@ -290,7 +290,7 @@ def gem():
 
     class Arguments_0(BaseDualOperator):
         __slots__                             = (())
-        display_name                          = '(0)'
+        display_name                          = 'arguments-(0)'
         is__arguments_0__or__left_parenthesis = true
         is_arguments_0                        = true
         is_postfix_operator                   = true
@@ -478,6 +478,12 @@ def gem():
         is_end_of_normal_expression_list = true
         is_end_of_normal_expression      = true
         is_end_of_unary_expression       = true
+
+
+    class Parameters_0(BaseDualOperator):
+        __slots__       = (())
+        display_name    = 'parameters-(0)'
+        is_parameters_0 = true
 
 
     class Whitespace_Atom(BaseDualOperator):
@@ -848,6 +854,17 @@ def gem():
                        conjure_keyword_in__ends_in_newline,
                    )
 
+    evoke_parameters_0 = produce_evoke_dual_token(
+                             'parameters_0',
+                             Parameters_0,
+                             conjure_left_parenthesis,
+                             conjure_right_parenthesis,
+                             conjure_right_parenthesis__ends_in_newline,
+
+                             lookup  = lookup_parameters_0_token,
+                             provide = provide_parameters_0_token,
+                        )
+
     evoke__single_quote__whitespace = produce_evoke_dual_token(
                                           'single-quote+whitespace',
                                           Atom_Whitespace,
@@ -1009,4 +1026,5 @@ def gem():
         'find_evoke_comma_something',               find_evoke_comma_something,
         'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
         'evoke_colon__line_marker',                 evoke_colon__line_marker,
+        'evoke_parameters_0',                       evoke_parameters_0,
     )

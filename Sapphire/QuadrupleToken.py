@@ -385,18 +385,6 @@ def gem():
         indentation    = BaseQuadrupleOperator.a
 
 
-    class Parameter_0__Colon__LineMarker_1(BaseQuadrupleOperator):
-        display_name                        = r'():\n'
-        ends_in_newline                     = true
-        is__parameter_0__colon__line_marker = true
-        line_marker                         = true
-        newlines                            = 1
-
-
-        __init__       = construct_quadruple_operator__line_marker_1
-        count_newlines = count_newlines__line_marker
-
-
     conjure__comma__right_parenthesis__colon__line_marker = produce_conjure_quadruple_token(
             'comma__right_parenthesis__colon__line_marker',
             Comma_RightParenthesis_Colon_LineMarker_1,
@@ -405,13 +393,6 @@ def gem():
         )
 
     conjure_dot_name_quadruplet = produce_conjure_quadruple_token('.name-quadruplet', DotNameQuadruplet)
-
-    conjure__parameter_0__colon__line_marker = produce_conjure_quadruple_token(
-            'parameter_0__colon_newline',
-            Parameter_0__Colon__LineMarker_1,
-
-            line_marker = true,
-        )
 
     evoke__comma__right_parenthesis__colon__line_marker = produce_evoke_quadruple_token(
             'comma__right_parenthesis__colon__line_marker',
@@ -463,26 +444,14 @@ def gem():
             line_marker = true,
         )
 
-    evoke__parameter_0__colon__line_marker = produce_evoke_quadruple_token(
-            'parameter_0__colon_newline',
-            Parameter_0__Colon__LineMarker_1,
-            conjure_left_parenthesis,
-            conjure_right_parenthesis,
-            conjure_colon,
-
-            line_marker = true,
-        )
-
     share(
         'conjure__comma__right_parenthesis__colon__line_marker',
             conjure__comma__right_parenthesis__colon__line_marker,
 
         'conjure_dot_name_quadruplet',                          conjure_dot_name_quadruplet,
-        'conjure__parameter_0__colon__line_marker',             conjure__parameter_0__colon__line_marker,
         'evoke__comma__right_parenthesis__colon__line_marker',  evoke__comma__right_parenthesis__colon__line_marker,
         'evoke_indented__else__colon__line_marker',             evoke_indented__else__colon__line_marker,
         'evoke_indented__except__colon__line_marker',           evoke_indented__except__colon__line_marker,
         'evoke_indented__finally__colon__line_marker',          evoke_indented__finally__colon__line_marker,
         'evoke_indented__try__colon__line_marker',              evoke_indented__try__colon__line_marker,
-        'evoke__parameter_0__colon__line_marker',               evoke__parameter_0__colon__line_marker,
     )

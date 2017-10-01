@@ -14,7 +14,7 @@ def gem():
 
         s = qs()
 
-        m = header_parenthesis_match1(s, qj())
+        m = definition_header_parenthesis_match(s, qj())
 
         if m is none:
             raise_unknown_line()
@@ -23,15 +23,6 @@ def gem():
 
         if m.start('comment_newline') is not -1:
             if RP_end is not -1:
-                colon_end = m.end('colon')
-
-                if colon_end is not -1:
-                    return evoke__parameter_0__colon__line_marker(
-                               m.start('right_parenthesis'),
-                               RP_end,
-                               colon_end,
-                           )
-
                 raise_unknown_line()
 
             r = conjure_left_parenthesis__ends_in_newline(s[qi() : ])
@@ -42,7 +33,12 @@ def gem():
             return r
 
         if RP_end is not -1:
-            raise_unknown_line()
+            r = evoke_parameters_0(m.start('right_parenthesis'), RP_end)
+
+            wi(RP_end)
+            wj(m.end())
+
+            return r
 
         j = m.end()
 
@@ -133,9 +129,6 @@ def gem():
         return tokenize_parameter_operator__X__right_parenthesis(m)
 
 
-    #
-    #   TODO: FIX THIS - need to name it differently, etc (should not be returning two tokens like this).
-    #
     @share
     def tokenize_parameter_colon_newline():
         assert qd() is 0
@@ -147,14 +140,10 @@ def gem():
         m = parameter_colon_newline_match(s, qj())
 
         if m is none:
+            #my_line(portray_string(s[qj() : ]))
             raise_unknown_line()
 
-        colon_end = m.end('colon')
-
-        return ((
-                   conjure_colon      (s[qi()      : colon_end]),
-                   conjure_line_marker(s[colon_end :          ]),
-               ))
+        return evoke_colon__line_marker(m.end('colon'))
 
 
     def tokenize_nested__X__equal_sign__blankline():

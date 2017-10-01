@@ -289,11 +289,8 @@ def gem():
         #   Statements - Parse 1
         #
         MATCH(
-            'header_parenthesis_match1',
-            (
-                  G(left_parenthesis) + ow + P(G(right_parenthesis) + ow + P(G(colon) + ow))
-                + Q(comment_newline)
-            ),
+            'definition_header_parenthesis_match',
+            G(left_parenthesis) + ow + P(G(right_parenthesis) + ow) + Q(comment_newline)
         )
 
         MATCH(
