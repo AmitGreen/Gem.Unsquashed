@@ -4,7 +4,7 @@
 @gem('Sapphire.Parse1Function')
 def gem():
     require_gem('Sapphire.BookcaseDualStatement')
-    require_gem('Sapphire.HeaderStatement')
+    require_gem('Sapphire.DefinitionHeader')
 
 
     @share

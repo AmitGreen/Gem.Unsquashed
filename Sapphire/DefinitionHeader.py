@@ -1,12 +1,12 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.HeaderStatement')
+@gem('Sapphire.DefinitionHeader')
 def gem():
     require_gem('Sapphire.Tree')
 
 
-    class HeaderStatement(SapphireTrunk):
+    class DefinitionHeader(SapphireTrunk):
         __slots__ = ((
             'frill',                    #   Indented_Keyword
             'name',                     #   String
@@ -88,17 +88,17 @@ def gem():
             t.parameters_colon.write(w)
 
 
-    HeaderStatement.k1 = HeaderStatement.frill
-    HeaderStatement.k2 = HeaderStatement.name
-    HeaderStatement.k3 = HeaderStatement.parameters_colon
+    DefinitionHeader.k1 = DefinitionHeader.frill
+    DefinitionHeader.k2 = DefinitionHeader.name
+    DefinitionHeader.k3 = DefinitionHeader.parameters_colon
 
 
-    class ClassHeader(HeaderStatement):
+    class ClassHeader(DefinitionHeader):
         __slots__    = (())
         display_name = 'class-header'
 
 
-    class FunctionHeader(HeaderStatement):
+    class FunctionHeader(DefinitionHeader):
         __slots__    = (())
         display_name = 'function-header'
 

@@ -161,7 +161,7 @@ def gem():
         display_name = 'else-if-header'
         frill        = conjure_dual_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_else_if('elif ')),
-                           conjure_colon__line_marker(':\n'),
+                           colon__empty_line_marker,
                        )
 
         is_statement        = false
@@ -173,7 +173,7 @@ def gem():
         display_name = 'except-header-1'
         frill        = conjure_dual_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_except('except ')),
-                           conjure_colon__line_marker(':\n'),
+                           colon__empty_line_marker,
                        )
 
         is_statement        = false
@@ -185,7 +185,7 @@ def gem():
         display_name = 'if-header'
         frill        = conjure_dual_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_if('if ')),
-                           conjure_colon__line_marker(':\n'),
+                           colon__empty_line_marker,
                        )
 
         is_statement        = false
@@ -224,7 +224,7 @@ def gem():
         display_name = 'while-header'
         frill        = conjure_dual_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_while('while ')),
-                           conjure_colon__line_marker(':\n'),
+                           colon__empty_line_marker,
                        )
 
         is_statement        = false
@@ -236,7 +236,7 @@ def gem():
         display_name = 'with-header-1'
         frill        = conjure_dual_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('with ')),
-                           conjure_colon__line_marker(':\n'),
+                           colon__empty_line_marker,
                        )
 
         is_statement        = false

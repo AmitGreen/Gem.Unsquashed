@@ -141,7 +141,7 @@ def gem():
         frill        = conjure_triple_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_except('except ')),
                            conjure_keyword_as(' as '),
-                           conjure_colon__line_marker(':\n'),
+                           colon__empty_line_marker,
                        )
 
         is_statement        = false
@@ -154,7 +154,7 @@ def gem():
         frill        = conjure_triple_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_for('for ')),
                            conjure_keyword_in(' in '),
-                           conjure_colon__line_marker(':\n'),
+                           colon__empty_line_marker,
                        )
 
         is_statement        = false
@@ -197,7 +197,7 @@ def gem():
         frill        = conjure_triple_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('with ')),
                            conjure_keyword_as(' as '),
-                           conjure_colon__line_marker(':\n'),
+                           colon__empty_line_marker,
                        )
 
         is_statement        = false

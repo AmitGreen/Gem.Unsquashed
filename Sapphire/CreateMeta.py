@@ -10,15 +10,6 @@ def gem():
 
 
     @share
-    def count_newlines__line_marker(t):
-        assert (t.ends_in_newline is t.line_marker is true)
-        assert t.s[-1] == '\n'
-        assert t.newlines == t.s.count('\n')
-
-        return t.newlines
-
-
-    @share
     def conjure_ActionWord_WithNewlines(Meta, constructor):
         ActionWord_WithNewlines = lookup_adjusted_meta(Meta)
 

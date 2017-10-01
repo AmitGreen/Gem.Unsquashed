@@ -5,6 +5,7 @@
 def gem():
     require_gem('Sapphire.ActionWord')
     require_gem('Sapphire.LineMarker')
+    require_gem('Sapphire.Tree')
 
 
     def construct_action_word__line_marker_1(t, s):
@@ -432,41 +433,6 @@ def gem():
         is_end_of_ternary_expression_list       = true
         is_end_of_unary_expression              = true
         keyword                                 = ':'
-
-
-    class OperatorColon_LineMarker_1(KeywordAndOperatorBase):
-        __slots__                               = (())
-        is_colon__line_marker                   = true
-        is_end_of_arithmetic_expression         = true
-        is_end_of_boolean_and_expression        = true
-        is_end_of_boolean_or_expression         = true
-        is_end_of_compare_expression            = true
-        is_end_of_comprehension_expression_list = true
-        is_end_of_comprehension_expression      = true
-        is_end_of_logical_and_expression        = true
-        is_end_of_logical_or_expression         = true
-        is_end_of_multiply_expression           = true
-        is_end_of_normal_expression_list        = true
-        is_end_of_normal_expression             = true
-        is_end_of_ternary_expression            = true
-        is_end_of_ternary_expression_list       = true
-        is_end_of_unary_expression              = true
-        keyword                                 = r'colon:\n'
-        ends_in_newline                         = true
-        line_marker                             = true
-        newlines                                = 1
-
-
-        __init__       = construct_action_word__line_marker_1
-        count_newlines = count_newlines__line_marker
-
-
-        def __repr__(t):
-            return arrange('<OperatorColon_LineMarker_1 %s>', portray_raw_string(t.s))
-
-
-        def display_token(t):
-            return portray_raw_string(t.s)
 
 
     class OperatorComma(KeywordAndOperatorBase):
@@ -1013,11 +979,6 @@ def gem():
         conjure_left_square_bracket, conjure_left_square_bracket__ends_in_newline,
     ] = produce_conjure_action_word('left_square_bracket', OperatorLeftSquareBracket, produce_ends_in_newline = true)
 
-    conjure_colon__line_marker = produce_conjure_action_word__line_marker(
-            'colon',
-            OperatorColon_LineMarker_1,
-        )
-
     [
         conjure_right_brace, conjure_right_brace__ends_in_newline,
     ] = produce_conjure_action_word('right_brace', OperatorRightBrace, produce_ends_in_newline = true)
@@ -1108,7 +1069,6 @@ def gem():
         'conjure_at_sign',                                  conjure_at_sign,
         'conjure_colon',                                    conjure_colon,
         'conjure_colon__ends_in_newline',                   conjure_colon__ends_in_newline,
-        'conjure_colon__line_marker',                       conjure_colon__line_marker,
         'conjure_comma',                                    conjure_comma,
         'conjure_comma__ends_in_newline',                   conjure_comma__ends_in_newline,
         'conjure_dot',                                      conjure_dot,

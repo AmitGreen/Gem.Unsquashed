@@ -41,7 +41,7 @@ def gem():
         t.newlines        = newlines
 
 
-    def construct_dual_operator__line_marker_1(t, s, a, b):
+    def construct_dual_token__line_marker_1(t, s, a, b):
         assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
         assert s == a.s + b.s
         assert s.count('\n') is 1
@@ -169,7 +169,7 @@ def gem():
 
             s = intern_string(s)
 
-            return provide(s, create_dual_token__with_newlines(Meta, s, a, b))
+            return provide(s, create_dual_token(Meta, s, a, b))
 
 
         if __debug__:
@@ -301,6 +301,31 @@ def gem():
         display_name                   = 'atom+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
+
+
+    class Colon_LineMarker_1(KeywordAndOperatorBase):
+        __slots__                               = (())
+        ends_in_newline                         = true
+        is_colon__line_marker                   = true
+        is_end_of_arithmetic_expression         = true
+        is_end_of_boolean_and_expression        = true
+        is_end_of_boolean_or_expression         = true
+        is_end_of_compare_expression            = true
+        is_end_of_comprehension_expression_list = true
+        is_end_of_comprehension_expression      = true
+        is_end_of_logical_and_expression        = true
+        is_end_of_logical_or_expression         = true
+        is_end_of_multiply_expression           = true
+        is_end_of_normal_expression_list        = true
+        is_end_of_normal_expression             = true
+        is_end_of_ternary_expression_list       = true
+        is_end_of_ternary_expression            = true
+        is_end_of_unary_expression              = true
+        line_marker                             = true
+        newlines                                = 1
+
+        __init__       = construct_dual_token__line_marker_1
+        count_newlines = count_newlines__line_marker
 
 
     class Colon_RightSquareBracket(BaseDualOperator):
@@ -478,6 +503,13 @@ def gem():
                               provide = provide_arguments_0_token,
                           )
 
+    conjure_colon__line_marker = produce_conjure_dual_token(
+                                     'colon__line_marker__1',
+                                     Colon_LineMarker_1,
+                                     
+                                     line_marker = true,
+                                 )
+
     conjure__colon__right_square_bracket = produce_conjure_dual_token(
                                                'colon__right_square_bracket',
                                                Colon_RightSquareBracket,
@@ -527,6 +559,14 @@ def gem():
                             lookup  = lookup_arguments_0_token,
                             provide = provide_arguments_0_token,
                         )
+
+    evoke_colon__line_marker = produce_evoke_dual_token(
+                                   'colon__line_marker',
+                                   Colon_LineMarker_1,
+                                   conjure_colon,
+                                   
+                                   line_marker = true,
+                               )
 
     evoke__colon__right_square_bracket = produce_evoke_dual_token(
                                              'colon__right_square_bracket',
@@ -848,6 +888,8 @@ def gem():
                                          none,
                                      )
 
+    colon__empty_line_marker = conjure_colon__line_marker(conjure_colon(':'), empty_line_marker)
+
     find_evoke_comma_something = {
                                      #   (
                                      ')' : evoke__comma__right_parenthesis,
@@ -920,7 +962,9 @@ def gem():
 
 
     share(
+        'colon__empty_line_marker',                 colon__empty_line_marker,
         'conjure_arguments_0',                      conjure_arguments_0,
+        'conjure_colon__line_marker',               conjure_colon__line_marker,
         'conjure__colon__right_square_bracket',     conjure__colon__right_square_bracket,
         'conjure__comma__right_brace',              conjure__comma__right_brace,
         'conjure__comma__right_parenthesis',        conjure__comma__right_parenthesis,
@@ -964,4 +1008,5 @@ def gem():
         'find_evoke_atom_whitespace',               find_evoke_atom_whitespace,
         'find_evoke_comma_something',               find_evoke_comma_something,
         'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
+        'evoke_colon__line_marker',                 evoke_colon__line_marker,
     )

@@ -10,6 +10,22 @@ def gem():
     provide_atom = provide_normal_token
 
 
+    def count_newlines__zero(t):
+        assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
+        assert (t.s is intern_string(t.s))
+
+        return 0
+
+
+    @share
+    def count_newlines__line_marker(t):
+        assert (t.ends_in_newline is t.line_marker is true)
+        assert t.s[-1] == '\n'
+        assert t.newlines == t.s.count('\n')
+
+        return t.newlines
+
+
     @export
     class SapphireToken(Object):
         __slots__ = ((
@@ -39,11 +55,7 @@ def gem():
             return arrange('<%s %r>', t.__class__.__name__, t.s)
 
 
-        def count_newlines(t):
-            assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
-            assert (t.s is intern_string(t.s))
-
-            return 0
+        count_newlines = count_newlines__zero
 
 
         def display_short_token(t):
@@ -168,6 +180,7 @@ def gem():
 
         def display_token(t):
             return arrange('<%s>', t.s)
+
 
 
     @share

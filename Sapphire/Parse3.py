@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse3')
 def gem():
-    show = 7
+    show = 0
 
 
     require_gem('Sapphire.Suite')
@@ -137,21 +137,21 @@ def gem():
 
         def parse_lines():
             for v in data_iterator:
-                if v.is_comment__or__empty_line:
-                    if v.is_comment_line:
-                        [comment, v] = parse_comments(v)
-                    else:
-                        raise_unknown_line()
-                else:
-                    comment = no_comment
-
-                if v.is_end_of_data:
-                    if comment is not no_comment:
-                        append(comment)
-
-                    break
-
                 if 0:
+                    if v.is_comment__or__empty_line:
+                        if v.is_comment_line:
+                            [comment, v] = parse_comments(v)
+                        else:
+                            raise_unknown_line()
+                    else:
+                        comment = no_comment
+
+                    if v.is_end_of_data:
+                        if comment is not no_comment:
+                            append(comment)
+
+                        break
+
                     if v.indentation.total != 0:
                         raise_runtime_error('unexpected indentation %d (expected 0): %r', v.indentation.total, v)
 
@@ -163,11 +163,14 @@ def gem():
                     else:
                         raise_unknown_line()
 
-                if comment is not no_comment:
-                    #
-                    #   Fix this later
-                    #
-                    append(comment)
+                    if comment is not no_comment:
+                        #
+                        #   Fix this later
+                        #
+                        append(comment)
+
+                if v.is_end_of_data:
+                    break
 
                 append(v)
             else:
