@@ -142,6 +142,7 @@ def gem():
                            empty_line_marker,
                           )
 
+        is_decorator_header = true
         is_statement        = false
         is_statement_header = true
 

@@ -199,10 +199,10 @@ def gem():
         caller_name  = caller_frame.f_code.co_name
         basename     = path_basename(caller_frame.f_code.co_filename)
 
-        line('%s#%s: %s; %d', basename, caller_frame.f_lineno, caller_name, ql())
+        line('%s#%s: %s; %s', basename, caller_frame.f_lineno, caller_name, ql())
 
         unknown_line_error = UnknownLineException(
-                                 arrange('parse incomplete: %s#%s: %s; %d',
+                                 arrange('parse incomplete: %s#%s: %s; %s',
                                          basename, caller_frame.f_lineno, caller_name, ql()),
                                  UnknownLine(qs()),
                              )

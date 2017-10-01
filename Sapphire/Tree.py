@@ -8,6 +8,8 @@ def gem():
         __slots__ = (())
 
 
+        is_class_or_function_header           = false
+        is_decorator_header                   = false
         is_comment_line                       = false
         is_comment__or__empty_line            = false
         is_end_of_data                        = false
