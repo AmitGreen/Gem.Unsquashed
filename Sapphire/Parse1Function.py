@@ -141,9 +141,13 @@ def gem():
                 raise_unknown_line()
 
         if operator_2.is_right_parenthesis:
-            [colon, line_marker] = tokenize_parameter_colon_newline()
-
-            operator_2 = conjure__right_parenthesis__colon__line_marker(operator_2, colon, line_marker)
+            return conjure_function_header(
+                       indentation,
+                       keyword,
+                       name,
+                       conjure_parameters_1(operator_1, token_1, operator_2),
+                       tokenize_parameter_colon_newline(),
+                   )
 
         if operator_2.is__any__right_parenthesis__colon__newline:
             if qn() is not none:
@@ -156,7 +160,7 @@ def gem():
                    )
 
         if not operator_2.is_comma:
-            my_line('operator_2: %r', operator_2)
+            #my_line('operator_2: %r', operator_2)
             raise_unknown_line()
 
         token_7 = tokenize_parameter_atom()
@@ -201,6 +205,7 @@ def gem():
                     raise_unknown_line()
 
                 if operator_7.is_right_parenthesis:
+                    assert 0# FIX THIS
                     [colon, line_marker] = tokenize_parameter_colon_newline()
 
                     operator_7 = conjure__right_parenthesis__colon__line_marker(operator_7, colon, line_marker)

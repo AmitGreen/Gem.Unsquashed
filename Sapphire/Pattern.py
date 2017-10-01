@@ -305,14 +305,8 @@ def gem():
             'parameter_operator_match',
             (
                   G(equal_sign) + ow
-                | (
-                        G(comma) + ow
-                      + P(
-                              G('comma_RP', right_parenthesis) + ow
-                            + P(G('comma_RP_colon', colon) + ow)
-                        )
-                  )
-                | G(right_parenthesis) + ow + P(G(colon) + ow)
+                | G(comma) + ow + P(G('comma_RP', right_parenthesis) + ow)
+                | G(right_parenthesis) + ow
             ) + Q(comment_newline),
         )
 

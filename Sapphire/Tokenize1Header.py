@@ -57,6 +57,11 @@ def gem():
         right_parenthesis__end = m.end('right_parenthesis')
 
         if m.end('comment_newline') is not -1:
+            assert qi() == qj()
+
+            my_line(portray_string(s[qi() : ]))
+            my_line(portray_string(m.group('comment_newline')))
+
             raise_unknown_line()
 
         r = conjure_right_parenthesis(s[qi() : right_parenthesis__end])

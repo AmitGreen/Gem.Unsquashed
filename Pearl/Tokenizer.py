@@ -137,6 +137,10 @@ def gem():
         newlines            = 1
 
 
+        def __repr__(t):
+            return arrange('<UnknownLine %s>', portray_string(t))
+
+
         def count_newlines(t):
             assert (t.ends_in_newline is t.line_marker is true) and (t.newlines is 1)
             assert (t.count('\n') is 1) and (t[-1] == '\n')
@@ -144,11 +148,15 @@ def gem():
             return 1
 
 
-        def __repr__(t):
-            return arrange('<UnknownLine %s>', portray_string(t))
-
-
         display_token = __repr__
+
+
+        def dump_token(t, newline = true):
+            assert newline is true
+
+            line(t.display_token())
+
+            return false
 
 
         def write(t, w):

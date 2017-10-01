@@ -190,6 +190,12 @@ def gem():
         frill        = LSB_RSB
 
 
+    class Parameters_1(BookcaseExpression):
+        __slots__    = (())
+        display_name = 'parameters-(1)'
+        frill        = LP_RP
+
+
     class ParenthesizedExpression(BookcaseExpression):
         __slots__                      = (())
         display_name                   = '()'
@@ -217,6 +223,7 @@ def gem():
     conjure_list_expression_1 = produce_conjure_bookcase_expression('list-expression-1', ListExpression_1)
     conjure_map_expression_1  = produce_conjure_bookcase_expression('map-expression-1',  MapExpression_1)
     conjure_normal_index      = produce_conjure_bookcase_expression('normal-index',      NormalIndex)
+    conjure_parameters_1      = produce_conjure_bookcase_expression('parameters-1',      Parameters_1)
 
     conjure_parenthesized_expression = produce_conjure_bookcase_expression(
                                            'parenthesized-expression',
@@ -233,6 +240,7 @@ def gem():
         'conjure_list_expression_1',                conjure_list_expression_1,
         'conjure_map_expression_1',                 conjure_map_expression_1,
         'conjure_normal_index',                     conjure_normal_index,
+        'conjure_parameters_1',                     conjure_parameters_1,
         'conjure_parenthesized_expression',         conjure_parenthesized_expression,
         'conjure_tail_index',                       conjure_tail_index,
         'conjure_tuple_expression_1',               conjure_tuple_expression_1,
