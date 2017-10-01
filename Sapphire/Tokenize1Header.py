@@ -56,16 +56,8 @@ def gem():
 
         right_parenthesis__end = m.end('right_parenthesis')
 
-        if m.start('colon') is not -1:
-            if m.end('comment_newline') is -1:
-                raise_unknown_line()
-
-            wd0()
-
-            return evoke__right_parenthesis__colon__line_marker(right_parenthesis__end, m.end('colon'))
-
-        if m.end('comment_newline') is -1:
-            return conjure_right_parenthesis(s[qi() :])
+        if m.end('comment_newline') is not -1:
+            raise_unknown_line()
 
         r = conjure_right_parenthesis(s[qi() : right_parenthesis__end])
 

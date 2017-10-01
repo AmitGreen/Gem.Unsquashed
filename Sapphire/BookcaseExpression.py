@@ -198,12 +198,6 @@ def gem():
         is_atom                        = true
 
 
-    class Parameter_1__Colon__LineMarker_1(BookcaseExpression):
-        __slots__    = (())
-        display_name = r'parameter-(1):\n'
-        frill        = conjure__right_parenthesis__colon__line_marker(LP, conjure_colon(':'), empty_line_marker)
-
-
     class TailIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'tail-index'
@@ -229,12 +223,6 @@ def gem():
                                            ParenthesizedExpression,
                                        )
 
-    conjure__parameter_1__colon__line_marker = produce_conjure_bookcase_expression(
-                                                   'parameter-colon-1',
-                                                   Parameter_1__Colon__LineMarker_1,
-                                               )
-
-
     conjure_tail_index         = produce_conjure_bookcase_expression('tail-index',         TailIndex)
     conjure_tuple_expression_1 = produce_conjure_bookcase_expression('tuple-expression-1', TupleExpression_1)
 
@@ -245,7 +233,6 @@ def gem():
         'conjure_list_expression_1',                conjure_list_expression_1,
         'conjure_map_expression_1',                 conjure_map_expression_1,
         'conjure_normal_index',                     conjure_normal_index,
-        'conjure__parameter_1__colon__line_marker', conjure__parameter_1__colon__line_marker,
         'conjure_parenthesized_expression',         conjure_parenthesized_expression,
         'conjure_tail_index',                       conjure_tail_index,
         'conjure_tuple_expression_1',               conjure_tuple_expression_1,

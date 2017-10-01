@@ -297,7 +297,7 @@ def gem():
             'parameter_atom_match',
             (
                   Q(star_sign) + G(name) + ow
-                | G(right_parenthesis) + ow + P(G(colon) + ow)
+                | G(right_parenthesis) + ow
             ) + Q(comment_newline),
         )
 

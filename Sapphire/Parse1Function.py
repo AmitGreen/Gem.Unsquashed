@@ -104,7 +104,13 @@ def gem():
         #</parameter_1>
 
         if token_1.is_right_parenthesis:
-            raise_unknown_line()
+            return conjure_function_header(
+                       indentation,
+                       keyword,
+                       name,
+                       conjure_parameters_0(operator_1, token_1),
+                       tokenize_parameter_colon_newline(),
+                   )
 
         if token_1.is__right_parenthesis__colon__newline:
             return conjure_function_header(

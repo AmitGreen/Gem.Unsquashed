@@ -391,19 +391,6 @@ def gem():
         count_newlines = count_newlines__line_marker
 
 
-    class RightParenthesis_Colon_LineMarker_1(BaseTripleOperator):
-        __slots__                                  = (())
-        display_name                               = r'):\n'
-        ends_in_newline                            = true
-        is__any__right_parenthesis__colon__newline = true
-        is__right_parenthesis__colon__newline      = true
-        line_marker                                = true
-        newlines                                   = 1
-
-        __init__       = construct_triple_operator__line_marker_1
-        count_newlines = count_newlines__line_marker
-
-
     class Whitespace_Atom_Whitespace(BaseTripleOperator):
         __slots__                      = (())
         display_name                   = 'whitespace+atom+whitespace'
@@ -422,13 +409,6 @@ def gem():
     conjure_all_index           = produce_conjure_triple_token('all_index',           AllIndex)
     conjure_dot_name_triplet    = produce_conjure_triple_token('.name-triplet',       DotNameTriplet)
     conjure_indented_else_colon = produce_conjure_triple_token('indented-else-colon', Indented_Else_Colon)
-
-    conjure__right_parenthesis__colon__line_marker = produce_conjure_triple_token(
-                                                         'right_parenthesis__colon__line_marker',
-                                                         RightParenthesis_Colon_LineMarker_1,
-
-                                                         line_marker = true
-                                                     )
 
     evoke_all_index = produce_evoke_triple_token(
                           'all_index',
@@ -503,15 +483,6 @@ def gem():
                                              line_marker = true,
                                          )
 
-
-    evoke__right_parenthesis__colon__line_marker = produce_evoke_triple_token(
-                                                       'right_parenthesis__colon__line_marker',
-                                                       RightParenthesis_Colon_LineMarker_1,
-                                                       conjure_right_parenthesis,
-                                                       conjure_colon,
-
-                                                       line_marker = true,
-                                                   )
 
     evoke_whitespace__double_quote__whitespace = produce_evoke_triple_token(
                                                      'whitespace+double-quote+whitespace',
@@ -595,7 +566,6 @@ def gem():
         'conjure_all_index',                                conjure_all_index,
         'conjure_dot_name_triplet',                         conjure_dot_name_triplet,
         'conjure_indented_else_colon',                      conjure_indented_else_colon,
-        'conjure__right_parenthesis__colon__line_marker',   conjure__right_parenthesis__colon__line_marker,
         'evoke_all_index',                                  evoke_all_index,
         'evoke_indented__break__line_marker',               evoke_indented__break__line_marker,
         'evoke_indented__continue__line_marker',            evoke_indented__continue__line_marker,
@@ -604,6 +574,5 @@ def gem():
         'evoke_indented__raise__line_marker',               evoke_indented__raise__line_marker,
         'evoke_indented__return__line_marker',              evoke_indented__return__line_marker,
         'evoke_indented__yield__line_marker',               evoke_indented__yield__line_marker,
-        'evoke__right_parenthesis__colon__line_marker',     evoke__right_parenthesis__colon__line_marker,
         'find_evoke_whitespace_atom_whitespace',            find_evoke_whitespace_atom_whitespace,
     )
