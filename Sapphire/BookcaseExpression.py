@@ -213,7 +213,7 @@ def gem():
     class TupleExpression_1(BookcaseExpression):
         __slots__                      = (())
         display_name                   = '{,}'
-        frill                          = conjure_dual_frill(LP, conjure__comma__right_parenthesis(conjure_comma(','), RP))
+        frill                          = conjure_dual_frill(LP, conjure_comma__right_parenthesis(conjure_comma(','), RP))
         is__atom__or__special_operator = true
         is_atom                        = true
 

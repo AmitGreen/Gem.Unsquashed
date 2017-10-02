@@ -87,7 +87,7 @@ def gem():
             return conjure_arguments_1(
                        left_parenthesis,
                        argument_1,
-                       conjure__comma__right_parenthesis(operator_1, argument_2),
+                       conjure_comma__right_parenthesis(operator_1, argument_2),
                    )
 
         argument_2 = parse1_argument7__left(argument_2)
@@ -109,7 +109,7 @@ def gem():
                        argument_1,
                        operator_1,
                        argument_2,
-                       conjure__comma__right_parenthesis(operator_2, argument_3),
+                       conjure_comma__right_parenthesis(operator_2, argument_3),
                    )
 
         frill_many = [operator_1, operator_2]
@@ -135,7 +135,7 @@ def gem():
                            left_parenthesis,
                            many,
                            frill_many,
-                           conjure__comma__right_parenthesis(operator_7, argument_3),
+                           conjure_comma__right_parenthesis(operator_7, argument_3),
                        )
 
             frill_many.append(operator_7)

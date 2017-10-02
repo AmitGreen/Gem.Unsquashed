@@ -521,12 +521,8 @@ def gem():
                                                Colon_RightSquareBracket,
                                            )
 
-    conjure__comma__right_brace = produce_conjure_dual_token('comma__right_brace', Comma_RightBrace)
-
-    conjure__comma__right_parenthesis = produce_conjure_dual_token(
-                                            'comma__right_parenthesis',
-                                            Comma_RightParenthesis,
-                                        )
+    conjure__comma__right_brace      = produce_conjure_dual_token('comma__right_brace',       Comma_RightBrace)
+    conjure_comma__right_parenthesis = produce_conjure_dual_token('comma__right_parenthesis', Comma_RightParenthesis)
 
     conjure__comma__right_square_bracket = produce_conjure_dual_token(
                                                'comma__right_square_bracket',
@@ -992,7 +988,7 @@ def gem():
         'conjure_colon__line_marker',               conjure_colon__line_marker,
         'conjure__colon__right_square_bracket',     conjure__colon__right_square_bracket,
         'conjure__comma__right_brace',              conjure__comma__right_brace,
-        'conjure__comma__right_parenthesis',        conjure__comma__right_parenthesis,
+        'conjure_comma__right_parenthesis',         conjure_comma__right_parenthesis,
         'conjure__comma__right_square_bracket',     conjure__comma__right_square_bracket,
         'conjure_dot_name',                         conjure_dot_name,
         'conjure_dot_name_pair',                    conjure_dot_name_pair,

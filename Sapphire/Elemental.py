@@ -69,7 +69,6 @@ def gem():
         is_postfix_operator                        = false
         is_power_operator                          = false
         is_right_brace                             = false
-        is__right_parenthesis__colon               = false
         is_right_parenthesis                       = false
         is_right_square_bracket                    = false
         is_star_sign                               = false

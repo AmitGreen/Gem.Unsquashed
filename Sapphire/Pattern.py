@@ -134,14 +134,6 @@ def gem():
         w_as_w                  = NAME('w_as_w',                  w + keyword_as + w)
         w_import_w              = NAME('w_import_w',              w + keyword_import + w)
 
-        right_parenthesis__colon     = NAME('right_parenthesis__colon',     right_parenthesis + ow + colon)
-        ow__right_parenthesis__colon = NAME('ow__right_parenthesis__colon', ow + right_parenthesis + ow + colon)
-
-        ow__right_parenthesis__colon__ow = NAME(
-                                               'ow__right_parenthesis__colon__ow',
-                                               ow + right_parenthesis + ow + colon + ow,
-                                           )
-
         #
         #   OLD
         #
