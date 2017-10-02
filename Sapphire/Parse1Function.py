@@ -14,7 +14,7 @@ def gem():
 
         j = m.end()
 
-        indented__keyword = evoke_indented_class(m.end('indented'), j)
+        indented_keyword = evoke_indented_class(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -31,7 +31,7 @@ def gem():
         operator_1 = tokenize_header_parenthesis_atom()
 
         if operator_1.is_parameters_0:
-            return conjure_class_header(indented__keyword, name, operator_1, tokenize_parameter_colon_newline())
+            return conjure_class_header(indented_keyword, name, operator_1, tokenize_parameter_colon_newline())
 
         if not operator_1.is_left_parenthesis:
             raise_unknown_line()
@@ -55,7 +55,7 @@ def gem():
             raise_unknown_line()
 
         return conjure_class_header(
-                   indented__keyword,
+                   indented_keyword,
                    name,
                    conjure__parameter_1__colon__line_marker(operator_1, parameter_1, operator_2),
                )
@@ -67,12 +67,8 @@ def gem():
             raise_unknown_line()
 
         j = m.end()
-        s = qs()
 
-        indentation_end = m.end('indented')
-
-        indentation = conjure_indentation     (s[                : indentation_end])
-        keyword     = conjure_keyword_function(s[indentation_end : j              ])
+        indented_keyword = evoke_indented_function(m.end('indented'), j)
 
         wi(j)
         wj(j)
@@ -89,7 +85,7 @@ def gem():
         operator_1 = tokenize_header_parenthesis_atom()
 
         if operator_1.is_parameters_0:
-            return conjure_function_header(indentation, keyword, name, operator_1, tokenize_parameter_colon_newline())
+            return conjure_function_header(indented_keyword, name, operator_1, tokenize_parameter_colon_newline())
 
         if not operator_1.is_left_parenthesis:
             raise_unknown_line()
@@ -105,23 +101,10 @@ def gem():
 
         if token_1.is_right_parenthesis:
             return conjure_function_header(
-                       indentation,
-                       keyword,
+                       indented_keyword,
                        name,
                        conjure_parameters_0(operator_1, token_1),
                        tokenize_parameter_colon_newline(),
-                   )
-
-        if token_1.is__right_parenthesis__colon__newline:
-            return conjure_function_header(
-                       indented__keyword,
-                       name,
-                       conjure__parameter_0__colon__line_marker(
-                           operator_1,
-                           token_1.a,
-                           token_1.b,
-                           token_1.c,
-                       ),
                    )
 
         if not token_1.is_atom:
@@ -140,23 +123,12 @@ def gem():
             if operator_2 is none:
                 raise_unknown_line()
 
-        if operator_2.is_right_parenthesis:
+        if operator_2.is__optional_comma__right_parenthesis:
             return conjure_function_header(
-                       indentation,
-                       keyword,
+                       indented_keyword,
                        name,
                        conjure_parameters_1(operator_1, token_1, operator_2),
                        tokenize_parameter_colon_newline(),
-                   )
-
-        if operator_2.is__any__right_parenthesis__colon__newline:
-            if qn() is not none:
-                raise_unknown_line()
-
-            return conjure_function_header(
-                       indented__keyword,
-                       name,
-                       conjure__parameter_1__colon__line_marker(operator_1, token_1, operator_2),
                    )
 
         if not operator_2.is_comma:
@@ -168,20 +140,16 @@ def gem():
         if qn() is not none:
             raise_unknown_line()
 
-        if token_7.is__right_parenthesis__colon__newline:
+        if token_7.is_right_parenthesis:
             return conjure_function_header(
-                       indented__keyword,
+                       indented_keyword,
                        name,
-                       conjure__parameter_1__colon__line_marker(
+                       conjure_parameter_1(
                            operator_1,
                            token_1,
-                           evoke__comma__right_parenthesis__colon__line_marker(
-                               operator_2,
-                               token_7.a,
-                               token_7.b,
-                               token_7.c,
-                           ),
+                           evoke_comma__right_parenthesis(operator_2, token_7),
                        ),
+                       tokenize_parameter_colon_newline(),
                    )
 
         if not token_7.is_atom:
@@ -212,14 +180,12 @@ def gem():
 
             many.append(token_7)
 
-            if operator_7.is__any__right_parenthesis__colon__newline:
-                if qn() is not none:
-                    raise_unknown_line()
-
+            if operator_7.is_right_parenthesis:
                 return conjure_function_header(
-                           indented__keyword,
+                           indented_keyword,
                            name,
                            conjure_parameter_colon_many(operator_1, many, many_frill, operator_7),
+                           tokenize_parameter_colon_newline(),
                        )
 
             if not operator_7.is_comma:
@@ -233,7 +199,7 @@ def gem():
 
             if token_7.is__right_parenthesis__colon__newline:
                 return conjure_function_header(
-                           indented__keyword,
+                           indented_keyword,
                            name,
                            conjure_parameter_colon_many(
                                operator_1,

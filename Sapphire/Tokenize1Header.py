@@ -185,21 +185,22 @@ def gem():
             comma_RP_end = m.end('comma_RP')
 
             if comma_RP_end is not -1:
-                if m.start('comma_RP_colon') is not -1:
-                    if m.end('comment_newline') is -1:
-                        raise_unknown_line()
+                if m.end('comment_newline') is not -1:
+                    raise_unknown_line()
 
-                    wd0()
+                d = qd()
 
-                    comma_RP_start = m.start('comma_RP')
+                if d is 0:
+                    raise_unknown_line()
 
-                    return evoke__comma__right_parenthesis__colon__line_marker(
-                               comma_RP_start,
-                               comma_RP_end,
-                               m.end('comma_RP_colon'),
-                           )
+                r = evoke_comma__right_parenthesis(comma_end, comma_RP_end)
 
-                raise_unknown_line()
+                wd(d - 1)
+                wi(comma_RP_end)
+                wj(m.end())
+
+                return r
+
 
             if m.end('comment_newline') is not -1:
                 r = conjure_comma__ends_in_newline(s[qi() :])

@@ -598,13 +598,13 @@ def gem():
                                     conjure_right_brace__ends_in_newline,
                                 )
 
-    evoke__comma__right_parenthesis = produce_evoke_dual_token(
-                                          'comma__right_parenthesis',
-                                          Comma_RightParenthesis,
-                                          conjure_comma,
-                                          conjure_right_parenthesis,
-                                          conjure_right_parenthesis__ends_in_newline,
-                                      )
+    evoke_comma__right_parenthesis = produce_evoke_dual_token(
+                                         'comma__right_parenthesis',
+                                         Comma_RightParenthesis,
+                                         conjure_comma,
+                                         conjure_right_parenthesis,
+                                         conjure_right_parenthesis__ends_in_newline,
+                                     )
 
     evoke__comma__right_square_bracket = produce_evoke_dual_token(
                                              'comma__right_square_bracket',
@@ -917,7 +917,7 @@ def gem():
 
     find_evoke_comma_something = {
                                      #   (
-                                     ')' : evoke__comma__right_parenthesis,
+                                     ')' : evoke_comma__right_parenthesis,
 
                                      #   [
                                      ']' : evoke__comma__right_square_bracket,
@@ -1007,7 +1007,7 @@ def gem():
         'evoke_colon__line_marker',                 evoke_colon__line_marker,
         'evoke__colon__right_square_bracket',       evoke__colon__right_square_bracket,
         'evoke__comma__right_brace',                evoke__comma__right_brace,
-        'evoke__comma__right_parenthesis',          evoke__comma__right_parenthesis,
+        'evoke_comma__right_parenthesis',           evoke_comma__right_parenthesis,
         'evoke_empty_list',                         evoke_empty_list,
         'evoke_empty_map',                          evoke_empty_map,
         'evoke_empty_tuple',                        evoke_empty_tuple,

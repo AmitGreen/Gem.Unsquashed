@@ -136,14 +136,13 @@ def gem():
 
     @share
     class Identifier(SapphireToken):
-        __slots__                             = (())
-        display_name                          = 'Identifier'
-        is__atom__or__special_operator        = true
-        is_atom                               = true
-        is_colon                              = false
-        is_identifier                         = true
-        is_right_brace                        = false
-        is__right_parenthesis__colon__newline = false
+        __slots__                      = (())
+        display_name                   = 'Identifier'
+        is__atom__or__special_operator = true
+        is_atom                        = true
+        is_colon                       = false
+        is_identifier                  = true
+        is_right_brace                 = false
 
 
         def display_token(t):

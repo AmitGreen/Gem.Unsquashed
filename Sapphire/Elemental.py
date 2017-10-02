@@ -18,7 +18,6 @@ def gem():
     @share
     class KeywordAndOperatorBase(SapphireToken):
         is_all_index                               = false
-        is__any__right_parenthesis__colon__newline = false
         is_arguments_0                             = false
         is__arguments_0__or__left_parenthesis      = false
         is_arithmetic_operator                     = false
@@ -71,7 +70,6 @@ def gem():
         is_power_operator                          = false
         is_right_brace                             = false
         is__right_parenthesis__colon               = false
-        is__right_parenthesis__colon__newline      = false
         is_right_parenthesis                       = false
         is_right_square_bracket                    = false
         is_star_sign                               = false
@@ -812,16 +810,6 @@ def gem():
         is_right_parenthesis                    = true
         #  (
         keyword                                 = ')'
-
-
-    @export
-    class OperatorRightParenthesisColon(KeywordAndOperatorBase):
-        __slots__                    = (())
-        #  ([
-        display_name                 = '):'
-        is__right_parenthesis__colon = true
-        #  ([
-        keyword                      = '):'
 
 
     @export
