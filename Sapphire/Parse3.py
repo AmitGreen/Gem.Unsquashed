@@ -29,10 +29,15 @@ def gem():
 
 
         def show_all():
-            for v in many:
-                r = v.dump_token()
+            with create_StringOutput() as f:
+                f.line('===  show_all  ===')
 
-                assert not r
+                for v in many:
+                    r = v.dump_token(f)
+
+                    assert not r
+
+            partial(f.result)
 
 
         def test_identical_output():
@@ -91,11 +96,10 @@ def gem():
                 v = next_line()
 
                 if not v.is_comment__or__empty_line:
-                    wv(v)
-                    return first_comment
+                    return v.add_comment(first_comment)
             else:
                 if not v.is_comment__or__empty_line:
-                    return first_comment
+                    return v.add_comment(first_comment)
 
                 wv0()
 
@@ -200,6 +204,7 @@ def gem():
                 if v.is_statement_header:
                     v = v.parse_header()
                 else:
+                    my_line('v: %r', v)
                     raise_unknown_line()
 
                 #my_line('===  append  ===')

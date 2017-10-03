@@ -18,18 +18,15 @@ def gem():
             return t[0].indentation
 
 
-        def dump_token(t, newline = true):
+        def dump_token(t, f, newline = true):
             assert newline is true
 
             indentation = t[0].indentation
 
-            line('%s<comment-* +%d', indentation.s, indentation.total)
-
-            for v in t:
-                partial('%s  ', indentation.s)
-                v.dump_token()
-
-            line('%s>', indentation.s)
+            with f.indent(prefix = indentation.total):
+                with f.indent(arrange('<comment-* +%d', indentation.total), '>'):
+                    for v in t:
+                        v.dump_token(f)
 
 
         @property

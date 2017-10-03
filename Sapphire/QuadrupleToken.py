@@ -68,19 +68,19 @@ def gem():
         t.newlines = newlines
 
 
-    def dump_token__indented__keyword__colon__line_marker(t, newline = true):
+    def dump_token__indented__keyword__colon__line_marker(t, f, newline = true):
         indentation = t.a
 
-        partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
-        t.b.dump_token()
-        t.c.dump_token()
-        r = t.d.dump_token(false)
+        f.partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+        t.b.dump_token(f)
+        t.c.dump_token(f)
+        r = t.d.dump_token(f, false)
 
         if (r) and (newline):
-            line('>')
+            f.line('>')
             return false
 
-        partial('>')
+        f.partial('>')
         return r
 
 

@@ -47,24 +47,24 @@ def gem():
                            t.body     .display_token())
 
 
-        def dump_token(t, newline = true):
+        def dump_token(t, f, newline = true):
             assert newline is true
 
             frill       = t.frill
             frill_a     = frill.a
             indentation = frill_a.a
 
-            partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
-            frill.a.b.dump_token()
-            t.condition.dump_token()
-            frill.b.dump_token()
-            r = t.body.dump_token(false)
+            f.partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+            frill.a.b.dump_token(f)
+            t.condition.dump_token(f)
+            frill.b.dump_token(f)
+            r = t.body.dump_token(f, false)
 
             if (r) and (newline):
-                line('>')
+                f.line('>')
                 return false
 
-            partial('>')
+            f.partial('>')
             return r
 
 

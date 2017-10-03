@@ -26,19 +26,19 @@ def gem():
                            frill.b.display_token())
 
 
-        def dump_token(t, newline = true):
+        def dump_token(t, f, newline = true):
             frill       = t.frill
             indentation = frill.a
 
-            partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
-            t.a.dump_token()
-            r = frill.b.dump_token(false)
+            f.partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+            t.a.dump_token(f)
+            r = frill.b.dump_token(f, false)
 
             if (r) and (newline):
-                line('>')
+                f.line('>')
                 return false
 
-            partial('>')
+            f.partial('>')
             return r
 
 
@@ -110,7 +110,7 @@ def gem():
                            frill.b        .display_token())
 
 
-        def dump_token(t, newline = true):
+        def dump_token(t, f, newline = true):
             assert newline is true
 
             frill       = t.frill
@@ -118,24 +118,24 @@ def gem():
             comment     = frill_a.comment
             indentation = frill_a.indentation
 
-            partial('%s<%s +%d', indentation.s, t.display_name, indentation.total)
+            f.partial('%s<%s +%d', indentation.s, t.display_name, indentation.total)
 
             if comment is no_comment:
-                partial(' ')
+                f.partial(' ')
             else:
-                line()
-                frill_a.comment.dump_token()
-                partial(indentation.s)
+                f.line()
+                frill_a.comment.dump_token(f)
+                f.partial(indentation.s)
 
-            frill.a.keyword.dump_token()
-            t.a.dump_token()
-            r = frill.b.dump_token(false)
+            frill.a.keyword.dump_token(f)
+            t.a.dump_token(f)
+            r = frill.b.dump_token(f, false)
 
             if (r) and (newline):
-                line('>')
+                f.line('>')
                 return false
 
-            partial('>')
+            f.partial('>')
             return r
 
 

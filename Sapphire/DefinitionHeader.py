@@ -78,7 +78,7 @@ def gem():
 
 
 
-        def dump_token(t, newline = true):
+        def dump_token(t, f, newline = true):
             assert newline is true
 
             frill       = t.frill
@@ -87,19 +87,19 @@ def gem():
             indentation = frill_a.indentation
 
             if comment is not no_comment:
-                comment.dump_token()
+                comment.dump_token(f)
 
-            partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
-            frill_a.keyword.dump_token()
-            t.name.dump_token()
-            t.parameters.dump_token()
-            r = frill.b.dump_token(false)
+            f.partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+            frill_a.keyword.dump_token(f)
+            t.name.dump_token(f)
+            t.parameters.dump_token(f)
+            r = frill.b.dump_token(f, false)
 
             if (r) and (newline):
-                line('>')
+                f.line('>')
                 return false
 
-            partial('>')
+            f.partial('>')
             return r
 
 

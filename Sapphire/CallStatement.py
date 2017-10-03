@@ -50,20 +50,20 @@ def gem():
                            frill.b    .display_token())
 
 
-        def dump_token(t, newline = true):
+        def dump_token(t, f, newline = true):
             frill       = t.frill
             indentation = frill.a
 
-            partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
-            t.left.dump_token()
-            t.arguments.dump_token()
-            r = frill.b.dump_token(false)
+            f.partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+            t.left.dump_token(f)
+            t.arguments.dump_token(f)
+            r = frill.b.dump_token(f, false)
 
             if (r) and (newline):
-                line('>')
+                f.line('>')
                 return false
 
-            partial('>')
+            f.partial('>')
             return r
 
 

@@ -6,13 +6,13 @@ def gem():
     require_gem('Sapphire.DualTwig')
 
 
-    def dump_token__body_statement(t, newline = true):
+    def dump_token__body_statement(t, f, newline = true):
         assert newline is true
 
-        line('<%s +%d', t.display_name, t.a.indentation.total)
-        t.a.dump_token()
-        t.b.dump_token()
-        line('>')
+        with f.indent(arrange('<%s +%d', t.display_name, t.a.indentation.total), '>'):
+            t.a.dump_token(f)
+            t.b.dump_token(f)
+
         return false
 
 

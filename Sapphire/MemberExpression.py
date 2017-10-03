@@ -34,16 +34,16 @@ def gem():
             return arrange('<member %s %s>', t.left.display_token(), t.postfix.display_token())
 
 
-        def dump_token(t, newline = true):
-            partial('<member ')
-            t.left.dump_token()
-            r = t.postfix.dump_token(false)
+        def dump_token(t, f, newline = true):
+            f.partial('<member ')
+            t.left.dump_token(f)
+            r = t.postfix.dump_token(f, false)
 
             if (r) and (newline):
-                line('>')
+                f.line('>')
                 return false
 
-            partial('>')
+            f.partial('>')
             return r
 
 

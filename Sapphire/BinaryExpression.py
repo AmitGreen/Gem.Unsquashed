@@ -74,19 +74,19 @@ def gem():
             return arrange('<%s %s %s>', t.display_name, t.a.display_token(), t.b.display_token())
 
 
-        def dump_token(t, newline = true):
+        def dump_token(t, f, newline = true):
             frill = t.frill
 
-            partial('<%s ', t.display_name)
-            t.a.dump_token()
-            frill.dump_token()
-            r = t.b.dump_token()
+            f.partial('<%s ', t.display_name)
+            t.a.dump_token(f)
+            frill.dump_token(f)
+            r = t.b.dump_token(f)
 
             if (r) and (newline):
-                line('>')
+                f.line('>')
                 return false
 
-            partial('>')
+            f.partial('>')
             return r
 
 

@@ -151,10 +151,10 @@ def gem():
         display_token = __repr__
 
 
-        def dump_token(t, newline = true):
+        def dump_token(t, f, newline = true):
             assert newline is true
 
-            line(t.display_token())
+            f.line(t.display_token())
 
             return false
 

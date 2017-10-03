@@ -12,11 +12,11 @@ def gem():
     store_comment_line   = comment_line_cache.__setitem__
 
 
-    def dump_token__comment(t, newline = true):
-        partial(t.display_token())
+    def dump_token__comment(t, f, newline = true):
+        f.partial(t.display_token())
 
         if newline:
-            line()
+            f.line()
             return false
 
         return true

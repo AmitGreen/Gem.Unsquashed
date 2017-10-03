@@ -52,7 +52,7 @@ def gem():
             wk(none)
 
         if operator_1.is_equal_sign:
-            if not left.is_identifier:
+            if not argument_1.is_identifier:
                 raise_unknown_line()
 
             argument_1 = conjure_keyword_argument(argument_1, operator_1, parse1_ternary_expression())

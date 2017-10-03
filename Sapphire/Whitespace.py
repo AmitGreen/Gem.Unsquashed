@@ -46,10 +46,10 @@ def gem():
             return arrange('<empty-line %s>', portray_string(t))
 
 
-        def dump_token(t, newline = true):
+        def dump_token(t, f, newline = true):
             assert newline is true
 
-            line('<%s>', portray_string(t)[1:-1])
+            f.line('<%s>', portray_string(t)[1:-1])
 
 
         def write(t, w):
