@@ -118,10 +118,15 @@ def gem():
             comment     = frill_a.comment
             indentation = frill_a.indentation
 
-            if comment is not no_comment:
-                frill_a.comment.dump_token()
+            partial('%s<%s +%d', indentation.s, t.display_name, indentation.total)
 
-            partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+            if comment is no_comment:
+                partial(' ')
+            else:
+                line()
+                frill_a.comment.dump_token()
+                partial(indentation.s)
+
             frill.a.keyword.dump_token()
             t.a.dump_token()
             r = frill.b.dump_token(false)
@@ -148,6 +153,7 @@ def gem():
                        )
 
 
+    @share
     class DecoratorHeader(CommentedKeywordExpressionStatement):
         __slots__    = (())
         display_name = '@-header'
@@ -156,9 +162,10 @@ def gem():
                            empty_line_marker,
                        )
 
-        is_decorator_header = true
-        is_statement        = false
-        is_statement_header = true
+        is_class_decorator_or_function_header = true
+        is_decorator_header                   = true
+        is_statement                          = false
+        is_statement_header                   = true
 
 
     class DeleteStatement_1(CommentedKeywordExpressionStatement):

@@ -18,9 +18,9 @@ def gem():
         ))
 
 
-        is_class_or_function_header = true
-        is_statement_header         = true
-        is_statement                = false
+        is_class_decorator_or_function_header = true
+        is_statement_header                   = true
+        is_statement                          = false
 
 
         def __init__(t, frill, name, parameters):
@@ -31,6 +31,22 @@ def gem():
 
         def  __repr__(t):
             return arrange('<%s %s %r %r>', t.__class__.__name__, t.frill, t.name, t.parameters)
+
+
+        def add_comment(t, comment):
+            assert comment is not no_comment
+
+            frill   = t.frill
+            frill_a = frill.a
+
+            assert frill_a.comment is no_comment
+
+            return t.conjure(
+                       conjure_comment_indented_token(comment, frill_a.indentation, frill_a.keyword),
+                       t.name,
+                       t.parameters,
+                       frill.b,
+                   )
 
 
         def count_newlines(t):
@@ -124,11 +140,13 @@ def gem():
         return conjure_definition_header
 
 
+    @share
     class ClassHeader(DefinitionHeader):
         __slots__    = (())
         display_name = 'class-header'
 
 
+    @share
     class FunctionHeader(DefinitionHeader):
         __slots__    = (())
         display_name = 'function-header'
@@ -136,6 +154,9 @@ def gem():
 
     conjure_class_header    = produce_conjure_definition_header('class-header',    ClassHeader)
     conjure_function_header = produce_conjure_definition_header('function-header', FunctionHeader)
+
+
+    FunctionHeader.conjure = static_method(conjure_function_header)
 
 
     share(

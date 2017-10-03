@@ -6,7 +6,19 @@ def gem():
     show = 0
 
 
+    require_gem('Sapphire.BodyStatement')
     require_gem('Sapphire.Suite')
+
+
+    variables = [0]
+
+    query = variables.__getitem__
+    write = variables.__setitem__
+
+    qv = Method(query, 0)
+    wv = Method(write, 0)
+
+    wv0 = Method(wv, 0)
 
 
     @share
@@ -73,10 +85,19 @@ def gem():
 
 
         def parse_comments(first_comment):
-            v = next_line()
+            v = qv()
 
-            if not v.is_comment__or__empty_line:
-                return ((first_comment, v))
+            if v is 0:
+                v = next_line()
+
+                if not v.is_comment__or__empty_line:
+                    wv(v)
+                    return first_comment
+            else:
+                if not v.is_comment__or__empty_line:
+                    return first_comment
+
+                wv0()
 
             indentation = first_comment.indentation
 
@@ -87,104 +108,121 @@ def gem():
                 comments = [first_comment, v]
 
                 while 7 is 7:
-                    v = next_line()
+                    v = qv()
 
-                    if v.is_comment__or__empty_line:
-                        if (v.is_comment_line) and (indentation is v.indentation):
-                            comments.append(v)
-                            continue
+                    if v is 0:
+                        v = next_line()
 
+                        if not v.is_comment__or__empty_line:
+                            return v.add_comment(conjure_comment_suite(comments))
+                    else:
+                        if v.is_comment__or__empty_line:
+                            return v.add_comment(conjure_comment_suite(comments))
+
+                        wv0()
+
+                    if (v.is_comment_line) and (indentation is v.indentation):
+                        comments.append(v)
+                        continue
+
+                    wv(v)
                     break
-
-                return ((conjure_comment_suite(comments), v))
 
             raise_unknown_line()
 
 
-        def parse_decorator(decorator_comment, decorator_header):
+        def parse_decorator_header(decorator_header):
             indentation = decorator_header.indentation
             v           = next_line()
 
             if v.is_comment__or__empty_line:
                 if v.is_comment_line:
-                    [v_comment, v] = parse_comments(v)
+                    v = parse_comments(v)
+
+                    if v.is_end_of_data:
+                        raise_unknown_line()
+
+                    v = v.add_comment(comment)
                 else:
                     raise_unknown_line()
-            else:
-                v_comment = no_comment
 
-            if not v.is_class_or_function_header:
-                raise_runtime_error('decorator_header must be followed by class or function header: %r',
+            if not v.is_class_decorator_or_function_header:
+                raise_runtime_error('decorator_header must be followed by class, decorator, or function header: %r',
                                     decorator_header)
 
             if indentation is not v.indentation:
                 raise_runtime_error('decorator_header (with indentation %d) followed by'
-                                        + ' class or function header with different indentation: %d',
+                                        + ' class, decorator, or function header with different indentation: %d',
                                     indentation.total,
                                     v.indentation.total)
 
-            [body, next_comment] = parse_suite(indentation)
+            [decorated, next_comment] = v.parse_header()
 
-            my_line('decorator_comment: %r', decorator_comment)
-            line('decorator_header: %r', decorator_header)
-            line('v_comment: %r', v_comment)
-            line('v: %r', v)
-            line('body: %r', body)
-            line('next_comment: %r', next_comment)
+            return ((conjure_decorated_definition(decorator_header, decorated), next_comment))
 
-            raise_unknown_line()
+
+        def parse_function_header(function_header):
+            return conjure_function_definition(function_header, parse_suite(function_header.indentation))
 
 
         def parse_lines():
-            for v in data_iterator:
-                if v.is_comment__or__empty_line:
-                    if v.is_comment_line:
-                        [comment, v] = parse_comments(v)
+            while 7 is 7:
+                v = qv()
+                break
+
+                if v is 0:
+                    v = next_line()
+
+                    if v.is_comment__or__empty_line:
+                        if v.is_comment_line:
+                            v = parse_comments(v)
+                        else:
+                            raise_unknown_line()
                     else:
-                        raise_unknown_line()
+                        if v.is_end_of_data:
+                            wv(v)
+                            break
                 else:
-                    comment = no_comment
+                    if v.is_comment__or__empty_line:
+                        if v.is_comment_line:
+                            wv(0)
+                            v = parse_comments(v)
+                        else:
+                            raise_unknown_line()
+                    else:
+                        if v.is_end_of_data:
+                            break
 
-                if v.is_end_of_data:
-                    if comment is not no_comment:
-                        append(comment)
-
-                    break
 
                 if v.indentation.total != 0:
                     raise_runtime_error('unexpected indentation %d (expected 0): %r', v.indentation.total, v)
 
-                if comment is not no_comment:
-                    v = v.add_comment(comment)
-                    append(v)
-                    break
-
                 if v.is_statement_header:
-                    if v.is_decorator_header:
-                        v = parse_decorator(comment, v)
-                    else:
-                        raise_unknown_line()
+                    v = v.parse_header()
                 else:
                     raise_unknown_line()
 
-                if comment is not no_comment:
-                    #
-                    #   Fix this later
-                    #
-                    append(comment)
+                #my_line('===  append  ===')
+                #v.dump_token()
 
                 append(v)
             else:
                 raise_runtime_error('programming error: loop to parse lines did not exit on %r', end_of_data)
 
-            if not v.is_end_of_data:
-                for v in data_iterator:
-                    if v.is_end_of_data:
-                        break
+            while 7 is 7:
+                v = qv()
 
-                    append(v)
+                if v is 0:
+                    v = next_line()
                 else:
-                    raise_runtime_error('programming error: SECOND loop to parse lines did not exit on %r', end_of_data)
+                    wv(0)
+
+                if v.is_end_of_data:
+                    break
+
+                append(v)
+            else:
+                raise_runtime_error('programming error: SECOND loop to parse lines did not exit on %r', end_of_data)
 
 
         def parse_suite(indentation):
@@ -192,11 +230,9 @@ def gem():
 
             if v.is_comment__or__empty_line:
                 if v.is_comment_line:
-                    [v_comment, v] = parse_comments(v)
+                    v = parse_comments(v)
                 else:
                     raise_unknown_line()
-            else:
-                v_comment = no_comment
 
             if v.is_end_of_data:
                 raise_unknown_line()
@@ -206,29 +242,25 @@ def gem():
                                     v.indentation.total, indentation.total)
 
             if v.is_statement_header:
-                if v.is_decorator_header:
-                    v = parse_decorator(comment, v)
-                else:
-                    raise_unknown_line()
-            else:
-                if v_comment is not no_comment:
-                    raise_unknown_line()
+                v = v.parse_header(v)
 
             w = next_line()
 
             if w.is_comment__or__empty_line:
                 if w.is_comment_line:
-                    [w_comment, w] = parse_comments(v)
+                    w = parse_comments(v)
                 else:
                     raise_unknown_line()
-            else:
-                w_comment = no_comment
 
             if w.is_end_of_data:
-                return ((v, w_comment))
+                wv(w)
+                return v
 
             raise_unknown_line()
 
+
+        DecoratorHeader.parse_header = parse_decorator_header
+        FunctionHeader .parse_header = parse_function_header
 
         parse_lines()
         test_identical_output()
