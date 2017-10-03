@@ -33,6 +33,9 @@ def gem():
 
             if e is none:
                 if t.ending is not none:
+                    if t.f.position is 1:
+                        t.f.line()
+
                     t.f.line(t.ending)
 
 

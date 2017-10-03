@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse3')
 def gem():
-    show = 0
+    show = 7
 
 
     require_gem('Sapphire.BodyStatement')
@@ -160,9 +160,7 @@ def gem():
                                     indentation.total,
                                     v.indentation.total)
 
-            [decorated, next_comment] = v.parse_header()
-
-            return ((conjure_decorated_definition(decorator_header, decorated), next_comment))
+            return conjure_decorated_definition(decorator_header, v.parse_header())
 
 
         def parse_function_header(function_header):
@@ -172,7 +170,6 @@ def gem():
         def parse_lines():
             while 7 is 7:
                 v = qv()
-                break
 
                 if v is 0:
                     v = next_line()
