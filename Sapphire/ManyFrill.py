@@ -12,7 +12,8 @@ def gem():
 
 
     class ManyFrill(TokenTuple):
-        __slots__ = (())
+        __slots__    = (())
+        display_name = 'frill-*'
 
 
         frill_estimate = 7

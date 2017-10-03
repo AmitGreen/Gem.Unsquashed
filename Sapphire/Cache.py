@@ -58,7 +58,6 @@ def gem():
 
                 return
 
-
             for [name, cache] in cache_many:
                 if use_name == name:
                     dump_cache(name, cache)
