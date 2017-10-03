@@ -137,44 +137,54 @@ def gem():
 
         def parse_lines():
             for v in data_iterator:
-                if 0:
-                    if v.is_comment__or__empty_line:
-                        if v.is_comment_line:
-                            [comment, v] = parse_comments(v)
-                        else:
-                            raise_unknown_line()
-                    else:
-                        comment = no_comment
-
-                    if v.is_end_of_data:
-                        if comment is not no_comment:
-                            append(comment)
-
-                        break
-
-                    if v.indentation.total != 0:
-                        raise_runtime_error('unexpected indentation %d (expected 0): %r', v.indentation.total, v)
-
-                    if v.is_statement_header:
-                        if v.is_decorator_header:
-                            v = parse_decorator(comment, v)
-                        else:
-                            raise_unknown_line()
+                if v.is_comment__or__empty_line:
+                    if v.is_comment_line:
+                        [comment, v] = parse_comments(v)
                     else:
                         raise_unknown_line()
-
-                    if comment is not no_comment:
-                        #
-                        #   Fix this later
-                        #
-                        append(comment)
+                else:
+                    comment = no_comment
 
                 if v.is_end_of_data:
+                    if comment is not no_comment:
+                        append(comment)
+
                     break
+
+                if v.indentation.total != 0:
+                    raise_runtime_error('unexpected indentation %d (expected 0): %r', v.indentation.total, v)
+
+                if comment is not no_comment:
+                    v = v.add_comment(comment)
+                    append(v)
+                    break
+
+                if v.is_statement_header:
+                    if v.is_decorator_header:
+                        v = parse_decorator(comment, v)
+                    else:
+                        raise_unknown_line()
+                else:
+                    raise_unknown_line()
+
+                if comment is not no_comment:
+                    #
+                    #   Fix this later
+                    #
+                    append(comment)
 
                 append(v)
             else:
                 raise_runtime_error('programming error: loop to parse lines did not exit on %r', end_of_data)
+
+            if not v.is_end_of_data:
+                for v in data_iterator:
+                    if v.is_end_of_data:
+                        break
+
+                    append(v)
+                else:
+                    raise_runtime_error('programming error: SECOND loop to parse lines did not exit on %r', end_of_data)
 
 
         def parse_suite(indentation):

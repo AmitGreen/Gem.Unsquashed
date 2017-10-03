@@ -5,6 +5,7 @@
 def gem():
     dual_frill_cache = {}
 
+
     class DualFrill(Object):
         __slots__ = ((
             'a',                        #   SapphireToken+
@@ -31,12 +32,12 @@ def gem():
         def display_token(t):
             return arrange('<dual-frill %s %s>', t.a.display_token(), t.b.display_token())
 
- 
+
     #DualFrill.k1 = DualFrill.a
     DualFrill.k2 = DualFrill.b
 
 
-    conjure_dual_frill = produce_conjure_dual('dual_frill', DualFrill, dual_frill_cache)
+    conjure_dual_frill = produce_conjure_dual('dual-frill', DualFrill, dual_frill_cache)
 
 
     append_cache('dual-frill', dual_frill_cache)

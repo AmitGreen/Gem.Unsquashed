@@ -32,6 +32,11 @@ def gem():
             line('%s>', indentation.s)
 
 
+        @property
+        def s(t):
+            return ''.join(v.s   for v in t)
+
+
     conjure_comment_suite = produce_conjure_tuple('comment-*', CommentSuite, comment_suite_cache)
 
 

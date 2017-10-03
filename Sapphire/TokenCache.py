@@ -16,7 +16,8 @@ def gem():
     #       empty_line_cache            - Empty lines (See Sapphire/Whitespace.py)
     #
     #       indentation_cache           - White space at beginning of a line that is considered indentation.
-    #                                     (Also used for dual token Indentation_Token)
+    #                                     (Also used for dual token Indentation_Token & triple token
+    #                                     Comment_Indented_Token)
     #
     #       join_token_cache            - Whitespace that is used to concatanate strings; Example:
     #

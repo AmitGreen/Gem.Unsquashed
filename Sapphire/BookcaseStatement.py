@@ -53,6 +53,20 @@ def gem():
         is_statement        = true
 
 
+        def add_comment(t, comment):
+            assert comment is not no_comment
+
+            frill   = t.frill
+            frill_a = frill.a
+
+            assert frill_a.comment is no_comment
+
+            return t.conjure(
+                       conjure_comment_indented_token(comment, frill_a.indentation, frill_a.keyword),
+                       t.a,
+                       frill.b,
+                   )
+
         def display_token(t):
             frill   = t.frill
             frill_a = frill.a
@@ -140,7 +154,7 @@ def gem():
         frill        = conjure_dual_frill(
                            conjure_indented_token(empty_indentation, conjure_at_sign('@')),
                            empty_line_marker,
-                          )
+                       )
 
         is_decorator_header = true
         is_statement        = false
@@ -273,6 +287,9 @@ def gem():
     conjure_while_header       = produce_conjure_bookcase_expression('while-header',       WhileHeader)
     conjure_with_header_1      = produce_conjure_bookcase_expression('with-header-1',      WithHeader_1)
     conjure_yield_statement_1  = produce_conjure_bookcase_expression('yield-statement-1',  YieldStatement_1)
+
+
+    DecoratorHeader.conjure = static_method(conjure_decorator_header)
 
 
     share(

@@ -298,9 +298,20 @@ def gem():
         is_postfix_operator = true
 
 
+    class Comment_Indented_Token(BaseTripleOperator):
+        __slots__    = (())
+        display_name = r'comment-indented-token'
+
+
+        comment     = BaseTripleOperator.a
+        indentation = BaseTripleOperator.b
+        keyword     = BaseTripleOperator.c
+
+
     class Indented_Else_Colon(BaseTripleOperator):
         __slots__    = (())
         display_name = r'indented-else:'
+
         indentation  = BaseTripleOperator.a
 
 
@@ -308,7 +319,6 @@ def gem():
         __slots__           = (())
         display_name        = r'indented-break\n'
         ends_in_newline     = true
-        indentation         = BaseTripleOperator.a
         is_statement_header = false
         is_statement        = true
         line_marker         = true
@@ -329,6 +339,8 @@ def gem():
         line_marker         = true
         newlines            = 1
 
+        indentation = BaseTripleOperator.a
+
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
         dump_token     = dump_token__indented__keyword__line_marker
@@ -338,11 +350,12 @@ def gem():
         __slots__           = (())
         display_name        = r'indented-pass\n'
         ends_in_newline     = true
-        indentation         = BaseTripleOperator.a
         is_statement_header = false
         is_statement        = true
         line_marker         = true
         newlines            = 1
+
+        indentation = BaseTripleOperator.a
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
@@ -353,11 +366,12 @@ def gem():
         __slots__           = (())
         display_name        = r'indented-raise\n'
         ends_in_newline     = true
-        indentation         = BaseTripleOperator.a
         is_statement_header = false
         is_statement        = true
         line_marker         = true
         newlines            = 1
+
+        indentation = BaseTripleOperator.a
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
@@ -367,11 +381,12 @@ def gem():
         __slots__           = (())
         display_name        = r'indented-return\n'
         ends_in_newline     = true
-        indentation         = BaseTripleOperator.a
         is_statement_header = false
         is_statement        = true
         line_marker         = true
         newlines            = 1
+
+        indentation = BaseTripleOperator.a
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
@@ -381,11 +396,12 @@ def gem():
         __slots__           = (())
         display_name        = r'indented-yield\n'
         ends_in_newline     = true
-        indentation         = BaseTripleOperator.a
         is_statement_header = false
         is_statement        = true
         line_marker         = true
         newlines            = 1
+
+        indentation = BaseTripleOperator.a
 
         __init__       = construct_triple_operator__line_marker_1
         count_newlines = count_newlines__line_marker
@@ -406,8 +422,14 @@ def gem():
         is_identifier                  = true
 
 
-    conjure_all_index           = produce_conjure_triple_token('all_index',           AllIndex)
-    conjure_dot_name_triplet    = produce_conjure_triple_token('.name-triplet',       DotNameTriplet)
+    conjure_all_index        = produce_conjure_triple_token('all_index',           AllIndex)
+    conjure_dot_name_triplet = produce_conjure_triple_token('.name-triplet',       DotNameTriplet)
+
+    conjure_comment_indented_token = produce_conjure_triple_token(
+                                         'comment-indented-token',
+                                         Comment_Indented_Token,
+                                     )
+
     conjure_indented_else_colon = produce_conjure_triple_token('indented-else-colon', Indented_Else_Colon)
 
     evoke_all_index = produce_evoke_triple_token(
@@ -563,16 +585,17 @@ def gem():
 
 
     share(
-        'conjure_all_index',                                conjure_all_index,
-        'conjure_dot_name_triplet',                         conjure_dot_name_triplet,
-        'conjure_indented_else_colon',                      conjure_indented_else_colon,
-        'evoke_all_index',                                  evoke_all_index,
-        'evoke_indented__break__line_marker',               evoke_indented__break__line_marker,
-        'evoke_indented__continue__line_marker',            evoke_indented__continue__line_marker,
-        'evoke_indented_else_colon',                        evoke_indented_else_colon,
-        'evoke_indented__pass__line_marker',                evoke_indented__pass__line_marker,
-        'evoke_indented__raise__line_marker',               evoke_indented__raise__line_marker,
-        'evoke_indented__return__line_marker',              evoke_indented__return__line_marker,
-        'evoke_indented__yield__line_marker',               evoke_indented__yield__line_marker,
-        'find_evoke_whitespace_atom_whitespace',            find_evoke_whitespace_atom_whitespace,
+        'conjure_all_index',                        conjure_all_index,
+        'conjure_comment_indented_token',           conjure_comment_indented_token,
+        'conjure_dot_name_triplet',                 conjure_dot_name_triplet,
+        'conjure_indented_else_colon',              conjure_indented_else_colon,
+        'evoke_all_index',                          evoke_all_index,
+        'evoke_indented__break__line_marker',       evoke_indented__break__line_marker,
+        'evoke_indented__continue__line_marker',    evoke_indented__continue__line_marker,
+        'evoke_indented_else_colon',                evoke_indented_else_colon,
+        'evoke_indented__pass__line_marker',        evoke_indented__pass__line_marker,
+        'evoke_indented__raise__line_marker',       evoke_indented__raise__line_marker,
+        'evoke_indented__return__line_marker',      evoke_indented__return__line_marker,
+        'evoke_indented__yield__line_marker',       evoke_indented__yield__line_marker,
+        'find_evoke_whitespace_atom_whitespace',    find_evoke_whitespace_atom_whitespace,
     )
