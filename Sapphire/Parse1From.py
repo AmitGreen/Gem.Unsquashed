@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.Parse1From')
 def gem():
+    require_gem('Sapphire.BookcaseKeywordStatement')
+
+
     def parse1_statement_from_module(index):
         s = qs()
 

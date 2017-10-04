@@ -57,7 +57,8 @@ QUARTZ_FILES = \
 SAPPHIRE_FILES = \
     ../Sapphire/ActionWord.py ../Sapphire/Atom.py \
     ../Sapphire/BinaryExpression.py ../Sapphire/BookcaseDualExpression.py ../Sapphire/BookcaseDualStatement.py \
-        ../Sapphire/BookcaseExpression.py ../Sapphire/BookcaseManyExpression.py ../Sapphire/BookcaseManyFrill.py \
+        ../Sapphire/BookcaseExpression.py ../Sapphire/BookcaseKeywordStatement.py \
+        ../Sapphire/BookcaseManyExpression.py ../Sapphire/BookcaseManyFrill.py \
         ../Sapphire/BookcaseManyStatement.py ../Sapphire/BookcaseStatement.py \
         ../Sapphire/BookcaseTriple.py ../Sapphire/BodyStatement.py \
     ../Sapphire/Cache.py ../Sapphire/CallStatement.py ../Sapphire/Comment.py ../Sapphire/ConditionStatement.py \
@@ -143,8 +144,8 @@ clean:
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
 	rm -f   h2f.py h2p.py h3e.py h3f.py h2t.py h2w.py h3t.py h3p.py h4f.py h4t.py
-	rm -f   hat.py haw.py hbe.py hbs.py hca.py hcc.py hcd.py hcm.py hco.py hcs.py hdh.py hdt.pm hel.py
-	rm -f   hk.py hkd.py hkds.py hkf.py hkm.py hkms.py hks.py hkt.py hi.py hl.py hma.py hmc.py hme.py hmf.py
+	rm -f   hat.py haw.py hbe.py hbs.py hca.py hcc.py hcd.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py
+	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkm.py hkms.py hks.py hkt.py hi.py hl.py hma.py hmc.py hme.py hmf.py
 	rm -f   hpt.py hs.py htc.py hto.py htr.py htt.py hu.py hus.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
@@ -239,6 +240,7 @@ links:
 	ln -s ../Sapphire/BookcaseDualExpression.py     hkd.py
 	ln -s ../Sapphire/BookcaseDualStatement.py      hkds.py
 	ln -s ../Sapphire/BookcaseManyFrill.py          hkf.py
+	ln -s ../Sapphire/BookcaseKeywordStatement.py   hkk.py
 	ln -s ../Sapphire/BookcaseManyExpression.py     hkm.py
 	ln -s ../Sapphire/BookcaseManyStatement.py      hkms.py
 	ln -s ../Sapphire/BookcaseStatement.py          hks.py
