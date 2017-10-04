@@ -126,6 +126,7 @@ def gem():
 
     class EndOfData(SapphireToken):
         __slots__                  = (())
+        indentation                = none
         is_comment_line            = false
         is_comment__or__empty_line = false
         is_end_of_data             = true

@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse3')
 def gem():
-    show = 7
+    show = 0
 
 
     require_gem('Sapphire.BodyStatement')
@@ -29,7 +29,6 @@ def gem():
         write = variables.__setitem__
 
         qv  = Method(query, 0)
-
         wv  = Method(write, 0)
 
         wv0 = Method(wv, 0)
@@ -108,15 +107,12 @@ def gem():
             v = next_line()
 
             if not v.is_comment__or__empty_line:
-                if (first.is_comment_line) and (not v.is_end_of_data):
+                if (first.is_comment_line) and (first.indentation is v.indentation):
                     return v.add_comment(first)
-
-                raise_unknown_line()
 
                 wv(v)
                 return first
 
-            raise_unknown_line()
 
             #
             #   mixed:        first element of mixed_many
@@ -145,15 +141,23 @@ def gem():
                             break
 
                         if v.is_end_of_data:
+                            raise_unknown_line()
+
                             (q_append() or create_append())(conjure_comment_suite(comment_many))
                             return v
 
                         return v.add_comment(conjure_comment_suite(comment_many))
 
+                    raise_unknown_line()
+
                     mixed = conjure_comment_suite(comment_many)
                 else:
+                    raise_unknown_line()
+
                     mixed = first
             else:
+                raise_unknown_line()
+
                 indentation = none
 
                 if first.is_comment_line:
@@ -230,31 +234,27 @@ def gem():
 
         def parse_lines():
             while 7 is 7:
+                break
+
                 v = qv()
 
                 if v is 0:
                     v = next_line()
-
-                    if v.is_comment__or__empty_line:
-                        if v.is_comment_line:
-                            v = parse_comments_or_empty_lines(v)
-                        else:
-                            raise_unknown_line()
-                    else:
-                        if v.is_end_of_data:
-                            wv(v)
-                            break
                 else:
+                    wv0()
+
+                if v.is_comment__or__empty_line:
+                    v = parse_comments_or_empty_lines(v)
+
                     if v.is_comment__or__empty_line:
-                        if v.is_comment_line:
-                            wv0()
-                            v = parse_comments_or_empty_lines(v)
-                        else:
-                            raise_unknown_line()
-                    else:
+                        append_twig(v)
+
+                        v = qv()
+
                         if v.is_end_of_data:
                             break
 
+                        wv0()
 
                 if v.indentation.total != 0:
                     raise_runtime_error('unexpected indentation %d (expected 0): %r', v.indentation.total, v)
