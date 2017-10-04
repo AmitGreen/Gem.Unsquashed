@@ -3,7 +3,9 @@
 #
 @gem('Sapphire.QuadrupleFrill')
 def gem():
-    quadruple_frill_cache = {}
+    quadruple_frill_cache  = {}
+    lookup_quadruple_frill = quadruple_frill_cache.get
+    store_quadruple_frill  = quadruple_frill_cache.__setitem__
 
 
     class QuadrupleFrill(Object):
@@ -41,18 +43,42 @@ def gem():
                            t.d.display_token())
 
 
+    class CommentedDualExpressionStatementFrill(QuadrupleFrill):
+        __slots__ = (())
+
+        comment         = QuadrupleFrill.a
+        indentation     = QuadrupleFrill.b
+        assign_operator = QuadrupleFrill.c
+        line_marker     = QuadrupleFrill.d
+
+
     QuadrupleFrill.k1 = QuadrupleFrill.a
     QuadrupleFrill.k2 = QuadrupleFrill.b
     QuadrupleFrill.k3 = QuadrupleFrill.c
     QuadrupleFrill.k4 = QuadrupleFrill.d
 
 
-    conjure_quadruple_frill = produce_conjure_quadruple__4123('quadruple_frill', QuadrupleFrill, quadruple_frill_cache)
+    conjure_quadruple_frill = produce_conjure_quadruple__4123(
+                                  'quadruple_frill',
+                                  QuadrupleFrill,
+                                  quadruple_frill_cache,
+                                  lookup_quadruple_frill,
+                                  store_quadruple_frill,
+                              )
+
+    conjure_commented_dual_expression_statement_frill = produce_conjure_quadruple__4123(
+                                                            'quadruple_frill',
+                                                            CommentedDualExpressionStatementFrill,
+                                                            quadruple_frill_cache,
+                                                            lookup_quadruple_frill,
+                                                            store_quadruple_frill,
+                                                        )
 
 
     append_cache('quadruple-frill', quadruple_frill_cache)
 
 
     share(
-        'conjure_quadruple_frill',  conjure_quadruple_frill,
+        'conjure_quadruple_frill',                              conjure_quadruple_frill,
+        'conjure_commented_dual_expression_statement_frill',    conjure_commented_dual_expression_statement_frill,
     )

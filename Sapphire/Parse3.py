@@ -3,7 +3,7 @@
 #
 @gem('Sapphire.Parse3')
 def gem():
-    show = 0
+    show = 7
 
 
     require_gem('Sapphire.BodyStatement')
@@ -234,8 +234,6 @@ def gem():
 
         def parse_lines():
             while 7 is 7:
-                break
-
                 v = qv()
 
                 if v is 0:
@@ -250,23 +248,17 @@ def gem():
                         append_twig(v)
 
                         v = qv()
-
-                        if v.is_end_of_data:
-                            break
-
                         wv0()
+
+                if v.is_end_of_data:
+                    wv(v)
+                    break
 
                 if v.indentation.total != 0:
                     raise_runtime_error('unexpected indentation %d (expected 0): %r', v.indentation.total, v)
 
                 if v.is_statement_header:
                     v = v.parse_header()
-                else:
-                    my_line('v: %r', v)
-                    raise_unknown_line()
-
-                #my_line('===  append  ===')
-                #v.dump_token()
 
                 append_twig(v)
             else:

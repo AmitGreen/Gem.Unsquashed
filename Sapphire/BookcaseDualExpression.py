@@ -85,7 +85,15 @@ def gem():
 
     @share
     @privileged
-    def produce_conjure_bookcase_dual_expression(name, Meta):
+    def produce_conjure_bookcase_dual_expression(
+            name,
+            Meta,
+
+            conjure_triple_frill   = conjure_triple_frill,
+            produce_conjure_triple = false,
+    ):
+        assert type(produce_conjure_triple) is Boolean
+
         cache  = {}
         lookup = cache.get
         store  = cache.__setitem__
@@ -126,6 +134,13 @@ def gem():
                                            frill.c.display_token())
 
 
+                write = attribute(Meta, 'write__frill', none)
+
+
+                if write is not none:
+                    BookcaseDualExpression_WithFrill.write = write
+
+
                 BookcaseDualExpression_WithFrill.k3 = BookcaseDualExpression_WithFrill.frill
 
 
@@ -156,6 +171,9 @@ def gem():
             conjure_bookcase_dual_expression.__name__ = intern_arrange('conjure_%s', name)
 
             append_cache(name, cache)
+
+        if produce_conjure_triple:
+            return (( conjure_bookcase_dual_expression, static_method(conjure_triple) ))
 
         return conjure_bookcase_dual_expression
 

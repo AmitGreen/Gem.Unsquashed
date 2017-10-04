@@ -67,6 +67,7 @@ def gem():
                        frill.b,
                    )
 
+
         def display_token(t):
             frill   = t.frill
             frill_a = frill.a
@@ -136,7 +137,6 @@ def gem():
                 frill.a.keyword.dump_token(f)
                 t.a.dump_token(f)
                 frill.b.dump_token(f, false)
-
 
             return false
 

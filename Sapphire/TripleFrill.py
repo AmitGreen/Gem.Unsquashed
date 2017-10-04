@@ -3,7 +3,9 @@
 #
 @gem('Sapphire.TripleFrill')
 def gem():
-    triple_frill_cache = {}
+    triple_frill_cache  = {}
+    lookup_triple_frill = triple_frill_cache.get
+    store_triple_frill  = triple_frill_cache.__setitem__
 
 
     class TripleFrill(Object):
@@ -35,17 +37,41 @@ def gem():
             return arrange('<triple-frill %s %s %s>', t.a.display_token(), t.b.display_token(), t.c.display_token())
 
 
+    class DualExpressionStatementFrill(TripleFrill):
+        __slots__ = (())
+
+        comment         = no_comment
+        indentation     = TripleFrill.a
+        assign_operator = TripleFrill.b
+        line_marker     = TripleFrill.c
+
+
     TripleFrill.k1 = TripleFrill.a
     TripleFrill.k2 = TripleFrill.b
     TripleFrill.k3 = TripleFrill.c
 
 
-    conjure_triple_frill = produce_conjure_triple('triple_frill', TripleFrill, triple_frill_cache)
+    conjure_triple_frill = produce_conjure_triple(
+                               'triple_frill',
+                               TripleFrill,
+                               triple_frill_cache,
+                               lookup_triple_frill,
+                               store_triple_frill,
+                           )
+
+    conjure_dual_expression_statement_frill = produce_conjure_triple(
+                                                  'triple_frill',
+                                                  DualExpressionStatementFrill,
+                                                  triple_frill_cache,
+                                                  lookup_triple_frill,
+                                                  store_triple_frill,
+                                              )
 
 
     append_cache('triple-frill', triple_frill_cache)
 
 
     share(
-        'conjure_triple_frill',     conjure_triple_frill,
+        'conjure_triple_frill',                     conjure_triple_frill,
+        'conjure_dual_expression_statement_frill',  conjure_dual_expression_statement_frill,
     )
