@@ -3,12 +3,12 @@
 #
 @gem('Sapphire.Suite')
 def gem():
-    comment_suite_cache = {}
+    suite_cache   = {}
+    provide_suite = suite_cache.setdefault
 
 
-    class CommentSuite(TokenTuple):
+    class SuiteBase(TokenTuple):
         __slots__           = (())
-        display_name        = 'comment-*'
         is_statement        = true
         is_statement_header = false
 
@@ -24,7 +24,7 @@ def gem():
             indentation = t[0].indentation
 
             with f.indent(prefix = indentation.total):
-                with f.indent(arrange('<comment-* +%d', indentation.total), '>'):
+                with f.indent(arrange('%s +%d', t.display_name, indentation.total), '>'):
                     for v in t:
                         v.dump_token(f)
 
@@ -34,12 +34,29 @@ def gem():
             return ''.join(v.s   for v in t)
 
 
-    conjure_comment_suite = produce_conjure_tuple('comment-*', CommentSuite, comment_suite_cache)
+    class CommentSuite(SuiteBase):
+        __slots__    = (())
+        display_name = 'comment-*'
 
 
-    append_cache('comment-suite', comment_suite_cache)
+    class EmptyLineSuite(SuiteBase):
+        __slots__    = (())
+        display_name = 'empty-line-*'
+
+    class MixedSuite(SuiteBase):
+        __slots__    = (())
+        display_name = 'mixed-*'
+
+
+    conjure_comment_suite    = produce_conjure_tuple('comment-*',    CommentSuite,    suite_cache, provide_suite)
+    conjure_empty_line_suite = produce_conjure_tuple('empty-line-*', EmptyLineSuite,  suite_cache, provide_suite)
+    conjure_mixed            = produce_conjure_tuple('mixed-*',      MixedSuite,      suite_cache, provide_suite)
+
+
+    append_cache('suite', suite_cache)
 
 
     share(
-        'conjure_comment_suite',    conjure_comment_suite,
+        'conjure_comment_suite',        conjure_comment_suite,
+        'conjure_empty_line_suite',     conjure_empty_line_suite,
     )

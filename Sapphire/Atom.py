@@ -37,6 +37,7 @@ def gem():
         is_comma                   = false
         is_comment_line            = false
         is_comment__or__empty_line = false
+        is_empty_line              = false
         is_end_of_data             = false
         is_identifier              = false
         is_keyword                 = false

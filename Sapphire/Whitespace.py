@@ -20,7 +20,8 @@ def gem():
         ends_in_newline            = true
         indentation                = empty_indentation
         is_comment_line            = false
-        is_comment__or__empty_line = false
+        is_comment__or__empty_line = true
+        is_empty_line              = true
         is_end_of_data             = false
         is_statement               = false
         is_statement_header        = false
