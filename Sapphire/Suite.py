@@ -43,14 +43,20 @@ def gem():
         __slots__    = (())
         display_name = 'empty-line-*'
 
+
     class MixedSuite(SuiteBase):
         __slots__    = (())
         display_name = 'mixed-*'
 
+    class StatementSuite(SuiteBase):
+        __slots__    = (())
+        display_name = 'statement-*'
+
 
     conjure_comment_suite    = produce_conjure_tuple('comment-*',    CommentSuite,    suite_cache, provide_suite)
     conjure_empty_line_suite = produce_conjure_tuple('empty-line-*', EmptyLineSuite,  suite_cache, provide_suite)
-    conjure_mixed            = produce_conjure_tuple('mixed-*',      MixedSuite,      suite_cache, provide_suite)
+    conjure_mixed_suite      = produce_conjure_tuple('mixed-*',      MixedSuite,      suite_cache, provide_suite)
+    conjure_statement_suite  = produce_conjure_tuple('statement-*',  StatementSuite,  suite_cache, provide_suite)
 
 
     append_cache('suite', suite_cache)
@@ -59,4 +65,6 @@ def gem():
     share(
         'conjure_comment_suite',        conjure_comment_suite,
         'conjure_empty_line_suite',     conjure_empty_line_suite,
+        'conjure_mixed_suite',          conjure_mixed_suite,
+        'conjure_statement_suite',      conjure_statement_suite,
     )

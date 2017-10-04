@@ -22,29 +22,17 @@ def gem():
         append_twig = tree_many.append
 
         variables = [
-                        append_twig,        #   0 = append
-                        0,                  #   1 = element
-                        tree_many,          #   2 = many
-                        0,                  #   3 = v
+                        0,                  #   0 = v
                     ]
 
         query = variables.__getitem__
         write = variables.__setitem__
 
-        q_append  = Method(query, 0)
-        q_element = Method(query, 1)
-        q_many    = Method(query, 2)
-        qv        = Method(query, 3)
+        qv  = Method(query, 0)
 
-        w_append  = Method(write, 0)
-        w_element = Method(write, 1)
-        w_many    = Method(write, 2)
-        wv        = Method(write, 3)
+        wv  = Method(write, 0)
 
-        w_append_0  = Method(w_append,  0)
-        w_element_0 = Method(w_element, 0)
-        w_many_0    = Method(w_many,    0)
-        wv0         = Method(wv,        0)
+        wv0 = Method(wv, 0)
 
 
         def show_indentation():
@@ -115,20 +103,18 @@ def gem():
 
  
         def parse_comments_or_empty_lines(first):
-            v = qv()
+            assert qv() is 0
 
-            if v is 0:
-                v = next_line()
-            else:
-                wv0()
+            v = next_line()
 
             if not v.is_comment__or__empty_line:
                 if (first.is_comment_line) and (not v.is_end_of_data):
                     return v.add_comment(first)
 
                 raise_unknown_line()
-                (q_append() or create_append())(first)
-                return v
+
+                wv(v)
+                return first
 
             raise_unknown_line()
 
@@ -303,23 +289,31 @@ def gem():
 
 
         def parse_suite(previous_indentation):
-            previous_append  = q_append()
-            previous_element = q_element()
-            previous_many    = q_many()
-
-            w_append_0()
-            w_element_0()
-            w_many_0()
-
             v = qv()
 
             if v is 0:
                 v = next_line()
             else:
+                assert 0
+
                 wv0()
 
             if v.is_comment__or__empty_line:
                 v = parse_comments_or_empty_lines(v)
+
+                if v.is_comment__or__empty_line:
+                    suite_many   = [v]
+                    suite_append = suite_many.append
+
+                    v = qv()
+
+                    wv0()
+
+                    assert (v is not 0) and (not v.is_comment__or__empty_line)
+                else:
+                    suite_append = suite_many = 0
+            else:
+                suite_append = suite_many = 0
 
             if v.is_end_of_data:
                 raise_unknown_line()
@@ -333,52 +327,54 @@ def gem():
             if v.is_statement_header:
                 v = v.parse_header()
 
-            assert q_element() is 0
+            if suite_append is not 0:
+                suite_append(v)
 
-            append = q_append()
+                v = 0
 
-            if append is 0:
-                w_element(v)
+            w = qv()
+
+            if w is 0:
+                w = next_line()
             else:
-                append(v)
+                wv0()
 
-            while 7 is 7:
-                w = qv()
-
-                if w is 0:
-                    w = next_line()
-                else:
-                    wv0()
+            if w.is_comment__or__empty_line:
+                w = parse_comments_or_empty_lines(w)
 
                 if w.is_comment__or__empty_line:
-                    w = parse_comments_or_empty_lines(w)
+                    if suite_append is 0:
+                        assert v is not 0 
 
-                if w.is_end_of_data:
-                    wv(w)
+                        suite_many   = [v, w]
+                        suite_append = suite_many.append
+                    else:
+                        assert v is 0
 
-                    element = q_element()
+                        suite_append(w)
 
-                    if element is 0:
-                        for v in q_many():
-                            dump_token('many[?]', v)
+                    w = qv()
 
-                        raise_unknown_line()
+                    wv0()
 
-                    assert q_append() is q_many() is 0
+                    assert (w is not 0) and (not w.is_comment__or__empty_line)
 
-                    w_append (previous_append )
-                    w_element(previous_element)
-                    w_many   (previous_many   )
+            if w.is_end_of_data:
+                wv(w)
 
-                    dump_token('suite result', v)
-
+                if suite_append is 0:
                     return v
 
-                dump_token('v', v)
-                dump_token('w', w)
-                my_line('w: %r', w)
+                return conjure_statement_suite(suite_many)
 
-                raise_unknown_line()
+
+            if suite_append is 0:
+                suite_many   = [v, w]
+                suite_append = suite_many.append
+
+                v = 0
+            else:
+                suite_append(w)
 
 
         DecoratorHeader.parse_header = parse_decorator_header
