@@ -16,7 +16,7 @@ def gem():
 
             return t.conjure_with_frill(
                        t.a,
-                       conjure_commented__indented_keyword__x__frill(comment, frill.indented_keyword, frill.x),
+                       conjure_commented__indented_token__x__frill(comment, frill.indented_token, frill.x),
                    )
 
 
@@ -26,36 +26,36 @@ def gem():
 
             return arrange('<%s +%d%s %s>',
                            t.display_name,
-                           frill.indented_keyword.indentation.total,
+                           frill.indented_token.indentation.total,
                            (''   if comment is 0 else   ' ' + comment.display_token()),
                            t.a.display_token())
 
 
         def display_token__frill(t):
-            frill            = t.frill
-            comment          = frill.comment
-            indented_keyword = frill.indented_keyword
+            frill          = t.frill
+            comment        = frill.comment
+            indented_token = frill.indented_token
 
             return arrange('<%s+frill +%d%s %s %s %s>',
                            t.display_name,
-                           indented_keyword.indentation.total,
+                           indented_token.indentation.total,
                            (''   if comment is 0 else   ' ' + comment.display_token()),
-                           indented_keyword.keyword.display_token(),
-                           t.a                     .display_token(),
-                           frill.x                 .display_token())
+                           indented_token.keyword.display_token(),
+                           t.a                   .display_token(),
+                           frill.x               .display_token())
 
 
         def dump_token(t, f, newline = true):
             assert newline is true
 
-            frill            = t.frill
-            comment          = frill.comment
-            indented_keyword = frill.indented_keyword
+            frill          = t.frill
+            comment        = frill.comment
+            indented_token = frill.indented_token
 
             if comment is 0:
-                f.partial('<%s +%d ', t.display_name, indented_keyword.indentation.total)
+                f.partial('<%s +%d ', t.display_name, indented_token.indentation.total)
 
-                indented_keyword.keyword.dump_token(f)
+                indented_token.keyword.dump_token(f)
                 t.a.dump_token(f)
                 r = frill.x.dump_token(f, false)
 
@@ -66,9 +66,9 @@ def gem():
                 f.partial('>')
                 return r
 
-            with f.indent(arrange('<%s +%d ', t.display_name, indented_keyword.indentation.total), '>'):
+            with f.indent(arrange('<%s +%d ', t.display_name, indented_token.indentation.total), '>'):
                 comment.dump_token(f)
-                indented_keyword.keyword.dump_token(f)
+                indented_token.keyword.dump_token(f)
                 t.a.dump_token(f)
                 frill.x.dump_token(f, false)
 
@@ -77,7 +77,7 @@ def gem():
 
         @property
         def indentation(t):
-            return t.frill.indented_keyword.indentation
+            return t.frill.indented_token.indentation
 
 
         def write__frill(t, w):
@@ -87,7 +87,7 @@ def gem():
             if comment is not 0:
                 comment.write(w)
 
-            w(frill.indented_keyword.s)
+            w(frill.indented_token.s)
             t.a.write(w)
             w(frill.x.s)
 
@@ -95,7 +95,7 @@ def gem():
     class AssertStatement_1(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'assert-1'
-        frill        = conjure__indented_keyword__x__frill(
+        frill        = conjure__indented_token__x__frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_assert('assert ')),
                            empty_line_marker,
                        )
@@ -105,7 +105,7 @@ def gem():
     class DecoratorHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = '@-header'
-        frill        = conjure_dual_frill(
+        frill        = conjure__indented_token__x__frill(
                            conjure_indented_token(empty_indentation, conjure_at_sign('@')),
                            empty_line_marker,
                        )
@@ -119,7 +119,7 @@ def gem():
     class DeleteStatement_1(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'delete-statement-1'
-        frill        = conjure_dual_frill(
+        frill        = conjure__indented_token__x__frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_delete('del ')),
                            empty_line_marker,
                        )
@@ -128,7 +128,7 @@ def gem():
     class ElseIfHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'else-if-header'
-        frill        = conjure_dual_frill(
+        frill        = conjure__indented_token__x__frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_else_if('elif ')),
                            colon__empty_line_marker,
                        )
@@ -140,7 +140,7 @@ def gem():
     class ExceptHeader_1(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'except-header-1'
-        frill        = conjure_dual_frill(
+        frill        = conjure__indented_token__x__frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_except('except ')),
                            colon__empty_line_marker,
                        )
@@ -152,7 +152,7 @@ def gem():
     class IfHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'if-header'
-        frill        = conjure_dual_frill(
+        frill        = conjure__indented_token__x__frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_if('if ')),
                            colon__empty_line_marker,
                        )
@@ -164,7 +164,7 @@ def gem():
     class ImportStatement(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'import-statement'
-        frill        = conjure_dual_frill(
+        frill        = conjure__indented_token__x__frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_import('import ')),
                            empty_line_marker,
                        )
@@ -173,7 +173,7 @@ def gem():
     class RaiseStatement_1(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'raise-statement'
-        frill        = conjure_dual_frill(
+        frill        = conjure__indented_token__x__frill(
                            conjure_indented_token(conjure_indentation('    '), conjure_keyword_raise('raise ')),
                            empty_line_marker,
                        )
@@ -182,7 +182,7 @@ def gem():
     class ReturnStatement(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'return-statement'
-        frill        = conjure_dual_frill(
+        frill        = conjure__indented_token__x__frill(
                            conjure_indented_token(conjure_indentation('    '), conjure_keyword_return('return ')),
                            empty_line_marker,
                        )
@@ -191,7 +191,7 @@ def gem():
     class WhileHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'while-header'
-        frill        = conjure_dual_frill(
+        frill        = conjure__indented_token__x__frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_while('while ')),
                            colon__empty_line_marker,
                        )
@@ -203,7 +203,7 @@ def gem():
     class WithHeader_1(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'with-header-1'
-        frill        = conjure_dual_frill(
+        frill        = conjure__indented_token__x__frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('with ')),
                            colon__empty_line_marker,
                        )
@@ -215,7 +215,7 @@ def gem():
     class YieldStatement_1(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'yield-statement-1'
-        frill        = conjure_dual_frill(
+        frill        = conjure__indented_token__x__frill(
                            conjure_indented_token(conjure_indentation('    '), conjure_keyword_yield('yield ')),
                            empty_line_marker,
                        )
@@ -227,22 +227,119 @@ def gem():
             'assert-statement-1',
             AssertStatement_1,
 
-            conjure_dual_frill         = conjure__indented_keyword__x__frill,
+            conjure_dual_frill         = conjure__indented_token__x__frill,
             produce_conjure_with_frill = true,
         )
 
+    [
+        conjure_decorator_header, DecoratorHeader.conjure_with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'decorator-header',
+            DecoratorHeader,
 
-    conjure_decorator_header   = produce_conjure_bookcase_expression('decorator-header',   DecoratorHeader)
-    conjure_delete_header      = produce_conjure_bookcase_expression('delete-header',      DeleteStatement_1)
-    conjure_else_if_header     = produce_conjure_bookcase_expression('else-if-header',     ElseIfHeader)
-    conjure_except_header_1    = produce_conjure_bookcase_expression('except-header-1',    ExceptHeader_1)
-    conjure_if_header          = produce_conjure_bookcase_expression('if-header',          IfHeader)
-    conjure_import_statement   = produce_conjure_bookcase_expression('import-statement',   ImportStatement)
-    conjure_raise_statement_1  = produce_conjure_bookcase_expression('raise-statement-1',  RaiseStatement_1)
-    conjure_return_statement   = produce_conjure_bookcase_expression('return-statement',   ReturnStatement)
-    conjure_while_header       = produce_conjure_bookcase_expression('while-header',       WhileHeader)
-    conjure_with_header_1      = produce_conjure_bookcase_expression('with-header-1',      WithHeader_1)
-    conjure_yield_statement_1  = produce_conjure_bookcase_expression('yield-statement-1',  YieldStatement_1)
+            conjure_dual_frill         = conjure__indented_token__x__frill,
+            produce_conjure_with_frill = true,
+        )
+
+    [
+        conjure_delete_header, DeleteStatement_1.conjure_with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'delete-header',
+            DeleteStatement_1,
+
+            conjure_dual_frill         = conjure__indented_token__x__frill,
+            produce_conjure_with_frill = true,
+        )
+
+    [
+        conjure_else_if_header, ElseIfHeader.conjure_with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'else-if-header',
+            ElseIfHeader,
+
+            conjure_dual_frill         = conjure__indented_token__x__frill,
+            produce_conjure_with_frill = true,
+        )
+
+    [
+        conjure_except_header_1, ExceptHeader_1.conjure_with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'except-header-1',
+            ExceptHeader_1,
+
+            conjure_dual_frill         = conjure__indented_token__x__frill,
+            produce_conjure_with_frill = true,
+        )
+
+    [
+        conjure_if_header, IfHeader.conjure_with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'if-header',
+            IfHeader,
+
+            conjure_dual_frill         = conjure__indented_token__x__frill,
+            produce_conjure_with_frill = true,
+        )
+
+    [
+        conjure_import_statement, ImportStatement.conjure_with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'import-statement',
+            ImportStatement,
+
+            conjure_dual_frill         = conjure__indented_token__x__frill,
+            produce_conjure_with_frill = true,
+        )
+
+    [
+        conjure_raise_statement_1, RaiseStatement_1.conjure_with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'raise-statement-1',
+            RaiseStatement_1,
+
+            conjure_dual_frill         = conjure__indented_token__x__frill,
+            produce_conjure_with_frill = true,
+        )
+
+    [
+        conjure_return_statement, ReturnStatement.conjure_with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'return-statement',
+            ReturnStatement,
+
+            conjure_dual_frill         = conjure__indented_token__x__frill,
+            produce_conjure_with_frill = true,
+        )
+
+    [
+        conjure_while_header, WhileHeader.conjure_with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'while-header',
+            WhileHeader,
+
+            conjure_dual_frill         = conjure__indented_token__x__frill,
+            produce_conjure_with_frill = true,
+        )
+
+    [
+        conjure_with_header_1, WithHeader_1.conjure_with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'with-header-1',
+            WithHeader_1,
+
+            conjure_dual_frill         = conjure__indented_token__x__frill,
+            produce_conjure_with_frill = true,
+        )
+
+    [
+        conjure_yield_statement_1, YieldStatement_1.conjure_with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'yield-statement-1',
+            YieldStatement_1,
+
+            conjure_dual_frill         = conjure__indented_token__x__frill,
+            produce_conjure_with_frill = true,
+        )
 
 
     share(

@@ -3,7 +3,8 @@
 #
 @gem('Sapphire.Parse3')
 def gem():
-    show = 7
+    tree = 0
+    show = 0
 
 
     require_gem('Sapphire.BodyStatement')
@@ -233,38 +234,37 @@ def gem():
 
 
         def parse_lines():
-            while 7 is 7:
-                #break
+            if tree is 7:
+                while 7 is 7:
+                    v = qv()
 
-                v = qv()
-
-                if v is 0:
-                    v = next_line()
-                else:
-                    wv0()
-
-                if v.is_comment__or__empty_line:
-                    v = parse_comments_or_empty_lines(v)
-
-                    if v.is_comment__or__empty_line:
-                        append_twig(v)
-
-                        v = qv()
+                    if v is 0:
+                        v = next_line()
+                    else:
                         wv0()
 
-                if v.is_end_of_data:
-                    wv(v)
-                    break
+                    if v.is_comment__or__empty_line:
+                        v = parse_comments_or_empty_lines(v)
 
-                if v.indentation.total != 0:
-                    raise_runtime_error('unexpected indentation %d (expected 0): %r', v.indentation.total, v)
+                        if v.is_comment__or__empty_line:
+                            append_twig(v)
 
-                if v.is_statement_header:
-                    v = v.parse_header()
+                            v = qv()
+                            wv0()
 
-                append_twig(v)
-            else:
-                raise_runtime_error('programming error: loop to parse lines did not exit on %r', end_of_data)
+                    if v.is_end_of_data:
+                        wv(v)
+                        break
+
+                    if v.indentation.total != 0:
+                        raise_runtime_error('unexpected indentation %d (expected 0): %r', v.indentation.total, v)
+
+                    if v.is_statement_header:
+                        v = v.parse_header()
+
+                    append_twig(v)
+                else:
+                    raise_runtime_error('programming error: loop to parse lines did not exit on %r', end_of_data)
 
             while 7 is 7:
                 v = qv()
