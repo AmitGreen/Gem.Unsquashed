@@ -430,13 +430,12 @@ def gem():
         display_name = 'indented-token'
 
 
-        comment     = 0
         indentation = BaseDualOperator.a
         token       = BaseDualOperator.b
 
 
         def display_token(t):
-            return arrange('<+%d {%s}>', t.a.total, portray_string(t.b.s)[1:-1])
+            return arrange('<+%d {%s}>', t.identation.total, portray_string(t.token.s)[1:-1])
 
 
     @share
