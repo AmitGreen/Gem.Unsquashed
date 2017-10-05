@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.Parse1Simple')
 def gem():
+    require_gem('Sapphire.BookcaseKeywordStatement')
     require_gem('Sapphire.BookcaseStatement')
     require_gem('Sapphire.BookcaseTriple')
 

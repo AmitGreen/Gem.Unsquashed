@@ -3,7 +3,9 @@
 #
 @gem('Sapphire.DualFrill')
 def gem():
-    dual_frill_cache = {}
+    dual_frill_cache  = {}
+    lookup_dual_frill = dual_frill_cache.get
+    store_dual_frill  = dual_frill_cache.__setitem__
 
 
     class DualFrill(Object):
@@ -33,16 +35,41 @@ def gem():
             return arrange('<dual-frill %s %s>', t.a.display_token(), t.b.display_token())
 
 
+    class IndentedKeyword_X_Frill(DualFrill):
+        __slots__ = (())
+
+        comment          = 0
+        indented_keyword = DualFrill.a
+        x                = DualFrill.b
+
+
+
     #DualFrill.k1 = DualFrill.a
     DualFrill.k2 = DualFrill.b
 
 
-    conjure_dual_frill = produce_conjure_dual('dual-frill', DualFrill, dual_frill_cache)
+    conjure_dual_frill = produce_conjure_dual(
+                             'dual-frill',
+                             DualFrill,
+                             dual_frill_cache,
+                             lookup_dual_frill,
+                             store_dual_frill
+                         )
+
+
+    conjure__indented_keyword__x__frill = produce_conjure_dual(
+                             'indented-keyword--x--frill',
+                             IndentedKeyword_X_Frill,
+                             dual_frill_cache,
+                             lookup_dual_frill,
+                             store_dual_frill
+                         )
 
 
     append_cache('dual-frill', dual_frill_cache)
 
 
     share(
-        'conjure_dual_frill',   conjure_dual_frill,
+        'conjure_dual_frill',                   conjure_dual_frill,
+        'conjure__indented_keyword__x__frill',  conjure__indented_keyword__x__frill,
     )

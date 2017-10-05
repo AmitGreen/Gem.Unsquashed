@@ -19,7 +19,7 @@ def gem():
 
             assert frill.comment is 0
 
-            return find_conjure__bookcase_dual_expression__with_frill(t.__class__)(
+            return t.conjure_with_frill(
                        t.a,
                        t.b,
                        conjure_commented_indented_xy_frill(comment, frill.indentation, frill.x, frill.y),
@@ -118,30 +118,24 @@ def gem():
 
 
     [
-            conjure_assign_1, conjure__assign_statement_1__with_frill,
+            conjure_assign_1, AssignStatement_1.conjure_with_frill,
     ] = produce_conjure_bookcase_dual_expression(
             'assign-1',
             AssignStatement_1,
 
-            conjure_triple_frill                                  = conjure_indented_xy_frill,
-            produce_conjure__bookcase_dual_expression__with_frill = true,
+            conjure_triple_frill       = conjure_indented_xy_frill,
+            produce_conjure_with_frill = true,
         )
 
     [
-            conjure_modify_statement, conjure__modify_statement__with_frill,
+            conjure_modify_statement, ModifyStatement.conjure_with_frill,
     ] = produce_conjure_bookcase_dual_expression(
             'modify-statement',
             ModifyStatement,
 
-            conjure_triple_frill                                  = conjure_indented_xy_frill,
-            produce_conjure__bookcase_dual_expression__with_frill = true,
+            conjure_triple_frill       = conjure_indented_xy_frill,
+            produce_conjure_with_frill = true,
         )
-
-
-    find_conjure__bookcase_dual_expression__with_frill = {
-            AssignStatement_1 : conjure__assign_statement_1__with_frill,
-            ModifyStatement   : conjure__modify_statement__with_frill,
-        }.__getitem__
 
 
     share(

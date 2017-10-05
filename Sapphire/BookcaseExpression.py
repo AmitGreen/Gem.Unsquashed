@@ -80,7 +80,15 @@ def gem():
 
     @share
     @privileged
-    def produce_conjure_bookcase_expression(name, Meta):
+    def produce_conjure_bookcase_expression(
+            name, Meta,
+            
+
+            conjure_dual_frill         = conjure_dual_frill,
+            produce_conjure_with_frill = false,
+    ):
+        assert type(produce_conjure_with_frill) is Boolean
+
         cache   = {}
         lookup  = cache.get
         provide = cache.setdefault
@@ -118,6 +126,13 @@ def gem():
                                            frill.b.display_token())
 
 
+                write = attribute(Meta, 'write__frill', none)
+
+
+                if write is not none:
+                    BookcaseExpression_WithFrill.write = write
+
+
                 #BookcaseExpression_WithFrill.k2 = BookcaseExpression_WithFrill.frill
 
 
@@ -129,13 +144,13 @@ def gem():
             return BookcaseExpression_WithFrill(a, frill)
 
 
-        conjure_dual__21 = produce_conjure_dual__21(
-                               name + '__X2',
-                               conjure_BookcaseExpression_WithFrill,
-                               cache,
-                               lookup,
-                               store,
-                           )
+        conjure_dual__with_frill = produce_conjure_dual__21(
+                                       name + '__X2',
+                                       conjure_BookcaseExpression_WithFrill,
+                                       cache,
+                                       lookup,
+                                       store,
+                                   )
 
         meta_frill_a = Meta.frill.a
         meta_frill_b = Meta.frill.b
@@ -145,13 +160,17 @@ def gem():
             if (frill_a is meta_frill_a) and (frill_b is meta_frill_b):
                 return (lookup(a)) or (provide(a, Meta(a)))
 
-            return conjure_dual__21(a, conjure_dual_frill(frill_a, frill_b))
+            return conjure_dual__with_frill(a, conjure_dual_frill(frill_a, frill_b))
 
 
         if __debug__:
             conjure_bookcase_expression.__name__ = intern_arrange('conjure_%s', name)
 
             append_cache(name, cache)
+
+        if produce_conjure_with_frill:
+            return (( conjure_bookcase_expression, static_method(conjure_dual__with_frill) ))
+
 
         return conjure_bookcase_expression
 

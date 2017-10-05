@@ -37,6 +37,14 @@ def gem():
             return arrange('<triple-frill %s %s %s>', t.a.display_token(), t.b.display_token(), t.c.display_token())
 
 
+    class Commented_IndentedKeyword_X_Frill(TripleFrill):
+        __slots__ = (())
+
+        comment          = TripleFrill.a
+        indented_keyword = TripleFrill.b
+        x                = TripleFrill.c
+
+
     class Indented_XY_Frill(TripleFrill):
         __slots__ = (())
 
@@ -51,13 +59,13 @@ def gem():
     TripleFrill.k3 = TripleFrill.c
 
 
-    conjure_triple_frill = produce_conjure_triple(
-                               'triple-frill',
-                               TripleFrill,
-                               triple_frill_cache,
-                               lookup_triple_frill,
-                               store_triple_frill,
-                           )
+    conjure_commented__indented_keyword__x__frill = produce_conjure_triple(
+                                                        'commented--indented-keyword--x--frill',
+                                                        Commented_IndentedKeyword_X_Frill,
+                                                        triple_frill_cache,
+                                                        lookup_triple_frill,
+                                                        store_triple_frill,
+                                                    )
 
     conjure_indented_xy_frill = produce_conjure_triple(
                                     'indented-xy-frill',
@@ -67,11 +75,20 @@ def gem():
                                     store_triple_frill,
                                 )
 
+    conjure_triple_frill = produce_conjure_triple(
+                               'triple-frill',
+                               TripleFrill,
+                               triple_frill_cache,
+                               lookup_triple_frill,
+                               store_triple_frill,
+                           )
+
 
     append_cache('triple-frill', triple_frill_cache)
 
 
     share(
-        'conjure_triple_frill',         conjure_triple_frill,
-        'conjure_indented_xy_frill',    conjure_indented_xy_frill,
+        'conjure_commented__indented_keyword__x__frill',    conjure_commented__indented_keyword__x__frill,
+        'conjure_indented_xy_frill',                        conjure_indented_xy_frill,
+        'conjure_triple_frill',                             conjure_triple_frill,
     )
