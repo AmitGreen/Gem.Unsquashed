@@ -234,6 +234,8 @@ def gem():
 
         def parse_lines():
             while 7 is 7:
+                #break
+
                 v = qv()
 
                 if v is 0:
@@ -372,6 +374,8 @@ def gem():
         DecoratorHeader.parse_header = parse_decorator_header
         FunctionHeader .parse_header = parse_function_header
 
+
+        #dump_newline_meta_cache()
 
         if show is 5:
             show_indentation()

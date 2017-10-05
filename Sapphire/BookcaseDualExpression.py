@@ -89,10 +89,10 @@ def gem():
             name,
             Meta,
 
-            conjure_triple_frill   = conjure_triple_frill,
-            produce_conjure_triple = false,
+            conjure_triple_frill                                  = conjure_triple_frill,
+            produce_conjure__bookcase_dual_expression__with_frill = false,
     ):
-        assert type(produce_conjure_triple) is Boolean
+        assert type(produce_conjure__bookcase_dual_expression__with_frill) is Boolean
 
         cache  = {}
         lookup = cache.get
@@ -152,8 +152,8 @@ def gem():
             return BookcaseDualExpression_WithFrill(a, b, frill)
 
 
-        conjure_dual   = produce_conjure_dual       (name, Meta,                   cache, lookup, store)
-        conjure_triple = produce_conjure_triple__312(name, conjure_Meta_WithFrill, cache, lookup, store)
+        conjure_dual              = produce_conjure_dual       (name, Meta,                   cache, lookup, store)
+        conjure_triple_with_frill = produce_conjure_triple__312(name, conjure_Meta_WithFrill, cache, lookup, store)
 
         meta_frill_a = Meta.frill.a
         meta_frill_b = Meta.frill.b
@@ -164,7 +164,7 @@ def gem():
             if (frill_a is meta_frill_a) and (frill_b is meta_frill_b) and (frill_c is meta_frill_c):
                 return conjure_dual(a, b)
 
-            return conjure_triple(a, b, conjure_triple_frill(frill_a, frill_b, frill_c))
+            return conjure_triple_with_frill(a, b, conjure_triple_frill(frill_a, frill_b, frill_c))
 
 
         if __debug__:
@@ -172,8 +172,8 @@ def gem():
 
             append_cache(name, cache)
 
-        if produce_conjure_triple:
-            return (( conjure_bookcase_dual_expression, static_method(conjure_triple) ))
+        if produce_conjure__bookcase_dual_expression__with_frill:
+            return (( conjure_bookcase_dual_expression, conjure_triple_with_frill ))
 
         return conjure_bookcase_dual_expression
 

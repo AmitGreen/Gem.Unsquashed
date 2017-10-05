@@ -15,21 +15,14 @@ def gem():
 
 
         def add_comment(t, comment):
-            assert comment is not no_comment
-
             frill = t.frill
 
-            assert frill.comment is no_comment
+            assert frill.comment is 0
 
-            return t.conjure_triple(
+            return find_conjure__bookcase_dual_expression__with_frill(t.__class__)(
                        t.a,
                        t.b,
-                       conjure_commented_dual_expression_statement_frill(
-                           comment,
-                           frill.indentation,
-                           frill.assign_operator,
-                           frill.line_marker,
-                       ),
+                       conjure_commented_indented_xy_frill(comment, frill.indentation, frill.x, frill.y),
                    )
 
 
@@ -48,11 +41,11 @@ def gem():
             return arrange('<%s+frill +%d%s %s %s %s %s>',
                            t.display_name,
                            frill.indentation.total,
-                           (''   if comment is no_comment else   ' ' + comment.display_token()),
-                           t.a                  .display_token(),
-                           frill.assign_operator.display_token(),
-                           t.b                  .display_token(),
-                           frill.line_marker    .display_token())
+                           (''   if comment is 0 else   ' ' + comment.display_token()),
+                           t.a    .display_token(),
+                           frill.x.display_token(),
+                           t.b    .display_token(),
+                           frill.y.display_token())
 
 
         def dump_token(t, f, newline = true):
@@ -61,12 +54,12 @@ def gem():
             comment     = frill.comment
             indentation = frill.indentation
 
-            if comment is no_comment:
+            if comment is 0:
                 f.partial('<%s +%d ', t.display_name, indentation.total)
                 t.a.dump_token(f)
-                frill.assign_operator.dump_token(f)
+                frill.x.dump_token(f)
                 t.b.dump_token(f)
-                r = frill.line_marker.dump_token(f, false)
+                r = frill.y.dump_token(f, false)
 
                 if (r) and (newline):
                     f.line('>')
@@ -78,9 +71,9 @@ def gem():
             with f.indent(arrange('<%s +%d ', t.display_name, frill.indentation.total), '>'):
                 comment.dump_token(f)
                 t.a.dump_token(f)
-                frill.assign_operator.dump_token(f)
+                frill.x.dump_token(f)
                 t.b.dump_token(f)
-                frill.line_marker.dump_token(f)
+                frill.y.dump_token(f)
 
             return false
 
@@ -94,20 +87,20 @@ def gem():
             frill   = t.frill
             comment = frill.comment
 
-            if comment is not no_comment:
+            if comment is not 0:
                 comment.write(w)
 
             w(frill.indentation.s)
             t.a.write(w)
-            w(frill.assign_operator.s)
+            w(frill.x.s)
             t.b.write(w)
-            w(frill.line_marker.s)
+            w(frill.y.s)
 
 
     class AssignStatement_1(DualExpressionStatement):
         __slots__    = (())
         display_name = 'assign-1'
-        frill        = conjure_dual_expression_statement_frill(
+        frill        = conjure_indented_xy_frill(
                            empty_indentation,
                            conjure_equal_sign(' = '),
                            empty_line_marker,
@@ -117,7 +110,7 @@ def gem():
     class ModifyStatement(DualExpressionStatement):
         __slots__    = (())
         display_name = 'modify-statement'
-        frill        = conjure_dual_expression_statement_frill(
+        frill        = conjure_indented_xy_frill(
                            empty_indentation,
                            conjure_action_word('+=', ' += '),
                            empty_line_marker,
@@ -125,24 +118,30 @@ def gem():
 
 
     [
-            conjure_assign_1, AssignStatement_1.conjure_triple,
+            conjure_assign_1, conjure__assign_statement_1__with_frill,
     ] = produce_conjure_bookcase_dual_expression(
             'assign-1',
             AssignStatement_1,
 
-            conjure_triple_frill   = conjure_dual_expression_statement_frill,
-            produce_conjure_triple = true,
+            conjure_triple_frill                                  = conjure_indented_xy_frill,
+            produce_conjure__bookcase_dual_expression__with_frill = true,
         )
 
     [
-            conjure_modify_statement, ModifyStatement.conjure_triple,
+            conjure_modify_statement, conjure__modify_statement__with_frill,
     ] = produce_conjure_bookcase_dual_expression(
             'modify-statement',
             ModifyStatement,
 
-            conjure_triple_frill   = conjure_dual_expression_statement_frill,
-            produce_conjure_triple = true,
+            conjure_triple_frill                                  = conjure_indented_xy_frill,
+            produce_conjure__bookcase_dual_expression__with_frill = true,
         )
+
+
+    find_conjure__bookcase_dual_expression__with_frill = {
+            AssignStatement_1 : conjure__assign_statement_1__with_frill,
+            ModifyStatement   : conjure__modify_statement__with_frill,
+        }.__getitem__
 
 
     share(

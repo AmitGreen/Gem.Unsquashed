@@ -430,7 +430,7 @@ def gem():
         display_name = 'indented-token'
 
 
-        comment     = no_comment
+        comment     = 0
         indentation = BaseDualOperator.a
         keyword     = BaseDualOperator.b
 

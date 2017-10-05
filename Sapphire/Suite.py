@@ -24,7 +24,7 @@ def gem():
             indentation = t[0].indentation
 
             with f.indent(prefix = indentation.total):
-                with f.indent(arrange('%s +%d', t.display_name, indentation.total), '>'):
+                with f.indent(arrange('<%s +%d', t.display_name, indentation.total), '>'):
                     for v in t:
                         v.dump_token(f)
 

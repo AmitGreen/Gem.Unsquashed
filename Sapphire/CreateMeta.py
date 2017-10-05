@@ -63,11 +63,12 @@ def gem():
         return Actionword_LineMarker_Many
 
 
-    @share
-    def dump_newline_meta_cache():
-        for k in iterate_values_sorted_by_key({ k.__name__ : k   for k in adjusted_meta_cache }):
-            line('%s:', k.__name__)
-            line('    %s', adjusted_meta_cache[k].__name__)
+    if __debug__:
+        @share
+        def dump_newline_meta_cache():
+            for k in iterate_values_sorted_by_key({ k.__name__ : k   for k in adjusted_meta_cache }):
+                line('%s:', k.__name__)
+                line('    %s', adjusted_meta_cache[k].__name__)
 
 
     share(

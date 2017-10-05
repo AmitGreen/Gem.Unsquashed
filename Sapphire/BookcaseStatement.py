@@ -54,12 +54,10 @@ def gem():
 
 
         def add_comment(t, comment):
-            assert comment is not no_comment
-
             frill   = t.frill
             frill_a = frill.a
 
-            assert frill_a.comment is no_comment
+            assert frill_a.comment is 0
 
             return t.conjure(
                        conjure_comment_indented_token(comment, frill_a.indentation, frill_a.keyword),
@@ -73,16 +71,10 @@ def gem():
             frill_a = frill.a
             comment = frill_a.comment
 
-            if comment is no_comment:
-                return arrange('<%s +%d %s>',
-                               t.display_name,
-                               frill_a.indentation.total,
-                               t.a.display_token())
-
-            return arrange('<%s +%d %s %s>',
+            return arrange('<%s +%d%s %s>',
                            t.display_name,
                            frill_a.indentation.total,
-                           comment.display_token(),
+                           (''   if comment is 0 else   ' ' + comment.display_token()),
                            t.a.display_token())
 
 
@@ -92,23 +84,15 @@ def gem():
             comment     = frill_a.comment
             indentation = frill_a.indentation
 
-            if comment is no_comment:
-                return arrange('%s<%s+frill +%d %s %s %s>',
-                               indentation.s,
-                               t.display_name,
-                               indentation.total,
-                               frill_a.keyword.display_token(),
-                               t.a            .display_token(),
-                               frill.b        .display_token())
-
-            return arrange('%s<%s+frill +%d %s %s %s %s %s>',
+            return arrange('%s<%s+frill +%d%s %s %s %s>',
                            indentation.s,
                            t.display_name,
                            indentation.total,
-                           comment        .display_token(),
+                           (''   if comment is 0 else   ' ' + comment.display_token()),
                            frill_a.keyword.display_token(),
                            t.a            .display_token(),
                            frill.b        .display_token())
+
 
 
         def dump_token(t, f, newline = true):
@@ -118,7 +102,7 @@ def gem():
             frill_a = frill.a
             comment = frill_a.comment
 
-            if comment is no_comment:
+            if comment is 0:
                 f.partial('<%s +%d ', t.display_name, frill_a.indentation.total)
 
                 frill.a.keyword.dump_token(f)

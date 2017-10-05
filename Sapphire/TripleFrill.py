@@ -37,13 +37,13 @@ def gem():
             return arrange('<triple-frill %s %s %s>', t.a.display_token(), t.b.display_token(), t.c.display_token())
 
 
-    class DualExpressionStatementFrill(TripleFrill):
+    class Indented_XY_Frill(TripleFrill):
         __slots__ = (())
 
-        comment         = no_comment
-        indentation     = TripleFrill.a
-        assign_operator = TripleFrill.b
-        line_marker     = TripleFrill.c
+        comment     = 0
+        indentation = TripleFrill.a
+        x           = TripleFrill.b
+        y           = TripleFrill.c
 
 
     TripleFrill.k1 = TripleFrill.a
@@ -52,26 +52,26 @@ def gem():
 
 
     conjure_triple_frill = produce_conjure_triple(
-                               'triple_frill',
+                               'triple-frill',
                                TripleFrill,
                                triple_frill_cache,
                                lookup_triple_frill,
                                store_triple_frill,
                            )
 
-    conjure_dual_expression_statement_frill = produce_conjure_triple(
-                                                  'triple_frill',
-                                                  DualExpressionStatementFrill,
-                                                  triple_frill_cache,
-                                                  lookup_triple_frill,
-                                                  store_triple_frill,
-                                              )
+    conjure_indented_xy_frill = produce_conjure_triple(
+                                    'indented-xy-frill',
+                                    Indented_XY_Frill,
+                                    triple_frill_cache,
+                                    lookup_triple_frill,
+                                    store_triple_frill,
+                                )
 
 
     append_cache('triple-frill', triple_frill_cache)
 
 
     share(
-        'conjure_triple_frill',                     conjure_triple_frill,
-        'conjure_dual_expression_statement_frill',  conjure_dual_expression_statement_frill,
+        'conjure_triple_frill',         conjure_triple_frill,
+        'conjure_indented_xy_frill',    conjure_indented_xy_frill,
     )

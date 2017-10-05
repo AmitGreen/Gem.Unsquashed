@@ -43,13 +43,13 @@ def gem():
                            t.d.display_token())
 
 
-    class CommentedDualExpressionStatementFrill(QuadrupleFrill):
+    class Commented_Indented_XY_Frill(QuadrupleFrill):
         __slots__ = (())
 
-        comment         = QuadrupleFrill.a
-        indentation     = QuadrupleFrill.b
-        assign_operator = QuadrupleFrill.c
-        line_marker     = QuadrupleFrill.d
+        comment     = QuadrupleFrill.a
+        indentation = QuadrupleFrill.b
+        x           = QuadrupleFrill.c
+        y           = QuadrupleFrill.d
 
 
     QuadrupleFrill.k1 = QuadrupleFrill.a
@@ -59,26 +59,26 @@ def gem():
 
 
     conjure_quadruple_frill = produce_conjure_quadruple__4123(
-                                  'quadruple_frill',
+                                  'quadruple-frill',
                                   QuadrupleFrill,
                                   quadruple_frill_cache,
                                   lookup_quadruple_frill,
                                   store_quadruple_frill,
                               )
 
-    conjure_commented_dual_expression_statement_frill = produce_conjure_quadruple__4123(
-                                                            'quadruple_frill',
-                                                            CommentedDualExpressionStatementFrill,
-                                                            quadruple_frill_cache,
-                                                            lookup_quadruple_frill,
-                                                            store_quadruple_frill,
-                                                        )
+    conjure_commented_indented_xy_frill = produce_conjure_quadruple__4123(
+                                              'commented-indented-xy-frill',
+                                              Commented_Indented_XY_Frill,
+                                              quadruple_frill_cache,
+                                              lookup_quadruple_frill,
+                                              store_quadruple_frill,
+                                          )
 
 
     append_cache('quadruple-frill', quadruple_frill_cache)
 
 
     share(
-        'conjure_quadruple_frill',                              conjure_quadruple_frill,
-        'conjure_commented_dual_expression_statement_frill',    conjure_commented_dual_expression_statement_frill,
+        'conjure_quadruple_frill',                conjure_quadruple_frill,
+        'conjure_commented_indented_xy_frill',    conjure_commented_indented_xy_frill,
     )
