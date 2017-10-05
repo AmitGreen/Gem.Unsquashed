@@ -19,6 +19,8 @@ def gem():
 
 
         def __init__(t, a, b):
+            assert not (a.is_indentation and b.is_line_marker)
+
             t.a = a
             t.b = b
 
@@ -41,6 +43,11 @@ def gem():
         comment = 0
         x       = DualFrill.a
         y       = DualFrill.b
+
+
+        def __init__(t, a, b):
+            t.a = a
+            t.b = b
 
 
     #DualFrill.k1 = DualFrill.a

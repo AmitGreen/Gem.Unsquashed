@@ -40,10 +40,10 @@ def gem():
         is_empty_line              = false
         is_end_of_data             = false
         is_identifier              = false
+        is_indentation             = false
         is_keyword                 = false
         is_right_parenthesis       = false
         is_right_square_bracket    = false
-        is_token_indentation       = false
         line_marker                = false
         newlines                   = 0
 

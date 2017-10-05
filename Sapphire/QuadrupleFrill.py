@@ -48,8 +48,8 @@ def gem():
 
         comment = QuadrupleFrill.a
         x       = QuadrupleFrill.b
-        x       = QuadrupleFrill.c
-        y       = QuadrupleFrill.d
+        y       = QuadrupleFrill.c
+        z       = QuadrupleFrill.d
 
 
     QuadrupleFrill.k1 = QuadrupleFrill.a

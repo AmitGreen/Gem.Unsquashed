@@ -9,7 +9,7 @@ def gem():
         ))
 
 
-        is_token_indentation = true
+        is_indentation = true
 
 
         def __init__(t, s):

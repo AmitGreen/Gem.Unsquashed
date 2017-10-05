@@ -118,7 +118,7 @@ def gem():
 
             a = t.a
 
-            if a.is_token_indentation:
+            if a.is_indentation:
                 return arrange('<%s %+d %s %s>',
                                display_name,
                                a.total,

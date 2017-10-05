@@ -10,7 +10,7 @@ def gem():
 
     class CallStatementBase(SapphireTrunk):
         __slots__ = ((
-            'frill',                    #   DualFrill
+            'frill',                    #   XY_Frill | Commented_XY_Frill
             'left',                     #   Expression
             'arguments',                #   Arguments*
         ))
@@ -21,6 +21,8 @@ def gem():
 
 
         def __init__(t, frill, left, arguments):
+            frill.comment
+
             t.frill     = frill
             t.left      = left
             t.arguments = arguments
@@ -36,43 +38,57 @@ def gem():
 
         @property
         def indentation(t):
-            return t.frill.a
+            return t.frill.x
 
 
         def display_token(t):
-            frill = t.frill
+            frill   = t.frill
+            comment = frill.comment
 
-            return arrange('<%s +%d %s %s %s>',
+            return arrange('<%s +%d%s %s %s %s>',
                            t.display_name,
-                           frill.a.total,
+                           frill.x.total,
+                           (''   if comment is 0 else   '' + comment.display_token()),
                            t.left     .display_token(),
                            t.arguments.display_token(),
-                           frill.b    .display_token())
+                           frill.y    .display_token())
 
 
         def dump_token(t, f, newline = true):
-            frill = t.frill
+            frill   = t.frill
+            comment = frill.comment
 
-            f.partial('<%s +%d ', t.display_name, frill.a.total)
-            t.left.dump_token(f)
-            t.arguments.dump_token(f)
-            r = frill.b.dump_token(f, false)
+            if comment is 0:
+                f.partial('<%s +%d ', t.display_name, frill.x.total)
+                t.left.dump_token(f)
+                t.arguments.dump_token(f)
+                r = frill.y.dump_token(f, false)
 
-            if (r) and (newline):
-                f.line('>')
-                return false
+                if (r) and (newline):
+                    f.line('>')
+                    return false
 
-            f.partial('>')
-            return r
+                f.partial('>')
+                return r
+
+            with f.line(arrange('<%s +%d', t.display_name, frill.x.total), '>'):
+                comment    .dump_token(f)
+                t.left     .dump_token(f)
+                t.arguments.dump_token(f)
+                frill.y    .dump_token(f)
 
 
         def write(t, w):
-            frill = t.frill
+            frill   = t.frill
+            comment = frill.comment
 
-            w(frill.a.s)
+            if comment is not 0:
+                comment.write(w)
+
+            w(frill.x.s)
             t.left     .write(w)
             t.arguments.write(w)
-            w(frill.b.s)
+            w(frill.y.s)
 
 
     CallStatementBase.k1 = CallStatementBase.frill
@@ -90,7 +106,6 @@ def gem():
     class MethodCallStatement(CallStatementBase):
         __slots__    = (())
         display_name = 'method-call-statement'
-
 
 
     conjure_call_statement        = produce_conjure_triple__312('call-statement',        CallStatement)
