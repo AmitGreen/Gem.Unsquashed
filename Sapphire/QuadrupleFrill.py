@@ -43,13 +43,13 @@ def gem():
                            t.d.display_token())
 
 
-    class Commented_Indented_XY_Frill(QuadrupleFrill):
+    class Commented_XYZ_Frill(QuadrupleFrill):
         __slots__ = (())
 
-        comment     = QuadrupleFrill.a
-        indentation = QuadrupleFrill.b
-        x           = QuadrupleFrill.c
-        y           = QuadrupleFrill.d
+        comment = QuadrupleFrill.a
+        x       = QuadrupleFrill.b
+        x       = QuadrupleFrill.c
+        y       = QuadrupleFrill.d
 
 
     QuadrupleFrill.k1 = QuadrupleFrill.a
@@ -66,19 +66,19 @@ def gem():
                                   store_quadruple_frill,
                               )
 
-    conjure_commented_indented_xy_frill = produce_conjure_quadruple__4123(
-                                              'commented-indented-xy-frill',
-                                              Commented_Indented_XY_Frill,
-                                              quadruple_frill_cache,
-                                              lookup_quadruple_frill,
-                                              store_quadruple_frill,
-                                          )
+    conjure_commented_xyz_frill = produce_conjure_quadruple__4123(
+                                      'commented-xyz-frill',
+                                      Commented_XYZ_Frill,
+                                      quadruple_frill_cache,
+                                      lookup_quadruple_frill,
+                                      store_quadruple_frill,
+                                  )
 
 
     append_cache('quadruple-frill', quadruple_frill_cache)
 
 
     share(
-        'conjure_quadruple_frill',                conjure_quadruple_frill,
-        'conjure_commented_indented_xy_frill',    conjure_commented_indented_xy_frill,
+        'conjure_quadruple_frill',      conjure_quadruple_frill,
+        'conjure_commented_xyz_frill',  conjure_commented_xyz_frill,
     )

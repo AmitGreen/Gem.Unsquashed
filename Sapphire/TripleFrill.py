@@ -45,13 +45,13 @@ def gem():
         y       = TripleFrill.c
 
 
-    class Indented_XY_Frill(TripleFrill):
+    class XYZ_Frill(TripleFrill):
         __slots__ = (())
 
-        comment     = 0
-        indentation = TripleFrill.a
-        x           = TripleFrill.b
-        y           = TripleFrill.c
+        comment = 0
+        x       = TripleFrill.a
+        y       = TripleFrill.b
+        z       = TripleFrill.c
 
 
     TripleFrill.k1 = TripleFrill.a
@@ -67,14 +67,6 @@ def gem():
                                      store_triple_frill,
                                  )
 
-    conjure_indented_xy_frill = produce_conjure_triple(
-                                    'indented-xy-frill',
-                                    Indented_XY_Frill,
-                                    triple_frill_cache,
-                                    lookup_triple_frill,
-                                    store_triple_frill,
-                                )
-
     conjure_triple_frill = produce_conjure_triple(
                                'triple-frill',
                                TripleFrill,
@@ -83,12 +75,20 @@ def gem():
                                store_triple_frill,
                            )
 
+    conjure_xyz_frill = produce_conjure_triple(
+                            'xyz-frill',
+                            XYZ_Frill,
+                            triple_frill_cache,
+                            lookup_triple_frill,
+                            store_triple_frill,
+                        )
+
 
     append_cache('triple-frill', triple_frill_cache)
 
 
     share(
         'conjure_commented_xy_frill',   conjure_commented_xy_frill,
-        'conjure_indented_xy_frill',    conjure_indented_xy_frill,
         'conjure_triple_frill',         conjure_triple_frill,
+        'conjure_xyz_frill',            conjure_xyz_frill,
     )

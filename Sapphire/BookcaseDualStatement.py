@@ -22,14 +22,14 @@ def gem():
             return t.conjure_with_frill(
                        t.a,
                        t.b,
-                       conjure_commented_indented_xy_frill(comment, frill.indentation, frill.x, frill.y),
+                       conjure_commented_xyz_frill(comment, frill.x, frill.y, frill.z),
                    )
 
 
         def display_token(t):
             return arrange('<%s +%d %s %s>',
                            t.display_name,
-                           t.frill.indentation.total,
+                           t.frill.x.total,
                            t.a    .display_token(),
                            t.b    .display_token())
 
@@ -40,26 +40,25 @@ def gem():
 
             return arrange('<%s+frill +%d%s %s %s %s %s>',
                            t.display_name,
-                           frill.indentation.total,
+                           frill.x.total,
                            (''   if comment is 0 else   ' ' + comment.display_token()),
                            t.a    .display_token(),
-                           frill.x.display_token(),
+                           frill.y.display_token(),
                            t.b    .display_token(),
-                           frill.y.display_token())
+                           frill.z.display_token())
 
 
         def dump_token(t, f, newline = true):
             frill = t.frill
 
-            comment     = frill.comment
-            indentation = frill.indentation
+            comment = frill.comment
 
             if comment is 0:
-                f.partial('<%s +%d ', t.display_name, indentation.total)
+                f.partial('<%s +%d ', t.display_name, frill.x.total)
                 t.a.dump_token(f)
-                frill.x.dump_token(f)
+                frill.y.dump_token(f)
                 t.b.dump_token(f)
-                r = frill.y.dump_token(f, false)
+                r = frill.z.dump_token(f, false)
 
                 if (r) and (newline):
                     f.line('>')
@@ -68,19 +67,19 @@ def gem():
                 f.partial('>')
                 return r
 
-            with f.indent(arrange('<%s +%d ', t.display_name, frill.indentation.total), '>'):
+            with f.indent(arrange('<%s +%d ', t.display_name, frill.x.total), '>'):
                 comment.dump_token(f)
                 t.a.dump_token(f)
-                frill.x.dump_token(f)
-                t.b.dump_token(f)
                 frill.y.dump_token(f)
+                t.b.dump_token(f)
+                frill.z.dump_token(f)
 
             return false
 
 
         @property
         def indentation(t):
-            return t.frill.indentation
+            return t.frill.x
 
 
         def write__frill(t, w):
@@ -90,17 +89,17 @@ def gem():
             if comment is not 0:
                 comment.write(w)
 
-            w(frill.indentation.s)
-            t.a.write(w)
             w(frill.x.s)
-            t.b.write(w)
+            t.a.write(w)
             w(frill.y.s)
+            t.b.write(w)
+            w(frill.z.s)
 
 
     class AssignStatement_1(DualExpressionStatement):
         __slots__    = (())
         display_name = 'assign-1'
-        frill        = conjure_indented_xy_frill(
+        frill        = conjure_xyz_frill(
                            empty_indentation,
                            conjure_equal_sign(' = '),
                            empty_line_marker,
@@ -110,7 +109,7 @@ def gem():
     class ModifyStatement(DualExpressionStatement):
         __slots__    = (())
         display_name = 'modify-statement'
-        frill        = conjure_indented_xy_frill(
+        frill        = conjure_xyz_frill(
                            empty_indentation,
                            conjure_action_word('+=', ' += '),
                            empty_line_marker,
@@ -123,7 +122,7 @@ def gem():
             'assign-1',
             AssignStatement_1,
 
-            conjure_triple_frill       = conjure_indented_xy_frill,
+            conjure_triple_frill       = conjure_xyz_frill,
             produce_conjure_with_frill = true,
         )
 
@@ -133,7 +132,7 @@ def gem():
             'modify-statement',
             ModifyStatement,
 
-            conjure_triple_frill       = conjure_indented_xy_frill,
+            conjure_triple_frill       = conjure_xyz_frill,
             produce_conjure_with_frill = true,
         )
 
