@@ -56,12 +56,6 @@ def gem():
         dump_token = dump_token__comment
 
 
-        if 0:
-            @property
-            def s(t):
-                return '#' + t + '\n'
-
-
         def write(t, w):
             w('#' + t + '\n')
 

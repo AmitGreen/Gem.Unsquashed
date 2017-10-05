@@ -32,6 +32,18 @@ def gem():
             return arrange('<%s %r %r %r>', t.__class__.__name__, t.frill, t.left, t.arguments)
 
 
+        def add_comment(t, comment):
+            frill = t.frill
+
+            assert frill.comment is 0
+
+            return t.conjure(
+                       conjure_commented_xy_frill(comment, frill.x, frill.y),
+                       t.left,
+                       t.arguments,
+                   )
+
+
         def count_newlines(t):
             return t.frill.count_newlines() + t.left.count_newlines() + t.arguments.count_newlines()
 
@@ -71,7 +83,7 @@ def gem():
                 f.partial('>')
                 return r
 
-            with f.line(arrange('<%s +%d', t.display_name, frill.x.total), '>'):
+            with f.indent(arrange('<%s +%d', t.display_name, frill.x.total), '>'):
                 comment    .dump_token(f)
                 t.left     .dump_token(f)
                 t.arguments.dump_token(f)
@@ -112,8 +124,13 @@ def gem():
     conjure_method_call_statement = produce_conjure_triple__312('method-call-statement', MethodCallStatement)
 
 
-    static_conjure_call_statement = static_method(conjure_call_statement)
+    static_conjure_call_statement        = static_method(conjure_call_statement)
+    static_conjure_method_call_statement = static_method(conjure_method_call_statement)
 
-    MemberExpression.call_statement = static_method(conjure_method_call_statement)
+    MemberExpression.call_statement = static_conjure_method_call_statement
     SapphireToken   .call_statement = static_conjure_call_statement
     SapphireTrunk   .call_statement = static_conjure_call_statement
+
+    CallStatement      .conjure = static_conjure_call_statement
+    MethodCallStatement.conjure = static_conjure_method_call_statement
+

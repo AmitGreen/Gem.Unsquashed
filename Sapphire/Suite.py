@@ -23,16 +23,9 @@ def gem():
 
             indentation = t[0].indentation
 
-            with f.indent(prefix = indentation.total):
-                with f.indent(arrange('<%s +%d', t.display_name, indentation.total), '>'):
-                    for v in t:
-                        v.dump_token(f)
-
-
-        if 0:
-            @property
-            def s(t):
-                return ''.join(v.s   for v in t)
+            with f.indent(arrange('<%s +%d', t.display_name, indentation.total), '>'):
+                for v in t:
+                    v.dump_token(f)
 
 
     class CommentSuite(SuiteBase):
