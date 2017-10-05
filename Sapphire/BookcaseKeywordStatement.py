@@ -40,9 +40,9 @@ def gem():
                            t.display_name,
                            indented_token.indentation.total,
                            (''   if comment is 0 else   ' ' + comment.display_token()),
-                           indented_token.keyword.display_token(),
-                           t.a                   .display_token(),
-                           frill.x               .display_token())
+                           indented_token.token.display_token(),
+                           t.a                 .display_token(),
+                           frill.x             .display_token())
 
 
         def dump_token(t, f, newline = true):
@@ -55,7 +55,7 @@ def gem():
             if comment is 0:
                 f.partial('<%s +%d ', t.display_name, indented_token.indentation.total)
 
-                indented_token.keyword.dump_token(f)
+                indented_token.token.dump_token(f)
                 t.a.dump_token(f)
                 r = frill.x.dump_token(f, false)
 
@@ -68,7 +68,7 @@ def gem():
 
             with f.indent(arrange('<%s +%d ', t.display_name, indented_token.indentation.total), '>'):
                 comment.dump_token(f)
-                indented_token.keyword.dump_token(f)
+                indented_token.token.dump_token(f)
                 t.a.dump_token(f)
                 frill.x.dump_token(f, false)
 

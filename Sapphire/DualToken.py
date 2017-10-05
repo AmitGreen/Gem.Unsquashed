@@ -432,7 +432,7 @@ def gem():
 
         comment     = 0
         indentation = BaseDualOperator.a
-        keyword     = BaseDualOperator.b
+        token       = BaseDualOperator.b
 
 
         def display_token(t):

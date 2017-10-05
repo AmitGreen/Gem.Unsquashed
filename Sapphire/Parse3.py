@@ -3,8 +3,8 @@
 #
 @gem('Sapphire.Parse3')
 def gem():
-    tree = 0
-    show = 0
+    tree = 7
+    show = 7
 
 
     require_gem('Sapphire.BodyStatement')
@@ -211,8 +211,6 @@ def gem():
 
                     if v.is_end_of_data:
                         raise_unknown_line()
-
-                    v = v.add_comment(comment)
                 else:
                     raise_unknown_line()
 

@@ -29,9 +29,10 @@ def gem():
                         v.dump_token(f)
 
 
-        @property
-        def s(t):
-            return ''.join(v.s   for v in t)
+        if 0:
+            @property
+            def s(t):
+                return ''.join(v.s   for v in t)
 
 
     class CommentSuite(SuiteBase):
@@ -47,6 +48,7 @@ def gem():
     class MixedSuite(SuiteBase):
         __slots__    = (())
         display_name = 'mixed-*'
+
 
     class StatementSuite(SuiteBase):
         __slots__    = (())
