@@ -228,7 +228,7 @@ def gem():
             AssertStatement_1,
 
             conjure_dual_frill         = conjure_xy_frill,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 2,
         )
 
     [
@@ -238,7 +238,7 @@ def gem():
             DecoratorHeader,
 
             conjure_dual_frill         = conjure_xy_frill,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 2,
         )
 
     [
@@ -248,7 +248,7 @@ def gem():
             DeleteStatement_1,
 
             conjure_dual_frill         = conjure_xy_frill,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 2,
         )
 
     [
@@ -258,7 +258,7 @@ def gem():
             ElseIfHeader,
 
             conjure_dual_frill         = conjure_xy_frill,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 2,
         )
 
     [
@@ -268,7 +268,7 @@ def gem():
             ExceptHeader_1,
 
             conjure_dual_frill         = conjure_xy_frill,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 2,
         )
 
     [
@@ -278,7 +278,7 @@ def gem():
             IfHeader,
 
             conjure_dual_frill         = conjure_xy_frill,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 2,
         )
 
     [
@@ -288,7 +288,7 @@ def gem():
             ImportStatement,
 
             conjure_dual_frill         = conjure_xy_frill,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 2,
         )
 
     [
@@ -298,7 +298,7 @@ def gem():
             RaiseStatement_1,
 
             conjure_dual_frill         = conjure_xy_frill,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 2,
         )
 
     [
@@ -308,7 +308,7 @@ def gem():
             ReturnStatement,
 
             conjure_dual_frill         = conjure_xy_frill,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 2,
         )
 
     [
@@ -318,7 +318,7 @@ def gem():
             WhileHeader,
 
             conjure_dual_frill         = conjure_xy_frill,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 2,
         )
 
     [
@@ -328,7 +328,7 @@ def gem():
             WithHeader_1,
 
             conjure_dual_frill         = conjure_xy_frill,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 2,
         )
 
     [
@@ -338,7 +338,7 @@ def gem():
             YieldStatement_1,
 
             conjure_dual_frill         = conjure_xy_frill,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 2,
         )
 
 

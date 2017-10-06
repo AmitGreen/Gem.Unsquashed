@@ -11,6 +11,17 @@ def gem():
         is_statement        = true
 
 
+        def add_comment(t, comment):
+            frill = t.frill
+
+            assert frill.comment is 0
+
+            return conjure_expression_statement__with_frill(
+                       t.a,
+                       conjure_commented_xy_frill(comment, frill.x, frill.y),
+                   )
+
+
         def display_token(t):
             return arrange('<expression-statement +%d %s>', t.frill.x.total, t.a.display_token())
 
@@ -27,21 +38,41 @@ def gem():
         def dump_token(t, f, newline = true):
             frill = t.frill
 
-            f.partial('<%s +%d ', t.display_name, frill.x.total)
-            t.a.dump_token(f)
-            r = frill.y.dump_token(f, false)
+            comment = frill.comment
 
-            if (r) and (newline):
-                f.line('>')
-                return false
+            if comment is 0:
+                f.partial('<%s +%d ', t.display_name, frill.x.total)
+                t.a.dump_token(f)
+                r = frill.y.dump_token(f, false)
 
-            f.partial('>')
-            return r
+                if (r) and (newline):
+                    f.line('>')
+                    return false
+
+                f.partial('>')
+                return r
+
+            with f.indent(arrange('<%s +%d', t.display_name, frill.x.total), '>'):
+                comment.dump_token(f)
+                t.a    .dump_token(f)
+                frill.y.dump_token(f)
 
 
         @property
         def indentation(t):
             return t.frill.x
+
+
+        def write__frill(t, w):
+            frill   = t.frill
+            comment = frill.comment
+
+            if comment is not 0:
+                comment.write(w)
+
+            w(frill.x.s)
+            t.a.write(w)
+            w(frill.y.s)
 
 
     [
@@ -51,7 +82,7 @@ def gem():
             ExpressionStatement,
                                          
             conjure_dual_frill         = conjure_xy_frill,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 1,
         )
 
 

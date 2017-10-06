@@ -85,9 +85,9 @@ def gem():
             
 
             conjure_dual_frill         = conjure_dual_frill,
-            produce_conjure_with_frill = false,
+            produce_conjure_with_frill = 0,
     ):
-        assert type(produce_conjure_with_frill) is Boolean
+        assert 0 <= produce_conjure_with_frill <= 2
 
         cache   = {}
         lookup  = cache.get
@@ -169,7 +169,13 @@ def gem():
             append_cache(name, cache)
 
         if produce_conjure_with_frill:
-            return (( conjure_bookcase_expression, static_method(conjure_dual__with_frill) ))
+            return ((
+                       conjure_bookcase_expression,
+                       (
+                           conjure_dual__with_frill   if produce_conjure_with_frill is 1 else
+                           static_method(conjure_dual__with_frill)
+                       ),
+                   ))
 
 
         return conjure_bookcase_expression
