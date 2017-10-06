@@ -23,19 +23,23 @@ def gem():
         append_twig = tree_many.append
 
         variables = [
-                        0,                  #   0 = comment
-                        0,                  #   1 = v
+                        0,                  #   0 = before
+                        0,                  #   1 = comment
+                        0,                  #   2 = v
                     ]
 
         query = variables.__getitem__
         write = variables.__setitem__
 
-        qc  = Method(query, 0)
-        qv  = Method(query, 1)
+        qb  = Method(query, 0)
+        qc  = Method(query, 1)
+        qv  = Method(query, 2)
 
-        wc  = Method(write, 0)
-        wv  = Method(write, 1)
+        wb  = Method(write, 0)
+        wc  = Method(write, 1)
+        wv  = Method(write, 2)
 
+        wb0 = Method(wb, 0)
         wc0 = Method(wc, 0)
         wv0 = Method(wv, 0)
 
@@ -107,59 +111,43 @@ def gem():
             return append
 
  
-        def parse_comments_or_empty_lines(v):
-            assert qc() is qv() is 0
+        #
+        #   parse_blank_line:
+        #
+        #       This routine is "rolled-out" at least three times ... Hard to read the first time (and second time
+        #       and third time!), but the code is actualy "simplier" due to the 'unrolling' ("simplier" in the sense
+        #       less conditions per loop, if it was not "rolled-out")
+        #
+        def parse_blank_lines(v):
+            assert qb() is qc() is qv() is 0
 
-            w = next_line()
+            #
+            #   At this point:
+            #       v:              first comment or empty line
+            #
+            #   Set soon:
+            #       v_impression:   indentation if 'v' is a comment, or 0 if 'v' is an empty line
+            #       w:              next line
+            #       w_impression:   indentation if 'w' is a comment, or 0 if 'w' is an empty line
+            #
+            v_impression = v.impression
+            w            = next_line()
 
             if not w.is_comment__or__empty_line:
-                if (v.is_comment_line) and (v.impression is w.indentation):
+                if v_impression is w.indentation:
+                    assert (v.is_comment_line) and (not w.is_end_of_data)
+
                     return w.add_comment(v)
 
-                wc(v)
+                wb(v)
                 return w
 
-            #
-            #   mixed:          first element of mixed_many
-            #   mixed_many:     multiple mixed
-            #   impression:     impression of comments (or 0 if processing blank lines)
-            #
-            if w.is_comment_line:
-                impression = w.impression
+            w_impression = w.impression
 
-                if (v.is_comment_line) and (v.impression is impression):
-                    comment_many = [v, w]
+            if v_impression is w_impression:
+                if v_impression is 0:
+                    assert (v.is_empty_line) and (w.is_empty_line)
 
-                    while 7 is 7:
-                        w = next_line()
-
-                        if w.is_comment_line:
-                            if impression is w.impression:
-                                comment_many.append(w)
-                                continue
-
-                            impression = w.impression
-                            break
-
-                        if w.is_empty_line:
-                            impression = 0
-                            break
-
-                        if w.is_end_of_data:
-                            wc(conjure_comment_suite(comment_many))
-                            return w
-
-                        return w.add_comment(conjure_comment_suite(comment_many))
-
-                    mixed = conjure_comment_suite(comment_many)
-                else:
-                    mixed = v
-            else:
-                impression = 0
-
-                if v.is_comment_line:
-                    mixed = v
-                else:
                     empty_line_many = [v, w]
 
                     while 7 is 7:
@@ -170,142 +158,276 @@ def gem():
                             continue
 
                         if w.is_comment_line:
-                            impression = w.impression
+                            w_impression = w.impression
                             break
 
-                        wc(conjure_empty_line_suite(empty_line_many))
+                        wb(conjure_empty_line_suite(empty_line_many))
                         return w
 
-                    mixed = conjure_empty_line_suite(empty_line_many)
+                    v = conjure_empty_line_suite(empty_line_many)
+                else:
+                    assert (v.is_comment_line) and (w.is_comment_line)
 
-            mixed_many = none
+                    comment_many = [v, w]
+
+                    while 7 is 7:
+                        w = next_line()
+
+                        if w.is_comment__or__empty_line:
+                            w_impression = w.impression
+
+                            if v_impression is w_impression:
+                                comment_many.append(w)
+                                continue
+
+                            break
+
+                        if v_impression is w.indentation:
+                            return w.add_comment(conjure_comment_suite(comment_many))
+
+                        wb(conjure_comment_suite(comment_many))
+                        return w
+
+                    v = conjure_comment_suite(comment_many)
+
+            #
+            #   At this point:
+            #       v:              first comment, empty line, suite of comments, or suite of empty lines
+            #       w:              current comment or empty line
+            #       w_impression:   indentation if 'w' is a comment, or 0 if 'w' is an empty line
+            #
+            #   Set soon:
+            #       x:              next line
+            #       x_impression:   indentation if 'x' is a comment, or 0 if 'x' is an empty line
+            #
+            x = next_line()
+
+            if not x.is_comment__or__empty_line:
+                if w_impression is x.indentation:
+                    assert (w.is_comment_line) and (not x.is_end_of_data)
+
+                    wb(v)
+                    return x.add_comment(w)
+
+                wb(conjure_mixed_suite([v, w]))
+                return x
+
+            x_impression = x.impression
+
+            if w_impression is not x_impression:
+                mixed_many = [v, w]
+            elif w_impression is 0:
+                assert (w.is_empty_line) and (x.is_empty_line)
+
+                empty_line_many = [w, x]
+
+                while 7 is 7:
+                    x = next_line()
+
+                    if x.is_empty_line:
+                        empty_line_many.append(x)
+                        continue
+
+                    if x.is_comment_line:
+                        x_impression = x.impression
+                        break
+
+                    wb(conjure_mixed_suite([v, conjure_empty_line_suite(empty_line_many)]))
+                    return x
+
+                mixed_many = [v, conjure_empty_line_suite(empty_line_many)]
+            else:
+                assert (w.is_comment_line) and (x.is_comment_line)
+
+                comment_many = [w, x]
+
+                while 7 is 7:
+                    x = next_line()
+
+                    if x.is_comment__or__empty_line:
+                        x_impression = x.impression
+
+                        if w_impression is x_impression:
+                            comment_many.append(x)
+                            continue
+
+                        break
+
+                    if w_impression is x.indentation:
+                        wb(v)
+                        return x.add_comment(conjure_comment_suite(comment_many))
+
+                    wb(conjure_mixed_suite([v, conjure_comment_suite(comment_many)]))
+                    return x
+
+                mixed_many = [v, conjure_comment_suite(comment_many)]
 
             #
             #   At this point:
             #       v:              no longer used
-            #       mixed:          first element of mixed_many, or 0 if no longer used
+            #       w:              no longer used
             #       mixed_many:     multiple mixed
-            #       w:              current comment or empty line
-            #       indentation:    indentation if comment, or 0 if empty line
+            #       x:              current comment or empty line
+            #       x_impression:   indentation if 'x' is a comment, or 0 if 'x' is an empty line
             #
-            if 0:
-                my_line('=== 1 ===')
-                my_line('mixed: %r', mixed)
-                my_line('mixed_many: %r', mixed_many)
-                my_line('w: %r', w)
-                my_line('impression: %r', impression)
+            #   Set soon:
+            #       y:              next line
+            #       y_impression:   indentation if 'y' is a comment, or 0 if 'y' is an empty line
+            #
+            y = next_line()
 
-            if impression is 0:
-                assert w.is_empty_line
+            if not y.is_comment__or__empty_line:
+                if x_impression is y.indentation:
+                    assert (x.is_comment_line) and (not y.is_end_of_data)
+
+                    wb(conjure_mixed_suite(mixed_many))
+                    return y.add_comment(x)
+
+                mixed_many.append(x)
+                wb(conjure_mixed_suite(mixed_many))
+                return y
+
+            y_impression = y.impression
+
+            if x_impression is not y_impression:
+                mixed_append = mixed_many.append
+
+                mixed_append(x)
+            elif x_impression is 0:
+                assert (x.is_empty_line) and (y.is_empty_line)
+
+                empty_line_many = [x, y]
+
+                while 7 is 7:
+                    y = next_line()
+
+                    if y.is_empty_line:
+                        empty_line_many.append(y)
+                        continue
+
+                    if y.is_comment_line:
+                        y_impression = y.impression
+                        break
+
+                    mixed_many.append(conjure_empty_line_suite(empty_line_many))
+                    wb(conjure_mixed_suite(mixed_many))
+                    return y
+
+                mixed_append = mixed_many.append
+
+                mixed_append(conjure_empty_line_suite(empty_line_many))
             else:
-                assert impression is w.impression
+                assert (x.is_comment_line) and (y.is_comment_line)
 
-            while 7 is 7:
-                x = next_line()
+                comment_many = [x, y]
 
-                if not x.is_comment__or__empty_line:
-                    if impression is x.indentation:
-                        if mixed is 0:
-                            wc(conjure_mixed_suite(mixed_many))
-                        else:
-                            wc(mixed)
+                while 7 is 7:
+                    y = next_line()
 
-                        return x.add_comment(w)
+                    if y.is_comment__or__empty_line:
+                        y_impression = y.impression
 
-                    if mixed is 0:
-                        mixed_many.append(w)
-                    else:
-                        mixed_many = [mixed, w]
-
-                    wc(conjure_mixed_suite(mixed_many))
-                    return x
-
-                if 0:
-                    my_line('===')
-                    my_line('x: %r', x)
-                    my_line('impression: %r', impression)
-                    my_line('x.impression: %r', x.impression)
-
-                if impression is 0:
-                    if x.is_empty_line:
-                        empty_line_many = [w, x]
-
-                        while 7 is 7:
-                            x = next_line()
-
-                            if x.is_empty_line:
-                                empty_line_many.append(x)
-                                continue
-
-                            if x.is_comment_line:
-                                impression = x.impression
-                                break
-
-                            if mixed is 0:
-                                mixed_many.append(conjure_empty_line_suite(empty_line_many))
-                                wc(conjure_mixed_suite(mixed_many))
-                                return x
-
-                            wc(conjure_mixed_suite([mixed, conjure_empty_line_suite(empty_line_many)]))
-                            return x
-
-                        w = x
-
-                        if mixed is 0:
-                            mixed_many.append(conjure_empty_line_suite(empty_line_many))
+                        if x_impression is y_impression:
+                            comment_many.append(y)
                             continue
 
-                        mixed_many = [mixed, conjure_empty_line_suite(empty_line_many)]
-                        mixed      = 0
-                        continue
+                        break
 
-                elif impression is x.impression:
-                    comment_many = [w, x]
+                    if x_impression is y.indentation:
+                        wb(conjure_mixed_suite(mixed_many))
+                        return y.add_comment(conjure_comment_suite(comment_many))
 
-                    while 7 is 7:
-                        x = next_line()
+                    mixed_many.append(conjure_comment_suite(comment_many))
+                    wb(conjure_mixed_suite(mixed_many))
+                    return y
 
-                        if x.is_comment_line:
-                            if impression is x.impression:
-                                comment_many.append(x)
-                                continue
+                mixed_append = mixed_many.append
 
-                            impression = x.impression
-                            break
+                mixed_append(conjure_comment_suite(comment_many))
 
-                        if x.is_empty_line:
-                            impression = 0
-                            break
+            #
+            #   At this point:
+            #       v:              no longer used
+            #       w:              no longer used
+            #       x:              no longer used
+            #       mixed_many:     multiple mixed
+            #       mixed_append:   append to mixed_many
+            #       y:              current comment or empty line
+            #       y_impression:   indentation if 'y' is a comment, or 0 if 'y' is an empty line
+            #
+            #   Set soon:
+            #       z:              next line
+            #       z_impression:   indentation if 'z' is a comment, or 0 if 'z' is an empty line
+            #
+            while 7 is 7:
+                z = next_line()
 
-                        if x.is_end_of_data:
-                            if mixed is not 0:
-                                mixed_many = [mixed]
+                if not z.is_comment__or__empty_line:
+                    if y_impression is z.indentation:
+                        assert (y.is_comment_line) and (not z.is_end_of_data)
 
-                            mixed_many.append(conjure_comment_suite(comment_many))
-                            wc(conjure_mixed_suite(mixed_many))
-                            return x
+                        wb(conjure_mixed_suite(mixed_many))
+                        return z.add_comment(y)
 
-                        wc(conjure_mixed_suite(mixed_many)   if mixed is 0 else   mixed)
-                        return x.add_comment(conjure_comment_suite(comment_many))
+                    mixed_append(y)
+                    wb(conjure_mixed_suite(mixed_many))
+                    return z
 
-                    w = x
+                if y_impression is not z.impression:
+                    mixed_append(y)
 
-                    if mixed is 0:
-                        mixed_many.append(conjure_comment_suite(comment_many))
-                        continue
-
-                    mixed_many = [mixed, conjure_comment_suite(comment_many)]
-                    mixed      = 0
+                    y            = z
+                    y_impression = z.impression
                     continue
 
-                if mixed is 0:
-                    mixed_many.append(w)
-                else:
-                    mixed_many = [mixed, w]
-                    mixed      = 0
+                if y_impression is 0:
+                    assert (y.is_empty_line) and (z.is_empty_line)
 
-                impression = x.impression
-                w          = x
+                    empty_line_many = [y, z]
+
+                    while 7 is 7:
+                        y = next_line()
+
+                        if y.is_empty_line:
+                            empty_line_many.append(y)
+                            continue
+
+                        if y.is_comment_line:
+                            y_impression = y.impression
+                            break
+
+                        mixed_append(conjure_empty_line_suite(empty_line_many))
+                        wb(conjure_mixed_suite(mixed_many))
+                        return y
+
+                    mixed_append(conjure_empty_line_suite(empty_line_many))
+                    continue
+
+                assert (y.is_comment_line) and (z.is_comment_line)
+
+                comment_many = [y, z]
+
+                while 7 is 7:
+                    y = next_line()
+
+                    if y.is_comment__or__empty_line:
+                        if y_impression is y.impression:
+                            comment_many.append(y)
+                            continue
+
+                        y_impression = y.impression
+                        break
+
+                    if y_impression is y.indentation:
+                        wb(conjure_mixed_suite(mixed_many))
+                        return y.add_comment(conjure_comment_suite(comment_many))
+
+                    mixed_append(conjure_comment_suite(comment_many))
+                    wb(conjure_mixed_suite(mixed_many))
+                    return y
+
+                mixed_append(conjure_comment_suite(comment_many))
+                y_impression = y.impression
 
 
         def parse_decorator_header(decorator_header):
@@ -360,13 +482,13 @@ def gem():
                         wv0()
 
                     if v.is_comment__or__empty_line:
-                        v = parse_comments_or_empty_lines(v)
+                        v = parse_blank_lines(v)
                         
-                        comment = qc()
+                        before = qb()
 
-                        if comment is not 0:
+                        if before is not 0:
                             wc0()
-                            append_twig(comment)
+                            append_twig(before)
 
                     if v.is_end_of_data:
                         wv(v)
@@ -441,21 +563,21 @@ def gem():
                     wv0()
 
                 if w.is_comment__or__empty_line:
-                    w = parse_comments_or_empty_lines(w)
+                    w = parse_blank_lines(w)
 
                     assert not w.is_comment__or__empty_line
 
-                    comment = qc()
+                    before = qb()
 
-                    if comment is not 0:
-                        wc0()
+                    if before is not 0:
+                        wb0()
 
                         if indentation is not w.indentation:
                             wv(w)
 
-                            return conjure_statement_suite([v, comment])
+                            return conjure_statement_suite([v, before])
 
-                        suite_many = [v, comment, w]
+                        suite_many = [v, before, w]
                     else:
                         if indentation is not w.indentation:
                             wv(w)
