@@ -158,7 +158,6 @@ def gem():
                 impression = 0
 
                 if v.is_comment_line:
-                    raise_unknown_line()
                     mixed = v
                 else:
                     empty_line_many = [v, w]
@@ -189,7 +188,7 @@ def gem():
             #       w:              current comment or empty line
             #       indentation:    indentation if comment, or 0 if empty line
             #
-            if 7:
+            if 0:
                 my_line('=== 1 ===')
                 my_line('mixed: %r', mixed)
                 my_line('mixed_many: %r', mixed_many)
@@ -221,10 +220,11 @@ def gem():
                     wc(conjure_mixed_suite(mixed_many))
                     return x
 
-                my_line('===')
-                my_line('x: %r', x)
-                my_line('impression: %r', impression)
-                my_line('x.impression: %r', x.impression)
+                if 0:
+                    my_line('===')
+                    my_line('x: %r', x)
+                    my_line('impression: %r', impression)
+                    my_line('x.impression: %r', x.impression)
 
                 if impression is 0:
                     if x.is_empty_line:
@@ -285,8 +285,8 @@ def gem():
                             wc(conjure_mixed_suite(mixed_many))
                             return x
 
-                        raise_unknown_line()
-                        return w.add_comment(conjure_comment_suite(comment_many))
+                        wc(conjure_mixed_suite(mixed_many)   if mixed is 0 else   mixed)
+                        return x.add_comment(conjure_comment_suite(comment_many))
 
                     w = x
 
@@ -417,13 +417,8 @@ def gem():
 
                 if comment is not 0:
                     wc0()
-
-                    suite_many   = [comment]
-                    suite_append = suite_many.append
-                else:
-                    suite_append = suite_many = 0
             else:
-                suite_append = suite_many = 0
+                comment = 0
 
             if v.is_end_of_data:
                 raise_unknown_line()
@@ -437,54 +432,118 @@ def gem():
             if v.is_statement_header:
                 v = v.parse_header()
 
-            if suite_append is not 0:
-                suite_append(v)
+            if comment is 0:
+                w = qv()
 
-                v = 0
+                if w is 0:
+                    w = next_line()
+                else:
+                    wv0()
 
-            w = qv()
+                if w.is_comment__or__empty_line:
+                    w = parse_comments_or_empty_lines(w)
 
-            if w is 0:
-                w = next_line()
+                    assert not w.is_comment__or__empty_line
+
+                    comment = qc()
+
+                    if comment is not 0:
+                        wc0()
+
+                        if indentation is not w.indentation:
+                            wv(w)
+
+                            return conjure_statement_suite([v, comment])
+
+                        suite_many = [v, comment, w]
+                    else:
+                        if indentation is not w.indentation:
+                            wv(w)
+
+                            return v
+
+                        suite_many = [v, w]
+                else:
+                    if indentation is not w.indentation:
+                        wv(w)
+
+                        return v
+                
+                    suite_many = [v, w]
+            else:
+                suite_many = [comment, v]
+
+            #
+            #   Handle 3rd part of suite -- set suite_append only if needed
+            #
+            x = qv()
+
+            if x is 0:
+                x = next_line()
             else:
                 wv0()
 
-            if w.is_comment__or__empty_line:
-                w = parse_comments_or_empty_lines(w)
+            if x.is_comment__or__empty_line:
+                x = parse_comments_or_empty_lines(x)
 
-                assert not w.is_comment__or__empty_line
+                assert not x.is_comment__or__empty_line
 
                 comment = qc()
 
                 if comment is not 0:
                     wc0()
+                    suite_append = suite_many.append
+                    suite_append(comment)
 
-                    if suite_append is 0:
-                        assert v is not 0 
+                    if indentation is not x.indentation:
+                        wv(x)
 
-                        suite_many   = [v, comment]
-                        suite_append = suite_many.append
-                    else:
-                        assert v is 0
+                        return conjure_statement_suite(suite_many)
+                else:
+                    if indentation is not x.indentation:
+                        wv(x)
 
-                        suite_append(comment)
+                        return conjure_statement_suite(suite_many)
 
-            if w.is_end_of_data:
-                wv(w)
+                    suite_append = suite_many.append
+            else:
+                if indentation is not x.indentation:
+                    wv(x)
 
-                if suite_append is 0:
-                    return v
+                    return conjure_statement_suite(suite_many)
 
-                return conjure_statement_suite(suite_many)
-
-
-            if suite_append is 0:
-                suite_many   = [v, w]
                 suite_append = suite_many.append
 
-                v = 0
-            else:
-                suite_append(w)
+            suite_append(x)
+
+            #
+            #   Handle 4th+ part of suite -- use suite_append
+            #
+            while 7 is 7:
+                x = qv()
+
+                if x is 0:
+                    x = next_line()
+                else:
+                    wv0()
+
+                if x.is_comment__or__empty_line:
+                    x = parse_comments_or_empty_lines(x)
+
+                    assert not x.is_comment__or__empty_line
+
+                    comment = qc()
+
+                    if comment is not 0:
+                        wc0()
+                        suite_append(comment)
+
+                if indentation is not x.indentation:
+                    wv(x)
+
+                    return conjure_statement_suite(suite_many)
+
+                suite_append(x)
 
 
         DecoratorHeader.parse_header = parse_decorator_header

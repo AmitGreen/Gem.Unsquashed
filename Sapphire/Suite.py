@@ -23,7 +23,7 @@ def gem():
 
     class CommentSuite(SuiteBase):
         __slots__   =  (())
-        indendation = none
+        indentation = none
 
 
         def dump_token(t, f, newline = true):
@@ -37,7 +37,7 @@ def gem():
     class EmptyLineSuite(SuiteBase):
         __slots__    = (())
         display_name = 'empty-line-*'
-        indendation  = none
+        indentation  = none
 
 
         dump_token = dump_token__no_impression
@@ -46,7 +46,7 @@ def gem():
     class MixedSuite(SuiteBase):
         __slots__    = (())
         display_name = 'mixed-*'
-        indendation  = none
+        indentation  = none
 
 
         dump_token = dump_token__no_impression
@@ -59,7 +59,9 @@ def gem():
         def dump_token(t, f, newline = true):
             assert newline is true
 
-            indendation = (t[0].indentation) or (t[1].indendation)
+            indentation = (t[0].indentation) or (t[1].indentation)
+
+            assert indentation is not none
 
             with f.indent(arrange('<statement-* ++%d', indentation.total), '>'):
                 for v in t:
@@ -69,15 +71,15 @@ def gem():
         if __debug__:
             @property
             def indentation(t):
-                indendation = (t[0].indentation) or (t[1].indendation)
+                indentation = (t[0].indentation) or (t[1].indentation)
 
-                assert indendation is not none
+                assert indentation is not none
 
-                return indendation
+                return indentation
         else:
             @property
             def indentation(t):
-                return (t[0].indentation) or (t[1].indendation)
+                return (t[0].indentation) or (t[1].indentation)
 
 
     conjure_comment_suite    = produce_conjure_tuple('comment-*',    CommentSuite,    suite_cache, provide_suite)
