@@ -25,7 +25,8 @@ def gem():
     class CommentLine(String):
         __slots__                  = (())
         ends_in_newline            = true
-        indentation                = empty_indentation
+        impression                 = empty_indentation
+        indentation                = none
         is_comment_line            = true
         is_comment__or__empty_line = true
         is_empty_line              = false
@@ -68,7 +69,8 @@ def gem():
 
 
         ends_in_newline            = true
-        indentation                = empty_indentation
+        impression                 = empty_indentation
+        indentation                = none
         is_comment_line            = true
         is_comment__or__empty_line = true
         is_empty_line              = false
@@ -104,12 +106,13 @@ def gem():
 
     class IndentedCommentLine(SapphireToken):
         __slots__ = ((
-            'indentation',              #   Indentation
+            'impression',               #   Indentation
             'comment',                  #   CommentLine
         ))
 
 
         ends_in_newline            = true
+        indentation                = none
         is_comment_line            = true
         is_comment__or__empty_line = true
         is_empty_line              = false
@@ -119,28 +122,28 @@ def gem():
         newlines                   = 1
 
 
-        def __init__(t, s, indentation, comment):
-            t.s           = s
-            t.indentation = indentation
-            t.comment     = comment
+        def __init__(t, s, impression, comment):
+            t.s          = s
+            t.impression = impression
+            t.comment    = comment
 
 
         def __repr__(t):
-            return arrange('<IndentedCommentLine +%d %r>', t.indentation.total, portray_string(t.comment))
+            return arrange('<IndentedCommentLine ++%d %r>', t.impression.total, portray_string(t.comment))
 
 
         def count_newlines(t):
             assert (t.ends_in_newline is true) and (t.line_marker is false) and (t.newlines is 1)
-            assert (t.indentation.count_newlines() is 0) and ('\n' not in t.comment)
+            assert (t.impression.count_newlines() is 0) and ('\n' not in t.comment)
 
             return 1
 
 
         def display_token(t):
             if t.comment is empty_comment_line:
-                return arrange('<# +%d>', t.indentation.total)
+                return arrange('<# ++%d>', t.impression.total)
 
-            return arrange('<# +%d %s>', t.indentation.total, portray_string(t.comment))
+            return arrange('<# ++%d %s>', t.impression.total, portray_string(t.comment))
 
 
         dump_token = dump_token__comment
@@ -148,13 +151,14 @@ def gem():
 
     class IndentedCommentLine_WithTrailer(SapphireToken):
         __slots__ = ((
-            'indentation',              #   Indentation
+            'impression',               #   Indentation
             'comment',                  #   CommentLine
             'newline',                  #   EmptyLine
         ))
 
 
         ends_in_newline            = true
+        indentation                = none
         is_comment_line            = true
         is_comment__or__empty_line = true
         is_empty_line              = false
@@ -163,28 +167,28 @@ def gem():
         newlines                   = 1
 
 
-        def __init__(t, s, indentation, comment, newline):
-            t.s           = s
-            t.indentation = indentation
-            t.comment     = comment
-            t.newline     = newline
+        def __init__(t, s, impression, comment, newline):
+            t.s          = s
+            t.impression = impression
+            t.comment    = comment
+            t.newline    = newline
 
 
         def __repr__(t):
-            return arrange('<IndentedCommentLine_WithTrailer +%d %s %s>',
-                           t.indentation.total, portray_string(t.comment), portray_string(t.newline))
+            return arrange('<IndentedCommentLine_WithTrailer ++%d %s %s>',
+                           t.impression.total, portray_string(t.comment), portray_string(t.newline))
 
 
         def count_newlines(t):
             assert (t.ends_in_newline is true) and (t.line_marker is false) and (t.newlines is 1)
-            assert (t.indentation.count_newlines() is 0) and ('\n' not in t.comment)
+            assert (t.impression.count_newlines() is 0) and ('\n' not in t.comment)
             assert t.newline.count_newlines() is 1
 
             return 1
 
 
         def display_token(t):
-            return arrange('<# +%d %s %s>', t.indentation.total, portray_string(t.comment), portray_string(t.newline))
+            return arrange('<# ++%d %s %s>', t.impression.total, portray_string(t.comment), portray_string(t.newline))
 
 
         dump_token = dump_token__comment
@@ -202,7 +206,7 @@ def gem():
         return provide_comment_line(r, r)
 
 
-    def conjure_any_comment_line(indentation_end, comment_end):
+    def conjure_any_comment_line(impression_end, comment_end):
         r = lookup_comment_line(qs())
 
         if r is not none:
@@ -210,23 +214,23 @@ def gem():
 
         s = intern_string(qs())
 
-        comment = conjure_comment_line(s[indentation_end + 1 : comment_end])
-        newline =                      s[comment_end         :            ]
+        comment = conjure_comment_line(s[impression_end + 1 : comment_end])
+        newline =                      s[comment_end        :            ]
 
-        if indentation_end is 0:
+        if impression_end is 0:
             if newline == '\n':
                 return provide_comment_line(s, comment)
 
             return provide_comment_line(s, CommentLine_WithTrailer(s, comment, conjure_empty_line(newline)))
 
-        indentation = conjure_indentation(s[ : indentation_end])
+        impression = conjure_indentation(s[ : impression_end])
 
         if newline == '\n':
-            return provide_comment_line(s, IndentedCommentLine(s, indentation, comment))
+            return provide_comment_line(s, IndentedCommentLine(s, impression, comment))
 
         return provide_comment_line(
                    s,
-                   IndentedCommentLine_WithTrailer(s, indentation, comment, conjure_empty_line(newline)),
+                   IndentedCommentLine_WithTrailer(s, impression, comment, conjure_empty_line(newline)),
                )
 
 

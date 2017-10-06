@@ -113,36 +113,36 @@ def gem():
             w = next_line()
 
             if not w.is_comment__or__empty_line:
-                if (v.is_comment_line) and (v.indentation is w.indentation):
+                if (v.is_comment_line) and (v.impression is w.indentation):
                     return w.add_comment(v)
 
                 wc(v)
                 return w
 
             #
-            #   mixed:        first element of mixed_many
-            #   mixed_many:   multiple mixed
-            #   indentation:  indentation of comments (or none if processing blank lines)
+            #   mixed:          first element of mixed_many
+            #   mixed_many:     multiple mixed
+            #   impression:     impression of comments (or 0 if processing blank lines)
             #
             if w.is_comment_line:
-                indentation = w.indentation
+                impression = w.impression
 
-                if (v.is_comment_line) and (v.indentation is indentation):
+                if (v.is_comment_line) and (v.impression is impression):
                     comment_many = [v, w]
 
                     while 7 is 7:
                         w = next_line()
 
                         if w.is_comment_line:
-                            if indentation is w.indentation:
+                            if impression is w.impression:
                                 comment_many.append(w)
                                 continue
 
-                            indentation = w.indentation
+                            impression = w.impression
                             break
 
                         if w.is_empty_line:
-                            indentation = 0
+                            impression = 0
                             break
 
                         if w.is_end_of_data:
@@ -155,7 +155,7 @@ def gem():
                 else:
                     mixed = v
             else:
-                indentation = 0
+                impression = 0
 
                 if v.is_comment_line:
                     raise_unknown_line()
@@ -171,7 +171,7 @@ def gem():
                             continue
 
                         if w.is_comment_line:
-                            indentation = w.indentation
+                            impression = w.impression
                             break
 
                         wc(conjure_empty_line_suite(empty_line_many))
@@ -194,18 +194,18 @@ def gem():
                 my_line('mixed: %r', mixed)
                 my_line('mixed_many: %r', mixed_many)
                 my_line('w: %r', w)
-                my_line('indentation: %r', indentation)
+                my_line('impression: %r', impression)
 
-            if indentation is 0:
+            if impression is 0:
                 assert w.is_empty_line
             else:
-                assert indentation is w.indentation
+                assert impression is w.impression
 
             while 7 is 7:
                 x = next_line()
 
                 if not x.is_comment__or__empty_line:
-                    if indentation is x.indentation:
+                    if impression is x.indentation:
                         if mixed is 0:
                             wc(conjure_mixed_suite(mixed_many))
                         else:
@@ -221,30 +221,60 @@ def gem():
                     wc(conjure_mixed_suite(mixed_many))
                     return x
 
+                my_line('===')
                 my_line('x: %r', x)
-                my_line('indentation: %r', indentation)
-                my_line('x.indentation: %r', x.indentation)
+                my_line('impression: %r', impression)
+                my_line('x.impression: %r', x.impression)
 
-                if indentation is 0:
-                    raise_unknown_line()
+                if impression is 0:
+                    if x.is_empty_line:
+                        empty_line_many = [w, x]
 
-                if indentation is x.indentation:
+                        while 7 is 7:
+                            x = next_line()
+
+                            if x.is_empty_line:
+                                empty_line_many.append(x)
+                                continue
+
+                            if x.is_comment_line:
+                                impression = x.impression
+                                break
+
+                            if mixed is 0:
+                                mixed_many.append(conjure_empty_line_suite(empty_line_many))
+                                wc(conjure_mixed_suite(mixed_many))
+                                return x
+
+                            wc(conjure_mixed_suite([mixed, conjure_empty_line_suite(empty_line_many)]))
+                            return x
+
+                        w = x
+
+                        if mixed is 0:
+                            mixed_many.append(conjure_empty_line_suite(empty_line_many))
+                            continue
+
+                        mixed_many = [mixed, conjure_empty_line_suite(empty_line_many)]
+                        mixed      = 0
+                        continue
+
+                elif impression is x.impression:
                     comment_many = [w, x]
 
                     while 7 is 7:
                         x = next_line()
 
                         if x.is_comment_line:
-                            if indentation is x.indentation:
+                            if impression is x.impression:
                                 comment_many.append(x)
                                 continue
 
-                            indentation = x.indentation
+                            impression = x.impression
                             break
 
                         if x.is_empty_line:
-                            indentation = 0
-                            raise_unknown_line()
+                            impression = 0
                             break
 
                         if x.is_end_of_data:
@@ -274,8 +304,8 @@ def gem():
                     mixed_many = [mixed, w]
                     mixed      = 0
 
-                indentation = x.indentation
-                w           = x
+                impression = x.impression
+                w          = x
 
 
         def parse_decorator_header(decorator_header):

@@ -7,45 +7,77 @@ def gem():
     provide_suite = suite_cache.setdefault
 
 
+    def dump_token__no_impression(t, f, newline = true):
+        assert newline is true
+
+        with f.indent(arrange('<%s', t.display_name), '>'):
+            for v in t:
+                v.dump_token(f)
+
+
     class SuiteBase(TokenTuple):
         __slots__           = (())
         is_statement        = true
         is_statement_header = false
 
 
-        @property
-        def indentation(t):
-            return t[0].indentation
+    class CommentSuite(SuiteBase):
+        __slots__   =  (())
+        indendation = none
 
 
         def dump_token(t, f, newline = true):
             assert newline is true
 
-            indentation = t[0].indentation
-
-            with f.indent(arrange('<%s +%d', t.display_name, indentation.total), '>'):
+            with f.indent(arrange('<comment-* +%d', t[0].impression.total), '>'):
                 for v in t:
                     v.dump_token(f)
-
-
-    class CommentSuite(SuiteBase):
-        __slots__    = (())
-        display_name = 'comment-*'
 
 
     class EmptyLineSuite(SuiteBase):
         __slots__    = (())
         display_name = 'empty-line-*'
+        indendation  = none
+
+
+        dump_token = dump_token__no_impression
 
 
     class MixedSuite(SuiteBase):
         __slots__    = (())
         display_name = 'mixed-*'
+        indendation  = none
+
+
+        dump_token = dump_token__no_impression
 
 
     class StatementSuite(SuiteBase):
-        __slots__    = (())
-        display_name = 'statement-*'
+        __slots__ = (())
+
+
+        def dump_token(t, f, newline = true):
+            assert newline is true
+
+            indendation = (t[0].indentation) or (t[1].indendation)
+
+            with f.indent(arrange('<statement-* ++%d', indentation.total), '>'):
+                for v in t:
+                    v.dump_token(f)
+
+
+        if __debug__:
+            @property
+            def indentation(t):
+                indendation = (t[0].indentation) or (t[1].indendation)
+
+                assert indendation is not none
+
+                return indendation
+        else:
+            @property
+            def indentation(t):
+                return (t[0].indentation) or (t[1].indendation)
 
 
     conjure_comment_suite    = produce_conjure_tuple('comment-*',    CommentSuite,    suite_cache, provide_suite)
