@@ -137,6 +137,9 @@ def gem():
 
 
         def display_token(t):
+            if t.comment is empty_comment_line:
+                return arrange('<# +%d>', t.indentation.total)
+
             return arrange('<# +%d %s>', t.indentation.total, portray_string(t.comment))
 
 
