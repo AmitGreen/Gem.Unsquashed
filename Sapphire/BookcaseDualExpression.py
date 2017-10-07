@@ -24,31 +24,12 @@ def gem():
 
 
     @share
-    class BookcaseDualExpression(SapphireTrunk):
-        __slots__ = ((
-            'a',                    #   Expression+
-            'b',                    #   Expression+
-        ))
-
-
+    class BookcaseDualExpression(DualTwig):
         k3 = none
-
-
-        def __init__(t, a, b):
-            t.a = a
-            t.b = b
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.b)
 
 
         def count_newlines(t):
             return t.a.count_newlines() + t.b.count_newlines() + t.frill.count_newlines()
-
-
-        def display_token(t):
-            return arrange('<%s %s %s>', t.display_name, t.a.display_token(), t.b.display_token())
 
 
         def dump_token(t, f, newline = true):

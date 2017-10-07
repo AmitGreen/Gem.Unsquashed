@@ -8,59 +8,27 @@ def gem():
     store_dual_frill  = dual_frill_cache.__setitem__
 
 
-    class DualFrill(Object):
+    class XY_Frill(Object):
         __slots__ = ((
             'a',                        #   SapphireToken+
             'b',                        #   SapphireToken+
         ))
 
-
+        comment        = 0
+        display_name   = 'xy-frill'
         frill_estimate = 2
 
-
-        def __init__(t, a, b):
-            assert not (a.is_indentation and b.is_line_marker)
-
-            t.a = a
-            t.b = b
+        __init__       = construct__ab
+        __repr__       = portray__ab
+        count_newlines = count_newlines__ab
+        display_token  = display_token__ab
 
 
-        def __repr__(t):
-            return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.b)
+    XY_Frill.x = XY_Frill.a
+    XY_Frill.y = XY_Frill.b
 
-
-        def count_newlines(t):
-            return t.a.count_newlines() + t.b.count_newlines()
-
-
-        def display_token(t):
-            return arrange('<dual-frill %s %s>', t.a.display_token(), t.b.display_token())
-
-
-    class XY_Frill(DualFrill):
-        __slots__ = (())
-
-        comment = 0
-        x       = DualFrill.a
-        y       = DualFrill.b
-
-
-        def __init__(t, a, b):
-            t.a = a
-            t.b = b
-
-
-    #DualFrill.k1 = DualFrill.a
-    DualFrill.k2 = DualFrill.b
-
-
-    conjure_dual_frill = produce_conjure_dual(
-                             'dual-frill',
-                             DualFrill,
-                             dual_frill_cache,
-                             lookup_dual_frill,
-                             store_dual_frill
-                         )
+    #XY_Frill.k1 = XY_Frill.a
+    XY_Frill.k2 = XY_Frill.b
 
 
     conjure_xy_frill = produce_conjure_dual(
@@ -76,6 +44,5 @@ def gem():
 
 
     share(
-        'conjure_dual_frill',   conjure_dual_frill,
         'conjure_xy_frill',     conjure_xy_frill,
     )

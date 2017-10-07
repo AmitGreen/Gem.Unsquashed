@@ -4,6 +4,7 @@
 @gem('Sapphire.BookcaseTriple')
 def gem():
     require_gem('Sapphire.QuadrupleFrill')
+    require_gem('Sapphire.TripleTwig')
 
 
     append_cache                    = Shared.append_cache                       #   Due to privileged
@@ -15,25 +16,9 @@ def gem():
 
 
     @share
-    class BookcaseTripleExpression(SapphireTrunk):
-        __slots__ = ((
-            'a',                    #   Expression+
-            'b',                    #   Expression+
-            'c',                    #   Expression+
-        ))
-
-
-        k4 = none
-
-
-        def __init__(t, a, b, c):
-            t.a = a
-            t.b = b
-            t.c = c
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.c)
+    class BookcaseTripleExpression(TripleTwig):
+        __slots__ = (())
+        k4        = none
 
 
         def count_newlines(t):
@@ -43,14 +28,6 @@ def gem():
                        + t.c    .count_newlines()
                        + t.frill.count_newlines()
                    )
-
-
-        def display_token(t):
-            return arrange('<%s %s %s %s>',
-                           t.display_name,
-                           t.a.display_token(),
-                           t.b.display_token(),
-                           t.b.display_token())
 
 
         def dump_token(t, f, newline = true):
@@ -85,11 +62,6 @@ def gem():
             w(frill.d.s)
  
  
-    BookcaseTripleExpression.k1 = BookcaseTripleExpression.a
-    BookcaseTripleExpression.k2 = BookcaseTripleExpression.b
-    BookcaseTripleExpression.k3 = BookcaseTripleExpression.c
-
-
     @share
     @privileged
     def produce_conjure_bookcase_triple_expression(name, Meta):

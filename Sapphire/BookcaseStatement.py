@@ -82,7 +82,6 @@ def gem():
             'expression-statement',
             ExpressionStatement,
                                          
-            conjure_dual_frill         = conjure_xy_frill,
             produce_conjure_with_frill = 1,
         )
 

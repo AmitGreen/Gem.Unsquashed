@@ -24,9 +24,9 @@ def gem():
             assert length(many) is 3
 
             many[0].dump_token(f)
-            frill_many.a.dump_token(f)
+            frill_many.x.dump_token(f)
             many[1].dump_token(f)
-            frill_many.b.dump_token(f)
+            frill_many.y.dump_token(f)
             many[2].dump_token(f)
         elif frill_estimate is 3:
             assert length(many) is 4

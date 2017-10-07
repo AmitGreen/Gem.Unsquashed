@@ -5,6 +5,7 @@
 def gem():
     require_gem('Sapphire.Cache')
     require_gem('Sapphire.DualToken')
+    require_gem('Sapphire.DualTwig')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.Tree')
 
@@ -47,31 +48,11 @@ def gem():
         return arrange('{%s %s %s}', t.display_name, t.a.display_token(), t.b.display_token())
 
 
-    class BinaryExpression(SapphireTrunk):
-        __slots__ = ((
-            'a',                        #   Expression
-            'b',                        #   Expression
-        ))
+    class BinaryExpression(DualTwig):
+        __slots__ = (())
 
 
-        k3  = none
-
-
-        def __init__(t, a, b):
-            t.a = a
-            t.b = b
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.b)
-
-
-        def count_newlines(t):
-            return t.a.count_newlines() + t.b.count_newlines()
-
-
-        def display_token(t):
-            return arrange('<%s %s %s>', t.display_name, t.a.display_token(), t.b.display_token())
+        k3 = none
 
 
         def dump_token(t, f, newline = true):
@@ -94,10 +75,6 @@ def gem():
             t.a.write(w)
             w(t.frill.s)
             t.b.write(w)
-
-
-    BinaryExpression.k1 = BinaryExpression.a
-    BinaryExpression.k2 = BinaryExpression.b
 
 
     @privileged

@@ -4,6 +4,7 @@
 @gem('Sapphire.DualToken')
 def gem():
     require_gem('Sapphire.Comment')
+    require_gem('Sapphire.DualTwig')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.Whitespace')
 
@@ -81,8 +82,7 @@ def gem():
             t.b = b
 
 
-        def __repr__(t):
-            return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.b)
+        __repr__ = portray__ab
 
 
         def display_full_token(t):

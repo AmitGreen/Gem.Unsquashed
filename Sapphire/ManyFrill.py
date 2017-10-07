@@ -36,7 +36,7 @@ def gem():
                 return many[0]
 
             if total is 2:
-                return conjure_dual_frill(many[0], many[1])
+                return conjure_xy_frill(many[0], many[1])
 
             if total is 3:
                 return conjure_triple_frill(many[0], many[1], many[2])

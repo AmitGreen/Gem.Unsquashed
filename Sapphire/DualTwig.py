@@ -3,9 +3,33 @@
 #
 @gem('Sapphire.DualTwig')
 def gem():
+    require_gem('Sapphire.Tree')
+
+
     dual_twig_cache  = {}
     lookup_dual_twig = dual_twig_cache.get
     store_dual_twig  = dual_twig_cache.__setitem__
+
+
+    @share
+    def construct__ab(t, a, b):
+        t.a = a
+        t.b = b
+
+
+    @share
+    def portray__ab(t):
+        return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.b)
+
+
+    @share
+    def count_newlines__ab(t):
+        return t.a.count_newlines() + t.b.count_newlines()
+
+
+    @share
+    def display_token__ab(t):
+        return arrange('<%s %s %s>', t.display_name, t.a.display_token(), t.b.display_token())
 
 
     @share
@@ -16,21 +40,10 @@ def gem():
         ))
 
 
-        def __init__(t, a, b):
-            t.a = a
-            t.b = b
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r>', t.__class__.__name__, t.a, t.b)
-
-
-        def count_newlines(t):
-            return t.a.count_newlines() + t.b.count_newlines()
-
-
-        def display_token(t):
-            return arrange('<%s %s %s>', t.display_name, t.a.display_token(), t.b.display_token())
+        __init__       = construct__ab
+        __repr__       = portray__ab
+        count_newlines = count_newlines__ab
+        display_token  = display_token__ab
 
 
         def dump_token(t, f, newline = true):
