@@ -16,13 +16,19 @@ def gem():
         return false
 
 
+    @property
+    def indentation__body_statement(t):
+        return t.a.indentation
+
+
     class DecoratedDefinition(DualTwig):
         __slots__           = (())
         display_name        = 'decorated-definition'
         is_statement_header = false
         is_statement        = true
 
-        dump_token = dump_token__body_statement
+        dump_token  = dump_token__body_statement
+        indentation = indentation__body_statement
 
 
     class FunctionDefinition(DualTwig):
@@ -31,7 +37,8 @@ def gem():
         is_statement_header = false
         is_statement        = true
 
-        dump_token = dump_token__body_statement
+        dump_token  = dump_token__body_statement
+        indentation = indentation__body_statement
 
 
     conjure_decorated_definition = produce_conjure_dual_twig('decorated-definition', DecoratedDefinition)

@@ -68,9 +68,7 @@ def gem():
 
 
     def dump_token__indented__keyword__line_marker(t, f, newline = true):
-        indentation = t.a
-
-        f.partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+        f.partial('<%s +%d ', t.display_name, t.a.total)
         t.b.dump_token(f)
         r = t.c.dump_token(f, false)
 
