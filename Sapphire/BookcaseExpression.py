@@ -12,7 +12,7 @@ def gem():
 
 
     append_cache             = Shared.append_cache                  #   Due to privileged
-    conjure_xy_frill         = Shared.conjure_xy_frill              #   Due to privileged
+    conjure_vw_frill         = Shared.conjure_vw_frill              #   Due to privileged
     lookup_adjusted_meta     = Shared.lookup_adjusted_meta          #   Due to privileged
     produce_conjure_dual__21 = Shared.produce_conjure_dual__21      #   Due to privileged
     store_adjusted_meta      = Shared.store_adjusted_meta           #   Due to privileged
@@ -23,8 +23,8 @@ def gem():
     RP  = conjure_right_parenthesis   (')')
     RSB = conjure_right_square_bracket(']')
 
-    LP_RP   = conjure_xy_frill(LP,  RP)
-    LSB_RSB = conjure_xy_frill(LSB, RSB)
+    LP_RP   = conjure_vw_frill(LP,  RP)
+    LSB_RSB = conjure_vw_frill(LSB, RSB)
 
 
     @share
@@ -55,9 +55,9 @@ def gem():
 
             f.partial('<%s ', t.display_name)
 
-            frill.x.dump_token(f)
+            frill.v.dump_token(f)
             t.a.dump_token(f)
-            r = frill.y.dump_token(f, false)
+            r = frill.w.dump_token(f, false)
 
             if (r) and (newline):
                 f.line('>')
@@ -70,9 +70,9 @@ def gem():
         def write(t, w):
             frill = t.frill
 
-            w(frill.x.s)
+            w(frill.v.s)
             t.a.write(w)
-            w(frill.y.s)
+            w(frill.w.s)
 
 
     BookcaseExpression.k1 = BookcaseExpression.a
@@ -120,9 +120,9 @@ def gem():
 
                             return arrange('<%s+frill %s %s %s>',
                                            t.display_name,
-                                           frill.x.display_token(),
+                                           frill.v.display_token(),
                                            t.a    .display_token(),
-                                           frill.y.display_token())
+                                           frill.w.display_token())
 
 
                 write = attribute(Meta, 'write__frill', none)
@@ -150,15 +150,15 @@ def gem():
                                        store,
                                    )
 
-        meta_frill_x = Meta.frill.x
-        meta_frill_y = Meta.frill.y
+        meta_frill_v = Meta.frill.v
+        meta_frill_w = Meta.frill.w
 
 
-        def conjure_bookcase_expression(frill_x, a, frill_y):
-            if (frill_x is meta_frill_x) and (frill_y is meta_frill_y):
+        def conjure_bookcase_expression(frill_v, a, frill_w):
+            if (frill_v is meta_frill_v) and (frill_w is meta_frill_w):
                 return (lookup(a)) or (provide(a, Meta(a)))
 
-            return conjure_dual__with_frill(a, conjure_xy_frill(frill_x, frill_y))
+            return conjure_dual__with_frill(a, conjure_vw_frill(frill_v, frill_w))
 
 
         if __debug__:
@@ -188,7 +188,7 @@ def gem():
     class HeadIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'head-index'
-        frill        = conjure_xy_frill(LSB, conjure__colon__right_square_bracket(conjure_colon(':'), RSB))
+        frill        = conjure_vw_frill(LSB, conjure__colon__right_square_bracket(conjure_colon(':'), RSB))
 
 
     class ListExpression_1(BookcaseExpression):
@@ -202,7 +202,7 @@ def gem():
     class MapExpression_1(BookcaseExpression):
         __slots__                      = (())
         display_name                   = '{:1:}'
-        frill                          = conjure_xy_frill(conjure_left_brace ('{'), conjure_right_brace('}'))
+        frill                          = conjure_vw_frill(conjure_left_brace ('{'), conjure_right_brace('}'))
         is__atom__or__special_operator = true
         is_atom                        = true
 
@@ -230,13 +230,13 @@ def gem():
     class TailIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'tail-index'
-        frill        = conjure_xy_frill(conjure__left_square_bracket__colon(LSB, conjure_colon(':')), RSB)
+        frill        = conjure_vw_frill(conjure__left_square_bracket__colon(LSB, conjure_colon(':')), RSB)
 
 
     class TupleExpression_1(BookcaseExpression):
         __slots__                      = (())
         display_name                   = '{,}'
-        frill                          = conjure_xy_frill(LP, conjure_comma__right_parenthesis(conjure_comma(','), RP))
+        frill                          = conjure_vw_frill(LP, conjure_comma__right_parenthesis(conjure_comma(','), RP))
         is__atom__or__special_operator = true
         is_atom                        = true
 

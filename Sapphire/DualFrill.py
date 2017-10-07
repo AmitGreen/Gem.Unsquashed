@@ -8,7 +8,7 @@ def gem():
     store_dual_frill  = dual_frill_cache.__setitem__
 
 
-    class XY_Frill(Object):
+    class VW_Frill(Object):
         __slots__ = ((
             'a',                        #   SapphireToken+
             'b',                        #   SapphireToken+
@@ -24,16 +24,16 @@ def gem():
         display_token  = display_token__ab
 
 
-    XY_Frill.x = XY_Frill.a
-    XY_Frill.y = XY_Frill.b
+    VW_Frill.v = VW_Frill.a
+    VW_Frill.w = VW_Frill.b
 
-    #XY_Frill.k1 = XY_Frill.a
-    XY_Frill.k2 = XY_Frill.b
+    #VW_Frill.k1 = VW_Frill.a
+    VW_Frill.k2 = VW_Frill.b
 
 
-    conjure_xy_frill = produce_conjure_dual(
-                           'xy-frill',
-                           XY_Frill,
+    conjure_vw_frill = produce_conjure_dual(
+                           'vw-frill',
+                           VW_Frill,
                            dual_frill_cache,
                            lookup_dual_frill,
                            store_dual_frill
@@ -44,5 +44,5 @@ def gem():
 
 
     share(
-        'conjure_xy_frill',     conjure_xy_frill,
+        'conjure_vw_frill',     conjure_vw_frill,
     )

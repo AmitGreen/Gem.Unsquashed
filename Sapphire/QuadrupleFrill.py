@@ -43,13 +43,13 @@ def gem():
                            t.d.display_token())
 
 
-    class Commented_XYZ_Frill(QuadrupleFrill):
+    class Commented_VWX_Frill(QuadrupleFrill):
         __slots__ = (())
 
         comment = QuadrupleFrill.a
-        x       = QuadrupleFrill.b
-        y       = QuadrupleFrill.c
-        z       = QuadrupleFrill.d
+        v       = QuadrupleFrill.b
+        w       = QuadrupleFrill.c
+        x       = QuadrupleFrill.d
 
 
     QuadrupleFrill.k1 = QuadrupleFrill.a
@@ -66,9 +66,9 @@ def gem():
                                   store_quadruple_frill,
                               )
 
-    conjure_commented_xyz_frill = produce_conjure_quadruple__4123(
-                                      'commented-xyz-frill',
-                                      Commented_XYZ_Frill,
+    conjure_commented_vwx_frill = produce_conjure_quadruple__4123(
+                                      '#vwx-frill',
+                                      Commented_VWX_Frill,
                                       quadruple_frill_cache,
                                       lookup_quadruple_frill,
                                       store_quadruple_frill,
@@ -80,5 +80,5 @@ def gem():
 
     share(
         'conjure_quadruple_frill',      conjure_quadruple_frill,
-        'conjure_commented_xyz_frill',  conjure_commented_xyz_frill,
+        'conjure_commented_vwx_frill',  conjure_commented_vwx_frill,
     )

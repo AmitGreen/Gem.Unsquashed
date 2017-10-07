@@ -26,7 +26,6 @@ def gem():
                          t.a    .count_newlines()
                        + t.b    .count_newlines()
                        + t.c    .count_newlines()
-                       + t.d    .count_newlines()
                        + t.frill.count_newlines()
                    )
 

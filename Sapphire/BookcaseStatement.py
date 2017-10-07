@@ -6,7 +6,7 @@ def gem():
     class ExpressionStatement(BookcaseExpression):
         __slots__           = (())
         display_name        = 'expression-statement'
-        frill               = conjure_xy_frill(empty_indentation, empty_line_marker)
+        frill               = conjure_vw_frill(empty_indentation, empty_line_marker)
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
@@ -19,21 +19,21 @@ def gem():
 
             return conjure_expression_statement__with_frill(
                        t.a,
-                       conjure_commented_xy_frill(comment, frill.x, frill.y),
+                       conjure_commented_vw_frill(comment, frill.v, frill.w),
                    )
 
 
         def display_token(t):
-            return arrange('<expression-statement +%d %s>', t.frill.x.total, t.a.display_token())
+            return arrange('<expression-statement +%d %s>', t.frill.v.total, t.a.display_token())
 
 
         def display_token__frill(t):
             frill = t.frill
 
             return arrange('<expression-statement+frill +%d %s %s>',
-                           frill.x.total,
+                           frill.v.total,
                            t.a    .display_token(),
-                           frill.y.display_token())
+                           frill.w.display_token())
 
 
         def dump_token(t, f, newline = true):
@@ -42,9 +42,9 @@ def gem():
             comment = frill.comment
 
             if comment is 0:
-                f.partial('<%s +%d ', t.display_name, frill.x.total)
+                f.partial('<%s +%d ', t.display_name, frill.v.total)
                 t.a.dump_token(f)
-                r = frill.y.dump_token(f, false)
+                r = frill.w.dump_token(f, false)
 
                 if (r) and (newline):
                     f.line('>')
@@ -53,15 +53,15 @@ def gem():
                 f.partial('>')
                 return r
 
-            with f.indent(arrange('<%s +%d', t.display_name, frill.x.total), '>'):
+            with f.indent(arrange('<%s +%d', t.display_name, frill.v.total), '>'):
                 comment.dump_token(f)
                 t.a    .dump_token(f)
-                frill.y.dump_token(f)
+                frill.w.dump_token(f)
 
 
         @property
         def indentation(t):
-            return t.frill.x
+            return t.frill.v
 
 
         def write__frill(t, w):
@@ -71,9 +71,9 @@ def gem():
             if comment is not 0:
                 comment.write(w)
 
-            w(frill.x.s)
+            w(frill.v.s)
             t.a.write(w)
-            w(frill.y.s)
+            w(frill.w.s)
 
 
     [

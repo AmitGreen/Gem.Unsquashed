@@ -8,11 +8,11 @@ def gem():
     store_triple_frill  = triple_frill_cache.__setitem__
 
 
-    class Commented_XY_Frill(TripleTwig):
+    class Commented_VW_Frill(TripleTwig):
         __slots__ = (())
         comment   = TripleTwig.a
-        x         = TripleTwig.b
-        y         = TripleTwig.c
+        v         = TripleTwig.b
+        w         = TripleTwig.c
 
         display_name   = '#xy-frill'
         frill_estimate = 3
@@ -23,12 +23,12 @@ def gem():
         display_token  = display_token__abc
 
 
-    class XYZ_Frill(TripleTwig):
+    class VWX_Frill(TripleTwig):
         __slots__ = (())
         comment   = 0
-        x         = TripleTwig.a
-        y         = TripleTwig.b
-        z         = TripleTwig.c
+        v         = TripleTwig.a
+        w         = TripleTwig.b
+        x         = TripleTwig.c
 
         display_name   = 'xyz-frill'
         frill_estimate = 3
@@ -39,17 +39,17 @@ def gem():
         display_token  = display_token__abc
 
 
-    conjure_commented_xy_frill = produce_conjure_triple(
-                                     'commented-xy-frill',
-                                     Commented_XY_Frill,
+    conjure_commented_vw_frill = produce_conjure_triple(
+                                     '#vw-frill',
+                                     Commented_VW_Frill,
                                      triple_frill_cache,
                                      lookup_triple_frill,
                                      store_triple_frill,
                                  )
 
-    conjure_xyz_frill = produce_conjure_triple(
-                            'xyz-frill',
-                            XYZ_Frill,
+    conjure_vwx_frill = produce_conjure_triple(
+                            'vwx-frill',
+                            VWX_Frill,
                             triple_frill_cache,
                             lookup_triple_frill,
                             store_triple_frill,
@@ -60,6 +60,6 @@ def gem():
 
 
     share(
-        'conjure_commented_xy_frill',   conjure_commented_xy_frill,
-        'conjure_xyz_frill',            conjure_xyz_frill,
+        'conjure_commented_vw_frill',   conjure_commented_vw_frill,
+        'conjure_vwx_frill',            conjure_vwx_frill,
     )

@@ -178,7 +178,7 @@ def gem():
                 if (indentation is not 0) and (newline is not none) and (qk() is none):
                     wn(none)
 
-                    return left.call_statement(conjure_xy_frill(indentation, newline), left, operator)
+                    return left.call_statement(conjure_vw_frill(indentation, newline), left, operator)
 
                 left = left.call_expression(left, operator)
 

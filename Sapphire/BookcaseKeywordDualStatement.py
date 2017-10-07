@@ -18,7 +18,7 @@ def gem():
         def display_token(t):
             return arrange('<%s +%d %s %s>',
                            t.display_name,
-                           t.frill.x.a.total,
+                           t.frill.v.a.total,
                            t.a    .display_token(),
                            t.b    .display_token())
 
@@ -26,28 +26,28 @@ def gem():
         def display_token__frill(t):
             frill = t.frill
 
-            frill_x = frill.x
+            frill_v = frill.v
 
             return arrange('<%s+frill +%d %s %s %s %s %s>',
                            t.display_name,
-                           frill_x.a.total,
-                           frill_x.b.display_token(),
+                           frill_v.a.total,
+                           frill_v.b.display_token(),
                            t.a      .display_token(),
-                           frill.y  .display_token(),
+                           frill.w  .display_token(),
                            t.b      .display_token(),
-                           frill.z  .display_token())
+                           frill.x  .display_token())
 
 
         def dump_token(t, f, newline = true):
             frill   = t.frill
-            frill_x = frill.x
+            frill_v = frill.v
 
-            f.partial('<%s +%d ', t.display_name, frill_a.a.total)
-            frill_x.b.dump_token(f)
+            f.partial('<%s +%d ', t.display_name, frill_v.a.total)
+            frill_v.b.dump_token(f)
             t.a.dump_token(f)
-            frill.y.dump_token(f)
+            frill.w.dump_token(f)
             t.b.dump_token(f)
-            r = frill.z.dump_token(f, false)
+            r = frill.x.dump_token(f, false)
 
             if (r) and (newline):
                 f.line('>')
@@ -59,13 +59,13 @@ def gem():
 
         @property
         def indentation(t):
-            return t.frill.x.a
+            return t.frill.v.a
 
 
     class AssertStatement_2(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'assert-2'
-        frill        = conjure_xyz_frill(
+        frill        = conjure_vwx_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_assert('assert ')),
                            conjure_comma(', '),
                            empty_line_marker,
@@ -75,7 +75,7 @@ def gem():
     class ExceptHeader_2(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'except-header-2'
-        frill        = conjure_xyz_frill(
+        frill        = conjure_vwx_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_except('except ')),
                            conjure_keyword_as(' as '),
                            colon__empty_line_marker,
@@ -88,7 +88,7 @@ def gem():
     class ForHeader(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'for-header'
-        frill        = conjure_xyz_frill(
+        frill        = conjure_vwx_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_for('for ')),
                            conjure_keyword_in(' in '),
                            colon__empty_line_marker,
@@ -101,7 +101,7 @@ def gem():
     class StatementFromImport(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'from-statement'
-        frill        = conjure_xyz_frill(
+        frill        = conjure_vwx_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_from('from ')),
                            conjure_keyword_import(' import '),
                            empty_line_marker,
@@ -111,7 +111,7 @@ def gem():
     class RaiseStatement_2(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'raise-statement-2'
-        frill        = conjure_xyz_frill(
+        frill        = conjure_vwx_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('raise ')),
                            conjure_comma(', '),
                            empty_line_marker,
@@ -121,7 +121,7 @@ def gem():
     class WithHeader_2(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'with-header-2'
-        frill        = conjure_xyz_frill(
+        frill        = conjure_vwx_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('with ')),
                            conjure_keyword_as(' as '),
                            colon__empty_line_marker,

@@ -63,20 +63,20 @@ def gem():
                 assert length(many) is 3
 
                 many[0].dump_token(f)
-                frill.x.dump_token(f)
+                frill.v.dump_token(f)
                 many[1].dump_token(f)
-                frill.y.dump_token(f)
+                frill.w.dump_token(f)
                 r = many[2].dump_token(f, false)
 
             elif frill_estimate is 3:
                 assert length(many) is 4
 
                 many[0].dump_token(f)
-                frill.x.dump_token(f)
+                frill.v.dump_token(f)
                 many[1].dump_token(f)
-                frill.y.dump_token(f)
+                frill.w.dump_token(f)
                 many[2].dump_token(f)
-                frill.z.dump_token(f)
+                frill.x.dump_token(f)
                 r = many[3].dump_token(f, false)
 
             elif frill_estimate is 4:
@@ -131,9 +131,9 @@ def gem():
                 assert length(many) is 3
 
                 many[0].write(w)
-                w(frill.x.s)
+                w(frill.v.s)
                 many[1].write(w)
-                w(frill.y.s)
+                w(frill.w.s)
                 many[2].write(w)
                 return
 
@@ -141,11 +141,11 @@ def gem():
                 assert length(many) is 4
 
                 many[0].write(w)
-                w(frill.x.s)
+                w(frill.v.s)
                 many[1].write(w)
-                w(frill.y.s)
+                w(frill.w.s)
                 many[2].write(w)
-                w(frill.z.s)
+                w(frill.x.s)
                 many[3].write(w)
                 return
 

@@ -10,7 +10,7 @@ def gem():
 
     class CallStatementBase(SapphireTrunk):
         __slots__ = ((
-            'frill',                    #   XY_Frill | Commented_XY_Frill
+            'frill',                    #   VW_Frill | Commented_VW_Frill
             'left',                     #   Expression
             'arguments',                #   Arguments*
         ))
@@ -39,7 +39,7 @@ def gem():
             assert frill.comment is 0
 
             return t.conjure(
-                       conjure_commented_xy_frill(comment, frill.x, frill.y),
+                       conjure_commented_vw_frill(comment, frill.v, frill.w),
                        t.left,
                        t.arguments,
                    )
@@ -51,7 +51,7 @@ def gem():
 
         @property
         def indentation(t):
-            return t.frill.x
+            return t.frill.v
 
 
         def display_token(t):
@@ -60,11 +60,11 @@ def gem():
 
             return arrange('<%s +%d%s %s %s %s>',
                            t.display_name,
-                           frill.x.total,
+                           frill.v.total,
                            (''   if comment is 0 else   '' + comment.display_token()),
                            t.left     .display_token(),
                            t.arguments.display_token(),
-                           frill.y    .display_token())
+                           frill.w    .display_token())
 
 
         def dump_token(t, f, newline = true):
@@ -72,10 +72,10 @@ def gem():
             comment = frill.comment
 
             if comment is 0:
-                f.partial('<%s +%d ', t.display_name, frill.x.total)
+                f.partial('<%s +%d ', t.display_name, frill.v.total)
                 t.left.dump_token(f)
                 t.arguments.dump_token(f)
-                r = frill.y.dump_token(f, false)
+                r = frill.w.dump_token(f, false)
 
                 if (r) and (newline):
                     f.line('>')
@@ -84,11 +84,11 @@ def gem():
                 f.partial('>')
                 return r
 
-            with f.indent(arrange('<%s +%d', t.display_name, frill.x.total), '>'):
+            with f.indent(arrange('<%s +%d', t.display_name, frill.v.total), '>'):
                 comment    .dump_token(f)
                 t.left     .dump_token(f)
                 t.arguments.dump_token(f)
-                frill.y    .dump_token(f)
+                frill.w    .dump_token(f)
 
 
         def write(t, w):
@@ -98,10 +98,10 @@ def gem():
             if comment is not 0:
                 comment.write(w)
 
-            w(frill.x.s)
+            w(frill.v.s)
             t.left     .write(w)
             t.arguments.write(w)
-            w(frill.y.s)
+            w(frill.w.s)
 
 
     CallStatementBase.k1 = CallStatementBase.frill

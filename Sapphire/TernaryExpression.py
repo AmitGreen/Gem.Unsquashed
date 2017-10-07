@@ -7,7 +7,7 @@ def gem():
 
 
     append_cache                    = Shared.append_cache                       #   Due to privileged
-    conjure_xy_frill                = Shared.conjure_xy_frill                   #   Due to privileged
+    conjure_vw_frill                = Shared.conjure_vw_frill                   #   Due to privileged
     lookup_adjusted_meta            = Shared.lookup_adjusted_meta               #   Due to privileged
     produce_conjure_quadruple__4123 = Shared.produce_conjure_quadruple__4123    #   Due to privileged
     produce_conjure_triple          = Shared.produce_conjure_triple             #   Due to privileged
@@ -23,9 +23,9 @@ def gem():
 
             f.partial('<%s ', t.display_name)
             t.a.dump_token(f)
-            frill.x.dump_token(f)
+            frill.v.dump_token(f)
             t.b.dump_token(f)
-            frill.y.dump_token(f)
+            frill.w.dump_token(f)
             r = t.c.dump_token(f, false)
 
             if (r) and (newline):
@@ -40,9 +40,9 @@ def gem():
             frill = t.frill
 
             t.a.write(w)
-            w(frill.x.s)
+            w(frill.v.s)
             t.b.write(w)
-            w(frill.y.s)
+            w(frill.w.s)
             t.c.write(w)
 
 
@@ -89,9 +89,9 @@ def gem():
                         return arrange('<%s+frill %s %s %s %s %s>',
                                        t.display_name,
                                        t.a    .display_token(),
-                                       frill.x.display_token(),
+                                       frill.v.display_token(),
                                        t.b    .display_token(),
-                                       frill.y.display_token(),
+                                       frill.w.display_token(),
                                        t.c    .display_token())
 
 
@@ -108,15 +108,15 @@ def gem():
         conjure_triple    = produce_conjure_triple         (name + '__X3', Meta, cache, lookup, store)
         conjure_quadruple = produce_conjure_quadruple__4123(name, conjure_Meta_WithFrill, cache, lookup, store)
 
-        meta_frill_x = Meta.frill.x
-        meta_frill_y = Meta.frill.y
+        meta_frill_v = Meta.frill.v
+        meta_frill_w = Meta.frill.w
 
 
-        def conjure_triple_expression(a, frill_x, b, frill_y, c):
-            if (frill_x is meta_frill_x) and (frill_y is meta_frill_y):
+        def conjure_triple_expression(a, frill_v, b, frill_w, c):
+            if (frill_v is meta_frill_v) and (frill_w is meta_frill_w):
                 return conjure_triple(a, b, c)
 
-            return conjure_quadruple(a, b, c, conjure_xy_frill(frill_x, frill_y))
+            return conjure_quadruple(a, b, c, conjure_vw_frill(frill_v, frill_w))
 
 
         if __debug__:
@@ -130,13 +130,13 @@ def gem():
     class ComprehensionForExpression(TripleExpression):
         __slots__    = (())
         display_name = 'comprehension-for'
-        frill        = conjure_xy_frill(conjure_keyword_for(' for '), conjure_keyword_in(' in '))
+        frill        = conjure_vw_frill(conjure_keyword_for(' for '), conjure_keyword_in(' in '))
 
 
     class TernaryExpression(TripleExpression):
         __slots__    = (())
         display_name = '?:'
-        frill        = conjure_xy_frill(conjure_keyword_if(' if '), conjure_action_word('else', ' else '))
+        frill        = conjure_vw_frill(conjure_keyword_if(' if '), conjure_action_word('else', ' else '))
 
 
     conjure_comprehension_for  = produce_conjure_triple_expression('comprehension-for',  ComprehensionForExpression)

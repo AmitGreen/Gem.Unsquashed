@@ -6,13 +6,13 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    conjure_xy_frill            = Shared.conjure_xy_frill               #   due to privileged
+    conjure_vw_frill            = Shared.conjure_vw_frill               #   due to privileged
     produce_conjure_triple__213 = Shared.produce_conjure_triple__213    #   due to privileged
 
 
     class DefinitionHeader(SapphireTrunk):
         __slots__ = ((
-            'frill',                    #   XY_Frill | Commented_XY_Frill
+            'frill',                    #   XY_Frill | Commented_VW_Frill
             'name',                     #   String
             'parameters',               #   Parameter_0 | Parameter_1 | Parameter_Many
         ))
@@ -40,7 +40,7 @@ def gem():
             assert frill.comment is 0
 
             return t.conjure_with_frill(
-                       conjure_commented_xy_frill(comment, frill.x, frill.y),
+                       conjure_commented_vw_frill(comment, frill.v, frill.w),
                        t.name,
                        t.parameters,
                    )
@@ -53,7 +53,7 @@ def gem():
         def display_token(t):
             frill          = t.frill
             comment        = frill.comment
-            indented_token = frill.x
+            indented_token = frill.v
 
             return arrange('<%s +%d%s %s %s %s %s>',
                            t.display_name,
@@ -71,14 +71,14 @@ def gem():
 
             frill          = t.frill
             comment        = frill.comment
-            indented_token = frill.x
+            indented_token = frill.v
 
             if comment is 0:
                 f.partial('<%s +%d ', t.display_name, indented_token.indentation.total)
                 indented_token.token.dump_token(f)
                 t.name.dump_token(f)
                 t.parameters.dump_token(f)
-                r = frill.y.dump_token(f, false)
+                r = frill.w.dump_token(f, false)
 
                 if (r) and (newline):
                     f.line('>')
@@ -92,12 +92,12 @@ def gem():
                 indented_token.token.dump_token(f)
                 t.name.dump_token(f)
                 t.parameters.dump_token(f)
-                frill.y.dump_token(f)
+                frill.w.dump_token(f)
 
 
         @property
         def indentation(t):
-            return t.frill.x.indentation
+            return t.frill.v.indentation
 
             
         def write(t, w):
@@ -108,9 +108,9 @@ def gem():
             if comment is not 0:
                 comment.write(w)
 
-            w(frill.x.s + t.name.s)
+            w(frill.v.s + t.name.s)
             t.parameters.write(w)
-            w(frill.y.s)
+            w(frill.w.s)
 
 
     DefinitionHeader.k1 = DefinitionHeader.frill
@@ -125,7 +125,7 @@ def gem():
 
         def conjure_definition_header(indented_keyword, name, parameters, colon_newline):
             return conjure_triple__312(
-                       conjure_xy_frill(indented_keyword, colon_newline),
+                       conjure_vw_frill(indented_keyword, colon_newline),
                        name,
                        parameters,
                    )
