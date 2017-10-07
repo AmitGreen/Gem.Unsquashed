@@ -82,7 +82,6 @@ def gem():
     @privileged
     def produce_conjure_bookcase_expression(
             name, Meta,
-            
 
             conjure_dual_frill         = conjure_dual_frill,
             produce_conjure_with_frill = 0,
@@ -93,6 +92,7 @@ def gem():
         lookup  = cache.get
         provide = cache.setdefault
         store   = cache.__setitem__
+
 
         def conjure_BookcaseExpression_WithFrill(a, frill):
             BookcaseExpression_WithFrill = lookup_adjusted_meta(Meta)
@@ -127,7 +127,6 @@ def gem():
 
 
                 write = attribute(Meta, 'write__frill', none)
-
 
                 if write is not none:
                     BookcaseExpression_WithFrill.write = write

@@ -3,8 +3,8 @@
 #
 @gem('Sapphire.Parse3')
 def gem():
-    tree = 7
-    show = 7
+    tree = 0
+    show = 0
 
 
     require_gem('Sapphire.DualStatement')

@@ -129,6 +129,7 @@ def gem():
         indentation                = none
         is_comment_line            = false
         is_comment__or__empty_line = false
+        is_else_header             = false
         is_end_of_data             = true
 
 
