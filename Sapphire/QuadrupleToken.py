@@ -311,8 +311,8 @@ def gem():
         line_marker         = true
         newlines            = 1
 
-
         __init__       = construct_quadruple_operator__line_marker_1
+        add_comment    = 0
         count_newlines = count_newlines__line_marker
         display_token  = display_token__indented__keyword__colon__line_marker
         dump_token     = dump_token__indented__keyword__colon__line_marker
@@ -329,8 +329,8 @@ def gem():
         line_marker         = true
         newlines            = 1
 
-
         __init__       = construct_quadruple_operator__line_marker_1
+        add_comment    = 0
         count_newlines = count_newlines__line_marker
         display_token  = display_token__indented__keyword__colon__line_marker
         dump_token     = dump_token__indented__keyword__colon__line_marker
@@ -347,8 +347,8 @@ def gem():
         line_marker         = true
         newlines            = 1
 
-
         __init__       = construct_quadruple_operator__line_marker_1
+        add_comment    = 0
         count_newlines = count_newlines__line_marker
         display_token  = display_token__indented__keyword__colon__line_marker
         dump_token     = dump_token__indented__keyword__colon__line_marker
@@ -365,8 +365,8 @@ def gem():
         line_marker         = true
         newlines            = 1
 
-
         __init__       = construct_quadruple_operator__line_marker_1
+        add_comment    = 0
         count_newlines = count_newlines__line_marker
         display_token  = display_token__indented__keyword__colon__line_marker
         dump_token     = dump_token__indented__keyword__colon__line_marker

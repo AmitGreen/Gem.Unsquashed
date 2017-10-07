@@ -11,8 +11,6 @@ def gem():
             t.a.dump_token(f)
             t.b.dump_token(f)
 
-        return false
-
 
     @property
     def indentation__a_indentation(t):

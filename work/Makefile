@@ -147,7 +147,7 @@ clean:
 	rm -f   h2f.py h2p.py h2ps.py h2s.py h2s.py h2t.py h2w.py
 	rm -f   h3e.py h3f.py h3p.py h3t.py h3w.py
 	rm -f   h4f.py h4t.py
-	rm -f   hat.py haw.py hbe.py hca.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py
+	rm -f   hat.py haw.py hb.py hca.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
 	rm -f   hma.py hmc.py hme.py hmf.py hpt.py hs.py htc.py hto.py htr.py htt.py hu.py hus.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
@@ -231,7 +231,7 @@ links:
 	ln -s ../Sapphire/QuadrupleToken.py                 h4t.py
 	ln -s ../Sapphire/Atom.py                           hat.py
 	ln -s ../Sapphire/ActionWord.py                     haw.py
-	ln -s ../Sapphire/BinaryExpression.py               hbe.py
+	ln -s ../Sapphire/BinaryExpression.py               hb.py
 	ln -s ../Sapphire/Cache.py                          hca.py
 	ln -s ../Sapphire/CreateMeta.py                     hcc.py
 	ln -s ../Sapphire/Comment.py                        hcm.py
