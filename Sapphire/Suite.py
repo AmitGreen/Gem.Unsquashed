@@ -35,6 +35,11 @@ def gem():
                     v.dump_token(f)
 
 
+        @property
+        def impression(t):
+            return t[0].impression
+
+
     class EmptyLineSuite(TokenTuple):
         __slots__           = (())
         display_name        = 'empty-line-*'

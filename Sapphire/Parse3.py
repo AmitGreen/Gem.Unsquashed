@@ -220,7 +220,7 @@ def gem():
                         wb(v)
                         return add_comment(w)
 
-                wb(conjure_mixed_suite([v, w]))
+                wb([v, w])
                 return x
 
             x_impression = x.impression
@@ -243,7 +243,7 @@ def gem():
                         x_impression = x.impression
                         break
 
-                    wb(conjure_mixed_suite([v, conjure_empty_line_suite(empty_line_many)]))
+                    wb([v, conjure_empty_line_suite(empty_line_many)])
                     return x
 
                 mixed_many = [v, conjure_empty_line_suite(empty_line_many)]
@@ -271,10 +271,18 @@ def gem():
                             wb(v)
                             return add_comment(conjure_comment_suite(comment_many))
 
-                    wb(conjure_mixed_suite([v, conjure_comment_suite(comment_many)]))
+                    wb([v, conjure_comment_suite(comment_many)])
                     return x
 
                 mixed_many = [v, conjure_comment_suite(comment_many)]
+
+            #
+            #   NOTE:
+            #       Although 'mixed_many' might not be complete yet (and we might append more elements to it)
+            #       ... we will always return it --- so store 'mixed_many' in 'b' now
+            #
+            wb(mixed_many)
+
 
             #
             #   At this point:
@@ -288,6 +296,7 @@ def gem():
             #       y:              next line
             #       y_impression:   indentation if 'y' is a comment, or 0 if 'y' is an empty line
             #
+            #
             y = next_line()
 
             if not y.is_comment__or__empty_line:
@@ -297,11 +306,9 @@ def gem():
                     add_comment = y.add_comment
 
                     if add_comment is not 0:
-                        wb(conjure_mixed_suite(mixed_many))
                         return add_comment(x)
 
                 mixed_many.append(x)
-                wb(conjure_mixed_suite(mixed_many))
                 return y
 
             y_impression = y.impression
@@ -327,7 +334,6 @@ def gem():
                         break
 
                     mixed_many.append(conjure_empty_line_suite(empty_line_many))
-                    wb(conjure_mixed_suite(mixed_many))
                     return y
 
                 mixed_append = mixed_many.append
@@ -354,11 +360,9 @@ def gem():
                         add_comment = y.add_comment
 
                         if add_comment is not 0:
-                            wb(conjure_mixed_suite(mixed_many))
                             return add_comment(conjure_comment_suite(comment_many))
 
                     mixed_many.append(conjure_comment_suite(comment_many))
-                    wb(conjure_mixed_suite(mixed_many))
                     return y
 
                 mixed_append = mixed_many.append
@@ -389,11 +393,9 @@ def gem():
                         add_comment = z.add_comment
 
                         if add_comment is not 0:
-                            wb(conjure_mixed_suite(mixed_many))
                             return add_comment(y)
 
                     mixed_append(y)
-                    wb(conjure_mixed_suite(mixed_many))
                     return z
 
                 if y_impression is not z.impression:
@@ -420,7 +422,6 @@ def gem():
                             break
 
                         mixed_append(conjure_empty_line_suite(empty_line_many))
-                        wb(conjure_mixed_suite(mixed_many))
                         return y
 
                     mixed_append(conjure_empty_line_suite(empty_line_many))
@@ -445,11 +446,9 @@ def gem():
                         add_comment = y.add_comment
 
                         if add_comment is not 0:
-                            wb(conjure_mixed_suite(mixed_many))
                             return add_comment(conjure_comment_suite(comment_many))
 
                     mixed_append(conjure_comment_suite(comment_many))
-                    wb(conjure_mixed_suite(mixed_many))
                     return y
 
                 mixed_append(conjure_comment_suite(comment_many))
@@ -476,7 +475,7 @@ def gem():
 
                     comment = qc()
 
-                    if comment is not none:
+                    if comment is not 0:
                         raise_unknown_line()
 
                     if v.is_end_of_data:
@@ -520,7 +519,11 @@ def gem():
 
                     return conjure_dual_statement(
                                v,
-                               conjure_prefixed_else_fragment(prefix, w, parse_suite(indentation)),
+                               conjure_prefixed_else_fragment(
+                                   (conjure_mixed_suite(prefix)   if type(prefix) is List else   prefix),
+                                   w,
+                                   parse_suite(indentation),
+                               ),
                            )
             else:
                 w = next_line()
@@ -551,7 +554,7 @@ def gem():
                         if comment is not 0:
                             wc0()
 
-                            append_twig(comment)
+                            append_twig(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
 
                     if v.is_comment__or__empty_line:
                         v = parse_blank_lines(v)
@@ -560,7 +563,7 @@ def gem():
 
                         if before is not 0:
                             wc0()
-                            append_twig(before)
+                            append_twig(conjure_mixed_suite(before)   if type(before) is List else   before)
 
                     if v.is_end_of_data:
                         wv(v)
@@ -630,12 +633,20 @@ def gem():
             #  Now look for 2nd part of suite
             #
             if before is not 0:
-                suite_many = [before, v]
+                suite_many = [(conjure_mixed_suite(before)   if type(before) is List else   before), v]
             else:
                 w = qv()
 
                 if w is not 0:
                     if indentation is not w.indentation:
+                        comment = qc()
+
+                        if comment is not 0:
+                            comment = split_comment(indentation, comment)
+
+                            if comment is not 0:
+                                return conjure_mixed_suite([v, comment])
+
                         return v
 
                     wv0()
@@ -647,7 +658,11 @@ def gem():
                 if comment is not 0:
                     wc0()
 
-                    suite_many = [v, comment, (w.parse_header()   if w.is_statement_header else w)]
+                    suite_many = [
+                                     v,
+                                     (conjure_mixed_suite(comment)   if type(comment) is List else   comment),
+                                     (w.parse_header()   if w.is_statement_header else w)
+                                 ]
                 else:
                     if w.is_comment__or__empty_line:
                         w = parse_blank_lines(w)
@@ -660,12 +675,20 @@ def gem():
                             wb0()
 
                             if indentation is not w.indentation:
-                                wc(before)
                                 wv(w)
+
+                                comment = split_comment(indentation, before)
+
+                                if comment is not 0:
+                                    return conjure_mixed_suite([v, comment])
 
                                 return v
 
-                            suite_many = [v, before, (w.parse_header()   if w.is_statement_header else w)]
+                            suite_many = [
+                                             v,
+                                             (conjure_mixed_suite(before)   if type(before) is List else   before),
+                                             (w.parse_header()   if w.is_statement_header else w),
+                                         ]
                         else:
                             if indentation is not w.indentation:
                                 wv(w)
@@ -700,7 +723,8 @@ def gem():
                 wc0()
 
                 suite_append = suite_many.append
-                suite_append(comment)
+
+                suite_append(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
 
                 assert indentation is x.indentation
             else:
@@ -713,13 +737,19 @@ def gem():
 
                     if before is not 0:
                         wb0()
-                        suite_append = suite_many.append
-                        suite_append(before)
 
                         if indentation is not x.indentation:
                             wv(x)
 
+                            comment = split_comment(indentation, before)
+
+                            if comment is not 0:
+                                suite_many.append(comment)
+
                             return conjure_statement_suite(suite_many)
+
+                        suite_append = suite_many.append
+                        suite_append(conjure_mixed_suite(before)   if type(before) is List else   before)
                     else:
                         if indentation is not x.indentation:
                             wv(x)
@@ -757,7 +787,7 @@ def gem():
                 if comment is not 0:
                     wc0()
 
-                    suite_append(comment)
+                    suite_append(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
 
                     assert indentation is x.indentation
                 else:
@@ -770,7 +800,8 @@ def gem():
 
                         if before is not 0:
                             wb0()
-                            suite_append(before)
+
+                            suite_append(conjure_mixed_suite(before)   if type(before) is List else   before)
 
                     if indentation is not x.indentation:
                         wv(x)
@@ -778,6 +809,46 @@ def gem():
                         return conjure_statement_suite(suite_many)
 
                 suite_append(x.parse_header()   if x.is_statement_header else   x)
+
+
+        def split_comment(indentation, comment):
+            if type(comment) is List:
+                total_m1 = length(comment) - 1
+
+                assert total_m1 >= 1
+
+                if indentation is comment[total_m1].impression:
+                    wc0()
+                    return conjure_mixed_suite(comment)
+
+                j = total_m1
+
+                while 7 is 7:
+                    i = j - 1
+
+                    v = comment[i]
+
+                    if indentation is not v.impression:
+                        if j is 0:
+                            wc(comment)
+                            return 0
+
+                        j = i
+                        continue
+
+                    wc(comment[j]   if j is total_m1 else   comment[j : ])
+
+                    if j is 1:
+                        return v
+
+                    return conjure_mixed_suite(comment[ : j])
+
+            if indentation is comment.impression:
+                wc0()
+                return comment
+
+            wc(comment)
+            return 0
 
 
         ClassHeader    .parse_header = parse_class_header
