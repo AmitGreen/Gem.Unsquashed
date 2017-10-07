@@ -74,7 +74,7 @@ SAPPHIRE_FILES = \
         ../Sapphire/Parse1From.py ../Sapphire/Parse1Function.py ../Sapphire/Parse1Import.py \
         ../Sapphire/Parse1Simple.py \
         ../Sapphire/Parse2.py ../Sapphire/Parse3.py \
-        ../Sapphire/PostfixExpression.py \
+        ../Sapphire/PostfixExpression.py ../Sapphire/PrefixedDualStatement.py \
     ../Sapphire/Pattern.py \
     ../Sapphire/QuadrupleFrill.py ../Sapphire/QuadrupleToken.py \
     ../Sapphire/Suite.py \
@@ -144,7 +144,7 @@ clean:
 	rm -f gd.py gg.py
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
-	rm -f   h2f.py h2p.py h2s.py h2s.py h2t.py h2w.py
+	rm -f   h2f.py h2p.py h2ps.py h2s.py h2s.py h2t.py h2w.py
 	rm -f   h3e.py h3f.py h3p.py h3t.py h3w.py
 	rm -f   h4f.py h4t.py
 	rm -f   hat.py haw.py hbe.py hca.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py
@@ -219,6 +219,7 @@ links:
 	ln -s ../Sapphire/Parse2.py                         h2p.py
 	ln -s ../Sapphire/Parse3.py                         h3p.py
 	ln -s ../Sapphire/DualFrill.py                      h2f.py
+	ln -s ../Sapphire/PrefixedDualStatement.py          h2ps.py
 	ln -s ../Sapphire/DualStatement.py                  h2s.py
 	ln -s ../Sapphire/DualToken.py                      h2t.py
 	ln -s ../Sapphire/DualTwig.py                       h2w.py

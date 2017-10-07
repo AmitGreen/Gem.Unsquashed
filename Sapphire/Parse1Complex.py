@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.Parse1Complex')
 def gem():
+    require_gem('Sapphire.PrefixedDualStatement')
     require_gem('Sapphire.UnaryStatement')
 
 
