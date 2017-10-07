@@ -1,11 +1,12 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.BodyStatement')
+@gem('Sapphire.HeaderBodyStatement')
 def gem():
     require_gem('Sapphire.DualTwig')
 
 
+    @export
     def dump_token__body_statement(t, f, newline = true):
         assert newline is true
 
@@ -24,6 +25,7 @@ def gem():
     class ClassDefinition(DualTwig):
         __slots__           = (())
         display_name        = 'class-definition'
+        is_else_header      = false
         is_statement_header = false
         is_statement        = true
 
@@ -34,6 +36,7 @@ def gem():
     class DecoratedDefinition(DualTwig):
         __slots__           = (())
         display_name        = 'decorated-definition'
+        is_else_header      = false
         is_statement_header = false
         is_statement        = true
 
@@ -44,6 +47,7 @@ def gem():
     class ElseIfStatement(DualTwig):
         __slots__           = (())
         display_name        = 'else-if-statement'
+        is_else_header      = false
         is_statement_header = false
         is_statement        = true
 
@@ -56,6 +60,7 @@ def gem():
     class FunctionDefinition(DualTwig):
         __slots__           = (())
         display_name        = 'function-definition'
+        is_else_header      = false
         is_statement_header = false
         is_statement        = true
 
@@ -66,6 +71,7 @@ def gem():
     class IfStatement(DualTwig):
         __slots__           = (())
         display_name        = 'if-statement'
+        is_else_header      = false
         is_statement_header = false
         is_statement        = true
 
@@ -76,6 +82,7 @@ def gem():
     class WhileStatement(DualTwig):
         __slots__           = (())
         display_name        = 'while-statement'
+        is_else_header      = false
         is_statement_header = false
         is_statement        = true
 
@@ -98,4 +105,5 @@ def gem():
         'conjure_function_definition',      conjure_function_definition,
         'conjure_if_statement',             conjure_if_statement,
         'conjure_while_statement',          conjure_while_statement,
+        'indentation__body_statement',      indentation__body_statement,
     )

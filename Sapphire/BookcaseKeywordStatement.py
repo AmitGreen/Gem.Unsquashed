@@ -5,6 +5,7 @@
 def gem():
     class KeywordExpressionStatement(BookcaseExpression):
         __slots__           = (())
+        is_else_header      = false
         is_statement_header = false
         is_statement        = true
 
@@ -149,6 +150,7 @@ def gem():
         is_statement_header = true
 
 
+    @share
     class IfHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'if-header'

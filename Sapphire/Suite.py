@@ -17,13 +17,14 @@ def gem():
 
     class SuiteBase(TokenTuple):
         __slots__           = (())
-        is_statement        = true
+
+
+    class CommentSuite(TokenTuple):
+        __slots__           =  (())
+        indentation         = none
+        is_else_header      = false
         is_statement_header = false
-
-
-    class CommentSuite(SuiteBase):
-        __slots__   =  (())
-        indentation = none
+        is_statement        = true
 
 
         def dump_token(t, f, newline = true):
@@ -34,26 +35,35 @@ def gem():
                     v.dump_token(f)
 
 
-    class EmptyLineSuite(SuiteBase):
-        __slots__    = (())
-        display_name = 'empty-line-*'
-        indentation  = none
+    class EmptyLineSuite(TokenTuple):
+        __slots__           = (())
+        display_name        = 'empty-line-*'
+        indentation         = none
+        is_else_header      = false
+        is_statement_header = false
+        is_statement        = true
 
 
         dump_token = dump_token__no_impression
 
 
-    class MixedSuite(SuiteBase):
-        __slots__    = (())
-        display_name = 'mixed-*'
-        indentation  = none
+    class MixedSuite(TokenTuple):
+        __slots__           = (())
+        display_name        = 'mixed-*'
+        indentation         = none
+        is_else_header      = false
+        is_statement_header = false
+        is_statement        = true
 
 
         dump_token = dump_token__no_impression
 
 
-    class StatementSuite(SuiteBase):
-        __slots__ = (())
+    class StatementSuite(TokenTuple):
+        __slots__           = (())
+        is_else_header      = false
+        is_statement_header = false
+        is_statement        = true
 
 
         def dump_token(t, f, newline = true):

@@ -15,6 +15,7 @@ def gem():
                            conjure_colon(': '),
                        )
 
+        is_else_header      = false
         is_statement        = true
         is_statement_header = false
 

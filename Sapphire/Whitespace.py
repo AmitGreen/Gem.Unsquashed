@@ -22,6 +22,7 @@ def gem():
         impression                 = 0
         is_comment_line            = false
         is_comment__or__empty_line = true
+        is_else_header             = false
         is_empty_line              = true
         is_end_of_data             = false
         is_statement               = false

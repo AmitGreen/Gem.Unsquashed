@@ -16,6 +16,7 @@ def gem():
         ))
 
 
+        is_else_header      = false
         is_statement_header = false
         is_statement        = true
 

@@ -7,6 +7,7 @@ def gem():
         __slots__           = (())
         display_name        = 'expression-statement'
         frill               = conjure_xy_frill(empty_indentation, empty_line_marker)
+        is_else_header      = false
         is_statement_header = false
         is_statement        = true
 

@@ -3,13 +3,15 @@
 #
 @gem('Sapphire.Parse3')
 def gem():
-    tree = 0
-    show = 0
+    tree = 7
+    show = 7
 
 
-    require_gem('Sapphire.BodyStatement')
-    require_gem('Sapphire.DumpToken')
+    require_gem('Sapphire.DualStatement')
     require_gem('Sapphire.Suite')
+
+    if __debug__:
+        require_gem('Sapphire.DumpToken')
 
 
     @share
@@ -475,6 +477,31 @@ def gem():
             return conjure_function_definition(header, parse_suite(header.indentation))
 
 
+        def parse_if_header(v):
+            indentation = v.indentation
+
+            v = conjure_if_statement(v, parse_suite(indentation))
+
+            w = qv()
+
+            if w is not 0:
+                if (not w.is_else_header) or (indentation is not w.indentation):
+                    return v
+
+                wv0()
+
+                if qc() is not 0:
+                    raise_unknown_line()
+            else:
+                w = next_line()
+
+                if (not w.is_else_header) or (indentation is not w.indentation):
+                    wv(v)
+                    return v
+
+            return conjure_dual_statement(v, conjure_else_fragment(w, parse_suite(indentation)))
+
+
         def parse_while_header(header):
             return conjure_while_statement(header, parse_suite(header.indentation))
 
@@ -726,6 +753,7 @@ def gem():
         ClassHeader    .parse_header = parse_class_header
         DecoratorHeader.parse_header = parse_decorator_header
         FunctionHeader .parse_header = parse_function_header
+        IfHeader       .parse_header = parse_if_header
         WhileHeader    .parse_header = parse_while_header
 
 

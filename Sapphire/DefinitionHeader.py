@@ -19,6 +19,7 @@ def gem():
 
 
         is_class_decorator_or_function_header = true
+        is_else_header                        = false
         is_statement_header                   = true
         is_statement                          = false
 

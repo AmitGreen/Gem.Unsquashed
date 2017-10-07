@@ -304,8 +304,9 @@ def gem():
         __slots__           = (())
         display_name        = 'else'
         ends_in_newline     = true
+        is_else_header      = true
         is_statement        = false
-        is_statement_header = true
+        is_statement_header = false
         keyword             = 'else'
         line_marker         = true
         newlines            = 1
