@@ -84,7 +84,10 @@ def gem():
         is_statement        = false
         is_statement_header = true
 
+        add_comment  = 0
 
+
+    @share
     class ForHeader(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'for-header'
@@ -96,6 +99,8 @@ def gem():
 
         is_statement        = false
         is_statement_header = true
+
+        add_comment  = 0
 
 
     class StatementFromImport(KeywordDualExpressionStatement):
@@ -121,7 +126,6 @@ def gem():
     @share
     class WithHeader_2(KeywordDualExpressionStatement):
         __slots__    = (())
-        add_comment  = 0
         display_name = 'with-header-2'
         frill        = conjure_vwx_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('with ')),
@@ -131,6 +135,8 @@ def gem():
 
         is_statement        = false
         is_statement_header = true
+
+        add_comment  = 0
 
 
     conjure_assert_statement_2 = produce_conjure_bookcase_dual_expression('assert-statement-2', AssertStatement_2)

@@ -14,6 +14,9 @@ def gem():
         require_gem('Sapphire.DumpToken')
 
 
+    conjure_mixed_suite = Shared.conjure_mixed_suite                        #   due to privileged
+
+
     @share
     def parse3_python(path, data, data_lines, data_many):
         data_many.append(end_of_data)
@@ -25,7 +28,6 @@ def gem():
         append_twig = tree_many.append
 
         variables = [
-                        0,                  #   0 = before
                         0,                  #   1 = comment
                         0,                  #   2 = v
                     ]
@@ -33,15 +35,12 @@ def gem():
         query = variables.__getitem__
         write = variables.__setitem__
 
-        qb  = Method(query, 0)
-        qc  = Method(query, 1)
-        qv  = Method(query, 2)
+        qc  = Method(query, 0)
+        qv  = Method(query, 1)
 
-        wb  = Method(write, 0)
-        wc  = Method(write, 1)
-        wv  = Method(write, 2)
+        wc  = Method(write, 0)
+        wv  = Method(write, 1)
 
-        wb0 = Method(wb, 0)
         wc0 = Method(wc, 0)
         wv0 = Method(wv, 0)
 
@@ -121,7 +120,7 @@ def gem():
         #       less conditions per loop, if it was not "rolled-out")
         #
         def parse_blank_lines(v):
-            assert qb() is qc() is qv() is 0
+            assert qc() is qv() is 0
 
             #
             #   At this point:
@@ -144,7 +143,7 @@ def gem():
                     if add_comment is not 0:
                         return add_comment(v)
 
-                wb(v)
+                wc(v)
                 return w
 
             w_impression = w.impression
@@ -166,7 +165,7 @@ def gem():
                             w_impression = w.impression
                             break
 
-                        wb(conjure_empty_line_suite(empty_line_many))
+                        wc(conjure_empty_line_suite(empty_line_many))
                         return w
 
                     v = conjure_empty_line_suite(empty_line_many)
@@ -193,7 +192,7 @@ def gem():
                             if add_comment is not 0:
                                 return add_comment(conjure_comment_suite(comment_many))
 
-                        wb(conjure_comment_suite(comment_many))
+                        wc(conjure_comment_suite(comment_many))
                         return w
 
                     v = conjure_comment_suite(comment_many)
@@ -217,10 +216,10 @@ def gem():
                     add_comment = x.add_comment
 
                     if add_comment is not 0:
-                        wb(v)
+                        wc(v)
                         return add_comment(w)
 
-                wb([v, w])
+                wc([v, w])
                 return x
 
             x_impression = x.impression
@@ -243,7 +242,7 @@ def gem():
                         x_impression = x.impression
                         break
 
-                    wb([v, conjure_empty_line_suite(empty_line_many)])
+                    wc([v, conjure_empty_line_suite(empty_line_many)])
                     return x
 
                 mixed_many = [v, conjure_empty_line_suite(empty_line_many)]
@@ -268,10 +267,10 @@ def gem():
                         add_comment = x.add_comment
 
                         if add_comment is not 0:
-                            wb(v)
+                            wc(v)
                             return add_comment(conjure_comment_suite(comment_many))
 
-                    wb([v, conjure_comment_suite(comment_many)])
+                    wc([v, conjure_comment_suite(comment_many)])
                     return x
 
                 mixed_many = [v, conjure_comment_suite(comment_many)]
@@ -279,9 +278,9 @@ def gem():
             #
             #   NOTE:
             #       Although 'mixed_many' might not be complete yet (and we might append more elements to it)
-            #       ... we will always return it --- so store 'mixed_many' in 'b' now
+            #       ... we will always return it --- so store 'mixed_many' in 'c' now
             #
-            wb(mixed_many)
+            wc(mixed_many)
 
 
             #
@@ -475,8 +474,6 @@ def gem():
 
                     comment = qc()
 
-                    assert qb() is 0
-
                     if comment is not 0:
                         raise_unknown_line()
 
@@ -498,6 +495,60 @@ def gem():
             return conjure_decorated_definition(decorator_header, v.parse_header())
 
 
+        @privileged
+        def produce_parse_header__with_optional_else(name, conjure_statement, conjure_prefixed_statement):
+            def parse_header__with_optional_else(v):
+                indentation = v.indentation
+
+                comment = qc()
+
+                if comment is not 0:
+                    wc0()
+
+                    v = conjure_prefixed_statement(
+                            (conjure_mixed_suite(comment)   if type(comment) is List else   comment),
+                            v,
+                            parse_suite(indentation),
+                        )
+                else:
+                    v = conjure_statement(v, parse_suite(indentation))
+
+                w = qv()
+
+                if w is not 0:
+                    if (not w.is_else_header) or (indentation is not w.indentation):
+                        return v
+
+                    wv0()
+                    prefix = qc()
+
+                    if prefix is not 0:
+                        wc0()
+
+                        return conjure_dual_statement(
+                                   v,
+                                   conjure_prefixed_else_fragment(
+                                       (conjure_mixed_suite(prefix)   if type(prefix) is List else   prefix),
+                                       w,
+                                       parse_suite(indentation),
+                                   ),
+                               )
+                else:
+                    w = next_line()
+
+                    if (not w.is_else_header) or (indentation is not w.indentation):
+                        wv(v)
+                        return v
+
+                return conjure_dual_statement(v, conjure_else_fragment(w, parse_suite(indentation)))
+
+
+            if __debug__:
+                parse_header__with_optional_else.__name__ = intern_string(name)
+
+            return parse_header__with_optional_else
+
+
         def parse_function_header(header):
             return conjure_function_definition(header, parse_suite(header.indentation))
 
@@ -515,8 +566,6 @@ def gem():
 
                 wv0()
                 prefix = qc()
-
-                assert qb() is 0
 
                 if prefix is not 0:
                     wc0()
@@ -540,23 +589,23 @@ def gem():
 
 
         def parse_while_header(header):
-            before = qb()
+            comment = qc()
 
-            if before is not 0:
-                wb0()
+            if comment is not 0:
+                wc0()
 
-                return conjure_prefixed_while_statement(before, header, parse_suite(header.indentation))
+                return conjure_prefixed_while_statement(comment, header, parse_suite(header.indentation))
 
             return conjure_while_statement(header, parse_suite(header.indentation))
 
 
         def parse_with_header(header):
-            before = qb()
+            comment = qc()
 
-            if before is not 0:
-                wb0()
+            if comment is not 0:
+                wc0()
 
-                return conjure_prefixed_with_statement(before, header, parse_suite(header.indentation))
+                return conjure_prefixed_with_statement(comment, header, parse_suite(header.indentation))
 
             return conjure_with_statement(header, parse_suite(header.indentation))
 
@@ -576,39 +625,30 @@ def gem():
 
                         assert not v.is_comment__or__empty_line
 
-                    if v.is_end_of_data:
-                        before = qb()
-
-                        if before is not 0:
-                            assert qc() is 0
-
-                            append_twig(conjure_mixed_suite(before)   if type(before) is List else   before)
-
-                        comment = qb()
-
-                        if comment is not 0:
-                            append_twig(conjure_mixed_suite(comment)   if type(comment) is List else   before)
-
-                        wv(v)
-                        break
-
-                    if v.indentation.total != 0:
+                    if (not v.is_end_of_data) and (v.indentation.total != 0):
                         raise_runtime_error('unexpected indentation %d (expected 0): %r', v.indentation.total, v)
 
                     if v.is_statement_header:
-                        v = v.parse_header()
-                    else:
-                        before = qb()
-
-                        if before is not 0:
-                            assert qc() is 0
-
-                            append_twig(conjure_mixed_suite(before)   if type(before) is List else   before)
-
-                        comment = qb()
+                        comment = qc()
 
                         if comment is not 0:
-                            append_twig(conjure_mixed_suite(comment)   if type(comment) is List else   before)
+                            comment = split_comment(empty_indentation, comment)
+
+                            if comment is not 0:
+                                append_twig(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
+
+                        v = v.parse_header()
+                    else:
+                        comment = qc()
+
+                        if comment is not 0:
+                            wc0()
+
+                            append_twig(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
+
+                        if v.is_end_of_data:
+                            wv(v)
+                            break
 
                     append_twig(v)
                 else:
@@ -631,7 +671,6 @@ def gem():
 
 
         def parse_suite(previous_indentation):
-            assert qb() is 0
             assert qc() is 0
             assert qv() is 0
 
@@ -640,14 +679,12 @@ def gem():
             if v.is_comment__or__empty_line:
                 v = parse_blank_lines(v)
 
-                before = qb()
+                comment = qc()
 
-                assert qc() is 0
-
-                if before is not 0:
-                    wb0()
+                if comment is not 0:
+                    wc0()
             else:
-                before = 0
+                comment = 0
 
             if v.is_end_of_data:
                 raise_unknown_line()
@@ -664,15 +701,13 @@ def gem():
             #
             #  Now look for 2nd part of suite
             #
-            if before is not 0:
-                suite_many = [(conjure_mixed_suite(before)   if type(before) is List else   before), v]
+            if comment is not 0:
+                suite_many = [(conjure_mixed_suite(comment)   if type(comment) is List else   comment), v]
             else:
                 w = qv()
 
                 if w is not 0:
                     if indentation is not w.indentation:
-                        assert qb() is 0
-
                         comment = qc()
 
                         if comment is not 0:
@@ -685,8 +720,6 @@ def gem():
 
                     wv0()
                     comment = qc()
-
-                    assert qb() is 0
                 else:
                     w = next_line()
                     comment = 0
@@ -703,17 +736,15 @@ def gem():
                     if w.is_comment__or__empty_line:
                         w = parse_blank_lines(w)
 
-                        before = qb()
+                        comment = qc()
 
-                        assert qc() is 0
-
-                        if before is not 0:
-                            wb0()
+                        if comment is not 0:
+                            wc0()
 
                             if indentation is not w.indentation:
                                 wv(w)
 
-                                comment = split_comment(indentation, before)
+                                comment = split_comment(indentation, comment)
 
                                 if comment is not 0:
                                     return conjure_mixed_suite([v, comment])
@@ -722,7 +753,7 @@ def gem():
 
                             suite_many = [
                                              v,
-                                             (conjure_mixed_suite(before)   if type(before) is List else   before),
+                                             (conjure_mixed_suite(comment)   if type(comment) is List else   comment),
                                              (w.parse_header()   if w.is_statement_header else w),
                                          ]
                         else:
@@ -751,8 +782,6 @@ def gem():
 
                 wv0()
                 comment = qc()
-
-                assert qb() is 0
             else:
                 x       = next_line()
                 comment = 0
@@ -769,17 +798,15 @@ def gem():
                 if x.is_comment__or__empty_line:
                     x = parse_blank_lines(x)
 
-                    before = qb()
+                    comment = qc()
 
-                    assert qc() is 0
-
-                    if before is not 0:
-                        wb0()
+                    if comment is not 0:
+                        wc0()
 
                         if indentation is not x.indentation:
                             wv(x)
 
-                            comment = split_comment(indentation, before)
+                            comment = split_comment(indentation, comment)
 
                             if comment is not 0:
                                 suite_many.append(comment)
@@ -787,7 +814,7 @@ def gem():
                             return conjure_statement_suite(suite_many)
 
                         suite_append = suite_many.append
-                        suite_append(conjure_mixed_suite(before)   if type(before) is List else   before)
+                        suite_append(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
                     else:
                         if indentation is not x.indentation:
                             wv(x)
@@ -818,8 +845,6 @@ def gem():
 
                     wv0()
                     comment = qc()
-
-                    assert qb() is 0
                 else:
                     x       = next_line()
                     comment = 0
@@ -834,14 +859,12 @@ def gem():
                     if x.is_comment__or__empty_line:
                         x = parse_blank_lines(x)
 
-                        assert qc() is 0
+                        comment = qc()
 
-                        before = qb()
+                        if comment is not 0:
+                            wc0()
 
-                        if before is not 0:
-                            wb0()
-
-                            suite_append(conjure_mixed_suite(before)   if type(before) is List else   before)
+                            suite_append(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
 
                     if indentation is not x.indentation:
                         wv(x)
@@ -893,11 +916,18 @@ def gem():
 
         ClassHeader    .parse_header = parse_class_header
         DecoratorHeader.parse_header = parse_decorator_header
-        FunctionHeader .parse_header = parse_function_header
-        IfHeader       .parse_header = parse_if_header
-        WhileHeader    .parse_header = parse_while_header
-        WithHeader_1   .parse_header = parse_with_header
-        WithHeader_2   .parse_header = parse_with_header
+
+        ForHeader.parse_header = produce_parse_header__with_optional_else(
+                                     'parse_for_header',
+                                     conjure_for_statement,
+                                     conjure_prefixed_for_statement,
+                                 )
+
+        FunctionHeader.parse_header = parse_function_header
+        IfHeader      .parse_header = parse_if_header
+        WhileHeader   .parse_header = parse_while_header
+        WithHeader_1  .parse_header = parse_with_header
+        WithHeader_2  .parse_header = parse_with_header
 
 
         #dump_newline_meta_cache()

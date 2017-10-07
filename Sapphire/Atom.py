@@ -131,6 +131,7 @@ def gem():
         is_comment__or__empty_line = false
         is_else_header             = false
         is_end_of_data             = true
+        is_statement_header        = false
 
 
         def __repr__(t):

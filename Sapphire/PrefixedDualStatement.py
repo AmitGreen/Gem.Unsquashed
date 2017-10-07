@@ -61,6 +61,17 @@ def gem():
         indentation = indentation__a_indentation
 
 
+    class ForStatement(DualTwig):
+        __slots__           = (())
+        display_name        = 'for-statement'
+        is_else_header      = false
+        is_statement_header = false
+        is_statement        = true
+
+        dump_token  = dump_token__ab
+        indentation = indentation__a_indentation
+
+
     class FunctionDefinition(DualTwig):
         __slots__           = (())
         display_name        = 'function-definition'
@@ -198,6 +209,10 @@ def gem():
     ] = produce_conjure_dual_twig_functions('else-if-statement', ElseIfStatement)
 
     [
+            conjure_for_statement, conjure_prefixed_for_statement,
+    ] = produce_conjure_dual_twig_functions('for-statement', ForStatement)
+
+    [
             conjure_function_definition, conjure_prefixed_function_definition,
     ] = produce_conjure_dual_twig_functions('function-definition', FunctionDefinition)
 
@@ -220,6 +235,7 @@ def gem():
     share(
         'conjure_class_definition',                 conjure_class_definition,
         'conjure_decorated_definition',             conjure_decorated_definition,
+        'conjure_for_statement',                    conjure_for_statement,
         'conjure_else_fragment',                    conjure_else_fragment,
         'conjure_else_if_statement',                conjure_else_if_statement,
         'conjure_function_definition',              conjure_function_definition,
@@ -231,6 +247,7 @@ def gem():
         'conjure_prefixed_decorated_definition',    conjure_prefixed_decorated_definition,
         'conjure_prefixed_else_fragment',           conjure_prefixed_else_fragment,
         'conjure_prefixed_else_if_statement',       conjure_prefixed_else_if_statement,
+        'conjure_prefixed_for_statement',           conjure_prefixed_for_statement,
         'conjure_prefixed_function_definition',     conjure_prefixed_function_definition,
         'conjure_prefixed_if_statement',            conjure_prefixed_if_statement,
         'conjure_prefixed_while_statement',         conjure_prefixed_while_statement,
