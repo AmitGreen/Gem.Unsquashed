@@ -94,6 +94,17 @@ def gem():
         indentation = indentation__a_indentation
 
 
+    class WithStatement(DualTwig):
+        __slots__           = (())
+        display_name        = 'with-statement'
+        is_else_header      = false
+        is_statement_header = false
+        is_statement        = true
+
+        dump_token  = dump_token__ab
+        indentation = indentation__a_indentation
+
+
     @privileged
     def produce_conjure_dual_twig_functions(name, Meta):
         cache  = {}
@@ -198,6 +209,10 @@ def gem():
             conjure_while_statement, conjure_prefixed_while_statement,
     ] = produce_conjure_dual_twig_functions('while-statement', WhileStatement)
 
+    [
+            conjure_with_statement, conjure_prefixed_with_statement,
+    ] = produce_conjure_dual_twig_functions('with-statement', WithStatement)
+
 
     append_cache('#dual-twig', prefixed_dual_twig_cache)
 
@@ -210,6 +225,7 @@ def gem():
         'conjure_function_definition',              conjure_function_definition,
         'conjure_if_statement',                     conjure_if_statement,
         'conjure_while_statement',                  conjure_while_statement,
+        'conjure_with_statement',                   conjure_with_statement,
 
         'conjure_prefixed_class_definition',        conjure_prefixed_class_definition,
         'conjure_prefixed_decorated_definition',    conjure_prefixed_decorated_definition,
@@ -218,4 +234,5 @@ def gem():
         'conjure_prefixed_function_definition',     conjure_prefixed_function_definition,
         'conjure_prefixed_if_statement',            conjure_prefixed_if_statement,
         'conjure_prefixed_while_statement',         conjure_prefixed_while_statement,
+        'conjure_prefixed_with_statement',          conjure_prefixed_with_statement,
     )

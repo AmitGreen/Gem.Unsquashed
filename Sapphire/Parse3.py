@@ -475,6 +475,8 @@ def gem():
 
                     comment = qc()
 
+                    assert qb() is 0
+
                     if comment is not 0:
                         raise_unknown_line()
 
@@ -514,6 +516,8 @@ def gem():
                 wv0()
                 prefix = qc()
 
+                assert qb() is 0
+
                 if prefix is not 0:
                     wc0()
 
@@ -536,7 +540,25 @@ def gem():
 
 
         def parse_while_header(header):
+            before = qb()
+
+            if before is not 0:
+                wb0()
+
+                return conjure_prefixed_while_statement(before, header, parse_suite(header.indentation))
+
             return conjure_while_statement(header, parse_suite(header.indentation))
+
+
+        def parse_with_header(header):
+            before = qb()
+
+            if before is not 0:
+                wb0()
+
+                return conjure_prefixed_with_statement(before, header, parse_suite(header.indentation))
+
+            return conjure_with_statement(header, parse_suite(header.indentation))
 
 
         def parse_lines():
@@ -546,26 +568,27 @@ def gem():
 
                     if v is 0:
                         v = next_line()
+
+                        if v.is_comment__or__empty_line:
+                            v = parse_blank_lines(v)
                     else:
                         wv0()
 
-                        comment = qc()
+                        assert not v.is_comment__or__empty_line
 
-                        if comment is not 0:
-                            wc0()
-
-                            append_twig(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
-
-                    if v.is_comment__or__empty_line:
-                        v = parse_blank_lines(v)
-                        
+                    if v.is_end_of_data:
                         before = qb()
 
                         if before is not 0:
-                            wc0()
+                            assert qc() is 0
+
                             append_twig(conjure_mixed_suite(before)   if type(before) is List else   before)
 
-                    if v.is_end_of_data:
+                        comment = qb()
+
+                        if comment is not 0:
+                            append_twig(conjure_mixed_suite(comment)   if type(comment) is List else   before)
+
                         wv(v)
                         break
 
@@ -574,6 +597,18 @@ def gem():
 
                     if v.is_statement_header:
                         v = v.parse_header()
+                    else:
+                        before = qb()
+
+                        if before is not 0:
+                            assert qc() is 0
+
+                            append_twig(conjure_mixed_suite(before)   if type(before) is List else   before)
+
+                        comment = qb()
+
+                        if comment is not 0:
+                            append_twig(conjure_mixed_suite(comment)   if type(comment) is List else   before)
 
                     append_twig(v)
                 else:
@@ -596,21 +631,18 @@ def gem():
 
 
         def parse_suite(previous_indentation):
-            v = qv()
+            assert qb() is 0
+            assert qc() is 0
+            assert qv() is 0
 
-            if v is 0:
-                v = next_line()
-            else:
-                assert 0
-
-                wv0()
+            v = next_line()
 
             if v.is_comment__or__empty_line:
                 v = parse_blank_lines(v)
 
-                assert (not v.is_comment__or__empty_line)
-
                 before = qb()
+
+                assert qc() is 0
 
                 if before is not 0:
                     wb0()
@@ -639,6 +671,8 @@ def gem():
 
                 if w is not 0:
                     if indentation is not w.indentation:
+                        assert qb() is 0
+
                         comment = qc()
 
                         if comment is not 0:
@@ -651,6 +685,8 @@ def gem():
 
                     wv0()
                     comment = qc()
+
+                    assert qb() is 0
                 else:
                     w = next_line()
                     comment = 0
@@ -667,9 +703,9 @@ def gem():
                     if w.is_comment__or__empty_line:
                         w = parse_blank_lines(w)
 
-                        assert not w.is_comment__or__empty_line
-
                         before = qb()
+
+                        assert qc() is 0
 
                         if before is not 0:
                             wb0()
@@ -715,6 +751,8 @@ def gem():
 
                 wv0()
                 comment = qc()
+
+                assert qb() is 0
             else:
                 x       = next_line()
                 comment = 0
@@ -731,9 +769,9 @@ def gem():
                 if x.is_comment__or__empty_line:
                     x = parse_blank_lines(x)
 
-                    assert not x.is_comment__or__empty_line
-
                     before = qb()
+
+                    assert qc() is 0
 
                     if before is not 0:
                         wb0()
@@ -780,6 +818,8 @@ def gem():
 
                     wv0()
                     comment = qc()
+
+                    assert qb() is 0
                 else:
                     x       = next_line()
                     comment = 0
@@ -794,7 +834,7 @@ def gem():
                     if x.is_comment__or__empty_line:
                         x = parse_blank_lines(x)
 
-                        assert not x.is_comment__or__empty_line
+                        assert qc() is 0
 
                         before = qb()
 
@@ -856,6 +896,8 @@ def gem():
         FunctionHeader .parse_header = parse_function_header
         IfHeader       .parse_header = parse_if_header
         WhileHeader    .parse_header = parse_while_header
+        WithHeader_1   .parse_header = parse_with_header
+        WithHeader_2   .parse_header = parse_with_header
 
 
         #dump_newline_meta_cache()
@@ -864,10 +906,11 @@ def gem():
             show_indentation()
 
         parse_lines()
-        test_identical_output()
-        test_count_newlines()
 
         if show is 7:
             show_tree()
+
+        test_identical_output()
+        test_count_newlines()
 
         #dump_caches('dual-twig')

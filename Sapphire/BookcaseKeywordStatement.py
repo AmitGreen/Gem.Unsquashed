@@ -203,8 +203,10 @@ def gem():
         is_statement_header = true
 
 
+    @share
     class WithHeader_1(KeywordExpressionStatement):
         __slots__    = (())
+        add_comment  = 0
         display_name = 'with-header-1'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('with ')),

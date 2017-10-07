@@ -118,8 +118,10 @@ def gem():
                        )
 
 
+    @share
     class WithHeader_2(KeywordDualExpressionStatement):
         __slots__    = (())
+        add_comment  = 0
         display_name = 'with-header-2'
         frill        = conjure_vwx_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('with ')),

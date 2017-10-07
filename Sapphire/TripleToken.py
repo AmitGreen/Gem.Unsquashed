@@ -6,6 +6,7 @@ def gem():
     require_gem('Sapphire.Whitespace')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.TripleTwig')
+    require_gem('Sapphire.DualStatement')
 
 
     conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged
@@ -310,7 +311,9 @@ def gem():
 
 
     class Indented_Continue_LineMarker_1(BaseTripleOperator):
-        __slots__           = (())
+        __slots__   = (())
+        indentation = BaseTripleOperator.a
+
         display_name        = r'indented-continue\n'
         ends_in_newline     = true
         indentation         = BaseTripleOperator.a
@@ -320,9 +323,13 @@ def gem():
         line_marker         = true
         newlines            = 1
 
-        indentation = BaseTripleOperator.a
+        __init__ = construct_triple_operator__line_marker_1
 
-        __init__       = construct_triple_operator__line_marker_1
+
+        def add_comment(t, comment):
+            return conjure_commented_statement(comment, t)
+
+
         count_newlines = count_newlines__line_marker
         dump_token     = dump_token__indented__keyword__line_marker
 

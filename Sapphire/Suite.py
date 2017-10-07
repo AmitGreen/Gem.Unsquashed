@@ -43,11 +43,11 @@ def gem():
     class EmptyLineSuite(TokenTuple):
         __slots__           = (())
         display_name        = 'empty-line-*'
+        impression          = 0
         indentation         = none
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
-
 
         dump_token = dump_token__no_impression
 
@@ -59,7 +59,6 @@ def gem():
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
-
 
         dump_token = dump_token__no_impression
 
