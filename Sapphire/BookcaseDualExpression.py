@@ -9,7 +9,7 @@ def gem():
 
 
     append_cache                = Shared.append_cache                   #   Due to privileged
-    conjure_triple_frill        = Shared.conjure_triple_frill           #   Due to privileged
+    conjure_xyz_frill           = Shared.conjure_xyz_frill              #   Due to privileged
     lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   Due to privileged
     produce_conjure_dual        = Shared.produce_conjure_dual           #   Due to privileged
     produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   Due to privileged
@@ -36,11 +36,11 @@ def gem():
             frill = t.frill
 
             f.partial('<%s ', t.display_name)
-            frill.a.dump_token(f)
+            frill.x.dump_token(f)
             t.a.dump_token(f)
-            frill.b.dump_token(f)
+            frill.y.dump_token(f)
             t.b.dump_token(f)
-            r = frill.c.dump_token(f, false)
+            r = frill.z.dump_token(f, false)
 
             if (r) and (newline):
                 f.line('>')
@@ -53,11 +53,11 @@ def gem():
         def write(t, w):
             frill = t.frill
 
-            w(frill.a.s)
+            w(frill.x.s)
             t.a.write(w)
-            w(frill.b.s)
+            w(frill.y.s)
             t.b.write(w)
-            w(frill.c.s)
+            w(frill.z.s)
  
  
     BookcaseDualExpression.k1 = BookcaseDualExpression.a
@@ -70,7 +70,6 @@ def gem():
             name,
             Meta,
 
-            conjure_triple_frill       = conjure_triple_frill,
             produce_conjure_with_frill = false,
     ):
         assert type(produce_conjure_with_frill) is Boolean
@@ -108,11 +107,11 @@ def gem():
 
                             return arrange('<%s+frill %s %s %s %s %s>',
                                            t.display_name,
-                                           frill.a.display_token(),
+                                           frill.x.display_token(),
                                            t.a    .display_token(),
-                                           frill.b.display_token(),
+                                           frill.y.display_token(),
                                            t.b    .display_token(),
-                                           frill.c.display_token())
+                                           frill.z.display_token())
 
 
                 write = attribute(Meta, 'write__frill', none)
@@ -136,16 +135,16 @@ def gem():
         conjure_dual              = produce_conjure_dual       (name, Meta,                   cache, lookup, store)
         conjure_triple_with_frill = produce_conjure_triple__312(name, conjure_Meta_WithFrill, cache, lookup, store)
 
-        meta_frill_a = Meta.frill.a
-        meta_frill_b = Meta.frill.b
-        meta_frill_c = Meta.frill.c
+        meta_frill_x = Meta.frill.x
+        meta_frill_y = Meta.frill.y
+        meta_frill_z = Meta.frill.z
 
 
-        def conjure_bookcase_dual_expression(frill_a, a, frill_b, b, frill_c):
-            if (frill_a is meta_frill_a) and (frill_b is meta_frill_b) and (frill_c is meta_frill_c):
+        def conjure_bookcase_dual_expression(frill_x, a, frill_y, b, frill_z):
+            if (frill_x is meta_frill_x) and (frill_y is meta_frill_y) and (frill_z is meta_frill_z):
                 return conjure_dual(a, b)
 
-            return conjure_triple_with_frill(a, b, conjure_triple_frill(frill_a, frill_b, frill_c))
+            return conjure_triple_with_frill(a, b, conjure_xyz_frill(frill_x, frill_y, frill_z))
 
 
         if __debug__:
@@ -162,13 +161,13 @@ def gem():
     class Arguments_2(BookcaseDualExpression):
         __slots__    = (())
         display_name = '(2)'
-        frill        = conjure_triple_frill(LP, COMMA_SPACE, RP)
+        frill        = conjure_xyz_frill(LP, COMMA_SPACE, RP)
 
 
     class ListExpression_2(BookcaseDualExpression):
         __slots__                      = (())
         display_name                   = '[2]'
-        frill                          = conjure_triple_frill(LSB, COMMA_SPACE, RSB)
+        frill                          = conjure_xyz_frill(LSB, COMMA_SPACE, RSB)
         is__atom__or__special_operator = true
         is_atom                        = true
 
@@ -176,13 +175,13 @@ def gem():
     class RangeIndex(BookcaseDualExpression):
         __slots__    = (())
         display_name = 'range-index'
-        frill        = conjure_triple_frill(LSB, conjure_colon(' : '), RSB)
+        frill        = conjure_xyz_frill(LSB, conjure_colon(' : '), RSB)
 
 
     class TupleExpression_2(BookcaseDualExpression):
         __slots__                      = (())
         display_name                   = '{,2}'
-        frill                          = conjure_triple_frill(LP, COMMA_SPACE, RP)
+        frill                          = conjure_xyz_frill(LP, COMMA_SPACE, RP)
         is__atom__or__special_operator = true
         is_atom                        = true
 

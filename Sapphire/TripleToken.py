@@ -5,6 +5,7 @@
 def gem():
     require_gem('Sapphire.Whitespace')
     require_gem('Sapphire.Elemental')
+    require_gem('Sapphire.TripleTwig')
 
 
     conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged
@@ -89,10 +90,7 @@ def gem():
 
 
         __init__ = construct_triple_token
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.c)
+        __repr__ = portray__abc
 
 
         def display_full_token(t):

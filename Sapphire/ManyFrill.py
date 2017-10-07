@@ -39,7 +39,7 @@ def gem():
                 return conjure_xy_frill(many[0], many[1])
 
             if total is 3:
-                return conjure_triple_frill(many[0], many[1], many[2])
+                return conjure_xyz_frill(many[0], many[1], many[2])
 
             assert total is 4
 

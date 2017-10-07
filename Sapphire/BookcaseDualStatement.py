@@ -123,7 +123,6 @@ def gem():
             'assign-1',
             AssignStatement_1,
 
-            conjure_triple_frill       = conjure_xyz_frill,
             produce_conjure_with_frill = true,
         )
 
@@ -133,7 +132,6 @@ def gem():
             'modify-statement',
             ModifyStatement,
 
-            conjure_triple_frill       = conjure_xyz_frill,
             produce_conjure_with_frill = true,
         )
 

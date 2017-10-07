@@ -9,6 +9,32 @@ def gem():
 
 
     @share
+    def construct__abc(t, a, b, c):
+        t.a = a
+        t.b = b
+        t.c = c
+
+
+    @share
+    def count_newlines__abc(t):
+        return t.a.count_newlines() + t.b.count_newlines() + t.c.count_newlines()
+
+
+    @share
+    def display_token__abc(t):
+        return arrange('<%s %s %s %s>',
+                       t.display_name,
+                       t.a.display_token(),
+                       t.b.display_token(),
+                       t.b.display_token())
+
+
+    @share
+    def portray__abc(t):
+        return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.c)
+
+
+    @share
     class TripleTwig(SapphireTrunk):
         __slots__ = ((
             'a',                        #   Any
@@ -17,26 +43,10 @@ def gem():
         ))
 
 
-        def __init__(t, a, b, c):
-            t.a = a
-            t.b = b
-            t.c = c
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.c)
-
-
-        def count_newlines(t):
-            return t.a.count_newlines() + t.b.count_newlines() + t.c.count_newlines()
-
-
-        def display_token(t):
-            return arrange('<%s %s %s %s>',
-                           t.display_name,
-                           t.a.display_token(),
-                           t.b.display_token(),
-                           t.b.display_token())
+        __init__       = construct__abc
+        __repr__       = portray__abc
+        count_newlines = count_newlines__abc
+        display_token  = display_token__abc
 
 
         def dump_token(t, f, newline = true):

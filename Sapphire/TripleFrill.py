@@ -8,55 +8,35 @@ def gem():
     store_triple_frill  = triple_frill_cache.__setitem__
 
 
-    class TripleFrill(Object):
-        __slots__ = ((
-            'a',                        #   SapphireToken+
-            'b',                        #   SapphireToken+
-            'c',                        #   SapphireToken+
-        ))
+    class Commented_XY_Frill(TripleTwig):
+        __slots__ = (())
+        comment   = TripleTwig.a
+        x         = TripleTwig.b
+        y         = TripleTwig.c
 
-
+        display_name   = '#xy-frill'
         frill_estimate = 3
 
-
-        def __init__(t, a, b, c):
-            t.a = a
-            t.b = b
-            t.c = c
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.c)
+        __init__       = construct__abc
+        __repr__       = portray__abc
+        count_newlines = count_newlines__abc
+        display_token  = display_token__abc
 
 
-        def count_newlines(t):
-            return t.a.count_newlines() + t.b.count_newlines() + t.c.count_newlines()
-
-
-        def display_token(t):
-            return arrange('<triple-frill %s %s %s>', t.a.display_token(), t.b.display_token(), t.c.display_token())
-
-
-    class Commented_XY_Frill(TripleFrill):
+    class XYZ_Frill(TripleTwig):
         __slots__ = (())
+        comment   = 0
+        x         = TripleTwig.a
+        y         = TripleTwig.b
+        z         = TripleTwig.c
 
-        comment = TripleFrill.a
-        x       = TripleFrill.b
-        y       = TripleFrill.c
+        display_name   = 'xyz-frill'
+        frill_estimate = 3
 
-
-    class XYZ_Frill(TripleFrill):
-        __slots__ = (())
-
-        comment = 0
-        x       = TripleFrill.a
-        y       = TripleFrill.b
-        z       = TripleFrill.c
-
-
-    TripleFrill.k1 = TripleFrill.a
-    TripleFrill.k2 = TripleFrill.b
-    TripleFrill.k3 = TripleFrill.c
+        __init__       = construct__abc
+        __repr__       = portray__abc
+        count_newlines = count_newlines__abc
+        display_token  = display_token__abc
 
 
     conjure_commented_xy_frill = produce_conjure_triple(
@@ -66,14 +46,6 @@ def gem():
                                      lookup_triple_frill,
                                      store_triple_frill,
                                  )
-
-    conjure_triple_frill = produce_conjure_triple(
-                               'triple-frill',
-                               TripleFrill,
-                               triple_frill_cache,
-                               lookup_triple_frill,
-                               store_triple_frill,
-                           )
 
     conjure_xyz_frill = produce_conjure_triple(
                             'xyz-frill',
@@ -89,6 +61,5 @@ def gem():
 
     share(
         'conjure_commented_xy_frill',   conjure_commented_xy_frill,
-        'conjure_triple_frill',         conjure_triple_frill,
         'conjure_xyz_frill',            conjure_xyz_frill,
     )
