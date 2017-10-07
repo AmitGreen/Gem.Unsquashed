@@ -188,11 +188,12 @@ def gem():
                        )
 
 
+    @export
     class WhileHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'while-header'
         frill        = conjure_xy_frill(
-                           conjure_indented_token(empty_indentation, conjure_keyword_while('while ')),
+                           conjure_indented_token(conjure_indentation('    '), conjure_keyword_while('while ')),
                            colon__empty_line_marker,
                        )
 

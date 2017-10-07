@@ -3,14 +3,13 @@
 #
 @gem('Sapphire.Parse1Complex')
 def gem():
-    require_gem('Sapphire.ConditionStatement')
     require_gem('Sapphire.UnaryStatement')
 
 
     show = 0
 
 
-    def parse1_condition_statement__X__m(m, conjure_indented_keyword, evoke_header, MetaStatement):
+    def parse1_condition_statement__X__m(m, conjure_indented_keyword, evoke_header, conjure_body_statement):
         if m.end('newline') is not -1:
             raise_unknown_line()
 
@@ -47,10 +46,8 @@ def gem():
         if not left.is_atom:
             raise_unknown_line()
 
-        return MetaStatement(
-                   indented_keyword,
-                   condition,
-                   operator,
+        return conjure_body_statement(
+                   evoke_header(indented_keyword, condition, operator),
                    parse1_statement_expression__atom('', left),
                )
 

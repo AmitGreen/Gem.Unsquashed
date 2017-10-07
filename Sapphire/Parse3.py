@@ -3,8 +3,8 @@
 #
 @gem('Sapphire.Parse3')
 def gem():
-    tree = 7
-    show = 7
+    tree = 0
+    show = 0
 
 
     require_gem('Sapphire.BodyStatement')
@@ -430,6 +430,10 @@ def gem():
                 y_impression = y.impression
 
 
+        def parse_class_header(header):
+            return conjure_class_definition(header, parse_suite(header.indentation))
+
+
         def parse_decorator_header(decorator_header):
             indentation = decorator_header.indentation
 
@@ -467,8 +471,12 @@ def gem():
             return conjure_decorated_definition(decorator_header, v.parse_header())
 
 
-        def parse_function_header(function_header):
-            return conjure_function_definition(function_header, parse_suite(function_header.indentation))
+        def parse_function_header(header):
+            return conjure_function_definition(header, parse_suite(header.indentation))
+
+
+        def parse_while_header(header):
+            return conjure_while_statement(header, parse_suite(header.indentation))
 
 
         def parse_lines():
@@ -715,8 +723,10 @@ def gem():
                 suite_append(x.parse_header()   if x.is_statement_header else   x)
 
 
+        ClassHeader    .parse_header = parse_class_header
         DecoratorHeader.parse_header = parse_decorator_header
         FunctionHeader .parse_header = parse_function_header
+        WhileHeader    .parse_header = parse_while_header
 
 
         #dump_newline_meta_cache()

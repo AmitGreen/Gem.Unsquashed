@@ -38,12 +38,10 @@ def gem():
 
 
         def dump_token(t, f, newline = true):
-            frill = t.frill
+            frill   = t.frill
+            frill_a = frill.a
 
-            frill_a     = frill.a
-            indentation = frill_a.a
-
-            f.partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+            f.partial('<%s +%d ', t.display_name, frill_a.a.total)
             frill_a.b.dump_token(f)
             t.a.dump_token(f)
             frill.b.dump_token(f)
