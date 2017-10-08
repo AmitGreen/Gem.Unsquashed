@@ -80,8 +80,8 @@ SAPPHIRE_FILES = \
     ../Sapphire/Suite.py \
     ../Sapphire/TernaryExpression.py ../Sapphire/TokenCache.py ../Sapphire/TokenTuple.py \
         ../Sapphire/Tokenize1Atom.py ../Sapphire/Tokenize1Name.py ../Sapphire/Tokenize1Operator.py \
-        ../Sapphire/Tree.py ../Sapphire/TripleFrill.py ../Sapphire/TripleToken.py ../Sapphire/TripleTwig.py \
-        ../Sapphire/TupleOfExpression.py \
+        ../Sapphire/Tree.py ../Sapphire/TripleFrill.py ../Sapphire/TripleStatement.py ../Sapphire/TripleToken.py \
+        ../Sapphire/TripleTwig.py ../Sapphire/TupleOfExpression.py \
     ../Sapphire/UnaryExpression.py \
     ../Sapphire/Whitespace.py
     #
@@ -145,7 +145,7 @@ clean:
 	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
 	rm -f   h2f.py h2p.py h2ps.py h2s.py h2s.py h2t.py h2w.py
-	rm -f   h3e.py h3f.py h3p.py h3t.py h3w.py
+	rm -f   h3e.py h3f.py h3p.py h3s.py h3t.py h3w.py
 	rm -f   h4f.py h4t.py
 	rm -f   hat.py haw.py hb.py hca.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
@@ -225,6 +225,7 @@ links:
 	ln -s ../Sapphire/DualTwig.py                       h2w.py
 	ln -s ../Sapphire/TernaryExpression.py              h3e.py
 	ln -s ../Sapphire/TripleFrill.py                    h3f.py
+	ln -s ../Sapphire/TripleStatement.py                h3s.py
 	ln -s ../Sapphire/TripleToken.py                    h3t.py
 	ln -s ../Sapphire/TripleTwig.py                     h3w.py
 	ln -s ../Sapphire/QuadrupleFrill.py                 h4f.py

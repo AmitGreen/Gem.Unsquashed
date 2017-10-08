@@ -10,6 +10,7 @@ def gem():
 
     require_gem('Sapphire.DualStatement')
     require_gem('Sapphire.Suite')
+    require_gem('Sapphire.TripleStatement')
 
     if __debug__:
         require_gem('Sapphire.DumpToken')
@@ -52,8 +53,8 @@ def gem():
 
         wb0       = Method(wb,      0)
         wc0       = Method(wc,      0)
-        w_split_0 = Method(w_split, 0)
         w_split_1 = Method(w_split, 1)
+        w_split_2 = Method(w_split, 2)
         wv0       = Method(wv,      0)
 
 
@@ -531,6 +532,11 @@ def gem():
 
 
         def parse_any_else_fragment(v):
+            if qc() is not 0:
+                my_line('v: %r', v)
+
+            assert qc() is 0
+
             before = qb()
 
             if before is not 0:
@@ -573,7 +579,7 @@ def gem():
                 v = next_line()
 
                 if v.is_comment__or__empty_line:
-                    w_split_0()
+                    w_split_2()
 
                     v = parse_blank_lines(v)
 
@@ -694,7 +700,36 @@ def gem():
         def parse_if_statement__X__statement(v, w):
             w = parse_any_else_fragment(w)
 
-            return conjure_dual_statement(v, w)
+            if w.is_else_fragment:
+                return conjure_dual_statement(v, w)
+
+            x = qv()
+
+            if x is not 0:
+                if not x.is_any_else:
+                    return conjure_dual_statement(v, w)
+
+                wv0()
+            else:
+                x = next_line()
+
+                if x.is_comment__or__empty_line:
+                    w_split_2()
+
+                    x = parse_blank_lines(x)
+
+                    w_split_1()
+
+                if not x.is_any_else:
+                    wv(x)
+                    return conjure_dual_statement(v, w)
+
+            x = parse_any_else_fragment(x)
+
+            if x.is_else_fragment:
+                return conjure_triple_statement(v, w, x)
+
+            assert 0, 'incomplete'
 
 
         def parse_if_statement(v):
@@ -710,14 +745,14 @@ def gem():
             w = next_line()
 
             if w.is_comment__or__empty_line:
-                w_split_0()
+                w_split_2()
 
                 w = parse_blank_lines(w)
 
                 w_split_1()
 
                 if not w.is_any_else:
-                    wc(w)
+                    wv(w)
                     return v
 
             return parse_if_statement__X__statement(v, w)
@@ -1142,15 +1177,18 @@ def gem():
         WithHeader_2  .parse_header = parse_with_header
 
 
-        ElseIfHeader                  .conjure_fragment = conjure_else_if_fragment
-        ElseFragment                  .conjure_fragment = conjure_else_if_fragment
-        Indented_Else_Colon_LineMarker.conjure_fragment = conjure_else_fragment
-
+        static_conjure_prefixed_else_fragment    = static_method(conjure_prefixed_else_fragment)
         static_conjure_prefixed_else_if_fragment = static_method(conjure_prefixed_else_if_fragment)
 
+        ElseFragment                  .conjure_fragment = conjure_else_fragment
+        ElseIfFragment                .conjure_fragment = conjure_else_if_fragment
+        ElseIfHeader                  .conjure_fragment = conjure_else_if_fragment
+        Indented_Else_Colon_LineMarker.conjure_fragment = conjure_else_fragment
+
+        ElseFragment                  .conjure_prefixed_fragment = static_conjure_prefixed_else_fragment
+        ElseIfFragment                .conjure_prefixed_fragment = static_conjure_prefixed_else_if_fragment
         ElseIfHeader                  .conjure_prefixed_fragment = static_conjure_prefixed_else_if_fragment
-        ElseFragment                  .conjure_prefixed_fragment = static_conjure_prefixed_else_if_fragment
-        Indented_Else_Colon_LineMarker.conjure_prefixed_fragment = static_method(conjure_prefixed_else_fragment)
+        Indented_Else_Colon_LineMarker.conjure_prefixed_fragment = static_conjure_prefixed_else_fragment 
 
 
         #dump_newline_meta_cache()

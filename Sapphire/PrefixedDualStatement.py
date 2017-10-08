@@ -49,6 +49,7 @@ def gem():
         add_comment           = 0
         display_name          = 'else-fragment'
         is_any_else           = true
+        is_else_fragment      = true
         is_else_header        = false
         is_statement          = false
         is_statement_header   = false
@@ -59,14 +60,18 @@ def gem():
         indentation = indentation__a_indentation
 
 
+    @share
     class ElseIfFragment(DualTwig):
         __slots__             = (())
+        add_comment           = 0
         display_name          = 'else-if-fragment'
         is_any_else           = true
+        is_else_fragment      = false
         is_else_header        = false
         is_statement_header   = false
         is_statement          = true
         prefixed_display_name = 'prefixed-else-if-fragment'
+        split_comment         = 0
 
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
