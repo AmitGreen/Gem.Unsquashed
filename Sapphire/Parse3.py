@@ -9,6 +9,7 @@ def gem():
 
 
     require_gem('Sapphire.DualStatement')
+    require_gem('Sapphire.QuadrupleStatement')
     require_gem('Sapphire.Suite')
     require_gem('Sapphire.TripleStatement')
 
@@ -531,9 +532,27 @@ def gem():
             parse_blank_lines = show_parse_blank_lines
 
 
-        def parse_any_else_fragment(v):
-            if qc() is not 0:
-                my_line('v: %r', v)
+        def parse_any_else_fragment():
+            v = qv()
+
+            if v is not 0:
+                if not v.is_any_else:
+                    return 0
+
+                wv0()
+            else:
+                v = next_line()
+
+                if v.is_comment__or__empty_line:
+                    w_split_2()
+
+                    v = parse_blank_lines(v)
+
+                    w_split_1()
+
+                if not v.is_any_else:
+                    wv(v)
+                    return 0
 
             assert qc() is 0
 
@@ -676,58 +695,42 @@ def gem():
 
 
         def parse_if_header(v):
-            indentation = v.indentation
-
             comment = qc()
 
             if comment is not 0:
                 wc0()
 
-                v = conjure_prefixed_if_definition(comment, header, parse_suite(indentation))
+                v = conjure_prefixed_if_definition(comment, header, parse_suite(v.indentation))
             else:
-                v = conjure_if_statement(v, parse_suite(indentation))
+                v = conjure_if_statement(v, parse_suite(v.indentation))
 
-            w = qv()
+            return parse_if_statement__X(v)
 
-            if not w.is_any_else:
+
+        def parse_if_statement__X(v):
+            w = parse_any_else_fragment()
+
+            if w is 0:
                 return v
-
-            wv0()
-
-            return parse_if_statement__X__statement(v, w)
-
-
-        def parse_if_statement__X__statement(v, w):
-            w = parse_any_else_fragment(w)
 
             if w.is_else_fragment:
                 return conjure_dual_statement(v, w)
 
-            x = qv()
+            x = parse_any_else_fragment()
 
-            if x is not 0:
-                if not x.is_any_else:
-                    return conjure_dual_statement(v, w)
-
-                wv0()
-            else:
-                x = next_line()
-
-                if x.is_comment__or__empty_line:
-                    w_split_2()
-
-                    x = parse_blank_lines(x)
-
-                    w_split_1()
-
-                if not x.is_any_else:
-                    wv(x)
-                    return conjure_dual_statement(v, w)
-
-            x = parse_any_else_fragment(x)
+            if x is 0:
+                return conjure_dual_statement(v, w)
 
             if x.is_else_fragment:
                 return conjure_triple_statement(v, w, x)
+
+            y = parse_any_else_fragment()
+
+            if y is 0:
+                return conjure_triple_statement(v, w, x)
+
+            if y.is_else_fragment:
+                return conjure_quadruple_statement(v, w, x, y)
 
             assert 0, 'incomplete'
 
@@ -742,20 +745,7 @@ def gem():
 
                 v = conjure_prefixed_if_definition(comment, v.a, v.b)
 
-            w = next_line()
-
-            if w.is_comment__or__empty_line:
-                w_split_2()
-
-                w = parse_blank_lines(w)
-
-                w_split_1()
-
-                if not w.is_any_else:
-                    wv(w)
-                    return v
-
-            return parse_if_statement__X__statement(v, w)
+            return parse_if_statement__X(v)
             
 
 

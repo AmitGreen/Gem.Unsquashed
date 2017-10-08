@@ -76,7 +76,8 @@ SAPPHIRE_FILES = \
         ../Sapphire/Parse2.py ../Sapphire/Parse3.py \
         ../Sapphire/PostfixExpression.py ../Sapphire/PrefixedDualStatement.py \
     ../Sapphire/Pattern.py \
-    ../Sapphire/QuadrupleFrill.py ../Sapphire/QuadrupleToken.py \
+    ../Sapphire/QuadrupleFrill.py ../Sapphire/QuadrupleStatement.py ../Sapphire/QuadrupleToken.py \
+        ../Sapphire/QuadrupleTwig.py \
     ../Sapphire/Suite.py \
     ../Sapphire/TernaryExpression.py ../Sapphire/TokenCache.py ../Sapphire/TokenTuple.py \
         ../Sapphire/Tokenize1Atom.py ../Sapphire/Tokenize1Name.py ../Sapphire/Tokenize1Operator.py \
@@ -146,7 +147,7 @@ clean:
 	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
 	rm -f   h2f.py h2p.py h2ps.py h2s.py h2s.py h2t.py h2w.py
 	rm -f   h3e.py h3f.py h3p.py h3s.py h3t.py h3w.py
-	rm -f   h4f.py h4t.py
+	rm -f   h4f.py h4s.py h4t.py h4w.py
 	rm -f   hat.py haw.py hb.py hca.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
 	rm -f   hma.py hmc.py hme.py hmf.py hpt.py hs.py htc.py hto.py htr.py htt.py hu.py hw.py hx.py hy.py
@@ -229,7 +230,9 @@ links:
 	ln -s ../Sapphire/TripleToken.py                    h3t.py
 	ln -s ../Sapphire/TripleTwig.py                     h3w.py
 	ln -s ../Sapphire/QuadrupleFrill.py                 h4f.py
+	ln -s ../Sapphire/QuadrupleStatement.py             h4s.py
 	ln -s ../Sapphire/QuadrupleToken.py                 h4t.py
+	ln -s ../Sapphire/QuadrupleTwig.py                  h4w.py
 	ln -s ../Sapphire/Atom.py                           hat.py
 	ln -s ../Sapphire/ActionWord.py                     haw.py
 	ln -s ../Sapphire/BinaryExpression.py               hb.py

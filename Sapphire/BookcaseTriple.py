@@ -8,7 +8,7 @@ def gem():
 
 
     append_cache                    = Shared.append_cache                       #   Due to privileged
-    conjure_quadruple_frill         = Shared.conjure_quadruple_frill            #   Due to privileged
+    conjure_vwxy_frill              = Shared.conjure_vwxy_frill                 #   Due to privileged
     lookup_adjusted_meta            = Shared.lookup_adjusted_meta               #   Due to privileged
     produce_conjure_triple          = Shared.produce_conjure_triple             #   Due to privileged
     produce_conjure_quadruple__4123 = Shared.produce_conjure_quadruple__4123    #   Due to privileged
@@ -35,13 +35,13 @@ def gem():
 
             f.partial('<%s ', t.display_name)
 
-            frill    .a.dump_token(f)
+            frill    .v.dump_token(f)
             t        .a.dump_token(f)
-            frill    .b.dump_token(f)
+            frill    .w.dump_token(f)
             t        .b.dump_token(f)
-            frill    .c.dump_token(f)
+            frill    .x.dump_token(f)
             t        .c.dump_token(f)
-            r = frill.d.dump_token(f, false)
+            r = frill.y.dump_token(f, false)
 
             return f.token_result(r, newline)
 
@@ -49,13 +49,13 @@ def gem():
         def write(t, w):
             frill = t.frill
 
-            w(frill.a.s)
+            w(frill.v.s)
             t.a.write(w)
-            w(frill.b.s)
+            w(frill.w.s)
             t.b.write(w)
-            w(frill.c.s)
+            w(frill.x.s)
             t.c.write(w)
-            w(frill.d.s)
+            w(frill.y.s)
  
  
     @share
@@ -93,18 +93,18 @@ def gem():
                         def display_token(t):
                             frill = t.frill
 
-                            frill_a = frill.a
+                            frill_v = frill.v
 
                             return arrange('<%s+frill %+d %s %s %s %s %s %s %s>',
                                            t.display_name,
-                                           frill_a.a.total,
-                                           frill_a.b.display_token(),
-                                           t.a      .display_token(),
-                                           frill.b  .display_token(),
-                                           t.b      .display_token(),
-                                           frill.c  .display_token(),
-                                           t.c      .display_token(),
-                                           frill.d  .display_token())
+                                           frill_v.a.total,
+                                           frill_v.b.display_token(),
+                                           t      .a.display_token(),
+                                           frill  .w.display_token(),
+                                           t      .b.display_token(),
+                                           frill  .x.display_token(),
+                                           t      .c.display_token(),
+                                           frill  .y.display_token())
 
 
                 BookcaseTripleExpression_WithFrill.k4 = BookcaseTripleExpression_WithFrill.frill
@@ -121,22 +121,22 @@ def gem():
         conjure_triple    = produce_conjure_triple         (name, Meta,                   cache, lookup, store)
         conjure_quadruple = produce_conjure_quadruple__4123(name, conjure_Meta_WithFrill, cache, lookup, store)
 
-        meta_frill_a = Meta.frill.a
-        meta_frill_b = Meta.frill.b
-        meta_frill_c = Meta.frill.c
-        meta_frill_d = Meta.frill.d
+        meta_frill_v = Meta.frill.v
+        meta_frill_w = Meta.frill.w
+        meta_frill_x = Meta.frill.x
+        meta_frill_y = Meta.frill.y
 
 
-        def conjure_bookcase_triple(frill_a, a, frill_b, b, frill_c, c, frill_d):
+        def conjure_bookcase_triple(frill_v, a, frill_w, b, frill_x, c, frill_y):
             if (
-                       frill_a is meta_frill_a
-                   and frill_b is meta_frill_b
-                   and frill_c is meta_frill_c
-                   and frill_d is meta_frill_d
+                       frill_v is meta_frill_v
+                   and frill_w is meta_frill_w
+                   and frill_x is meta_frill_x
+                   and frill_y is meta_frill_y
             ):
                 return conjure_triple(a, b, c)
 
-            return conjure_quadruple(a, b, c, conjure_quadruple_frill(frill_a, frill_b, frill_c, frill_d))
+            return conjure_quadruple(a, b, c, conjure_vwxy_frill(frill_v, frill_w, frill_x, frill_y))
 
 
         if __debug__:
@@ -150,7 +150,7 @@ def gem():
     class RaiseStatement_3(BookcaseTripleExpression):
         __slots__    = (())
         display_name = 'raise-statement-3'
-        frill        = conjure_quadruple_frill(
+        frill        = conjure_vwxy_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('raise ')),
                            conjure_comma(', '),
                            conjure_comma(', '),
@@ -165,7 +165,7 @@ def gem():
 
         @property
         def indentation(t):
-            return t.frill.a.a
+            return t.frill.v.a
 
 
     conjure_raise_statement_3 = produce_conjure_bookcase_triple_expression('raise-statement-3', RaiseStatement_3)

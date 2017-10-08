@@ -48,12 +48,12 @@ def gem():
             indented_token = frill.v
 
             return arrange('<%s +%d %s %s %s %s>',
-                           t.display_name,
+                           t                         .display_name,
                            indented_token.indentation.total,
-                           indented_token.token.display_token(),
-                           t.name              .display_token(),
-                           t.parameters        .display_token(),
-                           frill.b             .display_token())
+                           indented_token.token      .display_token(),
+                           t             .name       .display_token(),
+                           t             .parameters .display_token(),
+                           frill         .b          .display_token())
 
 
 

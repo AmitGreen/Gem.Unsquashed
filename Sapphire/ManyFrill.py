@@ -48,7 +48,7 @@ def gem():
 
             assert total is 4
 
-            return conjure_quadruple_frill(many[0], many[1], many[2], many[3])
+            return conjure_vwxy_frill(many[0], many[1], many[2], many[3])
 
         r = ManyFrill(many)
 

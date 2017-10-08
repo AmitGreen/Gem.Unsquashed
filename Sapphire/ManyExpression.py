@@ -83,13 +83,13 @@ def gem():
                 assert length(many) is 5
 
                 many    [0].dump_token(f)
-                frill   .a .dump_token(f)
+                frill   .v .dump_token(f)
                 many    [1].dump_token(f)
-                frill   .b .dump_token(f)
+                frill   .w .dump_token(f)
                 many    [2].dump_token(f)
-                frill   .c .dump_token(f)
+                frill   .x .dump_token(f)
                 many    [3].dump_token(f)
-                frill   .d .dump_token(f)
+                frill   .y .dump_token(f)
                 r = many[4].dump_token(f, false)
 
             else:
@@ -148,13 +148,13 @@ def gem():
                 assert length(many) is 5
 
                 many[0].write(w)
-                w(frill.a.s)
+                w(frill.v.s)
                 many[1].write(w)
-                w(frill.b.s)
+                w(frill.w.s)
                 many[2].write(w)
-                w(frill.c.s)
+                w(frill.x.s)
                 many[3].write(w)
-                w(frill.d.s)
+                w(frill.y.s)
                 many[4].write(w)
                 return
 

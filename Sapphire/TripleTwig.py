@@ -26,7 +26,7 @@ def gem():
                        t.display_name,
                        t.a.display_token(),
                        t.b.display_token(),
-                       t.b.display_token())
+                       t.c.display_token())
 
 
     @share
