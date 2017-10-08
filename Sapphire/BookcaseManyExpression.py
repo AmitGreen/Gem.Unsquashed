@@ -13,6 +13,143 @@ def gem():
 
 
     @share
+    def dump_token__X__many(t, f):
+        frill = t.frill
+        many  = t.many
+
+        frill_many = frill.many
+
+        frill_estimate = frill_many.frill_estimate
+
+        if frill_estimate is 1:
+            assert length(many) is 2
+
+            many   [0].dump_token(f)
+            frill_many.dump_token(f)
+            many   [1].dump_token(f)
+
+            return
+
+        if frill_estimate is 2:
+            assert length(many) is 3
+
+            many      [0].dump_token(f)
+            frill_many.v .dump_token(f)
+            many      [1].dump_token(f)
+            frill_many.w .dump_token(f)
+            many      [2].dump_token(f)
+
+            return
+
+        if frill_estimate is 3:
+            assert length(many) is 4
+
+            many      [0].dump_token(f)
+            frill_many.v .dump_token(f)
+            many      [1].dump_token(f)
+            frill_many.w .dump_token(f)
+            many      [2].dump_token(f)
+            frill_many.x .dump_token(f)
+            many      [3].dump_token(f)
+
+            return
+
+        if frill_estimate is 4:
+            assert length(many) is 5
+
+            many      [0].dump_token(f)
+            frill_many.a .dump_token(f)
+            many      [1].dump_token(f)
+            frill_many.b .dump_token(f)
+            many      [2].dump_token(f)
+            frill_many.c .dump_token(f)
+            many      [3].dump_token(f)
+            frill.many.d .dump_token(f)
+            many      [4].dump_token(f)
+
+            return
+
+        iterator   = iterate(many)
+        next_frill = next_method(iterate(frill_many))
+
+        next_method(iterator)().dump_token(f)
+
+        for v in iterator:
+            next_frill().dump_token(f)
+            v           .dump_token(f)
+
+
+    @export
+    def write__X__many_end(t, w):
+        frill = t.frill
+        many  = t.many
+
+        frill_many = frill.many
+
+        frill_estimate = frill_many.frill_estimate
+
+        if frill_estimate is 1:
+            assert length(many) is 2
+
+            many[0].write(w)
+            w(frill_many.s)
+            many[1].write(w)
+            w(frill.end.s)
+            return
+
+        if frill_estimate is 2:
+            assert length(many) is 3
+
+            many[0].write(w)
+            w(frill_many.v.s)
+            many[1].write(w)
+            w(frill_many.w.s)
+            many[2].write(w)
+            w(frill.end.s)
+            return
+
+        if frill_estimate is 3:
+            assert length(many) is 4
+
+            many[0].write(w)
+            w(frill_many.v.s)
+            many[1].write(w)
+            w(frill_many.w.s)
+            many[2].write(w)
+            w(frill_many.x.s)
+            many[3].write(w)
+            w(frill.end.s)
+            return
+
+        if frill_estimate is 4:
+            assert length(many) is 5
+
+            many[0].write(w)
+            w(frill_many.a.s)
+            many[1].write(w)
+            w(frill_many.b.s)
+            many[2].write(w)
+            w(frill_many.c.s)
+            many[3].write(w)
+            w(frill.many.d.s)
+            many[4].write(w)
+            w(frill.end.s)
+            return
+
+        iterator         = iterate(many)
+        write_frill_many = next_method(frill_many.iterate_write(w))
+
+        next_method(iterator)().write(w)
+
+        for v in iterator:
+            write_frill_many()
+            v.write(w)
+
+        w(frill.end.s)
+
+
+
+    @share
     class BookcaseManyExpression(SapphireTrunk):
         __slots__ = ((
             'frill',                    #   BookcaseManyFrill
@@ -42,138 +179,19 @@ def gem():
 
         def dump_token(t, f, newline = true):
             frill = t.frill
-            many  = t.many
-
-            frill_many = frill.many
-
-            frill_estimate = frill_many.frill_estimate
 
             f.partial('<%s ', t.display_name)
             frill.begin.dump_token(f)
-
-            if frill_estimate is 1:
-                assert length(many) is 2
-
-                many[0]   .dump_token(f)
-                frill_many.dump_token(f)
-                many[1]   .dump_token(f)
-
-            elif frill_estimate is 2:
-                assert length(many) is 3
-
-                many      [0].dump_token(f)
-                frill_many.v .dump_token(f)
-                many      [1].dump_token(f)
-                frill_many.w .dump_token(f)
-                many      [2].dump_token(f)
-
-            elif frill_estimate is 3:
-                assert length(many) is 4
-
-                many      [0].dump_token(f)
-                frill_many.v .dump_token(f)
-                many      [1].dump_token(f)
-                frill_many.w .dump_token(f)
-                many      [2].dump_token(f)
-                frill_many.x .dump_token(f)
-                many      [3].dump_token(f)
-
-            elif frill_estimate is 4:
-                assert length(many) is 5
-
-                many      [0].dump_token(f)
-                frill_many.a .dump_token(f)
-                many      [1].dump_token(f)
-                frill_many.b .dump_token(f)
-                many      [2].dump_token(f)
-                frill_many.c .dump_token(f)
-                many      [3].dump_token(f)
-                frill.many.d .dump_token(f)
-                many      [4].dump_token(f)
-
-            else:
-                iterator   = iterate(many)
-                next_frill = next_method(iterate(frill_many))
-
-                next_method(iterator)().dump_token(f)
-
-                for v in iterator:
-                    next_frill().dump_token(f)
-                    v           .dump_token(f)
-
+            dump_token__X__many(t, f)
             r = frill.end.dump_token(f, false)
 
             return f.token_result(r, newline)
 
 
         def write(t, w):
-            frill = t.frill
-            many  = t.many
+            w(t.frill.begin.s)
 
-            frill_many = frill.many
-
-            frill_estimate = frill_many.frill_estimate
-
-            w(frill.begin.s)
-
-            if frill_estimate is 1:
-                assert length(many) is 2
-
-                many[0].write(w)
-                w(frill_many.s)
-                many[1].write(w)
-                w(frill.end.s)
-                return
-
-            if frill_estimate is 2:
-                assert length(many) is 3
-
-                many[0].write(w)
-                w(frill_many.v.s)
-                many[1].write(w)
-                w(frill_many.w.s)
-                many[2].write(w)
-                w(frill.end.s)
-                return
-
-            if frill_estimate is 3:
-                assert length(many) is 4
-
-                many[0].write(w)
-                w(frill_many.v.s)
-                many[1].write(w)
-                w(frill_many.w.s)
-                many[2].write(w)
-                w(frill_many.x.s)
-                many[3].write(w)
-                w(frill.end.s)
-                return
-
-            if frill_estimate is 4:
-                assert length(many) is 5
-
-                many[0].write(w)
-                w(frill_many.a.s)
-                many[1].write(w)
-                w(frill_many.b.s)
-                many[2].write(w)
-                w(frill_many.c.s)
-                many[3].write(w)
-                w(frill.many.d.s)
-                many[4].write(w)
-                w(frill.end.s)
-                return
-
-            iterator         = iterate(many)
-            write_frill_many = next_method(frill_many.iterate_write(w))
-
-            next_method(iterator)().write(w)
-
-            for v in iterator:
-                write_frill_many()
-                v.write(w)
-
-            w(frill.end.s)
+            write__X__many_end(t, w)
 
 
     #BookcaseManyExpression.k1 = BookcaseManyExpression.frill

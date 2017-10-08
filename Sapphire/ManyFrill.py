@@ -27,6 +27,11 @@ def gem():
 
     @share
     def conjure_many_frill(many):
+        if type(many) is not List:
+            assert many.frill_estimate
+
+            return many
+
         total = length(many)
 
         if total <= 4:

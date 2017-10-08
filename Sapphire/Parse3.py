@@ -4,8 +4,8 @@
 @gem('Sapphire.Parse3')
 def gem():
     debug = 0
-    tree = 7
-    show = 7
+    tree  = 7
+    show  = 7
 
 
     require_gem('Sapphire.DualStatement')
@@ -502,7 +502,7 @@ def gem():
                         if add_comment is not 0:
                             return add_comment(comment)
 
-                        if w.split_comment is q_split():
+                        if y.split_comment is q_split():
                             wc(comment)
                             return y
 
@@ -531,6 +531,13 @@ def gem():
 
 
         def parse_class_header(header):
+            comment = qc()
+
+            if comment is not 0:
+                wc0()
+
+                return conjure_prefixed_class_definition(comment, header, parse_suite(header.indentation))
+
             return conjure_class_definition(header, parse_suite(header.indentation))
 
 

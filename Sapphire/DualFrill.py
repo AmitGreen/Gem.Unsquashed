@@ -15,7 +15,7 @@ def gem():
         ))
 
         comment        = 0
-        display_name   = 'xy-frill'
+        display_name   = 'vw-frill'
         frill_estimate = 2
 
         __init__       = construct__ab
