@@ -266,7 +266,7 @@ def gem():
                         x_impression = x.impression
                         break
 
-                    wc([v, empty_line_suite])
+                    wb([v, empty_line_suite])
                     return x
 
                 mixed_many = [v, empty_line_suite]
@@ -613,6 +613,11 @@ def gem():
 
 
         def parse_function_header(header):
+            if 0:
+                my_line('header: %r', header)
+                my_line('qc: %r', qc())
+                line()
+
             return conjure_function_definition(header, parse_suite(header.indentation))
 
 
