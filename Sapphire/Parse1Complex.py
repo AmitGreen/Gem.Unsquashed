@@ -40,9 +40,6 @@ def gem():
 
         left = parse1_atom()
 
-        if qn() is not none:
-            raise_unknown_line()
-
         if not left.is_atom:
             raise_unknown_line()
 

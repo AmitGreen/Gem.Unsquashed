@@ -530,6 +530,26 @@ def gem():
             parse_blank_lines = show_parse_blank_lines
 
 
+        def parse_any_else_fragment(v):
+            before = qb()
+
+            if before is not 0:
+                wb0()
+
+                if type(before) is List:
+                    before = conjure_mixed_suite(before)
+
+                if v.is_statement_header:
+                    return v.conjure_prefixed_fragment(before, v, parse_suite(v.indentation))
+
+                return v.conjure_prefixed_fragment(before, v.a, v.b)
+
+            if v.is_statement_header:
+                return v.conjure_fragment(parse_suite(v.indentation))
+
+            return v
+
+
         def parse_class_header(header):
             comment = qc()
 
@@ -553,19 +573,18 @@ def gem():
                 v = next_line()
 
                 if v.is_comment__or__empty_line:
-                    if v.is_comment_line:
-                        w_split_0()
+                    w_split_0()
 
-                        v = parse_blank_lines(v)
+                    v = parse_blank_lines(v)
 
-                        w_split_1()
+                    w_split_1()
 
-                        before = qb()
+                    before = qb()
 
-                        if before is not 0:
-                            wb0()
+                    if before is not 0:
+                        wb0()
 
-                            wc(conjure_mixed_suite(before)   if type(before) is List else   before)
+                        wc(conjure_mixed_suite(before)   if type(before) is List else   before)
             else:
                 wv0()
 
@@ -664,28 +683,45 @@ def gem():
 
             w = qv()
 
-            if (not w.is_any_else) or (indentation is not w.indentation):
+            if not w.is_any_else:
                 return v
 
             wv0()
 
-            before = qb()
+            return parse_if_statement__X__statement(v, w)
 
-            if before is not 0:
-                wb0()
 
-                if type(before) is List:
-                    before = conjure_mixed_suite(before)
-
-                if w.is_statement_header:
-                    w = w.conjure_prefixed_fragment(before, w, parse_suite(indentation))
-                else:
-                    w = w.conjure_prefixed_fragment(before, w.a, w.b)
-            else:
-                if w.is_statement_header:
-                    w = w.conjure_fragment(parse_suite(indentation))
+        def parse_if_statement__X__statement(v, w):
+            w = parse_any_else_fragment(w)
 
             return conjure_dual_statement(v, w)
+
+
+        def parse_if_statement(v):
+            assert qb() is qv() is 0
+
+            comment = qc()
+
+            if comment is not 0:
+                wc0()
+
+                v = conjure_prefixed_if_definition(comment, v.a, v.b)
+
+            w = next_line()
+
+            if w.is_comment__or__empty_line:
+                w_split_0()
+
+                w = parse_blank_lines(w)
+
+                w_split_1()
+
+                if not w.is_any_else:
+                    wc(w)
+                    return v
+
+            return parse_if_statement__X__statement(v, w)
+            
 
 
         def parse_while_header(header):
@@ -1100,6 +1136,7 @@ def gem():
 
         FunctionHeader.parse_header = parse_function_header
         IfHeader      .parse_header = parse_if_header
+        IfStatement   .parse_header = parse_if_statement
         WhileHeader   .parse_header = parse_while_header
         WithHeader_1  .parse_header = parse_with_header
         WithHeader_2  .parse_header = parse_with_header

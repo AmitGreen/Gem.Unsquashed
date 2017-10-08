@@ -98,12 +98,13 @@ def gem():
         indentation = indentation__a_indentation
 
 
+    @share
     class IfStatement(DualTwig):
         __slots__             = (())
         display_name          = 'if-statement'
         is_any_else           = false
         is_else_header        = false
-        is_statement_header   = false
+        is_statement_header   = true
         is_statement          = true
         prefixed_display_name = '#if-statement'
 
