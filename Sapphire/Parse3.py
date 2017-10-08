@@ -653,36 +653,39 @@ def gem():
         def parse_if_header(v):
             indentation = v.indentation
 
-            v = conjure_if_statement(v, parse_suite(indentation))
+            comment = qc()
+
+            if comment is not 0:
+                wc0()
+
+                v = conjure_prefixed_if_definition(comment, header, parse_suite(indentation))
+            else:
+                v = conjure_if_statement(v, parse_suite(indentation))
 
             w = qv()
 
-            if w is not 0:
-                if (not w.is_else_header) or (indentation is not w.indentation):
-                    return v
+            if (not w.is_any_else) or (indentation is not w.indentation):
+                return v
 
-                wv0()
-                prefix = qc()
+            wv0()
 
-                if prefix is not 0:
-                    wc0()
+            before = qb()
 
-                    return conjure_dual_statement(
-                               v,
-                               conjure_prefixed_else_fragment(
-                                   (conjure_mixed_suite(prefix)   if type(prefix) is List else   prefix),
-                                   w,
-                                   parse_suite(indentation),
-                               ),
-                           )
+            if before is not 0:
+                wb0()
+
+                if type(before) is List:
+                    before = conjure_mixed_suite(before)
+
+                if w.is_statement_header:
+                    w = w.conjure_prefixed_fragment(before, w, parse_suite(indentation))
+                else:
+                    w = w.conjure_prefixed_fragment(before, w.a, w.b)
             else:
-                w = next_line()
+                if w.is_statement_header:
+                    w = w.conjure_fragment(parse_suite(indentation))
 
-                if (not w.is_else_header) or (indentation is not w.indentation):
-                    wv(v)
-                    return v
-
-            return conjure_dual_statement(v, conjure_else_fragment(w, parse_suite(indentation)))
+            return conjure_dual_statement(v, w)
 
 
         def parse_while_header(header):
@@ -1100,6 +1103,17 @@ def gem():
         WhileHeader   .parse_header = parse_while_header
         WithHeader_1  .parse_header = parse_with_header
         WithHeader_2  .parse_header = parse_with_header
+
+
+        ElseIfHeader                  .conjure_fragment = conjure_else_if_fragment
+        ElseFragment                  .conjure_fragment = conjure_else_if_fragment
+        Indented_Else_Colon_LineMarker.conjure_fragment = conjure_else_fragment
+
+        static_conjure_prefixed_else_if_fragment = static_method(conjure_prefixed_else_if_fragment)
+
+        ElseIfHeader                  .conjure_prefixed_fragment = static_conjure_prefixed_else_if_fragment
+        ElseFragment                  .conjure_prefixed_fragment = static_conjure_prefixed_else_if_fragment
+        Indented_Else_Colon_LineMarker.conjure_prefixed_fragment = static_method(conjure_prefixed_else_fragment)
 
 
         #dump_newline_meta_cache()

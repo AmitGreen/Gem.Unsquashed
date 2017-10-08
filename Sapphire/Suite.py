@@ -22,6 +22,7 @@ def gem():
     class CommentSuite(TokenTuple):
         __slots__           =  (())
         indentation         = none
+        is_any_else         = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
@@ -45,6 +46,7 @@ def gem():
         display_name        = 'empty-line-*'
         impression          = 0
         indentation         = none
+        is_any_else         = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
@@ -56,6 +58,7 @@ def gem():
         __slots__           = (())
         display_name        = 'mixed-*'
         indentation         = none
+        is_any_else         = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
@@ -65,6 +68,7 @@ def gem():
 
     class StatementSuite(TokenTuple):
         __slots__           = (())
+        is_any_else         = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true

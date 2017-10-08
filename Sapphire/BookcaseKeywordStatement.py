@@ -5,6 +5,7 @@
 def gem():
     class KeywordExpressionStatement(BookcaseExpression):
         __slots__           = (())
+        is_any_else         = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
@@ -124,6 +125,7 @@ def gem():
                        )
 
 
+    @export
     class ElseIfHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'else-if-header'
@@ -132,6 +134,7 @@ def gem():
                            colon__empty_line_marker,
                        )
 
+        is_any_else         = true
         is_statement        = false
         is_statement_header = true
 

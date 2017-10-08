@@ -82,7 +82,7 @@ SAPPHIRE_FILES = \
         ../Sapphire/Tokenize1Atom.py ../Sapphire/Tokenize1Name.py ../Sapphire/Tokenize1Operator.py \
         ../Sapphire/Tree.py ../Sapphire/TripleFrill.py ../Sapphire/TripleToken.py ../Sapphire/TripleTwig.py \
         ../Sapphire/TupleOfExpression.py \
-    ../Sapphire/UnaryExpression.py ../Sapphire/UnaryStatement.py \
+    ../Sapphire/UnaryExpression.py \
     ../Sapphire/Whitespace.py
     #
     #   Excludes:
@@ -149,7 +149,7 @@ clean:
 	rm -f   h4f.py h4t.py
 	rm -f   hat.py haw.py hb.py hca.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
-	rm -f   hma.py hmc.py hme.py hmf.py hpt.py hs.py htc.py hto.py htr.py htt.py hu.py hus.py hw.py hx.py hy.py
+	rm -f   hma.py hmc.py hme.py hmf.py hpt.py hs.py htc.py hto.py htr.py htt.py hu.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
@@ -263,7 +263,6 @@ links:
 	ln -s ../Sapphire/Tree.py                           htr.py
 	ln -s ../Sapphire/TokenTuple.py                     htt.py
 	ln -s ../Sapphire/UnaryExpression.py                hu.py
-	ln -s ../Sapphire/UnaryStatement.py                 hus.py
 	ln -s ../Sapphire/Whitespace.py                     hw.py
 	ln -s ../Sapphire/PostfixExpression.py              hx.py
 	ln -s ../Sapphire/ManyExpression.py                 hy.py

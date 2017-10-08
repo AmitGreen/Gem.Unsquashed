@@ -130,7 +130,7 @@ def gem():
         __slots__           = (())
         display_name        = 'unknown-line'
         ends_in_newline     = true
-        is_else_header      = false
+        is_any_else         = false
         is_end_of_data      = false
         is_statement_header = false
         is_statement        = true

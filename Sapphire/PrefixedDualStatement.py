@@ -20,6 +20,7 @@ def gem():
     class ClassDefinition(DualTwig):
         __slots__             = (())
         display_name          = 'class-definition'
+        is_any_else           = false
         is_else_header        = false
         is_statement_header   = false
         is_statement          = true
@@ -32,6 +33,7 @@ def gem():
     class DecoratedDefinition(DualTwig):
         __slots__             = (())
         display_name          = 'decorated-definition'
+        is_any_else           = false
         is_else_header        = false
         is_statement_header   = false
         is_statement          = true
@@ -41,21 +43,26 @@ def gem():
         indentation = indentation__a_indentation
 
 
+    @share
     class ElseFragment(DualTwig):
         __slots__             = (())
+        add_comment           = 0
         display_name          = 'else-fragment'
+        is_any_else           = true
         is_else_header        = false
         is_statement          = false
         is_statement_header   = false
         prefixed_display_name = 'prefixed-else-fragment'
+        split_comment         = 0
 
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
 
 
-    class ElseIfStatement(DualTwig):
+    class ElseIfFragment(DualTwig):
         __slots__             = (())
-        display_name          = 'else-if-statement'
+        display_name          = 'else-if-fragment'
+        is_any_else           = true
         is_else_header        = false
         is_statement_header   = false
         is_statement          = true
@@ -68,6 +75,7 @@ def gem():
     class ForStatement(DualTwig):
         __slots__             = (())
         display_name          = 'for-statement'
+        is_any_else           = false
         is_else_header        = false
         is_statement_header   = false
         is_statement          = true
@@ -80,6 +88,7 @@ def gem():
     class FunctionDefinition(DualTwig):
         __slots__             = (())
         display_name          = 'function-definition'
+        is_any_else           = false
         is_else_header        = false
         is_statement_header   = false
         is_statement          = true
@@ -92,6 +101,7 @@ def gem():
     class IfStatement(DualTwig):
         __slots__             = (())
         display_name          = 'if-statement'
+        is_any_else           = false
         is_else_header        = false
         is_statement_header   = false
         is_statement          = true
@@ -104,6 +114,7 @@ def gem():
     class WhileStatement(DualTwig):
         __slots__             = (())
         display_name          = 'while-statement'
+        is_any_else           = false
         is_else_header        = false
         is_statement_header   = false
         is_statement          = true
@@ -116,6 +127,7 @@ def gem():
     class WithStatement(DualTwig):
         __slots__           = (())
         display_name        = 'with-statement'
+        is_any_else           = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
@@ -213,8 +225,8 @@ def gem():
     ] = produce_conjure_dual_twig_functions('else-fragment', ElseFragment)
 
     [
-            conjure_else_if_statement, conjure_prefixed_else_if_statement,
-    ] = produce_conjure_dual_twig_functions('else-if-statement', ElseIfStatement)
+            conjure_else_if_fragment, conjure_prefixed_else_if_fragment,
+    ] = produce_conjure_dual_twig_functions('else-if-statement', ElseIfFragment)
 
     [
             conjure_for_statement, conjure_prefixed_for_statement,
@@ -245,7 +257,7 @@ def gem():
         'conjure_decorated_definition',             conjure_decorated_definition,
         'conjure_for_statement',                    conjure_for_statement,
         'conjure_else_fragment',                    conjure_else_fragment,
-        'conjure_else_if_statement',                conjure_else_if_statement,
+        'conjure_else_if_fragment',                 conjure_else_if_fragment,
         'conjure_function_definition',              conjure_function_definition,
         'conjure_if_statement',                     conjure_if_statement,
         'conjure_while_statement',                  conjure_while_statement,
@@ -254,7 +266,7 @@ def gem():
         'conjure_prefixed_class_definition',        conjure_prefixed_class_definition,
         'conjure_prefixed_decorated_definition',    conjure_prefixed_decorated_definition,
         'conjure_prefixed_else_fragment',           conjure_prefixed_else_fragment,
-        'conjure_prefixed_else_if_statement',       conjure_prefixed_else_if_statement,
+        'conjure_prefixed_else_if_fragment',        conjure_prefixed_else_if_fragment,
         'conjure_prefixed_for_statement',           conjure_prefixed_for_statement,
         'conjure_prefixed_function_definition',     conjure_prefixed_function_definition,
         'conjure_prefixed_if_statement',            conjure_prefixed_if_statement,

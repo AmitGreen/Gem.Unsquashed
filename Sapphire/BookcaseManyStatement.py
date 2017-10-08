@@ -17,6 +17,7 @@ def gem():
     class AssignStatment_Many(BookcaseManyExpression):
         __slots__           = (())
         display_name        = 'assign-*'
+        is_any_else         = false
         is_else_header      = false
         is_statement        = true
         is_statement_header = false
@@ -59,6 +60,7 @@ def gem():
     class Comment_AssignStatment_Many(BookcaseManyExpression):
         __slots__           = (())
         display_name        = '#assign-*'
+        is_any_else         = false
         is_else_header      = false
         is_statement        = true
         is_statement_header = false
@@ -97,6 +99,7 @@ def gem():
     class Comment_DeleteStatement_Many(BookcaseManyExpression):
         __slots__           = (())
         display_name        = '#delete-*'
+        is_any_else         = false
         is_else_header      = false
         is_statement        = true
         is_statement_header = false
@@ -141,6 +144,7 @@ def gem():
     class DeleteStatement_Many(BookcaseManyExpression):
         __slots__           = (())
         display_name        = 'delete-*'
+        is_any_else         = false
         is_else_header      = false
         is_statement        = true
         is_statement_header = false

@@ -10,9 +10,9 @@ def gem():
         cache_many = []
 
 
-    empty_line_cache     = {}
-    lookup_empty_line    = empty_line_cache.get
-    provide_empty_line   = empty_line_cache.setdefault
+    empty_line_cache   = {}
+    lookup_empty_line  = empty_line_cache.get
+    provide_empty_line = empty_line_cache.setdefault
 
 
     class EmptyLine(String):
@@ -20,6 +20,7 @@ def gem():
         ends_in_newline            = true
         indentation                = none
         impression                 = 0
+        is_any_else                = false
         is_comment_line            = false
         is_comment__or__empty_line = true
         is_else_header             = false

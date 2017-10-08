@@ -296,13 +296,15 @@ def gem():
         is_postfix_operator = true
 
 
+    @share
     class Indented_Else_Colon_LineMarker(BaseQuadrupleOperator):
         __slots__           = (())
         display_name        = 'else'
         ends_in_newline     = true
+        is_any_else         = true
         is_else_header      = true
         is_statement        = false
-        is_statement_header = false
+        is_statement_header = true
         keyword             = 'else'
         line_marker         = true
         newlines            = 1

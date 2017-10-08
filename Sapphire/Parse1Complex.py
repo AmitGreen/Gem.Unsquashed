@@ -4,7 +4,6 @@
 @gem('Sapphire.Parse1Complex')
 def gem():
     require_gem('Sapphire.PrefixedDualStatement')
-    require_gem('Sapphire.UnaryStatement')
 
 
     show = 0
@@ -67,13 +66,10 @@ def gem():
 
         left = parse1_atom()
 
-        if qn() is not none:
-            raise_unknown_line()
-
         if not left.is_atom:
             raise_unknown_line()
 
-        return conjure_else_statement(keyword, parse1_statement_expression__atom('', left))
+        return conjure_else_fragment(keyword, parse1_statement_expression__atom('', left))
 
 
     @share
@@ -82,7 +78,7 @@ def gem():
                    m,
                    conjure_keyword_else_if,
                    conjure_else_if_header,
-                   conjure_else_if_statement
+                   conjure_else_if_fragment,
                )
 
 

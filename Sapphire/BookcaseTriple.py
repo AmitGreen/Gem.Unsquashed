@@ -157,6 +157,7 @@ def gem():
                            empty_line_marker,
                        )
 
+        is_any_else         = false
         is_else_header      = false
         is_statement        = true
         is_statement_header = false

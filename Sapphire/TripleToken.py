@@ -301,6 +301,7 @@ def gem():
 
         display_name        = r'indented-break\n'
         ends_in_newline     = true
+        is_any_else         = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
@@ -320,6 +321,7 @@ def gem():
         display_name        = r'indented-continue\n'
         ends_in_newline     = true
         indentation         = BaseTripleOperator.a
+        is_any_else         = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
@@ -345,6 +347,7 @@ def gem():
 
         display_name        = r'indented-pass\n'
         ends_in_newline     = true
+        is_any_else         = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
@@ -363,6 +366,7 @@ def gem():
 
         display_name        = r'indented-raise\n'
         ends_in_newline     = true
+        is_any_else         = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
@@ -381,6 +385,7 @@ def gem():
 
         display_name        = r'indented-return\n'
         ends_in_newline     = true
+        is_any_else         = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
@@ -399,6 +404,7 @@ def gem():
 
         display_name        = r'indented-yield\n'
         ends_in_newline     = true
+        is_any_else         = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true

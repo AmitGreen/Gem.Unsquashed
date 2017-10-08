@@ -20,6 +20,7 @@ def gem():
     class DualStatement(DualTwig):
         __slots__           = (())
         display_name        = 'dual-statement'
+        is_any_else         = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
@@ -31,6 +32,7 @@ def gem():
     class CommentedStatement(DualTwig):
         __slots__           = (())
         display_name        = '#statement'
+        is_any_else         = false
         is_else_header      = false
         is_statement_header = false
         is_statement        = true
