@@ -43,18 +43,14 @@ def gem():
             frill_v = frill.v
 
             f.partial('<%s +%d ', t.display_name, frill_v.a.total)
-            frill_v.b.dump_token(f)
-            t.a.dump_token(f)
-            frill.w.dump_token(f)
-            t.b.dump_token(f)
+
+            frill_v  .b.dump_token(f)
+            t        .a.dump_token(f)
+            frill    .w.dump_token(f)
+            t        .b.dump_token(f)
             r = frill.x.dump_token(f, false)
 
-            if (r) and (newline):
-                f.line('>')
-                return false
-
-            f.partial('>')
-            return r
+            return f.token_result(r, newline)
 
 
         @property

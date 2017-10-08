@@ -72,16 +72,12 @@ def gem():
         indentation = t.a
 
         f.partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
-        t.b.dump_token(f)
-        t.c.dump_token(f)
+
+        t    .b.dump_token(f)
+        t    .c.dump_token(f)
         r = t.d.dump_token(f, false)
 
-        if (r) and (newline):
-            f.line('>')
-            return false
-
-        f.partial('>')
-        return r
+        return f.token_result(r, newline)
 
 
     def display_token__indented__keyword__colon__line_marker(t):

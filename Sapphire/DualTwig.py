@@ -48,15 +48,11 @@ def gem():
 
         def dump_token(t, f, newline = true):
             f.partial('<%s ', t.display_name)
-            t.a.dump_token(f)
+
+            t    .a.dump_token(f)
             r = t.b.dump_token(f, false)
 
-            if (r) and (newline):
-                f.line('>')
-                return false
-
-            f.partial('>')
-            return r
+            return f.token_result(r, newline)
             
 
         def write(t, w):

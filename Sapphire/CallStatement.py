@@ -73,16 +73,12 @@ def gem():
 
             if comment is 0:
                 f.partial('<%s +%d ', t.display_name, frill.v.total)
-                t.left.dump_token(f)
-                t.arguments.dump_token(f)
-                r = frill.w.dump_token(f, false)
 
-                if (r) and (newline):
-                    f.line('>')
-                    return false
+                t        .left     .dump_token(f)
+                t        .arguments.dump_token(f)
+                r = frill.w        .dump_token(f, false)
 
-                f.partial('>')
-                return r
+                return f.token_result(r, newline)
 
             with f.indent(arrange('<%s +%d', t.display_name, frill.v.total), '>'):
                 comment    .dump_token(f)

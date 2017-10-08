@@ -34,16 +34,7 @@ def gem():
             return arrange('<%s %s %r %r>', t.__class__.__name__, t.frill, t.name, t.parameters)
 
 
-        def add_comment(t, comment):
-            frill = t.frill
-
-            assert frill.comment is 0
-
-            return t.conjure_with_frill(
-                       conjure_commented_vw_frill(comment, frill.v, frill.w),
-                       t.name,
-                       t.parameters,
-                   )
+        add_comment = 0
 
 
         def count_newlines(t):
@@ -52,13 +43,11 @@ def gem():
 
         def display_token(t):
             frill          = t.frill
-            comment        = frill.comment
             indented_token = frill.v
 
-            return arrange('<%s +%d%s %s %s %s %s>',
+            return arrange('<%s +%d %s %s %s %s>',
                            t.display_name,
                            indented_token.indentation.total,
-                           (''   if  comment is 0 else   ' ' + comment.display_token()),
                            indented_token.token.display_token(),
                            t.name              .display_token(),
                            t.parameters        .display_token(),
@@ -70,29 +59,16 @@ def gem():
             assert newline is true
 
             frill          = t.frill
-            comment        = frill.comment
             indented_token = frill.v
 
-            if comment is 0:
-                f.partial('<%s +%d ', t.display_name, indented_token.indentation.total)
-                indented_token.token.dump_token(f)
-                t.name.dump_token(f)
-                t.parameters.dump_token(f)
-                r = frill.w.dump_token(f, false)
+            f.partial('<%s +%d ', t.display_name, indented_token.indentation.total)
 
-                if (r) and (newline):
-                    f.line('>')
-                    return false
+            indented_token.token     .dump_token(f)
+            t             .name      .dump_token(f)
+            t             .parameters.dump_token(f)
+            r = frill     .w         .dump_token(f, false)
 
-                f.partial('>')
-                return r
-
-            with f.indent(arrange('<%s +%d', t.display_name, indented_token.indentation.total), '>'):
-                comment.dump_token(f)
-                indented_token.token.dump_token(f)
-                t.name.dump_token(f)
-                t.parameters.dump_token(f)
-                frill.w.dump_token(f)
+            return f.token_result(r, newline)
 
 
         @property
@@ -102,11 +78,6 @@ def gem():
             
         def write(t, w):
             frill = t.frill
-
-            comment = frill.comment
-
-            if comment is not 0:
-                comment.write(w)
 
             w(frill.v.s + t.name.s)
             t.parameters.write(w)

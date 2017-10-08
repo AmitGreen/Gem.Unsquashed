@@ -58,7 +58,7 @@ def gem():
 
 
         def show_tree():
-            with create_StringOutput() as f:
+            with create_TokenOutput() as f:
                 f.line('===  show_tree  ===')
 
                 for v in tree_many:
@@ -521,41 +521,39 @@ def gem():
             return conjure_class_definition(header, parse_suite(header.indentation))
 
 
-        def parse_decorator_header(decorator_header):
-            indentation = decorator_header.indentation
+        def parse_decorator_header(header):
+            assert qb() is 0
+
+            prefix = qc()
+
+            if prefix is not 0:
+                wc0()
 
             v = qv()
 
             if v is 0:
                 v = next_line()
+
+                if v.is_comment__or__empty_line:
+                    if v.is_comment_line:
+                        v = parse_blank_lines(v)
             else:
                 wv0()
-
-            if v.is_comment__or__empty_line:
-                if v.is_comment_line:
-                    v = parse_comments_or_empty_lines(v)
-
-                    comment = qc()
-
-                    if comment is not 0:
-                        raise_unknown_line()
-
-                    if v.is_end_of_data:
-                        raise_unknown_line()
-                else:
-                    raise_unknown_line()
 
             if not v.is_class_decorator_or_function_header:
                 raise_runtime_error('decorator_header must be followed by class, decorator, or function header: %r',
                                     decorator_header)
 
-            if indentation is not v.indentation:
+            if header.indentation is not v.indentation:
                 raise_runtime_error('decorator_header (with indentation %d) followed by'
                                         + ' class, decorator, or function header with different indentation: %d',
-                                    indentation.total,
+                                    header.indentation.total,
                                     v.indentation.total)
 
-            return conjure_decorated_definition(decorator_header, v.parse_header())
+            if prefix is 0:
+                return conjure_decorated_definition(header, v.parse_header())
+
+            return conjure_prefixed_decorated_definition(prefix, header, v.parse_header())
 
 
         @privileged

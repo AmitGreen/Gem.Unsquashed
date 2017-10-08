@@ -54,42 +54,42 @@ def gem():
             if frill_estimate is 1:
                 assert length(many) is 2
 
-                many[0].dump_token(f)
+                many[0]   .dump_token(f)
                 frill_many.dump_token(f)
-                many[1].dump_token(f)
+                many[1]   .dump_token(f)
 
             elif frill_estimate is 2:
                 assert length(many) is 3
 
-                many[0].dump_token(f)
-                frill_many.v.dump_token(f)
-                many[1].dump_token(f)
-                frill_many.w.dump_token(f)
-                many[2].dump_token(f)
+                many      [0].dump_token(f)
+                frill_many.v .dump_token(f)
+                many      [1].dump_token(f)
+                frill_many.w .dump_token(f)
+                many      [2].dump_token(f)
 
             elif frill_estimate is 3:
                 assert length(many) is 4
 
-                many[0].dump_token(f)
-                frill_many.v.dump_token(f)
-                many[1].dump_token(f)
-                frill_many.w.dump_token(f)
-                many[2].dump_token(f)
-                frill_many.x.dump_token(f)
-                many[3].dump_token(f)
+                many      [0].dump_token(f)
+                frill_many.v .dump_token(f)
+                many      [1].dump_token(f)
+                frill_many.w .dump_token(f)
+                many      [2].dump_token(f)
+                frill_many.x .dump_token(f)
+                many      [3].dump_token(f)
 
             elif frill_estimate is 4:
                 assert length(many) is 5
 
-                many[0].dump_token(f)
-                frill_many.a.dump_token(f)
-                many[1].dump_token(f)
-                frill_many.b.dump_token(f)
-                many[2].dump_token(f)
-                frill_many.c.dump_token(f)
-                many[3].dump_token(f)
-                frill.many.d.dump_token(f)
-                many[4].dump_token(f)
+                many      [0].dump_token(f)
+                frill_many.a .dump_token(f)
+                many      [1].dump_token(f)
+                frill_many.b .dump_token(f)
+                many      [2].dump_token(f)
+                frill_many.c .dump_token(f)
+                many      [3].dump_token(f)
+                frill.many.d .dump_token(f)
+                many      [4].dump_token(f)
 
             else:
                 iterator   = iterate(many)
@@ -99,16 +99,11 @@ def gem():
 
                 for v in iterator:
                     next_frill().dump_token(f)
-                    v.dump_token(f)
+                    v           .dump_token(f)
 
             r = frill.end.dump_token(f, false)
 
-            if (r) and (newline):
-                f.line('>')
-                return false
-
-            f.partial('>')
-            return r
+            return f.token_result(r, newline)
 
 
         def write(t, w):

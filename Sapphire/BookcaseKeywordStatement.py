@@ -57,15 +57,10 @@ def gem():
                 f.partial('<%s +%d ', t.display_name, indented_token.indentation.total)
 
                 indented_token.token.dump_token(f)
-                t.a.dump_token(f)
-                r = frill.w.dump_token(f, false)
+                t             .a    .dump_token(f)
+                r = frill     .w    .dump_token(f, false)
 
-                if (r) and (newline):
-                    f.line('>')
-                    return false
-
-                f.partial('>')
-                return r
+                return f.token_result(r, newline)
 
             with f.indent(arrange('<%s +%d ', t.display_name, indented_token.indentation.total), '>'):
                 comment.dump_token(f)
@@ -105,6 +100,7 @@ def gem():
     @share
     class DecoratorHeader(KeywordExpressionStatement):
         __slots__    = (())
+        add_comment  = 0
         display_name = '@-header'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_at_sign('@')),

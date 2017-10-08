@@ -75,15 +75,11 @@ def gem():
 
     def dump_token__indented__keyword__line_marker(t, f, newline = true):
         f.partial('<%s +%d ', t.display_name, t.a.total)
-        t.b.dump_token(f)
+
+        t    .b.dump_token(f)
         r = t.c.dump_token(f, false)
 
-        if (r) and (newline):
-            f.line('>')
-            return false
-
-        f.partial('>')
-        return r
+        return f.token_result(r, newline)
 
 
     class BaseTripleOperator(KeywordAndOperatorBase):

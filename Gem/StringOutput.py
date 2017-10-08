@@ -39,6 +39,7 @@ def gem():
                     t.f.line(t.ending)
 
 
+    @export
     class StringOutput(Object):
         __slots__ = ((
             'f',                        #   StringIO
