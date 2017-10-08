@@ -22,6 +22,7 @@ def gem():
         is_else_header                        = false
         is_statement_header                   = true
         is_statement                          = false
+        split_comment                         = 1
 
 
         def __init__(t, frill, name, parameters):

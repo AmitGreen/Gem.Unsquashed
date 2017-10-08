@@ -33,23 +33,28 @@ def gem():
         variables = [
                         0,                  #   0 = before
                         0,                  #   1 = comment
-                        0,                  #   2 = v
+                        1,                  #   2 = split_comment
+                        0,                  #   3 = v
                     ]
 
         query = variables.__getitem__
         write = variables.__setitem__
 
-        qb  = Method(query, 0)
-        qc  = Method(query, 1)
-        qv  = Method(query, 2)
+        qb      = Method(query, 0)
+        qc      = Method(query, 1)
+        q_split = Method(query, 2)
+        qv      = Method(query, 3)
 
-        wb  = Method(write, 0)
-        wc  = Method(write, 1)
-        wv  = Method(write, 2)
+        wb      = Method(write, 0)
+        wc      = Method(write, 1)
+        w_split = Method(write, 2)
+        wv      = Method(write, 3)
 
-        wb0 = Method(wb, 0)
-        wc0 = Method(wc, 0)
-        wv0 = Method(wv, 0)
+        wb0       = Method(wb,      0)
+        wc0       = Method(wc,      0)
+        w_split_0 = Method(w_split, 0)
+        w_split_1 = Method(w_split, 1)
+        wv0       = Method(wv,      0)
 
 
         def show_indentation():
@@ -153,8 +158,9 @@ def gem():
                     if add_comment is not 0:
                         return add_comment(v)
 
-                    wc(v)
-                    return w
+                    if w.split_comment is q_split():
+                        wc(v)
+                        return w
 
                 wb(v)
                 return w
@@ -207,8 +213,9 @@ def gem():
                             if add_comment is not 0:
                                 return add_comment(comment)
 
-                            wc(comment)
-                            return w
+                            if w.split_comment is q_split():
+                                wc(comment)
+                                return w
 
                         wb(comment)
                         return w
@@ -231,15 +238,16 @@ def gem():
                 if w_impression is x.indentation:
                     assert (w.is_comment_line) and (not x.is_end_of_data)
 
-                    wb(v)
-
                     add_comment = x.add_comment
 
                     if add_comment is not 0:
+                        wb(v)
                         return add_comment(w)
 
-                    wc(w)
-                    return x
+                    if x.split_comment is q_split():
+                        wb(v)
+                        wc(w)
+                        return x
 
                 wb([v, w])
                 return x
@@ -290,15 +298,16 @@ def gem():
                     comment = conjure_comment_suite(comment_many)
 
                     if w_impression is x.indentation:
-                        wb(v)
-
                         add_comment = x.add_comment
 
                         if add_comment is not 0:
+                            wb(v)
                             return add_comment(comment)
 
-                        wc(comment)
-                        return x
+                        if x.split_comment is q_split():
+                            wb(v)
+                            wc(comment)
+                            return x
 
                     wb([v, comment])
                     return x
@@ -336,8 +345,9 @@ def gem():
                     if add_comment is not 0:
                         return add_comment(x)
 
-                    wc(x)
-                    return y
+                    if y.split_comment is q_split():
+                        wc(x)
+                        return y
 
                 mixed_many.append(x)
                 return y
@@ -397,8 +407,9 @@ def gem():
                         if add_comment is not 0:
                             return add_comment(comment)
 
-                        wc(comment)
-                        return y
+                        if y.split_comment is q_split():
+                            wc(comment)
+                            return y
 
                     mixed_many.append(comment)
                     return y
@@ -433,8 +444,9 @@ def gem():
                         if add_comment is not 0:
                             return add_comment(y)
 
-                        wc(y)
-                        return z
+                        if w.split_comment is q_split():
+                            wc(y)
+                            return z
 
                     mixed_append(y)
                     return z
@@ -490,8 +502,9 @@ def gem():
                         if add_comment is not 0:
                             return add_comment(comment)
 
-                        wc(comment)
-                        return y
+                        if w.split_comment is q_split():
+                            wc(comment)
+                            return y
 
                     mixed_append(comment)
                     return y
@@ -522,8 +535,6 @@ def gem():
 
 
         def parse_decorator_header(header):
-            assert qb() is 0
-
             prefix = qc()
 
             if prefix is not 0:
@@ -536,7 +547,18 @@ def gem():
 
                 if v.is_comment__or__empty_line:
                     if v.is_comment_line:
+                        w_split_0()
+
                         v = parse_blank_lines(v)
+
+                        w_split_1()
+
+                        before = qb()
+
+                        if before is not 0:
+                            wb0()
+
+                            wc(conjure_mixed_suite(before)   if type(before) is List else   before)
             else:
                 wv0()
 
@@ -611,10 +633,12 @@ def gem():
 
 
         def parse_function_header(header):
-            if 0:
-                my_line('header: %r', header)
-                my_line('qc: %r', qc())
-                line()
+            comment = qc()
+
+            if comment is not 0:
+                wc0()
+
+                return conjure_prefixed_function_definition(comment, header, parse_suite(header.indentation))
 
             return conjure_function_definition(header, parse_suite(header.indentation))
 

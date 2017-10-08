@@ -79,8 +79,9 @@ def gem():
 
         is_statement        = false
         is_statement_header = true
+        split_comment       = 0
 
-        add_comment  = 0
+        add_comment = 0
 
 
     @share
@@ -95,8 +96,9 @@ def gem():
 
         is_statement        = false
         is_statement_header = true
+        split_comment       = 1
 
-        add_comment  = 0
+        add_comment = 0
 
 
     class StatementFromImport(KeywordDualExpressionStatement):
@@ -131,8 +133,9 @@ def gem():
 
         is_statement        = false
         is_statement_header = true
+        split_comment       = 1
 
-        add_comment  = 0
+        add_comment = 0
 
 
     conjure_assert_statement_2 = produce_conjure_bookcase_dual_expression('assert-statement-2', AssertStatement_2)

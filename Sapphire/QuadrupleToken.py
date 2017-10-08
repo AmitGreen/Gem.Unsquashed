@@ -306,6 +306,7 @@ def gem():
         keyword             = 'else'
         line_marker         = true
         newlines            = 1
+        split_comment       = 0
 
         __init__       = construct_quadruple_operator__line_marker_1
         add_comment    = 0
@@ -324,6 +325,7 @@ def gem():
         keyword             = 'except'
         line_marker         = true
         newlines            = 1
+        split_comment       = 0
 
         __init__       = construct_quadruple_operator__line_marker_1
         add_comment    = 0
@@ -342,6 +344,7 @@ def gem():
         keyword             = 'finally'
         line_marker         = true
         newlines            = 1
+        split_comment       = 0
 
         __init__       = construct_quadruple_operator__line_marker_1
         add_comment    = 0
@@ -360,6 +363,7 @@ def gem():
         keyword             = 'try'
         line_marker         = true
         newlines            = 1
+        split_comment       = 1
 
         __init__       = construct_quadruple_operator__line_marker_1
         add_comment    = 0

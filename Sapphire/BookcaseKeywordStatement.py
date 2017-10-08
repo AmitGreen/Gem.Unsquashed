@@ -100,7 +100,6 @@ def gem():
     @share
     class DecoratorHeader(KeywordExpressionStatement):
         __slots__    = (())
-        add_comment  = 0
         display_name = '@-header'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_at_sign('@')),
@@ -111,6 +110,9 @@ def gem():
         is_decorator_header                   = true
         is_statement                          = false
         is_statement_header                   = true
+        split_comment                         = 1
+
+        add_comment = 0
 
 
     class DeleteStatement_1(KeywordExpressionStatement):
@@ -202,7 +204,6 @@ def gem():
     @share
     class WithHeader_1(KeywordExpressionStatement):
         __slots__    = (())
-        add_comment  = 0
         display_name = 'with-header-1'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('with ')),
@@ -211,6 +212,9 @@ def gem():
 
         is_statement        = false
         is_statement_header = true
+        split_comment       = 1
+
+        add_comment = 0
 
 
     class YieldStatement_1(KeywordExpressionStatement):
