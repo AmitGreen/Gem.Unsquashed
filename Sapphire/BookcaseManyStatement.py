@@ -98,9 +98,7 @@ def gem():
 
 
         def dump_token(t, f, newline = true):
-            indentation = t.frill.begin
-
-            f.partial('%s<assign-* +%d ', indentation.s, indentation.total)
+            f.partial('<assign-* +%d ', t.frill.begin.total)
 
             return dump_token__X__many(t, f, newline)
 
@@ -133,9 +131,8 @@ def gem():
 
         def dump_token(t, f, newline = true):
             frill_begin = t.frill.begin
-            indentation = frill_begin.a
 
-            f.partial('%s<delete-* +%d ', indentation.s, indentation.total)
+            f.partial('<delete-* +%d ', frill_begin.a.total)
             frill_begin.b.dump_token(f)
 
             return dump_token__X__many(t, f, newline)

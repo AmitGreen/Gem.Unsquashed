@@ -15,7 +15,9 @@ def gem():
         require_gem('Sapphire.DumpToken')
 
 
-    conjure_mixed_suite = Shared.conjure_mixed_suite                        #   due to privileged
+    conjure_dual_statement = Shared.conjure_dual_statement      #   due to privileged
+    conjure_else_fragment  = Shared.conjure_else_fragment       #   due to privileged
+    conjure_mixed_suite    = Shared.conjure_mixed_suite         #   due to privileged
 
 
     @share
@@ -789,11 +791,19 @@ def gem():
                         wb0()
 
                         if w.is_statement_header:
-                            suite_many = [v, comment, w.parse_header()]
+                            suite_many = [
+                                             v,
+                                             (conjure_mixed_suite(comment)   if type(comment) is List else   comment),
+                                             w.parse_header(),
+                                         ]
                         else:
                             assert qc() is 0
 
-                            suite_many = [v, comment, w]
+                            suite_many = [
+                                             v,
+                                             (conjure_mixed_suite(comment)   if type(comment) is List else   comment),
+                                             w,
+                                         ]
                     else:
                         if w.is_statement_header:
                             suite_many = [v, w.parse_header()]
@@ -826,11 +836,19 @@ def gem():
                             wb0()
 
                             if w.is_statement_header:
-                                suite_many = [v, comment, w.parse_header()]
+                                suite_many = [
+                                                 v,
+                                                 (conjure_mixed_suite(comment)   if type(comment) is List else   comment),
+                                                 w.parse_header(),
+                                             ]
                             else:
                                 assert qc() is 0
 
-                                suite_many = [v, comment, w]
+                                suite_many = [
+                                                 v,
+                                                 (conjure_mixed_suite(comment)   if type(comment) is List else   comment),
+                                                 w,
+                                             ]
                         else:
                             if w.is_statement_header:
                                 suite_many = [v, w.parse_header()]
@@ -873,14 +891,14 @@ def gem():
 
                 if comment is not 0:
                     wb0()
-                    suite_append(comment)
+                    suite_append(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
 
-                if w.is_statement_header:
-                    suite_append(w.parse_header())
+                if x.is_statement_header:
+                    suite_append(x.parse_header())
                 else:
                     assert qc() is 0
 
-                    suite_append(w)
+                    suite_append(x)
             else:
                 assert qb() is qc() is 0
 
@@ -906,7 +924,7 @@ def gem():
 
                     if comment is not 0:
                         wb0()
-                        suite_append(comment)
+                        suite_append(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
                 else:
                     if indentation is not x.indentation:
                         wv(x)
@@ -944,14 +962,14 @@ def gem():
 
                     if comment is not 0:
                         wb0()
-                        suite_append(comment)
+                        suite_append(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
 
-                    if w.is_statement_header:
-                        suite_append(w.parse_header())
+                    if x.is_statement_header:
+                        suite_append(x.parse_header())
                     else:
                         assert qc() is 0
 
-                        suite_append(w)
+                        suite_append(x)
                 else:
                     assert qb() is qc() is 0
 
@@ -975,7 +993,7 @@ def gem():
 
                         if comment is not 0:
                             wb0()
-                            suite_append(comment)
+                            suite_append(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
                     else:
                         if indentation is not x.indentation:
                             wv(x)
