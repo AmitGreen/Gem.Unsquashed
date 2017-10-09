@@ -14,11 +14,21 @@ def gem():
 
 
     #
-    #   intern_arrange
+    #   intern_arrange & intern_integer
     #
     @built_in
     def intern_arrange(format, *arguments):
         return intern_string(format % arguments)
+
+
+    provide_integer = {}.setdefault
+
+
+    @built_in
+    def intern_integer(v):
+        assert type(v) is Integer
+
+        return provide_integer(v, v)
 
 
     #

@@ -44,25 +44,33 @@ def gem():
 
             if t is not copyright:
                 if copyright is not 0:
-                    close_copyright()
+                    close_copyright(f)
 
                 wc(t)
 
                 f.blank2()
                 f.line('#<Copyright (c) %d %s.  All rights reserved.>', t.year, t.author)
+                f.blank_suppress()
 
 
     Copyright.k1 = Copyright.year
-    Copyright.k1 = Copyright.author
+    Copyright.k2 = Copyright.author
 
 
-    create_copyright = produce_conjure_dual('copyright', Copyright)
+    copyright_cache = {}
+
+    conjure_copyright__X__dual = produce_conjure_dual('copyright', Copyright, copyright_cache)
+
+
+    def conjure_copyright(year, author):
+        return conjure_copyright__X__dual(intern_integer(year), intern_string(author))
 
 
     def close_copyright(f):
         if qc() is not 0:
             wc0()
 
+            f.blank_suppress()
             f.line('#</Copyright>')
             f.blank2()
 
@@ -86,16 +94,65 @@ def gem():
         def write(t, f):
             t.copyright.write(f)
 
+            f.blank2()
             f.line(arrange("#<source %r %s>", t.path, t.part))
             t.twig.write(f.write)
             f.line('#</source>')
+            f.blank2()
 
 
-    @share
-    def extract_boot():
-        main_path = '../Sapphire/Main.py'
+    def extract_boot(path, tree, index, copyright):
+        boot_code = tree[index]
 
-        tree = parse_python(main_path)
+        #@boot('Boot')
+        boot_decorator_header = conjure_decorator_header(
+                                    empty_indentation__at_sign,
+                                    conjure_call_expression(
+                                        conjure_name('boot'),
+                                        conjure_arguments_1(LP, conjure_single_quote("'Boot'"), RP),
+                                    ),
+                                    empty_line_marker,
+                                )
+
+        assert boot_code.is_decorated_definition
+        assert boot_code.a is boot_decorator_header
+
+        return TwigCode(path, arrange('[%d]', index), extract_copyright(tree), boot_code)
+
+
+    def extract_copyright(tree):
+        copyright = tree[0].prefix
+
+        assert copyright.is_comment_suite
+        assert length(copyright) is 3
+        assert copyright[0] == empty_comment_line
+        assert copyright[1].is_comment_line
+        assert copyright[2] == empty_comment_line
+
+        m = copyright_match(copyright[1])
+
+        if m is none:
+            raise_runtime_error('failed to extract copyright from: %r', copyright[1])
+
+        return conjure_copyright(Integer(m.group('year')), m.group('author'))
+
+
+    def extract_sardnoyx_boot():
+        path = '../Sardonyx/Boot.py'
+
+        tree = parse_python(path)
+
+        assert length(tree) is 1
+
+        return ((
+                   extract_boot(path, tree, 0, extract_copyright(tree)),
+               ))
+
+
+    def extract_sapphire_main():
+        path = '../Sapphire/Main.py'
+
+        tree = parse_python(path)
 
         #
         #   [0]
@@ -114,21 +171,6 @@ def gem():
         assert boot_decorator.a is boot_decorator__function_header
         assert boot_decorator.b.is_statement_suite
 
-        copyright = boot_decorator.prefix
-
-        assert copyright.is_comment_suite
-        assert length(copyright) is 3
-        assert copyright[0] == empty_comment_line
-        assert copyright[1].is_comment_line
-        assert copyright[2] == empty_comment_line
-
-        m = copyright_match(copyright[1])
-
-        if m is none:
-            raise_runtime_error('failed to extract copyright from: %r', copyright[1])
-
-        copyright = create_copyright(Integer(m.group('year')), m.group('author'))
-
 
         #
         #   [1]
@@ -137,40 +179,24 @@ def gem():
 
 
         #
-        #   [2]
-        #
-        boot_code = tree[2]
-
-        #@boot('Boot')
-        boot_decorator_header = conjure_decorator_header(
-                                    empty_indentation__at_sign,
-                                    conjure_call_expression(
-                                        boot_decorator.a.name,
-                                        conjure_arguments_1(LP, conjure_single_quote("'Boot'"), RP),
-                                    ),
-                                    empty_line_marker,
-                                )
-
-        assert boot_code.is_decorated_definition
-        assert boot_code.a is boot_decorator_header
-
-        #dump_token('boot_code.b', boot_code.b)
-
-
-        #
         #   Result
         #
-        return TwigCode(main_path, '[0]', copyright, boot_decorator)
+        return ((
+                   TwigCode(path, '[0]', extract_copyright(tree), boot_decorator),
+               ))
+
 
 
     @share
     def development():
-        boot_decorator = extract_boot()
+        [boot_decorator] = extract_sapphire_main()
+        [boot_code]      = extract_sardnoyx_boot()
 
-        output_path = '.pyxie/hma.py'
+        output_path = '../bin/.pyxie/hma.py'
 
         with create_DelayedFileOutput(output_path) as f:
             boot_decorator.write(f)
+            boot_code.write(f)
 
             close_copyright(f)
 

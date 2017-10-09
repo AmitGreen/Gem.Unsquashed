@@ -15,8 +15,8 @@ def gem():
     #
     PythonSystem    = __import__('sys')
     PythonTypes     = __import__('types')
-    is_python_2     = PythonSystem.version_info.major is 2
-    is_python_3     = PythonSystem.version_info.major is 3
+    is_python_2     = (PythonSystem.version_info.major is 2)
+    is_python_3     = (PythonSystem.version_info.major is 3)
     PythonBuiltIn   = __import__('__builtin__'  if is_python_2 else   'builtins')
     PythonException = (__import__('exceptions')   if is_python_2 else  PythonBuiltIn)
 
@@ -91,8 +91,8 @@ def gem():
     #   Store in python modules:
     #
     #       Gem                 (overwritten)
-    #       Gem.Core
-    #       Gem.Restricted
+    #       Gem.BuiltIn
+    #       Gem.Privileged
     #       Gem.Shared
     #
     for module in [Gem, GemBuiltIn, GemPrivileged, GemShared]:
@@ -975,5 +975,8 @@ def gem():
     Main.gem = gem
 
 
-    del Gem.__builtins__
-    del Gem.__package__
+    if gem_scope.get('gem_fast'):
+        del Gem.gem_fast
+    else:
+        del Gem.__builtins__
+        del Gem.__package__
