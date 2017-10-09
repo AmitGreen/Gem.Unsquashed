@@ -577,6 +577,49 @@ def gem():
             return v
 
 
+        def parse_any_except_or_finally_fragment():
+            v = qv()
+
+            if v is not 0:
+                if not v.is_any_except_or_finally:
+                    return 0
+
+                wv0()
+            else:
+                v = next_line()
+
+                if v.is_comment__or__empty_line:
+                    w_split_2()
+
+                    v = parse_blank_lines(v)
+
+                    w_split_1()
+
+                if not v.is__any_except_or_finally:
+                    wv(v)
+                    return 0
+
+            assert qc() is 0
+
+            before = qb()
+
+            if before is not 0:
+                wb0()
+
+                if type(before) is List:
+                    before = conjure_mixed_suite(before)
+
+                if v.is_statement_header:
+                    return v.conjure_prefixed_fragment(before, v, parse_suite(v.indentation))
+
+                return v.conjure_prefixed_fragment(before, v.a, v.b)
+
+            if v.is_statement_header:
+                return v.conjure_fragment(parse_suite(v.indentation))
+
+            return v
+
+
         def parse_class_header(header):
             comment = qc()
 
@@ -781,6 +824,91 @@ def gem():
             return parse_if_statement__X(v)
             
 
+        def parse_try_header(v):
+            comment = qc()
+
+            if comment is not 0:
+                wc0()
+
+                v = conjure_prefixed_try_definition(comment, header, parse_suite(v.indentation))
+            else:
+                v = conjure_try_statement(v, parse_suite(v.indentation))
+
+            return parse_try_statement__X(v)
+
+
+        def parse_try_statement__X(v):
+            w = parse_any_except_or_finally_fragment()
+
+            if w is 0:
+                return v
+
+            if w.is_finally_fragment:
+                return conjure_dual_statement(v, w)
+
+            x = parse_any_except_or_finally_fragment()
+
+            if x is 0:
+                return conjure_dual_statement(v, w)
+
+            if x.is_finally_fragment:
+                return conjure_triple_statement(v, w, x)
+
+            y = parse_any_except_or_finally_fragment()
+
+            if y is 0:
+                return conjure_triple_statement(v, w, x)
+
+            if y.is_finally_fragment:
+                return conjure_quadruple_statement(v, w, x, y)
+
+            z = parse_any_except_or_finally_fragment()
+
+            if z is 0:
+                return conjure_quadruple_statement(v, w, x, y)
+
+            many = [v, w, x, y, z]
+
+            #
+            #   Don't need many_append yet
+            #
+            if z.is_finally_fragment:
+                return conjure_try_statement_many(many)
+
+            v = parse_any_except_or_finally_fragment()
+
+            if v is 0:
+                return conjure_try_statement_many(many)
+
+            #
+            #   Loop ...
+            #
+            many_append = many.append
+
+            while 7 is 7:
+                many_append(v)
+
+                if v.is_finally_fragment:
+                    return conjure_try_statement_many(many)
+
+                v = parse_any_except_or_finally_fragment()
+
+                if v is 0:
+                    return conjure_try_statement_many(many)
+
+
+        def parse_try_statement(v):
+            assert qb() is qv() is 0
+
+            comment = qc()
+
+            if comment is not 0:
+                wc0()
+
+                v = conjure_prefixed_try_definition(comment, v.a, v.b)
+
+            return parse_try_statement__X(v)
+            
 
         def parse_while_header(header):
             comment = qc()
@@ -1192,26 +1320,36 @@ def gem():
                                      conjure_prefixed_for_statement,
                                  )
 
-        FunctionHeader.parse_header = parse_function_header
-        IfHeader      .parse_header = parse_if_header
-        IfStatement   .parse_header = parse_if_statement
-        WhileHeader   .parse_header = parse_while_header
-        WithHeader_1  .parse_header = parse_with_header
-        WithHeader_2  .parse_header = parse_with_header
-
+        FunctionHeader               .parse_header = parse_function_header
+        IfHeader                     .parse_header = parse_if_header
+        IfStatement                  .parse_header = parse_if_statement
+        WhileHeader                  .parse_header = parse_while_header
+        WithHeader_1                 .parse_header = parse_with_header
+        WithHeader_2                 .parse_header = parse_with_header
+        Indented_Try_Colon_LineMarker.parse_header = parse_try_header
 
         static_conjure_prefixed_else_fragment    = static_method(conjure_prefixed_else_fragment)
         static_conjure_prefixed_else_if_fragment = static_method(conjure_prefixed_else_if_fragment)
+        static_conjure_prefixed_except_fragment  = static_method(conjure_prefixed_except_fragment)
+        static_conjure_prefixed_finally_fragment = static_method(conjure_prefixed_finally_fragment)
 
-        ElseFragment                  .conjure_fragment = conjure_else_fragment
-        ElseIfFragment                .conjure_fragment = conjure_else_if_fragment
-        ElseIfHeader                  .conjure_fragment = conjure_else_if_fragment
-        Indented_Else_Colon_LineMarker.conjure_fragment = conjure_else_fragment
+        ElseFragment                     .conjure_fragment = conjure_else_fragment
+        ElseIfFragment                   .conjure_fragment = conjure_else_if_fragment
+        ElseIfHeader                     .conjure_fragment = conjure_else_if_fragment
+        ExceptHeader_1                   .conjure_fragment = conjure_except_fragment
+        ExceptHeader_2                   .conjure_fragment = conjure_except_fragment
+        Indented_Else_Colon_LineMarker   .conjure_fragment = conjure_else_fragment
+        Indented_Except_Colon_LineMarker .conjure_fragment = conjure_except_fragment
+        Indented_Finally_Colon_LineMarker.conjure_fragment = conjure_finally_fragment
 
-        ElseFragment                  .conjure_prefixed_fragment = static_conjure_prefixed_else_fragment
-        ElseIfFragment                .conjure_prefixed_fragment = static_conjure_prefixed_else_if_fragment
-        ElseIfHeader                  .conjure_prefixed_fragment = static_conjure_prefixed_else_if_fragment
-        Indented_Else_Colon_LineMarker.conjure_prefixed_fragment = static_conjure_prefixed_else_fragment 
+        ElseFragment                     .conjure_prefixed_fragment = static_conjure_prefixed_else_fragment
+        ElseIfFragment                   .conjure_prefixed_fragment = static_conjure_prefixed_else_if_fragment
+        ElseIfHeader                     .conjure_prefixed_fragment = static_conjure_prefixed_else_if_fragment
+        ExceptHeader_1                   .conjure_prefixed_fragment = static_conjure_prefixed_except_fragment 
+        ExceptHeader_2                   .conjure_prefixed_fragment = static_conjure_prefixed_except_fragment 
+        Indented_Else_Colon_LineMarker   .conjure_prefixed_fragment = static_conjure_prefixed_else_fragment 
+        Indented_Except_Colon_LineMarker .conjure_prefixed_fragment = static_conjure_prefixed_except_fragment 
+        Indented_Finally_Colon_LineMarker.conjure_prefixed_fragment = static_conjure_prefixed_finally_fragment 
 
 
         #dump_newline_meta_cache()

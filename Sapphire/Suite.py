@@ -23,10 +23,16 @@ def gem():
                 v.dump_token(f)
 
 
+    @property
+    def indentation__index_0(t):
+        return t[0].indentation
+
+
     class CommentSuite(TokenTuple):
         __slots__                  = (())
         indentation                = none
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
@@ -51,6 +57,7 @@ def gem():
         impression                 = 0
         indentation                = none
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
@@ -62,17 +69,13 @@ def gem():
         __slots__                  = (())
         display_name               = 'if-statement-*'
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
 
-
-        dump_token = dump_token__many
-
-
-        @property
-        def indentation(t):
-            return t[0].indentation
+        dump_token  = dump_token__many
+        indentation = indentation__index_0
 
 
     class MixedSuite(TokenTuple):
@@ -80,6 +83,7 @@ def gem():
         display_name               = 'mixed-*'
         indentation                = none
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
@@ -90,6 +94,7 @@ def gem():
     class StatementSuite(TokenTuple):
         __slots__                  = (())
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
@@ -121,11 +126,31 @@ def gem():
                 return (t[0].indentation) or (t[1].indentation)
 
 
+    class TryStatement_Many(TokenTuple):
+        __slots__                  = (())
+        display_name               = 'try-statement-*'
+        is_any_else                = false
+        is_any_except_or_finally   = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
+
+        dump_token  = dump_token__many
+        indentation = indentation__index_0
+
+
     conjure_comment_suite     = produce_conjure_tuple('comment-*',      CommentSuite,     suite_cache, provide_suite)
     conjure_empty_line_suite  = produce_conjure_tuple('empty-line-*',   EmptyLineSuite,   suite_cache, provide_suite)
     conjure_if_statement_many = produce_conjure_tuple('if-statement-*', IfStatement_Many, suite_cache, provide_suite)
     conjure_mixed_suite       = produce_conjure_tuple('mixed-*',        MixedSuite,       suite_cache, provide_suite)
     conjure_statement_suite   = produce_conjure_tuple('statement-*',    StatementSuite,   suite_cache, provide_suite)
+
+    conjure_try_statement_many = produce_conjure_tuple(
+                                     'try-statement-*',
+                                     TryStatement_Many,
+                                     suite_cache,
+                                     provide_suite,
+                                 )
 
 
     append_cache('suite', suite_cache)
@@ -137,4 +162,5 @@ def gem():
         'conjure_if_statement_many',    conjure_if_statement_many,
         'conjure_mixed_suite',          conjure_mixed_suite,
         'conjure_statement_suite',      conjure_statement_suite,
+        'conjure_try_statement_many',   conjure_try_statement_many,
     )

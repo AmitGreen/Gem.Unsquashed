@@ -302,6 +302,7 @@ def gem():
         display_name               = 'else'
         ends_in_newline            = true
         is_any_else                = true
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = true
         is_statement               = false
         is_statement_header        = true
@@ -318,16 +319,18 @@ def gem():
         indentation    = BaseQuadrupleOperator.a
 
 
+    @share
     class Indented_Except_Colon_LineMarker(BaseQuadrupleOperator):
-        __slots__           = (())
-        display_name        = 'except'
-        ends_in_newline     = true
-        is_statement        = false
-        is_statement_header = true
-        keyword             = 'except'
-        line_marker         = true
-        newlines            = 1
-        split_comment       = 0
+        __slots__                = (())
+        display_name             = 'except'
+        ends_in_newline          = true
+        is_any_except_or_finally = true
+        is_statement             = false
+        is_statement_header      = true
+        keyword                  = 'except'
+        line_marker              = true
+        newlines                 = 1
+        split_comment            = 0
 
         __init__       = construct_quadruple_operator__line_marker_1
         add_comment    = 0
@@ -337,16 +340,18 @@ def gem():
         indentation    = BaseQuadrupleOperator.a
 
 
+    @share
     class Indented_Finally_Colon_LineMarker(BaseQuadrupleOperator):
-        __slots__           = (())
-        display_name        = 'finally'
-        ends_in_newline     = true
-        is_statement        = false
-        is_statement_header = true
-        keyword             = 'finally'
-        line_marker         = true
-        newlines            = 1
-        split_comment       = 0
+        __slots__                = (())
+        display_name             = 'finally'
+        ends_in_newline          = true
+        is_any_except_or_finally = true
+        is_statement             = false
+        is_statement_header      = true
+        keyword                  = 'finally'
+        line_marker              = true
+        newlines                 = 1
+        split_comment            = 0
 
         __init__       = construct_quadruple_operator__line_marker_1
         add_comment    = 0
@@ -356,6 +361,7 @@ def gem():
         indentation    = BaseQuadrupleOperator.a
 
 
+    @share
     class Indented_Try_Colon_LineMarker(BaseQuadrupleOperator):
         __slots__           = (())
         display_name        = 'try'

@@ -21,6 +21,7 @@ def gem():
         indentation                = none
         impression                 = 0
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_comment_line            = false
         is_comment__or__empty_line = true
         is_else_header_or_fragment = false

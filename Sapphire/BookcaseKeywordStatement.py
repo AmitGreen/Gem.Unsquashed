@@ -6,6 +6,7 @@ def gem():
     class KeywordExpressionStatement(BookcaseExpression):
         __slots__                  = (())
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
@@ -137,8 +138,12 @@ def gem():
         is_any_else         = true
         is_statement        = false
         is_statement_header = true
+        split_comment       = 0
+
+        add_comment  = 0
 
 
+    @share
     class ExceptHeader_1(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'except-header-1'
@@ -147,8 +152,12 @@ def gem():
                            colon__empty_line_marker,
                        )
 
-        is_statement        = false
-        is_statement_header = true
+        is_any_except_or_finally = true
+        is_statement             = false
+        is_statement_header      = true
+        split_comment            = 0
+
+        add_comment  = 0
 
 
     @share

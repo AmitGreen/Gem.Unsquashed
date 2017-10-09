@@ -21,6 +21,7 @@ def gem():
         __slots__                  = (())
         display_name               = 'class-definition'
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
@@ -34,6 +35,7 @@ def gem():
         __slots__                  = (())
         display_name               = 'decorated-definition'
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
@@ -49,6 +51,7 @@ def gem():
         add_comment                = 0
         display_name               = 'else-fragment'
         is_any_else                = true
+        is_any_except_or_finally   = false
         is_else_fragment           = true
         is_else_header_or_fragment = true
         is_statement               = false
@@ -66,6 +69,7 @@ def gem():
         add_comment                = 0
         display_name               = 'else-if-fragment'
         is_any_else                = true
+        is_any_except_or_finally   = false
         is_else_fragment           = false
         is_else_header_or_fragment = false
         is_statement_header        = false
@@ -77,10 +81,47 @@ def gem():
         indentation = indentation__a_indentation
 
 
+    @share
+    class ExceptFragment(DualTwig):
+        __slots__                  = (())
+        add_comment                = 0
+        display_name               = 'except-fragment'
+        is_any_else                = false
+        is_any_except_or_finally   = true
+        is_else_header_or_fragment = false
+        is_finally_fragment        = false
+        is_statement               = false
+        is_statement_header        = false
+        prefixed_display_name      = 'prefixed-except-fragment'
+        split_comment              = 0
+
+        dump_token  = dump_token__ab
+        indentation = indentation__a_indentation
+
+
+    @share
+    class FinallyFragment(DualTwig):
+        __slots__                  = (())
+        add_comment                = 0
+        display_name               = 'finally-fragment'
+        is_any_else                = false
+        is_any_except_or_finally   = true
+        is_else_header_or_fragment = false
+        is_finally_fragment        = true
+        is_statement               = false
+        is_statement_header        = false
+        prefixed_display_name      = 'prefixed-finally-fragment'
+        split_comment              = 0
+
+        dump_token  = dump_token__ab
+        indentation = indentation__a_indentation
+
+
     class ForStatement(DualTwig):
         __slots__                  = (())
         display_name               = 'for-statement'
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
@@ -94,6 +135,7 @@ def gem():
         __slots__                  = (())
         display_name               = 'function-definition'
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
@@ -108,6 +150,7 @@ def gem():
         __slots__                  = (())
         display_name               = 'if-statement'
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = true
         is_statement               = true
@@ -117,10 +160,25 @@ def gem():
         indentation   = indentation__a_indentation
 
 
+    @share
+    class TryStatement(DualTwig):
+        __slots__                    = (())
+        display_name                 = 'try-statement'
+        is_any_except_or_finally     = false
+        is_finaly_header_or_fragment = false
+        is_statement_header          = true
+        is_statement                 = true
+        prefixed_display_name        = '#try-statement'
+
+        dump_token    = dump_token__ab
+        indentation   = indentation__a_indentation
+
+
     class WhileStatement(DualTwig):
         __slots__                  = (())
         display_name               = 'while-statement'
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
@@ -134,6 +192,7 @@ def gem():
         __slots__                  = (())
         display_name               = 'with-statement'
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
@@ -235,6 +294,14 @@ def gem():
     ] = produce_conjure_dual_twig_functions('else-if-statement', ElseIfFragment)
 
     [
+            conjure_except_fragment, conjure_prefixed_except_fragment,
+    ] = produce_conjure_dual_twig_functions('except-fragment', ExceptFragment)
+
+    [
+            conjure_finally_fragment, conjure_prefixed_finally_fragment,
+    ] = produce_conjure_dual_twig_functions('finally-fragment', FinallyFragment)
+
+    [
             conjure_for_statement, conjure_prefixed_for_statement,
     ] = produce_conjure_dual_twig_functions('for-statement', ForStatement)
 
@@ -245,6 +312,10 @@ def gem():
     [
             conjure_if_statement, conjure_prefixed_if_statement,
     ] = produce_conjure_dual_twig_functions('if-statement', IfStatement)
+
+    [
+            conjure_try_statement, conjure_prefixed_try_statement,
+    ] = produce_conjure_dual_twig_functions('try-statement', TryStatement)
 
     [
             conjure_while_statement, conjure_prefixed_while_statement,
@@ -264,8 +335,11 @@ def gem():
         'conjure_for_statement',                    conjure_for_statement,
         'conjure_else_fragment',                    conjure_else_fragment,
         'conjure_else_if_fragment',                 conjure_else_if_fragment,
+        'conjure_except_fragment',                  conjure_except_fragment,
+        'conjure_finally_fragment',                 conjure_finally_fragment,
         'conjure_function_definition',              conjure_function_definition,
         'conjure_if_statement',                     conjure_if_statement,
+        'conjure_try_statement',                    conjure_try_statement,
         'conjure_while_statement',                  conjure_while_statement,
         'conjure_with_statement',                   conjure_with_statement,
 
@@ -273,9 +347,12 @@ def gem():
         'conjure_prefixed_decorated_definition',    conjure_prefixed_decorated_definition,
         'conjure_prefixed_else_fragment',           conjure_prefixed_else_fragment,
         'conjure_prefixed_else_if_fragment',        conjure_prefixed_else_if_fragment,
+        'conjure_prefixed_except_fragment',         conjure_prefixed_except_fragment,
+        'conjure_prefixed_finally_fragment',        conjure_prefixed_finally_fragment,
         'conjure_prefixed_for_statement',           conjure_prefixed_for_statement,
         'conjure_prefixed_function_definition',     conjure_prefixed_function_definition,
         'conjure_prefixed_if_statement',            conjure_prefixed_if_statement,
+        'conjure_prefixed_try_statement',           conjure_prefixed_try_statement,
         'conjure_prefixed_while_statement',         conjure_prefixed_while_statement,
         'conjure_prefixed_with_statement',          conjure_prefixed_with_statement,
     )

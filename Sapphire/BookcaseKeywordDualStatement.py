@@ -11,6 +11,7 @@ def gem():
 
 
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
@@ -69,6 +70,7 @@ def gem():
                        )
 
 
+    @share
     class ExceptHeader_2(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'except-header-2'
@@ -78,9 +80,10 @@ def gem():
                            colon__empty_line_marker,
                        )
 
-        is_statement        = false
-        is_statement_header = true
-        split_comment       = 0
+        is_any_except_or_finally = true
+        is_statement             = false
+        is_statement_header      = true
+        split_comment            = 0
 
         add_comment = 0
 

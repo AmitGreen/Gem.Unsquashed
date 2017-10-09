@@ -28,6 +28,7 @@ def gem():
         impression                 = empty_indentation
         indentation                = none
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_comment_line            = true
         is_comment__or__empty_line = true
         is_else_header_or_fragment = false
@@ -74,6 +75,7 @@ def gem():
         impression                 = empty_indentation
         indentation                = none
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_comment_line            = true
         is_comment__or__empty_line = true
         is_else_header_or_fragment = false
@@ -118,6 +120,7 @@ def gem():
         ends_in_newline            = true
         indentation                = none
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_comment_line            = true
         is_comment__or__empty_line = true
         is_else_header_or_fragment = false
@@ -166,6 +169,7 @@ def gem():
         ends_in_newline            = true
         indentation                = none
         is_any_else                = false
+        is_any_except_or_finally   = false
         is_comment_line            = true
         is_comment__or__empty_line = true
         is_else_header_or_fragment = false
