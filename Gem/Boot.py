@@ -975,8 +975,14 @@ def gem():
     Main.gem = gem
 
 
-    if gem_scope.get('gem_fast'):
-        del Gem.gem_fast
-    else:
+    gem_fast = gem_scope.get('gem_fast')
+
+
+    if gem_fast is none:
         del Gem.__builtins__
         del Gem.__package__
+
+        gem_fast = 0
+
+
+    built_in('gem_fast', gem_fast)

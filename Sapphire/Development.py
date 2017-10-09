@@ -105,17 +105,17 @@ def gem():
         boot_code = tree[index]
 
         #@boot('Boot')
-        boot_decorator_header = conjure_decorator_header(
-                                    empty_indentation__at_sign,
-                                    conjure_call_expression(
-                                        conjure_name('boot'),
-                                        conjure_arguments_1(LP, conjure_single_quote("'Boot'"), RP),
-                                    ),
-                                    empty_line_marker,
-                                )
+        boot_code__decorator_header = conjure_decorator_header(
+                                          empty_indentation__at_sign,
+                                          conjure_call_expression(
+                                              conjure_name('boot'),
+                                              conjure_arguments_1(LP, conjure_single_quote("'Boot'"), RP),
+                                          ),
+                                          empty_line_marker,
+                                      )
 
         assert boot_code.is_decorated_definition
-        assert boot_code.a is boot_decorator_header
+        assert boot_code.a is boot_code__decorator_header
 
         return TwigCode(path, arrange('[%d]', index), extract_copyright(tree), boot_code)
 
@@ -154,8 +154,15 @@ def gem():
 
         tree = parse_python(path)
 
+        assert length(tree) is 5
+
+        copyright = extract_copyright(tree)
+
+
         #
-        #   [0]
+        #   [0]:
+        #       def boot(module_name):
+        #           ...
         #
         boot_decorator = tree[0]
 
@@ -173,31 +180,84 @@ def gem():
 
 
         #
-        #   [1]
+        #   [1]: empty lines
         #
         assert tree[1].is_empty_line_suite
+
+
+        #
+        #   [2]:
+        #       @boot('Boot')
+        #       def boot():
+        #           ...
+        #
+        boot = extract_boot(path, tree, 2, copyright)
+
+        del boot        #   We don't really want this, but just extracted it for testing purposes
+
+
+        #
+        #   [3]
+        #
+        assert tree[3].is_empty_line_suite
+
+
+        #
+        #   [4]:
+        #       @gem('Sapphire.Main')
+        #       def gem():
+        #           ...
+        #
+        main = tree[4]
+
+        #@gem('Sapphire.Main')
+        main__decorator_header = conjure_decorator_header(
+                                    empty_indentation__at_sign,
+                                    conjure_call_expression(
+                                        conjure_name('gem'),
+                                        conjure_arguments_1(LP, conjure_single_quote("'Sapphire.Main'"), RP),
+                                    ),
+                                    empty_line_marker,
+                                )
+
+        #def gem():
+        main__function_header = conjure_function_header(
+                                    empty_indentation__function,
+                                    conjure_name('gem'),
+                                    conjure_parameters_0(LP, RP),
+                                    colon__empty_line_marker,
+                                )
+
+        assert main.is_decorated_definition
+        assert main.a is main__decorator_header
+        assert main.b.is_function_definition
+        assert main.b.a is main__function_header
+        assert main.b.b.is_statement_suite
 
 
         #
         #   Result
         #
         return ((
-                   TwigCode(path, '[0]', extract_copyright(tree), boot_decorator),
+                   TwigCode(path, '[0]', copyright, boot_decorator),
+                   TwigCode(path, '[4]', copyright, main),
                ))
 
 
 
     @share
     def development():
-        [boot_decorator] = extract_sapphire_main()
-        [boot_code]      = extract_sardnoyx_boot()
+        [boot_decorator, main_code] = extract_sapphire_main()
+        [boot_code]                 = extract_sardnoyx_boot()
+
 
         output_path = '../bin/.pyxie/hma.py'
 
         with create_DelayedFileOutput(output_path) as f:
             boot_decorator.write(f)
             boot_code.write(f)
+            main_code.write(f)
 
             close_copyright(f)
 
-        partial(read_text_from_path(output_path))
+        #partial(read_text_from_path(output_path))

@@ -26,7 +26,8 @@ def gem():
 
 
     def test_development():
-        create_sapphire_match()
+        if gem_fast is 0:
+            create_sapphire_match()
 
         require_gem('Sapphire.Development')
 

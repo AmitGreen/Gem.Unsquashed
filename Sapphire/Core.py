@@ -14,7 +14,7 @@ def gem():
 
 
     from Gem import create_DelayedFileOutput, create_SimpleStringOutput, create_StringOutput
-    from Gem import print_exception_chain, produce_conjure_by_name
+    from Gem import path_join, print_exception_chain, produce_conjure_by_name
     from Gem import produce_conjure_dual, produce_conjure_dual__21, produce_conjure_quadruple__4123
     from Gem import produce_conjure_triple, produce_conjure_triple__213, produce_conjure_triple__312
     from Gem import produce_conjure_tuple, program_exit, read_text_from_path, StringOutput
@@ -35,6 +35,7 @@ def gem():
         'create_SimpleStringOutput',        create_SimpleStringOutput,
         'create_StringOutput',              create_StringOutput,
         'la',                               la,
+        'path_join',                        path_join,
         'print_exception_chain',            print_exception_chain,
         'produce_conjure_by_name',          produce_conjure_by_name,
         'produce_conjure_dual__21',         produce_conjure_dual__21,

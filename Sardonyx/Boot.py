@@ -79,4 +79,11 @@ def boot():
 
     store_python_module(Gem_name, Gem)
 
-    return __import__('Gem.Boot').boot
+
+    #
+    #   Run generic boot code
+    #
+    __import__('Gem.Boot').boot()
+
+
+    __import__(__name__).gem = __import__('__main__').gem
