@@ -175,9 +175,10 @@ def gem():
 
 
     class Arguments_1(BookcaseExpression):
-        __slots__    = (())
-        display_name = 'arguments-(1)'
-        frill        = LP_RP
+        __slots__      = (())
+        display_name   = 'arguments-(1)'
+        frill          = LP_RP
+        is_arguments_1 = true
 
 
     class HeadIndex(BookcaseExpression):
@@ -209,9 +210,14 @@ def gem():
 
 
     class Parameters_1(BookcaseExpression):
-        __slots__    = (())
-        display_name = 'parameters-(1)'
-        frill        = LP_RP
+        __slots__       = (())
+        display_name    = 'parameters-(1)'
+        frill           = LP_RP
+        is_parameters_1 =  true
+
+
+        def parameter_1_named(t, name):
+            return t.a.s == name
 
 
     class ParenthesizedExpression(BookcaseExpression):

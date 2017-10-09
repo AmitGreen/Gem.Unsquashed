@@ -18,6 +18,15 @@ def gem():
     wc0 = Method(wc, 0)
 
 
+    #
+    #   Tokens
+    #
+    LP = conjure_left_parenthesis ('(')
+    RP = conjure_right_parenthesis(')')
+
+    empty_indentation__function = conjure_indented_token( empty_indentation, conjure_keyword_function('def '))
+
+
     class Copyright(Object):
         __slots__ = ((
             'year',                     #   Integer
@@ -61,15 +70,15 @@ def gem():
     class TwigCode(Object):
         __slots__ = ((
             'path',                     #   String+
-            'number',                   #   Integer
+            'part',                     #   String
             'copyright',                #   Copyright
             'twig',                     #   Any
         ))
 
 
-        def __init__(t, path, number, copyright, twig):
+        def __init__(t, path, part, copyright, twig):
             t.path      = path
-            t.number    = number
+            t.part      = part
             t.copyright = copyright
             t.twig      = twig
 
@@ -77,24 +86,35 @@ def gem():
         def write(t, f):
             t.copyright.write(f)
 
-            f.line(arrange("#<source %r #%d>", t.path, t.number))
+            f.line(arrange("#<source %r %s>", t.path, t.part))
             t.twig.write(f.write)
             f.line('#</source>')
 
 
     @share
-    def development():
+    def extract_boot():
         main_path = '../Sapphire/Main.py'
 
         tree = parse_python(main_path)
 
-        boot = tree[0]
+        #
+        #   [0]
+        #
+        boot_decorator = tree[0]
 
-        assert boot.is_function_definition
-        assert boot.a.is_function_header
-        assert boot.a.name.s == 'boot'
+        #def boot(module_name):
+        boot_decorator__function_header = conjure_function_header(
+                                              empty_indentation__function,
+                                              conjure_name('boot'),
+                                              conjure_parameters_1(LP, conjure_name('module_name'), RP),
+                                              colon__empty_line_marker,
+                                          )
 
-        copyright = boot.prefix
+        assert boot_decorator.is_function_definition
+        assert boot_decorator.a is boot_decorator__function_header
+        assert boot_decorator.b.is_statement_suite
+
+        copyright = boot_decorator.prefix
 
         assert copyright.is_comment_suite
         assert length(copyright) is 3
@@ -109,8 +129,49 @@ def gem():
 
         copyright = create_copyright(Integer(m.group('year')), m.group('author'))
 
-        boot_twig = TwigCode(main_path, 0, copyright, boot)
 
-        with create_DelayedFileOutput('.pyxie/hma.py') as f:
-            boot_twig.write(f)
+        #
+        #   [1]
+        #
+        assert tree[1].is_empty_line_suite
+
+
+        #
+        #   [2]
+        #
+        boot_code = tree[2]
+
+        #@boot('Boot')
+        boot_decorator_header = conjure_decorator_header(
+                                    empty_indentation__at_sign,
+                                    conjure_call_expression(
+                                        boot_decorator.a.name,
+                                        conjure_arguments_1(LP, conjure_single_quote("'Boot'"), RP),
+                                    ),
+                                    empty_line_marker,
+                                )
+
+        assert boot_code.is_decorated_definition
+        assert boot_code.a is boot_decorator_header
+
+        #dump_token('boot_code.b', boot_code.b)
+
+
+        #
+        #   Result
+        #
+        return TwigCode(main_path, '[0]', copyright, boot_decorator)
+
+
+    @share
+    def development():
+        boot_decorator = extract_boot()
+
+        output_path = '.pyxie/hma.py'
+
+        with create_DelayedFileOutput(output_path) as f:
+            boot_decorator.write(f)
+
             close_copyright(f)
+
+        partial(read_text_from_path(output_path))

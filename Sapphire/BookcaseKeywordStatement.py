@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.BookcaseKeywordStatement')
 def gem():
+    empty_indentation__at_sign = conjure_indented_token(empty_indentation, conjure_at_sign('@'))
+
+
     class KeywordExpressionStatement(BookcaseExpression):
         __slots__                  = (())
         is_any_else                = false
@@ -93,10 +96,7 @@ def gem():
     class AssertStatement_1(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'assert-1'
-        frill        = conjure_vw_frill(
-                           conjure_indented_token(empty_indentation, conjure_keyword_assert('assert ')),
-                           empty_line_marker,
-                       )
+        frill        = conjure_vw_frill(empty_indentation__at_sign, empty_line_marker)
 
 
     @share
@@ -360,4 +360,5 @@ def gem():
         'conjure_while_header',             conjure_while_header,
         'conjure_with_header_1',            conjure_with_header_1,
         'conjure_yield_statement_1',        conjure_yield_statement_1,
+        'empty_indentation__at_sign',       empty_indentation__at_sign,
     )

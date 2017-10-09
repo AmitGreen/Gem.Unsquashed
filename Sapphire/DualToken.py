@@ -485,6 +485,11 @@ def gem():
         is_parameters_0 = true
 
 
+        def parameters_1_named(t, name):
+            return 0
+            
+
+
     class Whitespace_Atom(BaseDualOperator):
         __slots__                      = (())
         display_name                   = 'whitespace+atom'

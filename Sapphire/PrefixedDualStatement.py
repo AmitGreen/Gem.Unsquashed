@@ -36,6 +36,7 @@ def gem():
         display_name               = 'decorated-definition'
         is_any_else                = false
         is_any_except_or_finally   = false
+        is_decorated_definition    = true
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true

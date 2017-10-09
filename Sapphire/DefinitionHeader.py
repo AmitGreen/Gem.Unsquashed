@@ -124,6 +124,10 @@ def gem():
         is_function_header = true
 
 
+        def function_header_with_1_parameter(t, function_name, parameter_1_name):
+            return (t.name.s == function_name) and (t.parameters.parameter_1_named(parameter_1_name))
+
+
     [
         conjure_class_header, ClassHeader.conjure_with_frill,
     ] = produce_conjure_definition_header(

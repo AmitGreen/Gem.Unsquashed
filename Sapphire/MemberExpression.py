@@ -52,12 +52,12 @@ def gem():
     MemberExpression.k2 = MemberExpression.postfix
 
 
-    static_produce_call_expression = static_method(produce_call_expression)
+    static_conjure_call_expression = static_method(conjure_call_expression)
 
 
-    MemberExpression.call_expression = static_method(produce_method_call_expression)
-    SapphireToken   .call_expression = static_produce_call_expression
-    SapphireTrunk   .call_expression = static_produce_call_expression
+    MemberExpression.call_expression = static_method(conjure_method_call_expression)
+    SapphireToken   .call_expression = static_conjure_call_expression
+    SapphireTrunk   .call_expression = static_conjure_call_expression
 
 
     conjure_member_expression = produce_conjure_dual('member-expession', MemberExpression, member_expression_cache)

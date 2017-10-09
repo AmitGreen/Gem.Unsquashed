@@ -181,11 +181,11 @@ def gem():
         is_right_brace                 = false
         is_right_parenthesis           = false
         is_right_square_bracket        = false
+        is_single_quote                = true
 
 
         def display_token(t):
             return arrange('<%s>', t.s)
-
 
 
     @share

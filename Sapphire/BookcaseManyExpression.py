@@ -245,6 +245,10 @@ def gem():
         display_name = '(*):'
 
 
+        def parameter_1_named(t, name):
+            return 0
+
+
     class TupleExpression_Many(BookcaseManyExpression):
         __slots__                      = (())
         display_name                   = '{,*,}'

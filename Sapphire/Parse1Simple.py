@@ -53,7 +53,7 @@ def gem():
             if newline is none:
                 raise_unknown_line()
 
-            return conjure_decorator_header(indentation__at_sign, produce_call_expression(name, operator), newline)
+            return conjure_decorator_header(indentation__at_sign, conjure_call_expression(name, operator), newline)
 
         if not operator.is_left_parenthesis:
             raise_unknown_line()

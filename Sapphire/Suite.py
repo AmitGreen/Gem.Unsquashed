@@ -60,6 +60,7 @@ def gem():
         is_any_else                = false
         is_any_except_or_finally   = false
         is_else_header_or_fragment = false
+        is_empty_line_suite        = true
         is_statement_header        = false
         is_statement               = true
 
@@ -100,6 +101,7 @@ def gem():
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
+        is_statement_suite         = true
 
 
         def dump_token(t, f, newline = true):
