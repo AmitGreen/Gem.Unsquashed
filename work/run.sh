@@ -45,6 +45,8 @@ commandO="python -O $Main_py"
 command3="python3 $Main_py"
 command3O="python3 -O $Main_py"
 
+option="dev"
+
 cat >$tmp1 <<END
 AmitGreen
 CA1A41C16B1D3F25
@@ -59,7 +61,7 @@ cat $show
 
 while :
 do
-    $command <$tmp1 >&$tmp2
+    $command $option <$tmp1 >&$tmp2
     if cmp -s $tmp2 2
     then
         :
@@ -72,10 +74,10 @@ do
         fi
     fi
 
-    $commandO <$tmp1 >&$tmp3
+    $commandO $option <$tmp1 >&$tmp3
     mv $tmp3 2o
 
-    $command3 <$tmp1 >&$tmp3
+    $command3 $option <$tmp1 >&$tmp3
     if cmp -s $tmp3 3
     then
         :
@@ -88,7 +90,7 @@ do
         fi
     fi
 
-    $command3O <$tmp1 >&$tmp3
+    $command3O $option <$tmp1 >&$tmp3
     mv $tmp3 3o
 
     sleep 0.01

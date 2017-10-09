@@ -69,7 +69,8 @@ SAPPHIRE_FILES = \
     ../Sapphire/Indentation.py \
     ../Sapphire/LineMarker.py \
     ../Sapphire/Main.py ../Sapphire/ManyExpression.py ../Sapphire/ManyFrill.py ../Sapphire/MemberExpression.py \
-    ../Sapphire/Parse1.py ../Sapphire/Parse1Atom.py ../Sapphire/Tokenize1Header.py ../Sapphire/Parse1Call.py \
+    ../Sapphire/Parse.py \
+        ../Sapphire/Parse1.py ../Sapphire/Parse1Atom.py ../Sapphire/Tokenize1Header.py ../Sapphire/Parse1Call.py \
         ../Sapphire/Parse1Complex.py ../Sapphire/Parse1Expression.py ../Sapphire/Parse1ExpressionStatement.py \
         ../Sapphire/Parse1From.py ../Sapphire/Parse1Function.py ../Sapphire/Parse1Import.py \
         ../Sapphire/Parse1Simple.py \
@@ -143,14 +144,15 @@ clean:
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gd.py gg.py
-	rm -f h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
-	rm -f   h1za.py h1zh.py h1zn.py h1zo.py
+	rm -f h0p.py
+	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
+	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
 	rm -f   h2f.py h2p.py h2ps.py h2s.py h2s.py h2t.py h2w.py
 	rm -f   h3e.py h3f.py h3p.py h3s.py h3t.py h3w.py
 	rm -f   h4f.py h4s.py h4t.py h4w.py
 	rm -f   hat.py haw.py hb.py hca.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
-	rm -f   hma.py hmc.py hme.py hmf.py hpt.py hs.py htc.py hto.py htr.py htt.py hu.py hw.py hx.py hy.py
+	rm -f   hma.py hmc.py hme.py hmf.py hp.py hs.py htc.py hto.py htr.py htt.py hu.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
@@ -203,6 +205,7 @@ links:
 	ln -s ../Gem/FileStatus.py                          fs.py
 	ln -s ../Gem/Codec.py                               gd.py
 	ln -s ../Gem/Global.py                              gg.py
+	ln -s ../Sapphire/Parse.py                          h0p.py
 	ln -s ../Sapphire/Parse1.py                         h1p.py
 	ln -s ../Sapphire/Parse1Atom.py                     h1pa.py
 	ln -s ../Sapphire/Parse1Call.py                     h1pc.py
@@ -260,7 +263,7 @@ links:
 	ln -s ../Sapphire/Match.py                          hmc.py
 	ln -s ../Sapphire/MemberExpression.py               hme.py
 	ln -s ../Sapphire/ManyFrill.py                      hmf.py
-	ln -s ../Sapphire/Pattern.py                        hpt.py
+	ln -s ../Sapphire/Pattern.py                        hp.py
 	ln -s ../Sapphire/Suite.py                          hs.py
 	ln -s ../Sapphire/TokenCache.py                     htc.py
 	ln -s ../Sapphire/TupleOfExpression.py              hto.py

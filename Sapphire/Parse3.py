@@ -4,8 +4,6 @@
 @gem('Sapphire.Parse3')
 def gem():
     debug = 0
-    tree  = 7
-    show  = 7
 
 
     require_gem('Sapphire.DualStatement')
@@ -58,56 +56,6 @@ def gem():
         w_split_1 = Method(w_split, 1)
         w_split_2 = Method(w_split, 2)
         wv0       = Method(wv,      0)
-
-
-        def show_indentation():
-            for v in data_many:
-                line('+%d %s', v.indentation.total, v.display_token())
-
-
-        def show_tree():
-            with create_TokenOutput() as f:
-                f.line('===  show_tree  ===')
-
-                for v in tree_many:
-                    r = v.dump_token(f)
-
-                    assert not r
-
-            partial(f.result)
-
-
-        def test_identical_output():
-            with create_StringOutput() as f:
-                w = f.write
-
-                for v in tree_many:
-                    v.write(w)
-
-            if data != f.result:
-                with create_DelayedFileOutput('oops.txt') as oops:
-                    oops.write(f.result)
-
-                raise_runtime_error('mismatch on %r: output saved in %r', path, 'oops.txt')
-
-            line('Passed#1: Identical dump from parse tree.  Total: %d line%s',
-                 length(tree_many), (''   if length(data_many) is 0 else   's'))
-
-
-        def test_count_newlines():
-            total = 0
-
-            for v in tree_many:
-                v.is_statement                  #   Test this exists
-                v.is_statement_header           #   Test this exists
-
-                total += v.count_newlines()
-
-            if total != length(data_lines):
-                raise_runtime_error('mismatch on counted lines (counted: %d; expected: %d)',
-                                    total, length(parse_context.data_lines))
-                                
-            line('Passed#2: Total counted lines %d matches input', total)
 
 
         def create_append():
@@ -934,47 +882,46 @@ def gem():
 
 
         def parse_lines():
-            if tree is 7:
-                while 7 is 7:
-                    v = qv()
+            while 7 is 7:
+                v = qv()
 
-                    if v is 0:
-                        v = next_line()
+                if v is 0:
+                    v = next_line()
 
-                        if v.is_comment__or__empty_line:
-                            v = parse_blank_lines(v)
-
-                            before = qb()
-
-                            if before is not 0:
-                                wb0()
-                                append_twig(conjure_mixed_suite(before)   if type(before) is List else   before)
-                    else:
-                        wv0()
-
-                        assert not v.is_comment__or__empty_line
+                    if v.is_comment__or__empty_line:
+                        v = parse_blank_lines(v)
 
                         before = qb()
 
                         if before is not 0:
                             wb0()
                             append_twig(conjure_mixed_suite(before)   if type(before) is List else   before)
-
-                    if (not v.is_end_of_data) and (v.indentation.total != 0):
-                        raise_runtime_error('unexpected indentation %d (expected 0): %r', v.indentation.total, v)
-
-                    if v.is_statement_header:
-                        v = v.parse_header()
-                    else:
-                        assert qc() is 0
-
-                        if v.is_end_of_data:
-                            wv(v)
-                            break
-
-                    append_twig(v)
                 else:
-                    raise_runtime_error('programming error: loop to parse lines did not exit on %r', end_of_data)
+                    wv0()
+
+                    assert not v.is_comment__or__empty_line
+
+                    before = qb()
+
+                    if before is not 0:
+                        wb0()
+                        append_twig(conjure_mixed_suite(before)   if type(before) is List else   before)
+
+                if (not v.is_end_of_data) and (v.indentation.total != 0):
+                    raise_runtime_error('unexpected indentation %d (expected 0): %r', v.indentation.total, v)
+
+                if v.is_statement_header:
+                    v = v.parse_header()
+                else:
+                    assert qc() is 0
+
+                    if v.is_end_of_data:
+                        wv(v)
+                        break
+
+                append_twig(v)
+            else:
+                raise_runtime_error('programming error: loop to parse lines did not exit on %r', end_of_data)
 
             assert qb() is qc() is 0
 
@@ -1359,17 +1306,6 @@ def gem():
         Indented_Finally_Colon_LineMarker.conjure_prefixed_fragment = static_conjure_prefixed_finally_fragment 
 
 
-        #dump_newline_meta_cache()
-
-        if show is 5:
-            show_indentation()
-
         parse_lines()
 
-        if show is 7:
-            show_tree()
-
-        test_identical_output()
-        test_count_newlines()
-
-        #dump_caches('dual-twig')
+        return tree_many

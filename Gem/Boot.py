@@ -789,9 +789,10 @@ def gem():
                 )(
                 )
 
-                main = parent_module.Shared.__dict__.pop('main')
+                arguments = PythonSystem.argv[1:]
+                main      = parent_module.Shared.__dict__.pop('main')
 
-                main()
+                main(arguments)
 
 
             return execute

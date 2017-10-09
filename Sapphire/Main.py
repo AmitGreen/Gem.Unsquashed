@@ -25,31 +25,49 @@ def gem():
     require_gem('Sapphire.Pattern')
 
 
-    depth = 1
+    def test_development():
+        require_gem('Sapphire.Parse')                       #   Must be after 'create_sapphire_match'
+
+        for path in [ '../Sapphire/Main.py', '../Gem/__init__.py']:
+            tree = parse_python(path)
+            break
+
+
+    def test_parse1():
+        create_sapphire_match()
+
+        require_gem('Sapphire.Parse')                       #   Must be after 'create_sapphire_match'
+
+        path = 'test.py'
+
+        parse_python(path)
+
+
+    def test_parse2():
+        require_gem('Sapphire.Parse2')                      #   Must be after 'create_sapphire_match'
+
+        parse2_python_from_path('test2.py')
 
 
     @share
-    def main():
+    def main(arguments):
         try:
-            #for k in introspection(Gem):
-            #    print k
+            total = length(arguments)
 
-            create_sapphire_match()
+            if total is 0:
+                return test_parse1()
 
-            if (depth == 1) or (depth == 99):
-                require_gem('Sapphire.Parse1')                      #   Must be after 'create_sapphire_match'
-                require_gem('Sapphire.Parse3')
+            if total is not 1:
+                raise_runtime_error('must have zero or one argument')
 
-                path = 'test.py'
+            option = arguments[0]
+            
+            if option == 'dev':
+                #return test_development()
+                return test_parse1()
 
-                [data, data_lines, many] = parse1_python_from_path(path)
+            raise_runtime_error('unknown option: %r', option)
 
-                parse3_python(path, data, data_lines, many)
-
-            if (depth == 2) or (depth == 99):
-                require_gem('Sapphire.Parse2')                      #   Must be after 'create_sapphire_match'
-
-                parse2_python_from_path('test2.py')
         except:
             with except_any_clause() as e:
                 print_exception_chain(e)
