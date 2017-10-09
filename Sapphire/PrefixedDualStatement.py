@@ -18,26 +18,26 @@ def gem():
 
 
     class ClassDefinition(DualTwig):
-        __slots__             = (())
-        display_name          = 'class-definition'
-        is_any_else           = false
-        is_else_header        = false
-        is_statement_header   = false
-        is_statement          = true
-        prefixed_display_name = '#class-definition'
+        __slots__                  = (())
+        display_name               = 'class-definition'
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
+        prefixed_display_name      = '#class-definition'
 
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
 
 
     class DecoratedDefinition(DualTwig):
-        __slots__             = (())
-        display_name          = 'decorated-definition'
-        is_any_else           = false
-        is_else_header        = false
-        is_statement_header   = false
-        is_statement          = true
-        prefixed_display_name = '#decorated-definition'
+        __slots__                  = (())
+        display_name               = 'decorated-definition'
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
+        prefixed_display_name      = '#decorated-definition'
 
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
@@ -45,16 +45,16 @@ def gem():
 
     @share
     class ElseFragment(DualTwig):
-        __slots__             = (())
-        add_comment           = 0
-        display_name          = 'else-fragment'
-        is_any_else           = true
-        is_else_fragment      = true
-        is_else_header        = false
-        is_statement          = false
-        is_statement_header   = false
-        prefixed_display_name = 'prefixed-else-fragment'
-        split_comment         = 0
+        __slots__                  = (())
+        add_comment                = 0
+        display_name               = 'else-fragment'
+        is_any_else                = true
+        is_else_fragment           = true
+        is_else_header_or_fragment = true
+        is_statement               = false
+        is_statement_header        = false
+        prefixed_display_name      = 'prefixed-else-fragment'
+        split_comment              = 0
 
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
@@ -62,42 +62,42 @@ def gem():
 
     @share
     class ElseIfFragment(DualTwig):
-        __slots__             = (())
-        add_comment           = 0
-        display_name          = 'else-if-fragment'
-        is_any_else           = true
-        is_else_fragment      = false
-        is_else_header        = false
-        is_statement_header   = false
-        is_statement          = true
-        prefixed_display_name = 'prefixed-else-if-fragment'
-        split_comment         = 0
+        __slots__                  = (())
+        add_comment                = 0
+        display_name               = 'else-if-fragment'
+        is_any_else                = true
+        is_else_fragment           = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
+        prefixed_display_name      = 'prefixed-else-if-fragment'
+        split_comment              = 0
 
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
 
 
     class ForStatement(DualTwig):
-        __slots__             = (())
-        display_name          = 'for-statement'
-        is_any_else           = false
-        is_else_header        = false
-        is_statement_header   = false
-        is_statement          = true
-        prefixed_display_name = '#for-statement'
+        __slots__                  = (())
+        display_name               = 'for-statement'
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
+        prefixed_display_name      = '#for-statement'
 
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
 
 
     class FunctionDefinition(DualTwig):
-        __slots__             = (())
-        display_name          = 'function-definition'
-        is_any_else           = false
-        is_else_header        = false
-        is_statement_header   = false
-        is_statement          = true
-        prefixed_display_name = '#function-definition'
+        __slots__                  = (())
+        display_name               = 'function-definition'
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
+        prefixed_display_name      = '#function-definition'
 
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
@@ -105,38 +105,38 @@ def gem():
 
     @share
     class IfStatement(DualTwig):
-        __slots__             = (())
-        display_name          = 'if-statement'
-        is_any_else           = false
-        is_else_header        = false
-        is_statement_header   = true
-        is_statement          = true
-        prefixed_display_name = '#if-statement'
+        __slots__                  = (())
+        display_name               = 'if-statement'
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = true
+        is_statement               = true
+        prefixed_display_name      = '#if-statement'
 
         dump_token    = dump_token__ab
         indentation   = indentation__a_indentation
 
 
     class WhileStatement(DualTwig):
-        __slots__             = (())
-        display_name          = 'while-statement'
-        is_any_else           = false
-        is_else_header        = false
-        is_statement_header   = false
-        is_statement          = true
-        prefixed_display_name = '#while-statement'
+        __slots__                  = (())
+        display_name               = 'while-statement'
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
+        prefixed_display_name      = '#while-statement'
 
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
 
 
     class WithStatement(DualTwig):
-        __slots__           = (())
-        display_name        = 'with-statement'
-        is_any_else           = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
+        __slots__                  = (())
+        display_name               = 'with-statement'
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
 
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation

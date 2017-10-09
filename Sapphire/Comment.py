@@ -30,7 +30,7 @@ def gem():
         is_any_else                = false
         is_comment_line            = true
         is_comment__or__empty_line = true
-        is_else_header             = false
+        is_else_header_or_fragment = false
         is_empty_line              = false
         is_end_of_data             = false
         is_statement               = false
@@ -76,7 +76,7 @@ def gem():
         is_any_else                = false
         is_comment_line            = true
         is_comment__or__empty_line = true
-        is_else_header             = false
+        is_else_header_or_fragment = false
         is_empty_line              = false
         is_end_of_data             = false
         is_statement               = false
@@ -120,7 +120,7 @@ def gem():
         is_any_else                = false
         is_comment_line            = true
         is_comment__or__empty_line = true
-        is_else_header             = false
+        is_else_header_or_fragment = false
         is_empty_line              = false
         is_end_of_data             = false
         is_statement               = false
@@ -168,7 +168,7 @@ def gem():
         is_any_else                = false
         is_comment_line            = true
         is_comment__or__empty_line = true
-        is_else_header             = false
+        is_else_header_or_fragment = false
         is_empty_line              = false
         is_statement               = false
         is_statement_header        = false

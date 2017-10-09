@@ -24,12 +24,12 @@ def gem():
 
 
     class CommentSuite(TokenTuple):
-        __slots__           =  (())
-        indentation         = none
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
+        __slots__                  = (())
+        indentation                = none
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
 
 
         def dump_token(t, f, newline = true):
@@ -46,25 +46,25 @@ def gem():
 
 
     class EmptyLineSuite(TokenTuple):
-        __slots__           = (())
-        display_name        = 'empty-line-*'
-        impression          = 0
-        indentation         = none
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
+        __slots__                  = (())
+        display_name               = 'empty-line-*'
+        impression                 = 0
+        indentation                = none
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
 
         dump_token = dump_token__no_impression
 
 
     class IfStatement_Many(TokenTuple):
-        __slots__           = (())
-        display_name        = 'if-statement-*'
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
+        __slots__                  = (())
+        display_name               = 'if-statement-*'
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
 
 
         dump_token = dump_token__many
@@ -76,23 +76,23 @@ def gem():
 
 
     class MixedSuite(TokenTuple):
-        __slots__           = (())
-        display_name        = 'mixed-*'
-        indentation         = none
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
+        __slots__                  = (())
+        display_name               = 'mixed-*'
+        indentation                = none
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
 
         dump_token = dump_token__no_impression
 
 
     class StatementSuite(TokenTuple):
-        __slots__           = (())
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
+        __slots__                  = (())
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
 
 
         def dump_token(t, f, newline = true):

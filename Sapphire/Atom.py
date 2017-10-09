@@ -130,7 +130,7 @@ def gem():
         is_comment_line            = false
         is_comment__or__empty_line = false
         is_any_else                = false
-        is_else_header             = false
+        is_else_header_or_fragment = false
         is_end_of_data             = true
         is_statement_header        = false
 

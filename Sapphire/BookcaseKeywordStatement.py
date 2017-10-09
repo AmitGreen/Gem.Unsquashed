@@ -4,11 +4,11 @@
 @gem('Sapphire.BookcaseKeywordStatement')
 def gem():
     class KeywordExpressionStatement(BookcaseExpression):
-        __slots__           = (())
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
+        __slots__                  = (())
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
 
 
         def add_comment(t, comment):

@@ -16,10 +16,10 @@ def gem():
         ))
 
 
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
 
 
         def __init__(t, frill, left, arguments):

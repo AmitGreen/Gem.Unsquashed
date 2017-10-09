@@ -17,9 +17,11 @@ def gem():
         require_gem('Sapphire.DumpToken')
 
 
-    conjure_dual_statement = Shared.conjure_dual_statement      #   due to privileged
-    conjure_else_fragment  = Shared.conjure_else_fragment       #   due to privileged
-    conjure_mixed_suite    = Shared.conjure_mixed_suite         #   due to privileged
+    conjure_dual_statement         = Shared.conjure_dual_statement              #   due to privileged
+    conjure_else_fragment          = Shared.conjure_else_fragment               #   due to privileged
+    conjure_else_fragment          = Shared.conjure_else_fragment               #   due to privileged
+    conjure_mixed_suite            = Shared.conjure_mixed_suite                 #   due to privileged
+    conjure_prefixed_else_fragment = Shared.conjure_prefixed_else_fragment      #   due to privileged
 
 
     @share
@@ -639,42 +641,41 @@ def gem():
                 if comment is not 0:
                     wc0()
 
-                    v = conjure_prefixed_statement(
-                            (conjure_mixed_suite(comment)   if type(comment) is List else   comment),
-                            v,
-                            parse_suite(indentation),
-                        )
+                    v = conjure_prefixed_statement(comment, v, parse_suite(indentation))
                 else:
                     v = conjure_statement(v, parse_suite(indentation))
 
                 w = qv()
 
                 if w is not 0:
-                    if (not w.is_else_header) or (indentation is not w.indentation):
+                    if (not w.is_else_header_or_fragment) or (indentation is not w.indentation):
                         return v
 
                     wv0()
-                    prefix = qc()
 
-                    if prefix is not 0:
-                        wc0()
+                    before = qb()
 
-                        return conjure_dual_statement(
-                                   v,
-                                   conjure_prefixed_else_fragment(
-                                       (conjure_mixed_suite(prefix)   if type(prefix) is List else   prefix),
-                                       w,
-                                       parse_suite(indentation),
-                                   ),
-                               )
+                    if before is not 0:
+                        wb0()
+
+                        if type(before) is List:
+                            before = conjure_mixed_suite(before)
+
+                        if w.is_statement_header:
+                            w = conjure_prefixed_else_fragment(before, w, parse_suite(indentation))
+                        else:
+                            w = conjure_prefixed_else_fragment(before, w.a, w.b)
                 else:
                     w = next_line()
 
-                    if (not w.is_else_header) or (indentation is not w.indentation):
+                    if (not w.is_else_header_or_fragment) or (indentation is not w.indentation):
                         wv(v)
                         return v
 
-                return conjure_dual_statement(v, conjure_else_fragment(w, parse_suite(indentation)))
+                    if w.is_statement_header:
+                        w = conjure_else_fragment(w, parse_suite(indentation))
+
+                return conjure_dual_statement(v, w)
 
 
             if __debug__:

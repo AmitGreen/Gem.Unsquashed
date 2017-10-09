@@ -299,14 +299,14 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
-        display_name        = r'indented-break\n'
-        ends_in_newline     = true
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
-        line_marker         = true
-        newlines            = 1
+        display_name               = r'indented-break\n'
+        ends_in_newline            = true
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
+        line_marker                = true
+        newlines                   = 1
 
         __init__       = construct_triple_operator__line_marker_1
         add_comment    = add_comment__commented_statement
@@ -318,15 +318,15 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
-        display_name        = r'indented-continue\n'
-        ends_in_newline     = true
-        indentation         = BaseTripleOperator.a
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
-        line_marker         = true
-        newlines            = 1
+        display_name               = r'indented-continue\n'
+        ends_in_newline            = true
+        indentation                = BaseTripleOperator.a
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
+        line_marker                = true
+        newlines                   = 1
 
         __init__       = construct_triple_operator__line_marker_1
         add_comment    = add_comment__commented_statement
@@ -345,14 +345,14 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
-        display_name        = r'indented-pass\n'
-        ends_in_newline     = true
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
-        line_marker         = true
-        newlines            = 1
+        display_name               = r'indented-pass\n'
+        ends_in_newline            = true
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
+        line_marker                = true
+        newlines                   = 1
 
         __init__       = construct_triple_operator__line_marker_1
         add_comment    = add_comment__commented_statement
@@ -364,14 +364,14 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
-        display_name        = r'indented-raise\n'
-        ends_in_newline     = true
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
-        line_marker         = true
-        newlines            = 1
+        display_name               = r'indented-raise\n'
+        ends_in_newline            = true
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
+        line_marker                = true
+        newlines                   = 1
 
         __init__       = construct_triple_operator__line_marker_1
         add_comment    = add_comment__commented_statement
@@ -383,14 +383,14 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
-        display_name        = r'indented-return\n'
-        ends_in_newline     = true
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
-        line_marker         = true
-        newlines            = 1
+        display_name               = r'indented-return\n'
+        ends_in_newline            = true
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
+        line_marker                = true
+        newlines                   = 1
 
         __init__       = construct_triple_operator__line_marker_1
         add_comment    = add_comment__commented_statement
@@ -402,14 +402,14 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
-        display_name        = r'indented-yield\n'
-        ends_in_newline     = true
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
-        line_marker         = true
-        newlines            = 1
+        display_name               = r'indented-yield\n'
+        ends_in_newline            = true
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
+        line_marker                = true
+        newlines                   = 1
 
         __init__       = construct_triple_operator__line_marker_1
         add_comment    = add_comment__commented_statement

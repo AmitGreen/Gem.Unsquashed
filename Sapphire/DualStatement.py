@@ -18,24 +18,24 @@ def gem():
 
 
     class DualStatement(DualTwig):
-        __slots__           = (())
-        display_name        = 'dual-statement'
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
+        __slots__                  = (())
+        display_name               = 'dual-statement'
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
 
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
 
 
     class CommentedStatement(DualTwig):
-        __slots__           = (())
-        display_name        = '#statement'
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
+        __slots__                  = (())
+        display_name               = '#statement'
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
 
 
         def dump_token(t, f, newline = true):

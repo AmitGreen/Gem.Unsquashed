@@ -4,12 +4,12 @@
 @gem('Sapphire.TripleStatement')
 def gem():
     class TripleStatement(TripleTwig):
-        __slots__           = (())
-        display_name        = 'triple-statement'
-        is_any_else         = false
-        is_else_header      = false
-        is_statement_header = false
-        is_statement        = true
+        __slots__                  = (())
+        display_name               = 'triple-statement'
+        is_any_else                = false
+        is_else_header_or_fragment = false
+        is_statement_header        = false
+        is_statement               = true
 
 
         def dump_token(t, f, newline = true):
