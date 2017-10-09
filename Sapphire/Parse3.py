@@ -732,7 +732,39 @@ def gem():
             if y.is_else_fragment:
                 return conjure_quadruple_statement(v, w, x, y)
 
-            assert 0, 'incomplete'
+            z = parse_any_else_fragment()
+
+            if z is 0:
+                return conjure_quadruple_statement(v, w, x, y)
+
+            many = [v, w, x, y, z]
+
+            #
+            #   Don't need many_append yet
+            #
+            if z.is_else_fragment:
+                return conjure_if_statement_many(many)
+
+            v = parse_any_else_fragment()
+
+            if v is 0:
+                return conjure_if_statement_many(many)
+
+            #
+            #   Loop ...
+            #
+            many_append = many.append
+
+            while 7 is 7:
+                many_append(v)
+
+                if v.is_else_fragment:
+                    return conjure_if_statement_many(many)
+
+                v = parse_any_else_fragment()
+
+                if v is 0:
+                    return conjure_if_statement_many(many)
 
 
         def parse_if_statement(v):
