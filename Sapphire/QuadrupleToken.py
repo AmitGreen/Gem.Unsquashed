@@ -69,9 +69,7 @@ def gem():
 
 
     def dump_token__indented__keyword__colon__line_marker(t, f, newline = true):
-        indentation = t.a
-
-        f.partial('%s<%s +%d ', indentation.s, t.display_name, indentation.total)
+        f.partial('<%s +%d ', t.display_name, t.a.total)
 
         t    .b.dump_token(f)
         t    .c.dump_token(f)
@@ -324,6 +322,7 @@ def gem():
         __slots__                = (())
         display_name             = 'except'
         ends_in_newline          = true
+        is_any_else              = false
         is_any_except_or_finally = true
         is_statement             = false
         is_statement_header      = true
@@ -366,6 +365,7 @@ def gem():
         __slots__           = (())
         display_name        = 'try'
         ends_in_newline     = true
+        is_any_else         = false
         is_statement        = false
         is_statement_header = true
         keyword             = 'try'

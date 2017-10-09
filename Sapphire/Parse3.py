@@ -9,12 +9,10 @@ def gem():
 
 
     require_gem('Sapphire.DualStatement')
+    require_gem('Sapphire.DumpToken')
     require_gem('Sapphire.QuadrupleStatement')
     require_gem('Sapphire.Suite')
     require_gem('Sapphire.TripleStatement')
-
-    if __debug__:
-        require_gem('Sapphire.DumpToken')
 
 
     conjure_dual_statement         = Shared.conjure_dual_statement              #   due to privileged
@@ -22,6 +20,7 @@ def gem():
     conjure_else_fragment          = Shared.conjure_else_fragment               #   due to privileged
     conjure_mixed_suite            = Shared.conjure_mixed_suite                 #   due to privileged
     conjure_prefixed_else_fragment = Shared.conjure_prefixed_else_fragment      #   due to privileged
+    dump_token                     = Shared.dump_token                          #   due to privileged
 
 
     @share
@@ -534,11 +533,11 @@ def gem():
             parse_blank_lines = show_parse_blank_lines
 
 
-        def parse_any_else_fragment():
+        def parse_any_else_fragment(indentation):
             v = qv()
 
             if v is not 0:
-                if not v.is_any_else:
+                if (not v.is_any_else) or (v.indentation is not indentation):
                     return 0
 
                 wv0()
@@ -552,7 +551,7 @@ def gem():
 
                     w_split_1()
 
-                if not v.is_any_else:
+                if (not v.is_any_else) or (v.indentation is not indentation):
                     wv(v)
                     return 0
 
@@ -577,11 +576,11 @@ def gem():
             return v
 
 
-        def parse_any_except_or_finally_fragment():
+        def parse_any_except_or_finally_fragment(indentation):
             v = qv()
 
             if v is not 0:
-                if not v.is_any_except_or_finally:
+                if (not v.is_any_except_or_finally) or (v.indentation is not indentation):
                     return 0
 
                 wv0()
@@ -595,7 +594,7 @@ def gem():
 
                     w_split_1()
 
-                if not v.is__any_except_or_finally:
+                if (not v.is_any_except_or_finally) or (v.indentation is not indentation):
                     wv(v)
                     return 0
 
@@ -656,6 +655,8 @@ def gem():
 
                         wc(conjure_mixed_suite(before)   if type(before) is List else   before)
             else:
+                assert qb() is 0
+
                 wv0()
 
             if not v.is_class_decorator_or_function_header:
@@ -695,26 +696,33 @@ def gem():
                         return v
 
                     wv0()
-
-                    before = qb()
-
-                    if before is not 0:
-                        wb0()
-
-                        if type(before) is List:
-                            before = conjure_mixed_suite(before)
-
-                        if w.is_statement_header:
-                            w = conjure_prefixed_else_fragment(before, w, parse_suite(indentation))
-                        else:
-                            w = conjure_prefixed_else_fragment(before, w.a, w.b)
                 else:
                     w = next_line()
 
+                    if w.is_comment__or__empty_line:
+                        w_split_2()
+
+                        w = parse_blank_lines(w)
+
+                        w_split_1()
+
                     if (not w.is_else_header_or_fragment) or (indentation is not w.indentation):
-                        wv(v)
+                        wv(w)
                         return v
 
+                before = qb()
+
+                if before is not 0:
+                    wb0()
+
+                    if type(before) is List:
+                        before = conjure_mixed_suite(before)
+
+                    if w.is_statement_header:
+                        w = conjure_prefixed_else_fragment(before, w, parse_suite(indentation))
+                    else:
+                        w = conjure_prefixed_else_fragment(before, w.a, w.b)
+                else:
                     if w.is_statement_header:
                         w = conjure_else_fragment(w, parse_suite(indentation))
 
@@ -752,7 +760,9 @@ def gem():
 
 
         def parse_if_statement__X(v):
-            w = parse_any_else_fragment()
+            indentation = v.indentation
+
+            w = parse_any_else_fragment(indentation)
 
             if w is 0:
                 return v
@@ -760,7 +770,7 @@ def gem():
             if w.is_else_fragment:
                 return conjure_dual_statement(v, w)
 
-            x = parse_any_else_fragment()
+            x = parse_any_else_fragment(indentation)
 
             if x is 0:
                 return conjure_dual_statement(v, w)
@@ -768,7 +778,7 @@ def gem():
             if x.is_else_fragment:
                 return conjure_triple_statement(v, w, x)
 
-            y = parse_any_else_fragment()
+            y = parse_any_else_fragment(indentation)
 
             if y is 0:
                 return conjure_triple_statement(v, w, x)
@@ -776,7 +786,7 @@ def gem():
             if y.is_else_fragment:
                 return conjure_quadruple_statement(v, w, x, y)
 
-            z = parse_any_else_fragment()
+            z = parse_any_else_fragment(indentation)
 
             if z is 0:
                 return conjure_quadruple_statement(v, w, x, y)
@@ -789,7 +799,7 @@ def gem():
             if z.is_else_fragment:
                 return conjure_if_statement_many(many)
 
-            v = parse_any_else_fragment()
+            v = parse_any_else_fragment(indentation)
 
             if v is 0:
                 return conjure_if_statement_many(many)
@@ -805,7 +815,7 @@ def gem():
                 if v.is_else_fragment:
                     return conjure_if_statement_many(many)
 
-                v = parse_any_else_fragment()
+                v = parse_any_else_fragment(indentation)
 
                 if v is 0:
                     return conjure_if_statement_many(many)
@@ -830,7 +840,7 @@ def gem():
             if comment is not 0:
                 wc0()
 
-                v = conjure_prefixed_try_definition(comment, header, parse_suite(v.indentation))
+                v = conjure_prefixed_try_statement(comment, v, parse_suite(v.indentation))
             else:
                 v = conjure_try_statement(v, parse_suite(v.indentation))
 
@@ -838,7 +848,9 @@ def gem():
 
 
         def parse_try_statement__X(v):
-            w = parse_any_except_or_finally_fragment()
+            indentation = v.indentation
+
+            w = parse_any_except_or_finally_fragment(indentation)
 
             if w is 0:
                 return v
@@ -846,7 +858,7 @@ def gem():
             if w.is_finally_fragment:
                 return conjure_dual_statement(v, w)
 
-            x = parse_any_except_or_finally_fragment()
+            x = parse_any_except_or_finally_fragment(indentation)
 
             if x is 0:
                 return conjure_dual_statement(v, w)
@@ -854,7 +866,7 @@ def gem():
             if x.is_finally_fragment:
                 return conjure_triple_statement(v, w, x)
 
-            y = parse_any_except_or_finally_fragment()
+            y = parse_any_except_or_finally_fragment(indentation)
 
             if y is 0:
                 return conjure_triple_statement(v, w, x)
@@ -862,7 +874,7 @@ def gem():
             if y.is_finally_fragment:
                 return conjure_quadruple_statement(v, w, x, y)
 
-            z = parse_any_except_or_finally_fragment()
+            z = parse_any_except_or_finally_fragment(indentation)
 
             if z is 0:
                 return conjure_quadruple_statement(v, w, x, y)
@@ -875,7 +887,7 @@ def gem():
             if z.is_finally_fragment:
                 return conjure_try_statement_many(many)
 
-            v = parse_any_except_or_finally_fragment()
+            v = parse_any_except_or_finally_fragment(indentation)
 
             if v is 0:
                 return conjure_try_statement_many(many)
@@ -891,7 +903,7 @@ def gem():
                 if v.is_finally_fragment:
                     return conjure_try_statement_many(many)
 
-                v = parse_any_except_or_finally_fragment()
+                v = parse_any_except_or_finally_fragment(indentation)
 
                 if v is 0:
                     return conjure_try_statement_many(many)
@@ -909,17 +921,6 @@ def gem():
 
             return parse_try_statement__X(v)
             
-
-        def parse_while_header(header):
-            comment = qc()
-
-            if comment is not 0:
-                wc0()
-
-                return conjure_prefixed_while_statement(comment, header, parse_suite(header.indentation))
-
-            return conjure_while_statement(header, parse_suite(header.indentation))
-
 
         def parse_with_header(header):
             comment = qc()
@@ -1323,7 +1324,13 @@ def gem():
         FunctionHeader               .parse_header = parse_function_header
         IfHeader                     .parse_header = parse_if_header
         IfStatement                  .parse_header = parse_if_statement
-        WhileHeader                  .parse_header = parse_while_header
+
+        WhileHeader.parse_header = produce_parse_header__with_optional_else(
+                                       'parse_for_header',
+                                       conjure_for_statement,
+                                       conjure_prefixed_for_statement,
+                                   )
+
         WithHeader_1                 .parse_header = parse_with_header
         WithHeader_2                 .parse_header = parse_with_header
         Indented_Try_Colon_LineMarker.parse_header = parse_try_header

@@ -48,7 +48,6 @@ def gem():
     @share
     class ElseFragment(DualTwig):
         __slots__                  = (())
-        add_comment                = 0
         display_name               = 'else-fragment'
         is_any_else                = true
         is_any_except_or_finally   = false
@@ -59,6 +58,7 @@ def gem():
         prefixed_display_name      = 'prefixed-else-fragment'
         split_comment              = 0
 
+        add_comment = 0
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
 
@@ -66,7 +66,6 @@ def gem():
     @share
     class ElseIfFragment(DualTwig):
         __slots__                  = (())
-        add_comment                = 0
         display_name               = 'else-if-fragment'
         is_any_else                = true
         is_any_except_or_finally   = false
@@ -77,6 +76,7 @@ def gem():
         prefixed_display_name      = 'prefixed-else-if-fragment'
         split_comment              = 0
 
+        add_comment = 0
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
 
@@ -84,7 +84,6 @@ def gem():
     @share
     class ExceptFragment(DualTwig):
         __slots__                  = (())
-        add_comment                = 0
         display_name               = 'except-fragment'
         is_any_else                = false
         is_any_except_or_finally   = true
@@ -95,6 +94,7 @@ def gem():
         prefixed_display_name      = 'prefixed-except-fragment'
         split_comment              = 0
 
+        add_comment = 0
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
 
@@ -102,7 +102,6 @@ def gem():
     @share
     class FinallyFragment(DualTwig):
         __slots__                  = (())
-        add_comment                = 0
         display_name               = 'finally-fragment'
         is_any_else                = false
         is_any_except_or_finally   = true
@@ -113,6 +112,7 @@ def gem():
         prefixed_display_name      = 'prefixed-finally-fragment'
         split_comment              = 0
 
+        add_comment = 0
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
 
@@ -126,7 +126,9 @@ def gem():
         is_statement_header        = false
         is_statement               = true
         prefixed_display_name      = '#for-statement'
+        split_comment              = 0
 
+        add_comment = 0
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
 
@@ -155,9 +157,11 @@ def gem():
         is_statement_header        = true
         is_statement               = true
         prefixed_display_name      = '#if-statement'
+        split_comment              = 0
 
-        dump_token    = dump_token__ab
-        indentation   = indentation__a_indentation
+        add_comment = 0
+        dump_token  = dump_token__ab
+        indentation = indentation__a_indentation
 
 
     @share
@@ -169,9 +173,11 @@ def gem():
         is_statement_header          = true
         is_statement                 = true
         prefixed_display_name        = '#try-statement'
+        split_comment              = 0
 
-        dump_token    = dump_token__ab
-        indentation   = indentation__a_indentation
+        add_comment = 0
+        dump_token  = dump_token__ab
+        indentation = indentation__a_indentation
 
 
     class WhileStatement(DualTwig):
@@ -183,7 +189,9 @@ def gem():
         is_statement_header        = false
         is_statement               = true
         prefixed_display_name      = '#while-statement'
+        split_comment              = 0
 
+        add_comment = 0
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
 
@@ -196,7 +204,10 @@ def gem():
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
+        prefixed_display_name      = '#with-statement'
+        split_comment              = 0
 
+        add_comment = 0
         dump_token  = dump_token__ab
         indentation = indentation__a_indentation
 
