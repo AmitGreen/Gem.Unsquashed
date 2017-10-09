@@ -26,11 +26,11 @@ def gem():
 
 
     def test_development():
-        require_gem('Sapphire.Parse')                       #   Must be after 'create_sapphire_match'
+        create_sapphire_match()
 
-        for path in [ '../Sapphire/Main.py', '../Gem/__init__.py']:
-            tree = parse_python(path)
-            break
+        require_gem('Sapphire.Development')
+
+        development()
 
 
     def test_parse1():
@@ -63,7 +63,9 @@ def gem():
             option = arguments[0]
             
             if option == 'dev':
-                #return test_development()
+                if 7:
+                    return test_development()
+
                 return test_parse1()
 
             raise_runtime_error('unknown option: %r', option)

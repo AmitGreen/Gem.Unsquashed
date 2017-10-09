@@ -175,6 +175,20 @@ def gem():
 
 
         #
+        #   Copyright
+        #
+        FULL_MATCH(
+            'copyright_match',
+            (
+                  EXACT('   Copyright (c)')
+                + ' ' + G('year', '2017')
+                + ' ' + G('author', 'Amit Green')
+                + '.  All rights reserved.'
+            ),
+        )
+
+
+        #
         #   Expressions 1
         #
         MATCH(

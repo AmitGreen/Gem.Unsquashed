@@ -119,8 +119,9 @@ def gem():
 
     @share
     class FunctionHeader(DefinitionHeader):
-        __slots__    = (())
-        display_name = 'function-header'
+        __slots__          = (())
+        display_name       = 'function-header'
+        is_function_header = true
 
 
     [

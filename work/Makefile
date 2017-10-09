@@ -63,8 +63,8 @@ SAPPHIRE_FILES = \
         ../Sapphire/BookcaseTriple.py \
     ../Sapphire/Cache.py ../Sapphire/CallStatement.py ../Sapphire/Comment.py ../Sapphire/Core.py \
         ../Sapphire/CreateMeta.py \
-    ../Sapphire/DefinitionHeader.py ../Sapphire/DualFrill.py ../Sapphire/DualStatement.py ../Sapphire/DualToken.py  \
-        ../Sapphire/DualTwig.py ../Sapphire/DumpToken.py \
+    ../Sapphire/DefinitionHeader.py ../Sapphire/Development.py ../Sapphire/DualFrill.py ../Sapphire/DualStatement.py \
+        ../Sapphire/DualToken.py ../Sapphire/DualTwig.py ../Sapphire/DumpToken.py \
     ../Sapphire/Elemental.py \
     ../Sapphire/Indentation.py \
     ../Sapphire/LineMarker.py \
@@ -152,7 +152,7 @@ clean:
 	rm -f   h4f.py h4s.py h4t.py h4w.py
 	rm -f   hat.py haw.py hb.py hca.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
-	rm -f   hma.py hmc.py hme.py hmf.py hp.py hs.py htc.py hto.py htr.py htt.py hu.py hw.py hx.py hy.py
+	rm -f   hma.py hmc.py hme.py hmf.py hp.py hs.py htc.py hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
@@ -270,6 +270,7 @@ links:
 	ln -s ../Sapphire/Tree.py                           htr.py
 	ln -s ../Sapphire/TokenTuple.py                     htt.py
 	ln -s ../Sapphire/UnaryExpression.py                hu.py
+	ln -s ../Sapphire/Development.py                    hv.py
 	ln -s ../Sapphire/Whitespace.py                     hw.py
 	ln -s ../Sapphire/PostfixExpression.py              hx.py
 	ln -s ../Sapphire/ManyExpression.py                 hy.py

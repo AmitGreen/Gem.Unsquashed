@@ -254,4 +254,5 @@ def gem():
 
     share(
         'conjure_any_comment_line',     conjure_any_comment_line,
+        'empty_comment_line',           empty_comment_line,
     )
