@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Expression')
+@gem('Sapphire.MemberExpression')
 def gem():
     require_gem('Sapphire.PostfixExpression')
 
@@ -41,6 +41,9 @@ def gem():
             r = t.postfix.dump_token(f, false)
 
             return f.token_result(r, newline)
+
+
+        is_name = is_name__0
 
 
         def write(t, w):

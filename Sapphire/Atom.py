@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.Atom')
 def gem():
+    require_gem('Sapphire.Method')
     require_gem('Sapphire.TokenCache')
 
 
@@ -105,6 +106,9 @@ def gem():
         display_token = __repr__
 
 
+        is_name = is_name__0
+
+
         def write(t, w):
             w(t.s)
 
@@ -155,6 +159,10 @@ def gem():
 
         def display_token(t):
             return t.s
+
+
+        def is_name(t, s):
+            return t.s == s
 
 
     @share

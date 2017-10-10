@@ -109,6 +109,111 @@ def gem():
             f.blank2()
 
 
+    class RequireMany(Object):
+        __slots__ = ((
+            'latest_many',              #   List of String
+            '_append_latest',           #   Method
+
+            'twig_many',                #   List of Twig
+            '_append_twig',             #   Method
+
+            'processed_set',            #   LiquidSet of String
+            '_add_processed',           #   Method
+            '_contains_processed',      #   Method
+        ))
+
+
+        def __init__(t):
+            t.latest_many    = many        = []
+            t._append_latest = many.append
+
+            t.twig_many    = many        = []
+            t._append_twig = many.append
+
+            t.processed_set       = processed = LiquidSet()
+            t._add_processed      = processed.add
+            t._contains_processed = processed.__contains__
+
+            #
+            #   Ignore these file, pretend we already saw it
+            #
+            t._add_processed('Gem.Path2')
+            t._add_processed('Sapphire.Parse2')
+            t._add_processed('Sapphire.Pattern')
+
+
+        def add_require_gem(t, module_name):
+            assert module_name.is_single_quote
+
+            s = module_name.s[1:-1]
+
+            if t._contains_processed(s):
+                return
+
+            t._append_latest(s)
+
+
+        def loop(t):
+            contains_processed = t._contains_processed
+            latest_many        = t.latest_many
+            process_module     = t.process_module
+
+            append_latest = t._append_latest
+            extend_latest = latest_many.extend
+            length_latest = latest_many.__len__
+            index_latest  = latest_many.__getitem__
+            delete_latest = latest_many.__delitem__
+
+            index_latest_0  = Method(index_latest, 0)
+            index_latest_1  = Method(index_latest, 1)
+            delete_latest_0 = Method(delete_latest, 0)
+            zap_latest      = Method(delete_latest, slice_all)
+
+            while 7 is 7:
+                total = length_latest()
+
+                if total is 0:
+                    break
+
+                first = index_latest_0()
+
+                if contains_processed(first):
+                    line('Already processed %s', first)
+                    delete_latest_0()
+                    continue
+
+                line('Total %d - Process %s', total, first)
+
+                if total is 1:
+                    zap_latest()
+                    process_module(first)
+                    continue
+
+                if total is 2:
+                    other = index_latest_1()
+                    zap_latest()
+                    process_module(first)
+                    append_latest(other)
+                    continue
+
+                other = t.latest_many[1:]
+                zap_latest()
+                process_module(first)
+                extend_latest(other)
+            
+
+        def process_module(t, module):
+            t._add_processed(module)
+
+            path = path_join('..', arrange('%s.py', module.replace('.', '/')))
+
+            gem = extract_gem(module, path)
+
+            t._append_twig(gem)
+
+            gem.twig.find_require_gem(t)
+
+
     def conjure_gem_decorator_header(module):
         #@gem('Gem.Something')
         return conjure_decorator_header(
@@ -187,7 +292,6 @@ def gem():
         assert gem.a is conjure_gem_decorator_header(module)
         assert gem.b.is_function_definition
         assert gem.b.a is gem__function_header
-        assert gem.b.b.is_statement_suite
 
         return TwigCode(path, '[0]', copyright, gem)
 
@@ -309,21 +413,17 @@ def gem():
                ))
 
 
-
     @share
     def development():
         [boot_decorator, main_code] = extract_sapphire_main()
         sardnoyx_boot_code          = extract_sardnoyx_boot()
         gem_boot_code               = extract_gem_boot()
 
-        gem_many   = []
-        append_gem = gem_many.append
+        require_many = RequireMany()
 
-        for part in ['Core']:
-            module = arrange('Gem.%s', part)
-            path   = path_join('../Gem', arrange('%s.py', part))
-
-            gem_many.append(extract_gem(module, path))
+        require_many.process_module('Gem.Core')
+        main_code.twig.find_require_gem(require_many)
+        require_many.loop()
 
         output_path = '../bin/.pyxie/hma.py'
 
@@ -331,7 +431,7 @@ def gem():
             boot_decorator.write(f)
             sardnoyx_boot_code.write(f)
 
-            for v in gem_many:
+            for v in require_many.twig_many:
                 v.write(f)
 
             gem_boot_code.write(f)

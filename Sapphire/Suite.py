@@ -7,6 +7,11 @@ def gem():
     provide_suite = suite_cache.setdefault
 
 
+    def find_require_gem__many(t, e):
+        for v in t:
+            v.find_require_gem(e)
+
+
     def dump_token__no_impression(t, f, newline = true):
         assert newline is true
 
@@ -64,7 +69,8 @@ def gem():
         is_statement_header        = false
         is_statement               = true
 
-        dump_token = dump_token__no_impression
+        dump_token       = dump_token__no_impression
+        find_require_gem = find_require_gem__0
 
 
     class IfStatement_Many(TokenTuple):
@@ -76,8 +82,9 @@ def gem():
         is_statement_header        = false
         is_statement               = true
 
-        dump_token  = dump_token__many
-        indentation = indentation__index_0
+        dump_token       = dump_token__many
+        find_require_gem = find_require_gem__many
+        indentation      = indentation__index_0
 
 
     class MixedSuite(TokenTuple):
@@ -90,7 +97,8 @@ def gem():
         is_statement_header        = false
         is_statement               = true
 
-        dump_token = dump_token__no_impression
+        dump_token       = dump_token__no_impression
+        find_require_gem = find_require_gem__0
 
 
     class StatementSuite(TokenTuple):
@@ -116,6 +124,9 @@ def gem():
                     v.dump_token(f)
 
 
+        find_require_gem = find_require_gem__many
+
+
         if __debug__:
             @property
             def indentation(t):
@@ -139,8 +150,9 @@ def gem():
         is_statement_header        = false
         is_statement               = true
 
-        dump_token  = dump_token__many
-        indentation = indentation__index_0
+        dump_token       = dump_token__many
+        find_require_gem = find_require_gem__many
+        indentation      = indentation__index_0
 
 
     conjure_comment_suite     = produce_conjure_tuple('comment-*',      CommentSuite,     suite_cache, provide_suite)

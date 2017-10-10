@@ -22,11 +22,12 @@ def boot():
 @gem('Sapphire.Main')
 def gem():
     require_gem('Sapphire.Core')
-    require_gem('Sapphire.Pattern')
 
 
     def test_development():
         if fast_cache is 0:
+            require_gem('Sapphire.Pattern')
+
             create_sapphire_match()
 
         require_gem('Sapphire.Development')
@@ -35,6 +36,8 @@ def gem():
 
 
     def test_parse1():
+        require_gem('Sapphire.Pattern')
+
         create_sapphire_match()
 
         require_gem('Sapphire.Parse')                       #   Must be after 'create_sapphire_match'

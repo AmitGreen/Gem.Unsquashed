@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Whitespace')
+@gem('Sapphire.Comment')
 def gem():
     require_gem('Sapphire.Indentation')
 
@@ -158,7 +158,8 @@ def gem():
             return arrange('<# ++%d %s>', t.impression.total, portray_string(t.comment))
 
 
-        dump_token = dump_token__comment
+        dump_token       = dump_token__comment
+        find_require_gem = find_require_gem__0
 
 
     class IndentedCommentLine_WithTrailer(SapphireToken):

@@ -69,6 +69,7 @@ SAPPHIRE_FILES = \
     ../Sapphire/Indentation.py \
     ../Sapphire/LineMarker.py \
     ../Sapphire/Main.py ../Sapphire/ManyExpression.py ../Sapphire/ManyFrill.py ../Sapphire/MemberExpression.py \
+        ../Sapphire/Method.py \
     ../Sapphire/Parse.py \
         ../Sapphire/Parse1.py ../Sapphire/Parse1Atom.py ../Sapphire/Tokenize1Header.py ../Sapphire/Parse1Call.py \
         ../Sapphire/Parse1Complex.py ../Sapphire/Parse1Expression.py ../Sapphire/Parse1ExpressionStatement.py \
@@ -139,7 +140,6 @@ all: clean files links
 clean:
 	rm -rf __pycache__
 	rm -f *.old *.new *.pyc
-
 	rm -f 2re.py 2sf.py 2sp.py 2sc.py
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
 	rm -f a.py ab.py ac.py ag.py
@@ -157,7 +157,7 @@ clean:
 	rm -f   h4f.py h4s.py h4t.py h4w.py
 	rm -f   hat.py haw.py hb.py hca.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
-	rm -f   hma.py hma1.py hma2.py hmc.py hme.py hmf.py hp.py hs.py
+	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hp.py hs.py
 	rm -f   htc.py hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
@@ -270,6 +270,7 @@ links:
 	ln -s ../bin/.pyxie/hma.py                          hma1.py
 	ln -s ../bin/.pyxie/hma2.py                         hma2.py
 	ln -s ../Sapphire/Match.py                          hmc.py
+	ln -s ../Sapphire/Method.py                         hmd.py
 	ln -s ../Sapphire/MemberExpression.py               hme.py
 	ln -s ../Sapphire/ManyFrill.py                      hmf.py
 	ln -s ../Sapphire/Pattern.py                        hp.py

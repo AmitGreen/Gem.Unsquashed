@@ -12,6 +12,11 @@ def gem():
             t.b.dump_token(f)
 
 
+    def find_require_gem__ab(t, e):
+        t.a.find_require_gem(e)
+        t.b.find_require_gem(e)
+
+
     @property
     def indentation__a_indentation(t):
         return t.a.indentation
@@ -26,8 +31,9 @@ def gem():
         is_statement_header        = false
         is_statement               = true
 
-        dump_token  = dump_token__ab
-        indentation = indentation__a_indentation
+        dump_token       = dump_token__ab
+        find_require_gem = find_require_gem__ab
+        indentation      = indentation__a_indentation
 
 
     class CommentedStatement(DualTwig):

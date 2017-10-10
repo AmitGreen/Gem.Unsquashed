@@ -98,6 +98,8 @@ def gem():
         display_name = 'assert-1'
         frill        = conjure_vw_frill(empty_indentation__at_sign, empty_line_marker)
 
+        find_require_gem = find_require_gem__0
+
 
     @share
     class DecoratorHeader(KeywordExpressionStatement):
@@ -124,6 +126,8 @@ def gem():
                            conjure_indented_token(empty_indentation, conjure_keyword_delete('del ')),
                            empty_line_marker,
                        )
+
+        find_require_gem = find_require_gem__0
 
 
     @export
@@ -181,6 +185,8 @@ def gem():
                            empty_line_marker,
                        )
 
+        find_require_gem = find_require_gem__0
+
 
     class RaiseStatement_1(KeywordExpressionStatement):
         __slots__    = (())
@@ -190,6 +196,8 @@ def gem():
                            empty_line_marker,
                        )
 
+        find_require_gem = find_require_gem__0
+
 
     class ReturnStatement(KeywordExpressionStatement):
         __slots__    = (())
@@ -198,6 +206,8 @@ def gem():
                            conjure_indented_token(conjure_indentation('    '), conjure_keyword_return('return ')),
                            empty_line_marker,
                        )
+
+        find_require_gem = find_require_gem__0
 
 
     @export
@@ -236,6 +246,8 @@ def gem():
                            conjure_indented_token(conjure_indentation('    '), conjure_keyword_yield('yield ')),
                            empty_line_marker,
                        )
+
+        find_require_gem = find_require_gem__0
 
 
     [

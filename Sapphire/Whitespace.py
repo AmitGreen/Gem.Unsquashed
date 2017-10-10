@@ -4,6 +4,7 @@
 @gem('Sapphire.Whitespace')
 def gem():
     require_gem('Sapphire.Indentation')
+    require_gem('Sapphire.Method')
 
 
     if __debug__:
@@ -56,6 +57,9 @@ def gem():
             assert newline is true
 
             f.line('<%s>', portray_string(t)[1:-1])
+
+
+        find_require_gem = find_require_gem__0
 
 
         def write(t, w):

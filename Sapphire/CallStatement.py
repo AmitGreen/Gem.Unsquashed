@@ -5,6 +5,7 @@
 def gem():
     require_gem('Sapphire.BookcaseExpression')
     require_gem('Sapphire.MemberExpression')
+    require_gem('Sapphire.Method')
     require_gem('Sapphire.Tree')
 
 
@@ -49,6 +50,15 @@ def gem():
 
         def count_newlines(t):
             return t.frill.count_newlines() + t.left.count_newlines() + t.arguments.count_newlines()
+
+
+        def find_require_gem(t, e):
+            if not t.left.is_name('require_gem'):
+                return
+
+            assert t.arguments.is_arguments_1
+
+            e.add_require_gem(t.arguments.a)
 
 
         @property
@@ -132,4 +142,3 @@ def gem():
 
     CallStatement      .conjure = static_conjure_call_statement
     MethodCallStatement.conjure = static_conjure_method_call_statement
-

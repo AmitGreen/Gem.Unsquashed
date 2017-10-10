@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Expression')
+@gem('Sapphire.PostfixExpression')
 def gem():
     require_gem('Sapphire.DualTwig')
 

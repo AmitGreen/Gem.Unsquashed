@@ -69,6 +69,8 @@ def gem():
                            empty_line_marker,
                        )
 
+        find_require_gem = find_require_gem__0
+
 
     @share
     class ExceptHeader_2(KeywordDualExpressionStatement):
@@ -114,6 +116,8 @@ def gem():
                            empty_line_marker,
                        )
 
+        find_require_gem = find_require_gem__0
+
 
     class RaiseStatement_2(KeywordDualExpressionStatement):
         __slots__    = (())
@@ -123,6 +127,8 @@ def gem():
                            conjure_comma(', '),
                            empty_line_marker,
                        )
+
+        find_require_gem = find_require_gem__0
 
 
     @share

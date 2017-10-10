@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.BookcaseManyExpression')
+@gem('Sapphire.ManyExpression')
 def gem():
     require_gem('Sapphire.ManyFrill')
     require_gem('Sapphire.TupleOfExpression')

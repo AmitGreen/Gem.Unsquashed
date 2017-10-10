@@ -53,12 +53,15 @@ def gem():
             return f.token_result(r, newline)
 
 
+        find_require_gem = find_require_gem__0
+
+
         @property
         def indentation(t):
             return t.frill.begin
 
 
-    class Comment_AssignStatment_Many(BookcaseManyExpression):
+    class Comment_AssignStatement_Many(BookcaseManyExpression):
         __slots__                  = (())
         display_name               = '#assign-*'
         is_any_else                = false
@@ -88,6 +91,9 @@ def gem():
                 begin.v.dump_token(f)
                 dump_token__X__many(t, f)
                 frill.end.dump_token(f)
+
+
+        find_require_gem = find_require_gem__0
 
 
         @property
@@ -141,7 +147,8 @@ def gem():
                 frill.end.dump_token(f)
 
 
-        write = write__comment_many
+        find_require_gem = find_require_gem__0
+        write            = write__comment_many
 
 
     class DeleteStatement_Many(BookcaseManyExpression):
@@ -191,8 +198,11 @@ def gem():
             return f.token_result(r, newline)
 
 
+        find_require_gem = find_require_gem__0
+
+
     conjure_assign_many         = produce_conjure_bookcase_many_expression('assign-*',  AssignStatment_Many)
-    conjure_comment_assign_many = produce_conjure_bookcase_many_expression('#assign-*', Comment_AssignStatment_Many)
+    conjure_comment_assign_many = produce_conjure_bookcase_many_expression('#assign-*', Comment_AssignStatement_Many)
     conjure_comment_delete_many = produce_conjure_bookcase_many_expression('#delete-*', Comment_DeleteStatement_Many)
     conjure_delete_many         = produce_conjure_bookcase_many_expression('delete-*',  DeleteStatement_Many)
 

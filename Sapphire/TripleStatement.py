@@ -22,6 +22,12 @@ def gem():
                 t.c.dump_token(f)
 
 
+        def find_require_gem(t, e):
+            t.a.find_require_gem(e)
+            t.b.find_require_gem(e)
+            t.c.find_require_gem(e)
+
+
         indentation = indentation__a_indentation
 
 

@@ -724,7 +724,7 @@ def gem():
     #
     #   Debugging
     #
-    if 0:
+    if 7:
         flush_standard_output = PythonSystem.stdout.flush
         write_standard_output = PythonSystem.stdout.write
 
@@ -890,8 +890,13 @@ def gem():
             store_python_module(module_name, module)
 
             if fast is not none:
+                debug('fast processing %s', module_name)
+
                 gem(module_name)(fast)
             else:
+                if fast_cache:
+                    debug('slow processing %s', module_name)
+
                 if dot_index is -1:
                     [f, pathname, description] = find_module(module_name)
                 else:

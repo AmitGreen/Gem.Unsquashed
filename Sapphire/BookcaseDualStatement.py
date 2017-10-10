@@ -76,6 +76,7 @@ def gem():
             return false
 
 
+
         @property
         def indentation(t):
             return t.frill.v
@@ -104,6 +105,8 @@ def gem():
                            empty_line_marker,
                        )
 
+        find_require_gem = find_require_gem__0
+
 
     class ModifyStatement(DualExpressionStatement):
         __slots__    = (())
@@ -113,6 +116,8 @@ def gem():
                            conjure_action_word('+=', ' += '),
                            empty_line_marker,
                        )
+
+        find_require_gem = find_require_gem__0
 
 
     [

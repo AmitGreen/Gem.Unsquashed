@@ -17,6 +17,10 @@ def gem():
     store_prefixed_dual_twig  = prefixed_dual_twig_cache.__setitem__
 
 
+    def find_require_gem__b(t, e):
+        t.b.find_require_gem(e)
+
+
     class ClassDefinition(DualTwig):
         __slots__                  = (())
         display_name               = 'class-definition'
@@ -27,8 +31,9 @@ def gem():
         is_statement               = true
         prefixed_display_name      = '#class-definition'
 
-        dump_token  = dump_token__ab
-        indentation = indentation__a_indentation
+        dump_token       = dump_token__ab
+        find_require_gem = find_require_gem__b
+        indentation      = indentation__a_indentation
 
 
     class DecoratedDefinition(DualTwig):
@@ -42,8 +47,9 @@ def gem():
         is_statement               = true
         prefixed_display_name      = '#decorated-definition'
 
-        dump_token  = dump_token__ab
-        indentation = indentation__a_indentation
+        dump_token       = dump_token__ab
+        find_require_gem = find_require_gem__b
+        indentation      = indentation__a_indentation
 
 
     @share
@@ -59,9 +65,10 @@ def gem():
         prefixed_display_name      = 'prefixed-else-fragment'
         split_comment              = 0
 
-        add_comment = 0
-        dump_token  = dump_token__ab
-        indentation = indentation__a_indentation
+        add_comment      = 0
+        dump_token       = dump_token__ab
+        find_require_gem = find_require_gem__b
+        indentation      = indentation__a_indentation
 
 
     @share
@@ -77,9 +84,10 @@ def gem():
         prefixed_display_name      = 'prefixed-else-if-fragment'
         split_comment              = 0
 
-        add_comment = 0
-        dump_token  = dump_token__ab
-        indentation = indentation__a_indentation
+        add_comment      = 0
+        dump_token       = dump_token__ab
+        find_require_gem = find_require_gem__b
+        indentation      = indentation__a_indentation
 
 
     @share
@@ -95,9 +103,10 @@ def gem():
         prefixed_display_name      = 'prefixed-except-fragment'
         split_comment              = 0
 
-        add_comment = 0
-        dump_token  = dump_token__ab
-        indentation = indentation__a_indentation
+        add_comment      = 0
+        dump_token       = dump_token__ab
+        find_require_gem = find_require_gem__b
+        indentation      = indentation__a_indentation
 
 
     @share
@@ -113,9 +122,10 @@ def gem():
         prefixed_display_name      = 'prefixed-finally-fragment'
         split_comment              = 0
 
-        add_comment = 0
-        dump_token  = dump_token__ab
-        indentation = indentation__a_indentation
+        add_comment      = 0
+        dump_token       = dump_token__ab
+        find_require_gem = find_require_gem__b
+        indentation      = indentation__a_indentation
 
 
     class ForStatement(DualTwig):
@@ -129,9 +139,10 @@ def gem():
         prefixed_display_name      = '#for-statement'
         split_comment              = 0
 
-        add_comment = 0
-        dump_token  = dump_token__ab
-        indentation = indentation__a_indentation
+        add_comment      = 0
+        dump_token       = dump_token__ab
+        find_require_gem = find_require_gem__b
+        indentation      = indentation__a_indentation
 
 
     class FunctionDefinition(DualTwig):
@@ -145,8 +156,9 @@ def gem():
         is_statement               = true
         prefixed_display_name      = '#function-definition'
 
-        dump_token  = dump_token__ab
-        indentation = indentation__a_indentation
+        dump_token       = dump_token__ab
+        find_require_gem = find_require_gem__b
+        indentation      = indentation__a_indentation
 
 
     @share
@@ -161,9 +173,10 @@ def gem():
         prefixed_display_name      = '#if-statement'
         split_comment              = 0
 
-        add_comment = 0
-        dump_token  = dump_token__ab
-        indentation = indentation__a_indentation
+        add_comment      = 0
+        dump_token       = dump_token__ab
+        find_require_gem = find_require_gem__b
+        indentation      = indentation__a_indentation
 
 
     @share
@@ -177,9 +190,10 @@ def gem():
         prefixed_display_name        = '#try-statement'
         split_comment              = 0
 
-        add_comment = 0
-        dump_token  = dump_token__ab
-        indentation = indentation__a_indentation
+        add_comment      = 0
+        dump_token       = dump_token__ab
+        find_require_gem = find_require_gem__b
+        indentation      = indentation__a_indentation
 
 
     class WhileStatement(DualTwig):
@@ -193,9 +207,10 @@ def gem():
         prefixed_display_name      = '#while-statement'
         split_comment              = 0
 
-        add_comment = 0
-        dump_token  = dump_token__ab
-        indentation = indentation__a_indentation
+        add_comment      = 0
+        dump_token       = dump_token__ab
+        find_require_gem = find_require_gem__b
+        indentation      = indentation__a_indentation
 
 
     class WithStatement(DualTwig):
@@ -209,9 +224,10 @@ def gem():
         prefixed_display_name      = '#with-statement'
         split_comment              = 0
 
-        add_comment = 0
-        dump_token  = dump_token__ab
-        indentation = indentation__a_indentation
+        add_comment      = 0
+        dump_token       = dump_token__ab
+        find_require_gem = find_require_gem__b
+        indentation      = indentation__a_indentation
 
 
     @privileged

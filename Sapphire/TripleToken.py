@@ -309,10 +309,11 @@ def gem():
         line_marker                = true
         newlines                   = 1
 
-        __init__       = construct_triple_operator__line_marker_1
-        add_comment    = add_comment__commented_statement
-        count_newlines = count_newlines__line_marker
-        dump_token     = dump_token__indented__keyword__line_marker
+        __init__         = construct_triple_operator__line_marker_1
+        add_comment      = add_comment__commented_statement
+        count_newlines   = count_newlines__line_marker
+        dump_token       = dump_token__indented__keyword__line_marker
+        find_require_gem = find_require_gem__0
 
 
     class Indented_Continue_LineMarker_1(BaseTripleOperator):
@@ -330,10 +331,11 @@ def gem():
         line_marker                = true
         newlines                   = 1
 
-        __init__       = construct_triple_operator__line_marker_1
-        add_comment    = add_comment__commented_statement
-        count_newlines = count_newlines__line_marker
-        dump_token     = dump_token__indented__keyword__line_marker
+        __init__         = construct_triple_operator__line_marker_1
+        add_comment      = add_comment__commented_statement
+        count_newlines   = count_newlines__line_marker
+        dump_token       = dump_token__indented__keyword__line_marker
+        find_require_gem = find_require_gem__0
 
 
     class Indented_Else_Colon(BaseTripleOperator):
@@ -357,10 +359,11 @@ def gem():
         line_marker                = true
         newlines                   = 1
 
-        __init__       = construct_triple_operator__line_marker_1
-        add_comment    = add_comment__commented_statement
-        count_newlines = count_newlines__line_marker
-        dump_token     = dump_token__indented__keyword__line_marker
+        __init__         = construct_triple_operator__line_marker_1
+        add_comment      = add_comment__commented_statement
+        count_newlines   = count_newlines__line_marker
+        dump_token       = dump_token__indented__keyword__line_marker
+        find_require_gem = find_require_gem__0
 
 
     class Indented_Raise_LineMarker_1(BaseTripleOperator):
@@ -377,10 +380,11 @@ def gem():
         line_marker                = true
         newlines                   = 1
 
-        __init__       = construct_triple_operator__line_marker_1
-        add_comment    = add_comment__commented_statement
-        count_newlines = count_newlines__line_marker
-        dump_token     = dump_token__indented__keyword__line_marker
+        __init__         = construct_triple_operator__line_marker_1
+        add_comment      = add_comment__commented_statement
+        count_newlines   = count_newlines__line_marker
+        dump_token       = dump_token__indented__keyword__line_marker
+        find_require_gem = find_require_gem__0
 
 
     class Indented_Return_LineMarker_1(BaseTripleOperator):
@@ -397,10 +401,11 @@ def gem():
         line_marker                = true
         newlines                   = 1
 
-        __init__       = construct_triple_operator__line_marker_1
-        add_comment    = add_comment__commented_statement
-        count_newlines = count_newlines__line_marker
-        dump_token     = dump_token__indented__keyword__line_marker
+        __init__         = construct_triple_operator__line_marker_1
+        add_comment      = add_comment__commented_statement
+        count_newlines   = count_newlines__line_marker
+        dump_token       = dump_token__indented__keyword__line_marker
+        find_require_gem = find_require_gem__0
 
 
     class Indented_Yield_LineMarker_1(BaseTripleOperator):
@@ -417,10 +422,11 @@ def gem():
         line_marker                = true
         newlines                   = 1
 
-        __init__       = construct_triple_operator__line_marker_1
-        add_comment    = add_comment__commented_statement
-        count_newlines = count_newlines__line_marker
-        dump_token     = dump_token__indented__keyword__line_marker
+        __init__         = construct_triple_operator__line_marker_1
+        add_comment      = add_comment__commented_statement
+        count_newlines   = count_newlines__line_marker
+        dump_token       = dump_token__indented__keyword__line_marker
+        find_require_gem = find_require_gem__0
 
 
     class Whitespace_Atom_Whitespace(BaseTripleOperator):

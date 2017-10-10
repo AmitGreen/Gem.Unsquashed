@@ -56,6 +56,9 @@ def gem():
                 frill.w.dump_token(f)
 
 
+        find_require_gem = find_require_gem__0
+
+
         @property
         def indentation(t):
             return t.frill.v
