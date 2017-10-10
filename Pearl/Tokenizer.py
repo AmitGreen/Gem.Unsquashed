@@ -127,16 +127,18 @@ def gem():
 
 
     class UnknownLine(String):
-        __slots__                = (())
-        display_name             = 'unknown-line'
-        ends_in_newline          = true
-        is_any_else              = false
-        is_any_except_or_finally = false
-        is_end_of_data           = false
-        is_statement_header      = false
-        is_statement             = true
-        line_marker              = true
-        newlines                 = 1
+        __slots__                        = (())
+        display_name                     = 'unknown-line'
+        ends_in_newline                  = true
+        is_end_of_data__or__unknown_line = true
+        is_any_else                      = false
+        is_any_except_or_finally         = false
+        is_comment__or__empty_line       = false
+        is_end_of_data                   = false
+        is_statement_header              = false
+        is_statement                     = true
+        line_marker                      = true
+        newlines                         = 1
 
 
         def __repr__(t):

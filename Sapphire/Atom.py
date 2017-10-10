@@ -33,19 +33,20 @@ def gem():
         ))
 
 
-        ends_in_newline            = false
-        is_comma                   = false
-        is_comment_line            = false
-        is_comment__or__empty_line = false
-        is_empty_line              = false
-        is_end_of_data             = false
-        is_identifier              = false
-        is_indentation             = false
-        is_keyword                 = false
-        is_right_parenthesis       = false
-        is_right_square_bracket    = false
-        line_marker                = false
-        newlines                   = 0
+        ends_in_newline                  = false
+        is_comma                         = false
+        is_comment_line                  = false
+        is_comment__or__empty_line       = false
+        is_empty_line                    = false
+        is_end_of_data                   = false
+        is_end_of_data__or__unknown_line = false
+        is_identifier                    = false
+        is_indentation                   = false
+        is_keyword                       = false
+        is_right_parenthesis             = false
+        is_right_square_bracket          = false
+        line_marker                      = false
+        newlines                         = 0
 
 
         def __init__(t, s):
@@ -125,15 +126,16 @@ def gem():
 
 
     class EndOfData(SapphireToken):
-        __slots__                  = (())
-        indentation                = none
-        is_comment_line            = false
-        is_comment__or__empty_line = false
-        is_any_else                = false
-        is_any_except_or_finally   = false
-        is_else_header_or_fragment = false
-        is_end_of_data             = true
-        is_statement_header        = false
+        __slots__                        = (())
+        indentation                      = none
+        is_comment_line                  = false
+        is_comment__or__empty_line       = false
+        is_any_else                      = false
+        is_any_except_or_finally         = false
+        is_else_header_or_fragment       = false
+        is_end_of_data                   = true
+        is_end_of_data__or__unknown_line = true
+        is_statement_header              = false
 
 
         def __repr__(t):

@@ -23,21 +23,22 @@ def gem():
 
 
     class CommentLine(String):
-        __slots__                  = (())
-        ends_in_newline            = true
-        impression                 = empty_indentation
-        indentation                = none
-        is_any_else                = false
-        is_any_except_or_finally   = false
-        is_comment_line            = true
-        is_comment__or__empty_line = true
-        is_else_header_or_fragment = false
-        is_empty_line              = false
-        is_end_of_data             = false
-        is_statement               = false
-        is_statement_header        = false
-        line_marker                = false
-        newlines                   = 1
+        __slots__                        = (())
+        ends_in_newline                  = true
+        impression                       = empty_indentation
+        indentation                      = none
+        is_any_else                      = false
+        is_any_except_or_finally         = false
+        is_comment_line                  = true
+        is_comment__or__empty_line       = true
+        is_else_header_or_fragment       = false
+        is_empty_line                    = false
+        is_end_of_data                   = false
+        is_end_of_data__or__unknown_line = false
+        is_statement                     = false
+        is_statement_header              = false
+        line_marker                      = false
+        newlines                         = 1
 
 
         def __repr__(t):
@@ -71,19 +72,20 @@ def gem():
         ))
 
 
-        ends_in_newline            = true
-        impression                 = empty_indentation
-        indentation                = none
-        is_any_else                = false
-        is_any_except_or_finally   = false
-        is_comment_line            = true
-        is_comment__or__empty_line = true
-        is_else_header_or_fragment = false
-        is_empty_line              = false
-        is_end_of_data             = false
-        is_statement               = false
-        is_statement_header        = false
-        newlines                   = 1
+        ends_in_newline                  = true
+        impression                       = empty_indentation
+        indentation                      = none
+        is_any_else                      = false
+        is_any_except_or_finally         = false
+        is_comment_line                  = true
+        is_comment__or__empty_line       = true
+        is_else_header_or_fragment       = false
+        is_empty_line                    = false
+        is_end_of_data                   = false
+        is_end_of_data__or__unknown_line = false
+        is_statement                     = false
+        is_statement_header              = false
+        newlines                         = 1
 
 
         def __init__(t, s, comment, newline):
@@ -117,18 +119,19 @@ def gem():
         ))
 
 
-        ends_in_newline            = true
-        indentation                = none
-        is_any_else                = false
-        is_any_except_or_finally   = false
-        is_comment_line            = true
-        is_comment__or__empty_line = true
-        is_else_header_or_fragment = false
-        is_empty_line              = false
-        is_end_of_data             = false
-        is_statement               = false
-        is_statement_header        = false
-        newlines                   = 1
+        ends_in_newline                  = true
+        indentation                      = none
+        is_any_else                      = false
+        is_any_except_or_finally         = false
+        is_comment_line                  = true
+        is_comment__or__empty_line       = true
+        is_else_header_or_fragment       = false
+        is_empty_line                    = false
+        is_end_of_data                   = false
+        is_end_of_data__or__unknown_line = false
+        is_statement                     = false
+        is_statement_header              = false
+        newlines                         = 1
 
 
         def __init__(t, s, impression, comment):

@@ -907,7 +907,7 @@ def gem():
                         wb0()
                         append_twig(conjure_mixed_suite(before)   if type(before) is List else   before)
 
-                if (not v.is_end_of_data) and (v.indentation.total != 0):
+                if (not v.is_end_of_data__or__unknown_line) and (v.indentation.total != 0):
                     raise_runtime_error('unexpected indentation %d (expected 0): %r', v.indentation.total, v)
 
                 if v.is_statement_header:

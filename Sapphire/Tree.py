@@ -14,6 +14,7 @@ def gem():
         is_decorator_header                   = false
         is_empty_line                         = false
         is_end_of_data                        = false
+        is_end_of_data__or__unknown_line      = false
         is_right_brace                        = false
         is_right_parenthesis                  = false
         is_right_square_bracket               = false

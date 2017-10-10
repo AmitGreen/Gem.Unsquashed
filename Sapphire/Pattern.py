@@ -47,6 +47,7 @@ def gem():
         keyword_is          = NAME('is',                  'is')
         keyword_not         = NAME('not',                 'not')
         keyword_or          = NAME('or',                  'or')
+        keyword_print       = NAME('print',               'print')
         keyword_try         = NAME('try',                 'try')
         left_brace          = NAME('left_brace',          '{')                                #   }
         left_parenthesis    = NAME('left_parenthesis',    '(')                                #   )
@@ -281,6 +282,7 @@ def gem():
                                 | keyword_for
                                 | 'i' + ANY_OF('f', 'n')
                                 | keyword_or
+                                | keyword_print
                             ),
                         )
                       + (w | NOT_FOLLOWED_BY(alphanumeric_or_underscore))
