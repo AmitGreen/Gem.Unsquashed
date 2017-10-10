@@ -58,7 +58,10 @@ def gem():
             return arrange('<# %s>', portray_string(t))
 
 
-        dump_token = dump_token__comment
+        dump_token       = dump_token__comment
+        find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
+        transform        = transform__remove_comments_0
 
 
         def write(t, w):
@@ -109,7 +112,10 @@ def gem():
             return arrange('<# %s %s>', portray_string(t.comment), portray_string(t.newline))
 
 
-        dump_token = dump_token__comment
+        dump_token       = dump_token__comment
+        find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
+        transform        = transform__remove_comments_0
 
 
     class IndentedCommentLine(SapphireToken):
@@ -160,6 +166,8 @@ def gem():
 
         dump_token       = dump_token__comment
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
+        transform        = transform__remove_comments_0
 
 
     class IndentedCommentLine_WithTrailer(SapphireToken):
@@ -207,8 +215,9 @@ def gem():
             return arrange('<# ++%d %s %s>', t.impression.total, portray_string(t.comment), portray_string(t.newline))
 
 
-        dump_token = dump_token__comment
-
+        dump_token      = dump_token__comment
+        scout_variables = scout_variables__0
+        transform       = transform__remove_comments_0
 
 
     def conjure_comment_line(comment):

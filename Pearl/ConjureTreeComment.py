@@ -116,5 +116,5 @@ def gem():
 
     if gem_global.testing:
         export(
-            'tree_comment',   tree_comment_cache,
+            'tree_comment_cache',   tree_comment_cache,
         )

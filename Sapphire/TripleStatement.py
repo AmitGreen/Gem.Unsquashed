@@ -28,10 +28,17 @@ def gem():
             t.c.find_require_gem(e)
 
 
-        indentation = indentation__a_indentation
+        indentation     = indentation__a_indentation
+        scout_variables = scout_variables__abc
 
 
     conjure_triple_statement = produce_conjure_triple_twig('triple-statement', TripleStatement)
+
+
+    #
+    #   .transform
+    #
+    TripleStatement.transform = produce_transform__abc('triple-statement', conjure_triple_statement)
 
 
     share(

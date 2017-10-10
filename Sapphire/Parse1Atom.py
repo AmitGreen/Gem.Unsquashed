@@ -17,6 +17,9 @@ def gem():
         if token.is_right_brace:
             return token
 
+        if token.is_special_operator:
+            raise_unknown_line()
+
         operator = qk()
 
         if operator is none:
@@ -124,6 +127,12 @@ def gem():
         #
         middle_1 = parse1_atom()
 
+        if middle_1.is_right_parenthesis:
+            return conjure_empty_tuple(left_parenthesis, middle_1)
+
+        if middle_1.is_special_operator:
+            raise_unknown_line()
+
         operator_1 = qk()
 
         if operator_1 is none:
@@ -140,10 +149,7 @@ def gem():
         if operator_1.is_right_parenthesis:
             return conjure_parenthesized_expression(left_parenthesis, middle_1, operator_1)
 
-        #
-        #RENAME TO: is_comma_right_parenthesis
-        #
-        if operator_1.is__optional_comma__right_parenthesis:
+        if operator_1.is_comma__right_parenthesis:
             return conjure_tuple_expression_1(left_parenthesis, middle_1, operator_1)
 
         if not operator_1.is_comma:
@@ -160,6 +166,9 @@ def gem():
                        middle_1,
                        conjure_comma__right_parenthesis(operator_1, middle_2),
                    )
+
+        if middle_2.is_special_operator:
+            raise_unknown_line()
 
         operator_2 = tokenize_operator()
 
@@ -188,6 +197,9 @@ def gem():
                        middle_2,
                        conjure_comma__right_parenthesis(operator_2, middle_3),
                    )
+
+        if middle_3.is_special_operator:
+            raise_unknown_line()
 
         many       = [middle_1, middle_2]
         many_frill = [operator_1, operator_2]
@@ -219,6 +231,9 @@ def gem():
                            conjure_comma__right_parenthesis(operator_7, middle_3),
                        )
 
+            if middle_3.is_special_operator:
+                raise_unknown_line()
+
             many_frill.append(operator_7)
 
 
@@ -231,6 +246,9 @@ def gem():
 
         if middle_1.is_right_square_bracket:
             return conjure_empty_list(left_square_bracket, middle_1)
+
+        if middle_1.is_special_operator:
+            raise_unknown_line()
 
         operator_1 = tokenize_operator()
 
@@ -256,8 +274,11 @@ def gem():
             return conjure_list_expression_1(
                        left_square_bracket,
                        middle_1,
-                       conjure__comma__right_square_bracket(operator_1, middle_2),
+                       conjure_comma__right_square_bracket(operator_1, middle_2),
                    )
+
+        if middle_2.is_special_operator:
+            raise_unknown_line()
 
         operator_2 = tokenize_operator()
 
@@ -284,8 +305,11 @@ def gem():
                        middle_1,
                        operator_1,
                        middle_2,
-                       conjure__comma__right_square_bracket(operator_2, middle_3),
+                       conjure_comma__right_square_bracket(operator_2, middle_3),
                    )
+
+        if middle_3.is_special_operator:
+            raise_unknown_line()
 
         many       = [middle_1, middle_2]
         many_frill = [operator_1, operator_2]
@@ -314,8 +338,11 @@ def gem():
                            left_square_bracket,
                            many,
                            many_frill,
-                           conjure__comma__right_square_bracket(operator_7, middle_3),
+                           conjure_comma__right_square_bracket(operator_7, middle_3),
                        )
+
+            if middle_3.is_special_operator:
+                raise_unknown_line()
 
             many_frill.append(operator_7)
 

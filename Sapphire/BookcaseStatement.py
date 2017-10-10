@@ -6,7 +6,7 @@ def gem():
     class ExpressionStatement(BookcaseExpression):
         __slots__                  = (())
         display_name               = 'expression-statement'
-        frill                      = conjure_vw_frill(empty_indentation, empty_line_marker)
+        frill                      = conjure_vw_frill(empty_indentation, LINE_MARKER)
         is_any_else                = false
         is_any_except_or_finally   = false
         is_else_header_or_fragment = false
@@ -20,8 +20,8 @@ def gem():
             assert frill.comment is 0
 
             return conjure_expression_statement__with_frill(
-                       t.a,
                        conjure_commented_vw_frill(comment, frill.v, frill.w),
+                       t.a,
                    )
 
 
@@ -64,6 +64,9 @@ def gem():
             return t.frill.v
 
 
+        scout_variables = scout_variables__a
+
+
         def write__frill(t, w):
             frill   = t.frill
             comment = frill.comment
@@ -78,12 +81,17 @@ def gem():
 
     [
         conjure_expression_statement, conjure_expression_statement__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'expression-statement',
-            ExpressionStatement,
-                                         
-            produce_conjure_with_frill = 1,
-        )
+    ] = produce_conjure_bookcase_expression('expression-statement', ExpressionStatement)
+
+
+    #
+    #   .transform
+    #
+    ExpressionStatement.transform = produce_transform__frill__a_with_priority(
+                                        'expression_statement',
+                                        PRIORITY_TERNARY_LIST,
+                                        conjure_expression_statement__with_frill,
+                                    )
 
 
     share(

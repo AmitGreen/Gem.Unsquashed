@@ -37,7 +37,7 @@ def gem():
     #
     #                                     Normal whitespace also appears in this cache (for example whitespace
     #                                     before an atom on a continuation line).
-    #   
+    #
     #       parameters_0_token_cache     - '()' that is used as function parameters.
     #
     arguments_0_token_cache  = {}

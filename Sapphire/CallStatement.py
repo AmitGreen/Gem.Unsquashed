@@ -25,7 +25,7 @@ def gem():
 
 
         def __init__(t, frill, left, arguments):
-            frill.comment
+            assert type(left) is not VW_Frill
 
             t.frill     = frill
             t.left      = left
@@ -41,7 +41,7 @@ def gem():
 
             assert frill.comment is 0
 
-            return t.conjure(
+            return t.conjure_call(
                        conjure_commented_vw_frill(comment, frill.v, frill.w),
                        t.left,
                        t.arguments,
@@ -99,6 +99,11 @@ def gem():
                 frill.w    .dump_token(f)
 
 
+        def scout_variables(t, art):
+            t.left     .scout_variables(art)
+            t.arguments.scout_variables(art)
+
+
         def write(t, w):
             frill   = t.frill
             comment = frill.comment
@@ -111,6 +116,9 @@ def gem():
             t.arguments.write(w)
             w(frill.w.s)
 
+
+    CallStatementBase.a = CallStatementBase.left
+    CallStatementBase.b = CallStatementBase.arguments
 
     CallStatementBase.k1 = CallStatementBase.frill
     CallStatementBase.k2 = CallStatementBase.left
@@ -140,5 +148,20 @@ def gem():
     SapphireToken   .call_statement = static_conjure_call_statement
     SapphireTrunk   .call_statement = static_conjure_call_statement
 
-    CallStatement      .conjure = static_conjure_call_statement
-    MethodCallStatement.conjure = static_conjure_method_call_statement
+    CallStatement      .conjure_call = static_conjure_call_statement
+    MethodCallStatement.conjure_call = static_conjure_method_call_statement
+
+
+    CallStatement.transform = produce_transform__frill__ab_with_priority(
+                                  'call_statement',
+                                  PRIORITY_POSTFIX,
+                                  PRIORITY_COMPREHENSION,
+                                  conjure_call_statement,
+                              )
+
+    MethodCallStatement.transform = produce_transform__frill__ab_with_priority(
+                                        'method_call_statement',
+                                        PRIORITY_POSTFIX,
+                                        PRIORITY_COMPREHENSION,
+                                        conjure_method_call_statement,
+                                    )

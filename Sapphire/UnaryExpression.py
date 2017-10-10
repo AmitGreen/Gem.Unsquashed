@@ -23,7 +23,8 @@ def gem():
         ))
 
 
-        is_colon = false
+        is_colon            = false
+        is_special_operator = false
 
 
         def __init__(t, a):
@@ -141,17 +142,25 @@ def gem():
         display_name = '-'
         frill        = conjure_action_word('-', '-')
 
+        scout_variables = scout_variables__a
+
 
     class NotExpression(UnaryExpression):
         __slots__    = (())
         display_name = 'not'
-        frill        = conjure_keyword_not('not ')
+        frill        = NOT__W
+
+        mutate          = produce_mutate__frill__a__priority('not-expression', PRIORITY_UNARY)
+        scout_variables = scout_variables__a
 
 
     class StarArgument(UnaryExpression):
         __slots__    = (())
         display_name = '*-argument'
         frill        = conjure_star_sign('*')
+
+        scout_variables = scout_variables__a
+
 
 
     class StarParameter(UnaryExpression):
@@ -160,11 +169,16 @@ def gem():
         frill        = conjure_star_sign('*')
         is_atom      = true
 
+        add_parameters       = add_parameters__a
+        scout_default_values = scout_default_values__a
+
 
     class TwosComplementExpression(UnaryExpression):
         __slots__    = (())
         display_name = '~'
         frill        = conjure_action_word('~', '~')
+
+        scout_variables = scout_variables__a
 
 
     conjure_negative_expression = produce_conjure_unary_expression('negative',        NegativeExpression)
@@ -172,6 +186,40 @@ def gem():
     conjure_star_argument       = produce_conjure_unary_expression('*-argument',      StarArgument)
     conjure_star_parameter      = produce_conjure_unary_expression('*-parameter',     StarParameter)
     conjure_twos_complement     = produce_conjure_unary_expression('twos-complement', TwosComplementExpression)
+
+
+    NotExpression           .conjure_with_frill = static_method(conjure_not_expression)
+    StarArgument            .conjure_with_frill = static_method(conjure_star_argument)
+    StarParameter           .conjure_with_frill = static_method(conjure_star_parameter)
+    TwosComplementExpression.conjure_with_frill = static_method(conjure_twos_complement)
+
+
+    #
+    #   .mutate
+    #
+    NegativeExpression.mutate = produce_mutate__frill__a_with_priority(
+                                    'negative_expression',
+                                    PRIORITY_UNARY,
+                                    conjure_negative_expression,
+                                )
+
+    StarArgument.mutate = produce_mutate__frill__a_with_priority(
+                              'star_argument',
+                              PRIORITY_TERNARY,
+                              conjure_star_argument,
+                          )
+
+    TwosComplementExpression.mutate = produce_mutate__frill__a_with_priority(
+                                          'twos_complement_expression',
+                                          PRIORITY_TERNARY,
+                                          conjure_twos_complement,
+                                      )
+
+
+    #
+    #   .transform
+    #
+    StarParameter.transform = produce_transform__frill_a('star_paramater', conjure_star_parameter)
 
 
     share(

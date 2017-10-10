@@ -56,8 +56,8 @@ def gem():
             w(frill.x.s)
             t.c.write(w)
             w(frill.y.s)
- 
- 
+
+
     @share
     @privileged
     def produce_conjure_bookcase_triple_expression(name, Meta):
@@ -66,7 +66,7 @@ def gem():
         store  = cache.__setitem__
 
 
-        def conjure_Meta_WithFrill(a, b, c, frill):
+        def conjure_Meta_WithFrill(frill, a, b, c):
             BookcaseTripleExpression_WithFrill = lookup_adjusted_meta(Meta)
 
             if BookcaseTripleExpression_WithFrill is none:
@@ -76,11 +76,11 @@ def gem():
                     ))
 
 
-                    def __init__(t, a, b, c, frill):
+                    def __init__(t, frill, a, b, c):
+                        t.frill = frill
                         t.a     = a
                         t.b     = b
                         t.c     = c
-                        t.frill = frill
 
 
                     def __repr__(t):
@@ -115,7 +115,7 @@ def gem():
 
                 store_adjusted_meta(Meta, BookcaseTripleExpression_WithFrill)
 
-            return BookcaseTripleExpression_WithFrill(a, b, c, frill)
+            return BookcaseTripleExpression_WithFrill(frill, a, b, c)
 
 
         conjure_triple    = produce_conjure_triple         (name, Meta,                   cache, lookup, store)
@@ -136,7 +136,7 @@ def gem():
             ):
                 return conjure_triple(a, b, c)
 
-            return conjure_quadruple(a, b, c, conjure_vwxy_frill(frill_v, frill_w, frill_x, frill_y))
+            return conjure_quadruple(conjure_vwxy_frill(frill_v, frill_w, frill_x, frill_y), a, b, c)
 
 
         if __debug__:
@@ -152,9 +152,9 @@ def gem():
         display_name = 'raise-statement-3'
         frill        = conjure_vwxy_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('raise ')),
-                           conjure_comma(', '),
-                           conjure_comma(', '),
-                           empty_line_marker,
+                           COMMA__W,
+                           COMMA__W,
+                           LINE_MARKER,
                        )
 
         is_any_else                = false

@@ -8,19 +8,12 @@ def gem():
     require_gem('Sapphire.TripleFrill')
 
 
-    append_cache                = Shared.append_cache                   #   Due to privileged
-    conjure_vwx_frill           = Shared.conjure_vwx_frill              #   Due to privileged
-    lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   Due to privileged
-    produce_conjure_dual        = Shared.produce_conjure_dual           #   Due to privileged
-    produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   Due to privileged
-    store_adjusted_meta         = Shared.store_adjusted_meta            #   Due to privileged
-
-
-    COMMA_SPACE = conjure_comma               (', ')
-    LP          = conjure_left_parenthesis    ('(')
-    LSB         = conjure_left_square_bracket ('[')
-    RP          = conjure_right_parenthesis   (')')
-    RSB         = conjure_right_square_bracket(']')
+    append_cache           = Shared.append_cache                #   due to privileged
+    conjure_vwx_frill      = Shared.conjure_vwx_frill           #   due to privileged
+    lookup_adjusted_meta   = Shared.lookup_adjusted_meta        #   due to privileged
+    produce_conjure_dual   = Shared.produce_conjure_dual        #   due to privileged
+    produce_conjure_triple = Shared.produce_conjure_triple      #   due to privileged
+    store_adjusted_meta    = Shared.store_adjusted_meta         #   due to privileged
 
 
     @share
@@ -54,8 +47,8 @@ def gem():
             w(frill.w.s)
             t.b.write(w)
             w(frill.x.s)
- 
- 
+
+
     BookcaseDualExpression.k1 = BookcaseDualExpression.a
     BookcaseDualExpression.k2 = BookcaseDualExpression.b
 
@@ -66,16 +59,18 @@ def gem():
             name,
             Meta,
 
+            produce_conjure_plain      = false,
             produce_conjure_with_frill = false,
     ):
-        assert type(produce_conjure_with_frill) is Boolean
+        assert type(produce_conjure_plain)      is Boolean
+        assert (type(produce_conjure_with_frill) is Boolean) or (produce_conjure_with_frill is 1)
 
         cache  = {}
         lookup = cache.get
         store  = cache.__setitem__
 
 
-        def conjure_Meta_WithFrill(a, b, frill):
+        def conjure_Meta_WithFrill(frill, a, b):
             BookcaseDualExpression_WithFrill = lookup_adjusted_meta(Meta)
 
             if BookcaseDualExpression_WithFrill is none:
@@ -85,14 +80,14 @@ def gem():
                     ))
 
 
-                    def __init__(t, a, b, frill):
+                    def __init__(t, frill, a, b):
+                        t.frill = frill
                         t.a     = a
                         t.b     = b
-                        t.frill = frill
 
 
                     def __repr__(t):
-                        return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.frill)
+                        return arrange('<%s %r %r %r>', t.__class__.__name__, t.frill, t.a, t.b)
 
 
                     display_token = attribute(Meta, 'display_token__frill', none)
@@ -110,6 +105,11 @@ def gem():
                                            frill.x.display_token())
 
 
+                #BookcaseDualExpression_WithFrill.k1 = BookcaseDualExpression_WithFrill.frill
+                BookcaseDualExpression_WithFrill.k2 = BookcaseDualExpression_WithFrill.a
+                BookcaseDualExpression_WithFrill.k3 = BookcaseDualExpression_WithFrill.b
+
+
                 write = attribute(Meta, 'write__frill', none)
 
 
@@ -125,22 +125,23 @@ def gem():
 
                 store_adjusted_meta(Meta, BookcaseDualExpression_WithFrill)
 
-            return BookcaseDualExpression_WithFrill(a, b, frill)
+            return BookcaseDualExpression_WithFrill(frill, a, b)
 
 
-        conjure_dual              = produce_conjure_dual       (name, Meta,                   cache, lookup, store)
-        conjure_triple_with_frill = produce_conjure_triple__312(name, conjure_Meta_WithFrill, cache, lookup, store)
+        conjure_dual              = produce_conjure_dual  (name, Meta,                   cache, lookup, store)
+        conjure_triple_with_frill = produce_conjure_triple(name, conjure_Meta_WithFrill, cache, lookup, store)
 
-        meta_frill_v = Meta.frill.v
-        meta_frill_w = Meta.frill.w
-        meta_frill_x = Meta.frill.x
+        meta_frill   = Meta.frill
+        meta_frill_v = meta_frill.v
+        meta_frill_w = meta_frill.w
+        meta_frill_x = meta_frill.x
 
 
         def conjure_bookcase_dual_expression(frill_v, a, frill_w, b, frill_x):
             if (frill_v is meta_frill_v) and (frill_w is meta_frill_w) and (frill_x is meta_frill_x):
                 return conjure_dual(a, b)
 
-            return conjure_triple_with_frill(a, b, conjure_vwx_frill(frill_v, frill_w, frill_x))
+            return conjure_triple_with_frill(conjure_vwx_frill(frill_v, frill_w, frill_x), a, b)
 
 
         if __debug__:
@@ -149,7 +150,34 @@ def gem():
             append_cache(name, cache)
 
         if produce_conjure_with_frill:
-            return (( conjure_bookcase_dual_expression, static_method(conjure_triple_with_frill) ))
+            def conjure_with_frill(frill, a, b):
+                if frill is meta_frill:
+                    return conjure_dual(a, b)
+
+                return conjure_triple_with_frill(frill, a, b)
+
+
+            if __debug__:
+                conjure_with_frill.__name__ = intern_arrange('conjure_%s__with_frill', name)
+
+
+            if produce_conjure_plain:
+                return ((
+                           conjure_bookcase_dual_expression,
+                           static_method(conjure_dual),
+                           (conjure_with_frill   if produce_conjure_with_frill is 1 else   static_method(conjure_with_frill)),
+                       ))
+
+            return ((
+                       conjure_bookcase_dual_expression,
+                       (conjure_with_frill   if produce_conjure_with_frill is 1 else   static_method(conjure_with_frill)),
+                   ))
+
+        if produce_conjure_plain:
+            return ((
+                       conjure_bookcase_dual_expression,
+                       static_method(conjure_dual),
+                   ))
 
         return conjure_bookcase_dual_expression
 
@@ -157,15 +185,21 @@ def gem():
     class Arguments_2(BookcaseDualExpression):
         __slots__    = (())
         display_name = '(2)'
-        frill        = conjure_vwx_frill(LP, COMMA_SPACE, RP)
+        frill        = conjure_vwx_frill(LP, COMMA__W, RP)
+
+        scout_variables = scout_variables__ab
 
 
     class ListExpression_2(BookcaseDualExpression):
         __slots__                      = (())
         display_name                   = '[2]'
-        frill                          = conjure_vwx_frill(LSB, COMMA_SPACE, RSB)
+        frill                          = conjure_vwx_frill(LSB, COMMA__W, RSB)
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
+
+        scout_variables = scout_variables__ab
+        write_variables = write_variables__ab
 
 
     class RangeIndex(BookcaseDualExpression):
@@ -173,19 +207,105 @@ def gem():
         display_name = 'range-index'
         frill        = conjure_vwx_frill(LSB, conjure_colon(' : '), RSB)
 
+        scout_variables = scout_variables__ab
+
 
     class TupleExpression_2(BookcaseDualExpression):
         __slots__                      = (())
         display_name                   = '{,2}'
-        frill                          = conjure_vwx_frill(LP, COMMA_SPACE, RP)
+        frill                          = conjure_vwx_frill(LP, COMMA__W, RP)
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
 
 
-    conjure_arguments_2        = produce_conjure_bookcase_dual_expression('arguments-2',        Arguments_2)
-    conjure_list_expression_2  = produce_conjure_bookcase_dual_expression('list-expression-2',  ListExpression_2)
-    conjure_range_index        = produce_conjure_bookcase_dual_expression('range-index',        RangeIndex)
-    conjure_tuple_expression_2 = produce_conjure_bookcase_dual_expression('tuple-expression-2', TupleExpression_2)
+        def mutate(t, vary, priority):
+            if priority is PRIORITY_COMPREHENSION:
+                element_priority = PRIORITY_TERNARY
+            elif priority is PRIORITY_TERNARY:
+                pass
+            else:
+                #my_line('priority: %d', priority)
+                raise_unknown_line()
+
+            frill = t.frill
+            a     = t.a
+            b     = t.b
+
+            frill__2 = frill.transform(vary)
+            a__2     = a    .mutate(vary, priority)
+            b__2     = b    .mutate(vary, priority)
+
+            if (frill is frill__2) and (a is a__2) and (b is b__2):
+                return t
+
+            return conjure_tuple_expression_2__with_frill(frill__2, a__2, b__2)
+
+
+        scout_variables = scout_variables__ab
+
+
+    [
+        conjure_arguments_2, Arguments_2.conjure_plain, conjure_arguments_2__with_frill,
+    ] = produce_conjure_bookcase_dual_expression(
+            'arguments-2',
+            Arguments_2,
+
+            produce_conjure_plain      = true,
+            produce_conjure_with_frill = 1,
+        )
+
+    [
+        conjure_list_expression_2, conjure_list_expression_2__with_frill,
+    ] = produce_conjure_bookcase_dual_expression(
+            'list-expression-2',
+            ListExpression_2,
+
+            produce_conjure_with_frill = 1,
+        )
+
+    [
+        conjure_range_index, conjure_range_index__with_frill,
+    ] = produce_conjure_bookcase_dual_expression(
+            'range-index',
+            RangeIndex,
+
+            produce_conjure_with_frill = 1,
+        )
+
+    [
+        conjure_tuple_expression_2, conjure_tuple_expression_2__with_frill,
+    ] = produce_conjure_bookcase_dual_expression(
+            'tuple-expression-2',
+            TupleExpression_2,
+
+            produce_conjure_with_frill = 1,
+        )
+
+
+    #
+    #   .mutate
+    #
+    Arguments_2.mutate = produce_mutate__frill__ab_with_priority(
+                             'arguments_2',
+                             PRIORITY_ASSIGN,
+                             PRIORITY_ASSIGN,
+                             conjure_arguments_2__with_frill,
+                         )
+
+    ListExpression_2.mutate = produce_mutate__frill__ab_with_priority(
+                                  'list_expression_2',
+                                  PRIORITY_COMPREHENSION,
+                                  PRIORITY_TERNARY,
+                                  conjure_list_expression_2__with_frill,
+                              )
+
+    RangeIndex.mutate = produce_mutate__frill__ab_with_priority(
+                            'range_index',
+                            PRIORITY_SUBSCRIPT,
+                            PRIORITY_SUBSCRIPT,
+                            conjure_range_index__with_frill,
+                        )
 
 
     share(

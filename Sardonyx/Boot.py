@@ -19,7 +19,7 @@ def boot():
 
 
     #
-    #   Python keywords
+    #   Python Keywords
     #
     false = False
     none  = None
@@ -27,7 +27,7 @@ def boot():
 
 
     #
-    #   Python functions
+    #   Python Functions
     #
     intern_string = (PythonBuiltIn   if is_python_2 else   PythonSystem).intern
     module_path   = PythonSystem.path
@@ -36,10 +36,15 @@ def boot():
 
 
     #
+    #   Python Types
+    #
+    ModuleType = type(PythonSystem)
+
+
+    #
     #   python_modules (also lookup_python_module & store_python_module)
     #
     python_modules       = PythonSystem.modules
-    lookup_python_module = python_modules.get
     store_python_module  = python_modules.__setitem__
 
 
@@ -50,38 +55,39 @@ def boot():
 
 
     #
-    #   Calculate root & Gem paths
+    #   Calculate & store root path
     #
     root_path = intern_string(path_absolute(path_join(module_path[0], '../..')))
-    Gem_path  = intern_string(path_join(root_path, Gem_name))
 
-
-    #
-    #   Store root path
-    #
     module_path[0] = root_path
 
 
     #
-    #   Create Gem Module
+    #   Create initial modules
     #
-    ModuleType = type(PythonSystem)
+    def create_module(module_name):
+        module_name = intern_string(module_name)
+        module_path = intern_string(path_join(root_path, module_name))
 
-    Gem = ModuleType(Gem_name)
+        module = ModuleType(module_name)
 
-    Gem.__file__ = intern_string(path_join(Gem_path, '__init__.py'))
-    Gem.__path__ = [Gem_path]
+        module.__file__ = intern_string(path_join(module_path, '__init__.py'))
+        module.__path__ = [module_path]
 
+        assert module_name not in python_modules
 
-    store_python_module(Gem_name, Gem)
+        store_python_module(module_name, module)
+
+        return module
 
 
     #
     #   Set flag to indicate using fast loading mode
     #
+    Gem = create_module('Gem')
+
     Gem.fast_cache = fast_cache = {}
 
-    find_fast  = fast_cache.get
     store_fast = fast_cache.__setitem__
 
 
@@ -99,9 +105,20 @@ def boot():
 
 
     def boot():
-        fast_cache['Gem.Boot']()
+        fast_cache.pop('Gem.Boot')()
 
-        f        = find_fast('Sapphire.Main')
+        produce_export_and_share = Gem.Shared.produce_export_and_share
+        store_gem_module         = Gem.Shared.store_gem_module
+
+        del Gem.Shared.produce_export_and_share, Gem.Shared.store_gem_module
+
+        for module_name in ['Pearl', 'Sapphire', 'Tremolite']:
+            module = create_module(module_name)
+
+            produce_export_and_share(module)
+            store_gem_module(module_name, module)
+
+        f        = fast_cache.pop('Sapphire.Main')
         gem_main = __import__('__main__').gem('Sapphire.Main')
 
         gem_main(f)

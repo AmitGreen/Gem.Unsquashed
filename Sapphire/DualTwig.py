@@ -53,7 +53,7 @@ def gem():
             r = t.b.dump_token(f, false)
 
             return f.token_result(r, newline)
-            
+
 
         def write(t, w):
             t.a.write(w)

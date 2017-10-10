@@ -11,6 +11,7 @@ def gem():
     def produce_cache_functions(
             name,
             Meta                    = absent,
+            cache                   = absent,
             produce_cache           = false,
             produce_conjure_by_name = false,
             produce_find            = false,
@@ -20,7 +21,8 @@ def gem():
         result = []
         append = result.append
 
-        cache = {}
+        if cache is absent:
+            cache = {}
 
         if (produce_conjure_by_name) or (produce_insert_interned):
             provide = cache.setdefault
@@ -85,8 +87,8 @@ def gem():
 
 
     @export
-    def produce_conjure_by_name(name, Meta):
-        [conjure_by_name] = produce_cache_functions(name, Meta, produce_conjure_by_name = true)
+    def produce_conjure_by_name(name, Meta, cache = absent):
+        [conjure_by_name] = produce_cache_functions(name, Meta, cache = cache, produce_conjure_by_name = true)
 
         return conjure_by_name
 
@@ -263,6 +265,38 @@ def gem():
             conjure_quadruple__4123.__name__ = intern_arrange('conjure_%s__4123', name)
 
         return conjure_quadruple__4123
+
+
+    @export
+    @privileged
+    def produce_conjure_single(
+            name,
+            Meta,
+
+            cache = absent,
+    ):
+        if cache is absent:
+            cache = {}
+
+        lookup  = cache.get
+        provide = cache.setdefault
+
+
+        def conjure_single(k1):
+            r = lookup(k1)
+
+            if r is not none:
+                return r
+
+            r = Meta(k1)
+
+            return provide(r, r)
+
+
+        if __debug__:
+            conjure_single.__name__ = intern_arrange('conjure_%s', name)
+
+        return conjure_single
 
 
     @export

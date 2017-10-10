@@ -6,7 +6,7 @@ def gem():
     require_gem('Pearl.Core')
 
 
-    tokenizer = [none, 0, 0, 0, none, none, none]
+    tokenizer = [none, 0, 0, 0, none, none, none, 0]
 
     query = tokenizer.__getitem__
     write = tokenizer.__setitem__
@@ -24,6 +24,7 @@ def gem():
     qk = Method(query, 4)
     ql = Method(query, 5)
     qn = Method(query, 6)
+    qp = Method(query, 7)
 
     ws = Method(write, 0)
     wd = Method(write, 1)
@@ -32,6 +33,7 @@ def gem():
     wk = Method(write, 4)
     wl = Method(write, 5)
     wn = Method(write, 6)
+    wp = Method(write, 7)
 
     wd0 = Method(wd, 0)
     wd1 = Method(wd, 1)
@@ -130,6 +132,7 @@ def gem():
         __slots__                        = (())
         display_name                     = 'unknown-line'
         ends_in_newline                  = true
+        indentation                      = none
         is_end_of_data__or__unknown_line = true
         is_any_else                      = false
         is_any_except_or_finally         = false
@@ -160,8 +163,6 @@ def gem():
 
             f.line(t.display_token())
 
-            return false
-
 
         def write(t, w):
             w(t)
@@ -171,7 +172,7 @@ def gem():
 
 
     @export
-    def z_initialize(data):
+    def z_initialize(path, data):
         data_lines = Tuple(data.splitlines(true))
         maximum_i  = length(data_lines)
         q_data     = data_lines.__getitem__
@@ -200,6 +201,10 @@ def gem():
             wl(none)
             wk(none)
             wn(none)
+            wp(none)
+
+
+        wp(path)
 
 
         return parse_context.reset(data_lines, GENERATOR_next_line())
@@ -211,11 +216,11 @@ def gem():
         caller_name  = caller_frame.f_code.co_name
         basename     = path_basename(caller_frame.f_code.co_filename)
 
-        line('%s#%s: %s; %s', basename, caller_frame.f_lineno, caller_name, ql())
+        line('%s#%s: %s; %s:%s', basename, caller_frame.f_lineno, caller_name, qp(), ql())
 
         unknown_line_error = UnknownLineException(
-                                 arrange('parse incomplete: %s#%s: %s; %s',
-                                         basename, caller_frame.f_lineno, caller_name, ql()),
+                                 arrange('parse incomplete: %s#%s: %s; %s:%s',
+                                         basename, caller_frame.f_lineno, caller_name, qp(), ql()),
                                  UnknownLine(qs()),
                              )
 

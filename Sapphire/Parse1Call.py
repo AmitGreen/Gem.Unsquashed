@@ -44,6 +44,9 @@ def gem():
         if argument_1.is_right_parenthesis:
             return conjure_arguments_0(left_parenthesis, argument_1)
 
+        if argument_1.is_special_operator:
+            raise_unknown_line()
+
         operator_1 = qk()
 
         if operator_1 is none:
@@ -90,6 +93,9 @@ def gem():
                        conjure_comma__right_parenthesis(operator_1, argument_2),
                    )
 
+        if argument_2.is_special_operator:
+            raise_unknown_line()
+
         argument_2 = parse1_argument7__left(argument_2)
         operator_2 = qk()
 
@@ -111,6 +117,9 @@ def gem():
                        argument_2,
                        conjure_comma__right_parenthesis(operator_2, argument_3),
                    )
+
+        if argument_3.is_special_operator:
+            raise_unknown_line()
 
         frill_many = [operator_1, operator_2]
         many       = [argument_1, argument_2]
@@ -137,5 +146,8 @@ def gem():
                            frill_many,
                            conjure_comma__right_parenthesis(operator_7, argument_3),
                        )
+
+            if argument_3.is_special_operator:
+                raise_unknown_line()
 
             frill_many.append(operator_7)

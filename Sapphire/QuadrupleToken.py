@@ -11,6 +11,8 @@ def gem():
     provide_normal_token = Shared.provide_normal_token      #   Due to privileged
     qi                   = Shared.qi                        #   Due to privileged
     qs                   = Shared.qs                        #   Due to privileged
+    COLON                = Shared.COLON                     #   Due to privileged
+    LINE_MARKER          = Shared.LINE_MARKER               #   Due to privileged
 
 
     def construct_quadruple_token(t, s, a, b, c, d):
@@ -85,6 +87,38 @@ def gem():
                        t.b.display_token(),
                        t.c.display_token(),
                        t.d.display_token())
+
+
+    @privileged
+    def produce_transform__indented__keyword__colon__line_marker(name, conjure, keyword):
+        def transform(t, vary):
+            a = t.a
+            b = t.b
+            c = t.c
+            d = t.d
+
+            a__2 = (vary.indentation   if vary.remove_indentation else   a)
+
+            if vary.remove_comments:
+                b__2 = keyword
+                c__2 = COLON
+                d__2 = LINE_MARKER
+
+                if (a is a__2) and (b is b__2) and (c is c__2) and (d is d__2):
+                    return t
+
+                return conjure(a__2, b__2, c__2, d__2)
+
+            if a is a__2:
+                return t
+
+            return conjure(a__2, b, c, d)
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform__%s', name)
+
+        return transform
 
 
     class BaseQuadrupleOperator(KeywordAndOperatorBase):
@@ -168,7 +202,7 @@ def gem():
     @privileged
     def produce_conjure_quadruple_token(
             name, Meta,
-            
+
             lookup      = lookup_normal_token,
             provide     = provide_normal_token,
             line_marker = false
@@ -207,7 +241,7 @@ def gem():
     @privileged
     def produce_evoke_quadruple_token(
             name, Meta, conjure_a, conjure_b, conjure_c,
-            
+
             conjure_d                  = absent,
             conjure_d__ends_in_newline = absent,
             lookup                     = lookup_normal_token,
@@ -231,7 +265,7 @@ def gem():
                 full = qs()[qi() : ]
 
                 r = lookup_line_marker(full)
-               
+
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
@@ -258,7 +292,7 @@ def gem():
                 full = qs()[qi() : d_end]
 
                 r = lookup(full)
-               
+
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
@@ -315,6 +349,7 @@ def gem():
         display_token  = display_token__indented__keyword__colon__line_marker
         dump_token     = dump_token__indented__keyword__colon__line_marker
         indentation    = BaseQuadrupleOperator.a
+        scout_variables = scout_variables__0
 
 
     @share
@@ -337,6 +372,7 @@ def gem():
         display_token  = display_token__indented__keyword__colon__line_marker
         dump_token     = dump_token__indented__keyword__colon__line_marker
         indentation    = BaseQuadrupleOperator.a
+        scout_variables = scout_variables__0
 
 
     @share
@@ -358,6 +394,7 @@ def gem():
         display_token  = display_token__indented__keyword__colon__line_marker
         dump_token     = dump_token__indented__keyword__colon__line_marker
         indentation    = BaseQuadrupleOperator.a
+        scout_variables = scout_variables__0
 
 
     @share
@@ -373,15 +410,37 @@ def gem():
         newlines            = 1
         split_comment       = 1
 
-        __init__       = construct_quadruple_operator__line_marker_1
-        add_comment    = 0
-        count_newlines = count_newlines__line_marker
-        display_token  = display_token__indented__keyword__colon__line_marker
-        dump_token     = dump_token__indented__keyword__colon__line_marker
-        indentation    = BaseQuadrupleOperator.a
+        __init__        = construct_quadruple_operator__line_marker_1
+        add_comment     = 0
+        count_newlines  = count_newlines__line_marker
+        display_token   = display_token__indented__keyword__colon__line_marker
+        dump_token      = dump_token__indented__keyword__colon__line_marker
+        indentation     = BaseQuadrupleOperator.a
+        scout_variables = scout_variables__0
 
 
     conjure_dot_name_quadruplet = produce_conjure_quadruple_token('.name-quadruplet', DotNameQuadruplet)
+
+    conjure_indented__else__colon__line_marker = produce_conjure_quadruple_token(
+                                                     'indented__else__colon__line_marker',
+                                                     Indented_Else_Colon_LineMarker,
+
+                                                     line_marker = true,
+                                                 )
+
+    conjure_indented__except__colon__line_marker = produce_conjure_quadruple_token(
+                                                       'indented__except__colon__line_marker',
+                                                       Indented_Except_Colon_LineMarker,
+
+                                                       line_marker = true,
+                                                   )
+
+    conjure_indented__try__colon__line_marker = produce_conjure_quadruple_token(
+                                                    'indented__try__colon__line_marker',
+                                                    Indented_Try_Colon_LineMarker,
+
+                                                    line_marker = true,
+                                                )
 
     evoke_indented__else__colon__line_marker = produce_evoke_quadruple_token(
             'indented__else__colon__line_marker',
@@ -422,6 +481,36 @@ def gem():
 
             line_marker = true,
         )
+
+
+    #
+    #   .mutate
+    #
+    DotNameQuadruplet.mutate = produce_mutate__abcd('dot_name_quadruplet', conjure_dot_name_quadruplet)
+
+
+    #
+    #   .transform
+    #
+    Indented_Else_Colon_LineMarker.transform = produce_transform__indented__keyword__colon__line_marker(
+                                                   'indented_else_colon__line_marker',
+                                                   conjure_indented__else__colon__line_marker,
+                                                   ELSE,
+                                               )
+
+    Indented_Except_Colon_LineMarker.transform = produce_transform__indented__keyword__colon__line_marker(
+                                                     'indented_except_colon__line_marker',
+                                                     conjure_indented__except__colon__line_marker,
+                                                     EXCEPT,
+                                                 )
+
+
+    Indented_Try_Colon_LineMarker.transform = produce_transform__indented__keyword__colon__line_marker(
+                                                  'indented_try_colon__line_marker',
+                                                  conjure_indented__try__colon__line_marker,
+                                                  TRY,
+                                              )
+
 
     share(
         'conjure_dot_name_quadruplet',                          conjure_dot_name_quadruplet,

@@ -32,6 +32,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        scout_variables = scout_variables__abc
+
+
         def write(t, w):
             frill = t.frill
 
@@ -43,7 +46,11 @@ def gem():
 
 
     @privileged
-    def produce_conjure_triple_expression(name, Meta):
+    def produce_conjure_triple_expression(
+            name, Meta,
+
+            produce_conjure_with_frill = false,
+    ):
         cache  = {}
         lookup = cache.get
         store  = cache.__setitem__
@@ -104,8 +111,9 @@ def gem():
         conjure_triple    = produce_conjure_triple         (name + '__X3', Meta, cache, lookup, store)
         conjure_quadruple = produce_conjure_quadruple__4123(name, conjure_Meta_WithFrill, cache, lookup, store)
 
-        meta_frill_v = Meta.frill.v
-        meta_frill_w = Meta.frill.w
+        meta_frill   = Meta.frill
+        meta_frill_v = meta_frill.v
+        meta_frill_w = meta_frill.w
 
 
         def conjure_triple_expression(a, frill_v, b, frill_w, c):
@@ -120,23 +128,104 @@ def gem():
 
             append_cache(name, cache)
 
+        if produce_conjure_with_frill:
+            def conjure_with_frill(frill, a, b, c):
+                if frill is meta_frill:
+                    return conjure_triple(a, b, c)
+
+                return conjure_quadruple(a, b, c, frill)
+
+
+            if __debug__:
+                conjure_with_frill.__name__ = intern_arrange('conjure_%s__with_frill', name)
+
+            return ((
+                       conjure_triple_expression,
+                       conjure_with_frill,
+                   ))
+
+
         return conjure_triple_expression
+
+
+    @privileged
+    def produce_mutate_triple_expression(
+            name, frill_priority, a_priority, b_priority, c_priority, conjure_with_frill,
+    ):
+        def mutate(t, vary, priority):
+            frill = t.frill
+            a     = t.a
+            b     = t.b
+            c     = t.c
+
+            frill__2 = frill.morph (vary, frill_priority, frill_priority)
+            a__2     = a    .mutate(vary, a_priority)
+            b__2     = b    .mutate(vary, b_priority)
+            c__2     = c    .mutate(vary, c_priority)
+
+            if (frill is frill__2) and (a is a__2) and (b is b__2) and (c is c__2):
+                return t
+
+            return conjure_with_frill(frill__2, a__2, b__2, c__2)
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate_%s', name)
+
+        return mutate
 
 
     class ComprehensionForExpression(TripleExpression):
         __slots__    = (())
         display_name = 'comprehension-for'
-        frill        = conjure_vw_frill(conjure_keyword_for(' for '), conjure_keyword_in(' in '))
+        frill        = conjure_vw_frill(W__FOR__W, W__IN__W)
 
 
     class TernaryExpression(TripleExpression):
         __slots__    = (())
         display_name = '?:'
-        frill        = conjure_vw_frill(conjure_keyword_if(' if '), conjure_action_word('else', ' else '))
+        frill        = conjure_vw_frill(W__IF__W, W__ELSE__W)
 
 
-    conjure_comprehension_for  = produce_conjure_triple_expression('comprehension-for',  ComprehensionForExpression)
-    conjure_ternary_expression = produce_conjure_triple_expression('ternary-expression', TernaryExpression)
+    [
+        conjure_comprehension_for, conjure_comprehension_for__with_frill,
+    ] = produce_conjure_triple_expression(
+            'comprehension-for',
+            ComprehensionForExpression,
+
+            produce_conjure_with_frill = true,
+        )
+
+    [
+        conjure_ternary_expression, conjure_ternary_expression__with_frill,
+    ] = produce_conjure_triple_expression(
+            'ternary-expression',
+            TernaryExpression,
+
+            produce_conjure_with_frill = true,
+        )
+
+
+    #
+    #   .mutate
+    #
+    ComprehensionForExpression.mutate = produce_mutate_triple_expression(
+                                            'comprehension_for_expression',
+                                            PRIORITY_ASSIGN,
+                                            PRIORITY_TERNARY,
+                                            PRIORITY_ASSIGN,
+                                            PRIORITY_TERNARY_LIST,
+                                            conjure_comprehension_for__with_frill,
+                                       )
+
+    TernaryExpression.mutate = produce_mutate_triple_expression(
+                                   'ternary_expression',
+                                   PRIORITY_TERNARY,
+                                   PRIORITY_BOOLEAN_OR,
+                                   PRIORITY_BOOLEAN_OR,
+                                   PRIORITY_TERNARY,
+                                   conjure_ternary_expression__with_frill,
+                              )
 
 
     share(
