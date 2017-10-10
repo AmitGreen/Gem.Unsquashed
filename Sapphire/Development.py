@@ -178,11 +178,11 @@ def gem():
                 first = index_latest_0()
 
                 if contains_processed(first):
-                    line('Already processed %s', first)
+                    #line('Already processed %s', first)
                     delete_latest_0()
                     continue
 
-                line('Total %d - Process %s', total, first)
+                #line('Total %d - Process %s', total, first)
 
                 if total is 1:
                     zap_latest()

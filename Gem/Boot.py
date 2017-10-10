@@ -827,10 +827,10 @@ def gem():
     if fast_cache is not 0:
         del gem_scope['fast_cache']
 
-        fast_lookup = fast_cache.get
+        fast_pop = fast_cache.pop
     else:
-        def fast_lookup(module_name):
-            return none
+        def fast_pop(module_name, alternate):
+            return alternate
 
 
     #
@@ -858,7 +858,7 @@ def gem():
 
             #debug('require_gem: %r', module_name)
 
-            fast = fast_lookup(module_name)
+            fast = fast_pop(module_name, 0)
 
             dot_index = module_name.rfind('.')
 
@@ -889,8 +889,8 @@ def gem():
             #
             store_python_module(module_name, module)
 
-            if fast is not none:
-                debug('fast processing %s', module_name)
+            if fast is not 0:
+                #debug('fast processing %s', module_name)
 
                 gem(module_name)(fast)
             else:
@@ -953,12 +953,31 @@ def gem():
 
             #debug('require_gem: %r', module_name)
 
+            fast = fast_pop(module_name, 0)
+
             dot_index = module_name.rfind('.')
 
             if dot_index is not -1:
                 parent_module = require_gem(module_name[:dot_index])
 
             module_name = intern_string(module_name)
+
+            if fast is not 0:
+                #debug('fast processing %s', module_name)
+
+                module = Module(module_name)
+
+                store_python_module(module_name, module)
+
+                gem(module_name)(fast)
+
+                store_gem_module(module_name, 0)
+
+                return module
+
+            if fast_cache:
+                debug('slow processing %s', module_name)
+
             blueprint   = lookup_module_blueprint(module_name)
 
             if blueprint is none:
