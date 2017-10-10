@@ -39,7 +39,7 @@ def gem():
 
 
     #
-    #   Python types
+    #   Python Types
     #
     Module    = PythonBuiltIn.__class__
     LiquidSet = PythonBuiltIn.set
@@ -828,6 +828,11 @@ def gem():
         del gem_scope['fast_cache']
 
         fast_pop = fast_cache.pop
+
+        share(
+            'produce_export_and_share',     produce_export_and_share,
+            'store_gem_module',             store_gem_module,
+        )
     else:
         def fast_pop(module_name, alternate):
             return alternate

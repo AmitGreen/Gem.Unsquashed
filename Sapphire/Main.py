@@ -34,6 +34,10 @@ def gem():
 
         development()
 
+        if fast_cache is not 0:
+            for s in sorted_list(fast_cache):
+                line('Unused: %s', s)
+
 
     def test_parse1():
         require_gem('Sapphire.Pattern')

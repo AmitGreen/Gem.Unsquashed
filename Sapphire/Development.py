@@ -135,11 +135,11 @@ def gem():
             t._contains_processed = processed.__contains__
 
             #
-            #   Ignore these file, pretend we already saw it
+            #   Ignore these file, pretend we already saw them
             #
             t._add_processed('Gem.Path2')
+            t._add_processed('Sapphire.Boot')
             t._add_processed('Sapphire.Parse2')
-            t._add_processed('Sapphire.Pattern')
 
 
         def add_require_gem(t, module_name):
