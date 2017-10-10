@@ -97,7 +97,8 @@ def gem():
                                     f.line(data)
 
                             if groups is not 0:
-                                f.line('%s,', portray(groups))
+                                f.line('((%s)),',
+                                       ', '.join(('none'   if v is none else   portray_string(v))   for v in groups))
 
                             if flags is not 0:
                                 f.line('%d,', flags)

@@ -31,7 +31,7 @@ def gem():
         assign_operator     = NAME('assign_operator',     '=')
         colon               = NAME('colon',               ':')
         comma               = NAME('comma',               ',')
-        comment_newline     = NAME('comment_newline',     P('#' + ZERO_OR_MORE(DOT)) + LINEFEED)
+        comment_newline     = NAME('comment_newline',     P('#' + ZERO_OR_MORE(DOT)) + LINEFEED + END_OF_PATTERN)
         compare_equal       = NAME('compare_equal',       '==')
         dot                 = NAME('dot',                 '.')
         equal_sign          = NAME('equal_sign',          '=')
@@ -67,21 +67,42 @@ def gem():
         number              = NAME('number', '0' | ANY_OF('1-9') + ZERO_OR_MORE(ANY_OF('0-9')))
         period              = NAME('period', '.')
 
+
+        next_triple_double_quote = NAME(
+                                       'next_triple_double_quote',
+                                       (
+                                             ZERO_OR_MORE(
+                                                   PRINTABLE_MINUS('"', '\\')
+                                                 | BACKSLASH + PRINTABLE
+                                                 | '"' + P('"') + NOT_FOLLOWED_BY('"')
+                                             )
+                                           + ('"""' | G('missing_double_quote', LINEFEED + END_OF_PATTERN))
+                                       )
+                                   )
+
+        next_triple_single_quote = NAME(
+                                       'next_single_double_quote',
+                                       (
+                                             ZERO_OR_MORE(
+                                                   PRINTABLE_MINUS("'", '\\')
+                                                 | BACKSLASH + PRINTABLE
+                                                 | "'" + P("'") + NOT_FOLLOWED_BY("'")
+                                             )
+                                           + ("'''" | G('missing_single_quote', LINEFEED + END_OF_PATTERN))
+                                       )
+                                   )
+
         double_quote = NAME(
                            'double_quote',
                            (
                                   '"'
                                 + (
-                                        (
-                                              '"'
-                                            + OPTIONAL(
-                                                    '"'
-                                                  + ONE_OR_MORE(
-                                                          PRINTABLE_MINUS('"', '\\')
-                                                        | BACKSLASH + PRINTABLE
-                                                        | '"' + P('"') + NOT_FOLLOWED_BY('"')
-                                                    ) + '"""'
-                                              )
+                                      (
+                                            '"'
+                                          + (
+                                                  '"' + next_triple_double_quote
+                                                | NOT_FOLLOWED_BY('"')
+                                            )
                                       )
                                       | ONE_OR_MORE(PRINTABLE_MINUS('"', '\\') | BACKSLASH + PRINTABLE) + '"'
                                   )
@@ -93,16 +114,12 @@ def gem():
                            (
                                   "'"
                                 + (
-                                        (
-                                              "'"
-                                            + OPTIONAL(
-                                                    "'"
-                                                  + ONE_OR_MORE(
-                                                          PRINTABLE_MINUS("'", '\\')
-                                                        | BACKSLASH + PRINTABLE
-                                                        | "'" + P("'") + NOT_FOLLOWED_BY("'")
-                                                    ) + "'''"
-                                              )
+                                      (
+                                            "'"
+                                          + (
+                                                  "'" + next_triple_single_quote
+                                                | NOT_FOLLOWED_BY("'")
+                                            )
                                       )
                                       | ONE_OR_MORE(PRINTABLE_MINUS("'", '\\') | BACKSLASH + PRINTABLE) + "'"
                                   )
@@ -149,23 +166,6 @@ def gem():
         #
         pound_G_comment = NAME('pound_G_comment', '#' + G('comment', ZERO_OR_MORE(DOT)))
 
-        G__keyword__ow = NAMED_GROUP(
-                             'keyword__ow',
-                             (
-                                   G(
-                                       'keyword',
-                                       (
-                                             '@'
-                                           | (
-                                                   (EXACT('def') | 'class' | 'from' | 'import' | 'return')
-                                                 + NOT_FOLLOWED_BY(alphanumeric_or_underscore)
-                                             )
-                                       )
-                                   )
-                                 + ow
-                             ),
-                         )
-
 
         #
         #   Generic
@@ -173,7 +173,6 @@ def gem():
         name_match             = MATCH('name_match', name)
         name_ow_match          = MATCH('name_ow_match', G(name) + ow + Q(comment_newline))
         next_nested_line_match = MATCH('next_nested_line_match', ow + Q(comment_newline))
-
 
         #
         #   Copyright
@@ -226,7 +225,7 @@ def gem():
                           + G('comment', ZERO_OR_MORE(ow + ONE_OR_MORE(NOT_ANY_OF('\x00-\x1F', ' '))))
                           + ow
                       )
-                      + G('newline', LINEFEED)
+                      + G('newline', LINEFEED + END_OF_PATTERN)
                   )
             ),
         )
@@ -291,6 +290,9 @@ def gem():
                 | G(keyword_not__ow) + Q('not_in', keyword_in__ow)
             ) + Q(comment_newline),
         )
+
+        MATCH('next_triple_double_quote_line_match', G('quote', next_triple_double_quote) + ow + Q(comment_newline))
+        MATCH('next_triple_single_quote_line_match', G('quote', next_triple_single_quote) + ow + Q(comment_newline))
 
 
         #

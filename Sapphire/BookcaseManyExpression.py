@@ -148,7 +148,6 @@ def gem():
         w(frill.end.s)
 
 
-
     @share
     class BookcaseManyExpression(SapphireTrunk):
         __slots__ = ((
@@ -200,7 +199,13 @@ def gem():
 
     @share
     @privileged
-    def produce_conjure_bookcase_many_expression(name, Meta):
+    def produce_conjure_bookcase_many_expression(
+            name, Meta,
+
+            produce_conjure_with_frill = true,
+    ):
+        assert (produce_conjure_with_frill is true) or (produce_conjure_with_frill is 1)
+
         cache = {}
 
         conjure_dual = produce_conjure_dual(name + '__X2', Meta, cache)
@@ -218,7 +223,19 @@ def gem():
 
             append_cache(name, cache)
 
-        return conjure_bookcase_many_expression
+        if produce_conjure_with_frill == 1:
+            if __debug__:
+                conjure_dual.__name__ = intern_arrange('conjure_%s__with_frill', name)
+
+            return ((
+                       conjure_bookcase_many_expression,
+                       conjure_dual,
+                   ))
+
+        return ((
+                   conjure_bookcase_many_expression,
+                   static_method(conjure_dual),
+               ))
 
 
     class Arguments_Many(BookcaseManyExpression):
@@ -226,11 +243,19 @@ def gem():
         display_name = 'arguments-*'
 
 
+        scout_variables = scout_variables__many
+
+
     class ListExpression_Many(BookcaseManyExpression):
         __slots__                      = (())
         display_name                   = '[*]'
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
+
+
+        scout_variables = scout_variables__many
+        write_variables = write_variables__many
 
 
     class MapExpression_Many(BookcaseManyExpression):
@@ -238,15 +263,29 @@ def gem():
         display_name                   = '{:*:}'
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
 
 
-    class ParameterColon_Many(BookcaseManyExpression):
+        scout_variables = scout_variables__many
+
+
+    class Parameters_Many(BookcaseManyExpression):
         __slots__    = (())
-        display_name = '(*):'
+        display_name = 'parameter-(*)'
+
+
+        def add_parameters(t, art):
+            for v in t.many:
+                v.add_parameters(art)
 
 
         def parameter_1_named(t, name):
             return 0
+
+
+        def scout_variables(t, many):
+            for v in t.many:
+                v.scout_default_values(many)
 
 
     class TupleExpression_Many(BookcaseManyExpression):
@@ -254,19 +293,107 @@ def gem():
         display_name                   = '{,*,}'
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
 
 
-    conjure_arguments_many        = produce_conjure_bookcase_many_expression('arguments-*',        Arguments_Many)
-    conjure_list_expression_many  = produce_conjure_bookcase_many_expression('list-expression-*',  ListExpression_Many)
-    conjure_map_expression_many   = produce_conjure_bookcase_many_expression('map-expression-*',   MapExpression_Many)
-    conjure_parameter_colon_many  = produce_conjure_bookcase_many_expression('parameter-colon-*',  ParameterColon_Many)
-    conjure_tuple_expression_many = produce_conjure_bookcase_many_expression('tuple-expression-*', TupleExpression_Many)
+        scout_variables = scout_variables__many
+
+
+    [
+        conjure_arguments_many, conjure_arguments_many__with_frill,
+    ] = produce_conjure_bookcase_many_expression(
+            'arguments-*',
+            Arguments_Many,
+
+            produce_conjure_with_frill = 1,
+        )
+
+    [
+        conjure_list_expression_many, conjure_list_expression_many__with_frill
+    ] = produce_conjure_bookcase_many_expression(
+            'list-expression-*',
+            ListExpression_Many,
+
+            produce_conjure_with_frill = 1,
+        )
+
+    [
+        conjure_map_expression_many, conjure_map_expression_many__with_frill,
+    ] = produce_conjure_bookcase_many_expression(
+            'map-expression-*',
+            MapExpression_Many,
+
+            produce_conjure_with_frill = 1,
+        )
+
+    [
+        conjure_parameters_many, conjure_parameters_many__with_frill,
+    ] = produce_conjure_bookcase_many_expression(
+            'parameter-*',
+            Parameters_Many,
+
+            produce_conjure_with_frill = 1,
+        )
+
+    [
+        conjure_tuple_expression_many, conjure_tuple_expression_many__with_frill,
+    ] = produce_conjure_bookcase_many_expression(
+            'tuple-expression-*',
+            TupleExpression_Many,
+
+            produce_conjure_with_frill = 1,
+        )
+
+
+    #
+    #   .mutate
+    #
+    Arguments_Many.mutate = produce_mutate__frill__many(
+                                'arguments_many',
+                                PRIORITY_ASSIGN,
+                                PRIORITY_ASSIGN,
+                                PRIORITY_ASSIGN,
+                                conjure_arguments_many__with_frill,
+                            )
+
+    ListExpression_Many.mutate = produce_mutate__frill__many(
+                                     'list_expression_many',
+                                     PRIORITY_COMPREHENSION,
+                                     PRIORITY_TERNARY,
+                                     PRIORITY_TERNARY,
+                                     conjure_list_expression_many__with_frill,
+                                 )
+
+    MapExpression_Many.mutate = produce_mutate__frill__many(
+                                    'list_expression_many',
+                                    PRIORITY_COMPREHENSION,
+                                    PRIORITY_MAP_ELEMENT,
+                                    PRIORITY_MAP_ELEMENT,
+                                    conjure_map_expression_many__with_frill,
+                                )
+
+    TupleExpression_Many.mutate = produce_mutate__frill__many(
+                                    'tuple_expression_many',
+                                    PRIORITY_TERNARY,
+                                    PRIORITY_TERNARY,
+                                    PRIORITY_TERNARY,
+                                    conjure_tuple_expression_many__with_frill,
+                                )
+
+    #
+    #   .mutate
+    #
+    Parameters_Many.transform = produce_transform__frill__many(
+                                    'parameters_many',
+                                    PRIORITY_ASSIGN,
+                                    conjure_parameters_many__with_frill,
+                                )
 
 
     share(
         'conjure_arguments_many',           conjure_arguments_many,
         'conjure_list_expression_many',     conjure_list_expression_many,
         'conjure_map_expression_many',      conjure_map_expression_many,
-        'conjure_parameter_colon_many',     conjure_parameter_colon_many,
+        'conjure_parameters_many',          conjure_parameters_many,
         'conjure_tuple_expression_many',    conjure_tuple_expression_many,
     )

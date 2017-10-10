@@ -34,17 +34,19 @@ Main_py=../Beryl/Main.py
 Main_py=../Ivory/Main.py
 Main_py=../Tremolite/Main.py
 Main_py=../Quartz/Main.py
-#Main_py=../Dravite/Main.py
-#Main_py=../Topaz/Main.py
-#Main_py=test3.py
+Main_py=../Dravite/Main.py
+Main_py=../Topaz/Main.py
 Main_py=../Sapphire/Main.py
+#Main_py=show.py
 
 show=2
+all=false
 
-command="python $Main_py"
+command="python -sS $Main_py"
 commandO="python -O $Main_py"
 command3="python3 $Main_py"
 command3O="python3 -O $Main_py"
+#command="../bin/x"
 
 option="dev"
 
@@ -63,8 +65,7 @@ cat $show
 while :
 do
     $command $option <$tmp1 >&$tmp2
-    if cmp -s $tmp2 2
-    then
+    if cmp -s $tmp2 2; then
         :
     else
         mv $tmp2 2
@@ -75,24 +76,25 @@ do
         fi
     fi
 
-    $commandO $option <$tmp1 >&$tmp3
-    mv $tmp3 2o
-
-    $command3 $option <$tmp1 >&$tmp3
-    if cmp -s $tmp3 3
-    then
-        :
-    else
-        mv $tmp3 3
-
-        if [ $show = 3 ]; then
-            echo -en '\E[H\E[J'
-            tail -60 3
-        fi
+    if [ $all = true ]; then
+       $commandO $option <$tmp1 >&$tmp3
+       mv $tmp3 2o
+   
+       $command3 $option <$tmp1 >&$tmp3
+       if cmp -s $tmp3 3; then
+           :
+       else
+           mv $tmp3 3
+   
+           if [ $show = 3 ]; then
+               echo -en '\E[H\E[J'
+               tail -60 3
+           fi
+       fi
+   
+       $command3O $option <$tmp1 >&$tmp3
+       mv $tmp3 3o
     fi
 
-    $command3O $option <$tmp1 >&$tmp3
-    mv $tmp3 3o
-
-    sleep 0.01
+   sleep 0.01
 done

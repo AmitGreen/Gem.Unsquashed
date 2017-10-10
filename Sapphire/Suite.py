@@ -38,6 +38,7 @@ def gem():
         indentation                = none
         is_any_else                = false
         is_any_except_or_finally   = false
+        is_comment__or__empty_line = true
         is_comment_suite           = true
         is_else_header_or_fragment = false
         is_statement_header        = false
@@ -52,9 +53,16 @@ def gem():
                     v.dump_token(f)
 
 
+        find_require_gem = find_require_gem__0
+
+
         @property
         def impression(t):
             return t[0].impression
+
+
+        scout_variables = scout_variables__0
+        transform       = transform__remove_comments_0
 
 
     class EmptyLineSuite(TokenTuple):
@@ -64,6 +72,7 @@ def gem():
         indentation                = none
         is_any_else                = false
         is_any_except_or_finally   = false
+        is_comment__or__empty_line = true
         is_else_header_or_fragment = false
         is_empty_line_suite        = true
         is_statement_header        = false
@@ -71,6 +80,8 @@ def gem():
 
         dump_token       = dump_token__no_impression
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
+        transform        = transform__remove_comments_0
 
 
     class IfStatement_Many(TokenTuple):
@@ -85,6 +96,7 @@ def gem():
         dump_token       = dump_token__many
         find_require_gem = find_require_gem__many
         indentation      = indentation__index_0
+        scout_variables  = scout_variables__tuple
 
 
     class MixedSuite(TokenTuple):
@@ -97,8 +109,18 @@ def gem():
         is_statement_header        = false
         is_statement               = true
 
+
+        def __init__(t, many):
+            for v in many:
+                assert v.is_comment__or__empty_line
+
+            TokenTuple.__init__(t, many)
+
+
         dump_token       = dump_token__no_impression
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
+        transform        = transform__remove_comments_0
 
 
     class StatementSuite(TokenTuple):
@@ -141,6 +163,95 @@ def gem():
                 return (t[0].indentation) or (t[1].indentation)
 
 
+        scout_variables = scout_variables__tuple
+
+
+        def transform(t, vary):
+            i        = 0
+            iterator = iterate(t)
+
+            for v in iterator:
+                v__2 = v.transform(vary)
+
+                if v__2 is v:
+                    i += 1
+                    continue
+
+                break
+            else:
+                return t
+
+            if i < 2:
+                if i is 0:
+                    if v__2 is 0:
+                        for v in iterator:
+                            v__2 = v.transform(vary)
+
+                            if v__2 is not 0:
+                                break
+                        else:
+                            return conjure_indented__pass__line_marker(
+                                       (
+                                           vary.indentation   if vary.remove_indentation else
+                                           (t[0].indentation) or (t[1].indentation)
+                                       ),
+                                       conjure_keyword_pass('pass'),
+                                       LINE_MARKER,
+                                   )
+
+                    for w in iterator:
+                        w__2 = w.transform(vary)
+
+                        if w__2 is not 0:
+                            break
+                    else:
+                        return v__2
+
+                    many = [v__2, w__2]
+                else:
+                    if v__2 is 0:
+                        for v in iterator:
+                            v__2 = v.transform(vary)
+
+                            if v__2 is not 0:
+                                break
+                        else:
+                            return t[0]
+
+                    many = [t[0], v__2]
+
+                for v in iterator:
+                    v__2 = v.transform(vary)
+
+                    if v__2 is not 0:
+                        break
+                else:
+                    return conjure_statement_suite(many)
+            else:
+                many = List(t[:i])
+
+                if v__2 is 0:
+                    for v in iterator:
+                        v__2 = v.transform(vary)
+
+                        if v__2 is not 0:
+                            break
+                    else:
+                        return conjure_statement_suite(many)
+
+            append = many.append
+
+            append(v__2)
+
+            for w in iterator:
+                w__2 = w.transform(vary)
+
+                if w__2 is not 0:
+                    append(w__2)
+
+            return conjure_statement_suite(many)
+
+
     class TryStatement_Many(TokenTuple):
         __slots__                  = (())
         display_name               = 'try-statement-*'
@@ -168,8 +279,13 @@ def gem():
                                      provide_suite,
                                  )
 
-
     append_cache('suite', suite_cache)
+
+
+    #
+    #   .transform
+    #
+    IfStatement_Many.transform = produce_tranform_many('if-statement-many', conjure_if_statement_many)
 
 
     share(

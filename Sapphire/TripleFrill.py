@@ -14,13 +14,25 @@ def gem():
         v         = TripleTwig.b
         w         = TripleTwig.c
 
-        display_name   = '#xy-frill'
-        frill_estimate = 3
+        display_name = '#vw-frill'
 
-        __init__       = construct__abc
-        __repr__       = portray__abc
-        count_newlines = count_newlines__abc
-        display_token  = display_token__abc
+
+        def transform(t, vary):
+            comment = t.comment
+            v       = t.v
+            w       = t.w
+
+            comment__2 = comment.transform(vary)
+            v__2       = v.transform(vary)
+            w__2       = w.transform(vary)
+
+            if (comment is comment__2) and (v is v__2) and (w is w__2):
+                return t
+
+            if comment__2 is 0:
+                return conjure_vw_frill(v__2, w__2)
+
+            return conjure_commented_vw_frill(comment__2, v__2, w__2)
 
 
     class VWX_Frill(TripleTwig):
@@ -33,10 +45,22 @@ def gem():
         display_name   = 'xyz-frill'
         frill_estimate = 3
 
-        __init__       = construct__abc
-        __repr__       = portray__abc
-        count_newlines = count_newlines__abc
-        display_token  = display_token__abc
+
+        def morph(t, vary, v_priority, w_priority, x_priority):
+            assert v_priority is x_priority is 0
+
+            v = t.v
+            w = t.w
+            x = t.x
+
+            v__2 = v.transform(vary)
+            w__2 = w.mutate   (vary, w_priority)
+            x__2 = x.transform(vary)
+
+            if (v is v__2) and (w is w__2) and (x is x__2):
+                return t
+
+            return conjure_vwx_frill(v__2, w__2, x__2)
 
 
     conjure_commented_vw_frill = produce_conjure_triple(
@@ -54,6 +78,9 @@ def gem():
                             lookup_triple_frill,
                             store_triple_frill,
                         )
+
+
+    VWX_Frill.transform = produce_transform__abc('vwx-frill', conjure_vwx_frill)
 
 
     append_cache('triple-frill', triple_frill_cache)

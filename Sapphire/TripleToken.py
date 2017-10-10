@@ -10,6 +10,7 @@ def gem():
 
 
     conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged
+    LINE_MARKER          = Shared.LINE_MARKER               #   Due to privileged
     lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   Due to privileged
     lookup_line_marker   = Shared.lookup_line_marker        #   Due to privileged
     lookup_normal_token  = Shared.lookup_normal_token       #   Due to privileged
@@ -82,6 +83,63 @@ def gem():
         return f.token_result(r, newline)
 
 
+    @privileged
+    def produce_transform__indented__keyword__line_marker(name, conjure, keyword):
+        def transform(t, vary):
+            a = t.a
+            b = t.b
+            c = t.c
+
+            a__2 = (vary.indentation   if vary.remove_indentation else   a)
+
+            if vary.remove_comments:
+                b__2 = keyword
+                c__2 = LINE_MARKER
+
+                if (a is a__2) and (b is b__2) and (c is c__2):
+                    return t
+
+                return conjure(a__2, b__2, c__2)
+
+            if a is a__2:
+                return t
+
+            return conjure(a__2, b, c)
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform__%s', name)
+
+        return transform
+
+
+    @privileged
+    def produce_mutate_whitespace_atom_whitespace(name, conjure):
+        def mutate(t, vary, priority):
+            b    = t.b
+            b__2 = b.mutate(vary, priority)
+
+            if vary.remove_comments:
+                return b__2
+
+            a = t.a
+            c = t.c
+
+            a__2 = a.transform(vary)
+            c__2 = c.transform(vary)
+
+            if (a is a__2) and (b is b__2) and (c is c__2):
+                return t
+
+            return conjure(a__2, b__2, c__3)
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate_%s', name)
+
+        return mutate
+
+
     class BaseTripleOperator(KeywordAndOperatorBase):
         __slots__ = ((
             'a',                        #   Operator+
@@ -91,7 +149,7 @@ def gem():
 
 
         __init__ = construct_triple_token
-        __repr__ = portray__abc
+        __repr__ = portray__123
 
 
         def display_full_token(t):
@@ -130,6 +188,11 @@ def gem():
                            t.c.display_short_token())
 
 
+    BaseTripleOperator.k1 = BaseTripleOperator.a
+    BaseTripleOperator.k2 = BaseTripleOperator.b
+    BaseTripleOperator.k3 = BaseTripleOperator.c
+
+
     def create_triple_token__with_newlines(Meta, s, a, b, c):
         assert s == a.s + b.s + c.s
 
@@ -161,7 +224,7 @@ def gem():
     @privileged
     def produce_conjure_triple_token(
             name, Meta,
-            
+
             lookup      = lookup_normal_token,
             provide     = provide_normal_token,
             line_marker = false
@@ -200,7 +263,7 @@ def gem():
     @privileged
     def produce_evoke_triple_token(
             name, Meta, conjure_a, conjure_b,
-            
+
             conjure_c                  = absent,
             conjure_c__ends_in_newline = absent,
             lookup                     = lookup_normal_token,
@@ -224,7 +287,7 @@ def gem():
                 triple_s = qs()[qi() : ]
 
                 r = lookup_line_marker(triple_s)
-               
+
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
@@ -253,7 +316,7 @@ def gem():
                 full = qs()[qi() : c_end]
 
                 r = lookup(full)
-               
+
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
@@ -287,6 +350,8 @@ def gem():
         is_all_index        = true
         is_postfix_operator = true
 
+        scout_variables = scout_variables__0
+
 
     class DotNameTriplet(BaseTripleOperator):
         __slots__           = (())
@@ -314,6 +379,7 @@ def gem():
         count_newlines   = count_newlines__line_marker
         dump_token       = dump_token__indented__keyword__line_marker
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
 
 
     class Indented_Continue_LineMarker_1(BaseTripleOperator):
@@ -336,13 +402,15 @@ def gem():
         count_newlines   = count_newlines__line_marker
         dump_token       = dump_token__indented__keyword__line_marker
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
 
 
     class Indented_Else_Colon(BaseTripleOperator):
-        __slots__   = (())
-        indentation = BaseTripleOperator.a
-
+        __slots__    = (())
         display_name = r'indented-else:'
+        indentation  = BaseTripleOperator.a
+
+        scout_variables = scout_variables__0
 
 
     class Indented_Pass_LineMarker_1(BaseTripleOperator):
@@ -364,6 +432,7 @@ def gem():
         count_newlines   = count_newlines__line_marker
         dump_token       = dump_token__indented__keyword__line_marker
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
 
 
     class Indented_Raise_LineMarker_1(BaseTripleOperator):
@@ -385,6 +454,7 @@ def gem():
         count_newlines   = count_newlines__line_marker
         dump_token       = dump_token__indented__keyword__line_marker
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
 
 
     class Indented_Return_LineMarker_1(BaseTripleOperator):
@@ -406,6 +476,7 @@ def gem():
         count_newlines   = count_newlines__line_marker
         dump_token       = dump_token__indented__keyword__line_marker
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
 
 
     class Indented_Yield_LineMarker_1(BaseTripleOperator):
@@ -427,6 +498,7 @@ def gem():
         count_newlines   = count_newlines__line_marker
         dump_token       = dump_token__indented__keyword__line_marker
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
 
 
     class Whitespace_Atom_Whitespace(BaseTripleOperator):
@@ -434,6 +506,9 @@ def gem():
         display_name                   = 'whitespace+atom+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
+
+        scout_variables = scout_variables__0
 
 
     class Whitespace_Name_Whitespace(BaseTripleOperator):
@@ -442,13 +517,68 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
         is_identifier                  = true
+        is_special_operator            = false
+
+        scout_variables = scout_variables__b
 
 
+    #
+    #   conjure_*
+    #
     conjure_all_index        = produce_conjure_triple_token('all_index',           AllIndex)
     conjure_dot_name_triplet = produce_conjure_triple_token('.name-triplet',       DotNameTriplet)
 
+    conjure_indented__break__line_marker = produce_conjure_triple_token(
+                                               'indented__break__line_marker',
+                                               Indented_Break_LineMarker_1,
+
+                                               line_marker = true,
+                                           )
+
+    conjure_indented__continue__line_marker = produce_conjure_triple_token(
+                                               'indented__continue__line_marker',
+                                               Indented_Continue_LineMarker_1,
+
+                                               line_marker = true,
+                                           )
+
     conjure_indented_else_colon = produce_conjure_triple_token('indented-else-colon', Indented_Else_Colon)
 
+    conjure_indented__pass__line_marker = produce_conjure_triple_token(
+                                              'indented__pass__line_marker',
+                                              Indented_Pass_LineMarker_1,
+
+                                              line_marker = true,
+                                          )
+
+    conjure_indented__return__line_marker = produce_conjure_triple_token(
+                                                'indented__return__line_marker',
+                                                Indented_Return_LineMarker_1,
+
+                                                line_marker = true,
+                                            )
+
+    conjure_indented__yield__line_marker = produce_conjure_triple_token(
+                                               'indented__yield__line_marker',
+                                               Indented_Yield_LineMarker_1,
+
+                                               line_marker = true,
+                                           )
+
+    conjure_whitespace_atom_whitespace = produce_conjure_triple_token(
+                                             'whitespace_atom_whitespace',
+                                             Whitespace_Atom_Whitespace,
+                                         )
+
+    conjure_whitespace_name_whitespace = produce_conjure_triple_token(
+                                             'whitespace_name_whitespace',
+                                             Whitespace_Name_Whitespace,
+                                         )
+
+
+    #
+    #   evoke_*
+    #
     evoke_all_index = produce_evoke_triple_token(
                           'all_index',
                           AllIndex,
@@ -559,6 +689,67 @@ def gem():
                                                      conjure_whitespace__ends_in_newline,
                                                  )
 
+
+    #
+    #   Constants
+    #
+    ALL_INDEX = conjure_all_index(LSB, COLON, RSB)
+
+
+    #
+    #   .mutate
+    #
+    DotNameTriplet.mutate = produce_mutate__abc('dot_name_triplet', conjure_dot_name_triplet)
+
+    Whitespace_Atom_Whitespace.mutate = produce_mutate_whitespace_atom_whitespace(
+                                            'whitespace_atom_whitespace',
+                                            conjure_whitespace_atom_whitespace,
+                                        )
+
+    Whitespace_Name_Whitespace.mutate = produce_mutate_whitespace_atom_whitespace(
+                                            'whitespace_name_whitespace',
+                                            conjure_whitespace_name_whitespace,
+                                        )
+
+
+    #
+    #   .mutate
+    #
+    AllIndex.mutate = produce_mutate__uncommented('all_index', ALL_INDEX)
+
+    Indented_Break_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+                                                'indented_break__line_marker_1',
+                                                conjure_indented__break__line_marker,
+                                                BREAK,
+                                            )
+
+    Indented_Continue_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+                                                   'indented_continue__line_marker_1',
+                                                   conjure_indented__continue__line_marker,
+                                                   CONTINUE,
+                                               )
+
+    Indented_Pass_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+                                               'indented_pass__line_marker_1',
+                                               conjure_indented__pass__line_marker,
+                                               PASS,
+                                           )
+
+    Indented_Return_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+                                                 'indented_return__line_marker_1',
+                                                 conjure_indented__return__line_marker,
+                                                 RETURN,
+                                             )
+
+    Indented_Yield_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+                                                'indented_yield__line_marker_1',
+                                                conjure_indented__yield__line_marker,
+                                                YIELD,
+                                            )
+
+    #
+    #   find_evoke_whitespace_atom_whitespace
+    #
     find_evoke_whitespace_atom_whitespace = {
             '"' : evoke_whitespace__double_quote__whitespace,
             "'" : evoke_whitespace__single_quote__whitespace,
@@ -605,6 +796,8 @@ def gem():
         'conjure_all_index',                        conjure_all_index,
         'conjure_dot_name_triplet',                 conjure_dot_name_triplet,
         'conjure_indented_else_colon',              conjure_indented_else_colon,
+        'conjure_indented__pass__line_marker',      conjure_indented__pass__line_marker,
+        'conjure_whitespace_atom_whitespace',       conjure_whitespace_atom_whitespace,
         'evoke_all_index',                          evoke_all_index,
         'evoke_indented__break__line_marker',       evoke_indented__break__line_marker,
         'evoke_indented__continue__line_marker',    evoke_indented__continue__line_marker,

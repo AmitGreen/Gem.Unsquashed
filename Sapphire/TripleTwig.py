@@ -3,35 +3,12 @@
 #
 @gem('Sapphire.TripleTwig')
 def gem():
+    require_gem('Sapphire.Method')
+
+
     triple_twig_cache  = {}
     lookup_triple_twig = triple_twig_cache.get
     store_triple_twig  = triple_twig_cache.__setitem__
-
-
-    @share
-    def construct__abc(t, a, b, c):
-        t.a = a
-        t.b = b
-        t.c = c
-
-
-    @share
-    def count_newlines__abc(t):
-        return t.a.count_newlines() + t.b.count_newlines() + t.c.count_newlines()
-
-
-    @share
-    def display_token__abc(t):
-        return arrange('<%s %s %s %s>',
-                       t.display_name,
-                       t.a.display_token(),
-                       t.b.display_token(),
-                       t.c.display_token())
-
-
-    @share
-    def portray__abc(t):
-        return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.c)
 
 
     @share
@@ -43,26 +20,12 @@ def gem():
         ))
 
 
-        __init__       = construct__abc
-        __repr__       = portray__abc
-        count_newlines = count_newlines__abc
-        display_token  = display_token__abc
-
-
-        def dump_token(t, f, newline = true):
-            f.partial('<%s ', t.display_name)
-
-            t    .a.dump_token(f)
-            t    .b.dump_token(f)
-            r = t.c.dump_token(f, false)
-
-            return f.token_result(r, newline)
-            
-
-        def write(t, w):
-            t.a.write(w)
-            t.b.write(w)
-            t.c.write(w)
+        __init__       = construct__123
+        __repr__       = portray__123
+        count_newlines = count_newlines__123
+        display_token  = display_token__123
+        dump_token     = dump_token__123
+        write          = write__123
 
 
     TripleTwig.k1 = TripleTwig.a

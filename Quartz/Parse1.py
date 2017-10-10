@@ -16,7 +16,7 @@ def gem():
         many   = []
         append = many.append
 
-        iterate_lines = z_initialize(data)
+        iterate_lines = z_initialize(path, data)
 
         for s in iterate_lines:
             m1 = mysql_line_match(s)

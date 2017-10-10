@@ -8,6 +8,7 @@ def gem():
     require_gem('Gem.Cadence')
     require_gem('Gem.Exception')
     require_gem('Gem.Global')
+    require_gem('Gem.Path')
     require_gem('Gem.System')
 
 

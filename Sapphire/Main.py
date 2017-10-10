@@ -24,25 +24,45 @@ def gem():
     require_gem('Sapphire.Core')
 
 
-    def test_development():
+    choice = 1
+
+
+    def command_combine(module_name = 'hma', remove_comments = false, remove_indentation = false):
+        require_gem('Sapphire.Transform')
+
+        vary = create_sapphire_transform(
+                   remove_comments    = remove_comments,
+                   remove_indentation = remove_indentation,
+               )
+
         if fast_cache is 0:
             require_gem('Sapphire.Pattern')
 
             create_sapphire_match()
 
+        require_gem('Sapphire.Combine')
+
+        command_combine__X(module_name, vary)
+
+        if fast_cache is not 0:
+            for s in sorted_list(fast_cache):
+                line('Unused: %s', s)
+
+
+    def command_development():
         require_gem('Sapphire.Development')
 
         development()
 
 
-    def test_parse1():
+    def command_parse1(show = 7):
         require_gem('Sapphire.Pattern')
 
         create_sapphire_match()
 
         require_gem('Sapphire.Parse')                       #   Must be after 'create_sapphire_match'
 
-        parse_python('test.py', test = 7)
+        parse_python('test.py', test = 7, show = show)
 
 
     def test_parse2():
@@ -57,18 +77,41 @@ def gem():
             total = length(arguments)
 
             if total is 0:
-                return test_parse1()
+                return command_parse1()
 
             if total is not 1:
                 raise_runtime_error('must have zero or one argument')
 
             option = arguments[0]
-            
-            if option == 'dev':
-                if 7:
-                    return test_development()
 
-                return test_parse1()
+            if option == 'combine':
+                return command_combine(
+                           module_name        = 'hma',
+                           remove_comments    = true,
+                           remove_indentation = true,
+                       )
+
+            if option == 'combine2':
+                return command_combine(module_name = 'hma2')
+
+            if option == 'dev':
+                if choice is 1:
+                    return command_development()
+
+                if choice is 2:
+                    return command_parse1()
+
+                if choice is 3:
+                    return command_combine(
+                               module_name        = 'hma',
+                               remove_comments    = true,
+                               remove_indentation = true,
+                           )
+
+                raise_runtime_error('unknown choice: %d', choice)
+
+            if option == 'parse':
+                return command_parse1(show = 7)
 
             raise_runtime_error('unknown option: %r', option)
 

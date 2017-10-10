@@ -55,4 +55,10 @@ def gem():
         return provide_many_frill(r, r)
 
 
+    #
+    #   .transform
+    #
+    ManyFrill.transform = produce_tranform_many('many-frill', conjure_many_frill)
+
+
     append_cache('many-frill', many_frill_cache)

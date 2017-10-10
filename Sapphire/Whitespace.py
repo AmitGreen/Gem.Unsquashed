@@ -60,6 +60,8 @@ def gem():
 
 
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
+        transform        = transform__remove_comments_0
 
 
         def write(t, w):
@@ -74,6 +76,9 @@ def gem():
             assert '\n' not in s
 
             t.s = s
+
+
+        transform = transform__self
 
 
     def conjure_empty_line(s):

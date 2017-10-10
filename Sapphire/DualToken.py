@@ -65,6 +65,80 @@ def gem():
         t.newlines = newlines
 
 
+
+
+    @privileged
+    def produce_mutate_atom_whitespace(name, conjure):
+        def mutate(t, vary, priority):
+            a    = t.a
+            a__2 = a.mutate(vary, priority)
+
+            if vary.remove_comments:
+                return a__2
+
+            b    = t.b
+            b__2 = b.transform(vary)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure(a__2, b__2)
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate_%s', name)
+
+        return mutate
+
+
+    @privileged
+    def produce_transform_atom_whitespace(name, conjure):
+        def transform(t, vary):
+            a    = t.a
+            a__2 = a.transform(vary)
+
+            if vary.remove_comments:
+                return a__2
+
+            b    = t.b
+            b__2 = b.transform(vary)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure(a__2, b__2)
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform_%s', name)
+
+        return transform
+
+
+    @privileged
+    def produce_mutate_whitespace_atom(name, conjure):
+        def mutate(t, vary, priority):
+            b    = t.b
+            b__2 = b.mutate(vary, priority)
+
+            if vary.remove_comments:
+                return b__2
+
+            a    = t.a
+            a__2 = a.transform(vary)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure(a__2, b__2)
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate_%s', name)
+
+        return mutate
+
+
     class BaseDualOperator(KeywordAndOperatorBase):
         __slots__ = ((
             'a',                        #   Operator+
@@ -142,7 +216,7 @@ def gem():
     @privileged
     def produce_conjure_dual_token(
             name, Meta,
-            
+
             lookup      = lookup_normal_token,
             provide     = provide_normal_token,
             line_marker = false
@@ -181,7 +255,7 @@ def gem():
     @privileged
     def produce_evoke_dual_token(
             name, Meta, conjure_first,
-            
+
             conjure_second                  = absent,
             conjure_second__ends_in_newline = absent,
             lookup                          = lookup_normal_token,
@@ -203,7 +277,7 @@ def gem():
                 full_s = qs()[qi() : ]
 
                 r = lookup_line_marker(full_s)
-               
+
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
@@ -231,7 +305,7 @@ def gem():
                 full = qs()[qi() : end]
 
                 r = lookup(full)
-               
+
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
@@ -261,8 +335,13 @@ def gem():
                 full = qs()[qi() : end]
 
                 r = lookup(full)
-               
+
                 if r is not none:
+                    #if not ( (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta)) ):
+                    #    my_line('r: %r', r)
+                    #    my_line('Meta: %r', Meta)
+                    #    my_line('adjusted: %r', lookup_adjusted_meta(Meta))
+
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
                     return r
@@ -295,6 +374,8 @@ def gem():
         is_arguments_0                        = true
         is_postfix_operator                   = true
 
+        scout_variables = scout_variables__0
+
 
     class Atom_Whitespace(BaseDualOperator):
         __slots__                      = (())
@@ -302,8 +383,10 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
 
+        scout_variables = scout_variables__0
 
-    class Colon_LineMarker_1(KeywordAndOperatorBase):
+
+    class Colon_LineMarker_1(BaseDualOperator):
         __slots__                               = (())
         ends_in_newline                         = true
         is_colon__line_marker                   = true
@@ -359,6 +442,7 @@ def gem():
         __slots__                             = (())
         #   (
         display_name                          = ',)'
+        is_comma__right_parenthesis           = true
         is_end_of_arithmetic_expression       = true
         is_end_of_boolean_and_expression      = true
         is_end_of_boolean_or_expression       = true
@@ -397,6 +481,20 @@ def gem():
         display_name        = '.name'
         is_postfix_operator = true
 
+
+        def mutate(t, vary, priority):
+            a = t.a
+            b = t.b
+
+            a__2 = a.transform(vary)
+            b__2 = b.transform(vary)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure_dot_name(a__2, b__2)
+
+
     class DotNamePair(BaseDualOperator):
         __slots__           = (())
         #   [
@@ -410,6 +508,8 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
 
+        scout_variables = scout_variables__0
+
 
     class EmptyMap(BaseDualOperator):
         __slots__                      = (())
@@ -417,12 +517,16 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
 
+        scout_variables = scout_variables__0
+
 
     class EmptyTuple(BaseDualOperator):
         __slots__                      = (())
         display_name                   = '{,}'
         is__atom__or__special_operator = true
         is_atom                        = true
+
+        scout_variables = scout_variables__0
 
 
     class Indented_Token(BaseDualOperator):
@@ -465,6 +569,9 @@ def gem():
         is_atom                        = true
         is_identifier                  = true
 
+        scout_variables = scout_variables__a
+        write_variables = write_variables__a
+
 
     @share
     class Not_In(BaseDualOperator):
@@ -485,9 +592,9 @@ def gem():
         is_parameters_0 = true
 
 
-        def parameters_1_named(t, name):
-            return 0
-            
+        add_parameters     = add_parameters__0
+        parameters_1_named = parameters_1_named__false
+        scout_variables    = scout_variables__0
 
 
     class Whitespace_Atom(BaseDualOperator):
@@ -495,6 +602,10 @@ def gem():
         display_name                   = 'whitespace+atom'
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
+
+
+        scout_variables = scout_variables__0
 
 
     class Whitespace_Name(BaseDualOperator):
@@ -503,7 +614,34 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
         is_identifier                  = true
+        is_special_operator            = false
 
+
+        add_parameters = add_parameters__b
+
+
+        def mutate(t, vary, priority):
+            if vary.remove_comments:
+                return t.b
+
+            return t
+
+
+        scout_default_values = scout_default_values__b
+        scout_variables      = scout_variables__b
+
+
+        def transform(t, vary):
+            if vary.remove_comments:
+                return t.b
+
+            return t
+
+
+        write_variables = write_variables__b
+
+
+    conjure_atom_whitespace = produce_conjure_dual_token('atom_whitespace', Atom_Whitespace)
 
     conjure_arguments_0 = produce_conjure_dual_token(
                               'arguments_0',
@@ -516,27 +654,28 @@ def gem():
     conjure_colon__line_marker = produce_conjure_dual_token(
                                      'colon__line_marker__1',
                                      Colon_LineMarker_1,
-                                     
+
                                      line_marker = true,
                                  )
 
-    conjure__colon__right_square_bracket = produce_conjure_dual_token(
-                                               'colon__right_square_bracket',
-                                               Colon_RightSquareBracket,
-                                           )
+    conjure_colon__right_square_bracket = produce_conjure_dual_token(
+                                              'colon__right_square_bracket',
+                                              Colon_RightSquareBracket,
+                                          )
 
     conjure__comma__right_brace      = produce_conjure_dual_token('comma__right_brace',       Comma_RightBrace)
     conjure_comma__right_parenthesis = produce_conjure_dual_token('comma__right_parenthesis', Comma_RightParenthesis)
 
-    conjure__comma__right_square_bracket = produce_conjure_dual_token(
-                                               'comma__right_square_bracket',
-                                               Comma_RightSquareBracket,
-                                           )
+    conjure_comma__right_square_bracket = produce_conjure_dual_token(
+                                              'comma__right_square_bracket',
+                                              Comma_RightSquareBracket,
+                                          )
 
-    conjure_dot_name      = produce_conjure_dual_token('.name',      Dot_Name)
-    conjure_dot_name_pair = produce_conjure_dual_token('.name-pair', DotNamePair)
-    conjure_empty_list    = produce_conjure_dual_token('[]',         EmptyList)
-    conjure_empty_map     = produce_conjure_dual_token('{}',         EmptyMap)
+    conjure_dot_name      = produce_conjure_dual_token('.name',       Dot_Name)
+    conjure_dot_name_pair = produce_conjure_dual_token('.name-pair',  DotNamePair)
+    conjure_empty_list    = produce_conjure_dual_token('[]',          EmptyList)
+    conjure_empty_map     = produce_conjure_dual_token('{}',          EmptyMap)
+    conjure_empty_tuple   = produce_conjure_dual_token('empty-tuple', EmptyTuple)
 
     conjure_indented_token = produce_conjure_dual_token(
                                  'indented-token',
@@ -546,12 +685,14 @@ def gem():
                                  provide = provide_indentation,
                              )
 
-    conjure_is_not = produce_conjure_dual_token('is-not',     Is_Not)
+    conjure_is_not = produce_conjure_dual_token('is-not', Is_Not)
 
-    conjure__left_square_bracket__colon = produce_conjure_dual_token(
-                                              '[:',                           #   ]
-                                              LeftSquareBracket_Colon,
-                                          )
+    conjure_left_square_bracket__colon = produce_conjure_dual_token(
+                                             '[:',                           #   ]
+                                             LeftSquareBracket_Colon,
+                                         )
+
+    conjure_name_whitespace = produce_conjure_dual_token('name_whitespace', Name_Whitespace)
 
     conjure_not_in = produce_conjure_dual_token('not-in', Not_In)
 
@@ -562,6 +703,9 @@ def gem():
                                lookup  = lookup_parameters_0_token,
                                provide = provide_parameters_0_token,
                           )
+
+    conjure_whitespace_atom = produce_conjure_dual_token('whitespace_atom', Whitespace_Atom)
+    conjure_whitespace_name = produce_conjure_dual_token('whitespace_name', Whitespace_Name)
 
     evoke_arguments_0 = produce_evoke_dual_token(
                             'arguments_0',
@@ -578,7 +722,7 @@ def gem():
                                    'colon__line_marker',
                                    Colon_LineMarker_1,
                                    conjure_colon,
-                                   
+
                                    line_marker = true,
                                )
 
@@ -913,8 +1057,70 @@ def gem():
                                          none,
                                      )
 
-    colon__empty_line_marker = conjure_colon__line_marker(conjure_colon(':'), empty_line_marker)
+    #
+    #   Constants
+    #
+    ARGUMENTS_0         = conjure_arguments_0                (LP,         RP)
+    COLON__LINE_MARKER  = conjure_colon__line_marker         (COLON,      LINE_MARKER)
+    COLON_RSB           = conjure_colon__right_square_bracket(COLON,      RSB)
+    COMMA_RSB           = conjure_comma__right_square_bracket(COMMA,      RSB)
+    COMMA_RP            = conjure_comma__right_parenthesis   (COMMA,      RP)
+    EMPTY_LIST          = conjure_empty_list                 (LSB,        RSB)
+    EMPTY_MAP           = conjure_empty_map                  (LEFT_BRACE, RIGHT_BRACE)
+    EMPTY_TUPLE         = conjure_empty_tuple                (LP,         RP)
+    LSB_COLON           = conjure_left_square_bracket__colon (LSB,        COLON)
+    PARAMETERS_0        = conjure_parameters_0               (LP,         RP)
+    W__IS_NOT__W        = conjure_is_not                     (W__IS__W,   NOT__W)
+    W__NOT_IN__W        = conjure_not_in                     (W__NOT__W,  IN__W)
 
+
+    #
+    #   .mutate
+    #
+    #   NOTE:
+    #       Comma_RightParentheiss.mutate    leaves  the , (called on parenthesized tuple expression)
+    #       Comma_RightParenthesis.transform removes the , (called in other situations where the , is not needed)
+    #
+    Arguments_0           .mutate = produce_mutate__uncommented   ('arguments_0',              ARGUMENTS_0)
+    Atom_Whitespace       .mutate = produce_mutate_atom_whitespace('atom_whitespace',          conjure_atom_whitespace)
+    Comma_RightParenthesis.mutate = produce_mutate__uncommented   ('comma__right_parenthesis', COMMA_RP)
+    DotNamePair           .mutate = produce_mutate__ab            ('dot-name-pair',            conjure_dot_name_pair)
+    EmptyList             .mutate = produce_mutate__uncommented   ('empty_list',               EMPTY_LIST)
+    EmptyMap              .mutate = produce_mutate__uncommented   ('empty_map',                EMPTY_MAP)
+    EmptyTuple            .mutate = produce_mutate__uncommented   ('empty_tuple',              EMPTY_TUPLE)
+    Name_Whitespace       .mutate = produce_mutate_atom_whitespace('name_whitespace',          conjure_name_whitespace)
+    Whitespace_Atom       .mutate = produce_mutate_whitespace_atom('whitespace_atom',          conjure_whitespace_atom)
+    Whitespace_Name       .mutate = produce_mutate_whitespace_atom('whitespace_name',          conjure_whitespace_name)
+
+
+    #
+    #   .transform
+    #
+    Colon_LineMarker_1.transform = produce_transform__ab('colon__line_marker_1', conjure_colon__line_marker)
+
+    Comma_RightBrace        .transform = produce_transform__uncommented('comma__right_brace',          RIGHT_BRACE)
+    Colon_RightSquareBracket.transform = produce_transform__uncommented('colon__right_square_bracket', COLON_RSB)
+
+    Comma_RightParenthesis.transform = produce_transform__uncommented(
+                                           'comma__right_parenthesis',
+                                           RP,                          #   See comment above on why not 'COMMA_RP'
+                                       )
+
+    Comma_RightSquareBracket.transform = produce_transform__uncommented('comma__right_square_bracket', COMMA_RSB)
+
+    Indented_Token.transform = produce_transform__ab         ('indented_token', conjure_indented_token)
+    Is_Not        .transform = produce_transform__uncommented('is_not',         W__IS_NOT__W)
+
+    LeftSquareBracket_Colon.transform = produce_transform__uncommented('left_square_bracket__colon', LSB_COLON)
+
+    Name_Whitespace.transform = produce_transform_atom_whitespace('name_whitespace', conjure_name_whitespace)
+    Not_In         .transform = produce_transform__uncommented   ('not_in',          W__NOT_IN__W)
+    Parameters_0   .transform = produce_transform__uncommented   ('parameters_0',    PARAMETERS_0)
+
+
+    #
+    #   find_*
+    #
     find_evoke_comma_something = {
                                      #   (
                                      ')' : evoke_comma__right_parenthesis,
@@ -987,20 +1193,22 @@ def gem():
 
 
     share(
-        'colon__empty_line_marker',                 colon__empty_line_marker,
+        'COLON__LINE_MARKER',                       COLON__LINE_MARKER,
+        'COLON_RSB',                                COLON_RSB,
+        'COMMA_RP',                                 COMMA_RP,
         'conjure_arguments_0',                      conjure_arguments_0,
+        'conjure_atom_whitespace',                  conjure_atom_whitespace,
         'conjure_colon__line_marker',               conjure_colon__line_marker,
-        'conjure__colon__right_square_bracket',     conjure__colon__right_square_bracket,
         'conjure__comma__right_brace',              conjure__comma__right_brace,
         'conjure_comma__right_parenthesis',         conjure_comma__right_parenthesis,
-        'conjure__comma__right_square_bracket',     conjure__comma__right_square_bracket,
+        'conjure_comma__right_square_bracket',      conjure_comma__right_square_bracket,
         'conjure_dot_name',                         conjure_dot_name,
         'conjure_dot_name_pair',                    conjure_dot_name_pair,
         'conjure_empty_list',                       conjure_empty_list,
         'conjure_empty_map',                        conjure_empty_map,
+        'conjure_empty_tuple',                      conjure_empty_tuple,
         'conjure_indented_token',                   conjure_indented_token,
         'conjure_is_not',                           conjure_is_not,
-        'conjure__left_square_bracket__colon',      conjure__left_square_bracket__colon,
         'conjure_not_in',                           conjure_not_in,
         'conjure_parameters_0',                     conjure_parameters_0,
         'evoke_arguments_0',                        evoke_arguments_0,
@@ -1036,4 +1244,5 @@ def gem():
         'find_evoke_atom_whitespace',               find_evoke_atom_whitespace,
         'find_evoke_comma_something',               find_evoke_comma_something,
         'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
+        'LSB_COLON',                                LSB_COLON,
     )

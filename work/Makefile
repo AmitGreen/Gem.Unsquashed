@@ -19,9 +19,9 @@ GEM_FILES = \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
 	../Gem/Global.py \
     ../Gem/Import.py ../Gem/IO.py \
-    ../Gem/Map.py \
+    ../Gem/Map.py ../Gem/Method.py \
     ../Gem/Output.py \
-    ../Gem/Path.py ../Gem/Path2.py ../Gem/PortrayString.py \
+    ../Gem/Path.py ../Gem/PortrayString.py \
     ../Gem/RegularExpression.py \
     ../Gem/SimpleStringIO.py ../Gem/StringOutput.py ../Gem/System.py \
     ../Gem/Traceback.py
@@ -61,32 +61,35 @@ SAPPHIRE_FILES = \
         ../Sapphire/BookcaseKeywordDualStatement.py ../Sapphire/BookcaseManyExpression.py \
         ../Sapphire/BookcaseManyFrill.py ../Sapphire/BookcaseManyStatement.py ../Sapphire/BookcaseStatement.py \
         ../Sapphire/BookcaseTriple.py \
-    ../Sapphire/Cache.py ../Sapphire/CallStatement.py ../Sapphire/Comment.py ../Sapphire/Core.py \
-        ../Sapphire/CreateMeta.py \
+        ../Sapphire/BuildSymbolTable.py \
+    ../Sapphire/Cache.py ../Sapphire/CallStatement.py ../Sapphire/Comment.py ../Sapphire/Combine.py \
+        ../Sapphire/Core.py ../Sapphire/CreateMeta.py \
     ../Sapphire/DefinitionHeader.py ../Sapphire/Development.py ../Sapphire/DualFrill.py ../Sapphire/DualStatement.py \
         ../Sapphire/DualToken.py ../Sapphire/DualTwig.py ../Sapphire/DumpToken.py \
     ../Sapphire/Elemental.py \
     ../Sapphire/Indentation.py \
     ../Sapphire/LineMarker.py \
     ../Sapphire/Main.py ../Sapphire/ManyExpression.py ../Sapphire/ManyFrill.py ../Sapphire/MemberExpression.py \
-        ../Sapphire/Method.py \
+        ../Sapphire/Method.py ../Sapphire/MosiacDefinition.py ../Sapphire/MosiacSymbol.py \
     ../Sapphire/Parse.py \
         ../Sapphire/Parse1.py ../Sapphire/Parse1Atom.py ../Sapphire/Tokenize1Header.py ../Sapphire/Parse1Call.py \
         ../Sapphire/Parse1Complex.py ../Sapphire/Parse1Expression.py ../Sapphire/Parse1ExpressionStatement.py \
         ../Sapphire/Parse1From.py ../Sapphire/Parse1Function.py ../Sapphire/Parse1Import.py \
         ../Sapphire/Parse1Simple.py \
         ../Sapphire/Parse2.py ../Sapphire/Parse3.py \
-        ../Sapphire/PostfixExpression.py ../Sapphire/PrefixedDualStatement.py \
+        ../Sapphire/PostfixExpression.py ../Sapphire/PrefixedDualStatement.py ../Sapphire/Priority.py \
     ../Sapphire/Pattern.py \
     ../Sapphire/QuadrupleFrill.py ../Sapphire/QuadrupleStatement.py ../Sapphire/QuadrupleToken.py \
         ../Sapphire/QuadrupleTwig.py \
-    ../Sapphire/Suite.py \
+    ../Sapphire/Suite.py ../Sapphire/SymbolTable.py \
     ../Sapphire/TernaryExpression.py ../Sapphire/TokenCache.py ../Sapphire/TokenTuple.py \
         ../Sapphire/Tokenize1Atom.py ../Sapphire/Tokenize1Name.py ../Sapphire/Tokenize1Operator.py \
         ../Sapphire/Tree.py ../Sapphire/TripleFrill.py ../Sapphire/TripleStatement.py ../Sapphire/TripleToken.py \
         ../Sapphire/TripleTwig.py ../Sapphire/TupleOfExpression.py \
     ../Sapphire/UnaryExpression.py \
-    ../Sapphire/Whitespace.py
+    ../Sapphire/Whitespace.py \
+    ../Sapphire/Transform.py \
+    ../Sapphire/Variable.py
     #
     #   Excludes:
     #       ../Sapphire/Match.py
@@ -145,7 +148,7 @@ clean:
 	rm -f a.py ab.py ac.py ag.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py cd.py ce.py co.py
-	rm -f de.py dfo.py di.py dm.py dr.py
+	rm -f d.py de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gd.py gg.py
@@ -155,21 +158,21 @@ clean:
 	rm -f   h2f.py h2p.py h2ps.py h2s.py h2s.py h2t.py h2w.py
 	rm -f   h3e.py h3f.py h3p.py h3s.py h3t.py h3w.py
 	rm -f   h4f.py h4s.py h4t.py h4w.py
-	rm -f   hat.py haw.py hb.py hca.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py
+	rm -f   hat.py haw.py hbe.py hby.py hca.py hcb.py hcc.py hcm.py hco.py hcs.py hd.py hdh.py hdt.py hel.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
-	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hp.py hs.py
+	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpa.py hpr.py hs.py
 	rm -f   htc.py hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
-	rm -f m m.py m.txt
+	rm -f m map.py md.py m.txt
 	rm -f o.py
 	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
-	rm -f x.py
+	rm -f xb.py xf.py
 	rm -f zc.py ze.py zj.py zm.py zpa.py zps.py zpt.py zso.py
 
 
@@ -200,6 +203,7 @@ links:
 	ln -s ../Gem/Cadence.py                             cd.py
 	ln -s ../Gem/CatchException.py                      ce.py
 	ln -s ../Gem/Core.py                                co.py
+	ln -s ../Sapphire/Development.py                    d.py
 	ln -s ../Dravite/Euclid.py                          de.py
 	ln -s ../Gem/DelayedFileOutput.py                   dfo.py
 	ln -s ../Dravite/__init__.py                        di.py
@@ -245,8 +249,10 @@ links:
 	ln -s ../Sapphire/QuadrupleTwig.py                  h4w.py
 	ln -s ../Sapphire/Atom.py                           hat.py
 	ln -s ../Sapphire/ActionWord.py                     haw.py
-	ln -s ../Sapphire/BinaryExpression.py               hb.py
+	ln -s ../Sapphire/BinaryExpression.py               hbe.py
+	ln -s ../Sapphire/BuildSymbolTable.py               hby.py
 	ln -s ../Sapphire/Cache.py                          hca.py
+	ln -s ../Sapphire/Combine.py                        hcb.py
 	ln -s ../Sapphire/CreateMeta.py                     hcc.py
 	ln -s ../Sapphire/Comment.py                        hcm.py
 	ln -s ../Sapphire/Core.py                           hco.py
@@ -270,20 +276,24 @@ links:
 	ln -s ../bin/.pyxie/hma.py                          hma1.py
 	ln -s ../bin/.pyxie/hma2.py                         hma2.py
 	ln -s ../Sapphire/Match.py                          hmc.py
-	ln -s ../Sapphire/Method.py                         hmd.py
+	ln -s ../Sapphire/MosiacDefinition.py               hmd.py
 	ln -s ../Sapphire/MemberExpression.py               hme.py
 	ln -s ../Sapphire/ManyFrill.py                      hmf.py
-	ln -s ../Sapphire/Pattern.py                        hp.py
+	ln -s ../Sapphire/Method.py                         hmo.py
+	ln -s ../Sapphire/ManyExpression.py                 hmx.py
+	ln -s ../Sapphire/MosiacSymbol.py                   hmy.py
+	ln -s ../Sapphire/Pattern.py                        hpa.py
+	ln -s ../Sapphire/Priority.py                       hpr.py
 	ln -s ../Sapphire/Suite.py                          hs.py
 	ln -s ../Sapphire/TokenCache.py                     htc.py
 	ln -s ../Sapphire/TupleOfExpression.py              hto.py
 	ln -s ../Sapphire/Tree.py                           htr.py
 	ln -s ../Sapphire/TokenTuple.py                     htt.py
 	ln -s ../Sapphire/UnaryExpression.py                hu.py
-	ln -s ../Sapphire/Development.py                    hv.py
+	ln -s ../Sapphire/Variable.py                       hv.py
 	ln -s ../Sapphire/Whitespace.py                     hw.py
 	ln -s ../Sapphire/PostfixExpression.py              hx.py
-	ln -s ../Sapphire/ManyExpression.py                 hy.py
+	ln -s ../Sapphire/SymbolTable.py                    hy.py
 	ln -s ../Gem/__init__.py                            in.py
 	ln -s ../Gem/Import.py                              im.py
 	ln -s ../Ivory/Main.py                              iv.py
@@ -293,7 +303,8 @@ links:
 	ln -s ../OtherLicenses/README.txt                   lr.txt
 	ln -s Makefile                                      m
 	ln -s mine.txt                                      m.txt
-	ln -s ../Gem/Map.py                                 m.py
+	ln -s ../Gem/Map.py                                 map.py
+	ln -s ../Gem/Method.py                              md.py
 	ln -s ../Gem/Output.py                              o.py
 	ln -s ../Gem/Path.py                                pa.py
 	ln -s ../Gem/Path2.py                               pa2.py
@@ -329,7 +340,8 @@ links:
 	ln -s ../Tremolite/Build.py                         tu.py
 	ln -s ../Tremolite/PatternWrapper.py                tw.py
 	ln -s ../Tremolite/Compile.py                       tx.py
-	ln -s ../Sardonyx/Boot.py                           x.py
+	ln -s ../Sardonyx/Boot.py                           xb.py
+	ln -s ../Sapphire/Transform.py                      xf.py
 	ln -s ../Topaz/Core.py                              zc.py
 	ln -s ../Topaz/ExceptionChain.py                    ze.py
 	ln -s ../Topaz/ConjureTreeComment.py                zj.py

@@ -20,8 +20,8 @@ def gem():
 
 
     @share
-    def create_TokenOutput():
-        return TokenOutput(create_SimpleStringOutput())
+    def create_TokenOutput(f = none):
+        return TokenOutput((f) or (create_SimpleStringOutput()))
 
 
     @share
@@ -29,5 +29,8 @@ def gem():
         with create_TokenOutput() as f:
             f.line('===  %s  ===', name)
             token.dump_token(f)
+
+            if f.position:
+                f.line()
 
         partial(f.result)

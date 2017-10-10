@@ -23,24 +23,15 @@ def gem():
         ))
 
 
-        def __init__(t, begin, many, end):
-            t.begin = begin
-            t.many  = many
-            t.end   = end
+        __init__       = construct__123
+        count_newlines = count_newlines__123
+        __repr__       = portray__123
+        display_token  = display_token__123
 
 
-        def count_newlines(t):
-            return t.begin.count_newlines() + t.many.count_newlines() + t.end.count_newlines()
-
-
-        def __repr__(t):
-            return arrange('<%s %r %r %r>', t.__class__.__name__, t.begin, t.many, t.end)
-
-
-        def display_token(t):
-            return arrange('<bookcase-many-frill %s %s %s>',
-                           t.begin.display_token(), t.many.display_token(), t.end.display_token())
-
+    BookcaseManyFrill.a = BookcaseManyFrill.begin
+    BookcaseManyFrill.b = BookcaseManyFrill.many
+    BookcaseManyFrill.c = BookcaseManyFrill.end
 
     BookcaseManyFrill.k1 = BookcaseManyFrill.begin
     BookcaseManyFrill.k2 = BookcaseManyFrill.many
@@ -53,6 +44,7 @@ def gem():
                                            bookcase_many_frill_cache,
                                        )
 
+    BookcaseManyFrill.transform = produce_transform__abc('bookcase_many_frill', conjure_bookcase_many_frill__213)
 
     append_cache('bookcase-*-frill', bookcase_many_frill_cache)
 

@@ -28,6 +28,7 @@ def gem():
         is_colon__right_square_bracket             = false
         is_comma                                   = false
         is__comma__or__right_parenthesis           = false
+        is_comma__right_parenthesis                = false
         is_comma__right_square_bracket             = false
         is_compare_operator                        = false
         is_dot                                     = false
@@ -71,6 +72,7 @@ def gem():
         is_right_brace                             = false
         is_right_parenthesis                       = false
         is_right_square_bracket                    = false
+        is_special_operator                        = false
         is_star_sign                               = false
         is_tail_index                              = false
         is_tilde_sign                              = false
@@ -429,6 +431,7 @@ def gem():
         is_end_of_ternary_expression            = true
         is_end_of_ternary_expression_list       = true
         is_end_of_unary_expression              = true
+        is_special_operator                     = true
         keyword                                 = ':'
 
 
@@ -781,6 +784,7 @@ def gem():
         is_end_of_ternary_expression            = true
         is_end_of_unary_expression              = true
         is_right_brace                          = true
+        is_special_operator                     = true
         #  {
         keyword                                 = '}'
 
@@ -807,6 +811,7 @@ def gem():
         is_end_of_unary_expression              = true
         is__optional_comma__right_parenthesis   = true
         is_right_parenthesis                    = true
+        is_special_operator                     = true
         #  (
         keyword                                 = ')'
 
@@ -833,6 +838,7 @@ def gem():
         is_end_of_ternary_expression             = true
         is_end_of_unary_expression               = true
         is_right_square_bracket                  = true
+        is_special_operator                      = true
         #   [
         keyword                                  = ']'
 
@@ -975,7 +981,7 @@ def gem():
     ] = produce_conjure_action_word(
             'right_parenthesis',
             OperatorRightParenthesis,
-            
+
             produce_ends_in_newline = true,
         )
 
@@ -984,7 +990,7 @@ def gem():
     ] = produce_conjure_action_word(
             'right_square_bracket',
             OperatorRightSquareBracket,
-            
+
             produce_ends_in_newline = true,
         )
 
@@ -1010,6 +1016,174 @@ def gem():
     conjure_keyword_yield    = produce_conjure_action_word('keyword-yield',         KeywordYield)
 
 
+    ASSERT__W                   = conjure_keyword_assert      ('assert ')
+    AT_SIGN                     = conjure_at_sign             ('@')
+    BREAK                       = conjure_keyword_break       ('break')
+    CONTINUE                    = conjure_keyword_continue    ('continue')
+    CLASS__W                    = conjure_keyword_class       ('class ')
+    COLON                       = conjure_colon               (':')
+    COMMA                       = conjure_comma               (',')
+    COMMA__W                    = conjure_comma               (', ')
+    DELETE__W                   = conjure_keyword_delete      ('del ')
+    DOT                         = conjure_dot                 ('.')
+    ELSE                        = conjure_keyword_else        ('else')
+    ELSE_IF__W                  = conjure_keyword_else_if     ('elif ')
+    EXCEPT                      = conjure_keyword_try         ('except')
+    FOR__W                      = conjure_keyword_for         ('for ')
+    FROM__W                     = conjure_keyword_from        ('from ')
+    FUNCTION__W                 = conjure_keyword_function    ('def ')
+    IF__W                       = conjure_keyword_if          ('if ')
+    IMPORT__W                   = conjure_keyword_import      ('import ')
+    IN__W                       = conjure_keyword_in          ('in ')
+    LEFT_BRACE                  = conjure_left_brace          ('{')
+    LP                          = conjure_left_parenthesis    ('(')
+    LSB                         = conjure_left_square_bracket ('[')
+    MINUS_SIGN                  = conjure_action_word         ('-', '-')
+    NOT__W                      = conjure_keyword_not         ('not ')
+    PASS                        = conjure_keyword_pass        ('pass')
+    PLUS_SIGN                   = conjure_action_word         ('+', '+')
+    RAISE__W                    = conjure_keyword_raise       ('raise ')
+    RETURN                      = conjure_keyword_return      ('return')
+    RETURN__W                   = conjure_keyword_return      ('return ')
+    RIGHT_BRACE                 = conjure_right_brace         ('}')
+    RP                          = conjure_right_parenthesis   (')')
+    RSB                         = conjure_right_square_bracket(']')
+    STAR_SIGN                   = conjure_star_sign           ('*')
+    TILDE_SIGN                  = conjure_action_word         ('~', '~')
+    TRY                         = conjure_keyword_try         ('try')
+    W__ADD_MODIFY__W            = conjure_action_word         ('+=', ' += ')
+    W__AND__W                   = conjure_action_word         ('and', ' and ')
+    W__AND_SIGN__W              = conjure_action_word         ('&', ' & ')
+    W__ASSIGN__W                = conjure_equal_sign          (' = ')
+    W__AS__W                    = conjure_keyword_as          (' as ')
+    W__COLON__W                 = conjure_colon               (' : ')
+    W__COMPARE_EQUAL__W         = conjure_action_word         ('==', ' == ')
+    W__COMPARE_NOT_EQUAL__W     = conjure_action_word         ('!=', ' != ')
+    W__ELSE__W                  = conjure_keyword_else        (' else ')
+    W__FOR__W                   = conjure_keyword_for         (' for ')
+    W__GREATER_THAN__W          = conjure_action_word         ('>',  ' > ')
+    W__GREATER_THAN_OR_EQUAL__W = conjure_action_word         ('>=',  ' >= ')
+    WHILE__W                    = conjure_keyword_while       ('while ')
+    W__IF__W                    = conjure_keyword_if          (' if ')
+    W__IMPORT__W                = conjure_keyword_import      (' import ')
+    W__IN__W                    = conjure_keyword_in          (' in ')
+    W__IS__W                    = conjure_keyword_is          (' is ')
+    WITH__W                     = conjure_keyword_with        ('with ')
+    W__LESS_THAN__W             = conjure_action_word         ('<',  ' < ')
+    W__LESS_THAN_OR_EQUAL__W    = conjure_action_word         ('<=', ' <= ')
+    W__NOT__W                   = conjure_keyword_not         (' not ')
+    W__OR__W                    = conjure_action_word         ('or', ' or ')
+    W__OR_MODIFY__W             = conjure_action_word         ('|=', ' |= ')
+    W__OR_SIGN__W               = conjure_action_word         ('|', ' | ')
+    W__PERCENT_SIGN__W          = conjure_action_word         ('%', ' % ')
+    W__STAR_SIGN__W             = conjure_star_sign           (' * ')
+    W__SUBTRACT_MODIFY__W       = conjure_action_word         ('-=', ' -= ')
+    YIELD                       = conjure_keyword_yield       ('yield')
+    YIELD__W                    = conjure_keyword_yield       ('yield ')
+
+
+    #
+    #   NOTE:
+    #       .mutate functions when called are generally called on expressions, thus the result
+    #       (when removing comments) needs to have leading space.
+    #
+    #       .transform functions when called are generally called on statement, thus the result
+    #       (when removing comments) needs to NOT have leading space.
+    #
+    #       Example:
+    #           KeywordIf.mutate:       Returns ' if ' (with    a leading space, when removing comments)
+    #           KeywordIf.transform:    Returns 'if '  (without a leading space, when removing comments)
+    #
+    #       Thus given the following input:
+    #
+    #           if  ((a)if  b else c):
+    #
+    #       The first 'if  ' is transformed to 'if ', while the second 'if  ' is mutated to ' if '.
+    #
+    #   NOTE:
+    #       For KeywordNot, the .mutate is called for a unary not-expressio; hence the result is ' not '.
+    #
+    #       When used in an expression like '1 is not 2' then the Is_Not handles this & internally
+    #       converts this to ' in ' & 'not ' (i.e.: no leading space on the 'not ').
+    #
+    #       Hence KeywordNot.mutate always returns 'not ' since it is only called in the context
+    #       of a unary-expression.
+    #
+    KeywordElse  .mutate = produce_mutate__uncommented('keyword_else',   W__ELSE__W)
+    KeywordFor   .mutate = produce_mutate__uncommented('keyword_for',    W__FOR__W)
+    KeywordIf    .mutate = produce_mutate__uncommented('keyword_if',     W__IF__W)
+    KeywordIn    .mutate = produce_mutate__uncommented('keyword_in',     W__IN__W)
+    KeywordImport.mutate = produce_mutate__uncommented('keyword_import', W__IMPORT__W)
+    KeywordNot   .mutate = produce_mutate__uncommented('keyword_not',    NOT__W)
+    OperatorColon.mutate = produce_mutate__uncommented('operator_colon', W__COLON__W)
+#   OperatorLeftParenthesis.mutate = produce_mutate__uncommented('left_parenthesis', RP)
+
+
+    #
+    #   NOTE:
+    #       See note in KeywordFor   .mutate on the difference from KeywordFor   .transform
+    #       See note in KeywordImport.mutate on the difference from KeywordImport.transform
+    #
+    KeywordAnd             .transform = produce_transform__uncommented('keyword_and',         W__AND__W)
+    KeywordAs              .transform = produce_transform__uncommented('keyword_as',          W__AS__W)
+    KeywordAssert          .transform = produce_transform__uncommented('keyword_assert',      ASSERT__W)
+    KeywordClass           .transform = produce_transform__uncommented('keyword_class',       CLASS__W)
+    KeywordDelete          .transform = produce_transform__uncommented('keyword_delete',      DELETE__W)
+    KeywordElseIf          .transform = produce_transform__uncommented('keyword_else_if',     ELSE_IF__W)
+    KeywordFor             .transform = produce_transform__uncommented('keyword_for',         FOR__W)
+    KeywordFrom            .transform = produce_transform__uncommented('keyword_from',        FROM__W)
+    KeywordFunction        .transform = produce_transform__uncommented('keyword_function',    FUNCTION__W)
+    KeywordIf              .transform = produce_transform__uncommented('keyword_if',          IF__W)
+    KeywordIn              .transform = produce_transform__uncommented('keyword_in',          W__IN__W)
+    KeywordIs              .transform = produce_transform__uncommented('keyword_is',          W__IS__W)
+    KeywordImport          .transform = produce_transform__uncommented('keyword_import',      IMPORT__W)
+    KeywordOr              .transform = produce_transform__uncommented('keyword_or',          W__OR__W)
+    KeywordRaise           .transform = produce_transform__uncommented('keyword_raise',       RAISE__W)
+    KeywordReturn          .transform = produce_transform__uncommented('keyword_return',      RETURN__W)
+    KeywordWhile           .transform = produce_transform__uncommented('keyword_while',       WHILE__W)
+    KeywordWith            .transform = produce_transform__uncommented('keyword_with',        WITH__W)
+    KeywordYield           .transform = produce_transform__uncommented('keyword_yield',       YIELD__W)
+    OperatorAddModify      .transform = produce_transform__uncommented('operator_add_modify', W__ADD_MODIFY__W)
+    OperatorAtSign         .transform = produce_transform__uncommented('at_sign',             AT_SIGN)
+    OperatorColon          .transform = produce_transform__uncommented('colon',               COLON)
+    OperatorComma          .transform = produce_transform__uncommented('comma',               COMMA__W)
+    OperatorCompareEqual   .transform = produce_transform__uncommented('compare_equal',       W__COMPARE_EQUAL__W)
+    OperatorCompareNotEqual.transform = produce_transform__uncommented('compare_not_equal',   W__COMPARE_NOT_EQUAL__W)
+    OperatorDot            .transform = produce_transform__uncommented('operator_dot',        DOT)
+    OperatorEqualSign      .transform = produce_transform__uncommented('equal_sign',          W__ASSIGN__W)
+    OperatorGreaterThan    .transform = produce_transform__uncommented('greater_than',        W__GREATER_THAN__W)
+
+    OperatorGreaterThanOrEqual.transform = produce_transform__uncommented(
+                                               'greater_than_or_equal',
+                                               W__GREATER_THAN_OR_EQUAL__W,
+                                           )
+
+    OperatorLeftBrace        .transform = produce_transform__uncommented('left_brace',          LEFT_BRACE)
+    OperatorLeftParenthesis  .transform = produce_transform__uncommented('left_parenthesis',    LP)
+    OperatorLeftSquareBracket.transform = produce_transform__uncommented('left_square_bracket', LSB)
+    OperatorLessThan         .transform = produce_transform__uncommented('less_than',           W__LESS_THAN__W)
+
+    OperatorLessThanOrEqual.transform = produce_transform__uncommented('less_than_or_equal', W__LESS_THAN_OR_EQUAL__W)
+
+    OperatorLogicalAndSign    .transform = produce_transform__uncommented('logical_and_sign',      W__AND_SIGN__W)
+    OperatorLogicalOrSign     .transform = produce_transform__uncommented('logical_or_sign',       W__OR_SIGN__W)
+    OperatorLogicalOrModify   .transform = produce_transform__uncommented('logical_or_modify',     W__OR_MODIFY__W)
+    OperatorMinusSign         .transform = produce_transform__uncommented('operator_minus_sign',   MINUS_SIGN)
+    OperatorPercentSign       .transform = produce_transform__uncommented('operator_percent_sign', W__PERCENT_SIGN__W)
+    OperatorPlusSign          .transform = produce_transform__uncommented('operator_plus_sign',    PLUS_SIGN)
+    OperatorRightBrace        .transform = produce_transform__uncommented('right_brace',           RIGHT_BRACE)
+    OperatorRightParenthesis  .transform = produce_transform__uncommented('right_parenthesis',     RP)
+    OperatorRightSquareBracket.transform = produce_transform__uncommented('right_square_bracket',  RSB)
+    OperatorStarSign          .transform = produce_transform__uncommented('operator_star_sign',    STAR_SIGN)
+
+    OperatorSubtractModify.transform = produce_transform__uncommented(
+                                           'operator_subtract_modify',
+                                           W__SUBTRACT_MODIFY__W,
+                                       )
+
+    OperatorTildeSign.transform = produce_transform__uncommented('operator_tilde_sign', TILDE_SIGN)
+
+
     find_atom_type = {
             '"' : conjure_double_quote,
             "'" : conjure_single_quote,
@@ -1027,7 +1201,7 @@ def gem():
             'K' : conjure_name, 'L' : conjure_name, 'M' : conjure_name, 'N' : conjure_name, 'O' : conjure_name,
             'P' : conjure_name, 'Q' : conjure_name, 'R' : conjure_name, 'S' : conjure_name, 'T' : conjure_name,
             'U' : conjure_name, 'V' : conjure_name, 'W' : conjure_name, 'X' : conjure_name, 'Y' : conjure_name,
-            'Z' : conjure_name, '_' : conjure_name, 
+            'Z' : conjure_name, '_' : conjure_name,
 
             #  [
             ']' : conjure_right_square_bracket,
@@ -1106,7 +1280,46 @@ def gem():
         'conjure_try_colon',                                conjure_try_colon,
         'find_atom_type',                                   find_atom_type,
         'is_close_operator',                                is_close_operator,
+        'AT_SIGN',                                          AT_SIGN,
+        'BREAK',                                            BREAK,
+        'CONTINUE',                                         CONTINUE,
+        'COLON',                                            COLON,
+        'COMMA',                                            COMMA,
+        'COMMA__W',                                         COMMA__W,
+        'ELSE',                                             ELSE,
+        'EXCEPT',                                           EXCEPT,
+        'FOR__W',                                           FOR__W,
+        'FUNCTION__W',                                      FUNCTION__W,
+        'IF__W',                                            IF__W,
+        'IN__W',                                            IN__W,
         'is_colon_7',                                       is_colon_7,
         'is_right_parenthesis_7',                           is_right_parenthesis_7,
+        'LEFT_BRACE',                                       LEFT_BRACE,
         'lookup_keyword_conjure_function',                  lookup_keyword_conjure_function,
+        'LP',                                               LP,
+        'LSB',                                              LSB,
+        'NOT__W',                                           NOT__W,
+        'PASS',                                             PASS,
+        'RAISE__W',                                         RAISE__W,
+        'RETURN',                                           RETURN,
+        'RETURN__W',                                        RETURN__W,
+        'RIGHT_BRACE',                                      RIGHT_BRACE,
+        'RP',                                               RP,
+        'RSB',                                              RSB,
+        'TRY',                                              TRY,
+        'W__ASSIGN__W',                                     W__ASSIGN__W,
+        'W__AS__W',                                         W__AS__W,
+        'W__COLON__W',                                      W__COLON__W,
+        'W__ELSE__W',                                       W__ELSE__W,
+        'W__FOR__W',                                        W__FOR__W,
+        'WHILE__W',                                         WHILE__W,
+        'W__IF__W',                                         W__IF__W,
+        'W__IN__W',                                         W__IN__W,
+        'W__IS__W',                                         W__IS__W,
+        'WITH__W',                                          WITH__W,
+        'W__NOT__W',                                        W__NOT__W,
+        'W__PERCENT_SIGN__W',                               W__PERCENT_SIGN__W,
+        'W__STAR_SIGN__W',                                  W__STAR_SIGN__W,
+        'YIELD',                                            YIELD,
+        'YIELD__W',                                         YIELD__W,
     )

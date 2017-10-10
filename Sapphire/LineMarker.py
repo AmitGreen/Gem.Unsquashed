@@ -117,9 +117,13 @@ def gem():
         return conjure_action_word__line_marker
 
 
-    empty_line_marker = conjure_line_marker('\n')
+    LINE_MARKER = conjure_line_marker('\n')
+
+
+    LineMarker.mutate    = produce_mutate__uncommented   ('line_marker', LINE_MARKER)
+    LineMarker.transform = produce_transform__uncommented('line_marker', LINE_MARKER)
 
 
     share(
-        'empty_line_marker',    empty_line_marker,
+        'LINE_MARKER',    LINE_MARKER,
     )

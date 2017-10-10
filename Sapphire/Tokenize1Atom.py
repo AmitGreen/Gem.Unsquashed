@@ -3,7 +3,102 @@
 #
 @gem('Sapphire.Tokenize1Atom')
 def gem():
-    show = 7
+    require_gem('Sapphire.Tokenize1Operator')
+
+
+    conjure_atom_whitespace             = Shared.conjure_atom_whitespace
+    conjure_line_marker                 = Shared.conjure_line_marker
+    conjure_whitespace_atom_whitespace  = Shared.conjure_whitespace_atom_whitespace
+    conjure_whitespace__ends_in_newline = Shared.conjure_whitespace__ends_in_newline
+    conjure_whitespace                  = Shared.conjure_whitespace
+    parse_context                       = Shared.parse_context
+    qd                                  = Shared.qd
+    qi                                  = Shared.qi
+    qj                                  = Shared.qj
+    qs                                  = Shared.qs
+    raise_unknown_line                  = Shared.raise_unknown_line
+    skip_tokenize_prefix                = Shared.skip_tokenize_prefix
+    wi                                  = Shared.wi
+    wj                                  = Shared.wj
+    wn                                  = Shared.wn
+
+    @privileged
+    def produce_tokenize_multiline_quote(name, next_triple_quote_match, conjure_quote__with_newlines):
+        group_name = intern_arrange('missing_%s_quote', name)
+
+
+        def tokenize_multiline_quote(m):
+            j = qj()
+
+            prefix = (0   if qi() == j else   conjure_whitespace(qs()[qi() : j]))
+
+            many   = [qs()[j : ]]
+            append = many.append
+
+            next = next_method(parse_context.iterate_lines)
+
+            while 7 is 7:
+                next()
+
+                m = next_triple_quote_match(qs())
+
+                if m is none:
+                    raise_unknown_line()
+
+                if m.start(group_name) is not -1:
+                    append(qs())
+                    continue
+
+                quote_end = m.end('quote')
+
+                append(qs()[ : quote_end])
+
+                r = conjure_quote__with_newlines(''.join(many))
+
+                if m.start('comment_newline') is -1:
+                    wi(quote_end)
+                    wj(m.end())
+
+                    if prefix is 0:
+                        return r
+
+                    return conjure_whitespace_atom(prefix, r)
+
+                if qd() is 0:
+                    wn(conjure_line_marker(qs()[quote_end : ]))
+
+                    if prefix is 0:
+                        return r
+
+                    return conjure_whitespace_atom(prefix, r)
+
+                suffix = conjure_whitespace__ends_in_newline(qs()[quote_end : ])
+
+                skip_tokenize_prefix()
+
+                if prefix is 0:
+                    return conjure_atom_whitespace(r, suffix)
+
+                return conjure_whitespace_atom_whitespace(prefix, r, suffix)
+
+
+        if __debug__:
+            tokenize_multiline_quote.__name__ = intern_arrange('tokenize_multiline_%s_quote', name)
+
+        return tokenize_multiline_quote
+
+
+    tokenize_multiline_double_quote = produce_tokenize_multiline_quote(
+                                          'double',
+                                          next_triple_double_quote_line_match,
+                                          conjure_double_quote__with_newlines,
+                                      )
+
+    tokenize_multiline_single_quote = produce_tokenize_multiline_quote(
+                                          'single',
+                                          next_triple_single_quote_line_match,
+                                          conjure_single_quote__with_newlines,
+                                      )
 
 
     #
@@ -180,6 +275,12 @@ def gem():
             if quote_start is not -1:
                 j         = qj()
                 quote_end = m.end('quote')
+
+                if m.start('missing_double_quote') is not -1:
+                    return tokenize_multiline_double_quote(m)
+
+                if m.start('missing_single_quote') is not -1:
+                    return tokenize_multiline_single_quote(m)
 
                 if qi() != j:
                     r = find_evoke_whitespace_atom(qs()[quote_start])(j, quote_end)
@@ -405,6 +506,8 @@ def gem():
         quote_start = m.start('quote')
 
         if quote_start is not -1:
+            assert m.start('missing_double_quote') is m.start('missing_single_quote') is -1
+
             #
             #   NOTE:
             #

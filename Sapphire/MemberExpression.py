@@ -46,9 +46,34 @@ def gem():
         is_name = is_name__0
 
 
+
+        def scout_variables(t, art):
+            t.left.scout_variables(art)
+
+            #
+            #   t.postfix - not relevant yet -- relevant later when tracking class members
+            #
+
+
+        def write_import(t, art):
+            t.left.write_import(art)
+
+
+        def write_variables(t, art):
+            t.left.scout_variables(art)
+
+            #
+            #   t.postfix - not relevant yet -- relevant later when tracking class members
+            #
+
+
         def write(t, w):
             t.left.write(w)
             w(t.postfix.s)
+
+
+    MemberExpression.a = MemberExpression.left
+    MemberExpression.b = MemberExpression.postfix
 
 
     #MemberExpression.k1 = MemberExpression.left
@@ -65,6 +90,13 @@ def gem():
 
     conjure_member_expression = produce_conjure_dual('member-expession', MemberExpression, member_expression_cache)
 
+
+    MemberExpression.mutate = produce__mutate__ab__priority(
+                                  'member-expression',
+                                  conjure_member_expression,
+                                  PRIORITY_POSTFIX,
+                                  PRIORITY_POSTFIX,
+                              )
 
     append_cache('member-expression', member_expression_cache)
 

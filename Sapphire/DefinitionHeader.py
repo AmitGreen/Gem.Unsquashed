@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.DefinitionHeader')
 def gem():
+    require_gem('Sapphire.Method')
     require_gem('Sapphire.Tree')
 
 
@@ -27,21 +28,10 @@ def gem():
         split_comment                         = 1
 
 
-        def __init__(t, frill, name, parameters):
-            t.frill      = frill
-            t.name       = name
-            t.parameters = parameters
-
-
-        def  __repr__(t):
-            return arrange('<%s %s %r %r>', t.__class__.__name__, t.frill, t.name, t.parameters)
-
-
-        add_comment = 0
-
-
-        def count_newlines(t):
-            return t.frill.count_newlines() + t.name.count_newlines() + t.parameters.count_newlines()
+        __init__       = construct__123
+        __repr__       = portray__123
+        add_comment    = 0
+        count_newlines = count_newlines__123
 
 
         def display_token(t):
@@ -78,7 +68,15 @@ def gem():
         def indentation(t):
             return t.frill.v.indentation
 
-            
+
+        def scout_variables(t, art):
+            t.parameters.scout_variables(art)
+
+            #
+            #   t.name is handled elsewhere (add comment explaining where).
+            #
+
+
         def write(t, w):
             frill = t.frill
 
@@ -86,6 +84,9 @@ def gem():
             t.parameters.write(w)
             w(frill.w.s)
 
+
+    DefinitionHeader.a = DefinitionHeader.name
+    DefinitionHeader.b = DefinitionHeader.parameters
 
     DefinitionHeader.k1 = DefinitionHeader.frill
     DefinitionHeader.k2 = DefinitionHeader.name
@@ -108,20 +109,39 @@ def gem():
         if __debug__:
             conjure_definition_header.__name__ = intern_arrange('conjure_%s', name)
 
-        return (( conjure_definition_header, static_method(conjure_triple__312) ))
+        return ((
+                   conjure_definition_header,
+                   conjure_triple__312,
+               ))
 
 
     @share
     class ClassHeader(DefinitionHeader):
         __slots__    = (())
         display_name = 'class-header'
+        display_type = 'class'
+
+        scout_variables = scout_variables__ab
 
 
     @share
     class FunctionHeader(DefinitionHeader):
         __slots__          = (())
         display_name       = 'function-header'
+        display_type       = 'function'
         is_function_header = true
+
+
+        if 0:
+            def adorn(t, art):
+                parameters = t.parameters
+
+                parameters__2 = parameters.adorn(art)
+
+                if parameters is parameters__2:
+                    return t
+
+                return conjure_function_header__with_frill(t.frill, t.name, parameters__2)
 
 
         def function_header_with_1_parameter(t, function_name, parameter_1_name):
@@ -129,21 +149,22 @@ def gem():
 
 
     [
-        conjure_class_header, ClassHeader.conjure_with_frill,
-    ] = produce_conjure_definition_header(
-            'class-header',
-            ClassHeader,
-        )
+        conjure_class_header, conjure_class_header__with_frill,
+    ] = produce_conjure_definition_header('class-header', ClassHeader)
 
     [
-        conjure_function_header, FunctionHeader.conjure_with_frill,
-    ] = produce_conjure_definition_header(
-            'function-header',
-            FunctionHeader,
-        )
+        conjure_function_header, conjure_function_header__with_frill,
+    ] = produce_conjure_definition_header('function-header', FunctionHeader)
 
 
-    FunctionHeader.conjure = static_method(conjure_function_header)
+    ClassHeader.transform = produce_transform__frill__a__b_with_priority(
+                                'class_header',
+                                PRIORITY_TERNARY_LIST,
+                                conjure_class_header__with_frill,
+                            )
+
+
+    FunctionHeader.transform = produce_transform__frill_ab('function_header', conjure_function_header__with_frill)
 
 
     share(

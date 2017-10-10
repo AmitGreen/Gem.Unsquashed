@@ -3,12 +3,21 @@
 #
 @gem('Sapphire.Indentation')
 def gem():
+    require_gem('Sapphire.Atom')
+
+
+    next_indentation_cache   = {}
+    lookup_next_indentation  = next_indentation_cache.get
+    provide_next_indentation = next_indentation_cache.setdefault
+
+
     class Indentation(SapphireToken):
         __slots__ = ((
             'total',                    #   Integer {> 0}
         ))
 
 
+        comment        = 0
         is_indentation = true
 
 
@@ -35,6 +44,20 @@ def gem():
             return arrange('{+%d %s}', t.total, portray_string(t.s))
 
 
+        def mutate(t, vary, priority):
+            if vary.remove_indentation:
+                return vary.indentation
+
+            return t
+
+
+        def transform(t, vary):
+            if vary.remove_indentation:
+                return vary.indentation
+
+            return t
+
+
     def conjure_indentation(s):
         r = lookup_indentation(s)
 
@@ -49,7 +72,15 @@ def gem():
     empty_indentation = conjure_indentation('')
 
 
+    def next_indentation(indentation):
+        return (
+                      lookup_next_indentation(indentation)
+                   or provide_next_indentation(indentation, conjure_indentation(indentation.s + ' '))
+               )
+
+
     share(
         'conjure_indentation',  conjure_indentation,
         'empty_indentation',    empty_indentation,
+        'next_indentation',     next_indentation,
     )

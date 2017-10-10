@@ -34,19 +34,16 @@ def gem():
         total = 0
 
         for v in tree_many:
-            v.is_statement                  #   Test this exists
-            v.is_statement_header           #   Test this exists
-
             total += v.count_newlines()
 
         if total != length(data_lines):
             raise_runtime_error('mismatch on counted lines (counted: %d; expected: %d)',
                                 total, length(parse_context.data_lines))
-                            
+
         line('Passed#2: Total counted lines %d matches input', total)
 
 
-    def test_identical_output(data, data_many, tree_many):
+    def test_identical_output(path, data, data_many, tree_many):
         with create_StringOutput() as f:
             w = f.write
 
@@ -76,7 +73,7 @@ def gem():
             show_tree(tree_many)
 
         if test is 7:
-            test_identical_output(data, data_many, tree_many)
+            test_identical_output(path, data, data_many, tree_many)
             test_count_newlines(data_lines, tree_many)
 
         #dump_newline_meta_cache()
