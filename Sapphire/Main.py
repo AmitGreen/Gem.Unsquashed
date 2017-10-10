@@ -64,7 +64,7 @@ def gem():
             option = arguments[0]
             
             if option == 'dev':
-                if 0:
+                if 7:
                     return test_development()
 
                 return test_parse1()
