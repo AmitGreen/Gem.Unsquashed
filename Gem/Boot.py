@@ -773,6 +773,8 @@ def gem():
 
         Shared_Scope = parent_module.Shared.__dict__
 
+        #debug('child_module_name: %r', child_module_name)
+
         if child_module_name == 'Main':
             del Main.gem
 
@@ -817,6 +819,21 @@ def gem():
 
 
     #
+    #   fast_cache
+    #
+    fast_cache = gem_scope.get('fast_cache', 0)
+
+
+    if fast_cache is not 0:
+        del gem_scope['fast_cache']
+
+        fast_lookup = fast_cache.get
+    else:
+        def fast_lookup(module_name):
+            return none
+
+
+    #
     #   require_gem
     #
     if is_python_2:
@@ -840,6 +857,8 @@ def gem():
                 return module
 
             #debug('require_gem: %r', module_name)
+
+            fast = fast_lookup(module_name)
 
             dot_index = module_name.rfind('.')
 
@@ -870,30 +889,33 @@ def gem():
             #
             store_python_module(module_name, module)
 
-            if dot_index is -1:
-                [f, pathname, description] = find_module(module_name)
+            if fast is not none:
+                gem(module_name)(fast)
             else:
-                [f, pathname, description] = find_module(module_name[dot_index + 1:], parent_module.__path__)
+                if dot_index is -1:
+                    [f, pathname, description] = find_module(module_name)
+                else:
+                    [f, pathname, description] = find_module(module_name[dot_index + 1:], parent_module.__path__)
 
-            #debug('%r: %r, %r, %r', module_name, f, pathname, description)
+                #debug('%r: %r, %r, %r', module_name, f, pathname, description)
 
-            #
-            #   CAREFUL here:
-            #       We *MUST* close 'f' if any exception is thrown.
-            #
-            #       So ASAP use 'f' within a 'with' clause (this ensures 'f' is always closed, whether
-            #       an exception is thrown or not)
-            #
-            if f is not none:
-                with f:
-                    module.gem = gem
+                #
+                #   CAREFUL here:
+                #       We *MUST* close 'f' if any exception is thrown.
+                #
+                #       So ASAP use 'f' within a 'with' clause (this ensures 'f' is always closed, whether
+                #       an exception is thrown or not)
+                #
+                if f is not none:
+                    with f:
+                        module.gem = gem
+                        load_module(module_name, f, pathname, description)
+                else:
+                    if description[2] == PACKAGE_DIRECTORY:
+                        is_package = 7
+                        produce_export_and_share(module)
+
                     load_module(module_name, f, pathname, description)
-            else:
-                if description[2] == PACKAGE_DIRECTORY:
-                    is_package = 7
-                    produce_export_and_share(module)
-
-                load_module(module_name, f, pathname, description)
 
             #
             #   If this is a package: Keep this module
@@ -975,14 +997,8 @@ def gem():
     Main.gem = gem
 
 
-    gem_fast = gem_scope.get('gem_fast')
-
-
-    if gem_fast is none:
+    if fast_cache is 0:
         del Gem.__builtins__
         del Gem.__package__
 
-        gem_fast = 0
-
-
-    built_in('gem_fast', gem_fast)
+    built_in('fast_cache', fast_cache)

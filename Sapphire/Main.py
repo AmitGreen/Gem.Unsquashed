@@ -26,7 +26,7 @@ def gem():
 
 
     def test_development():
-        if gem_fast is 0:
+        if fast_cache is 0:
             create_sapphire_match()
 
         require_gem('Sapphire.Development')
@@ -39,9 +39,7 @@ def gem():
 
         require_gem('Sapphire.Parse')                       #   Must be after 'create_sapphire_match'
 
-        path = 'test.py'
-
-        parse_python(path)
+        parse_python('test.py', test = 7)
 
 
     def test_parse2():

@@ -3,10 +3,6 @@
 #
 @gem('Sapphire.Parse')
 def gem():
-    tree  = 0
-    show  = 0
-
-
     require_gem('Sapphire.Parse1')
     require_gem('Sapphire.Parse3')
 
@@ -68,7 +64,7 @@ def gem():
 
 
     @share
-    def parse_python(path):
+    def parse_python(path, show = 0, test = 0):
         [data, data_lines, data_many] = parse1_python_from_path(path)
 
         if show is 5:
@@ -79,8 +75,9 @@ def gem():
         if show is 7:
             show_tree(tree_many)
 
-        test_identical_output(data, data_many, tree_many)
-        test_count_newlines(data_lines, tree_many)
+        if test is 7:
+            test_identical_output(data, data_many, tree_many)
+            test_count_newlines(data_lines, tree_many)
 
         #dump_newline_meta_cache()
         #dump_caches('dual-twig')

@@ -48,11 +48,13 @@ def boot():
     #
     Gem_name = intern_string('Gem')
 
+
     #
     #   Calculate root & Gem paths
     #
     root_path = intern_string(path_absolute(path_join(module_path[0], '../..')))
     Gem_path  = intern_string(path_join(root_path, Gem_name))
+
 
     #
     #   Store root path
@@ -71,19 +73,38 @@ def boot():
     Gem.__path__ = [Gem_path]
 
 
-    #
-    #   Set flag to indicate using fast loading mode
-    #
-    Gem.gem_fast = 7
-
-
     store_python_module(Gem_name, Gem)
 
 
     #
-    #   Run generic boot code
+    #   Set flag to indicate using fast loading mode
     #
-    __import__('Gem.Boot').boot()
+    Gem.fast_cache = fast_cache = {}
+
+    find_fast  = fast_cache.get
+    store_fast = fast_cache.__setitem__
 
 
-    __import__(__name__).gem = __import__('__main__').gem
+    def gem(module_name):
+        def execute(f):
+            store_fast(module_name, f)
+
+            return gem
+
+
+        return execute
+
+
+    __import__(__name__).gem = gem
+
+
+    def boot():
+        fast_cache['Gem.Boot']()
+
+        f        = find_fast('Sapphire.Main')
+        gem_main = __import__('__main__').gem('Sapphire.Main')
+
+        gem_main(f)
+
+
+    return boot

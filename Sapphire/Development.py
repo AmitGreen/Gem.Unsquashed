@@ -26,6 +26,14 @@ def gem():
 
     empty_indentation__function = conjure_indented_token( empty_indentation, conjure_keyword_function('def '))
 
+    #def gem():
+    gem__function_header = conjure_function_header(
+                               empty_indentation__function,
+                               conjure_name('gem'),
+                               conjure_parameters_0(LP, RP),
+                               colon__empty_line_marker,
+                           )
+
 
     class Copyright(Object):
         __slots__ = ((
@@ -101,6 +109,17 @@ def gem():
             f.blank2()
 
 
+    def conjure_gem_decorator_header(module):
+        #@gem('Gem.Something')
+        return conjure_decorator_header(
+                   empty_indentation__at_sign,
+                   conjure_call_expression(
+                       conjure_name('gem'),
+                       conjure_arguments_1(LP, conjure_single_quote(portray(module)), RP),
+                   ),
+                   empty_line_marker,
+               )
+
     def extract_boot(path, tree, index, copyright):
         boot_code = tree[index]
 
@@ -120,6 +139,24 @@ def gem():
         return TwigCode(path, arrange('[%d]', index), extract_copyright(tree), boot_code)
 
 
+    def extract_boot_decorator(function_name, path, tree, copyright):
+        boot_decorator = tree[0]
+
+        #def boot(module_name):
+        boot_decorator__function_header = conjure_function_header(
+                                              empty_indentation__function,
+                                              conjure_name(function_name),
+                                              conjure_parameters_1(LP, conjure_name('module_name'), RP),
+                                              colon__empty_line_marker,
+                                          )
+
+        assert boot_decorator.is_function_definition
+        assert boot_decorator.a is boot_decorator__function_header
+        assert boot_decorator.b.is_statement_suite
+
+        return TwigCode(path, '[0]', copyright, boot_decorator)
+
+
     def extract_copyright(tree):
         copyright = tree[0].prefix
 
@@ -137,6 +174,24 @@ def gem():
         return conjure_copyright(Integer(m.group('year')), m.group('author'))
 
 
+    def extract_gem(module, path):
+        tree = parse_python(path)
+
+        assert length(tree) is 1
+
+        copyright = extract_copyright(tree)
+
+        gem = tree[0]
+
+        assert gem.is_decorated_definition
+        assert gem.a is conjure_gem_decorator_header(module)
+        assert gem.b.is_function_definition
+        assert gem.b.a is gem__function_header
+        assert gem.b.b.is_statement_suite
+
+        return TwigCode(path, '[0]', copyright, gem)
+
+
     def extract_sardnoyx_boot():
         path = '../Sardonyx/Boot.py'
 
@@ -144,13 +199,53 @@ def gem():
 
         assert length(tree) is 1
 
-        return ((
-                   extract_boot(path, tree, 0, extract_copyright(tree)),
-               ))
+        return extract_boot(path, tree, 0, extract_copyright(tree))
+
+
+    def extract_gem_boot():
+        module_name = 'Gem.Boot'
+        path        = '../Gem/Boot.py'
+
+        tree = parse_python(path)
+
+        assert length(tree) is 3
+
+        copyright = extract_copyright(tree)
+
+        #
+        #    [0]
+        #       def boot(module_name):
+        #           ...
+        #
+        boot_decorator = extract_boot_decorator('gem', path, tree, copyright)
+
+        del boot_decorator  #   We don't really want this, but just extracted it for testing purposes
+
+        #
+        #   [1]: empty lines
+        #
+        assert tree[1].is_empty_line_suite
+
+        #
+        #   [2]:
+        #       @gem('Gem.Boot')
+        #       def gem():
+        #           ...
+        #
+        gem = tree[2]
+
+        assert gem.is_decorated_definition
+        assert gem.a is conjure_gem_decorator_header(module_name)
+        assert gem.b.is_function_definition
+        assert gem.b.a is gem__function_header
+        assert gem.b.b.is_statement_suite
+
+        return TwigCode(path, '[2]', copyright, gem)
 
 
     def extract_sapphire_main():
-        path = '../Sapphire/Main.py'
+        module_name = 'Sapphire.Main'
+        path        = '../Sapphire/Main.py'
 
         tree = parse_python(path)
 
@@ -164,19 +259,7 @@ def gem():
         #       def boot(module_name):
         #           ...
         #
-        boot_decorator = tree[0]
-
-        #def boot(module_name):
-        boot_decorator__function_header = conjure_function_header(
-                                              empty_indentation__function,
-                                              conjure_name('boot'),
-                                              conjure_parameters_1(LP, conjure_name('module_name'), RP),
-                                              colon__empty_line_marker,
-                                          )
-
-        assert boot_decorator.is_function_definition
-        assert boot_decorator.a is boot_decorator__function_header
-        assert boot_decorator.b.is_statement_suite
+        boot_decorator = extract_boot_decorator('boot', path, tree, copyright)
 
 
         #
@@ -210,28 +293,10 @@ def gem():
         #
         main = tree[4]
 
-        #@gem('Sapphire.Main')
-        main__decorator_header = conjure_decorator_header(
-                                    empty_indentation__at_sign,
-                                    conjure_call_expression(
-                                        conjure_name('gem'),
-                                        conjure_arguments_1(LP, conjure_single_quote("'Sapphire.Main'"), RP),
-                                    ),
-                                    empty_line_marker,
-                                )
-
-        #def gem():
-        main__function_header = conjure_function_header(
-                                    empty_indentation__function,
-                                    conjure_name('gem'),
-                                    conjure_parameters_0(LP, RP),
-                                    colon__empty_line_marker,
-                                )
-
         assert main.is_decorated_definition
-        assert main.a is main__decorator_header
+        assert main.a is conjure_gem_decorator_header(module_name)
         assert main.b.is_function_definition
-        assert main.b.a is main__function_header
+        assert main.b.a is gem__function_header
         assert main.b.b.is_statement_suite
 
 
@@ -239,7 +304,7 @@ def gem():
         #   Result
         #
         return ((
-                   TwigCode(path, '[0]', copyright, boot_decorator),
+                   boot_decorator,
                    TwigCode(path, '[4]', copyright, main),
                ))
 
@@ -248,14 +313,28 @@ def gem():
     @share
     def development():
         [boot_decorator, main_code] = extract_sapphire_main()
-        [boot_code]                 = extract_sardnoyx_boot()
+        sardnoyx_boot_code          = extract_sardnoyx_boot()
+        gem_boot_code               = extract_gem_boot()
 
+        gem_many   = []
+        append_gem = gem_many.append
+
+        for part in ['Core']:
+            module = arrange('Gem.%s', part)
+            path   = path_join('../Gem', arrange('%s.py', part))
+
+            gem_many.append(extract_gem(module, path))
 
         output_path = '../bin/.pyxie/hma.py'
 
         with create_DelayedFileOutput(output_path) as f:
             boot_decorator.write(f)
-            boot_code.write(f)
+            sardnoyx_boot_code.write(f)
+
+            for v in gem_many:
+                v.write(f)
+
+            gem_boot_code.write(f)
             main_code.write(f)
 
             close_copyright(f)
