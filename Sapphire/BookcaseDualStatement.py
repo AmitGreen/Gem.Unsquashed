@@ -82,6 +82,32 @@ def gem():
             return t.frill.v
 
 
+        def remove_comments(t):
+            frill = t.frill
+            a     = t.a
+            b     = t.b
+            w     = frill.w
+
+            a__2 = a.remove_comments()
+            w__2 = w.uncommented_token
+            b__2 = b.remove_comments()
+
+            if (
+                    frill.comment is 0
+               #and frill.v       is frill.v
+                and a             is a__2
+                and w             is w__2
+                and b             is b__2
+                and frill.x       is LINE_MARKER
+            ):
+                return t
+
+            return t.conjure(frill.v, a__2, w__2, b__2, LINE_MARKER)
+
+
+        remove_comments__frill = remove_comments
+
+
         def write__frill(t, w):
             frill   = t.frill
             comment = frill.comment
@@ -97,14 +123,9 @@ def gem():
 
 
     class AssignStatement_1(DualExpressionStatement):
-        __slots__    = (())
-        display_name = 'assign-1'
-        frill        = conjure_vwx_frill(
-                           empty_indentation,
-                           conjure_equal_sign(' = '),
-                           empty_line_marker,
-                       )
-
+        __slots__        = (())
+        display_name     = 'assign-1'
+        frill            = conjure_vwx_frill(empty_indentation, W__EQUAL_SIGN__W, LINE_MARKER)
         find_require_gem = find_require_gem__0
 
 
@@ -114,18 +135,19 @@ def gem():
         frill        = conjure_vwx_frill(
                            empty_indentation,
                            conjure_action_word('+=', ' += '),
-                           empty_line_marker,
+                           LINE_MARKER,
                        )
 
         find_require_gem = find_require_gem__0
 
 
     [
-            conjure_assign_1, AssignStatement_1.conjure_with_frill,
+            conjure_assign_1, AssignStatement_1.conjure_plain, AssignStatement_1.conjure_with_frill,
     ] = produce_conjure_bookcase_dual_expression(
             'assign-1',
             AssignStatement_1,
 
+            produce_conjure_plain      = true,
             produce_conjure_with_frill = true,
         )
 

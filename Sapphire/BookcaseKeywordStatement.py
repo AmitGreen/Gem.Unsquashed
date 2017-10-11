@@ -82,11 +82,12 @@ def gem():
 
 
         def remove_comments(t):
-            frill            = t.frill
+            frill          = t.frill
             indented_token = frill.v
-            a                = t.a
+            a              = t.a
 
-            uncommented_token = t.uncommented_token
+            uncommented_token  = t.uncommented_token
+            uncommented_ending = t.uncommented_ending
 
             indented_token__2 = (
                                     indented_token   if indented_token.token is uncommented_token else
@@ -98,12 +99,14 @@ def gem():
             if (
                     indented_token is indented_token__2
                 and a              is a__2
-                and frill.w        is empty_line_marker
+                and frill.w        is uncommented_ending
             ):
                 return t
 
-            return t.conjure(indented_token__2, a__2, empty_line_marker)
+            return t.conjure(indented_token__2, a__2, uncommented_ending)
 
+
+        remove_comments__frill = remove_comments
 
 
         def write__frill(t, w):
@@ -121,7 +124,7 @@ def gem():
     class AssertStatement_1(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'assert-1'
-        frill        = conjure_vw_frill(empty_indentation__at_sign, empty_line_marker)
+        frill        = conjure_vw_frill(empty_indentation__at_sign, LINE_MARKER)
 
         find_require_gem = find_require_gem__0
 
@@ -130,10 +133,13 @@ def gem():
     class DecoratorHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = '@-header'
-        frill        = conjure_vw_frill(
-                           conjure_indented_token(empty_indentation, conjure_at_sign('@')),
-                           empty_line_marker,
-                       )
+
+        uncommented_token = conjure_at_sign('@')
+        uncommented_ending = LINE_MARKER
+        frill              = conjure_vw_frill(
+                                 conjure_indented_token(empty_indentation, uncommented_token),
+                                 uncommented_ending,
+                             )
 
         is_class_decorator_or_function_header = true
         is_decorator_header                   = true
@@ -149,7 +155,7 @@ def gem():
         display_name = 'delete-statement-1'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_delete('del ')),
-                           empty_line_marker,
+                           LINE_MARKER,
                        )
 
         find_require_gem = find_require_gem__0
@@ -161,7 +167,7 @@ def gem():
         display_name = 'else-if-header'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_else_if('elif ')),
-                           colon__empty_line_marker,
+                           COLON__LINE_MARKER,
                        )
 
         is_any_else         = true
@@ -178,7 +184,7 @@ def gem():
         display_name = 'except-header-1'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_except('except ')),
-                           colon__empty_line_marker,
+                           COLON__LINE_MARKER,
                        )
 
         is_any_except_or_finally = true
@@ -193,10 +199,13 @@ def gem():
     class IfHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'if-header'
-        frill        = conjure_vw_frill(
-                           conjure_indented_token(empty_indentation, conjure_keyword_if('if ')),
-                           colon__empty_line_marker,
-                       )
+
+        uncommented_token  = conjure_keyword_if('if ')
+        uncommented_ending = COLON__LINE_MARKER
+        frill              = conjure_vw_frill(
+                                 conjure_indented_token(empty_indentation, uncommented_token),
+                                 uncommented_ending,
+                             )
 
         is_statement        = false
         is_statement_header = true
@@ -207,7 +216,7 @@ def gem():
         display_name = 'import-statement'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_import('import ')),
-                           empty_line_marker,
+                           LINE_MARKER,
                        )
 
         find_require_gem = find_require_gem__0
@@ -218,7 +227,7 @@ def gem():
         display_name = 'raise-statement'
         frill        = conjure_vw_frill(
                            conjure_indented_token(conjure_indentation('    '), conjure_keyword_raise('raise ')),
-                           empty_line_marker,
+                           LINE_MARKER,
                        )
 
         find_require_gem = find_require_gem__0
@@ -228,11 +237,12 @@ def gem():
         __slots__    = (())
         display_name = 'return-statement'
 
-        uncommented_token = conjure_keyword_return('return ')
-        frill             = conjure_vw_frill(
-                                conjure_indented_token(conjure_indentation('    '), uncommented_token),
-                                empty_line_marker,
-                            )
+        uncommented_token  = conjure_keyword_return('return ')
+        uncommented_ending = LINE_MARKER
+        frill              = conjure_vw_frill(
+                                 conjure_indented_token(conjure_indentation('    '), uncommented_token),
+                                 uncommented_ending,
+                             )
 
         find_require_gem = find_require_gem__0
 
@@ -243,7 +253,7 @@ def gem():
         display_name = 'while-header'
         frill        = conjure_vw_frill(
                            conjure_indented_token(conjure_indentation('    '), conjure_keyword_while('while ')),
-                           colon__empty_line_marker,
+                           COLON__LINE_MARKER,
                        )
 
         is_statement        = false
@@ -256,7 +266,7 @@ def gem():
         display_name = 'with-header-1'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('with ')),
-                           colon__empty_line_marker,
+                           COLON__LINE_MARKER,
                        )
 
         is_statement        = false
@@ -271,7 +281,7 @@ def gem():
         display_name = 'yield-statement-1'
         frill        = conjure_vw_frill(
                            conjure_indented_token(conjure_indentation('    '), conjure_keyword_yield('yield ')),
-                           empty_line_marker,
+                           LINE_MARKER,
                        )
 
         find_require_gem = find_require_gem__0
@@ -386,6 +396,7 @@ def gem():
         )
 
 
+    IfHeader.conjure        = static_method(conjure_if_header)
     ReturnStatement.conjure = static_method(conjure_return_statement)
 
 

@@ -71,6 +71,7 @@ def gem():
 
         dump_token       = dump_token__no_impression
         find_require_gem = find_require_gem__0
+        remove_comments  = remove_comments__0
 
 
     class IfStatement_Many(TokenTuple):
@@ -168,7 +169,7 @@ def gem():
                             return conjure_indented__pass__line_marker(
                                        (t[0].indentation) or (t[1].indentation),
                                        conjure_keyword_pass('pass'),
-                                       empty_line_marker,
+                                       LINE_MARKER,
                                    )
 
                     for w in iterator:
@@ -183,7 +184,7 @@ def gem():
                 else:
                     if v__2 is 0:
                         for v in iterator:
-                            v__2 = w.remove_comments()
+                            v__2 = v.remove_comments()
 
                             if v__2 is not 0:
                                 break

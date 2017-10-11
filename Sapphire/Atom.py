@@ -129,6 +129,9 @@ def gem():
             return arrange('<%s>', t.s)
 
 
+        remove_comments = remove_comments__self
+
+
     class EndOfData(SapphireToken):
         __slots__                        = (())
         indentation                      = none
@@ -144,6 +147,9 @@ def gem():
 
         def __repr__(t):
             return t.s
+
+
+        remove_comments = remove_comments__self
 
 
     @share
@@ -165,8 +171,7 @@ def gem():
             return t.s == s
 
 
-        def remove_comments(t):
-            return t
+        remove_comments = remove_comments__self
 
 
     @share
@@ -185,6 +190,9 @@ def gem():
             return t.s
 
 
+        remove_comments = remove_comments__self
+
+
     @share
     class SingleQuote(SapphireToken):
         __slots__                      = (())
@@ -200,6 +208,9 @@ def gem():
 
         def display_token(t):
             return arrange('<%s>', t.s)
+
+
+        remove_comments = remove_comments__self
 
 
     @share

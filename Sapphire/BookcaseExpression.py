@@ -60,6 +60,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        remove_comments = remove_comments__a__plain
+
+
         def write(t, w):
             frill = t.frill
 
@@ -116,6 +119,13 @@ def gem():
                                            frill.v.display_token(),
                                            t.a    .display_token(),
                                            frill.w.display_token())
+
+
+                    remove_comments = attribute(Meta, 'remove_comments__frill', none)
+
+                    if remove_comments is none:
+                        def remove_comments(t):
+                            return t.conjure_plain(t.a.remove_comments())
 
 
                 write = attribute(Meta, 'write__frill', none)
@@ -179,10 +189,21 @@ def gem():
         is_arguments_1 = true
 
 
+        def remove_comments(t):
+            a = t.a
+
+            a__2 = a.remove_comments()
+
+            if (t.frill is LP_RP) and (a is a__2):
+                return t
+
+            return conjure_arguments_1(LP, a__2, RP)
+
+
     class HeadIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'head-index'
-        frill        = conjure_vw_frill(LSB, conjure__colon__right_square_bracket(conjure_colon(':'), RSB))
+        frill        = conjure_vw_frill(LSB, conjure__colon__right_square_bracket(COLON, RSB))
 
 
     class ListExpression_1(BookcaseExpression):
@@ -219,7 +240,8 @@ def gem():
 
 
         def remove_comments(t):
-            a    = t.a
+            a = t.a
+
             a__2 = a.remove_comments()
 
             if (t.frill is LP_RP) and (a is a__2):
@@ -239,7 +261,7 @@ def gem():
     class TailIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'tail-index'
-        frill        = conjure_vw_frill(conjure__left_square_bracket__colon(LSB, conjure_colon(':')), RSB)
+        frill        = conjure_vw_frill(conjure__left_square_bracket__colon(LSB, COLON), RSB)
 
 
     class TupleExpression_1(BookcaseExpression):

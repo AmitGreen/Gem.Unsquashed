@@ -28,7 +28,7 @@ def gem():
                                empty_indentation__function,
                                conjure_name('gem'),
                                conjure_parameters_0(LP, RP),
-                               colon__empty_line_marker,
+                               COLON__LINE_MARKER,
                            )
 
 
@@ -219,7 +219,7 @@ def gem():
                        conjure_name('gem'),
                        conjure_arguments_1(LP, conjure_single_quote(portray(module)), RP),
                    ),
-                   empty_line_marker,
+                   LINE_MARKER,
                )
 
     def extract_boot(path, tree, index, copyright):
@@ -232,7 +232,7 @@ def gem():
                                               conjure_name('boot'),
                                               conjure_arguments_1(LP, conjure_single_quote("'Boot'"), RP),
                                           ),
-                                          empty_line_marker,
+                                          LINE_MARKER,
                                       )
 
         assert boot_code.is_decorated_definition
@@ -249,7 +249,7 @@ def gem():
                                               empty_indentation__function,
                                               conjure_name(function_name),
                                               conjure_parameters_1(LP, conjure_name('module_name'), RP),
-                                              colon__empty_line_marker,
+                                              COLON__LINE_MARKER,
                                           )
 
         assert boot_decorator.is_function_definition
@@ -409,7 +409,7 @@ def gem():
         #
         return ((
                    boot_decorator,
-                   TwigCode(path, '[4]', copyright, main),
+                   TwigCode(path, '[4]', copyright, main.remove_comments()),
                ))
 
 

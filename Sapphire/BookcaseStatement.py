@@ -6,7 +6,7 @@ def gem():
     class ExpressionStatement(BookcaseExpression):
         __slots__                  = (())
         display_name               = 'expression-statement'
-        frill                      = conjure_vw_frill(empty_indentation, empty_line_marker)
+        frill                      = conjure_vw_frill(empty_indentation, LINE_MARKER)
         is_any_else                = false
         is_any_except_or_finally   = false
         is_else_header_or_fragment = false

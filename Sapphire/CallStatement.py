@@ -41,7 +41,7 @@ def gem():
 
             assert frill.comment is 0
 
-            return t.conjure(
+            return t.conjure_call(
                        conjure_commented_vw_frill(comment, frill.v, frill.w),
                        t.left,
                        t.arguments,
@@ -99,6 +99,29 @@ def gem():
                 frill.w    .dump_token(f)
 
 
+        def remove_comments(t):
+            frill     = t.frill
+            left      = t.left
+            arguments = t.arguments
+
+            left__2      = left     .remove_comments()
+            arguments__2 = arguments.remove_comments()
+
+            frill__2 = (
+                           frill   if (frill.comment is 0) and (frill.w is LINE_MARKER) else
+                           conjure_vw_frill(frill.v, LINE_MARKER)
+                       )
+                        
+            if (
+                    left      is left__2
+                and arguments is arguments__2
+                and frill     is frill__2
+            ):
+                return t
+
+            return t.conjure_call(frill__2, left__2, arguments__2)
+
+
         def write(t, w):
             frill   = t.frill
             comment = frill.comment
@@ -140,5 +163,5 @@ def gem():
     SapphireToken   .call_statement = static_conjure_call_statement
     SapphireTrunk   .call_statement = static_conjure_call_statement
 
-    CallStatement      .conjure = static_conjure_call_statement
-    MethodCallStatement.conjure = static_conjure_method_call_statement
+    CallStatement      .conjure_call = static_conjure_call_statement
+    MethodCallStatement.conjure_call = static_conjure_method_call_statement

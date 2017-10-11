@@ -117,9 +117,9 @@ def gem():
         return conjure_action_word__line_marker
 
 
-    empty_line_marker = conjure_line_marker('\n')
+    LINE_MARKER = conjure_line_marker('\n')
 
 
     share(
-        'empty_line_marker',    empty_line_marker,
+        'LINE_MARKER',    LINE_MARKER,
     )

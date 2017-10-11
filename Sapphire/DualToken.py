@@ -491,7 +491,10 @@ def gem():
 
         def parameters_1_named(t, name):
             return 0
-            
+
+
+        def remove_comments(t):
+            return empty__parameters_0
 
 
     class Whitespace_Atom(BaseDualOperator):
@@ -917,9 +920,10 @@ def gem():
                                          none,
                                      )
 
-    colon__empty_line_marker = conjure_colon__line_marker(conjure_colon(':'), empty_line_marker)
+    COLON__LINE_MARKER = conjure_colon__line_marker(COLON, LINE_MARKER)
 
-    empty__arguments_0 = conjure_arguments_0(LP, RP)
+    empty__arguments_0  = conjure_arguments_0(LP, RP)
+    empty__parameters_0 = conjure_parameters_0(LP, RP)
 
     find_evoke_comma_something = {
                                      #   (
@@ -993,7 +997,7 @@ def gem():
 
 
     share(
-        'colon__empty_line_marker',                 colon__empty_line_marker,
+        'COLON__LINE_MARKER',                       COLON__LINE_MARKER,
         'conjure_arguments_0',                      conjure_arguments_0,
         'conjure_colon__line_marker',               conjure_colon__line_marker,
         'conjure__colon__right_square_bracket',     conjure__colon__right_square_bracket,

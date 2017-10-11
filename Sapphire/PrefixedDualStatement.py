@@ -36,6 +36,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        remove_comments  = remove_comments__ab
 
 
     class DecoratedDefinition(DualTwig):
@@ -52,6 +53,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        remove_comments  = remove_comments__ab
 
 
     @share
@@ -71,6 +73,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        remove_comments  = remove_comments__ab
 
 
     @share
@@ -90,6 +93,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        remove_comments  = remove_comments__ab
 
 
     @share
@@ -109,6 +113,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        remove_comments  = remove_comments__ab
 
 
     @share
@@ -128,6 +133,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        remove_comments  = remove_comments__ab
 
 
     class ForStatement(DualTwig):
@@ -145,6 +151,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        remove_comments  = remove_comments__ab
 
 
     class FunctionDefinition(DualTwig):
@@ -161,6 +168,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        remove_comments  = remove_comments__ab
 
 
     @share
@@ -179,6 +187,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        remove_comments  = remove_comments__ab
 
 
     @share
@@ -196,6 +205,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        remove_comments  = remove_comments__ab
 
 
     class WhileStatement(DualTwig):
@@ -213,6 +223,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        remove_comments  = remove_comments__ab
 
 
     class WithStatement(DualTwig):
@@ -230,6 +241,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        remove_comments  = remove_comments__ab
 
 
     @privileged
@@ -281,7 +293,7 @@ def gem():
 
 
                     def remove_comments(t):
-                        return t.conjure_normal(t.a.remove_comments(), t.b.remove_comments())
+                        return t.conjure(t.a.remove_comments(), t.b.remove_comments())
 
 
                     def write(t, w):
@@ -361,7 +373,12 @@ def gem():
     ] = produce_conjure_dual_twig_functions('with-statement', WithStatement)
 
 
-    FunctionDefinition.conjure_normal = static_method(conjure_function_definition)
+    DecoratedDefinition.conjure = static_method(conjure_decorated_definition)
+    ExceptFragment     .conjure = static_method(conjure_except_fragment)
+    ForStatement       .conjure = static_method(conjure_for_statement)
+    FunctionDefinition .conjure = static_method(conjure_function_definition)
+    IfStatement        .conjure = static_method(conjure_if_statement)
+    TryStatement       .conjure = static_method(conjure_try_statement)
 
 
     append_cache('#dual-twig', prefixed_dual_twig_cache)

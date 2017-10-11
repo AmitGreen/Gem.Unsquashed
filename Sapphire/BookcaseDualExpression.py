@@ -44,6 +44,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        remove_comments = remove_comments__ab__plain
+
+
         def write(t, w):
             frill = t.frill
 
@@ -64,8 +67,10 @@ def gem():
             name,
             Meta,
 
+            produce_conjure_plain      = false,
             produce_conjure_with_frill = false,
     ):
+        assert type(produce_conjure_plain)      is Boolean
         assert type(produce_conjure_with_frill) is Boolean
 
         cache  = {}
@@ -108,6 +113,13 @@ def gem():
                                            frill.x.display_token())
 
 
+                    remove_comments = attribute(Meta, 'remove_comments__frill', none)
+
+                    if remove_comments is none:
+                        def remove_comments(t):
+                            return t.conjure_plain(t.a.remove_comments(), t.b.remove_comments())
+
+
                 write = attribute(Meta, 'write__frill', none)
 
 
@@ -146,8 +158,25 @@ def gem():
 
             append_cache(name, cache)
 
+        if produce_conjure_plain:
+            if produce_conjure_with_frill:
+                return ((
+                           conjure_bookcase_dual_expression,
+                           static_method(conjure_dual),
+                           static_method(conjure_triple_with_frill),
+                       ))
+
+            return ((
+                       conjure_bookcase_dual_expression,
+                       static_method(conjure_dual),
+                   ))
+
+
         if produce_conjure_with_frill:
-            return (( conjure_bookcase_dual_expression, static_method(conjure_triple_with_frill) ))
+            return ((
+                       conjure_bookcase_dual_expression,
+                       static_method(conjure_triple_with_frill),
+                   ))
 
         return conjure_bookcase_dual_expression
 
@@ -180,7 +209,15 @@ def gem():
         is_atom                        = true
 
 
-    conjure_arguments_2        = produce_conjure_bookcase_dual_expression('arguments-2',        Arguments_2)
+    [
+        conjure_arguments_2, Arguments_2.conjure_plain,
+    ] = produce_conjure_bookcase_dual_expression(
+                'arguments-2',
+                Arguments_2,
+                
+                produce_conjure_plain = true,
+        )
+
     conjure_list_expression_2  = produce_conjure_bookcase_dual_expression('list-expression-2',  ListExpression_2)
     conjure_range_index        = produce_conjure_bookcase_dual_expression('range-index',        RangeIndex)
     conjure_tuple_expression_2 = produce_conjure_bookcase_dual_expression('tuple-expression-2', TupleExpression_2)

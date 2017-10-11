@@ -154,7 +154,7 @@ def gem():
                            conjure_indented_token(empty_indentation, conjure_keyword_with('raise ')),
                            conjure_comma(', '),
                            conjure_comma(', '),
-                           empty_line_marker,
+                           LINE_MARKER,
                        )
 
         is_any_else                = false

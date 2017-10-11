@@ -339,6 +339,17 @@ def gem():
         indentation    = BaseQuadrupleOperator.a
 
 
+        def remove_comments(t):
+            if (
+                    t.b is EXCEPT
+                and t.c is COLON
+                and t.d is LINE_MARKER
+            ):
+                return t
+
+            return conjure_indented__except__colon__line_marker(t.a, EXCEPT, COLON, LINE_MARKER)
+
+
     @share
     class Indented_Finally_Colon_LineMarker(BaseQuadrupleOperator):
         __slots__                = (())
@@ -381,7 +392,32 @@ def gem():
         indentation    = BaseQuadrupleOperator.a
 
 
+        def remove_comments(t):
+            if (
+                    t.b is TRY
+                and t.c is COLON
+                and t.d is LINE_MARKER
+            ):
+                return t
+
+            return conjure_indented__try__colon__line_marker(t.a, TRY, COLON, LINE_MARKER)
+
+
     conjure_dot_name_quadruplet = produce_conjure_quadruple_token('.name-quadruplet', DotNameQuadruplet)
+
+    conjure_indented__except__colon__line_marker = produce_conjure_quadruple_token(
+                                                       'indented__except__colon__line_marker',
+                                                       Indented_Except_Colon_LineMarker,
+
+                                                       line_marker = true,
+                                                   )
+
+    conjure_indented__try__colon__line_marker = produce_conjure_quadruple_token(
+                                                    'indented__try__colon__line_marker',
+                                                    Indented_Try_Colon_LineMarker,
+
+                                                    line_marker = true,
+                                                )
 
     evoke_indented__else__colon__line_marker = produce_evoke_quadruple_token(
             'indented__else__colon__line_marker',
@@ -422,6 +458,7 @@ def gem():
 
             line_marker = true,
         )
+
 
     share(
         'conjure_dot_name_quadruplet',                          conjure_dot_name_quadruplet,

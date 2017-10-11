@@ -99,11 +99,11 @@ def gem():
                     indented_keyword is indented_keyword__2
                 and parameters       is parameters__2
                 and name             is name__2
-                and frill.w          is colon__empty_line_marker
+                and frill.w          is COLON__LINE_MARKER
             ):
                 return t
 
-            return t.conjure(indented_keyword__2, name__2, parameters__2, colon__empty_line_marker)
+            return t.conjure(indented_keyword__2, name__2, parameters__2, COLON__LINE_MARKER)
 
 
         def write(t, w):

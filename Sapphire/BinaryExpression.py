@@ -14,6 +14,7 @@ def gem():
     lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   Due to privileged
     produce_conjure_dual        = Shared.produce_conjure_dual           #   Due to privileged
     produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   Due to privileged
+    remove_comments__ab__always = Shared.remove_comments__ab__always    #   Due to privileged
     store_adjusted_meta         = Shared.store_adjusted_meta            #   Due to privileged
 
 
@@ -67,6 +68,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        remove_comments = remove_comments__ab
+
+
         def write(t, w):
             t.a.write(w)
             w(t.frill.s)
@@ -112,6 +116,9 @@ def gem():
                                             if method_is_function(Meta.display_token, display_token__with_braces) else
                                                 display_token__frill
                                     )
+
+
+                    remove_comments = remove_comments__ab__always
 
 
                 BinaryExpression_WithFrill.k3  = BinaryExpression_WithFrill.frill

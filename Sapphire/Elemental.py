@@ -1010,8 +1010,15 @@ def gem():
     conjure_keyword_yield    = produce_conjure_action_word('keyword-yield',         KeywordYield)
 
 
-    LP = conjure_left_parenthesis ('(')
-    RP = conjure_right_parenthesis(')')
+    COLON            = conjure_colon(':')
+    EXCEPT           = conjure_keyword_try('except')
+    LP               = conjure_left_parenthesis ('(')
+    RP               = conjure_right_parenthesis(')')
+    TRY              = conjure_keyword_try('try')
+    W__EQUAL_SIGN__W = conjure_equal_sign(' = ')
+
+
+    OperatorEqualSign.uncommented_token = W__EQUAL_SIGN__W
 
 
     find_atom_type = {
@@ -1113,6 +1120,10 @@ def gem():
         'is_colon_7',                                       is_colon_7,
         'is_right_parenthesis_7',                           is_right_parenthesis_7,
         'lookup_keyword_conjure_function',                  lookup_keyword_conjure_function,
+        'COLON',                                            COLON,
+        'EXCEPT',                                           EXCEPT,
         'LP',                                               LP,
         'RP',                                               RP,
+        'TRY',                                              TRY,
+        'W__EQUAL_SIGN__W',                                 W__EQUAL_SIGN__W,
     )
