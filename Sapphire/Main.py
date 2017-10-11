@@ -2,6 +2,7 @@
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
 def boot(module_name):
+    #test
     def execute(f):
         return f()
 
@@ -24,7 +25,7 @@ def gem():
     require_gem('Sapphire.Core')
 
 
-    def test_development():
+    def test_development(remove_comments):
         if fast_cache is 0:
             require_gem('Sapphire.Pattern')
 
@@ -32,7 +33,7 @@ def gem():
 
         require_gem('Sapphire.Development')
 
-        development()
+        development(remove_comments)
 
         if fast_cache is not 0:
             for s in sorted_list(fast_cache):
@@ -69,8 +70,8 @@ def gem():
             option = arguments[0]
             
             if option == 'dev':
-                if 7:
-                    return test_development()
+                if 1:
+                    return test_development(remove_comments = true)
 
                 return test_parse1()
 

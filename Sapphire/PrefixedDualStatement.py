@@ -4,12 +4,14 @@
 @gem('Sapphire.PrefixedDualStatement')
 def gem():
     require_gem('Sapphire.DualStatement')
+    require_gem('Sapphire.DumpToken')
 
 
-    lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   Due to 'privileged'
-    produce_conjure_dual_twig   = Shared.produce_conjure_dual_twig      #   Due to privileged
-    produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   Due to privileged
-    store_adjusted_meta         = Shared.store_adjusted_meta            #   Due to 'privileged'
+    dump_token                  = Shared.dump_token                     #   due to privileged
+    lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   due to privileged
+    produce_conjure_dual_twig   = Shared.produce_conjure_dual_twig      #   due to privileged
+    produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   due to privileged
+    store_adjusted_meta         = Shared.store_adjusted_meta            #   due to privileged
 
 
     prefixed_dual_twig_cache  = {}
@@ -277,7 +279,11 @@ def gem():
                             t.a.dump_token(f)
                             t.b.dump_token(f)
 
-                                        
+
+                    def remove_comments(t):
+                        return t.conjure_normal(t.a.remove_comments(), t.b.remove_comments())
+
+
                     def write(t, w):
                         t.prefix.write(w)
                         t.a     .write(w)
@@ -353,6 +359,9 @@ def gem():
     [
             conjure_with_statement, conjure_prefixed_with_statement,
     ] = produce_conjure_dual_twig_functions('with-statement', WithStatement)
+
+
+    FunctionDefinition.conjure_normal = static_method(conjure_function_definition)
 
 
     append_cache('#dual-twig', prefixed_dual_twig_cache)

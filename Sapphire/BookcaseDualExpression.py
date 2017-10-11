@@ -17,9 +17,7 @@ def gem():
 
 
     COMMA_SPACE = conjure_comma               (', ')
-    LP          = conjure_left_parenthesis    ('(')
     LSB         = conjure_left_square_bracket ('[')
-    RP          = conjure_right_parenthesis   (')')
     RSB         = conjure_right_square_bracket(']')
 
 

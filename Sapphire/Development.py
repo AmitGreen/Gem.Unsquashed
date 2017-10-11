@@ -21,9 +21,6 @@ def gem():
     #
     #   Tokens
     #
-    LP = conjure_left_parenthesis ('(')
-    RP = conjure_right_parenthesis(')')
-
     empty_indentation__function = conjure_indented_token( empty_indentation, conjure_keyword_function('def '))
 
     #def gem():
@@ -244,7 +241,7 @@ def gem():
         return TwigCode(path, arrange('[%d]', index), extract_copyright(tree), boot_code)
 
 
-    def extract_boot_decorator(function_name, path, tree, copyright):
+    def extract_boot_decorator(function_name, path, tree, copyright, extract_comments = false):
         boot_decorator = tree[0]
 
         #def boot(module_name):
@@ -258,6 +255,9 @@ def gem():
         assert boot_decorator.is_function_definition
         assert boot_decorator.a is boot_decorator__function_header
         assert boot_decorator.b.is_statement_suite
+
+        if extract_comments:
+            boot_decorator = boot_decorator.remove_comments()
 
         return TwigCode(path, '[0]', copyright, boot_decorator)
 
@@ -347,7 +347,7 @@ def gem():
         return TwigCode(path, '[2]', copyright, gem)
 
 
-    def extract_sapphire_main():
+    def extract_sapphire_main(remove_comments):
         module_name = 'Sapphire.Main'
         path        = '../Sapphire/Main.py'
 
@@ -363,7 +363,7 @@ def gem():
         #       def boot(module_name):
         #           ...
         #
-        boot_decorator = extract_boot_decorator('boot', path, tree, copyright)
+        boot_decorator = extract_boot_decorator('boot', path, tree, copyright, remove_comments)
 
 
         #
@@ -414,8 +414,8 @@ def gem():
 
 
     @share
-    def development():
-        [boot_decorator, main_code] = extract_sapphire_main()
+    def development(remove_comments):
+        [boot_decorator, main_code] = extract_sapphire_main(remove_comments)
         sardnoyx_boot_code          = extract_sardnoyx_boot()
         gem_boot_code               = extract_gem_boot()
 

@@ -449,6 +449,13 @@ def gem():
 
     conjure_indented_else_colon = produce_conjure_triple_token('indented-else-colon', Indented_Else_Colon)
 
+    conjure_indented__pass__line_marker = produce_conjure_triple_token(
+                                              'indented__pass__line_marker',
+                                              Indented_Pass_LineMarker_1,
+                                              lookup_line_marker,
+                                              provide_line_marker,
+                                          )
+
     evoke_all_index = produce_evoke_triple_token(
                           'all_index',
                           AllIndex,
@@ -605,6 +612,7 @@ def gem():
         'conjure_all_index',                        conjure_all_index,
         'conjure_dot_name_triplet',                 conjure_dot_name_triplet,
         'conjure_indented_else_colon',              conjure_indented_else_colon,
+        'conjure_indented__pass__line_marker',      conjure_indented__pass__line_marker,
         'evoke_all_index',                          evoke_all_index,
         'evoke_indented__break__line_marker',       evoke_indented__break__line_marker,
         'evoke_indented__continue__line_marker',    evoke_indented__continue__line_marker,

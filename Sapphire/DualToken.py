@@ -296,6 +296,10 @@ def gem():
         is_postfix_operator                   = true
 
 
+        def remove_comments(t):
+            return empty__arguments_0
+
+
     class Atom_Whitespace(BaseDualOperator):
         __slots__                      = (())
         display_name                   = 'atom+whitespace'
@@ -914,6 +918,8 @@ def gem():
                                      )
 
     colon__empty_line_marker = conjure_colon__line_marker(conjure_colon(':'), empty_line_marker)
+
+    empty__arguments_0 = conjure_arguments_0(LP, RP)
 
     find_evoke_comma_something = {
                                      #   (

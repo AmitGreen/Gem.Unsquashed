@@ -11,3 +11,8 @@ def gem():
     @share
     def is_name__0(t, name):
         return false
+
+
+    @share
+    def remove_comments__0(t):
+        return 0

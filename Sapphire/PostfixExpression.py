@@ -12,6 +12,19 @@ def gem():
         is_call_expression = true
 
 
+        def remove_comments(t):
+            a = t.a
+            b = t.b
+
+            a__2 = a.remove_comments()
+            b__2 = b.remove_comments()
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return t.conjure(a__2, b__2)
+
+
     class IndexExpression(DualTwig):
         __slots__    = (())
         display_name = 'index'
@@ -25,6 +38,9 @@ def gem():
     conjure_call_expression        = produce_conjure_dual_twig('call',        CallExpression)
     conjure_index_expression       = produce_conjure_dual_twig('index',       IndexExpression)
     conjure_method_call_expression = produce_conjure_dual_twig('call-method', MethodCallExpression)
+
+
+    CallExpression.conjure = static_method(conjure_call_expression)
 
 
     share(

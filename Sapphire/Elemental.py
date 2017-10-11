@@ -1010,6 +1010,10 @@ def gem():
     conjure_keyword_yield    = produce_conjure_action_word('keyword-yield',         KeywordYield)
 
 
+    LP = conjure_left_parenthesis ('(')
+    RP = conjure_right_parenthesis(')')
+
+
     find_atom_type = {
             '"' : conjure_double_quote,
             "'" : conjure_single_quote,
@@ -1109,4 +1113,6 @@ def gem():
         'is_colon_7',                                       is_colon_7,
         'is_right_parenthesis_7',                           is_right_parenthesis_7,
         'lookup_keyword_conjure_function',                  lookup_keyword_conjure_function,
+        'LP',                                               LP,
+        'RP',                                               RP,
     )

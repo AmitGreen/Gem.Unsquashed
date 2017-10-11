@@ -79,6 +79,33 @@ def gem():
             return t.frill.v.indentation
 
             
+        def remove_comments(t):
+            frill            = t.frill
+            indented_keyword = frill.v
+            name             = t.name
+            parameters       = t.parameters
+
+            uncommented_keyword = t.uncommented_keyword
+
+            indented_keyword__2 = (
+                                      indented_keyword     if indented_keyword.token is uncommented_keyword else
+                                      conjure_indented_token(indented_keyword, uncommented_keyword)
+                                  )
+
+            name__2             = name.remove_comments()
+            parameters__2       = parameters.remove_comments()
+
+            if (
+                    indented_keyword is indented_keyword__2
+                and parameters       is parameters__2
+                and name             is name__2
+                and frill.w          is colon__empty_line_marker
+            ):
+                return t
+
+            return t.conjure(indented_keyword__2, name__2, parameters__2, colon__empty_line_marker)
+
+
         def write(t, w):
             frill = t.frill
 
@@ -113,15 +140,17 @@ def gem():
 
     @share
     class ClassHeader(DefinitionHeader):
-        __slots__    = (())
-        display_name = 'class-header'
+        __slots__           = (())
+        display_name        = 'class-header'
+        uncommented_keyword = conjure_keyword_class('class ')
 
 
     @share
     class FunctionHeader(DefinitionHeader):
-        __slots__          = (())
-        display_name       = 'function-header'
-        is_function_header = true
+        __slots__           = (())
+        display_name        = 'function-header'
+        is_function_header  = true
+        uncommented_keyword = conjure_keyword_function('def ')
 
 
         def function_header_with_1_parameter(t, function_name, parameter_1_name):

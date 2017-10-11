@@ -141,6 +141,89 @@ def gem():
                 return (t[0].indentation) or (t[1].indentation)
 
 
+        def remove_comments(t):
+            i        = 0
+            iterator = iterate(t)
+
+            for v in iterator:
+                v__2 = v.remove_comments()
+
+                if v__2 is v:
+                    i += 1
+                    continue
+
+                break
+            else:
+                return t
+
+            if i < 2:
+                if i is 0:
+                    if v__2 is 0:
+                        for v in iterator:
+                            v__2 = v.remove_comments()
+
+                            if v__2 is not 0:
+                                break
+                        else:
+                            return conjure_indented__pass__line_marker(
+                                       (t[0].indentation) or (t[1].indentation),
+                                       conjure_keyword_pass('pass'),
+                                       empty_line_marker,
+                                   )
+
+                    for w in iterator:
+                        w__2 = w.remove_comments()
+
+                        if w__2 is not 0:
+                            break
+                    else:
+                        return v__2
+
+                    many = [v__2, w__2]
+                else:
+                    if v__2 is 0:
+                        for v in iterator:
+                            v__2 = w.remove_comments()
+
+                            if v__2 is not 0:
+                                break
+                        else:
+                            return t[0]
+
+                    many = [t[0], v__2]
+
+                for v in iterator:
+                    v__2 = v.remove_comments()
+
+                    if v__2 is not 0:
+                        break
+                else:
+                    return conjure_statement_suite(many)
+            else:
+                many = List(t[:i])
+
+                if v__2 is 0:
+                    for v in iterator:
+                        v__2 = v.remove_comments()
+
+                        if v__2 is not 0:
+                            break
+                    else:
+                        return conjure_statement_suite(many)
+
+            append = many.append
+
+            append(v__2)
+
+            for w in iterator:
+                w__2 = w.remove_comments()
+
+                if w__2 is not 0:
+                    append(w__2)
+
+            return conjure_statement_suite(many)
+
+
     class TryStatement_Many(TokenTuple):
         __slots__                  = (())
         display_name               = 'try-statement-*'

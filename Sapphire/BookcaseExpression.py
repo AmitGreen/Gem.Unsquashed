@@ -18,9 +18,7 @@ def gem():
     store_adjusted_meta      = Shared.store_adjusted_meta           #   Due to privileged
 
 
-    LP  = conjure_left_parenthesis    ('(')
     LSB = conjure_left_square_bracket ('[')
-    RP  = conjure_right_parenthesis   (')')
     RSB = conjure_right_square_bracket(']')
 
     LP_RP   = conjure_vw_frill(LP,  RP)
@@ -218,6 +216,16 @@ def gem():
 
         def parameter_1_named(t, name):
             return t.a.s == name
+
+
+        def remove_comments(t):
+            a    = t.a
+            a__2 = a.remove_comments()
+
+            if (t.frill is LP_RP) and (a is a__2):
+                return t
+
+            return conjure_parameters_1(LP, a__2, RP)
 
 
     class ParenthesizedExpression(BookcaseExpression):

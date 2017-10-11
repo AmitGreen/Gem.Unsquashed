@@ -60,6 +60,7 @@ def gem():
 
 
         find_require_gem = find_require_gem__0
+        remove_comments  = remove_comments__0
 
 
         def write(t, w):

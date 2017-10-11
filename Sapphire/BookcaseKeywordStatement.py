@@ -81,6 +81,31 @@ def gem():
             return t.frill.v.indentation
 
 
+        def remove_comments(t):
+            frill            = t.frill
+            indented_token = frill.v
+            a                = t.a
+
+            uncommented_token = t.uncommented_token
+
+            indented_token__2 = (
+                                    indented_token   if indented_token.token is uncommented_token else
+                                    conjure_indented_token(indented_token.indentation, uncommented_token)
+                                )
+
+            a__2 = a.remove_comments()
+
+            if (
+                    indented_token is indented_token__2
+                and a              is a__2
+                and frill.w        is empty_line_marker
+            ):
+                return t
+
+            return t.conjure(indented_token__2, a__2, empty_line_marker)
+
+
+
         def write__frill(t, w):
             frill   = t.frill
             comment = frill.comment
@@ -202,10 +227,12 @@ def gem():
     class ReturnStatement(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'return-statement'
-        frill        = conjure_vw_frill(
-                           conjure_indented_token(conjure_indentation('    '), conjure_keyword_return('return ')),
-                           empty_line_marker,
-                       )
+
+        uncommented_token = conjure_keyword_return('return ')
+        frill             = conjure_vw_frill(
+                                conjure_indented_token(conjure_indentation('    '), uncommented_token),
+                                empty_line_marker,
+                            )
 
         find_require_gem = find_require_gem__0
 
@@ -357,6 +384,9 @@ def gem():
 
             produce_conjure_with_frill = 2,
         )
+
+
+    ReturnStatement.conjure = static_method(conjure_return_statement)
 
 
     share(

@@ -165,6 +165,10 @@ def gem():
             return t.s == s
 
 
+        def remove_comments(t):
+            return t
+
+
     @share
     class Number(SapphireToken):
         __slots__                      = (())
