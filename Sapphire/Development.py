@@ -4,6 +4,8 @@
 @gem('Sapphire.Development')
 def gem():
     require_gem('Sapphire.Parse')
+    require_gem('Sapphire.Transform')
+
 
     variables = [
                     0,                  #   0 = copyright
@@ -241,7 +243,7 @@ def gem():
         return TwigCode(path, arrange('[%d]', index), extract_copyright(tree), boot_code)
 
 
-    def extract_boot_decorator(function_name, path, tree, copyright, extract_comments = false):
+    def extract_boot_decorator(function_name, path, tree, copyright, mutations = 0):
         boot_decorator = tree[0]
 
         #def boot(module_name):
@@ -256,8 +258,8 @@ def gem():
         assert boot_decorator.a is boot_decorator__function_header
         assert boot_decorator.b.is_statement_suite
 
-        if extract_comments:
-            boot_decorator = boot_decorator.remove_comments()
+        if mutations is not 0:
+            boot_decorator = boot_decorator.transform(mutations)
 
         return TwigCode(path, '[0]', copyright, boot_decorator)
 
@@ -347,7 +349,7 @@ def gem():
         return TwigCode(path, '[2]', copyright, gem)
 
 
-    def extract_sapphire_main(remove_comments):
+    def extract_sapphire_main(mutations):
         module_name = 'Sapphire.Main'
         path        = '../Sapphire/Main.py'
 
@@ -363,7 +365,7 @@ def gem():
         #       def boot(module_name):
         #           ...
         #
-        boot_decorator = extract_boot_decorator('boot', path, tree, copyright, remove_comments)
+        boot_decorator = extract_boot_decorator('boot', path, tree, copyright, mutations)
 
 
         #
@@ -407,15 +409,23 @@ def gem():
         #
         #   Result
         #
+        if mutations is not 0:
+            main = main.transform(mutations)
+
         return ((
                    boot_decorator,
-                   TwigCode(path, '[4]', copyright, main.remove_comments()),
+                   TwigCode(path, '[4]', copyright, main),
                ))
 
 
     @share
-    def development(remove_comments):
-        [boot_decorator, main_code] = extract_sapphire_main(remove_comments)
+    def development(module_name, remove_comments):
+        mutations = create_sapphire_transform(
+                        remove_comments    = remove_comments,
+                    )
+
+
+        [boot_decorator, main_code] = extract_sapphire_main(mutations)
         sardnoyx_boot_code          = extract_sardnoyx_boot()
         gem_boot_code               = extract_gem_boot()
 
@@ -425,7 +435,7 @@ def gem():
         main_code.twig.find_require_gem(require_many)
         require_many.loop()
 
-        output_path = '../bin/.pyxie/hma.py'
+        output_path = arrange('../bin/.pyxie/%s.py', module_name)
 
         with create_DelayedFileOutput(output_path) as f:
             boot_decorator.write(f)

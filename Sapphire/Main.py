@@ -25,7 +25,7 @@ def gem():
     require_gem('Sapphire.Core')
 
 
-    def test_development(remove_comments):
+    def test_development(module_name = 'hma', remove_comments = false):
         if fast_cache is 0:
             require_gem('Sapphire.Pattern')
 
@@ -33,7 +33,7 @@ def gem():
 
         require_gem('Sapphire.Development')
 
-        development(remove_comments)
+        development(module_name, remove_comments)
 
         if fast_cache is not 0:
             for s in sorted_list(fast_cache):
@@ -69,11 +69,17 @@ def gem():
 
             option = arguments[0]
             
+            if option == 'rc':
+                return test_development(module_name = 'hma2', remove_comments = true)
+
             if option == 'dev':
                 if 1:
-                    return test_development(remove_comments = true)
+                    return test_development(module_name = 'hma', remove_comments = true)
 
                 return test_parse1()
+
+            if option == 'x':
+                return test_development(module_name = 'hma2')
 
             raise_runtime_error('unknown option: %r', option)
 

@@ -152,8 +152,8 @@ def gem():
         display_name = 'raise-statement-3'
         frill        = conjure_vwxy_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('raise ')),
-                           conjure_comma(', '),
-                           conjure_comma(', '),
+                           COMMA__W,
+                           COMMA__W,
                            LINE_MARKER,
                        )
 

@@ -225,6 +225,12 @@ def gem():
             return conjure_statement_suite(many)
 
 
+        def transform(t, mutations):
+            assert mutations.remove_comments
+
+            return t.remove_comments()
+
+
     class TryStatement_Many(TokenTuple):
         __slots__                  = (())
         display_name               = 'try-statement-*'

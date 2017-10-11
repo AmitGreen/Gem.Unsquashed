@@ -73,7 +73,7 @@ def gem():
     def parse2_python_from_path(path):
         data = read_text_from_path(path)
 
-        parse_context = z_initialize(data)
+        parse_context = z_initialize(path, data)
 
         append        = parse_context.append
         many          = parse_context.many

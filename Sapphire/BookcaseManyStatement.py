@@ -201,10 +201,21 @@ def gem():
         find_require_gem = find_require_gem__0
 
 
-    conjure_assign_many         = produce_conjure_bookcase_many_expression('assign-*',  AssignStatment_Many)
-    conjure_comment_assign_many = produce_conjure_bookcase_many_expression('#assign-*', Comment_AssignStatement_Many)
-    conjure_comment_delete_many = produce_conjure_bookcase_many_expression('#delete-*', Comment_DeleteStatement_Many)
-    conjure_delete_many         = produce_conjure_bookcase_many_expression('delete-*',  DeleteStatement_Many)
+    [
+        conjure_assign_many, AssignStatment_Many.conjure_dual
+    ] = produce_conjure_bookcase_many_expression('assign-*', AssignStatment_Many)
+
+    [
+        conjure_comment_assign_many, Comment_AssignStatement_Many.conjure_dual,
+    ] = produce_conjure_bookcase_many_expression('#assign-*', Comment_AssignStatement_Many)
+
+    [
+        conjure_comment_delete_many, Comment_DeleteStatement_Many.conjure_dual,
+    ] = produce_conjure_bookcase_many_expression('#delete-*', Comment_DeleteStatement_Many)
+
+    [
+        conjure_delete_many, DeleteStatement_Many.conjure_dual,
+    ] = produce_conjure_bookcase_many_expression('delete-*',  DeleteStatement_Many)
 
 
     share(

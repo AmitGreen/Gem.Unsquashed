@@ -97,7 +97,7 @@ def gem():
         display_name = 'assert-2'
         frill        = conjure_vwx_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_assert('assert ')),
-                           conjure_comma(', '),
+                           COMMA__W,
                            LINE_MARKER,
                        )
 
@@ -160,7 +160,7 @@ def gem():
         display_name = 'raise-statement-2'
         frill        = conjure_vwx_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('raise ')),
-                           conjure_comma(', '),
+                           COMMA__W,
                            LINE_MARKER,
                        )
 

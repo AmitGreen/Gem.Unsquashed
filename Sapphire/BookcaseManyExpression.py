@@ -148,7 +148,6 @@ def gem():
         w(frill.end.s)
 
 
-
     @share
     class BookcaseManyExpression(SapphireTrunk):
         __slots__ = ((
@@ -218,7 +217,10 @@ def gem():
 
             append_cache(name, cache)
 
-        return conjure_bookcase_many_expression
+        return ((
+                   conjure_bookcase_many_expression,
+                   static_method(conjure_dual),
+               ))
 
 
     class Arguments_Many(BookcaseManyExpression):
@@ -240,13 +242,51 @@ def gem():
         is_atom                        = true
 
 
-    class ParameterColon_Many(BookcaseManyExpression):
+    class Parameter_Many(BookcaseManyExpression):
         __slots__    = (())
-        display_name = '(*):'
+        display_name = 'parameter-(*)'
 
 
         def parameter_1_named(t, name):
             return 0
+
+
+        def remove_comments(t):
+            frill    = t.frill
+            many     = t.many
+            iterator = iterate(many)
+
+            frill_2 = frill.remove_comments()
+
+            i = 0
+
+            for v in iterator:
+                v__2 = v.remove_comments()
+
+                if v is not v__2:
+                    break
+
+                i += 1
+            else:
+                if frill is frill_2:
+                    return t
+
+                return t.conjure_dual(frill__2, many)
+
+            many__2 = (
+                          []          if i is 0 else
+                          [many[0]]   if i is 1 else
+                          List(many[:i])
+                      )
+
+            append = many__2.append
+
+            append(v__2)
+
+            for v in iterator:
+                append(v.remove_comments)
+
+            return t.conjure_dual(frill_2, conjure_tuple_of_many_expression(many__2))
 
 
     class TupleExpression_Many(BookcaseManyExpression):
@@ -256,17 +296,31 @@ def gem():
         is_atom                        = true
 
 
-    conjure_arguments_many        = produce_conjure_bookcase_many_expression('arguments-*',        Arguments_Many)
-    conjure_list_expression_many  = produce_conjure_bookcase_many_expression('list-expression-*',  ListExpression_Many)
-    conjure_map_expression_many   = produce_conjure_bookcase_many_expression('map-expression-*',   MapExpression_Many)
-    conjure_parameter_colon_many  = produce_conjure_bookcase_many_expression('parameter-colon-*',  ParameterColon_Many)
-    conjure_tuple_expression_many = produce_conjure_bookcase_many_expression('tuple-expression-*', TupleExpression_Many)
+    [
+        conjure_arguments_many, Arguments_Many.conjure_dual
+    ] = produce_conjure_bookcase_many_expression('arguments-*', Arguments_Many)
+
+    [
+        conjure_list_expression_many, ListExpression_Many.conjure_dual,
+    ] = produce_conjure_bookcase_many_expression('list-expression-*', ListExpression_Many)
+
+    [
+        conjure_map_expression_many, MapExpression_Many.conjure_dual
+    ] = produce_conjure_bookcase_many_expression('map-expression-*', MapExpression_Many)
+
+    [
+        conjure_parameter_many, Parameter_Many.conjure_dual
+    ] = produce_conjure_bookcase_many_expression('parameter-*', Parameter_Many)
+
+    [
+        conjure_tuple_expression_many, TupleExpression_Many.conjure_dual
+    ] = produce_conjure_bookcase_many_expression('tuple-expression-*', TupleExpression_Many)
 
 
     share(
         'conjure_arguments_many',           conjure_arguments_many,
         'conjure_list_expression_many',     conjure_list_expression_many,
         'conjure_map_expression_many',      conjure_map_expression_many,
-        'conjure_parameter_colon_many',     conjure_parameter_colon_many,
+        'conjure_parameter_many',           conjure_parameter_many,
         'conjure_tuple_expression_many',    conjure_tuple_expression_many,
     )

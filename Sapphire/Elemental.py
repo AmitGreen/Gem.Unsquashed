@@ -452,6 +452,10 @@ def gem():
         keyword                            = ','
 
 
+        def remove_comments(t):
+            return COMMA__W
+
+
     @share
     class OperatorCompareEqual(KeywordAndOperatorBase):
         __slots__                        = (())
@@ -610,6 +614,10 @@ def gem():
         is_left_parenthesis                   = true
         is_postfix_operator                   = true
         keyword                               = '('         #   )
+
+
+        def remove_comments(t):
+            return LP
 
 
     @export
@@ -809,6 +817,12 @@ def gem():
         is_right_parenthesis                    = true
         #  (
         keyword                                 = ')'
+
+
+        def remove_comments(t):
+            return RP
+
+
 
 
     @export
@@ -1011,6 +1025,7 @@ def gem():
 
 
     COLON            = conjure_colon(':')
+    COMMA__W         = conjure_comma(', ')
     EXCEPT           = conjure_keyword_try('except')
     LP               = conjure_left_parenthesis ('(')
     RP               = conjure_right_parenthesis(')')
@@ -1121,6 +1136,7 @@ def gem():
         'is_right_parenthesis_7',                           is_right_parenthesis_7,
         'lookup_keyword_conjure_function',                  lookup_keyword_conjure_function,
         'COLON',                                            COLON,
+        'COMMA__W',                                         COMMA__W,
         'EXCEPT',                                           EXCEPT,
         'LP',                                               LP,
         'RP',                                               RP,

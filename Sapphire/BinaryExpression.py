@@ -174,7 +174,7 @@ def gem():
     class CommaExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = ','
-        frill        = conjure_comma(', ')
+        frill        = COMMA__W
 
 
     class ComprehensionIfExpression(BinaryExpression):

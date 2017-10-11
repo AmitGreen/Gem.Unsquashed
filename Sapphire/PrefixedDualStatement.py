@@ -54,6 +54,7 @@ def gem():
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
         remove_comments  = remove_comments__ab
+        transform        = transform__ab
 
 
     @share
@@ -169,6 +170,7 @@ def gem():
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
         remove_comments  = remove_comments__ab
+        transform        = transform__ab
 
 
     @share

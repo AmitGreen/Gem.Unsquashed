@@ -86,7 +86,8 @@ SAPPHIRE_FILES = \
         ../Sapphire/Tree.py ../Sapphire/TripleFrill.py ../Sapphire/TripleStatement.py ../Sapphire/TripleToken.py \
         ../Sapphire/TripleTwig.py ../Sapphire/TupleOfExpression.py \
     ../Sapphire/UnaryExpression.py \
-    ../Sapphire/Whitespace.py
+    ../Sapphire/Whitespace.py \
+    ../Sapphire/Transform.py
     #
     #   Excludes:
     #       ../Sapphire/Match.py
@@ -169,7 +170,7 @@ clean:
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
-	rm -f x.py
+	rm -f xb.py xf.py
 	rm -f zc.py ze.py zj.py zm.py zpa.py zps.py zpt.py zso.py
 
 
@@ -329,7 +330,8 @@ links:
 	ln -s ../Tremolite/Build.py                         tu.py
 	ln -s ../Tremolite/PatternWrapper.py                tw.py
 	ln -s ../Tremolite/Compile.py                       tx.py
-	ln -s ../Sardonyx/Boot.py                           x.py
+	ln -s ../Sardonyx/Boot.py                           xb.py
+	ln -s ../Sapphire/Transform.py                      xf.py
 	ln -s ../Topaz/Core.py                              zc.py
 	ln -s ../Topaz/ExceptionChain.py                    ze.py
 	ln -s ../Topaz/ConjureTreeComment.py                zj.py

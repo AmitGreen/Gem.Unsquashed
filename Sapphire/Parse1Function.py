@@ -123,7 +123,7 @@ def gem():
                 return conjure_definition_header(
                            indented_keyword,
                            name,
-                           conjure_parameter_colon_many(operator_1, many, many_frill, operator_7),
+                           conjure_parameter_many(operator_1, many, many_frill, operator_7),
                            tokenize_parameter_colon_newline(),
                        )
 
@@ -140,7 +140,7 @@ def gem():
                 return conjure_definition_header(
                            indented_keyword,
                            name,
-                           conjure_parameter_colon_many(
+                           conjure_parameter_many(
                                operator_1,
                                many,
                                many_frill,

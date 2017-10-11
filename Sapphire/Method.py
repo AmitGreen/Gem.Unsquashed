@@ -66,3 +66,19 @@ def gem():
     @share
     def remove_comments__self(t):
         return t
+
+
+    @share
+    def transform__ab(t, mutations):
+        assert mutations.remove_comments
+
+        a = t.a
+        b = t.b
+
+        a__2 = a.remove_comments()
+        b__2 = b.transform(mutations)
+
+        if (a is a__2) and (b is b__2):
+            return t
+
+        return t.conjure(a__2, b__2)
