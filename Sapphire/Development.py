@@ -23,7 +23,7 @@ def gem():
     #
     #   Tokens
     #
-    empty_indentation__function = conjure_indented_token( empty_indentation, conjure_keyword_function('def '))
+    empty_indentation__function = conjure_indented_token(empty_indentation, FUNCTION__W)
 
     #def gem():
     gem__function_header = conjure_function_header(
@@ -243,7 +243,7 @@ def gem():
         return TwigCode(path, arrange('[%d]', index), extract_copyright(tree), boot_code)
 
 
-    def extract_boot_decorator(function_name, path, tree, copyright, mutations = 0):
+    def extract_boot_decorator(function_name, path, tree, copyright, mutate = 0):
         boot_decorator = tree[0]
 
         #def boot(module_name):
@@ -258,8 +258,8 @@ def gem():
         assert boot_decorator.a is boot_decorator__function_header
         assert boot_decorator.b.is_statement_suite
 
-        if mutations is not 0:
-            boot_decorator = boot_decorator.transform(mutations)
+        if mutate is not 0:
+            boot_decorator = boot_decorator.transform(mutate)
 
         return TwigCode(path, '[0]', copyright, boot_decorator)
 
@@ -349,7 +349,7 @@ def gem():
         return TwigCode(path, '[2]', copyright, gem)
 
 
-    def extract_sapphire_main(mutations):
+    def extract_sapphire_main(mutate):
         module_name = 'Sapphire.Main'
         path        = '../Sapphire/Main.py'
 
@@ -365,7 +365,7 @@ def gem():
         #       def boot(module_name):
         #           ...
         #
-        boot_decorator = extract_boot_decorator('boot', path, tree, copyright, mutations)
+        boot_decorator = extract_boot_decorator('boot', path, tree, copyright, mutate)
 
 
         #
@@ -409,8 +409,8 @@ def gem():
         #
         #   Result
         #
-        if mutations is not 0:
-            main = main.transform(mutations)
+        if mutate is not 0:
+            main = main.transform(mutate)
 
         return ((
                    boot_decorator,
@@ -420,12 +420,12 @@ def gem():
 
     @share
     def development(module_name, remove_comments):
-        mutations = create_sapphire_transform(
-                        remove_comments    = remove_comments,
-                    )
+        mutate = create_sapphire_transform(
+                     remove_comments = remove_comments,
+                 )
 
 
-        [boot_decorator, main_code] = extract_sapphire_main(mutations)
+        [boot_decorator, main_code] = extract_sapphire_main(mutate)
         sardnoyx_boot_code          = extract_sardnoyx_boot()
         gem_boot_code               = extract_gem_boot()
 

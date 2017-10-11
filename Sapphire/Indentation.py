@@ -35,6 +35,10 @@ def gem():
             return arrange('{+%d %s}', t.total, portray_string(t.s))
 
 
+        def transform(t, mutate):
+            return t
+
+
     def conjure_indentation(s):
         r = lookup_indentation(s)
 

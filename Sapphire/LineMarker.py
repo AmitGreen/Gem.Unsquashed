@@ -72,6 +72,10 @@ def gem():
             return true
 
 
+        def transform(t, mutate):
+            return LINE_MARKER
+
+
     @share
     def conjure_line_marker(s):
         r = lookup_line_marker(s)

@@ -69,14 +69,14 @@ def gem():
 
 
     @share
-    def transform__ab(t, mutations):
-        assert mutations.remove_comments
+    def transform__ab(t, mutate):
+        assert mutate.remove_comments
 
         a = t.a
         b = t.b
 
-        a__2 = a.remove_comments()
-        b__2 = b.transform(mutations)
+        a__2 = a.transform(mutate)
+        b__2 = b.transform(mutate)
 
         if (a is a__2) and (b is b__2):
             return t

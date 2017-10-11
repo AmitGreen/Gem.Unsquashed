@@ -106,6 +106,25 @@ def gem():
             return t.conjure(indented_keyword__2, name__2, parameters__2, COLON__LINE_MARKER)
 
 
+        def transform(t, mutate):
+            frill      = t.frill
+            name       = t.name
+            parameters = t.parameters
+
+            frill__2      = frill     .transform(mutate)
+            name__2       = name      .remove_comments()
+            parameters__2 = parameters.remove_comments()
+
+            if (
+                    frill      is frill__2
+                and parameters is parameters__2
+                and name       is name__2
+            ):
+                return t
+
+            return t.conjure_with_frill(frill__2, name__2, parameters__2)
+
+
         def write(t, w):
             frill = t.frill
 
@@ -135,7 +154,10 @@ def gem():
         if __debug__:
             conjure_definition_header.__name__ = intern_arrange('conjure_%s', name)
 
-        return (( conjure_definition_header, static_method(conjure_triple__312) ))
+        return ((
+                   conjure_definition_header,
+                   static_method(conjure_triple__312),
+               ))
 
 
     @share
@@ -150,7 +172,7 @@ def gem():
         __slots__           = (())
         display_name        = 'function-header'
         is_function_header  = true
-        uncommented_keyword = conjure_keyword_function('def ')
+        uncommented_keyword = FUNCTION__W
 
 
         def function_header_with_1_parameter(t, function_name, parameter_1_name):

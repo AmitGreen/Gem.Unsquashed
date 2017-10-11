@@ -225,8 +225,8 @@ def gem():
             return conjure_statement_suite(many)
 
 
-        def transform(t, mutations):
-            assert mutations.remove_comments
+        def transform(t, mutate):
+            assert mutate.remove_comments
 
             return t.remove_comments()
 

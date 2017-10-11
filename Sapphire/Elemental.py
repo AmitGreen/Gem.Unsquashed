@@ -237,6 +237,10 @@ def gem():
         keyword      = 'def'
 
 
+        def transform(x, mutate):
+            return FUNCTION__W
+
+
     class KeywordIf(KeywordAndOperatorBase):
         __slots__                        = (())
         display_name                     = 'if'
@@ -408,6 +412,10 @@ def gem():
         __slots__    = (())
         display_name = '@'
         keyword      = '@'
+
+
+        def transform(t, mutate):
+            return AT_SIGN
 
 
     class OperatorColon(KeywordAndOperatorBase):
@@ -1024,9 +1032,11 @@ def gem():
     conjure_keyword_yield    = produce_conjure_action_word('keyword-yield',         KeywordYield)
 
 
+    AT_SIGN          = conjure_at_sign('@')
     COLON            = conjure_colon(':')
     COMMA__W         = conjure_comma(', ')
     EXCEPT           = conjure_keyword_try('except')
+    FUNCTION__W      = conjure_keyword_function('def ')
     LP               = conjure_left_parenthesis ('(')
     RP               = conjure_right_parenthesis(')')
     TRY              = conjure_keyword_try('try')
@@ -1135,9 +1145,11 @@ def gem():
         'is_colon_7',                                       is_colon_7,
         'is_right_parenthesis_7',                           is_right_parenthesis_7,
         'lookup_keyword_conjure_function',                  lookup_keyword_conjure_function,
+        'AT_SIGN',                                          AT_SIGN,
         'COLON',                                            COLON,
         'COMMA__W',                                         COMMA__W,
         'EXCEPT',                                           EXCEPT,
+        'FUNCTION__W',                                      FUNCTION__W,
         'LP',                                               LP,
         'RP',                                               RP,
         'TRY',                                              TRY,

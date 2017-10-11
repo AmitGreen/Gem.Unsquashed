@@ -332,6 +332,10 @@ def gem():
         count_newlines = count_newlines__line_marker
 
 
+        def transform(x, mutate):
+            return COLON__LINE_MARKER
+
+
     class Colon_RightSquareBracket(BaseDualOperator):
         __slots__                               = (())
         #   [
@@ -440,6 +444,9 @@ def gem():
 
         def display_token(t):
             return arrange('<+%d {%s}>', t.identation.total, portray_string(t.token.s)[1:-1])
+
+
+        transform = transform__ab
 
 
     @share
@@ -919,6 +926,8 @@ def gem():
                                          conjure_single_quote,
                                          none,
                                      )
+
+    Indented_Token.conjure = static_method(conjure_indented_token)
 
     COLON__LINE_MARKER = conjure_colon__line_marker(COLON, LINE_MARKER)
 

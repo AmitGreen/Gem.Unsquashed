@@ -24,6 +24,9 @@ def gem():
         display_token  = display_token__ab
 
 
+        transform = transform__ab
+
+
     VW_Frill.v = VW_Frill.a
     VW_Frill.w = VW_Frill.b
 
@@ -38,6 +41,9 @@ def gem():
                            lookup_dual_frill,
                            store_dual_frill
                        )
+
+
+    VW_Frill.conjure = static_method(conjure_vw_frill)
 
 
     append_cache('dual-frill', dual_frill_cache)
