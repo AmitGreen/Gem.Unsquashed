@@ -18,9 +18,6 @@ def gem():
     store_adjusted_meta      = Shared.store_adjusted_meta           #   Due to privileged
 
 
-    LSB = conjure_left_square_bracket ('[')
-    RSB = conjure_right_square_bracket(']')
-
     LP_RP   = conjure_vw_frill(LP,  RP)
     LSB_RSB = conjure_vw_frill(LSB, RSB)
 
@@ -139,6 +136,19 @@ def gem():
                     if remove_comments is none:
                         def remove_comments(t):
                             return t.conjure_plain(t.a.remove_comments())
+
+
+                    def transform(t, mutate):
+                        frill = t.frill
+                        a     = t.a
+
+                        frill__2 = frill.transform(mutate)
+                        a__2     = a    .transform(mutate)
+
+                        if (frill is frill__2) and (a is a__2):
+                            return t
+
+                        return t.conjure_with_frill(frill__2, a__2)
 
 
                 write = attribute(Meta, 'write__frill', none)

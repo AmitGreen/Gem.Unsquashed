@@ -1022,26 +1022,40 @@ def gem():
     conjure_keyword_yield    = produce_conjure_action_word('keyword-yield',         KeywordYield)
 
 
-    AT_SIGN          = conjure_at_sign          ('@')
-    COLON            = conjure_colon            (':')
-    COMMA__W         = conjure_comma            (', ')
-    EXCEPT           = conjure_keyword_try      ('except')
-    FUNCTION__W      = conjure_keyword_function ('def ')
-    IF__W            = conjure_keyword_if       ('if ')
-    LP               = conjure_left_parenthesis ('(')
-    RETURN__W        = conjure_keyword_return   ('return ')
-    RP               = conjure_right_parenthesis(')')
-    TRY              = conjure_keyword_try      ('try')
-    W__EQUAL_SIGN__W = conjure_equal_sign       (' = ')
+    AT_SIGN          = conjure_at_sign             ('@')
+    COLON            = conjure_colon               (':')
+    COMMA__W         = conjure_comma               (', ')
+    EXCEPT           = conjure_keyword_try         ('except')
+    FOR__W           = conjure_keyword_for         ('for ')
+    FUNCTION__W      = conjure_keyword_function    ('def ')
+    IF__W            = conjure_keyword_if          ('if ')
+    LP               = conjure_left_parenthesis    ('(')
+    LSB              = conjure_left_square_bracket ('[')
+    RETURN__W        = conjure_keyword_return      ('return ')
+    RP               = conjure_right_parenthesis   (')')
+    RSB              = conjure_right_square_bracket(']')
+    TRY              = conjure_keyword_try         ('try')
+    W__EQUAL_SIGN__W = conjure_equal_sign          (' = ')
+    W__AS__W         = conjure_keyword_as          (' as ')
+    W__IN__W         = conjure_keyword_in          (' in ')
+    WITH__W          = conjure_keyword_with        ('with ')
 
 
-    KeywordFunction         .transform = produce_transform__uncommented('keyword_function',  FUNCTION__W)
-    KeywordIf               .transform = produce_transform__uncommented('keyword_if',        IF__W)
-    KeywordReturn           .transform = produce_transform__uncommented('keyword_return',    RETURN__W)
-    OperatorAtSign          .transform = produce_transform__uncommented('at_sign',           AT_SIGN)
-    OperatorColon           .transform = produce_transform__uncommented('colon',             COLON)
-    OperatorLeftParenthesis .transform = produce_transform__uncommented('left_parenthesis',  LP)
-    OperatorRightParenthesis.transform = produce_transform__uncommented('right_parenthesis', RP)
+    KeywordAs                 .transform = produce_transform__uncommented('keyword_as',           W__AS__W)
+    KeywordFor                .transform = produce_transform__uncommented('keyword_for',          FOR__W)
+    KeywordFunction           .transform = produce_transform__uncommented('keyword_function',     FUNCTION__W)
+    KeywordIf                 .transform = produce_transform__uncommented('keyword_if',           IF__W)
+    KeywordIn                 .transform = produce_transform__uncommented('keyword_in',           W__IN__W)
+    KeywordReturn             .transform = produce_transform__uncommented('keyword_return',       RETURN__W)
+    KeywordWith               .transform = produce_transform__uncommented('keyword_with',         WITH__W)
+    OperatorAtSign            .transform = produce_transform__uncommented('at_sign',              AT_SIGN)
+    OperatorColon             .transform = produce_transform__uncommented('colon',                COLON)
+    OperatorComma             .transform = produce_transform__uncommented('comma',                COMMA__W)
+    OperatorEqualSign         .transform = produce_transform__uncommented('equal_sign',           W__EQUAL_SIGN__W)
+    OperatorLeftParenthesis   .transform = produce_transform__uncommented('left_parenthesis',     LP)
+    OperatorLeftSquareBracket .transform = produce_transform__uncommented('left_square_bracket',  LSB)
+    OperatorRightParenthesis  .transform = produce_transform__uncommented('right_parenthesis',    RP)
+    OperatorRightSquareBracket.transform = produce_transform__uncommented('right_square_bracket', RSB)
 
 
     OperatorEqualSign.uncommented_token = W__EQUAL_SIGN__W
@@ -1152,7 +1166,9 @@ def gem():
         'EXCEPT',                                           EXCEPT,
         'FUNCTION__W',                                      FUNCTION__W,
         'LP',                                               LP,
+        'LSB',                                              LSB,
         'RP',                                               RP,
+        'RSB',                                              RSB,
         'TRY',                                              TRY,
         'W__EQUAL_SIGN__W',                                 W__EQUAL_SIGN__W,
     )

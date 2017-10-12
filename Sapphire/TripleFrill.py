@@ -38,6 +38,21 @@ def gem():
         count_newlines = count_newlines__abc
         display_token  = display_token__abc
 
+        
+        def transform(t, mutate):
+            v = t.v
+            w = t.w
+            x = t.x
+
+            v__2 = v.transform(mutate)
+            w__2 = w.transform(mutate)
+            x__2 = x.transform(mutate)
+
+            if (v is v__2) and (w is w__2) and (x is x__2):
+                return t
+
+            return conjure_vwx_frill(v__2, w__2, x__2)
+
 
     conjure_commented_vw_frill = produce_conjure_triple(
                                      '#vw-frill',

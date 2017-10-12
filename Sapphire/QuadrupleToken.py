@@ -350,6 +350,20 @@ def gem():
             return conjure_indented__except__colon__line_marker(t.a, EXCEPT, COLON, LINE_MARKER)
 
 
+        def transform(t, mutate):
+            if not mutate.remove_comments:
+                return t
+
+            if (
+                    t.b is EXCEPT
+                and t.c is COLON
+                and t.d is LINE_MARKER
+            ):
+                return t
+
+            return conjure_indented__try__colon__line_marker(t.a, EXCEPT, COLON, LINE_MARKER)
+
+
     @share
     class Indented_Finally_Colon_LineMarker(BaseQuadrupleOperator):
         __slots__                = (())
@@ -393,6 +407,20 @@ def gem():
 
 
         def remove_comments(t):
+            if (
+                    t.b is TRY
+                and t.c is COLON
+                and t.d is LINE_MARKER
+            ):
+                return t
+
+            return conjure_indented__try__colon__line_marker(t.a, TRY, COLON, LINE_MARKER)
+
+
+        def transform(t, mutate):
+            if not mutate.remove_comments:
+                return t
+
             if (
                     t.b is TRY
                 and t.c is COLON

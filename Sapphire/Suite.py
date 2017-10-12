@@ -284,7 +284,7 @@ def gem():
                     many = [t[0], v__2]
 
                 for v in iterator:
-                    v__2 = v.remove_comments()
+                    v__2 = v.transform(mutate)
 
                     if v__2 is not 0:
                         break
@@ -295,7 +295,7 @@ def gem():
 
                 if v__2 is 0:
                     for v in iterator:
-                        v__2 = v.remove_comments()
+                        v__2 = v.transform(mutate)
 
                         if v__2 is not 0:
                             break
@@ -307,7 +307,7 @@ def gem():
             append(v__2)
 
             for w in iterator:
-                w__2 = w.remove_comments()
+                w__2 = w.transform(mutate)
 
                 if w__2 is not 0:
                     append(w__2)

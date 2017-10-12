@@ -57,6 +57,21 @@ def gem():
             return conjure_bookcase_many_frill__213(begin__2, many__2, end__2)
 
 
+        def transform(t, mutate):
+            begin = t.begin
+            many  = t.many
+            end   = t.end
+
+            begin__2 = begin.transform(mutate)
+            many__2  = many .transform(mutate)
+            end__2   = end  .transform(mutate)
+
+            if (begin is begin__2) and (many is many__2) and (end is end__2):
+                return t
+
+            return conjure_bookcase_many_frill__213(begin__2, many__2, end__2)
+
+
     BookcaseManyFrill.k1 = BookcaseManyFrill.begin
     BookcaseManyFrill.k2 = BookcaseManyFrill.many
     BookcaseManyFrill.k3 = BookcaseManyFrill.end

@@ -192,7 +192,7 @@ def gem():
             many     = t.many
             iterator = iterate(many)
 
-            frill_2 = frill.remove_comments()
+            frill_2 = frill.transform(mutate)
 
             i = 0
 

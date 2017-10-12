@@ -16,11 +16,6 @@ def gem():
     store_adjusted_meta    = Shared.store_adjusted_meta         #   due to privileged
 
 
-    COMMA_SPACE = conjure_comma               (', ')
-    LSB         = conjure_left_square_bracket ('[')
-    RSB         = conjure_right_square_bracket(']')
-
-
     @share
     class BookcaseDualExpression(DualTwig):
         k3 = none
@@ -120,6 +115,21 @@ def gem():
                             return t.conjure_plain(t.a.remove_comments(), t.b.remove_comments())
 
 
+                    def transform(t, mutate):
+                        frill = t.frill
+                        a     = t.a
+                        b     = t.b
+
+                        frill__2 = frill.transform(mutate)
+                        a__2     = a    .transform(mutate)
+                        b__2     = b    .transform(mutate)
+
+                        if (frill is frill__2) and (a is a__2) and (b is b__2):
+                            return t
+
+                        return t.conjure_with_frill(frill__2, a__2, b__2)
+
+
                 #BookcaseDualExpression_WithFrill.k1 = BookcaseDualExpression_WithFrill.frill
                 BookcaseDualExpression_WithFrill.k2 = BookcaseDualExpression_WithFrill.a
                 BookcaseDualExpression_WithFrill.k3 = BookcaseDualExpression_WithFrill.b
@@ -201,13 +211,13 @@ def gem():
     class Arguments_2(BookcaseDualExpression):
         __slots__    = (())
         display_name = '(2)'
-        frill        = conjure_vwx_frill(LP, COMMA_SPACE, RP)
+        frill        = conjure_vwx_frill(LP, COMMA__W, RP)
 
 
     class ListExpression_2(BookcaseDualExpression):
         __slots__                      = (())
         display_name                   = '[2]'
-        frill                          = conjure_vwx_frill(LSB, COMMA_SPACE, RSB)
+        frill                          = conjure_vwx_frill(LSB, COMMA__W, RSB)
         is__atom__or__special_operator = true
         is_atom                        = true
 
@@ -221,7 +231,7 @@ def gem():
     class TupleExpression_2(BookcaseDualExpression):
         __slots__                      = (())
         display_name                   = '{,2}'
-        frill                          = conjure_vwx_frill(LP, COMMA_SPACE, RP)
+        frill                          = conjure_vwx_frill(LP, COMMA__W, RP)
         is__atom__or__special_operator = true
         is_atom                        = true
 
