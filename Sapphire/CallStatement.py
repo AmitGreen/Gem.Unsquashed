@@ -99,14 +99,14 @@ def gem():
                 frill.w    .dump_token(f)
 
 
-        def transform(t, mutate):
+        def transform(t, vary):
             frill     = t.frill
             left      = t.left
             arguments = t.arguments
 
-            frill__2     = frill    .transform(mutate)
-            left__2      = left     .transform(mutate)
-            arguments__2 = arguments.transform(mutate)
+            frill__2     = frill    .transform(vary)
+            left__2      = left     .transform(vary)
+            arguments__2 = arguments.transform(vary)
 
             if (
                     frill     is frill__2

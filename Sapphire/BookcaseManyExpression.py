@@ -187,17 +187,17 @@ def gem():
             return f.token_result(r, newline)
 
 
-        def transform(t, mutate):
+        def transform(t, vary):
             frill    = t.frill
             many     = t.many
             iterator = iterate(many)
 
-            frill_2 = frill.transform(mutate)
+            frill_2 = frill.transform(vary)
 
             i = 0
 
             for v in iterator:
-                v__2 = v.transform(mutate)
+                v__2 = v.transform(vary)
 
                 if v is not v__2:
                     break
@@ -220,7 +220,7 @@ def gem():
             append(v__2)
 
             for v in iterator:
-                append(v.transform(mutate))
+                append(v.transform(vary))
 
             return t.conjure_dual(frill_2, conjure_tuple_of_many_expression(many__2))
 

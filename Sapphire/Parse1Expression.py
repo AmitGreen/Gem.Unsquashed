@@ -10,25 +10,6 @@ def gem():
     show = 0
 
 
-    PRECEDENCE_POSTFIX              = 1      #   . () and []
-    PRECEDENCE_POWER                = 2      #   **
-    PRECEDENCE_UNARY                = 3      #   ~ unary- 
-    PRECEDENCE_MULTIPLY             = 4      #   *
-    PRECEDENCE_ARITHMETIC           = 5      #   +
-    PRECEDENCE_SHIFT                = 6      #   << and >>
-    PRECEDENCE_LOGICAL_AND          = 7      #   &
-    PRECEDENCE_LOGICAL_EXCLUSIVE_OR = 8      #   ^
-    PRECEDENCE_LOGICAL_OR           = 9      #   |
-    PRECEDENCE_NORMAL_LIST          = 10     #   Comma expression of PRECEDENCE_LOGICAL_OR
-    PRECEDENCE_COMPARE              = 11     #   ==
-    PRECEDENCE_NOT                  = 12     #   not
-    PRECEDENCE_BOOLEAN_AND          = 13     #   'and'
-    PRECEDENCE_BOOLEAN_OR           = 14     #   'or'
-    PRECEDENCE_TERNARY              = 15     #   'if'
-    PRECEDENCE_TERNARY_LIST         = 16     #   Comma expression of PRECEDENCE_TERNARY
-    PRECEDENCE_COMPREHENSION        = 17     #   'for'
-
-
     #
     #   1.  Postfix-Expression (Python 2.7.14rc1 grammer calls this 'trailer')
     #
@@ -2306,23 +2287,3 @@ def gem():
 
         my_line('left: %r; operator: %r; s: %s', left, operator, portray_string(qs()[qj():]))
         raise_unknown_line()
-
-    share(
-        'PRECEDENCE_POSTFIX',               PRECEDENCE_POSTFIX,
-        'PRECEDENCE_POWER',                 PRECEDENCE_POWER,
-        'PRECEDENCE_UNARY',                 PRECEDENCE_UNARY,
-        'PRECEDENCE_MULTIPLY',              PRECEDENCE_MULTIPLY,
-        'PRECEDENCE_ARITHMETIC',            PRECEDENCE_ARITHMETIC,
-        'PRECEDENCE_SHIFT',                 PRECEDENCE_SHIFT,
-        'PRECEDENCE_LOGICAL_AND',           PRECEDENCE_LOGICAL_AND,
-        'PRECEDENCE_LOGICAL_EXCLUSIVE_OR',  PRECEDENCE_LOGICAL_EXCLUSIVE_OR,
-        'PRECEDENCE_LOGICAL_OR',            PRECEDENCE_LOGICAL_OR,
-        'PRECEDENCE_NORMAL_LIST',           PRECEDENCE_NORMAL_LIST,
-        'PRECEDENCE_COMPARE',               PRECEDENCE_COMPARE,
-        'PRECEDENCE_NOT',                   PRECEDENCE_NOT,
-        'PRECEDENCE_BOOLEAN_AND',           PRECEDENCE_BOOLEAN_AND,
-        'PRECEDENCE_BOOLEAN_OR',            PRECEDENCE_BOOLEAN_OR,
-        'PRECEDENCE_TERNARY',               PRECEDENCE_TERNARY,
-        'PRECEDENCE_TERNARY_LIST',          PRECEDENCE_TERNARY_LIST,
-        'PRECEDENCE_COMPREHENSION',         PRECEDENCE_COMPREHENSION,
-    )

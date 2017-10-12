@@ -339,8 +339,8 @@ def gem():
         indentation    = BaseQuadrupleOperator.a
 
 
-        def transform(t, mutate):
-            if not mutate.remove_comments:
+        def transform(t, vary):
+            if not vary.remove_comments:
                 return t
 
             if (
@@ -395,8 +395,8 @@ def gem():
         indentation    = BaseQuadrupleOperator.a
 
 
-        def transform(t, mutate):
-            if not mutate.remove_comments:
+        def transform(t, vary):
+            if not vary.remove_comments:
                 return t
 
             if (

@@ -288,14 +288,14 @@ def gem():
                         t.b     .write(w)
 
 
-                    def transform(t, mutate):
+                    def transform(t, vary):
                         prefix = t.prefix
                         a      = t.a
                         b      = t.b
 
-                        prefix__2 = prefix.transform(mutate)
-                        a__2      = a     .transform(mutate)
-                        b__2      = b     .transform(mutate)
+                        prefix__2 = prefix.transform(vary)
+                        a__2      = a     .transform(vary)
+                        b__2      = b     .transform(vary)
 
                         if (prefix is prefix__2) and (a is a__2) and (b is b__2):
                             return t

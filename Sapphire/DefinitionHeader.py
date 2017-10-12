@@ -79,14 +79,14 @@ def gem():
             return t.frill.v.indentation
 
             
-        def transform(t, mutate):
+        def transform(t, vary):
             frill      = t.frill
             name       = t.name
             parameters = t.parameters
 
-            frill__2      = frill     .transform(mutate)
-            name__2       = name      .transform(mutate)
-            parameters__2 = parameters.transform(mutate)
+            frill__2      = frill     .transform(vary)
+            name__2       = name      .transform(vary)
+            parameters__2 = parameters.transform(vary)
 
             if (
                     frill      is frill__2

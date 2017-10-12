@@ -35,8 +35,8 @@ def gem():
             return arrange('{+%d %s}', t.total, portray_string(t.s))
 
 
-        def transform(t, mutate):
-            assert not mutate.remove_indentation
+        def transform(t, vary):
+            assert not vary.remove_indentation
 
             return t
 

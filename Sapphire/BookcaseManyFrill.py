@@ -42,14 +42,14 @@ def gem():
                            t.begin.display_token(), t.many.display_token(), t.end.display_token())
 
 
-        def transform(t, mutate):
+        def transform(t, vary):
             begin = t.begin
             many  = t.many
             end   = t.end
 
-            begin__2 = begin.transform(mutate)
-            many__2  = many .transform(mutate)
-            end__2   = end  .transform(mutate)
+            begin__2 = begin.transform(vary)
+            many__2  = many .transform(vary)
+            end__2   = end  .transform(vary)
 
             if (begin is begin__2) and (many is many__2) and (end is end__2):
                 return t

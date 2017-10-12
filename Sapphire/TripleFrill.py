@@ -39,14 +39,14 @@ def gem():
         display_token  = display_token__abc
 
         
-        def transform(t, mutate):
+        def transform(t, vary):
             v = t.v
             w = t.w
             x = t.x
 
-            v__2 = v.transform(mutate)
-            w__2 = w.transform(mutate)
-            x__2 = x.transform(mutate)
+            v__2 = v.transform(vary)
+            w__2 = w.transform(vary)
+            x__2 = x.transform(vary)
 
             if (v is v__2) and (w is w__2) and (x is x__2):
                 return t

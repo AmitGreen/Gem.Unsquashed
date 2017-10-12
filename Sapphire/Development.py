@@ -243,7 +243,7 @@ def gem():
         return TwigCode(path, arrange('[%d]', index), extract_copyright(tree), boot_code)
 
 
-    def extract_boot_decorator(function_name, path, tree, copyright, mutate = 0):
+    def extract_boot_decorator(function_name, path, tree, copyright, vary = 0):
         boot_decorator = tree[0]
 
         #def boot(module_name):
@@ -258,8 +258,8 @@ def gem():
         assert boot_decorator.a is boot_decorator__function_header
         assert boot_decorator.b.is_statement_suite
 
-        if mutate is not 0:
-            boot_decorator = boot_decorator.transform(mutate)
+        if vary is not 0:
+            boot_decorator = boot_decorator.transform(vary)
 
         return TwigCode(path, '[0]', copyright, boot_decorator)
 
@@ -349,7 +349,7 @@ def gem():
         return TwigCode(path, '[2]', copyright, gem)
 
 
-    def extract_sapphire_main(mutate):
+    def extract_sapphire_main(vary):
         module_name = 'Sapphire.Main'
         path        = '../Sapphire/Main.py'
 
@@ -365,7 +365,7 @@ def gem():
         #       def boot(module_name):
         #           ...
         #
-        boot_decorator = extract_boot_decorator('boot', path, tree, copyright, mutate)
+        boot_decorator = extract_boot_decorator('boot', path, tree, copyright, vary)
 
 
         #
@@ -409,8 +409,8 @@ def gem():
         #
         #   Result
         #
-        if mutate is not 0:
-            main = main.transform(mutate)
+        if vary is not 0:
+            main = main.transform(vary)
 
         return ((
                    boot_decorator,
@@ -420,12 +420,12 @@ def gem():
 
     @share
     def development(module_name, remove_comments):
-        mutate = create_sapphire_transform(
+        vary = create_sapphire_transform(
                      remove_comments = remove_comments,
                  )
 
 
-        [boot_decorator, main_code] = extract_sapphire_main(mutate)
+        [boot_decorator, main_code] = extract_sapphire_main(vary)
         sardnoyx_boot_code          = extract_sardnoyx_boot()
         gem_boot_code               = extract_gem_boot()
 

@@ -16,8 +16,8 @@ def gem():
     @share
     @privileged
     def produce_transform__uncommented(name, uncommented):
-        def transform(t, mutate):
-            if mutate.remove_comments:
+        def transform(t, vary):
+            if vary.remove_comments:
                 return uncommented
 
             return t
@@ -30,14 +30,14 @@ def gem():
 
 
     @share
-    def transform__ab(t, mutate):
-        assert mutate.remove_comments
+    def transform__ab(t, vary):
+        assert vary.remove_comments
 
         a = t.a
         b = t.b
 
-        a__2 = a.transform(mutate)
-        b__2 = b.transform(mutate)
+        a__2 = a.transform(vary)
+        b__2 = b.transform(vary)
 
         if (a is a__2) and (b is b__2):
             return t
@@ -46,12 +46,12 @@ def gem():
 
 
     @share
-    def transform__frill_a(t, mutate):
+    def transform__frill_a(t, vary):
         frill = t.frill
         a     = t.a
 
-        frill__2 = frill.transform(mutate)
-        a__2     = a    .transform(mutate)
+        frill__2 = frill.transform(vary)
+        a__2     = a    .transform(vary)
 
         if (frill is frill__2) and (a is a__2):
             return t
@@ -60,14 +60,14 @@ def gem():
 
 
     @share
-    def transform__frill_ab(t, mutate):
+    def transform__frill_ab(t, vary):
         frill = t.frill
         a     = t.a
         b     = t.b
 
-        frill__2 = frill.transform(mutate)
-        a__2     = a    .transform(mutate)
-        b__2     = b    .transform(mutate)
+        frill__2 = frill.transform(vary)
+        a__2     = a    .transform(vary)
+        b__2     = b    .transform(vary)
 
         if (frill is frill__2) and (a is a__2) and (b is b__2):
             return t
@@ -76,15 +76,15 @@ def gem():
 
 
     @share
-    def transform__remove_comments_0(t, mutate):
-        assert mutate.remove_comments
+    def transform__remove_comments_0(t, vary):
+        assert vary.remove_comments
 
-        if mutate.remove_comments:
+        if vary.remove_comments:
             return 0
 
         return t
 
 
     @share
-    def transform__self(t, mutate):
+    def transform__self(t, vary):
         return t

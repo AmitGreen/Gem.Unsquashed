@@ -76,7 +76,7 @@ SAPPHIRE_FILES = \
         ../Sapphire/Parse1From.py ../Sapphire/Parse1Function.py ../Sapphire/Parse1Import.py \
         ../Sapphire/Parse1Simple.py \
         ../Sapphire/Parse2.py ../Sapphire/Parse3.py \
-        ../Sapphire/PostfixExpression.py ../Sapphire/PrefixedDualStatement.py \
+        ../Sapphire/PostfixExpression.py ../Sapphire/PrefixedDualStatement.py ../Sapphire/Priority.py \
     ../Sapphire/Pattern.py \
     ../Sapphire/QuadrupleFrill.py ../Sapphire/QuadrupleStatement.py ../Sapphire/QuadrupleToken.py \
         ../Sapphire/QuadrupleTwig.py \
@@ -158,7 +158,7 @@ clean:
 	rm -f   h4f.py h4s.py h4t.py h4w.py
 	rm -f   hat.py haw.py hb.py hca.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
-	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hp.py hs.py
+	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hpa.py hpr.py hs.py
 	rm -f   htc.py hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
@@ -274,7 +274,8 @@ links:
 	ln -s ../Sapphire/Method.py                         hmd.py
 	ln -s ../Sapphire/MemberExpression.py               hme.py
 	ln -s ../Sapphire/ManyFrill.py                      hmf.py
-	ln -s ../Sapphire/Pattern.py                        hp.py
+	ln -s ../Sapphire/Pattern.py                        hpa.py
+	ln -s ../Sapphire/Priority.py                       hpr.py
 	ln -s ../Sapphire/Suite.py                          hs.py
 	ln -s ../Sapphire/TokenCache.py                     htc.py
 	ln -s ../Sapphire/TupleOfExpression.py              hto.py
