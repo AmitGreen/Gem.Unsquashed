@@ -72,7 +72,7 @@ def gem():
             if option == 'rc':
                 return test_development(module_name = 'hma2', remove_comments = true)
 
-            if option == 'dev'    and 1:#bye
+            if option == 'dev':#bye
                 if 1:
                     return test_development(module_name = 'hma', remove_comments = true)
 
@@ -87,4 +87,3 @@ def gem():
             with except_any_clause() as e:
                 print_exception_chain(e)
                 program_exit(1)
-                #a = not 1

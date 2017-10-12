@@ -421,8 +421,8 @@ def gem():
     @share
     def development(module_name, remove_comments):
         vary = create_sapphire_transform(
-                     remove_comments = remove_comments,
-                 )
+                   remove_comments = remove_comments,
+               )
 
 
         [boot_decorator, main_code] = extract_sapphire_main(vary)

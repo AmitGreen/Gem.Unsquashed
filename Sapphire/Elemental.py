@@ -1020,6 +1020,7 @@ def gem():
     LP                  = conjure_left_parenthesis    ('(')
     LSB                 = conjure_left_square_bracket ('[')
     RETURN__W           = conjure_keyword_return      ('return ')
+    NOT__W              = conjure_keyword_not         ('not ')
     RP                  = conjure_right_parenthesis   (')')
     RSB                 = conjure_right_square_bracket(']')
     TRY                 = conjure_keyword_try         ('try')
@@ -1033,8 +1034,17 @@ def gem():
     WITH__W             = conjure_keyword_with        ('with ')
 
 
+    #
+    #   NOTE:
+    #       KeywordNot.mutate is only called in a unary context, thus its default value is 'not '
+    #
+    #       When used as part of a 'not in' operator, NotIn.Mutate does *NOT* call KeywordNot.mutate --
+    #       hence KeywordNot.mutate does not need to deal with this situation when its default vaulue
+    #       would be ' not '.
+    #
     KeywordAnd              .mutate = produce_mutate__uncommented('keyword_and',       W__AND__W)
     KeywordIs               .mutate = produce_mutate__uncommented('keyword_is',        W__IS__W)
+    KeywordNot              .mutate = produce_mutate__uncommented('keyword_is',        NOT__W)          #   Unary context
     OperatorComma           .mutate = produce_mutate__uncommented('comma',             COMMA__W)
     OperatorCompareEqual    .mutate = produce_mutate__uncommented('compare_equal',     W__COMPARE_EQUAL__W)
     OperatorEqualSign       .mutate = produce_mutate__uncommented('equal_sign',        W__EQUAL_SIGN__W)
@@ -1170,6 +1180,8 @@ def gem():
         'RP',                                               RP,
         'RSB',                                              RSB,
         'TRY',                                              TRY,
+        'NOT__W',                                           NOT__W,
         'W__EQUAL_SIGN__W',                                 W__EQUAL_SIGN__W,
         'W__IS__W',                                         W__IS__W,
+        'W__NOT__W',                                        W__NOT__W,
     )

@@ -263,6 +263,11 @@ def gem():
                 r = lookup(full)
                
                 if r is not none:
+                    #if not ( (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta)) ):
+                    #    my_line('r: %r', r)
+                    #    my_line('Meta: %r', Meta)
+                    #    my_line('adjusted: %r', lookup_adjusted_meta(Meta))
+
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
                     return r
@@ -554,7 +559,7 @@ def gem():
                                  provide = provide_indentation,
                              )
 
-    conjure_is_not = produce_conjure_dual_token('is-not',     Is_Not)
+    conjure_is_not = produce_conjure_dual_token('is-not', Is_Not)
 
     conjure__left_square_bracket__colon = produce_conjure_dual_token(
                                               '[:',                           #   ]
@@ -921,7 +926,8 @@ def gem():
                                          none,
                                      )
 
-    Is_Not.mutate = produce_mutate__uncommented('is_not', conjure_is_not(W__IS__W, conjure_keyword_not('not ')))
+    Is_Not.mutate = produce_mutate__uncommented('is_not', conjure_is_not(W__IS__W,  NOT__W))
+    Not_In.mutate = produce_mutate__uncommented('not_in', conjure_not_in(W__NOT__W, conjure_keyword_in ('in ')))
 
 
     Colon_LineMarker_1.conjure = static_method(conjure_colon__line_marker)

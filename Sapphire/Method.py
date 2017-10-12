@@ -78,6 +78,27 @@ def gem():
 
     @share
     @privileged
+    def produce_mutate___frill__a__priority(name, priority):
+        def mutate(t, vary, priority):
+            frill = t.frill
+            a     = t.a
+
+            frill__2 = frill.mutate(vary, priority)
+            a__2     = a    .mutate(vary, priority)
+
+            if (frill is frill__2) and (a is a__2):
+                return t
+
+            return t.conjure_with_frill(frill__2, a__2)
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate_%s', name)
+
+        return mutate
+
+
+    @share
+    @privileged
     def produce_mutate___frill__a_with_priority(name, a_priority):
         def mutate(t, vary, priority):
             frill = t.frill

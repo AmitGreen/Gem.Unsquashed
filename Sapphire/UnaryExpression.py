@@ -145,7 +145,9 @@ def gem():
     class NotExpression(UnaryExpression):
         __slots__    = (())
         display_name = 'not'
-        frill        = conjure_keyword_not('not ')
+        frill        = NOT__W
+
+        mutate = produce_mutate___frill__a__priority('not-expression', PRIORITY_UNARY)
 
 
     class StarArgument(UnaryExpression):

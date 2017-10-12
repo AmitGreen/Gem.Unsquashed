@@ -244,7 +244,7 @@ def gem():
     class CompareDifferentExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'is-not'
-        frill        = conjure_is_not(conjure_keyword_is(' is '), conjure_keyword_not('not '))
+        frill        = conjure_is_not(W__IS__W, NOT__W)
 
         mutate = mutate__frill__ab__compare
 
@@ -255,7 +255,7 @@ def gem():
     class CompareExcludeExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'not-in'
-        frill        = conjure_not_in(conjure_keyword_is(' not '), conjure_keyword_not('in '))
+        frill        = conjure_not_in(W__NOT__W, conjure_keyword_in('in '))
 
         mutate = mutate__frill__ab__compare
 
