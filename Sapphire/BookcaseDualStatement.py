@@ -23,9 +23,9 @@ def gem():
             assert frill.comment is 0
 
             return t.conjure_with_frill(
+                       conjure_commented_vwx_frill(comment, frill.v, frill.w, frill.x),
                        t.a,
                        t.b,
-                       conjure_commented_vwx_frill(comment, frill.v, frill.w, frill.x),
                    )
 
 

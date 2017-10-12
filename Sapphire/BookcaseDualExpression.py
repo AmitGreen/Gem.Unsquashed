@@ -8,12 +8,12 @@ def gem():
     require_gem('Sapphire.TripleFrill')
 
 
-    append_cache                = Shared.append_cache                   #   Due to privileged
-    conjure_vwx_frill           = Shared.conjure_vwx_frill              #   Due to privileged
-    lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   Due to privileged
-    produce_conjure_dual        = Shared.produce_conjure_dual           #   Due to privileged
-    produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   Due to privileged
-    store_adjusted_meta         = Shared.store_adjusted_meta            #   Due to privileged
+    append_cache           = Shared.append_cache                #   due to privileged
+    conjure_vwx_frill      = Shared.conjure_vwx_frill           #   due to privileged
+    lookup_adjusted_meta   = Shared.lookup_adjusted_meta        #   due to privileged
+    produce_conjure_dual   = Shared.produce_conjure_dual        #   due to privileged
+    produce_conjure_triple = Shared.produce_conjure_triple      #   due to privileged
+    store_adjusted_meta    = Shared.store_adjusted_meta         #   due to privileged
 
 
     COMMA_SPACE = conjure_comma               (', ')
@@ -78,7 +78,7 @@ def gem():
         store  = cache.__setitem__
 
 
-        def conjure_Meta_WithFrill(a, b, frill):
+        def conjure_Meta_WithFrill(frill, a, b):
             BookcaseDualExpression_WithFrill = lookup_adjusted_meta(Meta)
 
             if BookcaseDualExpression_WithFrill is none:
@@ -88,14 +88,14 @@ def gem():
                     ))
 
 
-                    def __init__(t, a, b, frill):
+                    def __init__(t, frill, a, b):
+                        t.frill = frill
                         t.a     = a
                         t.b     = b
-                        t.frill = frill
 
 
                     def __repr__(t):
-                        return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.b, t.frill)
+                        return arrange('<%s %r %r %r>', t.__class__.__name__, t.frill, t.a, t.b)
 
 
                     display_token = attribute(Meta, 'display_token__frill', none)
@@ -120,6 +120,11 @@ def gem():
                             return t.conjure_plain(t.a.remove_comments(), t.b.remove_comments())
 
 
+                #BookcaseDualExpression_WithFrill.k1 = BookcaseDualExpression_WithFrill.frill
+                BookcaseDualExpression_WithFrill.k2 = BookcaseDualExpression_WithFrill.a
+                BookcaseDualExpression_WithFrill.k3 = BookcaseDualExpression_WithFrill.b
+
+
                 write = attribute(Meta, 'write__frill', none)
 
 
@@ -135,11 +140,11 @@ def gem():
 
                 store_adjusted_meta(Meta, BookcaseDualExpression_WithFrill)
 
-            return BookcaseDualExpression_WithFrill(a, b, frill)
+            return BookcaseDualExpression_WithFrill(frill, a, b)
 
 
-        conjure_dual              = produce_conjure_dual       (name, Meta,                   cache, lookup, store)
-        conjure_triple_with_frill = produce_conjure_triple__312(name, conjure_Meta_WithFrill, cache, lookup, store)
+        conjure_dual              = produce_conjure_dual  (name, Meta,                   cache, lookup, store)
+        conjure_triple_with_frill = produce_conjure_triple(name, conjure_Meta_WithFrill, cache, lookup, store)
 
         meta_frill_v = Meta.frill.v
         meta_frill_w = Meta.frill.w
@@ -150,7 +155,7 @@ def gem():
             if (frill_v is meta_frill_v) and (frill_w is meta_frill_w) and (frill_x is meta_frill_x):
                 return conjure_dual(a, b)
 
-            return conjure_triple_with_frill(a, b, conjure_vwx_frill(frill_v, frill_w, frill_x))
+            return conjure_triple_with_frill(conjure_vwx_frill(frill_v, frill_w, frill_x), a, b)
 
 
         if __debug__:
@@ -158,8 +163,19 @@ def gem():
 
             append_cache(name, cache)
 
-        if produce_conjure_plain:
-            if produce_conjure_with_frill:
+        if produce_conjure_with_frill:
+            def conjure_with_frill(frill, a, b):
+                if frill is meta_frill:
+                    return conjure(a, b)
+
+                return conjure_triple_with_frill(conjure_vwx_frill(frill_v, frill_w, frill_x), a, b)
+
+
+            if __debug__:
+                conjure_with_frill.__name__ = intern_arrange('conjure_%s__with_frill', name)
+
+
+            if produce_conjure_plain:
                 return ((
                            conjure_bookcase_dual_expression,
                            static_method(conjure_dual),
@@ -168,15 +184,16 @@ def gem():
 
             return ((
                        conjure_bookcase_dual_expression,
+                       static_method(conjure_triple_with_frill),
+                   ))
+
+        if produce_conjure_plain:
+            return ((
+                       conjure_bookcase_dual_expression,
                        static_method(conjure_dual),
                    ))
 
 
-        if produce_conjure_with_frill:
-            return ((
-                       conjure_bookcase_dual_expression,
-                       static_method(conjure_triple_with_frill),
-                   ))
 
         return conjure_bookcase_dual_expression
 

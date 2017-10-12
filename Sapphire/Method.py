@@ -82,3 +82,7 @@ def gem():
             return t
 
         return t.conjure(a__2, b__2)
+
+    @share
+    def transform__self(t, mutate):
+        return t

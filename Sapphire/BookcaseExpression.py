@@ -153,8 +153,9 @@ def gem():
                                        store,
                                    )
 
-        meta_frill_v = Meta.frill.v
-        meta_frill_w = Meta.frill.w
+        meta_frill   = Meta.frill
+        meta_frill_v = meta_frill.v
+        meta_frill_w = meta_frill.w
 
 
         def conjure_bookcase_expression(frill_v, a, frill_w):
@@ -169,12 +170,24 @@ def gem():
 
             append_cache(name, cache)
 
+
         if produce_conjure_with_frill:
+            def conjure_with_frill(frill, a):
+                if frill is meta_frill:
+                    return (lookup(a)) or (provide(a, Meta(a)))
+
+                return conjure_dual__with_frill(a, frill)
+
+
+            if __debug__:
+                conjure_with_frill.__name__ = intern_arrange('conjure_%s__with_frill', name)
+
+
             return ((
                        conjure_bookcase_expression,
                        (
                            conjure_dual__with_frill   if produce_conjure_with_frill is 1 else
-                           static_method(conjure_dual__with_frill)
+                           static_method(conjure_with_frill)
                        ),
                    ))
 
@@ -198,6 +211,12 @@ def gem():
                 return t
 
             return conjure_arguments_1(LP, a__2, RP)
+
+
+        def transform(t, mutate):
+            assert mutate.remove_comments
+
+            return t.remove_comments()
 
 
     class HeadIndex(BookcaseExpression):

@@ -172,6 +172,7 @@ def gem():
 
 
         remove_comments = remove_comments__self
+        transform       = transform__self
 
 
     @share

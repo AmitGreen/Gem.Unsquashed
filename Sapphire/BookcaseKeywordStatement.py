@@ -21,8 +21,8 @@ def gem():
             assert frill.comment is 0
 
             return t.conjure_with_frill(
-                       t.a,
                        conjure_commented_vw_frill(comment, frill.v, frill.w),
+                       t.a,
                    )
 
 
@@ -114,12 +114,12 @@ def gem():
             a     = t.a
 
             frill__2 = frill.transform(mutate)
-            a__2     = a.remove_comments()#FIX:a    .transform(mutate)
+            a__2     = a    .transform(mutate)
 
             if (frill is frill__2) and (a__2 is a):
                 return t
 
-            return t.conjure_with_frill(a__2, frill__2)
+            return t.conjure_with_frill(frill__2, a__2)
 
 
         def write__frill(t, w):
