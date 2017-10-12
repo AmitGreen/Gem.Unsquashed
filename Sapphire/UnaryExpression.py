@@ -51,9 +51,6 @@ def gem():
             return f.token_result(r, newline)
 
 
-        transform = transform__frill_a
-
-
         def write(t, w):
             w(t.frill.s)
             t.a.write(w)

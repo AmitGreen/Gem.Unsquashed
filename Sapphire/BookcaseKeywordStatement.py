@@ -120,6 +120,7 @@ def gem():
         split_comment                         = 1
 
         add_comment = 0
+        transform   = produce_transform___frill__a_with_priority('parameters_1', PRIORITY_POSTFIX)
 
 
     class DeleteStatement_1(KeywordExpressionStatement):
@@ -181,6 +182,7 @@ def gem():
 
         is_statement        = false
         is_statement_header = true
+        transform           = produce_transform___frill__a_with_priority('parameters_1', PRIORITY_TERNARY)
 
 
     class ImportStatement(KeywordExpressionStatement):
@@ -217,6 +219,7 @@ def gem():
                              )
 
         find_require_gem = find_require_gem__0
+        transform        = produce_transform___frill__a_with_priority('parameters_1', PRIORITY_TERNARY_LIST)
 
 
     @export

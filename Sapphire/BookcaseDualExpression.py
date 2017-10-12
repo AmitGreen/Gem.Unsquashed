@@ -106,9 +106,6 @@ def gem():
                                            frill.x.display_token())
 
 
-                    transform = transform__frill_ab
-
-
                 #BookcaseDualExpression_WithFrill.k1 = BookcaseDualExpression_WithFrill.frill
                 BookcaseDualExpression_WithFrill.k2 = BookcaseDualExpression_WithFrill.a
                 BookcaseDualExpression_WithFrill.k3 = BookcaseDualExpression_WithFrill.b
@@ -191,6 +188,13 @@ def gem():
         __slots__    = (())
         display_name = '(2)'
         frill        = conjure_vwx_frill(LP, COMMA__W, RP)
+
+        mutate = produce_mutate__frill__ab__priority(
+                     'arguments_2',
+                     PRIORITY_COMPREHENSION,
+                     PRIORITY_COMPREHENSION,
+                     PRIORITY_COMPREHENSION,
+                 )
 
 
     class ListExpression_2(BookcaseDualExpression):

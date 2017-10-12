@@ -21,6 +21,8 @@ def gem():
         __repr__       = portray__abc
         count_newlines = count_newlines__abc
         display_token  = display_token__abc
+        mutate         = mutate__abc
+        transform      = transform__abc
 
 
     class VWX_Frill(TripleTwig):
@@ -37,21 +39,8 @@ def gem():
         __repr__       = portray__abc
         count_newlines = count_newlines__abc
         display_token  = display_token__abc
-
-        
-        def transform(t, vary):
-            v = t.v
-            w = t.w
-            x = t.x
-
-            v__2 = v.transform(vary)
-            w__2 = w.transform(vary)
-            x__2 = x.transform(vary)
-
-            if (v is v__2) and (w is w__2) and (x is x__2):
-                return t
-
-            return conjure_vwx_frill(v__2, w__2, x__2)
+        mutate         = mutate__abc
+        transform      = transform__abc
 
 
     conjure_commented_vw_frill = produce_conjure_triple(

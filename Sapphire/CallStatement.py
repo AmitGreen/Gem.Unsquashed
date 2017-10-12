@@ -105,8 +105,8 @@ def gem():
             arguments = t.arguments
 
             frill__2     = frill    .transform(vary)
-            left__2      = left     .transform(vary)
-            arguments__2 = arguments.transform(vary)
+            left__2      = left     .mutate(vary, PRIORITY_POSTFIX)
+            arguments__2 = arguments.mutate(vary, PRIORITY_COMPREHENSION)
 
             if (
                     frill     is frill__2

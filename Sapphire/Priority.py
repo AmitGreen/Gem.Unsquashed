@@ -4,6 +4,7 @@
 @gem('Sapphire.Priority')
 def gem():
     share(
+        'PRIORITY_ATOM',                     0,     #   . () and []
         'PRIORITY_POSTFIX',                  1,     #   . () and []
         'PRIORITY_POWER',                    2,     #   **
         'PRIORITY_UNARY',                    3,     #   ~ unary- 
@@ -20,7 +21,8 @@ def gem():
         'PRIORITY_BOOLEAN_OR',              14,     #   'or'
         'PRIORITY_TERNARY',                 15,     #   'if'
         'PRIORITY_TERNARY_LIST',            16,     #   Comma expression of PRIORITY_TERNARY
-        'PRIORITY_COMPREHENSION',           17,     #   'for'
-        'PRIORITY_PARAMETER',               18,     #   function parameter
-        'PRIORITY_STATEMENT',               19,     #   statement
+        'PRIORITY_YIELD',                   17,     #   'yield'
+        'PRIORITY_COMPREHENSION',           18,     #   'for'
+        'PRIORITY_PARAMETER',               19,     #   function parameter
+        'PRIORITY_STATEMENT',               20,     #   statement
     )

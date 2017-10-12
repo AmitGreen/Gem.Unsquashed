@@ -110,6 +110,8 @@ def gem():
 
         add_comment = 0
 
+        transform = produce_transform___frill__ab_with_priority('for-header', PRIORITY_NORMAL_LIST, PRIORITY_TERNARY_LIST)
+
 
     class StatementFromImport(KeywordDualExpressionStatement):
         __slots__    = (())
@@ -154,6 +156,7 @@ def gem():
         split_comment       = 1
 
         add_comment = 0
+        transform   = produce_transform___frill__ab_with_priority('with-header', PRIORITY_TERNARY, PRIORITY_LOGICAL_OR)
 
 
     conjure_assert_statement_2 = produce_conjure_bookcase_dual_expression('assert-statement-2', AssertStatement_2)

@@ -165,6 +165,7 @@ def gem():
             return t.s == s
 
 
+        mutate    = mutate__self
         transform = transform__self
 
 
@@ -184,7 +185,7 @@ def gem():
             return t.s
 
 
-        transform = transform__self
+        mutate = mutate__self
 
 
     @share
@@ -204,7 +205,7 @@ def gem():
             return arrange('<%s>', t.s)
 
 
-        transform = transform__self
+        mutate = mutate__self
 
 
     @share

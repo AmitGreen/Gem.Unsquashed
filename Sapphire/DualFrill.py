@@ -22,9 +22,8 @@ def gem():
         __repr__       = portray__ab
         count_newlines = count_newlines__ab
         display_token  = display_token__ab
-
-
-        transform = transform__ab
+        mutate         = mutate__ab
+        transform      = transform__ab
 
 
     VW_Frill.v = VW_Frill.a

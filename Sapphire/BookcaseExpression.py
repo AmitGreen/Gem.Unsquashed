@@ -7,6 +7,7 @@ def gem():
     require_gem('Sapphire.DualFrill')
     require_gem('Sapphire.DualToken')
     require_gem('Sapphire.Elemental')
+    require_gem('Sapphire.Priority')
     require_gem('Sapphire.Tree')
     require_gem('Sapphire.TripleToken')
 
@@ -20,6 +21,12 @@ def gem():
 
     LP_RP   = conjure_vw_frill(LP,  RP)
     LSB_RSB = conjure_vw_frill(LSB, RSB)
+
+
+    mutate__frill__a_priority_comprehension = produce_mutate___frill__a_with_priority(
+                                                  'arguments_1',
+                                                  PRIORITY_COMPREHENSION,
+                                              )
 
 
     @share
@@ -55,9 +62,6 @@ def gem():
             r = frill.w.dump_token(f, false)
 
             return f.token_result(r, newline)
-
-
-        transform = transform__frill_a
 
 
         def write(t, w):
@@ -191,6 +195,8 @@ def gem():
         frill          = LP_RP
         is_arguments_1 = true
 
+        mutate = mutate__frill__a_priority_comprehension
+
 
     class HeadIndex(BookcaseExpression):
         __slots__    = (())
@@ -219,6 +225,8 @@ def gem():
         display_name = 'normal-index'
         frill        = LSB_RSB
 
+        mutate = mutate__frill__a_priority_comprehension
+
 
     class Parameters_1(BookcaseExpression):
         __slots__       = (())
@@ -229,6 +237,9 @@ def gem():
 
         def parameter_1_named(t, name):
             return t.a.s == name
+
+
+        transform = transform__frill_a
 
 
     class ParenthesizedExpression(BookcaseExpression):

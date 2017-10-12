@@ -34,6 +34,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__ab
         indentation      = indentation__a_indentation
+        transform        = transform__ab
 
 
     class CommentedStatement(DualTwig):

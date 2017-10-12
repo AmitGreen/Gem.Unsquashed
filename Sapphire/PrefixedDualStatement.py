@@ -23,6 +23,24 @@ def gem():
         t.b.find_require_gem(e)
 
 
+    def transform__prefix__ab(t, vary):
+        prefix = t.prefix
+        a      = t.a
+        b      = t.b
+
+        prefix__2 = prefix.transform(vary)
+        a__2      = a     .transform(vary)
+        b__2      = b     .transform(vary)
+
+        if (prefix is prefix__2) and (a is a__2) and (b is b__2):
+            return t
+
+        if prefix__2 is 0:
+            return t.conjure(a__2, b__2)
+
+        return t.conjure_prefixed_dual(prefix__2, a__2, b__2)
+
+
     class ClassDefinition(DualTwig):
         __slots__                  = (())
         display_name               = 'class-definition'
@@ -31,11 +49,13 @@ def gem():
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
+        prefix                     = 0
         prefixed_display_name      = '#class-definition'
 
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        transform        = transform__ab
 
 
     class DecoratedDefinition(DualTwig):
@@ -47,6 +67,7 @@ def gem():
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
+        prefix                     = 0
         prefixed_display_name      = '#decorated-definition'
 
         dump_token       = dump_token__ab
@@ -65,6 +86,7 @@ def gem():
         is_else_header_or_fragment = true
         is_statement               = false
         is_statement_header        = false
+        prefix                     = 0
         prefixed_display_name      = 'prefixed-else-fragment'
         split_comment              = 0
 
@@ -72,6 +94,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        transform        = transform__ab
 
 
     @share
@@ -84,6 +107,7 @@ def gem():
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
+        prefix                     = 0
         prefixed_display_name      = 'prefixed-else-if-fragment'
         split_comment              = 0
 
@@ -91,6 +115,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        transform        = transform__ab
 
 
     @share
@@ -103,6 +128,7 @@ def gem():
         is_finally_fragment        = false
         is_statement               = false
         is_statement_header        = false
+        prefix                     = 0
         prefixed_display_name      = 'prefixed-except-fragment'
         split_comment              = 0
 
@@ -110,6 +136,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        transform        = transform__ab
 
 
     @share
@@ -122,6 +149,7 @@ def gem():
         is_finally_fragment        = true
         is_statement               = false
         is_statement_header        = false
+        prefix                     = 0
         prefixed_display_name      = 'prefixed-finally-fragment'
         split_comment              = 0
 
@@ -129,6 +157,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        transform        = transform__ab
 
 
     class ForStatement(DualTwig):
@@ -139,6 +168,7 @@ def gem():
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
+        prefix                     = 0
         prefixed_display_name      = '#for-statement'
         split_comment              = 0
 
@@ -146,6 +176,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        transform        = transform__ab
 
 
     class FunctionDefinition(DualTwig):
@@ -157,6 +188,7 @@ def gem():
         is_function_definition     = true
         is_statement_header        = false
         is_statement               = true
+        prefix                     = 0
         prefixed_display_name      = '#function-definition'
 
         dump_token       = dump_token__ab
@@ -174,6 +206,7 @@ def gem():
         is_else_header_or_fragment = false
         is_statement_header        = true
         is_statement               = true
+        prefix                     = 0
         prefixed_display_name      = '#if-statement'
         split_comment              = 0
 
@@ -181,6 +214,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        transform        = transform__ab
 
 
     @share
@@ -191,6 +225,7 @@ def gem():
         is_finaly_header_or_fragment = false
         is_statement_header          = true
         is_statement                 = true
+        prefix                     = 0
         prefixed_display_name        = '#try-statement'
         split_comment              = 0
 
@@ -198,6 +233,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        transform        = transform__ab
 
 
     class WhileStatement(DualTwig):
@@ -208,6 +244,7 @@ def gem():
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
+        prefix                     = 0
         prefixed_display_name      = '#while-statement'
         split_comment              = 0
 
@@ -215,6 +252,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        transform        = transform__ab
 
 
     class WithStatement(DualTwig):
@@ -225,6 +263,7 @@ def gem():
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
+        prefix                     = 0
         prefixed_display_name      = '#with-statement'
         split_comment              = 0
 
@@ -232,6 +271,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        transform        = transform__ab
 
 
     @privileged
@@ -282,28 +322,13 @@ def gem():
                             t.b.dump_token(f)
 
 
+                    transform = transform__prefix__ab
+
+
                     def write(t, w):
                         t.prefix.write(w)
                         t.a     .write(w)
                         t.b     .write(w)
-
-
-                    def transform(t, vary):
-                        prefix = t.prefix
-                        a      = t.a
-                        b      = t.b
-
-                        prefix__2 = prefix.transform(vary)
-                        a__2      = a     .transform(vary)
-                        b__2      = b     .transform(vary)
-
-                        if (prefix is prefix__2) and (a is a__2) and (b is b__2):
-                            return t
-
-                        if prefix__2 is 0:
-                            return t.conjure(a__2, b__2)
-
-                        return t.conjure_prefixed_dual(prefix__2, a__2, b__2)
 
 
                 PrefixedDualTwig.k3 = PrefixedDualTwig.prefix

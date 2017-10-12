@@ -111,9 +111,6 @@ def gem():
                            portray_string(b_s)   if '\n' in b_s else   b_s)
 
 
-        transform = transform__ab
-
-
     def create_dual_token__with_newlines(Meta, s, a, b):
         assert s == a.s + b.s
 
@@ -298,6 +295,8 @@ def gem():
         is_arguments_0                        = true
         is_postfix_operator                   = true
 
+        mutate = produce__mutate__ab__priority('arguments_0', 0, 0)
+
 
     class Atom_Whitespace(BaseDualOperator):
         __slots__                      = (())
@@ -329,6 +328,7 @@ def gem():
 
         __init__       = construct_dual_token__line_marker_1
         count_newlines = count_newlines__line_marker
+        transform      = transform__ab
 
 
     class Colon_RightSquareBracket(BaseDualOperator):
@@ -441,6 +441,9 @@ def gem():
             return arrange('<+%d {%s}>', t.identation.total, portray_string(t.token.s)[1:-1])
 
 
+        transform = transform__ab
+
+
     @share
     class Is_Not(BaseDualOperator):
         __slots__                        = (())
@@ -490,6 +493,9 @@ def gem():
 
         def parameters_1_named(t, name):
             return 0
+
+
+        transform = transform__ab
 
 
     class Whitespace_Atom(BaseDualOperator):
@@ -915,7 +921,7 @@ def gem():
                                          none,
                                      )
 
-    Is_Not.transform = produce_transform__uncommented('is_not', conjure_is_not(W__IS__W, conjure_keyword_not('not ')))
+    Is_Not.mutate = produce_mutate__uncommented('is_not', conjure_is_not(W__IS__W, conjure_keyword_not('not ')))
 
 
     Colon_LineMarker_1.conjure = static_method(conjure_colon__line_marker)

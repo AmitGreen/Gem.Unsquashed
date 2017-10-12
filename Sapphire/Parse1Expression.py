@@ -2078,7 +2078,11 @@ def gem():
 
 
     #
-    #   17.  Comprehension-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist_comp')
+    #   17.  Yield-Expression
+    #
+
+    #
+    #   18.  Comprehension-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist_comp')
     #
     def parse1_comprehension_expression__left_operator(left, operator):
         assert operator.is_keyword_for
