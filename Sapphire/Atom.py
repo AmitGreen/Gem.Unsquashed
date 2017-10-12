@@ -149,9 +149,6 @@ def gem():
             return t.s
 
 
-        remove_comments = remove_comments__self
-
-
     @share
     class Identifier(SapphireToken):
         __slots__                      = (())
@@ -192,6 +189,7 @@ def gem():
 
 
         remove_comments = remove_comments__self
+        transform       = transform__self
 
 
     @share
@@ -212,6 +210,7 @@ def gem():
 
 
         remove_comments = remove_comments__self
+        transform       = transform__self
 
 
     @share

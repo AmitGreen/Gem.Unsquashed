@@ -63,6 +63,19 @@ def gem():
         remove_comments = remove_comments__a__plain
 
 
+        def transform(t, mutate):
+            frill   = t.frill
+            a       = t.a
+
+            frill__2 = frill.transform(mutate)
+            a__2     = a    .transform(mutate)
+
+            if (frill__2 is frill) and (a is a__2):
+                return t
+
+            return t.conjure_frill(frill__2, a__2)
+
+
         def write(t, w):
             frill = t.frill
 
@@ -213,12 +226,6 @@ def gem():
             return conjure_arguments_1(LP, a__2, RP)
 
 
-        def transform(t, mutate):
-            assert mutate.remove_comments
-
-            return t.remove_comments()
-
-
     class HeadIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'head-index'
@@ -291,7 +298,15 @@ def gem():
         is_atom                        = true
 
 
-    conjure_arguments_1       = produce_conjure_bookcase_expression('arguments-1',       Arguments_1)
+    [
+        conjure_arguments_1, Arguments_1.conjure_with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'arguments-1',
+            Arguments_1,
+            
+            produce_conjure_with_frill = true,
+       )
+
     conjure_head_index        = produce_conjure_bookcase_expression('head-index',        HeadIndex)
     conjure_list_expression_1 = produce_conjure_bookcase_expression('list-expression-1', ListExpression_1)
     conjure_map_expression_1  = produce_conjure_bookcase_expression('map-expression-1',  MapExpression_1)

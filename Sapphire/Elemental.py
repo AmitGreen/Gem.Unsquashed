@@ -15,6 +15,21 @@ def gem():
         t.s = s
 
 
+    @privileged
+    def produce_transform(name, uncommented):
+        def transform(t, mutate):
+            if mutate.remove_comments:
+                return uncommented
+
+            return t
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform__%s', name)
+
+        return transform
+
+
     @share
     class KeywordAndOperatorBase(SapphireToken):
         is_all_index                               = false
@@ -831,8 +846,6 @@ def gem():
             return RP
 
 
-
-
     @export
     class OperatorRightSquareBracket(KeywordAndOperatorBase):
         __slots__                                = (())
@@ -1041,6 +1054,10 @@ def gem():
     RP               = conjure_right_parenthesis(')')
     TRY              = conjure_keyword_try('try')
     W__EQUAL_SIGN__W = conjure_equal_sign(' = ')
+
+
+    OperatorLeftParenthesis .transform = produce_transform('left_parenthesis', LP)
+    OperatorRightParenthesis.transform = produce_transform('right_parenthesis', RP)
 
 
     OperatorEqualSign.uncommented_token = W__EQUAL_SIGN__W
