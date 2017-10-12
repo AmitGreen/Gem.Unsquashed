@@ -36,6 +36,8 @@ def gem():
 
 
         def transform(t, mutate):
+            assert not mutate.remove_indentation
+
             return t
 
 

@@ -112,8 +112,8 @@ def gem():
             parameters = t.parameters
 
             frill__2      = frill     .transform(mutate)
-            name__2       = name      .remove_comments()
-            parameters__2 = parameters.remove_comments()
+            name__2       = name      .transform(mutate)
+            parameters__2 = parameters.transform(mutate)
 
             if (
                     frill      is frill__2

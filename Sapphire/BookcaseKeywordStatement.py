@@ -109,19 +109,6 @@ def gem():
         remove_comments__frill = remove_comments
 
 
-        def transform(t, mutate):
-            frill = t.frill
-            a     = t.a
-
-            frill__2 = frill.transform(mutate)
-            a__2     = a    .transform(mutate)
-
-            if (frill is frill__2) and (a__2 is a):
-                return t
-
-            return t.conjure_with_frill(frill__2, a__2)
-
-
         def write__frill(t, w):
             frill   = t.frill
             comment = frill.comment

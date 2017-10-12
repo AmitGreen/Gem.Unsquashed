@@ -15,21 +15,6 @@ def gem():
         t.s = s
 
 
-    @privileged
-    def produce_transform(name, uncommented):
-        def transform(t, mutate):
-            if mutate.remove_comments:
-                return uncommented
-
-            return t
-
-
-        if __debug__:
-            transform.__name__ = intern_arrange('transform__%s', name)
-
-        return transform
-
-
     @share
     class KeywordAndOperatorBase(SapphireToken):
         is_all_index                               = false
@@ -252,10 +237,6 @@ def gem():
         keyword      = 'def'
 
 
-        def transform(x, mutate):
-            return FUNCTION__W
-
-
     class KeywordIf(KeywordAndOperatorBase):
         __slots__                        = (())
         display_name                     = 'if'
@@ -427,10 +408,6 @@ def gem():
         __slots__    = (())
         display_name = '@'
         keyword      = '@'
-
-
-        def transform(t, mutate):
-            return AT_SIGN
 
 
     class OperatorColon(KeywordAndOperatorBase):
@@ -1045,19 +1022,24 @@ def gem():
     conjure_keyword_yield    = produce_conjure_action_word('keyword-yield',         KeywordYield)
 
 
-    AT_SIGN          = conjure_at_sign('@')
-    COLON            = conjure_colon(':')
-    COMMA__W         = conjure_comma(', ')
-    EXCEPT           = conjure_keyword_try('except')
-    FUNCTION__W      = conjure_keyword_function('def ')
+    AT_SIGN          = conjure_at_sign          ('@')
+    COLON            = conjure_colon            (':')
+    COMMA__W         = conjure_comma            (', ')
+    EXCEPT           = conjure_keyword_try      ('except')
+    FUNCTION__W      = conjure_keyword_function ('def ')
     LP               = conjure_left_parenthesis ('(')
+    RETURN           = conjure_keyword_return   ('return')
     RP               = conjure_right_parenthesis(')')
-    TRY              = conjure_keyword_try('try')
-    W__EQUAL_SIGN__W = conjure_equal_sign(' = ')
+    TRY              = conjure_keyword_try      ('try')
+    W__EQUAL_SIGN__W = conjure_equal_sign       (' = ')
 
 
-    OperatorLeftParenthesis .transform = produce_transform('left_parenthesis', LP)
-    OperatorRightParenthesis.transform = produce_transform('right_parenthesis', RP)
+    KeywordFunction         .transform = produce_transform__uncommented('keyword_function',  FUNCTION__W)
+    KeywordReturn           .transform = produce_transform__uncommented('keyword_return',    RETURN)
+    OperatorAtSign          .transform = produce_transform__uncommented('at_sign',           AT_SIGN)
+    OperatorColon           .transform = produce_transform__uncommented('colon',             COLON)
+    OperatorLeftParenthesis .transform = produce_transform__uncommented('left_parenthesis',  LP)
+    OperatorRightParenthesis.transform = produce_transform__uncommented('right_parenthesis', RP)
 
 
     OperatorEqualSign.uncommented_token = W__EQUAL_SIGN__W

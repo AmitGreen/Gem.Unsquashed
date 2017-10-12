@@ -122,6 +122,25 @@ def gem():
             return t.conjure_call(frill__2, left__2, arguments__2)
 
 
+        def transform(t, mutate):
+            frill     = t.frill
+            left      = t.left
+            arguments = t.arguments
+
+            frill__2     = frill    .transform(mutate)
+            left__2      = left     .remove_comments()
+            arguments__2 = arguments.remove_comments()
+
+            if (
+                    frill     is frill__2
+                and left      is left__2
+                and arguments is arguments__2
+            ):
+                return t
+
+            return t.conjure_call(frill__2, left__2, arguments__2)
+
+
         def write(t, w):
             frill   = t.frill
             comment = frill.comment

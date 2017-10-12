@@ -111,6 +111,9 @@ def gem():
                            portray_string(b_s)   if '\n' in b_s else   b_s)
 
 
+        transform = transform__ab
+
+
     def create_dual_token__with_newlines(Meta, s, a, b):
         assert s == a.s + b.s
 
@@ -307,7 +310,7 @@ def gem():
         is_atom                        = true
 
 
-    class Colon_LineMarker_1(KeywordAndOperatorBase):
+    class Colon_LineMarker_1(BaseDualOperator):
         __slots__                               = (())
         ends_in_newline                         = true
         is_colon__line_marker                   = true
@@ -330,10 +333,6 @@ def gem():
 
         __init__       = construct_dual_token__line_marker_1
         count_newlines = count_newlines__line_marker
-
-
-        def transform(x, mutate):
-            return COLON__LINE_MARKER
 
 
     class Colon_RightSquareBracket(BaseDualOperator):
@@ -444,9 +443,6 @@ def gem():
 
         def display_token(t):
             return arrange('<+%d {%s}>', t.identation.total, portray_string(t.token.s)[1:-1])
-
-
-        transform = transform__ab
 
 
     @share

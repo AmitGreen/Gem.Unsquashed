@@ -72,10 +72,6 @@ def gem():
             return true
 
 
-        def transform(t, mutate):
-            return LINE_MARKER
-
-
     @share
     def conjure_line_marker(s):
         r = lookup_line_marker(s)
@@ -122,6 +118,9 @@ def gem():
 
 
     LINE_MARKER = conjure_line_marker('\n')
+
+
+    LineMarker.transform = produce_transform__uncommented('line_marker', LINE_MARKER)
 
 
     share(

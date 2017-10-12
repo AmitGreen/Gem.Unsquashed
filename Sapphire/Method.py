@@ -14,6 +14,22 @@ def gem():
 
 
     @share
+    @privileged
+    def produce_transform__uncommented(name, uncommented):
+        def transform(t, mutate):
+            if mutate.remove_comments:
+                return uncommented
+
+            return t
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform__%s', name)
+
+        return transform
+
+
+    @share
     def remove_comments__0(t):
         return 0
 
@@ -82,6 +98,7 @@ def gem():
             return t
 
         return t.conjure(a__2, b__2)
+
 
     @share
     def transform__self(t, mutate):
