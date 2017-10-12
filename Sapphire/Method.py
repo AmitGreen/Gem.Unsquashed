@@ -101,5 +101,15 @@ def gem():
 
 
     @share
+    def transform__remove_comments_0(t, mutate):
+        assert mutate.remove_comments
+
+        if mutate.remove_comments:
+            return 0
+
+        return t
+
+
+    @share
     def transform__self(t, mutate):
         return t

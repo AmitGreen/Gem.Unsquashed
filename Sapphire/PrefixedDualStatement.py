@@ -304,6 +304,24 @@ def gem():
                         t.b     .write(w)
 
 
+                    def transform(t, mutate):
+                        prefix = t.prefix
+                        a      = t.a
+                        b      = t.b
+
+                        prefix__2 = prefix.transform(mutate)
+                        a__2      = a     .transform(mutate)
+                        b__2      = b     .transform(mutate)
+
+                        if (prefix is prefix__2) and (a is a__2) and (b is b__2):
+                            return t
+
+                        if prefix__2 is 0:
+                            return t.conjure(a__2, b__2)
+
+                        return t.conjure_prefixed_dual(prefix__2, a__2, b__2)
+
+
                 PrefixedDualTwig.k3 = PrefixedDualTwig.prefix
 
                 if __debug__:

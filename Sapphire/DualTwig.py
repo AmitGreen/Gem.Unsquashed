@@ -55,6 +55,9 @@ def gem():
             return f.token_result(r, newline)
             
 
+        transform = transform__ab
+
+
         def write(t, w):
             t.a.write(w)
             t.b.write(w)

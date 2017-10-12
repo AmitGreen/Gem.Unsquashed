@@ -59,6 +59,7 @@ def gem():
 
 
         dump_token = dump_token__comment
+        transform  = transform__remove_comments_0
 
 
         def write(t, w):
@@ -110,6 +111,7 @@ def gem():
 
 
         dump_token = dump_token__comment
+        transform  = transform__remove_comments_0
 
 
     class IndentedCommentLine(SapphireToken):
@@ -160,6 +162,7 @@ def gem():
 
         dump_token       = dump_token__comment
         find_require_gem = find_require_gem__0
+        transform        = transform__remove_comments_0
 
 
     class IndentedCommentLine_WithTrailer(SapphireToken):
@@ -208,6 +211,7 @@ def gem():
 
 
         dump_token = dump_token__comment
+        transform  = transform__remove_comments_0
 
 
 

@@ -57,6 +57,9 @@ def gem():
             return t[0].impression
 
 
+        transform = transform__remove_comments_0
+
+
     class EmptyLineSuite(TokenTuple):
         __slots__                  = (())
         display_name               = 'empty-line-*'
@@ -72,13 +75,7 @@ def gem():
         dump_token       = dump_token__no_impression
         find_require_gem = find_require_gem__0
         remove_comments  = remove_comments__0
-
-
-        def transform(t, mutate):
-            if mutate.remove_comments:
-                return 0
-
-            return t
+        transform        = transform__remove_comments_0
 
 
     class IfStatement_Many(TokenTuple):
@@ -107,6 +104,7 @@ def gem():
 
         dump_token       = dump_token__no_impression
         find_require_gem = find_require_gem__0
+        transform        = transform__remove_comments_0
 
 
     class StatementSuite(TokenTuple):
@@ -253,7 +251,7 @@ def gem():
                 if i is 0:
                     if v__2 is 0:
                         for v in iterator:
-                            v__2 = v.remove_comments()
+                            v__2 = v.transform(mutate)
 
                             if v__2 is not 0:
                                 break
@@ -265,7 +263,7 @@ def gem():
                                    )
 
                     for w in iterator:
-                        w__2 = w.remove_comments()
+                        w__2 = w.transform(mutate)
 
                         if w__2 is not 0:
                             break
@@ -276,7 +274,7 @@ def gem():
                 else:
                     if v__2 is 0:
                         for v in iterator:
-                            v__2 = v.remove_comments()
+                            v__2 = v.transform(mutate)
 
                             if v__2 is not 0:
                                 break

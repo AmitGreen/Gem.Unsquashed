@@ -187,6 +187,44 @@ def gem():
             return f.token_result(r, newline)
 
 
+        def transform(t, mutate):
+            frill    = t.frill
+            many     = t.many
+            iterator = iterate(many)
+
+            frill_2 = frill.remove_comments()
+
+            i = 0
+
+            for v in iterator:
+                v__2 = v.remove_comments()
+
+                if v is not v__2:
+                    break
+
+                i += 1
+            else:
+                if frill is frill_2:
+                    return t
+
+                return t.conjure_dual(frill__2, many)
+
+            many__2 = (
+                          []          if i is 0 else
+                          [many[0]]   if i is 1 else
+                          List(many[:i])
+                      )
+
+            append = many__2.append
+
+            append(v__2)
+
+            for v in iterator:
+                append(v.remove_comments)
+
+            return t.conjure_dual(frill_2, conjure_tuple_of_many_expression(many__2))
+
+
         def write(t, w):
             w(t.frill.begin.s)
 

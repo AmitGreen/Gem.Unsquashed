@@ -63,6 +63,13 @@ def gem():
         remove_comments  = remove_comments__0
 
 
+        def transform(t, mutate):
+            if mutate.remove_comments:
+                return 0
+
+            return t
+
+
         def write(t, w):
             w(t)
 
