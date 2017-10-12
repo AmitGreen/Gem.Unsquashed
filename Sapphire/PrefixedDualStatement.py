@@ -383,6 +383,7 @@ def gem():
     FunctionDefinition .conjure = static_method(conjure_function_definition)
     IfStatement        .conjure = static_method(conjure_if_statement)
     TryStatement       .conjure = static_method(conjure_try_statement)
+    WithStatement      .conjure = static_method(conjure_with_statement)
 
 
     append_cache('#dual-twig', prefixed_dual_twig_cache)

@@ -51,6 +51,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        transform = transform__frill_a
+
+
         def write(t, w):
             w(t.frill.s)
             t.a.write(w)
@@ -172,6 +175,13 @@ def gem():
     conjure_star_argument       = produce_conjure_unary_expression('*-argument',      StarArgument)
     conjure_star_parameter      = produce_conjure_unary_expression('*-parameter',     StarParameter)
     conjure_twos_complement     = produce_conjure_unary_expression('twos-complement', TwosComplementExpression)
+
+
+    NegativeExpression      .conjure_with_frill = static_method(conjure_negative_expression)
+    NotExpression           .conjure_with_frill = static_method(conjure_not_expression)
+    StarArgument            .conjure_with_frill = static_method(conjure_star_argument)
+    StarParameter           .conjure_with_frill = static_method(conjure_star_parameter)
+    TwosComplementExpression.conjure_with_frill = static_method(conjure_twos_complement)
 
 
     share(

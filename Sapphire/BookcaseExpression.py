@@ -57,17 +57,7 @@ def gem():
             return f.token_result(r, newline)
 
 
-        def transform(t, mutate):
-            frill = t.frill
-            a     = t.a
-
-            frill__2 = frill.transform(mutate)
-            a__2     = a    .transform(mutate)
-
-            if (frill is frill__2) and (a is a__2):
-                return t
-
-            return t.conjure_with_frill(frill__2, a__2)
+        transform = transform__frill_a
 
 
         def write(t, w):
@@ -126,19 +116,6 @@ def gem():
                                            frill.v.display_token(),
                                            t.a    .display_token(),
                                            frill.w.display_token())
-
-
-                    def transform(t, mutate):
-                        frill = t.frill
-                        a     = t.a
-
-                        frill__2 = frill.transform(mutate)
-                        a__2     = a    .transform(mutate)
-
-                        if (frill is frill__2) and (a is a__2):
-                            return t
-
-                        return t.conjure_with_frill(frill__2, a__2)
 
 
                 write = attribute(Meta, 'write__frill', none)

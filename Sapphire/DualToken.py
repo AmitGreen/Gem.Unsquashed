@@ -915,8 +915,10 @@ def gem():
                                          none,
                                      )
 
+    Is_Not.transform = produce_transform__uncommented('is_not', conjure_is_not(W__IS__W, conjure_keyword_not('not ')))
+
+
     Colon_LineMarker_1.conjure = static_method(conjure_colon__line_marker)
-    Is_Not            .conjure = static_method(conjure_is_not)
     Indented_Token    .conjure = static_method(conjure_indented_token)
 
     COLON__LINE_MARKER = conjure_colon__line_marker(COLON, LINE_MARKER)

@@ -1167,4 +1167,5 @@ def gem():
         'RSB',                                              RSB,
         'TRY',                                              TRY,
         'W__EQUAL_SIGN__W',                                 W__EQUAL_SIGN__W,
+        'W__IS__W',                                         W__IS__W,
     )
