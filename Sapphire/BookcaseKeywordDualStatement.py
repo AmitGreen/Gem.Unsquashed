@@ -55,38 +55,6 @@ def gem():
             return f.token_result(r, newline)
 
 
-        def remove_comments(t):
-            frill               = t.frill
-            indented_keyword    = frill.v
-            a                   = t.a
-            b                   = t.b
-            uncommented_keyword = t.uncommented_keyword
-            uncommented_middle  = t.uncommented_middle
-            uncommented_ending  = t.uncommented_ending
-
-            indented_keyword__2 = (
-                                      indented_keyword   if indented_keyword.token is uncommented_keyword else
-                                      conjure_indented_keyword(indented_keyword.indentation, uncommented_keyword)
-                                  )
-
-            a__2 = a.remove_comments()
-            b__2 = b.remove_comments()
-
-            if (
-                    indented_keyword is indented_keyword__2
-                and a                is a__2
-                and frill.w          is uncommented_middle
-                and b                is b__2
-                and frill.x          is uncommented_ending
-            ):
-                return t
-
-            return t.conjure(indented_keyword__2, a__2, uncommented_middle, b__2, uncommented_ending)
-
-
-        remove_comments__frill = remove_comments
-
-
         @property
         def indentation(t):
             return t.frill.v.a

@@ -339,17 +339,6 @@ def gem():
         indentation    = BaseQuadrupleOperator.a
 
 
-        def remove_comments(t):
-            if (
-                    t.b is EXCEPT
-                and t.c is COLON
-                and t.d is LINE_MARKER
-            ):
-                return t
-
-            return conjure_indented__except__colon__line_marker(t.a, EXCEPT, COLON, LINE_MARKER)
-
-
         def transform(t, mutate):
             if not mutate.remove_comments:
                 return t
@@ -404,17 +393,6 @@ def gem():
         display_token  = display_token__indented__keyword__colon__line_marker
         dump_token     = dump_token__indented__keyword__colon__line_marker
         indentation    = BaseQuadrupleOperator.a
-
-
-        def remove_comments(t):
-            if (
-                    t.b is TRY
-                and t.c is COLON
-                and t.d is LINE_MARKER
-            ):
-                return t
-
-            return conjure_indented__try__colon__line_marker(t.a, TRY, COLON, LINE_MARKER)
 
 
         def transform(t, mutate):

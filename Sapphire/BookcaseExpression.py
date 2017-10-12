@@ -57,9 +57,6 @@ def gem():
             return f.token_result(r, newline)
 
 
-        remove_comments = remove_comments__a__plain
-
-
         def transform(t, mutate):
             frill = t.frill
             a     = t.a
@@ -129,13 +126,6 @@ def gem():
                                            frill.v.display_token(),
                                            t.a    .display_token(),
                                            frill.w.display_token())
-
-
-                    remove_comments = attribute(Meta, 'remove_comments__frill', none)
-
-                    if remove_comments is none:
-                        def remove_comments(t):
-                            return t.conjure_plain(t.a.remove_comments())
 
 
                     def transform(t, mutate):
@@ -225,17 +215,6 @@ def gem():
         is_arguments_1 = true
 
 
-        def remove_comments(t):
-            a = t.a
-
-            a__2 = a.remove_comments()
-
-            if (t.frill is LP_RP) and (a is a__2):
-                return t
-
-            return conjure_arguments_1(LP, a__2, RP)
-
-
     class HeadIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'head-index'
@@ -273,17 +252,6 @@ def gem():
 
         def parameter_1_named(t, name):
             return t.a.s == name
-
-
-        def remove_comments(t):
-            a = t.a
-
-            a__2 = a.remove_comments()
-
-            if (t.frill is LP_RP) and (a is a__2):
-                return t
-
-            return conjure_parameters_1(LP, a__2, RP)
 
 
     class ParenthesizedExpression(BookcaseExpression):

@@ -82,32 +82,6 @@ def gem():
             return t.frill.v
 
 
-        def remove_comments(t):
-            frill = t.frill
-            a     = t.a
-            b     = t.b
-            w     = frill.w
-
-            a__2 = a.remove_comments()
-            w__2 = w.uncommented_token
-            b__2 = b.remove_comments()
-
-            if (
-                    frill.comment is 0
-               #and frill.v       is frill.v
-                and a             is a__2
-                and w             is w__2
-                and b             is b__2
-                and frill.x       is LINE_MARKER
-            ):
-                return t
-
-            return t.conjure(frill.v, a__2, w__2, b__2, LINE_MARKER)
-
-
-        remove_comments__frill = remove_comments
-
-
         def write__frill(t, w):
             frill   = t.frill
             comment = frill.comment

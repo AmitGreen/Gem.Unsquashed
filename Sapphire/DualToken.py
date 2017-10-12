@@ -299,10 +299,6 @@ def gem():
         is_postfix_operator                   = true
 
 
-        def remove_comments(t):
-            return empty__arguments_0
-
-
     class Atom_Whitespace(BaseDualOperator):
         __slots__                      = (())
         display_name                   = 'atom+whitespace'
@@ -494,10 +490,6 @@ def gem():
 
         def parameters_1_named(t, name):
             return 0
-
-
-        def remove_comments(t):
-            return empty__parameters_0
 
 
     class Whitespace_Atom(BaseDualOperator):
@@ -923,7 +915,9 @@ def gem():
                                          none,
                                      )
 
-    Indented_Token.conjure = static_method(conjure_indented_token)
+    Colon_LineMarker_1.conjure = static_method(conjure_colon__line_marker)
+    Is_Not            .conjure = static_method(conjure_is_not)
+    Indented_Token    .conjure = static_method(conjure_indented_token)
 
     COLON__LINE_MARKER = conjure_colon__line_marker(COLON, LINE_MARKER)
 

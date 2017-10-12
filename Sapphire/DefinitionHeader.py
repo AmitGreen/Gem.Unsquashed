@@ -79,33 +79,6 @@ def gem():
             return t.frill.v.indentation
 
             
-        def remove_comments(t):
-            frill            = t.frill
-            indented_keyword = frill.v
-            name             = t.name
-            parameters       = t.parameters
-
-            uncommented_keyword = t.uncommented_keyword
-
-            indented_keyword__2 = (
-                                      indented_keyword     if indented_keyword.token is uncommented_keyword else
-                                      conjure_indented_token(indented_keyword, uncommented_keyword)
-                                  )
-
-            name__2             = name.remove_comments()
-            parameters__2       = parameters.remove_comments()
-
-            if (
-                    indented_keyword is indented_keyword__2
-                and parameters       is parameters__2
-                and name             is name__2
-                and frill.w          is COLON__LINE_MARKER
-            ):
-                return t
-
-            return t.conjure(indented_keyword__2, name__2, parameters__2, COLON__LINE_MARKER)
-
-
         def transform(t, mutate):
             frill      = t.frill
             name       = t.name

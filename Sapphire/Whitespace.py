@@ -60,14 +60,7 @@ def gem():
 
 
         find_require_gem = find_require_gem__0
-        remove_comments  = remove_comments__0
-
-
-        def transform(t, mutate):
-            if mutate.remove_comments:
-                return 0
-
-            return t
+        transform        = transform__remove_comments_0
 
 
         def write(t, w):

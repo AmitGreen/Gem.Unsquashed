@@ -34,7 +34,6 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__ab
         indentation      = indentation__a_indentation
-        remove_comments  = remove_comments__ab
 
 
     class CommentedStatement(DualTwig):
@@ -58,9 +57,6 @@ def gem():
         @property
         def indentation(t):
             return t.b.indentation
-
-
-        remove_comments = remove_comments__ab__always
 
 
     conjure_commented_statement = produce_conjure_dual_twig('#statement',     CommentedStatement)

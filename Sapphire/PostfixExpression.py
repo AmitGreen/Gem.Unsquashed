@@ -11,16 +11,14 @@ def gem():
         display_name       = 'call'
         is_call_expression = true
 
-        remove_comments = remove_comments__ab
-        transform       = transform__ab
+        transform = transform__ab
 
 
     class IndexExpression(DualTwig):
         __slots__    = (())
         display_name = 'index'
 
-        remove_comments = remove_comments__ab
-        transform       = transform__ab
+        transform = transform__ab
 
 
     class MethodCallExpression(DualTwig):

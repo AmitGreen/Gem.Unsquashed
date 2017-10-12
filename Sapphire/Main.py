@@ -72,7 +72,7 @@ def gem():
             if option == 'rc':
                 return test_development(module_name = 'hma2', remove_comments = true)
 
-            if option == 'dev':
+            if option == 'dev'    and 1:#bye
                 if 1:
                     return test_development(module_name = 'hma', remove_comments = true)
 

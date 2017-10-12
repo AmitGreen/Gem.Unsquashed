@@ -14,7 +14,6 @@ def gem():
     lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   Due to privileged
     produce_conjure_dual        = Shared.produce_conjure_dual           #   Due to privileged
     produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   Due to privileged
-    remove_comments__ab__always = Shared.remove_comments__ab__always    #   Due to privileged
     store_adjusted_meta         = Shared.store_adjusted_meta            #   Due to privileged
 
 
@@ -68,7 +67,7 @@ def gem():
             return f.token_result(r, newline)
 
 
-        remove_comments = remove_comments__ab
+        transform = transform__frill_ab
 
 
         def write(t, w):
@@ -78,7 +77,14 @@ def gem():
 
 
     @privileged
-    def produce_conjure_binary_expression(name, Meta):
+    def produce_conjure_binary_expression(
+            name,
+            Meta,
+
+            produce_conjure_with_frill = false,
+    ):
+        assert type(produce_conjure_with_frill) is Boolean
+
         cache  = {}
         lookup = cache.get
         store  = cache.__setitem__
@@ -118,9 +124,6 @@ def gem():
                                     )
 
 
-                    remove_comments = remove_comments__ab__always
-
-
                 BinaryExpression_WithFrill.k3  = BinaryExpression_WithFrill.frill
 
 
@@ -149,6 +152,23 @@ def gem():
             conjure_binary_expression.__name__ = intern_arrange('conjure_%s', name)
 
             append_cache(name, cache)
+
+
+        if produce_conjure_with_frill:
+            def conjure_binary_expression__with_frill(frill, a, b):
+                if frill is meta_frill:
+                    return conjure_dual(a, b)
+
+                return conjure_triple(a, b, frill)
+
+            if __debug__:
+                conjure_binary_expression__with_frill.__name__ = intern_arrange('conjure_%s__with_frill', name)
+
+            return ((
+                       conjure_binary_expression,
+                       static_method(conjure_binary_expression__with_frill),
+                   ))
+
 
         return conjure_binary_expression
 
@@ -276,7 +296,7 @@ def gem():
     class DivideExpression(BinaryExpression):
         __slots__    = (())
         display_name = '/'
-        frill        = conjure_action_word('/', ' / ') 
+        frill        = conjure_action_word('/', ' / ')
 
         __repr__ = portray_with_braces
 
@@ -286,7 +306,7 @@ def gem():
     class IntegerDivideExpression(BinaryExpression):
         __slots__    = (())
         display_name = '//'
-        frill        = conjure_action_word('//', ' // ') 
+        frill        = conjure_action_word('//', ' // ')
 
         __repr__ = portray_with_braces
 
@@ -354,13 +374,34 @@ def gem():
 
 
     conjure_add_expression     = produce_conjure_binary_expression('add',               AddExpression)
-    conjure_and_expression_1   = produce_conjure_binary_expression('and-1',             AndExpression_1)
+
+
+    [
+        conjure_and_expression_1, AndExpression_1.conjure_with_frill,
+    ] = produce_conjure_binary_expression(
+            'and-1',
+            AndExpression_1,
+
+            produce_conjure_with_frill = true,
+        )
+
     conjure_as_fragment        = produce_conjure_binary_expression('as-fragment',       AsFragment)
     conjure_comma_expression_1 = produce_conjure_binary_expression('comma-1',           CommaExpression_1)
     conjure_comprehension_if   = produce_conjure_binary_expression('comprehension-if',  ComprehensionIfExpression)
     conjure_compare_contains   = produce_conjure_binary_expression('compare-contains',  CompareContainsExpression)
     conjure_compare_equal      = produce_conjure_binary_expression('compare-equal',     CompareEqualExpression)
-    conjure_compare_different  = produce_conjure_binary_expression('compare-different', CompareDifferentExpression)
+
+
+    [
+        conjure_compare_different, CompareDifferentExpression.conjure_with_frill,
+    ] = produce_conjure_binary_expression(
+            'compare-different',
+            CompareDifferentExpression,
+
+            produce_conjure_with_frill = true,
+        )
+
+
     conjure_compare_exclude    = produce_conjure_binary_expression('compare-exclude',   CompareExcludeExpression)
 
     conjure_compare_greater_than = produce_conjure_binary_expression(

@@ -14,6 +14,7 @@ def gem():
     produce_conjure_dual   = Shared.produce_conjure_dual        #   due to privileged
     produce_conjure_triple = Shared.produce_conjure_triple      #   due to privileged
     store_adjusted_meta    = Shared.store_adjusted_meta         #   due to privileged
+    transform__frill_ab    = Shared.transform__frill_ab         #   due to privileged
 
 
     @share
@@ -37,9 +38,6 @@ def gem():
             r = frill.x.dump_token(f, false)
 
             return f.token_result(r, newline)
-
-
-        remove_comments = remove_comments__ab__plain
 
 
         def write(t, w):
@@ -108,26 +106,7 @@ def gem():
                                            frill.x.display_token())
 
 
-                    remove_comments = attribute(Meta, 'remove_comments__frill', none)
-
-                    if remove_comments is none:
-                        def remove_comments(t):
-                            return t.conjure_plain(t.a.remove_comments(), t.b.remove_comments())
-
-
-                    def transform(t, mutate):
-                        frill = t.frill
-                        a     = t.a
-                        b     = t.b
-
-                        frill__2 = frill.transform(mutate)
-                        a__2     = a    .transform(mutate)
-                        b__2     = b    .transform(mutate)
-
-                        if (frill is frill__2) and (a is a__2) and (b is b__2):
-                            return t
-
-                        return t.conjure_with_frill(frill__2, a__2, b__2)
+                    transform = transform__frill_ab
 
 
                 #BookcaseDualExpression_WithFrill.k1 = BookcaseDualExpression_WithFrill.frill

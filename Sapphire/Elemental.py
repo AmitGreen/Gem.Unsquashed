@@ -452,10 +452,6 @@ def gem():
         keyword                            = ','
 
 
-        def remove_comments(t):
-            return COMMA__W
-
-
     @share
     class OperatorCompareEqual(KeywordAndOperatorBase):
         __slots__                        = (())
@@ -614,10 +610,6 @@ def gem():
         is_left_parenthesis                   = true
         is_postfix_operator                   = true
         keyword                               = '('         #   )
-
-
-        def remove_comments(t):
-            return LP
 
 
     @export
@@ -819,10 +811,6 @@ def gem():
         keyword                                 = ')'
 
 
-        def remove_comments(t):
-            return RP
-
-
     @export
     class OperatorRightSquareBracket(KeywordAndOperatorBase):
         __slots__                                = (())
@@ -1022,35 +1010,43 @@ def gem():
     conjure_keyword_yield    = produce_conjure_action_word('keyword-yield',         KeywordYield)
 
 
-    AT_SIGN          = conjure_at_sign             ('@')
-    COLON            = conjure_colon               (':')
-    COMMA__W         = conjure_comma               (', ')
-    EXCEPT           = conjure_keyword_try         ('except')
-    FOR__W           = conjure_keyword_for         ('for ')
-    FUNCTION__W      = conjure_keyword_function    ('def ')
-    IF__W            = conjure_keyword_if          ('if ')
-    LP               = conjure_left_parenthesis    ('(')
-    LSB              = conjure_left_square_bracket ('[')
-    RETURN__W        = conjure_keyword_return      ('return ')
-    RP               = conjure_right_parenthesis   (')')
-    RSB              = conjure_right_square_bracket(']')
-    TRY              = conjure_keyword_try         ('try')
-    W__EQUAL_SIGN__W = conjure_equal_sign          (' = ')
-    W__AS__W         = conjure_keyword_as          (' as ')
-    W__IN__W         = conjure_keyword_in          (' in ')
-    WITH__W          = conjure_keyword_with        ('with ')
+    AT_SIGN             = conjure_at_sign             ('@')
+    COLON               = conjure_colon               (':')
+    COMMA__W            = conjure_comma               (', ')
+    EXCEPT              = conjure_keyword_try         ('except')
+    FOR__W              = conjure_keyword_for         ('for ')
+    FUNCTION__W         = conjure_keyword_function    ('def ')
+    IF__W               = conjure_keyword_if          ('if ')
+    LP                  = conjure_left_parenthesis    ('(')
+    LSB                 = conjure_left_square_bracket ('[')
+    RETURN__W           = conjure_keyword_return      ('return ')
+    RP                  = conjure_right_parenthesis   (')')
+    RSB                 = conjure_right_square_bracket(']')
+    TRY                 = conjure_keyword_try         ('try')
+    W__COMPARE_EQUAL__W = conjure_action_word         ('==', ' == ')
+    W__EQUAL_SIGN__W    = conjure_equal_sign          (' = ')
+    W__AS__W            = conjure_keyword_as          (' as ')
+    W__AND__W           = conjure_action_word         ('and', ' and ')
+    W__IN__W            = conjure_keyword_in          (' in ')
+    W__IS__W            = conjure_keyword_is          (' is ')
+    W__NOT__W           = conjure_keyword_not         (' not ')
+    WITH__W             = conjure_keyword_with        ('with ')
 
 
     KeywordAs                 .transform = produce_transform__uncommented('keyword_as',           W__AS__W)
+    KeywordAnd                .transform = produce_transform__uncommented('keyword_and',          W__AND__W)
     KeywordFor                .transform = produce_transform__uncommented('keyword_for',          FOR__W)
     KeywordFunction           .transform = produce_transform__uncommented('keyword_function',     FUNCTION__W)
     KeywordIf                 .transform = produce_transform__uncommented('keyword_if',           IF__W)
     KeywordIn                 .transform = produce_transform__uncommented('keyword_in',           W__IN__W)
+    KeywordIs                 .transform = produce_transform__uncommented('keyword_is',           W__IS__W)
+    KeywordNot                .transform = produce_transform__uncommented('keyword_not',          W__NOT__W)
     KeywordReturn             .transform = produce_transform__uncommented('keyword_return',       RETURN__W)
     KeywordWith               .transform = produce_transform__uncommented('keyword_with',         WITH__W)
     OperatorAtSign            .transform = produce_transform__uncommented('at_sign',              AT_SIGN)
     OperatorColon             .transform = produce_transform__uncommented('colon',                COLON)
     OperatorComma             .transform = produce_transform__uncommented('comma',                COMMA__W)
+    OperatorCompareEqual      .transform = produce_transform__uncommented('compare_equal',        W__COMPARE_EQUAL__W)
     OperatorEqualSign         .transform = produce_transform__uncommented('equal_sign',           W__EQUAL_SIGN__W)
     OperatorLeftParenthesis   .transform = produce_transform__uncommented('left_parenthesis',     LP)
     OperatorLeftSquareBracket .transform = produce_transform__uncommented('left_square_bracket',  LSB)
