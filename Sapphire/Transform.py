@@ -11,32 +11,26 @@ def gem():
             'remove_comments',          #   Boolean
             'remove_indentation',       #   Boolean
             'indentation',              #   Vacant | Indentation
-            'indentation_stack',        #   Vacant | List
-            '_push_indentation',        #   Vacant | Method
-            '_pop_indentation',         #   Vacant | Method
         ))
 
 
         def __init__(t, remove_comments, remove_indentation):
             t.remove_comments    = remove_comments
             t.remove_indentation = remove_indentation
-
-            if remove_indentation:
-                t.indentation       = empty_indentation
-                t.indentation_stack = indentation_stack = []
-                t._push_indentation = indentation_stack.append
-                t._pop_indentation  = Method(indentation_stack.pop, -1)
+            t.indentation        = empty_indentation
 
 
-        def pop_indentation(t):
-            r = t.indentation = t._pop_indentation()
-
-            return r
+        def pop_indentation(t, previous):
+            t.indentation = previous
 
 
-        def push_indentation(t, indentation):
-            t.indentation = indentation
-            t._push_indentation(indentation)
+        def push_indentation(t):
+            indentation = t.indentation
+
+            if t.remove_indentation:
+                t.indentation = next_indentation(indentation)
+
+            return indentation
 
 
     @share
