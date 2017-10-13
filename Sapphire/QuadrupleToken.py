@@ -11,6 +11,8 @@ def gem():
     provide_normal_token = Shared.provide_normal_token      #   Due to privileged
     qi                   = Shared.qi                        #   Due to privileged
     qs                   = Shared.qs                        #   Due to privileged
+    COLON                = Shared.COLON                     #   Due to privileged
+    LINE_MARKER          = Shared.LINE_MARKER               #   Due to privileged
 
 
     def construct_quadruple_token(t, s, a, b, c, d):
@@ -85,6 +87,38 @@ def gem():
                        t.b.display_token(),
                        t.c.display_token(),
                        t.d.display_token())
+
+
+    @privileged
+    def produce_transform__indented__keyword__colon__line_marker(name, conjure, keyword):
+        def transform__indented__keyword__colon__line_marker(t, vary):
+            a = t.a
+            b = t.b
+            c = t.c
+            d = t.d
+
+            a__2 = (vary.indentation   if vary.remove_indentation else   a)
+
+            if vary.remove_comments:
+                b__2 = keyword
+                c__2 = COLON
+                d__2 = LINE_MARKER
+
+                if (a is a__2) and (b is b__2) and (c is c__2) and (d is d__2):
+                    return t
+
+                return conjure(a__2, b__2, c__2, d__2)
+
+            if a is a__2:
+                return
+
+            return conjure(a__2, b, c, d)
+
+
+        if __debug__:
+            transform__indented__keyword__colon__line_marker.__name__ = intern_arrange('transform__%s', name)
+
+        return transform__indented__keyword__colon__line_marker
 
 
     class BaseQuadrupleOperator(KeywordAndOperatorBase):
@@ -339,20 +373,6 @@ def gem():
         indentation    = BaseQuadrupleOperator.a
 
 
-        def transform(t, vary):
-            if not vary.remove_comments:
-                return t
-
-            if (
-                    t.b is EXCEPT
-                and t.c is COLON
-                and t.d is LINE_MARKER
-            ):
-                return t
-
-            return conjure_indented__try__colon__line_marker(t.a, EXCEPT, COLON, LINE_MARKER)
-
-
     @share
     class Indented_Finally_Colon_LineMarker(BaseQuadrupleOperator):
         __slots__                = (())
@@ -393,20 +413,6 @@ def gem():
         display_token  = display_token__indented__keyword__colon__line_marker
         dump_token     = dump_token__indented__keyword__colon__line_marker
         indentation    = BaseQuadrupleOperator.a
-
-
-        def transform(t, vary):
-            if not vary.remove_comments:
-                return t
-
-            if (
-                    t.b is TRY
-                and t.c is COLON
-                and t.d is LINE_MARKER
-            ):
-                return t
-
-            return conjure_indented__try__colon__line_marker(t.a, TRY, COLON, LINE_MARKER)
 
 
     conjure_dot_name_quadruplet = produce_conjure_quadruple_token('.name-quadruplet', DotNameQuadruplet)
@@ -464,6 +470,20 @@ def gem():
 
             line_marker = true,
         )
+
+
+    Indented_Except_Colon_LineMarker.transform = produce_transform__indented__keyword__colon__line_marker(
+                                                     'indented_else_colon__line_marker', 
+                                                     conjure_indented__try__colon__line_marker,
+                                                     EXCEPT,
+                                                 )
+
+
+    Indented_Try_Colon_LineMarker.transform = produce_transform__indented__keyword__colon__line_marker(
+                                                  'indented_try_colon__line_marker', 
+                                                  conjure_indented__try__colon__line_marker,
+                                                  TRY,
+                                              )
 
 
     share(

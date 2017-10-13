@@ -80,8 +80,8 @@ def gem():
             w(frill.w.s)
 
 
-    DefinitionHeader.a = DefinitionHeader.frill
-    DefinitionHeader.b = DefinitionHeader.name
+    DefinitionHeader.a = DefinitionHeader.name
+    DefinitionHeader.b = DefinitionHeader.parameters
 
     DefinitionHeader.k1 = DefinitionHeader.frill
     DefinitionHeader.k2 = DefinitionHeader.name
@@ -114,7 +114,7 @@ def gem():
     class ClassHeader(DefinitionHeader):
         __slots__           = (())
         display_name        = 'class-header'
-        uncommented_keyword = conjure_keyword_class('class ')
+        #uncommented_keyword = conjure_keyword_class('class ')
 
 
     @share
@@ -122,7 +122,7 @@ def gem():
         __slots__           = (())
         display_name        = 'function-header'
         is_function_header  = true
-        uncommented_keyword = FUNCTION__W
+        #uncommented_keyword = FUNCTION__W
 
 
         def function_header_with_1_parameter(t, function_name, parameter_1_name):
