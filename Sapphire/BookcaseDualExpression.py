@@ -189,12 +189,7 @@ def gem():
         display_name = '(2)'
         frill        = conjure_vwx_frill(LP, COMMA__W, RP)
 
-        mutate = produce_mutate__frill__ab__priority(
-                     'arguments_2',
-                     PRIORITY_COMPREHENSION,
-                     PRIORITY_COMPREHENSION,
-                     PRIORITY_COMPREHENSION,
-                 )
+        mutate = produce_mutate__frill__ab_with_priority('arguments_2', PRIORITY_ASSIGN, PRIORITY_ASSIGN)
 
 
     class ListExpression_2(BookcaseDualExpression):

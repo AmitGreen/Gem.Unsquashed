@@ -43,7 +43,11 @@ def gem():
 
 
     @privileged
-    def produce_conjure_triple_expression(name, Meta):
+    def produce_conjure_triple_expression(
+            name, Meta,
+
+            produce_conjure_with_frill = false,
+    ):
         cache  = {}
         lookup = cache.get
         store  = cache.__setitem__
@@ -104,8 +108,9 @@ def gem():
         conjure_triple    = produce_conjure_triple         (name + '__X3', Meta, cache, lookup, store)
         conjure_quadruple = produce_conjure_quadruple__4123(name, conjure_Meta_WithFrill, cache, lookup, store)
 
-        meta_frill_v = Meta.frill.v
-        meta_frill_w = Meta.frill.w
+        meta_frill   = Meta.frill
+        meta_frill_v = meta_frill.v
+        meta_frill_w = meta_frill.w
 
 
         def conjure_triple_expression(a, frill_v, b, frill_w, c):
@@ -120,23 +125,65 @@ def gem():
 
             append_cache(name, cache)
 
+        if produce_conjure_with_frill:
+            def conjure_with_frill(frill, a, b, c):
+                if frill is meta_frill:
+                    return conjure_triple(a, b, c)
+
+                return conjure_quadruple(a, b, c, frill)
+
+
+            if __debug__:
+                conjure_with_frill.__name__ = intern_arrange('conjure_%s__with_frill', name)
+
+            return ((
+                       conjure_triple_expression,
+                       conjure_with_frill,
+                   ))
+
+
         return conjure_triple_expression
 
 
     class ComprehensionForExpression(TripleExpression):
         __slots__    = (())
         display_name = 'comprehension-for'
-        frill        = conjure_vw_frill(conjure_keyword_for(' for '), conjure_keyword_in(' in '))
+        frill        = conjure_vw_frill(W__FOR__W, W__IN__W)
 
 
     class TernaryExpression(TripleExpression):
         __slots__    = (())
         display_name = '?:'
-        frill        = conjure_vw_frill(conjure_keyword_if(' if '), conjure_action_word('else', ' else '))
+        frill        = conjure_vw_frill(W__IF__W, W__ELSE__W)
 
 
-    conjure_comprehension_for  = produce_conjure_triple_expression('comprehension-for',  ComprehensionForExpression)
-    conjure_ternary_expression = produce_conjure_triple_expression('ternary-expression', TernaryExpression)
+    [
+        conjure_comprehension_for, conjure_comprehension_for__with_frill,
+    ] = produce_conjure_triple_expression(
+            'comprehension-for',
+            ComprehensionForExpression,
+            
+            produce_conjure_with_frill = true,
+        )
+
+    [
+        conjure_ternary_expression, conjure_ternary_expression__with_frill,
+    ] = produce_conjure_triple_expression(
+            'ternary-expression',
+            TernaryExpression,
+            
+            produce_conjure_with_frill = true,
+        )
+
+
+    TernaryExpression.mutate = produce_mutate__frill__abc__priority(
+                                   'ternary-expression',
+                                   conjure_ternary_expression__with_frill,
+                                   PRIORITY_TERNARY,
+                                   PRIORITY_BOOLEAN_OR,
+                                   PRIORITY_BOOLEAN_OR,
+                                   PRIORITY_TERNARY,
+                              )
 
 
     share(

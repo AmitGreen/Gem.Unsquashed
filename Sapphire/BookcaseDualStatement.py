@@ -99,10 +99,9 @@ def gem():
     class AssignStatement_1(DualExpressionStatement):
         __slots__        = (())
         display_name     = 'assign-1'
-        frill            = conjure_vwx_frill(empty_indentation, W__EQUAL_SIGN__W, LINE_MARKER)
+        frill            = conjure_vwx_frill(empty_indentation, W__ASSIGN__W, LINE_MARKER)
         find_require_gem = find_require_gem__0
-
-        transform = produce_transform___frill__ab_with_priority('assign-1', PRIORITY_TERNARY_LIST, PRIORITY_YIELD)
+        transform        = produce_transform__frill_ab_with_priority('assign-1', PRIORITY_TERNARY_LIST, PRIORITY_YIELD)
 
 
     class ModifyStatement(DualExpressionStatement):

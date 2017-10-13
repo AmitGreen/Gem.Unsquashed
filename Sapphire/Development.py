@@ -223,7 +223,7 @@ def gem():
                    LINE_MARKER,
                )
 
-    def extract_boot(path, tree, index, copyright):
+    def extract_boot(path, tree, index, copyright, vary):
         boot_code = tree[index]
 
         #@boot('Boot')
@@ -238,6 +238,9 @@ def gem():
 
         assert boot_code.is_decorated_definition
         assert boot_code.a is boot_code__decorator_header
+
+        if vary and 7:
+            boot_code = boot_code.transform(vary)
 
         return TwigCode(path, arrange('[%d]', index), extract_copyright(tree), boot_code)
 
@@ -297,14 +300,14 @@ def gem():
         return TwigCode(path, '[0]', copyright, gem)
 
 
-    def extract_sardnoyx_boot():
+    def extract_sardnoyx_boot(vary):
         path = '../Sardonyx/Boot.py'
 
         tree = parse_python(path)
 
         assert length(tree) is 1
 
-        return extract_boot(path, tree, 0, extract_copyright(tree))
+        return extract_boot(path, tree, 0, extract_copyright(tree), vary)
 
 
     def extract_gem_boot():
@@ -379,7 +382,7 @@ def gem():
         #       def boot():
         #           ...
         #
-        boot = extract_boot(path, tree, 2, copyright)
+        boot = extract_boot(path, tree, 2, copyright, vary)
 
         del boot        #   We don't really want this, but just extracted it for testing purposes
 
@@ -420,7 +423,7 @@ def gem():
     @share
     def development(module_name, vary):
         [boot_decorator, main_code] = extract_sapphire_main(vary)
-        sardnoyx_boot_code          = extract_sardnoyx_boot()
+        sardnoyx_boot_code          = extract_sardnoyx_boot(vary)
         gem_boot_code               = extract_gem_boot()
 
         require_many = RequireMany()

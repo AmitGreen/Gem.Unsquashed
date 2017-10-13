@@ -31,7 +31,26 @@ def gem():
         display_name   = 'xyz-frill'
         frill_estimate = 3
 
-        mutate    = mutate__abc
+
+        def morph(t, vary, v_priority, w_priority, x_priority):
+            assert v_priority is x_priority is 0
+
+            v = t.v
+            w = t.w
+            x = t.x
+
+            #my_line('t: %r', t)
+
+            v__2 = v.transform(vary)
+            w__2 = w.mutate   (vary, w_priority)
+            x__2 = x.transform(vary)
+
+            if (v is v__2) and (w is w__2) and (x is x__2):
+                return t
+
+            return t.conjure(v__2, w__2, x__2)
+
+
         transform = transform__abc
 
 

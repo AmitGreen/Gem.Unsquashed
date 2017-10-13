@@ -6,30 +6,20 @@ def gem():
     require_gem('Sapphire.DualTwig')
 
 
-    mutate__postfix_expression = produce__mutate__ab__priority('postfix_expression', PRIORITY_ATOM, PRIORITY_COMPREHENSION)
-
-
     class CallExpression(DualTwig):
         __slots__          = (())
         display_name       = 'call'
         is_call_expression = true
 
 
-        mutate = mutate__postfix_expression
-
-
     class IndexExpression(DualTwig):
         __slots__    = (())
         display_name = 'index'
-
-        mutate = mutate__postfix_expression
 
 
     class MethodCallExpression(DualTwig):
         __slots__    = (())
         display_name = 'method-call'
-
-        mutate = mutate__postfix_expression
 
 
     conjure_call_expression        = produce_conjure_dual_twig('call',        CallExpression)
@@ -37,8 +27,26 @@ def gem():
     conjure_method_call_expression = produce_conjure_dual_twig('call-method', MethodCallExpression)
 
 
-    CallExpression.conjure = static_method(conjure_call_expression)
+    CallExpression.mutate = produce__mutate__ab__priority(
+                                'postfix-expression',
+                                conjure_call_expression,
+                                PRIORITY_POSTFIX,
+                                PRIORITY_COMPREHENSION,
+                            )
 
+    IndexExpression.mutate = produce__mutate__ab__priority(
+                                 'index-expression',
+                                 conjure_index_expression,
+                                 PRIORITY_POSTFIX,
+                                 PRIORITY_SUBSCRIPT_LIST,
+                             )
+
+    MethodCallExpression.mutate = produce__mutate__ab__priority(
+                                      'postfix-expression',
+                                      conjure_method_call_expression,
+                                      PRIORITY_POSTFIX,
+                                      PRIORITY_COMPREHENSION,
+                                  )
 
     share(
         'conjure_call_expression',          conjure_call_expression,

@@ -211,6 +211,8 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
 
+        mutate = mutate__frill__a_priority_comprehension
+
 
     class MapExpression_1(BookcaseExpression):
         __slots__                      = (())
@@ -249,6 +251,8 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
 
+        mutate = produce_mutate___frill__a_with_priority('parenthesized-expression', PRIORITY_COMPREHENSION)
+
 
     class TailIndex(BookcaseExpression):
         __slots__    = (())
@@ -279,10 +283,14 @@ def gem():
     conjure_normal_index      = produce_conjure_bookcase_expression('normal-index',      NormalIndex)
     conjure_parameters_1      = produce_conjure_bookcase_expression('parameters-1',      Parameters_1)
 
-    conjure_parenthesized_expression = produce_conjure_bookcase_expression(
-                                           'parenthesized-expression',
-                                           ParenthesizedExpression,
-                                       )
+    [
+        conjure_parenthesized_expression, ParenthesizedExpression.conjure_with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'parenthesized-expression',
+            ParenthesizedExpression,
+
+            produce_conjure_with_frill = true,
+        )
 
     conjure_tail_index         = produce_conjure_bookcase_expression('tail-index',         TailIndex)
     conjure_tuple_expression_1 = produce_conjure_bookcase_expression('tuple-expression-1', TupleExpression_1)

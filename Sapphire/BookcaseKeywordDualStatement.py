@@ -109,11 +109,10 @@ def gem():
         split_comment       = 1
 
         add_comment = 0
+        transform   = produce_transform__frill_ab_with_priority('for-header', PRIORITY_NORMAL_LIST, PRIORITY_TERNARY_LIST)
 
-        transform = produce_transform___frill__ab_with_priority('for-header', PRIORITY_NORMAL_LIST, PRIORITY_TERNARY_LIST)
 
-
-    class StatementFromImport(KeywordDualExpressionStatement):
+    class FromImportStatement(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'from-statement'
         frill        = conjure_vwx_frill(
@@ -123,6 +122,21 @@ def gem():
                        )
 
         find_require_gem = find_require_gem__0
+
+
+        def transform(t, vary):
+            frill = t.frill
+            a     = t.a
+            b     = t.b
+
+            frill__2 = frill.morph (vary, 0, PRIORITY_ASSIGN, 0)
+            a__2     = a    .mutate(vary, PRIORITY_POSTFIX)
+            b__2     = b    .mutate(vary, PRIORITY_NORMAL_LIST)
+
+            if (frill is frill__2) and (a is a__2) and (b is b__2):
+                return t
+
+            return t.conjure_with_frill(frill__2, a__2, b__2)
 
 
     class RaiseStatement_2(KeywordDualExpressionStatement):
@@ -156,7 +170,7 @@ def gem():
         split_comment       = 1
 
         add_comment = 0
-        transform   = produce_transform___frill__ab_with_priority('with-header', PRIORITY_TERNARY, PRIORITY_LOGICAL_OR)
+        transform   = produce_transform__frill_ab_with_priority('with-header', PRIORITY_TERNARY, PRIORITY_NORMAL)
 
 
     conjure_assert_statement_2 = produce_conjure_bookcase_dual_expression('assert-statement-2', AssertStatement_2)
@@ -171,7 +185,15 @@ def gem():
             produce_conjure_with_frill = true,
         )
 
-    conjure_from_statement     = produce_conjure_bookcase_dual_expression('from-statement',     StatementFromImport)
+    [
+        conjure_from_statement, FromImportStatement.conjure_with_frill,
+    ] = produce_conjure_bookcase_dual_expression(
+            'from-statement',
+            FromImportStatement,
+            
+            produce_conjure_with_frill = true,
+        )
+
     conjure_raise_statement_2  = produce_conjure_bookcase_dual_expression('raise-statement-2',  RaiseStatement_2)
     
     [

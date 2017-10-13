@@ -79,6 +79,52 @@ def gem():
             v           .dump_token(f)
 
 
+    @privileged
+    def produce_mutate__frill__many(name, conjure_with_frill, many_priority):
+        def mutate(t, vary, priority):
+            frill    = t.frill
+            many     = t.many
+            iterator = iterate(many)
+
+            frill__2 = frill.transform(vary)
+
+            i = 0
+
+            for v in iterator:
+                v__2 = v.mutate(vary, many_priority)
+
+                if v is not v__2:
+                    break
+
+                i += 1
+            else:
+                if frill is frill__2:
+                    return t
+
+                return conjure_with_frill(frill__2, many)
+
+            many__2 = (
+                          []          if i is 0 else
+                          [many[0]]   if i is 1 else
+                          List(many[:i])
+                      )
+
+            append = many__2.append
+
+            append(v__2)
+
+            for v in iterator:
+                append(v.mutate(vary, many_priority))
+
+            return conjure_with_frill(frill__2, conjure_tuple_of_many_expression(many__2))
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate_%s', name)
+
+        return mutate
+
+
     @export
     def write__X__many_end(t, w):
         frill = t.frill
@@ -199,7 +245,13 @@ def gem():
 
     @share
     @privileged
-    def produce_conjure_bookcase_many_expression(name, Meta):
+    def produce_conjure_bookcase_many_expression(
+            name, Meta,
+            
+            produce_conjure_with_frill = true,
+    ):
+        assert (produce_conjure_with_frill is true) or (produce_conjure_with_frill is 1)
+
         cache = {}
 
         conjure_dual = produce_conjure_dual(name + '__X2', Meta, cache)
@@ -217,6 +269,15 @@ def gem():
 
             append_cache(name, cache)
 
+        if produce_conjure_with_frill == 1:
+            if __debug__:
+                conjure_dual.__name__ = intern_arrange('conjure_%s__with_frill', name)
+
+            return ((
+                       conjure_bookcase_many_expression,
+                       conjure_dual,
+                   ))
+
         return ((
                    conjure_bookcase_many_expression,
                    static_method(conjure_dual),
@@ -226,44 +287,6 @@ def gem():
     class Arguments_Many(BookcaseManyExpression):
         __slots__    = (())
         display_name = 'arguments-*'
-
-
-        def mutate(t, vary, priority):
-            frill    = t.frill
-            many     = t.many
-            iterator = iterate(many)
-
-            frill_2 = frill.mutate(vary, PRIORITY_COMPREHENSION)
-
-            i = 0
-
-            for v in iterator:
-                v__2 = v.mutate(vary, PRIORITY_COMPREHENSION)
-
-                if v is not v__2:
-                    break
-
-                i += 1
-            else:
-                if frill is frill_2:
-                    return t
-
-                return t.conjure_dual(frill__2, many)
-
-            many__2 = (
-                          []          if i is 0 else
-                          [many[0]]   if i is 1 else
-                          List(many[:i])
-                      )
-
-            append = many__2.append
-
-            append(v__2)
-
-            for v in iterator:
-                append(v.mutate(vary, PRIORITY_COMPREHENSION))
-
-            return t.conjure_dual(frill_2, conjure_tuple_of_many_expression(many__2))
 
 
     class ListExpression_Many(BookcaseManyExpression):
@@ -280,51 +303,13 @@ def gem():
         is_atom                        = true
 
 
-    class Parameter_Many(BookcaseManyExpression):
+    class Parameters_Many(BookcaseManyExpression):
         __slots__    = (())
         display_name = 'parameter-(*)'
 
 
         def parameter_1_named(t, name):
             return 0
-
-
-        def transform(t, vary):
-            frill    = t.frill
-            many     = t.many
-            iterator = iterate(many)
-
-            frill_2 = frill.transform(vary)
-
-            i = 0
-
-            for v in iterator:
-                v__2 = v.transform(vary)
-
-                if v is not v__2:
-                    break
-
-                i += 1
-            else:
-                if frill is frill_2:
-                    return t
-
-                return t.conjure_dual(frill__2, many)
-
-            many__2 = (
-                          []          if i is 0 else
-                          [many[0]]   if i is 1 else
-                          List(many[:i])
-                      )
-
-            append = many__2.append
-
-            append(v__2)
-
-            for v in iterator:
-                append(v.transform(vary))
-
-            return t.conjure_dual(frill_2, conjure_tuple_of_many_expression(many__2))
 
 
     class TupleExpression_Many(BookcaseManyExpression):
@@ -335,30 +320,64 @@ def gem():
 
 
     [
-        conjure_arguments_many, Arguments_Many.conjure_dual
-    ] = produce_conjure_bookcase_many_expression('arguments-*', Arguments_Many)
+        conjure_arguments_many, conjure_arguments_many__with_frill,
+    ] = produce_conjure_bookcase_many_expression(
+            'arguments-*',
+            Arguments_Many,
+
+            produce_conjure_with_frill = 1,
+        )
 
     [
-        conjure_list_expression_many, ListExpression_Many.conjure_dual,
-    ] = produce_conjure_bookcase_many_expression('list-expression-*', ListExpression_Many)
+        conjure_list_expression_many, conjure_list_expression_many__with_frill
+    ] = produce_conjure_bookcase_many_expression(
+            'list-expression-*',
+            ListExpression_Many,
+
+            produce_conjure_with_frill = 1,
+        )
 
     [
         conjure_map_expression_many, MapExpression_Many.conjure_dual
     ] = produce_conjure_bookcase_many_expression('map-expression-*', MapExpression_Many)
 
     [
-        conjure_parameter_many, Parameter_Many.conjure_dual
-    ] = produce_conjure_bookcase_many_expression('parameter-*', Parameter_Many)
+        conjure_parameters_many, conjure_parameters_many__with_frill,
+    ] = produce_conjure_bookcase_many_expression(
+            'parameter-*',
+            Parameters_Many,
+
+            produce_conjure_with_frill = 1,
+        )
 
     [
         conjure_tuple_expression_many, TupleExpression_Many.conjure_dual
     ] = produce_conjure_bookcase_many_expression('tuple-expression-*', TupleExpression_Many)
 
 
+    Arguments_Many.mutate = produce_mutate__frill__many(
+                                'arguments_many',
+                                conjure_arguments_many__with_frill,
+                                PRIORITY_ASSIGN,
+                            )
+
+    ListExpression_Many.mutate = produce_mutate__frill__many(
+                                     'list_expression_many',
+                                     conjure_list_expression_many__with_frill,
+                                     PRIORITY_COMPREHENSION,
+                                 )
+
+    Parameters_Many.transform = produce_transform__frill__many(
+                                    'parameters_many',
+                                    conjure_parameters_many__with_frill,
+                                    PRIORITY_ASSIGN,
+                                )
+
+
     share(
         'conjure_arguments_many',           conjure_arguments_many,
         'conjure_list_expression_many',     conjure_list_expression_many,
         'conjure_map_expression_many',      conjure_map_expression_many,
-        'conjure_parameter_many',           conjure_parameter_many,
+        'conjure_parameters_many',          conjure_parameters_many,
         'conjure_tuple_expression_many',    conjure_tuple_expression_many,
     )

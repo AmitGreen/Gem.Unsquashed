@@ -29,6 +29,28 @@ def gem():
         x         = QuadrupleTwig.d
 
 
+        def transform(t, vary):
+            comment = t.comment
+            v       = t.v
+            w       = t.w
+            x       = t.x
+
+            #my_line('t: %r', t)
+
+            comment__2 = comment.transform(vary)
+            v__2       = v      .transform(vary)
+            w__2       = w      .transform(vary)
+            x__2       = x      .transform(vary)
+
+            if (comment is comment__2) and (v is v__2) and (w is w__2) and (x is x__2):
+                return t
+
+            if comment__2 is 0:
+                return conjure_vwx_frill(v__2, w__2, x__2)
+
+            return conjure_commented_vwx_frill(comment__2, v__2, w__2, x__2)
+
+
     conjure_vwxy_frill = produce_conjure_quadruple__4123(
                              'vwxy-frill',
                              VWXY_Frill,

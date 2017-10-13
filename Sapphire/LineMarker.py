@@ -120,6 +120,7 @@ def gem():
     LINE_MARKER = conjure_line_marker('\n')
 
 
+    LineMarker.mutate    = produce_mutate__uncommented   ('line_marker', LINE_MARKER)
     LineMarker.transform = produce_transform__uncommented('line_marker', LINE_MARKER)
 
 

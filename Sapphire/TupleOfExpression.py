@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.TupleOfExpression')
 def gem():
+    require_gem('Sapphire.Cache')
     require_gem('Sapphire.TokenTuple')
 
 

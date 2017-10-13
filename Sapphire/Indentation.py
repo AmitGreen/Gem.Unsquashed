@@ -43,6 +43,13 @@ def gem():
             return arrange('{+%d %s}', t.total, portray_string(t.s))
 
 
+        def mutate(t, vary, priority):
+            if vary.remove_indentation:
+                return vary.indentation
+
+            return t
+
+
         def transform(t, vary):
             if vary.remove_indentation:
                 return vary.indentation

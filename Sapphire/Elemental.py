@@ -225,6 +225,25 @@ def gem():
         keyword                           = 'for'
 
 
+        #
+        #   NOTE:
+        #       1.  .mutate    is called inside comprehension expressions
+        #       2.  .transform is called inside for           statements
+        #
+        #       When removing comments:
+        #
+        #           .mutate    converts to ' for ' (leading space)
+        #           .transform converts to 'for '  (no leading space)
+        #
+        def mutate(t, vary, priority):
+            assert priority == PRIORITY_ASSIGN
+
+            if vary.remove_comments:
+                return W__FOR__W
+
+            return t
+
+
     class KeywordFrom(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'from'
@@ -289,6 +308,25 @@ def gem():
         __slots__    = (())
         display_name = 'import'
         keyword      = 'import'
+
+
+        #
+        #   NOTE:
+        #       1.  .mutate    is called for 'from ... import ...' statements
+        #       2.  .transform is called for 'import ...'          statements
+        #
+        #       When removing comments:
+        #
+        #           .mutate    converts to ' import ' (leading space)
+        #           .transform converts to 'import '  (no leading space)
+        #
+        def mutate(t, vary, priority):
+            assert priority == PRIORITY_ASSIGN
+
+            if vary.remove_comments:
+                return W__IMPORT__W
+
+            return t
 
 
     class KeywordNot(KeywordAndOperatorBase):
@@ -430,6 +468,17 @@ def gem():
         is_end_of_ternary_expression_list       = true
         is_end_of_unary_expression              = true
         keyword                                 = ':'
+
+
+        def mutate(t, vary, priority):
+            if vary.remove_comments:
+                if priority == PRIORITY_ASSIGN:
+                    return COLON
+
+                my_line('priority: %r', priority)
+                assert 0
+
+            return t
 
 
     class OperatorComma(KeywordAndOperatorBase):
@@ -982,7 +1031,7 @@ def gem():
     ] = produce_conjure_action_word(
             'right_parenthesis',
             OperatorRightParenthesis,
-            
+
             produce_ends_in_newline = true,
         )
 
@@ -991,7 +1040,7 @@ def gem():
     ] = produce_conjure_action_word(
             'right_square_bracket',
             OperatorRightSquareBracket,
-            
+
             produce_ends_in_newline = true,
         )
 
@@ -1017,26 +1066,38 @@ def gem():
     conjure_keyword_yield    = produce_conjure_action_word('keyword-yield',         KeywordYield)
 
 
+    ASSERT__W           = conjure_keyword_assert      ('assert ')
     AT_SIGN             = conjure_at_sign             ('@')
     COLON               = conjure_colon               (':')
     COMMA               = conjure_comma               (',')
     COMMA__W            = conjure_comma               (', ')
+    DELETE__W           = conjure_keyword_delete      ('del ')
+    DOT                 = conjure_dot                 ('.')
     EXCEPT              = conjure_keyword_try         ('except')
     FOR__W              = conjure_keyword_for         ('for ')
+    FROM__W             = conjure_keyword_from        ('from ')
     FUNCTION__W         = conjure_keyword_function    ('def ')
     IF__W               = conjure_keyword_if          ('if ')
+    IN__W               = conjure_keyword_in          ('in ')
+    IMPORT__W           = conjure_keyword_import      ('import ')
+    LEFT_BRACE          = conjure_left_brace          ('{')
     LP                  = conjure_left_parenthesis    ('(')
     LSB                 = conjure_left_square_bracket ('[')
     RETURN__W           = conjure_keyword_return      ('return ')
     NOT__W              = conjure_keyword_not         ('not ')
+    RIGHT_BRACE         = conjure_right_brace         ('}')
     RP                  = conjure_right_parenthesis   (')')
     RSB                 = conjure_right_square_bracket(']')
     TRY                 = conjure_keyword_try         ('try')
     W__COMPARE_EQUAL__W = conjure_action_word         ('==', ' == ')
-    W__EQUAL_SIGN__W    = conjure_equal_sign          (' = ')
+    W__ASSIGN__W        = conjure_equal_sign          (' = ')
     W__AS__W            = conjure_keyword_as          (' as ')
     W__AND__W           = conjure_action_word         ('and', ' and ')
+    W__ELSE__W          = conjure_keyword_else        (' else ')
+    W__FOR__W           = conjure_keyword_for         (' for ')
+    W__IF__W            = conjure_keyword_if          (' if ')
     W__IN__W            = conjure_keyword_in          (' in ')
+    W__IMPORT__W        = conjure_keyword_import      (' import ')
     W__IS__W            = conjure_keyword_is          (' is ')
     W__NOT__W           = conjure_keyword_not         (' not ')
     WITH__W             = conjure_keyword_with        ('with ')
@@ -1044,39 +1105,63 @@ def gem():
 
     #
     #   NOTE:
-    #       KeywordNot.mutate is only called in a unary context, thus its default value is 'not '
+    #       .mutate functions when called are generally called on expressions, thus the result
+    #       (when removing comments) needs to have leading space.
     #
-    #       When used as part of a 'not in' operator, NotIn.Mutate does *NOT* call KeywordNot.mutate --
-    #       hence KeywordNot.mutate does not need to deal with this situation when its default vaulue
-    #       would be ' not '.
+    #       .transform functions when called are generally called on statement, thus the result
+    #       (when removing comments) needs to NOT have leading space.
     #
-    KeywordAnd              .mutate = produce_mutate__uncommented('keyword_and',       W__AND__W)
-    KeywordIs               .mutate = produce_mutate__uncommented('keyword_is',        W__IS__W)
-    KeywordNot              .mutate = produce_mutate__uncommented('keyword_is',        NOT__W)          #   Unary context
-    OperatorComma           .mutate = produce_mutate__uncommented('comma',             COMMA__W)
-    OperatorCompareEqual    .mutate = produce_mutate__uncommented('compare_equal',     W__COMPARE_EQUAL__W)
-    OperatorEqualSign       .mutate = produce_mutate__uncommented('equal_sign',        W__EQUAL_SIGN__W)
-    OperatorLeftParenthesis .mutate = produce_mutate__uncommented('left_parenthesis',  LP)
-    OperatorRightParenthesis.mutate = produce_mutate__uncommented('right_parenthesis', RP)
+    #       Example:
+    #           KeywordIf.mutate:       Returns ' if ' (with    a leading space, when removing comments)
+    #           KeywordIf.transform:    Returns 'if '  (without a leading space, when removing comments)
+    #
+    #       Thus given the following input:
+    #
+    #           if  ((a)if  b else c):
+    #
+    #       The first 'if  ' is transformed to 'if ', while the second 'if  ' is mutated to ' if '.
+    #
 
+    #KeywordAnd              .mutate = produce_mutate__uncommented('keyword_and',       W__AND__W)
+    #KeywordAs               .mutate = produce_mutate__uncommented('keyword_as',        W__AS__W)
+    #KeywordIn               .mutate = produce_mutate__uncommented('keyword_in',        W__IN__W)
+    #KeywordNot              .mutate = produce_mutate__uncommented('keyword_is',        NOT__W)          #   Unary context
+    #OperatorComma           .mutate = produce_mutate__uncommented('comma',             COMMA__W)
+    #OperatorEqualSign       .mutate = produce_mutate__uncommented('equal_sign',        W__ASSIGN__W)
+    #OperatorLeftParenthesis .mutate = produce_mutate__uncommented('left_parenthesis',  LP)
+    #OperatorRightParenthesis.mutate = produce_mutate__uncommented('right_parenthesis', RP)
+
+    KeywordElse             .mutate = produce_mutate__uncommented('keyword_else', W__ELSE__W)
+    KeywordIf               .mutate = produce_mutate__uncommented('keyword_if',   W__IF__W)
+
+
+    #
+    #   NOTE:
+    #       See note in KeywordFor   .mutate on the difference from KeywordFor   .transform
+    #       See note in KeywordImport.mutate on the difference from KeywordImport.transform
+    #
     KeywordAs                 .transform = produce_transform__uncommented('keyword_as',           W__AS__W)
+    KeywordAssert             .transform = produce_transform__uncommented('keyword_assert',       ASSERT__W)
+    KeywordDelete             .transform = produce_transform__uncommented('keyword_delete',       DELETE__W)
     KeywordFor                .transform = produce_transform__uncommented('keyword_for',          FOR__W)
+    KeywordFrom               .transform = produce_transform__uncommented('keyword_from',         FROM__W)
     KeywordFunction           .transform = produce_transform__uncommented('keyword_function',     FUNCTION__W)
     KeywordIf                 .transform = produce_transform__uncommented('keyword_if',           IF__W)
     KeywordIn                 .transform = produce_transform__uncommented('keyword_in',           W__IN__W)
+    KeywordIs                 .transform = produce_transform__uncommented('keyword_is',           W__IS__W)
+    KeywordImport             .transform = produce_transform__uncommented('keyword_import',       IMPORT__W)
     KeywordReturn             .transform = produce_transform__uncommented('keyword_return',       RETURN__W)
     KeywordWith               .transform = produce_transform__uncommented('keyword_with',         WITH__W)
     OperatorAtSign            .transform = produce_transform__uncommented('at_sign',              AT_SIGN)
     OperatorColon             .transform = produce_transform__uncommented('colon',                COLON)
     OperatorComma             .transform = produce_transform__uncommented('comma',                COMMA__W)
-    OperatorEqualSign         .transform = produce_transform__uncommented('equal_sign',           W__EQUAL_SIGN__W)
+    OperatorCompareEqual      .transform = produce_transform__uncommented('compare_equal',        W__COMPARE_EQUAL__W)
+    OperatorDot               .transform = produce_transform__uncommented('operator_dot',         DOT)
+    OperatorEqualSign         .transform = produce_transform__uncommented('equal_sign',           W__ASSIGN__W)
     OperatorLeftParenthesis   .transform = produce_transform__uncommented('left_parenthesis',     LP)
     OperatorLeftSquareBracket .transform = produce_transform__uncommented('left_square_bracket',  LSB)
     OperatorRightParenthesis  .transform = produce_transform__uncommented('right_parenthesis',    RP)
     OperatorRightSquareBracket.transform = produce_transform__uncommented('right_square_bracket', RSB)
-
-
-    OperatorEqualSign.uncommented_token = W__EQUAL_SIGN__W
 
 
     find_atom_type = {
@@ -1096,7 +1181,7 @@ def gem():
             'K' : conjure_name, 'L' : conjure_name, 'M' : conjure_name, 'N' : conjure_name, 'O' : conjure_name,
             'P' : conjure_name, 'Q' : conjure_name, 'R' : conjure_name, 'S' : conjure_name, 'T' : conjure_name,
             'U' : conjure_name, 'V' : conjure_name, 'W' : conjure_name, 'X' : conjure_name, 'Y' : conjure_name,
-            'Z' : conjure_name, '_' : conjure_name, 
+            'Z' : conjure_name, '_' : conjure_name,
 
             #  [
             ']' : conjure_right_square_bracket,
@@ -1184,13 +1269,20 @@ def gem():
         'COMMA__W',                                         COMMA__W,
         'EXCEPT',                                           EXCEPT,
         'FUNCTION__W',                                      FUNCTION__W,
+        'IN__W',                                            IN__W,
         'LP',                                               LP,
         'LSB',                                              LSB,
         'RP',                                               RP,
         'RSB',                                              RSB,
         'TRY',                                              TRY,
+        'LEFT_BRACE',                                       LEFT_BRACE,
         'NOT__W',                                           NOT__W,
-        'W__EQUAL_SIGN__W',                                 W__EQUAL_SIGN__W,
+        'RIGHT_BRACE',                                      RIGHT_BRACE,
+        'W__ASSIGN__W',                                     W__ASSIGN__W,
+        'W__ELSE__W',                                       W__ELSE__W,
+        'W__FOR__W',                                        W__FOR__W,
+        'W__IF__W',                                         W__IF__W,
+        'W__IN__W',                                         W__IN__W,
         'W__IS__W',                                         W__IS__W,
         'W__NOT__W',                                        W__NOT__W,
     )

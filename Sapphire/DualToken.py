@@ -300,7 +300,21 @@ def gem():
         is_arguments_0                        = true
         is_postfix_operator                   = true
 
-        mutate = produce__mutate__ab__priority('arguments_0', 0, 0)
+
+        def mutate(t, vary, priority):
+            if vary.remove_comments:
+                return empty__arguments_0
+
+            a = t.a
+            b = t.b
+
+            a__2 = a.transform(vary)
+            b__2 = b.transform(vary)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure_arguments_0(a__2, b__2)
 
 
     class Atom_Whitespace(BaseDualOperator):
@@ -333,6 +347,7 @@ def gem():
 
         __init__       = construct_dual_token__line_marker_1
         count_newlines = count_newlines__line_marker
+#       mutate         = mutate__ab
         transform      = transform__ab
 
 
@@ -382,8 +397,10 @@ def gem():
 
 
         def mutate(t, vary, priority):
+            assert priority == PRIORITY_TUPLE
+
             if vary.remove_comments:
-                return (COMMA_RP   if priority == PRIORITY_TUPLE else  RP)
+                return COMMA_RP
 
             return t
 
@@ -412,11 +429,27 @@ def gem():
         display_name        = '.name'
         is_postfix_operator = true
 
+
+        def mutate(t, vary, priority):
+            a = t.a
+            b = t.b
+
+            a__2 = a.transform(vary)
+            b__2 = b.transform(vary)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure_dot_name(a__2, b__2)
+
+
     class DotNamePair(BaseDualOperator):
         __slots__           = (())
         #   [
         display_name        = '.name-pair'
         is_postfix_operator = true
+
+        mutate = mutate__ab
 
 
     class EmptyList(BaseDualOperator):
@@ -453,6 +486,7 @@ def gem():
             return arrange('<+%d {%s}>', t.identation.total, portray_string(t.token.s)[1:-1])
 
 
+#       mutate    = mutate__ab
         transform = transform__ab
 
 
@@ -940,8 +974,26 @@ def gem():
                                          none,
                                      )
 
-    Is_Not.mutate = produce_mutate__uncommented('is_not', conjure_is_not(W__IS__W,  NOT__W))
-    Not_In.mutate = produce_mutate__uncommented('not_in', conjure_not_in(W__NOT__W, conjure_keyword_in ('in ')))
+    empty__arguments_0  = conjure_arguments_0(LP, RP)
+    empty__empty_map    = conjure_empty_map  (LEFT_BRACE, RIGHT_BRACE)
+    empty__parameters_0 = conjure_parameters_0(LP, RP)
+
+
+    EmptyMap.mutate = produce_mutate__uncommented('empty_map', empty__empty_map)
+
+    
+    W__IS_NOT__W = conjure_is_not(W__IS__W,  NOT__W)
+    W__NOT_IN__W = conjure_not_in(W__NOT__W, IN__W)
+
+
+    #
+    #   NOTE:
+    #       Comma_RightParentheiss.muaate    leaves  the , (called on parenthesized tuple expression)
+    #       Comma_RightParenthesis.transform removes the , (called in other situations where the , is not needed)
+    #
+    Is_Not                .transform = produce_transform__uncommented('is_not', W__IS_NOT__W)
+    Not_In                .transform = produce_transform__uncommented('not_in', W__NOT_IN__W)
+    Comma_RightParenthesis.transform = produce_transform__uncommented('comma__right_parenthesis', RP)
 
 
     Colon_LineMarker_1.conjure = static_method(conjure_colon__line_marker)
@@ -949,9 +1001,6 @@ def gem():
 
     COLON__LINE_MARKER = conjure_colon__line_marker      (COLON, LINE_MARKER)
     COMMA_RP           = conjure_comma__right_parenthesis(COMMA, RP)
-
-    empty__arguments_0  = conjure_arguments_0(LP, RP)
-    empty__parameters_0 = conjure_parameters_0(LP, RP)
 
     find_evoke_comma_something = {
                                      #   (

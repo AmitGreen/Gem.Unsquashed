@@ -3,6 +3,11 @@
 #
 @gem('Sapphire.Method')
 def gem():
+    require_gem('Sapphire.TupleOfExpression')
+
+    conjure_tuple_of_many_expression = Shared.conjure_tuple_of_many_expression
+
+
     @share
     def construct__123(t, k1, k2, k3):
         t.k1 = k1
@@ -55,6 +60,8 @@ def gem():
         a = t.a
         b = t.b
 
+        #my_line('t: %r', t)
+
         a__2 = a.mutate(vary, priority)
         b__2 = b.mutate(vary, priority)
 
@@ -89,10 +96,12 @@ def gem():
 
     @share
     @privileged
-    def produce__mutate__ab__priority(name, a_priority, b_priority):
+    def produce__mutate__ab__priority(name, conjure, a_priority, b_priority):
         def mutate(t, vary, priority):
             a = t.a
             b = t.b
+
+            #my_line('t: %r', t)
 
             a__2 = a.mutate(vary, a_priority)
             b__2 = b.mutate(vary, b_priority)
@@ -100,7 +109,7 @@ def gem():
             if (a is a__2) and (b is b__2):
                 return t
 
-            return t.conjure(a__2, b__2)
+            return conjure(a__2, b__2)
 
 
         if __debug__:
@@ -181,6 +190,62 @@ def gem():
 
     @share
     @privileged
+    def produce_mutate__frill__abc__priority(
+            name, conjure_with_frill, frill_priority, a_priority, b_priority, c_priority,
+    ):
+        def mutate(t, vary, priority):
+            frill = t.frill
+            a     = t.a
+            b     = t.b
+            c     = t.c
+
+            #my_line('t: %r', t)
+
+            frill__2 = frill.mutate(vary, frill_priority)
+            a__2     = a    .mutate(vary, a_priority)
+            b__2     = b    .mutate(vary, b_priority)
+            c__2     = c    .mutate(vary, c_priority)
+
+            if (frill is frill__2) and (a is a__2) and (b is b__2) and (c is c__2):
+                return t
+
+            return conjure_with_frill(frill__2, a__2, b__2, c__2)
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate_%s', name)
+
+        return mutate
+
+
+    @share
+    @privileged
+    def produce_mutate__frill__ab_with_priority(name, a_priority, b_priority):
+        def mutate(t, vary, priority):
+            frill = t.frill
+            a     = t.a
+            b     = t.b
+
+            #my_line('t: %r', t)
+
+            frill__2 = frill.transform(vary)
+            a__2     = a    .mutate   (vary, a_priority)
+            b__2     = b    .mutate   (vary, b_priority)
+
+            if (frill is frill__2) and (a is a__2) and (b is b__2):
+                return t
+
+            return t.conjure_with_frill(frill__2, a__2, b__2)
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate_%s', name)
+
+        return mutate
+
+
+    @share
+    @privileged
     def produce_mutate__uncommented(name, uncommented):
         def mutate(t, vary, priority):
             if vary.remove_comments:
@@ -202,6 +267,9 @@ def gem():
             frill = t.frill
             a     = t.a
 
+            #my_line('t: %r', t)
+            #my_line('a: %r', a)
+
             frill__2 = frill.transform(vary)
             a__2     = a    .mutate   (vary, priority)
 
@@ -219,11 +287,13 @@ def gem():
 
     @share
     @privileged
-    def produce_transform___frill__ab_with_priority(name, a_priority, b_priority):
+    def produce_transform__frill_ab_with_priority(name, a_priority, b_priority):
         def transform(t, vary):
             frill = t.frill
             a     = t.a
             b     = t.b
+
+            #my_line('t: %r', t)
 
             frill__2 = frill.transform(vary)
             a__2     = a    .mutate(vary, a_priority)
@@ -315,6 +385,53 @@ def gem():
             return t
 
         return t.conjure_with_frill(frill__2, a__2, b__2)
+
+
+    @share
+    @privileged
+    def produce_transform__frill__many(name, conjure_with_frill, many_priority):
+        def transform(t, vary):
+            frill    = t.frill
+            many     = t.many
+            iterator = iterate(many)
+
+            frill_2 = frill.transform(vary)
+
+            i = 0
+
+            for v in iterator:
+                v__2 = v.transform(vary)
+
+                if v is not v__2:
+                    break
+
+                i += 1
+            else:
+                if frill is frill_2:
+                    return t
+
+                return conjure_with_frill(frill__2, many)
+
+            many__2 = (
+                          []          if i is 0 else
+                          [many[0]]   if i is 1 else
+                          List(many[:i])
+                      )
+
+            append = many__2.append
+
+            append(v__2)
+
+            for v in iterator:
+                append(v.transform(vary))
+
+            return conjure_with_frill(frill_2, conjure_tuple_of_many_expression(many__2))
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform_%s', name)
+
+        return transform
 
 
     @share

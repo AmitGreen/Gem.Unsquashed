@@ -22,8 +22,15 @@ def gem():
         'PRIORITY_BOOLEAN_OR',              16,     #   'or'
         'PRIORITY_TERNARY',                 17,     #   'if'
         'PRIORITY_TERNARY_LIST',            18,     #   Comma expression of PRIORITY_TERNARY
-        'PRIORITY_YIELD',                   19,     #   'yield'
-        'PRIORITY_COMPREHENSION',           20,     #   'for'
-        'PRIORITY_PARAMETER',               21,     #   function parameter
-        'PRIORITY_STATEMENT',               22,     #   statement
+        'PRIORITY_SUBSCRIPT',               19,     #   Subscript of index expression
+        'PRIORITY_SUBSCRIPT_LIST',          20,     #   COmma expresion of Subscripts
+        'PRIORITY_YIELD',                   21,     #   'yield'
+        'PRIORITY_COMPREHENSION',           22,     #   'for'
+        'PRIORITY_ASSIGN',                  23,     #   '=', 'import', and 'in'
+        'PRIORITY_STATEMENT',               24,     #   statement
+
+        #
+        #   PRIORITY_NORMAL is an alias for PRIORITY_LOGICAL_OR
+        #
+        'PRIORITY_NORMAL',                  11,
     )

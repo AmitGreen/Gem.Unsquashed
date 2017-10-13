@@ -99,6 +99,7 @@ def gem():
         frill        = conjure_vw_frill(empty_indentation__at_sign, LINE_MARKER)
 
         find_require_gem = find_require_gem__0
+        transform        = produce_transform___frill__a_with_priority('assert-1', PRIORITY_TERNARY)
 
 
     @share
@@ -194,6 +195,7 @@ def gem():
                        )
 
         find_require_gem = find_require_gem__0
+        transform        = produce_transform___frill__a_with_priority('import-statement', PRIORITY_ASSIGN)
 
 
     class RaiseStatement_1(KeywordExpressionStatement):

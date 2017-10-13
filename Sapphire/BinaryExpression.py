@@ -18,20 +18,11 @@ def gem():
     store_adjusted_meta         = Shared.store_adjusted_meta            #   Due to privileged
 
 
-    mutate__frill__ab__compare = produce_mutate__frill__ab__priority(
-                                     'compare-expression',
-                                     PRIORITY_COMPARE,
-                                     PRIORITY_COMPARE,
-                                     PRIORITY_COMPARE,
-                                 )
-
-    mutate__frill__ab__comprehension = produce_mutate__frill__ab__priority(
-                                           'keyword-argument',
-                                           PRIORITY_COMPREHENSION,
-                                           PRIORITY_COMPREHENSION,
-                                           PRIORITY_COMPREHENSION,
-                                       )
-
+    mutate__frill__ab_with_compare = produce_mutate__frill__ab_with_priority(
+                                         'compare-expression',
+                                         PRIORITY_COMPARE,
+                                         PRIORITY_NORMAL,
+                                     )
 
     def portray_frill(t):
         return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.frill, t.b)
@@ -197,9 +188,8 @@ def gem():
         display_name = 'and-1'
         frill        = conjure_action_word('and', ' and ')
 
-        mutate = produce_mutate__frill__ab__priority(
+        mutate = produce_mutate__frill__ab_with_priority(
                      'and-expression-1',
-                     PRIORITY_BOOLEAN_AND,
                      PRIORITY_BOOLEAN_AND,
                      PRIORITY_BOOLEAN_AND,
                  )
@@ -210,11 +200,28 @@ def gem():
         display_name   = 'as-fragment'
         frill          = conjure_action_word('as', ' as ')
 
+        mutate = produce_mutate__frill__ab_with_priority('as-fragment', PRIORITY_TERNARY, PRIORITY_NORMAL)
+
 
     class CommaExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = ','
         frill        = COMMA__W
+
+
+        def mutate(t, vary, priority):
+            frill = t.frill
+            a     = t.a
+            b     = t.b
+
+            frill__2 = frill.transform(vary)
+            a__2     = a    .mutate(vary, priority)
+            b__2     = b    .mutate(vary, priority)
+
+            if (frill is frill__2) and (a is a__2) and (b is b__2):
+                return t
+
+            return conjure_comma_expression_1(a__2, frill__2, b__2)
 
 
     class ComprehensionIfExpression(BinaryExpression):
@@ -228,7 +235,7 @@ def gem():
         display_name = 'in'
         frill        = conjure_keyword_in(' in ')
 
-        mutate = mutate__frill__ab__compare
+        mutate = mutate__frill__ab_with_compare
 
 
     class CompareEqualExpression(BinaryExpression):
@@ -238,7 +245,7 @@ def gem():
 
         __repr__      = portray_with_braces
         display_token = display_token__with_braces
-        mutate        = mutate__frill__ab__compare
+        mutate        = mutate__frill__ab_with_compare
 
 
     class CompareDifferentExpression(BinaryExpression):
@@ -246,7 +253,7 @@ def gem():
         display_name = 'is-not'
         frill        = conjure_is_not(W__IS__W, NOT__W)
 
-        mutate = mutate__frill__ab__compare
+        mutate = mutate__frill__ab_with_compare
 
 
     del Shared.conjure_is_not
@@ -257,7 +264,7 @@ def gem():
         display_name = 'not-in'
         frill        = conjure_not_in(W__NOT__W, conjure_keyword_in('in '))
 
-        mutate = mutate__frill__ab__compare
+        mutate = mutate__frill__ab_with_compare
 
 
     del Shared.conjure_not_in
@@ -270,7 +277,7 @@ def gem():
 
         __repr__      = portray_with_braces
         display_token = display_token__with_braces
-        mutate        = mutate__frill__ab__compare
+        mutate        = mutate__frill__ab_with_compare
 
 
     class CompareGreaterThanOrEqualExpression(BinaryExpression):
@@ -280,7 +287,7 @@ def gem():
 
         __repr__      = portray_with_braces
         display_token = display_token__with_braces
-        mutate        = mutate__frill__ab__compare
+        mutate        = mutate__frill__ab_with_compare
 
 
     class CompareIdentityExpression(BinaryExpression):
@@ -288,7 +295,7 @@ def gem():
         display_name = 'is'
         frill        = conjure_keyword_is(' is ')
 
-        mutate = mutate__frill__ab__compare
+        mutate = mutate__frill__ab_with_compare
 
 
     class CompareLessThanExpression(BinaryExpression):
@@ -298,7 +305,7 @@ def gem():
 
         __repr__      = portray_with_braces
         display_token = display_token__with_braces
-        mutate        = mutate__frill__ab__compare
+        mutate        = mutate__frill__ab_with_compare
 
 
     class CompareLessThanOrEqualExpression(BinaryExpression):
@@ -308,7 +315,7 @@ def gem():
 
         __repr__      = portray_with_braces
         display_token = display_token__with_braces
-        mutate        = mutate__frill__ab__compare
+        mutate        = mutate__frill__ab_with_compare
 
 
     class CompareNotEqualExpression(BinaryExpression):
@@ -318,7 +325,7 @@ def gem():
 
         __repr__      = portray_with_braces
         display_token = display_token__with_braces
-        mutate        = mutate__frill__ab__compare
+        mutate        = mutate__frill__ab_with_compare
 
 
     class DivideExpression(BinaryExpression):
@@ -344,9 +351,9 @@ def gem():
     class KeywordArgument(BinaryExpression):
         __slots__    = (())
         display_name = 'keyword-argument'
-        frill        = conjure_action_word('=', ' = ')
+        frill        = W__ASSIGN__W
 
-        mutate = mutate__frill__ab__comprehension
+        mutate = produce_mutate__frill__ab_with_priority('keyword-argument', PRIORITY_POSTFIX, PRIORITY_TERNARY)
 
 
     class KeywordParameter(BinaryExpression):
@@ -354,7 +361,7 @@ def gem():
         display_name = 'keyword-parameter'
         frill        = conjure_action_word('=', ' = ')
 
-        transform = produce_transform___frill__ab_with_priority('keyword_parameter', PRIORITY_ATOM, PRIORITY_TERNARY)
+        transform = produce_transform__frill_ab_with_priority('keyword_parameter', PRIORITY_ATOM, PRIORITY_TERNARY)
 
 
     class LogicalAndExpression_1(BinaryExpression):
@@ -362,11 +369,10 @@ def gem():
         display_name = '&'
         frill        = conjure_action_word('&', ' & ')
 
-        mutate = produce_mutate__frill__ab__priority(
+        mutate = produce_mutate__frill__ab_with_priority(
                      'logical-and-expression',
                      PRIORITY_LOGICAL_AND,
-                     PRIORITY_LOGICAL_AND,
-                     PRIORITY_LOGICAL_AND,
+                     PRIORITY_SHIFT,
                  )
 
 
@@ -424,7 +430,15 @@ def gem():
             produce_conjure_with_frill = true,
         )
 
-    conjure_as_fragment        = produce_conjure_binary_expression('as-fragment',       AsFragment)
+    [
+        conjure_as_fragment, AsFragment.conjure_with_frill,
+    ] = produce_conjure_binary_expression(
+            'as-fragment',
+            AsFragment,
+            
+            produce_conjure_with_frill = true,
+        )
+
     conjure_comma_expression_1 = produce_conjure_binary_expression('comma-1',           CommaExpression_1)
     conjure_comprehension_if   = produce_conjure_binary_expression('comprehension-if',  ComprehensionIfExpression)
     conjure_compare_contains   = produce_conjure_binary_expression('compare-contains',  CompareContainsExpression)
