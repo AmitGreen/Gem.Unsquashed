@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.DefinitionHeader')
 def gem():
+    require_gem('Sapphire.Method')
     require_gem('Sapphire.Tree')
 
 
@@ -27,21 +28,10 @@ def gem():
         split_comment                         = 1
 
 
-        def __init__(t, frill, name, parameters):
-            t.frill      = frill
-            t.name       = name
-            t.parameters = parameters
-
-
-        def  __repr__(t):
-            return arrange('<%s %s %r %r>', t.__class__.__name__, t.frill, t.name, t.parameters)
-
-
-        add_comment = 0
-
-
-        def count_newlines(t):
-            return t.frill.count_newlines() + t.name.count_newlines() + t.parameters.count_newlines()
+        __init__       = construct__123
+        __repr__       = portray__123
+        add_comment    = 0
+        count_newlines = count_newlines__123
 
 
         def display_token(t):
@@ -79,23 +69,7 @@ def gem():
             return t.frill.v.indentation
 
             
-        def transform(t, vary):
-            frill      = t.frill
-            name       = t.name
-            parameters = t.parameters
-
-            frill__2      = frill     .transform(vary)
-            name__2       = name      .transform(vary)
-            parameters__2 = parameters.transform(vary)
-
-            if (
-                    frill      is frill__2
-                and parameters is parameters__2
-                and name       is name__2
-            ):
-                return t
-
-            return t.conjure_with_frill(frill__2, name__2, parameters__2)
+        transform = transform__frill_ab
 
 
         def write(t, w):
@@ -105,6 +79,9 @@ def gem():
             t.parameters.write(w)
             w(frill.w.s)
 
+
+    DefinitionHeader.a = DefinitionHeader.frill
+    DefinitionHeader.b = DefinitionHeader.name
 
     DefinitionHeader.k1 = DefinitionHeader.frill
     DefinitionHeader.k2 = DefinitionHeader.name

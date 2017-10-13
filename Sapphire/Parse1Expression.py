@@ -11,7 +11,7 @@ def gem():
 
 
     #
-    #   1.  Postfix-Expression (Python 2.7.14rc1 grammer calls this 'trailer')
+    #   3.  Postfix-Expression (Python 2.7.14rc1 grammer calls this 'trailer')
     #
     #       postfix-expression
     #           : atom
@@ -374,7 +374,7 @@ def gem():
 
 
     #
-    #   2.  Power-Expression (Python 2.7.14rc1 grammer calls this 'power')
+    #   4.  Power-Expression (Python 2.7.14rc1 grammer calls this 'power')
     #
     #       power-expression
     #           :   postfix-expression
@@ -385,7 +385,7 @@ def gem():
 
 
     #
-    #   3.  Unary-Expression (Python 2.7.14rc1 grammer calls this 'factor')
+    #   5.  Unary-Expression (Python 2.7.14rc1 grammer calls this 'factor')
     #
     @share
     def parse1_twos_complement_expression__operator(operator):
@@ -474,7 +474,7 @@ def gem():
 
 
     #
-    #   4.  Multiply-Expression (Python 2.7.14rc1 grammer calls this 'term')
+    #   6.  Multiply-Expression (Python 2.7.14rc1 grammer calls this 'term')
     #
     def parse1_multiply_expression__left_operator(left, multiply_operator):
         right = parse1_unary_expression()
@@ -592,7 +592,7 @@ def gem():
 
 
     #
-    #   5.  Arithmetic-Expression (Python 2.7.14rc1 grammer calls this 'arith_expr')
+    #   7.  Arithmetic-Expression (Python 2.7.14rc1 grammer calls this 'arith_expr')
     #
     def parse1_arithmetic_expression__left_operator(left, add_operator):
         assert add_operator.is_arithmetic_operator
@@ -728,11 +728,11 @@ def gem():
 
 
     #
-    #   6.  Shift-Expression (Python 2.7.14rc1 grammer calls this 'shift_expr')
+    #   j.  Shift-Expression (Python 2.7.14rc1 grammer calls this 'shift_expr')
     #
 
     #
-    #   7.  Logical-And-Expression (Python 2.7.14rc1 grammer calls this 'and_expr')
+    #   9.  Logical-And-Expression (Python 2.7.14rc1 grammer calls this 'and_expr')
     #
     def parse1_logical_and_expression__left_operator(left, logical_and_operator):
         assert logical_and_operator.is_logical_and_operator
@@ -883,11 +883,11 @@ def gem():
 
 
     #
-    #   8.  Logical-Exclusive-Or-Expression (Python 2.7.14rc1 grammer calls this 'xor_expr')
+    #   10. Logical-Exclusive-Or-Expression (Python 2.7.14rc1 grammer calls this 'xor_expr')
     #
 
     #
-    #   9.  Normal-Expression (Logical-Or) (Python 2.7.14rc1 grammer calls this 'expr')
+    #   11. Normal-Expression (Logical-Or) (Python 2.7.14rc1 grammer calls this 'expr')
     #
     def parse1_normal_expression__left_operator(left, logical_or_operator):
         assert logical_or_operator.is_logical_or_operator
@@ -1055,7 +1055,7 @@ def gem():
         raise_unknown_line()
 
     #
-    #   10. Normal-Expression-List (Python 2.7.14rc1 grammer calls this 'exprlist')
+    #   12. Normal-Expression-List (Python 2.7.14rc1 grammer calls this 'exprlist')
     #
     @share
     def parse1_normal_expression_list():
@@ -1063,7 +1063,7 @@ def gem():
 
 
     #
-    #   11.  Compare-Expression (Python 2.7.14rc1 grammer calls this 'comparasion')
+    #   13. Compare-Expression (Python 2.7.14rc1 grammer calls this 'comparasion')
     #
     @share
     def parse1_compare_expression__left_operator(left, compare_operator):
@@ -1248,7 +1248,7 @@ def gem():
 
 
     #
-    #   12.  Not-Expression (Python 2.7.14rc1 grammer calls this 'not_test')
+    #   14. Not-Expression (Python 2.7.14rc1 grammer calls this 'not_test')
     #
     #       not-expression
     #           : compare-expression
@@ -1266,7 +1266,7 @@ def gem():
 
 
     #
-    #   13. Boolean-And-Expression (Python 2.7.14rc1 grammer calls this 'and_test')
+    #   15. Boolean-And-Expression (Python 2.7.14rc1 grammer calls this 'and_test')
     #
     def parse1_boolean_and_expression__left_operator(left, operator):
         assert operator.is_keyword_and
@@ -1463,7 +1463,7 @@ def gem():
 
 
     #
-    #   14. Boolean-Or-Expression (Python 2.7.14rc1 grammer calls this 'or_test')
+    #   16. Boolean-Or-Expression (Python 2.7.14rc1 grammer calls this 'or_test')
     #
     def parse1_boolean_or_expression__left_operator(left, operator):
         assert operator.is_keyword_or
@@ -1676,7 +1676,7 @@ def gem():
 
 
     #
-    #   15.  Ternary-Expression (Python 2.7.14rc1 grammer calls this 'test')
+    #   17. Ternary-Expression (Python 2.7.14rc1 grammer calls this 'test')
     #
     #           ternary-expression
     #               : boolean-or-expression
@@ -1884,7 +1884,7 @@ def gem():
 
 
     #
-    #   16.  Ternary-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist')
+    #   18. Ternary-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist')
     #
     @share
     def parse1_ternary_expression_list__X_any_expresion(left, operator):
@@ -2078,11 +2078,11 @@ def gem():
 
 
     #
-    #   17.  Yield-Expression
+    #   19. Yield-Expression
     #
 
     #
-    #   18.  Comprehension-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist_comp')
+    #   20. Comprehension-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist_comp')
     #
     def parse1_comprehension_expression__left_operator(left, operator):
         assert operator.is_keyword_for

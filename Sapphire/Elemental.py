@@ -612,6 +612,13 @@ def gem():
         keyword                               = '('         #   )
 
 
+        def mutate(t, vary, priority):
+            my_line('priority: %d', priority)
+
+            assert 0
+
+
+
     @export
     class OperatorLeftSquareBracket(KeywordAndOperatorBase):
         __slots__              = (())
@@ -1012,6 +1019,7 @@ def gem():
 
     AT_SIGN             = conjure_at_sign             ('@')
     COLON               = conjure_colon               (':')
+    COMMA               = conjure_comma               (',')
     COMMA__W            = conjure_comma               (', ')
     EXCEPT              = conjure_keyword_try         ('except')
     FOR__W              = conjure_keyword_for         ('for ')
@@ -1172,6 +1180,7 @@ def gem():
         'lookup_keyword_conjure_function',                  lookup_keyword_conjure_function,
         'AT_SIGN',                                          AT_SIGN,
         'COLON',                                            COLON,
+        'COMMA',                                            COMMA,
         'COMMA__W',                                         COMMA__W,
         'EXCEPT',                                           EXCEPT,
         'FUNCTION__W',                                      FUNCTION__W,

@@ -127,7 +127,7 @@ def gem():
 
 
                     def count_newlines(t):
-                        return t.a.count_newlines() + t.b.count_newlines() + t.frill.count_newlines()
+                        return t.a.count_newlines() + t.frill.count_newlines() + t.b.count_newlines()
 
 
                     display_token = (
@@ -137,7 +137,7 @@ def gem():
                                     )
 
 
-                BinaryExpression_WithFrill.k3  = BinaryExpression_WithFrill.frill
+                BinaryExpression_WithFrill.k3 = BinaryExpression_WithFrill.frill
 
 
                 if __debug__:
@@ -464,7 +464,17 @@ def gem():
     conjure_compare_not_equal         = produce_conjure_binary_expression('compare-not-equal',  CompareNotEqualExpression)
     conjure_divide_expression         = produce_conjure_binary_expression('divide',             DivideExpression)
     conjure_integer_divide_expression = produce_conjure_binary_expression('integer-divide',     IntegerDivideExpression)
-    conjure_keyword_argument          = produce_conjure_binary_expression('keyword-argument',   KeywordArgument)
+
+    [
+        conjure_keyword_argument, KeywordArgument.conjure_with_frill,
+    ] = produce_conjure_binary_expression(
+            'keyword-argument',
+            KeywordArgument,
+
+            produce_conjure_with_frill = true,
+        )
+
+
     conjure_keyword_parameter         = produce_conjure_binary_expression('keyword-parameter',  KeywordParameter)
     conjure_logical_and_expression    = produce_conjure_binary_expression('logical-and-1',      LogicalAndExpression_1)
     conjure_logical_or_expression     = produce_conjure_binary_expression('logical-or-1',       LogicalOrExpression_1)

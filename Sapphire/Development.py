@@ -4,7 +4,6 @@
 @gem('Sapphire.Development')
 def gem():
     require_gem('Sapphire.Parse')
-    require_gem('Sapphire.Transform')
 
 
     variables = [
@@ -419,12 +418,7 @@ def gem():
 
 
     @share
-    def development(module_name, remove_comments):
-        vary = create_sapphire_transform(
-                   remove_comments = remove_comments,
-               )
-
-
+    def development(module_name, vary):
         [boot_decorator, main_code] = extract_sapphire_main(vary)
         sardnoyx_boot_code          = extract_sardnoyx_boot()
         gem_boot_code               = extract_gem_boot()

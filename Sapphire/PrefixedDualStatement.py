@@ -410,6 +410,8 @@ def gem():
     TryStatement       .conjure = static_method(conjure_try_statement)
     WithStatement      .conjure = static_method(conjure_with_statement)
 
+    FunctionDefinition .conjure_prefixed_dual = static_method(conjure_prefixed_function_definition)
+
 
     append_cache('#dual-twig', prefixed_dual_twig_cache)
 

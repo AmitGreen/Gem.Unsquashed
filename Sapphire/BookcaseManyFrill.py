@@ -42,6 +42,21 @@ def gem():
                            t.begin.display_token(), t.many.display_token(), t.end.display_token())
 
 
+        def mutate(t, vary, priority):
+            begin = t.begin
+            many  = t.many
+            end   = t.end
+
+            begin__2 = begin.mutate(vary, priority)
+            many__2  = many .mutate(vary, priority)
+            end__2   = end  .mutate(vary, priority)
+
+            if (begin is begin__2) and (many is many__2) and (end is end__2):
+                return t
+
+            return conjure_bookcase_many_frill__213(begin__2, many__2, end__2)
+
+
         def transform(t, vary):
             begin = t.begin
             many  = t.many

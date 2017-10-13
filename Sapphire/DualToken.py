@@ -381,6 +381,13 @@ def gem():
         is__optional_comma__right_parenthesis = true
 
 
+        def mutate(t, vary, priority):
+            if vary.remove_comments:
+                return (COMMA_RP   if priority == PRIORITY_TUPLE else  RP)
+
+            return t
+
+
     class Comma_RightSquareBracket(BaseDualOperator):
         __slots__                                = (())
         #   [
@@ -516,6 +523,13 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
         is_identifier                  = true
+
+
+        def mutate(t, vary, priority):
+            if vary.remove_comments:
+                return t.b
+            
+            return t
 
 
     conjure_arguments_0 = produce_conjure_dual_token(
@@ -933,7 +947,8 @@ def gem():
     Colon_LineMarker_1.conjure = static_method(conjure_colon__line_marker)
     Indented_Token    .conjure = static_method(conjure_indented_token)
 
-    COLON__LINE_MARKER = conjure_colon__line_marker(COLON, LINE_MARKER)
+    COLON__LINE_MARKER = conjure_colon__line_marker      (COLON, LINE_MARKER)
+    COMMA_RP           = conjure_comma__right_parenthesis(COMMA, RP)
 
     empty__arguments_0  = conjure_arguments_0(LP, RP)
     empty__parameters_0 = conjure_parameters_0(LP, RP)
@@ -1059,4 +1074,5 @@ def gem():
         'find_evoke_atom_whitespace',               find_evoke_atom_whitespace,
         'find_evoke_comma_something',               find_evoke_comma_something,
         'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
+        'COMMA_RP',                                 COMMA_RP,
     )

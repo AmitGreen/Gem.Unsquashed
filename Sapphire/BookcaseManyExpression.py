@@ -228,6 +228,44 @@ def gem():
         display_name = 'arguments-*'
 
 
+        def mutate(t, vary, priority):
+            frill    = t.frill
+            many     = t.many
+            iterator = iterate(many)
+
+            frill_2 = frill.mutate(vary, PRIORITY_COMPREHENSION)
+
+            i = 0
+
+            for v in iterator:
+                v__2 = v.mutate(vary, PRIORITY_COMPREHENSION)
+
+                if v is not v__2:
+                    break
+
+                i += 1
+            else:
+                if frill is frill_2:
+                    return t
+
+                return t.conjure_dual(frill__2, many)
+
+            many__2 = (
+                          []          if i is 0 else
+                          [many[0]]   if i is 1 else
+                          List(many[:i])
+                      )
+
+            append = many__2.append
+
+            append(v__2)
+
+            for v in iterator:
+                append(v.mutate(vary, PRIORITY_COMPREHENSION))
+
+            return t.conjure_dual(frill_2, conjure_tuple_of_many_expression(many__2))
+
+
     class ListExpression_Many(BookcaseManyExpression):
         __slots__                      = (())
         display_name                   = '[*]'
@@ -287,8 +325,6 @@ def gem():
                 append(v.transform(vary))
 
             return t.conjure_dual(frill_2, conjure_tuple_of_many_expression(many__2))
-
-
 
 
     class TupleExpression_Many(BookcaseManyExpression):

@@ -4,6 +4,38 @@
 @gem('Sapphire.Method')
 def gem():
     @share
+    def construct__123(t, k1, k2, k3):
+        t.k1 = k1
+        t.k2 = k2
+        t.k3 = k3
+
+
+    @share
+    def count_newlines__123(t):
+        return t.k1.count_newlines() + t.k2.count_newlines() + t.k3.count_newlines()
+
+
+    @share
+    def display_token__123(t):
+        return arrange('<%s %s %s %s>',
+                       t.display_name,
+                       t.k1.display_token(),
+                       t.k2.display_token(),
+                       t.k3.display_token())
+
+
+    @share
+    def dump_token__123(t, f, newline = true):
+        f.partial('<%s ', t.display_name)
+
+        t    .k1.dump_token(f)
+        t    .k2.dump_token(f)
+        r = t.k3.dump_token(f, false)
+
+        return f.token_result(r, newline)
+
+
+    @share
     def find_require_gem__0(t, e):
         pass
 
@@ -20,8 +52,6 @@ def gem():
 
     @share
     def mutate__ab(t, vary, priority):
-        assert vary.remove_comments
-
         a = t.a
         b = t.b
 
@@ -36,11 +66,11 @@ def gem():
 
     @share
     def mutate__abc(t, vary, priority):
-        assert vary.remove_comments
-
         a = t.a
         b = t.b
         c = t.c
+
+        #my_line('t: %r', t)
 
         a__2 = a.mutate(vary, priority)
         b__2 = b.mutate(vary, priority)
@@ -53,11 +83,14 @@ def gem():
 
 
     @share
+    def portray__123(t):
+        return arrange('<%s %s %r %r>', t.__class__.__name__, t.k1, t.k2, t.k3)
+
+
+    @share
     @privileged
     def produce__mutate__ab__priority(name, a_priority, b_priority):
         def mutate(t, vary, priority):
-            assert vary.remove_comments
-
             a = t.a
             b = t.b
 
@@ -91,6 +124,7 @@ def gem():
 
             return t.conjure_with_frill(frill__2, a__2)
 
+
         if __debug__:
             mutate.__name__ = intern_arrange('mutate_%s', name)
 
@@ -112,6 +146,7 @@ def gem():
 
             return t.conjure_with_frill(frill__2, a__2)
 
+
         if __debug__:
             mutate.__name__ = intern_arrange('mutate_%s', name)
 
@@ -126,6 +161,8 @@ def gem():
             a     = t.a
             b     = t.b
 
+            #my_line('t: %r', t)
+
             frill__2 = frill.mutate(vary, frill_priority)
             a__2     = a    .mutate(vary, a_priority)
             b__2     = b    .mutate(vary, b_priority)
@@ -134,6 +171,7 @@ def gem():
                 return t
 
             return t.conjure_with_frill(frill__2, a__2, b__2)
+
 
         if __debug__:
             mutate.__name__ = intern_arrange('mutate_%s', name)
@@ -172,6 +210,7 @@ def gem():
 
             return t.conjure_with_frill(frill__2, a__2)
 
+
         if __debug__:
             transform.__name__ = intern_arrange('transform_%s', name)
 
@@ -194,6 +233,7 @@ def gem():
                 return t
 
             return t.conjure_with_frill(frill__2, a__2, b__2)
+
 
         if __debug__:
             transform.__name__ = intern_arrange('transform_%s', name)
@@ -279,8 +319,6 @@ def gem():
 
     @share
     def transform__remove_comments_0(t, vary):
-        assert vary.remove_comments
-
         if vary.remove_comments:
             return 0
 
@@ -290,3 +328,10 @@ def gem():
     @share
     def transform__self(t, vary):
         return t
+
+
+    @share
+    def write__123(t, w):
+        t.k1.write(w)
+        t.k2.write(w)
+        t.k3.write(w)

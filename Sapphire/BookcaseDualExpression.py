@@ -220,12 +220,13 @@ def gem():
 
 
     [
-        conjure_arguments_2, Arguments_2.conjure_plain,
+        conjure_arguments_2, Arguments_2.conjure_plain, Arguments_2.conjure_with_frill,
     ] = produce_conjure_bookcase_dual_expression(
                 'arguments-2',
                 Arguments_2,
                 
-                produce_conjure_plain = true,
+                produce_conjure_plain      = true,
+                produce_conjure_with_frill = true,
         )
 
     conjure_list_expression_2  = produce_conjure_bookcase_dual_expression('list-expression-2',  ListExpression_2)

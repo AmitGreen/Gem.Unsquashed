@@ -147,8 +147,6 @@ def gem():
 
 
         def transform(t, vary):
-            assert vary.remove_comments
-
             i        = 0
             iterator = iterate(t)
 
@@ -173,7 +171,10 @@ def gem():
                                 break
                         else:
                             return conjure_indented__pass__line_marker(
-                                       (t[0].indentation) or (t[1].indentation),
+                                       (
+                                           vary.indentation   if vary.remove_indentation else
+                                           (t[0].indentation) or (t[1].indentation)
+                                       ),
                                        conjure_keyword_pass('pass'),
                                        LINE_MARKER,
                                    )

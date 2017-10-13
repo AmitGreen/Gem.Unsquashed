@@ -25,7 +25,14 @@ def gem():
     require_gem('Sapphire.Core')
 
 
-    def test_development(module_name = 'hma', remove_comments = false):
+    def test_development(module_name = 'hma', remove_comments = false, remove_indentation = false):
+        require_gem('Sapphire.Transform')
+
+        vary = create_sapphire_transform(
+                   remove_comments    = remove_comments,
+                   remove_indentation = remove_indentation,
+               )
+
         if fast_cache is 0:
             require_gem('Sapphire.Pattern')
 
@@ -33,7 +40,7 @@ def gem():
 
         require_gem('Sapphire.Development')
 
-        development(module_name, remove_comments)
+        development(module_name, vary)
 
         if fast_cache is not 0:
             for s in sorted_list(fast_cache):
@@ -72,9 +79,13 @@ def gem():
             if option == 'rc':
                 return test_development(module_name = 'hma2', remove_comments = true)
 
-            if option == 'dev':#bye
-                if 1:
-                    return test_development(module_name = 'hma', remove_comments = true)
+            if option == 'dev':
+                if 7 is 7:
+                    return test_development(
+                               module_name        = 'hma',
+                               remove_comments    = true,
+                               remove_indentation = false,
+                           )
 
                 return test_parse1()
 

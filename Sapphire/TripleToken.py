@@ -91,7 +91,7 @@ def gem():
 
 
         __init__ = construct_triple_token
-        __repr__ = portray__abc
+        __repr__ = portray__123
 
 
         def display_full_token(t):
@@ -128,6 +128,11 @@ def gem():
                            a  .display_short_token(),
                            t.b.display_short_token(),
                            t.c.display_short_token())
+
+
+    BaseTripleOperator.k1 = BaseTripleOperator.a
+    BaseTripleOperator.k2 = BaseTripleOperator.b
+    BaseTripleOperator.k3 = BaseTripleOperator.c
 
 
     def create_triple_token__with_newlines(Meta, s, a, b, c):
