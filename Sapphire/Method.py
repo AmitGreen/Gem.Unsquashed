@@ -418,22 +418,6 @@ def gem():
 
 
     @share
-    def transform__abc(t, vary):
-        a = t.a
-        b = t.b
-        c = t.c
-
-        a__2 = a.transform(vary)
-        b__2 = b.transform(vary)
-        c__2 = c.transform(vary)
-
-        if (a is a__2) and (b is b__2) and (c is c__2):
-            return t
-
-        return t.conjure(a__2, b__2, c__2)
-
-
-    @share
     def transform__frill_a(t, vary):
         frill = t.frill
         a     = t.a

@@ -106,13 +106,10 @@ def gem():
     class DecoratorHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = '@-header'
-
-        uncommented_token = conjure_at_sign('@')
-        uncommented_ending = LINE_MARKER
-        frill              = conjure_vw_frill(
-                                 conjure_indented_token(empty_indentation, uncommented_token),
-                                 uncommented_ending,
-                             )
+        frill        = conjure_vw_frill(
+                           conjure_indented_token(empty_indentation, AT_SIGN),
+                           LINE_MARKER,
+                       )
 
         is_class_decorator_or_function_header = true
         is_decorator_header                   = true
@@ -173,13 +170,10 @@ def gem():
     class IfHeader(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'if-header'
-
-        uncommented_token  = conjure_keyword_if('if ')
-        uncommented_ending = COLON__LINE_MARKER
-        frill              = conjure_vw_frill(
-                                 conjure_indented_token(empty_indentation, uncommented_token),
-                                 uncommented_ending,
-                             )
+        frill        = conjure_vw_frill(
+                           conjure_indented_token(empty_indentation, IF__W),
+                           LINE_MARKER,
+                       )
 
         is_statement        = false
         is_statement_header = true
@@ -212,13 +206,10 @@ def gem():
     class ReturnStatement(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'return-statement'
-
-        uncommented_token  = conjure_keyword_return('return ')
-        uncommented_ending = LINE_MARKER
-        frill              = conjure_vw_frill(
-                                 conjure_indented_token(conjure_indentation('    '), uncommented_token),
-                                 uncommented_ending,
-                             )
+        frill        = conjure_vw_frill(
+                           conjure_indented_token(conjure_indentation('    '), RETURN__W),
+                           LINE_MARKER,
+                       )
 
         find_require_gem = find_require_gem__0
         transform        = produce_transform__frill__a_with_priority('parameters_1', PRIORITY_TERNARY_LIST)

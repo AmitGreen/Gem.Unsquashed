@@ -14,7 +14,6 @@ def gem():
     produce_conjure_dual   = Shared.produce_conjure_dual        #   due to privileged
     produce_conjure_triple = Shared.produce_conjure_triple      #   due to privileged
     store_adjusted_meta    = Shared.store_adjusted_meta         #   due to privileged
-    transform__frill_ab    = Shared.transform__frill_ab         #   due to privileged
 
 
     @share

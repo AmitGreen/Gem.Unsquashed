@@ -61,10 +61,7 @@ def gem():
             if (v is v__2) and (w is w__2) and (x is x__2):
                 return t
 
-            return t.conjure(v__2, w__2, x__2)
-
-
-        transform = transform__abc
+            return conjure_vwx_frill(v__2, w__2, x__2)
 
 
     conjure_commented_vw_frill = produce_conjure_triple(
@@ -84,7 +81,7 @@ def gem():
                         )
 
 
-    VWX_Frill.conjure = static_method(conjure_vwx_frill)
+    VWX_Frill.transform = produce_transform__abc('vwx-frill', conjure_vwx_frill)
 
 
     append_cache('triple-frill', triple_frill_cache)

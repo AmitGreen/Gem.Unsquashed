@@ -112,9 +112,8 @@ def gem():
 
     @share
     class ClassHeader(DefinitionHeader):
-        __slots__           = (())
-        display_name        = 'class-header'
-        #uncommented_keyword = conjure_keyword_class('class ')
+        __slots__    = (())
+        display_name = 'class-header'
 
 
     @share
@@ -122,7 +121,6 @@ def gem():
         __slots__           = (())
         display_name        = 'function-header'
         is_function_header  = true
-        #uncommented_keyword = FUNCTION__W
 
 
         def function_header_with_1_parameter(t, function_name, parameter_1_name):

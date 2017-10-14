@@ -94,15 +94,11 @@ def gem():
     class ForHeader(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'for-header'
-
-        uncommented_keyword = conjure_keyword_for('for ')
-        uncommented_middle  = conjure_keyword_in(' in ')
-        uncommented_ending  = COLON__LINE_MARKER
-        frill               = conjure_vwx_frill(
-                                  conjure_indented_token(empty_indentation, uncommented_keyword),
-                                  uncommented_middle,
-                                  uncommented_ending
-                              )
+        frill        = conjure_vwx_frill(
+                           conjure_indented_token(empty_indentation, FOR__W),
+                           W__IN__W,
+                           LINE_MARKER,
+                       )
 
         is_statement        = false
         is_statement_header = true
@@ -154,15 +150,11 @@ def gem():
     class WithHeader_2(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'with-header-2'
-
-        uncommented_keyword = conjure_keyword_with('with ')
-        uncommented_middle  = conjure_keyword_as(' as ')
-        uncommented_ending  = COLON__LINE_MARKER
-        frill               = conjure_vwx_frill(
-                                  conjure_indented_token(empty_indentation, uncommented_keyword),
-                                  uncommented_middle,
-                                  uncommented_ending,
-                              )
+        frill        = conjure_vwx_frill(
+                           conjure_indented_token(empty_indentation, WITH__W),
+                           W__AS__W,
+                           LINE_MARKER,
+                       )
 
         is_statement        = false
         is_statement_header = true
