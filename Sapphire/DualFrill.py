@@ -8,6 +8,7 @@ def gem():
     store_dual_frill  = dual_frill_cache.__setitem__
 
 
+    @share
     class VW_Frill(Object):
         __slots__ = ((
             'a',                        #   SapphireToken+

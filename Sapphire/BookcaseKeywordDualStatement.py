@@ -109,7 +109,6 @@ def gem():
         split_comment       = 1
 
         add_comment = 0
-        transform   = produce_transform__frill_ab_with_priority('for-header', PRIORITY_NORMAL_LIST, PRIORITY_TERNARY_LIST)
 
 
     class FromImportStatement(KeywordDualExpressionStatement):
@@ -170,19 +169,18 @@ def gem():
         split_comment       = 1
 
         add_comment = 0
-        transform   = produce_transform__frill_ab_with_priority('with-header', PRIORITY_TERNARY, PRIORITY_NORMAL)
 
 
     conjure_assert_statement_2 = produce_conjure_bookcase_dual_expression('assert-statement-2', AssertStatement_2)
     conjure_except_header_2    = produce_conjure_bookcase_dual_expression('except-header2',     ExceptHeader_2)
 
     [
-        conjure_for_header, ForHeader.conjure_with_frill,
+        conjure_for_header, conjure_for_header__with_frill,
     ] = produce_conjure_bookcase_dual_expression(
             'for-header',
             ForHeader,
             
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 1,
         )
 
     [
@@ -197,16 +195,29 @@ def gem():
     conjure_raise_statement_2  = produce_conjure_bookcase_dual_expression('raise-statement-2',  RaiseStatement_2)
     
     [
-        conjure_with_header_2, WithHeader_2.conjure_with_frill
+        conjure_with_header_2, conjure_with_header_2__with_frill,
     ] = produce_conjure_bookcase_dual_expression(
             'with-header-2',
             WithHeader_2,
             
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 1,
         )
 
 
-    ForHeader.conjure = static_method(conjure_for_header)
+    ForHeader.transform = produce_transform__frill__ab_with_priority(
+                              'for-header',
+                              PRIORITY_NORMAL_LIST,
+                              PRIORITY_TERNARY_LIST,
+                              conjure_for_header__with_frill,
+                         )
+
+
+    WithHeader_2.transform = produce_transform__frill__ab_with_priority(
+                                 'with-header-2',
+                                 PRIORITY_TERNARY,
+                                 PRIORITY_NORMAL,
+                                 conjure_with_header_2__with_frill,
+                            )
 
 
     share(

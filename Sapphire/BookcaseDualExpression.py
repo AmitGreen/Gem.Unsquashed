@@ -64,7 +64,7 @@ def gem():
             produce_conjure_with_frill = false,
     ):
         assert type(produce_conjure_plain)      is Boolean
-        assert type(produce_conjure_with_frill) is Boolean
+        assert (type(produce_conjure_with_frill) is Boolean) or (produce_conjure_with_frill is 1)
 
         cache  = {}
         lookup = cache.get
@@ -132,9 +132,10 @@ def gem():
         conjure_dual              = produce_conjure_dual  (name, Meta,                   cache, lookup, store)
         conjure_triple_with_frill = produce_conjure_triple(name, conjure_Meta_WithFrill, cache, lookup, store)
 
-        meta_frill_v = Meta.frill.v
-        meta_frill_w = Meta.frill.w
-        meta_frill_x = Meta.frill.x
+        meta_frill   = Meta.frill
+        meta_frill_v = meta_frill.v
+        meta_frill_w = meta_frill.w
+        meta_frill_x = meta_frill.x
 
 
         def conjure_bookcase_dual_expression(frill_v, a, frill_w, b, frill_x):
@@ -152,9 +153,9 @@ def gem():
         if produce_conjure_with_frill:
             def conjure_with_frill(frill, a, b):
                 if frill is meta_frill:
-                    return conjure(a, b)
+                    return conjure_dual(a, b)
 
-                return conjure_triple_with_frill(conjure_vwx_frill(frill_v, frill_w, frill_x), a, b)
+                return conjure_triple_with_frill(frill, a, b)
 
 
             if __debug__:
@@ -165,12 +166,12 @@ def gem():
                 return ((
                            conjure_bookcase_dual_expression,
                            static_method(conjure_dual),
-                           static_method(conjure_triple_with_frill),
+                           (conjure_with_frill   if produce_conjure_with_frill is 1 else   static_method(conjure_with_frill)),
                        ))
 
             return ((
                        conjure_bookcase_dual_expression,
-                       static_method(conjure_triple_with_frill),
+                       (conjure_with_frill   if produce_conjure_with_frill is 1 else   static_method(conjure_with_frill)),
                    ))
 
         if produce_conjure_plain:
@@ -178,8 +179,6 @@ def gem():
                        conjure_bookcase_dual_expression,
                        static_method(conjure_dual),
                    ))
-
-
 
         return conjure_bookcase_dual_expression
 

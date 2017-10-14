@@ -87,7 +87,7 @@ def gem():
 
             produce_conjure_with_frill = false,
     ):
-        assert type(produce_conjure_with_frill) is Boolean
+        assert (type(produce_conjure_with_frill) is Boolean) or (produce_conjure_with_frill is 1)
 
         cache  = {}
         lookup = cache.get
@@ -167,6 +167,12 @@ def gem():
 
             if __debug__:
                 conjure_binary_expression__with_frill.__name__ = intern_arrange('conjure_%s__with_frill', name)
+
+            if produce_conjure_with_frill is 1:
+                return ((
+                           conjure_binary_expression,
+                           conjure_binary_expression__with_frill,
+                       ))
 
             return ((
                        conjure_binary_expression,
@@ -353,15 +359,11 @@ def gem():
         display_name = 'keyword-argument'
         frill        = W__ASSIGN__W
 
-        mutate = produce_mutate__frill__ab_with_priority('keyword-argument', PRIORITY_POSTFIX, PRIORITY_TERNARY)
-
 
     class KeywordParameter(BinaryExpression):
         __slots__    = (())
         display_name = 'keyword-parameter'
         frill        = conjure_action_word('=', ' = ')
-
-        transform = produce_transform__frill_ab_with_priority('keyword_parameter', PRIORITY_ATOM, PRIORITY_TERNARY)
 
 
     class LogicalAndExpression_1(BinaryExpression):
@@ -485,12 +487,12 @@ def gem():
     conjure_integer_divide_expression = produce_conjure_binary_expression('integer-divide',     IntegerDivideExpression)
 
     [
-        conjure_keyword_argument, KeywordArgument.conjure_with_frill,
+        conjure_keyword_argument, conjure_keyword_argument__with_frill,
     ] = produce_conjure_binary_expression(
             'keyword-argument',
             KeywordArgument,
 
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 1,
         )
 
 
@@ -512,6 +514,22 @@ def gem():
 
     conjure_power_expression          = produce_conjure_binary_expression('power',              PowerExpression)
     conjure_subtract_expression       = produce_conjure_binary_expression('subtract',           SubtractExpression)
+
+
+    KeywordArgument.mutate = produce_mutate__frill__ab_with_priority(
+                                 'keyword-argument',
+                                 PRIORITY_POSTFIX,
+                                 PRIORITY_TERNARY,
+                                 conjure_keyword_argument__with_frill,
+                             )
+
+
+    KeywordParameter.transform = produce_transform__frill__ab_with_priority(
+                                     'keyword_parameter',
+                                     PRIORITY_ATOM,
+                                     PRIORITY_TERNARY,
+                                     conjure_keyword_argument__with_frill,
+                                 )
 
 
     Is_Not                    .expression_meta = static_method(conjure_compare_different)

@@ -6,6 +6,29 @@ def gem():
     require_gem('Sapphire.BookcaseDualExpression')
 
 
+    conjure_commented_vwx_frill = Shared.conjure_commented_vwx_frill    #   due to privileged
+
+
+    @privileged
+    def produce_add_comment(name, conjure_with_frill):
+        def add_comment(t, comment):
+            frill = t.frill
+
+            assert frill.comment is 0
+
+            return conjure_with_frill(
+                       conjure_commented_vwx_frill(comment, frill.v, frill.w, frill.x),
+                       t.a,
+                       t.b,
+                   )
+
+
+        if __debug__:
+            add_comment.__name__ = intern_arrange('add_comment__%s', name)
+
+        return add_comment
+
+
     class DualExpressionStatement(BookcaseDualExpression):
         __slots__ = (())
 
@@ -15,18 +38,6 @@ def gem():
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
-
-
-        def add_comment(t, comment):
-            frill = t.frill
-
-            assert frill.comment is 0
-
-            return t.conjure_with_frill(
-                       conjure_commented_vwx_frill(comment, frill.v, frill.w, frill.x),
-                       t.a,
-                       t.b,
-                   )
 
 
         def display_token(t):
@@ -101,7 +112,6 @@ def gem():
         display_name     = 'assign-1'
         frill            = conjure_vwx_frill(empty_indentation, W__ASSIGN__W, LINE_MARKER)
         find_require_gem = find_require_gem__0
-        transform        = produce_transform__frill_ab_with_priority('assign-1', PRIORITY_TERNARY_LIST, PRIORITY_YIELD)
 
 
     class ModifyStatement(DualExpressionStatement):
@@ -117,13 +127,13 @@ def gem():
 
 
     [
-            conjure_assign_1, AssignStatement_1.conjure_plain, AssignStatement_1.conjure_with_frill,
+            conjure_assign_1, AssignStatement_1.conjure_plain, conjure_assign_1__with_frill,
     ] = produce_conjure_bookcase_dual_expression(
             'assign-1',
             AssignStatement_1,
 
             produce_conjure_plain      = true,
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 1,
         )
 
     [
@@ -134,6 +144,15 @@ def gem():
 
             produce_conjure_with_frill = true,
         )
+
+    AssignStatement_1.add_comment = produce_add_comment('assign_statement_1', conjure_assign_1__with_frill)
+
+    AssignStatement_1.transform = produce_transform__frill__ab_with_priority(
+                                      'assign_statement_1',
+                                      PRIORITY_TERNARY_LIST,
+                                      PRIORITY_YIELD,
+                                      conjure_assign_1__with_frill,
+                                  )
 
 
     share(
