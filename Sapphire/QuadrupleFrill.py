@@ -68,6 +68,8 @@ def gem():
                                   )
 
 
+    VWXY_Frill.transform = produce_transform__abcd('vwxy_frill', conjure_vwxy_frill)
+
     append_cache('quadruple-frill', quadruple_frill_cache)
 
 

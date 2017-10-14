@@ -417,6 +417,13 @@ def gem():
 
     conjure_dot_name_quadruplet = produce_conjure_quadruple_token('.name-quadruplet', DotNameQuadruplet)
 
+    conjure_indented__else__colon__line_marker = produce_conjure_quadruple_token(
+                                                     'indented__else__colon__line_marker',
+                                                     Indented_Else_Colon_LineMarker,
+
+                                                     line_marker = true,
+                                                 )
+
     conjure_indented__except__colon__line_marker = produce_conjure_quadruple_token(
                                                        'indented__except__colon__line_marker',
                                                        Indented_Except_Colon_LineMarker,
@@ -472,9 +479,15 @@ def gem():
         )
 
 
+    Indented_Else_Colon_LineMarker.transform = produce_transform__indented__keyword__colon__line_marker(
+                                                   'indented_else_colon__line_marker', 
+                                                   conjure_indented__else__colon__line_marker,
+                                                   ELSE,
+                                               )
+
     Indented_Except_Colon_LineMarker.transform = produce_transform__indented__keyword__colon__line_marker(
-                                                     'indented_else_colon__line_marker', 
-                                                     conjure_indented__try__colon__line_marker,
+                                                     'indented_except_colon__line_marker', 
+                                                     conjure_indented__except__colon__line_marker,
                                                      EXCEPT,
                                                  )
 

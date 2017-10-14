@@ -405,6 +405,11 @@ def gem():
         display_name = 'or'
         frill        = conjure_action_word('or', ' or ')
 
+        mutate = produce_mutate__frill__ab_with_priority(
+                     'or-expression-1',
+                     PRIORITY_BOOLEAN_OR,
+                     PRIORITY_BOOLEAN_AND,
+                 )
 
     class PowerExpression(BinaryExpression):
         __slots__    = (())
@@ -495,7 +500,16 @@ def gem():
     conjure_map_element               = produce_conjure_binary_expression('map-element',        MapElement)
     conjure_modulus_expression        = produce_conjure_binary_expression('modulus',            ModulusExpression)
     conjure_multiple_expression_1     = produce_conjure_binary_expression('multiply-1',         MultiplyExpression_1)
-    conjure_or_expression_1           = produce_conjure_binary_expression('or-1',               OrExpression_1)
+
+    [   
+        conjure_or_expression_1, OrExpression_1.conjure_with_frill,
+    ] = produce_conjure_binary_expression(
+            'or-1',
+            OrExpression_1,
+
+            produce_conjure_with_frill = true,
+        )
+
     conjure_power_expression          = produce_conjure_binary_expression('power',              PowerExpression)
     conjure_subtract_expression       = produce_conjure_binary_expression('subtract',           SubtractExpression)
 

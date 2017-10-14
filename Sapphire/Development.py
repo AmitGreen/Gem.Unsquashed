@@ -239,7 +239,7 @@ def gem():
         assert boot_code.is_decorated_definition
         assert boot_code.a is boot_code__decorator_header
 
-        if vary and 7:
+        if vary:
             boot_code = boot_code.transform(vary)
 
         return TwigCode(path, arrange('[%d]', index), extract_copyright(tree), boot_code)

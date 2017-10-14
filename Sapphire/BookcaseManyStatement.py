@@ -14,14 +14,6 @@ def gem():
         write__X__many_end(t, w)
 
 
-    def transform__bookcase_many_statement(t, vary):
-        frill = t.frill
-        many  = t.many
-
-        frill__2 = t.frill.transform(vary)
-
-
-
     class AssignStatement_Many(BookcaseManyExpression):
         __slots__                  = (())
         display_name               = 'assign-*'
@@ -293,8 +285,6 @@ def gem():
                 append(v.mutate(vary, PRIORITY_NORMAL))
 
             return conjure_delete_many__with_frill(frill__2, conjure_tuple_of_many_expression(many__2))
-
-
 
 
     [

@@ -467,6 +467,7 @@ def gem():
 
 
     DecoratedDefinition.conjure = static_method(conjure_decorated_definition)
+    ElseFragment       .conjure = static_method(conjure_else_fragment)
     ExceptFragment     .conjure = static_method(conjure_except_fragment)
     ForStatement       .conjure = static_method(conjure_for_statement)
     FunctionDefinition .conjure = static_method(conjure_function_definition)

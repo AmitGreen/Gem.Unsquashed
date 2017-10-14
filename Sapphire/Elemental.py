@@ -1073,6 +1073,7 @@ def gem():
     COMMA__W            = conjure_comma               (', ')
     DELETE__W           = conjure_keyword_delete      ('del ')
     DOT                 = conjure_dot                 ('.')
+    ELSE                = conjure_keyword_else        ('else')
     EXCEPT              = conjure_keyword_try         ('except')
     FOR__W              = conjure_keyword_for         ('for ')
     FROM__W             = conjure_keyword_from        ('from ')
@@ -1100,6 +1101,7 @@ def gem():
     W__IMPORT__W        = conjure_keyword_import      (' import ')
     W__IS__W            = conjure_keyword_is          (' is ')
     W__NOT__W           = conjure_keyword_not         (' not ')
+    W__OR__W            = conjure_action_word         ('or', ' or ')
     WITH__W             = conjure_keyword_with        ('with ')
 
 
@@ -1121,8 +1123,18 @@ def gem():
     #
     #       The first 'if  ' is transformed to 'if ', while the second 'if  ' is mutated to ' if '.
     #
+    #   NOTE:
+    #       For KeywordNot, the .mutate is called for a unary not-expressio; hence the result is ' not '.
+    #
+    #       When used in an expression like '1 is not 2' then the Is_Not handles this & internally
+    #       converts this to ' in ' & 'not ' (i.e.: no leading space on the 'not ').
+    #
+    #       Hence KeywordNot.mutate always returns 'not ' since it is only called in the context
+    #       of a unary-expression.
+    #
     KeywordElse.mutate = produce_mutate__uncommented('keyword_else', W__ELSE__W)
     KeywordIf  .mutate = produce_mutate__uncommented('keyword_if',   W__IF__W)
+    KeywordNot .mutate = produce_mutate__uncommented('keyword_not',  NOT__W)
 
 
     #
@@ -1140,6 +1152,7 @@ def gem():
     KeywordIn                 .transform = produce_transform__uncommented('keyword_in',           W__IN__W)
     KeywordIs                 .transform = produce_transform__uncommented('keyword_is',           W__IS__W)
     KeywordImport             .transform = produce_transform__uncommented('keyword_import',       IMPORT__W)
+    KeywordOr                 .transform = produce_transform__uncommented('keyword_or',           W__OR__W)
     KeywordReturn             .transform = produce_transform__uncommented('keyword_return',       RETURN__W)
     KeywordWith               .transform = produce_transform__uncommented('keyword_with',         WITH__W)
     OperatorAtSign            .transform = produce_transform__uncommented('at_sign',              AT_SIGN)
@@ -1257,6 +1270,7 @@ def gem():
         'COLON',                                            COLON,
         'COMMA',                                            COMMA,
         'COMMA__W',                                         COMMA__W,
+        'ELSE',                                             ELSE,
         'EXCEPT',                                           EXCEPT,
         'FUNCTION__W',                                      FUNCTION__W,
         'IN__W',                                            IN__W,

@@ -17,8 +17,26 @@ def gem():
         display_name   = '#xy-frill'
         frill_estimate = 3
 
-        mutate    = mutate__abc
+#       mutate    = mutate__abc
         transform = transform__abc
+
+
+        def transform(t, vary):
+            comment = t.comment
+            v       = t.v
+            w       = t.w
+
+            comment__2 = comment.transform(vary)
+            v__2       = v.transform(vary)
+            w__2       = w.transform(vary)
+
+            if (comment is comment__2) and (v is v__2) and (w is w__2):
+                return t
+
+            if comment__2 is 0:
+                return conjure_vw_frill(v__2, w__2)
+
+            return conjure_commented_vw_frill(comment__2, v__2, w__2)
 
 
     class VWX_Frill(TripleTwig):
