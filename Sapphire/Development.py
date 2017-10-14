@@ -310,7 +310,7 @@ def gem():
         return extract_boot(path, tree, 0, extract_copyright(tree), vary)
 
 
-    def extract_gem_boot():
+    def extract_gem_boot(vary):
         module_name = 'Gem.Boot'
         path        = '../Gem/Boot.py'
 
@@ -347,6 +347,9 @@ def gem():
         assert gem.b.is_function_definition
         assert gem.b.a is gem__function_header
         assert gem.b.b.is_statement_suite
+
+        if (vary is not none) and 0:
+            gem = gem.transform(vary)
 
         return TwigCode(path, '[2]', copyright, gem)
 
@@ -424,7 +427,7 @@ def gem():
     def development(module_name, vary):
         [boot_decorator, main_code] = extract_sapphire_main(vary)
         sardnoyx_boot_code          = extract_sardnoyx_boot(vary)
-        gem_boot_code               = extract_gem_boot()
+        gem_boot_code               = extract_gem_boot(vary)
 
         require_many = RequireMany()
 

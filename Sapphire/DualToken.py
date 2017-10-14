@@ -347,7 +347,6 @@ def gem():
 
         __init__       = construct_dual_token__line_marker_1
         count_newlines = count_newlines__line_marker
-#       mutate         = mutate__ab
         transform      = transform__ab
 
 
@@ -449,8 +448,6 @@ def gem():
         display_name        = '.name-pair'
         is_postfix_operator = true
 
-        mutate = mutate__ab
-
 
     class EmptyList(BaseDualOperator):
         __slots__                      = (())
@@ -486,7 +483,6 @@ def gem():
             return arrange('<+%d {%s}>', t.identation.total, portray_string(t.token.s)[1:-1])
 
 
-#       mutate    = mutate__ab
         transform = transform__ab
 
 
@@ -978,12 +974,14 @@ def gem():
     empty__empty_map    = conjure_empty_map  (LEFT_BRACE, RIGHT_BRACE)
     empty__parameters_0 = conjure_parameters_0(LP, RP)
 
-
-    EmptyMap.mutate = produce_mutate__uncommented('empty_map', empty__empty_map)
-
     
     W__IS_NOT__W = conjure_is_not(W__IS__W,  NOT__W)
     W__NOT_IN__W = conjure_not_in(W__NOT__W, IN__W)
+
+
+    EmptyMap   .mutate = produce_mutate__uncommented('empty_map',     empty__empty_map)
+    DotNamePair.mutate = produce_mutate__ab         ('dot-name-pair', conjure_dot_name_pair)
+
 
 
     #

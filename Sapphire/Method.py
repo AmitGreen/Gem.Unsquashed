@@ -56,22 +56,6 @@ def gem():
 
 
     @share
-    def mutate__ab(t, vary, priority):
-        a = t.a
-        b = t.b
-
-        #my_line('t: %r', t)
-
-        a__2 = a.mutate(vary, priority)
-        b__2 = b.mutate(vary, priority)
-
-        if (a is a__2) and (b is b__2):
-            return t
-
-        return t.conjure(a__2, b__2)
-
-
-    @share
     def mutate__abc(t, vary, priority):
         a = t.a
         b = t.b
@@ -92,6 +76,30 @@ def gem():
     @share
     def portray__123(t):
         return arrange('<%s %s %r %r>', t.__class__.__name__, t.k1, t.k2, t.k3)
+
+
+    @share
+    @privileged
+    def produce_mutate__ab(name, conjure):
+        def mutate(t, vary, priority):
+            a = t.a
+            b = t.b
+
+            #my_line('t: %r', t)
+
+            a__2 = a.mutate(vary, priority)
+            b__2 = b.mutate(vary, priority)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure(a__2, b__2)
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate__%s', name)
+
+        return mutate
 
 
     @share
@@ -262,7 +270,31 @@ def gem():
 
     @share
     @privileged
-    def produce_transform___frill__a_with_priority(name, priority):
+    def produce_transform__ab(name, conjure):
+        def transform(t, vary):
+            a = t.a
+            b = t.b
+
+            #my_line('t: %r', t)
+
+            a__2 = a.transform(vary)
+            b__2 = b.transform(vary)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure(a__2, b__2)
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform_%s', name)
+
+        return transform
+
+
+    @share
+    @privileged
+    def produce_transform__frill__a_with_priority(name, priority):
         def transform(t, vary):
             frill = t.frill
             a     = t.a

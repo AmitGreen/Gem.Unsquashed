@@ -22,8 +22,6 @@ def gem():
         __repr__       = portray__ab
         count_newlines = count_newlines__ab
         display_token  = display_token__ab
-        mutate         = mutate__ab
-        transform      = transform__ab
 
 
     VW_Frill.v = VW_Frill.a
@@ -42,7 +40,8 @@ def gem():
                        )
 
 
-    VW_Frill.conjure = static_method(conjure_vw_frill)
+    VW_Frill.mutate    = produce_mutate__ab   ('vw_frill', conjure_vw_frill)
+    VW_Frill.transform = produce_transform__ab('vw_frill', conjure_vw_frill)
 
 
     append_cache('dual-frill', dual_frill_cache)

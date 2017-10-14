@@ -1121,18 +1121,8 @@ def gem():
     #
     #       The first 'if  ' is transformed to 'if ', while the second 'if  ' is mutated to ' if '.
     #
-
-    #KeywordAnd              .mutate = produce_mutate__uncommented('keyword_and',       W__AND__W)
-    #KeywordAs               .mutate = produce_mutate__uncommented('keyword_as',        W__AS__W)
-    #KeywordIn               .mutate = produce_mutate__uncommented('keyword_in',        W__IN__W)
-    #KeywordNot              .mutate = produce_mutate__uncommented('keyword_is',        NOT__W)          #   Unary context
-    #OperatorComma           .mutate = produce_mutate__uncommented('comma',             COMMA__W)
-    #OperatorEqualSign       .mutate = produce_mutate__uncommented('equal_sign',        W__ASSIGN__W)
-    #OperatorLeftParenthesis .mutate = produce_mutate__uncommented('left_parenthesis',  LP)
-    #OperatorRightParenthesis.mutate = produce_mutate__uncommented('right_parenthesis', RP)
-
-    KeywordElse             .mutate = produce_mutate__uncommented('keyword_else', W__ELSE__W)
-    KeywordIf               .mutate = produce_mutate__uncommented('keyword_if',   W__IF__W)
+    KeywordElse.mutate = produce_mutate__uncommented('keyword_else', W__ELSE__W)
+    KeywordIf  .mutate = produce_mutate__uncommented('keyword_if',   W__IF__W)
 
 
     #
