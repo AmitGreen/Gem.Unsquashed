@@ -17,9 +17,6 @@ def gem():
         display_name   = '#xy-frill'
         frill_estimate = 3
 
-#       mutate    = mutate__abc
-        transform = transform__abc
-
 
         def transform(t, vary):
             comment = t.comment
@@ -56,8 +53,6 @@ def gem():
             v = t.v
             w = t.w
             x = t.x
-
-            #my_line('t: %r', t)
 
             v__2 = v.transform(vary)
             w__2 = w.mutate   (vary, w_priority)

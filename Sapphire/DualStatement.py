@@ -34,7 +34,6 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__ab
         indentation      = indentation__a_indentation
-        transform        = transform__ab
 
 
     class CommentedStatement(DualTwig):
@@ -64,7 +63,7 @@ def gem():
     conjure_dual_statement      = produce_conjure_dual_twig('dual-statement', DualStatement)
 
 
-    DualStatement.conjure = static_method(conjure_dual_statement)
+    DualStatement.transform = produce_transform__ab('dual-statement', conjure_dual_statement)
 
 
     share(

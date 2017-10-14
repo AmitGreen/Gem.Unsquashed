@@ -347,7 +347,6 @@ def gem():
 
         __init__       = construct_dual_token__line_marker_1
         count_newlines = count_newlines__line_marker
-        transform      = transform__ab
 
 
     class Colon_RightSquareBracket(BaseDualOperator):
@@ -483,9 +482,6 @@ def gem():
             return arrange('<+%d {%s}>', t.identation.total, portray_string(t.token.s)[1:-1])
 
 
-        transform = transform__ab
-
-
     @share
     class Is_Not(BaseDualOperator):
         __slots__                        = (())
@@ -535,9 +531,6 @@ def gem():
 
         def parameters_1_named(t, name):
             return 0
-
-
-        transform = transform__ab
 
 
     class Whitespace_Atom(BaseDualOperator):
@@ -983,19 +976,18 @@ def gem():
     DotNamePair.mutate = produce_mutate__ab         ('dot-name-pair', conjure_dot_name_pair)
 
 
-
     #
     #   NOTE:
-    #       Comma_RightParentheiss.muaate    leaves  the , (called on parenthesized tuple expression)
+    #       Comma_RightParentheiss.mutate    leaves  the , (called on parenthesized tuple expression)
     #       Comma_RightParenthesis.transform removes the , (called in other situations where the , is not needed)
     #
     Is_Not                .transform = produce_transform__uncommented('is_not', W__IS_NOT__W)
     Not_In                .transform = produce_transform__uncommented('not_in', W__NOT_IN__W)
     Comma_RightParenthesis.transform = produce_transform__uncommented('comma__right_parenthesis', RP)
 
-
-    Colon_LineMarker_1.conjure = static_method(conjure_colon__line_marker)
-    Indented_Token    .conjure = static_method(conjure_indented_token)
+    Colon_LineMarker_1.transform = produce_transform__ab('colon__line_marker_1', conjure_colon__line_marker)
+    Indented_Token    .transform = produce_transform__ab('indented_token',       conjure_indented_token)
+    Parameters_0      .transform = produce_transform__ab('parameters_0',         conjure_parameters_0)
 
     COLON__LINE_MARKER = conjure_colon__line_marker      (COLON, LINE_MARKER)
     COMMA_RP           = conjure_comma__right_parenthesis(COMMA, RP)

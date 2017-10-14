@@ -199,8 +199,6 @@ def gem():
             a     = t.a
             b     = t.b
 
-            #my_line('t: %r', t)
-
             frill__2 = frill.mutate(vary, frill_priority)
             a__2     = a    .mutate(vary, a_priority)
             b__2     = b    .mutate(vary, b_priority)
@@ -228,8 +226,6 @@ def gem():
             b     = t.b
             c     = t.c
 
-            #my_line('t: %r', t)
-
             frill__2 = frill.mutate(vary, frill_priority)
             a__2     = a    .mutate(vary, a_priority)
             b__2     = b    .mutate(vary, b_priority)
@@ -254,8 +250,6 @@ def gem():
             frill = t.frill
             a     = t.a
             b     = t.b
-
-            #my_line('t: %r', t)
 
             frill__2 = frill.transform(vary)
             a__2     = a    .mutate   (vary, a_priority)
@@ -295,8 +289,6 @@ def gem():
         def transform(t, vary):
             a = t.a
             b = t.b
-
-            #my_line('t: %r', t)
 
             a__2 = a.transform(vary)
             b__2 = b.transform(vary)
@@ -345,8 +337,6 @@ def gem():
             b = t.b
             c = t.c
             d = t.d
-
-            #my_line('t: %r', t)
 
             a__2 = a.transform(vary)
             b__2 = b.transform(vary)
@@ -425,20 +415,6 @@ def gem():
             transform.__name__ = intern_arrange('transform__%s', name)
 
         return transform
-
-
-    @share
-    def transform__ab(t, vary):
-        a = t.a
-        b = t.b
-
-        a__2 = a.transform(vary)
-        b__2 = b.transform(vary)
-
-        if (a is a__2) and (b is b__2):
-            return t
-
-        return t.conjure(a__2, b__2)
 
 
     @share

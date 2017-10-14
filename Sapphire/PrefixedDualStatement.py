@@ -116,7 +116,6 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
-        transform        = transform__ab
 
 
     @share
@@ -237,25 +236,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
-
-
-        def transform(t, vary):
-            a = t.a
-            b = t.b
-
-            a__2 = a.transform(vary)
-
-            if 'clique':
-                previous = vary.push_indentation()
-
-                b__2 = b.transform(vary)
-
-                vary.pop_indentation(previous)
-
-            if (a is a__2) and (b is b__2):
-                return t
-
-            return t.conjure(a__2, b__2)
+        transform        = transform__a__b_with_indentation
 
 
     @share
@@ -478,6 +459,9 @@ def gem():
     ExceptFragment     .conjure_prefixed_dual = static_method(conjure_prefixed_except_fragment)
     DecoratedDefinition.conjure_prefixed_dual = static_method(conjure_prefixed_decorated_definition)
     FunctionDefinition .conjure_prefixed_dual = static_method(conjure_prefixed_function_definition)
+
+
+    DecoratedDefinition.transform = produce_transform__ab('decorated-definition', conjure_decorated_definition)
 
 
     append_cache('#dual-twig', prefixed_dual_twig_cache)

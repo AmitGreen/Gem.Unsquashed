@@ -35,8 +35,6 @@ def gem():
             w       = t.w
             x       = t.x
 
-            #my_line('t: %r', t)
-
             comment__2 = comment.transform(vary)
             v__2       = v      .transform(vary)
             w__2       = w      .transform(vary)
