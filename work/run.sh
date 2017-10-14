@@ -38,8 +38,9 @@ Main_py=../Quartz/Main.py
 #Main_py=../Topaz/Main.py
 #Main_py=test3.py
 Main_py=../Sapphire/Main.py
+Main_py=demo.py
 
-show=2
+show=3
 
 command="python $Main_py"
 commandO="python -O $Main_py"
