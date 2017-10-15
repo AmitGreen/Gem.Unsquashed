@@ -8,7 +8,7 @@ def gem():
         'PRIORITY_TUPLE',                    2,     #   tuple
         'PRIORITY_POSTFIX',                  3,     #   . () and []
         'PRIORITY_POWER',                    4,     #   **
-        'PRIORITY_UNARY',                    5,     #   ~ unary- 
+        'PRIORITY_UNARY',                    5,     #   ~ unary-
         'PRIORITY_MULTIPLY',                 6,     #   *
         'PRIORITY_ARITHMETIC',               7,     #   +
         'PRIORITY_SHIFT',                    8,     #   << and >>

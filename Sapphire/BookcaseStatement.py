@@ -81,7 +81,7 @@ def gem():
     ] = produce_conjure_bookcase_expression(
             'expression-statement',
             ExpressionStatement,
-                                         
+
             produce_conjure_with_frill = 3,
         )
 

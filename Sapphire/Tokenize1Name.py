@@ -25,7 +25,7 @@ def gem():
             r = conjure_name(s[j : name_end])
         else:
             r = evoke_whitespace_name(j, name_end)
-        
+
         wn(conjure_line_marker(s[name_end : ]))
 
         return r

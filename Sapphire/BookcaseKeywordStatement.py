@@ -25,7 +25,7 @@ def gem():
             add_comment.__name__ = intern_arrange('add_comment__%s', name)
 
         return add_comment
-        
+
 
 
     class KeywordExpressionStatement(BookcaseExpression):
@@ -298,7 +298,7 @@ def gem():
         )
 
     [
-        conjure_else_if_header, conjure_else_if_header__with_frill, 
+        conjure_else_if_header, conjure_else_if_header__with_frill,
     ] = produce_conjure_bookcase_expression(
             'else-if-header',
             ElseIfHeader,
@@ -307,7 +307,7 @@ def gem():
         )
 
     [
-        conjure_except_header_1, conjure_except_header_1__with_frill, 
+        conjure_except_header_1, conjure_except_header_1__with_frill,
     ] = produce_conjure_bookcase_expression(
             'except-header-1',
             ExceptHeader_1,
@@ -325,7 +325,7 @@ def gem():
         )
 
     [
-        conjure_import_statement, conjure_import_statement__with_frill, 
+        conjure_import_statement, conjure_import_statement__with_frill,
     ] = produce_conjure_bookcase_expression(
             'import-statement',
             ImportStatement,

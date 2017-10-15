@@ -56,8 +56,8 @@ def gem():
             w(frill.x.s)
             t.c.write(w)
             w(frill.y.s)
- 
- 
+
+
     @share
     @privileged
     def produce_conjure_bookcase_triple_expression(name, Meta):

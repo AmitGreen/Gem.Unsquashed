@@ -247,7 +247,7 @@ def gem():
     @privileged
     def produce_conjure_bookcase_many_expression(
             name, Meta,
-            
+
             produce_conjure_with_frill = true,
     ):
         assert (produce_conjure_with_frill is true) or (produce_conjure_with_frill is 1)

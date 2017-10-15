@@ -18,12 +18,6 @@ def gem():
     store_adjusted_meta         = Shared.store_adjusted_meta            #   Due to privileged
 
 
-    mutate__frill__ab_with_compare = produce_mutate__frill__ab_with_priority(
-                                         'compare-expression',
-                                         PRIORITY_COMPARE,
-                                         PRIORITY_NORMAL,
-                                     )
-
     def portray_frill(t):
         return arrange('<%s %r %r %r>', t.__class__.__name__, t.a, t.frill, t.b)
 
@@ -194,19 +188,11 @@ def gem():
         display_name = 'and-1'
         frill        = conjure_action_word('and', ' and ')
 
-        mutate = produce_mutate__frill__ab_with_priority(
-                     'and-expression-1',
-                     PRIORITY_BOOLEAN_AND,
-                     PRIORITY_BOOLEAN_AND,
-                 )
-
 
     class AsFragment(BinaryExpression):
         __slots__      = (())
         display_name   = 'as-fragment'
         frill          = conjure_action_word('as', ' as ')
-
-        mutate = produce_mutate__frill__ab_with_priority('as-fragment', PRIORITY_TERNARY, PRIORITY_NORMAL)
 
 
     class CommaExpression_1(BinaryExpression):
@@ -241,8 +227,6 @@ def gem():
         display_name = 'in'
         frill        = conjure_keyword_in(' in ')
 
-        mutate = mutate__frill__ab_with_compare
-
 
     class CompareEqualExpression(BinaryExpression):
         __slots__    = (())
@@ -251,15 +235,12 @@ def gem():
 
         __repr__      = portray_with_braces
         display_token = display_token__with_braces
-        mutate        = mutate__frill__ab_with_compare
 
 
     class CompareDifferentExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'is-not'
         frill        = conjure_is_not(W__IS__W, NOT__W)
-
-        mutate = mutate__frill__ab_with_compare
 
 
     del Shared.conjure_is_not
@@ -269,8 +250,6 @@ def gem():
         __slots__    = (())
         display_name = 'not-in'
         frill        = conjure_not_in(W__NOT__W, conjure_keyword_in('in '))
-
-        mutate = mutate__frill__ab_with_compare
 
 
     del Shared.conjure_not_in
@@ -283,7 +262,6 @@ def gem():
 
         __repr__      = portray_with_braces
         display_token = display_token__with_braces
-        mutate        = mutate__frill__ab_with_compare
 
 
     class CompareGreaterThanOrEqualExpression(BinaryExpression):
@@ -293,15 +271,12 @@ def gem():
 
         __repr__      = portray_with_braces
         display_token = display_token__with_braces
-        mutate        = mutate__frill__ab_with_compare
 
 
     class CompareIdentityExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'is'
         frill        = conjure_keyword_is(' is ')
-
-        mutate = mutate__frill__ab_with_compare
 
 
     class CompareLessThanExpression(BinaryExpression):
@@ -311,7 +286,6 @@ def gem():
 
         __repr__      = portray_with_braces
         display_token = display_token__with_braces
-        mutate        = mutate__frill__ab_with_compare
 
 
     class CompareLessThanOrEqualExpression(BinaryExpression):
@@ -321,7 +295,6 @@ def gem():
 
         __repr__      = portray_with_braces
         display_token = display_token__with_braces
-        mutate        = mutate__frill__ab_with_compare
 
 
     class CompareNotEqualExpression(BinaryExpression):
@@ -331,7 +304,6 @@ def gem():
 
         __repr__      = portray_with_braces
         display_token = display_token__with_braces
-        mutate        = mutate__frill__ab_with_compare
 
 
     class DivideExpression(BinaryExpression):
@@ -371,12 +343,6 @@ def gem():
         display_name = '&'
         frill        = conjure_action_word('&', ' & ')
 
-        mutate = produce_mutate__frill__ab_with_priority(
-                     'logical-and-expression',
-                     PRIORITY_LOGICAL_AND,
-                     PRIORITY_SHIFT,
-                 )
-
 
     class LogicalOrExpression_1(BinaryExpression):
         __slots__    = (())
@@ -407,11 +373,6 @@ def gem():
         display_name = 'or'
         frill        = conjure_action_word('or', ' or ')
 
-        mutate = produce_mutate__frill__ab_with_priority(
-                     'or-expression-1',
-                     PRIORITY_BOOLEAN_OR,
-                     PRIORITY_BOOLEAN_AND,
-                 )
 
     class PowerExpression(BinaryExpression):
         __slots__    = (())
@@ -429,60 +390,119 @@ def gem():
 
 
     [
-        conjure_and_expression_1, AndExpression_1.conjure_with_frill,
+        conjure_and_expression_1, conjure_and_expression_1__with_frill,
     ] = produce_conjure_binary_expression(
             'and-1',
             AndExpression_1,
 
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 1,
         )
 
     [
-        conjure_as_fragment, AsFragment.conjure_with_frill,
+        conjure_as_fragment, conjure_as_fragment__with_frill,
     ] = produce_conjure_binary_expression(
             'as-fragment',
             AsFragment,
-            
-            produce_conjure_with_frill = true,
+
+            produce_conjure_with_frill = 1,
         )
 
     conjure_comma_expression_1 = produce_conjure_binary_expression('comma-1',           CommaExpression_1)
     conjure_comprehension_if   = produce_conjure_binary_expression('comprehension-if',  ComprehensionIfExpression)
-    conjure_compare_contains   = produce_conjure_binary_expression('compare-contains',  CompareContainsExpression)
-    conjure_compare_equal      = produce_conjure_binary_expression('compare-equal',     CompareEqualExpression)
 
 
     [
-        conjure_compare_different, CompareDifferentExpression.conjure_with_frill,
+        conjure_compare_contains, conjure_compare_contains__with_frill,
+    ] = produce_conjure_binary_expression(
+            'compare-contains',
+            CompareContainsExpression,
+
+            produce_conjure_with_frill = 1,
+        )
+
+    [
+        conjure_compare_equal, conjure_compare_equal__with_frill,
+    ] = produce_conjure_binary_expression(
+            'compare-equal',
+            CompareEqualExpression,
+
+            produce_conjure_with_frill = 1,
+        )
+
+
+    [
+        conjure_compare_different, conjure_compare_different__with_frill,
     ] = produce_conjure_binary_expression(
             'compare-different',
             CompareDifferentExpression,
 
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 1,
         )
 
 
-    conjure_compare_exclude    = produce_conjure_binary_expression('compare-exclude',   CompareExcludeExpression)
+    [
+        conjure_compare_exclude, conjure_compare_exclude__with_frill,
+    ] = produce_conjure_binary_expression(
+            'compare-exclude',
+            CompareExcludeExpression,
 
-    conjure_compare_greater_than = produce_conjure_binary_expression(
-                                       'compare-greater-than',
-                                       CompareGreaterThanExpression,
-                                   )
+            produce_conjure_with_frill = 1,
+        )
 
-    conjure_compare_greater_than_or_equal = produce_conjure_binary_expression(
-                                                'compare-greater-than-or-equal',
-                                                CompareGreaterThanOrEqualExpression,
-                                            )
+    [
+        conjure_compare_greater_than, conjure_compare_greater_than__with_frill,
+    ] = produce_conjure_binary_expression(
+            'compare-greater-than',
+            CompareGreaterThanExpression,
 
-    conjure_compare_identity  = produce_conjure_binary_expression('compare-identity',  CompareIdentityExpression)
-    conjure_compare_less_than = produce_conjure_binary_expression('compare-less-than', CompareLessThanExpression)
+            produce_conjure_with_frill = 1,
+        )
 
-    conjure_compare_less_than_or_equal = produce_conjure_binary_expression(
-                                             'compare-less-than-or-equal',
-                                             CompareLessThanOrEqualExpression,
-                                        )
+    [
+        conjure_compare_greater_than_or_equal, conjure_compare_greater_than_or_equal__with_frill,
+    ] = produce_conjure_binary_expression(
+            'compare-greater-than-or-equal',
+            CompareGreaterThanOrEqualExpression,
 
-    conjure_compare_not_equal         = produce_conjure_binary_expression('compare-not-equal',  CompareNotEqualExpression)
+            produce_conjure_with_frill = 1,
+        )
+
+    [
+        conjure_compare_identity, conjure_compare_identity__with_frill,
+    ] = produce_conjure_binary_expression(
+            'compare-identity',
+            CompareIdentityExpression,
+
+            produce_conjure_with_frill = 1,
+        )
+
+    [
+        conjure_compare_less_than, conjure_compare_less_than__with_frill,
+    ] = produce_conjure_binary_expression(
+            'compare-less-than',
+            CompareLessThanExpression,
+
+            produce_conjure_with_frill = 1,
+        )
+
+    [
+        conjure_compare_less_than_or_equal, conjure_compare_less_than_or_equal__with_frill,
+    ] = produce_conjure_binary_expression(
+            'compare-less-than-or-equal',
+            CompareLessThanOrEqualExpression,
+
+            produce_conjure_with_frill = 1,
+        )
+
+    [
+        conjure_compare_not_equal, conjure_compare_not_equal__with_frill,
+    ] = produce_conjure_binary_expression(
+            'compare-not-equal',
+            CompareNotEqualExpression,
+
+            produce_conjure_with_frill = 1,
+        )
+
     conjure_divide_expression         = produce_conjure_binary_expression('divide',             DivideExpression)
     conjure_integer_divide_expression = produce_conjure_binary_expression('integer-divide',     IntegerDivideExpression)
 
@@ -496,25 +516,121 @@ def gem():
         )
 
 
-    conjure_keyword_parameter         = produce_conjure_binary_expression('keyword-parameter',  KeywordParameter)
-    conjure_logical_and_expression    = produce_conjure_binary_expression('logical-and-1',      LogicalAndExpression_1)
-    conjure_logical_or_expression     = produce_conjure_binary_expression('logical-or-1',       LogicalOrExpression_1)
-    conjure_map_element               = produce_conjure_binary_expression('map-element',        MapElement)
-    conjure_modulus_expression        = produce_conjure_binary_expression('modulus',            ModulusExpression)
-    conjure_multiple_expression_1     = produce_conjure_binary_expression('multiply-1',         MultiplyExpression_1)
+    conjure_keyword_parameter = produce_conjure_binary_expression('keyword-parameter', KeywordParameter)
 
-    [   
-        conjure_or_expression_1, OrExpression_1.conjure_with_frill,
+    [
+        conjure_logical_and_expression, conjure_logical_and_expression__with_frill,
+    ] = produce_conjure_binary_expression(
+            'logical-and-1',
+            LogicalAndExpression_1,
+
+            produce_conjure_with_frill = 1,
+        )
+
+    conjure_logical_or_expression = produce_conjure_binary_expression('logical-or-1', LogicalOrExpression_1)
+    conjure_map_element           = produce_conjure_binary_expression('map-element',  MapElement)
+    conjure_modulus_expression    = produce_conjure_binary_expression('modulus',      ModulusExpression)
+    conjure_multiple_expression_1 = produce_conjure_binary_expression('multiply-1',   MultiplyExpression_1)
+
+    [
+        conjure_or_expression_1, conjure_or_expression_1__with_frill,
     ] = produce_conjure_binary_expression(
             'or-1',
             OrExpression_1,
 
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 1,
         )
 
     conjure_power_expression          = produce_conjure_binary_expression('power',              PowerExpression)
     conjure_subtract_expression       = produce_conjure_binary_expression('subtract',           SubtractExpression)
 
+
+    #
+    #   .mutate
+    #
+    AndExpression_1.mutate = produce_mutate__frill__ab_with_priority(
+                                 'and-expression-1',
+                                 PRIORITY_BOOLEAN_AND,
+                                 PRIORITY_BOOLEAN_AND,
+                                 conjure_and_expression_1__with_frill,
+                             )
+
+    AsFragment.mutate = produce_mutate__frill__ab_with_priority(
+                            'as_fragment',
+                            PRIORITY_TERNARY,
+                            PRIORITY_NORMAL,
+                            conjure_as_fragment__with_frill,
+                        )
+
+    CompareContainsExpression.mutate = produce_mutate__frill__ab_with_priority(
+                                           'compare_expression',
+                                           PRIORITY_COMPARE,
+                                           PRIORITY_NORMAL,
+                                           conjure_compare_contains__with_frill,
+                                       )
+
+    CompareEqualExpression.mutate = produce_mutate__frill__ab_with_priority(
+                                        'compare_equal_expression',
+                                        PRIORITY_COMPARE,
+                                        PRIORITY_NORMAL,
+                                        conjure_compare_equal__with_frill,
+                                    )
+
+    CompareDifferentExpression.mutate = produce_mutate__frill__ab_with_priority(
+                                            'compare_different_expression',
+                                            PRIORITY_COMPARE,
+                                            PRIORITY_NORMAL,
+                                            conjure_compare_different__with_frill,
+                                        )
+
+    CompareExcludeExpression.mutate = produce_mutate__frill__ab_with_priority(
+                                          'compare_exclude_expression',
+                                          PRIORITY_COMPARE,
+                                          PRIORITY_NORMAL,
+                                          conjure_compare_exclude__with_frill,
+                                      )
+
+    CompareGreaterThanExpression.mutate = produce_mutate__frill__ab_with_priority(
+                                              'compare_greater_than_expression',
+                                              PRIORITY_COMPARE,
+                                              PRIORITY_NORMAL,
+                                              conjure_compare_greater_than__with_frill,
+                                          )
+
+    CompareGreaterThanOrEqualExpression.mutate = produce_mutate__frill__ab_with_priority(
+                                                     'compare_greater_than_or_equal_expression',
+                                                     PRIORITY_COMPARE,
+                                                     PRIORITY_NORMAL,
+                                                     conjure_compare_greater_than_or_equal__with_frill,
+                                                 )
+
+    CompareIdentityExpression.mutate = produce_mutate__frill__ab_with_priority(
+                                           'compare_identity_expression',
+                                           PRIORITY_COMPARE,
+                                           PRIORITY_NORMAL,
+                                           conjure_compare_identity__with_frill,
+                                       )
+
+    CompareLessThanExpression.mutate = produce_mutate__frill__ab_with_priority(
+                                           'compare_less_than_expression',
+                                           PRIORITY_COMPARE,
+                                           PRIORITY_NORMAL,
+                                           conjure_compare_less_than__with_frill,
+                                       )
+
+    CompareLessThanOrEqualExpression.mutate = produce_mutate__frill__ab_with_priority(
+                                                  'compare_less_than_or_equal_expression',
+                                                  PRIORITY_COMPARE,
+                                                  PRIORITY_NORMAL,
+                                                  conjure_compare_less_than_or_equal__with_frill,
+                                              )
+
+    CompareNotEqualExpression.mutate = produce_mutate__frill__ab_with_priority(
+                                           'compare_not_equal_expression',
+                                           PRIORITY_COMPARE,
+                                           PRIORITY_NORMAL,
+                                           conjure_compare_not_equal__with_frill,
+                                       )
 
     KeywordArgument.mutate = produce_mutate__frill__ab_with_priority(
                                  'keyword-argument',
@@ -523,7 +639,23 @@ def gem():
                                  conjure_keyword_argument__with_frill,
                              )
 
+    LogicalAndExpression_1.mutate = produce_mutate__frill__ab_with_priority(
+                                        'logical_and_expression_1',
+                                        PRIORITY_LOGICAL_AND,
+                                        PRIORITY_SHIFT,
+                                        conjure_logical_and_expression__with_frill,
+                                    )
 
+    OrExpression_1.mutate = produce_mutate__frill__ab_with_priority(
+                                'or_expression_1',
+                                PRIORITY_BOOLEAN_OR,
+                                PRIORITY_BOOLEAN_AND,
+                                conjure_or_expression_1__with_frill,
+                            )
+
+    #
+    #   .transform
+    #
     KeywordParameter.transform = produce_transform__frill__ab_with_priority(
                                      'keyword_parameter',
                                      PRIORITY_ATOM,
@@ -532,6 +664,9 @@ def gem():
                                  )
 
 
+    #
+    #   .expression_meta
+    #
     Is_Not                    .expression_meta = static_method(conjure_compare_different)
     KeywordIn                 .expression_meta = static_method(conjure_compare_contains)
     KeywordIs                 .expression_meta = static_method(conjure_compare_identity)

@@ -8,6 +8,9 @@ def gem():
     conjure_tuple_of_many_expression = Shared.conjure_tuple_of_many_expression
 
 
+    #
+    #   construct
+    #
     @share
     def construct__123(t, k1, k2, k3):
         t.k1 = k1
@@ -15,11 +18,17 @@ def gem():
         t.k3 = k3
 
 
+    #
+    #   count_newlines
+    #
     @share
     def count_newlines__123(t):
         return t.k1.count_newlines() + t.k2.count_newlines() + t.k3.count_newlines()
 
 
+    #
+    #   display_token
+    #
     @share
     def display_token__123(t):
         return arrange('<%s %s %s %s>',
@@ -29,6 +38,9 @@ def gem():
                        t.k3.display_token())
 
 
+    #
+    #   dump_token
+    #
     @share
     def dump_token__123(t, f, newline = true):
         f.partial('<%s ', t.display_name)
@@ -40,44 +52,41 @@ def gem():
         return f.token_result(r, newline)
 
 
+    #
+    #   find_require_gem
+    #
     @share
     def find_require_gem__0(t, e):
         pass
 
 
+    #
+    #   is_name
+    #
     @share
     def is_name__0(t, name):
         return false
 
 
+    #
+    #   mutate
+    #
     @share
     def mutate__self(t, vary, priority):
         return t
 
 
-    @share
-    def mutate__abc(t, vary, priority):
-        a = t.a
-        b = t.b
-        c = t.c
-
-        #my_line('t: %r', t)
-
-        a__2 = a.mutate(vary, priority)
-        b__2 = b.mutate(vary, priority)
-        c__2 = c.mutate(vary, priority)
-
-        if (a is a__2) and (b is b__2) and (c is c__2):
-            return t
-
-        return t.conjure(a__2, b__2, c__2)
-
-
+    #
+    #   portray
+    #
     @share
     def portray__123(t):
         return arrange('<%s %s %r %r>', t.__class__.__name__, t.k1, t.k2, t.k3)
 
 
+    #
+    #   produce_mutate
+    #
     @share
     @privileged
     def produce_mutate__ab(name, conjure):
@@ -130,8 +139,6 @@ def gem():
             a = t.a
             b = t.b
 
-            #my_line('t: %r', t)
-
             a__2 = a.mutate(vary, a_priority)
             b__2 = b.mutate(vary, b_priority)
 
@@ -149,7 +156,7 @@ def gem():
 
     @share
     @privileged
-    def produce_mutate___frill__a__priority(name, priority):
+    def produce_mutate__frill__a__priority(name, priority):
         def mutate(t, vary, priority):
             frill = t.frill
             a     = t.a
@@ -171,7 +178,7 @@ def gem():
 
     @share
     @privileged
-    def produce_mutate___frill__a_with_priority(name, a_priority, conjure_with_frill = 0):
+    def produce_mutate__frill__a_with_priority(name, a_priority, conjure_with_frill):
         def mutate(t, vary, priority):
             frill = t.frill
             a     = t.a
@@ -182,7 +189,7 @@ def gem():
             if (frill is frill__2) and (a is a__2):
                 return t
 
-            return ((conjure_with_frill) or (t.conjure_with_frill))(frill__2, a__2)
+            return conjure_with_frill(frill__2, a__2)
 
 
         if __debug__:
@@ -245,7 +252,7 @@ def gem():
 
     @share
     @privileged
-    def produce_mutate__frill__ab_with_priority(name, a_priority, b_priority, conjure_with_frill = 0):
+    def produce_mutate__frill__ab_with_priority(name, a_priority, b_priority, conjure_with_frill):
         def mutate(t, vary, priority):
             frill = t.frill
             a     = t.a
@@ -258,7 +265,7 @@ def gem():
             if (frill is frill__2) and (a is a__2) and (b is b__2):
                 return t
 
-            return ((conjure_with_frill) or (t.conjure_with_frill))(frill__2, a__2, b__2)
+            return conjure_with_frill(frill__2, a__2, b__2)
 
 
         if __debug__:
@@ -283,6 +290,9 @@ def gem():
         return mutate
 
 
+    #
+    #   produce_transform
+    #
     @share
     @privileged
     def produce_transform__ab(name, conjure):
@@ -510,6 +520,9 @@ def gem():
         return transform
 
 
+    #
+    #   transform
+    #
     @share
     def transform__remove_comments_0(t, vary):
         if vary.remove_comments:
@@ -523,6 +536,9 @@ def gem():
         return t
 
 
+    #
+    #   write
+    #
     @share
     def write__123(t, w):
         t.k1.write(w)

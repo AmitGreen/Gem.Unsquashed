@@ -166,7 +166,7 @@ def gem():
     @privileged
     def produce_conjure_triple_token(
             name, Meta,
-            
+
             lookup      = lookup_normal_token,
             provide     = provide_normal_token,
             line_marker = false
@@ -205,7 +205,7 @@ def gem():
     @privileged
     def produce_evoke_triple_token(
             name, Meta, conjure_a, conjure_b,
-            
+
             conjure_c                  = absent,
             conjure_c__ends_in_newline = absent,
             lookup                     = lookup_normal_token,
@@ -229,7 +229,7 @@ def gem():
                 triple_s = qs()[qi() : ]
 
                 r = lookup_line_marker(triple_s)
-               
+
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
@@ -258,7 +258,7 @@ def gem():
                 full = qs()[qi() : c_end]
 
                 r = lookup(full)
-               
+
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 

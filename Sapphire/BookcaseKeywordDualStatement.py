@@ -171,7 +171,7 @@ def gem():
     ] = produce_conjure_bookcase_dual_expression(
             'for-header',
             ForHeader,
-            
+
             produce_conjure_with_frill = 1,
         )
 
@@ -180,18 +180,18 @@ def gem():
     ] = produce_conjure_bookcase_dual_expression(
             'from-statement',
             FromImportStatement,
-            
+
             produce_conjure_with_frill = true,
         )
 
     conjure_raise_statement_2  = produce_conjure_bookcase_dual_expression('raise-statement-2',  RaiseStatement_2)
-    
+
     [
         conjure_with_header_2, conjure_with_header_2__with_frill,
     ] = produce_conjure_bookcase_dual_expression(
             'with-header-2',
             WithHeader_2,
-            
+
             produce_conjure_with_frill = 1,
         )
 

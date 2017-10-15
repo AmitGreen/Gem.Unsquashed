@@ -42,7 +42,7 @@ def gem():
         if total != length(data_lines):
             raise_runtime_error('mismatch on counted lines (counted: %d; expected: %d)',
                                 total, length(parse_context.data_lines))
-                            
+
         line('Passed#2: Total counted lines %d matches input', total)
 
 

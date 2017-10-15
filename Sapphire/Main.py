@@ -75,7 +75,7 @@ def gem():
                 raise_runtime_error('must have zero or one argument')
 
             option = arguments[0]
-            
+
             if option == 'rc':
                 return test_development(module_name = 'hma2', remove_comments = true)
 

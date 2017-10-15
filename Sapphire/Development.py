@@ -198,7 +198,7 @@ def gem():
                 zap_latest()
                 process_module(first)
                 extend_latest(other)
-            
+
 
         def process_module(t, module):
             t._add_processed(module)

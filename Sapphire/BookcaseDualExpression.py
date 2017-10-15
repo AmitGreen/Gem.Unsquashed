@@ -47,8 +47,8 @@ def gem():
             w(frill.w.s)
             t.b.write(w)
             w(frill.x.s)
- 
- 
+
+
     BookcaseDualExpression.k1 = BookcaseDualExpression.a
     BookcaseDualExpression.k2 = BookcaseDualExpression.b
 
@@ -187,8 +187,6 @@ def gem():
         display_name = '(2)'
         frill        = conjure_vwx_frill(LP, COMMA__W, RP)
 
-        mutate = produce_mutate__frill__ab_with_priority('arguments_2', PRIORITY_ASSIGN, PRIORITY_ASSIGN)
-
 
     class ListExpression_2(BookcaseDualExpression):
         __slots__                      = (())
@@ -213,18 +211,29 @@ def gem():
 
 
     [
-        conjure_arguments_2, Arguments_2.conjure_plain, Arguments_2.conjure_with_frill,
+        conjure_arguments_2, Arguments_2.conjure_plain, conjure_arguments_2__with_frill,
     ] = produce_conjure_bookcase_dual_expression(
-                'arguments-2',
-                Arguments_2,
-                
-                produce_conjure_plain      = true,
-                produce_conjure_with_frill = true,
+            'arguments-2',
+            Arguments_2,
+
+            produce_conjure_plain      = true,
+            produce_conjure_with_frill = 1,
         )
 
     conjure_list_expression_2  = produce_conjure_bookcase_dual_expression('list-expression-2',  ListExpression_2)
     conjure_range_index        = produce_conjure_bookcase_dual_expression('range-index',        RangeIndex)
     conjure_tuple_expression_2 = produce_conjure_bookcase_dual_expression('tuple-expression-2', TupleExpression_2)
+
+
+    #
+    #   .mutate
+    #
+    Arguments_2.mutate = produce_mutate__frill__ab_with_priority(
+                             'arguments_2',
+                             PRIORITY_ASSIGN,
+                             PRIORITY_ASSIGN,
+                             conjure_arguments_2__with_frill,
+                         )
 
 
     share(

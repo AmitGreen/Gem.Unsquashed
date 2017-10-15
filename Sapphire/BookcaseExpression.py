@@ -23,12 +23,6 @@ def gem():
     LSB_RSB = conjure_vw_frill(LSB, RSB)
 
 
-    mutate__frill__a_priority_comprehension = produce_mutate___frill__a_with_priority(
-                                                  'arguments_1',
-                                                  PRIORITY_COMPREHENSION,
-                                              )
-
-
     @share
     class BookcaseExpression(SapphireTrunk):
         __slots__ = ((
@@ -82,7 +76,7 @@ def gem():
 
             produce_conjure_with_frill = 0,
     ):
-        assert (produce_conjure_with_frill is 0) or (produce_conjure_with_frill is 3) or (produce_conjure_with_frill is true)
+        assert (produce_conjure_with_frill is 0) or (produce_conjure_with_frill is 3)
 
         cache   = {}
         lookup  = cache.get
@@ -176,15 +170,10 @@ def gem():
             if __debug__:
                 conjure_with_frill.__name__ = intern_arrange('conjure_%s__with_frill', name)
 
-
             return ((
                        conjure_bookcase_expression,
-                       (
-                           conjure_with_frill         if produce_conjure_with_frill is 3 else
-                           static_method(conjure_with_frill)
-                       ),
+                       conjure_with_frill,
                    ))
-
 
         return conjure_bookcase_expression
 
@@ -194,8 +183,6 @@ def gem():
         display_name   = 'arguments-(1)'
         frill          = LP_RP
         is_arguments_1 = true
-
-        mutate = mutate__frill__a_priority_comprehension
 
 
     class HeadIndex(BookcaseExpression):
@@ -211,8 +198,6 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
 
-        mutate = mutate__frill__a_priority_comprehension
-
 
     class MapExpression_1(BookcaseExpression):
         __slots__                      = (())
@@ -226,8 +211,6 @@ def gem():
         __slots__    = (())
         display_name = 'normal-index'
         frill        = LSB_RSB
-
-        mutate = mutate__frill__a_priority_comprehension
 
 
     class Parameters_1(BookcaseExpression):
@@ -248,8 +231,6 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
 
-        mutate = produce_mutate___frill__a_with_priority('parenthesized-expression', PRIORITY_COMPREHENSION)
-
 
     class TailIndex(BookcaseExpression):
         __slots__    = (())
@@ -266,18 +247,36 @@ def gem():
 
 
     [
-        conjure_arguments_1, Arguments_1.conjure_with_frill,
+        conjure_arguments_1, conjure_arguments_1_with_frill,
     ] = produce_conjure_bookcase_expression(
             'arguments-1',
             Arguments_1,
-            
-            produce_conjure_with_frill = true,
+
+            produce_conjure_with_frill = 3,
        )
 
-    conjure_head_index        = produce_conjure_bookcase_expression('head-index',        HeadIndex)
-    conjure_list_expression_1 = produce_conjure_bookcase_expression('list-expression-1', ListExpression_1)
+    conjure_head_index = produce_conjure_bookcase_expression('head-index', HeadIndex)
+
+    [
+        conjure_list_expression_1, conjure_list_expression_1__with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'list-expression-1',
+            ListExpression_1,
+
+            produce_conjure_with_frill = 3,
+        )
+
     conjure_map_expression_1  = produce_conjure_bookcase_expression('map-expression-1',  MapExpression_1)
-    conjure_normal_index      = produce_conjure_bookcase_expression('normal-index',      NormalIndex)
+
+
+    [
+        conjure_normal_index, conjure_normal_index__with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'normal-index',
+            NormalIndex,
+
+            produce_conjure_with_frill = 3,
+        )
 
     [
         conjure_parameters_1, conjure_parameters_1__with_frill,
@@ -304,7 +303,25 @@ def gem():
     #
     #   .mutate
     #
-    ParenthesizedExpression.mutate = produce_mutate___frill__a_with_priority(
+    Arguments_1.mutate = produce_mutate__frill__a_with_priority(
+                             'arguments_1',
+                             PRIORITY_COMPREHENSION,
+                             conjure_arguments_1_with_frill,
+                         )
+
+    ListExpression_1.mutate = produce_mutate__frill__a_with_priority(
+                                  'list_expression_1',
+                                  PRIORITY_COMPREHENSION,
+                                  conjure_list_expression_1__with_frill,
+                              )
+
+    NormalIndex.mutate = produce_mutate__frill__a_with_priority(
+                             'normal_index',
+                             PRIORITY_COMPREHENSION,
+                             conjure_normal_index__with_frill,
+                         )
+
+    ParenthesizedExpression.mutate = produce_mutate__frill__a_with_priority(
                                          'parenthesized_expression',
                                          PRIORITY_COMPREHENSION,
                                          conjure_parenthesized_expression__with_frill,

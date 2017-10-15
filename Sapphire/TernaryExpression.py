@@ -162,7 +162,7 @@ def gem():
     ] = produce_conjure_triple_expression(
             'comprehension-for',
             ComprehensionForExpression,
-            
+
             produce_conjure_with_frill = true,
         )
 
@@ -171,7 +171,7 @@ def gem():
     ] = produce_conjure_triple_expression(
             'ternary-expression',
             TernaryExpression,
-            
+
             produce_conjure_with_frill = true,
         )
 

@@ -142,7 +142,7 @@ def gem():
     @privileged
     def produce_conjure_dual_token(
             name, Meta,
-            
+
             lookup      = lookup_normal_token,
             provide     = provide_normal_token,
             line_marker = false
@@ -181,7 +181,7 @@ def gem():
     @privileged
     def produce_evoke_dual_token(
             name, Meta, conjure_first,
-            
+
             conjure_second                  = absent,
             conjure_second__ends_in_newline = absent,
             lookup                          = lookup_normal_token,
@@ -203,7 +203,7 @@ def gem():
                 full_s = qs()[qi() : ]
 
                 r = lookup_line_marker(full_s)
-               
+
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
@@ -231,7 +231,7 @@ def gem():
                 full = qs()[qi() : end]
 
                 r = lookup(full)
-               
+
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
@@ -261,7 +261,7 @@ def gem():
                 full = qs()[qi() : end]
 
                 r = lookup(full)
-               
+
                 if r is not none:
                     #if not ( (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta)) ):
                     #    my_line('r: %r', r)
@@ -551,7 +551,7 @@ def gem():
         def mutate(t, vary, priority):
             if vary.remove_comments:
                 return t.b
-            
+
             return t
 
 
@@ -566,7 +566,7 @@ def gem():
     conjure_colon__line_marker = produce_conjure_dual_token(
                                      'colon__line_marker__1',
                                      Colon_LineMarker_1,
-                                     
+
                                      line_marker = true,
                                  )
 
@@ -628,7 +628,7 @@ def gem():
                                    'colon__line_marker',
                                    Colon_LineMarker_1,
                                    conjure_colon,
-                                   
+
                                    line_marker = true,
                                )
 
@@ -967,7 +967,7 @@ def gem():
     empty__empty_map    = conjure_empty_map  (LEFT_BRACE, RIGHT_BRACE)
     empty__parameters_0 = conjure_parameters_0(LP, RP)
 
-    
+
     W__IS_NOT__W = conjure_is_not(W__IS__W,  NOT__W)
     W__NOT_IN__W = conjure_not_in(W__NOT__W, IN__W)
 

@@ -74,7 +74,7 @@ def gem():
 
             return append
 
- 
+
         #
         #   parse_blank_line:
         #
@@ -780,7 +780,7 @@ def gem():
                 v = conjure_prefixed_if_definition(comment, v.a, v.b)
 
             return parse_if_statement__X(v)
-            
+
 
         def parse_try_header(v):
             comment = qc()
@@ -868,7 +868,7 @@ def gem():
                 v = conjure_prefixed_try_definition(comment, v.a, v.b)
 
             return parse_try_statement__X(v)
-            
+
 
         def parse_with_header(header):
             comment = qc()
@@ -1299,11 +1299,11 @@ def gem():
         ElseFragment                     .conjure_prefixed_fragment = static_conjure_prefixed_else_fragment
         ElseIfFragment                   .conjure_prefixed_fragment = static_conjure_prefixed_else_if_fragment
         ElseIfHeader                     .conjure_prefixed_fragment = static_conjure_prefixed_else_if_fragment
-        ExceptHeader_1                   .conjure_prefixed_fragment = static_conjure_prefixed_except_fragment 
-        ExceptHeader_2                   .conjure_prefixed_fragment = static_conjure_prefixed_except_fragment 
-        Indented_Else_Colon_LineMarker   .conjure_prefixed_fragment = static_conjure_prefixed_else_fragment 
-        Indented_Except_Colon_LineMarker .conjure_prefixed_fragment = static_conjure_prefixed_except_fragment 
-        Indented_Finally_Colon_LineMarker.conjure_prefixed_fragment = static_conjure_prefixed_finally_fragment 
+        ExceptHeader_1                   .conjure_prefixed_fragment = static_conjure_prefixed_except_fragment
+        ExceptHeader_2                   .conjure_prefixed_fragment = static_conjure_prefixed_except_fragment
+        Indented_Else_Colon_LineMarker   .conjure_prefixed_fragment = static_conjure_prefixed_else_fragment
+        Indented_Except_Colon_LineMarker .conjure_prefixed_fragment = static_conjure_prefixed_except_fragment
+        Indented_Finally_Colon_LineMarker.conjure_prefixed_fragment = static_conjure_prefixed_finally_fragment
 
 
         parse_lines()

@@ -202,7 +202,7 @@ def gem():
     @privileged
     def produce_conjure_quadruple_token(
             name, Meta,
-            
+
             lookup      = lookup_normal_token,
             provide     = provide_normal_token,
             line_marker = false
@@ -241,7 +241,7 @@ def gem():
     @privileged
     def produce_evoke_quadruple_token(
             name, Meta, conjure_a, conjure_b, conjure_c,
-            
+
             conjure_d                  = absent,
             conjure_d__ends_in_newline = absent,
             lookup                     = lookup_normal_token,
@@ -265,7 +265,7 @@ def gem():
                 full = qs()[qi() : ]
 
                 r = lookup_line_marker(full)
-               
+
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
@@ -292,7 +292,7 @@ def gem():
                 full = qs()[qi() : d_end]
 
                 r = lookup(full)
-               
+
                 if r is not none:
                     assert (type(r) is Meta) or (type(r) is lookup_adjusted_meta(Meta))
 
@@ -480,20 +480,20 @@ def gem():
 
 
     Indented_Else_Colon_LineMarker.transform = produce_transform__indented__keyword__colon__line_marker(
-                                                   'indented_else_colon__line_marker', 
+                                                   'indented_else_colon__line_marker',
                                                    conjure_indented__else__colon__line_marker,
                                                    ELSE,
                                                )
 
     Indented_Except_Colon_LineMarker.transform = produce_transform__indented__keyword__colon__line_marker(
-                                                     'indented_except_colon__line_marker', 
+                                                     'indented_except_colon__line_marker',
                                                      conjure_indented__except__colon__line_marker,
                                                      EXCEPT,
                                                  )
 
 
     Indented_Try_Colon_LineMarker.transform = produce_transform__indented__keyword__colon__line_marker(
-                                                  'indented_try_colon__line_marker', 
+                                                  'indented_try_colon__line_marker',
                                                   conjure_indented__try__colon__line_marker,
                                                   TRY,
                                               )

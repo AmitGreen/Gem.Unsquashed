@@ -147,7 +147,7 @@ def gem():
         display_name = 'not'
         frill        = NOT__W
 
-        mutate = produce_mutate___frill__a__priority('not-expression', PRIORITY_UNARY)
+        mutate = produce_mutate__frill__a__priority('not-expression', PRIORITY_UNARY)
 
 
     class StarArgument(UnaryExpression):
