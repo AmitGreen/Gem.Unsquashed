@@ -190,7 +190,9 @@ def gem():
 
         is_statement        = false
         is_statement_header = true
-        transform           = produce_transform__frill__a_with_priority('parameters_1', PRIORITY_TERNARY)
+        split_comment       = 0
+
+        add_comment = 0
 
 
     class ImportStatement(KeywordExpressionStatement):
@@ -202,7 +204,6 @@ def gem():
                        )
 
         find_require_gem = find_require_gem__0
-        transform        = produce_transform__frill__a_with_priority('import-statement', PRIORITY_ASSIGN)
 
 
     class RaiseStatement_1(KeywordExpressionStatement):
@@ -287,48 +288,48 @@ def gem():
         )
 
     [
-        conjure_delete_header, DeleteStatement_1.conjure_with_frill,
+        conjure_delete_header, conjure_delete_statement_1__with_frill,
     ] = produce_conjure_bookcase_expression(
             'delete-header',
             DeleteStatement_1,
 
-            produce_conjure_with_frill = 2,
+            produce_conjure_with_frill = 3,
         )
 
     [
-        conjure_else_if_header, ElseIfHeader.conjure_with_frill,
+        conjure_else_if_header, conjure_else_if_header__with_frill, 
     ] = produce_conjure_bookcase_expression(
             'else-if-header',
             ElseIfHeader,
 
-            produce_conjure_with_frill = 2,
+            produce_conjure_with_frill = 3,
         )
 
     [
-        conjure_except_header_1, ExceptHeader_1.conjure_with_frill,
+        conjure_except_header_1, conjure_except_header_1__with_frill, 
     ] = produce_conjure_bookcase_expression(
             'except-header-1',
             ExceptHeader_1,
 
-            produce_conjure_with_frill = 2,
+            produce_conjure_with_frill = 3,
         )
 
     [
-        conjure_if_header, IfHeader.conjure_with_frill,
+        conjure_if_header, conjure_if_header__with_frill,
     ] = produce_conjure_bookcase_expression(
             'if-header',
             IfHeader,
 
-            produce_conjure_with_frill = 2,
+            produce_conjure_with_frill = 3,
         )
 
     [
-        conjure_import_statement, ImportStatement.conjure_with_frill,
+        conjure_import_statement, conjure_import_statement__with_frill, 
     ] = produce_conjure_bookcase_expression(
             'import-statement',
             ImportStatement,
 
-            produce_conjure_with_frill = 2,
+            produce_conjure_with_frill = 3,
         )
 
     [
@@ -377,11 +378,28 @@ def gem():
         )
 
 
+    #
+    #   .add_comment
+    #
     AssertStatement_1.add_comment = produce_add_comment(
                                         'assert_statement_1',
                                         conjure_assert_statement_1__with_frill,
                                     )
 
+    DeleteStatement_1.add_comment = produce_add_comment(
+                                       'delete_statement_1',
+                                       conjure_delete_statement_1__with_frill,
+                                    )
+
+    ImportStatement.add_comment = produce_add_comment(
+                                      'import_statement',
+                                      conjure_import_statement__with_frill,
+                                   )
+
+
+    #
+    #   .transform
+    #
     AssertStatement_1.transform = produce_transform__frill__a_with_priority(
                                       'assert-1',
                                       PRIORITY_TERNARY,
@@ -394,6 +412,35 @@ def gem():
                                     conjure_decorator_header__with_frill,
                                 )
 
+    DeleteStatement_1.transform = produce_transform__frill__a_with_priority(
+                                      'assert-1',
+                                      PRIORITY_NORMAL,
+                                      conjure_delete_statement_1__with_frill,
+                                  )
+
+    ElseIfHeader.transform = produce_transform__frill__a_with_priority(
+                                 'else_if_header',
+                                 PRIORITY_TERNARY,
+                                 conjure_else_if_header__with_frill,
+                             )
+
+    ExceptHeader_1.transform = produce_transform__frill__a_with_priority(
+                                   'except_header_1',
+                                   PRIORITY_TERNARY,
+                                   conjure_except_header_1__with_frill,
+                               )
+
+    IfHeader.transform = produce_transform__frill__a_with_priority(
+                             'if_header',
+                             PRIORITY_TERNARY,
+                             conjure_if_header__with_frill,
+                         )
+
+    ImportStatement.transform = produce_transform__frill__a_with_priority(
+                                    'import_statement',
+                                    PRIORITY_ASSIGN,
+                                    conjure_import_statement__with_frill,
+                                )
 
 
     share(

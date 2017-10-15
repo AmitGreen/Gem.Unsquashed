@@ -52,6 +52,9 @@ def gem():
                     v.dump_token(f)
 
 
+        find_require_gem = find_require_gem__0
+
+
         @property
         def impression(t):
             return t[0].impression
