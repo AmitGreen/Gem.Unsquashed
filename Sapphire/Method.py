@@ -357,7 +357,7 @@ def gem():
 
     @share
     @privileged
-    def produce_transform__frill__a_with_priority(name, priority):
+    def produce_transform__frill__a_with_priority(name, priority, conjure_with_frill = 0):
         def transform(t, vary):
             frill = t.frill
             a     = t.a
@@ -368,7 +368,7 @@ def gem():
             if (frill is frill__2) and (a is a__2):
                 return t
 
-            return t.conjure_with_frill(frill__2, a__2)
+            return ((conjure_with_frill) or (t.conjure_with_frill))(frill__2, a__2)
 
 
         if __debug__:

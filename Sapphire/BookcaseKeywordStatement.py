@@ -3,7 +3,29 @@
 #
 @gem('Sapphire.BookcaseKeywordStatement')
 def gem():
+    conjure_commented_vw_frill = Shared.conjure_commented_vw_frill      #   due to privileged
+
+
     empty_indentation__at_sign = conjure_indented_token(empty_indentation, conjure_at_sign('@'))
+
+
+    @privileged
+    def produce_add_comment(name, conjure_with_frill = 0):
+        def add_comment(t, comment):
+            frill = t.frill
+
+            assert frill.comment is 0
+
+            return ((conjure_with_frill) or (t.conjure_with_frill))(
+                       conjure_commented_vw_frill(comment, frill.v, frill.w),
+                       t.a,
+                   )
+
+        if __debug__:
+            add_comment.__name__ = intern_arrange('add_comment__%s', name)
+
+        return add_comment
+        
 
 
     class KeywordExpressionStatement(BookcaseExpression):
@@ -15,15 +37,7 @@ def gem():
         is_statement               = true
 
 
-        def add_comment(t, comment):
-            frill = t.frill
-
-            assert frill.comment is 0
-
-            return t.conjure_with_frill(
-                       conjure_commented_vw_frill(comment, frill.v, frill.w),
-                       t.a,
-                   )
+        add_comment = produce_add_comment('keyword-expression-statement')
 
 
         def display_token(t):
@@ -99,7 +113,6 @@ def gem():
         frill        = conjure_vw_frill(empty_indentation__at_sign, LINE_MARKER)
 
         find_require_gem = find_require_gem__0
-        transform        = produce_transform__frill__a_with_priority('assert-1', PRIORITY_TERNARY)
 
 
     @share
@@ -256,21 +269,21 @@ def gem():
 
 
     [
-        conjure_assert_statement_1, AssertStatement_1.conjure_with_frill,
+        conjure_assert_statement_1, conjure_assert_statement_1__with_frill,
     ] = produce_conjure_bookcase_expression(
             'assert-statement-1',
             AssertStatement_1,
 
-            produce_conjure_with_frill = 2,
+            produce_conjure_with_frill = 3,
         )
 
     [
-        conjure_decorator_header, DecoratorHeader.conjure_with_frill,
+        conjure_decorator_header, conjure_decorator_header__with_frill,
     ] = produce_conjure_bookcase_expression(
             'decorator-header',
             DecoratorHeader,
 
-            produce_conjure_with_frill = 2,
+            produce_conjure_with_frill = 3,
         )
 
     [
@@ -362,6 +375,25 @@ def gem():
 
             produce_conjure_with_frill = 2,
         )
+
+
+    AssertStatement_1.add_comment = produce_add_comment(
+                                        'assert_statement_1',
+                                        conjure_assert_statement_1__with_frill,
+                                    )
+
+    AssertStatement_1.transform = produce_transform__frill__a_with_priority(
+                                      'assert-1',
+                                      PRIORITY_TERNARY,
+                                      conjure_assert_statement_1__with_frill,
+                                  )
+
+    DecoratorHeader.transform = produce_transform__frill__a_with_priority(
+                                    'decorator_header',
+                                    PRIORITY_POSTFIX,
+                                    conjure_decorator_header__with_frill,
+                                )
+
 
 
     share(

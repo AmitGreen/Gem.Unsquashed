@@ -82,7 +82,7 @@ def gem():
 
             produce_conjure_with_frill = 0,
     ):
-        assert 0 <= produce_conjure_with_frill <= 2
+        assert 0 <= produce_conjure_with_frill <= 3
 
         cache   = {}
         lookup  = cache.get
@@ -180,6 +180,7 @@ def gem():
             return ((
                        conjure_bookcase_expression,
                        (
+                           conjure_with_frill         if produce_conjure_with_frill is 3 else
                            conjure_dual__with_frill   if produce_conjure_with_frill is 1 else
                            static_method(conjure_with_frill)
                        ),
