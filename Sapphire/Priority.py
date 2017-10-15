@@ -23,11 +23,13 @@ def gem():
         'PRIORITY_TERNARY',                 17,     #   'if'
         'PRIORITY_TERNARY_LIST',            18,     #   Comma expression of PRIORITY_TERNARY
         'PRIORITY_SUBSCRIPT',               19,     #   Subscript of index expression
-        'PRIORITY_SUBSCRIPT_LIST',          20,     #   COmma expresion of Subscripts
+        'PRIORITY_SUBSCRIPT_LIST',          20,     #   Comma expresion of Subscripts
         'PRIORITY_YIELD',                   21,     #   'yield'
         'PRIORITY_COMPREHENSION',           22,     #   'for'
-        'PRIORITY_ASSIGN',                  23,     #   '=', 'import', and 'in'
-        'PRIORITY_STATEMENT',               24,     #   statement
+        'PRIORITY_ASSIGN',                  23,     #   '=',
+        'PRIORITY_AS',                      24,     #   'as'
+        'PRIORITY_AS_LIST',                 25,     #   Comma expression of 'as'
+        'PRIORITY_STATEMENT',               26,     #   statement
 
         #
         #   PRIORITY_NORMAL is an alias for PRIORITY_LOGICAL_OR

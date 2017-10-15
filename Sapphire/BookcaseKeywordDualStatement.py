@@ -124,7 +124,7 @@ def gem():
             a     = t.a
             b     = t.b
 
-            frill__2 = frill.morph (vary, 0, PRIORITY_ASSIGN, 0)
+            frill__2 = frill.morph (vary, 0, PRIORITY_AS_LIST, 0)
             a__2     = a    .mutate(vary, PRIORITY_POSTFIX)
             b__2     = b    .mutate(vary, PRIORITY_NORMAL_LIST)
 

@@ -20,8 +20,8 @@ def gem():
             assert frill.comment is 0
 
             return conjure_expression_statement__with_frill(
-                       t.a,
                        conjure_commented_vw_frill(comment, frill.v, frill.w),
+                       t.a,
                    )
 
 
@@ -82,7 +82,7 @@ def gem():
             'expression-statement',
             ExpressionStatement,
                                          
-            produce_conjure_with_frill = 1,
+            produce_conjure_with_frill = 3,
         )
 
 

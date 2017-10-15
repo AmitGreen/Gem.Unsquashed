@@ -236,7 +236,7 @@ def gem():
         #           .transform converts to 'for '  (no leading space)
         #
         def mutate(t, vary, priority):
-            assert priority == PRIORITY_ASSIGN
+            assert priority == PRIORITY_AS_LIST
 
             if vary.remove_comments:
                 return W__FOR__W
@@ -321,7 +321,7 @@ def gem():
         #           .transform converts to 'import '  (no leading space)
         #
         def mutate(t, vary, priority):
-            assert priority == PRIORITY_ASSIGN
+            assert priority == PRIORITY_AS_LIST
 
             if vary.remove_comments:
                 return W__IMPORT__W
@@ -470,7 +470,12 @@ def gem():
         keyword                                 = ':'
 
 
+        #
+        #   FIX to deal with this as MapElement
+        #
         def mutate(t, vary, priority):
+            assert 0
+
             if vary.remove_comments:
                 if priority == PRIORITY_ASSIGN:
                     return COLON

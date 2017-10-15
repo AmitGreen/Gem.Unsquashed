@@ -131,7 +131,6 @@ def gem():
         split_comment                         = 1
 
         add_comment = 0
-        transform   = produce_transform__frill__a_with_priority('parameters_1', PRIORITY_POSTFIX)
 
 
     class DeleteStatement_1(KeywordExpressionStatement):
@@ -226,7 +225,6 @@ def gem():
                        )
 
         find_require_gem = find_require_gem__0
-        transform        = produce_transform__frill__a_with_priority('parameters_1', PRIORITY_TERNARY_LIST)
 
 
     @export
@@ -240,6 +238,9 @@ def gem():
 
         is_statement        = false
         is_statement_header = true
+        split_comment       = 0
+
+        add_comment = 0
 
 
     @share
@@ -333,68 +334,60 @@ def gem():
         )
 
     [
-        conjure_raise_statement_1, RaiseStatement_1.conjure_with_frill,
+        conjure_raise_statement_1, conjure_raise_statement_1__with_frill,
     ] = produce_conjure_bookcase_expression(
             'raise-statement-1',
             RaiseStatement_1,
 
-            produce_conjure_with_frill = 2,
+            produce_conjure_with_frill = 3,
         )
 
     [
-        conjure_return_statement, ReturnStatement.conjure_with_frill,
+        conjure_return_statement, conjure_return_statement__with_frill,
     ] = produce_conjure_bookcase_expression(
             'return-statement',
             ReturnStatement,
 
-            produce_conjure_with_frill = 2,
+            produce_conjure_with_frill = 3,
         )
 
     [
-        conjure_while_header, WhileHeader.conjure_with_frill,
+        conjure_while_header, conjure_while_header__with_frill,
     ] = produce_conjure_bookcase_expression(
             'while-header',
             WhileHeader,
 
-            produce_conjure_with_frill = 2,
+            produce_conjure_with_frill = 3,
         )
 
     [
-        conjure_with_header_1, WithHeader_1.conjure_with_frill,
+        conjure_with_header_1, conjure_with_header_1__with_frill,
     ] = produce_conjure_bookcase_expression(
             'with-header-1',
             WithHeader_1,
 
-            produce_conjure_with_frill = 2,
+            produce_conjure_with_frill = 3,
         )
 
     [
-        conjure_yield_statement_1, YieldStatement_1.conjure_with_frill,
+        conjure_yield_statement_1, conjure_yield_statement_1__with_frill,
     ] = produce_conjure_bookcase_expression(
             'yield-statement-1',
             YieldStatement_1,
 
-            produce_conjure_with_frill = 2,
+            produce_conjure_with_frill = 3,
         )
 
 
     #
     #   .add_comment
     #
-    AssertStatement_1.add_comment = produce_add_comment(
-                                        'assert_statement_1',
-                                        conjure_assert_statement_1__with_frill,
-                                    )
-
-    DeleteStatement_1.add_comment = produce_add_comment(
-                                       'delete_statement_1',
-                                       conjure_delete_statement_1__with_frill,
-                                    )
-
-    ImportStatement.add_comment = produce_add_comment(
-                                      'import_statement',
-                                      conjure_import_statement__with_frill,
-                                   )
+    AssertStatement_1.add_comment = produce_add_comment('assert_statement_1', conjure_assert_statement_1__with_frill)
+    DeleteStatement_1.add_comment = produce_add_comment('delete_statement_1', conjure_delete_statement_1__with_frill)
+    ImportStatement  .add_comment = produce_add_comment('import_statement',   conjure_import_statement__with_frill)
+    RaiseStatement_1 .add_comment = produce_add_comment('raise_statement_1',  conjure_raise_statement_1__with_frill)
+    ReturnStatement  .add_comment = produce_add_comment('return_statement',   conjure_return_statement__with_frill)
+    YieldStatement_1 .add_comment = produce_add_comment('yield_statement_1',  conjure_yield_statement_1__with_frill)
 
 
     #
@@ -438,9 +431,39 @@ def gem():
 
     ImportStatement.transform = produce_transform__frill__a_with_priority(
                                     'import_statement',
-                                    PRIORITY_ASSIGN,
+                                    PRIORITY_AS_LIST,
                                     conjure_import_statement__with_frill,
                                 )
+
+    RaiseStatement_1.transform = produce_transform__frill__a_with_priority(
+                                    'raise_statement_1',
+                                    PRIORITY_TERNARY,
+                                    conjure_raise_statement_1__with_frill,
+                                )
+
+    ReturnStatement.transform = produce_transform__frill__a_with_priority(
+                                    'return_statement',
+                                    PRIORITY_TERNARY_LIST,
+                                    conjure_return_statement__with_frill,
+                                )
+
+    WhileHeader.transform = produce_transform__frill__a_with_priority(
+                                'while_header',
+                                PRIORITY_TERNARY,
+                                conjure_while_header__with_frill,
+                            )
+
+    WithHeader_1.transform = produce_transform__frill__a_with_priority(
+                                 'with_header_1',
+                                 PRIORITY_AS_LIST,
+                                 conjure_with_header_1__with_frill,
+                             )
+
+    YieldStatement_1.transform = produce_transform__frill__a_with_priority(
+                                     'yield_statement_1',
+                                     PRIORITY_TERNARY,
+                                     conjure_yield_statement_1__with_frill,
+                                 )
 
 
     share(
