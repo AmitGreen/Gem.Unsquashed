@@ -171,7 +171,7 @@ def gem():
 
     @share
     @privileged
-    def produce_mutate___frill__a_with_priority(name, a_priority):
+    def produce_mutate___frill__a_with_priority(name, a_priority, conjure_with_frill = 0):
         def mutate(t, vary, priority):
             frill = t.frill
             a     = t.a
@@ -182,7 +182,7 @@ def gem():
             if (frill is frill__2) and (a is a__2):
                 return t
 
-            return t.conjure_with_frill(frill__2, a__2)
+            return ((conjure_with_frill) or (t.conjure_with_frill))(frill__2, a__2)
 
 
         if __debug__:
@@ -357,7 +357,53 @@ def gem():
 
     @share
     @privileged
-    def produce_transform__frill__a_with_priority(name, priority, conjure_with_frill = 0):
+    def produce_transform__frill_a(name, conjure_with_frill):
+        def transform(t, vary):
+            frill = t.frill
+            a     = t.a
+
+            frill__2 = frill.transform(vary)
+            a__2     = a    .transform(vary)
+
+            if (frill is frill__2) and (a is a__2):
+                return t
+
+            return conjure_with_frill(frill__2, a__2)
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform_%s', name)
+
+        return transform
+
+
+    @share
+    @privileged
+    def produce_transform__frill_ab(name, conjure_with_frill):
+        def transform(t, vary):
+            frill = t.frill
+            a     = t.a
+            b     = t.b
+
+            frill__2 = frill.transform(vary)
+            a__2     = a    .transform(vary)
+            b__2     = b    .transform(vary)
+
+            if (frill is frill__2) and (a is a__2) and (b is b__2):
+                return t
+
+            return conjure_with_frill(frill__2, a__2, b__2)
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform_%s', name)
+
+        return transform
+
+
+    @share
+    @privileged
+    def produce_transform__frill__a_with_priority(name, priority, conjure_with_frill):
         def transform(t, vary):
             frill = t.frill
             a     = t.a
@@ -368,7 +414,7 @@ def gem():
             if (frill is frill__2) and (a is a__2):
                 return t
 
-            return ((conjure_with_frill) or (t.conjure_with_frill))(frill__2, a__2)
+            return conjure_with_frill(frill__2, a__2)
 
 
         if __debug__:
@@ -415,36 +461,6 @@ def gem():
             transform.__name__ = intern_arrange('transform__%s', name)
 
         return transform
-
-
-    @share
-    def transform__frill_a(t, vary):
-        frill = t.frill
-        a     = t.a
-
-        frill__2 = frill.transform(vary)
-        a__2     = a    .transform(vary)
-
-        if (frill is frill__2) and (a is a__2):
-            return t
-
-        return t.conjure_with_frill(frill__2, a__2)
-
-
-    @share
-    def transform__frill_ab(t, vary):
-        frill = t.frill
-        a     = t.a
-        b     = t.b
-
-        frill__2 = frill.transform(vary)
-        a__2     = a    .transform(vary)
-        b__2     = b    .transform(vary)
-
-        if (frill is frill__2) and (a is a__2) and (b is b__2):
-            return t
-
-        return t.conjure_with_frill(frill__2, a__2, b__2)
 
 
     @share

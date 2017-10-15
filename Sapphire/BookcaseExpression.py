@@ -241,9 +241,6 @@ def gem():
             return t.a.s == name
 
 
-        transform = transform__frill_a
-
-
     class ParenthesizedExpression(BookcaseExpression):
         __slots__                      = (())
         display_name                   = '()'
@@ -281,19 +278,43 @@ def gem():
     conjure_list_expression_1 = produce_conjure_bookcase_expression('list-expression-1', ListExpression_1)
     conjure_map_expression_1  = produce_conjure_bookcase_expression('map-expression-1',  MapExpression_1)
     conjure_normal_index      = produce_conjure_bookcase_expression('normal-index',      NormalIndex)
-    conjure_parameters_1      = produce_conjure_bookcase_expression('parameters-1',      Parameters_1)
 
     [
-        conjure_parenthesized_expression, ParenthesizedExpression.conjure_with_frill,
+        conjure_parameters_1, conjure_parameters_1__with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'parameters-1',
+            Parameters_1,
+
+            produce_conjure_with_frill = 3,
+        )
+
+    [
+        conjure_parenthesized_expression, conjure_parenthesized_expression__with_frill,
     ] = produce_conjure_bookcase_expression(
             'parenthesized-expression',
             ParenthesizedExpression,
 
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 3,
         )
 
     conjure_tail_index         = produce_conjure_bookcase_expression('tail-index',         TailIndex)
     conjure_tuple_expression_1 = produce_conjure_bookcase_expression('tuple-expression-1', TupleExpression_1)
+
+
+    #
+    #   .mutate
+    #
+    ParenthesizedExpression.mutate = produce_mutate___frill__a_with_priority(
+                                         'parenthesized_expression',
+                                         PRIORITY_COMPREHENSION,
+                                         conjure_parenthesized_expression__with_frill,
+                                     )
+
+
+    #
+    #   .transform
+    #
+    Parameters_1.transform = produce_transform__frill_a('parameters_1', conjure_parameters_1__with_frill)
 
 
     share(

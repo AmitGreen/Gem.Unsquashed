@@ -68,9 +68,6 @@ def gem():
         def indentation(t):
             return t.frill.v.indentation
 
-            
-        transform = transform__frill_ab
-
 
         def write(t, w):
             frill = t.frill
@@ -106,7 +103,7 @@ def gem():
 
         return ((
                    conjure_definition_header,
-                   static_method(conjure_triple__312),
+                   conjure_triple__312,
                ))
 
 
@@ -128,21 +125,16 @@ def gem():
 
 
     [
-        conjure_class_header, ClassHeader.conjure_with_frill,
-    ] = produce_conjure_definition_header(
-            'class-header',
-            ClassHeader,
-        )
+        conjure_class_header, conjure_class_header__with_frill,
+    ] = produce_conjure_definition_header('class-header', ClassHeader)
 
     [
-        conjure_function_header, FunctionHeader.conjure_with_frill,
-    ] = produce_conjure_definition_header(
-            'function-header',
-            FunctionHeader,
-        )
+        conjure_function_header, conjure_function_header__with_frill,
+    ] = produce_conjure_definition_header('function-header', FunctionHeader)
 
 
-    FunctionHeader.conjure = static_method(conjure_function_header)
+    ClassHeader   .transform = produce_transform__frill_ab('class_header',    conjure_class_header__with_frill)
+    FunctionHeader.transform = produce_transform__frill_ab('function_header', conjure_function_header__with_frill)
 
 
     share(
