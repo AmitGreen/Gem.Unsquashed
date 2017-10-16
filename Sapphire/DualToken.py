@@ -540,6 +540,22 @@ def gem():
         is_atom                        = true
 
 
+        def mutate(t, vary, priority):
+            b    = t.b
+            b__2 = b.mutate(vary, priority)
+
+            if vary.remove_comments:
+                return b__2
+
+            a    = t.a
+            a__2 = a.mutate(vary, priority)
+            
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure_whitespace_atom(a__2, b__2)
+
+
     class Whitespace_Name(BaseDualOperator):
         __slots__                      = (())
         display_name                   = 'whitespace+name'
@@ -583,10 +599,11 @@ def gem():
                                                Comma_RightSquareBracket,
                                            )
 
-    conjure_dot_name      = produce_conjure_dual_token('.name',      Dot_Name)
-    conjure_dot_name_pair = produce_conjure_dual_token('.name-pair', DotNamePair)
-    conjure_empty_list    = produce_conjure_dual_token('[]',         EmptyList)
-    conjure_empty_map     = produce_conjure_dual_token('{}',         EmptyMap)
+    conjure_dot_name      = produce_conjure_dual_token('.name',       Dot_Name)
+    conjure_dot_name_pair = produce_conjure_dual_token('.name-pair',  DotNamePair)
+    conjure_empty_list    = produce_conjure_dual_token('[]',          EmptyList)
+    conjure_empty_map     = produce_conjure_dual_token('{}',          EmptyMap)
+    conjure_empty_tuple   = produce_conjure_dual_token('empty-tuple', EmptyTuple)
 
     conjure_indented_token = produce_conjure_dual_token(
                                  'indented-token',
@@ -612,6 +629,8 @@ def gem():
                                lookup  = lookup_parameters_0_token,
                                provide = provide_parameters_0_token,
                           )
+
+    conjure_whitespace_atom = produce_conjure_dual_token('whitespace_atom', Whitespace_Atom)
 
     evoke_arguments_0 = produce_evoke_dual_token(
                             'arguments_0',
@@ -963,26 +982,35 @@ def gem():
                                          none,
                                      )
 
-    empty__arguments_0  = conjure_arguments_0(LP, RP)
-    empty__empty_map    = conjure_empty_map  (LEFT_BRACE, RIGHT_BRACE)
+    empty__arguments_0  = conjure_arguments_0 (LP, RP)
+    empty__empty_list   = conjure_empty_list  (LSB, RSB)
+    empty__empty_map    = conjure_empty_map   (LEFT_BRACE, RIGHT_BRACE)
     empty__parameters_0 = conjure_parameters_0(LP, RP)
+    empty__empty_tuple  = conjure_empty_tuple (LP, RP)
 
 
     W__IS_NOT__W = conjure_is_not(W__IS__W,  NOT__W)
     W__NOT_IN__W = conjure_not_in(W__NOT__W, IN__W)
 
 
-    EmptyMap   .mutate = produce_mutate__uncommented('empty_map',     empty__empty_map)
-    DotNamePair.mutate = produce_mutate__ab         ('dot-name-pair', conjure_dot_name_pair)
-
-
+    #
+    #   .mutate
     #
     #   NOTE:
     #       Comma_RightParentheiss.mutate    leaves  the , (called on parenthesized tuple expression)
     #       Comma_RightParenthesis.transform removes the , (called in other situations where the , is not needed)
     #
-    Is_Not                .transform = produce_transform__uncommented('is_not', W__IS_NOT__W)
-    Not_In                .transform = produce_transform__uncommented('not_in', W__NOT_IN__W)
+    EmptyList  .mutate = produce_mutate__uncommented('empty_list',    empty__empty_list)
+    EmptyMap   .mutate = produce_mutate__uncommented('empty_map',     empty__empty_map)
+    EmptyTuple .mutate = produce_mutate__uncommented('empty_tuple',   empty__empty_tuple)
+    DotNamePair.mutate = produce_mutate__ab         ('dot-name-pair', conjure_dot_name_pair)
+
+
+    #
+    #   .transform
+    #
+    Is_Not                .transform = produce_transform__uncommented('is_not',                   W__IS_NOT__W)
+    Not_In                .transform = produce_transform__uncommented('not_in',                   W__NOT_IN__W)
     Comma_RightParenthesis.transform = produce_transform__uncommented('comma__right_parenthesis', RP)
 
     Colon_LineMarker_1.transform = produce_transform__ab('colon__line_marker_1', conjure_colon__line_marker)

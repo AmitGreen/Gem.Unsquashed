@@ -311,20 +311,20 @@ def gem():
 
     Arguments_Many.mutate = produce_mutate__frill__many(
                                 'arguments_many',
-                                conjure_arguments_many__with_frill,
                                 PRIORITY_ASSIGN,
+                                conjure_arguments_many__with_frill,
                             )
 
     ListExpression_Many.mutate = produce_mutate__frill__many(
                                      'list_expression_many',
-                                     conjure_list_expression_many__with_frill,
                                      PRIORITY_COMPREHENSION,
+                                     conjure_list_expression_many__with_frill,
                                  )
 
     Parameters_Many.transform = produce_transform__frill__many(
                                     'parameters_many',
-                                    conjure_parameters_many__with_frill,
                                     PRIORITY_ASSIGN,
+                                    conjure_parameters_many__with_frill,
                                 )
 
 

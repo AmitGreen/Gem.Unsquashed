@@ -129,6 +129,9 @@ def gem():
             return arrange('<%s>', t.s)
 
 
+        mutate = mutate__self
+
+
     class EndOfData(SapphireToken):
         __slots__                        = (())
         indentation                      = none

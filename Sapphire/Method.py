@@ -248,7 +248,7 @@ def gem():
 
     @share
     @privileged
-    def produce_mutate__frill__many(name, conjure_with_frill, many_priority):
+    def produce_mutate__frill__many(name, many_priority, conjure_with_frill):
         def mutate(t, vary, priority):
             frill    = t.frill
             many     = t.many

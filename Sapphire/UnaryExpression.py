@@ -183,6 +183,12 @@ def gem():
     TwosComplementExpression.conjure_with_frill = static_method(conjure_twos_complement)
 
 
+    #
+    #   .transform
+    #
+    StarParameter.transform = produce_transform__frill_a('star_paramater', conjure_star_parameter)
+
+
     share(
         'conjure_negative_expression',  conjure_negative_expression,
         'conjure_not_expression',       conjure_not_expression,

@@ -386,7 +386,14 @@ def gem():
         frill        = conjure_action_word('-', ' - ')
 
 
-    conjure_add_expression     = produce_conjure_binary_expression('add',               AddExpression)
+    [
+        conjure_add_expression, conjure_add_expression__with_frill,
+    ] = produce_conjure_binary_expression(
+            'add',
+            AddExpression,
+
+            produce_conjure_with_frill = 1,
+        )
 
 
     [
@@ -529,7 +536,16 @@ def gem():
 
     conjure_logical_or_expression = produce_conjure_binary_expression('logical-or-1', LogicalOrExpression_1)
     conjure_map_element           = produce_conjure_binary_expression('map-element',  MapElement)
-    conjure_modulus_expression    = produce_conjure_binary_expression('modulus',      ModulusExpression)
+
+    [
+        conjure_modulus_expression, conjure_modulus_expression__with_frill,
+    ] = produce_conjure_binary_expression(
+            'modulus',
+            ModulusExpression,
+
+            produce_conjure_with_frill = 1,
+        )
+
     conjure_multiple_expression_1 = produce_conjure_binary_expression('multiply-1',   MultiplyExpression_1)
 
     [
@@ -548,10 +564,17 @@ def gem():
     #
     #   .mutate
     #
+    AddExpression.mutate = produce_mutate__frill__ab_with_priority(
+                               'add-expression',
+                               PRIORITY_ARITHMETIC,
+                               PRIORITY_MULTIPLY,
+                               conjure_add_expression__with_frill,
+                           )
+
     AndExpression_1.mutate = produce_mutate__frill__ab_with_priority(
                                  'and-expression-1',
                                  PRIORITY_BOOLEAN_AND,
-                                 PRIORITY_BOOLEAN_AND,
+                                 PRIORITY_NOT,
                                  conjure_and_expression_1__with_frill,
                              )
 
@@ -644,6 +667,13 @@ def gem():
                                         PRIORITY_LOGICAL_AND,
                                         PRIORITY_SHIFT,
                                         conjure_logical_and_expression__with_frill,
+                                    )
+
+    ModulusExpression.mutate = produce_mutate__frill__ab_with_priority(
+                                        'moduls_expression',
+                                        PRIORITY_MULTIPLY,
+                                        PRIORITY_UNARY,
+                                        conjure_modulus_expression__with_frill,
                                     )
 
     OrExpression_1.mutate = produce_mutate__frill__ab_with_priority(

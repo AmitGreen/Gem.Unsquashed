@@ -476,6 +476,16 @@ def gem():
     #
     #   6.  Multiply-Expression (Python 2.7.14rc1 grammer calls this 'term')
     #
+    #       multiply-expression
+    #           : unary-expression
+    #           | multiply-expression mutiply-operator unary-expression
+    #
+    #       multiply-operator
+    #           : '*'
+    #           | '/'
+    #           | '%'
+    #           | '//'
+    #
     def parse1_multiply_expression__left_operator(left, multiply_operator):
         right = parse1_unary_expression()
 

@@ -173,7 +173,11 @@ def gem():
 
 
     @privileged
-    def produce_conjure_many_expression(name, Meta):
+    def produce_conjure_many_expression(
+            name, Meta,
+
+            produce_conjure_with_frill = 0,
+    ):
         cache  = {}
         lookup = cache.get
         store  = cache.__setitem__
@@ -189,6 +193,15 @@ def gem():
             conjure_many_expression.__name__ = intern_arrange('conjure_%s', name)
 
             append_cache(name, cache)
+
+        if produce_conjure_with_frill:
+            if __debug__:
+                conjure_dual.__name__ = intern_arrange('conjure_%s__with_frill', name)
+
+            return ((
+                       conjure_many_expression,
+                       conjure_dual,
+                   ))
 
         return conjure_many_expression
 
@@ -231,11 +244,29 @@ def gem():
     conjure_and_expression_many        = produce_conjure_many_expression('and-*',        AndExpression_Many)
     conjure_arithmetic_expression_many = produce_conjure_many_expression('arithmetic-*', ArithmeticExpression_Many)
     conjure_comma_expression_many      = produce_conjure_many_expression('comma-*',      CommaExpression_Many)
-    conjure_compare_expression_many    = produce_conjure_many_expression('compare-*',    CompareExpression_Many)
+
+    [
+        conjure_compare_expression_many, conjure_compare_expression_many__with_frill,
+    ] = produce_conjure_many_expression(
+            'compare-*',
+            CompareExpression_Many,
+            
+            produce_conjure_with_frill = 1,
+        )
+
     conjure_logical_or_expression_many = produce_conjure_many_expression('logical-or-*', LogicalOrExpression_Many)
     conjure_multiply_expression_many   = produce_conjure_many_expression('multiply-*',   MultiplyExpression_Many)
     conjure_or_expression_many         = produce_conjure_many_expression('or-*',         OrExpression_Many)
 
+
+    #
+    #   .mutate
+    #
+    CompareExpression_Many.mutate = produce_mutate__frill__many(
+                                        'compare_expression_many',
+                                        CompareExpression_Many,
+                                        conjure_compare_expression_many__with_frill,
+                                    )
 
     share(
         'conjure_and_expression_many',          conjure_and_expression_many,
