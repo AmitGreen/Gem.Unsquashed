@@ -65,6 +65,54 @@ def gem():
         t.newlines = newlines
 
 
+    @privileged
+    def produce_mutate_atom_whitespace(name, conjure):
+        def mutate(t, vary, priority):
+            a    = t.a
+            a__2 = a.mutate(vary, priority)
+
+            if vary.remove_comments:
+                return a__2
+
+            b    = t.b
+            b__2 = b.transform(vary)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure(a__2, b__2)
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate_%s', name)
+
+        return mutate
+
+
+    @privileged
+    def produce_transform_atom_whitespace(name, conjure):
+        def transform(t, vary):
+            a    = t.a
+            a__2 = a.transform(vary)
+
+            if vary.remove_comments:
+                return a__2
+
+            b    = t.b
+            b__2 = b.transform(vary)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure(a__2, b__2)
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform_%s', name)
+
+        return transform
+
+
     class BaseDualOperator(KeywordAndOperatorBase):
         __slots__ = ((
             'a',                        #   Operator+
@@ -578,6 +626,8 @@ def gem():
             return t
 
 
+    conjure_atom_whitespace = produce_conjure_dual_token('atom_whitespace', Atom_Whitespace)
+
     conjure_arguments_0 = produce_conjure_dual_token(
                               'arguments_0',
                               Arguments_0,
@@ -626,6 +676,8 @@ def gem():
                                              '[:',                           #   ]
                                              LeftSquareBracket_Colon,
                                          )
+
+    conjure_name_whitespace = produce_conjure_dual_token('name_whitespace', Name_Whitespace)
 
     conjure_not_in = produce_conjure_dual_token('not-in', Not_In)
 
@@ -989,15 +1041,20 @@ def gem():
                                          none,
                                      )
 
-    empty__arguments_0  = conjure_arguments_0 (LP, RP)
-    empty__empty_list   = conjure_empty_list  (LSB, RSB)
-    empty__empty_map    = conjure_empty_map   (LEFT_BRACE, RIGHT_BRACE)
-    empty__parameters_0 = conjure_parameters_0(LP, RP)
-    empty__empty_tuple  = conjure_empty_tuple (LP, RP)
+    #
+    #   Constants
+    #
+    COLON__LINE_MARKER  = conjure_colon__line_marker         (COLON, LINE_MARKER)
     COLON_RSB           = conjure_colon__right_square_bracket(COLON, RSB)
-    LSB_COLON           = conjure_left_square_bracket__colon(LSB, COLON)
-    W__IS_NOT__W        = conjure_is_not(W__IS__W,  NOT__W)
-    W__NOT_IN__W        = conjure_not_in(W__NOT__W, IN__W)
+    COMMA_RP            = conjure_comma__right_parenthesis   (COMMA, RP)
+    empty__arguments_0  = conjure_arguments_0                (LP, RP)
+    empty__empty_list   = conjure_empty_list                 (LSB, RSB)
+    empty__empty_map    = conjure_empty_map                  (LEFT_BRACE, RIGHT_BRACE)
+    empty__empty_tuple  = conjure_empty_tuple                (LP, RP)
+    empty__parameters_0 = conjure_parameters_0               (LP, RP)
+    LSB_COLON           = conjure_left_square_bracket__colon (LSB, COLON)
+    W__IS_NOT__W        = conjure_is_not                     (W__IS__W,  NOT__W)
+    W__NOT_IN__W        = conjure_not_in                     (W__NOT__W, IN__W)
 
 
     #
@@ -1007,28 +1064,35 @@ def gem():
     #       Comma_RightParentheiss.mutate    leaves  the , (called on parenthesized tuple expression)
     #       Comma_RightParenthesis.transform removes the , (called in other situations where the , is not needed)
     #
-    EmptyList  .mutate = produce_mutate__uncommented('empty_list',    empty__empty_list)
-    EmptyMap   .mutate = produce_mutate__uncommented('empty_map',     empty__empty_map)
-    EmptyTuple .mutate = produce_mutate__uncommented('empty_tuple',   empty__empty_tuple)
-    DotNamePair.mutate = produce_mutate__ab         ('dot-name-pair', conjure_dot_name_pair)
+    Atom_Whitespace.mutate = produce_mutate_atom_whitespace('atom_whitespace', conjure_atom_whitespace)
+    EmptyList      .mutate = produce_mutate__uncommented   ('empty_list',      empty__empty_list)
+    EmptyMap       .mutate = produce_mutate__uncommented   ('empty_map',       empty__empty_map)
+    EmptyTuple     .mutate = produce_mutate__uncommented   ('empty_tuple',     empty__empty_tuple)
+    DotNamePair    .mutate = produce_mutate__ab            ('dot-name-pair',   conjure_dot_name_pair)
+    Name_Whitespace.mutate = produce_mutate_atom_whitespace('name_whitespace', conjure_name_whitespace)
 
 
     #
     #   .transform
     #
+    Colon_LineMarker_1.transform = produce_transform__ab('colon__line_marker_1', conjure_colon__line_marker)
+
     Colon_RightSquareBracket.transform = produce_transform__uncommented('colon__right_square_bracket', COLON_RSB)
-    Is_Not                  .transform = produce_transform__uncommented('is_not',                      W__IS_NOT__W)
-    Not_In                  .transform = produce_transform__uncommented('not_in',                      W__NOT_IN__W)
     Comma_RightParenthesis  .transform = produce_transform__uncommented('comma__right_parenthesis',    RP)
-    LeftSquareBracket_Colon .transform = produce_transform__uncommented('left_square_bracket__colon',  LSB_COLON)
 
-    Colon_LineMarker_1     .transform = produce_transform__ab('colon__line_marker_1',       conjure_colon__line_marker)
-    Indented_Token         .transform = produce_transform__ab('indented_token',             conjure_indented_token)
-    Parameters_0           .transform = produce_transform__ab('parameters_0',               conjure_parameters_0)
+    Indented_Token.transform = produce_transform__ab         ('indented_token', conjure_indented_token)
+    Is_Not        .transform = produce_transform__uncommented('is_not',         W__IS_NOT__W)
 
-    COLON__LINE_MARKER = conjure_colon__line_marker      (COLON, LINE_MARKER)
-    COMMA_RP           = conjure_comma__right_parenthesis(COMMA, RP)
+    LeftSquareBracket_Colon.transform = produce_transform__uncommented('left_square_bracket__colon', LSB_COLON)
 
+    Name_Whitespace.transform = produce_transform_atom_whitespace('name_whitespace', conjure_name_whitespace)
+    Not_In         .transform = produce_transform__uncommented   ('not_in',          W__NOT_IN__W)
+    Parameters_0   .transform = produce_transform__ab            ('parameters_0',    conjure_parameters_0)
+
+
+    #
+    #   find_*
+    #
     find_evoke_comma_something = {
                                      #   (
                                      ')' : evoke_comma__right_parenthesis,

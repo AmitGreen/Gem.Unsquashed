@@ -71,13 +71,7 @@ def gem():
 
     @share
     @privileged
-    def produce_conjure_bookcase_expression(
-            name, Meta,
-
-            produce_conjure_with_frill = 0,
-    ):
-        assert (produce_conjure_with_frill is 0) or (produce_conjure_with_frill is 3)
-
+    def produce_conjure_bookcase_expression(name, Meta):
         cache   = {}
         lookup  = cache.get
         provide = cache.setdefault
@@ -153,29 +147,24 @@ def gem():
             return conjure_dual__with_frill(a, conjure_vw_frill(frill_v, frill_w))
 
 
+        def conjure_with_frill(frill, a):
+            if frill is meta_frill:
+                return (lookup(a)) or (provide(a, Meta(a)))
+
+            return conjure_dual__with_frill(a, frill)
+
+
         if __debug__:
             conjure_bookcase_expression.__name__ = intern_arrange('conjure_%s', name)
+            conjure_with_frill         .__name__ = intern_arrange('conjure_%s__with_frill', name)
 
             append_cache(name, cache)
 
 
-        if produce_conjure_with_frill:
-            def conjure_with_frill(frill, a):
-                if frill is meta_frill:
-                    return (lookup(a)) or (provide(a, Meta(a)))
-
-                return conjure_dual__with_frill(a, frill)
-
-
-            if __debug__:
-                conjure_with_frill.__name__ = intern_arrange('conjure_%s__with_frill', name)
-
-            return ((
-                       conjure_bookcase_expression,
-                       conjure_with_frill,
-                   ))
-
-        return conjure_bookcase_expression
+        return ((
+                   conjure_bookcase_expression,
+                   conjure_with_frill,
+               ))
 
 
     class Arguments_1(BookcaseExpression):
@@ -248,77 +237,39 @@ def gem():
 
     [
         conjure_arguments_1, conjure_arguments_1_with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'arguments-1',
-            Arguments_1,
-
-            produce_conjure_with_frill = 3,
-       )
+    ] = produce_conjure_bookcase_expression('arguments-1', Arguments_1) 
 
     [
         conjure_head_index, conjure_head_index__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'head-index',
-            HeadIndex,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('head-index', HeadIndex)
 
     [
         conjure_list_expression_1, conjure_list_expression_1__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'list-expression-1',
-            ListExpression_1,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('list-expression-1', ListExpression_1)
 
     [
         conjure_map_expression_1, conjure_map_expression_1__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'map-expression-1',
-            MapExpression_1,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('map-expression-1', MapExpression_1)
 
     [
         conjure_normal_index, conjure_normal_index__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'normal-index',
-            NormalIndex,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('normal-index', NormalIndex)
 
     [
         conjure_parameters_1, conjure_parameters_1__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'parameters-1',
-            Parameters_1,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('parameters-1', Parameters_1)
 
     [
         conjure_parenthesized_expression, conjure_parenthesized_expression__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'parenthesized-expression',
-            ParenthesizedExpression,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('parenthesized-expression', ParenthesizedExpression)
 
     [
         conjure_tail_index, conjure_tail_index__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'tail-index',
-            TailIndex,
+    ] = produce_conjure_bookcase_expression('tail-index', TailIndex)
 
-            produce_conjure_with_frill = 3,
-        )
-
-    conjure_tuple_expression_1 = produce_conjure_bookcase_expression('tuple-expression-1', TupleExpression_1)
+    [
+        conjure_tuple_expression_1, conjure_tuple_expression_1__with_frill,
+    ] = produce_conjure_bookcase_expression('tuple-expression-1', TupleExpression_1)
 
 
     #
@@ -367,6 +318,12 @@ def gem():
                            PRIORITY_TERNARY,
                            conjure_tail_index__with_frill,
                        )
+
+    TupleExpression_1.mutate = produce_mutate__frill__a_with_priority(
+                                   'tuple_expression_1',
+                                   PRIORITY_TERNARY,
+                                   conjure_tuple_expression_1__with_frill,
+                               )
 
 
     #

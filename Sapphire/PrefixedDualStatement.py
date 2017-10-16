@@ -443,6 +443,7 @@ def gem():
     ] = produce_conjure_dual_twig_functions('with-statement', WithStatement)
 
 
+    ClassDefinition    .conjure = static_method(conjure_class_definition)
     DecoratedDefinition.conjure = static_method(conjure_decorated_definition)
     ElseFragment       .conjure = static_method(conjure_else_fragment)
     ExceptFragment     .conjure = static_method(conjure_except_fragment)

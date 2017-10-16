@@ -272,111 +272,50 @@ def gem():
 
     [
         conjure_assert_statement_1, conjure_assert_statement_1__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'assert-statement-1',
-            AssertStatement_1,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('assert-statement-1', AssertStatement_1)
 
     [
         conjure_decorator_header, conjure_decorator_header__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'decorator-header',
-            DecoratorHeader,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('decorator-header', DecoratorHeader)
 
     [
         conjure_delete_header, conjure_delete_statement_1__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'delete-header',
-            DeleteStatement_1,
-
-            produce_conjure_with_frill = 3,
-        )
-
+    ] = produce_conjure_bookcase_expression('delete-header', DeleteStatement_1)
     [
         conjure_else_if_header, conjure_else_if_header__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'else-if-header',
-            ElseIfHeader,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('else-if-header', ElseIfHeader)
 
     [
         conjure_except_header_1, conjure_except_header_1__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'except-header-1',
-            ExceptHeader_1,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('except-header-1', ExceptHeader_1)
 
     [
         conjure_if_header, conjure_if_header__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'if-header',
-            IfHeader,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('if-header', IfHeader)
 
     [
         conjure_import_statement, conjure_import_statement__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'import-statement',
-            ImportStatement,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('import-statement', ImportStatement)
 
     [
         conjure_raise_statement_1, conjure_raise_statement_1__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'raise-statement-1',
-            RaiseStatement_1,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('raise-statement-1', RaiseStatement_1)
 
     [
         conjure_return_statement, conjure_return_statement__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'return-statement',
-            ReturnStatement,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('return-statement', ReturnStatement)
 
     [
         conjure_while_header, conjure_while_header__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'while-header',
-            WhileHeader,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('while-header', WhileHeader)
 
     [
         conjure_with_header_1, conjure_with_header_1__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'with-header-1',
-            WithHeader_1,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('with-header-1', WithHeader_1)
 
     [
         conjure_yield_statement_1, conjure_yield_statement_1__with_frill,
-    ] = produce_conjure_bookcase_expression(
-            'yield-statement-1',
-            YieldStatement_1,
-
-            produce_conjure_with_frill = 3,
-        )
+    ] = produce_conjure_bookcase_expression('yield-statement-1', YieldStatement_1)
 
 
     #
