@@ -34,6 +34,12 @@ def gem():
     conjure_triple_statement = produce_conjure_triple_twig('triple-statement', TripleStatement)
 
 
+    #
+    #   .transform
+    #
+    TripleStatement.transform = produce_transform__abc('triple-statement', conjure_triple_statement)
+
+
     share(
         'conjure_triple_statement',     conjure_triple_statement,
     )

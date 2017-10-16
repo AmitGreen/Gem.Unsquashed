@@ -113,6 +113,33 @@ def gem():
         return transform
 
 
+    @privileged
+    def produce_mutate_whitespace_atom_whitespace(name, conjure):
+        def mutate(t, vary, priority):
+            b    = t.b
+            b__2 = b.mutate(vary, priority)
+
+            if vary.remove_comments:
+                return b__2
+
+            a = t.a
+            c = t.c
+
+            a__2 = a.transform(vary)
+            c__2 = c.transform(vary)
+
+            if (a is a__2) and (b is b__2) and (c is c__2):
+                return t
+
+            return conjure(a__2, b__2, c__3)
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate_%s', name)
+
+        return mutate
+
+
     class BaseTripleOperator(KeywordAndOperatorBase):
         __slots__ = ((
             'a',                        #   Operator+
@@ -480,6 +507,9 @@ def gem():
         is_identifier                  = true
 
 
+    #
+    #   conjure_*
+    #
     conjure_all_index        = produce_conjure_triple_token('all_index',           AllIndex)
     conjure_dot_name_triplet = produce_conjure_triple_token('.name-triplet',       DotNameTriplet)
 
@@ -499,6 +529,20 @@ def gem():
                                                 line_marker = true,
                                             )
 
+    conjure_whitespace_atom_whitespace = produce_conjure_triple_token(
+                                             'whitespace_atom_whitespace',
+                                             Whitespace_Atom_Whitespace,
+                                         )
+
+    conjure_whitespace_name_whitespace = produce_conjure_triple_token(
+                                             'whitespace_name_whitespace',
+                                             Whitespace_Name_Whitespace,
+                                         )
+
+
+    #
+    #   evoke_*
+    #
     evoke_all_index = produce_evoke_triple_token(
                           'all_index',
                           AllIndex,
@@ -614,6 +658,11 @@ def gem():
     #   .mutate
     #
     DotNameTriplet.mutate = produce_mutate__abc('dot_name_triplet', conjure_dot_name_triplet)
+
+    Whitespace_Atom_Whitespace.mutate = produce_mutate_whitespace_atom_whitespace(
+                                            'whitespace_atom_whitespace',
+                                            conjure_whitespace_name_whitespace,
+                                        )
 
 
     #
