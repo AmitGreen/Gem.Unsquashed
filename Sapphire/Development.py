@@ -447,7 +447,7 @@ def gem():
         sardnoyx_boot_code          = extract_sardnoyx_boot(vary)
         gem_boot_code               = extract_gem_boot(vary)
 
-        require_many = RequireMany(vary, 27)
+        require_many = RequireMany(vary, 28)
 
         require_many.process_module('Gem.Core')
         main_code.twig.find_require_gem(require_many)

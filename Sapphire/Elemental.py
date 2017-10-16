@@ -1051,6 +1051,7 @@ def gem():
     ASSERT__W                = conjure_keyword_assert      ('assert ')
     AT_SIGN                  = conjure_at_sign             ('@')
     BREAK                    = conjure_keyword_break       ('break')
+    CONTINUE                 = conjure_keyword_continue    ('continue')
     CLASS__W                 = conjure_keyword_class       ('class ')
     COLON                    = conjure_colon               (':')
     COMMA                    = conjure_comma               (',')
@@ -1291,6 +1292,7 @@ def gem():
         'is_close_operator',                                is_close_operator,
         'AT_SIGN',                                          AT_SIGN,
         'BREAK',                                            BREAK,
+        'CONTINUE',                                         CONTINUE,
         'COLON',                                            COLON,
         'COMMA',                                            COMMA,
         'COMMA__W',                                         COMMA__W,

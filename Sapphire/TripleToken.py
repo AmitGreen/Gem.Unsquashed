@@ -520,6 +520,13 @@ def gem():
                                                line_marker = true,
                                            )
 
+    conjure_indented__continue__line_marker = produce_conjure_triple_token(
+                                               'indented__continue__line_marker',
+                                               Indented_Continue_LineMarker_1,
+
+                                               line_marker = true,
+                                           )
+
     conjure_indented_else_colon = produce_conjure_triple_token('indented-else-colon', Indented_Else_Colon)
 
     conjure_indented__pass__line_marker = produce_conjure_triple_token(
@@ -688,6 +695,12 @@ def gem():
                                                 conjure_indented__break__line_marker,
                                                 BREAK,
                                             )
+
+    Indented_Continue_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+                                                   'indented_continue__line_marker_1',
+                                                   conjure_indented__continue__line_marker,
+                                                   CONTINUE,
+                                               )
 
     Indented_Pass_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
                                                'indented_pass__line_marker_1',
