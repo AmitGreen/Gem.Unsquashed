@@ -137,12 +137,12 @@ def gem():
         )
 
     [
-            conjure_modify_statement, ModifyStatement.conjure_with_frill,
+            conjure_modify_statement, conjure_modify_statement__with_frill,
     ] = produce_conjure_bookcase_dual_expression(
             'modify-statement',
             ModifyStatement,
 
-            produce_conjure_with_frill = true,
+            produce_conjure_with_frill = 1,
         )
 
     AssignStatement_1.add_comment = produce_add_comment('assign_statement_1', conjure_assign_1__with_frill)
@@ -153,6 +153,13 @@ def gem():
                                       PRIORITY_YIELD,
                                       conjure_assign_1__with_frill,
                                   )
+
+    ModifyStatement.transform = produce_transform__frill__ab_with_priority(
+                                    'modify_statement_1',
+                                    PRIORITY_TERNARY_LIST,
+                                    PRIORITY_YIELD,
+                                    conjure_modify_statement__with_frill,
+                                )
 
 
     share(
