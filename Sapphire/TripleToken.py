@@ -10,6 +10,7 @@ def gem():
 
 
     conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged
+    LINE_MARKER          = Shared.LINE_MARKER               #   Due to privileged
     lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   Due to privileged
     lookup_line_marker   = Shared.lookup_line_marker        #   Due to privileged
     lookup_normal_token  = Shared.lookup_normal_token       #   Due to privileged
@@ -80,6 +81,36 @@ def gem():
         r = t.c.dump_token(f, false)
 
         return f.token_result(r, newline)
+
+
+    @privileged
+    def produce_transform__indented__keyword__line_marker(name, conjure, keyword):
+        def transform(t, vary):
+            a = t.a
+            b = t.b
+            c = t.c
+
+            a__2 = (vary.indentation   if vary.remove_indentation else   a)
+
+            if vary.remove_comments:
+                b__2 = keyword
+                c__2 = LINE_MARKER
+
+                if (a is a__2) and (b is b__2) and (c is c__2):
+                    return t
+
+                return conjure(a__2, b__2, c__2)
+
+            if a is a__2:
+                return t
+
+            return conjure(a__2, b, c)
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform__%s', name)
+
+        return transform
 
 
     class BaseTripleOperator(KeywordAndOperatorBase):
@@ -457,9 +488,16 @@ def gem():
     conjure_indented__pass__line_marker = produce_conjure_triple_token(
                                               'indented__pass__line_marker',
                                               Indented_Pass_LineMarker_1,
-                                              lookup_line_marker,
-                                              provide_line_marker,
+
+                                              line_marker = true,
                                           )
+
+    conjure_indented__return__line_marker = produce_conjure_triple_token(
+                                                'indented__return__line_marker',
+                                                Indented_Return_LineMarker_1,
+
+                                                line_marker = true,
+                                            )
 
     evoke_all_index = produce_evoke_triple_token(
                           'all_index',
@@ -577,6 +615,15 @@ def gem():
     #
     DotNameTriplet.mutate = produce_mutate__abc('dot_name_triplet', conjure_dot_name_triplet)
 
+
+    #
+    #   .mutate
+    #
+    Indented_Return_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+                                                 'indented_return_lineMarker_1',
+                                                 conjure_indented__return__line_marker,
+                                                 RETURN,
+                                             )
 
     #
     #   find_evoke_whitespace_atom_whitespace

@@ -91,7 +91,7 @@ def gem():
 
     @privileged
     def produce_transform__indented__keyword__colon__line_marker(name, conjure, keyword):
-        def transform__indented__keyword__colon__line_marker(t, vary):
+        def transform(t, vary):
             a = t.a
             b = t.b
             c = t.c
@@ -116,9 +116,9 @@ def gem():
 
 
         if __debug__:
-            transform__indented__keyword__colon__line_marker.__name__ = intern_arrange('transform__%s', name)
+            transform.__name__ = intern_arrange('transform__%s', name)
 
-        return transform__indented__keyword__colon__line_marker
+        return transform
 
 
     class BaseQuadrupleOperator(KeywordAndOperatorBase):

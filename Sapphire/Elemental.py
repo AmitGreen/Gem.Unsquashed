@@ -1071,6 +1071,7 @@ def gem():
     NOT__W              = conjure_keyword_not         ('not ')
     PLUS_SIGN           = conjure_action_word         ('+', '+')
     RAISE__W            = conjure_keyword_raise       ('raise ')
+    RETURN              = conjure_keyword_return      ('return')
     RETURN__W           = conjure_keyword_return      ('return ')
     RIGHT_BRACE         = conjure_right_brace         ('}')
     RP                  = conjure_right_parenthesis   (')')
@@ -1282,6 +1283,7 @@ def gem():
         'LSB',                                              LSB,
         'NOT__W',                                           NOT__W,
         'RAISE__W',                                         RAISE__W,
+        'RETURN',                                           RETURN,
         'RETURN__W',                                        RETURN__W,
         'RIGHT_BRACE',                                      RIGHT_BRACE,
         'RP',                                               RP,
