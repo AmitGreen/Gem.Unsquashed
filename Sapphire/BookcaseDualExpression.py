@@ -240,7 +240,14 @@ def gem():
             produce_conjure_with_frill = 1,
         )
 
-    conjure_list_expression_2  = produce_conjure_bookcase_dual_expression('list-expression-2',  ListExpression_2)
+    [
+        conjure_list_expression_2, conjure_list_expression_2__with_frill,
+    ] = produce_conjure_bookcase_dual_expression(
+            'list-expression-2',
+            ListExpression_2,
+
+            produce_conjure_with_frill = 1,
+        )
 
     [
         conjure_range_index, conjure_range_index__with_frill,
@@ -270,6 +277,13 @@ def gem():
                              PRIORITY_ASSIGN,
                              conjure_arguments_2__with_frill,
                          )
+
+    ListExpression_2.mutate = produce_mutate__frill__ab_with_priority(
+                                  'list_expression_2',
+                                  PRIORITY_COMPREHENSION,
+                                  PRIORITY_TERNARY,
+                                  conjure_list_expression_2__with_frill,
+                              )
 
     RangeIndex.mutate = produce_mutate__frill__ab_with_priority(
                             'range_index',

@@ -567,7 +567,16 @@ def gem():
         )
 
     conjure_power_expression          = produce_conjure_binary_expression('power',              PowerExpression)
-    conjure_subtract_expression       = produce_conjure_binary_expression('subtract',           SubtractExpression)
+
+
+    [
+        conjure_subtract_expression, conjure_subtract_expression__with_frill,
+    ] = produce_conjure_binary_expression(
+            'subtract',
+            SubtractExpression,
+
+            produce_conjure_with_frill = 1,
+        )
 
 
     #
@@ -714,6 +723,13 @@ def gem():
                                 PRIORITY_BOOLEAN_AND,
                                 conjure_or_expression_1__with_frill,
                             )
+
+    SubtractExpression.mutate = produce_mutate__frill__ab_with_priority(
+                                    'subtract_expression',
+                                    PRIORITY_ARITHMETIC,
+                                    PRIORITY_MULTIPLY,
+                                    conjure_subtract_expression__with_frill,
+                                )
 
     #
     #   .transform
