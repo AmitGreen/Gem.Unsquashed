@@ -1054,10 +1054,10 @@ def gem():
     Arguments_0           .mutate = produce_mutate__uncommented   ('arguments_0',              ARGUMENTS_0)
     Atom_Whitespace       .mutate = produce_mutate_atom_whitespace('atom_whitespace',          conjure_atom_whitespace)
     Comma_RightParenthesis.mutate = produce_mutate__uncommented   ('comma__right_parenthesis', COMMA_RP)
+    DotNamePair           .mutate = produce_mutate__ab            ('dot-name-pair',            conjure_dot_name_pair)
     EmptyList             .mutate = produce_mutate__uncommented   ('empty_list',               EMPTY_LIST)
     EmptyMap              .mutate = produce_mutate__uncommented   ('empty_map',                EMPTY_MAP)
     EmptyTuple            .mutate = produce_mutate__uncommented   ('empty_tuple',              EMPTY_TUPLE)
-    DotNamePair           .mutate = produce_mutate__ab            ('dot-name-pair',            conjure_dot_name_pair)
     Name_Whitespace       .mutate = produce_mutate_atom_whitespace('name_whitespace',          conjure_name_whitespace)
     Whitespace_Atom       .mutate = produce_mutate_whitespace_atom('whitespace_atom',          conjure_whitespace_atom)
     Whitespace_Name       .mutate = produce_mutate_whitespace_atom('whitespace_name',          conjure_whitespace_name)
@@ -1068,6 +1068,7 @@ def gem():
     #
     Colon_LineMarker_1.transform = produce_transform__ab('colon__line_marker_1', conjure_colon__line_marker)
 
+    Comma_RightBrace        .transform = produce_transform__uncommented('comma__right_brace',          RIGHT_BRACE)
     Colon_RightSquareBracket.transform = produce_transform__uncommented('colon__right_square_bracket', COLON_RSB)
 
     Comma_RightParenthesis.transform = produce_transform__uncommented(
