@@ -1063,6 +1063,7 @@ def gem():
     W__LESS_THAN_OR_EQUAL__W = conjure_action_word         ('<=', ' <= ')
     W__NOT__W                = conjure_keyword_not         (' not ')
     W__OR__W                 = conjure_action_word         ('or', ' or ')
+    W__OR_SIGN__W            = conjure_action_word         ('|', ' | ')
     W__PERCENT_SIGN__W       = conjure_action_word         ('%', ' % ')
     W__STAR_SIGN__W          = conjure_star_sign           (' * ')
     W__SUBTRACT_MODIFY__W    = conjure_action_word         ('-=', ' -= ')
@@ -1145,6 +1146,7 @@ def gem():
 
     OperatorLessThanOrEqual.transform = produce_transform__uncommented('less_than_or_equal', W__LESS_THAN_OR_EQUAL__W)
 
+    OperatorLogicalOrSign     .transform = produce_transform__uncommented('logical_or_sign',       W__OR_SIGN__W)
     OperatorMinusSign         .transform = produce_transform__uncommented('operator_minus_sign',   MINUS_SIGN)
     OperatorPercentSign       .transform = produce_transform__uncommented('operator_percent_sign', W__PERCENT_SIGN__W)
     OperatorPlusSign          .transform = produce_transform__uncommented('operator_plus_sign',    PLUS_SIGN)

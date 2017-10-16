@@ -528,7 +528,14 @@ def gem():
             produce_conjure_with_frill = 1,
         )
 
-    conjure_logical_or_expression = produce_conjure_binary_expression('logical-or-1', LogicalOrExpression_1)
+    [
+        conjure_logical_or_expression, conjure_logical_or_expression__with_frill,
+    ] = produce_conjure_binary_expression(
+            'logical-or-1',
+            LogicalOrExpression_1,
+
+            produce_conjure_with_frill = 1,
+        )
 
     [
         conjure_map_element, conjure_map_element__with_frill,
@@ -694,6 +701,13 @@ def gem():
                                         PRIORITY_SHIFT,
                                         conjure_logical_and_expression__with_frill,
                                     )
+
+    LogicalOrExpression_1.mutate = produce_mutate__frill__ab_with_priority(
+                                       'logical_or_expression_1',
+                                       PRIORITY_NORMAL,
+                                       PRIORITY_LOGICAL_EXCLUSIVE_OR,
+                                       conjure_logical_or_expression__with_frill,
+                                   )
 
     MapElement.mutate = produce_mutate__frill__ab__priority(
                             'map_element',

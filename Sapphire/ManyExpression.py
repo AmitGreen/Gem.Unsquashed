@@ -277,7 +277,15 @@ def gem():
             produce_conjure_with_frill = 1,
         )
 
-    conjure_logical_or_expression_many = produce_conjure_many_expression('logical-or-*', LogicalOrExpression_Many)
+    [
+        conjure_logical_or_expression_many, conjure_logical_or_expression_many__with_frill,
+    ] = produce_conjure_many_expression(
+            'logical-or-*',
+            LogicalOrExpression_Many,
+
+            produce_conjure_with_frill = 1,
+        )
+
     conjure_multiply_expression_many   = produce_conjure_many_expression('multiply-*',   MultiplyExpression_Many)
 
     [
@@ -324,6 +332,14 @@ def gem():
                                         PRIORITY_NORMAL,
                                         conjure_compare_expression_many__with_frill,
                                     )
+
+    LogicalOrExpression_Many.mutate = produce_mutate__frill__many(
+                                          'logical_or_expression_many',
+                                          PRIORITY_NORMAL,
+                                          PRIORITY_LOGICAL_EXCLUSIVE_OR,
+                                          PRIORITY_LOGICAL_EXCLUSIVE_OR,
+                                          conjure_logical_or_expression_many__with_frill,
+                                      )
 
     OrExpression_Many.mutate = produce_mutate__frill__many(
                                    'or_expression_many',

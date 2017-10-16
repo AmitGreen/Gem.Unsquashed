@@ -681,6 +681,11 @@ def gem():
 
     Whitespace_Atom_Whitespace.mutate = produce_mutate_whitespace_atom_whitespace(
                                             'whitespace_atom_whitespace',
+                                            conjure_whitespace_atom_whitespace,
+                                        )
+
+    Whitespace_Name_Whitespace.mutate = produce_mutate_whitespace_atom_whitespace(
+                                            'whitespace_name_whitespace',
                                             conjure_whitespace_name_whitespace,
                                         )
 
