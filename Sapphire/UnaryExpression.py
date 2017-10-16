@@ -191,6 +191,12 @@ def gem():
                                     conjure_negative_expression,
                                 )
 
+    StarArgument.mutate = produce_mutate__frill__a_with_priority(
+                              'star_argument',
+                              PRIORITY_TERNARY,
+                              conjure_star_argument,
+                          )
+
 
     #
     #   .transform

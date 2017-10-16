@@ -256,7 +256,7 @@ def gem():
             return conjure_list_expression_1(
                        left_square_bracket,
                        middle_1,
-                       conjure__comma__right_square_bracket(operator_1, middle_2),
+                       conjure_comma__right_square_bracket(operator_1, middle_2),
                    )
 
         operator_2 = tokenize_operator()
@@ -284,7 +284,7 @@ def gem():
                        middle_1,
                        operator_1,
                        middle_2,
-                       conjure__comma__right_square_bracket(operator_2, middle_3),
+                       conjure_comma__right_square_bracket(operator_2, middle_3),
                    )
 
         many       = [middle_1, middle_2]
@@ -314,7 +314,7 @@ def gem():
                            left_square_bracket,
                            many,
                            many_frill,
-                           conjure__comma__right_square_bracket(operator_7, middle_3),
+                           conjure_comma__right_square_bracket(operator_7, middle_3),
                        )
 
             many_frill.append(operator_7)

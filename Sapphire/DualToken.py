@@ -636,10 +636,10 @@ def gem():
     conjure__comma__right_brace      = produce_conjure_dual_token('comma__right_brace',       Comma_RightBrace)
     conjure_comma__right_parenthesis = produce_conjure_dual_token('comma__right_parenthesis', Comma_RightParenthesis)
 
-    conjure__comma__right_square_bracket = produce_conjure_dual_token(
-                                               'comma__right_square_bracket',
-                                               Comma_RightSquareBracket,
-                                           )
+    conjure_comma__right_square_bracket = produce_conjure_dual_token(
+                                              'comma__right_square_bracket',
+                                              Comma_RightSquareBracket,
+                                          )
 
     conjure_dot_name      = produce_conjure_dual_token('.name',       Dot_Name)
     conjure_dot_name_pair = produce_conjure_dual_token('.name-pair',  DotNamePair)
@@ -1033,6 +1033,7 @@ def gem():
     ARGUMENTS_0         = conjure_arguments_0                (LP,         RP)
     COLON__LINE_MARKER  = conjure_colon__line_marker         (COLON,      LINE_MARKER)
     COLON_RSB           = conjure_colon__right_square_bracket(COLON,      RSB)
+    COMMA_RSB           = conjure_comma__right_square_bracket(COMMA,      RSB)
     COMMA_RP            = conjure_comma__right_parenthesis   (COMMA,      RP)
     EMPTY_LIST          = conjure_empty_list                 (LSB,        RSB)
     EMPTY_MAP           = conjure_empty_map                  (LEFT_BRACE, RIGHT_BRACE)
@@ -1068,7 +1069,13 @@ def gem():
     Colon_LineMarker_1.transform = produce_transform__ab('colon__line_marker_1', conjure_colon__line_marker)
 
     Colon_RightSquareBracket.transform = produce_transform__uncommented('colon__right_square_bracket', COLON_RSB)
-    Comma_RightParenthesis  .transform = produce_transform__uncommented('comma__right_parenthesis',    RP)
+
+    Comma_RightParenthesis.transform = produce_transform__uncommented(
+                                           'comma__right_parenthesis',
+                                           RP,                          #   See comment above on why not 'COMMA_RP'
+                                       )
+
+    Comma_RightSquareBracket.transform = produce_transform__uncommented('comma__right_square_bracket', COMMA_RSB)
 
     Indented_Token.transform = produce_transform__ab         ('indented_token', conjure_indented_token)
     Is_Not        .transform = produce_transform__uncommented('is_not',         W__IS_NOT__W)
@@ -1160,7 +1167,7 @@ def gem():
         'conjure_colon__line_marker',               conjure_colon__line_marker,
         'conjure__comma__right_brace',              conjure__comma__right_brace,
         'conjure_comma__right_parenthesis',         conjure_comma__right_parenthesis,
-        'conjure__comma__right_square_bracket',     conjure__comma__right_square_bracket,
+        'conjure_comma__right_square_bracket',      conjure_comma__right_square_bracket,
         'conjure_dot_name',                         conjure_dot_name,
         'conjure_dot_name_pair',                    conjure_dot_name_pair,
         'conjure_empty_list',                       conjure_empty_list,
