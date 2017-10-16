@@ -20,18 +20,19 @@ def gem():
         'PRIORITY_NOT',                     14,     #   not
         'PRIORITY_BOOLEAN_AND',             15,     #   'and'
         'PRIORITY_BOOLEAN_OR',              16,     #   'or'
-        'PRIORITY_TERNARY',                 17,     #   'if'
-        'PRIORITY_TERNARY_LIST',            18,     #   Comma expression of PRIORITY_TERNARY
-        'PRIORITY_SUBSCRIPT',               19,     #   Subscript of index expression
-        'PRIORITY_SUBSCRIPT_LIST',          20,     #   Comma expresion of Subscripts
-        'PRIORITY_MAP_ELEMENT',             21,     #   ':'
-        'PRIORITY_MAP_LIST',                22,     #   Comma expression of ':'
-        'PRIORITY_YIELD',                   23,     #   'yield'
-        'PRIORITY_COMPREHENSION',           24,     #   'for' inside '()'
-        'PRIORITY_ASSIGN',                  25,     #   '=',
-        'PRIORITY_AS',                      26,     #   'as'
-        'PRIORITY_AS_LIST',                 27,     #   Comma expression of 'as'
-        'PRIORITY_STATEMENT',               28,     #   statement
+        'PRIORITY_LAMBDA',                  17,     #   'lambda'
+        'PRIORITY_TERNARY',                 18,     #   'if'
+        'PRIORITY_TERNARY_LIST',            19,     #   Comma expression of PRIORITY_TERNARY
+        'PRIORITY_SUBSCRIPT',               20,     #   Subscript of index expression
+        'PRIORITY_SUBSCRIPT_LIST',          21,     #   Comma expresion of Subscripts
+        'PRIORITY_MAP_ELEMENT',             22,     #   ':'
+        'PRIORITY_MAP_LIST',                23,     #   Comma expression of ':'
+        'PRIORITY_YIELD',                   24,     #   'yield'
+        'PRIORITY_COMPREHENSION',           25,     #   'for' inside '()'
+        'PRIORITY_ASSIGN',                  26,     #   '=',
+        'PRIORITY_AS',                      27,     #   'as'
+        'PRIORITY_AS_LIST',                 28,     #   Comma expression of 'as'
+        'PRIORITY_STATEMENT',               29,     #   statement
 
         #
         #   PRIORITY_NORMAL is an alias for PRIORITY_LOGICAL_OR

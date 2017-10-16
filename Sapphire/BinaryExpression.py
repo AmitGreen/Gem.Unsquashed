@@ -409,7 +409,14 @@ def gem():
         )
 
 
-    conjure_comprehension_if   = produce_conjure_binary_expression('comprehension-if',  ComprehensionIfExpression)
+    [
+        conjure_comprehension_if, conjure_comprehension_if__with_frill,
+    ] = produce_conjure_binary_expression(
+            'comprehension-if',
+            ComprehensionIfExpression,
+
+            produce_conjure_with_frill = 1,
+        )
 
 
     [
@@ -686,6 +693,13 @@ def gem():
                                            PRIORITY_COMPARE,
                                            PRIORITY_NORMAL,
                                            conjure_compare_not_equal__with_frill,
+                                       )
+
+    ComprehensionIfExpression.mutate = produce_mutate__frill__ab_with_priority(
+                                           'comprehension_if_expression',
+                                           PRIORITY_TERNARY,
+                                           PRIORITY_LAMBDA,
+                                           conjure_comprehension_if__with_frill,
                                        )
 
     KeywordArgument.mutate = produce_mutate__frill__ab_with_priority(

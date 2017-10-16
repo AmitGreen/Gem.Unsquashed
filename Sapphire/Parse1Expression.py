@@ -1686,7 +1686,12 @@ def gem():
 
 
     #
-    #   17. Ternary-Expression (Python 2.7.14rc1 grammer calls this 'test')
+    #   17. Lambda-Expression (Python 2.7.14rc1 grammer calls this 'lambdef')
+    #
+
+
+    #
+    #   18. Ternary-Expression (Python 2.7.14rc1 grammer calls this 'test')
     #
     #           ternary-expression
     #               : boolean-or-expression
@@ -1894,7 +1899,7 @@ def gem():
 
 
     #
-    #   18. Ternary-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist')
+    #   19. Ternary-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist')
     #
     @share
     def parse1_ternary_expression_list__X_any_expresion(left, operator):
@@ -2088,24 +2093,24 @@ def gem():
 
 
     #
-    #   19. Subscript-Expression
+    #   20. Subscript-Expression
     #
 
     #
-    #   20. Subscript-Expression-List
+    #   21. Subscript-Expression-List
     #
 
     #
-    #   21. Map-Element
     #   22. Map-Element
+    #   23. Map-Element
     #
 
     #
-    #   23. Yield-Expression
+    #   24. Yield-Expression
     #
 
     #
-    #   24. Comprehension-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist_comp')
+    #   25. Comprehension-Expression-List (Python 2.7.14rc1 grammer calls this 'testlist_comp')
     #
     def parse1_comprehension_expression__left_operator(left, operator):
         assert operator.is_keyword_for
