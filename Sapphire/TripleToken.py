@@ -619,8 +619,14 @@ def gem():
     #
     #   .mutate
     #
+    Indented_Pass_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+                                               'indented_pass__line_marker_1',
+                                               conjure_indented__pass__line_marker,
+                                               PASS,
+                                           )
+
     Indented_Return_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
-                                                 'indented_return_lineMarker_1',
+                                                 'indented_return__line_marker_1',
                                                  conjure_indented__return__line_marker,
                                                  RETURN,
                                              )

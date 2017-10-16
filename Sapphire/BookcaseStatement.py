@@ -78,7 +78,7 @@ def gem():
 
     [
         conjure_expression_statement, conjure_expression_statement__with_frill,
-    ] = produce_conjure_bookcase_expression('expression-statement', ExpressionStatement) 
+    ] = produce_conjure_bookcase_expression('expression-statement', ExpressionStatement)
 
 
     share(

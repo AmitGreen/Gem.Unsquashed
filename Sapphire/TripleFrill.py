@@ -14,8 +14,7 @@ def gem():
         v         = TripleTwig.b
         w         = TripleTwig.c
 
-        display_name   = '#xy-frill'
-        frill_estimate = 3
+        display_name = '#vw-frill'
 
 
         def transform(t, vary):

@@ -201,21 +201,6 @@ def gem():
         frill        = COMMA__W
 
 
-        def mutate(t, vary, priority):
-            frill = t.frill
-            a     = t.a
-            b     = t.b
-
-            frill__2 = frill.transform(vary)
-            a__2     = a    .mutate(vary, priority)
-            b__2     = b    .mutate(vary, priority)
-
-            if (frill is frill__2) and (a is a__2) and (b is b__2):
-                return t
-
-            return conjure_comma_expression_1(a__2, frill__2, b__2)
-
-
     class ComprehensionIfExpression(BinaryExpression):
         __slots__    = (())
         display_name = 'comprehension-if'
@@ -414,7 +399,16 @@ def gem():
             produce_conjure_with_frill = 1,
         )
 
-    conjure_comma_expression_1 = produce_conjure_binary_expression('comma-1',           CommaExpression_1)
+    [
+        conjure_comma_expression_1, conjure_comma_expression_1__with_frill,
+    ] = produce_conjure_binary_expression(
+            'comma-1',
+            CommaExpression_1,
+
+            produce_conjure_with_frill = 1,
+        )
+
+
     conjure_comprehension_if   = produce_conjure_binary_expression('comprehension-if',  ComprehensionIfExpression)
 
 
@@ -592,6 +586,14 @@ def gem():
                             PRIORITY_NORMAL,
                             conjure_as_fragment__with_frill,
                         )
+
+
+    CommaExpression_1.mutate = produce_mutate__frill__ab_with_priority(
+                                   'comma_expression_1',
+                                   PRIORITY_TERNARY,
+                                   PRIORITY_TERNARY,
+                                   conjure_comma_expression_1__with_frill,
+                               )
 
     CompareContainsExpression.mutate = produce_mutate__frill__ab_with_priority(
                                            'compare_expression',

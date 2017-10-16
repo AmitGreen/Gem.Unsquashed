@@ -349,6 +349,9 @@ def gem():
         is_postfix_operator                   = true
 
 
+        #
+        #   FIX: REMOVE THIs
+        #
         def mutate(t, vary, priority):
             if vary.remove_comments:
                 return empty__arguments_0
@@ -442,6 +445,9 @@ def gem():
         is__optional_comma__right_parenthesis = true
 
 
+        #
+        #   FIX: REMOVE THIS
+        #
         def mutate(t, vary, priority):
             assert priority == PRIORITY_TUPLE
 
@@ -588,6 +594,9 @@ def gem():
         is_atom                        = true
 
 
+        #
+        #   FIX: REMOVE THIS
+        #
         def mutate(t, vary, priority):
             b    = t.b
             b__2 = b.mutate(vary, priority)

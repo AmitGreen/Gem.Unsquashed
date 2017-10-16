@@ -237,7 +237,7 @@ def gem():
 
     [
         conjure_arguments_1, conjure_arguments_1_with_frill,
-    ] = produce_conjure_bookcase_expression('arguments-1', Arguments_1) 
+    ] = produce_conjure_bookcase_expression('arguments-1', Arguments_1)
 
     [
         conjure_head_index, conjure_head_index__with_frill,

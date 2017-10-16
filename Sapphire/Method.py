@@ -266,55 +266,16 @@ def gem():
     @privileged
     def produce_mutate__frill__many(name, first_priority, middle_priority, last_priority, conjure_with_frill):
         def mutate(t, vary, priority):
-            frill    = t.frill
-            many     = t.many
-            iterator = iterate(many)
+            frill = t.frill
+            many  = t.many
 
-            frill__2 = frill.transform(vary)
+            frill__2 = frill .transform(vary)
+            many__2  = t.many.morph    (vary, first_priority, middle_priority, last_priority)
 
-            element_priority = first_priority
-            i                = 0
-            maximum_i        = length(many) - 1
+            if (frill is frill__2) and (many is many__2):
+                return t
 
-            for v in iterator:
-                v__2 = v.mutate(vary, element_priority)
-
-                if v is not v__2:
-                    break
-
-                i += 1
-
-                if i is maximum_i:
-                    element_priority = last_priority
-                elif i is 1:
-                    element_priority = middle_priority
-            else:
-                if frill is frill__2:
-                    return t
-
-                return conjure_with_frill(frill__2, many)
-
-            many__2 = (
-                          []          if i is 0 else
-                          [many[0]]   if i is 1 else
-                          List(many[:i])
-                      )
-
-            append = many__2.append
-
-            append(v__2)
-
-            for v in iterator:
-                if i is maximum_i:
-                    element_priority = last_priority
-                elif i is 1:
-                    element_priority = middle_priority
-
-                append(v.mutate(vary, element_priority))
-
-                i += 1
-
-            return conjure_with_frill(frill__2, conjure_tuple_of_many_expression(many__2))
+            return conjure_with_frill(frill__2, many__2)
 
 
         if __debug__:

@@ -292,7 +292,7 @@ def gem():
         )
 
     [
-        conjure_map_expression_many, conjure_map_expression_many__with_frill, 
+        conjure_map_expression_many, conjure_map_expression_many__with_frill,
     ] = produce_conjure_bookcase_many_expression(
             'map-expression-*',
             MapExpression_Many,

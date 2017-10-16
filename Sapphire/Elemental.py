@@ -1069,6 +1069,7 @@ def gem():
     LSB                 = conjure_left_square_bracket ('[')
     MINUS_SIGN          = conjure_action_word         ('-', '-')
     NOT__W              = conjure_keyword_not         ('not ')
+    PASS                = conjure_keyword_pass        ('pass')
     PLUS_SIGN           = conjure_action_word         ('+', '+')
     RAISE__W            = conjure_keyword_raise       ('raise ')
     RETURN              = conjure_keyword_return      ('return')
@@ -1265,7 +1266,6 @@ def gem():
         'conjure_try_colon',                                conjure_try_colon,
         'find_atom_type',                                   find_atom_type,
         'is_close_operator',                                is_close_operator,
-        'is_colon_7',                                       is_colon_7,
         'AT_SIGN',                                          AT_SIGN,
         'COLON',                                            COLON,
         'COMMA',                                            COMMA,
@@ -1276,12 +1276,14 @@ def gem():
         'FUNCTION__W',                                      FUNCTION__W,
         'IF__W',                                            IF__W,
         'IN__W',                                            IN__W,
+        'is_colon_7',                                       is_colon_7,
         'is_right_parenthesis_7',                           is_right_parenthesis_7,
         'LEFT_BRACE',                                       LEFT_BRACE,
         'lookup_keyword_conjure_function',                  lookup_keyword_conjure_function,
         'LP',                                               LP,
         'LSB',                                              LSB,
         'NOT__W',                                           NOT__W,
+        'PASS',                                             PASS,
         'RAISE__W',                                         RAISE__W,
         'RETURN',                                           RETURN,
         'RETURN__W',                                        RETURN__W,

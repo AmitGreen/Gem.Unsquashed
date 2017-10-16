@@ -17,6 +17,7 @@ def gem():
         ))
 
 
+        comment        = 0
         is_indentation = true
 
 

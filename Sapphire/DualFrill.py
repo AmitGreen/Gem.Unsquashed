@@ -8,6 +8,30 @@ def gem():
     store_dual_frill  = dual_frill_cache.__setitem__
 
 
+    class Commented_V_Frill(DualTwig):
+        __slots__ = (())
+        comment   = DualTwig.a
+        v         = DualTwig.b
+
+        display_name = '#v-frill'
+
+
+        def transform(t, vary):
+            comment = t.comment
+            v       = t.v
+
+            comment__2 = comment.transform(vary)
+            v__2       = v      .transform(vary)
+
+            if (comment is comment__2) and (v is v__2):
+                return t
+
+            if comment__2 is 0:
+                return v__2
+
+            return conjure_commented_v_frill(comment__2, v__2)
+
+
     @share
     class VW_Frill(Object):
         __slots__ = ((
@@ -58,6 +82,14 @@ def gem():
     VW_Frill.k2 = VW_Frill.b
 
 
+    conjure_commented_v_frill = produce_conjure_dual(
+                                    '#v-frill',
+                                    Commented_V_Frill,
+                                    dual_frill_cache,
+                                    lookup_dual_frill,
+                                    store_dual_frill
+                                )
+
     conjure_vw_frill = produce_conjure_dual(
                            'vw-frill',
                            VW_Frill,
@@ -67,6 +99,9 @@ def gem():
                        )
 
 
+    #
+    #   .transform
+    #
     VW_Frill.transform = produce_transform__ab('vw_frill', conjure_vw_frill)
 
 
@@ -74,5 +109,6 @@ def gem():
 
 
     share(
-        'conjure_vw_frill',     conjure_vw_frill,
+        'conjure_commented_v_frill',    conjure_commented_v_frill,
+        'conjure_vw_frill',             conjure_vw_frill,
     )

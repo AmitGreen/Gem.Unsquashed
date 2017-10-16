@@ -6,12 +6,64 @@ def gem():
     require_gem('Sapphire.BookcaseManyExpression')
 
 
+    dump_token = Shared.dump_token      #   due to privileged
+
+
     def write__comment_many(t, w):
         begin = t.frill.begin
 
-        begin.v.write(w)
-        w(begin.w.s)
+        begin.comment.write(w)
+        w(begin.v.s)
         write__X__many_end(t, w)
+
+
+
+    @privileged
+    def produce_transform_comment_statement_many(
+                name, first_priority, middle_priority, last_priority, conjure_with_frill,
+                conjure_uncommented__with_frill,
+    ):
+        def transform(t, vary):
+            frill    = t.frill
+            many     = t.many
+
+            frill__2 = frill .transform(vary)
+            many__2  = t.many.morph    (vary, first_priority, middle_priority, last_priority)
+
+            if (frill is frill__2) and (many is many__2):
+                return t
+
+            return (
+                       conjure_uncommented__with_frill   if frill__2.begin.comment is 0 else
+                       conjure_with_frill
+                   )(frill__2, many__2)
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform_%s', name)
+
+        return transform
+
+
+    @privileged
+    def produce_transform_statement_many(name, first_priority, middle_priority, last_priority, conjure_with_frill):
+        def transform(t, vary):
+            frill    = t.frill
+            many     = t.many
+
+            frill__2 = frill .transform(vary)
+            many__2  = t.many.morph    (vary, first_priority, middle_priority, last_priority)
+
+            if (frill is frill__2) and (many is many__2):
+                return t
+
+            return conjure_with_frill(frill__2, many__2)
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform_%s', name)
+
+        return transform
 
 
     class AssignStatement_Many(BookcaseManyExpression):
@@ -27,7 +79,9 @@ def gem():
         def add_comment(t, comment):
             frill = t.frill
 
-            return conjure_comment_assign_many(conjure_vw_frill(comment, frill.begin), t.many, frill.many, frill.end)
+            assert frill.begin.comment is 0
+
+            return conjure_comment_assign_many(conjure_commented_v_frill(comment, frill.begin), t.many, frill.many, frill.end)
 
 
         def display_token(t):
@@ -61,54 +115,6 @@ def gem():
             return t.frill.begin
 
 
-        def transform(t, vary):
-            frill    = t.frill
-            many     = t.many
-            iterator = iterate(many)
-
-            frill__2 = frill.transform(vary)
-
-            i            = 0
-            i_maximum_m1 = length(many) - 1
-            priority     = PRIORITY_TERNARY_LIST
-
-            for v in iterator:
-                v__2 = v.mutate(vary, priority)
-
-                if v is not v__2:
-                    break
-
-                i += 1
-
-                if i == i_maximum_m1:
-                    priority = PRIORITY_YIELD
-            else:
-                if frill is frill__2:
-                    return t
-
-                return conjure_assign_many__with_frill(frill__2, many)
-
-            many__2 = (
-                          []          if i is 0 else
-                          [many[0]]   if i is 1 else
-                          List(many[:i])
-                      )
-
-            append = many__2.append
-
-            append(v__2)
-
-            for v in iterator:
-                append(v.mutate(vary, priority))
-
-                i += 1
-
-                if i == i_maximum_m1:
-                    priority = PRIORITY_YIELD
-
-            return conjure_assign_many__with_frill(frill__2, conjure_tuple_of_many_expression(many__2))
-
-
     class Comment_AssignStatement_Many(BookcaseManyExpression):
         __slots__                  = (())
         display_name               = '#assign-*'
@@ -124,19 +130,19 @@ def gem():
             begin = frill.begin
 
             return arrange('<#assign-* +%d %s %s %s %s>',
-                           begin.w.total,
-                           begin.v   .display_token(),
-                           ' '.join(v.display_token()   for v in t.many),
-                           frill.many.display_token(),
-                           frill.end .display_token())
+                           begin.      v.total,
+                           begin.comment.display_token(),
+                           ' '.join(v   .display_token()   for v in t.many),
+                           frill.many   .display_token(),
+                           frill.end    .display_token())
 
 
         def dump_token(t, f, newline = true):
             frill = t.frill
             begin = frill.begin
 
-            with f.indent(arrange('<#assign-* +%d ', begin.w.total), '>'):
-                begin.v.dump_token(f)
+            with f.indent(arrange('<#assign-* +%d ', begin.v.total), '>'):
+                begin.comment.dump_token(f)
                 dump_token__X__many(t, f)
                 frill.end.dump_token(f)
 
@@ -146,7 +152,7 @@ def gem():
 
         @property
         def indentation(t):
-            return t.frill.begin.w
+            return t.frill.begin.v
 
 
         write = write__comment_many
@@ -170,29 +176,29 @@ def gem():
         def display_token(t):
             frill          = t.frill
             begin          = frill.begin
-            comment        = begin.v
-            indented_token = begin.w
+            comment        = begin.comment
+            indented_token = begin.v
 
             return arrange('<#delete-* +%d %s %s %s %s %s>',
                            indented_token.a.total,
                            indented_token.b.display_token(),
                            comment         .display_token(),
-                           ' '.join(v.display_token()   for v in t.many),
-                           frill.many.display_token(),
-                           frill.end .display_token())
+                           ' '.join(v      .display_token()   for v in t.many),
+                           frill.many      .display_token(),
+                           frill.end       .display_token())
 
 
         def dump_token(t, f, newline = true):
             frill          = t.frill
             begin          = frill.begin
-            comment        = begin.v
-            indented_token = begin.w
+            comment        = begin.comment
+            indented_token = begin.v
 
             with f.indent(arrange('<#delete-* +%d ', indented_token.a.total), '>'):
-                comment.dump_token(f)
+                comment         .dump_token(f)
                 indented_token.b.dump_token(f)
                 dump_token__X__many(t, f)
-                frill.end.dump_token(f)
+                frill       .end.dump_token(f)
 
 
         find_require_gem = find_require_gem__0
@@ -249,44 +255,6 @@ def gem():
         find_require_gem = find_require_gem__0
 
 
-        def transform(t, vary):
-            frill    = t.frill
-            many     = t.many
-            iterator = iterate(many)
-
-            frill__2 = frill.transform(vary)
-
-            i = 0
-
-            for v in iterator:
-                v__2 = v.mutate(vary, PRIORITY_NORMAL)
-
-                if v is not v__2:
-                    break
-
-                i += 1
-            else:
-                if frill is frill__2:
-                    return t
-
-                return conjure_delete_many__with_frill(frill__2, many)
-
-            many__2 = (
-                          []          if i is 0 else
-                          [many[0]]   if i is 1 else
-                          List(many[:i])
-                      )
-
-            append = many__2.append
-
-            append(v__2)
-
-            for v in iterator:
-                append(v.mutate(vary, PRIORITY_NORMAL))
-
-            return conjure_delete_many__with_frill(frill__2, conjure_tuple_of_many_expression(many__2))
-
-
     [
         conjure_assign_many, conjure_assign_many__with_frill,
     ] = produce_conjure_bookcase_many_expression(
@@ -297,12 +265,22 @@ def gem():
         )
 
     [
-        conjure_comment_assign_many, Comment_AssignStatement_Many.conjure_dual,
-    ] = produce_conjure_bookcase_many_expression('#assign-*', Comment_AssignStatement_Many)
+        conjure_comment_assign_many, conjure_comment_assign_many__with_frill,
+    ] = produce_conjure_bookcase_many_expression(
+            '#assign-*',
+            Comment_AssignStatement_Many,
+
+            produce_conjure_with_frill = 1,
+        )
 
     [
-        conjure_comment_delete_many, Comment_DeleteStatement_Many.conjure_dual,
-    ] = produce_conjure_bookcase_many_expression('#delete-*', Comment_DeleteStatement_Many)
+        conjure_comment_delete_many, conjure_comment_delete_many__with_frill,
+    ] = produce_conjure_bookcase_many_expression(
+            '#delete-*',
+            Comment_DeleteStatement_Many,
+
+            produce_conjure_with_frill = 1,
+        )
 
     [
         conjure_delete_many, conjure_delete_many__with_frill,
@@ -312,6 +290,35 @@ def gem():
 
             produce_conjure_with_frill = 1,
         )
+
+
+    #
+    #   .transform
+    #
+    AssignStatement_Many.transform = produce_transform_statement_many(
+                                         'assign_statement_many',
+                                         PRIORITY_ASSIGN,
+                                         PRIORITY_ASSIGN,
+                                         PRIORITY_YIELD,
+                                         conjure_assign_many__with_frill,
+                                     )
+
+    Comment_AssignStatement_Many.transform = produce_transform_comment_statement_many(
+                                                 'comment_assign_statement_many',
+                                                 PRIORITY_ASSIGN,
+                                                 PRIORITY_ASSIGN,
+                                                 PRIORITY_YIELD,
+                                                 conjure_comment_assign_many__with_frill,
+                                                 conjure_assign_many__with_frill,
+                                             )
+
+    DeleteStatement_Many.transform = produce_transform_statement_many(
+                                         'delete_statement_many',
+                                         PRIORITY_NORMAL,
+                                         PRIORITY_NORMAL,
+                                         PRIORITY_NORMAL,
+                                         conjure_delete_many__with_frill,
+                                     )
 
 
     share(
