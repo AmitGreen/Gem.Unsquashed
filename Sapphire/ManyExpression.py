@@ -279,7 +279,15 @@ def gem():
 
     conjure_logical_or_expression_many = produce_conjure_many_expression('logical-or-*', LogicalOrExpression_Many)
     conjure_multiply_expression_many   = produce_conjure_many_expression('multiply-*',   MultiplyExpression_Many)
-    conjure_or_expression_many         = produce_conjure_many_expression('or-*',         OrExpression_Many)
+
+    [
+        conjure_or_expression_many, conjure_or_expression_many__with_frill,
+    ] = produce_conjure_many_expression(
+            'or-*',
+            OrExpression_Many,
+
+            produce_conjure_with_frill = 1,
+        )
 
 
     #
@@ -287,7 +295,7 @@ def gem():
     #
     AndExpression_Many.mutate = produce_mutate__frill__many(
                                     'and_expression_many',
-                                    PRIORITY_NOT,
+                                    PRIORITY_BOOLEAN_AND,
                                     PRIORITY_NOT,
                                     PRIORITY_NOT,
                                     conjure_and_expression_many__with_frill,
@@ -295,7 +303,7 @@ def gem():
 
     ArithmeticExpression_Many.mutate = produce_mutate__frill__many(
                                            'arithmetic_expression_many',
-                                           PRIORITY_MULTIPLY,
+                                           PRIORITY_ARITHMETIC,
                                            PRIORITY_MULTIPLY,
                                            PRIORITY_MULTIPLY,
                                            conjure_arithmetic_expression_many__with_frill,
@@ -311,11 +319,19 @@ def gem():
 
     CompareExpression_Many.mutate = produce_mutate__frill__many(
                                         'compare_expression_many',
-                                        PRIORITY_NORMAL,
+                                        PRIORITY_COMPARE,
                                         PRIORITY_NORMAL,
                                         PRIORITY_NORMAL,
                                         conjure_compare_expression_many__with_frill,
                                     )
+
+    OrExpression_Many.mutate = produce_mutate__frill__many(
+                                   'or_expression_many',
+                                   PRIORITY_BOOLEAN_OR,
+                                   PRIORITY_BOOLEAN_AND,
+                                   PRIORITY_BOOLEAN_AND,
+                                   conjure_or_expression_many__with_frill,
+                               )
 
     share(
         'conjure_and_expression_many',          conjure_and_expression_many,
