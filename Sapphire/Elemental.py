@@ -225,25 +225,6 @@ def gem():
         keyword                           = 'for'
 
 
-        #
-        #   NOTE:
-        #       1.  .mutate    is called inside comprehension expressions
-        #       2.  .transform is called inside for           statements
-        #
-        #       When removing comments:
-        #
-        #           .mutate    converts to ' for ' (leading space)
-        #           .transform converts to 'for '  (no leading space)
-        #
-        def mutate(t, vary, priority):
-            assert priority == PRIORITY_AS_LIST
-
-            if vary.remove_comments:
-                return W__FOR__W
-
-            return t
-
-
     class KeywordFrom(KeywordAndOperatorBase):
         __slots__    = (())
         display_name = 'from'
@@ -308,25 +289,6 @@ def gem():
         __slots__    = (())
         display_name = 'import'
         keyword      = 'import'
-
-
-        #
-        #   NOTE:
-        #       1.  .mutate    is called for 'from ... import ...' statements
-        #       2.  .transform is called for 'import ...'          statements
-        #
-        #       When removing comments:
-        #
-        #           .mutate    converts to ' import ' (leading space)
-        #           .transform converts to 'import '  (no leading space)
-        #
-        def mutate(t, vary, priority):
-            assert priority == PRIORITY_AS_LIST
-
-            if vary.remove_comments:
-                return W__IMPORT__W
-
-            return t
 
 
     class KeywordNot(KeywordAndOperatorBase):
@@ -1135,7 +1097,10 @@ def gem():
     #       of a unary-expression.
     #
     KeywordElse  .mutate = produce_mutate__uncommented('keyword_else',   W__ELSE__W)
+    KeywordFor   .mutate = produce_mutate__uncommented('keyword_for',    W__FOR__W)
     KeywordIf    .mutate = produce_mutate__uncommented('keyword_if',     W__IF__W)
+    KeywordIn    .mutate = produce_mutate__uncommented('keyword_in',     W__IN__W)
+    KeywordImport.mutate = produce_mutate__uncommented('keyword_import', W__IMPORT__W)
     KeywordNot   .mutate = produce_mutate__uncommented('keyword_not',    NOT__W)
     OperatorColon.mutate = produce_mutate__uncommented('operator_colon', W__COLON__W)
 #   OperatorLeftParenthesis.mutate = produce_mutate__uncommented('left_parenthesis', RP)

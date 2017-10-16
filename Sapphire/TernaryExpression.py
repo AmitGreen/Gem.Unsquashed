@@ -206,6 +206,15 @@ def gem():
     #
     #   .mutate
     #
+    ComprehensionForExpression.mutate = produce_mutate_triple_expression(
+                                            'comprehension_for_expression',
+                                            PRIORITY_ASSIGN,
+                                            PRIORITY_TERNARY,
+                                            PRIORITY_ASSIGN,
+                                            PRIORITY_TERNARY_LIST,
+                                            conjure_comprehension_for__with_frill,
+                                       )
+
     TernaryExpression.mutate = produce_mutate_triple_expression(
                                    'ternary_expression',
                                    PRIORITY_TERNARY,
