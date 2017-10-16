@@ -40,7 +40,7 @@ def gem():
     ):
         total = remove_comments + remove_indentation
 
-        if total is 0:
-            return 0
+        #if total is 0:
+        #    return 0
 
         return SapphireTransform(remove_comments, remove_indentation)

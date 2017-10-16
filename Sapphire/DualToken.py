@@ -548,7 +548,7 @@ def gem():
                 return b__2
 
             a    = t.a
-            a__2 = a.mutate(vary, priority)
+            a__2 = a.transform(vary)
             
             if (a is a__2) and (b is b__2):
                 return t

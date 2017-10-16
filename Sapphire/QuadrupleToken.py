@@ -110,7 +110,7 @@ def gem():
                 return conjure(a__2, b__2, c__2, d__2)
 
             if a is a__2:
-                return
+                return t
 
             return conjure(a__2, b, c, d)
 

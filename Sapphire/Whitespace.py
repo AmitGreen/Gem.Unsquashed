@@ -77,6 +77,9 @@ def gem():
             t.s = s
 
 
+        transform = transform__self
+
+
     def conjure_empty_line(s):
         r = lookup_empty_line(s)
 

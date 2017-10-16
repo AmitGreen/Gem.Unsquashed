@@ -348,7 +348,7 @@ def gem():
         assert gem.b.a is gem__function_header
         assert gem.b.b.is_statement_suite
 
-        if (vary is not none) and 7:
+        if (vary is not 0) and 7:
             gem = gem.transform(vary)
 
         return TwigCode(path, '[2]', copyright, gem)
