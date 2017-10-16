@@ -3,9 +3,11 @@
 #
 @gem('Sapphire.Method')
 def gem():
+    require_gem('Sapphire.DumpToken')
     require_gem('Sapphire.TupleOfExpression')
 
-    conjure_tuple_of_many_expression = Shared.conjure_tuple_of_many_expression
+    conjure_tuple_of_many_expression = Shared.conjure_tuple_of_many_expression      #   Due to privileged
+    dump_token                       = Shared.dump_token                            #   Due to privileged
 
 
     #
@@ -36,6 +38,19 @@ def gem():
                        t.k1.display_token(),
                        t.k2.display_token(),
                        t.k3.display_token())
+
+
+    #
+    #   dump_token
+    #
+    @share
+    def dump_token__12(t, f, newline = true):
+        f.partial('<%s ', t.display_name)
+
+        t    .k1.dump_token(f)
+        r = t.k2.dump_token(f, false)
+
+        return f.token_result(r, newline)
 
 
     #
@@ -249,7 +264,7 @@ def gem():
 
     @share
     @privileged
-    def produce_mutate__frill__many(name, many_priority, conjure_with_frill):
+    def produce_mutate__frill__many(name, first_priority, middle_priority, last_priority, conjure_with_frill):
         def mutate(t, vary, priority):
             frill    = t.frill
             many     = t.many
@@ -257,15 +272,22 @@ def gem():
 
             frill__2 = frill.transform(vary)
 
-            i = 0
+            element_priority = first_priority
+            i                = 0
+            maximum_i        = length(many) - 1
 
             for v in iterator:
-                v__2 = v.mutate(vary, many_priority)
+                v__2 = v.mutate(vary, element_priority)
 
                 if v is not v__2:
                     break
 
                 i += 1
+
+                if i is maximum_i:
+                    element_priority = last_priority
+                elif i is 1:
+                    element_priority = middle_priority
             else:
                 if frill is frill__2:
                     return t
@@ -283,7 +305,14 @@ def gem():
             append(v__2)
 
             for v in iterator:
-                append(v.mutate(vary, many_priority))
+                if i is maximum_i:
+                    element_priority = last_priority
+                elif i is 1:
+                    element_priority = middle_priority
+
+                append(v.mutate(vary, element_priority))
+
+                i += 1
 
             return conjure_with_frill(frill__2, conjure_tuple_of_many_expression(many__2))
 
@@ -495,7 +524,7 @@ def gem():
 
     @share
     @privileged
-    def produce_transform__frill__many(name, conjure_with_frill, many_priority):
+    def produce_transform__frill__many(name, many_priority, conjure_with_frill):
         def transform(t, vary):
             frill    = t.frill
             many     = t.many

@@ -23,6 +23,7 @@ def gem():
         __repr__       = portray__ab
         count_newlines = count_newlines__ab
         display_token  = display_token__ab
+        dump_token     = dump_token__12
 
 
         #
@@ -53,7 +54,7 @@ def gem():
     VW_Frill.v = VW_Frill.a
     VW_Frill.w = VW_Frill.b
 
-    #VW_Frill.k1 = VW_Frill.a
+    VW_Frill.k1 = VW_Frill.a
     VW_Frill.k2 = VW_Frill.b
 
 

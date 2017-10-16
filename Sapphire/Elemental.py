@@ -650,13 +650,6 @@ def gem():
         keyword                               = '('         #   )
 
 
-        def mutate(t, vary, priority):
-            my_line('priority: %d', priority)
-
-            assert 0
-
-
-
     @export
     class OperatorLeftSquareBracket(KeywordAndOperatorBase):
         __slots__              = (())

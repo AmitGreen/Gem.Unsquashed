@@ -243,14 +243,22 @@ def gem():
 
     conjure_and_expression_many        = produce_conjure_many_expression('and-*',        AndExpression_Many)
     conjure_arithmetic_expression_many = produce_conjure_many_expression('arithmetic-*', ArithmeticExpression_Many)
-    conjure_comma_expression_many      = produce_conjure_many_expression('comma-*',      CommaExpression_Many)
+
+    [
+        conjure_comma_expression_many, conjure_comma_expression_many__with_frill,
+    ] = produce_conjure_many_expression(
+            'comma-*',
+            CommaExpression_Many,
+
+            produce_conjure_with_frill = 1,
+        )
 
     [
         conjure_compare_expression_many, conjure_compare_expression_many__with_frill,
     ] = produce_conjure_many_expression(
             'compare-*',
             CompareExpression_Many,
-            
+
             produce_conjure_with_frill = 1,
         )
 
@@ -262,9 +270,19 @@ def gem():
     #
     #   .mutate
     #
+    CommaExpression_Many.mutate = produce_mutate__frill__many(
+                                      'comma_expression_many',
+                                      PRIORITY_TERNARY,
+                                      PRIORITY_TERNARY,
+                                      PRIORITY_TERNARY,
+                                      conjure_comma_expression_many__with_frill,
+                                  )
+
     CompareExpression_Many.mutate = produce_mutate__frill__many(
                                         'compare_expression_many',
-                                        CompareExpression_Many,
+                                        PRIORITY_COMPARE,
+                                        PRIORITY_COMPARE,
+                                        PRIORITY_NORMAL,
                                         conjure_compare_expression_many__with_frill,
                                     )
 

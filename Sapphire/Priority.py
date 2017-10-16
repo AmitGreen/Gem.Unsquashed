@@ -27,7 +27,7 @@ def gem():
         'PRIORITY_MAP_ELEMENT',             21,     #   ':'
         'PRIORITY_MAP_LIST',                22,     #   Comma expression of ':'
         'PRIORITY_YIELD',                   23,     #   'yield'
-        'PRIORITY_COMPREHENSION',           24,     #   'for'
+        'PRIORITY_COMPREHENSION',           24,     #   'for' inside '()'
         'PRIORITY_ASSIGN',                  25,     #   '=',
         'PRIORITY_AS',                      26,     #   'as'
         'PRIORITY_AS_LIST',                 27,     #   Comma expression of 'as'

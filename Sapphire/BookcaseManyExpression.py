@@ -292,8 +292,13 @@ def gem():
         )
 
     [
-        conjure_map_expression_many, MapExpression_Many.conjure_dual
-    ] = produce_conjure_bookcase_many_expression('map-expression-*', MapExpression_Many)
+        conjure_map_expression_many, conjure_map_expression_many__with_frill, 
+    ] = produce_conjure_bookcase_many_expression(
+            'map-expression-*',
+            MapExpression_Many,
+
+            produce_conjure_with_frill = 1,
+        )
 
     [
         conjure_parameters_many, conjure_parameters_many__with_frill,
@@ -312,14 +317,26 @@ def gem():
     Arguments_Many.mutate = produce_mutate__frill__many(
                                 'arguments_many',
                                 PRIORITY_ASSIGN,
+                                PRIORITY_ASSIGN,
+                                PRIORITY_ASSIGN,
                                 conjure_arguments_many__with_frill,
                             )
 
     ListExpression_Many.mutate = produce_mutate__frill__many(
                                      'list_expression_many',
                                      PRIORITY_COMPREHENSION,
+                                     PRIORITY_TERNARY,
+                                     PRIORITY_TERNARY,
                                      conjure_list_expression_many__with_frill,
                                  )
+
+    MapExpression_Many.mutate = produce_mutate__frill__many(
+                                    'list_expression_many',
+                                    PRIORITY_COMPREHENSION,
+                                    PRIORITY_MAP_ELEMENT,
+                                    PRIORITY_MAP_ELEMENT,
+                                    conjure_map_expression_many__with_frill,
+                                )
 
     Parameters_Many.transform = produce_transform__frill__many(
                                     'parameters_many',

@@ -109,6 +109,9 @@ def gem():
 
     class RequireMany(Object):
         __slots__ = ((
+            'vary',                     #   SapphireTransform
+            'vary_total',               #   Integer
+
             'latest_many',              #   List of String
             '_append_latest',           #   Method
 
@@ -121,7 +124,10 @@ def gem():
         ))
 
 
-        def __init__(t):
+        def __init__(t, vary, vary_total):
+            t.vary       = vary
+            t.vary_total = vary_total
+
             t.latest_many    = many        = []
             t._append_latest = many.append
 
@@ -205,7 +211,15 @@ def gem():
 
             path = path_join('..', arrange('%s.py', module.replace('.', '/')))
 
-            gem = extract_gem(module, path)
+            vary_total = t.vary_total
+
+            if vary_total is not 0:
+                vary         = t.vary
+                t.vary_total = vary_total -1
+            else:
+                vary = 0
+
+            gem = extract_gem(module, path, vary)
 
             t._append_twig(gem)
 
@@ -283,7 +297,7 @@ def gem():
         return conjure_copyright(Integer(m.group('year')), m.group('author'))
 
 
-    def extract_gem(module, path):
+    def extract_gem(module, path, vary):
         tree = parse_python(path)
 
         assert length(tree) is 1
@@ -296,6 +310,10 @@ def gem():
         assert gem.a is conjure_gem_decorator_header(module)
         assert gem.b.is_function_definition
         assert gem.b.a is gem__function_header
+
+        if vary is not 0:
+            line('Varying %s', path)
+            gem = gem.transform(vary)
 
         return TwigCode(path, '[0]', copyright, gem)
 
@@ -429,7 +447,7 @@ def gem():
         sardnoyx_boot_code          = extract_sardnoyx_boot(vary)
         gem_boot_code               = extract_gem_boot(vary)
 
-        require_many = RequireMany()
+        require_many = RequireMany(vary, 3)
 
         require_many.process_module('Gem.Core')
         main_code.twig.find_require_gem(require_many)
@@ -438,14 +456,14 @@ def gem():
         output_path = arrange('../bin/.pyxie/%s.py', module_name)
 
         with create_DelayedFileOutput(output_path) as f:
-            boot_decorator.write(f)
+            boot_decorator    .write(f)
             sardnoyx_boot_code.write(f)
 
             for v in require_many.twig_many:
                 v.write(f)
 
             gem_boot_code.write(f)
-            main_code.write(f)
+            main_code    .write(f)
 
             close_copyright(f)
 

@@ -30,4 +30,7 @@ def gem():
             f.line('===  %s  ===', name)
             token.dump_token(f)
 
+            if f.position:
+                f.line()
+
         partial(f.result)

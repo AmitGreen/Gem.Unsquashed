@@ -83,8 +83,8 @@ def gem():
                 if 7 is 7:
                     return test_development(
                                module_name        = 'hma',
-                               #remove_comments    = true,
-                               #remove_indentation = true,
+                               remove_comments    = true,
+                               remove_indentation = true,
                            )
 
                 return test_parse1()

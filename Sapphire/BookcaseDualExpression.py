@@ -210,6 +210,26 @@ def gem():
         is_atom                        = true
 
 
+        def mutate(t, vary, priority):
+            if priority is PRIORITY_COMPREHENSION:
+                element_priority = PRIORITY_TERNARY
+            else:
+                raise_unknown_line()
+
+            frill = t.frill
+            a     = t.a
+            b     = t.b
+
+            frill__2 = frill.transform(vary)
+            a__2     = a    .mutate(vary, priority)
+            b__2     = b    .mutate(vary, priority)
+
+            if (frill is frill__2) and (a is a__2) and (b is b__2):
+                return t
+
+            return conjure_tuple_expression_2__with_frill(frill__2, a__2, b__2)
+
+
     [
         conjure_arguments_2, Arguments_2.conjure_plain, conjure_arguments_2__with_frill,
     ] = produce_conjure_bookcase_dual_expression(
@@ -222,7 +242,15 @@ def gem():
 
     conjure_list_expression_2  = produce_conjure_bookcase_dual_expression('list-expression-2',  ListExpression_2)
     conjure_range_index        = produce_conjure_bookcase_dual_expression('range-index',        RangeIndex)
-    conjure_tuple_expression_2 = produce_conjure_bookcase_dual_expression('tuple-expression-2', TupleExpression_2)
+
+    [
+        conjure_tuple_expression_2, conjure_tuple_expression_2__with_frill,
+    ] = produce_conjure_bookcase_dual_expression(
+            'tuple-expression-2',
+            TupleExpression_2,
+
+            produce_conjure_with_frill = 1,
+        )
 
 
     #

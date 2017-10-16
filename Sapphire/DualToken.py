@@ -549,7 +549,7 @@ def gem():
 
             a    = t.a
             a__2 = a.transform(vary)
-            
+
             if (a is a__2) and (b is b__2):
                 return t
 
@@ -565,6 +565,13 @@ def gem():
 
 
         def mutate(t, vary, priority):
+            if vary.remove_comments:
+                return t.b
+
+            return t
+
+
+        def transform(t, vary):
             if vary.remove_comments:
                 return t.b
 
