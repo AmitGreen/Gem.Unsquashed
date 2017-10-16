@@ -586,10 +586,10 @@ def gem():
                                      line_marker = true,
                                  )
 
-    conjure__colon__right_square_bracket = produce_conjure_dual_token(
-                                               'colon__right_square_bracket',
-                                               Colon_RightSquareBracket,
-                                           )
+    conjure_colon__right_square_bracket = produce_conjure_dual_token(
+                                              'colon__right_square_bracket',
+                                              Colon_RightSquareBracket,
+                                          )
 
     conjure__comma__right_brace      = produce_conjure_dual_token('comma__right_brace',       Comma_RightBrace)
     conjure_comma__right_parenthesis = produce_conjure_dual_token('comma__right_parenthesis', Comma_RightParenthesis)
@@ -615,10 +615,10 @@ def gem():
 
     conjure_is_not = produce_conjure_dual_token('is-not', Is_Not)
 
-    conjure__left_square_bracket__colon = produce_conjure_dual_token(
-                                              '[:',                           #   ]
-                                              LeftSquareBracket_Colon,
-                                          )
+    conjure_left_square_bracket__colon = produce_conjure_dual_token(
+                                             '[:',                           #   ]
+                                             LeftSquareBracket_Colon,
+                                         )
 
     conjure_not_in = produce_conjure_dual_token('not-in', Not_In)
 
@@ -987,10 +987,10 @@ def gem():
     empty__empty_map    = conjure_empty_map   (LEFT_BRACE, RIGHT_BRACE)
     empty__parameters_0 = conjure_parameters_0(LP, RP)
     empty__empty_tuple  = conjure_empty_tuple (LP, RP)
-
-
-    W__IS_NOT__W = conjure_is_not(W__IS__W,  NOT__W)
-    W__NOT_IN__W = conjure_not_in(W__NOT__W, IN__W)
+    COLON_RSB           = conjure_colon__right_square_bracket(COLON, RSB)
+    LSB_COLON           = conjure_left_square_bracket__colon(LSB, COLON)
+    W__IS_NOT__W        = conjure_is_not(W__IS__W,  NOT__W)
+    W__NOT_IN__W        = conjure_not_in(W__NOT__W, IN__W)
 
 
     #
@@ -1009,13 +1009,15 @@ def gem():
     #
     #   .transform
     #
-    Is_Not                .transform = produce_transform__uncommented('is_not',                   W__IS_NOT__W)
-    Not_In                .transform = produce_transform__uncommented('not_in',                   W__NOT_IN__W)
-    Comma_RightParenthesis.transform = produce_transform__uncommented('comma__right_parenthesis', RP)
+    Colon_RightSquareBracket.transform = produce_transform__uncommented('colon__right_square_bracket', COLON_RSB)
+    Is_Not                  .transform = produce_transform__uncommented('is_not',                      W__IS_NOT__W)
+    Not_In                  .transform = produce_transform__uncommented('not_in',                      W__NOT_IN__W)
+    Comma_RightParenthesis  .transform = produce_transform__uncommented('comma__right_parenthesis',    RP)
+    LeftSquareBracket_Colon .transform = produce_transform__uncommented('left_square_bracket__colon',  LSB_COLON)
 
-    Colon_LineMarker_1.transform = produce_transform__ab('colon__line_marker_1', conjure_colon__line_marker)
-    Indented_Token    .transform = produce_transform__ab('indented_token',       conjure_indented_token)
-    Parameters_0      .transform = produce_transform__ab('parameters_0',         conjure_parameters_0)
+    Colon_LineMarker_1     .transform = produce_transform__ab('colon__line_marker_1',       conjure_colon__line_marker)
+    Indented_Token         .transform = produce_transform__ab('indented_token',             conjure_indented_token)
+    Parameters_0           .transform = produce_transform__ab('parameters_0',               conjure_parameters_0)
 
     COLON__LINE_MARKER = conjure_colon__line_marker      (COLON, LINE_MARKER)
     COMMA_RP           = conjure_comma__right_parenthesis(COMMA, RP)
@@ -1095,7 +1097,6 @@ def gem():
         'COLON__LINE_MARKER',                       COLON__LINE_MARKER,
         'conjure_arguments_0',                      conjure_arguments_0,
         'conjure_colon__line_marker',               conjure_colon__line_marker,
-        'conjure__colon__right_square_bracket',     conjure__colon__right_square_bracket,
         'conjure__comma__right_brace',              conjure__comma__right_brace,
         'conjure_comma__right_parenthesis',         conjure_comma__right_parenthesis,
         'conjure__comma__right_square_bracket',     conjure__comma__right_square_bracket,
@@ -1105,7 +1106,6 @@ def gem():
         'conjure_empty_map',                        conjure_empty_map,
         'conjure_indented_token',                   conjure_indented_token,
         'conjure_is_not',                           conjure_is_not,
-        'conjure__left_square_bracket__colon',      conjure__left_square_bracket__colon,
         'conjure_not_in',                           conjure_not_in,
         'conjure_parameters_0',                     conjure_parameters_0,
         'evoke_arguments_0',                        evoke_arguments_0,
@@ -1142,4 +1142,6 @@ def gem():
         'find_evoke_comma_something',               find_evoke_comma_something,
         'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
         'COMMA_RP',                                 COMMA_RP,
+        'LSB_COLON',                                LSB_COLON,
+        'COLON_RSB',                                COLON_RSB,
     )

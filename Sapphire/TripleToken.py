@@ -571,6 +571,16 @@ def gem():
                                                      conjure_whitespace__ends_in_newline,
                                                  )
 
+
+    #
+    #   .mutate
+    #
+    DotNameTriplet.mutate = produce_mutate__abc('dot_name_triplet', conjure_dot_name_triplet)
+
+
+    #
+    #   find_evoke_whitespace_atom_whitespace
+    #
     find_evoke_whitespace_atom_whitespace = {
             '"' : evoke_whitespace__double_quote__whitespace,
             "'" : evoke_whitespace__single_quote__whitespace,

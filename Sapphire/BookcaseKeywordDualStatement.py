@@ -153,7 +153,7 @@ def gem():
         frill        = conjure_vwx_frill(
                            conjure_indented_token(empty_indentation, WITH__W),
                            W__AS__W,
-                           LINE_MARKER,
+                           COLON__LINE_MARKER,
                        )
 
         is_statement        = false

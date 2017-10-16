@@ -188,7 +188,7 @@ def gem():
     class HeadIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'head-index'
-        frill        = conjure_vw_frill(LSB, conjure__colon__right_square_bracket(COLON, RSB))
+        frill        = conjure_vw_frill(LSB, COLON_RSB)
 
 
     class ListExpression_1(BookcaseExpression):
@@ -235,7 +235,7 @@ def gem():
     class TailIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'tail-index'
-        frill        = conjure_vw_frill(conjure__left_square_bracket__colon(LSB, COLON), RSB)
+        frill        = conjure_vw_frill(LSB_COLON, RSB)
 
 
     class TupleExpression_1(BookcaseExpression):
@@ -255,7 +255,14 @@ def gem():
             produce_conjure_with_frill = 3,
        )
 
-    conjure_head_index = produce_conjure_bookcase_expression('head-index', HeadIndex)
+    [
+        conjure_head_index, conjure_head_index__with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'head-index',
+            HeadIndex,
+
+            produce_conjure_with_frill = 3,
+        )
 
     [
         conjure_list_expression_1, conjure_list_expression_1__with_frill,
@@ -266,8 +273,14 @@ def gem():
             produce_conjure_with_frill = 3,
         )
 
-    conjure_map_expression_1  = produce_conjure_bookcase_expression('map-expression-1',  MapExpression_1)
+    [
+        conjure_map_expression_1, conjure_map_expression_1__with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'map-expression-1',
+            MapExpression_1,
 
+            produce_conjure_with_frill = 3,
+        )
 
     [
         conjure_normal_index, conjure_normal_index__with_frill,
@@ -296,7 +309,15 @@ def gem():
             produce_conjure_with_frill = 3,
         )
 
-    conjure_tail_index         = produce_conjure_bookcase_expression('tail-index',         TailIndex)
+    [
+        conjure_tail_index, conjure_tail_index__with_frill,
+    ] = produce_conjure_bookcase_expression(
+            'tail-index',
+            TailIndex,
+
+            produce_conjure_with_frill = 3,
+        )
+
     conjure_tuple_expression_1 = produce_conjure_bookcase_expression('tuple-expression-1', TupleExpression_1)
 
 
@@ -309,15 +330,28 @@ def gem():
                              conjure_arguments_1_with_frill,
                          )
 
+    HeadIndex.mutate = produce_mutate__frill__a_with_priority(
+                           'head_index',
+                           PRIORITY_TERNARY,
+                           conjure_head_index__with_frill,
+                       )
+
+
     ListExpression_1.mutate = produce_mutate__frill__a_with_priority(
                                   'list_expression_1',
                                   PRIORITY_COMPREHENSION,
                                   conjure_list_expression_1__with_frill,
                               )
 
+    MapExpression_1.mutate = produce_mutate__frill__a_with_priority(
+                                 'map_expression_1',
+                                 PRIORITY_MAP_ELEMENT,
+                                 conjure_map_expression_1__with_frill,
+                             )
+
     NormalIndex.mutate = produce_mutate__frill__a_with_priority(
                              'normal_index',
-                             PRIORITY_COMPREHENSION,
+                             PRIORITY_TERNARY,
                              conjure_normal_index__with_frill,
                          )
 
@@ -326,6 +360,13 @@ def gem():
                                          PRIORITY_COMPREHENSION,
                                          conjure_parenthesized_expression__with_frill,
                                      )
+
+
+    TailIndex.mutate = produce_mutate__frill__a_with_priority(
+                           'tail_index',
+                           PRIORITY_TERNARY,
+                           conjure_tail_index__with_frill,
+                       )
 
 
     #

@@ -176,11 +176,20 @@ def gem():
     conjure_twos_complement     = produce_conjure_unary_expression('twos-complement', TwosComplementExpression)
 
 
-    NegativeExpression      .conjure_with_frill = static_method(conjure_negative_expression)
     NotExpression           .conjure_with_frill = static_method(conjure_not_expression)
     StarArgument            .conjure_with_frill = static_method(conjure_star_argument)
     StarParameter           .conjure_with_frill = static_method(conjure_star_parameter)
     TwosComplementExpression.conjure_with_frill = static_method(conjure_twos_complement)
+
+
+    #
+    #   .mutate
+    #
+    NegativeExpression.mutate = produce_mutate__frill__a_with_priority(
+                                    'negative_expression',
+                                    PRIORITY_UNARY,
+                                    conjure_negative_expression,
+                                )
 
 
     #

@@ -470,22 +470,6 @@ def gem():
         keyword                                 = ':'
 
 
-        #
-        #   FIX to deal with this as MapElement
-        #
-        def mutate(t, vary, priority):
-            assert 0
-
-            if vary.remove_comments:
-                if priority == PRIORITY_ASSIGN:
-                    return COLON
-
-                my_line('priority: %r', priority)
-                assert 0
-
-            return t
-
-
     class OperatorComma(KeywordAndOperatorBase):
         __slots__                          = (())
         display_name                       = ','
@@ -1085,33 +1069,38 @@ def gem():
     FROM__W             = conjure_keyword_from        ('from ')
     FUNCTION__W         = conjure_keyword_function    ('def ')
     IF__W               = conjure_keyword_if          ('if ')
-    IN__W               = conjure_keyword_in          ('in ')
     IMPORT__W           = conjure_keyword_import      ('import ')
+    IN__W               = conjure_keyword_in          ('in ')
     LEFT_BRACE          = conjure_left_brace          ('{')
     LP                  = conjure_left_parenthesis    ('(')
     LSB                 = conjure_left_square_bracket ('[')
-    RETURN__W           = conjure_keyword_return      ('return ')
+    MINUS_SIGN          = conjure_action_word         ('-', '-')
     NOT__W              = conjure_keyword_not         ('not ')
     PLUS_SIGN           = conjure_action_word         ('+', '+')
+    RAISE__W            = conjure_keyword_raise       ('raise ')
+    RETURN__W           = conjure_keyword_return      ('return ')
     RIGHT_BRACE         = conjure_right_brace         ('}')
     RP                  = conjure_right_parenthesis   (')')
     RSB                 = conjure_right_square_bracket(']')
-    TRY                 = conjure_keyword_try         ('try')
     STAR_SIGN           = conjure_star_sign           ('*')
-    W__COMPARE_EQUAL__W = conjure_action_word         ('==', ' == ')
+    TRY                 = conjure_keyword_try         ('try')
+    W__AND__W           = conjure_action_word         ('and', ' and ')
     W__ASSIGN__W        = conjure_equal_sign          (' = ')
     W__AS__W            = conjure_keyword_as          (' as ')
-    W__AND__W           = conjure_action_word         ('and', ' and ')
+    W__COLON__W         = conjure_colon               (' : ')
+    W__COMPARE_EQUAL__W = conjure_action_word         ('==', ' == ')
     W__ELSE__W          = conjure_keyword_else        (' else ')
     W__FOR__W           = conjure_keyword_for         (' for ')
+    WHILE__W            = conjure_keyword_with        ('while ')
     W__IF__W            = conjure_keyword_if          (' if ')
-    W__IN__W            = conjure_keyword_in          (' in ')
     W__IMPORT__W        = conjure_keyword_import      (' import ')
+    W__IN__W            = conjure_keyword_in          (' in ')
     W__IS__W            = conjure_keyword_is          (' is ')
+    WITH__W             = conjure_keyword_with        ('with ')
     W__NOT__W           = conjure_keyword_not         (' not ')
     W__OR__W            = conjure_action_word         ('or', ' or ')
     W__PERCENT_SIGN__W  = conjure_action_word         ('%', ' % ')
-    WITH__W             = conjure_keyword_with        ('with ')
+    W__STAR_SIGN__W     = conjure_star_sign           (' * ')
 
 
     #
@@ -1141,9 +1130,10 @@ def gem():
     #       Hence KeywordNot.mutate always returns 'not ' since it is only called in the context
     #       of a unary-expression.
     #
-    KeywordElse.mutate = produce_mutate__uncommented('keyword_else', W__ELSE__W)
-    KeywordIf  .mutate = produce_mutate__uncommented('keyword_if',   W__IF__W)
-    KeywordNot .mutate = produce_mutate__uncommented('keyword_not',  NOT__W)
+    KeywordElse  .mutate = produce_mutate__uncommented('keyword_else',   W__ELSE__W)
+    KeywordIf    .mutate = produce_mutate__uncommented('keyword_if',     W__IF__W)
+    KeywordNot   .mutate = produce_mutate__uncommented('keyword_not',    NOT__W)
+    OperatorColon.mutate = produce_mutate__uncommented('operator_colon', W__COLON__W)
 
 
     #
@@ -1164,6 +1154,7 @@ def gem():
     KeywordIs                 .transform = produce_transform__uncommented('keyword_is',            W__IS__W)
     KeywordImport             .transform = produce_transform__uncommented('keyword_import',        IMPORT__W)
     KeywordOr                 .transform = produce_transform__uncommented('keyword_or',            W__OR__W)
+    KeywordRaise              .transform = produce_transform__uncommented('keyword_raise',         RAISE__W)
     KeywordReturn             .transform = produce_transform__uncommented('keyword_return',        RETURN__W)
     KeywordWith               .transform = produce_transform__uncommented('keyword_with',          WITH__W)
     OperatorAtSign            .transform = produce_transform__uncommented('at_sign',               AT_SIGN)
@@ -1172,10 +1163,13 @@ def gem():
     OperatorCompareEqual      .transform = produce_transform__uncommented('compare_equal',         W__COMPARE_EQUAL__W)
     OperatorDot               .transform = produce_transform__uncommented('operator_dot',          DOT)
     OperatorEqualSign         .transform = produce_transform__uncommented('equal_sign',            W__ASSIGN__W)
+    OperatorLeftBrace         .transform = produce_transform__uncommented('left_brace',            LEFT_BRACE)
     OperatorLeftParenthesis   .transform = produce_transform__uncommented('left_parenthesis',      LP)
     OperatorLeftSquareBracket .transform = produce_transform__uncommented('left_square_bracket',   LSB)
+    OperatorMinusSign         .transform = produce_transform__uncommented('operator_minus_sign',   MINUS_SIGN)
     OperatorPercentSign       .transform = produce_transform__uncommented('operator_percent_sign', W__PERCENT_SIGN__W)
     OperatorPlusSign          .transform = produce_transform__uncommented('operator_plus_sign',    PLUS_SIGN)
+    OperatorRightBrace        .transform = produce_transform__uncommented('right_brace',           RIGHT_BRACE)
     OperatorRightParenthesis  .transform = produce_transform__uncommented('right_parenthesis',     RP)
     OperatorRightSquareBracket.transform = produce_transform__uncommented('right_square_bracket',  RSB)
     OperatorStarSign          .transform = produce_transform__uncommented('operator_star_sign',    STAR_SIGN)
@@ -1278,7 +1272,6 @@ def gem():
         'find_atom_type',                                   find_atom_type,
         'is_close_operator',                                is_close_operator,
         'is_colon_7',                                       is_colon_7,
-        'is_right_parenthesis_7',                           is_right_parenthesis_7,
         'AT_SIGN',                                          AT_SIGN,
         'COLON',                                            COLON,
         'COMMA',                                            COMMA,
@@ -1289,23 +1282,29 @@ def gem():
         'FUNCTION__W',                                      FUNCTION__W,
         'IF__W',                                            IF__W,
         'IN__W',                                            IN__W,
+        'is_right_parenthesis_7',                           is_right_parenthesis_7,
         'LEFT_BRACE',                                       LEFT_BRACE,
         'lookup_keyword_conjure_function',                  lookup_keyword_conjure_function,
         'LP',                                               LP,
         'LSB',                                              LSB,
         'NOT__W',                                           NOT__W,
+        'RAISE__W',                                         RAISE__W,
         'RETURN__W',                                        RETURN__W,
         'RIGHT_BRACE',                                      RIGHT_BRACE,
         'RP',                                               RP,
         'RSB',                                              RSB,
         'TRY',                                              TRY,
-        'W__AS__W',                                         W__AS__W,
         'W__ASSIGN__W',                                     W__ASSIGN__W,
+        'W__AS__W',                                         W__AS__W,
+        'W__COLON__W',                                      W__COLON__W,
         'W__ELSE__W',                                       W__ELSE__W,
         'W__FOR__W',                                        W__FOR__W,
+        'WHILE__W',                                         WHILE__W,
         'W__IF__W',                                         W__IF__W,
         'W__IN__W',                                         W__IN__W,
         'W__IS__W',                                         W__IS__W,
         'WITH__W',                                          WITH__W,
         'W__NOT__W',                                        W__NOT__W,
+        'W__PERCENT_SIGN__W',                               W__PERCENT_SIGN__W,
+        'W__STAR_SIGN__W',                                  W__STAR_SIGN__W,
     )

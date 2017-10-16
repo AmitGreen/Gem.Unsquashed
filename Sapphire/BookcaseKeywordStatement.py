@@ -209,7 +209,7 @@ def gem():
         __slots__    = (())
         display_name = 'raise-statement'
         frill        = conjure_vw_frill(
-                           conjure_indented_token(conjure_indentation('    '), conjure_keyword_raise('raise ')),
+                           conjure_indented_token(conjure_indentation('    '), RAISE__W),
                            LINE_MARKER,
                        )
 
@@ -232,7 +232,7 @@ def gem():
         __slots__    = (())
         display_name = 'while-header'
         frill        = conjure_vw_frill(
-                           conjure_indented_token(conjure_indentation('    '), conjure_keyword_while('while ')),
+                           conjure_indented_token(conjure_indentation('    '), WHILE__W),
                            COLON__LINE_MARKER,
                        )
 

@@ -45,6 +45,7 @@ command="python $Main_py"
 commandO="python -O $Main_py"
 command3="python3 $Main_py"
 command3O="python3 -O $Main_py"
+command="../bin/x"
 
 option="dev"
 

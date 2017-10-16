@@ -111,29 +111,6 @@ def gem():
 
     @share
     @privileged
-    def produce_mutate__abc(name, conjure):
-        def mutate(t, vary, priority):
-            a = t.a
-            b = t.b
-
-            a__2 = a.mutate(vary, priority)
-            b__2 = b.mutate(vary, priority)
-            c__2 = c.mutate(vary, priority)
-
-            if (a is a__2) and (b is b__2) and (c is c__2):
-                return t
-
-            return conjure(a__2, b__2, c__2)
-
-
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate__%s', name)
-
-        return mutate
-
-
-    @share
-    @privileged
     def produce__mutate__ab__priority(name, conjure, a_priority, b_priority):
         def mutate(t, vary, priority):
             a = t.a
@@ -146,6 +123,30 @@ def gem():
                 return t
 
             return conjure(a__2, b__2)
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate__%s', name)
+
+        return mutate
+
+
+    @share
+    @privileged
+    def produce_mutate__abc(name, conjure):
+        def mutate(t, vary, priority):
+            a = t.a
+            b = t.b
+            c = t.c
+
+            a__2 = a.mutate(vary, priority)
+            b__2 = b.mutate(vary, priority)
+            c__2 = c.mutate(vary, priority)
+
+            if (a is a__2) and (b is b__2) and (c is c__2):
+                return t
+
+            return conjure(a__2, b__2, c__2)
 
 
         if __debug__:
@@ -200,7 +201,7 @@ def gem():
 
     @share
     @privileged
-    def produce_mutate__frill__ab__priority(name, frill_priority, a_priority, b_priority):
+    def produce_mutate__frill__ab__priority(name, frill_priority, a_priority, b_priority, conjure_with_frill = 0):
         def mutate(t, vary, priority):
             frill = t.frill
             a     = t.a
@@ -213,7 +214,7 @@ def gem():
             if (frill is frill__2) and (a is a__2) and (b is b__2):
                 return t
 
-            return t.conjure_with_frill(frill__2, a__2, b__2)
+            return ((conjure_with_frill) or (t.conjure_with_frill))(frill__2, a__2, b__2)
 
 
         if __debug__:

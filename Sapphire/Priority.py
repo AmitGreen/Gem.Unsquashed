@@ -8,7 +8,7 @@ def gem():
         'PRIORITY_TUPLE',                    2,     #   tuple
         'PRIORITY_POSTFIX',                  3,     #   . () and []
         'PRIORITY_POWER',                    4,     #   **
-        'PRIORITY_UNARY',                    5,     #   ~ unary-
+        'PRIORITY_UNARY',                    5,     #   unary '+', '-', '~'
         'PRIORITY_MULTIPLY',                 6,     #   *
         'PRIORITY_ARITHMETIC',               7,     #   +
         'PRIORITY_SHIFT',                    8,     #   << and >>
@@ -24,12 +24,14 @@ def gem():
         'PRIORITY_TERNARY_LIST',            18,     #   Comma expression of PRIORITY_TERNARY
         'PRIORITY_SUBSCRIPT',               19,     #   Subscript of index expression
         'PRIORITY_SUBSCRIPT_LIST',          20,     #   Comma expresion of Subscripts
-        'PRIORITY_YIELD',                   21,     #   'yield'
-        'PRIORITY_COMPREHENSION',           22,     #   'for'
-        'PRIORITY_ASSIGN',                  23,     #   '=',
-        'PRIORITY_AS',                      24,     #   'as'
-        'PRIORITY_AS_LIST',                 25,     #   Comma expression of 'as'
-        'PRIORITY_STATEMENT',               26,     #   statement
+        'PRIORITY_MAP_ELEMENT',             21,     #   ':'
+        'PRIORITY_MAP_LIST',                22,     #   Comma expression of ':'
+        'PRIORITY_YIELD',                   23,     #   'yield'
+        'PRIORITY_COMPREHENSION',           24,     #   'for'
+        'PRIORITY_ASSIGN',                  25,     #   '=',
+        'PRIORITY_AS',                      26,     #   'as'
+        'PRIORITY_AS_LIST',                 27,     #   Comma expression of 'as'
+        'PRIORITY_STATEMENT',               28,     #   statement
 
         #
         #   PRIORITY_NORMAL is an alias for PRIORITY_LOGICAL_OR
