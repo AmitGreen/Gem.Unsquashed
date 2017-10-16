@@ -52,22 +52,20 @@ def gem():
 
         #
         #   NOTE:
-        #       Do not simplify this to a .mutate method with a single parameter; even though as used
-        #       .morph takes an 'a_priority' & 'b_priority' with exactly the same value.
-        #
         #       This is deliberatly called .morph, as its not appropriate to do .mutate on a general
-        #       wrapper like VW_frill.
+        #       wrapper like VW_frill -- even when it is called with 'a_priority' and 'b_priority'
+        #       with the same value.
         #
         #       Thus the specific method .morph here is to indicate [for code clarity of the reader] that
         #       something special is going on -- even though [for the computer] it really looks like
         #       a .mutate method with redundant parameters.
         #
-        def morph(t, vary, a_priority, b_priorty):
+        def morph(t, vary, a_priority, b_priority):
             a = t.a
             b = t.b
 
-            a__2 = a.mutate(vary, a_priority)
-            b__2 = b.mutate(vary, a_priority)
+            a__2 = (a.transform(vary)   if a_priority is 0 else   a.mutate(vary, a_priority))
+            b__2 = (b.transform(vary)   if b_priority is 0 else   b.mutate(vary, b_priority))
 
             if (a is a__2) and (b is b__2):
                 return t

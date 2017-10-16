@@ -235,6 +235,19 @@ def gem():
         is_atom                        = true
 
 
+        def mutate(t, vary, priority):
+            frill = t.frill
+            a     = t.a
+
+            frill__2 = frill.morph (vary, 0, PRIORITY_TERNARY)
+            a__2     = a    .mutate(vary, PRIORITY_TERNARY)
+
+            if (frill is frill__2) and (a is a__2):
+                return t
+
+            return conjure_tuple_expression_1__with_frill(frill__2, a__2)
+
+
     [
         conjure_arguments_1, conjure_arguments_1_with_frill,
     ] = produce_conjure_bookcase_expression('arguments-1', Arguments_1)
@@ -318,12 +331,6 @@ def gem():
                            PRIORITY_TERNARY,
                            conjure_tail_index__with_frill,
                        )
-
-    TupleExpression_1.mutate = produce_mutate__frill__a_with_priority(
-                                   'tuple_expression_1',
-                                   PRIORITY_TERNARY,
-                                   conjure_tuple_expression_1__with_frill,
-                               )
 
 
     #

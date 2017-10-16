@@ -1137,6 +1137,7 @@ def gem():
     KeywordIf    .mutate = produce_mutate__uncommented('keyword_if',     W__IF__W)
     KeywordNot   .mutate = produce_mutate__uncommented('keyword_not',    NOT__W)
     OperatorColon.mutate = produce_mutate__uncommented('operator_colon', W__COLON__W)
+#   OperatorLeftParenthesis.mutate = produce_mutate__uncommented('left_parenthesis', RP)
 
 
     #
