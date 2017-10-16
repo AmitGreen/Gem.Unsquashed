@@ -25,6 +25,31 @@ def gem():
         display_token  = display_token__ab
 
 
+        #
+        #   NOTE:
+        #       Do not simplify this to a .mutate method with a single parameter; even though as used
+        #       .morph takes an 'a_priority' & 'b_priority' with exactly the same value.
+        #
+        #       This is deliberatly called .morph, as its not appropriate to do .mutate on a general
+        #       wrapper like VW_frill.
+        #
+        #       Thus the specific method .morph here is to indicate [for code clarity of the reader] that
+        #       something special is going on -- even though [for the computer] it really looks like
+        #       a .mutate method with redundant parameters.
+        #
+        def morph(t, vary, a_priority, b_priorty):
+            a = t.a
+            b = t.b
+
+            a__2 = a.mutate(vary, a_priority)
+            b__2 = b.mutate(vary, a_priority)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure_vw_frill(a__2, b__2)
+
+
     VW_Frill.v = VW_Frill.a
     VW_Frill.w = VW_Frill.b
 
@@ -41,7 +66,6 @@ def gem():
                        )
 
 
-    VW_Frill.mutate    = produce_mutate__ab   ('vw_frill', conjure_vw_frill)
     VW_Frill.transform = produce_transform__ab('vw_frill', conjure_vw_frill)
 
 

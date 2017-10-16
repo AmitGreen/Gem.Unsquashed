@@ -79,52 +79,6 @@ def gem():
             v           .dump_token(f)
 
 
-    @privileged
-    def produce_mutate__frill__many(name, conjure_with_frill, many_priority):
-        def mutate(t, vary, priority):
-            frill    = t.frill
-            many     = t.many
-            iterator = iterate(many)
-
-            frill__2 = frill.transform(vary)
-
-            i = 0
-
-            for v in iterator:
-                v__2 = v.mutate(vary, many_priority)
-
-                if v is not v__2:
-                    break
-
-                i += 1
-            else:
-                if frill is frill__2:
-                    return t
-
-                return conjure_with_frill(frill__2, many)
-
-            many__2 = (
-                          []          if i is 0 else
-                          [many[0]]   if i is 1 else
-                          List(many[:i])
-                      )
-
-            append = many__2.append
-
-            append(v__2)
-
-            for v in iterator:
-                append(v.mutate(vary, many_priority))
-
-            return conjure_with_frill(frill__2, conjure_tuple_of_many_expression(many__2))
-
-
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
-
-        return mutate
-
-
     @export
     def write__X__many_end(t, w):
         frill = t.frill

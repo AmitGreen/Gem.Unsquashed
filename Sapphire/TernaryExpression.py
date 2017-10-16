@@ -145,6 +145,33 @@ def gem():
         return conjure_triple_expression
 
 
+    @privileged
+    def produce_mutate_triple_expression(
+            name, frill_priority, a_priority, b_priority, c_priority, conjure_with_frill,
+    ):
+        def mutate(t, vary, priority):
+            frill = t.frill
+            a     = t.a
+            b     = t.b
+            c     = t.c
+
+            frill__2 = frill.morph (vary, frill_priority, frill_priority)
+            a__2     = a    .mutate(vary, a_priority)
+            b__2     = b    .mutate(vary, b_priority)
+            c__2     = c    .mutate(vary, c_priority)
+
+            if (frill is frill__2) and (a is a__2) and (b is b__2) and (c is c__2):
+                return t
+
+            return conjure_with_frill(frill__2, a__2, b__2, c__2)
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate_%s', name)
+
+        return mutate
+
+
     class ComprehensionForExpression(TripleExpression):
         __slots__    = (())
         display_name = 'comprehension-for'
@@ -176,13 +203,16 @@ def gem():
         )
 
 
-    TernaryExpression.mutate = produce_mutate__frill__abc__priority(
-                                   'ternary-expression',
+    #
+    #   .mutate
+    #
+    TernaryExpression.mutate = produce_mutate_triple_expression(
+                                   'ternary_expression',
+                                   PRIORITY_TERNARY,
+                                   PRIORITY_BOOLEAN_OR,
+                                   PRIORITY_BOOLEAN_OR,
+                                   PRIORITY_TERNARY,
                                    conjure_ternary_expression__with_frill,
-                                   PRIORITY_TERNARY,
-                                   PRIORITY_BOOLEAN_OR,
-                                   PRIORITY_BOOLEAN_OR,
-                                   PRIORITY_TERNARY,
                               )
 
 
