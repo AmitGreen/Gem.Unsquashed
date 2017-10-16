@@ -655,6 +655,12 @@ def gem():
 
 
     #
+    #   Constants
+    #
+    ALL_INDEX = conjure_all_index(LSB, COLON, RSB)
+
+
+    #
     #   .mutate
     #
     DotNameTriplet.mutate = produce_mutate__abc('dot_name_triplet', conjure_dot_name_triplet)
@@ -668,6 +674,8 @@ def gem():
     #
     #   .mutate
     #
+    AllIndex.mutate = produce_mutate__uncommented('all_index', ALL_INDEX)
+
     Indented_Pass_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
                                                'indented_pass__line_marker_1',
                                                conjure_indented__pass__line_marker,

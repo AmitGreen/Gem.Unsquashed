@@ -1089,7 +1089,7 @@ def gem():
     W__ELSE__W               = conjure_keyword_else        (' else ')
     W__FOR__W                = conjure_keyword_for         (' for ')
     W__GREATER_THAN__W       = conjure_action_word         ('>',  ' > ')
-    WHILE__W                 = conjure_keyword_with        ('while ')
+    WHILE__W                 = conjure_keyword_while       ('while ')
     W__IF__W                 = conjure_keyword_if          (' if ')
     W__IMPORT__W             = conjure_keyword_import      (' import ')
     W__IN__W                 = conjure_keyword_in          (' in ')
@@ -1102,6 +1102,8 @@ def gem():
     W__PERCENT_SIGN__W       = conjure_action_word         ('%', ' % ')
     W__STAR_SIGN__W          = conjure_star_sign           (' * ')
     W__SUBTRACT_MODIFY__W    = conjure_action_word         ('-=', ' -= ')
+#   YIELD                    = conjure_keyword_yield       ('yield')
+    YIELD__W                 = conjure_keyword_yield       ('yield ')
 
 
     #
@@ -1158,7 +1160,9 @@ def gem():
     KeywordOr                .transform = produce_transform__uncommented('keyword_or',          W__OR__W)
     KeywordRaise             .transform = produce_transform__uncommented('keyword_raise',       RAISE__W)
     KeywordReturn            .transform = produce_transform__uncommented('keyword_return',      RETURN__W)
+    KeywordWhile             .transform = produce_transform__uncommented('keyword_while',       WHILE__W)
     KeywordWith              .transform = produce_transform__uncommented('keyword_with',        WITH__W)
+    KeywordYield             .transform = produce_transform__uncommented('keyword_yield',       YIELD__W)
     OperatorAddModify        .transform = produce_transform__uncommented('operator_add_modify', W__ADD_MODIFY__W)
     OperatorAtSign           .transform = produce_transform__uncommented('at_sign',             AT_SIGN)
     OperatorColon            .transform = produce_transform__uncommented('colon',               COLON)
@@ -1322,4 +1326,5 @@ def gem():
         'W__NOT__W',                                        W__NOT__W,
         'W__PERCENT_SIGN__W',                               W__PERCENT_SIGN__W,
         'W__STAR_SIGN__W',                                  W__STAR_SIGN__W,
+        'YIELD__W',                                         YIELD__W,
     )

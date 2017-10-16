@@ -84,7 +84,7 @@ def gem():
                     return test_development(
                                module_name        = 'hma',
                                remove_comments    = true,
-                               remove_indentation = true,
+                               #remove_indentation = true,
                            )
 
                 return test_parse1()

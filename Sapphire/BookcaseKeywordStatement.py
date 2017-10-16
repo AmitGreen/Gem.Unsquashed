@@ -263,7 +263,7 @@ def gem():
         __slots__    = (())
         display_name = 'yield-statement-1'
         frill        = conjure_vw_frill(
-                           conjure_indented_token(conjure_indentation('    '), conjure_keyword_yield('yield ')),
+                           conjure_indented_token(conjure_indentation('    '), YIELD__W),
                            LINE_MARKER,
                        )
 

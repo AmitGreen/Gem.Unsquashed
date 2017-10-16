@@ -457,8 +457,12 @@ def gem():
     TryStatement       .conjure = static_method(conjure_try_statement)
     WithStatement      .conjure = static_method(conjure_with_statement)
 
-    ExceptFragment     .conjure_prefixed_dual = static_method(conjure_prefixed_except_fragment)
+    ClassDefinition    .conjure_prefixed_dual = static_method(conjure_prefixed_class_definition)
     DecoratedDefinition.conjure_prefixed_dual = static_method(conjure_prefixed_decorated_definition)
+    ElseFragment       .conjure_prefixed_dual = static_method(conjure_prefixed_else_fragment)
+    ElseIfFragment     .conjure_prefixed_dual = static_method(conjure_prefixed_else_if_fragment)
+    ExceptFragment     .conjure_prefixed_dual = static_method(conjure_prefixed_except_fragment)
+    ForStatement       .conjure_prefixed_dual = static_method(conjure_prefixed_for_statement)
     FunctionDefinition .conjure_prefixed_dual = static_method(conjure_prefixed_function_definition)
 
 
