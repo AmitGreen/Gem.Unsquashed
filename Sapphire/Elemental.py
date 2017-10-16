@@ -1050,6 +1050,7 @@ def gem():
 
     ASSERT__W                = conjure_keyword_assert      ('assert ')
     AT_SIGN                  = conjure_at_sign             ('@')
+    BREAK                    = conjure_keyword_break       ('break')
     CLASS__W                 = conjure_keyword_class       ('class ')
     COLON                    = conjure_colon               (':')
     COMMA                    = conjure_comma               (',')
@@ -1102,7 +1103,6 @@ def gem():
     W__PERCENT_SIGN__W       = conjure_action_word         ('%', ' % ')
     W__STAR_SIGN__W          = conjure_star_sign           (' * ')
     W__SUBTRACT_MODIFY__W    = conjure_action_word         ('-=', ' -= ')
-#   YIELD                    = conjure_keyword_yield       ('yield')
     YIELD__W                 = conjure_keyword_yield       ('yield ')
 
 
@@ -1290,6 +1290,7 @@ def gem():
         'find_atom_type',                                   find_atom_type,
         'is_close_operator',                                is_close_operator,
         'AT_SIGN',                                          AT_SIGN,
+        'BREAK',                                            BREAK,
         'COLON',                                            COLON,
         'COMMA',                                            COMMA,
         'COMMA__W',                                         COMMA__W,
