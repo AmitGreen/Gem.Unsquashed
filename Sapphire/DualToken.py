@@ -65,6 +65,8 @@ def gem():
         t.newlines = newlines
 
 
+
+
     @privileged
     def produce_mutate_atom_whitespace(name, conjure):
         def mutate(t, vary, priority):
@@ -111,6 +113,30 @@ def gem():
             transform.__name__ = intern_arrange('transform_%s', name)
 
         return transform
+
+
+    @privileged
+    def produce_mutate_whitespace_atom(name, conjure):
+        def mutate(t, vary, priority):
+            b    = t.b
+            b__2 = b.mutate(vary, priority)
+
+            if vary.remove_comments:
+                return b__2
+
+            a    = t.a
+            a__2 = a.transform(vary)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure(a__2, b__2)
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate_%s', name)
+
+        return mutate
 
 
     class BaseDualOperator(KeywordAndOperatorBase):
@@ -349,25 +375,6 @@ def gem():
         is_postfix_operator                   = true
 
 
-        #
-        #   FIX: REMOVE THIs
-        #
-        def mutate(t, vary, priority):
-            if vary.remove_comments:
-                return empty__arguments_0
-
-            a = t.a
-            b = t.b
-
-            a__2 = a.transform(vary)
-            b__2 = b.transform(vary)
-
-            if (a is a__2) and (b is b__2):
-                return t
-
-            return conjure_arguments_0(a__2, b__2)
-
-
     class Atom_Whitespace(BaseDualOperator):
         __slots__                      = (())
         display_name                   = 'atom+whitespace'
@@ -443,18 +450,6 @@ def gem():
         is_end_of_ternary_expression          = true
         is_end_of_unary_expression            = true
         is__optional_comma__right_parenthesis = true
-
-
-        #
-        #   FIX: REMOVE THIS
-        #
-        def mutate(t, vary, priority):
-            assert priority == PRIORITY_TUPLE
-
-            if vary.remove_comments:
-                return COMMA_RP
-
-            return t
 
 
     class Comma_RightSquareBracket(BaseDualOperator):
@@ -594,25 +589,6 @@ def gem():
         is_atom                        = true
 
 
-        #
-        #   FIX: REMOVE THIS
-        #
-        def mutate(t, vary, priority):
-            b    = t.b
-            b__2 = b.mutate(vary, priority)
-
-            if vary.remove_comments:
-                return b__2
-
-            a    = t.a
-            a__2 = a.transform(vary)
-
-            if (a is a__2) and (b is b__2):
-                return t
-
-            return conjure_whitespace_atom(a__2, b__2)
-
-
     class Whitespace_Name(BaseDualOperator):
         __slots__                      = (())
         display_name                   = 'whitespace+name'
@@ -699,6 +675,7 @@ def gem():
                           )
 
     conjure_whitespace_atom = produce_conjure_dual_token('whitespace_atom', Whitespace_Atom)
+    conjure_whitespace_name = produce_conjure_dual_token('whitespace_name', Whitespace_Name)
 
     evoke_arguments_0 = produce_evoke_dual_token(
                             'arguments_0',
@@ -1053,17 +1030,17 @@ def gem():
     #
     #   Constants
     #
-    COLON__LINE_MARKER  = conjure_colon__line_marker         (COLON, LINE_MARKER)
-    COLON_RSB           = conjure_colon__right_square_bracket(COLON, RSB)
-    COMMA_RP            = conjure_comma__right_parenthesis   (COMMA, RP)
-    empty__arguments_0  = conjure_arguments_0                (LP, RP)
-    empty__empty_list   = conjure_empty_list                 (LSB, RSB)
-    empty__empty_map    = conjure_empty_map                  (LEFT_BRACE, RIGHT_BRACE)
-    empty__empty_tuple  = conjure_empty_tuple                (LP, RP)
-    empty__parameters_0 = conjure_parameters_0               (LP, RP)
-    LSB_COLON           = conjure_left_square_bracket__colon (LSB, COLON)
-    W__IS_NOT__W        = conjure_is_not                     (W__IS__W,  NOT__W)
-    W__NOT_IN__W        = conjure_not_in                     (W__NOT__W, IN__W)
+    ARGUMENTS_0         = conjure_arguments_0                (LP,         RP)
+    COLON__LINE_MARKER  = conjure_colon__line_marker         (COLON,      LINE_MARKER)
+    COLON_RSB           = conjure_colon__right_square_bracket(COLON,      RSB)
+    COMMA_RP            = conjure_comma__right_parenthesis   (COMMA,      RP)
+    EMPTY_LIST          = conjure_empty_list                 (LSB,        RSB)
+    EMPTY_MAP           = conjure_empty_map                  (LEFT_BRACE, RIGHT_BRACE)
+    EMPTY_TUPLE         = conjure_empty_tuple                (LP,         RP)
+    LSB_COLON           = conjure_left_square_bracket__colon (LSB,        COLON)
+    PARAMETERS_0        = conjure_parameters_0               (LP,         RP)
+    W__IS_NOT__W        = conjure_is_not                     (W__IS__W,   NOT__W)
+    W__NOT_IN__W        = conjure_not_in                     (W__NOT__W,  IN__W)
 
 
     #
@@ -1073,12 +1050,16 @@ def gem():
     #       Comma_RightParentheiss.mutate    leaves  the , (called on parenthesized tuple expression)
     #       Comma_RightParenthesis.transform removes the , (called in other situations where the , is not needed)
     #
-    Atom_Whitespace.mutate = produce_mutate_atom_whitespace('atom_whitespace', conjure_atom_whitespace)
-    EmptyList      .mutate = produce_mutate__uncommented   ('empty_list',      empty__empty_list)
-    EmptyMap       .mutate = produce_mutate__uncommented   ('empty_map',       empty__empty_map)
-    EmptyTuple     .mutate = produce_mutate__uncommented   ('empty_tuple',     empty__empty_tuple)
-    DotNamePair    .mutate = produce_mutate__ab            ('dot-name-pair',   conjure_dot_name_pair)
-    Name_Whitespace.mutate = produce_mutate_atom_whitespace('name_whitespace', conjure_name_whitespace)
+    Arguments_0           .mutate = produce_mutate__uncommented   ('arguments_0',              ARGUMENTS_0)
+    Atom_Whitespace       .mutate = produce_mutate_atom_whitespace('atom_whitespace',          conjure_atom_whitespace)
+    Comma_RightParenthesis.mutate = produce_mutate__uncommented   ('comma__right_parenthesis', COMMA_RP)
+    EmptyList             .mutate = produce_mutate__uncommented   ('empty_list',               EMPTY_LIST)
+    EmptyMap              .mutate = produce_mutate__uncommented   ('empty_map',                EMPTY_MAP)
+    EmptyTuple            .mutate = produce_mutate__uncommented   ('empty_tuple',              EMPTY_TUPLE)
+    DotNamePair           .mutate = produce_mutate__ab            ('dot-name-pair',            conjure_dot_name_pair)
+    Name_Whitespace       .mutate = produce_mutate_atom_whitespace('name_whitespace',          conjure_name_whitespace)
+    Whitespace_Atom       .mutate = produce_mutate_whitespace_atom('whitespace_atom',          conjure_whitespace_atom)
+    Whitespace_Name       .mutate = produce_mutate_whitespace_atom('whitespace_name',          conjure_whitespace_name)
 
 
     #
@@ -1096,7 +1077,7 @@ def gem():
 
     Name_Whitespace.transform = produce_transform_atom_whitespace('name_whitespace', conjure_name_whitespace)
     Not_In         .transform = produce_transform__uncommented   ('not_in',          W__NOT_IN__W)
-    Parameters_0   .transform = produce_transform__ab            ('parameters_0',    conjure_parameters_0)
+    Parameters_0   .transform = produce_transform__uncommented   ('parameters_0',    PARAMETERS_0)
 
 
     #
