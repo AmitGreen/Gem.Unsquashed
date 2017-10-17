@@ -54,7 +54,7 @@ def gem():
 
         require_gem('Sapphire.Parse')                       #   Must be after 'create_sapphire_match'
 
-        parse_python('test.py', test = 7)
+        parse_python('test.py', test = 7, show = 7)
 
 
     def test_parse2():
@@ -80,7 +80,7 @@ def gem():
                 return test_development(module_name = 'hma2', remove_comments = true)
 
             if option == 'dev':
-                if 7 is 7:
+                if 7 is 0:
                     return test_development(
                                module_name        = 'hma',
                                remove_comments    = true,

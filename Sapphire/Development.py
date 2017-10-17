@@ -302,7 +302,6 @@ def gem():
         assert gem.b.a is gem__function_header
 
         if vary is not 0:
-            line('Varying %s', path)
             gem = gem.transform(vary)
 
         return TwigCode(path, '[0]', copyright, gem)

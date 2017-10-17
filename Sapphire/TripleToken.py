@@ -782,6 +782,7 @@ def gem():
         'conjure_dot_name_triplet',                 conjure_dot_name_triplet,
         'conjure_indented_else_colon',              conjure_indented_else_colon,
         'conjure_indented__pass__line_marker',      conjure_indented__pass__line_marker,
+        'conjure_whitespace_atom_whitespace',       conjure_whitespace_atom_whitespace,
         'evoke_all_index',                          evoke_all_index,
         'evoke_indented__break__line_marker',       evoke_indented__break__line_marker,
         'evoke_indented__continue__line_marker',    evoke_indented__continue__line_marker,

@@ -3,12 +3,69 @@
 #
 @gem('Sapphire.Atom')
 def gem():
+    require_gem('Sapphire.CreateMeta')
     require_gem('Sapphire.Method')
     require_gem('Sapphire.TokenCache')
 
 
+    lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   due to privileged
+    store_adjusted_meta  = Shared.store_adjusted_meta       #   due to privileged
+
+
     lookup_atom  = lookup_normal_token
     provide_atom = provide_normal_token
+
+
+    def construct__quote_with_newlines(t, s, newlines):
+        t.s        = s
+        t.newlines = newlines
+
+
+    def count_newlines__quote_with_newlines(t):
+        assert t.s[-1] != '\n'
+        assert t.ends_in_newline is t.line_marker is false
+        assert t.newlines == t.s.count('\n')
+
+        return t.newlines
+
+
+    @privileged
+    def produce_conjure_quote__with_newlines(name, Meta):
+        def conjure_quote__with_newlines(s):
+            assert s[-1] != '\n'
+
+            r = lookup_atom(s)
+
+            if r is not none:
+                return r
+
+            Quote_WithNewlines = lookup_adjusted_meta(Meta)
+
+            if Quote_WithNewlines is none:
+                class Quote_WithNewlines(Meta):
+                    __slots__ = ((
+                        'newlines',                                 #   Integer > 0
+                    ))
+
+
+                    __init__       = construct__quote_with_newlines
+                    count_newlines = count_newlines__quote_with_newlines
+
+
+                if __debug__:
+                    Quote_WithNewlines.__name__ = intern_arrange('%s_WithNewlines', Meta.__name__)
+
+                store_adjusted_meta(Meta, Quote_WithNewlines)
+
+            s = intern_string(s)
+
+            return provide_atom(s, Quote_WithNewlines(s, s.count('\n')))
+
+
+        if __debug__:
+            conjure_quote__with_newlines.__name__ = intern_arrange('conjure_%s__with_newlines', name)
+
+        return conjure_quote__with_newlines
 
 
     def count_newlines__zero(t):
@@ -238,19 +295,23 @@ def gem():
         return conjure_atom
 
 
-    conjure_double_quote = produce_conjure_atom('double-quote', DoubleQuote)
-    conjure_name         = produce_conjure_atom('name',         Identifier)
-    conjure_number       = produce_conjure_atom('number',       Number)
-    conjure_single_quote = produce_conjure_atom('single-quote', SingleQuote)
+    conjure_double_quote                = produce_conjure_atom                ('double-quote', DoubleQuote)
+    conjure_double_quote__with_newlines = produce_conjure_quote__with_newlines('double-quote', DoubleQuote)
+    conjure_name                        = produce_conjure_atom                ('name',         Identifier)
+    conjure_number                      = produce_conjure_atom                ('number',       Number)
+    conjure_single_quote                = produce_conjure_atom                ('single-quote', SingleQuote)
+    conjure_single_quote__with_newlines = produce_conjure_quote__with_newlines('single-quote', SingleQuote)
 
 
     end_of_data = EndOfData(intern_string('<end-of-data>'))
 
 
     share(
-        'conjure_double_quote',     conjure_double_quote,
-        'conjure_name',             conjure_name,
-        'conjure_number',           conjure_number,
-        'conjure_single_quote',     conjure_single_quote,
-        'end_of_data',              end_of_data,
+        'conjure_double_quote',                 conjure_double_quote,
+        'conjure_double_quote__with_newlines',  conjure_double_quote__with_newlines,
+        'conjure_name',                         conjure_name,
+        'conjure_number',                       conjure_number,
+        'conjure_single_quote',                 conjure_single_quote,
+        'conjure_single_quote__with_newlines',  conjure_single_quote__with_newlines,
+        'end_of_data',                          end_of_data,
     )

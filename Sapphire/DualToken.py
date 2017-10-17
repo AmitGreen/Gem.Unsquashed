@@ -1164,7 +1164,10 @@ def gem():
 
     share(
         'COLON__LINE_MARKER',                       COLON__LINE_MARKER,
+        'COLON_RSB',                                COLON_RSB,
+        'COMMA_RP',                                 COMMA_RP,
         'conjure_arguments_0',                      conjure_arguments_0,
+        'conjure_atom_whitespace',                  conjure_atom_whitespace,
         'conjure_colon__line_marker',               conjure_colon__line_marker,
         'conjure__comma__right_brace',              conjure__comma__right_brace,
         'conjure_comma__right_parenthesis',         conjure_comma__right_parenthesis,
@@ -1210,7 +1213,5 @@ def gem():
         'find_evoke_atom_whitespace',               find_evoke_atom_whitespace,
         'find_evoke_comma_something',               find_evoke_comma_something,
         'find_evoke_whitespace_atom',               find_evoke_whitespace_atom,
-        'COMMA_RP',                                 COMMA_RP,
         'LSB_COLON',                                LSB_COLON,
-        'COLON_RSB',                                COLON_RSB,
     )

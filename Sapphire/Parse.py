@@ -46,7 +46,7 @@ def gem():
         line('Passed#2: Total counted lines %d matches input', total)
 
 
-    def test_identical_output(data, data_many, tree_many):
+    def test_identical_output(path, data, data_many, tree_many):
         with create_StringOutput() as f:
             w = f.write
 
@@ -76,7 +76,7 @@ def gem():
             show_tree(tree_many)
 
         if test is 7:
-            test_identical_output(data, data_many, tree_many)
+            test_identical_output(path, data, data_many, tree_many)
             test_count_newlines(data_lines, tree_many)
 
         #dump_newline_meta_cache()
