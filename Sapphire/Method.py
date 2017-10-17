@@ -469,6 +469,46 @@ def gem():
 
     @share
     @privileged
+    def produce_tranform_many(name, conjure):
+        def transform(t, vary):
+            iterator = iterate(t)
+
+            i = 0
+
+            for v in iterator:
+                v__2 = v.transform(vary)
+
+                if v is not v__2:
+                    break
+
+                i += 1
+            else:
+                return t
+
+            many__2 = (
+                          []       if i is 0 else
+                          [t[0]]   if i is 1 else
+                          List(t[:i])
+                      )
+
+            append = many__2.append
+
+            append(v__2)
+
+            for v in iterator:
+                append(v.transform(vary))
+
+            return conjure(many__2)
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform_%s', name)
+
+        return transform
+
+
+    @share
+    @privileged
     def produce_transform__uncommented(name, uncommented):
         def transform(t, vary):
             if vary.remove_comments:
@@ -478,7 +518,7 @@ def gem():
 
 
         if __debug__:
-            transform.__name__ = intern_arrange('transform__%s', name)
+            transform.__name__ = intern_arrange('transform_%s', name)
 
         return transform
 

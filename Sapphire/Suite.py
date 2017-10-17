@@ -262,8 +262,13 @@ def gem():
                                      provide_suite,
                                  )
 
-
     append_cache('suite', suite_cache)
+
+
+    #
+    #   .transform
+    #
+    IfStatement_Many.transform = produce_tranform_many('if-statement-many', conjure_if_statement_many)
 
 
     share(

@@ -25,37 +25,6 @@ def gem():
                 yield
 
 
-        def transform(t, vary):
-            iterator = iterate(t)
-
-            i = 0
-
-            for v in iterator:
-                v__2 = v.transform(vary)
-
-                if v is not v__2:
-                    break
-
-                i += 1
-            else:
-                return t
-
-            many__2 = (
-                          []       if i is 0 else
-                          [t[0]]   if i is 1 else
-                          List(t[:i])
-                      )
-
-            append = many__2.append
-
-            append(v__2)
-
-            for v in iterator:
-                append(v.transform(vary))
-
-            return conjure_many_frill(many__2)
-
-
     @share
     def conjure_many_frill(many):
         if type(many) is not List:
@@ -84,6 +53,12 @@ def gem():
         r = ManyFrill(many)
 
         return provide_many_frill(r, r)
+
+
+    #
+    #   .transform
+    #
+    ManyFrill.transform = produce_tranform_many('many-frill', conjure_many_frill)
 
 
     append_cache('many-frill', many_frill_cache)
