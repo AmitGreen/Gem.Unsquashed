@@ -543,6 +543,13 @@ def gem():
                                                 line_marker = true,
                                             )
 
+    conjure_indented__yield__line_marker = produce_conjure_triple_token(
+                                               'indented__yield__line_marker',
+                                               Indented_Yield_LineMarker_1,
+
+                                               line_marker = true,
+                                           )
+
     conjure_whitespace_atom_whitespace = produce_conjure_triple_token(
                                              'whitespace_atom_whitespace',
                                              Whitespace_Atom_Whitespace,
@@ -718,6 +725,12 @@ def gem():
                                                  conjure_indented__return__line_marker,
                                                  RETURN,
                                              )
+
+    Indented_Yield_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+                                                'indented_yield__line_marker_1',
+                                                conjure_indented__yield__line_marker,
+                                                YIELD,
+                                            )
 
     #
     #   find_evoke_whitespace_atom_whitespace

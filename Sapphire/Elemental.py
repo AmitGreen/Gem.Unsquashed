@@ -1072,6 +1072,7 @@ def gem():
     W__PERCENT_SIGN__W          = conjure_action_word         ('%', ' % ')
     W__STAR_SIGN__W             = conjure_star_sign           (' * ')
     W__SUBTRACT_MODIFY__W       = conjure_action_word         ('-=', ' -= ')
+    YIELD                       = conjure_keyword_yield       ('yield')
     YIELD__W                    = conjure_keyword_yield       ('yield ')
 
 
@@ -1313,5 +1314,6 @@ def gem():
         'W__NOT__W',                                        W__NOT__W,
         'W__PERCENT_SIGN__W',                               W__PERCENT_SIGN__W,
         'W__STAR_SIGN__W',                                  W__STAR_SIGN__W,
+        'YIELD',                                            YIELD,
         'YIELD__W',                                         YIELD__W,
     )
