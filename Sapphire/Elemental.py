@@ -1043,9 +1043,11 @@ def gem():
     RP                          = conjure_right_parenthesis   (')')
     RSB                         = conjure_right_square_bracket(']')
     STAR_SIGN                   = conjure_star_sign           ('*')
+    TILDE_SIGN                  = conjure_action_word         ('~', '~')
     TRY                         = conjure_keyword_try         ('try')
     W__ADD_MODIFY__W            = conjure_action_word         ('+=', ' += ')
     W__AND__W                   = conjure_action_word         ('and', ' and ')
+    W__AND_SIGN__W              = conjure_action_word         ('&', ' & ')
     W__ASSIGN__W                = conjure_equal_sign          (' = ')
     W__AS__W                    = conjure_keyword_as          (' as ')
     W__COLON__W                 = conjure_colon               (' : ')
@@ -1064,6 +1066,7 @@ def gem():
     W__LESS_THAN_OR_EQUAL__W    = conjure_action_word         ('<=', ' <= ')
     W__NOT__W                   = conjure_keyword_not         (' not ')
     W__OR__W                    = conjure_action_word         ('or', ' or ')
+    W__OR_MODIFY__W             = conjure_action_word         ('|=', ' |= ')
     W__OR_SIGN__W               = conjure_action_word         ('|', ' | ')
     W__PERCENT_SIGN__W          = conjure_action_word         ('%', ' % ')
     W__STAR_SIGN__W             = conjure_star_sign           (' * ')
@@ -1153,7 +1156,9 @@ def gem():
 
     OperatorLessThanOrEqual.transform = produce_transform__uncommented('less_than_or_equal', W__LESS_THAN_OR_EQUAL__W)
 
+    OperatorLogicalAndSign    .transform = produce_transform__uncommented('logical_and_sign',      W__AND_SIGN__W)
     OperatorLogicalOrSign     .transform = produce_transform__uncommented('logical_or_sign',       W__OR_SIGN__W)
+    OperatorLogicalOrModify   .transform = produce_transform__uncommented('logical_or_modify',     W__OR_MODIFY__W)
     OperatorMinusSign         .transform = produce_transform__uncommented('operator_minus_sign',   MINUS_SIGN)
     OperatorPercentSign       .transform = produce_transform__uncommented('operator_percent_sign', W__PERCENT_SIGN__W)
     OperatorPlusSign          .transform = produce_transform__uncommented('operator_plus_sign',    PLUS_SIGN)
@@ -1166,6 +1171,8 @@ def gem():
                                            'operator_subtract_modify',
                                            W__SUBTRACT_MODIFY__W,
                                        )
+
+    OperatorTildeSign.transform = produce_transform__uncommented('operator_tilde_sign', TILDE_SIGN)
 
 
     find_atom_type = {

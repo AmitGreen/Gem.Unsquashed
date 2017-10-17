@@ -197,6 +197,12 @@ def gem():
                               conjure_star_argument,
                           )
 
+    TwosComplementExpression.mutate = produce_mutate__frill__a_with_priority(
+                                          'twos_complement_expression',
+                                          PRIORITY_TERNARY,
+                                          conjure_twos_complement,
+                                      )
+
 
     #
     #   .transform
