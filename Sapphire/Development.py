@@ -110,7 +110,6 @@ def gem():
     class RequireMany(Object):
         __slots__ = ((
             'vary',                     #   SapphireTransform
-            'vary_total',               #   Integer
 
             'latest_many',              #   List of String
             '_append_latest',           #   Method
@@ -124,9 +123,8 @@ def gem():
         ))
 
 
-        def __init__(t, vary, vary_total):
-            t.vary       = vary
-            t.vary_total = vary_total
+        def __init__(t, vary):
+            t.vary = vary
 
             t.latest_many    = many        = []
             t._append_latest = many.append
@@ -211,15 +209,7 @@ def gem():
 
             path = path_join('..', arrange('%s.py', module.replace('.', '/')))
 
-            vary_total = t.vary_total
-
-            if vary_total is not 0:
-                vary         = t.vary
-                t.vary_total = vary_total -1
-            else:
-                vary = 0
-
-            gem = extract_gem(module, path, vary)
+            gem = extract_gem(module, path, t.vary)
 
             t._append_twig(gem)
 
@@ -447,7 +437,7 @@ def gem():
         sardnoyx_boot_code          = extract_sardnoyx_boot(vary)
         gem_boot_code               = extract_gem_boot(vary)
 
-        require_many = RequireMany(vary, 86)
+        require_many = RequireMany(vary)
 
         require_many.process_module('Gem.Core')
         main_code.twig.find_require_gem(require_many)
