@@ -119,7 +119,7 @@ def gem():
 
 
         if __debug__:
-            mutate.__name__ = intern_arrange('mutate__%s', name)
+            mutate.__name__ = intern_arrange('mutate_%s', name)
 
         return mutate
 
@@ -141,7 +141,7 @@ def gem():
 
 
         if __debug__:
-            mutate.__name__ = intern_arrange('mutate__%s', name)
+            mutate.__name__ = intern_arrange('mutate_%s', name)
 
         return mutate
 
@@ -165,7 +165,33 @@ def gem():
 
 
         if __debug__:
-            mutate.__name__ = intern_arrange('mutate__%s', name)
+            mutate.__name__ = intern_arrange('mutate_%s', name)
+
+        return mutate
+
+
+    @share
+    @privileged
+    def produce_mutate__abcd(name, conjure):
+        def mutate(t, vary, priority):
+            a = t.a
+            b = t.b
+            c = t.c
+            d = t.d
+
+            a__2 = a.mutate(vary, priority)
+            b__2 = b.mutate(vary, priority)
+            c__2 = c.mutate(vary, priority)
+            d__2 = d.mutate(vary, priority)
+
+            if (a is a__2) and (b is b__2) and (c is c__2) and (d is d__2):
+                return t
+
+            return conjure(a__2, b__2, c__2, d__2)
+
+
+        if __debug__:
+            mutate.__name__ = intern_arrange('mutate_%s', name)
 
         return mutate
 
@@ -295,7 +321,7 @@ def gem():
 
 
         if __debug__:
-            mutate.__name__ = intern_arrange('mutate__%s', name)
+            mutate.__name__ = intern_arrange('mutate_%s', name)
 
         return mutate
 

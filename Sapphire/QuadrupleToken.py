@@ -479,6 +479,15 @@ def gem():
         )
 
 
+    #
+    #   .mutate
+    #
+    DotNameQuadruplet.mutate = produce_mutate__abcd('dot_name_quadruplet', conjure_dot_name_quadruplet)
+
+
+    #
+    #   .transform
+    #
     Indented_Else_Colon_LineMarker.transform = produce_transform__indented__keyword__colon__line_marker(
                                                    'indented_else_colon__line_marker',
                                                    conjure_indented__else__colon__line_marker,
