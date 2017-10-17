@@ -81,6 +81,16 @@ def gem():
     ] = produce_conjure_bookcase_expression('expression-statement', ExpressionStatement)
 
 
+    #
+    #   .transform
+    #
+    ExpressionStatement.transform = produce_transform__frill__a_with_priority(
+                                        'expression_statement',
+                                        PRIORITY_TERNARY_LIST,
+                                        conjure_expression_statement__with_frill,
+                                    )
+
+
     share(
         'conjure_expression_statement',     conjure_expression_statement,
     )
