@@ -36,6 +36,12 @@ def gem():
     conjure_quadruple_statement = produce_conjure_quadruple_twig('quadruple-statement', QuadrupleStatement)
 
 
+    #
+    #   .transform
+    #
+    QuadrupleStatement.transform = produce_transform__abcd('quadruple-statement', conjure_quadruple_statement)
+
+
     share(
         'conjure_quadruple_statement',  conjure_quadruple_statement,
     )
