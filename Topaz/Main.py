@@ -30,7 +30,7 @@ def gem():
 
 
     @share
-    def main():
+    def main(arguments):
         test_conjure_tree_comment()
         test_pattern()
         test_portray_raw_string()

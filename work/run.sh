@@ -35,9 +35,9 @@ Main_py=../Ivory/Main.py
 Main_py=../Tremolite/Main.py
 Main_py=../Quartz/Main.py
 #Main_py=../Dravite/Main.py
-#Main_py=../Topaz/Main.py
+Main_py=../Topaz/Main.py
 #Main_py=test3.py
-Main_py=../Sapphire/Main.py
+#Main_py=../Sapphire/Main.py
 
 show=2
 
@@ -76,24 +76,24 @@ do
         fi
     fi
 
-#?    $commandO $option <$tmp1 >&$tmp3
-#?    mv $tmp3 2o
-#?
-#?    $command3 $option <$tmp1 >&$tmp3
-#?    if cmp -s $tmp3 3
-#?    then
-#?        :
-#?    else
-#?        mv $tmp3 3
-#?
-#?        if [ $show = 3 ]; then
-#?            echo -en '\E[H\E[J'
-#?            tail -60 3
-#?        fi
-#?    fi
-#?
-#?    $command3O $option <$tmp1 >&$tmp3
-#?    mv $tmp3 3o
-#?
-#?    sleep 0.01
+    $commandO $option <$tmp1 >&$tmp3
+    mv $tmp3 2o
+
+    $command3 $option <$tmp1 >&$tmp3
+    if cmp -s $tmp3 3
+    then
+        :
+    else
+        mv $tmp3 3
+
+        if [ $show = 3 ]; then
+            echo -en '\E[H\E[J'
+            tail -60 3
+        fi
+    fi
+
+    $command3O $option <$tmp1 >&$tmp3
+    mv $tmp3 3o
+
+    sleep 0.01
 done
