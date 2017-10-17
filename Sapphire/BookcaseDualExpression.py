@@ -213,7 +213,10 @@ def gem():
         def mutate(t, vary, priority):
             if priority is PRIORITY_COMPREHENSION:
                 element_priority = PRIORITY_TERNARY
+            elif priority is PRIORITY_TERNARY:
+                pass
             else:
+                #my_line('priority: %d', priority)
                 raise_unknown_line()
 
             frill = t.frill
