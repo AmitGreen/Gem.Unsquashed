@@ -655,6 +655,13 @@ def gem():
 
 
     #
+    #   scan_variables
+    #
+    @share
+    def scan_variables__0(t, art):
+        pass
+
+    #
     #   transform
     #
     @share

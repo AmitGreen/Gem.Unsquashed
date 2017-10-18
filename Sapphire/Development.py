@@ -45,6 +45,7 @@ def gem():
 
             first_2 = first.adorn(art)
 
-            art.dump_variables()
+            art.dump_variables('globals')
 
         dump_caches('function_parameter')
+        dump_caches('local_variable')

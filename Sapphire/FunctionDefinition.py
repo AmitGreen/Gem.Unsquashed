@@ -23,10 +23,10 @@ def gem():
             child_art = create_function_symbol_table(art)
 
             a.parameters.scan_variables(child_art)
-            #b.scan_variables(child_art)
+            b           .scan_variables(child_art)
 
             if 7 is 7:
-                child_art.dump_variables()
+                child_art.dump_variables('FunctionDefinition.adorn')
 
             a__2 = a#.adorn(child_art)
             b__2 = b#.adorn(child_art)

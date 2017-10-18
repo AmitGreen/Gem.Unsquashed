@@ -132,10 +132,6 @@ def gem():
                 return conjure_function_header__with_frill(t.frill, t.name, parameters__2)
 
 
-        def scan_variables(t, art):
-            art.add_variable(t.name)
-
-
         def function_header_with_1_parameter(t, function_name, parameter_1_name):
             return (t.name.s == function_name) and (t.parameters.parameter_1_named(parameter_1_name))
 
