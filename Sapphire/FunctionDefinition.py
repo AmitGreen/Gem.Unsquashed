@@ -16,33 +16,34 @@ def gem():
         prefixed_display_name      = '#function-definition'
 
 
-        if 0:
-            def adorn(t, art, decorated = false):
-                if art.phase_function:
-                    art.add_function_definition(t)
-                    return t
+        def adorn(t, art):
+            a = t.a
+            b = t.b
 
-                a = t.a
-                b = t.b
+            child_art = create_function_symbol_table(art)
 
-                child_art = create_function_symbol_table(art)
+            a.parameters.scan_variables(child_art)
+            #b.scan_variables(child_art)
 
-                a__2 = a.adorn(child_art)
-                b__2 = b#.adorn(child_art)
+            if 7 is 7:
+                child_art.dump_variables()
 
-                if (a is a__2) and (b is b__2):
-                    return t
+            a__2 = a#.adorn(child_art)
+            b__2 = b#.adorn(child_art)
 
-                prefix = t.prefix
+            if (a is a__2) and (b is b__2):
+                return t
 
-                if prefix is 0:
-                    return conjure_function_definition(a__2, b__2)
+            prefix = t.prefix
 
-                return conjure_prefixed_function_definition(prefix, a__2, b__2)
+            if prefix is 0:
+                return conjure_function_definition(a__2, b__2)
+
+            return conjure_prefixed_function_definition(prefix, a__2, b__2)
 
 
         def scan_variables(t, art):
-            t.a.scan_variables(art)
+            art.add_variable(t.a.name.find_identifier())
 
 
         dump_token       = dump_token__ab

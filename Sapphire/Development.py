@@ -13,13 +13,15 @@ def gem():
 
     @share
     def development():
+        path = 'test.py'
+
         require_gem('Sapphire.Pattern')
 
         create_sapphire_match()
 
         require_gem('Sapphire.Parse')                       #   Must be after 'create_sapphire_match'
 
-        tree = parse_python('test.py', test = 7, show = 0)
+        tree = parse_python(path, test = 7, show = 0)
 
         assert length(tree) == 1
 
@@ -29,9 +31,19 @@ def gem():
             dump_token('development', first)
 
         if adorn is 7:
-            art = create_global_symbol_table()
+            global_scope = {
+                '__builtins__' : 1,
+                '__doc__'      : none,
+                '__file__'     : path,
+                '__name__'     : '__main__',
+                '__package__'  : none,
+            }
 
-            first__2 = first.scan_variables(art)
+            art = create_global_symbol_table(global_scope)
+
+            first.scan_variables(art)
+
+            first_2 = first.adorn(art)
 
             art.dump_variables()
 

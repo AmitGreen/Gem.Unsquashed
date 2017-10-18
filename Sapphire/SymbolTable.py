@@ -70,6 +70,19 @@ def gem():
 
             definitions_many.append(definition)
 
+
+        def dump_variables(t):
+            parameter_many = t.parameter_many
+
+            line('===  FunctionSymbolTable  ===')
+
+            if type(parameter_many) is List:
+                for v in parameter_many:
+                    line('  %r', v)
+            else:
+                line('  %r', parameter_many)
+
+
         
     class GlobalSymbolTable(Object):
         __slots__ = ((
@@ -78,8 +91,8 @@ def gem():
         ))
 
 
-        def __init__(t):
-            t.variable_map    = variable_map = {}
+        def __init__(t, variable_map):
+            t.variable_map    = variable_map
             t._store_variable = variable_map.__setitem__
 
 
@@ -102,8 +115,8 @@ def gem():
 
 
     @share
-    def create_global_symbol_table():
-        return GlobalSymbolTable()
+    def create_global_symbol_table(variable_map):
+        return GlobalSymbolTable(variable_map)
 
 
     @share
