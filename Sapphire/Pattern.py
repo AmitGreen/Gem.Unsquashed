@@ -71,7 +71,7 @@ def gem():
         next_triple_double_quote = NAME(
                                        'next_triple_double_quote',
                                        (
-                                             ONE_OR_MORE(
+                                             ZERO_OR_MORE(
                                                    PRINTABLE_MINUS('"', '\\')
                                                  | BACKSLASH + PRINTABLE
                                                  | '"' + P('"') + NOT_FOLLOWED_BY('"')
@@ -83,7 +83,7 @@ def gem():
         next_triple_single_quote = NAME(
                                        'next_single_double_quote',
                                        (
-                                             ONE_OR_MORE(
+                                             ZERO_OR_MORE(
                                                    PRINTABLE_MINUS("'", '\\')
                                                  | BACKSLASH + PRINTABLE
                                                  | "'" + P("'") + NOT_FOLLOWED_BY("'")
