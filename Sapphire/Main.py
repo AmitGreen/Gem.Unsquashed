@@ -24,7 +24,7 @@ def gem():
     require_gem('Sapphire.Core')
 
 
-    choice = 3
+    choice = 1
 
 
     def command_combine(module_name = 'hma', remove_comments = false, remove_indentation = false):

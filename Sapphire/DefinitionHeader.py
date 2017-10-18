@@ -120,6 +120,17 @@ def gem():
         is_function_header  = true
 
 
+        def adorn(t, art):
+            parameters = t.parameters
+
+            parameters__2 = parameters.adorn(art)
+
+            if parameters is parameters__2:
+                return t
+
+            return conjure_function_header__with_frill(t.frill, t.name, parameters__2)
+
+
         def function_header_with_1_parameter(t, function_name, parameter_1_name):
             return (t.name.s == function_name) and (t.parameters.parameter_1_named(parameter_1_name))
 

@@ -18,11 +18,16 @@ def gem():
 
 
     if __debug__:
-        def dump_cache(name, cache):
+        def dump_single_cache(name, cache):
             line('===  %s  ===', name)
 
             for [k, v] in iterate_items_sorted_by_key(cache):
-                line('%s:', (portray_string(k)  if k.__class__ is String else   k.display_token()))
+                line('%s:',
+                     (
+                        portray_string(k)  if k.__class__ is String  else
+                        k                  if k.__class__ is Integer else
+                        k.display_token()
+                     ))
 
                 if v.__class__ is Map:
                     for [k2, w] in iterate_items_sorted_by_key(v):
@@ -60,7 +65,7 @@ def gem():
 
             for [name, cache] in cache_many:
                 if use_name == name:
-                    dump_cache(name, cache)
+                    dump_single_cache(name, cache)
                     break
             else:
                 raise_runtime_error('did not find cache named %r', portray_string(use_name))

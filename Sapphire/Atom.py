@@ -223,6 +223,9 @@ def gem():
             return t.s
 
 
+        find_identifier = return_self
+
+
         def is_name(t, s):
             return t.s == s
 

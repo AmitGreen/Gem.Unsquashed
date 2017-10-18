@@ -3,9 +3,6 @@
 #
 @gem('Sapphire.FunctionDefinition')
 def gem():
-    require_gem('Sapphire.PrefixedDualStatement')
-
-
     class FunctionDefinition(DualTwig):
         __slots__                  = (())
         display_name               = 'function-definition'
@@ -17,6 +14,31 @@ def gem():
         is_statement               = true
         prefix                     = 0
         prefixed_display_name      = '#function-definition'
+
+
+        def adorn(t, art, decorated = false):
+            if art.phase_function:
+                art.add_function_definition(t)
+                return t
+
+            a = t.a
+            b = t.b
+
+            child_art = create_function_symbol_table(art)
+
+            a__2 = a.adorn(child_art)
+            b__2 = b#.adorn(child_art)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            prefix = t.prefix
+
+            if prefix is 0:
+                return conjure_function_definition(a__2, b__2)
+
+            return conjure_prefixed_function_definition(prefix, a__2, b__2)
+
 
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
@@ -30,7 +52,6 @@ def gem():
 
     FunctionDefinition.conjure               = static_method(conjure_function_definition)
     FunctionDefinition.conjure_prefixed_dual = static_method(conjure_prefixed_function_definition)
-    FunctionDefinition.adorn                 = produce_adorn__ab('function_Definition', conjure_function_definition)
 
     FunctionDefinition.transform = produce_transform__a__b_with_indentation(
                                        'function_Definition',

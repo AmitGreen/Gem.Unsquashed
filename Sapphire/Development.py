@@ -3,10 +3,11 @@
 #
 @gem('Sapphire.Development')
 def gem():
-    adorn = 0
-    show  = 7
+    adorn = 7
+    show  = 0
 
 
+    require_gem('Sapphire.Cache')
     require_gem('Sapphire.SymbolTable')
 
 
@@ -28,6 +29,8 @@ def gem():
             dump_token('development', first)
 
         if adorn is 7:
-            art = create_symbol_table()
+            art = create_global_symbol_table()
 
             first__2 = first.adorn(art)
+
+        dump_caches('function_parameter')

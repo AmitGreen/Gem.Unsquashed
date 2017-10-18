@@ -19,7 +19,7 @@ GEM_FILES = \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
 	../Gem/Global.py \
     ../Gem/Import.py ../Gem/IO.py \
-    ../Gem/Map.py \
+    ../Gem/Map.py ../Gem/Method.py \
     ../Gem/Output.py \
     ../Gem/Path.py ../Gem/PortrayString.py \
     ../Gem/RegularExpression.py \
@@ -164,7 +164,7 @@ clean:
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
-	rm -f m m.py m.txt
+	rm -f m map.py md.py m.txt
 	rm -f o.py
 	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
@@ -299,7 +299,8 @@ links:
 	ln -s ../OtherLicenses/README.txt                   lr.txt
 	ln -s Makefile                                      m
 	ln -s mine.txt                                      m.txt
-	ln -s ../Gem/Map.py                                 m.py
+	ln -s ../Gem/Map.py                                 map.py
+	ln -s ../Gem/Method.py                              md.py
 	ln -s ../Gem/Output.py                              o.py
 	ln -s ../Gem/Path.py                                pa.py
 	ln -s ../Gem/Path2.py                               pa2.py
