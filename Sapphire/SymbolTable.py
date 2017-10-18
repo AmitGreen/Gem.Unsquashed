@@ -73,11 +73,26 @@ def gem():
         
     class GlobalSymbolTable(Object):
         __slots__ = ((
+            'variable_map',                 #   None | Variable | Map { Symbol } of Variable
+            '_store_variable',              #   Method
         ))
 
 
-        parent         = none
-        phase_function = false
+        def __init__(t):
+            t.variable_map    = variable_map = {}
+            t._store_variable = variable_map.__setitem__
+
+
+        def add_variable(t, symbol):
+            t._store_variable(symbol.s, symbol)
+
+
+        def dump_variables(t):
+            line('===  GlobalSymbolTable  ===')
+
+            for [k, v] in iterate_items_sorted_by_key(t.variable_map):
+                line('  %s: %r', k, v)
+            
 
 
     conjure_function_parameter = produce_conjure_dual('function_parameter', FunctionParameter, function_parameter_cache)

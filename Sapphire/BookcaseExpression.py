@@ -212,10 +212,8 @@ def gem():
         is_parameters_1 =  true
 
 
-        def adorn(t, art):
+        def scan_variables(t, art):
             art.add_parameter(t.a)
-
-            return t
 
 
         def parameter_1_named(t, name):

@@ -31,6 +31,8 @@ def gem():
         if adorn is 7:
             art = create_global_symbol_table()
 
-            first__2 = first.adorn(art)
+            first__2 = first.scan_variables(art)
+
+            art.dump_variables()
 
         dump_caches('function_parameter')

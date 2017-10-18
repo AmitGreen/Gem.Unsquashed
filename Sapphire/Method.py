@@ -107,26 +107,27 @@ def gem():
     #
     #   produce_adorn
     #
-    @share
-    @privileged
-    def produce_adorn__ab(name, conjure):
-        def adorn(t, art):
-            a = t.a
-            b = t.b
+    if 0:
+        @share
+        @privileged
+        def produce_adorn__ab(name, conjure):
+            def adorn(t, art):
+                a = t.a
+                b = t.b
 
-            a__2 = a.adorn(art)
-            b__2 = b.adorn(art)
+                a__2 = a.adorn(art)
+                b__2 = b.adorn(art)
 
-            if (a is a__2) and (b is b__2):
-                return t
+                if (a is a__2) and (b is b__2):
+                    return t
 
-            return conjure(a__2, b__2)
+                return conjure(a__2, b__2)
 
 
-        if __debug__:
-            adorn.__name__ = intern_arrange('adorn_%s', name)
+            if __debug__:
+                adorn.__name__ = intern_arrange('adorn_%s', name)
 
-        return adorn
+            return adorn
 
 
     #
