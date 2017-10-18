@@ -50,12 +50,37 @@ def gem():
         display_token = portray__index_name
 
 
+    @privileged
+    def produce_add_variable(name, conjure):
+        def add_variable(t, name):
+            variable_index = t.variable_index
+
+            t.variable_index = variable_index + 1
+
+            variable = conjure(variable_index, name)
+
+            if variable_index is 0:
+                t.variable_many = variable
+                return
+
+            if variable_index is 1:
+                t.variable_many = [t.variable_many, variable]
+                return
+
+            t.variable_many.append(variable)
+
+        if __debug__:
+            add_variable.__name__ = intern_arrange('add_%s', name)
+
+        return add_variable
+
+
+
     class FunctionSymbolTable(Object):
         __slots__ = ((
             'parent',                   #   GlobalSymbolTable
             'phase_function',           #   Boolean
             'variable_index',           #   Integer
-            'parameter_many',           #   None | FunctionParameter | List of FunctionParameter
 #           'definitions_many',         #   None | FunctionDefinition+ | List of FunctionDefinition+
             'variable_many',            #   None | LocalVariable | List of LocalVariable
         ))
@@ -65,46 +90,8 @@ def gem():
             t.parent           = parent
             t.phase_function   = true
             t.variable_index   = 0
-            t.parameter_many   = none
 #           t.definitions_many = none
             t.variable_many    = 0
-
-
-        def add_parameter(t, name):
-            variable_index = t.variable_index
-
-            t.variable_index = variable_index + 1
-
-            function_parameter = conjure_function_parameter(variable_index, name)
-
-            if variable_index is 0:
-                t.parameter_many = function_parameter
-                return
-
-            if variable_index is 1:
-                t.parameter_many = [t.parameter_many, function_parameter]
-                return
-
-            t.parameter_many.append(function_parameter)
-
-
-        def add_variable(t, name):
-            variable_index = t.variable_index
-            variable_many  = t.variable_many
-
-            t.variable_index = variable_index + 1
-
-            local_variable = conjure_local_variable(variable_index, name)
-
-            if variable_many is 0:
-                t.variable_many = local_variable
-                return
-
-            if type(variable_many) is not List:
-                t.variable_many = [variable_many, local_variable]
-                return
-
-            t.variable_many.append(local_variable)
 
 
         if 0:
@@ -124,15 +111,6 @@ def gem():
 
         def dump_variables(t, name):
             line('===  FunctionSymbolTable %s  ===', name)
-
-            parameter_many = t.parameter_many
-
-            if parameter_many is not 0:
-                if type(parameter_many) is List:
-                    for v in parameter_many:
-                        line('  %r', v)
-                else:
-                    line('  %r', parameter_many)
 
             variable_many = t.variable_many
 
@@ -174,6 +152,10 @@ def gem():
 
     append_cache('function_parameter', function_parameter_cache)
     append_cache('local_variable',     local_variable_cache)
+
+
+    FunctionSymbolTable.add_parameter = produce_add_variable('parameter', conjure_function_parameter)
+    FunctionSymbolTable.add_variable  = produce_add_variable('variable',  conjure_local_variable)
 
 
     @share
