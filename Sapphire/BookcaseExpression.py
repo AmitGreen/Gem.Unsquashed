@@ -186,6 +186,7 @@ def gem():
         frill                          = LSB_RSB
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
 
 
     class MapExpression_1(BookcaseExpression):
@@ -194,6 +195,8 @@ def gem():
         frill                          = conjure_vw_frill(conjure_left_brace ('{'), conjure_right_brace('}'))
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
+        is_special_operator            = false
 
 
     class NormalIndex(BookcaseExpression):
@@ -219,6 +222,7 @@ def gem():
         frill                          = LP_RP
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
 
 
     class TailIndex(BookcaseExpression):
@@ -233,6 +237,7 @@ def gem():
         frill                          = conjure_vw_frill(LP, COMMA_RP)
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
 
 
         def mutate(t, vary, priority):

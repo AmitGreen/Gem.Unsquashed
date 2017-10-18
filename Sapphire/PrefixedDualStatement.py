@@ -19,36 +19,6 @@ def gem():
     store_prefixed_dual_twig  = prefixed_dual_twig_cache.__setitem__
 
 
-    def find_require_gem__b(t, e):
-        t.b.find_require_gem(e)
-
-
-    @privileged
-    def produce_transform__a__b_with_indentation(name, conjure):
-        def transform(t, vary):
-            a = t.a
-            b = t.b
-
-            a__2 = a.transform(vary)
-
-            if 'clique':
-                previous = vary.push_indentation()
-
-                b__2 = b.transform(vary)
-
-                vary.pop_indentation(previous)
-
-            if (a is a__2) and (b is b__2):
-                return t
-
-            return conjure(a__2, b__2)
-
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
-
-        return transform
-
-
     def transform__prefix__ab(t, vary):
         prefix = t.prefix
         a      = t.a
@@ -222,23 +192,6 @@ def gem():
         indentation      = indentation__a_indentation
 
 
-    class FunctionDefinition(DualTwig):
-        __slots__                  = (())
-        display_name               = 'function-definition'
-        is_any_else                = false
-        is_any_except_or_finally   = false
-        is_else_header_or_fragment = false
-        is_function_definition     = true
-        is_statement_header        = false
-        is_statement               = true
-        prefix                     = 0
-        prefixed_display_name      = '#function-definition'
-
-        dump_token       = dump_token__ab
-        find_require_gem = find_require_gem__b
-        indentation      = indentation__a_indentation
-
-
     @share
     class IfStatement(DualTwig):
         __slots__                  = (())
@@ -312,6 +265,7 @@ def gem():
         indentation      = indentation__a_indentation
 
 
+    @share
     @privileged
     def produce_conjure_dual_twig_functions(name, Meta):
         cache  = {}
@@ -423,10 +377,6 @@ def gem():
     ] = produce_conjure_dual_twig_functions('for-statement', ForStatement)
 
     [
-            conjure_function_definition, conjure_prefixed_function_definition,
-    ] = produce_conjure_dual_twig_functions('function-definition', FunctionDefinition)
-
-    [
             conjure_if_statement, conjure_prefixed_if_statement,
     ] = produce_conjure_dual_twig_functions('if-statement', IfStatement)
 
@@ -452,7 +402,6 @@ def gem():
     ElseIfFragment     .conjure = static_method(conjure_else_if_fragment)
     ExceptFragment     .conjure = static_method(conjure_except_fragment)
     ForStatement       .conjure = static_method(conjure_for_statement)
-    FunctionDefinition .conjure = static_method(conjure_function_definition)
     IfStatement        .conjure = static_method(conjure_if_statement)
     TryStatement       .conjure = static_method(conjure_try_statement)
     WithStatement      .conjure = static_method(conjure_with_statement)
@@ -463,8 +412,11 @@ def gem():
     ElseIfFragment     .conjure_prefixed_dual = static_method(conjure_prefixed_else_if_fragment)
     ExceptFragment     .conjure_prefixed_dual = static_method(conjure_prefixed_except_fragment)
     ForStatement       .conjure_prefixed_dual = static_method(conjure_prefixed_for_statement)
-    FunctionDefinition .conjure_prefixed_dual = static_method(conjure_prefixed_function_definition)
 
+
+    #
+    #   .adorn
+    #
 
 
     #
@@ -479,16 +431,10 @@ def gem():
     ExceptFragment .transform = produce_transform__a__b_with_indentation('except_fragment',  conjure_except_fragment)
     FinallyFragment.transform = produce_transform__a__b_with_indentation('finally_fragment', conjure_finally_fragment)
     ForStatement   .transform = produce_transform__a__b_with_indentation('for_statement',    conjure_for_statement)
-
-    FunctionDefinition.transform = produce_transform__a__b_with_indentation(
-                                       'function_Definition',
-                                       conjure_function_definition,
-                                   )
-
-    IfStatement   .transform = produce_transform__a__b_with_indentation('if_statement',    conjure_if_statement)
-    TryStatement  .transform = produce_transform__a__b_with_indentation('try_statement',   conjure_try_statement)
-    WhileStatement.transform = produce_transform__a__b_with_indentation('while_statement', conjure_while_statement)
-    WithStatement .transform = produce_transform__a__b_with_indentation('with_statement',  conjure_with_statement)
+    IfStatement    .transform = produce_transform__a__b_with_indentation('if_statement',     conjure_if_statement)
+    TryStatement   .transform = produce_transform__a__b_with_indentation('try_statement',    conjure_try_statement)
+    WhileStatement .transform = produce_transform__a__b_with_indentation('while_statement',  conjure_while_statement)
+    WithStatement  .transform = produce_transform__a__b_with_indentation('with_statement',   conjure_with_statement)
 
 
     append_cache('#dual-twig', prefixed_dual_twig_cache)
@@ -502,7 +448,6 @@ def gem():
         'conjure_else_if_fragment',                 conjure_else_if_fragment,
         'conjure_except_fragment',                  conjure_except_fragment,
         'conjure_finally_fragment',                 conjure_finally_fragment,
-        'conjure_function_definition',              conjure_function_definition,
         'conjure_if_statement',                     conjure_if_statement,
         'conjure_try_statement',                    conjure_try_statement,
         'conjure_while_statement',                  conjure_while_statement,
@@ -515,7 +460,6 @@ def gem():
         'conjure_prefixed_except_fragment',         conjure_prefixed_except_fragment,
         'conjure_prefixed_finally_fragment',        conjure_prefixed_finally_fragment,
         'conjure_prefixed_for_statement',           conjure_prefixed_for_statement,
-        'conjure_prefixed_function_definition',     conjure_prefixed_function_definition,
         'conjure_prefixed_if_statement',            conjure_prefixed_if_statement,
         'conjure_prefixed_try_statement',           conjure_prefixed_try_statement,
         'conjure_prefixed_while_statement',         conjure_prefixed_while_statement,

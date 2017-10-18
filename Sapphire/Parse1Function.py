@@ -52,7 +52,7 @@ def gem():
                        tokenize_parameter_colon_newline(),
                    )
 
-        if not token_1.is_atom:
+        if token_1.is_special_operator:
             raise_unknown_line()
 
         operator_2 = tokenize_parameter_operator()
@@ -97,7 +97,7 @@ def gem():
                        tokenize_parameter_colon_newline(),
                    )
 
-        if not token_7.is_atom:
+        if token_7.is_special_operator:
             raise_unknown_line()
 
         many       = [token_1]
@@ -149,7 +149,7 @@ def gem():
                            tokenize_parameter_colon_newline(),
                        )
 
-            if not token_7.is_atom:
+            if token_7.is_special_operator:
                 raise_unknown_line()
 
             many_frill.append(operator_7)

@@ -23,7 +23,8 @@ def gem():
         ))
 
 
-        is_colon = false
+        is_colon            = false
+        is_special_operator = false
 
 
         def __init__(t, a):

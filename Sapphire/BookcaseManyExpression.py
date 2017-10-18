@@ -248,6 +248,7 @@ def gem():
         display_name                   = '[*]'
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
 
 
     class MapExpression_Many(BookcaseManyExpression):
@@ -255,6 +256,7 @@ def gem():
         display_name                   = '{:*:}'
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
 
 
     class Parameters_Many(BookcaseManyExpression):
@@ -271,6 +273,7 @@ def gem():
         display_name                   = '{,*,}'
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
 
 
     [

@@ -438,6 +438,7 @@ def gem():
         __slots__                             = (())
         #   (
         display_name                          = ',)'
+        is_comma__right_parenthesis           = true
         is_end_of_arithmetic_expression       = true
         is_end_of_boolean_and_expression      = true
         is_end_of_boolean_or_expression       = true
@@ -587,6 +588,7 @@ def gem():
         display_name                   = 'whitespace+atom'
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
 
 
     class Whitespace_Name(BaseDualOperator):
@@ -595,6 +597,7 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
         is_identifier                  = true
+        is_special_operator            = false
 
 
         def mutate(t, vary, priority):
@@ -1176,6 +1179,7 @@ def gem():
         'conjure_dot_name_pair',                    conjure_dot_name_pair,
         'conjure_empty_list',                       conjure_empty_list,
         'conjure_empty_map',                        conjure_empty_map,
+        'conjure_empty_tuple',                      conjure_empty_tuple,
         'conjure_indented_token',                   conjure_indented_token,
         'conjure_is_not',                           conjure_is_not,
         'conjure_not_in',                           conjure_not_in,

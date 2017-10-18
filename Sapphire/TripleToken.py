@@ -497,6 +497,7 @@ def gem():
         display_name                   = 'whitespace+atom+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
 
 
     class Whitespace_Name_Whitespace(BaseTripleOperator):
@@ -505,6 +506,7 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
         is_identifier                  = true
+        is_special_operator            = false
 
 
     #

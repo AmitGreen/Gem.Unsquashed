@@ -180,6 +180,7 @@ def gem():
         is_right_brace                 = false
         is_right_parenthesis           = false
         is_right_square_bracket        = false
+        is_special_operator            = false
 
 
         def display_token(t):
@@ -215,6 +216,7 @@ def gem():
         is_colon                       = false
         is_identifier                  = true
         is_right_brace                 = false
+        is_special_operator            = false
 
 
         def display_token(t):
@@ -239,6 +241,7 @@ def gem():
         is_right_brace                 = false
         is_right_parenthesis           = false
         is_right_square_bracket        = false
+        is_special_operator            = false
 
 
         def display_token(t):
@@ -259,6 +262,7 @@ def gem():
         is_right_parenthesis           = false
         is_right_square_bracket        = false
         is_single_quote                = true
+        is_special_operator            = false
 
 
         def display_token(t):

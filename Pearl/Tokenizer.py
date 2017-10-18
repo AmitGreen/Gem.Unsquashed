@@ -132,6 +132,7 @@ def gem():
         __slots__                        = (())
         display_name                     = 'unknown-line'
         ends_in_newline                  = true
+        indentation                      = none
         is_end_of_data__or__unknown_line = true
         is_any_else                      = false
         is_any_except_or_finally         = false

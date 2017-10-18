@@ -40,7 +40,7 @@ def gem():
 
         left = parse1_atom()
 
-        if not left.is_atom:
+        if left.is_special_operator:
             raise_unknown_line()
 
         return conjure_body_statement(
@@ -63,7 +63,7 @@ def gem():
 
         left = parse1_atom()
 
-        if not left.is_atom:
+        if left.is_special_operator:
             raise_unknown_line()
 
         return conjure_else_fragment(keyword, parse1_statement_expression__atom('', left))

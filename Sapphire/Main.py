@@ -2,7 +2,6 @@
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
 def boot(module_name):
-    #test
     def execute(f):
         return f()
 

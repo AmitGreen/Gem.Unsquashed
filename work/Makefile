@@ -66,6 +66,7 @@ SAPPHIRE_FILES = \
     ../Sapphire/DefinitionHeader.py ../Sapphire/Development.py ../Sapphire/DualFrill.py ../Sapphire/DualStatement.py \
         ../Sapphire/DualToken.py ../Sapphire/DualTwig.py ../Sapphire/DumpToken.py \
     ../Sapphire/Elemental.py \
+    ../Sapphire/FunctionDefinition.py \
     ../Sapphire/Indentation.py \
     ../Sapphire/LineMarker.py \
     ../Sapphire/Main.py ../Sapphire/ManyExpression.py ../Sapphire/ManyFrill.py ../Sapphire/MemberExpression.py \
@@ -80,7 +81,7 @@ SAPPHIRE_FILES = \
     ../Sapphire/Pattern.py \
     ../Sapphire/QuadrupleFrill.py ../Sapphire/QuadrupleStatement.py ../Sapphire/QuadrupleToken.py \
         ../Sapphire/QuadrupleTwig.py \
-    ../Sapphire/Suite.py \
+    ../Sapphire/Suite.py ../Sapphire/SymbolTable.py \
     ../Sapphire/TernaryExpression.py ../Sapphire/TokenCache.py ../Sapphire/TokenTuple.py \
         ../Sapphire/Tokenize1Atom.py ../Sapphire/Tokenize1Name.py ../Sapphire/Tokenize1Operator.py \
         ../Sapphire/Tree.py ../Sapphire/TripleFrill.py ../Sapphire/TripleStatement.py ../Sapphire/TripleToken.py \
@@ -156,9 +157,9 @@ clean:
 	rm -f   h2f.py h2p.py h2ps.py h2s.py h2s.py h2t.py h2w.py
 	rm -f   h3e.py h3f.py h3p.py h3s.py h3t.py h3w.py
 	rm -f   h4f.py h4s.py h4t.py h4w.py
-	rm -f   hat.py haw.py hb.py hca.py hcb.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py
+	rm -f   hat.py haw.py hb.py hca.py hcb.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py hf.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
-	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hpa.py hpr.py hs.py
+	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmx.py hpa.py hpr.py hs.py
 	rm -f   htc.py hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
@@ -256,6 +257,7 @@ links:
 	ln -s ../Sapphire/DefinitionHeader.py               hdh.py
 	ln -s ../Sapphire/DumpToken.py                      hdt.py
 	ln -s ../Sapphire/Elemental.py                      hel.py
+	ln -s ../Sapphire/FunctionDefinition.py             hf.py
 	ln -s ../Sapphire/BookcaseExpression.py             hk.py
 	ln -s ../Sapphire/BookcaseDualExpression.py         hkd.py
 	ln -s ../Sapphire/BookcaseDualStatement.py          hkds.py
@@ -275,6 +277,7 @@ links:
 	ln -s ../Sapphire/Method.py                         hmd.py
 	ln -s ../Sapphire/MemberExpression.py               hme.py
 	ln -s ../Sapphire/ManyFrill.py                      hmf.py
+	ln -s ../Sapphire/ManyExpression.py                 hmx.py
 	ln -s ../Sapphire/Pattern.py                        hpa.py
 	ln -s ../Sapphire/Priority.py                       hpr.py
 	ln -s ../Sapphire/Suite.py                          hs.py
@@ -286,7 +289,7 @@ links:
 	ln -s ../Sapphire/Development.py                    hv.py
 	ln -s ../Sapphire/Whitespace.py                     hw.py
 	ln -s ../Sapphire/PostfixExpression.py              hx.py
-	ln -s ../Sapphire/ManyExpression.py                 hy.py
+	ln -s ../Sapphire/SymbolTable.py                    hy.py
 	ln -s ../Gem/__init__.py                            in.py
 	ln -s ../Gem/Import.py                              im.py
 	ln -s ../Ivory/Main.py                              iv.py

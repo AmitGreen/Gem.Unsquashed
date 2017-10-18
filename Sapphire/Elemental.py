@@ -28,6 +28,7 @@ def gem():
         is_colon__right_square_bracket             = false
         is_comma                                   = false
         is__comma__or__right_parenthesis           = false
+        is_comma__right_parenthesis                = false
         is_comma__right_square_bracket             = false
         is_compare_operator                        = false
         is_dot                                     = false
@@ -71,6 +72,7 @@ def gem():
         is_right_brace                             = false
         is_right_parenthesis                       = false
         is_right_square_bracket                    = false
+        is_special_operator                        = false
         is_star_sign                               = false
         is_tail_index                              = false
         is_tilde_sign                              = false
@@ -429,6 +431,7 @@ def gem():
         is_end_of_ternary_expression            = true
         is_end_of_ternary_expression_list       = true
         is_end_of_unary_expression              = true
+        is_special_operator                     = true
         keyword                                 = ':'
 
 
@@ -781,6 +784,7 @@ def gem():
         is_end_of_ternary_expression            = true
         is_end_of_unary_expression              = true
         is_right_brace                          = true
+        is_special_operator                     = true
         #  {
         keyword                                 = '}'
 
@@ -807,6 +811,7 @@ def gem():
         is_end_of_unary_expression              = true
         is__optional_comma__right_parenthesis   = true
         is_right_parenthesis                    = true
+        is_special_operator                     = true
         #  (
         keyword                                 = ')'
 
@@ -833,6 +838,7 @@ def gem():
         is_end_of_ternary_expression             = true
         is_end_of_unary_expression               = true
         is_right_square_bracket                  = true
+        is_special_operator                      = true
         #   [
         keyword                                  = ']'
 

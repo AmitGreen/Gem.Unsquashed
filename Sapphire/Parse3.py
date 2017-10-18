@@ -8,6 +8,7 @@ def gem():
 
     require_gem('Sapphire.DualStatement')
     require_gem('Sapphire.DumpToken')
+    require_gem('Sapphire.FunctionDefinition')
     require_gem('Sapphire.QuadrupleStatement')
     require_gem('Sapphire.Suite')
     require_gem('Sapphire.TripleStatement')
@@ -958,7 +959,7 @@ def gem():
             else:
                 before = 0
 
-            if v.is_end_of_data:
+            if v.is_end_of_data__or__unknown_line:
                 raise_unknown_line()
 
             indentation = v.indentation

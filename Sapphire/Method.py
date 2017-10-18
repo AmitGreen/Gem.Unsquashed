@@ -75,6 +75,11 @@ def gem():
         pass
 
 
+    @share
+    def find_require_gem__b(t, e):
+        t.b.find_require_gem(e)
+
+
     #
     #   is_name
     #
@@ -97,6 +102,31 @@ def gem():
     @share
     def portray__123(t):
         return arrange('<%s %s %r %r>', t.__class__.__name__, t.k1, t.k2, t.k3)
+
+
+    #
+    #   produce_adorn
+    #
+    @share
+    @privileged
+    def produce_adorn__ab(name, conjure):
+        def adorn(t, art):
+            a = t.a
+            b = t.b
+
+            a__2 = a.adorn(art)
+            b__2 = b.adorn(art)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure(a__2, b__2)
+
+
+        if __debug__:
+            adorn.__name__ = intern_arrange('adorn_%s', name)
+
+        return adorn
 
 
     #
@@ -344,6 +374,33 @@ def gem():
 
             return conjure(a__2, b__2)
 
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform_%s', name)
+
+        return transform
+
+
+    @share
+    @privileged
+    def produce_transform__a__b_with_indentation(name, conjure):
+        def transform(t, vary):
+            a = t.a
+            b = t.b
+
+            a__2 = a.transform(vary)
+
+            if 'clique':
+                previous = vary.push_indentation()
+
+                b__2 = b.transform(vary)
+
+                vary.pop_indentation(previous)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            return conjure(a__2, b__2)
 
         if __debug__:
             transform.__name__ = intern_arrange('transform_%s', name)

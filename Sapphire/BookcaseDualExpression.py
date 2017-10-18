@@ -194,6 +194,7 @@ def gem():
         frill                          = conjure_vwx_frill(LSB, COMMA__W, RSB)
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
 
 
     class RangeIndex(BookcaseDualExpression):
@@ -208,6 +209,7 @@ def gem():
         frill                          = conjure_vwx_frill(LP, COMMA__W, RP)
         is__atom__or__special_operator = true
         is_atom                        = true
+        is_special_operator            = false
 
 
         def mutate(t, vary, priority):

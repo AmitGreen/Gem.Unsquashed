@@ -75,24 +75,24 @@ do
         fi
     fi
 
-    $commandO $option <$tmp1 >&$tmp3
-    mv $tmp3 2o
+#    $commandO $option <$tmp1 >&$tmp3
+#    mv $tmp3 2o
+#
+#    $command3 $option <$tmp1 >&$tmp3
+#    if cmp -s $tmp3 3
+#    then
+#        :
+#    else
+#        mv $tmp3 3
+#
+#        if [ $show = 3 ]; then
+#            echo -en '\E[H\E[J'
+#            tail -60 3
+#        fi
+#    fi
+#
+#    $command3O $option <$tmp1 >&$tmp3
+#    mv $tmp3 3o
 
-    $command3 $option <$tmp1 >&$tmp3
-    if cmp -s $tmp3 3
-    then
-        :
-    else
-        mv $tmp3 3
-
-        if [ $show = 3 ]; then
-            echo -en '\E[H\E[J'
-            tail -60 3
-        fi
-    fi
-
-    $command3O $option <$tmp1 >&$tmp3
-    mv $tmp3 3o
-
-    sleep 0.01
+   sleep 0.01
 done
