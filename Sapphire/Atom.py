@@ -240,6 +240,10 @@ def gem():
         transform = transform__self
 
 
+        def write_variables(t, art):
+            art.write_variable(t)
+
+
     @share
     class Number(SapphireToken):
         __slots__                      = (())
@@ -257,7 +261,8 @@ def gem():
             return t.s
 
 
-        mutate = mutate__self
+        mutate          = mutate__self
+        scout_variables = scout_variables__0
 
 
     @share
@@ -278,7 +283,8 @@ def gem():
             return arrange('<%s>', t.s)
 
 
-        mutate = mutate__self
+        mutate          = mutate__self
+        scout_variables = scout_variables__0
 
 
     @share
