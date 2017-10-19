@@ -7,6 +7,7 @@ def gem():
 
 
     function_parameter_cache = {}
+    global_variable_cache    = {}
     local_variable_cache     = {}
 
 
@@ -35,6 +36,21 @@ def gem():
         display_token = portray__index_name
 
 
+    class GlobalVariable(Object):
+        __slots__ = ((
+            'index',                    #   Integer
+            'name',                     #   Identifier
+        ))
+
+
+        display_name = 'global'
+
+
+        __init__      = construct__index_name
+        __repr__      = portray__index_name
+        display_token = portray__index_name
+
+
     class LocalVariable(Object):
         __slots__ = ((
             'index',                    #   Integer
@@ -53,114 +69,111 @@ def gem():
     @privileged
     def produce_add_variable(name, conjure):
         def add_variable(t, name):
-            variable_index = t.variable_index
+            variable_map = t.variable_map
 
-            t.variable_index = variable_index + 1
-
-            variable = conjure(variable_index, name)
-
-            if variable_index is 0:
-                t.variable_many = variable
+            if variable_map is 0:
+                t.variable_map      = variable_map = { name : conjure(0, name) }
+                t.contains_variable = variable_map.__contains__
+                t.store_variable    = variable_map.__setitem__
                 return
 
-            if variable_index is 1:
-                t.variable_many = [t.variable_many, variable]
+            if t.contains_variable(name):
                 return
 
-            t.variable_many.append(variable)
+            t.store_variable(name, conjure(length(t.variable_map), name))
+
 
         if __debug__:
-            add_variable.__name__ = intern_arrange('add_%s', name)
+            add_variable.__name__ = intern_string(name)
 
         return add_variable
 
 
 
-    class FunctionSymbolTable(Object):
+    class BaseSymbolTable(Object):
+        __slots__ = ((
+            'function_map',             #   Zero | Map { FunctionDefinition } of Something
+            'variable_map',             #   Zero | Map { Name } of ( FunctionParameter | LocalVariable )
+            'contains_variable',        #   Vacant | Method
+            'store_variable',           #   Vacant | Method
+        ))
+
+
+        def __init__(t):
+            t.function_map = 0
+            t.variable_map = 0
+
+
+        def add_function(t, definition):
+            function_map = t.function_map
+
+            if function_map is 0:
+                t.function_map = { definition : 0 }
+            else:
+                function_map[definition] = 0
+
+            t.add_variable(definition.a.name.find_identifier())
+
+
+        def dump_variables(t, name):
+            line('===  %s %s  ===', t.display_name, name)
+
+            function_map = t.function_map
+
+            if function_map is not 0:
+                for k in iterate_values_sorted_by_key({ k.a.name.find_identifier().s : k    for k in function_map }):
+                    dump_token(k.a.name.find_identifier().s, k)
+                    line('  : %r', function_map[k])
+
+            variable_map = t.variable_map
+
+            if variable_map is not 0:
+                line('===  variables ===')
+                for k in iterate_values_sorted_by_key({ k.s : k   for k in variable_map }):
+                    line('  %s: %s', k.s, variable_map[k])
+
+
+    class FunctionSymbolTable(BaseSymbolTable):
         __slots__ = ((
             'parent',                   #   GlobalSymbolTable
-            'phase_function',           #   Boolean
-            'variable_index',           #   Integer
-#           'definitions_many',         #   None | FunctionDefinition+ | List of FunctionDefinition+
-            'variable_many',            #   None | LocalVariable | List of LocalVariable
         ))
+
+
+        display_name = 'function-symbol-table'
 
 
         def __init__(t, parent):
-            t.parent           = parent
-            t.phase_function   = true
-            t.variable_index   = 0
-#           t.definitions_many = none
-            t.variable_many    = 0
+            t.parent       = parent
+            t.function_map = 0
+            t.variable_map = 0
 
-
-        if 0:
-            def add_function_definition(t, definition):
-                definitions_many = t.definitions_many
-
-                if definitions_many is 0:
-                    t.definitions_many = definition
-                    return
-
-                if type(definitions_many) is not List:
-                    t.definitions_many = [definitions_many, definition]
-                    return
-
-                definitions_many.append(definition)
-
-
-        def dump_variables(t, name):
-            line('===  FunctionSymbolTable %s  ===', name)
-
-            variable_many = t.variable_many
-
-            if variable_many is not 0:
-                if type(variable_many) is List:
-                    for v in variable_many:
-                        line('  %r', v)
-                else:
-                    line('  %r', variable_many)
 
         
-    class GlobalSymbolTable(Object):
-        __slots__ = ((
-            'variable_map',                 #   None | Variable | Map { Symbol } of Variable
-            '_store_variable',              #   Method
-        ))
+    class GlobalSymbolTable(BaseSymbolTable):
+        __slots__ = (())
 
 
-        def __init__(t, variable_map):
-            t.variable_map    = variable_map
-            t._store_variable = variable_map.__setitem__
-
-
-        def add_variable(t, symbol):
-            t._store_variable(symbol.s, symbol)
-
-
-        def dump_variables(t, name):
-            line('===  GlobalSymbolTable %s  ===', name)
-
-            for [k, v] in iterate_items_sorted_by_key(t.variable_map):
-                line('  %s: %r', k, v)
-            
+        display_name = 'global-symbol-table'
 
 
     conjure_function_parameter = produce_conjure_dual('function_parameter', FunctionParameter, function_parameter_cache)
+    conjure_global_variable    = produce_conjure_dual('global_variable',    GlobalVariable,    global_variable_cache)
     conjure_local_variable     = produce_conjure_dual('local_variable',     LocalVariable,     local_variable_cache)
 
 
     append_cache('function_parameter', function_parameter_cache)
+    append_cache('global_variable',    global_variable_cache)
     append_cache('local_variable',     local_variable_cache)
 
 
-    FunctionSymbolTable.add_parameter = produce_add_variable('parameter', conjure_function_parameter)
-    FunctionSymbolTable.add_variable  = produce_add_variable('variable',  conjure_local_variable)
+    FunctionSymbolTable.add_parameter = produce_add_variable('add_parameter', conjure_function_parameter)
+    FunctionSymbolTable.add_variable  = produce_add_variable('add_variable',  conjure_local_variable)
+    GlobalSymbolTable  .add_variable  = produce_add_variable('add_variable',  conjure_global_variable)
 
 
     @share
-    def create_global_symbol_table(variable_map):
-        return GlobalSymbolTable(variable_map)
+    def create_global_symbol_table():
+        return GlobalSymbolTable()
 
 
     @share

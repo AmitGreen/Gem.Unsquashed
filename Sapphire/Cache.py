@@ -22,6 +22,17 @@ def gem():
             line('===  %s  ===', name)
 
             for [k, v] in iterate_items_sorted_by_key(cache):
+                if not v.__class__ is Map:
+                    line('%s: %s',
+                         (
+                            portray_string(k)  if k.__class__ is String  else
+                            k                  if k.__class__ is Integer else
+                            k.display_token()
+                         ),
+                         v.display_token())
+
+                    continue
+
                 line('%s:',
                      (
                         portray_string(k)  if k.__class__ is String  else
@@ -29,30 +40,23 @@ def gem():
                         k.display_token()
                      ))
 
-                if v.__class__ is Map:
-                    for [k2, w] in iterate_items_sorted_by_key(v):
-                        line('  %s:', k2.display_token())
+                for [k2, w] in iterate_items_sorted_by_key(v):
+                    if not w.__class__ is Map:
+                        line('  %s: %s', k2.display_token(), w.display_token())
+                        continue
 
-                        if w.__class__ is Map:
-                            for [k3, x] in iterate_items_sorted_by_key(w):
-                                line('    %s:', k3.display_token())
+                    line('  %s:', k2.display_token())
 
-                                if x.__class__ is Map:
-                                    for [k4, y] in iterate_items_sorted_by_key(x):
-                                        line('      %s:', k4.display_token())
-                                        line('        %s', y.display_token())
-
-                                    continue
-
-                                line('      %s', x.display_token())
-
+                    for [k3, x] in iterate_items_sorted_by_key(w):
+                        if not x.__class__ is Map:
+                            line('    %s: %s', k3.display_token(), x.display_token())
                             continue
 
-                        line('    %s', w.display_token())
+                        line('    %s:', k3.display_token())
 
-                    continue
-
-                line('  %s', v.display_token())
+                        for [k4, y] in iterate_items_sorted_by_key(x):
+                            line('      %s:', k4.display_token())
+                            line('        %s', y.display_token())
 
 
         @export

@@ -43,7 +43,7 @@ def gem():
 
 
         def scan_variables(t, art):
-            art.add_variable(t.a.name.find_identifier())
+            art.add_function(t)
 
 
         dump_token       = dump_token__ab

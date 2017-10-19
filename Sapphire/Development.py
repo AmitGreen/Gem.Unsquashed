@@ -31,21 +31,17 @@ def gem():
             dump_token('development', first)
 
         if adorn is 7:
-            global_scope = {
-                '__builtins__' : 1,
-                '__doc__'      : none,
-                '__file__'     : path,
-                '__name__'     : '__main__',
-                '__package__'  : none,
-            }
+            art = create_global_symbol_table()
 
-            art = create_global_symbol_table(global_scope)
-
+            for s in ['__builtins__', '__doc__', '__file__', '__name__', '__package__']:
+                art.add_variable(conjure_name(s))
+                
             first.scan_variables(art)
 
-            first_2 = first.adorn(art)
+            #first_2 = first.adorn(art)
 
             art.dump_variables('globals')
 
         dump_caches('function_parameter')
         dump_caches('local_variable')
+        dump_caches('global_variable')
