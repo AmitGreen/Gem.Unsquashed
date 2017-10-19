@@ -225,7 +225,7 @@ def gem():
                        )
 
         find_require_gem = find_require_gem__0
-        scan_variables   = scan_variables__0
+        scout_variables  = scout_variables__a
 
 
     @export

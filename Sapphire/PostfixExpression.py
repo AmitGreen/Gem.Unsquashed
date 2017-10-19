@@ -11,15 +11,21 @@ def gem():
         display_name       = 'call'
         is_call_expression = true
 
+        scout_variables = scout_variables__ab
+
 
     class IndexExpression(DualTwig):
         __slots__    = (())
         display_name = 'index'
 
+        scout_variables = scout_variables__ab
+
 
     class MethodCallExpression(DualTwig):
         __slots__    = (())
         display_name = 'method-call'
+
+        scout_variables = scout_variables__ab
 
 
     conjure_call_expression        = produce_conjure_dual_twig('call',        CallExpression)

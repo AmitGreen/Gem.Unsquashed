@@ -149,9 +149,9 @@ def gem():
                 return (t[0].indentation) or (t[1].indentation)
 
 
-        def scan_variables(t, art):
+        def scout_variables(t, art):
             for v in t:
-                v.scan_variables(art)
+                v.scout_variables(art)
 
 
         def transform(t, vary):

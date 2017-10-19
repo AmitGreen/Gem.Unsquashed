@@ -22,8 +22,8 @@ def gem():
 
             child_art = create_function_symbol_table(art)
 
-            a.parameters.scan_variables(child_art)
-            b           .scan_variables(child_art)
+            a.parameters.scout_variables(child_art)
+            b           .scout_variables(child_art)
 
             if 7 is 7:
                 child_art.dump_variables('FunctionDefinition.adorn')
@@ -42,7 +42,7 @@ def gem():
             return conjure_prefixed_function_definition(prefix, a__2, b__2)
 
 
-        def scan_variables(t, art):
+        def scout_variables(t, art):
             art.add_function(t)
 
 

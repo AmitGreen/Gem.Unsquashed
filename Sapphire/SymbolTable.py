@@ -79,27 +79,27 @@ def gem():
 
 
     @privileged
-    def produce_add_variable(name, conjure):
-        def add_variable(t, name):
+    def produce_write_variable(name, conjure):
+        def write_variable(t, name):
             variable_map = t.variable_map
 
             if variable_map is 0:
-                t.variable_map      = variable_map = { name : conjure(0, name) }
-                t.contains_variable = variable_map.__contains__
-                t.store_variable    = variable_map.__setitem__
+                t.variable_map     = variable_map = { name : conjure(0, name) }
+                t.lookup_variable  = variable_map.get
+                t.provide_variable = variable_map.setdefault
+                t.store_variable   = variable_map.__setitem__
                 return
 
-            if t.contains_variable(name):
+            if t.lookup_variable(name):
                 return
 
             t.store_variable(name, conjure(length(t.variable_map), name))
 
 
         if __debug__:
-            add_variable.__name__ = intern_string(name)
+           write_variable.__name__ = intern_string(name)
 
-        return add_variable
-
+        return write_variable
 
 
     class BaseSymbolTable(Object):
@@ -112,7 +112,8 @@ def gem():
             'store_function',           #   Vacant | Method
 
             'variable_map',             #   Zero | Map { Name } of ( FunctionParameter | LocalVariable )
-            'contains_variable',        #   Vacant | Method
+            'lookup_variable',          #   Vacant | Method
+            'provide_variable',         #   Vacant | Method
             'store_variable',           #   Vacant | Method
         ))
 
@@ -125,9 +126,10 @@ def gem():
            #t.contains_funtion = vacant
            #t.store_function   = vacant
 
-            t.variable_map      = 0
-           #t.contains_variable = vacant
-           #t.store_variable    = vacant
+            t.variable_map     = 0
+           #t.lookup_variable  = vacant
+           #t.provide_variable = vacant
+           #t.store_variable   = vacant
 
 
         def add_function(t, definition):
@@ -153,7 +155,7 @@ def gem():
                 t.store_function(definition)
                 t.append_function(definition)
 
-            t.add_variable(definition.a.name.find_identifier())
+            t.write_variable(definition.a.name.find_identifier())
 
 
         def dump_variables(t, name):
@@ -185,7 +187,7 @@ def gem():
                     line('  %s: %s', k.s, variable_map[k])
 
 
-        def scan_functions(t):
+        def scout_functions(t):
             function_many = t.function_many
 
             if function_many is 0:
@@ -194,10 +196,10 @@ def gem():
             if type(function_many) is not List:
                 t.function_map = art = create_function_symbol_table(t)
 
-                function_many.a.parameters.scan_parameters(art)
-                function_many.b           .scan_variables(art)
+                function_many.a.parameters.scout_parameters(art)
+                function_many.b           .scout_variables(art)
 
-                art.scan_functions()
+                art.scout_functions()
 
                 return
 
@@ -206,10 +208,23 @@ def gem():
 
                 t.function_map[v] = art
 
-                v.a.parameters.scan_parameters(art)
-                v.b           .scan_variables(art)
+                v.a.parameters.scout_parameters(art)
+                v.b           .scout_variables(art)
 
-                art.scan_functions()
+                art.scout_functions()
+
+
+        def fetch_variable(t, name):
+            variable_map = t.variable_map
+
+            if variable_map is 0:
+                t.variable_map     = variable_map = { name : 0 }
+                t.lookup_variable  = variable_map.get
+                t.provide_variable = variable_map.setdefault
+                t.store_variable   = variable_map.__setitem__
+                return
+
+            t.provide_variable(name, 0)
 
 
     construct_BaseSymbolTable = BaseSymbolTable.__init__
@@ -229,13 +244,12 @@ def gem():
 
             t.parent = parent
 
-        
+
     class GlobalSymbolTable(BaseSymbolTable):
         __slots__ = (())
 
 
         display_name = 'global-symbol-table'
-
 
 
     conjure_function_parameter = produce_conjure_dual('function_parameter', FunctionParameter, function_parameter_cache)
@@ -248,9 +262,9 @@ def gem():
     append_cache('local_variable',     local_variable_cache)
 
 
-    FunctionSymbolTable.add_parameter = produce_add_variable('add_parameter', conjure_function_parameter)
-    FunctionSymbolTable.add_variable  = produce_add_variable('add_variable',  conjure_local_variable)
-    GlobalSymbolTable  .add_variable  = produce_add_variable('add_variable',  conjure_global_variable)
+    FunctionSymbolTable.add_parameter  = produce_write_variable('add_parameter',  conjure_function_parameter)
+    FunctionSymbolTable.write_variable = produce_write_variable('write_variable', conjure_local_variable)
+    GlobalSymbolTable  .write_variable = produce_write_variable('write_variable', conjure_global_variable)
 
 
     @share

@@ -31,12 +31,12 @@ def gem():
             art = create_global_symbol_table()
 
             for s in ['__builtins__', '__doc__', '__file__', '__name__', '__package__']:
-                art.add_variable(conjure_name(s))
+                art.write_variable(conjure_name(s))
                 
             for v in tree:
-                v.scan_variables(art)
+                v.scout_variables(art)
 
-            art.scan_functions()
+            art.scout_functions()
 
             #first_2 = first.adorn(art)
 

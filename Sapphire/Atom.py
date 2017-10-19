@@ -230,7 +230,13 @@ def gem():
             return t.s == s
 
 
-        mutate    = mutate__self
+        mutate = mutate__self
+
+
+        def scout_variables(t, art):
+            art.fetch_variable(t)
+
+            
         transform = transform__self
 
 

@@ -374,6 +374,8 @@ def gem():
         is_arguments_0                        = true
         is_postfix_operator                   = true
 
+        scout_variables = scout_variables__0
+
 
     class Atom_Whitespace(BaseDualOperator):
         __slots__                      = (())
@@ -580,7 +582,7 @@ def gem():
 
 
         parameters_1_named = parameters_1_named__false
-        scan_parameters    = scan_parameters__0
+        scout_parameters   = scout_parameters__0
 
 
     class Whitespace_Atom(BaseDualOperator):

@@ -11,6 +11,32 @@ def gem():
 
 
     #
+    #   adorn
+    #
+    if 0:
+        @share
+        @privileged
+        def produce_adorn__ab(name, conjure):
+            def adorn(t, art):
+                a = t.a
+                b = t.b
+
+                a__2 = a.adorn(art)
+                b__2 = b.adorn(art)
+
+                if (a is a__2) and (b is b__2):
+                    return t
+
+                return conjure(a__2, b__2)
+
+
+            if __debug__:
+                adorn.__name__ = intern_arrange('adorn_%s', name)
+
+            return adorn
+
+
+    #
     #   construct
     #
     @share
@@ -96,51 +122,6 @@ def gem():
         return t
 
 
-    #
-    #   parameters_1_named
-    #
-    @share
-    def parameters_1_named__false(t, name):
-        return false
-
-
-    #
-    #   portray
-    #
-    @share
-    def portray__123(t):
-        return arrange('<%s %s %r %r>', t.__class__.__name__, t.k1, t.k2, t.k3)
-
-
-    #
-    #   produce_adorn
-    #
-    if 0:
-        @share
-        @privileged
-        def produce_adorn__ab(name, conjure):
-            def adorn(t, art):
-                a = t.a
-                b = t.b
-
-                a__2 = a.adorn(art)
-                b__2 = b.adorn(art)
-
-                if (a is a__2) and (b is b__2):
-                    return t
-
-                return conjure(a__2, b__2)
-
-
-            if __debug__:
-                adorn.__name__ = intern_arrange('adorn_%s', name)
-
-            return adorn
-
-
-    #
-    #   produce_mutate
-    #
     @share
     @privileged
     def produce_mutate__ab(name, conjure):
@@ -366,8 +347,64 @@ def gem():
 
 
     #
-    #   produce_transform
+    #   parameters_1_named
     #
+    @share
+    def parameters_1_named__false(t, name):
+        return false
+
+
+    #
+    #   portray
+    #
+    @share
+    def portray__123(t):
+        return arrange('<%s %s %r %r>', t.__class__.__name__, t.k1, t.k2, t.k3)
+
+
+    #
+    #   scout_parameters
+    #
+    @share
+    def scout_parameters__0(t, art):
+        pass
+
+
+    #
+    #   scout_variables
+    #
+    @share
+    def scout_variables__0(t, art):
+        pass
+
+
+    @share
+    def scout_variables__a(t, art):
+        t.a.scout_variables(art)
+
+
+    @share
+    def scout_variables__ab(t, art):
+        t.a.scout_variables(art)
+        t.b.scout_variables(art)
+
+
+    #
+    #   transform
+    #
+    @share
+    def transform__remove_comments_0(t, vary):
+        if vary.remove_comments:
+            return 0
+
+        return t
+
+
+    @share
+    def transform__self(t, vary):
+        return t
+
+
     @share
     @privileged
     def produce_transform__ab(name, conjure):
@@ -660,38 +697,6 @@ def gem():
             transform.__name__ = intern_arrange('transform_%s', name)
 
         return transform
-
-
-    #
-    #   scan_variables
-    #
-    @share
-    def scan_variables__0(t, art):
-        pass
-
-
-    #
-    #   scan_parameters
-    #
-    @share
-    def scan_parameters__0(t, art):
-        pass
-
-
-    #
-    #   transform
-    #
-    @share
-    def transform__remove_comments_0(t, vary):
-        if vary.remove_comments:
-            return 0
-
-        return t
-
-
-    @share
-    def transform__self(t, vary):
-        return t
 
 
     #

@@ -68,6 +68,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        scout_variables = scout_variables__ab
+
+
         def write(t, w):
             t.a.write(w)
             w(t.frill.s)
@@ -195,6 +198,10 @@ def gem():
         frill          = conjure_action_word('as', ' as ')
 
 
+        def scout_variables(t, art):
+            assert 0, 'incomplete'
+
+
     class CommaExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = ','
@@ -317,10 +324,19 @@ def gem():
         frill        = W__ASSIGN__W
 
 
+        def scout_variables(t, art):
+            assert 0, 'incomplete'
+
+
+
     class KeywordParameter(BinaryExpression):
         __slots__    = (())
         display_name = 'keyword-parameter'
         frill        = W__ASSIGN__W
+
+
+        def scout_variables(t, art):
+            assert 0, 'incomplete'
 
 
     class LogicalAndExpression_1(BinaryExpression):
