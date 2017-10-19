@@ -18,6 +18,11 @@ def gem():
         pass
 
 
+    @share
+    def add_parameters__a(t, art):
+        t.a.add_parameters(art)
+
+
     #
     #   adorn
     #
@@ -397,6 +402,12 @@ def gem():
 
 
     @share
+    def scout_variables__many(t, art):
+        for v in t.many:
+            v.scout_variables(art)
+
+
+    @share
     def scout_variables__tuple(t, art):
         for v in t:
             v.scout_variables(art)
@@ -720,3 +731,12 @@ def gem():
         t.k1.write(w)
         t.k2.write(w)
         t.k3.write(w)
+
+        
+    #
+    #   write_variables
+    #
+    @share
+    def write_variables__ab(t, art):
+        t.a.write_variables(art)
+        t.b.write_variables(art)

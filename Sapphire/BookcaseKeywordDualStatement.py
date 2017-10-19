@@ -107,6 +107,11 @@ def gem():
         add_comment = 0
 
 
+        def scout_variables(t, art):
+            t.a.write_variables(art)
+            t.b.scout_variables(art)
+
+
     class FromImportStatement(KeywordDualExpressionStatement):
         __slots__    = (())
         display_name = 'from-statement'
@@ -168,6 +173,11 @@ def gem():
         split_comment       = 1
 
         add_comment = 0
+
+
+        def scout_variables(t, art):
+            t.a.scout_variables(art)
+            t.b.write_variables(art)
 
 
     conjure_assert_statement_2 = produce_conjure_bookcase_dual_expression('assert-statement-2', AssertStatement_2)

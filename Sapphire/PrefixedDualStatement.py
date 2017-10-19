@@ -113,6 +113,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        scout_variables  = scout_variables__ab
 
 
     @share
@@ -133,6 +134,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        scout_variables  = scout_variables__ab
 
 
     @share
@@ -153,6 +155,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        scout_variables  = scout_variables__ab
 
 
     @share
@@ -173,6 +176,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        scout_variables  = scout_variables__ab
 
 
     class ForStatement(DualTwig):
@@ -191,6 +195,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        scout_variables  = scout_variables__ab
 
 
     @share
@@ -210,6 +215,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        scout_variables  = scout_variables__ab
 
 
     @share
@@ -228,6 +234,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        scout_variables  = scout_variables__ab
 
 
     class WhileStatement(DualTwig):
@@ -246,6 +253,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        scout_variables  = scout_variables__ab
 
 
     class WithStatement(DualTwig):
@@ -264,6 +272,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        scout_variables  = scout_variables__ab
 
 
     @share

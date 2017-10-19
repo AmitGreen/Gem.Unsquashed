@@ -199,13 +199,23 @@ def gem():
 
 
         def scout_variables(t, art):
-            assert 0, 'incomplete'
+            raise_runtime_error('AsFragment.scout_variables: programming error')
+
+
+        def write_variables(t, art):
+            #
+            #   t.a: not relevant yet, relevant in future when tracking what is in each module
+            #
+            t.b.write_variables(art)
 
 
     class CommaExpression_1(BinaryExpression):
         __slots__    = (())
         display_name = ','
         frill        = COMMA__W
+
+
+        write_variables = write_variables__ab
 
 
     class ComprehensionIfExpression(BinaryExpression):
@@ -325,14 +335,19 @@ def gem():
 
 
         def scout_variables(t, art):
-            assert 0, 'incomplete'
-
+            #
+            #   t.a: nothing to do yet -- later when matching function keyword parameters have something to do
+            #
+            t.b.scout_variables(art)
 
 
     class KeywordParameter(BinaryExpression):
         __slots__    = (())
         display_name = 'keyword-parameter'
         frill        = W__ASSIGN__W
+
+
+        add_parameters = add_parameters__a
 
 
         def scout_variables(t, art):

@@ -349,6 +349,7 @@ def gem():
         display_token  = display_token__indented__keyword__colon__line_marker
         dump_token     = dump_token__indented__keyword__colon__line_marker
         indentation    = BaseQuadrupleOperator.a
+        scout_variables = scout_variables__0
 
 
     @share
@@ -371,6 +372,7 @@ def gem():
         display_token  = display_token__indented__keyword__colon__line_marker
         dump_token     = dump_token__indented__keyword__colon__line_marker
         indentation    = BaseQuadrupleOperator.a
+        scout_variables = scout_variables__0
 
 
     @share
@@ -392,6 +394,7 @@ def gem():
         display_token  = display_token__indented__keyword__colon__line_marker
         dump_token     = dump_token__indented__keyword__colon__line_marker
         indentation    = BaseQuadrupleOperator.a
+        scout_variables = scout_variables__0
 
 
     @share
@@ -407,12 +410,13 @@ def gem():
         newlines            = 1
         split_comment       = 1
 
-        __init__       = construct_quadruple_operator__line_marker_1
-        add_comment    = 0
-        count_newlines = count_newlines__line_marker
-        display_token  = display_token__indented__keyword__colon__line_marker
-        dump_token     = dump_token__indented__keyword__colon__line_marker
-        indentation    = BaseQuadrupleOperator.a
+        __init__        = construct_quadruple_operator__line_marker_1
+        add_comment     = 0
+        count_newlines  = count_newlines__line_marker
+        display_token   = display_token__indented__keyword__colon__line_marker
+        dump_token      = dump_token__indented__keyword__colon__line_marker
+        indentation     = BaseQuadrupleOperator.a
+        scout_variables = scout_variables__0
 
 
     conjure_dot_name_quadruplet = produce_conjure_quadruple_token('.name-quadruplet', DotNameQuadruplet)

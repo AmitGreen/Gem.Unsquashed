@@ -243,6 +243,9 @@ def gem():
         display_name = 'arguments-*'
 
 
+        scout_variables = scout_variables__many
+
+
     class ListExpression_Many(BookcaseManyExpression):
         __slots__                      = (())
         display_name                   = '[*]'
@@ -251,12 +254,18 @@ def gem():
         is_special_operator            = false
 
 
+        scout_variables = scout_variables__many
+
+
     class MapExpression_Many(BookcaseManyExpression):
         __slots__                      = (())
         display_name                   = '{:*:}'
         is__atom__or__special_operator = true
         is_atom                        = true
         is_special_operator            = false
+
+
+        scout_variables = scout_variables__many
 
 
     class Parameters_Many(BookcaseManyExpression):
@@ -279,6 +288,9 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
         is_special_operator            = false
+
+
+        scout_variables = scout_variables__many
 
 
     [

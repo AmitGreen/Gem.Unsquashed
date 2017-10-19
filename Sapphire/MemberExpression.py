@@ -47,6 +47,14 @@ def gem():
 
 
 
+        def scout_variables(t, art):
+            t.left.scout_variables(art)
+
+            #
+            #   t.postfix - not relevant yet -- relevant later when tracking class members
+            #
+
+
         def write(t, w):
             t.left.write(w)
             w(t.postfix.s)

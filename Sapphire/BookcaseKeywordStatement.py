@@ -210,6 +210,10 @@ def gem():
         find_require_gem = find_require_gem__0
 
 
+        def scout_variables(t, art):
+            t.a.write_import(art)
+
+
     class RaiseStatement_1(KeywordExpressionStatement):
         __slots__    = (())
         display_name = 'raise-statement'

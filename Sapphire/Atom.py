@@ -247,6 +247,9 @@ def gem():
         def write_variables(t, art):
             art.write_variable(t)
 
+        
+        write_import = write_variables
+
 
     @share
     class Number(SapphireToken):

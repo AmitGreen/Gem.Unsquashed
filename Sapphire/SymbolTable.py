@@ -101,8 +101,8 @@ def gem():
         display_token = __repr__
 
 
-    #FreeVariable.k1 = FreeVariable.index
-    FreeVariable.k2 = FreeVariable.name
+    FreeVariable.k1 = FreeVariable.index
+    #FreeVariable.k2 = FreeVariable.name
 
 
     class FunctionParameter(Object):
@@ -122,8 +122,8 @@ def gem():
         display_token = portray__index_name
 
 
-    #FunctionParameter.k1 = FunctionParameter.index
-    FunctionParameter.k2 = FunctionParameter.name
+    FunctionParameter.k1 = FunctionParameter.index
+    #FunctionParameter.k2 = FunctionParameter.name
 
 
     class GlobalVariable(Object):
@@ -163,8 +163,8 @@ def gem():
         display_token = portray__index_name
 
 
-    #LocalVariable.k1 = LocalVariable.index
-    LocalVariable.k2 = LocalVariable.name
+    LocalVariable.k1 = LocalVariable.index
+    #LocalVariable.k2 = LocalVariable.name
 
 
     @privileged
@@ -251,7 +251,7 @@ def gem():
                 if t.contains_function(definition):
                     return
 
-                t.store_function(definition)
+                t.store_function(definition, 0)
                 t.append_function(definition)
 
             t.write_variable(definition.a.name.find_identifier())
@@ -308,7 +308,7 @@ def gem():
 
                 t.function_map[v] = art
 
-                v.a.parameters.scout_parameters(art)
+                v.a.parameters.add_parameters(art)
                 v.b           .scout_variables(art)
 
                 art.finalize_variables()
@@ -465,16 +465,16 @@ def gem():
 
     conjure_cell_local = produce_conjure_triple__312('cell_local', CellLocal, cell_local_cache)
 
-    conjure_free_variable = produce_conjure_dual('free_variable', FreeVariable, free_variable_cache)
+    conjure_free_variable = produce_conjure_dual__21('free_variable', FreeVariable, free_variable_cache)
 
-    conjure_function_parameter = produce_conjure_dual(
+    conjure_function_parameter = produce_conjure_dual__21(
                                      'function_parameter',
                                      FunctionParameter,
                                      function_parameter_cache,
                                  )
 
-    conjure_global_variable = produce_conjure_single('global_variable', GlobalVariable, global_variable_cache)
-    conjure_local_variable  = produce_conjure_dual  ('local_variable',  LocalVariable,  local_variable_cache)
+    conjure_global_variable = produce_conjure_single  ('global_variable', GlobalVariable, global_variable_cache)
+    conjure_local_variable  = produce_conjure_dual__21('local_variable',  LocalVariable,  local_variable_cache)
 
 
     append_cache('cell_function_parameter', cell_function_parameter_cache)
