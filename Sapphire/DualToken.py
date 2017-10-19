@@ -579,8 +579,8 @@ def gem():
         is_parameters_0 = true
 
 
-        def parameters_1_named(t, name):
-            return 0
+        parameters_1_named = parameters_1_named__false
+        scan_parameters    = scan_parameters__0
 
 
     class Whitespace_Atom(BaseDualOperator):

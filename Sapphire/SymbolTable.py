@@ -36,6 +36,10 @@ def gem():
         display_token = portray__index_name
 
 
+    #FunctionParameter.k1 = FunctionParameter.index
+    FunctionParameter.k2 = FunctionParameter.name
+
+
     class GlobalVariable(Object):
         __slots__ = ((
             'index',                    #   Integer
@@ -51,6 +55,10 @@ def gem():
         display_token = portray__index_name
 
 
+    #GlobalVariable.k1 = GlobalVariable.index
+    GlobalVariable.k2 = GlobalVariable.name
+
+
     class LocalVariable(Object):
         __slots__ = ((
             'index',                    #   Integer
@@ -64,6 +72,10 @@ def gem():
         __init__      = construct__index_name
         __repr__      = portray__index_name
         display_token = portray__index_name
+
+
+    #LocalVariable.k1 = LocalVariable.index
+    LocalVariable.k2 = LocalVariable.name
 
 
     @privileged
@@ -92,7 +104,13 @@ def gem():
 
     class BaseSymbolTable(Object):
         __slots__ = ((
-            'function_map',             #   Zero | Map { FunctionDefinition } of Something
+            'function_many',            #   Zero | FunctionDefinition | List of FunctionDefinition
+            'append_function',          #   Vacant | Method
+
+            'function_map',             #   Vacant | FunctionSymbolTable | Map { FunctionDefinition } of FunctionSymbolTable
+            'contains_function',        #   Vacant | Method
+            'store_function',           #   Vacant | Method
+
             'variable_map',             #   Zero | Map { Name } of ( FunctionParameter | LocalVariable )
             'contains_variable',        #   Vacant | Method
             'store_variable',           #   Vacant | Method
@@ -100,17 +118,40 @@ def gem():
 
 
         def __init__(t):
-            t.function_map = 0
-            t.variable_map = 0
+            t.function_many   = 0
+           #t.append_function = vacant
+
+           #t.function_map     = vacant
+           #t.contains_funtion = vacant
+           #t.store_function   = vacant
+
+            t.variable_map      = 0
+           #t.contains_variable = vacant
+           #t.store_variable    = vacant
 
 
         def add_function(t, definition):
-            function_map = t.function_map
+            function_many = t.function_many
 
-            if function_map is 0:
-                t.function_map = { definition : 0 }
+            if function_many is 0:
+                t.function_many = definition
+                t.function_map  = 0
+            elif type(function_many) is not List:
+                if function_many is definition:
+                    return
+
+                t.function_many   = many = [function_many, definition]
+                t.append_function = many.append
+
+                t.function_map      = map = { function_many : 0, definition : 0 }
+                t.contains_function = map.__contains__
+                t.store_function    = map.__setitem__
             else:
-                function_map[definition] = 0
+                if t.contains_function(definition):
+                    return
+
+                t.store_function(definition)
+                t.append_function(definition)
 
             t.add_variable(definition.a.name.find_identifier())
 
@@ -118,19 +159,60 @@ def gem():
         def dump_variables(t, name):
             line('===  %s %s  ===', t.display_name, name)
 
-            function_map = t.function_map
+            function_many = t.function_many
 
-            if function_map is not 0:
-                for k in iterate_values_sorted_by_key({ k.a.name.find_identifier().s : k    for k in function_map }):
-                    dump_token(k.a.name.find_identifier().s, k)
-                    line('  : %r', function_map[k])
+            if function_many is not 0:
+                if type(function_many) is not List:
+                    s = function_many.a.name.find_identifier().s
+
+                    dump_token(arrange('Only function: %s.%s', name, s), function_many)
+
+                    if t.function_map is not 0:
+                        t.function_map.dump_variables(arrange('%s.%s', name, s))
+                else:
+                    for [i, v] in enumerate(function_many):
+                        s = v.a.name.find_identifier().s
+                        dump_token(arrange('function #%d: %s.%s', i, name, s), v)
+
+                        t.function_map[v].dump_variables(arrange('%s.%s', name, s))
 
             variable_map = t.variable_map
 
             if variable_map is not 0:
-                line('===  variables ===')
+                line('===  variables %s  ===', name)
+
                 for k in iterate_values_sorted_by_key({ k.s : k   for k in variable_map }):
                     line('  %s: %s', k.s, variable_map[k])
+
+
+        def scan_functions(t):
+            function_many = t.function_many
+
+            if function_many is 0:
+                return
+
+            if type(function_many) is not List:
+                t.function_map = art = create_function_symbol_table(t)
+
+                function_many.a.parameters.scan_parameters(art)
+                function_many.b           .scan_variables(art)
+
+                art.scan_functions()
+
+                return
+
+            for v in function_many:
+                art = create_function_symbol_table(t)
+
+                t.function_map[v] = art
+
+                v.a.parameters.scan_parameters(art)
+                v.b           .scan_variables(art)
+
+                art.scan_functions()
+
+
+    construct_BaseSymbolTable = BaseSymbolTable.__init__
 
 
     class FunctionSymbolTable(BaseSymbolTable):
@@ -143,10 +225,9 @@ def gem():
 
 
         def __init__(t, parent):
-            t.parent       = parent
-            t.function_map = 0
-            t.variable_map = 0
+            construct_BaseSymbolTable(t)
 
+            t.parent = parent
 
         
     class GlobalSymbolTable(BaseSymbolTable):
@@ -154,6 +235,7 @@ def gem():
 
 
         display_name = 'global-symbol-table'
+
 
 
     conjure_function_parameter = produce_conjure_dual('function_parameter', FunctionParameter, function_parameter_cache)

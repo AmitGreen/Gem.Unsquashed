@@ -23,12 +23,9 @@ def gem():
 
         tree = parse_python(path, test = 7, show = 0)
 
-        assert length(tree) == 1
-
-        first = tree[0]
-
         if show is 7:
-            dump_token('development', first)
+            for v in tree:
+                dump_token('v', v)
 
         if adorn is 7:
             art = create_global_symbol_table()
@@ -36,7 +33,10 @@ def gem():
             for s in ['__builtins__', '__doc__', '__file__', '__name__', '__package__']:
                 art.add_variable(conjure_name(s))
                 
-            first.scan_variables(art)
+            for v in tree:
+                v.scan_variables(art)
+
+            art.scan_functions()
 
             #first_2 = first.adorn(art)
 

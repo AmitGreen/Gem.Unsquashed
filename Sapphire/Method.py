@@ -97,6 +97,14 @@ def gem():
 
 
     #
+    #   parameters_1_named
+    #
+    @share
+    def parameters_1_named__false(t, name):
+        return false
+
+
+    #
     #   portray
     #
     @share
@@ -659,6 +667,14 @@ def gem():
     #
     @share
     def scan_variables__0(t, art):
+        pass
+
+
+    #
+    #   scan_parameters
+    #
+    @share
+    def scan_parameters__0(t, art):
         pass
 
 

@@ -212,7 +212,7 @@ def gem():
         is_parameters_1 =  true
 
 
-        def scan_variables(t, art):
+        def scan_parameters(t, art):
             art.add_parameter(t.a)
 
 

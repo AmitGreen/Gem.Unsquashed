@@ -427,6 +427,7 @@ def gem():
         count_newlines   = count_newlines__line_marker
         dump_token       = dump_token__indented__keyword__line_marker
         find_require_gem = find_require_gem__0
+        scan_variables   = scan_variables__0
 
 
     class Indented_Raise_LineMarker_1(BaseTripleOperator):
