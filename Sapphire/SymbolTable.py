@@ -92,8 +92,13 @@ def gem():
 
 
         __init__      = construct__index_name
-        __repr__      = portray__index_name
-        display_token = portray__index_name
+
+
+        def __repr__(t):
+            return arrange('<%s#%d %s; cell #...>', t.display_name, t.index, t.name.s)
+
+
+        display_token = __repr__
 
 
     #FreeVariable.k1 = FreeVariable.index
@@ -108,6 +113,7 @@ def gem():
 
 
         display_name       = 'parameter'
+        is_cell_variable   = false
         is_global_variable = false
 
 
@@ -347,7 +353,9 @@ def gem():
         ))
 
 
-        display_name = 'function-symbol-table'
+        display_name             = 'function-symbol-table'
+        is_function_symbol_table = true
+        is_global_symbol_table   = false
 
 
         def __init__(t, parent):
@@ -363,7 +371,11 @@ def gem():
                 return
 
             parent              = t.parent
-            parent_variable_map = parent.variable_map
+
+            if parent.is_global_symbol_table:
+                parent_variable_map = parent = 0
+            else:
+                parent_variable_map = parent.variable_map
 
             for [k, v] in view_items(variable_map):
                 if v is not 0:
@@ -385,15 +397,64 @@ def gem():
                         t.cell_index += 1
                         continue
 
-                line('need to adjust %s', k)
-                assert 0, 'incomplete#3'
+                if parent is not 0:
+                    ancestor = parent.parent
+
+                    while ancestor.is_function_symbol_table:
+                        ancestor_variable_map = ancestor.variable_map
+
+                        if ancestor_variable_map is not 0:
+                            w = ancestor_variable_map.get(k)
+
+                            if w is not none:
+                                if w.is_global_variable:
+                                    break
+
+                                if not w.is_cell_variable:
+                                    ancestor_variable_map[k] = w.conjure_cell(w.index, k, ancestor.cell_index)
+                                    ancestor.cell_index += 1
+
+                                variable_map[k] = conjure_free_variable(t.cell_index, k)
+                                t.cell_index += 1
+                                break
+
+                        ancestor = ancestor.parent
+                    else:
+                        variable_map[k] = conjure_global_variable(k)
+                        continue
+
+                    if not w.is_global_variable:
+                        syncronize = parent
+
+                        while syncronize is not ancestor:
+                            syncronize_variable_map = syncronize.variable_map
+
+                            free_variable = conjure_free_variable(syncronize.cell_index, k)
+
+                            syncronize.cell_index += 1
+
+                            if syncronize_variable_map is 0:
+                                syncronize.variable_map     = variable_map = { k : free_variable }
+                                syncronize.lookup_variable  = variable_map.get
+                                syncronize.provide_variable = variable_map.setdefault
+                                syncronize.store_variable   = variable_map.__setitem__
+                            else:
+                                syncronize_variable_map[k] = free_variable
+
+                            syncronize = syncronize.parent
+
+                        continue
+
+                variable_map[k] = conjure_global_variable(k)
 
 
     class GlobalSymbolTable(BaseSymbolTable):
         __slots__ = (())
 
 
-        display_name = 'global-symbol-table'
+        display_name             = 'global-symbol-table'
+        is_function_symbol_table = false
+        is_global_symbol_table   = true
 
 
     conjure_cell_function_parameter = produce_conjure_triple__312(
@@ -418,6 +479,7 @@ def gem():
 
     append_cache('cell_function_parameter', cell_function_parameter_cache)
     append_cache('cell_local',              cell_local_cache)
+    append_cache('free_variable',           free_variable_cache)
     append_cache('function_parameter',      function_parameter_cache)
     append_cache('global_variable',         global_variable_cache)
     append_cache('local_variable',          local_variable_cache)
