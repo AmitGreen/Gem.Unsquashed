@@ -187,6 +187,8 @@ def gem():
         display_name = '(2)'
         frill        = conjure_vwx_frill(LP, COMMA__W, RP)
 
+        scout_variables = scout_variables__ab
+
 
     class ListExpression_2(BookcaseDualExpression):
         __slots__                      = (())
@@ -196,11 +198,15 @@ def gem():
         is_atom                        = true
         is_special_operator            = false
 
+        scout_variables = scout_variables__ab
+
 
     class RangeIndex(BookcaseDualExpression):
         __slots__    = (())
         display_name = 'range-index'
         frill        = conjure_vwx_frill(LSB, conjure_colon(' : '), RSB)
+
+        scout_variables = scout_variables__ab
 
 
     class TupleExpression_2(BookcaseDualExpression):
@@ -233,6 +239,9 @@ def gem():
                 return t
 
             return conjure_tuple_expression_2__with_frill(frill__2, a__2, b__2)
+
+
+        scout_variables = scout_variables__ab
 
 
     [

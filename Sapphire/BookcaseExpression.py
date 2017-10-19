@@ -173,11 +173,15 @@ def gem():
         frill          = LP_RP
         is_arguments_1 = true
 
+        scout_variables = scout_variables__a
+
 
     class HeadIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'head-index'
         frill        = conjure_vw_frill(LSB, COLON_RSB)
+
+        scout_variables = scout_variables__a
 
 
     class ListExpression_1(BookcaseExpression):
@@ -187,6 +191,8 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
         is_special_operator            = false
+
+        scout_variables = scout_variables__a
 
 
     class MapExpression_1(BookcaseExpression):
@@ -198,11 +204,15 @@ def gem():
         is_special_operator            = false
         is_special_operator            = false
 
+        scout_variables = scout_variables__a
+
 
     class NormalIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'normal-index'
         frill        = LSB_RSB
+
+        scout_variables = scout_variables__a
 
 
     class Parameters_1(BookcaseExpression):
@@ -212,8 +222,8 @@ def gem():
         is_parameters_1 =  true
 
 
-        def scout_parameters(t, art):
-            art.add_parameter(t.a)
+        def add_parameters(t, art):
+            t.a.add_parameters(art)
 
 
         def parameter_1_named(t, name):
@@ -228,11 +238,15 @@ def gem():
         is_atom                        = true
         is_special_operator            = false
 
+        scout_variables = scout_variables__a
+
 
     class TailIndex(BookcaseExpression):
         __slots__    = (())
         display_name = 'tail-index'
         frill        = conjure_vw_frill(LSB_COLON, RSB)
+
+        scout_variables = scout_variables__a
 
 
     class TupleExpression_1(BookcaseExpression):
@@ -255,6 +269,9 @@ def gem():
                 return t
 
             return conjure_tuple_expression_1__with_frill(frill__2, a__2)
+
+
+        scout_variables = scout_variables__a
 
 
     [

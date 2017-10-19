@@ -11,6 +11,14 @@ def gem():
 
 
     #
+    #   add_parameters
+    #
+    @share
+    def add_parameters__0(t, art):
+        pass
+
+
+    #
     #   adorn
     #
     if 0:
@@ -363,14 +371,6 @@ def gem():
 
 
     #
-    #   scout_parameters
-    #
-    @share
-    def scout_parameters__0(t, art):
-        pass
-
-
-    #
     #   scout_variables
     #
     @share
@@ -384,9 +384,22 @@ def gem():
 
 
     @share
+    def scout_variables__abc(t, art):
+        t.a.scout_variables(art)
+        t.b.scout_variables(art)
+        t.c.scout_variables(art)
+
+
+    @share
     def scout_variables__ab(t, art):
         t.a.scout_variables(art)
         t.b.scout_variables(art)
+
+
+    @share
+    def scout_variables__tuple(t, art):
+        for v in t:
+            v.scout_variables(art)
 
 
     #

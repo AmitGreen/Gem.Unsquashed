@@ -119,6 +119,13 @@ def gem():
         find_require_gem = find_require_gem__0
 
 
+        def scout_variables(t, art):
+            #
+            #   Nothing to do with t.a, as does not access variables
+            #
+            t.b.write_variables(art)
+
+
         def transform(t, vary):
             frill = t.frill
             a     = t.a

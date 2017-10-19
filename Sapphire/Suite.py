@@ -60,7 +60,8 @@ def gem():
             return t[0].impression
 
 
-        transform = transform__remove_comments_0
+        scout_variables = scout_variables__0
+        transform       = transform__remove_comments_0
 
 
     class EmptyLineSuite(TokenTuple):
@@ -77,6 +78,7 @@ def gem():
 
         dump_token       = dump_token__no_impression
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
         transform        = transform__remove_comments_0
 
 
@@ -106,6 +108,7 @@ def gem():
 
         dump_token       = dump_token__no_impression
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
         transform        = transform__remove_comments_0
 
 
@@ -149,9 +152,7 @@ def gem():
                 return (t[0].indentation) or (t[1].indentation)
 
 
-        def scout_variables(t, art):
-            for v in t:
-                v.scout_variables(art)
+        scout_variables = scout_variables__tuple
 
 
         def transform(t, vary):

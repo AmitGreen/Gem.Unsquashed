@@ -99,6 +99,11 @@ def gem():
                 frill.w    .dump_token(f)
 
 
+        def scout_variables(t, art):
+            t.left     .scout_variables(art)
+            t.arguments.scout_variables(art)
+
+
         def write(t, w):
             frill   = t.frill
             comment = frill.comment

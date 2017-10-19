@@ -219,6 +219,10 @@ def gem():
         is_special_operator            = false
 
 
+        def add_parameters(t, art):
+            art.add_parameter(t)
+
+
         def display_token(t):
             return t.s
 

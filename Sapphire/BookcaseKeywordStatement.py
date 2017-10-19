@@ -113,6 +113,7 @@ def gem():
         frill        = conjure_vw_frill(empty_indentation__at_sign, LINE_MARKER)
 
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__a
 
 
     @share
@@ -130,7 +131,8 @@ def gem():
         is_statement_header                   = true
         split_comment                         = 1
 
-        add_comment = 0
+        add_comment     = 0
+        scout_variables = scout_variables__a
 
 
     class DeleteStatement_1(KeywordExpressionStatement):
@@ -158,7 +160,8 @@ def gem():
         is_statement_header = true
         split_comment       = 0
 
-        add_comment  = 0
+        add_comment     = 0
+        scout_variables = scout_variables__a
 
 
     @share
@@ -175,7 +178,8 @@ def gem():
         is_statement_header      = true
         split_comment            = 0
 
-        add_comment  = 0
+        add_comment     = 0
+        scout_variables = scout_variables__a
 
 
     @share
@@ -191,7 +195,8 @@ def gem():
         is_statement_header = true
         split_comment       = 0
 
-        add_comment = 0
+        add_comment     = 0
+        scout_variables = scout_variables__a
 
 
     class ImportStatement(KeywordExpressionStatement):
@@ -214,6 +219,7 @@ def gem():
                        )
 
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__a
 
 
     class ReturnStatement(KeywordExpressionStatement):
@@ -241,7 +247,8 @@ def gem():
         is_statement_header = true
         split_comment       = 0
 
-        add_comment = 0
+        add_comment     = 0
+        scout_variables = scout_variables__a
 
 
     @share
@@ -257,7 +264,8 @@ def gem():
         is_statement_header = true
         split_comment       = 1
 
-        add_comment = 0
+        add_comment     = 0
+        scout_variables = scout_variables__a
 
 
     class YieldStatement_1(KeywordExpressionStatement):
@@ -269,6 +277,7 @@ def gem():
                        )
 
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__a
 
 
     [

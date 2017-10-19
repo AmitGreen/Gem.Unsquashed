@@ -264,6 +264,11 @@ def gem():
         display_name = 'parameter-(*)'
 
 
+        def add_parameters(t, art):
+            for v in t.many:
+                v.add_parameters(art)
+
+
         def parameter_1_named(t, name):
             return 0
 

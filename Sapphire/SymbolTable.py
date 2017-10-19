@@ -295,7 +295,7 @@ def gem():
             if type(function_many) is not List:
                 t.function_map = art = create_function_symbol_table(t)
 
-                function_many.a.parameters.scout_parameters(art)
+                function_many.a.parameters.add_parameters(art)
                 function_many.b           .scout_variables(art)
 
                 art.finalize_variables()

@@ -32,6 +32,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        scout_variables = scout_variables__abc
+
+
         def write(t, w):
             frill = t.frill
 
