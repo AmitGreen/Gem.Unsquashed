@@ -88,7 +88,8 @@ SAPPHIRE_FILES = \
         ../Sapphire/TripleTwig.py ../Sapphire/TupleOfExpression.py \
     ../Sapphire/UnaryExpression.py \
     ../Sapphire/Whitespace.py \
-    ../Sapphire/Transform.py
+    ../Sapphire/Transform.py \
+    ../Sapphire/Variable.py
     #
     #   Excludes:
     #       ../Sapphire/Match.py
@@ -157,7 +158,7 @@ clean:
 	rm -f   h2f.py h2p.py h2ps.py h2s.py h2s.py h2t.py h2w.py
 	rm -f   h3e.py h3f.py h3p.py h3s.py h3t.py h3w.py
 	rm -f   h4f.py h4s.py h4t.py h4w.py
-	rm -f   hat.py haw.py hb.py hca.py hcb.py hcc.py hcm.py hco.py hcs.py hdh.py hdt.py hel.py hf.py
+	rm -f   hat.py haw.py hb.py hca.py hcb.py hcc.py hcm.py hco.py hcs.py hd.py hdh.py hdt.py hel.py hf.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmx.py hpa.py hpr.py hs.py
 	rm -f   htc.py hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
@@ -202,6 +203,7 @@ links:
 	ln -s ../Gem/Cadence.py                             cd.py
 	ln -s ../Gem/CatchException.py                      ce.py
 	ln -s ../Gem/Core.py                                co.py
+	ln -s ../Sapphire/Development.py                    d.py
 	ln -s ../Dravite/Euclid.py                          de.py
 	ln -s ../Gem/DelayedFileOutput.py                   dfo.py
 	ln -s ../Dravite/__init__.py                        di.py
@@ -286,7 +288,7 @@ links:
 	ln -s ../Sapphire/Tree.py                           htr.py
 	ln -s ../Sapphire/TokenTuple.py                     htt.py
 	ln -s ../Sapphire/UnaryExpression.py                hu.py
-	ln -s ../Sapphire/Development.py                    hv.py
+	ln -s ../Sapphire/Variable.py                       hv.py
 	ln -s ../Sapphire/Whitespace.py                     hw.py
 	ln -s ../Sapphire/PostfixExpression.py              hx.py
 	ln -s ../Sapphire/SymbolTable.py                    hy.py

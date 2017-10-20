@@ -37,11 +37,11 @@ def gem():
             for v in tree:
                 v.scout_variables(art)
 
-            art.scout_functions()
+            art.scout_definitions()
 
             #first_2 = first.adorn(art)
 
-            #art.dump_variables('globals')
+            art.dump_variables('globals')
 
         if dump is 7:
             dump_caches('cell_function_parameter')

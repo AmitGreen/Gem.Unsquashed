@@ -3,168 +3,97 @@
 #
 @gem('Sapphire.SymbolTable')
 def gem():
-    require_gem('Sapphire.Cache')
+    require_gem('Sapphire.Variable')
 
 
-    cell_function_parameter_cache = {}
-    cell_local_cache              = {}
-    free_variable_cache           = {}
-    function_parameter_cache      = {}
-    global_variable_cache         = {}
-    local_variable_cache          = {}
+    def construct__nested_symbol_table(t, parent):
+        construct_BaseSymbolTable(t)
 
+        t.parent = parent
 
-    def construct__index_name(t, index, name):
-        t.index = index
-        t.name  = name
 
+    def finalize_variables__nested_symbol_table(t):
+        variable_map = t.variable_map
 
-    def construct__index_name__cell_index(t, index, name, cell_index):
-        t.index      = index
-        t.name       = name
-        t.cell_index = cell_index
+        if variable_map is 0:
+            return
 
+        parent = t.parent
 
-    def portray__index_name(t):
-        return arrange('<%s#%d %s>', t.display_name, t.index, t.name.s)
+        if parent.is_global_symbol_table:
+            parent_variable_map = parent = 0
+        else:
+            parent_variable_map = parent.variable_map
 
+        for [k, v] in view_items(variable_map):
+            if v is not 0:
+                continue
 
-    def portray__index_name__cell_index(t):
-        return arrange('<%s#%d %s; cell#%d>', t.display_name, t.index, t.name.s, t.cell_index)
+            if parent_variable_map is not 0:
+                w = parent_variable_map.get(k)
 
+                if w is not none:
+                    if w.is_global_variable:
+                        variable_map[k] = conjure_global_variable(k)
+                        continue
 
-    class CellFunctionParameter(Object):
-        __slots__ = ((
-            'index',                    #   Integer
-            'name',                     #   Identifier
-            'cell_index',               #   Integer
-        ))
+                    if not w.is_cell_variable:
+                        parent_variable_map[k] = w.conjure_cell(w.index, k, parent.cell_index)
+                        parent.cell_index += 1
 
+                    variable_map[k] = conjure_free_variable(t.cell_index, k)
+                    t.cell_index += 1
+                    continue
 
-        display_name       = 'cell-parameter'
-        is_cell_variable   = true
-        is_global_variable = false
+            if parent is not 0:
+                ancestor = parent.parent
 
+                while ancestor.is_function_symbol_table:
+                    ancestor_variable_map = ancestor.variable_map
 
-        __init__      = construct__index_name__cell_index
-        __repr__      = portray__index_name__cell_index
-        display_token = portray__index_name__cell_index
+                    if ancestor_variable_map is not 0:
+                        w = ancestor_variable_map.get(k)
 
+                        if w is not none:
+                            if w.is_global_variable:
+                                break
 
-    CellFunctionParameter.k1  = CellFunctionParameter.index
-    CellFunctionParameter.k2  = CellFunctionParameter.name
-    #CellFunctionParameter.k3 = CellFunctionParameter.cell_index
+                            if not w.is_cell_variable:
+                                ancestor_variable_map[k] = w.conjure_cell(w.index, k, ancestor.cell_index)
+                                ancestor.cell_index += 1
 
+                            variable_map[k] = conjure_free_variable(t.cell_index, k)
+                            t.cell_index += 1
+                            break
 
-    class CellLocal(Object):
-        __slots__ = ((
-            'index',                    #   Integer
-            'name',                     #   Identifier
-            'cell_index',               #   Integer
-        ))
+                    ancestor = ancestor.parent
+                else:
+                    variable_map[k] = conjure_global_variable(k)
+                    continue
 
+                if not w.is_global_variable:
+                    syncronize = parent
 
-        display_name       = 'cell-local'
-        is_cell_variable   = true
-        is_global_variable = false
+                    while syncronize is not ancestor:
+                        syncronize_variable_map = syncronize.variable_map
 
+                        free_variable = conjure_free_variable(syncronize.cell_index, k)
 
-        __init__      = construct__index_name__cell_index
-        __repr__      = portray__index_name__cell_index
-        display_token = portray__index_name__cell_index
+                        syncronize.cell_index += 1
 
+                        if syncronize_variable_map is 0:
+                            syncronize.variable_map     = variable_map = { k : free_variable }
+                            syncronize.lookup_variable  = variable_map.get
+                            syncronize.provide_variable = variable_map.setdefault
+                            syncronize.store_variable   = variable_map.__setitem__
+                        else:
+                            syncronize_variable_map[k] = free_variable
 
-    CellLocal.k1  = CellLocal.index
-    CellLocal.k2  = CellLocal.name
-    #CellLocal.k3 = CellLocal.cell_index
+                        syncronize = syncronize.parent
 
+                    continue
 
-    class FreeVariable(Object):
-        __slots__ = ((
-            'index',                    #   Integer
-            'name',                     #   Identifier
-        ))
-
-
-        display_name       = 'free-variable'
-        is_cell_variable   = true
-        is_global_variable = false
-
-
-        __init__      = construct__index_name
-
-
-        def __repr__(t):
-            return arrange('<%s#%d %s; cell #...>', t.display_name, t.index, t.name.s)
-
-
-        display_token = __repr__
-
-
-    FreeVariable.k1 = FreeVariable.index
-    #FreeVariable.k2 = FreeVariable.name
-
-
-    class FunctionParameter(Object):
-        __slots__ = ((
-            'index',                    #   Integer
-            'name',                     #   Identifier
-        ))
-
-
-        display_name       = 'parameter'
-        is_cell_variable   = false
-        is_global_variable = false
-
-
-        __init__      = construct__index_name
-        __repr__      = portray__index_name
-        display_token = portray__index_name
-
-
-    FunctionParameter.k1 = FunctionParameter.index
-    #FunctionParameter.k2 = FunctionParameter.name
-
-
-    class GlobalVariable(Object):
-        __slots__ = ((
-            'name',                     #   Identifier
-        ))
-
-
-        is_global_variable = true
-
-
-        def __init__(t, name):
-            t.name = name
-
-
-        def __repr__(t):
-            return arrange('<global %s>', t.name.s)
-
-
-        display_token = __repr__
-
-
-    class LocalVariable(Object):
-        __slots__ = ((
-            'index',                    #   Integer
-            'name',                     #   Identifier
-        ))
-
-
-        display_name       = 'local'
-        is_cell_variable   = false
-        is_global_variable = false
-
-
-        __init__      = construct__index_name
-        __repr__      = portray__index_name
-        display_token = portray__index_name
-
-
-    LocalVariable.k1 = LocalVariable.index
-    #LocalVariable.k2 = LocalVariable.name
+            variable_map[k] = conjure_global_variable(k)
 
 
     @privileged
@@ -198,12 +127,14 @@ def gem():
 
     class BaseSymbolTable(Object):
         __slots__ = ((
-            'function_many',            #   Zero | FunctionDefinition | List of FunctionDefinition
-            'append_function',          #   Vacant | Method
+            'definition_many',          #   Zero | (ClassDefinition | FunctionDefinition)
+                                        #       | List of (ClassDefinition | FunctionDefinition)
+            'append_definition',        #   Vacant | Method
 
-            'function_map',             #   Vacant | FunctionSymbolTable | Map { FunctionDefinition } of FunctionSymbolTable
-            'contains_function',        #   Vacant | Method
-            'store_function',           #   Vacant | Method
+            'definition_map',           #   Vacant | FunctionSymbolTable
+                                        #       | Map { ClassDefinition | FunctionDefinition } of FunctionSymbolTable
+            'contains_definition',      #   Vacant | Method
+            'store_definition',         #   Vacant | Method
 
             'variable_map',             #   Zero | Map { Name } of ( FunctionParameter | LocalVariable )
             'variable_index',           #   Integer
@@ -216,12 +147,12 @@ def gem():
 
 
         def __init__(t):
-            t.function_many   = 0
-           #t.append_function = vacant
+            t.definition_many   = 0
+           #t.append_definition = vacant
 
-           #t.function_map     = vacant
-           #t.contains_funtion = vacant
-           #t.store_function   = vacant
+           #t.definition_map      = vacant
+           #t.contains_definition = vacant
+           #t.store_definition    = vacant
 
             t.variable_index   = t.variable_map = 0
            #t.lookup_variable  = vacant
@@ -232,27 +163,27 @@ def gem():
 
 
         def add_definition(t, definition):
-            function_many = t.function_many
+            definition_many = t.definition_many
 
-            if function_many is 0:
-                t.function_many = definition
-                t.function_map  = 0
-            elif type(function_many) is not List:
-                if function_many is definition:
+            if definition_many is 0:
+                t.definition_many = definition
+                t.definition_map  = 0
+            elif type(definition_many) is not List:
+                if definition_many is definition:
                     return
 
-                t.function_many   = many = [function_many, definition]
-                t.append_function = many.append
+                t.definition_many   = many = [definition_many, definition]
+                t.append_definition = many.append
 
-                t.function_map      = map = { function_many : 0, definition : 0 }
-                t.contains_function = map.__contains__
-                t.store_function    = map.__setitem__
+                t.definition_map      = map = { definition_many : 0, definition : 0 }
+                t.contains_definition = map.__contains__
+                t.store_definition    = map.__setitem__
             else:
-                if t.contains_function(definition):
+                if t.contains_definition(definition):
                     return
 
-                t.store_function(definition, 0)
-                t.append_function(definition)
+                t.store_definition(definition, 0)
+                t.append_definition(definition)
 
             t.write_variable(definition.a.name.find_identifier())
 
@@ -260,22 +191,22 @@ def gem():
         def dump_variables(t, name):
             line('===  %s %s  ===', t.display_name, name)
 
-            function_many = t.function_many
+            definition_many = t.definition_many
 
-            if function_many is not 0:
-                if type(function_many) is not List:
-                    s = function_many.a.name.find_identifier().s
+            if definition_many is not 0:
+                if type(definition_many) is not List:
+                    s = definition_many.a.name.find_identifier().s
 
-                    dump_token(arrange('Only function: %s.%s', name, s), function_many)
+                    dump_token(arrange('Only function: %s.%s', name, s), definition_many)
 
-                    if t.function_map is not 0:
-                        t.function_map.dump_variables(arrange('%s.%s', name, s))
+                    if t.definition_map is not 0:
+                        t.definition_map.dump_variables(arrange('%s.%s', name, s))
                 else:
-                    for [i, v] in enumerate(function_many):
+                    for [i, v] in enumerate(definition_many):
                         s = v.a.name.find_identifier().s
                         dump_token(arrange('function #%d: %s.%s', i, name, s), v)
 
-                        t.function_map[v].dump_variables(arrange('%s.%s', name, s))
+                        t.definition_map[v].dump_variables(arrange('%s.%s', name, s))
 
             variable_map = t.variable_map
 
@@ -286,37 +217,43 @@ def gem():
                     line('  %s: %s', k.s, variable_map[k])
 
 
-        def scout_functions(t):
-            function_many = t.function_many
+        def scout_definitions(t):
+            definition_many = t.definition_many
 
-            if function_many is 0:
+            if definition_many is 0:
                 return
 
-            if type(function_many) is not List:
-                t.function_map = art = create_function_symbol_table(t)
+            if type(definition_many) is not List:
+                art = create_function_symbol_table(t.parent   if t.is_class_symbol_table else   t)
 
-                if function_many.is_function_definition:
-                    function_many.a.parameters.add_parameters(art)
+                if definition_many.is_function_definition:
+                    definition_many.a.parameters.add_parameters(art)
+                else:
+                    art = create_class_symbol_table(art)
 
-                function_many.b.scout_variables(art)
+                t.definition_map = art
+
+                definition_many.b.scout_variables(art)
 
                 art.finalize_variables()
-                art.scout_functions()
+                art.scout_definitions()
 
                 return
 
-            for v in function_many:
-                art = create_function_symbol_table(t)
-
-                t.function_map[v] = art
+            for v in definition_many:
+                art = create_function_symbol_table(t.parent   if t.is_class_symbol_table else   t)
 
                 if v.is_function_definition:
                     v.a.parameters.add_parameters(art)
+                else:
+                    art = create_class_symbol_table(art)
+
+                t.definition_map[v] = art
 
                 v.b.scout_variables(art)
 
                 art.finalize_variables()
-                art.scout_functions()
+                art.scout_definitions()
 
 
         def fetch_variable(t, name):
@@ -330,6 +267,60 @@ def gem():
                 return
 
             t.provide_variable(name, 0)
+
+
+    construct_BaseSymbolTable = BaseSymbolTable.__init__
+
+
+    class ClassSymbolTable(BaseSymbolTable):
+        __slots__ = ((
+            'parent',                   #   BaseSymbolTable+
+        ))
+
+
+        display_name             = 'class-symbol-table'
+        is_class_symbol_table    = true
+        is_function_symbol_table = false
+        is_global_symbol_table   = false
+        is_nested_symbol_table   = true
+
+
+        __init__           = construct__nested_symbol_table
+        finalize_variables = finalize_variables__nested_symbol_table
+
+
+        def dump_variables(t, name):
+            t.parent.dump_variables(arrange('wrapper for %s', name))
+            BaseSymbolTable.dump_variables(t, name)
+
+
+    class FunctionSymbolTable(BaseSymbolTable):
+        __slots__ = ((
+            'parent',                   #   GlobalSymbolTable
+        ))
+
+
+        display_name             = 'function-symbol-table'
+        is_class_symbol_table    = false
+        is_function_symbol_table = true
+        is_global_symbol_table   = false
+        is_nested_symbol_table   = true
+
+
+        __init__           = construct__nested_symbol_table
+        finalize_variables = finalize_variables__nested_symbol_table
+
+
+    class GlobalSymbolTable(BaseSymbolTable):
+        __slots__ = (())
+
+
+        display_name             = 'global-symbol-table'
+        is_class_symbol_table    = false
+        is_function_symbol_table = false
+        is_global_symbol_table   = true
+        is_nested_symbol_table   = false
+
 
 
         def write_variable(t, name):
@@ -348,149 +339,11 @@ def gem():
             t.store_variable(name, conjure_global_variable(name))
 
 
-    construct_BaseSymbolTable = BaseSymbolTable.__init__
+    write_variable = produce_write_variable('write_variable', conjure_local_variable)
 
-
-    class FunctionSymbolTable(BaseSymbolTable):
-        __slots__ = ((
-            'parent',                   #   GlobalSymbolTable
-        ))
-
-
-        display_name             = 'function-symbol-table'
-        is_function_symbol_table = true
-        is_global_symbol_table   = false
-
-
-        def __init__(t, parent):
-            construct_BaseSymbolTable(t)
-
-            t.parent = parent
-
-
-        def finalize_variables(t):
-            variable_map = t.variable_map
-
-            if variable_map is 0:
-                return
-
-            parent              = t.parent
-
-            if parent.is_global_symbol_table:
-                parent_variable_map = parent = 0
-            else:
-                parent_variable_map = parent.variable_map
-
-            for [k, v] in view_items(variable_map):
-                if v is not 0:
-                    continue
-
-                if parent_variable_map is not 0:
-                    w = parent_variable_map.get(k)
-
-                    if w is not none:
-                        if w.is_global_variable:
-                            variable_map[k] = conjure_global_variable(k)
-                            continue
-
-                        if not w.is_cell_variable:
-                            parent_variable_map[k] = w.conjure_cell(w.index, k, parent.cell_index)
-                            parent.cell_index += 1
-
-                        variable_map[k] = conjure_free_variable(t.cell_index, k)
-                        t.cell_index += 1
-                        continue
-
-                if parent is not 0:
-                    ancestor = parent.parent
-
-                    while ancestor.is_function_symbol_table:
-                        ancestor_variable_map = ancestor.variable_map
-
-                        if ancestor_variable_map is not 0:
-                            w = ancestor_variable_map.get(k)
-
-                            if w is not none:
-                                if w.is_global_variable:
-                                    break
-
-                                if not w.is_cell_variable:
-                                    ancestor_variable_map[k] = w.conjure_cell(w.index, k, ancestor.cell_index)
-                                    ancestor.cell_index += 1
-
-                                variable_map[k] = conjure_free_variable(t.cell_index, k)
-                                t.cell_index += 1
-                                break
-
-                        ancestor = ancestor.parent
-                    else:
-                        variable_map[k] = conjure_global_variable(k)
-                        continue
-
-                    if not w.is_global_variable:
-                        syncronize = parent
-
-                        while syncronize is not ancestor:
-                            syncronize_variable_map = syncronize.variable_map
-
-                            free_variable = conjure_free_variable(syncronize.cell_index, k)
-
-                            syncronize.cell_index += 1
-
-                            if syncronize_variable_map is 0:
-                                syncronize.variable_map     = variable_map = { k : free_variable }
-                                syncronize.lookup_variable  = variable_map.get
-                                syncronize.provide_variable = variable_map.setdefault
-                                syncronize.store_variable   = variable_map.__setitem__
-                            else:
-                                syncronize_variable_map[k] = free_variable
-
-                            syncronize = syncronize.parent
-
-                        continue
-
-                variable_map[k] = conjure_global_variable(k)
-
-
-    class GlobalSymbolTable(BaseSymbolTable):
-        __slots__ = (())
-
-
-        display_name             = 'global-symbol-table'
-        is_function_symbol_table = false
-        is_global_symbol_table   = true
-
-
-    conjure_cell_function_parameter = produce_conjure_triple__312(
-                                          'cell_function_parameter',
-                                          CellFunctionParameter,
-                                          cell_function_parameter_cache,
-                                      )
-
-    conjure_cell_local = produce_conjure_triple__312('cell_local', CellLocal, cell_local_cache)
-
-    conjure_free_variable = produce_conjure_dual__21('free_variable', FreeVariable, free_variable_cache)
-
-    conjure_function_parameter = produce_conjure_dual__21(
-                                     'function_parameter',
-                                     FunctionParameter,
-                                     function_parameter_cache,
-                                 )
-
-    conjure_global_variable = produce_conjure_single  ('global_variable', GlobalVariable, global_variable_cache)
-    conjure_local_variable  = produce_conjure_dual__21('local_variable',  LocalVariable,  local_variable_cache)
-
-
-    append_cache('cell_function_parameter', cell_function_parameter_cache)
-    append_cache('cell_local',              cell_local_cache)
-    append_cache('free_variable',           free_variable_cache)
-    append_cache('function_parameter',      function_parameter_cache)
-    append_cache('global_variable',         global_variable_cache)
-    append_cache('local_variable',          local_variable_cache)
-
-
+    ClassSymbolTable   .write_variable = write_variable
     FunctionSymbolTable.add_parameter  = produce_write_variable('add_parameter',  conjure_function_parameter)
-    FunctionSymbolTable.write_variable = produce_write_variable('write_variable', conjure_local_variable)
+    FunctionSymbolTable.write_variable = write_variable
 
 
     #
@@ -505,6 +358,9 @@ def gem():
         return GlobalSymbolTable()
 
 
-    @share
+    def create_class_symbol_table(parent):
+        return ClassSymbolTable(parent)
+
+
     def create_function_symbol_table(parent):
         return FunctionSymbolTable(parent)
