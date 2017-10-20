@@ -113,6 +113,9 @@ def gem():
         display_name = 'class-header'
 
 
+        scout_variables = scout_variables__ab
+
+
     @share
     class FunctionHeader(DefinitionHeader):
         __slots__           = (())
@@ -145,7 +148,13 @@ def gem():
     ] = produce_conjure_definition_header('function-header', FunctionHeader)
 
 
-    ClassHeader   .transform = produce_transform__frill_ab('class_header',    conjure_class_header__with_frill)
+    ClassHeader.transform = produce_transform__frill__a__b_with_priority(
+                                'class_header',
+                                PRIORITY_TERNARY_LIST,
+                                conjure_class_header__with_frill,
+                            )
+
+
     FunctionHeader.transform = produce_transform__frill_ab('function_header', conjure_function_header__with_frill)
 
 

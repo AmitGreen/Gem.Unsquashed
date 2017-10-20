@@ -982,26 +982,26 @@ def gem():
                 w = qv()
 
                 if w is not 0:
-                    comment = qb()
+                    before = qb()
 
                     if indentation is not w.indentation:
-                        if comment is not 0:
+                        if before is not 0:
                             comment = split_comment(indentation)
 
                             if comment is not 0:
-                                return conjure_mixed_suite( ((v, comment)) )
+                                return conjure_statement_suite( ((v, comment)) )
 
                         return v
 
                     wv0()
 
-                    if comment is not 0:
+                    if before is not 0:
                         wb0()
 
                         if w.is_statement_header:
                             suite_many = [
                                              v,
-                                             (conjure_mixed_suite(comment)   if type(comment) is List else   comment),
+                                             (conjure_mixed_suite(before)   if type(before) is List else   before),
                                              w.parse_header(),
                                          ]
                         else:
@@ -1009,7 +1009,7 @@ def gem():
 
                             suite_many = [
                                              v,
-                                             (conjure_mixed_suite(comment)   if type(comment) is List else   comment),
+                                             (conjure_mixed_suite(before)   if type(before) is List else   before),
                                              w,
                                          ]
                     else:
@@ -1027,26 +1027,26 @@ def gem():
                     if w.is_comment__or__empty_line:
                         w = parse_blank_lines(w)
 
-                        comment = qb()
+                        before = qb()
 
                         if indentation is not w.indentation:
                             wv(w)
 
-                            if comment is not 0:
+                            if before is not 0:
                                 comment = split_comment(indentation)
 
                                 if comment is not 0:
-                                    return conjure_mixed_suite( ((v, comment)) )
+                                    return conjure_statement_suite( ((v, comment)) )
 
                             return v
 
-                        if comment is not 0:
+                        if before is not 0:
                             wb0()
 
                             if w.is_statement_header:
                                 suite_many = [
                                                  v,
-                                                 (conjure_mixed_suite(comment)   if type(comment) is List else   comment),
+                                                 (conjure_mixed_suite(before)   if type(before) is List else   before),
                                                  w.parse_header(),
                                              ]
                             else:
@@ -1054,7 +1054,7 @@ def gem():
 
                                 suite_many = [
                                                  v,
-                                                 (conjure_mixed_suite(comment)   if type(comment) is List else   comment),
+                                                 (conjure_mixed_suite(before)   if type(before) is List else   before),
                                                  w,
                                              ]
                         else:
@@ -1083,10 +1083,10 @@ def gem():
             x = qv()
 
             if x is not 0:
-                comment = qb()
+                before = qb()
 
                 if indentation is not x.indentation:
-                    if comment is not 0:
+                    if before is not 0:
                         comment = split_comment(indentation)
 
                         if comment is not 0:
@@ -1097,9 +1097,9 @@ def gem():
                 wv0()
                 suite_append = suite_many.append
 
-                if comment is not 0:
+                if before is not 0:
                     wb0()
-                    suite_append(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
+                    suite_append(conjure_mixed_suite(before)   if type(before) is List else   before)
 
                 if x.is_statement_header:
                     suite_append(x.parse_header())
@@ -1115,12 +1115,12 @@ def gem():
                 if x.is_comment__or__empty_line:
                     x = parse_blank_lines(x)
 
-                    comment = qb()
+                    before = qb()
 
                     if indentation is not x.indentation:
                         wv(x)
 
-                        if comment is not 0:
+                        if before is not 0:
                             comment = split_comment(indentation)
 
                             if comment is not 0:
@@ -1130,9 +1130,9 @@ def gem():
 
                     suite_append = suite_many.append
 
-                    if comment is not 0:
+                    if before is not 0:
                         wb0()
-                        suite_append(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
+                        suite_append(conjure_mixed_suite(before)   if type(before) is List else   before)
                 else:
                     if indentation is not x.indentation:
                         wv(x)
@@ -1155,10 +1155,10 @@ def gem():
                 x = qv()
 
                 if x is not 0:
-                    comment = qb()
+                    before = qb()
 
                     if indentation is not x.indentation:
-                        if comment is not 0:
+                        if before is not 0:
                             comment = split_comment(indentation)
 
                             if comment is not 0:
@@ -1168,9 +1168,9 @@ def gem():
 
                     wv0()
 
-                    if comment is not 0:
+                    if before is not 0:
                         wb0()
-                        suite_append(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
+                        suite_append(conjure_mixed_suite(before)   if type(before) is List else   before)
 
                     if x.is_statement_header:
                         suite_append(x.parse_header())
@@ -1186,12 +1186,12 @@ def gem():
                     if x.is_comment__or__empty_line:
                         x = parse_blank_lines(x)
 
-                        comment = qb()
+                        before = qb()
 
                         if indentation is not x.indentation:
                             wv(x)
 
-                            if comment is not 0:
+                            if before is not 0:
                                 comment = split_comment(indentation)
 
                                 if comment is not 0:
@@ -1199,9 +1199,9 @@ def gem():
 
                             return conjure_statement_suite(suite_many)
 
-                        if comment is not 0:
+                        if before is not 0:
                             wb0()
-                            suite_append(conjure_mixed_suite(comment)   if type(comment) is List else   comment)
+                            suite_append(conjure_mixed_suite(before)   if type(before) is List else   before)
                     else:
                         if indentation is not x.indentation:
                             wv(x)
@@ -1217,46 +1217,46 @@ def gem():
 
 
         def split_comment(indentation):
-            comment = qb()
+            before = qb()
 
-            assert comment is not 0
+            assert before is not 0
 
-            if type(comment) is List:
-                total_m1 = length(comment) - 1
+            if type(before) is List:
+                total_m1 = length(before) - 1
 
                 assert total_m1 >= 1
 
-                if indentation is comment[total_m1].impression:
+                if indentation is before[total_m1].impression:
                     wb0()
-                    return conjure_mixed_suite(comment)
+                    return conjure_mixed_suite(before)
 
                 j = total_m1
 
                 while 7 is 7:
                     i = j - 1
 
-                    v = comment[i]
+                    v = before[i]
 
                     if indentation is not v.impression:
                         if j is 0:
-                            wb(comment)
+                            wb(before)
                             return 0
 
                         j = i
                         continue
 
-                    wb(comment[j]   if j is total_m1 else   comment[j : ])
+                    wb(before[j]   if j is total_m1 else   before[j : ])
 
                     if j is 1:
                         return v
 
-                    return conjure_mixed_suite(comment[ : j])
+                    return conjure_mixed_suite(before[ : j])
 
-            if indentation is comment.impression:
+            if indentation is before.impression:
                 wb0()
-                return comment
+                return before
 
-            wb(comment)
+            wb(before)
             return 0
 
 

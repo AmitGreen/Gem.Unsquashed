@@ -221,6 +221,9 @@ def gem():
         display_name = ',-*'
 
 
+        write_variables = write_variables__many
+
+
     class CompareExpression_Many(ManyExpression):
         __slots__    = (())
         display_name = 'compare-*'

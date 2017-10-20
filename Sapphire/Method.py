@@ -598,6 +598,30 @@ def gem():
 
     @share
     @privileged
+    def produce_transform__frill__a__b_with_priority(name, b_priority, conjure_with_frill):
+        def transform(t, vary):
+            frill = t.frill
+            a     = t.a
+            b     = t.b
+
+            frill__2 = frill.transform(vary)
+            a__2     = a    .transform(vary)
+            b__2     = b    .mutate(vary, b_priority)
+
+            if (frill is frill__2) and (a is a__2) and (b is b__2):
+                return t
+
+            return conjure_with_frill(frill__2, a__2, b__2)
+
+
+        if __debug__:
+            transform.__name__ = intern_arrange('transform_%s', name)
+
+        return transform
+
+
+    @share
+    @privileged
     def produce_transform__frill__ab_with_priority(name, a_priority, b_priority, conjure_with_frill):
         def transform(t, vary):
             frill = t.frill
@@ -740,3 +764,9 @@ def gem():
     def write_variables__ab(t, art):
         t.a.write_variables(art)
         t.b.write_variables(art)
+
+
+    @share
+    def write_variables__many(t, art):
+        for v in t.many:
+            v.write_variables(art)

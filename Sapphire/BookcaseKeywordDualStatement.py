@@ -180,7 +180,16 @@ def gem():
             t.b.write_variables(art)
 
 
-    conjure_assert_statement_2 = produce_conjure_bookcase_dual_expression('assert-statement-2', AssertStatement_2)
+    [
+        conjure_assert_statement_2, conjure_assert_statement_2__with_frill,
+    ] = produce_conjure_bookcase_dual_expression(
+            'assert-statement-2',
+            AssertStatement_2,
+
+            produce_conjure_with_frill = 1,
+        )
+
+
     conjure_except_header_2    = produce_conjure_bookcase_dual_expression('except-header2',     ExceptHeader_2)
 
     [
@@ -213,16 +222,22 @@ def gem():
         )
 
 
+    AssertStatement_2.transform = produce_transform__frill__ab_with_priority(
+                                      'assert_statement_2',
+                                      PRIORITY_TERNARY,
+                                      PRIORITY_TERNARY,
+                                      conjure_assert_statement_2__with_frill,
+                                  )
+
     ForHeader.transform = produce_transform__frill__ab_with_priority(
-                              'for-header',
+                              'for_header',
                               PRIORITY_NORMAL_LIST,
                               PRIORITY_TERNARY_LIST,
                               conjure_for_header__with_frill,
                          )
 
-
     WithHeader_2.transform = produce_transform__frill__ab_with_priority(
-                                 'with-header-2',
+                                 'with_header_2',
                                  PRIORITY_TERNARY,
                                  PRIORITY_NORMAL,
                                  conjure_with_header_2__with_frill,

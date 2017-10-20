@@ -75,6 +75,7 @@ def gem():
         dump_token       = dump_token__ab
         find_require_gem = find_require_gem__b
         indentation      = indentation__a_indentation
+        scout_variables  = scout_variables__ab
 
 
     class DecoratedDefinition(DualTwig):

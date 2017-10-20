@@ -38,6 +38,7 @@ def gem():
         indentation                = none
         is_any_else                = false
         is_any_except_or_finally   = false
+        is_comment__or__empty_line = true
         is_comment_suite           = true
         is_else_header_or_fragment = false
         is_statement_header        = false
@@ -71,6 +72,7 @@ def gem():
         indentation                = none
         is_any_else                = false
         is_any_except_or_finally   = false
+        is_comment__or__empty_line = true
         is_else_header_or_fragment = false
         is_empty_line_suite        = true
         is_statement_header        = false
@@ -105,6 +107,14 @@ def gem():
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
+
+
+        def __init__(t, many):
+            for v in many:
+                assert v.is_comment__or__empty_line
+
+            TokenTuple.__init__(t, many)
+
 
         dump_token       = dump_token__no_impression
         find_require_gem = find_require_gem__0

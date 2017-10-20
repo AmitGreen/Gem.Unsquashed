@@ -16,6 +16,13 @@ def gem():
         prefixed_display_name      = '#function-definition'
 
 
+        def __init__(t, a, b):
+            assert b is not 0
+
+            t.a = a
+            t.b = b
+
+
         def adorn(t, art):
             a = t.a
             b = t.b

@@ -3,9 +3,9 @@
 #
 @gem('Sapphire.Development')
 def gem():
-    adorn = 7
-    dump  = 7
-    show  = 0
+    adorn = 0
+    dump  = 0
+    show  = 7
 
 
     require_gem('Sapphire.Cache')
