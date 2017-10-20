@@ -377,6 +377,7 @@ def gem():
         count_newlines   = count_newlines__line_marker
         dump_token       = dump_token__indented__keyword__line_marker
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
 
 
     class Indented_Continue_LineMarker_1(BaseTripleOperator):
@@ -399,13 +400,15 @@ def gem():
         count_newlines   = count_newlines__line_marker
         dump_token       = dump_token__indented__keyword__line_marker
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
 
 
     class Indented_Else_Colon(BaseTripleOperator):
-        __slots__   = (())
-        indentation = BaseTripleOperator.a
-
+        __slots__    = (())
         display_name = r'indented-else:'
+        indentation  = BaseTripleOperator.a
+
+        scout_variables = scout_variables__0
 
 
     class Indented_Pass_LineMarker_1(BaseTripleOperator):
@@ -449,6 +452,7 @@ def gem():
         count_newlines   = count_newlines__line_marker
         dump_token       = dump_token__indented__keyword__line_marker
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
 
 
     class Indented_Return_LineMarker_1(BaseTripleOperator):
@@ -470,6 +474,7 @@ def gem():
         count_newlines   = count_newlines__line_marker
         dump_token       = dump_token__indented__keyword__line_marker
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
 
 
     class Indented_Yield_LineMarker_1(BaseTripleOperator):
@@ -491,6 +496,7 @@ def gem():
         count_newlines   = count_newlines__line_marker
         dump_token       = dump_token__indented__keyword__line_marker
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
 
 
     class Whitespace_Atom_Whitespace(BaseTripleOperator):

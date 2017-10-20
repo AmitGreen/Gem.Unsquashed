@@ -64,7 +64,7 @@ def gem():
             #
             #   t.a: comment - no need to scout
             #
-            t.b.scout_variable(art)
+            t.b.scout_variables(art)
 
 
     conjure_commented_statement = produce_conjure_dual_twig('#statement',     CommentedStatement)

@@ -593,6 +593,9 @@ def gem():
         is_special_operator            = false
 
 
+        scout_variables = scout_variables__b
+
+
     class Whitespace_Name(BaseDualOperator):
         __slots__                      = (())
         display_name                   = 'whitespace+name'

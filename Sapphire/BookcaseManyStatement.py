@@ -110,6 +110,19 @@ def gem():
         find_require_gem = find_require_gem__0
 
 
+        def scout_variables(t, art):
+            i          = 0
+            maximum_m1 = length(t.many) - 1
+
+            for v in t.many:
+                if i == maximum_m1:
+                    v.scout_variables(art)
+                    return
+
+                v.write_variables(art)
+                i += 1
+
+
         @property
         def indentation(t):
             return t.frill.begin

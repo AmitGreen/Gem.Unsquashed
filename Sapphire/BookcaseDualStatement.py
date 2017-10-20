@@ -116,7 +116,10 @@ def gem():
         __slots__        = (())
         display_name     = 'assign-1'
         frill            = conjure_vwx_frill(empty_indentation, W__ASSIGN__W, LINE_MARKER)
+
+
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__a_with_write__b
 
 
     class ModifyStatement(DualExpressionStatement):
@@ -128,6 +131,7 @@ def gem():
                            LINE_MARKER,
                        )
 
+        scout_variables  = scout_variables__a_with_write__b
         find_require_gem = find_require_gem__0
 
 

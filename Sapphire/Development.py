@@ -3,9 +3,9 @@
 #
 @gem('Sapphire.Development')
 def gem():
-    adorn = 0
+    adorn = 7
     dump  = 0
-    show  = 7
+    show  = 0
 
 
     require_gem('Sapphire.Cache')
@@ -33,7 +33,7 @@ def gem():
 
             for s in ['__builtins__', '__doc__', '__file__', '__name__', '__package__']:
                 art.write_variable(conjure_name(s))
-                
+
             for v in tree:
                 v.scout_variables(art)
 

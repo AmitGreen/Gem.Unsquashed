@@ -142,19 +142,25 @@ def gem():
         display_name = '-'
         frill        = conjure_action_word('-', '-')
 
+        scout_variables = scout_variables__a
+
 
     class NotExpression(UnaryExpression):
         __slots__    = (())
         display_name = 'not'
         frill        = NOT__W
 
-        mutate = produce_mutate__frill__a__priority('not-expression', PRIORITY_UNARY)
+        mutate          = produce_mutate__frill__a__priority('not-expression', PRIORITY_UNARY)
+        scout_variables = scout_variables__a
 
 
     class StarArgument(UnaryExpression):
         __slots__    = (())
         display_name = '*-argument'
         frill        = conjure_star_sign('*')
+
+        scout_variables = scout_variables__a
+
 
 
     class StarParameter(UnaryExpression):
@@ -168,6 +174,8 @@ def gem():
         __slots__    = (())
         display_name = '~'
         frill        = conjure_action_word('~', '~')
+
+        scout_variables = scout_variables__a
 
 
     conjure_negative_expression = produce_conjure_unary_expression('negative',        NegativeExpression)

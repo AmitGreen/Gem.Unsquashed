@@ -187,7 +187,8 @@ def gem():
             return arrange('<%s>', t.s)
 
 
-        mutate = mutate__self
+        mutate          = mutate__self
+        scout_variables = scout_variables__0
 
 
     class EndOfData(SapphireToken):
@@ -240,14 +241,14 @@ def gem():
         def scout_variables(t, art):
             art.fetch_variable(t)
 
-            
+
         transform = transform__self
 
 
         def write_variables(t, art):
             art.write_variable(t)
 
-        
+
         write_import = write_variables
 
 

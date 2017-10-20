@@ -67,7 +67,7 @@ def gem():
         number              = NAME('number', '0' | ANY_OF('1-9') + ZERO_OR_MORE(ANY_OF('0-9')))
         period              = NAME('period', '.')
 
-        
+
         next_triple_double_quote = NAME(
                                        'next_triple_double_quote',
                                        (
