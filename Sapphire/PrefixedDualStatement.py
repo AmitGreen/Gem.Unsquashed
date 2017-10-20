@@ -61,23 +61,6 @@ def gem():
         return t.conjure_prefixed_dual(prefix__2, a__2, b__2)
 
 
-    class ClassDefinition(DualTwig):
-        __slots__                  = (())
-        display_name               = 'class-definition'
-        is_any_else                = false
-        is_any_except_or_finally   = false
-        is_else_header_or_fragment = false
-        is_statement_header        = false
-        is_statement               = true
-        prefix                     = 0
-        prefixed_display_name      = '#class-definition'
-
-        dump_token       = dump_token__ab
-        find_require_gem = find_require_gem__b
-        indentation      = indentation__a_indentation
-        scout_variables  = scout_variables__ab
-
-
     class DecoratedDefinition(DualTwig):
         __slots__                  = (())
         display_name               = 'decorated-definition'
@@ -359,9 +342,6 @@ def gem():
                ))
 
 
-    [
-            conjure_class_definition, conjure_prefixed_class_definition,
-    ] = produce_conjure_dual_twig_functions('class-definition',ClassDefinition)
 
     [
             conjure_decorated_definition, conjure_prefixed_decorated_definition,
@@ -407,7 +387,6 @@ def gem():
     #
     #   .conjure
     #
-    ClassDefinition    .conjure = static_method(conjure_class_definition)
     DecoratedDefinition.conjure = static_method(conjure_decorated_definition)
     ElseFragment       .conjure = static_method(conjure_else_fragment)
     ElseIfFragment     .conjure = static_method(conjure_else_if_fragment)
@@ -417,7 +396,6 @@ def gem():
     TryStatement       .conjure = static_method(conjure_try_statement)
     WithStatement      .conjure = static_method(conjure_with_statement)
 
-    ClassDefinition    .conjure_prefixed_dual = static_method(conjure_prefixed_class_definition)
     DecoratedDefinition.conjure_prefixed_dual = static_method(conjure_prefixed_decorated_definition)
     ElseFragment       .conjure_prefixed_dual = static_method(conjure_prefixed_else_fragment)
     ElseIfFragment     .conjure_prefixed_dual = static_method(conjure_prefixed_else_if_fragment)
@@ -433,8 +411,6 @@ def gem():
     #
     #   .transform
     #
-    ClassDefinition.transform = produce_transform__a__b_with_indentation('class_definition', conjure_class_definition)
-
     DecoratedDefinition.transform = produce_transform__ab('decorated-definition', conjure_decorated_definition)
 
     ElseFragment   .transform = produce_transform__a__b_with_indentation('else_fragment',    conjure_else_fragment)
@@ -452,7 +428,6 @@ def gem():
 
 
     share(
-        'conjure_class_definition',                 conjure_class_definition,
         'conjure_decorated_definition',             conjure_decorated_definition,
         'conjure_for_statement',                    conjure_for_statement,
         'conjure_else_fragment',                    conjure_else_fragment,
@@ -464,7 +439,6 @@ def gem():
         'conjure_while_statement',                  conjure_while_statement,
         'conjure_with_statement',                   conjure_with_statement,
 
-        'conjure_prefixed_class_definition',        conjure_prefixed_class_definition,
         'conjure_prefixed_decorated_definition',    conjure_prefixed_decorated_definition,
         'conjure_prefixed_else_fragment',           conjure_prefixed_else_fragment,
         'conjure_prefixed_else_if_fragment',        conjure_prefixed_else_if_fragment,

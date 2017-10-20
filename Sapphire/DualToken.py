@@ -583,6 +583,7 @@ def gem():
 
         add_parameters     = add_parameters__0
         parameters_1_named = parameters_1_named__false
+        scout_variables    = scout_variables__0
 
 
     class Whitespace_Atom(BaseDualOperator):

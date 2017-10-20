@@ -350,6 +350,10 @@ def gem():
         add_parameters = add_parameters__a
 
 
+        def scout_default_value(t, art):
+            t.b.scout_variables(art)
+
+
         def scout_variables(t, art):
             assert 0, 'incomplete'
 

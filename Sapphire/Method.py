@@ -376,6 +376,14 @@ def gem():
 
 
     #
+    #   scout_default_value
+    #
+    @share
+    def scout_default_value__0(t, art):
+        pass
+
+
+    #
     #   scout_variables
     #
     @share

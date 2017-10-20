@@ -231,7 +231,7 @@ def gem():
             t.cell_index = 0
 
 
-        def add_function(t, definition):
+        def add_definition(t, definition):
             function_many = t.function_many
 
             if function_many is 0:
@@ -295,8 +295,10 @@ def gem():
             if type(function_many) is not List:
                 t.function_map = art = create_function_symbol_table(t)
 
-                function_many.a.parameters.add_parameters(art)
-                function_many.b           .scout_variables(art)
+                if function_many.is_function_definition:
+                    function_many.a.parameters.add_parameters(art)
+
+                function_many.b.scout_variables(art)
 
                 art.finalize_variables()
                 art.scout_functions()
@@ -308,8 +310,10 @@ def gem():
 
                 t.function_map[v] = art
 
-                v.a.parameters.add_parameters(art)
-                v.b           .scout_variables(art)
+                if v.is_function_definition:
+                    v.a.parameters.add_parameters(art)
+
+                v.b.scout_variables(art)
 
                 art.finalize_variables()
                 art.scout_functions()

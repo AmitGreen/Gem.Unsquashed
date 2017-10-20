@@ -69,6 +69,13 @@ def gem():
             return t.frill.v.indentation
 
 
+        def scout_variables(t, art):
+            t.parameters.scout_variables(art)
+
+            #
+            #   t.name is handled elsewhere?
+            #
+
         def write(t, w):
             frill = t.frill
 

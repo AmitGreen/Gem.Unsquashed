@@ -230,6 +230,10 @@ def gem():
             return t.a.s == name
 
 
+        def scout_variables(t, art):
+            t.a.scout_default_value(art)
+
+
     class ParenthesizedExpression(BookcaseExpression):
         __slots__                      = (())
         display_name                   = '()'
