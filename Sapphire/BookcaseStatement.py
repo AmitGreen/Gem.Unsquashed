@@ -64,6 +64,9 @@ def gem():
             return t.frill.v
 
 
+        scout_variables = scout_variables__a
+
+
         def write__frill(t, w):
             frill   = t.frill
             comment = frill.comment

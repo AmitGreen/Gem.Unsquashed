@@ -4,7 +4,7 @@
 @gem('Sapphire.Development')
 def gem():
     adorn = 7
-    dump  = 7
+    dump  = 0
     show  = 0
 
 

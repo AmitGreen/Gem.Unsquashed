@@ -570,6 +570,7 @@ def gem():
         is_identifier                  = true
 
         scout_variables = scout_variables__a
+        write_variables = write_variables__a
 
 
     @share

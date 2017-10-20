@@ -412,8 +412,15 @@ def gem():
 
 
     @share
-    def scout_variables__b(t, art):
+    def scout_variables__ab(t, art):
+        t.a.scout_variables(art)
         t.b.scout_variables(art)
+
+
+    @share
+    def scout_variables__a__b_with_write(t, art):
+        t.a.scout_variables(art)
+        t.b.write_variables(art)
 
 
     @share
@@ -423,16 +430,23 @@ def gem():
 
 
     @share
-    def scout_variables__ab(t, art):
-        t.a.scout_variables(art)
-        t.b.scout_variables(art)
-
-
-    @share
     def scout_variables__abc(t, art):
         t.a.scout_variables(art)
         t.b.scout_variables(art)
         t.c.scout_variables(art)
+
+
+    @share
+    def scout_variables__abcd(t, art):
+        t.a.scout_variables(art)
+        t.b.scout_variables(art)
+        t.c.scout_variables(art)
+        t.d.scout_variables(art)
+
+
+    @share
+    def scout_variables__b(t, art):
+        t.b.scout_variables(art)
 
 
     @share

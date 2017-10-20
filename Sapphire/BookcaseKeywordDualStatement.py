@@ -70,6 +70,7 @@ def gem():
                        )
 
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__ab
 
 
     @share
@@ -87,7 +88,8 @@ def gem():
         is_statement_header      = true
         split_comment            = 0
 
-        add_comment = 0
+        add_comment     = 0
+        scout_variables = scout_variables__a__b_with_write
 
 
     @share
@@ -104,12 +106,8 @@ def gem():
         is_statement_header = true
         split_comment       = 1
 
-        add_comment = 0
-
-
-        def scout_variables(t, art):
-            t.a.write_variables(art)
-            t.b.scout_variables(art)
+        add_comment     = 0
+        scout_variables = scout_variables__a_with_write__b
 
 
     class FromImportStatement(KeywordDualExpressionStatement):
@@ -156,6 +154,7 @@ def gem():
                        )
 
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__ab
 
 
     @share
@@ -172,12 +171,8 @@ def gem():
         is_statement_header = true
         split_comment       = 1
 
-        add_comment = 0
-
-
-        def scout_variables(t, art):
-            t.a.scout_variables(art)
-            t.b.write_variables(art)
+        add_comment     = 0
+        scout_variables = scout_variables__a__b_with_write
 
 
     [

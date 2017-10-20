@@ -34,9 +34,6 @@ def gem():
         total = 0
 
         for v in tree_many:
-            v.is_statement                  #   Test this exists
-            v.is_statement_header           #   Test this exists
-
             total += v.count_newlines()
 
         if total != length(data_lines):

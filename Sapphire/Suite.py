@@ -96,6 +96,7 @@ def gem():
         dump_token       = dump_token__many
         find_require_gem = find_require_gem__many
         indentation      = indentation__index_0
+        scout_variables  = scout_variables__tuple
 
 
     class MixedSuite(TokenTuple):

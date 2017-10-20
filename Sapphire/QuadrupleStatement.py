@@ -30,7 +30,8 @@ def gem():
             t.d.find_require_gem(e)
 
 
-        indentation = indentation__a_indentation
+        indentation     = indentation__a_indentation
+        scout_variables = scout_variables__abcd
 
 
     conjure_quadruple_statement = produce_conjure_quadruple_twig('quadruple-statement', QuadrupleStatement)
