@@ -350,7 +350,7 @@ def gem():
         add_parameters = add_parameters__a
 
 
-        def scout_default_value(t, art):
+        def scout_default_values(t, art):
             t.b.scout_variables(art)
 
 

@@ -383,6 +383,8 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
 
+        scout_variables = scout_variables__0
+
 
     class Colon_LineMarker_1(BaseDualOperator):
         __slots__                               = (())
@@ -506,6 +508,8 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
 
+        scout_variables = scout_variables__0
+
 
     class EmptyMap(BaseDualOperator):
         __slots__                      = (())
@@ -513,12 +517,16 @@ def gem():
         is__atom__or__special_operator = true
         is_atom                        = true
 
+        scout_variables = scout_variables__0
+
 
     class EmptyTuple(BaseDualOperator):
         __slots__                      = (())
         display_name                   = '{,}'
         is__atom__or__special_operator = true
         is_atom                        = true
+
+        scout_variables = scout_variables__0
 
 
     class Indented_Token(BaseDualOperator):
@@ -561,6 +569,8 @@ def gem():
         is_atom                        = true
         is_identifier                  = true
 
+        scout_variables = scout_variables__a
+
 
     @share
     class Not_In(BaseDualOperator):
@@ -594,7 +604,7 @@ def gem():
         is_special_operator            = false
 
 
-        scout_variables = scout_variables__b
+        scout_variables = scout_variables__0
 
 
     class Whitespace_Name(BaseDualOperator):
@@ -606,6 +616,9 @@ def gem():
         is_special_operator            = false
 
 
+        add_parameters = add_parameters__b
+
+
         def mutate(t, vary, priority):
             if vary.remove_comments:
                 return t.b
@@ -613,11 +626,18 @@ def gem():
             return t
 
 
+        scout_default_values = scout_default_values__b
+        scout_variables      = scout_variables__b
+
+
         def transform(t, vary):
             if vary.remove_comments:
                 return t.b
 
             return t
+
+
+        write_variables = write_variables__b
 
 
     conjure_atom_whitespace = produce_conjure_dual_token('atom_whitespace', Atom_Whitespace)

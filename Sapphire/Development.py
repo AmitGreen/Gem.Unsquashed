@@ -4,7 +4,7 @@
 @gem('Sapphire.Development')
 def gem():
     adorn = 7
-    dump  = 0
+    dump  = 7
     show  = 0
 
 
@@ -41,7 +41,7 @@ def gem():
 
             #first_2 = first.adorn(art)
 
-            art.dump_variables('globals')
+            #art.dump_variables('globals')
 
         if dump is 7:
             dump_caches('cell_function_parameter')

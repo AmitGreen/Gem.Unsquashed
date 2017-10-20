@@ -210,17 +210,21 @@ def gem():
         __slots__    = (())
         display_name = 'and-*'
 
+        scout_variables = scout_variables__many
+
 
     class ArithmeticExpression_Many(ManyExpression):
         __slots__    = (())
         display_name = 'arithmetic-*'
+
+        scout_variables = scout_variables__many
 
 
     class CommaExpression_Many(ManyExpression):
         __slots__    = (())
         display_name = ',-*'
 
-
+        scout_variables = scout_variables__many
         write_variables = write_variables__many
 
 
@@ -228,20 +232,28 @@ def gem():
         __slots__    = (())
         display_name = 'compare-*'
 
+        scout_variables = scout_variables__many
+
 
     class LogicalOrExpression_Many(ManyExpression):
         __slots__    = (())
         display_name = '|-*'
+
+        scout_variables = scout_variables__many
 
 
     class MultiplyExpression_Many(ManyExpression):
         __slots__    = (())
         display_name = 'multiply-*'
 
+        scout_variables = scout_variables__many
+
 
     class OrExpression_Many(ManyExpression):
         __slots__    = (())
         display_name = 'or-*'
+
+        scout_variables = scout_variables__many
 
 
     [

@@ -17,6 +17,23 @@ def gem():
         write__X__many_end(t, w)
 
 
+    def scout_variables__assign_statement_many(t, art):
+        i          = 0
+        maximum_m1 = length(t.many) - 1
+
+        for v in t.many:
+            if i == maximum_m1:
+                v.scout_variables(art)
+                return
+
+            v.write_variables(art)
+            i += 1
+
+
+    def scout_variables__delete_statement_many(t, art):
+        for v in t.many:
+            v.write_variables(art)
+
 
     @privileged
     def produce_transform_comment_statement_many(
@@ -108,19 +125,7 @@ def gem():
 
 
         find_require_gem = find_require_gem__0
-
-
-        def scout_variables(t, art):
-            i          = 0
-            maximum_m1 = length(t.many) - 1
-
-            for v in t.many:
-                if i == maximum_m1:
-                    v.scout_variables(art)
-                    return
-
-                v.write_variables(art)
-                i += 1
+        scout_variables  = scout_variables__assign_statement_many
 
 
         @property
@@ -168,7 +173,8 @@ def gem():
             return t.frill.begin.v
 
 
-        write = write__comment_many
+        scout_variables = scout_variables__assign_statement_many
+        write           = write__comment_many
 
 
     class Comment_DeleteStatement_Many(BookcaseManyExpression):
@@ -215,6 +221,7 @@ def gem():
 
 
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__delete_statement_many
         write            = write__comment_many
 
 
@@ -266,6 +273,7 @@ def gem():
 
 
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__delete_statement_many
 
 
     [

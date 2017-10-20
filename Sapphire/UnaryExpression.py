@@ -169,6 +169,9 @@ def gem():
         frill        = conjure_star_sign('*')
         is_atom      = true
 
+        add_parameters       = add_parameters__a
+        scout_default_values = scout_default_values__a
+
 
     class TwosComplementExpression(UnaryExpression):
         __slots__    = (())

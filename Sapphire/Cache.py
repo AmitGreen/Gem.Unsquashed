@@ -42,10 +42,22 @@ def gem():
 
                 for [k2, w] in iterate_items_sorted_by_key(v):
                     if not w.__class__ is Map:
-                        line('  %s: %s', k2.display_token(), w.display_token())
+                        line('  %s: %s',
+                             (
+                                portray_string(k2)  if k2.__class__ is String  else
+                                k2                  if k2.__class__ is Integer else
+                                k2.display_token()
+                             ),
+                             w.display_token())
+
                         continue
 
-                    line('  %s:', k2.display_token())
+                    line('  %s:',
+                         (
+                            portray_string(k2)  if k2.__class__ is String  else
+                            k2                  if k2.__class__ is Integer else
+                            k2.display_token()
+                         ))
 
                     for [k3, x] in iterate_items_sorted_by_key(w):
                         if not x.__class__ is Map:

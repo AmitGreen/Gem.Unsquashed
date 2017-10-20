@@ -199,6 +199,7 @@ def gem():
         is_special_operator            = false
 
         scout_variables = scout_variables__ab
+        write_variables = write_variables__ab
 
 
     class RangeIndex(BookcaseDualExpression):

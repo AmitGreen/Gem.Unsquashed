@@ -21,6 +21,11 @@ def gem():
         scout_variables = scout_variables__ab
 
 
+        def write_variables(t, art):
+            t.a.scout_variables(art)
+            t.b.scout_variables(art)
+
+
     class MethodCallExpression(DualTwig):
         __slots__    = (())
         display_name = 'method-call'

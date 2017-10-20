@@ -60,6 +60,7 @@ def gem():
 
         dump_token       = dump_token__comment
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
         transform        = transform__remove_comments_0
 
 
@@ -113,6 +114,7 @@ def gem():
 
         dump_token       = dump_token__comment
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
         transform        = transform__remove_comments_0
 
 
@@ -164,6 +166,7 @@ def gem():
 
         dump_token       = dump_token__comment
         find_require_gem = find_require_gem__0
+        scout_variables  = scout_variables__0
         transform        = transform__remove_comments_0
 
 
@@ -213,6 +216,7 @@ def gem():
 
 
         dump_token = dump_token__comment
+        scout_variables  = scout_variables__0
         transform  = transform__remove_comments_0
 
 

@@ -23,6 +23,11 @@ def gem():
         t.a.add_parameters(art)
 
 
+    @share
+    def add_parameters__b(t, art):
+        t.b.add_parameters(art)
+
+
     #
     #   adorn
     #
@@ -376,11 +381,21 @@ def gem():
 
 
     #
-    #   scout_default_value
+    #   scout_default_values
     #
     @share
-    def scout_default_value__0(t, art):
+    def scout_default_values__0(t, art):
         pass
+
+
+    @share
+    def scout_default_values__a(t, art):
+        t.a.scout_default_values(art)
+
+
+    @share
+    def scout_default_values__b(t, art):
+        t.b.scout_default_values(art)
 
 
     #
@@ -780,8 +795,18 @@ def gem():
     #   write_variables
     #
     @share
+    def write_variables__a(t, art):
+        t.a.write_variables(art)
+
+
+    @share
     def write_variables__ab(t, art):
         t.a.write_variables(art)
+        t.b.write_variables(art)
+
+
+    @share
+    def write_variables__b(t, art):
         t.b.write_variables(art)
 
 

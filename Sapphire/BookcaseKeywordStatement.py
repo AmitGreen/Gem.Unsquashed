@@ -146,6 +146,10 @@ def gem():
         find_require_gem = find_require_gem__0
 
 
+        def scout_variables(t, art):
+            t.a.write_variables(art)
+
+
     @export
     class ElseIfHeader(KeywordExpressionStatement):
         __slots__    = (())

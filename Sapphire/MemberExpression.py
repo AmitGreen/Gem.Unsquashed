@@ -55,6 +55,10 @@ def gem():
             #
 
 
+        def write_import(t, art):
+            t.left.write_import(art)
+
+
         def write_variables(t, art):
             t.left.scout_variables(art)
 

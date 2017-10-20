@@ -73,8 +73,9 @@ def gem():
             t.parameters.scout_variables(art)
 
             #
-            #   t.name is handled elsewhere?
+            #   t.name is handled elsewhere (add comment explaining where).
             #
+
 
         def write(t, w):
             frill = t.frill

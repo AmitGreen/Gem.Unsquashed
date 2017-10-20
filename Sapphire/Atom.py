@@ -238,7 +238,7 @@ def gem():
         mutate = mutate__self
 
 
-        scout_default_value = scout_default_value__0
+        scout_default_values = scout_default_values__0
 
 
         def scout_variables(t, art):

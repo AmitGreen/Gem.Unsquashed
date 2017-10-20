@@ -255,6 +255,7 @@ def gem():
 
 
         scout_variables = scout_variables__many
+        write_variables = write_variables__many
 
 
     class MapExpression_Many(BookcaseManyExpression):
@@ -280,6 +281,11 @@ def gem():
 
         def parameter_1_named(t, name):
             return 0
+
+
+        def scout_variables(t, many):
+            for v in t.many:
+                v.scout_default_values(many)
 
 
     class TupleExpression_Many(BookcaseManyExpression):

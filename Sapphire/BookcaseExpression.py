@@ -193,6 +193,7 @@ def gem():
         is_special_operator            = false
 
         scout_variables = scout_variables__a
+        write_variables = write_variables__a
 
 
     class MapExpression_1(BookcaseExpression):
@@ -231,7 +232,7 @@ def gem():
 
 
         def scout_variables(t, art):
-            t.a.scout_default_value(art)
+            t.a.scout_default_values(art)
 
 
     class ParenthesizedExpression(BookcaseExpression):

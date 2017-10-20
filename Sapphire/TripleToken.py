@@ -506,6 +506,8 @@ def gem():
         is_atom                        = true
         is_special_operator            = false
 
+        scout_variables = scout_variables__0
+
 
     class Whitespace_Name_Whitespace(BaseTripleOperator):
         __slots__                      = (())
@@ -514,6 +516,8 @@ def gem():
         is_atom                        = true
         is_identifier                  = true
         is_special_operator            = false
+
+        scout_variables = scout_variables__b
 
 
     #
