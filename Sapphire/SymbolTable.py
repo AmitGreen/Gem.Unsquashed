@@ -6,6 +6,9 @@ def gem():
     require_gem('Sapphire.BuildSymbolTable')
 
 
+    dump = 7
+
+
     class GlobalSymbolTable(Object):
         __slots__ = ((
             'nested_headers',               #   Tuple of { Integer, ClassHeader | FunctionHeader ... }
@@ -109,7 +112,8 @@ def gem():
 
         #first_2 = first.adorn(art)
 
-        #art.dump_variables('globals')
+        if dump is 7:
+            art.dump_variables('globals')
 
         return ((
                    create_global_symbol_table(art),

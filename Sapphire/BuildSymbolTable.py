@@ -70,7 +70,8 @@ def gem():
 
                     ancestor = ancestor.parent
                 else:
-                    variable_map[k] = conjure_global_variable(k)
+                    variable_map[k] = global_variable = conjure_global_variable(k)
+                    t.write_global_variable(global_variable)
                     continue
 
                 if not w.is_global_variable:
@@ -95,9 +96,6 @@ def gem():
 
                     continue
 
-            #
-            #   Also add this to global map
-            #
             variable_map[k] = global_variable = conjure_global_variable(k)
             t.write_global_variable(global_variable)
 
@@ -204,7 +202,7 @@ def gem():
                 if type(definition_many) is not List:
                     s = definition_many.a.name.find_identifier().s
 
-                    dump_token(arrange('Only function: %s.%s', name, s), definition_many)
+                    dump_token(arrange('only function: %s.%s', name, s), definition_many)
 
                     if t.definition_map is not 0:
                         t.definition_map.dump_variables(arrange('%s.%s', name, s))
@@ -230,8 +228,8 @@ def gem():
                 #   Need to have a FunctionWrapper symbol table also
                 #
                 art = create_base_function_symbol_table(
-                          (t.write_global_variable   if t.is_global_symbol_table else    t.write_global_variable),
-                          (t.parent   if t.is_class_symbol_table else   t),
+                          (t.write_global_variable   if t.is_global_symbol_table else   t.write_global_variable),
+                          (t.parent                  if t.is_class_symbol_table  else   t),
                       )
 
                 if v.is_function_definition:

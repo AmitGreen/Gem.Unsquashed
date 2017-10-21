@@ -127,7 +127,7 @@ def gem():
 
             t._blank = 0
 
-            
+
         def indent(t, header = none, ending = none, prefix = 4):
             if header is not none:
                 t.line(header)
