@@ -6,10 +6,11 @@ def gem():
     require_gem('Sapphire.Variable')
 
 
-    def construct__build_nested_symbol_table(t, parent):
+    def construct__build_nested_symbol_table(t, write_global_variable, parent):
         construct_BaseBuildSymbolTable(t)
 
-        t.parent = parent
+        t.write_global_variable = write_global_variable
+        t.parent                = parent
 
 
     def finalize_variables__build_nested_symbol_table(t):
@@ -34,7 +35,8 @@ def gem():
 
                 if w is not none:
                     if w.is_global_variable:
-                        variable_map[k] = conjure_global_variable(k)
+                        variable_map[k] = global_variable = conjure_global_variable(k)
+                        t.write_global_variable(global_variable)
                         continue
 
                     if not w.is_cell_variable:
@@ -93,7 +95,11 @@ def gem():
 
                     continue
 
-            variable_map[k] = conjure_global_variable(k)
+            #
+            #   Also add this to global map
+            #
+            variable_map[k] = global_variable = conjure_global_variable(k)
+            t.write_global_variable(global_variable)
 
 
     @privileged
@@ -219,42 +225,42 @@ def gem():
 
 
         def scout_definitions(t):
+            def scout_nested_definition(v):
+                #
+                #   Need to have a FunctionWrapper symbol table also
+                #
+                art = create_base_function_symbol_table(
+                          (t.write_global_variable   if t.is_global_symbol_table else    t.write_global_variable),
+                          (t.parent   if t.is_class_symbol_table else   t),
+                      )
+
+                if v.is_function_definition:
+                    v.a.parameters.add_parameters(art)
+                else:
+                    art = create_build_class_symbol_table(art.write_global_variable, art)
+
+                v.b.scout_variables(art)
+
+                art.finalize_variables()
+                art.scout_definitions()
+
+                return art
+
+
             definition_many = t.definition_many
 
             if definition_many is 0:
                 return
 
             if type(definition_many) is not List:
-                art = create_base_function_symbol_table(t.parent   if t.is_class_symbol_table else   t)
-
-                if definition_many.is_function_definition:
-                    definition_many.a.parameters.add_parameters(art)
-                else:
-                    art = create_build_class_symbol_table(art)
-
-                t.definition_map = art
-
-                definition_many.b.scout_variables(art)
-
-                art.finalize_variables()
-                art.scout_definitions()
+                t.definition_map = scout_nested_definition(definition_many)
 
                 return
 
+            store_definition = t.store_definition
+
             for v in definition_many:
-                art = create_base_function_symbol_table(t.parent   if t.is_class_symbol_table else   t)
-
-                if v.is_function_definition:
-                    v.a.parameters.add_parameters(art)
-                else:
-                    art = create_build_class_symbol_table(art)
-
-                t.definition_map[v] = art
-
-                v.b.scout_variables(art)
-
-                art.finalize_variables()
-                art.scout_definitions()
+                store_definition(v, scout_nested_definition(v))
 
 
         def fetch_variable(t, name):
@@ -275,6 +281,7 @@ def gem():
 
     class BuildClassSymbolTable(BaseBuildSymbolTable):
         __slots__ = ((
+            'write_global_variable',    #   Method
             'parent',                   #   BaseBuildSymbolTable+
         ))
 
@@ -297,6 +304,7 @@ def gem():
 
     class BuildFunctionSymbolTable(BaseBuildSymbolTable):
         __slots__ = ((
+            'write_global_variable',    #   Method
             'parent',                   #   BuildGlobalSymbolTable
         ))
 
@@ -322,6 +330,18 @@ def gem():
         is_global_symbol_table   = true
         is_nested_symbol_table   = false
 
+
+        def write_global_variable(t, global_variable):
+            variable_map = t.variable_map
+
+            if variable_map is 0:
+                t.variable_map     = variable_map = { global_variable.name : global_variable }
+                t.lookup_variable  = variable_map.get
+                t.provide_variable = variable_map.setdefault
+                t.store_variable   = variable_map.__setitem__
+                return
+
+            t.store_variable(global_variable.name, global_variable)
 
 
         def write_variable(t, name):
@@ -359,9 +379,9 @@ def gem():
         return BuildGlobalSymbolTable()
 
 
-    def create_build_class_symbol_table(parent):
-        return BuildClassSymbolTable(parent)
+    def create_build_class_symbol_table(write_global_variable, parent):
+        return BuildClassSymbolTable(write_global_variable, parent)
 
 
-    def create_base_function_symbol_table(parent):
-        return BuildFunctionSymbolTable(parent)
+    def create_base_function_symbol_table(write_global_variable, parent):
+        return BuildFunctionSymbolTable(write_global_variable, parent)

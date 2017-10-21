@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.FunctionDefinition')
+@gem('Sapphire.MosiacDefinition')
 def gem():
     def scout_variables__definition(t, art):
         t.a.scout_variables(art)

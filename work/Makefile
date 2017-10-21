@@ -67,11 +67,10 @@ SAPPHIRE_FILES = \
     ../Sapphire/DefinitionHeader.py ../Sapphire/Development.py ../Sapphire/DualFrill.py ../Sapphire/DualStatement.py \
         ../Sapphire/DualToken.py ../Sapphire/DualTwig.py ../Sapphire/DumpToken.py \
     ../Sapphire/Elemental.py \
-    ../Sapphire/FunctionDefinition.py \
     ../Sapphire/Indentation.py \
     ../Sapphire/LineMarker.py \
     ../Sapphire/Main.py ../Sapphire/ManyExpression.py ../Sapphire/ManyFrill.py ../Sapphire/MemberExpression.py \
-        ../Sapphire/Method.py \
+        ../Sapphire/Method.py ../Sapphire/MosiacDefinition.py ../Sapphire/MosiacSymbol.py \
     ../Sapphire/Parse.py \
         ../Sapphire/Parse1.py ../Sapphire/Parse1Atom.py ../Sapphire/Tokenize1Header.py ../Sapphire/Parse1Call.py \
         ../Sapphire/Parse1Complex.py ../Sapphire/Parse1Expression.py ../Sapphire/Parse1ExpressionStatement.py \
@@ -159,9 +158,9 @@ clean:
 	rm -f   h2f.py h2p.py h2ps.py h2s.py h2s.py h2t.py h2w.py
 	rm -f   h3e.py h3f.py h3p.py h3s.py h3t.py h3w.py
 	rm -f   h4f.py h4s.py h4t.py h4w.py
-	rm -f   hat.py haw.py hbe.py hby.py hca.py hcb.py hcc.py hcm.py hco.py hcs.py hd.py hdh.py hdt.py hel.py hf.py
+	rm -f   hat.py haw.py hbe.py hby.py hca.py hcb.py hcc.py hcm.py hco.py hcs.py hd.py hdh.py hdt.py hel.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
-	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmx.py hpa.py hpr.py hs.py
+	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpa.py hpr.py hs.py
 	rm -f   htc.py hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
@@ -261,7 +260,6 @@ links:
 	ln -s ../Sapphire/DefinitionHeader.py               hdh.py
 	ln -s ../Sapphire/DumpToken.py                      hdt.py
 	ln -s ../Sapphire/Elemental.py                      hel.py
-	ln -s ../Sapphire/FunctionDefinition.py             hf.py
 	ln -s ../Sapphire/BookcaseExpression.py             hk.py
 	ln -s ../Sapphire/BookcaseDualExpression.py         hkd.py
 	ln -s ../Sapphire/BookcaseDualStatement.py          hkds.py
@@ -278,10 +276,12 @@ links:
 	ln -s ../bin/.pyxie/hma.py                          hma1.py
 	ln -s ../bin/.pyxie/hma2.py                         hma2.py
 	ln -s ../Sapphire/Match.py                          hmc.py
-	ln -s ../Sapphire/Method.py                         hmd.py
+	ln -s ../Sapphire/MosiacDefinition.py               hmd.py
 	ln -s ../Sapphire/MemberExpression.py               hme.py
 	ln -s ../Sapphire/ManyFrill.py                      hmf.py
+	ln -s ../Sapphire/Method.py                         hmo.py
 	ln -s ../Sapphire/ManyExpression.py                 hmx.py
+	ln -s ../Sapphire/MosiacSymbol.py                   hmy.py
 	ln -s ../Sapphire/Pattern.py                        hpa.py
 	ln -s ../Sapphire/Priority.py                       hpr.py
 	ln -s ../Sapphire/Suite.py                          hs.py

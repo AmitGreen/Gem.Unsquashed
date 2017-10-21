@@ -115,3 +115,9 @@ def gem():
                    create_global_symbol_table(art),
                    (tree.transform(vary)   if vary else   tree),
                ))
+
+
+
+    @share
+    def build_function_symbol_table(tree, art):
+        pass

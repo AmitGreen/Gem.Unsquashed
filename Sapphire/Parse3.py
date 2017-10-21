@@ -8,7 +8,7 @@ def gem():
 
     require_gem('Sapphire.DualStatement')
     require_gem('Sapphire.DumpToken')
-    require_gem('Sapphire.FunctionDefinition')
+    require_gem('Sapphire.MosiacDefinition')
     require_gem('Sapphire.QuadrupleStatement')
     require_gem('Sapphire.Suite')
     require_gem('Sapphire.TripleStatement')
