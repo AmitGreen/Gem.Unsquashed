@@ -119,16 +119,17 @@ def gem():
     class ClassHeader(DefinitionHeader):
         __slots__    = (())
         display_name = 'class-header'
-
+        display_type = 'class'
 
         scout_variables = scout_variables__ab
 
 
     @share
     class FunctionHeader(DefinitionHeader):
-        __slots__           = (())
-        display_name        = 'function-header'
-        is_function_header  = true
+        __slots__          = (())
+        display_name       = 'function-header'
+        display_type       = 'function'
+        is_function_header = true
 
 
         if 0:

@@ -82,10 +82,10 @@ def gem():
                 return f.token_result(r, newline)
 
             with f.indent(arrange('<%s +%d ', t.display_name, indented_token.indentation.total), '>'):
-                comment.dump_token(f)
+                comment             .dump_token(f)
                 indented_token.token.dump_token(f)
-                t.a.dump_token(f)
-                frill.w.dump_token(f, false)
+                t             .a    .dump_token(f)
+                frill         .w    .dump_token(f, false)
 
             return false
 

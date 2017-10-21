@@ -162,7 +162,7 @@ def gem():
             with f.indent(arrange('<#assign-* +%d ', begin.v.total), '>'):
                 begin.comment.dump_token(f)
                 dump_token__X__many(t, f)
-                frill.end.dump_token(f)
+                frill.end    .dump_token(f)
 
 
         find_require_gem = find_require_gem__0
@@ -214,10 +214,10 @@ def gem():
             indented_token = begin.v
 
             with f.indent(arrange('<#delete-* +%d ', indented_token.a.total), '>'):
-                comment         .dump_token(f)
-                indented_token.b.dump_token(f)
+                comment           .dump_token(f)
+                indented_token.b  .dump_token(f)
                 dump_token__X__many(t, f)
-                frill       .end.dump_token(f)
+                frill         .end.dump_token(f)
 
 
         find_require_gem = find_require_gem__0

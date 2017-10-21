@@ -29,19 +29,13 @@ def gem():
                 dump_token('v', v)
 
         if adorn is 7:
-            art = create_global_symbol_table()
+            [art, tree] = build_global_symbol_table(tree)
 
-            for s in ['__builtins__', '__doc__', '__file__', '__name__', '__package__']:
-                art.write_variable(conjure_name(s))
+            f = create_TokenOutput()
+            art.dump_global_symbol_table(f)
 
-            for v in tree:
-                v.scout_variables(art)
+            partial(f.finish())
 
-            art.scout_definitions()
-
-            #first_2 = first.adorn(art)
-
-            art.dump_variables('globals')
 
         if dump is 7:
             dump_caches('cell_function_parameter')

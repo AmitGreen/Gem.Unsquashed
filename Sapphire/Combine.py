@@ -4,6 +4,7 @@
 @gem('Sapphire.Combine')
 def gem():
     require_gem('Sapphire.Parse')
+    require_gem('Sapphire.SymbolTable')
 
 
     variables = [
@@ -87,24 +88,49 @@ def gem():
             'part',                     #   String
             'copyright',                #   Copyright
             'twig',                     #   Any
+            'symbol_table',             #   GlobalSymbolTable
+            'transformed_twig',         #   Any
         ))
 
 
-        def __init__(t, path, part, copyright, twig):
-            t.path      = path
-            t.part      = part
-            t.copyright = copyright
-            t.twig      = twig
+        def __init__(t, path, part, copyright, twig, symbol_table, transformed_twig):
+            t.path             = path
+            t.part             = part
+            t.copyright        = copyright
+            t.twig             = twig
+            t.symbol_table     = symbol_table
+            t.transformed_twig = transformed_twig
 
 
-        def write(t, f):
+        def write(t, f, tree = false):
             t.copyright.write(f)
 
             f.blank2()
             f.line(arrange("#<source %r %s>", t.path, t.part))
-            t.twig.write(f.write)
+
+            if tree:
+                f2 = create_TokenOutput(f)
+
+                with f2.change_prefix('#', '#   '):
+                    f2.line()
+                    r = t.twig.dump_token(f2)
+                    f2.line()
+
+                    assert not r
+
+                    t.symbol_table.dump_global_symbol_table(f2)
+
+                    f2.flush()
+
+            t.transformed_twig.write(f.write)
             f.line('#</source>')
             f.blank2()
+
+
+    def create_twig_code(path, part, copyright, twig, vary):
+        [art, transformed_twig] = build_global_symbol_table(twig, vary)
+
+        return TwigCode(path, part, copyright, twig, art, transformed_twig)
 
 
     class RequireMany(Object):
@@ -243,10 +269,13 @@ def gem():
         assert boot_code.is_decorated_definition
         assert boot_code.a is boot_code__decorator_header
 
-        if vary:
-            boot_code = boot_code.transform(vary)
-
-        return TwigCode(path, arrange('[%d]', index), extract_copyright(tree), boot_code)
+        return create_twig_code(
+                   path,
+                   arrange('[%d]', index),
+                   extract_copyright(tree),
+                   boot_code,
+                   vary,
+               )
 
 
     def extract_boot_decorator(function_name, path, tree, copyright, vary = 0):
@@ -264,10 +293,7 @@ def gem():
         assert boot_decorator.a is boot_decorator__function_header
         assert boot_decorator.b.is_statement_suite
 
-        if vary is not 0:
-            boot_decorator = boot_decorator.transform(vary)
-
-        return TwigCode(path, '[0]', copyright, boot_decorator)
+        return create_twig_code(path, '[0]', copyright, boot_decorator, vary)
 
 
     def extract_copyright(tree):
@@ -296,15 +322,16 @@ def gem():
 
         gem = tree[0]
 
+        #if gem.a is not conjure_gem_decorator_header(module):
+        #    dump_token('gem.a', gem.a)
+        #    dump_token('other', conjure_gem_decorator_header(module))
+
         assert gem.is_decorated_definition
         assert gem.a is conjure_gem_decorator_header(module)
         assert gem.b.is_function_definition
         assert gem.b.a is gem__function_header
 
-        if vary is not 0:
-            gem = gem.transform(vary)
-
-        return TwigCode(path, '[0]', copyright, gem)
+        return create_twig_code(path, '[0]', copyright, gem, vary)
 
 
     def extract_sardnoyx_boot(vary):
@@ -355,10 +382,7 @@ def gem():
         assert gem.b.a is gem__function_header
         assert gem.b.b.is_statement_suite
 
-        if (vary is not 0) and 7:
-            gem = gem.transform(vary)
-
-        return TwigCode(path, '[2]', copyright, gem)
+        return create_twig_code(path, '[2]', copyright, gem, vary)
 
 
     def extract_sapphire_main(vary):
@@ -421,17 +445,14 @@ def gem():
         #
         #   Result
         #
-        if vary is not 0:
-            main = main.transform(vary)
-
         return ((
                    boot_decorator,
-                   TwigCode(path, '[4]', copyright, main),
+                   create_twig_code(path, '[4]', copyright, main, vary),
                ))
 
 
     @share
-    def command_combine__X(module_name, vary):
+    def command_combine__X(module_name, vary, tree = true):
         [boot_decorator, main_code] = extract_sapphire_main(vary)
         sardnoyx_boot_code          = extract_sardnoyx_boot(vary)
         gem_boot_code               = extract_gem_boot(vary)
@@ -445,14 +466,14 @@ def gem():
         output_path = arrange('../bin/.pyxie/%s.py', module_name)
 
         with create_DelayedFileOutput(output_path) as f:
-            boot_decorator    .write(f)
-            sardnoyx_boot_code.write(f)
+            boot_decorator    .write(f, tree)
+            sardnoyx_boot_code.write(f, tree)
 
             for v in require_many.twig_many:
-                v.write(f)
+                v.write(f, tree)
 
-            gem_boot_code.write(f)
-            main_code    .write(f)
+            gem_boot_code.write(f, tree)
+            main_code    .write(f, tree)
 
             close_copyright(f)
 

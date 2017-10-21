@@ -24,7 +24,7 @@ def gem():
     require_gem('Sapphire.Core')
 
 
-    choice = 1
+    choice = 3
 
 
     def command_combine(module_name = 'hma', remove_comments = false, remove_indentation = false):
@@ -77,7 +77,7 @@ def gem():
             total = length(arguments)
 
             if total is 0:
-                return test_parse1()
+                return command_parse1()
 
             if total is not 1:
                 raise_runtime_error('must have zero or one argument')

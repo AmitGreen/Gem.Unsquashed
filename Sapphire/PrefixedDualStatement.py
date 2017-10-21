@@ -7,7 +7,6 @@ def gem():
     require_gem('Sapphire.DumpToken')
 
 
-    dump_token                  = Shared.dump_token                     #   due to privileged
     lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   due to privileged
     produce_conjure_dual_twig   = Shared.produce_conjure_dual_twig      #   due to privileged
     produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   due to privileged
@@ -304,8 +303,8 @@ def gem():
 
                         with f.indent(arrange('<%s +%d', t.prefixed_display_name, t.a.indentation.total), '>'):
                             t.prefix.dump_token(f)
-                            t.a.dump_token(f)
-                            t.b.dump_token(f)
+                            t.a     .dump_token(f)
+                            t.b     .dump_token(f)
 
 
                     transform = (

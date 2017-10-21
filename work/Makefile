@@ -61,6 +61,7 @@ SAPPHIRE_FILES = \
         ../Sapphire/BookcaseKeywordDualStatement.py ../Sapphire/BookcaseManyExpression.py \
         ../Sapphire/BookcaseManyFrill.py ../Sapphire/BookcaseManyStatement.py ../Sapphire/BookcaseStatement.py \
         ../Sapphire/BookcaseTriple.py \
+        ../Sapphire/BuildSymbolTable.py \
     ../Sapphire/Cache.py ../Sapphire/CallStatement.py ../Sapphire/Comment.py ../Sapphire/Combine.py \
         ../Sapphire/Core.py ../Sapphire/CreateMeta.py \
     ../Sapphire/DefinitionHeader.py ../Sapphire/Development.py ../Sapphire/DualFrill.py ../Sapphire/DualStatement.py \
@@ -148,7 +149,7 @@ clean:
 	rm -f a.py ab.py ac.py ag.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py cd.py ce.py co.py
-	rm -f de.py dfo.py di.py dm.py dr.py
+	rm -f d.py de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gd.py gg.py
@@ -158,7 +159,7 @@ clean:
 	rm -f   h2f.py h2p.py h2ps.py h2s.py h2s.py h2t.py h2w.py
 	rm -f   h3e.py h3f.py h3p.py h3s.py h3t.py h3w.py
 	rm -f   h4f.py h4s.py h4t.py h4w.py
-	rm -f   hat.py haw.py hb.py hca.py hcb.py hcc.py hcm.py hco.py hcs.py hd.py hdh.py hdt.py hel.py hf.py
+	rm -f   hat.py haw.py hbe.py hby.py hca.py hcb.py hcc.py hcm.py hco.py hcs.py hd.py hdh.py hdt.py hel.py hf.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmx.py hpa.py hpr.py hs.py
 	rm -f   htc.py hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
@@ -249,7 +250,8 @@ links:
 	ln -s ../Sapphire/QuadrupleTwig.py                  h4w.py
 	ln -s ../Sapphire/Atom.py                           hat.py
 	ln -s ../Sapphire/ActionWord.py                     haw.py
-	ln -s ../Sapphire/BinaryExpression.py               hb.py
+	ln -s ../Sapphire/BinaryExpression.py               hbe.py
+	ln -s ../Sapphire/BuildSymbolTable.py               hby.py
 	ln -s ../Sapphire/Cache.py                          hca.py
 	ln -s ../Sapphire/Combine.py                        hcb.py
 	ln -s ../Sapphire/CreateMeta.py                     hcc.py

@@ -78,11 +78,11 @@ def gem():
                 return f.token_result(r, newline)
 
             with f.indent(arrange('<%s +%d ', t.display_name, frill.v.total), '>'):
-                comment.dump_token(f)
-                t.a.dump_token(f)
-                frill.w.dump_token(f)
-                t.b.dump_token(f)
-                frill.x.dump_token(f)
+                comment  .dump_token(f)
+                t      .a.dump_token(f)
+                frill  .w.dump_token(f)
+                t      .b.dump_token(f)
+                frill  .x.dump_token(f)
 
             return false
 

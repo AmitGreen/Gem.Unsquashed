@@ -350,6 +350,8 @@ def gem():
         is_all_index        = true
         is_postfix_operator = true
 
+        scout_variables = scout_variables__0
+
 
     class DotNameTriplet(BaseTripleOperator):
         __slots__           = (())

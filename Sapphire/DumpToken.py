@@ -20,8 +20,8 @@ def gem():
 
 
     @share
-    def create_TokenOutput():
-        return TokenOutput(create_SimpleStringOutput())
+    def create_TokenOutput(f = none):
+        return TokenOutput((f) or (create_SimpleStringOutput()))
 
 
     @share

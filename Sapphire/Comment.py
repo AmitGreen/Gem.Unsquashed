@@ -215,10 +215,9 @@ def gem():
             return arrange('<# ++%d %s %s>', t.impression.total, portray_string(t.comment), portray_string(t.newline))
 
 
-        dump_token = dump_token__comment
-        scout_variables  = scout_variables__0
-        transform  = transform__remove_comments_0
-
+        dump_token      = dump_token__comment
+        scout_variables = scout_variables__0
+        transform       = transform__remove_comments_0
 
 
     def conjure_comment_line(comment):

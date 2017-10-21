@@ -19,7 +19,6 @@ def gem():
     conjure_else_fragment          = Shared.conjure_else_fragment               #   due to privileged
     conjure_mixed_suite            = Shared.conjure_mixed_suite                 #   due to privileged
     conjure_prefixed_else_fragment = Shared.conjure_prefixed_else_fragment      #   due to privileged
-    dump_token                     = Shared.dump_token                          #   due to privileged
 
 
     @share

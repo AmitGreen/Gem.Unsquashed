@@ -93,7 +93,7 @@ def gem():
 
         @property
         def prefix_total(t):
-            return length(t.f.prefix)
+            return length(t.f._prefix)
 
 
     export(

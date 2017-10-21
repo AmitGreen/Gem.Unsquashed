@@ -163,8 +163,6 @@ def gem():
 
             f.line(t.display_token())
 
-            return false
-
 
         def write(t, w):
             w(t)
