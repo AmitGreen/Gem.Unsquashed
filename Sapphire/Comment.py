@@ -31,6 +31,7 @@ def gem():
         is_any_except_or_finally         = false
         is_comment_line                  = true
         is_comment__or__empty_line       = true
+        is_comment_suite                 = false
         is_else_header_or_fragment       = false
         is_empty_line                    = false
         is_end_of_data                   = false

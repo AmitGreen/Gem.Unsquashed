@@ -4,6 +4,7 @@
 @gem('Sapphire.Core')
 def gem():
     require_gem('Gem.Cache')
+    require_gem('Gem.Cache2')
     require_gem('Gem.DelayedFileOutput')
     require_gem('Gem.Exception')
     require_gem('Gem.Method')
@@ -14,8 +15,8 @@ def gem():
     require_gem('Pearl.Tokenizer')
 
 
-    from Gem import create_DelayedFileOutput, create_SimpleStringOutput, create_StringOutput
-    from Gem import path_join, print_exception_chain, produce_conjure_by_name
+    from Gem import create_cache, create_DelayedFileOutput, create_SimpleStringOutput, create_StringOutput
+    from Gem import path_join, print_exception_chain
     from Gem import produce_conjure_dual, produce_conjure_dual__21, produce_conjure_quadruple__4123
     from Gem import produce_conjure_single, produce_conjure_triple, produce_conjure_triple__213
     from Gem import produce_conjure_triple__312, produce_conjure_tuple
@@ -33,13 +34,13 @@ def gem():
         #
         #   Imported functions
         #
+        'create_cache',                     create_cache,
         'create_DelayedFileOutput',         create_DelayedFileOutput,
         'create_SimpleStringOutput',        create_SimpleStringOutput,
         'create_StringOutput',              create_StringOutput,
         'la',                               la,
         'path_join',                        path_join,
         'print_exception_chain',            print_exception_chain,
-        'produce_conjure_by_name',          produce_conjure_by_name,
         'produce_conjure_dual__21',         produce_conjure_dual__21,
         'produce_conjure_dual',             produce_conjure_dual,
         'produce_conjure_quadruple__4123',  produce_conjure_quadruple__4123,

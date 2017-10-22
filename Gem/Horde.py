@@ -651,4 +651,3 @@ def gem():
     export(
         'empty_horde',      empty_horde
     )
-

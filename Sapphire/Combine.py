@@ -210,7 +210,7 @@ def gem():
                     delete_latest_0()
                     continue
 
-                #line('Total %d - Process %s', total, first)
+                line('Total %d - Process %s', total, first)
 
                 if total is 1:
                     zap_latest()
@@ -298,6 +298,9 @@ def gem():
 
     def extract_copyright(tree):
         copyright = tree[0].prefix
+
+        if not copyright.is_comment_suite:
+            dump_token('copyright', copyright)
 
         assert copyright.is_comment_suite
         assert length(copyright) is 3
