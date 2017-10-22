@@ -25,6 +25,7 @@ from    Gem.BuiltIn         import  none                                    #   
 from    Gem.BuiltIn         import  privileged_2                            #   Gem.Core
 from    Gem.BuiltIn         import  raising_exception_from                  #   Gem.Boot
 from    Gem.BuiltIn         import  raising_exception                       #   Gem.Boot
+from    Gem.BuiltIn         import  rename_function                         #   Gem.Boot
 from    Gem.BuiltIn         import  String                                  #   Gem.Boot
 from    Gem.BuiltIn         import  true                                    #   Gem.Boot
 from    Gem.BuiltIn         import  view_items                              #   Gem.Map
@@ -62,7 +63,6 @@ from    Gem                 import  python_version                          #   
 from    Gem                 import  read_text_from_path                     #   Gem.Path
 from    Gem                 import  remove_path                             #   Gem.Path (via Gem.Path2 for Python 2)
 from    Gem                 import  remove_path__ignore_file_not_found      #   Gem.Path
-from    Gem                 import  rename_function                         #   Gem.Boot
 from    Gem                 import  rename_path                             #   Gem.Path
 from    Gem                 import  rename_path__ignore_file_not_found      #   Gem.Path
 from    Gem                 import  restricted                              #   Gem.Boot

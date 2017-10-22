@@ -306,6 +306,8 @@ def gem():
         __slots__ = ((
             'write_global_variable',    #   Method
             'parent',                   #   BaseBuildSymbolTable+
+            'local_variables',          #   Vacant | (FunctionParameter | FunctionLocal)
+                                        #       | List of (FunctionParameter | FunctionLocal)
         ))
 
 
@@ -316,7 +318,44 @@ def gem():
         is_nested_symbol_table   = true
 
 
-        __init__           = construct__build_nested_symbol_table
+        def __init__(t, write_global_variable, parent):
+            construct_BaseBuildSymbolTable(t)
+
+            t.write_global_variable = write_global_variable
+            t.parent                = parent
+            t.local_variables       = 0
+
+
+        def add_parameter(t, name):
+            variable_map = t.variable_map
+
+            if variable_map is 0:
+                t.local_variables = parameter = conjure_function_parameter(0, name)
+
+                t.variable_map     = variable_map = { name : parameter }
+                t.variable_index   = 1
+                t.lookup_variable  = variable_map.get
+                t.provide_variable = variable_map.setdefault
+                t.store_variable   = variable_map.__setitem__
+                return
+
+            if t.lookup_variable(name):
+                raise_runtime_error('parameter %s declared multiple times', name)
+
+            parameter = conjure_function_parameter(t.variable_index, name)
+
+            local_variables = t.local_variables
+
+            if type(local_variable) is not List:
+                t.local_variables = [local_variables, parameter]
+            else:
+                t.local_variables.append(parameter)
+
+            t.variable_index = index + 1
+
+            t.store_variable(name, parameter)
+
+
         finalize_variables = finalize_variables__build_nested_symbol_table
 
 
@@ -385,7 +424,7 @@ def gem():
     write_variable = produce_write_variable('write_variable', conjure_local_variable)
 
     BuildClassSymbolTable   .write_variable = write_variable
-    BuildFunctionSymbolTable.add_parameter  = produce_write_variable('add_parameter',  conjure_function_parameter)
+    BuildFunctionSymbolTable.add_parameter  = produce_write_variable('add_parameter', conjure_function_parameter)
     BuildFunctionSymbolTable.write_variable = write_variable
 
 

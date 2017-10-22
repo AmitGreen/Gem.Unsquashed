@@ -674,8 +674,9 @@ def gem():
 
         #   Functions
         #
-        'built_in',     built_in,
-        'restricted',   restricted,
+        'built_in',         built_in,
+        'restricted',       restricted,
+        'rename_function',  rename_function,
 
         #
         #   Modules
@@ -711,7 +712,6 @@ def gem():
         #   Functions
         #
         'is_instance',              is_instance,
-        'rename_function',          rename_function,
     )
 
 

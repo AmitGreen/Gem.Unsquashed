@@ -21,6 +21,7 @@ def boot():
 
 @gem('Topaz.Main')
 def gem():
+    require_gem('Topaz.Cache')
     require_gem('Topaz.ConjureTreeComment')
     require_gem('Topaz.ExceptionChain')
     require_gem('Topaz.Path')
@@ -31,10 +32,11 @@ def gem():
 
     @share
     def main(arguments):
+        test_cache()
         test_conjure_tree_comment()
         test_pattern()
         test_portray_raw_string()
         test_remove_path()
         test_rename_path()
         test_string_output()
-        test_exception_chain()
+        #test_exception_chain()

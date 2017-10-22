@@ -13,12 +13,14 @@ GEM_FILES = \
 	../Gem/__init__.py \
     ../Gem/Absent.py ../Gem/All.py ../Gem/Ascii.py \
 	../Gem/Boot.py \
-	../Gem/Cache.py ../Gem/Cadence.py ../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
+	../Gem/Cache.py ../Gem/Cache2.py ../Gem/Cadence.py ../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
 	../Gem/DelayedFileOutput.py \
 	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
 	../Gem/Global.py \
+    ../Gem/Horde.py \
     ../Gem/Import.py ../Gem/IO.py \
+    ../Gem/LiquidOrderedUniqueMap.py ../Gem/LiquidTribe.py \
     ../Gem/Map.py ../Gem/Method.py \
     ../Gem/Output.py \
     ../Gem/Path.py ../Gem/PortrayString.py \
@@ -96,7 +98,7 @@ SAPPHIRE_FILES = \
     #
 
 TOPAZ_FILES = \
-    ../Topaz/ConjureTreeComment.py ../Topaz/Core.py \
+    ../Topaz/Cache.py ../Topaz/ConjureTreeComment.py ../Topaz/Core.py \
     ../Topaz/ExceptionChain.py \
     ../Topaz/Main.py \
     ../Topaz/Path.py ../Topaz/Pattern.py ../Topaz/PortrayString.py \
@@ -147,11 +149,11 @@ clean:
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
 	rm -f a.py ab.py ac.py ag.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
-	rm -f ca.py cd.py ce.py co.py
+	rm -f ca.py ca2.py cd.py ce.py co.py
 	rm -f d.py de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
-	rm -f gd.py gg.py
+	rm -f gd.py gg.py gh.py
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -168,12 +170,12 @@ clean:
 	rm -f m map.py md.py m.txt
 	rm -f o.py
 	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
-	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
+	rm -f q1p.py qc.py ql.py qma.py qmc.py qo.py qp.py qt.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f zc.py ze.py zj.py zm.py zpa.py zps.py zpt.py zso.py
+	rm -f zca.py zco.py ze.py zj.py zm.py zpa.py zps.py zpt.py zso.py
 
 
 files:
@@ -200,6 +202,7 @@ links:
 	ln -s ../Beryl/Main.py                              bm.py
 	ln -s ../Gem/Boot.py                                bo.py
 	ln -s ../Gem/Cache.py                               ca.py
+	ln -s ../Gem/Cache2.py                              ca2.py
 	ln -s ../Gem/Cadence.py                             cd.py
 	ln -s ../Gem/CatchException.py                      ce.py
 	ln -s ../Gem/Core.py                                co.py
@@ -216,6 +219,7 @@ links:
 	ln -s ../Gem/FileStatus.py                          fs.py
 	ln -s ../Gem/Codec.py                               gd.py
 	ln -s ../Gem/Global.py                              gg.py
+	ln -s ../Gem/Horde.py                               gh.py
 	ln -s ../Sapphire/Parse.py                          h0p.py
 	ln -s ../Sapphire/Parse1.py                         h1p.py
 	ln -s ../Sapphire/Parse1Atom.py                     h1pa.py
@@ -321,7 +325,9 @@ links:
 	ln -s ../Quartz/Line.py                             ql.py
 	ln -s ../Quartz/Main.py                             qma.py
 	ln -s ../Quartz/Match.py                            qmc.py
+	ln -s ../Gem/LiquidOrderedUniqueMap.py              qo.py
 	ln -s ../Quartz/Pattern.py                          qp.py
+	ln -s ../Gem/LiquidTribe.py                         qt.py
 	ln -s ../Agate/RUNME.py                             rm.py
 	ln -s ../Gem/RegularExpression.py                   rx.py
 	ln -s ../Gem/StringOutput.py                        so.py
@@ -342,7 +348,8 @@ links:
 	ln -s ../Tremolite/Compile.py                       tx.py
 	ln -s ../Sardonyx/Boot.py                           xb.py
 	ln -s ../Sapphire/Transform.py                      xf.py
-	ln -s ../Topaz/Core.py                              zc.py
+	ln -s ../Topaz/Cache.py                             zca.py
+	ln -s ../Topaz/Core.py                              zco.py
 	ln -s ../Topaz/ExceptionChain.py                    ze.py
 	ln -s ../Topaz/ConjureTreeComment.py                zj.py
 	ln -s ../Topaz/Main.py                              zm.py
