@@ -15,7 +15,7 @@ def gem():
         __slots__ = (())
 
 
-        def iterate_items_sorted_by_key(t):
+        def items_sorted_by_key(t):
             value = t.__getitem__
 
             for k in sorted_list(t):
@@ -36,7 +36,7 @@ def gem():
             t.nub = nub
 
 
-        def iterate_items_sorted_by_key(t):
+        def items_sorted_by_key(t):
             value = t.__getitem__
 
             for k in sorted_list(t, key = t.nub):
@@ -154,7 +154,7 @@ def gem():
         def dump_single_cache(name, cache):
             line('===  %s  ===', name)
 
-            for [k, v] in cache.iterate_items_sorted_by_key():
+            for [k, v] in cache.items_sorted_by_key():
                 if not v.is_horde:
                     line('%s: %s',
                          (
@@ -173,7 +173,7 @@ def gem():
                         k.display_token()
                      ))
 
-                for [k2, w] in v.iterate_items_sorted_by_key():
+                for [k2, w] in v.items_sorted_by_key():
                     if not w.is_horde:
                         line('  %s: %s',
                              (
@@ -192,14 +192,14 @@ def gem():
                             k2.display_token()
                          ))
 
-                    for [k3, x] in w.iterate_items_sorted_by_key():
+                    for [k3, x] in w.items_sorted_by_key():
                         if not x.is_horde:
                             line('    %s: %s', k3.display_token(), x.display_token())
                             continue
 
                         line('    %s:', k3.display_token())
 
-                        for [k4, y] in x.iterate_items_sorted_by_key():
+                        for [k4, y] in x.items_sorted_by_key():
                             line('      %s:', k4.display_token())
                             line('        %s', y.display_token())
 
@@ -208,7 +208,7 @@ def gem():
             if use_name is none:
                 line('Total caches: %d', length(cache_names))
 
-                for [name, cache] in iterate_items_sorted_by_key(cache_names):
+                for [name, cache] in items_sorted_by_key(cache_names):
                     line('%s: %d', name, length(cache))
 
                 return

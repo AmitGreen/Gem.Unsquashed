@@ -45,6 +45,11 @@ def gem():
             return none
 
 
+        @static_method
+        def items_sorted_by_key():
+            return (())
+
+
         lookup = glimpse
 
 
@@ -79,6 +84,10 @@ def gem():
             assert t.a != b
 
             return Horde_23(t.a, b, t.v, w)
+
+
+        def items_sorted_by_key(t):
+            return (( ((t.a, t.v)), ))
 
 
         def lookup(t, k):
@@ -191,59 +200,44 @@ def gem():
             return r
 
 
-        def iterate_items_sorted_by_key(t):
+        def items_sorted_by_key(t):
             a = t.a
             b = t.b
             c = t.c
 
             nub = a.nub
 
+            av = ((a, t.v))
+            bw = ((b, t.w))
             ka = nub(a)
             kb = nub(b)
 
+
             if c is absent:
                 if ka < kb:
-                    yield ((a, t.v))
-                    yield ((b, t.w))
-                    return
+                    return ((av, bw))
 
-                yield ((b, t.w))
-                yield ((a, t.v))
-                return
+                return ((bw, av))
 
+            cx = ((c, t.x))
             kc = nub(c)
 
             if ka < kb:
                 if kb < kc:
-                    yield ((a, t.v))
-                    yield ((b, t.w))
-                    yield ((c, t.x))
-                    return
+                    return ((av, bw, cx))
 
                 if ka < kc:
-                    yield ((a, t.v))
-                    yield ((c, t.x))
-                else:
-                    yield ((c, t.x))
-                    yield ((a, t.v))
+                    return ((av, cx, bw))
 
-                yield ((b, t.w))
-                return
+                return ((cx, av, bw))
 
             if ka < kc:
-                yield ((b, t.w))
-                yield ((a, t.v))
-                yield ((c, t.x))
-                return
+                return ((bw, av, cx))
 
             if kb < kc:
-                yield ((b, t.w))
-                yield ((c, t.x))
-            else:
-                yield ((c, t.x))
-                yield ((b, t.w))
+                return ((bw, cx, av))
 
-            yield ((a, t.v))
+            return ((cx, bw, av))
 
 
         def lookup(t, k):
@@ -274,19 +268,7 @@ def gem():
                 t.x = y
                 return t
 
-            r = new_Horde_4567()
-
-            r.a = a
-            r.b = b
-            r.c = c
-            r.d = d
-            t.e = absent
-            r.v = t.v
-            r.w = t.w
-            r.x = t.x
-            r.y = y
-
-            return r
+            return create_horde_4567(a, b, c, d, t.v, t.w, t.x, y)
 
 
         def provision(t, d, y):
@@ -306,19 +288,7 @@ def gem():
                 t.x = y
                 return t
 
-            r = new_Horde_4567()
-
-            r.a = a
-            r.b = b
-            r.c = c
-            r.d = d
-            t.e = absent
-            r.v = t.v
-            r.w = t.w
-            r.x = t.x
-            r.y = y
-
-            return r
+            return create_horde_4567(a, b, c, d, t.v, t.w, t.x, y)
 
 
     class Horde_4567(Object):
@@ -329,7 +299,7 @@ def gem():
             'd',                        #   Any
             'e',                        #   Absent | Any
             'e6',                       #   Absent | Vacant | Any
-            'e7'                        #   Absent | Vacant | Any
+            'e7',                       #   Absent | Vacant | Any
             'v',                        #   Any
             'w',                        #   Any
             'x',                        #   Any
@@ -439,6 +409,39 @@ def gem():
             t[e8] = z8
 
             return r
+
+
+        def items_sorted_by_key(t):
+            a   = t.a
+            nub = a.nub
+
+            r = [ ((a, t.v)), ((t.b, t.w)), ((t.c, t.x)), ((t.d, t.y))]
+
+            e = t.e
+
+            if e is not absent:
+                r.append( ((e, t.z)) )
+
+                e6 = t.e6
+
+                if e6 is not absent:
+                    r.append( ((e6, t.z6)) )
+
+                    e7 = t.e7
+
+                    if e7 is not absent:
+                        r.append( ((e7, t.z7)) )
+
+
+            if nub is 0:
+                def key(pair):
+                    return pair[0]
+            else:
+                def key(pair):
+                    return nub(pair[0])
+
+
+            return sorted_list(r, key = key)
 
 
         def lookup(t, k):
@@ -618,7 +621,7 @@ def gem():
 
     @export
     def create_horde_23(a, b, v, w):
-        assert (a is not b) and (a is not absent) and (b is not absent)
+        assert (a is not absent) and (a is not b) and (b is not absent)
 
         t = new_Horde_23()
 
@@ -631,4 +634,30 @@ def gem():
         return t
 
 
+    def create_horde_4567(a, b, c, d, v, w, x, y):
+        assert (a is not absent) and (a is not b) and (a is not c) and (a is not d)
+        assert (b is not absent) and (b is not c) and (b is not d)
+        assert (c is not absent) and (c is not d)
+        assert d is not absent
+
+        t = new_Horde_4567()
+
+        t.a = a
+        t.b = b
+        t.c = c
+        t.d = d
+        t.e = absent
+        t.v = v
+        t.w = w
+        t.x = x
+        t.y = y
+
+        return t
+
+
     Horde_0.provision = Horde_0.provide = Horde_0.inject = Horde_0.insert = static_method(create_horde_1)
+
+    export(
+        'empty_horde',      empty_horde
+    )
+
