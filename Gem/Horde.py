@@ -11,8 +11,8 @@ def gem():
     #       Unordered
     #       Key must not include absent
     #
-    #   .glance
     #   .inject
+    #   .lookup
     #   .provide
     #       Use == for comparing keys
     #
@@ -41,11 +41,12 @@ def gem():
 
 
         @static_method
-        def glance(k):
+        def glimpse(k):
             return none
 
 
-        glimpse   = glance
+        lookup = glimpse
+
 
 
     class Horde_1(Object):
@@ -66,14 +67,6 @@ def gem():
             t.v = v
 
 
-        def glance(t, k):
-            if t.a == k: return t.v
-
-            assert k is not absent
-
-            return none
-
-
         def glimpse(t, k):
             if t.a is k: return t.v
 
@@ -86,6 +79,14 @@ def gem():
             assert t.a != b
 
             return Horde_23(t.a, b, t.v, w)
+
+
+        def lookup(t, k):
+            if t.a == k: return t.v
+
+            assert k is not absent
+
+            return none
 
 
         def insert(t, b, w):
@@ -131,17 +132,6 @@ def gem():
             t.c = absent
             t.v = v
             t.w = w
-
-
-        def glance(t, k):
-            if t.a == k: return t.v
-            if t.b == k: return t.w
-
-            assert k is not absent
-
-            if t.c == k: return t.x
-
-            return none
 
 
         def glimpse(t, k):
@@ -204,14 +194,67 @@ def gem():
         def iterate_items_sorted_by_key(t):
             a = t.a
             b = t.b
+            c = t.c
 
-            if a.less_than(b):
+            nub = a.nub
+
+            ka = nub(a)
+            kb = nub(b)
+
+            if c is absent:
+                if ka < kb:
+                    yield ((a, t.v))
+                    yield ((b, t.w))
+                    return
+
+                yield ((b, t.w))
                 yield ((a, t.v))
+                return
+
+            kc = nub(c)
+
+            if ka < kb:
+                if kb < kc:
+                    yield ((a, t.v))
+                    yield ((b, t.w))
+                    yield ((c, t.x))
+                    return
+
+                if ka < kc:
+                    yield ((a, t.v))
+                    yield ((c, t.x))
+                else:
+                    yield ((c, t.x))
+                    yield ((a, t.v))
+
                 yield ((b, t.w))
                 return
 
-            yield ((b, t.w))
+            if ka < kc:
+                yield ((b, t.w))
+                yield ((a, t.v))
+                yield ((c, t.x))
+                return
+
+            if kb < kc:
+                yield ((b, t.w))
+                yield ((c, t.x))
+            else:
+                yield ((c, t.x))
+                yield ((b, t.w))
+
             yield ((a, t.v))
+
+
+        def lookup(t, k):
+            if t.a == k: return t.v
+            if t.b == k: return t.w
+
+            assert k is not absent
+
+            if t.c == k: return t.x
+
+            return none
 
 
         def provide(t, d, y):
@@ -299,27 +342,6 @@ def gem():
 
         is_horde = true
         k2       = absent
-
-
-        def glance(t, k):
-            if t.a == k:        return t.v
-            if t.b == k:        return t.w
-            if t.c == k:        return t.x
-            if t.d == k:        return t.y
-
-            assert k is not absent
-
-            e = t.e
-            if e == k:          return t.z
-            if e is absent:     return none
-
-            e6 = t.e6
-            if e6 == k:         return t.z6
-            if e6 is absent:    return none
-
-            if t.e7 == k:       return t.z7
-
-            return none
 
 
         def glimpse(t, k):
@@ -417,6 +439,27 @@ def gem():
             t[e8] = z8
 
             return r
+
+
+        def lookup(t, k):
+            if t.a == k:        return t.v
+            if t.b == k:        return t.w
+            if t.c == k:        return t.x
+            if t.d == k:        return t.y
+
+            assert k is not absent
+
+            e = t.e
+            if e == k:          return t.z
+            if e is absent:     return none
+
+            e6 = t.e6
+            if e6 == k:         return t.z6
+            if e6 is absent:    return none
+
+            if t.e7 == k:       return t.z7
+
+            return none
 
 
         def provide(t, e8, z8):
@@ -531,8 +574,8 @@ def gem():
         k2       = absent
 
 
-        glance  = map__lookup
         glimpse = map__lookup
+        lookup  = map__lookup
 
 
         def inject(t, k, v):
@@ -573,7 +616,7 @@ def gem():
         return t
 
 
-    @share
+    @export
     def create_horde_23(a, b, v, w):
         assert (a is not b) and (a is not absent) and (b is not absent)
 

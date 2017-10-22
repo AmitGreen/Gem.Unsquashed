@@ -7,6 +7,10 @@ def gem():
     require_gem('Gem.Horde')
 
 
+    map__get     = Map.get
+    map__provide = Map.setdefault
+
+
     class LiquidMap(Map):
         __slots__ = (())
 
@@ -18,21 +22,29 @@ def gem():
                 yield (( k, value(k) ))
 
 
-    class LiquidMap_WithKey(Map):
+        lookup  = map__get
+        provide = map__provide
+
+
+    class LiquidMap_WithNub(Map):
         __slots__ = ((
-            'fetch_key_1',                      #   Method
+            'nub',                              #   Method
         ))
 
 
-        def __init__(t, fetch_key_1):
-            t.fetch_key_1 = fetch_key_1
+        def __init__(t, nub):
+            t.nub = nub
 
 
         def iterate_items_sorted_by_key(t):
             value = t.__getitem__
 
-            for k in sorted_list(t, key = t.fetch_key_1):
+            for k in sorted_list(t, key = t.nub):
                 yield (( k, value(k) ))
+
+
+        lookup  = map__get
+        provide = map__provide
 
 
     cache_names   = LiquidMap()                 #   Map String+ of Map
@@ -76,13 +88,13 @@ def gem():
             name,
             Meta,
 
-            cache       = absent,
-            fetch_key_1 = none,
-            lookup      = absent,
-            store       = absent,
+            cache  = absent,
+            nub    = none,
+            lookup = absent,
+            store  = absent,
     ):
         if cache is absent:
-            cache = create_cache(name, fetch_key_1 = fetch_key_1)
+            cache = create_cache(name, nub = nub)
 
         if lookup is absent:
             lookup = cache.get
@@ -115,7 +127,7 @@ def gem():
 
             first__2 = first.insert(k2, r)
 
-            if first is not first_2:
+            if first is not first__2:
                 store(k1, first_2)
 
             return r
@@ -129,12 +141,12 @@ def gem():
 
 
     @export
-    def create_cache(name, fetch_key_1 = none):
+    def create_cache(name, nub = none):
         assert name not in cache_names
 
         return provide_cache(
                    intern_string(name),
-                   (LiquidMap()   if fetch_key_1 is none else   LiquidMap_WithKey(fetch_key_1)),
+                   (LiquidMap()   if nub is none else   LiquidMap_WithNub(nub)),
                )
 
 
