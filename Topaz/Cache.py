@@ -119,8 +119,10 @@ def gem():
                                 )
 
 
+        eight = conjure_number('eight', 8)
         five  = conjure_number('five',  5)
         four  = conjure_number('four',  4)
+        nine  = conjure_number('nine',  9)
         one   = conjure_number('one',   1)
         seven = conjure_number('seven', 7)
         six   = conjure_number('six',   6)
@@ -145,15 +147,36 @@ def gem():
 
 
         def test_conjure_again():
-            assert one  is conjure_number('one',  1)
-            assert two  is conjure_number('two',  2)
-            assert zero is conjure_number('zero', 0)
+            assert one   is conjure_number('one',  1)
+            assert two   is conjure_number('two',  2)
+            assert zero  is conjure_number('zero', 0)
+            assert three is conjure_number('three', 3)
+            assert four  is conjure_number('four',  4)
+            assert five  is conjure_number('five',  5)
+            assert six   is conjure_number('six',   6)
+            assert seven is conjure_number('seven', 7)
+            assert eight is conjure_number('eight', 8)
+            assert nine  is conjure_number('nine',  9)
 
             assert red is conjure_color('red')
 
             assert blue_circle  is conjure_colored_shape(blue,  circle)
             assert red_circle   is conjure_colored_shape(red,   circle)
             assert green_circle is conjure_colored_shape(green, circle)
+
+
+        expected_items = ((
+                             ((zero,  zero .value)),
+                             ((one,   one  .value)),
+                             ((two,   two  .value)),
+                             ((three, three.value)),
+                             ((four,  four .value)),
+                             ((five,  five .value)),
+                             ((six,   six  .value)),
+                             ((seven, seven.value)),
+                             ((eight, eight.value)),
+                             ((nine,  nine .value)),
+                         ))
 
 
         #
@@ -169,15 +192,13 @@ def gem():
         def test_horde_1__sort():
             horde = empty_horde.provision(zero, zero.value)
 
-            assert horde.items_sorted_by_key() == (( ((zero, zero.value)), ))
+            assert horde.items_sorted_by_key() == expected_items[:1]
 
 
         #
         #   Verify sort of 2 & 3 element horde's
         #
         def test_horde_23__sort():
-            expected_order = (( ((zero, 0)), ((one, 1)) ))
-
             for [a, b] in [
                     [zero, one],
                     [one, zero],
@@ -193,9 +214,8 @@ def gem():
                     horde__2 = horde__2.provision(b, b.value)
 
                 assert horde is horde__2
-                assert Tuple(horde.items_sorted_by_key()) == expected_order
+                assert horde.items_sorted_by_key() == expected_items[:2]
 
-            expected_order = (( ((zero, 0)), ((one, 1)), ((two, 2)) ))
 
             for [a, b, c] in [
                     [zero, one,  two ],
@@ -217,21 +237,10 @@ def gem():
                     horde__2 = horde__2.provision(c, c.value)
 
                 assert horde is horde__2
-                assert horde.items_sorted_by_key() == expected_order
+                assert horde.items_sorted_by_key() == expected_items[:3]
 
 
         def test_horde_4567__sort():
-            expected = [
-                           ((zero,  zero .value)),
-                           ((one,   one  .value)),
-                           ((two,   two  .value)),
-                           ((three, three.value)),
-                           ((four,  four .value)),
-                           ((five,  five .value)),
-                           ((six,   six  .value)),
-                           ((seven, seven.value)),
-                       ]
-
             for add in [
                 [   zero,   one,    two,    three                                   ],
                 [   one,    three,  two,    zero                                    ],
@@ -243,10 +252,26 @@ def gem():
             ]:
                 horde = empty_horde
 
-                for v in add:
-                    horde = horde.provision(v, v.value)
+                for loop in [1, 2]:
+                    for v in add:
+                        horde = horde.provision(v, v.value)
 
-                assert horde.items_sorted_by_key() == expected[:length(add)]
+                assert Tuple(horde.items_sorted_by_key()) == expected_items[:length(add)]
+
+
+        def test_horde_many__sort():
+            for add in [
+                [   five,   three,  two,    seven,  one,    zero,   six,    four                    ],
+                [   seven,  six,    three,  five,   zero,   one,    two,    eight,  four            ],
+                [   one,    two,    zero,   nine,   five,   eight,  four,   six,    three,  seven   ],
+            ]:
+                horde = empty_horde
+
+                for loop in [1, 2]:
+                    for v in add:
+                        horde = horde.provision(v, v.value)
+
+                assert Tuple(horde.items_sorted_by_key()) == expected_items[:length(add)]
 
 
         test_conjure_again()
@@ -254,6 +279,7 @@ def gem():
         test_horde_1__sort()
         test_horde_23__sort()
         test_horde_4567__sort()
+        test_horde_many__sort()
 
         line('PASSED: test_cache')
 

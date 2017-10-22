@@ -359,18 +359,7 @@ def gem():
                 return t
             assert t.e7 != e8
 
-            r = new_Horde_Many()
-
-            t[a]  = t.v
-            t[b]  = t.w
-            t[c]  = t.x
-            t[d]  = t.y
-            t[e]  = t.z
-            t[e6] = t.z6
-            t[e7] = t.z7
-            t[e8] = z8
-
-            return r
+            return create_horde_many(a, b, c, d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
 
 
         def insert(t, e8, z8):
@@ -397,18 +386,7 @@ def gem():
                 return t
             assert t.e7 is not e8
 
-            r = new_Horde_Many()
-
-            t[a]  = t.v
-            t[b]  = t.w
-            t[c]  = t.x
-            t[d]  = t.y
-            t[e]  = t.z
-            t[e6] = t.z6
-            t[e7] = t.z7
-            t[e8] = z8
-
-            return r
+            return create_horde_many(a, b, c, d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
 
 
         def items_sorted_by_key(t):
@@ -503,18 +481,7 @@ def gem():
                 t.z7 = z8
                 return t
 
-            r = new_Horde_Many()
-
-            t[a]  = t.v
-            t[b]  = t.w
-            t[c]  = t.x
-            t[d]  = t.y
-            t[e]  = t.z
-            t[e6] = t.z6
-            t[e7] = t.z7
-            t[e8] = z8
-
-            return r
+            return create_horde_many(a, b, c, d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
 
 
         def provision(t, e8, z8):
@@ -555,18 +522,7 @@ def gem():
                 t.z7 = z8
                 return t
 
-            r = new_Horde_Many()
-
-            t[a]  = t.v
-            t[b]  = t.w
-            t[c]  = t.x
-            t[d]  = t.y
-            t[e]  = t.z
-            t[e6] = t.z6
-            t[e7] = t.z7
-            t[e8] = z8
-
-            return r
+            return create_horde_many(a, b, c, d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
 
 
     class Horde_Many(Map):
@@ -591,6 +547,22 @@ def gem():
         insert = inject
 
 
+        if is_python_2:
+            def items_sorted_by_key(t):
+                keys  = t.keys()
+                value = t.__getitem__
+
+                for k in sorted_list(keys, key = keys[0].nub):
+                    yield (( k, value(k) ))
+        else:
+            def items_sorted_by_key(t):
+                keys  = List(t.keys())
+                value = t.__getitem__
+
+                for k in sorted_list(keys, key = keys[0].nub):
+                    yield (( k, value(k) ))
+
+
         def provide(t, k, v):
             map__provide(t, k, v)
             return t
@@ -605,7 +577,7 @@ def gem():
     new_Horde_1    = Method(Object.__new__, Horde_1)
     new_Horde_23   = Method(Object.__new__, Horde_23)
     new_Horde_4567 = Method(Object.__new__, Horde_4567)
-    new_Horde_Many = Method(Object.__new__, Horde_Many)
+    new_Horde_Many = Method(Map   .__new__, Horde_Many)
 
 
     def create_horde_1(a, v):
@@ -651,6 +623,33 @@ def gem():
         t.w = w
         t.x = x
         t.y = y
+
+        return t
+
+
+    def create_horde_many(a, b, c, d, e, e6, e7, e8, v, w, x, y, z, z6, z7, z8):
+        assert (a is not absent) and (a is not b) and (a is not c) and (a is not d) and (a is not e)
+        assert (a is not e6) and (a is not e7) and (a is not e8)
+        assert (b is not absent) and (b is not c) and (b is not d) and (b is not e) and (b is not e6)
+        assert (b is not e7) and (b is not e8)
+        assert (c is not absent) and (c is not d) and (c is not e) and (c is not e6) and (c is not e7)
+        assert (c is not e8)
+        assert (d is not absent) and (d is not e) and (d is not e6) and (d is not e7) and (d is not e8)
+        assert (e is not absent) and (e is not e6) and (e is not e7) and (e is not e8)
+        assert (e6 is not absent) and (e6 is not e7) and (e6 is not e8)
+        assert (e7 is not absent) and (e7 is not e8)
+        assert e8 is not absent
+
+        t = new_Horde_Many()
+
+        t[a]  = v
+        t[b]  = w
+        t[c]  = x
+        t[d]  = y
+        t[e]  = z
+        t[e6] = z6
+        t[e7] = z7
+        t[e8] = z8
 
         return t
 
