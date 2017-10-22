@@ -20,7 +20,6 @@ GEM_FILES = \
 	../Gem/Global.py \
     ../Gem/Horde.py \
     ../Gem/Import.py ../Gem/IO.py \
-    ../Gem/LiquidOrderedUniqueMap.py ../Gem/LiquidTribe.py \
     ../Gem/Map.py ../Gem/Method.py \
     ../Gem/Output.py \
     ../Gem/Path.py ../Gem/PortrayString.py \
@@ -170,7 +169,7 @@ clean:
 	rm -f m map.py md.py m.txt
 	rm -f o.py
 	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
-	rm -f q1p.py qc.py ql.py qma.py qmc.py qo.py qp.py qt.py
+	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
@@ -325,9 +324,7 @@ links:
 	ln -s ../Quartz/Line.py                             ql.py
 	ln -s ../Quartz/Main.py                             qma.py
 	ln -s ../Quartz/Match.py                            qmc.py
-	ln -s ../Gem/LiquidOrderedUniqueMap.py              qo.py
 	ln -s ../Quartz/Pattern.py                          qp.py
-	ln -s ../Gem/LiquidTribe.py                         qt.py
 	ln -s ../Agate/RUNME.py                             rm.py
 	ln -s ../Gem/RegularExpression.py                   rx.py
 	ln -s ../Gem/StringOutput.py                        so.py

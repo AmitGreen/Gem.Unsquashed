@@ -5,7 +5,7 @@
 def gem():
     adorn = 7
     dump  = 0
-    show  = 0
+    show  = 7
 
 
     require_gem('Sapphire.Cache')

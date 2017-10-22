@@ -211,7 +211,10 @@ def gem():
                           | G('atom', number | '@' | name) + ow
                           | G(
                                 'operator',
-                                ANY_OF(right_parenthesis, minus_sign, right_square_bracket, right_brace, tilde_sign)
+                                ANY_OF(
+                                    right_parenthesis, star_sign, minus_sign, right_square_bracket, right_brace,
+                                    tilde_sign,
+                                )
                             ) + ow
                           | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                           | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
@@ -241,6 +244,27 @@ def gem():
                           right_parenthesis, star_sign, minus_sign, colon, right_square_bracket, right_brace,
                           tilde_sign,
                       ),
+                  ) + ow
+                | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
+                | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
+                | G(left_brace__ow)          + P(G(right_brace)          + ow)
+            ) + Q(comment_newline),
+        )
+
+        MATCH(
+            #
+            #   Same as 'atom_match', but without ')', ']', or '}'.
+            #
+            #   NOTE:
+            #       'name' is also analyze to see if it a keyword such as 'return'.
+            #
+            'simple_statement_match',
+            (
+                  OPTIONAL('r') + G('quote', double_quote | single_quote) + ow  #   Must preceed 'name'
+                | G('atom', number | name) + ow
+                | G(
+                      'operator',
+                      ANY_OF(star_sign, minus_sign, tilde_sign)
                   ) + ow
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)

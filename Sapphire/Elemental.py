@@ -55,6 +55,7 @@ def gem():
         is_keyword_in                              = false
         is_keyword_not                             = false
         is_keyword_or                              = false
+        is_keyword_return                          = false
         is_left_brace                              = false
         is_left_parenthesis                        = false
         is_left_square_bracket                     = false
@@ -351,6 +352,8 @@ def gem():
         __slots__    = (())
         display_name = 'return'
         keyword      = 'return'
+
+        is_keyword_return = true
 
 
     class KeywordTry(KeywordAndOperatorBase):
@@ -1220,9 +1223,9 @@ def gem():
     is_colon_7              = { ':' : 7 }.get
     is_close_operator       = { ')' : 7, ']' : 7, '}' : 7 }.get
 
-
     lookup_keyword_conjure_function = {
-                                          'not' : conjure_keyword_not,
+                                          'not'    : conjure_keyword_not,
+                                          'return' : conjure_keyword_return,
                                       }.get
 
 

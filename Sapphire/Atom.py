@@ -101,6 +101,7 @@ def gem():
         is_identifier                    = false
         is_indentation                   = false
         is_keyword                       = false
+        is_keyword_return                = false
         is_right_parenthesis             = false
         is_right_square_bracket          = false
         line_marker                      = false
