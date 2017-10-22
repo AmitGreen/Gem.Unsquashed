@@ -37,6 +37,7 @@ def gem():
 
 
         is_horde = true
+        k1       = absent
         k2       = absent
 
 
@@ -62,6 +63,7 @@ def gem():
 
 
         is_horde = true
+        k1       = absent
         k2       = absent
 
 
@@ -130,6 +132,7 @@ def gem():
 
 
         is_horde = true
+        k1       = absent
         k2       = absent
 
 
@@ -164,17 +167,7 @@ def gem():
                 t.x = y
                 return t
 
-            r.a = t.a
-            r.b = t.b
-            r.c = c
-            r.d = d
-            t.e = absent
-            r.v = t.v
-            r.w = t.w
-            r.x = t.x
-            r.y = y
-
-            return r
+            return create_horde_4567(t.a, t.b, c, d, t.v, t.w, t.x, y)
 
 
         def insert(t, d, y):
@@ -187,17 +180,7 @@ def gem():
                 t.x = y
                 return t
 
-            r.a = t.a
-            r.b = t.b
-            r.c = c
-            r.d = d
-            t.e = absent
-            r.v = t.v
-            r.w = t.w
-            r.x = t.x
-            r.y = y
-
-            return r
+            return create_horde_4567(t.a, t.b, c, d, t.v, t.w, t.x, y)
 
 
         def items_sorted_by_key(t):
@@ -311,6 +294,7 @@ def gem():
 
 
         is_horde = true
+        k1       = absent
         k2       = absent
 
 
@@ -337,56 +321,63 @@ def gem():
 
         def inject(t, e8, z8):
             assert (t.a != e8) and (t.b != e8) and (t.c != e8) and (t.d != e8)
+            assert e8 is not absent
 
-            if t.e is absent:
+            e = t.e
+            if e is absent:
                 t.e  = e8
                 t.z  = z8
                 t.e6 = absent
                 return t
             assert t.e != e8
 
-            if t.e6 is absent:
+            e6 = t.e6
+            if e6 is absent:
                 t.e6 = e8
                 t.z6 = z8
                 t.e7 = absent
                 return t
             assert t.e6 != e8
 
-            if t.e7 is absent:
+            e7 = t.e7
+            if e7 is absent:
                 t.e7 = e8
                 t.z7 = z8
                 t.e8 = absent
                 return t
             assert t.e7 != e8
 
-            return create_horde_many(a, b, c, d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
+            return create_horde_many(t.a, t.b, t.c, t.d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
 
 
         def insert(t, e8, z8):
             assert (t.a is not e8) and (t.b is not e8) and (t.c is not e8) and (t.d is not e8)
+            assert e8 is not absent
 
-            if t.e is absent:
+            e = t.e
+            if e is absent:
                 t.e  = e8
                 t.z  = z8
                 t.e6 = absent
                 return t
             assert t.e is not e8
 
-            if t.e6 is absent:
+            e6 = t.e6
+            if e6 is absent:
                 t.e6 = e8
                 t.z6 = z8
                 t.e7 = absent
                 return t
             assert t.e6 is not e8
 
-            if t.e7 is absent:
+            e7 = t.e7
+            if e7 is absent:
                 t.e7 = e8
                 t.z7 = z8
-                t.e8 = absent
                 return t
             assert t.e7 is not e8
 
-            return create_horde_many(a, b, c, d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
+            return create_horde_many(t.a, t.b, t.c, t.d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
 
 
         def items_sorted_by_key(t):
@@ -530,6 +521,7 @@ def gem():
 
 
         is_horde = true
+        k1       = absent
         k2       = absent
 
 
@@ -538,7 +530,7 @@ def gem():
 
 
         def inject(t, k, v):
-            assert map_lookup(k) is none
+            assert map__lookup(t, k) is none
 
             map__store(t, k, v)
             return t

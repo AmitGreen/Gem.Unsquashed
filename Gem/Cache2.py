@@ -139,6 +139,61 @@ def gem():
         return conjure_unique_dual
 
 
+    @export
+    def produce_conjure_unique_dual__21(
+            name,
+            Meta,
+
+            cache  = absent,
+            nub    = none,
+            lookup = absent,
+            store  = absent,
+    ):
+        if cache is absent:
+            cache = create_cache(name, nub = nub)
+
+        if lookup is absent:
+            lookup = cache.get
+
+        if store is absent:
+            store = cache.__setitem__
+
+
+        def conjure_numbered_shape__21(k1, k2):
+            first = lookup(k2, absent)
+
+            if first.k1 is k1:
+                return first
+
+            if not first.is_horde:
+                r = Meta(k1, k2)
+
+                store(k2, (r   if first is absent else   create_horde_23(first.k1, k1, first, r )))
+
+                return r
+
+            r = first.glimpse(k1)
+
+            if r is not none:
+                assert r.k1 is k1
+
+                return r
+
+            r = Meta(k1, k2)
+
+            first__2 = first.insert(k1, r)
+
+            if first is not first__2:
+                store(k2, first__2)
+
+            return r
+
+
+        if __debug__:
+            return rename_function(intern_arrange('conjure_%s__21', name), conjure_numbered_shape__21)
+
+        return conjure_numbered_shape__21
+
 
     @export
     def create_cache(name, nub = none):
