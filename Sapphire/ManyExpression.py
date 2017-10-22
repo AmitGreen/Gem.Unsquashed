@@ -108,6 +108,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        order = order__frill_many
+
+
         def write(t, w):
             many  = t.many
             frill = t.frill
@@ -208,6 +211,7 @@ def gem():
 
     class AndExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__MANY_EXPRESSION
         display_name = 'and-*'
 
         scout_variables = scout_variables__many
@@ -215,6 +219,7 @@ def gem():
 
     class ArithmeticExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__MANY_EXPRESSION
         display_name = 'arithmetic-*'
 
         scout_variables = scout_variables__many
@@ -222,6 +227,7 @@ def gem():
 
     class CommaExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__MANY_EXPRESSION
         display_name = ',-*'
 
         scout_variables = scout_variables__many
@@ -230,6 +236,7 @@ def gem():
 
     class CompareExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__MANY_EXPRESSION
         display_name = 'compare-*'
 
         scout_variables = scout_variables__many
@@ -237,13 +244,16 @@ def gem():
 
     class LogicalOrExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__MANY_EXPRESSION
         display_name = '|-*'
 
+        order           = order__frill_many
         scout_variables = scout_variables__many
 
 
     class MultiplyExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BINARY_EXPRESSION
         display_name = 'multiply-*'
 
         scout_variables = scout_variables__many
@@ -251,6 +261,7 @@ def gem():
 
     class OrExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BINARY_EXPRESSION
         display_name = 'or-*'
 
         scout_variables = scout_variables__many
@@ -301,7 +312,14 @@ def gem():
             produce_conjure_with_frill = 1,
         )
 
-    conjure_multiply_expression_many   = produce_conjure_many_expression('multiply-*',   MultiplyExpression_Many)
+    [
+        conjure_multiply_expression_many, conjure_multiply_expression_many__with_frill,
+    ] = produce_conjure_many_expression(
+            'multiply-*',
+            MultiplyExpression_Many,
+
+            produce_conjure_with_frill = 1,
+        )
 
     [
         conjure_or_expression_many, conjure_or_expression_many__with_frill,
@@ -355,6 +373,14 @@ def gem():
                                           PRIORITY_LOGICAL_EXCLUSIVE_OR,
                                           conjure_logical_or_expression_many__with_frill,
                                       )
+
+    MultiplyExpression_Many.mutate = produce_mutate__frill__many(
+                                         'multiply_expression_many',
+                                         PRIORITY_MULTIPLY,
+                                         PRIORITY_UNARY,
+                                         PRIORITY_UNARY,
+                                         conjure_multiply_expression_many__with_frill,
+                                     )
 
     OrExpression_Many.mutate = produce_mutate__frill__many(
                                    'or_expression_many',

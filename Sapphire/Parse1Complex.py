@@ -38,14 +38,65 @@ def gem():
         if not operator.is_colon:
             raise_unknown_line()
 
-        left = parse1_atom()
+        header = evoke_header(indented_keyword, condition, operator)
 
-        if left.is_special_operator:
+        assert qk() is none
+        assert qn() is none
+
+        m = simple_statement_match(qs(), qj())
+
+        if m is none:
+            #my_line('full: %r; s: %r', portray_string(qs()), portray_string(qs()[qj() :]))
+            raise_unknown_line()
+
+        token = analyze_atom(m)
+
+        if token.is_keyword_return:
+            if qn() is not none:
+                raise_unknown_line()
+
+            right = parse1_ternary_expression_list()
+
+            if qk() is not none:
+                raise_unknown_line()
+
+            newline = qn()
+
+            if newline is none:
+                raise_unknown_line()
+
+            return conjure_body_statement(
+                       header,
+                       conjure_return_statement(
+                           conjure_indented_token(empty_indentation, token),
+                           right,
+                           newline
+                       ),
+                   )
+
+        if token.is_atom:
+            pass
+        elif token.is_left_parenthesis:
+            token = parse1__parenthesized_expression__left_parenthesis(token)
+        elif token.is_left_square_bracket:
+            token = parse1__list_expression__left_square_bracket(token)
+        elif token.is_left_brace:
+            token = parse1_map__left_brace(token)
+        elif token.is_keyword_not:
+            token = parse1_not_expression__operator(token)
+        elif token.is_minus_sign:
+            token = parse1_negative_expression__operator(token)
+        elif token.is_tilde_sign:
+            token =  parse1_twos_complement_expression__operator(token)
+        elif token.is_star_sign:
+            token = conjure_star_argument(token, parse1_ternary_expression())
+        else:
+            #my_line('token: %r', token)
             raise_unknown_line()
 
         return conjure_body_statement(
-                   evoke_header(indented_keyword, condition, operator),
-                   parse1_statement_expression__atom('', left),
+                   header,
+                   parse1_statement_expression__atom('', token),
                )
 
 

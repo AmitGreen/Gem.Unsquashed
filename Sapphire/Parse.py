@@ -18,11 +18,17 @@ def gem():
             line('+%d %s', indentation.total, v.display_token())
 
 
-    def show_tree(tree_many):
+    def show_tree(tree_many, vary):
         with create_TokenOutput() as f:
             f.line('===  show_tree  ===')
 
             for v in tree_many:
+                if vary is not 0:
+                    v = v.transform(vary)
+
+                    if v is 0:
+                        continue
+
                 r = v.dump_token(f)
 
                 assert not r
@@ -61,7 +67,7 @@ def gem():
 
 
     @share
-    def parse_python(path, show = 0, test = 0):
+    def parse_python(path, vary = 0, show = 0, test = 0):
         [data, data_lines, data_many] = parse1_python_from_path(path)
 
         if show is 5:
@@ -70,13 +76,13 @@ def gem():
         tree_many = parse3_python(path, data, data_lines, data_many)
 
         if show is 7:
-            show_tree(tree_many)
+            show_tree(tree_many, vary)
 
         if test is 7:
             test_identical_output(path, data, data_many, tree_many)
             test_count_newlines(data_lines, tree_many)
 
         #dump_newline_meta_cache()
-        #dump_caches('dual-twig')
+        #dump_caches__OLD('dual-twig')
 
         return tree_many

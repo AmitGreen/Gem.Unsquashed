@@ -307,6 +307,11 @@ def gem():
         raise runtime_error
 
 
+    @share
+    def raise_iterator_exhausted():
+        raise_runtime_error('exhausted iterator (that yeilds 0 for end of iteration) called')
+
+
     #
     #   raise_value_error
     #

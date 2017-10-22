@@ -6,14 +6,11 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    append_cache             = Shared.append_cache                  #   Due to privileged
-    lookup_adjusted_meta     = Shared.lookup_adjusted_meta          #   Due to privileged
-    produce_conjure_dual__21 = Shared.produce_conjure_dual__21      #   Due to privileged
-    store_adjusted_meta      = Shared.store_adjusted_meta           #   Due to privileged
-
-
-    if __debug__:
-        cache_many = []
+    append_cache                    = Shared.append_cache                       #   due to privileged
+    lookup_adjusted_meta            = Shared.lookup_adjusted_meta               #   due to privileged
+    produce_conjure_dual__21        = Shared.produce_conjure_dual__21           #   due to privileged
+    produce_conjure_unique_dual__21 = Shared.produce_conjure_unique_dual__21    #   due to privileged
+    store_adjusted_meta             = Shared.store_adjusted_meta                #   due to privileged
 
 
     @share
@@ -23,6 +20,7 @@ def gem():
         ))
 
 
+        class_order         = CLASS_ORDER__UNARY_EXPRESSION
         is_colon            = false
         is_special_operator = false
 
@@ -52,6 +50,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        order = order__frill_a
+
+
         def write(t, w):
             w(t.frill.s)
             t.a.write(w)
@@ -61,12 +62,11 @@ def gem():
 
 
     @share
-    @privileged
     def produce_conjure_unary_expression(name, Meta):
-        cache   = {}
-        lookup  = cache.get
-        provide = cache.setdefault
-        store   = cache.__setitem__
+        cache   = create_cache(name, conjure_nub)
+        lookup  = cache.lookup
+        provide = cache.provide
+        store   = cache.store
 
 
         def conjure_UnaryExpression_WithFrill(a, frill):
@@ -79,9 +79,9 @@ def gem():
                     ))
 
 
-                    def __init__(t, frill, a):
-                        t.frill = frill
+                    def __init__(t, a, frill):
                         t.a     = a
+                        t.frill = frill
 
 
                     def __repr__(t):
@@ -99,7 +99,7 @@ def gem():
                             return arrange('<%s+frill %s %s>', t.display_name, t.frill.display_token(), t.a.display_token())
 
 
-                #UnaryExpression_WithFrill.k2 = UnaryExpression_WithFrill.frill
+                UnaryExpression_WithFrill.k2 = UnaryExpression_WithFrill.frill
 
 
                 if __debug__:
@@ -107,12 +107,12 @@ def gem():
 
                 store_adjusted_meta(Meta, UnaryExpression_WithFrill)
 
-            return UnaryExpression_WithFrill(frill, a)
+            return UnaryExpression_WithFrill(a, frill)
 
 
 
-        conjure_dual__21 = produce_conjure_dual__21(
-                               name + '__X2',
+        conjure_dual__21 = produce_conjure_unique_dual__21(
+                               name,
                                conjure_UnaryExpression_WithFrill,
                                cache,
                                lookup,
@@ -122,17 +122,13 @@ def gem():
         meta_frill = Meta.frill
 
 
+        @rename('conjure_%s', name)
         def conjure_unary_expression(frill, a):
             if frill is meta_frill:
                 return (lookup(a)) or (provide(a, Meta(a)))
 
             return conjure_dual__21(a, frill)
 
-
-        if __debug__:
-            conjure_unary_expression.__name__ = intern_arrange('conjure_%s', name)
-
-            append_cache(name, cache)
 
         return conjure_unary_expression
 

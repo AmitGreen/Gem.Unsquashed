@@ -7,18 +7,17 @@ def gem():
     require_gem('Sapphire.TripleTwig')
 
 
-    append_cache                    = Shared.append_cache                       #   Due to privileged
-    conjure_vwxy_frill              = Shared.conjure_vwxy_frill                 #   Due to privileged
-    lookup_adjusted_meta            = Shared.lookup_adjusted_meta               #   Due to privileged
-    produce_conjure_triple          = Shared.produce_conjure_triple             #   Due to privileged
-    produce_conjure_quadruple__4123 = Shared.produce_conjure_quadruple__4123    #   Due to privileged
-    store_adjusted_meta             = Shared.store_adjusted_meta                #   Due to privileged
+    triple_expression_cache  = create_cache('triple-expression', conjure_nub)
+    lookup_triple_expression = triple_expression_cache.get
+    store_triple_expression  = triple_expression_cache.__setitem__
 
 
     @share
     class BookcaseTripleExpression(TripleTwig):
         __slots__ = (())
-        k4        = none
+
+
+        class_order = CLASS_ORDER__BOOKCASE_TRIPLE_EXPRESSION
 
 
         def count_newlines(t):
@@ -46,6 +45,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        order = order__frill_abc
+
+
         def write(t, w):
             frill = t.frill
 
@@ -58,15 +60,13 @@ def gem():
             w(frill.y.s)
 
 
-    @share
-    @privileged
     def produce_conjure_bookcase_triple_expression(name, Meta):
-        cache  = {}
-        lookup = cache.get
-        store  = cache.__setitem__
+        cache  = create_cache(name, conjure_nub)
+        lookup = cache.lookup
+        store  = cache.store
 
 
-        def conjure_Meta_WithFrill(frill, a, b, c):
+        def conjure_Meta_WithFrill(a, b, c, frill):
             BookcaseTripleExpression_WithFrill = lookup_adjusted_meta(Meta)
 
             if BookcaseTripleExpression_WithFrill is none:
@@ -76,11 +76,11 @@ def gem():
                     ))
 
 
-                    def __init__(t, frill, a, b, c):
-                        t.frill = frill
+                    def __init__(t, a, b, c, frill):
                         t.a     = a
                         t.b     = b
                         t.c     = c
+                        t.frill = frill
 
 
                     def __repr__(t):
@@ -115,11 +115,18 @@ def gem():
 
                 store_adjusted_meta(Meta, BookcaseTripleExpression_WithFrill)
 
-            return BookcaseTripleExpression_WithFrill(frill, a, b, c)
+            return BookcaseTripleExpression_WithFrill(a, b, c, frill)
 
 
-        conjure_triple    = produce_conjure_triple         (name, Meta,                   cache, lookup, store)
-        conjure_quadruple = produce_conjure_quadruple__4123(name, conjure_Meta_WithFrill, cache, lookup, store)
+        conjure_triple = produce_conjure_unique_triple(name, Meta, cache, lookup, store)
+
+        conjure_quadruple = produce_conjure_unique_quadruple__4123(
+                                name,
+                                conjure_Meta_WithFrill,
+                                triple_expression_cache,
+                                lookup_triple_expression,
+                                store_triple_expression,
+                            )
 
         meta_frill_v = Meta.frill.v
         meta_frill_w = Meta.frill.w
@@ -127,6 +134,7 @@ def gem():
         meta_frill_y = Meta.frill.y
 
 
+        @rename('conjure_%s', name)
         def conjure_bookcase_triple(frill_v, a, frill_w, b, frill_x, c, frill_y):
             if (
                        frill_v is meta_frill_v
@@ -136,13 +144,8 @@ def gem():
             ):
                 return conjure_triple(a, b, c)
 
-            return conjure_quadruple(conjure_vwxy_frill(frill_v, frill_w, frill_x, frill_y), a, b, c)
+            return conjure_quadruple(a, b, c, conjure_vwxy_frill(frill_v, frill_w, frill_x, frill_y))
 
-
-        if __debug__:
-            conjure_bookcase_triple.__name__ = intern_arrange('conjure_%s', name)
-
-            append_cache(name, cache)
 
         return conjure_bookcase_triple
 

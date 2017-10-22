@@ -17,7 +17,10 @@ def gem():
         ))
 
 
-        comment        = 0
+        comment = 0
+
+
+        class_order    = CLASS_ORDER__INDENTATION
         is_indentation = true
 
 
@@ -49,6 +52,9 @@ def gem():
                 return vary.indentation
 
             return t
+
+
+        order = order__s
 
 
         def transform(t, vary):

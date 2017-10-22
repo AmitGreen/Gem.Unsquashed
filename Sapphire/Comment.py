@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.Comment')
 def gem():
+    require_gem('Sapphire.ClassOrder')
     require_gem('Sapphire.Indentation')
 
 
@@ -24,6 +25,7 @@ def gem():
 
     class CommentLine(String):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__COMMENT_LINE__STRING
         ends_in_newline                  = true
         impression                       = empty_indentation
         indentation                      = none
@@ -31,6 +33,7 @@ def gem():
         is_any_except_or_finally         = false
         is_comment_line                  = true
         is_comment__or__empty_line       = true
+        is_comment_suite                 = false
         is_else_header_or_fragment       = false
         is_empty_line                    = false
         is_end_of_data                   = false
@@ -60,6 +63,7 @@ def gem():
 
         dump_token       = dump_token__comment
         find_require_gem = find_require_gem__0
+        order            = order__string
         scout_variables  = scout_variables__0
         transform        = transform__remove_comments_0
 
@@ -75,6 +79,7 @@ def gem():
         ))
 
 
+        class_order                      = CLASS_ORDER__COMMENT_LINE
         ends_in_newline                  = true
         impression                       = empty_indentation
         indentation                      = none
@@ -114,6 +119,7 @@ def gem():
 
         dump_token       = dump_token__comment
         find_require_gem = find_require_gem__0
+        order            = order__s
         scout_variables  = scout_variables__0
         transform        = transform__remove_comments_0
 
@@ -125,6 +131,7 @@ def gem():
         ))
 
 
+        class_order                      = CLASS_ORDER__COMMENT_LINE
         ends_in_newline                  = true
         indentation                      = none
         is_any_else                      = false
@@ -166,6 +173,7 @@ def gem():
 
         dump_token       = dump_token__comment
         find_require_gem = find_require_gem__0
+        order            = order__s
         scout_variables  = scout_variables__0
         transform        = transform__remove_comments_0
 
@@ -178,6 +186,7 @@ def gem():
         ))
 
 
+        class_order                = CLASS_ORDER__COMMENT_LINE
         ends_in_newline            = true
         indentation                = none
         is_any_else                = false
@@ -216,6 +225,7 @@ def gem():
 
 
         dump_token      = dump_token__comment
+        order           = order__s
         scout_variables = scout_variables__0
         transform       = transform__remove_comments_0
 

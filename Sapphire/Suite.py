@@ -35,6 +35,7 @@ def gem():
 
     class CommentSuite(TokenTuple):
         __slots__                  = (())
+        display_name               = 'comment-*'
         indentation                = none
         is_any_else                = false
         is_any_except_or_finally   = false
@@ -114,7 +115,7 @@ def gem():
             for v in many:
                 assert v.is_comment__or__empty_line
 
-            TokenTuple.__init__(t, many)
+            #TokenTuple.__init__(t, many)
 
 
         dump_token       = dump_token__no_impression
@@ -285,7 +286,7 @@ def gem():
     #
     #   .transform
     #
-    IfStatement_Many.transform = produce_tranform_many('if-statement-many', conjure_if_statement_many)
+    IfStatement_Many.transform = produce_transform_many('if-statement-many', conjure_if_statement_many)
 
 
     share(

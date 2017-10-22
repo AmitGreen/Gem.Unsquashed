@@ -6,7 +6,7 @@ def gem():
     require_gem('Sapphire.ManyExpression')
 
 
-    bookcase_many_frill_cache = {}
+    bookcase_many_frill_cache = create_cache('bookcase-many-frill', conjure_nub)
 
 
     #
@@ -23,10 +23,16 @@ def gem():
         ))
 
 
+        class_order  = CLASS_ORDER__BOOKCASE_MANY_FRILL
+        display_name = 'bookcase-*-frill'
+        is_herd      = false
+
+
         __init__       = construct__123
         count_newlines = count_newlines__123
         __repr__       = portray__123
         display_token  = display_token__123
+        order          = order__abc
 
 
     BookcaseManyFrill.a = BookcaseManyFrill.begin
@@ -38,15 +44,13 @@ def gem():
     BookcaseManyFrill.k3 = BookcaseManyFrill.end
 
 
-    conjure_bookcase_many_frill__213 = produce_conjure_triple__213(
+    conjure_bookcase_many_frill__213 = produce_conjure_unique_triple__312(
                                            'bookcase_many_frill__213',
                                            BookcaseManyFrill,
                                            bookcase_many_frill_cache,
                                        )
 
     BookcaseManyFrill.transform = produce_transform__abc('bookcase_many_frill', conjure_bookcase_many_frill__213)
-
-    append_cache('bookcase-*-frill', bookcase_many_frill_cache)
 
 
     @share

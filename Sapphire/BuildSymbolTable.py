@@ -100,31 +100,43 @@ def gem():
             t.write_global_variable(global_variable)
 
 
-    @privileged
     def produce_write_variable(name, conjure):
+        @rename(name)
         def write_variable(t, name):
             variable_map = t.variable_map
 
             if variable_map is 0:
-                t.variable_map     = variable_map = { name : conjure(0, name) }
+                variable           = conjure(0, name)
+                t.variable_map     = variable_map = { name : variable }
                 t.variable_index   = 1
                 t.lookup_variable  = variable_map.get
                 t.provide_variable = variable_map.setdefault
                 t.store_variable   = variable_map.__setitem__
+
+                my_line('%s: install %r : %r', t.name, name, variable)
+                t.variable_drove = t.variable_drove.insert(name, variable)
+                assert not t.variable_drove.is_herd_many
+
                 return
 
             if t.lookup_variable(name):
+                my_line('%s: ignore %r', t.name, name)
+                assert t.variable_drove.glimpse(name) is not none
                 return
 
-            index = t.variable_index
+            #assert t.variable_drove.total == t.variable_index
 
-            t.store_variable(name, conjure(index, name))
+            index    = t.variable_index
+            variable = conjure(index, name)
+
+            my_line('%s: insert %r : %r', t.name, name, variable)
+            t.variable_drove = t.variable_drove.insert(name, variable)
+            assert not t.variable_drove.is_herd_many
+
+            t.store_variable(name, variable)
 
             t.variable_index = index + 1
 
-
-        if __debug__:
-           write_variable.__name__ = intern_string(name)
 
         return write_variable
 
@@ -141,6 +153,7 @@ def gem():
             'contains_definition',      #   Vacant | Method
             'store_definition',         #   Vacant | Method
 
+            'variable_drove',           #   Drove_*
             'variable_map',             #   Zero | Map { Name } of ( FunctionParameter | LocalVariable )
             'variable_index',           #   Integer
             'lookup_variable',          #   Vacant | Method
@@ -158,6 +171,8 @@ def gem():
            #t.definition_map      = vacant
            #t.contains_definition = vacant
            #t.store_definition    = vacant
+
+            t.variable_drove   = empty_herd
 
             t.variable_index   = t.variable_map = 0
            #t.lookup_variable  = vacant
@@ -213,6 +228,11 @@ def gem():
 
                         t.definition_map[v].dump_variables(arrange('%s.%s', name, s))
 
+            line('===  drove variables %s  ===', name)
+
+            for v in t.variable_drove.ordered_values():
+                line('  %s', v)
+
             variable_map = t.variable_map
 
             if variable_map is not 0:
@@ -224,16 +244,25 @@ def gem():
 
         def scout_definitions(t):
             def scout_nested_definition(v):
+                #line('Scouting: %r', v.a.name)
+
+                if t.is_global_symbol_table:
+                    name = v.a.name.s
+                else:
+                    name = arrange('%s.%s', t.name, v.a.name.s)
+
                 if v.is_function_definition:
                     art = BuildFunctionSymbolTable(
-                              (t.write_global_variable   if t.is_global_symbol_table else   t.write_global_variable),
+                              name,
+                              (t.write_global_variable   if t.is_global_symbol_table else   t.write_global_variable),#FIX
                               (t.parent                  if t.is_class_symbol_table  else   t),
                           )
 
                     v.a.parameters.add_parameters(art)
                 else:
                     art = BuildClassSymbolTable(
-                              (t.write_global_variable   if t.is_global_symbol_table else   t.write_global_variable),
+                              name,
+                              (t.write_global_variable   if t.is_global_symbol_table else   t.write_global_variable),#FIX
                               BuildWrapperSymbolTable(
                                   (t.parent              if t.is_class_symbol_table  else   t),
                               ),
@@ -264,6 +293,10 @@ def gem():
 
 
         def fetch_variable(t, name):
+            my_line('%s: provision %r : 0', t.name, name)
+            t.variable_drove = t.variable_drove.provision(name, 0)
+            assert not t.variable_drove.is_herd_many
+
             variable_map = t.variable_map
 
             if variable_map is 0:
@@ -304,8 +337,11 @@ def gem():
 
     class BuildFunctionSymbolTable(BaseBuildSymbolTable):
         __slots__ = ((
+            'name',                     #   Name
             'write_global_variable',    #   Method
             'parent',                   #   BaseBuildSymbolTable+
+            'local_variables',          #   Vacant | (FunctionParameter | FunctionLocal)
+                                        #       | List of (FunctionParameter | FunctionLocal)
         ))
 
 
@@ -316,7 +352,58 @@ def gem():
         is_nested_symbol_table   = true
 
 
-        __init__           = construct__build_nested_symbol_table
+        def __init__(t, name, write_global_variable, parent):
+            construct_BaseBuildSymbolTable(t)
+
+            t.name                  = name
+            t.write_global_variable = write_global_variable
+            t.parent                = parent
+            t.local_variables       = 0
+
+
+        def add_parameter(t, name):
+            variable_map = t.variable_map
+
+            parameter = conjure_function_parameter(
+                            (0    if variable_map is 0 else    t.variable_index),
+                            name,
+                        )
+
+            if variable_map is 0:
+                t.local_variables = parameter
+
+                assert t.variable_drove.total == 0
+
+                my_line('%s: insert %r : %r', t.name, name, parameter)
+                t.variable_drove = t.variable_drove.insert(name, parameter)
+
+                t.variable_map     = variable_map = { name : parameter }
+                t.variable_index   = 1
+                t.lookup_variable  = variable_map.get
+                t.provide_variable = variable_map.setdefault
+                t.store_variable   = variable_map.__setitem__
+                return
+
+            assert t.variable_drove.total == t.variable_index
+
+            if t.lookup_variable(name):
+                raise_runtime_error('parameter %s declared multiple times', name)
+
+            my_line('%s: insert %r : %r', t.name, name, parameter)
+            t.variable_drove = t.variable_drove.insert(name, parameter)
+
+            local_variables = t.local_variables
+
+            if type(local_variable) is not List:
+                t.local_variables = [local_variables, parameter]
+            else:
+                t.local_variables.append(parameter)
+
+            t.variable_index = index + 1
+
+            t.store_variable(name, parameter)
+
+
         finalize_variables = finalize_variables__build_nested_symbol_table
 
 
@@ -329,9 +416,17 @@ def gem():
         is_function_symbol_table = false
         is_global_symbol_table   = true
         is_nested_symbol_table   = false
+        name                     = 'global'
 
 
         def write_global_variable(t, global_variable):
+            my_line('%s: glimpse %r', t.name, global_variable.name)
+            assert t.variable_drove.glimpse(global_variable.name) is none
+
+            my_line('%s: install %r : %r', t.name, global_variable.name, global_variable)
+            t.variable_drove = t.variable_drove.install(global_variable.name, global_variable)
+            assert not t.variable_drove.is_herd_many
+
             variable_map = t.variable_map
 
             if variable_map is 0:
@@ -348,16 +443,39 @@ def gem():
             variable_map = t.variable_map
 
             if variable_map is 0:
-                t.variable_map     = variable_map = { name : conjure_global_variable(name) }
+                global_variable    = conjure_global_variable(name)
+                t.variable_map     = variable_map = { name : global_variable }
                 t.lookup_variable  = variable_map.get
                 t.provide_variable = variable_map.setdefault
                 t.store_variable   = variable_map.__setitem__
+
+                my_line('%s: glimpse %r is none', t.name, name)
+                assert t.variable_drove.glimpse(name) is none
+
+                my_line('%s: install %r : %r', t.name, name, global_variable)
+                t.variable_drove = t.variable_drove.install(name, global_variable)
+                assert not t.variable_drove.is_herd_many
+
                 return
 
+            #
+            #   NOTE:  Find if exists & non-zero
+            #
             if t.lookup_variable(name):
+                my_line('%s: glimpse %r: %r', t.name, name, t.variable_drove.glimpse(name))
+                assert t.variable_drove.glimpse(name)
                 return
 
-            t.store_variable(name, conjure_global_variable(name))
+            #
+            #   Variable might exist & have a '0' value
+            #
+            global_variable = conjure_global_variable(name)
+
+            my_line('%s: install %r : %r', t.name, name, global_variable)
+            t.variable_drove = t.variable_drove.install(name, global_variable)
+            assert not t.variable_drove.is_herd_many
+
+            t.store_variable(name, global_variable)
 
 
     class BuildWrapperSymbolTable(BaseBuildSymbolTable):
@@ -385,7 +503,7 @@ def gem():
     write_variable = produce_write_variable('write_variable', conjure_local_variable)
 
     BuildClassSymbolTable   .write_variable = write_variable
-    BuildFunctionSymbolTable.add_parameter  = produce_write_variable('add_parameter',  conjure_function_parameter)
+    BuildFunctionSymbolTable.add_parameter  = produce_write_variable('add_parameter', conjure_function_parameter)
     BuildFunctionSymbolTable.write_variable = write_variable
 
 

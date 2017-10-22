@@ -13,6 +13,7 @@ def gem():
         comment   = DualTwig.a
         v         = DualTwig.b
 
+        class_order  = CLASS_ORDER__FRILL_2
         display_name = '#v-frill'
 
 
@@ -33,12 +34,14 @@ def gem():
 
 
     @share
-    class VW_Frill(Object):
-        __slots__ = ((
-            'a',                        #   SapphireToken+
-            'b',                        #   SapphireToken+
-        ))
+    class VW_Frill(DualTwig):
+        __slots__ = (())
+        k1        = DualTwig.a
+        k2        = DualTwig.b
+        v         = DualTwig.a
+        w         = DualTwig.b
 
+        class_order    = CLASS_ORDER__FRILL_2
         comment        = 0
         display_name   = 'vw-frill'
         frill_estimate = 2
@@ -73,11 +76,8 @@ def gem():
             return conjure_vw_frill(a__2, b__2)
 
 
-    VW_Frill.v = VW_Frill.a
-    VW_Frill.w = VW_Frill.b
+        order = order__ab
 
-    VW_Frill.k1 = VW_Frill.a
-    VW_Frill.k2 = VW_Frill.b
 
 
     conjure_commented_v_frill = produce_conjure_dual(

@@ -114,6 +114,7 @@ def gem():
 
     class AssignStatement_1(DualExpressionStatement):
         __slots__        = (())
+        class_order      = CLASS_ORDER__BOOKCASE_DUAL_EXPRESSION
         display_name     = 'assign-1'
         frill            = conjure_vwx_frill(empty_indentation, W__ASSIGN__W, LINE_MARKER)
 
@@ -124,6 +125,7 @@ def gem():
 
     class ModifyStatement(DualExpressionStatement):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_DUAL_EXPRESSION
         display_name = 'modify-statement'
         frill        = conjure_vwx_frill(
                            empty_indentation,

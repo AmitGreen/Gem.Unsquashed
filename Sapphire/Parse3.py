@@ -395,7 +395,7 @@ def gem():
                         if add_comment is not 0:
                             return add_comment(y)
 
-                        if w.split_comment is q_split():
+                        if z.split_comment is q_split():
                             wc(y)
                             return z
 

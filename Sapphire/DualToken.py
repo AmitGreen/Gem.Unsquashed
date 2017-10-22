@@ -185,6 +185,9 @@ def gem():
                            portray_string(b_s)   if '\n' in b_s else   b_s)
 
 
+        order = order__s
+
+
     def create_dual_token__with_newlines(Meta, s, a, b):
         assert s == a.s + b.s
 
@@ -369,6 +372,7 @@ def gem():
 
     class Arguments_0(BaseDualOperator):
         __slots__                             = (())
+        class_order                           = CLASS_ORDER__ARGUMENT_0
         display_name                          = 'arguments-(0)'
         is__arguments_0__or__left_parenthesis = true
         is_arguments_0                        = true
@@ -379,6 +383,7 @@ def gem():
 
     class Atom_Whitespace(BaseDualOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = 'atom+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -388,6 +393,8 @@ def gem():
 
     class Colon_LineMarker_1(BaseDualOperator):
         __slots__                               = (())
+        class_order                             = CLASS_ORDER__LINE_MARKER
+        display_name                            = r':\n'
         ends_in_newline                         = true
         is_colon__line_marker                   = true
         is_end_of_arithmetic_expression         = true
@@ -413,6 +420,7 @@ def gem():
 
     class Colon_RightSquareBracket(BaseDualOperator):
         __slots__                               = (())
+        class_order                             = CLASS_ORDER__NORMAL_TOKEN
         #   [
         display_name                            = ':]'
         is_colon__right_square_bracket          = true
@@ -434,12 +442,14 @@ def gem():
 
     class Comma_RightBrace(BaseDualOperator):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         #   {
         display_name = ',}'
 
 
     class Comma_RightParenthesis(BaseDualOperator):
         __slots__                             = (())
+        class_order                           = CLASS_ORDER__NORMAL_TOKEN
         #   (
         display_name                          = ',)'
         is_comma__right_parenthesis           = true
@@ -459,6 +469,7 @@ def gem():
 
     class Comma_RightSquareBracket(BaseDualOperator):
         __slots__                                = (())
+        class_order                              = CLASS_ORDER__NORMAL_TOKEN
         #   [
         display_name                             = ',]'
         is_end_of_arithmetic_expression          = true
@@ -478,6 +489,7 @@ def gem():
     class Dot_Name(BaseDualOperator):
         __slots__           = (())
         #   [
+        class_order         = CLASS_ORDER__NORMAL_TOKEN
         display_name        = '.name'
         is_postfix_operator = true
 
@@ -497,6 +509,7 @@ def gem():
 
     class DotNamePair(BaseDualOperator):
         __slots__           = (())
+        class_order         = CLASS_ORDER__NORMAL_TOKEN
         #   [
         display_name        = '.name-pair'
         is_postfix_operator = true
@@ -504,6 +517,7 @@ def gem():
 
     class EmptyList(BaseDualOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = '[,]'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -513,6 +527,7 @@ def gem():
 
     class EmptyMap(BaseDualOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = '{:}'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -522,6 +537,7 @@ def gem():
 
     class EmptyTuple(BaseDualOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = '{,}'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -531,6 +547,7 @@ def gem():
 
     class Indented_Token(BaseDualOperator):
         __slots__    = (())
+        class_order  = CLASS_ORDER__INDENTATION
         display_name = 'indented-token'
 
 
@@ -539,12 +556,13 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<+%d {%s}>', t.identation.total, portray_string(t.token.s)[1:-1])
+            return arrange('<+%d {%s}>', t.indentation.total, portray_string(t.token.s)[1:-1])
 
 
     @share
     class Is_Not(BaseDualOperator):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = 'is-not'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
@@ -557,6 +575,7 @@ def gem():
 
     class LeftSquareBracket_Colon(BaseDualOperator):
         __slots__           = (())
+        class_order         = CLASS_ORDER__NORMAL_TOKEN
         display_name        = '[:'                             #   ]
         is_postfix_operator = true
         is_tail_index       = true
@@ -564,6 +583,7 @@ def gem():
 
     class Name_Whitespace(BaseDualOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = 'name+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -576,6 +596,7 @@ def gem():
     @share
     class Not_In(BaseDualOperator):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = 'not-in'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
@@ -588,6 +609,7 @@ def gem():
 
     class Parameters_0(BaseDualOperator):
         __slots__       = (())
+        class_order     = CLASS_ORDER__PARAMETERS_0
         display_name    = 'parameters-(0)'
         is_parameters_0 = true
 
@@ -599,6 +621,7 @@ def gem():
 
     class Whitespace_Atom(BaseDualOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = 'whitespace+atom'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -610,6 +633,7 @@ def gem():
 
     class Whitespace_Name(BaseDualOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = 'whitespace+name'
         is__atom__or__special_operator = true
         is_atom                        = true

@@ -4,12 +4,6 @@
 @gem('Gem.System')
 def gem():
     #
-    #   Types
-    #
-    Slice = PythonBuiltIn.slice
-
-
-    #
     #   Functions
     #
     python_frame = PythonSystem._getframe
@@ -51,5 +45,6 @@ def gem():
         'program_exit',     PythonSystem.exit,
         'python_frame',     PythonSystem._getframe,
         'python_version',   PythonSystem.version,
+        'reference_count',  PythonSystem.getrefcount,
         'slice_all',        Slice(none, none),
     )

@@ -6,11 +6,6 @@ def gem():
     require_gem('Sapphire.Method')
 
 
-    triple_twig_cache  = {}
-    lookup_triple_twig = triple_twig_cache.get
-    store_triple_twig  = triple_twig_cache.__setitem__
-
-
     @share
     class TripleTwig(SapphireTrunk):
         __slots__ = ((
@@ -35,7 +30,6 @@ def gem():
 
     @share
     def produce_conjure_triple_twig(name, Meta):
-        return produce_conjure_triple__312(name, Meta, triple_twig_cache, lookup_triple_twig, store_triple_twig)
+        cache = create_cache(name, conjure_nub)
 
-
-    append_cache('triple-twig', triple_twig_cache)
+        return produce_conjure_unique_triple__312(name, Meta, cache)

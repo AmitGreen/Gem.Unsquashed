@@ -187,6 +187,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        order = order__frill_many
+
+
         def write(t, w):
             w(t.frill.begin.s)
 
@@ -240,6 +243,7 @@ def gem():
 
     class Arguments_Many(BookcaseManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_MANY_EXPRESSION
         display_name = 'arguments-*'
 
 
@@ -248,6 +252,7 @@ def gem():
 
     class ListExpression_Many(BookcaseManyExpression):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__BOOKCASE_MANY_EXPRESSION
         display_name                   = '[*]'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -260,6 +265,7 @@ def gem():
 
     class MapExpression_Many(BookcaseManyExpression):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__BOOKCASE_MANY_EXPRESSION
         display_name                   = '{:*:}'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -271,6 +277,7 @@ def gem():
 
     class Parameters_Many(BookcaseManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_MANY_EXPRESSION
         display_name = 'parameter-(*)'
 
 
@@ -290,6 +297,7 @@ def gem():
 
     class TupleExpression_Many(BookcaseManyExpression):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__BOOKCASE_MANY_EXPRESSION
         display_name                   = '{,*,}'
         is__atom__or__special_operator = true
         is_atom                        = true

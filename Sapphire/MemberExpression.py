@@ -17,6 +17,9 @@ def gem():
         ))
 
 
+        class_order = CLASS_ORDER__MEMBER_EXPRESSION
+
+
         def __init__(t, left, postfix):
             t.left    = left
             t.postfix = postfix
@@ -44,7 +47,7 @@ def gem():
 
 
         is_name = is_name__0
-
+        order   = order__ab
 
 
         def scout_variables(t, art):

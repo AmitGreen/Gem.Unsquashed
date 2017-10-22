@@ -270,10 +270,15 @@ def gem():
     #   rename
     #
     if __debug__:
-        def rename(name):
+        def rename(format, *arguments):
             def rename(f):
-                return rename_function(name, f)
+                return rename_function(intern_string(format % arguments   if arguments else   format), f)
 
+            return rename
+    else:
+        def rename(format, *arguments):
+            def rename(f):
+                return f
 
             return rename
 
@@ -631,6 +636,8 @@ def gem():
         'privileged',               privileged,
         'raising_exception_from',   raising_exception_from,
         'raising_exception',        raising_exception,
+        'rename',                   rename,
+        'rename_function',          rename_function,
 
 
         #
@@ -674,8 +681,8 @@ def gem():
 
         #   Functions
         #
-        'built_in',     built_in,
-        'restricted',   restricted,
+        'built_in',         built_in,
+        'restricted',       restricted,
 
         #
         #   Modules
@@ -711,7 +718,6 @@ def gem():
         #   Functions
         #
         'is_instance',              is_instance,
-        'rename_function',          rename_function,
     )
 
 

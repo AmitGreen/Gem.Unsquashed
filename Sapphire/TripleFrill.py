@@ -14,8 +14,11 @@ def gem():
         v         = TripleTwig.b
         w         = TripleTwig.c
 
+        class_order  = CLASS_ORDER__TRIPLE_TWIG
         display_name = '#vw-frill'
 
+
+        order = order__abc
 
         def transform(t, vary):
             comment = t.comment
@@ -42,6 +45,7 @@ def gem():
         w         = TripleTwig.b
         x         = TripleTwig.c
 
+        class_order    = CLASS_ORDER__TRIPLE_TWIG
         display_name   = 'xyz-frill'
         frill_estimate = 3
 
@@ -61,6 +65,8 @@ def gem():
                 return t
 
             return conjure_vwx_frill(v__2, w__2, x__2)
+
+        order = order__abc
 
 
     conjure_commented_vw_frill = produce_conjure_triple(
