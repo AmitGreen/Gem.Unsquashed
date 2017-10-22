@@ -325,7 +325,14 @@ def gem():
                         wk(none)
 
                     if not operator_2.is_right_square_bracket:
-                        raise_unknown_line()
+                        middle_2 = parse1_ternary_expression__X__any_expression(middle_2, operator_2)
+
+                        operator_2 = qk()
+
+                        if not operator_2.is_right_square_bracket:
+                            raise_unknown_line()
+
+                        wk(none)
 
                     left = conjure_index_expression(left, conjure_tail_index(operator, middle_2, operator_2))
 

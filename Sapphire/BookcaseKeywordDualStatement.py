@@ -185,7 +185,14 @@ def gem():
         )
 
 
-    conjure_except_header_2    = produce_conjure_bookcase_dual_expression('except-header2',     ExceptHeader_2)
+    [
+        conjure_except_header_2, conjure_except_header_2__with_frill,
+    ] = produce_conjure_bookcase_dual_expression(
+            'except-header2',
+            ExceptHeader_2,
+
+            produce_conjure_with_frill = 1,
+        )
 
     [
         conjure_for_header, conjure_for_header__with_frill,
@@ -224,17 +231,25 @@ def gem():
                                       conjure_assert_statement_2__with_frill,
                                   )
 
+    ExceptHeader_2.transform = produce_transform__frill__ab_with_priority(
+                                   'except_header_2',
+                                   PRIORITY_TERNARY,
+                                   PRIORITY_ASSIGN,
+                                   conjure_except_header_2__with_frill,
+                                )
+
+
     ForHeader.transform = produce_transform__frill__ab_with_priority(
                               'for_header',
                               PRIORITY_NORMAL_LIST,
-                              PRIORITY_TERNARY_LIST,
+                              PRIORITY_ASSIGN,
                               conjure_for_header__with_frill,
                          )
 
     WithHeader_2.transform = produce_transform__frill__ab_with_priority(
                                  'with_header_2',
                                  PRIORITY_TERNARY,
-                                 PRIORITY_NORMAL,
+                                 PRIORITY_ASSIGN,
                                  conjure_with_header_2__with_frill,
                             )
 

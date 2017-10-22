@@ -40,34 +40,26 @@ def gem():
     #
     #       parameters_0_token_cache     - '()' that is used as function parameters.
     #
-    arguments_0_token_cache  = {}
-    indentation_cache        = {}
-    join_token_cache         = {}
-    line_marker_token_cache  = {}
-    normal_token_cache       = {}
-    parameters_0_token_cache = {}
+    arguments_0_token_cache  = create_cache('arguments_0_token')
+    indentation_cache        = create_cache('indentation')
+    join_token_cache         = create_cache('join_token')
+    line_marker_token_cache  = create_cache('line_marker_token')
+    normal_token_cache       = create_cache('normal_token')
+    parameters_0_token_cache = create_cache('parameters_0_token')
 
-    lookup_arguments_0_token  = arguments_0_token_cache .get
-    lookup_indentation        = indentation_cache       .get
-    lookup_join_token         = join_token_cache        .get
-    lookup_line_marker        = line_marker_token_cache .get
-    lookup_normal_token       = normal_token_cache      .get
-    lookup_parameters_0_token = parameters_0_token_cache.get
+    lookup_arguments_0_token  = arguments_0_token_cache .lookup
+    lookup_indentation        = indentation_cache       .lookup
+    lookup_join_token         = join_token_cache        .lookup
+    lookup_line_marker        = line_marker_token_cache .lookup
+    lookup_normal_token       = normal_token_cache      .lookup
+    lookup_parameters_0_token = parameters_0_token_cache.lookup
 
-    provide_arguments_0_token  = arguments_0_token_cache .setdefault
-    provide_indentation        = indentation_cache       .setdefault
-    provide_join_token         = join_token_cache        .setdefault
-    provide_line_marker        = line_marker_token_cache .setdefault
-    provide_normal_token       = normal_token_cache      .setdefault
-    provide_parameters_0_token = parameters_0_token_cache.setdefault
-
-
-    append_cache('arguments-0-token',  arguments_0_token_cache)
-    append_cache('indentation',        indentation_cache)
-    append_cache('join-token',         join_token_cache)
-    append_cache('line-marker-token',  line_marker_token_cache)
-    append_cache('normal-token',       normal_token_cache)
-    append_cache('parameters-0-token', parameters_0_token_cache)
+    provide_arguments_0_token  = arguments_0_token_cache .provide
+    provide_indentation        = indentation_cache       .provide
+    provide_join_token         = join_token_cache        .provide
+    provide_line_marker        = line_marker_token_cache .provide
+    provide_normal_token       = normal_token_cache      .provide
+    provide_parameters_0_token = parameters_0_token_cache.provide
 
 
     share(

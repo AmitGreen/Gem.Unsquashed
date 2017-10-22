@@ -13,6 +13,7 @@ def gem():
 
     class ManyFrill(TokenTuple):
         __slots__    = (())
+        class_order  = CLASS_ORDER__FRILL_MANY
         display_name = 'frill-*'
 
 
@@ -58,7 +59,7 @@ def gem():
     #
     #   .transform
     #
-    ManyFrill.transform = produce_tranform_many('many-frill', conjure_many_frill)
+    ManyFrill.transform = produce_transform_many('many-frill', conjure_many_frill)
 
 
     append_cache('many-frill', many_frill_cache)

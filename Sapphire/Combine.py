@@ -210,7 +210,7 @@ def gem():
                     delete_latest_0()
                     continue
 
-                #line('Total %d - Process %s', total, first)
+                line('Total %d - Process %s', total, first)
 
                 if total is 1:
                     zap_latest()
@@ -299,6 +299,9 @@ def gem():
     def extract_copyright(tree):
         copyright = tree[0].prefix
 
+        if not copyright.is_comment_suite:
+            dump_token('copyright', copyright)
+
         assert copyright.is_comment_suite
         assert length(copyright) is 3
         assert copyright[0] == empty_comment_line
@@ -347,6 +350,7 @@ def gem():
     def extract_gem_boot(vary):
         module_name = 'Gem.Boot'
         path        = '../Gem/Boot.py'
+        path        = 'b2.py'
 
         tree = parse_python(path)
 
@@ -453,9 +457,11 @@ def gem():
 
     @share
     def command_combine__X(module_name, vary, tree = true):
-        [boot_decorator, main_code] = extract_sapphire_main(vary)
-        sardnoyx_boot_code          = extract_sardnoyx_boot(vary)
+        #[boot_decorator, main_code] = extract_sapphire_main(vary)
+        #sardnoyx_boot_code          = extract_sardnoyx_boot(vary)
         gem_boot_code               = extract_gem_boot(vary)
+        return
+
 
         require_many = RequireMany(vary)
 
@@ -478,3 +484,6 @@ def gem():
             close_copyright(f)
 
         #partial(read_text_from_path(output_path))
+        #for name in ['cell-function-parameter']:
+        #    print_cache(name)
+        #print_cache()

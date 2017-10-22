@@ -7,10 +7,6 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    conjure_vw_frill            = Shared.conjure_vw_frill               #   due to privileged
-    produce_conjure_triple__213 = Shared.produce_conjure_triple__213    #   due to privileged
-
-
     class DefinitionHeader(SapphireTrunk):
         __slots__ = ((
             'frill',                    #   XY_Frill | Commented_VW_Frill
@@ -19,6 +15,7 @@ def gem():
         ))
 
 
+        class_order                           = CLASS_ORDER__DEFINITION_HEADER
         is_any_else                           = false
         is_any_except_or_finally              = false
         is_class_decorator_or_function_header = true
@@ -69,6 +66,9 @@ def gem():
             return t.frill.v.indentation
 
 
+        order = order__frill_ab
+
+
         def scout_variables(t, art):
             t.parameters.scout_variables(art)
 
@@ -93,25 +93,23 @@ def gem():
     DefinitionHeader.k3 = DefinitionHeader.parameters
 
 
-    @privileged
     def produce_conjure_definition_header(name, Meta):
-        conjure_triple__312 = produce_conjure_triple__213(name, Meta)
+        cache          = create_cache(name, conjure_nub)
+        conjure_triple = produce_conjure_unique_triple(name, Meta, cache)
 
 
+        @rename('conjure_%s', name)
         def conjure_definition_header(indented_keyword, name, parameters, colon_newline):
-            return conjure_triple__312(
+            return conjure_triple(
                        conjure_vw_frill(indented_keyword, colon_newline),
                        name,
                        parameters,
                    )
 
 
-        if __debug__:
-            conjure_definition_header.__name__ = intern_arrange('conjure_%s', name)
-
         return ((
                    conjure_definition_header,
-                   conjure_triple__312,
+                   conjure_triple,
                ))
 
 

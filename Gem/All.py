@@ -25,6 +25,7 @@ from    Gem.BuiltIn         import  none                                    #   
 from    Gem.BuiltIn         import  privileged_2                            #   Gem.Core
 from    Gem.BuiltIn         import  raising_exception_from                  #   Gem.Boot
 from    Gem.BuiltIn         import  raising_exception                       #   Gem.Boot
+from    Gem.BuiltIn         import  rename_function                         #   Gem.Boot
 from    Gem.BuiltIn         import  String                                  #   Gem.Boot
 from    Gem.BuiltIn         import  true                                    #   Gem.Boot
 from    Gem.BuiltIn         import  view_items                              #   Gem.Map
@@ -57,12 +58,12 @@ from    Gem                 import  PermissionError                         #   
 from    Gem                 import  privileged                              #   Gem.Boot
 from    Gem                 import  produce_cache_functions                 #   Gem.Cache
 from    Gem                 import  produce_conjure_by_name                 #   Gem.Cache
+from    Gem                 import  produce_conjure_by_name__V2             #   Gem.Cache2
 from    Gem                 import  python_frame                            #   Gem.System
 from    Gem                 import  python_version                          #   Gem.System
 from    Gem                 import  read_text_from_path                     #   Gem.Path
 from    Gem                 import  remove_path                             #   Gem.Path (via Gem.Path2 for Python 2)
 from    Gem                 import  remove_path__ignore_file_not_found      #   Gem.Path
-from    Gem                 import  rename_function                         #   Gem.Boot
 from    Gem                 import  rename_path                             #   Gem.Path
 from    Gem                 import  rename_path__ignore_file_not_found      #   Gem.Path
 from    Gem                 import  restricted                              #   Gem.Boot
@@ -73,3 +74,4 @@ from    Gem                 import  unknown_ascii                           #   
 from    Gem                 import  values_tuple_sorted_by_key              #   Gem.Map
 from    Gem                 import  write_binary_to_path                    #   Gem.Path
 from    Gem                 import  write_standard_output                   #   Gem.Boot
+from    Gem                 import  collect_garbage                         #   Gem.GarbageCollection

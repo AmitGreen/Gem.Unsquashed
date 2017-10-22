@@ -17,6 +17,7 @@ def gem():
         ))
 
 
+        class_order                = CLASS_ORDER__CALL_STATEMENT
         is_any_else                = false
         is_any_except_or_finally   = false
         is_else_header_or_fragment = false
@@ -99,6 +100,9 @@ def gem():
                 frill.w    .dump_token(f)
 
 
+        order = order__frill_ab
+
+
         def scout_variables(t, art):
             t.left     .scout_variables(art)
             t.arguments.scout_variables(art)
@@ -137,8 +141,14 @@ def gem():
         display_name = 'method-call-statement'
 
 
-    conjure_call_statement        = produce_conjure_triple__312('call-statement',        CallStatement)
-    conjure_method_call_statement = produce_conjure_triple__312('method-call-statement', MethodCallStatement)
+    def produce_conjure_call_statement(name, meta):
+        cache = create_cache(name, conjure_nub)
+
+        return produce_conjure_unique_triple__312(name, meta, cache)
+
+
+    conjure_call_statement        = produce_conjure_call_statement('call-statement',        CallStatement)
+    conjure_method_call_statement = produce_conjure_call_statement('method-call-statement', MethodCallStatement)
 
 
     static_conjure_call_statement        = static_method(conjure_call_statement)

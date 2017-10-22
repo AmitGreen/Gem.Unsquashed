@@ -109,6 +109,7 @@ def gem():
 
     class AssertStatement_1(KeywordExpressionStatement):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'assert-1'
         frill        = conjure_vw_frill(empty_indentation__at_sign, LINE_MARKER)
 
@@ -119,6 +120,7 @@ def gem():
     @share
     class DecoratorHeader(KeywordExpressionStatement):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = '@-header'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, AT_SIGN),
@@ -137,6 +139,7 @@ def gem():
 
     class DeleteStatement_1(KeywordExpressionStatement):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'delete-statement-1'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_delete('del ')),
@@ -153,6 +156,7 @@ def gem():
     @export
     class ElseIfHeader(KeywordExpressionStatement):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'else-if-header'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_else_if('elif ')),
@@ -171,6 +175,7 @@ def gem():
     @share
     class ExceptHeader_1(KeywordExpressionStatement):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'except-header-1'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_except('except ')),
@@ -189,6 +194,7 @@ def gem():
     @share
     class IfHeader(KeywordExpressionStatement):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'if-header'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, IF__W),
@@ -205,6 +211,7 @@ def gem():
 
     class ImportStatement(KeywordExpressionStatement):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'import-statement'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_import('import ')),
@@ -220,6 +227,7 @@ def gem():
 
     class RaiseStatement_1(KeywordExpressionStatement):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'raise-statement'
         frill        = conjure_vw_frill(
                            conjure_indented_token(conjure_indentation('    '), RAISE__W),
@@ -232,6 +240,7 @@ def gem():
 
     class ReturnStatement(KeywordExpressionStatement):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'return-statement'
         frill        = conjure_vw_frill(
                            conjure_indented_token(conjure_indentation('    '), RETURN__W),
@@ -245,6 +254,7 @@ def gem():
     @export
     class WhileHeader(KeywordExpressionStatement):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'while-header'
         frill        = conjure_vw_frill(
                            conjure_indented_token(conjure_indentation('    '), WHILE__W),
@@ -262,6 +272,7 @@ def gem():
     @share
     class WithHeader_1(KeywordExpressionStatement):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'with-header-1'
         frill        = conjure_vw_frill(
                            conjure_indented_token(empty_indentation, conjure_keyword_with('with ')),
@@ -278,6 +289,7 @@ def gem():
 
     class YieldStatement_1(KeywordExpressionStatement):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'yield-statement-1'
         frill        = conjure_vw_frill(
                            conjure_indented_token(conjure_indentation('    '), YIELD__W),

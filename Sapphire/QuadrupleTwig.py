@@ -3,11 +3,6 @@
 #
 @gem('Sapphire.QuadrupleTwig')
 def gem():
-    quadruple_twig_cache  = {}
-    lookup_quadruple_twig = quadruple_twig_cache.get
-    store_quadruple_twig  = quadruple_twig_cache.__setitem__
-
-
     @share
     def construct__abcd(t, a, b, c, d):
         t.a = a
@@ -78,7 +73,4 @@ def gem():
 
     @share
     def produce_conjure_quadruple_twig(name, Meta):
-        return produce_conjure_quadruple__4123(name, Meta, quadruple_twig_cache, lookup_quadruple_twig, store_quadruple_twig)
-
-
-    append_cache('quadruple-twig', quadruple_twig_cache)
+        return produce_conjure_unique_quadruple__4123(name, Meta, create_cache(name, conjure_nub))

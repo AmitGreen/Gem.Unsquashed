@@ -7,13 +7,7 @@ def gem():
     require_gem('Sapphire.DumpToken')
 
 
-    lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   due to privileged
-    produce_conjure_dual_twig   = Shared.produce_conjure_dual_twig      #   due to privileged
-    produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   due to privileged
-    store_adjusted_meta         = Shared.store_adjusted_meta            #   due to privileged
-
-
-    prefixed_dual_twig_cache  = {}
+    prefixed_dual_twig_cache  = create_cache('prefixed-dual-twig', conjure_nub)
     lookup_prefixed_dual_twig = prefixed_dual_twig_cache.get
     store_prefixed_dual_twig  = prefixed_dual_twig_cache.__setitem__
 
@@ -62,6 +56,7 @@ def gem():
 
     class DecoratedDefinition(DualTwig):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'decorated-definition'
         is_any_else                = false
         is_any_except_or_finally   = false
@@ -69,6 +64,7 @@ def gem():
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
+        is_statement_suite         = false
         prefix                     = 0
         prefixed_display_name      = '#decorated-definition'
 
@@ -81,6 +77,7 @@ def gem():
     @share
     class ElseFragment(DualTwig):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'else-fragment'
         is_any_else                = true
         is_any_except_or_finally   = false
@@ -102,6 +99,7 @@ def gem():
     @share
     class ElseIfFragment(DualTwig):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'else-if-fragment'
         is_any_else                = true
         is_any_except_or_finally   = false
@@ -123,6 +121,7 @@ def gem():
     @share
     class ExceptFragment(DualTwig):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'except-fragment'
         is_any_else                = false
         is_any_except_or_finally   = true
@@ -144,6 +143,7 @@ def gem():
     @share
     class FinallyFragment(DualTwig):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'finally-fragment'
         is_any_else                = false
         is_any_except_or_finally   = true
@@ -164,6 +164,7 @@ def gem():
 
     class ForStatement(DualTwig):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'for-statement'
         is_any_else                = false
         is_any_except_or_finally   = false
@@ -184,6 +185,7 @@ def gem():
     @share
     class IfStatement(DualTwig):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'if-statement'
         is_any_else                = false
         is_any_except_or_finally   = false
@@ -204,14 +206,15 @@ def gem():
     @share
     class TryStatement(DualTwig):
         __slots__                    = (())
+        class_order                  = CLASS_ORDER__DUAL_TWIG
         display_name                 = 'try-statement'
         is_any_except_or_finally     = false
         is_finaly_header_or_fragment = false
         is_statement_header          = true
         is_statement                 = true
-        prefix                     = 0
+        prefix                       = 0
         prefixed_display_name        = '#try-statement'
-        split_comment              = 0
+        split_comment                = 0
 
         add_comment      = 0
         dump_token       = dump_token__ab
@@ -222,6 +225,7 @@ def gem():
 
     class WhileStatement(DualTwig):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'while-statement'
         is_any_else                = false
         is_any_except_or_finally   = false
@@ -241,6 +245,7 @@ def gem():
 
     class WithStatement(DualTwig):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'with-statement'
         is_any_else                = false
         is_any_except_or_finally   = false
@@ -259,7 +264,6 @@ def gem():
 
 
     @share
-    @privileged
     def produce_conjure_dual_twig_functions(name, Meta):
         cache  = {}
         lookup = cache.get
@@ -268,6 +272,7 @@ def gem():
 
         def conjure_PrefixedDualTwig(prefix, a, b):
             PrefixedDualTwig = lookup_adjusted_meta(Meta)
+
 
             if PrefixedDualTwig is none:
                 class PrefixedDualTwig(Meta):
@@ -319,19 +324,22 @@ def gem():
                         t.b     .write(w)
 
 
-                PrefixedDualTwig.k3 = PrefixedDualTwig.prefix
+                PrefixedDualTwig.k1 = PrefixedDualTwig.prefix
+                PrefixedDualTwig.k2 = PrefixedDualTwig.a
+                PrefixedDualTwig.k3 = PrefixedDualTwig.b
 
                 if __debug__:
                     PrefixedDualTwig.__name__ = intern_arrange('Prefixed%s', Meta.__name__)
 
                 store_adjusted_meta(Meta, PrefixedDualTwig)
 
+
             return PrefixedDualTwig(prefix, a, b)
 
 
         return ((
                    produce_conjure_dual_twig(name, Meta),
-                   produce_conjure_triple__312(
+                   produce_conjure_unique_triple(
                        name,
                        conjure_PrefixedDualTwig,
                        prefixed_dual_twig_cache,

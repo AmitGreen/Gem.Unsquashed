@@ -7,7 +7,7 @@ def gem():
         __slots__ = (())
 
 
-        kt3 = kt2 = kq4 = kq3 = kq2 = none
+        is_herd = false
 
 
         @static_method
@@ -20,6 +20,14 @@ def gem():
             return 'absent'
 
 
+        @static_method
+        def __repr__():
+            return '<absent>'
+
+
+        display_token = __str__
+
+
         if is_python_2:
             __nonzero__ = __bool__
 
@@ -27,7 +35,7 @@ def gem():
     absent = Absent()
 
 
-    Absent.k3 = Absent.k2 = Absent.k1 = absent
+    Absent.k4 = Absent.k3 = Absent.k2 = Absent.k1 = absent
 
 
     built_in(

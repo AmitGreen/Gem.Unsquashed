@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.Atom')
 def gem():
+    require_gem('Sapphire.ClassOrder')
     require_gem('Sapphire.CreateMeta')
     require_gem('Sapphire.Method')
     require_gem('Sapphire.TokenCache')
@@ -98,9 +99,11 @@ def gem():
         is_empty_line                    = false
         is_end_of_data                   = false
         is_end_of_data__or__unknown_line = false
+        is_herd                          = false
         is_identifier                    = false
         is_indentation                   = false
         is_keyword                       = false
+        is_keyword_return                = false
         is_right_parenthesis             = false
         is_right_square_bracket          = false
         line_marker                      = false
@@ -161,9 +164,9 @@ def gem():
 
 
         display_token = __repr__
-
-
-        is_name = is_name__0
+        is_name       = is_name__0
+        nub           = static_conjure_nub
+        order         = order__s
 
 
         def write(t, w):
@@ -173,6 +176,7 @@ def gem():
     @share
     class DoubleQuote(SapphireToken):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = '"'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -211,6 +215,7 @@ def gem():
     @share
     class Identifier(SapphireToken):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = 'Identifier'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -258,6 +263,7 @@ def gem():
     @share
     class Number(SapphireToken):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = 'number'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -279,6 +285,7 @@ def gem():
     @share
     class SingleQuote(SapphireToken):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = "'"
         is__atom__or__special_operator = true
         is_atom                        = true

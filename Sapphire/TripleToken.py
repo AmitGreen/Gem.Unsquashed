@@ -84,7 +84,7 @@ def gem():
 
 
     @privileged
-    def produce_transform__indented__keyword__line_marker(name, conjure, keyword):
+    def produce_transform__indented__keyword__c(name, conjure, keyword, uncommented_c):
         def transform(t, vary):
             a = t.a
             b = t.b
@@ -94,7 +94,7 @@ def gem():
 
             if vary.remove_comments:
                 b__2 = keyword
-                c__2 = LINE_MARKER
+                c__2 = uncommented_c
 
                 if (a is a__2) and (b is b__2) and (c is c__2):
                     return t
@@ -346,6 +346,7 @@ def gem():
 
     class AllIndex(BaseTripleOperator):
         __slots__           = (())
+        class_order         = CLASS_ORDER__NORMAL_TOKEN
         display_name        = '[:]'
         is_all_index        = true
         is_postfix_operator = true
@@ -355,6 +356,7 @@ def gem():
 
     class DotNameTriplet(BaseTripleOperator):
         __slots__           = (())
+        class_order         = CLASS_ORDER__NORMAL_TOKEN
         #   [
         display_name        = '.name-triplet'
         is_postfix_operator = true
@@ -364,6 +366,7 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
+        class_order                = CLASS_ORDER__LINE_MARKER
         display_name               = r'indented-break\n'
         ends_in_newline            = true
         is_any_else                = false
@@ -386,6 +389,7 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
+        class_order                = CLASS_ORDER__LINE_MARKER
         display_name               = r'indented-continue\n'
         ends_in_newline            = true
         indentation                = BaseTripleOperator.a
@@ -407,6 +411,7 @@ def gem():
 
     class Indented_Else_Colon(BaseTripleOperator):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = r'indented-else:'
         indentation  = BaseTripleOperator.a
 
@@ -417,6 +422,7 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
+        class_order                = CLASS_ORDER__LINE_MARKER
         display_name               = r'indented-pass\n'
         ends_in_newline            = true
         is_any_else                = false
@@ -439,6 +445,7 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
+        class_order                = CLASS_ORDER__LINE_MARKER
         display_name               = r'indented-raise\n'
         ends_in_newline            = true
         is_any_else                = false
@@ -461,6 +468,7 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
+        class_order                = CLASS_ORDER__LINE_MARKER
         display_name               = r'indented-return\n'
         ends_in_newline            = true
         is_any_else                = false
@@ -483,6 +491,7 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
+        class_order                = CLASS_ORDER__LINE_MARKER
         display_name               = r'indented-yield\n'
         ends_in_newline            = true
         is_any_else                = false
@@ -503,6 +512,7 @@ def gem():
 
     class Whitespace_Atom_Whitespace(BaseTripleOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = 'whitespace+atom+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -513,6 +523,7 @@ def gem():
 
     class Whitespace_Name_Whitespace(BaseTripleOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = 'whitespace+name+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -550,6 +561,13 @@ def gem():
 
                                               line_marker = true,
                                           )
+
+    conjure_indented__raise__line_marker = produce_conjure_triple_token(
+                                               'indented__raise__line_marker',
+                                               Indented_Raise_LineMarker_1,
+
+                                               line_marker = true,
+                                           )
 
     conjure_indented__return__line_marker = produce_conjure_triple_token(
                                                 'indented__return__line_marker',
@@ -717,34 +735,53 @@ def gem():
     #
     AllIndex.mutate = produce_mutate__uncommented('all_index', ALL_INDEX)
 
-    Indented_Break_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+    Indented_Break_LineMarker_1.transform = produce_transform__indented__keyword__c(
                                                 'indented_break__line_marker_1',
                                                 conjure_indented__break__line_marker,
                                                 BREAK,
+                                                LINE_MARKER,
                                             )
 
-    Indented_Continue_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+    Indented_Continue_LineMarker_1.transform = produce_transform__indented__keyword__c(
                                                    'indented_continue__line_marker_1',
                                                    conjure_indented__continue__line_marker,
                                                    CONTINUE,
+                                                   LINE_MARKER,
                                                )
 
-    Indented_Pass_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+    Indented_Else_Colon.transform = produce_transform__indented__keyword__c(
+                                               'indented_else_colon',
+                                               conjure_indented_else_colon,
+                                               ELSE,
+                                               COLON,
+                                           )
+
+    Indented_Pass_LineMarker_1.transform = produce_transform__indented__keyword__c(
                                                'indented_pass__line_marker_1',
                                                conjure_indented__pass__line_marker,
                                                PASS,
+                                               LINE_MARKER,
                                            )
 
-    Indented_Return_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+    Indented_Raise_LineMarker_1.transform = produce_transform__indented__keyword__c(
+                                                'indented_raise__line_marker_1',
+                                                conjure_indented__raise__line_marker,
+                                                RAISE,
+                                                LINE_MARKER,
+                                            )
+
+    Indented_Return_LineMarker_1.transform = produce_transform__indented__keyword__c(
                                                  'indented_return__line_marker_1',
                                                  conjure_indented__return__line_marker,
                                                  RETURN,
+                                                 LINE_MARKER,
                                              )
 
-    Indented_Yield_LineMarker_1.transform = produce_transform__indented__keyword__line_marker(
+    Indented_Yield_LineMarker_1.transform = produce_transform__indented__keyword__c(
                                                 'indented_yield__line_marker_1',
                                                 conjure_indented__yield__line_marker,
                                                 YIELD,
+                                                LINE_MARKER,
                                             )
 
     #
