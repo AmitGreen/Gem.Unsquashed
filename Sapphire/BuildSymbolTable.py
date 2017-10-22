@@ -224,18 +224,20 @@ def gem():
 
         def scout_definitions(t):
             def scout_nested_definition(v):
-                #
-                #   Need to have a FunctionWrapper symbol table also
-                #
-                art = create_base_function_symbol_table(
-                          (t.write_global_variable   if t.is_global_symbol_table else   t.write_global_variable),
-                          (t.parent                  if t.is_class_symbol_table  else   t),
-                      )
-
                 if v.is_function_definition:
+                    art = BuildFunctionSymbolTable(
+                              (t.write_global_variable   if t.is_global_symbol_table else   t.write_global_variable),
+                              (t.parent                  if t.is_class_symbol_table  else   t),
+                          )
+
                     v.a.parameters.add_parameters(art)
                 else:
-                    art = create_build_class_symbol_table(art.write_global_variable, art)
+                    art = BuildClassSymbolTable(
+                              (t.write_global_variable   if t.is_global_symbol_table else   t.write_global_variable),
+                              BuildWrapperSymbolTable(
+                                  (t.parent              if t.is_class_symbol_table  else   t),
+                              ),
+                          )
 
                 v.b.scout_variables(art)
 
@@ -280,7 +282,7 @@ def gem():
     class BuildClassSymbolTable(BaseBuildSymbolTable):
         __slots__ = ((
             'write_global_variable',    #   Method
-            'parent',                   #   BaseBuildSymbolTable+
+            'parent',                   #   BuildWrapperSymbolTable
         ))
 
 
@@ -303,7 +305,7 @@ def gem():
     class BuildFunctionSymbolTable(BaseBuildSymbolTable):
         __slots__ = ((
             'write_global_variable',    #   Method
-            'parent',                   #   BuildGlobalSymbolTable
+            'parent',                   #   BaseBuildSymbolTable+
         ))
 
 
@@ -358,6 +360,28 @@ def gem():
             t.store_variable(name, conjure_global_variable(name))
 
 
+    class BuildWrapperSymbolTable(BaseBuildSymbolTable):
+        __slots__ = ((
+            'parent',                   #   BaseBuildSymbolTable+
+        ))
+
+
+        display_name             = 'wrapper-symbol-table'
+        is_class_symbol_table    = false
+        is_function_symbol_table = false
+        is_global_symbol_table   = false
+        is_nested_symbol_table   = true
+
+
+        def __init__(t, parent):
+            construct_BaseBuildSymbolTable(t)
+
+            t.parent = parent
+
+
+        finalize_variables = finalize_variables__build_nested_symbol_table
+
+
     write_variable = produce_write_variable('write_variable', conjure_local_variable)
 
     BuildClassSymbolTable   .write_variable = write_variable
@@ -375,11 +399,3 @@ def gem():
     @share
     def create_build_global_symbol_table():
         return BuildGlobalSymbolTable()
-
-
-    def create_build_class_symbol_table(write_global_variable, parent):
-        return BuildClassSymbolTable(write_global_variable, parent)
-
-
-    def create_base_function_symbol_table(write_global_variable, parent):
-        return BuildFunctionSymbolTable(write_global_variable, parent)
