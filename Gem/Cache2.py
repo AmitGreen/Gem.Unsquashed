@@ -115,25 +115,11 @@ def gem():
             if not first.is_horde:
                 r = Meta(k1, k2)
 
-                store(k1, (r   if first is absent else   create_horde_23(first.k2, k2, first, r )))
+                store(k1, (r   if first is absent else   create_horde_23(first.k2, k2, first, r)))
 
                 return r
 
-            r = first.glimpse(k2)
-
-            if r is not none:
-                assert r.k2 is k2
-
-                return r
-
-            r = Meta(k1, k2)
-
-            first__2 = first.insert(k2, r)
-
-            if first is not first__2:
-                store(k1, first__2)
-
-            return r
+            return first.provision2_k2(store, Meta, k1, k2)
 
 
         if __debug__:
@@ -171,25 +157,11 @@ def gem():
             if not first.is_horde:
                 r = Meta(k1, k2)
 
-                store(k2, (r   if first is absent else   create_horde_23(first.k1, k1, first, r )))
+                store(k2, (r   if first is absent else   create_horde_23(first.k1, k1, first, r)))
 
                 return r
 
-            r = first.glimpse(k1)
-
-            if r is not none:
-                assert r.k1 is k1
-
-                return r
-
-            r = Meta(k1, k2)
-
-            first__2 = first.insert(k1, r)
-
-            if first is not first__2:
-                store(k2, first__2)
-
-            return r
+            return first.provision2_k1(store, Meta, k1, k2)
 
 
         if __debug__:

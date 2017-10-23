@@ -74,43 +74,45 @@ def gem():
             t.v = v
 
 
-        def glimpse(t, k):
-            if t.a is k: return t.v
+        if 0:
+            def glimpse(t, k):
+                if t.a is k: return t.v
 
-            assert k is not absent
+                assert k is not absent
 
-            return none
+                return none
 
 
-        def inject(t, b, w):
-            assert t.a != b
+            def inject(t, b, w):
+                assert t.a != b
 
-            return Horde_23(t.a, b, t.v, w)
+                return Horde_23(t.a, b, t.v, w)
 
 
         def items_sorted_by_key(t):
             return (( ((t.a, t.v)), ))
 
 
-        def lookup(t, k):
-            if t.a == k: return t.v
+        if 0:
+            def lookup(t, k):
+                if t.a == k: return t.v
 
-            assert k is not absent
+                assert k is not absent
 
-            return none
-
-
-        def insert(t, b, w):
-            assert t.a is not b
-
-            return Horde_23(t.a, b, t.v, w)
+                return none
 
 
-        def provide(t, b, w):
-            a = t.a
-            if a == b: return t
+            def insert(t, b, w):
+                assert t.a is not b
 
-            return Horde_23(a, b, t.v, w)
+                return Horde_23(t.a, b, t.v, w)
+
+
+            def provide(t, b, w):
+                a = t.a
+                if a == b: return t
+
+                return Horde_23(a, b, t.v, w)
 
 
         def provision(t, b, w):
@@ -146,41 +148,42 @@ def gem():
             t.w = w
 
 
-        def glimpse(t, k):
-            if t.a is k: return t.v
-            if t.b is k: return t.w
+        if 0:
+            def glimpse(t, k):
+                if t.a is k: return t.v
+                if t.b is k: return t.w
 
-            assert k is not absent
+                assert k is not absent
 
-            if t.c is k: return t.x
+                if t.c is k: return t.x
 
-            return none
-
-
-        def inject(t, d, y):
-            assert (t.a != d) and (t.b != d) and (t.c != d)
-
-            c = t.c
-
-            if c is absent:
-                t.c = d
-                t.x = y
-                return t
-
-            return create_horde_4567(t.a, t.b, c, d, t.v, t.w, t.x, y)
+                return none
 
 
-        def insert(t, d, y):
-            assert (t.a is not d) and (t.b is not d) and (t.c is not d)
+            def inject(t, d, y):
+                assert (t.a != d) and (t.b != d) and (t.c != d)
 
-            c = t.c
+                c = t.c
 
-            if c is absent:
-                t.c = d
-                t.x = y
-                return t
+                if c is absent:
+                    t.c = d
+                    t.x = y
+                    return t
 
-            return create_horde_4567(t.a, t.b, c, d, t.v, t.w, t.x, y)
+                return create_horde_4567(t.a, t.b, c, d, t.v, t.w, t.x, y)
+
+
+            def insert(t, d, y):
+                assert (t.a is not d) and (t.b is not d) and (t.c is not d)
+
+                c = t.c
+
+                if c is absent:
+                    t.c = d
+                    t.x = y
+                    return t
+
+                return create_horde_4567(t.a, t.b, c, d, t.v, t.w, t.x, y)
 
 
         def items_sorted_by_key(t):
@@ -223,35 +226,36 @@ def gem():
             return ((cx, bw, av))
 
 
-        def lookup(t, k):
-            if t.a == k: return t.v
-            if t.b == k: return t.w
+        if 0:
+            def lookup(t, k):
+                if t.a == k: return t.v
+                if t.b == k: return t.w
 
-            assert k is not absent
+                assert k is not absent
 
-            if t.c == k: return t.x
+                if t.c == k: return t.x
 
-            return none
+                return none
 
 
-        def provide(t, d, y):
-            a = t.a
-            if a == d: return t
+            def provide(t, d, y):
+                a = t.a
+                if a == d: return t
 
-            b = t.b
-            if b == d: return t
+                b = t.b
+                if b == d: return t
 
-            c = t.c
-            if c == d: return t
+                c = t.c
+                if c == d: return t
 
-            assert d is not absent
+                assert d is not absent
 
-            if c is absent:
-                t.c = d
-                t.x = y
-                return t
+                if c is absent:
+                    t.c = d
+                    t.x = y
+                    return t
 
-            return create_horde_4567(a, b, c, d, t.v, t.w, t.x, y)
+                return create_horde_4567(a, b, c, d, t.v, t.w, t.x, y)
 
 
         def provision(t, d, y):
@@ -272,6 +276,28 @@ def gem():
                 return t
 
             return create_horde_4567(a, b, c, d, t.v, t.w, t.x, y)
+
+
+        def provision2_k1(t, displace, Meta, k1, k2):
+            a = t.a
+            if a is k1: return t.v
+
+            b = t.b
+            if b is k1: return t.w
+
+            c = t.c
+            if c is k1: return t.x
+
+            r = Meta(k1, k2)
+
+            if c is absent:
+                t.c = k1
+                t.x = r
+                return r
+
+            displace(k2, create_horde_4567(a, b, c, k1, t.v, t.w, t.x, r))
+
+            return r
 
 
     class Horde_4567(Object):
@@ -298,97 +324,102 @@ def gem():
         k2       = absent
 
 
-        def glimpse(t, k):
-            if t.a is k:        return t.v
-            if t.b is k:        return t.w
-            if t.c is k:        return t.x
-            if t.d is k:        return t.y
+        if 0:
+            def glimpse(t, k):
+                if t.a is k:        return t.v
+                if t.b is k:        return t.w
+                if t.c is k:        return t.x
+                if t.d is k:        return t.y
 
-            assert k is not absent
+                assert k is not absent
 
-            e = t.e
-            if e is k:          return t.z
-            if e is absent:     return none
+                e = t.e
+                if e is k:          return t.z
+                if e is absent:     return none
 
-            e6 = t.e6
-            if e6 is k:         return t.z6
-            if e6 is absent:    return none
+                e6 = t.e6
+                if e6 is k:         return t.z6
+                if e6 is absent:    return none
 
-            if t.e7 is k:       return t.z7
+                if t.e7 is k:       return t.z7
 
-            return none
-
-
-        def inject(t, e8, z8):
-            assert (t.a != e8) and (t.b != e8) and (t.c != e8) and (t.d != e8)
-            assert e8 is not absent
-
-            e = t.e
-            if e is absent:
-                t.e  = e8
-                t.z  = z8
-                t.e6 = absent
-                return t
-            assert t.e != e8
-
-            e6 = t.e6
-            if e6 is absent:
-                t.e6 = e8
-                t.z6 = z8
-                t.e7 = absent
-                return t
-            assert t.e6 != e8
-
-            e7 = t.e7
-            if e7 is absent:
-                t.e7 = e8
-                t.z7 = z8
-                t.e8 = absent
-                return t
-            assert t.e7 != e8
-
-            return create_horde_many(t.a, t.b, t.c, t.d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
+                return none
 
 
-        def insert(t, e8, z8):
-            assert (t.a is not e8) and (t.b is not e8) and (t.c is not e8) and (t.d is not e8)
-            assert e8 is not absent
+            def inject(t, e8, z8):
+                assert (t.a != e8) and (t.b != e8) and (t.c != e8) and (t.d != e8)
+                assert e8 is not absent
 
-            e = t.e
-            if e is absent:
-                t.e  = e8
-                t.z  = z8
-                t.e6 = absent
-                return t
-            assert t.e is not e8
+                e = t.e
+                if e is absent:
+                    t.e  = e8
+                    t.z  = z8
+                    t.e6 = absent
+                    return t
+                assert t.e != e8
 
-            e6 = t.e6
-            if e6 is absent:
-                t.e6 = e8
-                t.z6 = z8
-                t.e7 = absent
-                return t
-            assert t.e6 is not e8
+                e6 = t.e6
+                if e6 is absent:
+                    t.e6 = e8
+                    t.z6 = z8
+                    t.e7 = absent
+                    return t
+                assert t.e6 != e8
 
-            e7 = t.e7
-            if e7 is absent:
-                t.e7 = e8
-                t.z7 = z8
-                return t
-            assert t.e7 is not e8
+                e7 = t.e7
+                if e7 is absent:
+                    t.e7 = e8
+                    t.z7 = z8
+                    t.e8 = absent
+                    return t
+                assert t.e7 != e8
 
-            return create_horde_many(t.a, t.b, t.c, t.d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
+                return create_horde_many(t.a, t.b, t.c, t.d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
+
+
+            def insert(t, e8, z8):
+                assert (t.a is not e8) and (t.b is not e8) and (t.c is not e8) and (t.d is not e8)
+                assert e8 is not absent
+
+                e = t.e
+                if e is absent:
+                    t.e  = e8
+                    t.z  = z8
+                    t.e6 = absent
+                    return t
+                assert t.e is not e8
+
+                e6 = t.e6
+                if e6 is absent:
+                    t.e6 = e8
+                    t.z6 = z8
+                    t.e7 = absent
+                    return t
+                assert t.e6 is not e8
+
+                e7 = t.e7
+                if e7 is absent:
+                    t.e7 = e8
+                    t.z7 = z8
+                    return t
+                assert t.e7 is not e8
+
+                return create_horde_many(t.a, t.b, t.c, t.d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
 
 
         def items_sorted_by_key(t):
             a   = t.a
             nub = a.nub
 
-            r = [ ((a, t.v)), ((t.b, t.w)), ((t.c, t.x)), ((t.d, t.y))]
+            r = [((a, t.v)), ((t.b, t.w)), ((t.c, t.x)), ((t.d, t.y))]
 
             e = t.e
 
-            if e is not absent:
+            if e is absent:
+                r = [((a, t.v)), ((t.b, t.w)), ((t.c, t.x)), ((t.d, t.y))]
+            else:
+                r = [((a, t.v)), ((t.b, t.w)), ((t.c, t.x)), ((t.d, t.y))]
+
                 r.append( ((e, t.z)) )
 
                 e6 = t.e6
@@ -413,66 +444,67 @@ def gem():
             return sorted_list(r, key = key)
 
 
-        def lookup(t, k):
-            if t.a == k:        return t.v
-            if t.b == k:        return t.w
-            if t.c == k:        return t.x
-            if t.d == k:        return t.y
+        if 0:
+            def lookup(t, k):
+                if t.a == k:        return t.v
+                if t.b == k:        return t.w
+                if t.c == k:        return t.x
+                if t.d == k:        return t.y
 
-            assert k is not absent
+                assert k is not absent
 
-            e = t.e
-            if e == k:          return t.z
-            if e is absent:     return none
+                e = t.e
+                if e == k:          return t.z
+                if e is absent:     return none
 
-            e6 = t.e6
-            if e6 == k:         return t.z6
-            if e6 is absent:    return none
+                e6 = t.e6
+                if e6 == k:         return t.z6
+                if e6 is absent:    return none
 
-            if t.e7 == k:       return t.z7
+                if t.e7 == k:       return t.z7
 
-            return none
+                return none
 
 
-        def provide(t, e8, z8):
-            a = t.a
-            if a == e8: return t
+            def provide(t, e8, z8):
+                a = t.a
+                if a == e8: return t
 
-            b = t.b
-            if b == e8: return t
+                b = t.b
+                if b == e8: return t
 
-            c = t.c
-            if c == e8: return t
+                c = t.c
+                if c == e8: return t
 
-            d = t.d
-            if d == e8: return t
+                d = t.d
+                if d == e8: return t
 
-            assert e8 is not absent
+                assert e8 is not absent
 
-            e = t.e
-            if e == e8: return t
-            if e is absent:
-                t.e  = e8
-                t.z  = z8
-                t.e6 = absent
-                return t
+                e = t.e
+                if e == e8: return t
+                if e is absent:
+                    t.e  = e8
+                    t.z  = z8
+                    t.e6 = absent
+                    return t
 
-            e6 = t.e6
-            if e6 == e8: return t
-            if e6 is absent:
-                t.e6 = e8
-                t.z6 = z8
-                t.e7 = absent
-                return t
+                e6 = t.e6
+                if e6 == e8: return t
+                if e6 is absent:
+                    t.e6 = e8
+                    t.z6 = z8
+                    t.e7 = absent
+                    return t
 
-            e7 = t.e7
-            if e7 == e8: return t
-            if e7 is absent:
-                t.e7 = e8
-                t.z7 = z8
-                return t
+                e7 = t.e7
+                if e7 == e8: return t
+                if e7 is absent:
+                    t.e7 = e8
+                    t.z7 = z8
+                    return t
 
-            return create_horde_many(a, b, c, d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
+                return create_horde_many(a, b, c, d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
 
 
         def provision(t, e8, z8):
@@ -516,6 +548,50 @@ def gem():
             return create_horde_many(a, b, c, d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
 
 
+        def provision2_k1(t, displace, Meta, k1, k2):
+            a = t.a
+            if a is k1:     return t.v
+
+            b = t.b
+            if b is k1:     return t.w
+
+            c = t.c
+            if c is k1:     return t.x
+
+            d = t.d
+            if d is k1:     return t.y
+
+            e = t.e
+            if e is k1:     return t.z
+            if e is absent:
+                t.e  = k1
+                t.e6 = absent
+                t.z  = r = Meta(k1, k2)
+                return r
+
+            e6 = t.e6
+            if e6 is k1:    return t.z6
+            if e6 is absent:
+                t.e6 = k1
+                t.e7 = absent
+                t.z6 = r = Meta(k1, k2)
+                return r
+
+            e7 = t.e7
+            if e7 is k1:    return t.z7
+
+            r = Meta(k1, k2)
+
+            if e7 is absent:
+                t.e7 = k1
+                t.z7 = Meta(k1, k2)
+                return r
+
+            displace(k2, create_horde_many(a, b, c, d, e, e6, e7, k1, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
+
+            return r
+
+
     class Horde_Many(Map):
         __slots__ = (())
 
@@ -555,12 +631,19 @@ def gem():
                     yield (( k, value(k) ))
 
 
-        def provide(t, k, v):
+        if 0:
+            def provide(t, k, v):
+                map__provide(t, k, v)
+                return t
+
+
+        def provision(t, k, v):
             map__provide(t, k, v)
             return t
 
 
-        provision = provide
+        def provision2_k1(t, _displace, Meta, k1, k2):
+            return (map__lookup(t, k1)) or (map__provide(t, k1, Meta(k1, k2)))
 
 
     empty_horde = Horde_0()
