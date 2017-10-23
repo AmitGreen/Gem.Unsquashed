@@ -7,7 +7,7 @@ def gem():
     require_gem('Topaz.Core')
 
 
-    from Gem import create_cache, dump_caches, empty_horde, produce_conjure_by_name__V2
+    from Gem import create_cache, dump_caches, empty_herd, produce_conjure_by_name__V2
     from Gem import produce_conjure_unique_dual, produce_conjure_unique_dual__21
 
 
@@ -20,7 +20,7 @@ def gem():
             ))
 
 
-            is_horde = false
+            is_herd = false
 
 
             def __init__(t, name, value):
@@ -73,7 +73,7 @@ def gem():
             ))
 
 
-            is_horde = false
+            is_herd = false
 
 
             def __init__(t, number, shape):
@@ -228,7 +228,7 @@ def gem():
                 for v in [circle, ellipse, moon, pentagon, square, star, trapazoid, triangle]:
                     w = cache[v]
 
-                    if w.is_horde:
+                    if w.is_herd:
                         value = 1
 
                         for [number, x] in w.items_sorted_by_key():
@@ -256,41 +256,41 @@ def gem():
 
 
             #
-            #   Verify sort of 0 element horde's
+            #   Verify sort of 0 element herd's
             #
-            def test_horde_0__sort():
-                assert empty_horde.items_sorted_by_key() is (())
+            def test_herd_0__sort():
+                assert empty_herd.items_sorted_by_key() is (())
 
 
             #
-            #   Verify sort of 1 element horde's
+            #   Verify sort of 1 element herd's
             #
-            def test_horde_1__sort():
-                horde = empty_horde.provision(zero, zero.value)
+            def test_herd_1__sort():
+                herd = empty_herd.provision(zero, zero.value)
 
-                assert horde.items_sorted_by_key() == expected_items[:1]
+                assert herd.items_sorted_by_key() == expected_items[:1]
 
 
             #
-            #   Verify sort of 2 & 3 element horde's
+            #   Verify sort of 2 & 3 element herd's
             #
-            def test_horde_23__sort():
+            def test_herd_23__sort():
                 for [a, b] in [
                         [zero, one],
                         [one, zero],
                 ]:
-                    horde = empty_horde
-                    horde = horde.provision(a, a.value)
-                    horde = horde.provision(b, b.value)
+                    herd = empty_herd
+                    herd = herd.provision(a, a.value)
+                    herd = herd.provision(b, b.value)
 
-                    horde__2 = horde
+                    herd__2 = herd
 
                     for loop in [1, 2]:
-                        horde__2 = horde__2.provision(a, a.value)
-                        horde__2 = horde__2.provision(b, b.value)
+                        herd__2 = herd__2.provision(a, a.value)
+                        herd__2 = herd__2.provision(b, b.value)
 
-                    assert horde is horde__2
-                    assert horde.items_sorted_by_key() == expected_items[:2]
+                    assert herd is herd__2
+                    assert herd.items_sorted_by_key() == expected_items[:2]
 
 
                 for [a, b, c] in [
@@ -301,22 +301,23 @@ def gem():
                         [two,  zero, one ],
                         [two,  one,  zero],
                 ]:
-                    horde = empty_horde
-                    horde = horde.provision(a, a.value)
-                    horde = horde.provision(b, b.value)
+                    herd = empty_herd
+                    herd = herd.provision(a, a.value)
+                    herd = herd.provision(b, b.value)
+                    herd = herd.provision(c, c.value)
 
-                    horde__2 = horde
+                    herd__2 = herd
 
                     for loop in [1, 2]:
-                        horde__2 = horde__2.provision(a, a.value)
-                        horde__2 = horde__2.provision(b, b.value)
-                        horde__2 = horde__2.provision(c, c.value)
+                        herd__2 = herd__2.provision(a, a.value)
+                        herd__2 = herd__2.provision(b, b.value)
+                        herd__2 = herd__2.provision(c, c.value)
 
-                    assert horde is horde__2
-                    assert horde.items_sorted_by_key() == expected_items[:3]
+                    assert herd is herd__2
+                    assert herd.items_sorted_by_key() == expected_items[:3]
 
 
-            def test_horde_4567__sort():
+            def test_herd_4567__sort():
                 for add in [
                     [   zero,   one,    two,    three                                   ],
                     [   one,    three,  two,    zero                                    ],
@@ -325,34 +326,34 @@ def gem():
                     [   one,    three,  four,   zero,   five,   two,                    ],
                     [   zero,   six,    four,   five,   two,    one,    three           ],
                 ]:
-                    horde = empty_horde
+                    herd = empty_herd
 
                     for loop in [1, 2]:
                         for v in add:
-                            horde = horde.provision(v, v.value)
+                            herd = herd.provision(v, v.value)
 
-                    assert Tuple(horde.items_sorted_by_key()) == expected_items[:length(add)]
+                    assert Tuple(herd.items_sorted_by_key()) == expected_items[:length(add)]
 
 
-            def test_horde_many__sort():
+            def test_herd_many__sort():
                 for add in [
                     [   five,   three,  two,    seven,  one,    zero,   six,    four                    ],
                     [   seven,  six,    three,  five,   zero,   one,    two,    eight,  four            ],
                     [   one,    two,    zero,   nine,   five,   eight,  four,   six,    three,  seven   ],
                 ]:
-                    horde = empty_horde
+                    herd = empty_herd
 
                     for loop in [1, 2]:
                         for v in add:
-                            horde = horde.provision(v, v.value)
+                            herd = herd.provision(v, v.value)
 
-                    assert Tuple(horde.items_sorted_by_key()) == expected_items[:length(add)]
+                    assert Tuple(herd.items_sorted_by_key()) == expected_items[:length(add)]
 
-            test_horde_0__sort()
-            test_horde_1__sort()
-            test_horde_23__sort()
-            test_horde_4567__sort()
-            test_horde_many__sort()
+            test_herd_0__sort()
+            test_herd_1__sort()
+            test_herd_23__sort()
+            test_herd_4567__sort()
+            test_herd_many__sort()
 
 
         def test_conjure_unique_dual():

@@ -18,7 +18,7 @@ GEM_FILES = \
 	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
 	../Gem/Global.py \
-    ../Gem/Horde.py \
+    ../Gem/Herd.py \
     ../Gem/Import.py ../Gem/IO.py \
     ../Gem/Map.py ../Gem/Method.py \
     ../Gem/Output.py \
@@ -218,7 +218,7 @@ links:
 	ln -s ../Gem/FileStatus.py                          fs.py
 	ln -s ../Gem/Codec.py                               gd.py
 	ln -s ../Gem/Global.py                              gg.py
-	ln -s ../Gem/Horde.py                               gh.py
+	ln -s ../Gem/Herd.py                                gh.py
 	ln -s ../Sapphire/Parse.py                          h0p.py
 	ln -s ../Sapphire/Parse1.py                         h1p.py
 	ln -s ../Sapphire/Parse1Atom.py                     h1pa.py

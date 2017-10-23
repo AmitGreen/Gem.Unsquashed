@@ -4,7 +4,7 @@
 @gem('Gem.Cache2')
 def gem():
     require_gem('Gem.Absent')
-    require_gem('Gem.Horde')
+    require_gem('Gem.Herd')
 
 
     map__get     = Map.get
@@ -112,10 +112,10 @@ def gem():
             if first.k2 is k2:
                 return first
 
-            if not first.is_horde:
+            if not first.is_herd:
                 r = Meta(k1, k2)
 
-                store(k1, (r   if first is absent else   create_horde_23(first.k2, k2, first, r)))
+                store(k1, (r   if first is absent else   create_herd_2(first.k2, k2, first, r)))
 
                 return r
 
@@ -154,10 +154,10 @@ def gem():
             if first.k1 is k1:
                 return first
 
-            if not first.is_horde:
+            if not first.is_herd:
                 r = Meta(k1, k2)
 
-                store(k2, (r   if first is absent else   create_horde_23(first.k1, k1, first, r)))
+                store(k2, (r   if first is absent else   create_herd_2(first.k1, k1, first, r)))
 
                 return r
 
@@ -199,14 +199,14 @@ def gem():
 
                 r = Meta(k1, k2, k3)
 
-                store(k1, create_horde_1(k2, create_horde_23(first.k3, k3, first, r)))
+                store(k1, create_herd_1(k2, create_herd_2(first.k3, k3, first, r)))
 
                 return r
 
-            if not first.is_horde:
+            if not first.is_herd:
                 r = Meta(k1, k2, k3)
 
-                store(k1, (r   if first is absent else   create_horde_23(first.k2, k2, first, r)))
+                store(k1, (r   if first is absent else   create_herd_2(first.k2, k2, first, r)))
 
                 return r
 
@@ -218,13 +218,13 @@ def gem():
                 if second.k3 is k3:
                     return second
 
-                if not second.is_horde:
+                if not second.is_herd:
                     r = Meta(k1, k2, k3)
 
                     if second is absent:
                         first.insert(k2, r)
                     else:
-                        first.displace(k2, conjure_horde_23(second.k3, k3, second, r))
+                        first.displace(k2, conjure_herd_2(second.k3, k3, second, r))
 
                     return r
 
@@ -265,7 +265,7 @@ def gem():
 
             r = Meta(k1, k2, k3)
 
-            store(k1, create_horde_23(skip, k2, first.remove_skip(), r))
+            store(k1, create_herd_2(skip, k2, first.remove_skip(), r))
 
             return r
 
@@ -291,7 +291,7 @@ def gem():
             line('===  %s  ===', name)
 
             for [k, v] in cache.items_sorted_by_key():
-                if not v.is_horde:
+                if not v.is_herd:
                     line('%s: %s',
                          (
                             portray_string(k)  if k.__class__ is String  else
@@ -310,7 +310,7 @@ def gem():
                      ))
 
                 for [k2, w] in v.items_sorted_by_key():
-                    if not w.is_horde:
+                    if not w.is_herd:
                         line('  %s: %s',
                              (
                                 portray_string(k2)  if k2.__class__ is String  else
@@ -329,7 +329,7 @@ def gem():
                          ))
 
                     for [k3, x] in w.items_sorted_by_key():
-                        if not x.is_horde:
+                        if not x.is_herd:
                             line('    %s: %s', k3.display_token(), x.display_token())
                             continue
 

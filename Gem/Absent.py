@@ -7,7 +7,7 @@ def gem():
         __slots__ = (())
 
 
-        is_horde = false
+        is_herd = false
 
 
         @static_method
