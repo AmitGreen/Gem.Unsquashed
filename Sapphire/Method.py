@@ -694,7 +694,7 @@ def gem():
 
     @share
     @privileged
-    def produce_tranform_many(name, conjure):
+    def produce_transform_many(name, conjure):
         def transform(t, vary):
             iterator = iterate(t)
 

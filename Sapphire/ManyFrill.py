@@ -58,7 +58,7 @@ def gem():
     #
     #   .transform
     #
-    ManyFrill.transform = produce_tranform_many('many-frill', conjure_many_frill)
+    ManyFrill.transform = produce_transform_many('many-frill', conjure_many_frill)
 
 
     append_cache('many-frill', many_frill_cache)

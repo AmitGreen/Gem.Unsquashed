@@ -67,6 +67,23 @@ def gem():
             t.b.scout_variables(art)
 
 
+        def transform(t, vary):
+            a = t.a
+            b = t.b
+
+            a__2 = a.transform(vary)
+            b__2 = b.transform(vary)
+
+            if (a is a__2) and (b is b__2):
+                return t
+
+            if a__2 is 0:
+                return b__2
+
+            return conjure_commented_statement(a__2, b__2)
+
+
+
     conjure_commented_statement = produce_conjure_dual_twig('#statement',     CommentedStatement)
     conjure_dual_statement      = produce_conjure_dual_twig('dual-statement', DualStatement)
 

@@ -19,7 +19,7 @@ def gem():
     from Gem import path_join, print_exception_chain
     from Gem import produce_conjure_dual, produce_conjure_dual__21, produce_conjure_quadruple__4123
     from Gem import produce_conjure_single, produce_conjure_triple, produce_conjure_triple__213
-    from Gem import produce_conjure_triple__312, produce_conjure_tuple
+    from Gem import produce_conjure_triple__312, produce_conjure_tuple, produce_conjure_unique_dual
     from Gem import program_exit, read_text_from_path, return_self, slice_all, StringOutput
     from Pearl import la, parse_context, qd, qi, qj, qk, ql, qn, qs, raise_unknown_line
     from Pearl import wd, wd0, wd1, wi, wj, wk, wn, ws, z_initialize
@@ -49,6 +49,7 @@ def gem():
         'produce_conjure_triple__312',      produce_conjure_triple__312,
         'produce_conjure_triple',           produce_conjure_triple,
         'produce_conjure_tuple',            produce_conjure_tuple,
+        'produce_conjure_unique_dual',      produce_conjure_unique_dual,
         'program_exit',                     program_exit,
         'qd',                               qd,
         'qi',                               qi,

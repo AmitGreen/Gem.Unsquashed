@@ -9,6 +9,7 @@ def gem():
 
     map__get     = Map.get
     map__provide = Map.setdefault
+    map__store   = Map.__setitem__
 
 
     class LiquidMap(Map):
@@ -24,6 +25,7 @@ def gem():
 
         lookup  = map__get
         provide = map__provide
+        store   = map__store
 
 
     class LiquidMap_WithNub(Map):
@@ -45,6 +47,7 @@ def gem():
 
         lookup  = map__get
         provide = map__provide
+        store   = map__store
 
 
     cache_names   = LiquidMap()                 #   Map String+ of Map
@@ -89,9 +92,9 @@ def gem():
             Meta,
 
             cache  = absent,
-            nub    = none,
             lookup = absent,
             store  = absent,
+            nub    = none,
     ):
         if cache is absent:
             cache = create_cache(name, nub = nub)
@@ -128,7 +131,7 @@ def gem():
             first__2 = first.insert(k2, r)
 
             if first is not first__2:
-                store(k1, first_2)
+                store(k1, first__2)
 
             return r
 
@@ -145,9 +148,9 @@ def gem():
             Meta,
 
             cache  = absent,
-            nub    = none,
             lookup = absent,
             store  = absent,
+            nub    = none,
     ):
         if cache is absent:
             cache = create_cache(name, nub = nub)
@@ -159,7 +162,7 @@ def gem():
             store = cache.__setitem__
 
 
-        def conjure_numbered_shape__21(k1, k2):
+        def conjure_unique_dual__21(k1, k2):
             first = lookup(k2, absent)
 
             if first.k1 is k1:
@@ -190,9 +193,9 @@ def gem():
 
 
         if __debug__:
-            return rename_function(intern_arrange('conjure_%s__21', name), conjure_numbered_shape__21)
+            return rename_function(intern_arrange('conjure_%s__21', name), conjure_unique_dual__21)
 
-        return conjure_numbered_shape__21
+        return conjure_unique_dual__21
 
 
     @export

@@ -285,7 +285,7 @@ def gem():
     #
     #   .transform
     #
-    IfStatement_Many.transform = produce_tranform_many('if-statement-many', conjure_if_statement_many)
+    IfStatement_Many.transform = produce_transform_many('if-statement-many', conjure_if_statement_many)
 
 
     share(

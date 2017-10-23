@@ -1022,16 +1022,18 @@ def gem():
     ASSERT__W                   = conjure_keyword_assert      ('assert ')
     AT_SIGN                     = conjure_at_sign             ('@')
     BREAK                       = conjure_keyword_break       ('break')
-    CONTINUE                    = conjure_keyword_continue    ('continue')
     CLASS__W                    = conjure_keyword_class       ('class ')
     COLON                       = conjure_colon               (':')
     COMMA                       = conjure_comma               (',')
     COMMA__W                    = conjure_comma               (', ')
+    CONTINUE                    = conjure_keyword_continue    ('continue')
     DELETE__W                   = conjure_keyword_delete      ('del ')
     DOT                         = conjure_dot                 ('.')
     ELSE                        = conjure_keyword_else        ('else')
     ELSE_IF__W                  = conjure_keyword_else_if     ('elif ')
-    EXCEPT                      = conjure_keyword_try         ('except')
+    EXCEPT                      = conjure_keyword_except      ('except')
+    EXCEPT__W                   = conjure_keyword_except      ('except ')
+    FINALLY                     = conjure_keyword_finally     ('finally')
     FOR__W                      = conjure_keyword_for         ('for ')
     FROM__W                     = conjure_keyword_from        ('from ')
     FUNCTION__W                 = conjure_keyword_function    ('def ')
@@ -1045,6 +1047,7 @@ def gem():
     NOT__W                      = conjure_keyword_not         ('not ')
     PASS                        = conjure_keyword_pass        ('pass')
     PLUS_SIGN                   = conjure_action_word         ('+', '+')
+    RAISE                       = conjure_keyword_raise       ('raise')
     RAISE__W                    = conjure_keyword_raise       ('raise ')
     RETURN                      = conjure_keyword_return      ('return')
     RETURN__W                   = conjure_keyword_return      ('return ')
@@ -1055,30 +1058,33 @@ def gem():
     TILDE_SIGN                  = conjure_action_word         ('~', '~')
     TRY                         = conjure_keyword_try         ('try')
     W__ADD_MODIFY__W            = conjure_action_word         ('+=', ' += ')
-    W__AND__W                   = conjure_action_word         ('and', ' and ')
     W__AND_SIGN__W              = conjure_action_word         ('&', ' & ')
+    W__AND__W                   = conjure_action_word         ('and', ' and ')
     W__ASSIGN__W                = conjure_equal_sign          (' = ')
     W__AS__W                    = conjure_keyword_as          (' as ')
     W__COLON__W                 = conjure_colon               (' : ')
     W__COMPARE_EQUAL__W         = conjure_action_word         ('==', ' == ')
     W__COMPARE_NOT_EQUAL__W     = conjure_action_word         ('!=', ' != ')
+    W__DIVIDE__W                = conjure_action_word         ('/', ' / ')
     W__ELSE__W                  = conjure_keyword_else        (' else ')
     W__FOR__W                   = conjure_keyword_for         (' for ')
-    W__GREATER_THAN__W          = conjure_action_word         ('>',  ' > ')
     W__GREATER_THAN_OR_EQUAL__W = conjure_action_word         ('>=',  ' >= ')
+    W__GREATER_THAN__W          = conjure_action_word         ('>',  ' > ')
     WHILE__W                    = conjure_keyword_while       ('while ')
     W__IF__W                    = conjure_keyword_if          (' if ')
     W__IMPORT__W                = conjure_keyword_import      (' import ')
+    W__INTEGER_DIVIDE__W        = conjure_action_word         ('//', ' // ')
     W__IN__W                    = conjure_keyword_in          (' in ')
     W__IS__W                    = conjure_keyword_is          (' is ')
     WITH__W                     = conjure_keyword_with        ('with ')
-    W__LESS_THAN__W             = conjure_action_word         ('<',  ' < ')
     W__LESS_THAN_OR_EQUAL__W    = conjure_action_word         ('<=', ' <= ')
+    W__LESS_THAN__W             = conjure_action_word         ('<',  ' < ')
     W__NOT__W                   = conjure_keyword_not         (' not ')
-    W__OR__W                    = conjure_action_word         ('or', ' or ')
     W__OR_MODIFY__W             = conjure_action_word         ('|=', ' |= ')
     W__OR_SIGN__W               = conjure_action_word         ('|', ' | ')
+    W__OR__W                    = conjure_action_word         ('or', ' or ')
     W__PERCENT_SIGN__W          = conjure_action_word         ('%', ' % ')
+    W__POWER__W                 = conjure_action_word         ('**', ' ** ')
     W__STAR_SIGN__W             = conjure_star_sign           (' * ')
     W__SUBTRACT_MODIFY__W       = conjure_action_word         ('-=', ' -= ')
     YIELD                       = conjure_keyword_yield       ('yield')
@@ -1133,6 +1139,7 @@ def gem():
     KeywordClass           .transform = produce_transform__uncommented('keyword_class',       CLASS__W)
     KeywordDelete          .transform = produce_transform__uncommented('keyword_delete',      DELETE__W)
     KeywordElseIf          .transform = produce_transform__uncommented('keyword_else_if',     ELSE_IF__W)
+    KeywordExcept          .transform = produce_transform__uncommented('keyword_except',      EXCEPT__W)
     KeywordFor             .transform = produce_transform__uncommented('keyword_for',         FOR__W)
     KeywordFrom            .transform = produce_transform__uncommented('keyword_from',        FROM__W)
     KeywordFunction        .transform = produce_transform__uncommented('keyword_function',    FUNCTION__W)
@@ -1153,8 +1160,15 @@ def gem():
     OperatorCompareEqual   .transform = produce_transform__uncommented('compare_equal',       W__COMPARE_EQUAL__W)
     OperatorCompareNotEqual.transform = produce_transform__uncommented('compare_not_equal',   W__COMPARE_NOT_EQUAL__W)
     OperatorDot            .transform = produce_transform__uncommented('operator_dot',        DOT)
+    OperatorDivide         .transform = produce_transform__uncommented('operator_divide',     W__DIVIDE__W)
     OperatorEqualSign      .transform = produce_transform__uncommented('equal_sign',          W__ASSIGN__W)
-    OperatorGreaterThan    .transform = produce_transform__uncommented('greater_than',        W__GREATER_THAN__W)
+
+    OperatorIntegerDivide.transform = produce_transform__uncommented(
+                                          'operator_integer_divide',
+                                          W__INTEGER_DIVIDE__W,
+                                      )
+
+    OperatorGreaterThan.transform = produce_transform__uncommented('greater_than', W__GREATER_THAN__W)
 
     OperatorGreaterThanOrEqual.transform = produce_transform__uncommented(
                                                'greater_than_or_equal',
@@ -1174,6 +1188,7 @@ def gem():
     OperatorMinusSign         .transform = produce_transform__uncommented('operator_minus_sign',   MINUS_SIGN)
     OperatorPercentSign       .transform = produce_transform__uncommented('operator_percent_sign', W__PERCENT_SIGN__W)
     OperatorPlusSign          .transform = produce_transform__uncommented('operator_plus_sign',    PLUS_SIGN)
+    OperatorPower             .transform = produce_transform__uncommented('operator_power',        W__POWER__W)
     OperatorRightBrace        .transform = produce_transform__uncommented('right_brace',           RIGHT_BRACE)
     OperatorRightParenthesis  .transform = produce_transform__uncommented('right_parenthesis',     RP)
     OperatorRightSquareBracket.transform = produce_transform__uncommented('right_square_bracket',  RSB)
@@ -1291,6 +1306,7 @@ def gem():
         'COMMA__W',                                         COMMA__W,
         'ELSE',                                             ELSE,
         'EXCEPT',                                           EXCEPT,
+        'FINALLY',                                          FINALLY,
         'FOR__W',                                           FOR__W,
         'FUNCTION__W',                                      FUNCTION__W,
         'IF__W',                                            IF__W,
@@ -1303,6 +1319,7 @@ def gem():
         'LSB',                                              LSB,
         'NOT__W',                                           NOT__W,
         'PASS',                                             PASS,
+        'RAISE',                                            RAISE,
         'RAISE__W',                                         RAISE__W,
         'RETURN',                                           RETURN,
         'RETURN__W',                                        RETURN__W,

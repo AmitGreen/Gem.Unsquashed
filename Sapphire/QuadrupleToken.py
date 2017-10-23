@@ -435,6 +435,13 @@ def gem():
                                                        line_marker = true,
                                                    )
 
+    conjure_indented__finally__colon__line_marker = produce_conjure_quadruple_token(
+                                                       'indented__finally__colon__line_marker',
+                                                       Indented_Finally_Colon_LineMarker,
+
+                                                       line_marker = true,
+                                                   )
+
     conjure_indented__try__colon__line_marker = produce_conjure_quadruple_token(
                                                     'indented__try__colon__line_marker',
                                                     Indented_Try_Colon_LineMarker,
@@ -504,6 +511,11 @@ def gem():
                                                      EXCEPT,
                                                  )
 
+    Indented_Finally_Colon_LineMarker.transform = produce_transform__indented__keyword__colon__line_marker(
+                                                      'indented_finally__line_marker',
+                                                      conjure_indented__finally__colon__line_marker,
+                                                      FINALLY,
+                                                  )
 
     Indented_Try_Colon_LineMarker.transform = produce_transform__indented__keyword__colon__line_marker(
                                                   'indented_try_colon__line_marker',

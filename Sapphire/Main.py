@@ -24,10 +24,14 @@ def gem():
     require_gem('Sapphire.Core')
 
 
-    choice = 1
+    choice = 2
 
 
-    def command_combine(module_name = 'hma', remove_comments = false, remove_indentation = false):
+    def command_combine(
+            module_name        = 'hma',
+            remove_comments    = false,
+            remove_indentation = false,
+    ):
         require_gem('Sapphire.Transform')
 
         vary = create_sapphire_transform(
@@ -55,14 +59,24 @@ def gem():
         development()
 
 
-    def command_parse1(show = 7):
+    def command_parse1(
+            remove_comments    = false,
+            remove_indentation = false,
+            show               = 0,
+    ):
         require_gem('Sapphire.Pattern')
 
         create_sapphire_match()
 
+        require_gem('Sapphire.Transform')
         require_gem('Sapphire.Parse')                       #   Must be after 'create_sapphire_match'
 
-        parse_python('test.py', test = 7, show = show)
+        vary = create_sapphire_transform(
+                   remove_comments    = remove_comments,
+                   remove_indentation = remove_indentation,
+               )
+
+        parse_python('test.py', vary = vary, test = 7, show = show)
 
 
     def test_parse2():
@@ -99,7 +113,11 @@ def gem():
                     return command_development()
 
                 if choice is 2:
-                    return command_parse1()
+                    return command_parse1(
+                               remove_comments    = true,
+                               remove_indentation = true,
+                               show               = 7,
+                           )
 
                 if choice is 3:
                     return command_combine(

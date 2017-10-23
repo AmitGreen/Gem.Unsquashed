@@ -631,6 +631,7 @@ def gem():
         'privileged',               privileged,
         'raising_exception_from',   raising_exception_from,
         'raising_exception',        raising_exception,
+        'rename_function',          rename_function,
 
 
         #
@@ -676,7 +677,6 @@ def gem():
         #
         'built_in',         built_in,
         'restricted',       restricted,
-        'rename_function',  rename_function,
 
         #
         #   Modules
