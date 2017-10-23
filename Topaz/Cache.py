@@ -8,37 +8,19 @@ def gem():
 
 
     from Gem import create_cache, dump_caches, empty_herd, produce_conjure_by_name__V2
-    from Gem import produce_conjure_unique_dual, produce_conjure_unique_dual__21
+    from Gem import produce_conjure_unique_dual, produce_conjure_unique_dual__21, produce_conjure_unique_triple
 
 
     @share
     def test_cache():
-        class Number(Object):
-            __slots__ = ((
-                'name',                     #   String+
-                'value',                    #   String+
-            ))
-
-
-            is_herd = false
-
-
-            def __init__(t, name, value):
-                t.name  = name
-                t.value = value
-
-
-            def display_token(t):
-                return arrange('<number %r %d>', t.name, t.value)
-
-
-        Number.nub = Number.value.__get__
-
-
         class Color(Object):
             __slots__ = ((
                 'name',                     #   String+
             ))
+
+
+            is_color = true
+            is_shape = false
 
 
             def __init__(t, name):
@@ -49,10 +31,42 @@ def gem():
                 return arrange('<color %s>', t.name)
 
 
+        Color.nub = Color.name.__get__
+
+
+        class Number(Object):
+            __slots__ = ((
+                'name',                     #   String+
+                'value',                    #   String+
+            ))
+
+
+            is_herd  = false
+            is_shape = false
+
+
+            def __init__(t, name, value):
+                t.name  = name
+                t.value = value
+
+
+            def __repr__(t):
+                return arrange('<number %r %d>', t.name, t.value)
+
+
+            display_token = __repr__
+
+
+        Number.nub = Number.value.__get__
+
+
         class Shape(Object):
             __slots__ = ((
                 'name',                     #   String+
             ))
+
+
+            is_shape = true
 
 
             def __init__(t, name):
@@ -64,6 +78,35 @@ def gem():
 
 
         Shape.nub = Shape.name.__get__
+
+
+        class NumberedColoredShape(Object):
+            __slots__ = ((
+                'number',                   #   Number
+                'color',                    #   Color
+                'shape',                    #   Shape
+            ))
+
+
+            is_herd = false
+
+
+            def __init__(t, number, color, shape):
+                t.number = number
+                t.color  = color
+                t.shape  = shape
+
+
+            def __repr__(t):
+                return arrange('<numbered-colored-shape %d %s %s>', t.number.value, t.color.name, t.shape.name)
+
+
+            display_token = __repr__
+
+
+        NumberedColoredShape.k1 = NumberedColoredShape.number
+        NumberedColoredShape.k2 = NumberedColoredShape.color
+        NumberedColoredShape.k3 = NumberedColoredShape.shape
 
 
         class NumberedShape(Object):
@@ -116,6 +159,10 @@ def gem():
         conjure_color = produce_conjure_by_name__V2('color', Color)
         conjure_shape = produce_conjure_by_name__V2('shape', Shape)
 
+
+        #
+        #   Specific instances
+        #
         eight = conjure_number('eight', 8)
         five  = conjure_number('five',  5)
         four  = conjure_number('four',  4)
@@ -130,11 +177,13 @@ def gem():
         red   = conjure_color('red')
         green = conjure_color('green')
         blue  = conjure_color('blue')
+        cyan  = conjure_color('cyan')
 
         circle    = conjure_shape('circle')
         ellipse   = conjure_shape('ellipse')
         moon      = conjure_shape('moon')
         pentagon  = conjure_shape('pentagon')
+        oval      = conjure_shape('oval')
         square    = conjure_shape('square')
         star      = conjure_shape('star')
         trapazoid = conjure_shape('trapazoid')
@@ -153,21 +202,20 @@ def gem():
             assert eight is conjure_number('eight', 8)
             assert nine  is conjure_number('nine',  9)
 
-            assert red   is conjure_color('red')
-            assert green is conjure_color('green')
             assert blue  is conjure_color('blue')
+            assert cyan  is conjure_color('cyan')
+            assert green is conjure_color('green')
+            assert red   is conjure_color('red')
 
             assert circle    is conjure_shape('circle')
             assert ellipse   is conjure_shape('ellipse')
             assert moon      is conjure_shape('moon')
+            assert oval      is conjure_shape('oval')
             assert pentagon  is conjure_shape('pentagon')
             assert square    is conjure_shape('square')
             assert star      is conjure_shape('star')
             assert trapazoid is conjure_shape('trapazoid')
             assert triangle  is conjure_shape('triangle')
-
-
-
 
 
         def test_conjure_dual__X(cache, conjure_numbered_shape):
@@ -241,6 +289,68 @@ def gem():
                         assert w.number.value is 1
 
 
+        def test_conjure_unique_dual():
+            conjure_numbered_shape = produce_conjure_unique_dual(
+                                         'numbered_shape',
+                                         NumberedShape,
+                                         nub = Number.value.__get__,
+                                     )
+
+            test_conjure_dual__X(0, conjure_numbered_shape)
+
+
+        def test_conjure_unique_dual__21():
+            numbered_shape_cache__21 = create_cache('shape_number', nub = Shape.name.__get__)
+
+            conjure_numbered_shape__21 = produce_conjure_unique_dual__21(
+                                             'shape_number',
+                                             NumberedShape,
+                                             cache = numbered_shape_cache__21,
+                                         )
+
+            test_conjure_dual__X(numbered_shape_cache__21, conjure_numbered_shape__21)
+
+
+        def test_conjure_triple__X(cache, conjure_numbered_color_shape):
+            for loop in [1, 2]:
+                for [number, color, shape] in [
+                    [   one,   red,     circle       ],
+                    [   one,   red,     ellipse      ],
+                    [   one,   red,     moon         ],
+                    [   one,   red,     oval         ],
+                    [   one,   red,     pentagon     ],
+                    [   one,   red,     square       ],
+                    [   one,   red,     star         ],
+                    [   one,   red,     trapazoid    ],
+                    [   one,   red,     triangle     ],
+
+                    [   two,   cyan,    oval         ],
+                    [   two,   cyan,    star         ],
+                    [   two,   cyan,    triangle     ],
+                    [   two,   cyan,    square       ],
+                    [   two,   red,     star         ],
+                    [   two,   green,   star         ],
+                    [   two,   green,   moon         ],
+                    [   two,   blue,    star         ],
+
+                    [   three, blue,    moon         ],
+                    [   three, green,   moon         ],
+                    [   three, green,   star,        ],
+                ]:
+                    conjure_numbered_color_shape(number, color, shape)
+
+
+        def test_conjure_unique_triple():
+            conjure_numbered_color_shape = produce_conjure_unique_triple(
+                                               'numbered_colored_shape',
+                                               NumberedColoredShape,
+                                               nub = Number.value.__get__,
+                                           )
+
+            test_conjure_triple__X(0, conjure_numbered_color_shape)
+
+
+        def test_herd_sorting():
             expected_items = ((
                                  ((zero,  zero .value)),
                                  ((one,   one  .value)),
@@ -356,34 +466,16 @@ def gem():
             test_herd_many__sort()
 
 
-        def test_conjure_unique_dual():
-            conjure_numbered_shape = produce_conjure_unique_dual(
-                                         'numbered_shape',
-                                         NumberedShape,
-                                         nub = Number.value.__get__,
-                                     )
-
-            test_conjure_dual__X(0, conjure_numbered_shape)
-
-
-        def test_conjure_unique_dual__21():
-            numbered_shape_cache__21 = create_cache('shape_number', nub = Shape.name.__get__)
-
-            conjure_numbered_shape__21 = produce_conjure_unique_dual__21(
-                                             'shape_number',
-                                             NumberedShape,
-                                             cache = numbered_shape_cache__21,
-                                         )
-
-            test_conjure_dual__X(numbered_shape_cache__21, conjure_numbered_shape__21)
-
-
         test_conjure_again()
         test_conjure_unique_dual__21()
         test_conjure_unique_dual()
+        test_conjure_unique_triple()
+        test_herd_sorting()
 
 
         line('PASSED: test_cache')
+
+        dump_caches('numbered_colored_shape')
 
         #dump_caches('numbered_shape')
         #dump_caches('shape_number')

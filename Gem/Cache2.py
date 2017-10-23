@@ -210,7 +210,7 @@ def gem():
 
                 return r
 
-            skip = first.skip
+            skip = 0#first.skip
 
             if skip is 0:
                 second = first.glimpse(k2, absent)
@@ -222,9 +222,12 @@ def gem():
                     r = Meta(k1, k2, k3)
 
                     if second is absent:
-                        first.insert(k2, r)
+                        first__2 = first.insert(k2, r)
+
+                        if first is not first__2:
+                            store(k1, first__2)
                     else:
-                        first.displace(k2, conjure_herd_2(second.k3, k3, second, r))
+                        first.displace(k2, create_herd_2(second.k3, k3, second, r))
 
                     return r
 
@@ -240,9 +243,11 @@ def gem():
                 second__2 = second.insert(k3, r)
 
                 if second is not second__2:
-                    first.displace(k1, second__2)
+                    first.displace(k2, second__2)
 
                 return r
+
+            assert 0, 'incomplete'
 
             if skip is k2:
                 r = first.glimpse(k3)
