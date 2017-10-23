@@ -78,6 +78,8 @@ def gem():
 
         parse_python('test.py', vary = vary, test = 7, show = show)
 
+        dump_caches()
+
 
     def test_parse2():
         require_gem('Sapphire.Parse2')                      #   Must be after 'create_sapphire_match'

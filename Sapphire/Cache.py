@@ -72,7 +72,7 @@ def gem():
 
 
         @export
-        def dump_caches(use_name = none):
+        def dump_caches__OLD(use_name = none):
             if use_name is none:
                 for [name, cache] in cache_many:
                     line('%s: %d', name, length(cache))
@@ -87,5 +87,5 @@ def gem():
                 raise_runtime_error('did not find cache named %r', portray_string(use_name))
     else:
         @export
-        def dump_caches(use_name = none):
+        def dump_caches__OLD(use_name = none):
             pass
