@@ -119,7 +119,7 @@ def gem():
 
                 return r
 
-            return first.provision2_k2(store, Meta, k1, k2)
+            return first.provision_dual_k2(store, Meta, k1, k2)
 
 
         if __debug__:
@@ -161,7 +161,7 @@ def gem():
 
                 return r
 
-            return first.provision2_k1(store, Meta, k1, k2)
+            return first.provision_dual_k1(store, Meta, k1, k2)
 
 
         if __debug__:

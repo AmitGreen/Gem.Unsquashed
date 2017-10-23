@@ -7,7 +7,8 @@ def gem():
     require_gem('Topaz.Core')
 
 
-    from Gem import create_cache, empty_horde, produce_conjure_by_name__V2, produce_conjure_unique_dual__21, dump_caches
+    from Gem import create_cache, dump_caches, empty_horde, produce_conjure_by_name__V2
+    from Gem import produce_conjure_unique_dual, produce_conjure_unique_dual__21
 
 
     @share
@@ -88,7 +89,7 @@ def gem():
 
 
         NumberedShape.k1 = NumberedShape.number
-       #NumberedShape.k2 = NumberedShape.shape
+        NumberedShape.k2 = NumberedShape.shape
 
 
         #
@@ -115,16 +116,6 @@ def gem():
         conjure_color = produce_conjure_by_name__V2('color', Color)
         conjure_shape = produce_conjure_by_name__V2('shape', Shape)
 
-        numbered_shape_cache = create_cache('numbered_shape')
-
-        conjure_numbered_shape = produce_conjure_unique_dual__21(
-                                     'numbered_shape',
-                                     NumberedShape,
-                                     cache = numbered_shape_cache,
-                                     nub   = Shape.name.__get__,
-                                 )
-
-
         eight = conjure_number('eight', 8)
         five  = conjure_number('five',  5)
         four  = conjure_number('four',  4)
@@ -149,71 +140,6 @@ def gem():
         trapazoid = conjure_shape('trapazoid')
         triangle  = conjure_shape('triangle')
 
-        for loop in [1, 2]:
-            for [number, shape] in [
-                [   one,   circle       ],
-                [   three, circle       ],
-                [   two,   circle       ],
-
-                [   two,   ellipse      ],
-                [   one,   ellipse      ],
-                [   seven, ellipse      ],
-                [   six,   ellipse      ],
-                [   three, ellipse      ],
-                [   five,  ellipse      ],
-                [   four,  ellipse      ],
-
-                [   two,   moon         ],
-                [   five,  moon         ],
-                [   three, moon         ],
-                [   four,  moon         ],
-                [   one,   moon         ],
-
-                [   five,  pentagon     ],
-                [   four,  pentagon     ],
-                [   one,   pentagon     ],
-                [   six,   pentagon     ],
-                [   three, pentagon     ],
-                [   two,   pentagon     ],
-
-                [   one,  square        ],
-                [   two,  square        ],
-
-                [   four,  star         ],
-                [   three, star         ],
-                [   two,   star         ],
-                [   one,   star         ],
-
-                [   five,  trapazoid    ],
-                [   four,  trapazoid    ],
-                [   six,   trapazoid    ],
-                [   three, trapazoid    ],
-                [   nine,  trapazoid    ],
-                [   eight, trapazoid    ],
-                [   two,   trapazoid    ],
-                [   one,   trapazoid    ],
-                [   seven, trapazoid    ],
-
-                [   one, triangle       ],
-            ]:
-                conjure_numbered_shape(number, shape)
-
-
-        for v in [circle, ellipse, moon, pentagon, square, star, trapazoid, triangle]:
-            w = numbered_shape_cache[v]
-
-            if w.is_horde:
-                value = 1
-
-                for [number, x] in w.items_sorted_by_key():
-                    assert number.value is value
-                    assert x.number is number
-                    assert x.shape  is v
-
-                    value += 1
-            else:
-                assert w.number.value is 1
-
 
         def test_conjure_again():
             assert one   is conjure_number('one',  1)
@@ -231,124 +157,232 @@ def gem():
             assert green is conjure_color('green')
             assert blue  is conjure_color('blue')
 
+            assert circle    is conjure_shape('circle')
+            assert ellipse   is conjure_shape('ellipse')
+            assert moon      is conjure_shape('moon')
+            assert pentagon  is conjure_shape('pentagon')
+            assert square    is conjure_shape('square')
+            assert star      is conjure_shape('star')
+            assert trapazoid is conjure_shape('trapazoid')
+            assert triangle  is conjure_shape('triangle')
 
 
-        expected_items = ((
-                             ((zero,  zero .value)),
-                             ((one,   one  .value)),
-                             ((two,   two  .value)),
-                             ((three, three.value)),
-                             ((four,  four .value)),
-                             ((five,  five .value)),
-                             ((six,   six  .value)),
-                             ((seven, seven.value)),
-                             ((eight, eight.value)),
-                             ((nine,  nine .value)),
-                         ))
 
 
-        #
-        #   Verify sort of 0 element horde's
-        #
-        def test_horde_0__sort():
-            assert empty_horde.items_sorted_by_key() is (())
+
+        def test_conjure_dual__X(cache, conjure_numbered_shape):
+            for loop in [1, 2]:
+                for [number, shape] in [
+                    [   one,   circle       ],
+                    [   three, circle       ],
+                    [   two,   circle       ],
+
+                    [   two,   ellipse      ],
+                    [   one,   ellipse      ],
+                    [   seven, ellipse      ],
+                    [   six,   ellipse      ],
+                    [   three, ellipse      ],
+                    [   five,  ellipse      ],
+                    [   four,  ellipse      ],
+
+                    [   two,   moon         ],
+                    [   five,  moon         ],
+                    [   three, moon         ],
+                    [   four,  moon         ],
+                    [   one,   moon         ],
+
+                    [   five,  pentagon     ],
+                    [   four,  pentagon     ],
+                    [   one,   pentagon     ],
+                    [   six,   pentagon     ],
+                    [   three, pentagon     ],
+                    [   two,   pentagon     ],
+
+                    [   one,  square        ],
+                    [   two,  square        ],
+
+                    [   four,  star         ],
+                    [   three, star         ],
+                    [   two,   star         ],
+                    [   one,   star         ],
+
+                    [   five,  trapazoid    ],
+                    [   four,  trapazoid    ],
+                    [   six,   trapazoid    ],
+                    [   three, trapazoid    ],
+                    [   nine,  trapazoid    ],
+                    [   eight, trapazoid    ],
+                    [   two,   trapazoid    ],
+                    [   one,   trapazoid    ],
+                    [   seven, trapazoid    ],
+
+                    [   one, triangle       ],
+                ]:
+                    conjure_numbered_shape(number, shape)
 
 
-        #
-        #   Verify sort of 1 element horde's
-        #
-        def test_horde_1__sort():
-            horde = empty_horde.provision(zero, zero.value)
+            if cache is not 0:
+                #
+                #   If the cache is 'shape_number' then we can verify the second key is ordered numbers.
+                #
+                for v in [circle, ellipse, moon, pentagon, square, star, trapazoid, triangle]:
+                    w = cache[v]
 
-            assert horde.items_sorted_by_key() == expected_items[:1]
+                    if w.is_horde:
+                        value = 1
 
+                        for [number, x] in w.items_sorted_by_key():
+                            assert number.value is value
+                            assert x.number is number
+                            assert x.shape  is v
 
-        #
-        #   Verify sort of 2 & 3 element horde's
-        #
-        def test_horde_23__sort():
-            for [a, b] in [
-                    [zero, one],
-                    [one, zero],
-            ]:
-                horde = empty_horde
-                horde = horde.provision(a, a.value)
-                horde = horde.provision(b, b.value)
-
-                horde__2 = horde
-
-                for loop in [1, 2]:
-                    horde__2 = horde__2.provision(a, a.value)
-                    horde__2 = horde__2.provision(b, b.value)
-
-                assert horde is horde__2
-                assert horde.items_sorted_by_key() == expected_items[:2]
+                            value += 1
+                    else:
+                        assert w.number.value is 1
 
 
-            for [a, b, c] in [
-                    [zero, one,  two ],
-                    [zero, two,  one ],
-                    [one,  zero, two ],
-                    [one,  two,  zero],
-                    [two,  zero, one ],
-                    [two,  one,  zero],
-            ]:
-                horde = empty_horde
-                horde = horde.provision(a, a.value)
-                horde = horde.provision(b, b.value)
-
-                horde__2 = horde
-
-                for loop in [1, 2]:
-                    horde__2 = horde__2.provision(a, a.value)
-                    horde__2 = horde__2.provision(b, b.value)
-                    horde__2 = horde__2.provision(c, c.value)
-
-                assert horde is horde__2
-                assert horde.items_sorted_by_key() == expected_items[:3]
+            expected_items = ((
+                                 ((zero,  zero .value)),
+                                 ((one,   one  .value)),
+                                 ((two,   two  .value)),
+                                 ((three, three.value)),
+                                 ((four,  four .value)),
+                                 ((five,  five .value)),
+                                 ((six,   six  .value)),
+                                 ((seven, seven.value)),
+                                 ((eight, eight.value)),
+                                 ((nine,  nine .value)),
+                             ))
 
 
-        def test_horde_4567__sort():
-            for add in [
-                [   zero,   one,    two,    three                                   ],
-                [   one,    three,  two,    zero                                    ],
-                [   four,   zero,   one,    three,  two                             ],
-                [   three,  zero,   two,    one,    four                            ],
-                [   one,    three,  four,   zero,   five,   two,                    ],
-                [   zero,   six,    four,   five,   two,    one,    three           ],
-#               [   five,   three,  two,    seven,  one,    zero,   six,    four    ],
-            ]:
-                horde = empty_horde
-
-                for loop in [1, 2]:
-                    for v in add:
-                        horde = horde.provision(v, v.value)
-
-                assert Tuple(horde.items_sorted_by_key()) == expected_items[:length(add)]
+            #
+            #   Verify sort of 0 element horde's
+            #
+            def test_horde_0__sort():
+                assert empty_horde.items_sorted_by_key() is (())
 
 
-        def test_horde_many__sort():
-            for add in [
-                [   five,   three,  two,    seven,  one,    zero,   six,    four                    ],
-                [   seven,  six,    three,  five,   zero,   one,    two,    eight,  four            ],
-                [   one,    two,    zero,   nine,   five,   eight,  four,   six,    three,  seven   ],
-            ]:
-                horde = empty_horde
+            #
+            #   Verify sort of 1 element horde's
+            #
+            def test_horde_1__sort():
+                horde = empty_horde.provision(zero, zero.value)
 
-                for loop in [1, 2]:
-                    for v in add:
-                        horde = horde.provision(v, v.value)
+                assert horde.items_sorted_by_key() == expected_items[:1]
 
-                assert Tuple(horde.items_sorted_by_key()) == expected_items[:length(add)]
+
+            #
+            #   Verify sort of 2 & 3 element horde's
+            #
+            def test_horde_23__sort():
+                for [a, b] in [
+                        [zero, one],
+                        [one, zero],
+                ]:
+                    horde = empty_horde
+                    horde = horde.provision(a, a.value)
+                    horde = horde.provision(b, b.value)
+
+                    horde__2 = horde
+
+                    for loop in [1, 2]:
+                        horde__2 = horde__2.provision(a, a.value)
+                        horde__2 = horde__2.provision(b, b.value)
+
+                    assert horde is horde__2
+                    assert horde.items_sorted_by_key() == expected_items[:2]
+
+
+                for [a, b, c] in [
+                        [zero, one,  two ],
+                        [zero, two,  one ],
+                        [one,  zero, two ],
+                        [one,  two,  zero],
+                        [two,  zero, one ],
+                        [two,  one,  zero],
+                ]:
+                    horde = empty_horde
+                    horde = horde.provision(a, a.value)
+                    horde = horde.provision(b, b.value)
+
+                    horde__2 = horde
+
+                    for loop in [1, 2]:
+                        horde__2 = horde__2.provision(a, a.value)
+                        horde__2 = horde__2.provision(b, b.value)
+                        horde__2 = horde__2.provision(c, c.value)
+
+                    assert horde is horde__2
+                    assert horde.items_sorted_by_key() == expected_items[:3]
+
+
+            def test_horde_4567__sort():
+                for add in [
+                    [   zero,   one,    two,    three                                   ],
+                    [   one,    three,  two,    zero                                    ],
+                    [   four,   zero,   one,    three,  two                             ],
+                    [   three,  zero,   two,    one,    four                            ],
+                    [   one,    three,  four,   zero,   five,   two,                    ],
+                    [   zero,   six,    four,   five,   two,    one,    three           ],
+                ]:
+                    horde = empty_horde
+
+                    for loop in [1, 2]:
+                        for v in add:
+                            horde = horde.provision(v, v.value)
+
+                    assert Tuple(horde.items_sorted_by_key()) == expected_items[:length(add)]
+
+
+            def test_horde_many__sort():
+                for add in [
+                    [   five,   three,  two,    seven,  one,    zero,   six,    four                    ],
+                    [   seven,  six,    three,  five,   zero,   one,    two,    eight,  four            ],
+                    [   one,    two,    zero,   nine,   five,   eight,  four,   six,    three,  seven   ],
+                ]:
+                    horde = empty_horde
+
+                    for loop in [1, 2]:
+                        for v in add:
+                            horde = horde.provision(v, v.value)
+
+                    assert Tuple(horde.items_sorted_by_key()) == expected_items[:length(add)]
+
+            test_horde_0__sort()
+            test_horde_1__sort()
+            test_horde_23__sort()
+            test_horde_4567__sort()
+            test_horde_many__sort()
+
+
+        def test_conjure_unique_dual():
+            conjure_numbered_shape = produce_conjure_unique_dual(
+                                         'numbered_shape',
+                                         NumberedShape,
+                                         nub = Number.value.__get__,
+                                     )
+
+            test_conjure_dual__X(0, conjure_numbered_shape)
+
+
+        def test_conjure_unique_dual__21():
+            numbered_shape_cache__21 = create_cache('shape_number', nub = Shape.name.__get__)
+
+            conjure_numbered_shape__21 = produce_conjure_unique_dual__21(
+                                             'shape_number',
+                                             NumberedShape,
+                                             cache = numbered_shape_cache__21,
+                                         )
+
+            test_conjure_dual__X(numbered_shape_cache__21, conjure_numbered_shape__21)
 
 
         test_conjure_again()
-        test_horde_0__sort()
-        test_horde_1__sort()
-        test_horde_23__sort()
-        test_horde_4567__sort()
-        test_horde_many__sort()
+        test_conjure_unique_dual__21()
+        test_conjure_unique_dual()
+
 
         line('PASSED: test_cache')
 
         #dump_caches('numbered_shape')
+        #dump_caches('shape_number')

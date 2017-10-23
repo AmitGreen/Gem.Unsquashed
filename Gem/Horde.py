@@ -278,7 +278,7 @@ def gem():
             return create_horde_4567(a, b, c, d, t.v, t.w, t.x, y)
 
 
-        def provision2_k1(t, displace, Meta, k1, k2):
+        def provision_dual_k1(t, displace, Meta, k1, k2):
             a = t.a
             if a is k1: return t.v
 
@@ -296,6 +296,28 @@ def gem():
                 return r
 
             displace(k2, create_horde_4567(a, b, c, k1, t.v, t.w, t.x, r))
+
+            return r
+
+
+        def provision_dual_k2(t, displace, Meta, k1, k2):
+            a = t.a
+            if a is k2: return t.v
+
+            b = t.b
+            if b is k2: return t.w
+
+            c = t.c
+            if c is k2: return t.x
+
+            r = Meta(k1, k2)
+
+            if c is absent:
+                t.c = k2
+                t.x = r
+                return r
+
+            displace(k1, create_horde_4567(a, b, c, k2, t.v, t.w, t.x, r))
 
             return r
 
@@ -548,7 +570,7 @@ def gem():
             return create_horde_many(a, b, c, d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
 
 
-        def provision2_k1(t, displace, Meta, k1, k2):
+        def provision_dual_k1(t, displace, Meta, k1, k2):
             a = t.a
             if a is k1:     return t.v
 
@@ -588,6 +610,50 @@ def gem():
                 return r
 
             displace(k2, create_horde_many(a, b, c, d, e, e6, e7, k1, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
+
+            return r
+
+
+        def provision_dual_k2(t, displace, Meta, k1, k2):
+            a = t.a
+            if a is k2:     return t.v
+
+            b = t.b
+            if b is k2:     return t.w
+
+            c = t.c
+            if c is k2:     return t.x
+
+            d = t.d
+            if d is k2:     return t.y
+
+            e = t.e
+            if e is k2:     return t.z
+            if e is absent:
+                t.e  = k2
+                t.e6 = absent
+                t.z  = r = Meta(k1, k2)
+                return r
+
+            e6 = t.e6
+            if e6 is k2:    return t.z6
+            if e6 is absent:
+                t.e6 = k2
+                t.e7 = absent
+                t.z6 = r = Meta(k1, k2)
+                return r
+
+            e7 = t.e7
+            if e7 is k2:    return t.z7
+
+            r = Meta(k1, k2)
+
+            if e7 is absent:
+                t.e7 = k2
+                t.z7 = Meta(k1, k2)
+                return r
+
+            displace(k1, create_horde_many(a, b, c, d, e, e6, e7, k2, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
 
             return r
 
@@ -642,8 +708,12 @@ def gem():
             return t
 
 
-        def provision2_k1(t, _displace, Meta, k1, k2):
+        def provision_dual_k1(t, _displace, Meta, k1, k2):
             return (map__lookup(t, k1)) or (map__provide(t, k1, Meta(k1, k2)))
+
+
+        def provision_dual_k2(t, _displace, Meta, k1, k2):
+            return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2)))
 
 
     empty_horde = Horde_0()
