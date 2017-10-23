@@ -32,6 +32,41 @@ def gem():
     map__store   = Map.__setitem__
 
 
+    def displace_v(t, a, v):
+        assert t.a is a
+        t.v = v
+
+
+    def displace_w(t, b, w):
+        assert t.b is b
+        t.w = w
+
+
+    def displace_x(t, c, x):
+        assert t.c is c
+        t.x = x
+
+
+    def displace_y(t, d, y):
+        assert t.d is d
+        t.y = y
+
+
+    def displace_z(t, e, z):
+        assert t.e is e
+        t.z = z
+
+
+    def displace_z6(t, e6, z6):
+        assert t.e6 is e6
+        t.z6 = z6
+
+
+    def displace_z7(t, e7, z7):
+        assert t.e7 is e7
+        t.z7 = z7
+
+
     class Herd_0(Object):
         __slots__ = (())
 
@@ -45,7 +80,6 @@ def gem():
         @static_method
         def items_sorted_by_key():
             return (())
-
 
 
     class Herd_1(Object):
@@ -97,6 +131,37 @@ def gem():
             if a is b: return t
 
             return create_herd_2(a, b, t.v, w)
+
+
+        def provision_triple(t, displace, Meta, k1, k2, k3):
+            a = t.a
+            if a is k2:
+                v = t.v
+                if v.k3 is k3:  return v
+
+                if not v.is_herd:
+                    r   = Meta(k1, k2, k3)
+                    t.v = create_herd_2(v.k3, k3, v, r)
+                    return r
+
+                return v.provision_triple_step2(displace_v, t, Meta, k1, k2, k3)
+
+            r = Meta(k1, k2, k3)
+
+            displace(k1, create_herd_2(a, k2, t.v, r))
+
+            return r
+
+
+        def provision_triple_step2(t, displace, parent, Meta, k1, k2, k3):
+            a = t.a
+            if a is k3:     return t.v
+
+            r = Meta(k1, k2, k3)
+
+            displace(parent, k2, create_herd_2(a, k3, t.v, r))
+
+            return r
 
 
     class Herd_2(Object):
@@ -164,7 +229,21 @@ def gem():
             return create_herd_3(a, b, c, t.v, t.w, x)
 
 
-        def provision_dual_k1(t, displace, Meta, k1, k2):
+        def provision_dual(t, displace, Meta, k1, k2):
+            a = t.a
+            if a is k2: return t.v
+
+            b = t.b
+            if b is k2: return t.w
+
+            r = Meta(k1, k2)
+
+            displace(k1, create_herd_3(a, b, k2, t.v, t.w, r))
+
+            return r
+
+
+        def provision_dual__21(t, displace, Meta, k1, k2):
             a = t.a
             if a is k1: return t.v
 
@@ -178,16 +257,48 @@ def gem():
             return r
 
 
-        def provision_dual_k2(t, displace, Meta, k1, k2):
+        def provision_triple(t, displace, Meta, k1, k2, k3):
             a = t.a
-            if a is k2: return t.v
+            if a is k2:
+                v = t.v
+                if v.k3 is k3:  return v
+
+                if not v.is_herd:
+                    r   = Meta(k1, k2, k3)
+                    t.v = create_herd_2(v.k3, k3, v, r)
+                    return r
+
+                return v.provision_triple_step2(displace_v, t, Meta, k1, k2, k3)
 
             b = t.b
-            if b is k2: return t.w
+            if b is k2:
+                w = t.w
+                if w.k3 is k3:  return w
 
-            r = Meta(k1, k2)
+                if not w.is_herd:
+                    r   = Meta(k1, k2, k3)
+                    t.w = create_herd_2(w.k3, k3, w, r)
+                    return r
+
+                return w.provision_triple_step2(displace_w, t, Meta, k1, k2, k3)
+
+            r = Meta(k1, k2, k3)
 
             displace(k1, create_herd_3(a, b, k2, t.v, t.w, r))
+
+            return r
+
+
+        def provision_triple_step2(t, displace, parent, Meta, k1, k2, k3):
+            a = t.a
+            if a is k3:     return t.v
+
+            b = t.b
+            if b is k3:     return t.w
+
+            r = Meta(k1, k2, k3)
+
+            displace(parent, k2, create_herd_3(a, b, k3, t.v, t.w, r))
 
             return r
 
@@ -284,7 +395,24 @@ def gem():
             return create_herd_4567(a, b, c, d, t.v, t.w, t.x, y)
 
 
-        def provision_dual_k1(t, displace, Meta, k1, k2):
+        def provision_dual(t, displace, Meta, k1, k2):
+            a = t.a
+            if a is k2: return t.v
+
+            b = t.b
+            if b is k2: return t.w
+
+            c = t.c
+            if c is k2: return t.x
+
+            r = Meta(k1, k2)
+
+            displace(k1, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
+
+            return r
+
+
+        def provision_dual__21(t, displace, Meta, k1, k2):
             a = t.a
             if a is k1: return t.v
 
@@ -301,19 +429,63 @@ def gem():
             return r
 
 
-        def provision_dual_k2(t, displace, Meta, k1, k2):
+        def provision_triple(t, displace, Meta, k1, k2, k3):
             a = t.a
-            if a is k2: return t.v
+            if a is k2:
+                v = t.v
+                if v.k3 is k3:  return v
+
+                if not v.is_herd:
+                    r   = Meta(k1, k2, k3)
+                    t.v = create_herd_2(v.k3, k3, v, r)
+                    return r
+
+                return v.provision_triple_step2(displace_v, t, Meta, k1, k2, k3)
 
             b = t.b
-            if b is k2: return t.w
+            if b is k2:
+                w = t.w
+                if w.k3 is k3:  return w
+
+                if not w.is_herd:
+                    r   = Meta(k1, k2, k3)
+                    t.w = create_herd_2(w.k3, k3, w, r)
+                    return r
+
+                return w.provision_triple_step2(displace_w, t, Meta, k1, k2, k3)
 
             c = t.c
-            if c is k2: return t.x
+            if c is k2:
+                x = t.x
+                if x.k3 is k3:  return x
 
-            r = Meta(k1, k2)
+                if not x.is_herd:
+                    r   = Meta(k1, k2, k3)
+                    t.x = create_herd_2(x.k3, k3, x, r)
+                    return r
+
+                return x.provision_triple_step2(displace_x, t, Meta, k1, k2, k3)
+
+            r = Meta(k1, k2, k3)
 
             displace(k1, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
+
+            return r
+
+
+        def provision_triple_step2(t, displace, parent, Meta, k1, k2, k3):
+            a = t.a
+            if a is k3:     return t.v
+
+            b = t.b
+            if b is k3:     return t.w
+
+            c = t.c
+            if c is k3:     return t.x
+
+            r = Meta(k1, k2, k3)
+
+            displace(parent, k2, create_herd_4567(a, b, c, k3, t.v, t.w, t.x, r))
 
             return r
 
@@ -341,6 +513,36 @@ def gem():
         k1      = absent
         k2      = absent
         k3      = absent
+
+
+        def displace(t, k, v):
+            if t.a is k:
+                t.v = v
+                return
+
+            if t.b is k:
+                t.w = v
+                return
+
+            if t.c is k:
+                t.x = v
+                return
+
+            if t.d is k:
+                t.y = v
+                return
+
+            if t.e is k:
+                t.z = v
+                return
+
+            if t.e6 is k:
+                t.z6 = v
+                return
+
+            assert t.e7 is k
+
+            t.z7 = v
 
 
         def glimpse(t, k, d = none):
@@ -431,6 +633,10 @@ def gem():
                     return pair[0]
             else:
                 def key(pair):
+                    if nub.__self__.__objclass__ != pair[0].__class__:
+                        line('FIXING: %r', pair[0])
+                        return pair[0].name
+
                     return nub(pair[0])
 
 
@@ -478,51 +684,7 @@ def gem():
             return create_herd_many(a, b, c, d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
 
 
-        def provision_dual_k1(t, displace, Meta, k1, k2):
-            a = t.a
-            if a is k1:     return t.v
-
-            b = t.b
-            if b is k1:     return t.w
-
-            c = t.c
-            if c is k1:     return t.x
-
-            d = t.d
-            if d is k1:     return t.y
-
-            e = t.e
-            if e is k1:     return t.z
-            if e is absent:
-                t.e  = k1
-                t.e6 = absent
-                t.z  = r = Meta(k1, k2)
-                return r
-
-            e6 = t.e6
-            if e6 is k1:    return t.z6
-            if e6 is absent:
-                t.e6 = k1
-                t.e7 = absent
-                t.z6 = r = Meta(k1, k2)
-                return r
-
-            e7 = t.e7
-            if e7 is k1:    return t.z7
-
-            r = Meta(k1, k2)
-
-            if e7 is absent:
-                t.e7 = k1
-                t.z7 = Meta(k1, k2)
-                return r
-
-            displace(k2, create_herd_many(a, b, c, d, e, e6, e7, k1, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
-
-            return r
-
-
-        def provision_dual_k2(t, displace, Meta, k1, k2):
+        def provision_dual(t, displace, Meta, k1, k2):
             a = t.a
             if a is k2:     return t.v
 
@@ -566,6 +728,185 @@ def gem():
             return r
 
 
+        def provision_dual__21(t, displace, Meta, k1, k2):
+            a = t.a
+            if a is k1:     return t.v
+
+            b = t.b
+            if b is k1:     return t.w
+
+            c = t.c
+            if c is k1:     return t.x
+
+            d = t.d
+            if d is k1:     return t.y
+
+            e = t.e
+            if e is k1:     return t.z
+            if e is absent:
+                t.e  = k1
+                t.e6 = absent
+                t.z  = r = Meta(k1, k2)
+                return r
+
+            e6 = t.e6
+            if e6 is k1:    return t.z6
+            if e6 is absent:
+                t.e6 = k1
+                t.e7 = absent
+                t.z6 = r = Meta(k1, k2)
+                return r
+
+            e7 = t.e7
+            if e7 is k1:    return t.z7
+
+            r = Meta(k1, k2)
+
+            if e7 is absent:
+                t.e7 = k1
+                t.z7 = Meta(k1, k2)
+                return r
+
+            displace(k2, create_herd_many(a, b, c, d, e, e6, e7, k1, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
+
+            return r
+
+
+        def provision_triple(t, displace, Meta, k1, k2, k3):
+            a = t.a
+            if a is k2:
+                v = t.v
+                if v.k3 is k3:  return v
+                if not v.is_herd:
+                    r   = Meta(k1, k2, k3)
+                    t.v = create_herd_2(v.k3, k3, v, r)
+                    return r
+                return v.provision_triple_step2(displace_v, t, Meta, k1, k2, k3)
+
+            b = t.b
+            if b is k2:
+                w = t.w
+                if w.k3 is k3:  return w
+                if not w.is_herd:
+                    r   = Meta(k1, k2, k3)
+                    t.w = create_herd_2(w.k3, k3, w, r)
+                    return r
+                return w.provision_triple_step2(displace_w, t, Meta, k1, k2, k3)
+
+            c = t.c
+            if c is k2:
+                x = t.x
+                if x.k3 is k3:  return x
+                if not x.is_herd:
+                    r   = Meta(k1, k2, k3)
+                    t.x = create_herd_2(x.k3, k3, x, r)
+                    return r
+                return x.provision_triple_step2(displace_x, t, Meta, k1, k2, k3)
+
+            d = t.d
+            if d is k2:
+                y = t.y
+                if y.k3 is k3:  return y
+                if not y.is_herd:
+                    r   = Meta(k1, k2, k3)
+                    t.y = create_herd_2(y.k3, k3, y, r)
+                    return r
+                return y.provision_triple_step2(displace_y, t, Meta, k1, k2, k3)
+
+            e = t.e
+            if e is k2:
+                z = t.z
+                if z.k3 is k3:  return z
+                if not z.is_herd:
+                    r   = Meta(k1, k2, k3)
+                    t.z = create_herd_2(z.k3, k3, z, r)
+                    return r
+                return z.provision_triple_step2(displace_z, t, Meta, k1, k2, k3)
+            if e is absent:
+                t.e  = k2
+                t.e6 = absent
+                t.z  = r = Meta(k1, k2, k3)
+                return r
+
+            e6 = t.e6
+            if e6 is k2:
+                z6 = t.z6
+                if z6.k3 is k3:  return z6
+                if not z6.is_herd:
+                    r    = Meta(k1, k2, k3)
+                    t.z6 = create_herd_2(z6.k3, k3, z6, r)
+                    return r
+                return z6.provision_triple_step2(displace_z6, t, Meta, k1, k2, k3)
+            if e6 is absent:
+                t.e6 = k2
+                t.e7 = absent
+                t.z6 = r = Meta(k1, k2, k3)
+                return r
+
+            e7 = t.e7
+            if e7 is k2:
+                z7 = t.z7
+                if z7.k3 is k3:  return z7
+                if not z7.is_herd:
+                    r    = Meta(k1, k2, k3)
+                    t.z7 = create_herd_2(z7.k3, k3, z7, r)
+                    return r
+                return z7.provision_triple_step2(displace_z7, t, Meta, k1, k2, k3)
+            r = Meta(k1, k2, k3)                                                        #   r created here
+            if e7 is absent:
+                t.e7 = k2
+                t.z7 = r = Meta(k1, k2, k3)
+                return r
+
+            displace(k1, create_herd_many(a, b, c, d, e, e6, e7, k2, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
+
+            return r
+
+
+        def provision_triple_step2(t, displace, parent, Meta, k1, k2, k3):
+            a = t.a
+            if a is k3:     return t.v
+
+            b = t.b
+            if b is k3:     return t.w
+
+            c = t.c
+            if c is k3:     return t.x
+
+            d = t.d
+            if d is k3:     return t.y
+
+            e = t.e
+            if e is k3:     return t.z
+            if e is absent:
+                t.e  = k3
+                t.e6 = absent
+                t.z  = r = Meta(k1, k2, k3)
+                return r
+
+            e6 = t.e6
+            if e6 is k3:    return t.z6
+            if e6 is absent:
+                t.e6 = k3
+                t.e7 = absent
+                t.z6 = r = Meta(k1, k2, k3)
+                return r
+
+            e7 = t.e7
+            if e7 is k3:    return t.z7
+
+            r = Meta(k1, k2, k3)
+
+            if e7 is absent:
+                t.e7 = k3
+                t.z7 = r
+                return r
+
+            displace(parent, k2, create_herd_many(a, b, c, d, e, e6, e7, k3, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
+
+            return r
+
+
     class Herd_Many(Map):
         __slots__ = (())
 
@@ -574,6 +915,15 @@ def gem():
         k1      = absent
         k2      = absent
         k3      = absent
+
+
+        if __debug__:
+            def displace(t, k, v):
+                assert k in t
+
+                t[k] = v
+        else:
+            displace = map__store
 
 
         glimpse = map__lookup
@@ -611,12 +961,38 @@ def gem():
             return t
 
 
-        def provision_dual_k1(t, _displace, Meta, k1, k2):
+        def provision_dual(t, _displace, Meta, k1, k2):
+            return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2)))
+
+
+        def provision_dual__21(t, _displace, Meta, k1, k2):
             return (map__lookup(t, k1)) or (map__provide(t, k1, Meta(k1, k2)))
 
 
-        def provision_dual_k2(t, _displace, Meta, k1, k2):
-            return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2)))
+        def provision_triple(t, displace, Meta, k1, k2, k3):
+            #my_line('%s, %s, %s', k1, k2, k3)
+
+            second = map__lookup(t, k2, absent)
+
+            if second.k3 is k3:
+                return second
+
+            if not second.is_herd:
+                r = Meta(k1, k2, k3)
+
+                if second is absent:
+                    return map__provide(t, k2, r)
+
+                map__store(t, k2, create_herd_2(second.k3, k3, second, r))
+
+                return r
+
+            return second.provision_triple_step2(map__store, t, Meta, k1, k2, k3)
+            assert 0
+
+
+        def provision_triple_step2(t, _displace, _parent, Meta, k1, k2, k3):
+            return (map__lookup(t, k3)) or (map__provide(t, k3, Meta(k1, k2, k3)))
 
 
     empty_herd = Herd_0()

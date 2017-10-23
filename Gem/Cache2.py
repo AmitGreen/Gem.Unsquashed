@@ -119,7 +119,7 @@ def gem():
 
                 return r
 
-            return first.provision_dual_k2(store, Meta, k1, k2)
+            return first.provision_dual(store, Meta, k1, k2)
 
 
         if __debug__:
@@ -161,7 +161,7 @@ def gem():
 
                 return r
 
-            return first.provision_dual_k1(store, Meta, k1, k2)
+            return first.provision_dual__21(store, Meta, k1, k2)
 
 
         if __debug__:
@@ -210,6 +210,15 @@ def gem():
 
                 return r
 
+            if 7 is 7:
+                #
+                #   New way of doing this:
+                #
+                return first.provision_triple(store, Meta, k1, k2, k3)
+
+            #
+            #   OLD way of doing this -- also works
+            #
             skip = 0#first.skip
 
             if skip is 0:

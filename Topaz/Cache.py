@@ -27,8 +27,11 @@ def gem():
                 t.name = name
 
 
-            def display_token(t):
+            def __repr__(t):
                 return arrange('<color %s>', t.name)
+
+
+            display_token = __repr__
 
 
         Color.nub = Color.name.__get__
@@ -73,8 +76,11 @@ def gem():
                 t.name = name
 
 
-            def display_token(t):
+            def __repr__(t):
                 return arrange('<shape %s>', t.name)
+
+
+            display_token = __repr__
 
 
         Shape.nub = Shape.name.__get__
@@ -174,10 +180,15 @@ def gem():
         two   = conjure_number('two',   2)
         zero  = conjure_number('zero',  0)
 
-        red   = conjure_color('red')
-        green = conjure_color('green')
-        blue  = conjure_color('blue')
-        cyan  = conjure_color('cyan')
+        red    = conjure_color('red')
+        white  = conjure_color('white')
+        purple = conjure_color('purple')
+        green  = conjure_color('green')
+        silver = conjure_color('silver')
+        black  = conjure_color('black')
+        blue   = conjure_color('blue')
+        yellow = conjure_color('yellow')
+        cyan   = conjure_color('cyan')
 
         circle    = conjure_shape('circle')
         ellipse   = conjure_shape('ellipse')
@@ -202,10 +213,15 @@ def gem():
             assert eight is conjure_number('eight', 8)
             assert nine  is conjure_number('nine',  9)
 
-            assert blue  is conjure_color('blue')
-            assert cyan  is conjure_color('cyan')
-            assert green is conjure_color('green')
-            assert red   is conjure_color('red')
+            assert black  is conjure_color('black')
+            assert blue   is conjure_color('blue')
+            assert cyan   is conjure_color('cyan')
+            assert green  is conjure_color('green')
+            assert purple is conjure_color('purple')
+            assert red    is conjure_color('red')
+            assert silver is conjure_color('silver')
+            assert white  is conjure_color('white')
+            assert yellow is conjure_color('yellow')
 
             assert circle    is conjure_shape('circle')
             assert ellipse   is conjure_shape('ellipse')
@@ -316,27 +332,48 @@ def gem():
                 for [number, color, shape] in [
                     [   one,   red,     circle       ],
                     [   one,   red,     ellipse      ],
-                    [   one,   red,     moon         ],
+                    [   one,   red,     moon         ],     #   .displace_a
                     [   one,   red,     oval         ],
                     [   one,   red,     pentagon     ],
                     [   one,   red,     square       ],
                     [   one,   red,     star         ],
                     [   one,   red,     trapazoid    ],
                     [   one,   red,     triangle     ],
-
+ 
                     [   two,   cyan,    oval         ],
                     [   two,   cyan,    star         ],
                     [   two,   cyan,    triangle     ],
                     [   two,   cyan,    square       ],
                     [   two,   red,     star         ],
-                    [   two,   green,   star         ],
+                    [   two,   red,     square       ],     #   .displace_b
+                    [   two,   green,   star         ],     #   .displace_c
                     [   two,   green,   moon         ],
                     [   two,   blue,    star         ],
 
-                    [   three, blue,    moon         ],
-                    [   three, green,   moon         ],
-                    [   three, green,   star,        ],
+                    [   three,  blue,   moon         ],
+                    [   three,  green,  moon         ],
+                    [   three,  cyan,   star,        ],
+                    [   three,  red,    star,        ],
+                    [   three,  red,    moon,        ],     #   .displace_d
+                    [   three,  purple, moon,        ],
+                    [   three,  purple, oval,        ],     #   .displace_e
+                    [   three,  purple, triangle,    ],
+                    [   three,  purple, trapazoid,   ],
+
+                    [   four,   black,  circle,     ],
+                    [   four,   green,  circle,     ],
+                    [   four,   white,  oval,       ],
+                    [   four,   blue,   oval,       ],
+                    [   four,   red,    moon,       ],
+                    [   four,   purple, triangle,   ],
+                    [   four,   purple, star,       ],      #   .displace_e6
+                    [   four,   cyan,   square,     ],
+                    [   four,   cyan,   pentagon,   ],      #   .displace_e7
+                    [   four,   yellow, ellipse,    ],      #   Herd_Many.provision_triple
+                    [   four,   yellow, moon,       ],
+                    [   four,   silver, oval,       ],
                 ]:
+                    #my_line('%s, %s, %s', number, color, shape)
                     conjure_numbered_color_shape(number, color, shape)
 
 
@@ -475,7 +512,6 @@ def gem():
 
         line('PASSED: test_cache')
 
-        dump_caches('numbered_colored_shape')
-
+        #dump_caches('numbered_colored_shape')
         #dump_caches('numbered_shape')
         #dump_caches('shape_number')
