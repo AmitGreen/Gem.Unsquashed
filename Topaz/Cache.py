@@ -8,7 +8,8 @@ def gem():
 
 
     from Gem import create_cache, dump_caches, empty_herd, produce_conjure_by_name__V2
-    from Gem import produce_conjure_unique_dual, produce_conjure_unique_dual__21, produce_conjure_unique_triple
+    from Gem import produce_conjure_unique_dual, produce_conjure_unique_dual__21
+    from Gem import produce_conjure_unique_triple, produce_conjure_unique_triple__312
 
 
     @share
@@ -196,6 +197,7 @@ def gem():
         pentagon  = conjure_shape('pentagon')
         oval      = conjure_shape('oval')
         square    = conjure_shape('square')
+        polygon   = conjure_shape('polygon')
         star      = conjure_shape('star')
         trapazoid = conjure_shape('trapazoid')
         triangle  = conjure_shape('triangle')
@@ -228,6 +230,7 @@ def gem():
             assert moon      is conjure_shape('moon')
             assert oval      is conjure_shape('oval')
             assert pentagon  is conjure_shape('pentagon')
+            assert polygon   is conjure_shape('polygon')
             assert square    is conjure_shape('square')
             assert star      is conjure_shape('star')
             assert trapazoid is conjure_shape('trapazoid')
@@ -327,12 +330,12 @@ def gem():
             test_conjure_dual__X(numbered_shape_cache__21, conjure_numbered_shape__21)
 
 
-        def test_conjure_triple__X(cache, conjure_numbered_color_shape):
+        def test_conjure_triple__X(conjure_numbered_color_shape):
             for loop in [1, 2]:
                 for [number, color, shape] in [
                     [   one,   red,     circle       ],
                     [   one,   red,     ellipse      ],
-                    [   one,   red,     moon         ],     #   .displace_a
+                    [   one,   red,     moon         ],     #   .displace_v
                     [   one,   red,     oval         ],
                     [   one,   red,     pentagon     ],
                     [   one,   red,     square       ],
@@ -340,61 +343,101 @@ def gem():
                     [   one,   red,     trapazoid    ],
                     [   one,   red,     triangle     ],
  
-                    [   two,   cyan,    oval         ],
+                    [   two,   cyan,    oval         ],     #   Herd_2.provision_triple__312
                     [   two,   cyan,    star         ],
                     [   two,   cyan,    triangle     ],
                     [   two,   cyan,    square       ],
-                    [   two,   red,     star         ],     #   Horde_Many.provision_triple_step2
-                    [   two,   red,     square       ],     #   .displace_b
-                    [   two,   green,   star         ],     #   .displace_c
+                    [   two,   red,     star         ],     #   Horde_Many.provision_triple_step2 ...
+                    #                                       #       ... & Herd2.provision_triple_step2__312
+                    [   two,   red,     square       ],     #   .displace_w
+                    [   two,   green,   star         ],     #   .displace_x & Herd3.provision_triple_step2__312
                     [   two,   green,   moon         ],
-                    [   two,   blue,    star         ],
+                    [   two,   blue,    star         ],     #   Herd_4567.provision_triple_step2__312
 
-                    [   three,  blue,   moon         ],
+                    [   three,  blue,   moon         ],     #   Herd_3.provision_triple__312
                     [   three,  green,  moon         ],
                     [   three,  cyan,   star         ],
                     [   three,  red,    star         ],
-                    [   three,  red,    moon         ],     #   .displace_d
+                    [   three,  red,    moon         ],     #   .displace_y
                     [   three,  purple, moon         ],
-                    [   three,  purple, oval         ],     #   .displace_e
+                    [   three,  purple, oval         ],     #   .displace_z
                     [   three,  purple, triangle     ],
-                    [   three,  purple, trapazoid    ],
+                    [   three,  purple, star         ],
 
                     [   four,   black,  circle      ],
                     [   four,   green,  circle      ],
-                    [   four,   white,  oval        ],
+                    [   four,   white,  oval        ],      #   Herd_4567.provision_triple__312
                     [   four,   blue,   oval        ],
                     [   four,   red,    moon        ],
                     [   four,   purple, triangle    ],
-                    [   four,   purple, star        ],      #   .displace_e6
+                    [   four,   purple, star        ],      #   .displace_z6
                     [   four,   cyan,   square      ],
-                    [   four,   cyan,   pentagon    ],      #   .displace_e7
+                    [   four,   cyan,   triangle    ],      #   .displace_z7
                     [   four,   yellow, ellipse     ],      #   Herd_Many.provision_triple
                     [   four,   yellow, moon        ],
                     [   four,   silver, oval        ],
 
-                    [   five,   silver, moon,       ],
-                    [   five,   silver, ellipse,    ],
-                    [   five,   purple, oval,       ],      #   Horde_23.provision_triple_step2
-                    [   five,   silver, oval,       ],
-                    [   five,   silver, circle,     ],      #   Horde_23 (with skip 0) calls create_herd_4567
+                    [   five,   silver, moon        ],
+                    [   five,   silver, square      ],
+                    [   five,   purple, oval        ],      #   Horde_23.provision_triple_step2
+                    [   five,   silver, oval        ],
+                    [   five,   silver, circle      ],      #   Horde_23 (with skip 0) calls create_herd_4567
 
-                    [   six,    green,  square,     ],
-                    [   six,    green,  circle,     ],
-                    [   six,    green,  triangle,   ],
+                    [   six,    green,  square      ],
+                    [   six,    green,  circle      ],
+                    [   six,    green,  triangle    ],
+
+                    #
+                    #   Additional tests for produce_conjure_unique_triple__312
+                    #
+                    [   five,   purple, triangle    ],
+                    [   seven,  black,  triangle    ],
+                    [   eight,  white,  triangle    ],      #   Herd_Many.provision_triple__312
+                    [   nine,   blue,   triangle    ],
+
+                    [   two,    green,  star        ],
+                    [   two,    black,  star        ],
+                    [   two,    yellow, star        ],
+                    [   two,    purple, star        ],
+                    [   two,    silver, star        ],      #   Herd_Many.provision_triple_step2__312
+                    [   two,    white,  star        ],
+
+                    [   one,    silver, pentagon    ],      #   Horde_23.provision_triple__312
+                    [   one,    black,  pentagon    ],
+                    [   one,    purple, pentagon    ],      #   Horde_Many.provision_triple__312
+                    [   one,    green,  pentagon    ],
+
+                    [   one,    green,  trapazoid   ],
+                    [   two,    green,  trapazoid   ],      #   Horde_23.provision_triple_step2__312
+
+                    [   five,   white,  polygon     ],
+                    [   five,   green,  polygon     ],
+                    [   five,   silver, polygon     ],
+                    [   five,   black,  polygon     ],
+                    [   seven,  silver, polygon     ],      #   Horde_Many.provision_triple_step2__312
                 ]:
                     #my_line('%s, %s, %s', number, color, shape)
                     conjure_numbered_color_shape(number, color, shape)
 
 
         def test_conjure_unique_triple():
-            conjure_numbered_color_shape = produce_conjure_unique_triple(
-                                               'numbered_colored_shape',
-                                               NumberedColoredShape,
-                                               nub = Number.value.__get__,
-                                           )
+            test_conjure_triple__X(
+                produce_conjure_unique_triple(
+                    'numbered_colored_shape',
+                    NumberedColoredShape,
+                    nub = Number.value.__get__,
+                ),
+            )
 
-            test_conjure_triple__X(0, conjure_numbered_color_shape)
+
+        def test_conjure_unique_triple__312():
+            test_conjure_triple__X(
+                produce_conjure_unique_triple__312(
+                    'shape_number_color__312',
+                    NumberedColoredShape,
+                    nub = Shape.name.__get__,
+                ),
+            )
 
 
         def test_herd_sorting():
@@ -517,11 +560,14 @@ def gem():
         test_conjure_unique_dual__21()
         test_conjure_unique_dual()
         test_conjure_unique_triple()
+        test_conjure_unique_triple__312()
         test_herd_sorting()
 
 
         line('PASSED: test_cache')
 
-        dump_caches('numbered_colored_shape')
+        #dump_caches('numbered_colored_shape')
+        dump_caches('shape_number_color__312')
+
         #dump_caches('numbered_shape')
         #dump_caches('shape_number')

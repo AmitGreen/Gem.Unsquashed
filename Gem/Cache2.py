@@ -211,84 +211,62 @@ def gem():
 
                 return r
 
-            if 7 is 7:
-                #
-                #   New way of doing this:
-                #
-                return first.provision_triple(store, Meta, k1, k2, k3)
-
-            #
-            #   OLD way of doing this -- also works
-            #
-            skip = 0#first.skip
-
-            if skip is 0:
-                second = first.glimpse(k2, absent)
-
-                if second.k3 is k3:
-                    return second
-
-                if not second.is_herd:
-                    r = Meta(k1, k2, k3)
-
-                    if second is absent:
-                        first__2 = first.insert(k2, r)
-
-                        if first is not first__2:
-                            store(k1, first__2)
-                    else:
-                        first.displace(k2, create_herd_2(second.k3, k3, second, r))
-
-                    return r
-
-                r = second.glimpse(k3)
-
-                if r is not none:
-                    assert r.k3 is k3
-
-                    return r
-
-                r = Meta(k1, k2, k3)
-
-                second__2 = second.insert(k3, r)
-
-                if second is not second__2:
-                    first.displace(k2, second__2)
-
-                return r
-
-            assert 0, 'incomplete'
-
-            if skip is k2:
-                r = first.glimpse(k3)
-
-                if r is not none:
-                    assert (r.k2 is k2) and (r.k3 is k3)
-
-                    return r
-
-                r = Meta(k1, k2, k3)
-
-                first__2 = first.insert(k3, r)
-
-                if first is not first__2:
-                    assert first__2.skip is k2
-
-                    store(k1, first__2)
-
-                return r
-
-            r = Meta(k1, k2, k3)
-
-            store(k1, create_herd_2(skip, k2, first.remove_skip(), r))
-
-            return r
+            return first.provision_triple(store, Meta, k1, k2, k3)
 
 
         if __debug__:
             return rename_function(intern_arrange('conjure_%s', name), conjure_unique_triple)
 
         return conjure_unique_triple
+
+
+    @export
+    def produce_conjure_unique_triple__312(
+            name,
+            Meta,
+
+            cache  = absent,
+            lookup = absent,
+            store  = absent,
+            nub    = none,
+    ):
+        if cache is absent:
+            cache = create_cache(name, nub = nub)
+
+        if lookup is absent:
+            lookup = cache.get
+
+        if store is absent:
+            store = cache.__setitem__
+
+
+        def conjure_unique_triple__312(k1, k2, k3):
+            first = lookup(k3, absent)
+
+            if first.k1 is k1:
+                if first.k2 is k2:
+                    return first
+
+                r = Meta(k1, k2, k3)
+
+                store(k3, create_horde_2(1, first.k2, k2, first, r))
+
+                return r
+
+            if not first.is_herd:
+                r = Meta(k1, k2, k3)
+
+                store(k3, (r   if first is absent else   create_herd_2(first.k1, k1, first, r)))
+
+                return r
+
+            return first.provision_triple__312(store, Meta, k1, k2, k3)
+
+
+        if __debug__:
+            return rename_function(intern_arrange('conjure_%s__312', name), conjure_unique_triple__312)
+
+        return conjure_unique_triple__312
 
 
     @export
@@ -328,16 +306,7 @@ def gem():
                 prefix_1 = '  '
 
                 if v.skip is not 0:
-                    k2 = v.sample.k2
-                    line('%s%s (skip %d):',
-                         prefix_1,
-                         (
-                             portray_string(k2)  if k2.__class__ is String  else
-                             k2                  if k2.__class__ is Integer else
-                             k2.display_token()
-                         ),
-                         v.skip)
-
+                    line('%sskip %d:', prefix_1, v.skip)
                     prefix_1 += ('  ' * v.skip)
 
                 for [k2, w] in v.items_sorted_by_key():

@@ -107,6 +107,41 @@ def gem():
             return r
 
 
+        def provision_triple__312(t, displace, Meta, k1, k2, k3):
+            assert t.skip is 1
+
+            v    = t.v
+            v_k1 = v.k1
+
+            if v_k1 is not k1:
+                t.skip = 0
+                r      = Meta(k1, k2, k3)
+
+                displace(k3, create_herd_2(v_k1, k1, t, r))
+
+                return r
+
+            a = t.a
+            if a is k2:     return v
+
+            b = t.b
+            if b is k2:     return t.w
+
+            c = t.c
+            if c is k2:     return t.x
+
+            r = Meta(k1, k2, k3)
+
+            if c is absent:
+                t.c = k2
+                t.x = r
+                return r
+
+            displace(k3, create_horde_many(1, a, b, c, k2, v, t.w, t.x, r))
+
+            return r
+
+
         def provision_triple_step2(t, displace, parent, Meta, k1, k2, k3):
             assert t.skip is 0
 
@@ -127,6 +162,30 @@ def gem():
                 return r
 
             displace(parent, k2, create_herd_4567(a, b, c, k3, t.v, t.w, t.x, r))
+
+            return r
+
+
+        def provision_triple_step2__312(t, displace, parent, Meta, k1, k2, k3):
+            assert t.skip is 0
+
+            a = t.a
+            if a is k2:     return t.v
+
+            b = t.b
+            if b is k2:     return t.w
+
+            c = t.c
+            if c is k2:     return t.w
+
+            r = Meta(k1, k2, k3)
+
+            if c is absent:
+                t.c = k2
+                t.x = r
+                return r
+
+            displace(parent, k1, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
 
             return r
 
@@ -166,10 +225,32 @@ def gem():
             return (map__lookup(t, k3)) or (map__provide(t, k3, Meta(k1, k2, k3)))
 
 
+        def provision_triple__312(t, displace, Meta, k1, k2, k3):
+            assert t.skip is 1
+
+            sample_k1 = t.sample.k1
+
+            if sample_k1 is not k1:
+                t.skip = 0
+                r      = Meta(k1, k2, k3)
+
+                displace(k3, create_herd_2(sample_k1, k1, t, r))
+
+                return r
+
+            return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2, k3)))
+
+
         def provision_triple_step2(t, _displace, _parent, Meta, k1, k2, k3):
             assert t.skip is 0
 
             return (map__lookup(t, k3)) or (map__provide(t, k3, Meta(k1, k2, k3)))
+
+
+        def provision_triple_step2__312(t, _displace, _parent, Meta, k1, k2, k3):
+            assert t.skip is 0
+
+            return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2, k3)))
 
 
 
