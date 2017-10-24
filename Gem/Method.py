@@ -3,9 +3,17 @@
 #
 @gem('Gem.Method')
 def gem():
-    @export
-    def return_self(t):
-        return t
+    #
+    #   .count_nested
+    #
+    @share
+    def count_nested__map(t):
+        total = 0
+
+        for v in t.values():
+            total += (v.count_nested()    if v.is_herd else   1)
+
+        return total
 
 
     #
@@ -27,3 +35,13 @@ def gem():
 
             for k in sorted_list(keys, key = keys[0].nub):
                 yield (( k, value(k) ))
+
+
+    #
+    #   .return_self
+    #
+    @export
+    def return_self(t):
+        return t
+
+

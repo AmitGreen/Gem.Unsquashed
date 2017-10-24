@@ -33,6 +33,48 @@ def gem():
         k3      = absent
 
 
+        def count_nested(t):
+            v = t.v
+            w = t.w
+
+            if t.c is absent:
+                if v.is_herd:
+                    if w.is_herd:
+                        return v.count_nested() + w.count_nested()
+
+                    return v.count_nested() + 1
+
+                if w.is_herd:
+                    return 1 + w.count_nested()
+
+                return 2
+
+            x = t.x
+
+            if v.is_herd:
+                if w.is_herd:
+                    if x.is_herd:
+                        return v.count_nested() + w.count_nested() + x.count_nested()
+
+                    return v.count_nested() + w.count_nested() + 1
+
+                if x.is_herd:
+                    return v.count_nested() + 1 + x.count_nested()
+
+                return v.count_nested() + 2
+
+            if w.is_herd:
+                if x.is_herd:
+                    return 1 + w.count_nested() + x.count_nested()
+
+                return 2 + w.count_nested()         #  1 + w.count_nested() + 1
+
+            if x.is_herd:
+                return 2 + x.count_nested()
+
+            return 3
+
+
         def items_sorted_by_key(t):
             a = t.a
             b = t.b
@@ -161,9 +203,13 @@ def gem():
                 t.x = r
                 return r
 
-            displace(parent, k2, create_herd_4567(a, b, c, k3, t.v, t.w, t.x, r))
+            if parent.is_herd_many:
+                displace(parent, k2, create_herd_4567(a, b, c, k3, t.v, t.w, t.x, r))
+                return r
 
+            displace(parent, create_herd_4567(a, b, c, k3, t.v, t.w, t.x, r))
             return r
+
 
 
         def provision_triple_step2__312(t, displace, parent, Meta, k1, k2, k3):
@@ -185,8 +231,11 @@ def gem():
                 t.x = r
                 return r
 
-            displace(parent, k1, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
+            if parent.is_herd_many:
+                displace(parent, k1, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
+                return r
 
+            displace(parent, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
             return r
 
 
@@ -206,6 +255,7 @@ def gem():
         k3      = absent
 
 
+        count_nested        = count_nested__map
         items_sorted_by_key = items_sorted_by_key__herd_many
 
 

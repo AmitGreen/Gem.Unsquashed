@@ -14,7 +14,16 @@ def gem():
 
 
     class LiquidMap(Map):
-        __slots__ = (())
+        __slots__ = ((
+            'name',                             #   String+
+        ))
+
+
+        def __init__(t, name):
+            t.name = name
+
+
+        count_nested = count_nested__map
 
 
         def items_sorted_by_key(t):
@@ -31,12 +40,17 @@ def gem():
 
     class LiquidMap_WithNub(Map):
         __slots__ = ((
+            'name',                             #   String+
             'nub',                              #   Method
         ))
 
 
-        def __init__(t, nub):
-            t.nub = nub
+        def __init__(t, name, nub):
+            t.name = name
+            t.nub  = nub
+
+
+        count_nested = count_nested__map
 
 
         def items_sorted_by_key(t):
@@ -51,7 +65,11 @@ def gem():
         store   = map__store
 
 
-    cache_names   = LiquidMap()                 #   Map String+ of Map
+        if is_python_2:
+            values = Map.itervalues
+
+
+    cache_names   = LiquidMap('cache_names')        #   Map String+ of Map
     lookup_cache  = cache_names.get
     provide_cache = cache_names.setdefault
 
@@ -275,7 +293,7 @@ def gem():
 
         return provide_cache(
                    intern_string(name),
-                   (LiquidMap()   if nub is none else   LiquidMap_WithNub(nub)),
+                   (LiquidMap(name)   if nub is none else   LiquidMap_WithNub(name, nub)),
                )
 
 

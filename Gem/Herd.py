@@ -35,39 +35,8 @@ def gem():
     map__store   = Map.__setitem__
 
 
-    def displace_v(t, a, v):
-        assert t.a is a
-        t.v = v
-
-
-    def displace_w(t, b, w):
-        assert t.b is b
-        t.w = w
-
-
-    def displace_x(t, c, x):
-        assert t.c is c
-        t.x = x
-
-
-    def displace_y(t, d, y):
-        assert t.d is d
-        t.y = y
-
-
-    def displace_z(t, e, z):
-        assert t.e is e
-        t.z = z
-
-
-    def displace_z6(t, e6, z6):
-        assert t.e6 is e6
-        t.z6 = z6
-
-
-    def displace_z7(t, e7, z7):
-        assert t.e7 is e7
-        t.z7 = z7
+    def item_0(pair):
+        return pair[0]
 
 
     class Herd_0(Object):
@@ -93,11 +62,12 @@ def gem():
         ))
 
 
-        is_herd = true
-        k1      = absent
-        k2      = absent
-        k3      = absent
-        skip    = 0
+        is_herd      = true
+        is_herd_many = false
+        k1           = absent
+        k2           = absent
+        k3           = absent
+        skip         = 0
 
 
         def __init__(t, a, v):
@@ -150,7 +120,7 @@ def gem():
                         t.v = create_herd_2(v.k3, k3, v, r)
                         return r
 
-                    return v.provision_triple_step2(displace_v, t, Meta, k1, k2, k3)
+                    return v.provision_triple_step2(displace_1v, t, Meta, k1, k2, k3)
 
                 r = Meta(k1, k2, k3)
 
@@ -171,7 +141,7 @@ def gem():
                         t.v = create_herd_2(v.k2, k2, v, r)
                         return r
 
-                    return v.provision_triple_step2__312(displace_v, t, Meta, k1, k2, k3)
+                    return v.provision_triple_step2__312(displace_1v, t, Meta, k1, k2, k3)
 
                 r = Meta(k1, k2, k3)
 
@@ -187,8 +157,11 @@ def gem():
 
                 r = Meta(k1, k2, k3)
 
-                displace(parent, k2, create_herd_2(a, k3, t.v, r))
+                if parent.is_herd_many:
+                    displace(parent, k2, create_herd_2(a, k3, t.v, r))
+                    return r
 
+                displace(parent, create_herd_2(a, k3, t.v, r))
                 return r
 
 
@@ -201,11 +174,28 @@ def gem():
         ))
 
 
-        is_herd = true
-        k1      = absent
-        k2      = absent
-        k3      = absent
-        skip    = 0
+        is_herd      = true
+        is_herd_many = false
+        k1           = absent
+        k2           = absent
+        k3           = absent
+        skip         = 0
+
+
+        def count_nested(t):
+            v = t.v
+            w = t.w
+
+            if v.is_herd:
+                if w.is_herd:
+                    return v.count_nested() + w.count_nested()
+
+                return v.count_nested() + 1
+
+            if w.is_herd:
+                return 1 + w.count_nested()
+
+            return 2
 
 
         def displace(t, k, v):
@@ -297,7 +287,7 @@ def gem():
                     t.v = create_herd_2(v.k3, k3, v, r)
                     return r
 
-                return v.provision_triple_step2(displace_v, t, Meta, k1, k2, k3)
+                return v.provision_triple_step2(displace_2v, t, Meta, k1, k2, k3)
 
             b = t.b
             if b is k2:
@@ -309,7 +299,7 @@ def gem():
                     t.w = create_herd_2(w.k3, k3, w, r)
                     return r
 
-                return w.provision_triple_step2(displace_w, t, Meta, k1, k2, k3)
+                return w.provision_triple_step2(displace_2w, t, Meta, k1, k2, k3)
 
             r = Meta(k1, k2, k3)
 
@@ -329,7 +319,7 @@ def gem():
                     t.v = create_herd_2(v.k2, k2, v, r)
                     return r
 
-                return v.provision_triple_step2__312(displace_v, t, Meta, k1, k2, k3)
+                return v.provision_triple_step2__312(displace_2v, t, Meta, k1, k2, k3)
 
             b = t.b
             if b is k1:
@@ -341,7 +331,7 @@ def gem():
                     t.w = create_herd_2(w.k2, k2, w, r)
                     return r
 
-                return w.provision_triple_step2__312(displace_w, t, Meta, k1, k2, k3)
+                return w.provision_triple_step2__312(displace_2w, t, Meta, k1, k2, k3)
 
             r = Meta(k1, k2, k3)
 
@@ -359,8 +349,11 @@ def gem():
 
             r = Meta(k1, k2, k3)
 
-            displace(parent, k2, create_herd_3(a, b, k3, t.v, t.w, r))
+            if parent.is_herd_many:
+                displace(parent, k2, create_herd_3(a, b, k3, t.v, t.w, r))
+                return r
 
+            displace(parent, create_herd_3(a, b, k3, t.v, t.w, r))
             return r
 
 
@@ -373,8 +366,11 @@ def gem():
 
             r = Meta(k1, k2, k3)
 
-            displace(parent, k1, create_herd_3(a, b, k2, t.v, t.w, r))
+            if parent.is_herd_many:
+                displace(parent, k1, create_herd_3(a, b, k2, t.v, t.w, r))
+                return r
 
+            displace(parent, create_herd_3(a, b, k2, t.v, t.w, r))
             return r
 
 
@@ -389,11 +385,41 @@ def gem():
         ))
 
 
-        is_herd = true
-        k1      = absent
-        k2      = absent
-        k3      = absent
-        skip    = 0
+        is_herd      = true
+        is_herd_many = false
+        k1           = absent
+        k2           = absent
+        k3           = absent
+        skip         = 0
+
+
+        def count_nested(t):
+            v = t.v
+            w = t.w
+            x = t.x
+
+            if v.is_herd:
+                if w.is_herd:
+                    if x.is_herd:
+                        return v.count_nested() + w.count_nested() + x.count_nested()
+
+                    return v.count_nested() + w.count_nested() + 1
+
+                if x.is_herd:
+                    return v.count_nested() + 1 + x.count_nested()
+
+                return v.count_nested() + 2
+
+            if w.is_herd:
+                if x.is_herd:
+                    return 1 + w.count_nested() + x.count_nested()
+
+                return 2 + w.count_nested()         #  1 + w.count_nested() + 1
+
+            if x.is_herd:
+                return 2 + x.count_nested()
+
+            return 3
 
 
         def displace(t, k, v):
@@ -516,7 +542,7 @@ def gem():
                     t.v = create_herd_2(v.k3, k3, v, r)
                     return r
 
-                return v.provision_triple_step2(displace_v, t, Meta, k1, k2, k3)
+                return v.provision_triple_step2(displace_3v, t, Meta, k1, k2, k3)
 
             b = t.b
             if b is k2:
@@ -528,7 +554,7 @@ def gem():
                     t.w = create_herd_2(w.k3, k3, w, r)
                     return r
 
-                return w.provision_triple_step2(displace_w, t, Meta, k1, k2, k3)
+                return w.provision_triple_step2(displace_3w, t, Meta, k1, k2, k3)
 
             c = t.c
             if c is k2:
@@ -540,7 +566,7 @@ def gem():
                     t.x = create_herd_2(x.k3, k3, x, r)
                     return r
 
-                return x.provision_triple_step2(displace_x, t, Meta, k1, k2, k3)
+                return x.provision_triple_step2(displace_3x, t, Meta, k1, k2, k3)
 
             r = Meta(k1, k2, k3)
 
@@ -560,7 +586,7 @@ def gem():
                     t.v = create_herd_2(v.k2, k2, v, r)
                     return r
 
-                return v.provision_triple_step2__312(displace_v, t, Meta, k1, k2, k3)
+                return v.provision_triple_step2__312(displace_3v, t, Meta, k1, k2, k3)
 
             b = t.b
             if b is k1:
@@ -572,7 +598,7 @@ def gem():
                     t.w = create_herd_2(w.k2, k2, w, r)
                     return r
 
-                return w.provision_triple_step2__312(displace_w, t, Meta, k1, k2, k3)
+                return w.provision_triple_step2__312(displace_3w, t, Meta, k1, k2, k3)
 
             c = t.c
             if c is k1:
@@ -584,7 +610,7 @@ def gem():
                     t.x = create_herd_2(x.k2, k2, x, r)
                     return r
 
-                return x.provision_triple_step2__312(displace_x, t, Meta, k1, k2, k3)
+                return x.provision_triple_step2__312(displace_3x, t, Meta, k1, k2, k3)
 
             r = Meta(k1, k2, k3)
 
@@ -605,8 +631,11 @@ def gem():
 
             r = Meta(k1, k2, k3)
 
-            displace(parent, k2, create_herd_4567(a, b, c, k3, t.v, t.w, t.x, r))
+            if parent.is_herd_many:
+                displace(parent, k2, create_herd_4567(a, b, c, k3, t.v, t.w, t.x, r))
+                return r
 
+            displace(parent, create_herd_4567(a, b, c, k3, t.v, t.w, t.x, r))
             return r
 
 
@@ -622,8 +651,11 @@ def gem():
 
             r = Meta(k1, k2, k3)
 
-            displace(parent, k1, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
+            if parent.is_herd_many:
+                displace(parent, k1, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
+                return r
 
+            displace(parent, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
             return r
 
 
@@ -646,11 +678,63 @@ def gem():
         ))
 
 
-        is_herd = true
-        k1      = absent
-        k2      = absent
-        k3      = absent
-        skip    = 0
+        is_herd      = true
+        is_herd_many = false
+        k1           = absent
+        k2           = absent
+        k3           = absent
+        skip         = 0
+
+
+        def count_nested(t):
+            v = t.v
+            w = t.w
+            x = t.x
+            y = t.y
+
+            if t.e is absent:
+                return (
+                             (v.count_nested()   if v.is_herd else   1)
+                           + (w.count_nested()   if w.is_herd else   1)
+                           + (x.count_nested()   if x.is_herd else   1)
+                           + (y.count_nested()   if y.is_herd else   1)
+                       )
+
+            z = t.z
+
+            if t.e6 is absent:
+                return (
+                             (v.count_nested()   if v.is_herd else   1)
+                           + (w.count_nested()   if w.is_herd else   1)
+                           + (x.count_nested()   if x.is_herd else   1)
+                           + (y.count_nested()   if y.is_herd else   1)
+                           + (z.count_nested()   if z.is_herd else   1)
+                       )
+
+
+            z6 = t.z6
+
+            if t.e7 is absent:
+                return (
+                             (v .count_nested()   if v .is_herd else   1)
+                           + (w .count_nested()   if w .is_herd else   1)
+                           + (x .count_nested()   if x .is_herd else   1)
+                           + (y .count_nested()   if y .is_herd else   1)
+                           + (z .count_nested()   if z .is_herd else   1)
+                           + (z6.count_nested()   if z6.is_herd else   1)
+                       )
+
+            z7 = t.z7
+
+            return (
+                         (v .count_nested()   if v .is_herd else   1)
+                       + (w .count_nested()   if w .is_herd else   1)
+                       + (x .count_nested()   if x .is_herd else   1)
+                       + (y .count_nested()   if y .is_herd else   1)
+                       + (z .count_nested()   if z .is_herd else   1)
+                       + (z6.count_nested()   if z6.is_herd else   1)
+                       + (z7.count_nested()   if z7.is_herd else   1)
+                   )
 
 
         def displace(t, k, v):
@@ -743,8 +827,6 @@ def gem():
             if e is absent:
                 r = [((a, t.v)), ((t.b, t.w)), ((t.c, t.x)), ((t.d, t.y))]
             else:
-                r = [((a, t.v)), ((t.b, t.w)), ((t.c, t.x)), ((t.d, t.y)), ((e, t.z))]
-
                 e6 = t.e6
 
                 if e6 is absent:
@@ -767,18 +849,18 @@ def gem():
 
 
             if nub is 0:
-                def key(pair):
-                    return pair[0]
-            else:
-                def key(pair):
-                    if nub.__self__.__objclass__ != pair[0].__class__:
-                        line('FIXING: %r', pair[0])
-                        return pair[0].name
+                r.sort(key = item_0)
 
-                    return nub(pair[0])
+                return r
 
 
-            return sorted_list(r, key = key)
+            def nub_of_item_0(pair):
+                return nub(pair[0])
+
+
+            r.sort(key = nub_of_item_0)
+
+            return r
 
 
         def provision(t, e8, z8):
@@ -919,7 +1001,7 @@ def gem():
                     r   = Meta(k1, k2, k3)
                     t.v = create_herd_2(v.k3, k3, v, r)
                     return r
-                return v.provision_triple_step2(displace_v, t, Meta, k1, k2, k3)
+                return v.provision_triple_step2(displace_4v, t, Meta, k1, k2, k3)
 
             b = t.b
             if b is k2:
@@ -929,7 +1011,7 @@ def gem():
                     r   = Meta(k1, k2, k3)
                     t.w = create_herd_2(w.k3, k3, w, r)
                     return r
-                return w.provision_triple_step2(displace_w, t, Meta, k1, k2, k3)
+                return w.provision_triple_step2(displace_4w, t, Meta, k1, k2, k3)
 
             c = t.c
             if c is k2:
@@ -939,7 +1021,7 @@ def gem():
                     r   = Meta(k1, k2, k3)
                     t.x = create_herd_2(x.k3, k3, x, r)
                     return r
-                return x.provision_triple_step2(displace_x, t, Meta, k1, k2, k3)
+                return x.provision_triple_step2(displace_4x, t, Meta, k1, k2, k3)
 
             d = t.d
             if d is k2:
@@ -949,7 +1031,7 @@ def gem():
                     r   = Meta(k1, k2, k3)
                     t.y = create_herd_2(y.k3, k3, y, r)
                     return r
-                return y.provision_triple_step2(displace_y, t, Meta, k1, k2, k3)
+                return y.provision_triple_step2(displace_4y, t, Meta, k1, k2, k3)
 
             e = t.e
             if e is k2:
@@ -959,7 +1041,7 @@ def gem():
                     r   = Meta(k1, k2, k3)
                     t.z = create_herd_2(z.k3, k3, z, r)
                     return r
-                return z.provision_triple_step2(displace_z, t, Meta, k1, k2, k3)
+                return z.provision_triple_step2(displace_4z, t, Meta, k1, k2, k3)
             if e is absent:
                 t.e  = k2
                 t.e6 = absent
@@ -974,7 +1056,7 @@ def gem():
                     r    = Meta(k1, k2, k3)
                     t.z6 = create_herd_2(z6.k3, k3, z6, r)
                     return r
-                return z6.provision_triple_step2(displace_z6, t, Meta, k1, k2, k3)
+                return z6.provision_triple_step2(displace_4z6, t, Meta, k1, k2, k3)
             if e6 is absent:
                 t.e6 = k2
                 t.e7 = absent
@@ -989,7 +1071,7 @@ def gem():
                     r    = Meta(k1, k2, k3)
                     t.z7 = create_herd_2(z7.k3, k3, z7, r)
                     return r
-                return z7.provision_triple_step2(displace_z7, t, Meta, k1, k2, k3)
+                return z7.provision_triple_step2(displace_4z7, t, Meta, k1, k2, k3)
             r = Meta(k1, k2, k3)                                                        #   r created here
             if e7 is absent:
                 t.e7 = k2
@@ -1010,7 +1092,7 @@ def gem():
                     r   = Meta(k1, k2, k3)
                     t.v = create_herd_2(v.k2, k2, v, r)
                     return r
-                return v.provision_triple_step2__312(displace_v, t, Meta, k1, k2, k3)
+                return v.provision_triple_step2__312(displace_4v, t, Meta, k1, k2, k3)
 
             b = t.b
             if b is k1:
@@ -1020,7 +1102,7 @@ def gem():
                     r   = Meta(k1, k2, k3)
                     t.w = create_herd_2(w.k2, k2, w, r)
                     return r
-                return w.provision_triple_step2__312(displace_w, t, Meta, k1, k2, k3)
+                return w.provision_triple_step2__312(displace_4w, t, Meta, k1, k2, k3)
 
             c = t.c
             if c is k1:
@@ -1030,7 +1112,7 @@ def gem():
                     r   = Meta(k1, k2, k3)
                     t.x = create_herd_2(x.k2, k2, x, r)
                     return r
-                return x.provision_triple_step2__312(displace_x, t, Meta, k1, k2, k3)
+                return x.provision_triple_step2__312(displace_4x, t, Meta, k1, k2, k3)
 
             d = t.d
             if d is k1:
@@ -1040,7 +1122,7 @@ def gem():
                     r   = Meta(k1, k2, k3)
                     t.y = create_herd_2(y.k2, k2, y, r)
                     return r
-                return y.provision_triple_step2__312(displace_y, t, Meta, k1, k2, k3)
+                return y.provision_triple_step2__312(displace_4y, t, Meta, k1, k2, k3)
 
             e = t.e
             if e is k1:
@@ -1050,7 +1132,7 @@ def gem():
                     r   = Meta(k1, k2, k3)
                     t.z = create_herd_2(z.k2, k2, z, r)
                     return r
-                return z.provision_triple_step2__312(displace_z, t, Meta, k1, k2, k3)
+                return z.provision_triple_step2__312(displace_4z, t, Meta, k1, k2, k3)
             if e is absent:
                 t.e  = k1
                 t.e6 = absent
@@ -1065,7 +1147,7 @@ def gem():
                     r    = Meta(k1, k2, k3)
                     t.z6 = create_herd_2(z6.k2, k2, z6, r)
                     return r
-                return z6.provision_triple_step2__312(displace_z6, t, Meta, k1, k2, k3)
+                return z6.provision_triple_step2__312(displace_4z6, t, Meta, k1, k2, k3)
             if e6 is absent:
                 t.e6 = k1
                 t.e7 = absent
@@ -1080,7 +1162,7 @@ def gem():
                     r    = Meta(k1, k2, k3)
                     t.z7 = create_herd_2(z7.k2, k2, z7, r)
                     return r
-                return z7.provision_triple_step2__312(displace_z7, t, Meta, k1, k2, k3)
+                return z7.provision_triple_step2__312(displace_4z7, t, Meta, k1, k2, k3)
             r = Meta(k1, k2, k3)                                                        #   r created here
             if e7 is absent:
                 t.e7 = k1
@@ -1131,8 +1213,16 @@ def gem():
                 t.z7 = r
                 return r
 
-            displace(parent, k2, create_herd_many(a, b, c, d, e, e6, e7, k3, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
+            if parent.is_herd_many:
+                displace(
+                    parent,
+                    k2,
+                    create_herd_many(a, b, c, d, e, e6, e7, k3, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r),
+                )
 
+                return r
+
+            displace(parent, create_herd_many(a, b, c, d, e, e6, e7, k3, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
             return r
 
 
@@ -1175,8 +1265,16 @@ def gem():
                 t.z7 = r
                 return r
 
-            displace(parent, k1, create_herd_many(a, b, c, d, e, e6, e7, k2, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
+            if parent.is_herd_many:
+                displace(
+                    parent,
+                    k1,
+                    create_herd_many(a, b, c, d, e, e6, e7, k2, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r),
+                )
 
+                return r
+
+            displace(parent, create_herd_many(a, b, c, d, e, e6, e7, k2, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
             return r
 
 
@@ -1184,11 +1282,15 @@ def gem():
         __slots__ = (())
 
 
-        is_herd = true
-        k1      = absent
-        k2      = absent
-        k3      = absent
-        skip    = 0
+        is_herd      = true
+        is_herd_many = true
+        k1           = absent
+        k2           = absent
+        k3           = absent
+        skip         = 0
+
+
+        count_nested = count_nested__map
 
 
         if __debug__:
@@ -1374,6 +1476,21 @@ def gem():
         t[e8] = z8
 
         return t
+
+
+    displace_1v  = Herd_1   .v .__set__
+    displace_2v  = Herd_2   .v .__set__
+    displace_2w  = Herd_2   .w .__set__
+    displace_3v  = Herd_3   .v .__set__
+    displace_3w  = Herd_3   .w .__set__
+    displace_3x  = Herd_3   .x .__set__
+    displace_4v  = Herd_4567.v .__set__
+    displace_4w  = Herd_4567.w .__set__
+    displace_4x  = Herd_4567.x .__set__
+    displace_4y  = Herd_4567.y .__set__
+    displace_4z  = Herd_4567.z .__set__
+    displace_4z6 = Herd_4567.z6.__set__
+    displace_4z7 = Herd_4567.z7.__set__
 
 
     Herd_0.provision = Herd_0.provide = Herd_0.inject = HerHerdrt = static_method(create_herd_1)

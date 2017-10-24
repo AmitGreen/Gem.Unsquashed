@@ -24,7 +24,7 @@ def gem():
     require_gem('Sapphire.Core')
 
 
-    choice = 2
+    choice = 3
 
 
     def command_combine(
