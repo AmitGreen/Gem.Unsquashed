@@ -344,7 +344,7 @@ def gem():
                     [   two,   cyan,    star         ],
                     [   two,   cyan,    triangle     ],
                     [   two,   cyan,    square       ],
-                    [   two,   red,     star         ],
+                    [   two,   red,     star         ],     #   Horde_Many.provision_triple_step2
                     [   two,   red,     square       ],     #   .displace_b
                     [   two,   green,   star         ],     #   .displace_c
                     [   two,   green,   moon         ],
@@ -352,26 +352,36 @@ def gem():
 
                     [   three,  blue,   moon         ],
                     [   three,  green,  moon         ],
-                    [   three,  cyan,   star,        ],
-                    [   three,  red,    star,        ],
-                    [   three,  red,    moon,        ],     #   .displace_d
-                    [   three,  purple, moon,        ],
-                    [   three,  purple, oval,        ],     #   .displace_e
-                    [   three,  purple, triangle,    ],
-                    [   three,  purple, trapazoid,   ],
+                    [   three,  cyan,   star         ],
+                    [   three,  red,    star         ],
+                    [   three,  red,    moon         ],     #   .displace_d
+                    [   three,  purple, moon         ],
+                    [   three,  purple, oval         ],     #   .displace_e
+                    [   three,  purple, triangle     ],
+                    [   three,  purple, trapazoid    ],
 
-                    [   four,   black,  circle,     ],
-                    [   four,   green,  circle,     ],
-                    [   four,   white,  oval,       ],
-                    [   four,   blue,   oval,       ],
-                    [   four,   red,    moon,       ],
-                    [   four,   purple, triangle,   ],
-                    [   four,   purple, star,       ],      #   .displace_e6
-                    [   four,   cyan,   square,     ],
-                    [   four,   cyan,   pentagon,   ],      #   .displace_e7
-                    [   four,   yellow, ellipse,    ],      #   Herd_Many.provision_triple
-                    [   four,   yellow, moon,       ],
-                    [   four,   silver, oval,       ],
+                    [   four,   black,  circle      ],
+                    [   four,   green,  circle      ],
+                    [   four,   white,  oval        ],
+                    [   four,   blue,   oval        ],
+                    [   four,   red,    moon        ],
+                    [   four,   purple, triangle    ],
+                    [   four,   purple, star        ],      #   .displace_e6
+                    [   four,   cyan,   square      ],
+                    [   four,   cyan,   pentagon    ],      #   .displace_e7
+                    [   four,   yellow, ellipse     ],      #   Herd_Many.provision_triple
+                    [   four,   yellow, moon        ],
+                    [   four,   silver, oval        ],
+
+                    [   five,   silver, moon,       ],
+                    [   five,   silver, ellipse,    ],
+                    [   five,   purple, oval,       ],      #   Horde_23.provision_triple_step2
+                    [   five,   silver, oval,       ],
+                    [   five,   silver, circle,     ],      #   Horde_23 (with skip 0) calls create_herd_4567
+
+                    [   six,    green,  square,     ],
+                    [   six,    green,  circle,     ],
+                    [   six,    green,  triangle,   ],
                 ]:
                     #my_line('%s, %s, %s', number, color, shape)
                     conjure_numbered_color_shape(number, color, shape)
@@ -512,6 +522,6 @@ def gem():
 
         line('PASSED: test_cache')
 
-        #dump_caches('numbered_colored_shape')
+        dump_caches('numbered_colored_shape')
         #dump_caches('numbered_shape')
         #dump_caches('shape_number')

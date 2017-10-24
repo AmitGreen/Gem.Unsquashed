@@ -18,7 +18,7 @@ GEM_FILES = \
 	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
 	../Gem/Global.py \
-    ../Gem/Herd.py \
+    ../Gem/Herd.py ../Gem/Horde.py \
     ../Gem/Import.py ../Gem/IO.py \
     ../Gem/Map.py ../Gem/Method.py \
     ../Gem/Output.py \
@@ -152,7 +152,7 @@ clean:
 	rm -f d.py de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
-	rm -f gd.py gg.py gh.py
+	rm -f gd.py gg.py ghe.py gho.py
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -218,7 +218,8 @@ links:
 	ln -s ../Gem/FileStatus.py                          fs.py
 	ln -s ../Gem/Codec.py                               gd.py
 	ln -s ../Gem/Global.py                              gg.py
-	ln -s ../Gem/Herd.py                                gh.py
+	ln -s ../Gem/Herd.py                                ghe.py
+	ln -s ../Gem/Horde.py                               gho.py
 	ln -s ../Sapphire/Parse.py                          h0p.py
 	ln -s ../Sapphire/Parse1.py                         h1p.py
 	ln -s ../Sapphire/Parse1Atom.py                     h1pa.py

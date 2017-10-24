@@ -5,6 +5,7 @@
 def gem():
     require_gem('Gem.Absent')
     require_gem('Gem.Herd')
+    require_gem('Gem.Horde')
 
 
     map__get     = Map.get
@@ -199,7 +200,7 @@ def gem():
 
                 r = Meta(k1, k2, k3)
 
-                store(k1, create_herd_1(k2, create_herd_2(first.k3, k3, first, r)))
+                store(k1, create_horde_2(1, first.k3, k3, first, r))
 
                 return r
 
@@ -316,16 +317,33 @@ def gem():
 
                     continue
 
-                line('%s:',
+                line('%s: (%s)',
                      (
                         portray_string(k)  if k.__class__ is String  else
                         k                  if k.__class__ is Integer else
                         k.display_token()
-                     ))
+                     ),
+                     v.__class__.__name__)
+
+                prefix_1 = '  '
+
+                if v.skip is not 0:
+                    k2 = v.sample.k2
+                    line('%s%s (skip %d):',
+                         prefix_1,
+                         (
+                             portray_string(k2)  if k2.__class__ is String  else
+                             k2                  if k2.__class__ is Integer else
+                             k2.display_token()
+                         ),
+                         v.skip)
+
+                    prefix_1 += ('  ' * v.skip)
 
                 for [k2, w] in v.items_sorted_by_key():
                     if not w.is_herd:
-                        line('  %s: %s',
+                        line('%s%s: %s',
+                             prefix_1,
                              (
                                 portray_string(k2)  if k2.__class__ is String  else
                                 k2                  if k2.__class__ is Integer else
@@ -335,23 +353,29 @@ def gem():
 
                         continue
 
-                    line('  %s:',
+                    line('%s%s: (%s)',
+                         prefix_1,
                          (
                             portray_string(k2)  if k2.__class__ is String  else
                             k2                  if k2.__class__ is Integer else
                             k2.display_token()
-                         ))
+                         ),
+                         w.__class__.__name__)
+
+                    prefix_2 = prefix_1 + '  '
 
                     for [k3, x] in w.items_sorted_by_key():
                         if not x.is_herd:
-                            line('    %s: %s', k3.display_token(), x.display_token())
+                            line('%s%s: %s', prefix_2, k3.display_token(), x.display_token())
                             continue
 
-                        line('    %s:', k3.display_token())
+                        line('%s%s:', prefix_2, k3.display_token())
+
+                        prefix_3 = prefix_2 + '  '
 
                         for [k4, y] in x.items_sorted_by_key():
-                            line('      %s:', k4.display_token())
-                            line('        %s', y.display_token())
+                            line('%s%s:', prefix_3, k4.display_token())
+                            line('%s  %s', prefix_3, y.display_token())
 
         @export
         def dump_caches(use_name = none):

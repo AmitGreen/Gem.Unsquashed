@@ -27,6 +27,9 @@ def gem():
     #
 
 
+    require_gem('Gem.Method')
+
+
     map__lookup  = Map.get
     map__provide = Map.setdefault
     map__store   = Map.__setitem__
@@ -75,6 +78,7 @@ def gem():
         k1      = absent
         k2      = absent
         k3      = absent
+        skip    = 0
 
 
         @static_method
@@ -93,6 +97,7 @@ def gem():
         k1      = absent
         k2      = absent
         k3      = absent
+        skip    = 0
 
 
         def __init__(t, a, v):
@@ -177,6 +182,7 @@ def gem():
         k1      = absent
         k2      = absent
         k3      = absent
+        skip    = 0
 
 
         def displace(t, k, v):
@@ -318,6 +324,7 @@ def gem():
         k1      = absent
         k2      = absent
         k3      = absent
+        skip    = 0
 
 
         def displace(t, k, v):
@@ -513,6 +520,7 @@ def gem():
         k1      = absent
         k2      = absent
         k3      = absent
+        skip    = 0
 
 
         def displace(t, k, v):
@@ -915,6 +923,7 @@ def gem():
         k1      = absent
         k2      = absent
         k3      = absent
+        skip    = 0
 
 
         if __debug__:
@@ -937,23 +946,8 @@ def gem():
             return t
 
 
-        insert = inject
-
-
-        if is_python_2:
-            def items_sorted_by_key(t):
-                keys  = t.keys()
-                value = t.__getitem__
-
-                for k in sorted_list(keys, key = keys[0].nub):
-                    yield (( k, value(k) ))
-        else:
-            def items_sorted_by_key(t):
-                keys  = List(t.keys())
-                value = t.__getitem__
-
-                for k in sorted_list(keys, key = keys[0].nub):
-                    yield (( k, value(k) ))
+        insert              = inject
+        items_sorted_by_key = items_sorted_by_key__herd_many
 
 
         def provision(t, k, v):
@@ -970,8 +964,6 @@ def gem():
 
 
         def provision_triple(t, displace, Meta, k1, k2, k3):
-            #my_line('%s, %s, %s', k1, k2, k3)
-
             second = map__lookup(t, k2, absent)
 
             if second.k3 is k3:
@@ -988,7 +980,6 @@ def gem():
                 return r
 
             return second.provision_triple_step2(map__store, t, Meta, k1, k2, k3)
-            assert 0
 
 
         def provision_triple_step2(t, _displace, _parent, Meta, k1, k2, k3):
@@ -1048,6 +1039,7 @@ def gem():
         return t
 
 
+    @share
     def create_herd_4567(a, b, c, d, v, w, x, y):
         assert (a is not absent) and (a is not b) and (a is not c) and (a is not d)
         assert (b is not absent) and (b is not c) and (b is not d)
