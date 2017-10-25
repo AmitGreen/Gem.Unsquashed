@@ -1395,11 +1395,12 @@ def gem():
             z_sanitize = (z.sanitize   if z.is_herd else   0)
             z          = ((0   if reference_count(z) is 3 else   z)   if z_sanitize is 0 else   z_sanitize())
 
-            #my_line('v,w,x,y,z: %r,%r,%r,%r,%r', v, w, z, y, z)
-            #if t.e6 is not absent:
-            #    my_line('z6:%r', t.z6)
-            #    if t.e7 is not absent:
-            #        my_line('z7:%r', t.z7)
+            #if 7 is 7:
+            #    my_line('v,w,x,y,z: %r,%r,%r,%r,%r', v, w, x, y, z)
+            #    if t.e6 is not absent:
+            #        my_line('z6:%r', t.z6)
+            #        if t.e7 is not absent:
+            #            my_line('z7:%r', t.z7)
 
             #   a/v:    unknown
             if v is 0:
@@ -1452,10 +1453,11 @@ def gem():
                         #   .c/.x:    keep
                         #   .d/.y:    unknown
                         if y is 0:
+                            #my_line('a=a;b=b;c=c;y:0;index=3; %r:%r; %r:%r; %r:%r', t.a, v, t.b, w, t.c, x)
                             a     = t.a
                             b     = t.b
                             c     = t.c
-                            index = 2
+                            index = 3
                         else:
                             #   .a/.v:    keep
                             #   .b/.w:    keep
@@ -1942,6 +1944,46 @@ def gem():
 
         def provision_triple_step2__312(t, _displace, _parent, Meta, k1, k2, k3):
             return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2, k3)))
+
+
+        def sanitize(t):
+            append_remove = 0
+            value         = t.__getitem__
+            store         = t.__setitem__
+
+            for k in t.keys():
+                v = value(k).sanitize()
+
+                if v is 0:
+                    if append_remove is 0:
+                        remove_many = [k]
+                        append_remove = remove_many.append
+                        continue
+
+                    append_remove(k)
+                    continue
+
+                store(k, v)
+
+            if append_remove is 0:
+                return t
+
+            if length(remove_many) == length(t):
+                t.clear()
+                return 0
+
+            zap = t.__delitem__
+
+            for v in remove_many:
+                zap(v)
+
+            if length(t) is 1:
+                if is_python_2:
+                    return t.itervalues().next()
+
+                return t.values[0]
+
+            return t
 
 
     empty_herd = Herd_0()

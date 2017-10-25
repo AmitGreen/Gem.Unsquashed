@@ -252,51 +252,59 @@ def gem():
                     ((   three, ellipse      )),
                     ((   five,  ellipse      )),
                     ((   four,  ellipse      )),
-#
-#                    ((   two,   moon         )),
-#                    ((   five,  moon         )),
-#                    ((   three, moon         )),
-#                    ((   four,  moon         )),
-#                    ((   one,   moon         )),
-#
-#                    ((   five,  pentagon     )),
-#                    ((   four,  pentagon     )),
-#                    ((   one,   pentagon     )),
-#                    ((   six,   pentagon     )),
-#                    ((   three, pentagon     )),
-#                    ((   two,   pentagon     )),
-#
-#                    ((   one,  square        )),
-#                    ((   two,  square        )),
-#
-#                    ((   four,  star         )),
-#                    ((   three, star         )),
-#                    ((   two,   star         )),
-#                    ((   one,   star         )),
-#
-#                    ((   five,  trapazoid    )),
-#                    ((   four,  trapazoid    )),
-#                    ((   six,   trapazoid    )),
-#                    ((   three, trapazoid    )),
-#                    ((   nine,  trapazoid    )),
-#                    ((   eight, trapazoid    )),
-#                    ((   two,   trapazoid    )),
-#                    ((   one,   trapazoid    )),
-#                    ((   seven, trapazoid    )),
-#
-#                    ((   one, triangle       )),
+
+                    ((   two,   moon         )),
+                    ((   five,  moon         )),
+                    ((   three, moon         )),
+                    ((   four,  moon         )),
+                    ((   one,   moon         )),
+
+                    ((   five,  pentagon     )),
+                    ((   four,  pentagon     )),
+                    ((   one,   pentagon     )),
+                    ((   six,   pentagon     )),
+                    ((   three, pentagon     )),
+                    ((   two,   pentagon     )),
+
+                    ((   one,  square        )),
+                    ((   two,  square        )),
+
+                    ((   four,  star         )),
+                    ((   three, star         )),
+                    ((   two,   star         )),
+                    ((   one,   star         )),
+
+                    ((   five,  trapazoid    )),
+                    ((   four,  trapazoid    )),
+                    ((   six,   trapazoid    )),
+                    ((   three, trapazoid    )),
+                    ((   nine,  trapazoid    )),
+                    ((   eight, trapazoid    )),
+                    ((   two,   trapazoid    )),
+                    ((   one,   trapazoid    )),        #   Herd_Many.sanitize
+                    ((   seven, trapazoid    )),
+
+                    ((   one, triangle       )),
                 ))
 
 
             keep = LiquidSet()
             add  = keep.add
 
-            for loop in [3, 5]:
+            for loop in [7, 5, 3, 2, 1]:
                 total = 0
 
                 for [number, shape] in test_list:
+                    #if (number is one) and (shape is star):
+                    #    my_line('BEFORE ADDING 1S:')
+                    #    dump_caches(cache.name)
+
                     v = conjure_numbered_shape(number, shape)
                     total += 1
+
+                    #if (number is one) and (shape is star):
+                    #    my_line('AFTER ADDING 1S: %r', v)
+                    #    dump_caches(cache.name)
 
                     if not (total % loop):
                         add(v)
@@ -305,21 +313,26 @@ def gem():
 
                 assert cache.count_nested() == length(test_list)
 
-                #line('BEFORE: (loop %d)', loop)
-                #for v in keep:
-                #    line('KEEP:%r', v)
-                #v=0
-                #dump_caches(cache.name)
+                #if 7 is 7:
+                #    my_line('BEFORE: (loop %d)', loop)
+                #    for v in keep:
+                #        my_line('KEEP:%r', v)
+                #    v=0
+                #    dump_caches(cache.name)
 
                 cache.sanitize()
 
-                #line('AFTER: (loop %d)', loop)
-                #for v in keep:
-                #    line('KEEP:%r', v)
-                #v=0
-                #dump_caches(cache.name)
+                #if 7 is 7:
+                #    my_line('AFTER: (loop %d)', loop)
+                #    for v in keep:
+                #        my_line('KEEP:%r', v)
+                #    v=0
+                #    dump_caches(cache.name)
 
                 assert cache.count_nested() is length(keep)
+
+                #if 7 is 7:
+                #    my_line('keeping %d of %d', length(keep), length(test_list))
 
             del add, keep
 
@@ -327,7 +340,8 @@ def gem():
 
             assert cache.count_nested() is 0
 
-            #my_line('CLEANUP COMPLETE')
+            #if 7:
+            #    my_line('CLEANUP COMPLETE')
 
 
         def test_conjure_unique_dual():

@@ -83,18 +83,20 @@ def gem():
 
                 store(k, v)
 
-            if append_remove is not 0:
-                if length(remove_many) == length(t):
-                    t.clear()
-                    return
+            if append_remove is 0:
+                return t
 
-                zap = t.__delitem__
+            if length(remove_many) == length(t):
+                t.clear()
+                return t
 
-                for v in remove_many:
-                    zap(v)
+            zap = t.__delitem__
 
+            for v in remove_many:
+                zap(v)
 
             return t
+
 
         store = map__store
 
