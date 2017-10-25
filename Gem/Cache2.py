@@ -64,13 +64,28 @@ def gem():
         provide = map__provide
 
 
-        def sanitize(t):
+        def scrub(t):
             append_remove = 0
             value         = t.__getitem__
             store         = t.__setitem__
 
             for k in t.keys():
-                v = value(k).sanitize()
+                v       = value(k)
+                v_scrub = v.scrub
+
+                if v_scrub is 0:
+                    if reference_count(v) is not 3:
+                        continue
+
+                    if append_remove is 0:
+                        remove_many = [k]
+                        append_remove = remove_many.append
+                        continue
+
+                    append_remove(k)
+                    continue
+
+                v = v_scrub()
 
                 if v is 0:
                     if append_remove is 0:

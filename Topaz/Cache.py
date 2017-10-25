@@ -137,7 +137,7 @@ def gem():
 
 
             display_token = __repr__
-            sanitize      = sanitize_4
+            scrub         = 0
 
 
         NumberedShape.k1 = NumberedShape.number
@@ -281,7 +281,7 @@ def gem():
                     ((   nine,  trapazoid    )),
                     ((   eight, trapazoid    )),
                     ((   two,   trapazoid    )),
-                    ((   one,   trapazoid    )),        #   Herd_Many.sanitize
+                    ((   one,   trapazoid    )),        #   Herd_Many.scrub
                     ((   seven, trapazoid    )),
 
                     ((   one, triangle       )),
@@ -320,7 +320,7 @@ def gem():
                 #    v=0
                 #    dump_caches(cache.name)
 
-                cache.sanitize()
+                cache.scrub()
 
                 #if 7 is 7:
                 #    my_line('AFTER: (loop %d)', loop)
@@ -336,7 +336,7 @@ def gem():
 
             del add, keep
 
-            cache.sanitize()
+            cache.scrub()
 
             assert cache.count_nested() is 0
 

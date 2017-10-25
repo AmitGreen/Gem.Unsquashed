@@ -374,12 +374,59 @@ def gem():
             return r
 
 
-        def sanitize(t):
-            v = t.v.sanitize()
-            w = t.w.sanitize()
+        def scrub(t):
+            v = t.v
+            w = t.w
 
-            if v is 0:  return w
-            if w is 0:  return v
+            v_scrub = v.scrub
+            w_scrub = w.scrub
+
+            if v_scrub is 0:
+                if reference_count(v) is 3:
+                    if w_scrub is 0:
+                        if reference_count(w) is 3:
+                            return 0
+
+                        return w
+
+                    return w_scrub()
+
+                if w_scrub is 0:
+                    if reference_count(w) is 3:
+                        return v
+
+                    return t
+
+                w = w_scrub()
+
+                if w is 0:
+                    return v
+
+                t.w = w
+                return t
+
+            v = v_scrub()
+
+            if v is 0:
+                if w_scrub is 0:
+                    if reference_count(w) is 3:
+                        return 0
+
+                    return w
+
+                return w_scrub()
+
+            if w_scrub is 0:
+                if reference_count(w) is 3:
+                    return v
+
+                t.v = v
+                return t
+
+            w = w_scrub()
+
+            if w is 0:
+                return v
 
             t.v = v
             t.w = w
@@ -671,10 +718,32 @@ def gem():
             return r
 
 
-        def sanitize(t):
-            v = t.v.sanitize()
-            w = t.w.sanitize()
-            x = t.x.sanitize()
+        def scrub(t):
+            v = t.v
+            w = t.w
+            x = t.x
+
+            v_scrub = v.scrub
+            w_scrub = w.scrub
+            x_scrub = x.scrub
+
+            if v_scrub is 0:
+                if reference_count(v) is 3:
+                    v = 0
+            else:
+                v = v_scrub()
+
+            if w_scrub is 0:
+                if reference_count(w) is 3:
+                    w = 0
+            else:
+                w = w_scrub()
+
+            if x_scrub is 0:
+                if reference_count(x) is 3:
+                    x = 0
+            else:
+                x = x_scrub()
 
             if v is 0:
                 if w is 0:  return x
@@ -1315,21 +1384,40 @@ def gem():
             return r
 
 
-        def sanitize(t):
+        def scrub(t):
             v = t.v
             w = t.w
             x = t.x
             y = t.y
 
-            v_sanitize = (v.sanitize   if v.is_herd else   0)
-            w_sanitize = (w.sanitize   if w.is_herd else   0)
-            x_sanitize = (x.sanitize   if x.is_herd else   0)
-            y_sanitize = (y.sanitize   if y.is_herd else   0)
+            v_scrub = v.scrub
+            w_scrub = w.scrub
+            x_scrub = x.scrub
+            y_scrub = y.scrub
 
-            v = ((0   if reference_count(v) is 3 else   v)   if v_sanitize is 0 else   v_sanitize())
-            w = ((0   if reference_count(w) is 3 else   w)   if w_sanitize is 0 else   w_sanitize())
-            x = ((0   if reference_count(x) is 3 else   x)   if x_sanitize is 0 else   x_sanitize())
-            y = ((0   if reference_count(y) is 3 else   y)   if y_sanitize is 0 else   y_sanitize())
+            if v_scrub is 0:
+                if reference_count(v) is 3:
+                    v = 0
+            else:
+                v = v_scrub()
+
+            if w_scrub is 0:
+                if reference_count(w) is 3:
+                    w = 0
+            else:
+                w = w_scrub()
+
+            if x_scrub is 0:
+                if reference_count(x) is 3:
+                    x = 0
+            else:
+                x = x_scrub()
+
+            if y_scrub is 0:
+                if reference_count(y) is 3:
+                    y = 0
+            else:
+                y = y_scrub()
 
             if t.e is absent:
                 if v is 0:
@@ -1391,9 +1479,14 @@ def gem():
                 #my_line('t')
                 return t
 
-            z          = t.z
-            z_sanitize = (z.sanitize   if z.is_herd else   0)
-            z          = ((0   if reference_count(z) is 3 else   z)   if z_sanitize is 0 else   z_sanitize())
+            z       = t.z
+            z_scrub = z.scrub
+
+            if z_scrub is 0:
+                if reference_count(z) is 3:
+                    z = 0
+            else:
+                z = z_scrub()
 
             #if 7 is 7:
             #    my_line('v,w,x,y,z: %r,%r,%r,%r,%r', v, w, x, y, z)
@@ -1486,16 +1579,14 @@ def gem():
                                 #   .d /.y :  keep
                                 #   .e /.z :  keep
                                 #   .e6/.z6:  unknown
-                                z6          = t.z6
-                                z6_sanitize = (z6.sanitize   if z6.is_herd else   0)
-                                z6          = (
-                                                  (
-                                                      0   if reference_count(z6) is 3 else
-                                                      z6
-                                                  )
-                                                          if z6_sanitize is 0 else
-                                                  z6_sanitize()
-                                              )
+                                z6       = t.z6
+                                z6_scrub = z6.scrub
+
+                                if z6_scrub is 0:
+                                    if reference_count(z6) is 3:
+                                        z6 = 0
+                                else:
+                                    z6 = z6_scrub()
 
                                 if z6 is 0:
                                     a     = t.a
@@ -1522,16 +1613,14 @@ def gem():
                                     #   .e /.z :  keep
                                     #   .e6/.z6:  keep
                                     #   .e7/.z7:  unknown
-                                    z7          = t.z7
-                                    z7_sanitize = (z7.sanitize   if z7.is_herd else   0)
-                                    z6          = (
-                                                      (
-                                                          0   if reference_count(z6) is 3 else
-                                                          z6
-                                                      )
-                                                              if z6_sanitize is 0 else
-                                                      z6_sanitize()
-                                                  )
+                                    z7       = t.z7
+                                    z7_scrub = z7.scrub
+
+                                    if z7_scrub is 0:
+                                        if reference_count(z7) is 3:
+                                            z7 = 0
+                                    else:
+                                        z7 = z7_scrub()
 
                                     if z7 is 0:
                                         t.e7 = absent
@@ -1586,7 +1675,7 @@ def gem():
             #
 
             #
-            #   .a/.v:  keep or sanitize
+            #   .a/.v:  keep or scrub
             #   .b/.w:  unknown (unless index >= 1)
             #
             #   The following is done above (see comments there):
@@ -1598,8 +1687,8 @@ def gem():
             #               index = 1
             #
 
-            #   .a/.v:  keep or sanitize
-            #   .v/.w:  keep or sanitize
+            #   .a/.v:  keep or scrub
+            #   .v/.w:  keep or scrub
             #   .c/.x:  unknown (unless index >= 2)
             if index is 0:
                 if x is not 0:
@@ -1613,9 +1702,9 @@ def gem():
                     index = 2
 
 
-            #   .a/.v:  keep or sanitize
-            #   .v/.w:  keep or sanitize
-            #   .c/.x:  keep or sanitize
+            #   .a/.v:  keep or scrub
+            #   .v/.w:  keep or scrub
+            #   .c/.x:  keep or scrub
             #   .d/.y:  unknown (unless index >= 3)
             if index is 0:
                 if y is not 0:
@@ -1635,10 +1724,10 @@ def gem():
 
                     #my_line('c=d;x=y;index=3; %r:%r', c, x)
 
-            #   .a/.v:  keep or sanitize
-            #   .v/.w:  keep or sanitize
-            #   .c/.x:  keep or sanitize
-            #   .d/.y:  keep or sanitize
+            #   .a/.v:  keep or scrub
+            #   .v/.w:  keep or scrub
+            #   .c/.x:  keep or scrub
+            #   .d/.y:  keep or scrub
             #   .e/.z:  unknown (unless index >= 4)
             if index is 0:
                 if z is not 0:
@@ -1663,11 +1752,11 @@ def gem():
                 #else:
                 #    my_line('z:0;index:3')
 
-            #   .a /.v :    keep or sanitize
-            #   .v /.w :    keep or sanitize
-            #   .c /.x :    keep or sanitize
-            #   .d /.y :    keep or sanitize
-            #   .e /.z :    keep or sanitize
+            #   .a /.v :    keep or scrub
+            #   .v /.w :    keep or scrub
+            #   .c /.x :    keep or scrub
+            #   .d /.y :    keep or scrub
+            #   .e /.z :    keep or scrub
             #   .e6/.z6:    unknown (unless index is 5)
             if index is 5:
                 assert t.e6 is not absent
@@ -1695,9 +1784,14 @@ def gem():
 
                     return t
 
-                z6          = t.z6
-                z6_sanitize = (z6.sanitize   if z6.is_herd else   0)
-                z6          = ((0   if reference_count(z6) is 3 else   z6)   if z6_sanitize is 0 else   z6_sanitize())
+                z6       = t.z6
+                z6_scrub = z6.scrub
+
+                if z6_scrub is 0:
+                    if reference_count(z6) is 3:
+                        z6 = 0
+                else:
+                    z6 = z6_scrub()
 
                 if index is 0:
                     if z6 is not 0:
@@ -1729,12 +1823,12 @@ def gem():
                         z     = z6
                         index = 5
 
-            #   .a /.v :    keep or sanitize
-            #   .v /.w :    keep or sanitize
-            #   .c /.x :    keep or sanitize
-            #   .d /.y :    keep or sanitize
-            #   .e /.z :    keep or sanitize
-            #   .e6/.z6:    keep or sanitize
+            #   .a /.v :    keep or scrub
+            #   .v /.w :    keep or scrub
+            #   .c /.x :    keep or scrub
+            #   .d /.y :    keep or scrub
+            #   .e /.z :    keep or scrub
+            #   .e6/.z6:    keep or scrub
             #   .e7/.z7:    unknown
             if t.e7 is absent:
                 if index is 0:  return 0
@@ -1766,10 +1860,14 @@ def gem():
                 del t.z6
                 return t
 
+            z7       = t.z7
+            z7_scrub = z7.scrub
 
-            z7          = t.z7
-            z7_sanitize = (z7.sanitize   if z7.is_herd else   0)
-            z7          = ((0   if reference_count(z7) is 3 else   z7)   if z7_sanitize is 0 else   z7_sanitize())
+            if z7_scrub is 0:
+                if reference_count(z7) is 3:
+                    z7 = 0
+            else:
+                z7 = z7_scrub()
 
             #my_line('z7:%r', z7)
 
@@ -1946,13 +2044,28 @@ def gem():
             return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2, k3)))
 
 
-        def sanitize(t):
+        def scrub(t):
             append_remove = 0
             value         = t.__getitem__
             store         = t.__setitem__
 
             for k in t.keys():
-                v = value(k).sanitize()
+                v       = value(k)
+                v_scrub = v.scrub
+
+                if v_scrub is 0:
+                    if reference_count(v) is not 3:
+                        continue
+
+                    if append_remove is 0:
+                        remove_many = [k]
+                        append_remove = remove_many.append
+                        continue
+
+                    append_remove(k)
+                    continue
+
+                v = v_scrub()
 
                 if v is 0:
                     if append_remove is 0:

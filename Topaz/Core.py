@@ -9,7 +9,7 @@ def gem():
     require_gem('Gem.System')
 
 
-    from Gem import gem_global, reference_count, sanitize_4, values_tuple_sorted_by_key
+    from Gem import gem_global, reference_count, values_tuple_sorted_by_key
 
 
     gem_global.testing = true
@@ -20,6 +20,5 @@ def gem():
         #   Imported functions
         #
         'reference_count',              reference_count,
-        'sanitize_4',                   sanitize_4,
         'values_tuple_sorted_by_key',   values_tuple_sorted_by_key,
     )

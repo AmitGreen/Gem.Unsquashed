@@ -43,14 +43,3 @@ def gem():
     @export
     def return_self(t):
         return t
-
-
-    #
-    #   .sanitize_4
-    #
-    @export
-    def sanitize_4(t):
-        if reference_count(t) is 4:
-            return 0
-
-        return t
