@@ -374,6 +374,18 @@ def gem():
             return r
 
 
+        def sanitize(t):
+            v = t.v.sanitize()
+            w = t.w.sanitize()
+
+            if v is 0:  return w
+            if w is 0:  return v
+
+            t.v = v
+            t.w = w
+            return t
+
+
     class Herd_3(Object):
         __slots__ = ((
             'a',                        #   Any
@@ -657,6 +669,31 @@ def gem():
 
             displace(parent, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
             return r
+
+
+        def sanitize(t):
+            v = t.v.sanitize()
+            w = t.w.sanitize()
+            x = t.x.sanitize()
+
+            if v is 0:
+                if w is 0:  return x
+                if x is 0:  return w
+
+                return create_herd_2(t.b, t.c, w, x)
+
+            if w is 0:
+                if x is 0:  return v
+
+                return create_herd_2(t.a, t.c, v, x)
+
+            if x is 0:
+                return create_herd_2(t.a, t.b, v, w)
+
+            t.v = v
+            t.w = w
+            t.x = x
+            return t
 
 
     class Herd_4567(Object):
@@ -1276,6 +1313,490 @@ def gem():
 
             displace(parent, create_herd_many(a, b, c, d, e, e6, e7, k2, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
             return r
+
+
+        def sanitize(t):
+            #
+            #   a/v:    unknown
+            #
+            v = t.v.sanitize()
+            if v is 0:
+                #
+                #   This should be:
+                #
+                #       index = 0
+                #
+                #   However, instead the code that should be below:
+                #
+                #       if index is 0:
+                #           v = t.w.sanitize()
+                #           if v is not 0:
+                #               a     = t.b
+                #               index = 1
+                #
+                #   is inline'd into here and then rewritten as:
+                #
+                #       v = t.w.sanitize()
+                #       if v is 0:
+                #           index = 0
+                #       else:
+                #           a     = t.b
+                #           index = 1
+                #
+
+                #
+                #   .a/.v:    sanitize
+                #   .b/.w:    unknown
+                #
+                v = t.w.sanitize()
+                if v is 0:
+                    index = 0
+                else:
+                    a     = t.b
+                    index = 1
+            else:
+                #
+                #   .a/.v:    keep
+                #   .b/.w:    unknown
+                #
+                w = t.w.sanitize()
+                if w is 0:
+                    a     = t.a
+                    index = 1
+                else:
+                    #
+                    #   .a/.v:    keep
+                    #   .b/.w:    keep
+                    #   .c/.x:    unknown
+                    #
+                    x = t.x.sanitize()
+
+                    if x is 0:
+                        a     = t.a
+                        b     = t.b
+                        index = 2
+                    else:
+                        #
+                        #   .a/.v:    keep
+                        #   .b/.w:    keep
+                        #   .c/.x:    keep
+                        #   .d/.y:    unknown
+                        #
+                        y = t.y.sanitize()
+
+                        if y is 0:
+                            a     = t.a
+                            b     = t.b
+                            c     = t.c
+                            index = 2
+                        else:
+                            if t.e is absent:
+                                t.v = v
+                                t.w = w
+                                t.x = x
+                                t.y = y
+                                return t
+
+                            #
+                            #   .a/.v:    keep
+                            #   .b/.w:    keep
+                            #   .c/.x:    keep
+                            #   .d/.y:    keep
+                            #   .e/.z:    unknown
+                            #
+                            z = t.z.sanitize()
+
+                            if z is 0:
+                                a     = t.a
+                                b     = t.b
+                                c     = t.c
+                                d     = t.d
+                                index = 4
+                            else:
+                                e6 = t.e6
+                                if e6 is absent:
+                                    t.v = v
+                                    t.w = w
+                                    t.x = x
+                                    t.y = y
+                                    t.z = z
+                                    return t
+
+                                #
+                                #   .a /.v :  keep
+                                #   .b /.w :  keep
+                                #   .c /.x :  keep
+                                #   .d /.y :  keep
+                                #   .e /.z :  keep
+                                #   .e6/.z6:  unknown
+                                #
+                                z6 = t.z6.sanitize()
+
+                                if z6 is 0:
+                                    a     = t.a
+                                    b     = t.b
+                                    c     = t.c
+                                    d     = t.d
+                                    e     = t.e
+                                    index = 5
+                                else:
+                                    t.v  = v
+                                    t.w  = w
+                                    t.x  = x
+                                    t.y  = y
+                                    t.z  = z
+                                    t.z6 = z6
+
+                                    if t.e7 is absent:
+                                        return t
+
+                                    #
+                                    #   .a /.v :  keep
+                                    #   .b /.w :  keep
+                                    #   .c /.x :  keep
+                                    #   .d /.y :  keep
+                                    #   .e /.z :  keep
+                                    #   .e6/.z6:  keep
+                                    #   .e7/.z7:  unknown
+                                    #
+                                    z7 = t.z7.sanitize()
+
+                                    if z7 is 0:
+                                        t.e7 = absent
+                                        del t.z7
+                                        return t
+
+                                    t.z7 = z7
+                                    return t
+
+            #
+            #   At this point:
+            #
+            #       index is 0:
+            #               Ignore .a/.v
+            #               Ignore .b/.w
+            #               Examination from .c/.x
+            #
+            #       index is 1
+            #               keep either   .a/v or .b/w
+            #               ignore either .a/v or .b/w
+            #               Examination from .c/.x
+            #
+            #       index is 2:
+            #               keep   .a/.v
+            #               keep   .b/.w
+            #               ignore .c/.x
+            #               Examination from .d/.y
+            #
+            #       index is 3:
+            #               keep   .a/.v
+            #               keep   .b/.w
+            #               keep   .c/.x
+            #               ignore .d/.y
+            #               Examination from .e/.z
+            #
+            #       index is 4:
+            #               keep   .a/.v
+            #               keep   .b/.w
+            #               keep   .c/.x
+            #               keep   .d/.y
+            #               ignore .e/.z
+            #               Examination from .e6/.z6
+            #
+            #       index is 5:
+            #               keep   .a /.v
+            #               keep   .b /.w
+            #               keep   .c /.x
+            #               keep   .d /.y
+            #               keep   .e /.z
+            #               ignore .e6/.z6
+            #               Examination from .e7/.z7
+            #
+
+            #
+            #   .a/.v:  keep or sanitize
+            #   .b/.w:  unknown (unless index >= 1)
+            #
+            #   The following is done above (see comments there):
+            #
+            #       if index is 0:
+            #           v = t.w.sanitize()
+            #           if v is not 0:
+            #               a     = t.b
+            #               index = 1
+            #
+
+            #
+            #   .a/.v:  keep or sanitize
+            #   .v/.w:  keep or sanitize
+            #   .c/.x:  unknown (unless index >= 2)
+            #
+            if index is 0:
+                v = t.x.sanitize()
+
+                if v is not 0:
+                    a     = t.c
+                    index = 1
+            elif index is 1:
+                w = t.x.sanitize()
+
+                if w is not 0:
+                    b     = t.c
+                    index = 2
+
+
+            #
+            #   .a/.v:  keep or sanitize
+            #   .v/.w:  keep or sanitize
+            #   .c/.x:  keep or sanitize
+            #   .d/.y:  unknown (unless index >= 3)
+            #
+            if index is 0:
+                v = t.y.sanitize()
+
+                if v is not 0:
+                    a     = t.d
+                    index = 1
+            elif index is 1:
+                w = t.y.sanitize()
+
+                if w is not 0:
+                    b     = t.d
+                    index = 2
+            elif index is 2:
+                x = t.y.sanitize()
+
+                if x is not 0:
+                    c     = t.d
+                    index = 3
+
+            #
+            #   .a/.v:  keep or sanitize
+            #   .v/.w:  keep or sanitize
+            #   .c/.x:  keep or sanitize
+            #   .d/.y:  keep or sanitize
+            #   .e/.z:  unknown (unless index >= 4)
+            #
+            if t.e is absent:
+                if index is 0:  return 0
+                if index is 1:  return v
+                if index is 2:  return create_herd_2(a, b, v, w)
+
+                assert index is 3
+
+                return create_herd_3(a, b, c, v, w, x)
+
+            if index is 0:
+                v = t.z.sanitize()
+
+                if v is not 0:
+                    a     = t.e
+                    index = 1
+            elif index is 1:
+                w = t.z.sanitize()
+
+                if w is not 0:
+                    b     = t.e
+                    index = 2
+            elif index is 2:
+                x = t.z.sanitize()
+
+                if x is not 0:
+                    c     = t.e
+                    index = 3
+            elif index is 3:
+                y = t.z.sanitize()
+
+                if y is not 0:
+                    d     = t.e
+                    index = 4
+
+            #
+            #   .a /.v :    keep or sanitize
+            #   .v /.w :    keep or sanitize
+            #   .c /.x :    keep or sanitize
+            #   .d /.y :    keep or sanitize
+            #   .e /.z :    keep or sanitize
+            #   .e6/.z6:    unknown (unless index >= 5)
+            #
+            if t.e6 is absent:
+                if index is 0:  return 0
+                if index is 1:  return v
+                if index is 2:  return create_herd_2(a, b, v, w)
+                if index is 3:  return create_herd_3(a, b, c, v, w, x)
+
+                assert index is 4
+
+                t.a = a
+                t.b = b
+                t.c = c
+                t.d = d
+
+                t.v = v
+                t.w = w
+                t.x = x
+                t.y = y
+
+                t.e = absent
+                del t.z
+
+                return t
+
+            if index is 0:
+                v = t.z6.sanitize()
+
+                if v is not 0:
+                    a     = t.e6
+                    index = 1
+            elif index is 1:
+                w = t.z6.sanitize()
+
+                if w is not 0:
+                    b     = t.e6
+                    index = 2
+            elif index is 2:
+                x = t.z6.sanitize()
+
+                if x is not 0:
+                    c     = t.e6
+                    index = 3
+            elif index is 3:
+                y = t.z6.sanitize()
+
+                if y is not 0:
+                    d     = t.e6
+                    index = 4
+            elif index is 4:
+                z = t.z6.sanitize()
+
+                if z is not 0:
+                    e     = t.e6
+                    index = 5
+            else:
+                assert index is 5
+
+            #
+            #   .a /.v :    keep or sanitize
+            #   .v /.w :    keep or sanitize
+            #   .c /.x :    keep or sanitize
+            #   .d /.y :    keep or sanitize
+            #   .e /.z :    keep or sanitize
+            #   .e6/.z6:    keep or sanitize
+            #   .e7/.z7:    unknown
+            #
+            if t.e7 is absent:
+                if index is 0:  return 0
+                if index is 1:  return v
+                if index is 2:  return create_herd_2(a, b, v, w)
+                if index is 3:  return create_herd_3(a, b, c, v, w, x)
+
+                t.a = a
+                t.b = b
+                t.c = c
+                t.d = d
+
+                t.v = v
+                t.w = w
+                t.x = x
+                t.y = y
+
+                if index is 4:
+                    t.e = absent
+                    del t.z, t.z6
+                    return t
+
+                assert index is 5
+
+                t.e = e
+                t.z = z
+
+                t.e6 = absent
+                del t.z6
+                return t
+
+            if index is 0:
+                return t.z7.sanitize()
+
+            if index is 1:
+                w = t.z7.sanitize()
+
+                if w is 0:
+                    return v
+
+                return create_herd_2(a, t.e7, v, w)
+
+            if index is 2:
+                x = t.z7.sanitize()
+
+                if x is 0:
+                    return create_herd_2(a, b, v, w)
+
+                return create_herd_3(a, b, t.e7, v, w, x)
+
+            if index is 3:
+                y = t.z7.sanitize()
+
+                if y is 0:
+                    return create_herd_3(a, b, c, v, w, x)
+
+                t.a = a
+                t.b = b
+                t.c = c
+                t.d = t.e7
+
+                t.v = v
+                t.w = w
+                t.x = x
+                t.y = y
+
+                t.e = absent
+                del t.z, t.z6, t.z7
+
+                return t
+
+            t.a = a
+            t.b = b
+            t.c = c
+            t.d = d
+
+            t.v = v
+            t.w = w
+            t.x = x
+            t.y = y
+
+            if index is 4:
+                z = t.z7.sanitize()
+
+                if z is 0:
+                    t.e = absent
+                    del t.z, t.z6, t.z7
+                    return t
+
+                t.e = t.e7
+                t.z = z
+
+                t.e6 = absent
+                del t.z6, t.z7
+                return t
+
+            assert index is 5
+
+            t.e = e
+            t.z = z
+
+            z6 = t.z7.sanitize()
+
+            if z6 is 0:
+                t.e6 = absent
+                del t.z6, t.z7
+                return t
+
+            t.e6 = t.e7
+            t.z6 = z6
+
+            t.e7 = absent
+            del t.z7
+            return t
 
 
     class Herd_Many(Map):

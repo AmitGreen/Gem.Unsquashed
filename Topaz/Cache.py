@@ -136,6 +136,7 @@ def gem():
 
 
             display_token = __repr__
+            sanitize      = sanitize_4
 
 
         NumberedShape.k1 = NumberedShape.number
@@ -247,50 +248,76 @@ def gem():
                     ((   one,   ellipse      )),
                     ((   seven, ellipse      )),
                     ((   six,   ellipse      )),
-                    ((   three, ellipse      )),
-                    ((   five,  ellipse      )),
-                    ((   four,  ellipse      )),
-
-                    ((   two,   moon         )),
-                    ((   five,  moon         )),
-                    ((   three, moon         )),
-                    ((   four,  moon         )),
-                    ((   one,   moon         )),
-
-                    ((   five,  pentagon     )),
-                    ((   four,  pentagon     )),
-                    ((   one,   pentagon     )),
-                    ((   six,   pentagon     )),
-                    ((   three, pentagon     )),
-                    ((   two,   pentagon     )),
-
-                    ((   one,  square        )),
-                    ((   two,  square        )),
-
-                    ((   four,  star         )),
-                    ((   three, star         )),
-                    ((   two,   star         )),
-                    ((   one,   star         )),
-
-                    ((   five,  trapazoid    )),
-                    ((   four,  trapazoid    )),
-                    ((   six,   trapazoid    )),
-                    ((   three, trapazoid    )),
-                    ((   nine,  trapazoid    )),
-                    ((   eight, trapazoid    )),
-                    ((   two,   trapazoid    )),
-                    ((   one,   trapazoid    )),
-                    ((   seven, trapazoid    )),
-
-                    ((   one, triangle       )),
+#                    ((   three, ellipse      )),
+#                    ((   five,  ellipse      )),
+#                    ((   four,  ellipse      )),
+#
+#                    ((   two,   moon         )),
+#                    ((   five,  moon         )),
+#                    ((   three, moon         )),
+#                    ((   four,  moon         )),
+#                    ((   one,   moon         )),
+#
+#                    ((   five,  pentagon     )),
+#                    ((   four,  pentagon     )),
+#                    ((   one,   pentagon     )),
+#                    ((   six,   pentagon     )),
+#                    ((   three, pentagon     )),
+#                    ((   two,   pentagon     )),
+#
+#                    ((   one,  square        )),
+#                    ((   two,  square        )),
+#
+#                    ((   four,  star         )),
+#                    ((   three, star         )),
+#                    ((   two,   star         )),
+#                    ((   one,   star         )),
+#
+#                    ((   five,  trapazoid    )),
+#                    ((   four,  trapazoid    )),
+#                    ((   six,   trapazoid    )),
+#                    ((   three, trapazoid    )),
+#                    ((   nine,  trapazoid    )),
+#                    ((   eight, trapazoid    )),
+#                    ((   two,   trapazoid    )),
+#                    ((   one,   trapazoid    )),
+#                    ((   seven, trapazoid    )),
+#
+#                    ((   one, triangle       )),
                 ))
 
 
-            for loop in [1, 2]:
+            keep = LiquidSet()
+            add  = keep.add
+
+            for loop in [3, 5]:
+                total = 0
+
                 for [number, shape] in test_list:
-                    conjure_numbered_shape(number, shape)
+                    v = conjure_numbered_shape(number, shape)
+                    total += 1
+
+                    if not (total % loop):
+                        add(v)
+
+                del v
 
                 assert cache.count_nested() == length(test_list)
+
+                line('BEFORE: (loop %d)', loop)
+                dump_caches(cache.name)
+
+                cache.sanitize()
+
+                line('AFTER: (loop %d)', loop)
+                dump_caches(cache.name)
+
+                assert cache.count_nested() is length(keep)
+
+            del add, keep
+
+            cache.sanitize()
+            assert cache.count_nested() is 0
 
 
         def test_conjure_unique_dual():
@@ -317,20 +344,21 @@ def gem():
             test_conjure_dual__X(shape_number_cache, conjure_numbered_shape__21)
 
 
-            for v in [circle, ellipse, moon, pentagon, square, star, trapazoid, triangle]:
-                w = shape_number_cache[v]
+            if 0:
+                for v in [circle, ellipse, moon, pentagon, square, star, trapazoid, triangle]:
+                    w = shape_number_cache[v]
 
-                if w.is_herd:
-                    value = 1
+                    if w.is_herd:
+                        value = 1
 
-                    for [number, x] in w.items_sorted_by_key():
-                        assert number.value is value
-                        assert x.number is number
-                        assert x.shape  is v
+                        for [number, x] in w.items_sorted_by_key():
+                            assert number.value is value
+                            assert x.number is number
+                            assert x.shape  is v
 
-                        value += 1
-                else:
-                    assert w.number.value is 1
+                            value += 1
+                    else:
+                        assert w.number.value is 1
 
 
 
@@ -345,7 +373,7 @@ def gem():
                     ((   one,   red,     star         )),
                     ((   one,   red,     trapazoid    )),
                     ((   one,   red,     triangle     )),
- 
+
                     ((   two,   cyan,    oval         )),     #   Herd_2.provision_triple__312
                     ((   two,   cyan,    star         )),
                     ((   two,   cyan,    triangle     )),
