@@ -433,6 +433,10 @@ def gem():
             return t
 
 
+        def values(t):
+            return ((t.v, t.w))
+
+
     class Herd_3(Object):
         __slots__ = ((
             'a',                        #   Any
@@ -763,6 +767,10 @@ def gem():
             t.w = w
             t.x = x
             return t
+
+
+        def values(t):
+            return ((t.v, t.w, t.x))
 
 
     class Herd_4567(Object):
@@ -1462,7 +1470,7 @@ def gem():
                         return create_herd_2(t.a, t.c, v, x)
 
                     #my_line('a/v,c/x,d/y')
-                    return create_herd_2(t.a, t.c, t.d, v, x, y)
+                    return create_herd_3(t.a, t.c, t.d, v, x, y)
 
                 if x is 0:
                     if y is 0:
@@ -1946,6 +1954,19 @@ def gem():
             return t
 
 
+        def values(t):
+            if t.e is absent:
+                return ((t.v, t.w, t.x, t.y))
+
+            if t.e6 is absent:
+                return ((t.v, t.w, t.x, t.y, t.z))
+
+            if t.e7 is absent:
+                return ((t.v, t.w, t.x, t.y, t.z, t.z6))
+
+            return ((t.v, t.w, t.x, t.y, t.z, t.z6, t.z7))
+
+
     class Herd_Many(Map):
         __slots__ = (())
 
@@ -2094,7 +2115,7 @@ def gem():
                 if is_python_2:
                     return t.itervalues().next()
 
-                return t.values[0]
+                return iterate(t.values()).__next__()
 
             return t
 

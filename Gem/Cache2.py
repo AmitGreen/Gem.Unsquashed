@@ -13,6 +13,53 @@ def gem():
     map__store   = Map.__setitem__
 
 
+    def scrub__cache(t):
+        append_remove = 0
+        value         = t.__getitem__
+        store         = t.__setitem__
+
+        for k in t.keys():
+            v       = value(k)
+            v_scrub = v.scrub
+
+            if v_scrub is 0:
+                if reference_count(v) is not 3:
+                    continue
+
+                if append_remove is 0:
+                    remove_many = [k]
+                    append_remove = remove_many.append
+                    continue
+
+                append_remove(k)
+                continue
+
+            v = v_scrub()
+
+            if v is 0:
+                if append_remove is 0:
+                    remove_many = [k]
+                    append_remove = remove_many.append
+                    continue
+
+                append_remove(k)
+                continue
+
+            store(k, v)
+
+        if append_remove is 0:
+            return
+
+        if length(remove_many) == length(t):
+            t.clear()
+            return
+
+        zap = t.__delitem__
+
+        for v in remove_many:
+            zap(v)
+
+
     class LiquidMap(Map):
         __slots__ = ((
             'name',                             #   String+
@@ -35,6 +82,7 @@ def gem():
 
         lookup  = map__get
         provide = map__provide
+        scrub   = scrub__cache
         store   = map__store
 
 
@@ -62,58 +110,8 @@ def gem():
 
         lookup  = map__get
         provide = map__provide
-
-
-        def scrub(t):
-            append_remove = 0
-            value         = t.__getitem__
-            store         = t.__setitem__
-
-            for k in t.keys():
-                v       = value(k)
-                v_scrub = v.scrub
-
-                if v_scrub is 0:
-                    if reference_count(v) is not 3:
-                        continue
-
-                    if append_remove is 0:
-                        remove_many = [k]
-                        append_remove = remove_many.append
-                        continue
-
-                    append_remove(k)
-                    continue
-
-                v = v_scrub()
-
-                if v is 0:
-                    if append_remove is 0:
-                        remove_many = [k]
-                        append_remove = remove_many.append
-                        continue
-
-                    append_remove(k)
-                    continue
-
-                store(k, v)
-
-            if append_remove is 0:
-                return t
-
-            if length(remove_many) == length(t):
-                t.clear()
-                return t
-
-            zap = t.__delitem__
-
-            for v in remove_many:
-                zap(v)
-
-            return t
-
-
-        store = map__store
+        scrub   = scrub__cache
+        store   = map__store
 
 
         if is_python_2:

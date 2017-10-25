@@ -59,6 +59,7 @@ def gem():
 
 
             display_token = __repr__
+            scrub         = 0
 
 
         Number.nub = Number.value.__get__
@@ -145,7 +146,7 @@ def gem():
 
 
         #
-        #   Conjure functions
+        #   Conjure functions (number)
         #
         number_cache   = create_cache('number')
         lookup_number  = number_cache.lookup
@@ -165,6 +166,9 @@ def gem():
             return provide_number(r.value, r)
 
 
+        #
+        #   Conjure functions (other)
+        #
         conjure_color = produce_conjure_by_name__V2('color', Color)
         conjure_shape = produce_conjure_by_name__V2('shape', Shape)
 
@@ -606,11 +610,74 @@ def gem():
 
                     assert Tuple(herd.items_sorted_by_key()) == expected_items[:length(add)]
 
+
+            def test_herd_scrub():
+                class SimpleNumber(Object):
+                    __slots__ = ((
+                        'value',                    #   String+
+                    ))
+
+
+                    is_herd = false
+
+
+                    def __init__(t, value):
+                        t.value = value
+
+
+                    def __repr__(t):
+                        return arrange('<Simple-number %d>', t.value)
+
+
+                    display_token = __repr__
+                    scrub         = 0
+
+
+                simple_nub = SimpleNumber.value.__get__
+
+                for total in iterate_range(2, 10):
+                    for mask in iterate_range(0, 2 << (total - 1)):
+                        herd   = empty_herd
+                        many   = []
+                        append = many.append
+
+                        for i in iterate_range(total):
+                            v    = SimpleNumber(i)
+                            herd = herd.provision(i, v)
+
+                            append(v)
+
+                        v = 0
+
+                        bits = 1
+
+                        for i in iterate_range(total):
+                            if mask & bits:
+                                many[i] = 0
+
+                            bits <<= 1
+
+                        herd = herd.scrub()
+
+                        many = Tuple(v   for v in many   if v is not 0)
+
+                        if length(many) is 0:
+                            assert herd is 0
+                        elif length(many) is 1:
+                            assert herd is many[0]
+                        else:
+                            if total >= 8:
+                                assert Tuple(sorted_list(herd.values(), key = simple_nub)) == many
+                            else:
+                                assert herd.values() == many
+
+
             test_herd_0__sort()
             test_herd_1__sort()
             test_herd_23__sort()
             test_herd_4567__sort()
             test_herd_many__sort()
+            test_herd_scrub()
 
 
         test_conjure_again()
