@@ -103,6 +103,7 @@ def gem():
         #
         #   Functions
         #
+        'address_of',       PythonBuiltIn.id,
         'attribute',        PythonBuiltIn.getattr,
         'character',        PythonBuiltIn.chr,
         'enumerate',        PythonBuiltIn.enumerate,

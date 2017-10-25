@@ -977,7 +977,7 @@ def gem():
 
             if e7 is absent:
                 t.e7 = k2
-                t.z7 = Meta(k1, k2)
+                t.z7 = r
                 return r
 
             displace(k1, create_herd_many(a, b, c, d, e, e6, e7, k2, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
@@ -1021,7 +1021,7 @@ def gem():
 
             if e7 is absent:
                 t.e7 = k1
-                t.z7 = Meta(k1, k2)
+                t.z7 = r
                 return r
 
             displace(k2, create_herd_many(a, b, c, d, e, e6, e7, k1, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
@@ -1112,7 +1112,7 @@ def gem():
             r = Meta(k1, k2, k3)                                                        #   r created here
             if e7 is absent:
                 t.e7 = k2
-                t.z7 = r = Meta(k1, k2, k3)
+                t.z7 = r
                 return r
 
             displace(k1, create_herd_many(a, b, c, d, e, e6, e7, k2, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
@@ -1203,7 +1203,7 @@ def gem():
             r = Meta(k1, k2, k3)                                                        #   r created here
             if e7 is absent:
                 t.e7 = k1
-                t.z7 = r = Meta(k1, k2, k3)
+                t.z7 = r
                 return r
 
             displace(k3, create_herd_many(a, b, c, d, e, e6, e7, k1, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, r))
@@ -1316,10 +1316,92 @@ def gem():
 
 
         def sanitize(t):
-            #
+            v = t.v
+            w = t.w
+            x = t.x
+            y = t.y
+
+            v_sanitize = (v.sanitize   if v.is_herd else   0)
+            w_sanitize = (w.sanitize   if w.is_herd else   0)
+            x_sanitize = (x.sanitize   if x.is_herd else   0)
+            y_sanitize = (y.sanitize   if y.is_herd else   0)
+
+            v = ((0   if reference_count(v) is 3 else   v)   if v_sanitize is 0 else   v_sanitize())
+            w = ((0   if reference_count(w) is 3 else   w)   if w_sanitize is 0 else   w_sanitize())
+            x = ((0   if reference_count(x) is 3 else   x)   if x_sanitize is 0 else   x_sanitize())
+            y = ((0   if reference_count(y) is 3 else   y)   if y_sanitize is 0 else   y_sanitize())
+
+            if t.e is absent:
+                if v is 0:
+                    if w is 0:
+                        if x is 0:
+                            #my_line('y')
+                            return y
+
+                        if y is 0:
+                            #my_line('x')
+                            return x
+
+                        #my_line('c/x,d/y')
+                        return create_herd_2(t.c, t.d, x, y)
+
+                    if x is 0:
+                        if y is 0:
+                            #my_line('w')
+                            return w
+
+                        #my_line('b/w,d/y')
+                        return create_herd_2(t.b, t.d, w, y)
+
+                    if y is 0:
+                        #my_line('b/w,c/x')
+                        return create_herd_2(t.b, t.c, w, x)
+
+                    #my_line('b/w,c/x,d/y')
+                    return create_herd_3(t.b, t.c, t.d, w, x, y)
+
+                if w is 0:
+                    if x is 0:
+                        if y is 0:
+                            #my_line('v')
+                            return v
+
+                        #my_line('a/v,d/y')
+                        return create_herd_2(t.a, t.d, v, y)
+
+                    if y is 0:
+                        #my_line('a/v,c/x')
+                        return create_herd_2(t.a, t.c, v, x)
+
+                    #my_line('a/v,c/x,d/y')
+                    return create_herd_2(t.a, t.c, t.d, v, x, y)
+
+                if x is 0:
+                    if y is 0:
+                        #my_line('a/v,b/w')
+                        return create_herd_2(t.a, t.b, v, w)
+
+                    #my_line('a/v,b/y,d/y')
+                    return create_herd_3(t.a, t.b, t.d, v, w, y)
+
+                if y is 0:
+                    #my_line('a/v,b/y,c/x')
+                    return create_herd_3(t.a, t.b, t.c, v, w, x)
+
+                #my_line('t')
+                return t
+
+            z          = t.z
+            z_sanitize = (z.sanitize   if z.is_herd else   0)
+            z          = ((0   if reference_count(z) is 3 else   z)   if z_sanitize is 0 else   z_sanitize())
+
+            #my_line('v,w,x,y,z: %r,%r,%r,%r,%r', v, w, z, y, z)
+            #if t.e6 is not absent:
+            #    my_line('z6:%r', t.z6)
+            #    if t.e7 is not absent:
+            #        my_line('z7:%r', t.z7)
+
             #   a/v:    unknown
-            #
-            v = t.v.sanitize()
             if v is 0:
                 #
                 #   This should be:
@@ -1329,83 +1411,57 @@ def gem():
                 #   However, instead the code that should be below:
                 #
                 #       if index is 0:
-                #           v = t.w.sanitize()
-                #           if v is not 0:
+                #           if w is not 0:
                 #               a     = t.b
+                #               v     = w
                 #               index = 1
                 #
                 #   is inline'd into here and then rewritten as:
                 #
-                #       v = t.w.sanitize()
-                #       if v is 0:
+                #       if w is 0:
                 #           index = 0
                 #       else:
                 #           a     = t.b
+                #           v     = w
                 #           index = 1
                 #
-
-                #
-                #   .a/.v:    sanitize
-                #   .b/.w:    unknown
-                #
-                v = t.w.sanitize()
-                if v is 0:
+                if w is 0:
                     index = 0
                 else:
                     a     = t.b
+                    v     = w
                     index = 1
             else:
-                #
                 #   .a/.v:    keep
                 #   .b/.w:    unknown
-                #
-                w = t.w.sanitize()
                 if w is 0:
                     a     = t.a
                     index = 1
                 else:
-                    #
                     #   .a/.v:    keep
                     #   .b/.w:    keep
                     #   .c/.x:    unknown
-                    #
-                    x = t.x.sanitize()
-
                     if x is 0:
+                        #my_line('a=a;b=b;x:0;index=2; %r:%r & %r:%r', t.a, v, t.b, w)
                         a     = t.a
                         b     = t.b
                         index = 2
                     else:
-                        #
                         #   .a/.v:    keep
                         #   .b/.w:    keep
                         #   .c/.x:    keep
                         #   .d/.y:    unknown
-                        #
-                        y = t.y.sanitize()
-
                         if y is 0:
                             a     = t.a
                             b     = t.b
                             c     = t.c
                             index = 2
                         else:
-                            if t.e is absent:
-                                t.v = v
-                                t.w = w
-                                t.x = x
-                                t.y = y
-                                return t
-
-                            #
                             #   .a/.v:    keep
                             #   .b/.w:    keep
                             #   .c/.x:    keep
                             #   .d/.y:    keep
                             #   .e/.z:    unknown
-                            #
-                            z = t.z.sanitize()
-
                             if z is 0:
                                 a     = t.a
                                 b     = t.b
@@ -1422,15 +1478,22 @@ def gem():
                                     t.z = z
                                     return t
 
-                                #
                                 #   .a /.v :  keep
                                 #   .b /.w :  keep
                                 #   .c /.x :  keep
                                 #   .d /.y :  keep
                                 #   .e /.z :  keep
                                 #   .e6/.z6:  unknown
-                                #
-                                z6 = t.z6.sanitize()
+                                z6          = t.z6
+                                z6_sanitize = (z6.sanitize   if z6.is_herd else   0)
+                                z6          = (
+                                                  (
+                                                      0   if reference_count(z6) is 3 else
+                                                      z6
+                                                  )
+                                                          if z6_sanitize is 0 else
+                                                  z6_sanitize()
+                                              )
 
                                 if z6 is 0:
                                     a     = t.a
@@ -1450,7 +1513,6 @@ def gem():
                                     if t.e7 is absent:
                                         return t
 
-                                    #
                                     #   .a /.v :  keep
                                     #   .b /.w :  keep
                                     #   .c /.x :  keep
@@ -1458,8 +1520,16 @@ def gem():
                                     #   .e /.z :  keep
                                     #   .e6/.z6:  keep
                                     #   .e7/.z7:  unknown
-                                    #
-                                    z7 = t.z7.sanitize()
+                                    z7          = t.z7
+                                    z7_sanitize = (z7.sanitize   if z7.is_herd else   0)
+                                    z6          = (
+                                                      (
+                                                          0   if reference_count(z6) is 3 else
+                                                          z6
+                                                      )
+                                                              if z6_sanitize is 0 else
+                                                      z6_sanitize()
+                                                  )
 
                                     if z7 is 0:
                                         t.e7 = absent
@@ -1520,162 +1590,143 @@ def gem():
             #   The following is done above (see comments there):
             #
             #       if index is 0:
-            #           v = t.w.sanitize()
-            #           if v is not 0:
+            #           if w is not 0:
             #               a     = t.b
+            #               v     = w
             #               index = 1
             #
 
-            #
             #   .a/.v:  keep or sanitize
             #   .v/.w:  keep or sanitize
             #   .c/.x:  unknown (unless index >= 2)
-            #
             if index is 0:
-                v = t.x.sanitize()
-
-                if v is not 0:
+                if x is not 0:
                     a     = t.c
+                    v     = x
                     index = 1
             elif index is 1:
-                w = t.x.sanitize()
-
-                if w is not 0:
+                if x is not 0:
                     b     = t.c
+                    w     = x
                     index = 2
 
 
-            #
             #   .a/.v:  keep or sanitize
             #   .v/.w:  keep or sanitize
             #   .c/.x:  keep or sanitize
             #   .d/.y:  unknown (unless index >= 3)
-            #
             if index is 0:
-                v = t.y.sanitize()
-
-                if v is not 0:
+                if y is not 0:
                     a     = t.d
+                    v     = y
                     index = 1
             elif index is 1:
-                w = t.y.sanitize()
-
-                if w is not 0:
+                if y is not 0:
                     b     = t.d
+                    w     = y
                     index = 2
             elif index is 2:
-                x = t.y.sanitize()
-
-                if x is not 0:
+                if y is not 0:
                     c     = t.d
+                    x     = y
                     index = 3
 
-            #
+                    #my_line('c=d;x=y;index=3; %r:%r', c, x)
+
             #   .a/.v:  keep or sanitize
             #   .v/.w:  keep or sanitize
             #   .c/.x:  keep or sanitize
             #   .d/.y:  keep or sanitize
             #   .e/.z:  unknown (unless index >= 4)
-            #
-            if t.e is absent:
-                if index is 0:  return 0
-                if index is 1:  return v
-                if index is 2:  return create_herd_2(a, b, v, w)
-
-                assert index is 3
-
-                return create_herd_3(a, b, c, v, w, x)
-
             if index is 0:
-                v = t.z.sanitize()
-
-                if v is not 0:
+                if z is not 0:
                     a     = t.e
+                    v     = z
                     index = 1
             elif index is 1:
-                w = t.z.sanitize()
-
-                if w is not 0:
+                if z is not 0:
                     b     = t.e
+                    w     = z
                     index = 2
             elif index is 2:
-                x = t.z.sanitize()
-
-                if x is not 0:
+                if z is not 0:
                     c     = t.e
+                    x     = z
                     index = 3
             elif index is 3:
-                y = t.z.sanitize()
-
-                if y is not 0:
+                if z is not 0:
                     d     = t.e
+                    y     = z
                     index = 4
+                #else:
+                #    my_line('z:0;index:3')
 
-            #
             #   .a /.v :    keep or sanitize
             #   .v /.w :    keep or sanitize
             #   .c /.x :    keep or sanitize
             #   .d /.y :    keep or sanitize
             #   .e /.z :    keep or sanitize
-            #   .e6/.z6:    unknown (unless index >= 5)
-            #
-            if t.e6 is absent:
-                if index is 0:  return 0
-                if index is 1:  return v
-                if index is 2:  return create_herd_2(a, b, v, w)
-                if index is 3:  return create_herd_3(a, b, c, v, w, x)
-
-                assert index is 4
-
-                t.a = a
-                t.b = b
-                t.c = c
-                t.d = d
-
-                t.v = v
-                t.w = w
-                t.x = x
-                t.y = y
-
-                t.e = absent
-                del t.z
-
-                return t
-
-            if index is 0:
-                v = t.z6.sanitize()
-
-                if v is not 0:
-                    a     = t.e6
-                    index = 1
-            elif index is 1:
-                w = t.z6.sanitize()
-
-                if w is not 0:
-                    b     = t.e6
-                    index = 2
-            elif index is 2:
-                x = t.z6.sanitize()
-
-                if x is not 0:
-                    c     = t.e6
-                    index = 3
-            elif index is 3:
-                y = t.z6.sanitize()
-
-                if y is not 0:
-                    d     = t.e6
-                    index = 4
-            elif index is 4:
-                z = t.z6.sanitize()
-
-                if z is not 0:
-                    e     = t.e6
-                    index = 5
+            #   .e6/.z6:    unknown (unless index is 5)
+            if index is 5:
+                assert t.e6 is not absent
             else:
-                assert index is 5
+                if t.e6 is absent:
+                    if index is 0:  return 0
+                    if index is 1:  return v
+                    if index is 2:  return create_herd_2(a, b, v, w)
+                    if index is 3:  return create_herd_3(a, b, c, v, w, x)
 
-            #
+                    assert index is 4
+
+                    t.a = a
+                    t.b = b
+                    t.c = c
+                    t.d = d
+
+                    t.v = v
+                    t.w = w
+                    t.x = x
+                    t.y = y
+
+                    t.e = absent
+                    del t.z
+
+                    return t
+
+                z6          = t.z6
+                z6_sanitize = (z6.sanitize   if z6.is_herd else   0)
+                z6          = ((0   if reference_count(z6) is 3 else   z6)   if z6_sanitize is 0 else   z6_sanitize())
+
+                if index is 0:
+                    if z6 is not 0:
+                        a     = t.e6
+                        v     = z6
+                        index = 1
+                elif index is 1:
+                    if z6 is not 0:
+                        b     = t.e6
+                        w     = z6
+                        index = 2
+                elif index is 2:
+                    if z6 is not 0:
+                        c     = t.e6
+                        x     = z6
+                        index = 3
+                elif index is 3:
+                    if z6 is not 0:
+                        d     = t.e6
+                        y     = z6
+                        index = 4
+                    #else:
+                    #    my_line('z6:0;index:3')
+                else:
+                    assert index is 4
+
+                    if z6 is not 0:
+                        e     = t.e6
+                        z     = z6
+                        index = 5
+
             #   .a /.v :    keep or sanitize
             #   .v /.w :    keep or sanitize
             #   .c /.x :    keep or sanitize
@@ -1683,7 +1734,6 @@ def gem():
             #   .e /.z :    keep or sanitize
             #   .e6/.z6:    keep or sanitize
             #   .e7/.z7:    unknown
-            #
             if t.e7 is absent:
                 if index is 0:  return 0
                 if index is 1:  return v
@@ -1714,29 +1764,30 @@ def gem():
                 del t.z6
                 return t
 
+
+            z7          = t.z7
+            z7_sanitize = (z7.sanitize   if z7.is_herd else   0)
+            z7          = ((0   if reference_count(z7) is 3 else   z7)   if z7_sanitize is 0 else   z7_sanitize())
+
+            #my_line('z7:%r', z7)
+
             if index is 0:
-                return t.z7.sanitize()
+                return z7
 
             if index is 1:
-                w = t.z7.sanitize()
-
-                if w is 0:
+                if z7 is 0:
                     return v
 
-                return create_herd_2(a, t.e7, v, w)
+                return create_herd_2(a, t.e7, v, z7)
 
             if index is 2:
-                x = t.z7.sanitize()
-
-                if x is 0:
+                if z7 is 0:
                     return create_herd_2(a, b, v, w)
 
-                return create_herd_3(a, b, t.e7, v, w, x)
+                return create_herd_3(a, b, t.e7, v, w, z7)
 
             if index is 3:
-                y = t.z7.sanitize()
-
-                if y is 0:
+                if z7 is 0:
                     return create_herd_3(a, b, c, v, w, x)
 
                 t.a = a
@@ -1747,7 +1798,7 @@ def gem():
                 t.v = v
                 t.w = w
                 t.x = x
-                t.y = y
+                t.y = z7
 
                 t.e = absent
                 del t.z, t.z6, t.z7
@@ -1765,15 +1816,13 @@ def gem():
             t.y = y
 
             if index is 4:
-                z = t.z7.sanitize()
-
-                if z is 0:
+                if z7 is 0:
                     t.e = absent
                     del t.z, t.z6, t.z7
                     return t
 
                 t.e = t.e7
-                t.z = z
+                t.z = z7
 
                 t.e6 = absent
                 del t.z6, t.z7
@@ -1784,15 +1833,13 @@ def gem():
             t.e = e
             t.z = z
 
-            z6 = t.z7.sanitize()
-
-            if z6 is 0:
+            if z7 is 0:
                 t.e6 = absent
                 del t.z6, t.z7
                 return t
 
             t.e6 = t.e7
-            t.z6 = z6
+            t.z6 = z7
 
             t.e7 = absent
             del t.z7

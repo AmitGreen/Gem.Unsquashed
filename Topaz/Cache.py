@@ -131,8 +131,9 @@ def gem():
                 t.shape  = shape
 
 
-            def __repr__(t):
-                return arrange('<numbered-shape %d %s>', t.number.value, t.shape.name)
+            def __repr__(t):    
+                count = reference_count(t)
+                return arrange('<numbered-shape@%x ->#%d %d %s>', address_of(t), count, t.number.value, t.shape.name)
 
 
             display_token = __repr__
@@ -248,9 +249,9 @@ def gem():
                     ((   one,   ellipse      )),
                     ((   seven, ellipse      )),
                     ((   six,   ellipse      )),
-#                    ((   three, ellipse      )),
-#                    ((   five,  ellipse      )),
-#                    ((   four,  ellipse      )),
+                    ((   three, ellipse      )),
+                    ((   five,  ellipse      )),
+                    ((   four,  ellipse      )),
 #
 #                    ((   two,   moon         )),
 #                    ((   five,  moon         )),
@@ -304,20 +305,29 @@ def gem():
 
                 assert cache.count_nested() == length(test_list)
 
-                line('BEFORE: (loop %d)', loop)
-                dump_caches(cache.name)
+                #line('BEFORE: (loop %d)', loop)
+                #for v in keep:
+                #    line('KEEP:%r', v)
+                #v=0
+                #dump_caches(cache.name)
 
                 cache.sanitize()
 
-                line('AFTER: (loop %d)', loop)
-                dump_caches(cache.name)
+                #line('AFTER: (loop %d)', loop)
+                #for v in keep:
+                #    line('KEEP:%r', v)
+                #v=0
+                #dump_caches(cache.name)
 
                 assert cache.count_nested() is length(keep)
 
             del add, keep
 
             cache.sanitize()
+
             assert cache.count_nested() is 0
+
+            #my_line('CLEANUP COMPLETE')
 
 
         def test_conjure_unique_dual():
