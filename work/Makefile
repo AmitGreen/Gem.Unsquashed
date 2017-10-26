@@ -97,8 +97,10 @@ SAPPHIRE_FILES = \
     #
 
 TOPAZ_FILES = \
-    ../Topaz/Cache.py ../Topaz/ConjureTreeComment.py ../Topaz/Core.py \
+    ../Topaz/CacheSupport.py ../Topaz/ConjureDual.py ../Topaz/ConjureSingle.py ../Topaz/ConjureTriple.py \
+        ../Topaz/ConjureTreeComment.py ../Topaz/Core.py \
     ../Topaz/ExceptionChain.py \
+    ../Topaz/Herd.py \
     ../Topaz/Main.py \
     ../Topaz/Path.py ../Topaz/Pattern.py ../Topaz/PortrayString.py \
     ../Topaz/StringOutput.py
@@ -174,7 +176,7 @@ clean:
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f zca.py zco.py ze.py zj.py zm.py zpa.py zps.py zpt.py zso.py
+	rm -f zco.py zcs.py ze.py zh.py zj1.py zj2.py zj3.py zjtc.py zm.py zpa.py zps.py zpt.py zso.py
 
 
 files:
@@ -346,10 +348,14 @@ links:
 	ln -s ../Tremolite/Compile.py                       tx.py
 	ln -s ../Sardonyx/Boot.py                           xb.py
 	ln -s ../Sapphire/Transform.py                      xf.py
-	ln -s ../Topaz/Cache.py                             zca.py
 	ln -s ../Topaz/Core.py                              zco.py
+	ln -s ../Topaz/CacheSupport.py                      zcs.py
 	ln -s ../Topaz/ExceptionChain.py                    ze.py
-	ln -s ../Topaz/ConjureTreeComment.py                zj.py
+	ln -s ../Topaz/Herd.py                              zh.py
+	ln -s ../Topaz/ConjureSingle.py                     zj1.py
+	ln -s ../Topaz/ConjureDual.py                       zj2.py
+	ln -s ../Topaz/ConjureTriple.py                     zj3.py
+	ln -s ../Topaz/ConjureTreeComment.py                zjtc.py
 	ln -s ../Topaz/Main.py                              zm.py
 	ln -s ../Topaz/Path.py                              zpa.py
 	ln -s ../Topaz/PortrayString.py                     zps.py
