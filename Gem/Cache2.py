@@ -6,122 +6,22 @@ def gem():
     require_gem('Gem.Absent')
     require_gem('Gem.Herd')
     require_gem('Gem.Horde')
-
-
-    map__get     = Map.get
-    map__provide = Map.setdefault
-    map__store   = Map.__setitem__
-
-
-    def scrub__cache(t):
-        append_remove = 0
-        value         = t.__getitem__
-        store         = t.__setitem__
-
-        for k in t.keys():
-            v       = value(k)
-            v_scrub = v.scrub
-
-            if v_scrub is 0:
-                if reference_count(v) is not 3:
-                    continue
-
-                if append_remove is 0:
-                    remove_many   = [k]
-                    append_remove = remove_many.append
-                    continue
-
-                append_remove(k)
-                continue
-
-            v = v_scrub()
-
-            if v is 0:
-                if append_remove is 0:
-                    remove_many   = [k]
-                    append_remove = remove_many.append
-                    continue
-
-                append_remove(k)
-                continue
-
-            store(k, v)
-
-        if append_remove is 0:
-            return
-
-        if length(remove_many) == length(t):
-            t.clear()
-            return
-
-        zap = t.__delitem__
-
-        for v in remove_many:
-            zap(v)
-
-
-    class LiquidMap(Map):
-        __slots__ = ((
-            'name',                             #   String+
-        ))
-
-
-        def __init__(t, name):
-            t.name = name
-
-
-        count_nested = count_nested__map
-
-
-        def items_sorted_by_key(t):
-            value = t.__getitem__
-
-            for k in sorted_list(t):
-                yield (( k, value(k) ))
-
-
-        lookup  = map__get
-        provide = map__provide
-        scrub   = scrub__cache
-        store   = map__store
-
-
-    class LiquidMap_WithNub(Map):
-        __slots__ = ((
-            'name',                             #   String+
-            'nub',                              #   Method
-        ))
-
-
-        def __init__(t, name, nub):
-            t.name = name
-            t.nub  = nub
-
-
-        count_nested = count_nested__map
-
-
-        def items_sorted_by_key(t):
-            value = t.__getitem__
-
-            for k in sorted_list(t, key = t.nub):
-                yield (( k, value(k) ))
-
-
-        lookup  = map__get
-        provide = map__provide
-        scrub   = scrub__cache
-        store   = map__store
-
-
-        if is_python_2:
-            keys   = Map.iterkeys
-            values = Map.itervalues
+    require_gem('Gem.LiquidMap')
 
 
     cache_names   = LiquidMap('cache_names')        #   Map String+ of Map
     lookup_cache  = cache_names.get
     provide_cache = cache_names.setdefault
+
+
+    @export
+    def create_cache(name, nub = none):
+        assert name not in cache_names
+
+        return provide_cache(
+                   intern_string(name),
+                   (LiquidMap(name)   if nub is none else   LiquidMap_WithNub(name, nub)),
+               )
 
 
     @export
@@ -337,95 +237,6 @@ def gem():
         return conjure_unique_triple__312
 
 
-    @export
-    def create_cache(name, nub = none):
-        assert name not in cache_names
-
-        return provide_cache(
-                   intern_string(name),
-                   (LiquidMap(name)   if nub is none else   LiquidMap_WithNub(name, nub)),
-               )
-
-
-    if __debug__:
-        def dump_single_cache(name, cache):
-            line('===  %s  ===', name)
-
-            for [k, v] in cache.items_sorted_by_key():
-                if not v.is_herd:
-                    line('%s: %s',
-                         (
-                            portray_string(k)  if k.__class__ is String  else
-                            k                  if k.__class__ is Integer else
-                            k.display_token()
-                         ),
-                         v.display_token())
-
-                    continue
-
-                line('%s: (%s)',
-                     (
-                        portray_string(k)  if k.__class__ is String  else
-                        k                  if k.__class__ is Integer else
-                        k.display_token()
-                     ),
-                     v.__class__.__name__)
-
-                prefix_1 = '  '
-
-                if v.skip is not 0:
-                    line('%sskip %d:', prefix_1, v.skip)
-                    prefix_1 += ('  ' * v.skip)
-
-                for [k2, w] in v.items_sorted_by_key():
-                    if not w.is_herd:
-                        line('%s%s: %s',
-                             prefix_1,
-                             (
-                                portray_string(k2)  if k2.__class__ is String  else
-                                k2                  if k2.__class__ is Integer else
-                                k2.display_token()
-                             ),
-                             w.display_token())
-
-                        continue
-
-                    line('%s%s: (%s)',
-                         prefix_1,
-                         (
-                            portray_string(k2)  if k2.__class__ is String  else
-                            k2                  if k2.__class__ is Integer else
-                            k2.display_token()
-                         ),
-                         w.__class__.__name__)
-
-                    prefix_2 = prefix_1 + '  '
-
-                    for [k3, x] in w.items_sorted_by_key():
-                        if not x.is_herd:
-                            line('%s%s: %s', prefix_2, k3.display_token(), x.display_token())
-                            continue
-
-                        line('%s%s:', prefix_2, k3.display_token())
-
-                        prefix_3 = prefix_2 + '  '
-
-                        for [k4, y] in x.items_sorted_by_key():
-                            line('%s%s:', prefix_3, k4.display_token())
-                            line('%s  %s', prefix_3, y.display_token())
-
-        @export
-        def dump_caches(use_name = none):
-            if use_name is none:
-                line('Total caches: %d', length(cache_names))
-
-                for [name, cache] in cache_names.items_sorted_by_key():
-                    line('%s: %d', name, length(cache))
-
-                return
-
-            dump_single_cache(use_name, cache_names[use_name])
-    else:
-        @export
-        def dump_caches(use_name = none):
-            pass
+    share(
+        'cache_names',      cache_names,
+    )

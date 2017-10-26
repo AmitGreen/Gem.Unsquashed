@@ -78,7 +78,7 @@ def gem():
 
         parse_python('test.py', vary = vary, test = 7, show = show)
 
-        dump_caches()
+        print_cache()
 
 
     def test_parse2():

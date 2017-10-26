@@ -154,7 +154,7 @@ def gem():
             #    for v in keep_set:
             #        my_line('keep_set:%r', v)
             #    v=0
-            #    dump_caches(cache.name)
+            #    print_cache(cache.name)
 
             cache.scrub()
 
@@ -163,7 +163,7 @@ def gem():
             #    #for v in keep_set:
             #    #    my_line('keep_set:%r', v)
             #    v=0
-            #    dump_caches(cache.name)
+            #    print_cache(cache.name)
 
             assert cache.count_nested() == length(keep_set)
 
@@ -232,12 +232,12 @@ def gem():
             del v
 
             #my_line('BEFORE:')
-            #dump_caches(cache.name)
+            #print_cache(cache.name)
 
             cache.scrub()
 
             #my_line('AFTER:')
-            #dump_caches(cache.name)
+            #print_cache(cache.name)
 
             assert cache.count_nested() == length(keep_set)
 
@@ -267,5 +267,5 @@ def gem():
 
         line('PASSED: test_conjure_triple')
 
-        #dump_caches('numbered_colored_shape')
-        #dump_caches('shape_number_color__312')
+        #print_cache('numbered_colored_shape')
+        #print_cache('shape_number_color__312')
