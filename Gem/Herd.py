@@ -217,6 +217,10 @@ def gem():
             return d
 
 
+        def increment_skip(t):
+            return create_horde_2(1, t.a, t.b, t.v, t.w)
+
+
         def insert(t, c, x):
             assert (c is not absent) and (t.a is not c) and (t.b is not c)
 
@@ -381,6 +385,8 @@ def gem():
             v_scrub = v.scrub
             w_scrub = w.scrub
 
+            #my_line('v: %r; w: %r; v_scrub: %r; w_scrub: %r', v, w, v_scrub, w_scrub)
+
             if v_scrub is 0:
                 if reference_count(v) is 3:
                     if w_scrub is 0:
@@ -390,7 +396,13 @@ def gem():
                         w_increment = w.increment_skip
                         return (w   if w_increment is 0 else    w_increment())
 
-                    return w_scrub()
+                    w = w_scrub()
+
+                    if w is 0:
+                        return 0
+
+                    w_increment = w.increment_skip
+                    return (w   if w_increment is 0 else    w_increment())
 
                 if w_scrub is 0:
                     if reference_count(w) is 3:
@@ -418,7 +430,13 @@ def gem():
                     w_increment = w.increment_skip
                     return (w   if w_increment is 0 else    w_increment())
 
-                return w_scrub()
+                w = w_scrub()
+
+                if w is 0:
+                    return 0
+
+                w_increment = w.increment_skip
+                return (w   if w_increment is 0 else    w_increment())
 
             if w_scrub is 0:
                 if reference_count(w) is 3:
@@ -513,6 +531,10 @@ def gem():
             assert k is not absent
 
             return d
+
+
+        def increment_skip(t):
+            return create_horde_3(1, t.a, t.b, t.c, t.v, t.w, t.x)
 
 
         def insert(t, d, y):
@@ -916,6 +938,24 @@ def gem():
             if t.e7 is k:       return t.z7
 
             return d
+
+
+        def increment_skip(t):
+            r = create_horde_4(1, t.a, t.b, t.c, t.d, t.v, t.w, t.x, t.y)
+
+            if t.e is absent:
+                return r
+
+            if t.e is not absent:
+                r = r.provision(t.e, t.z)
+
+                if t.e6 is not absent:
+                    r = r.provision(t.e6, t.z6)
+
+                    if t.e7 is not absent:
+                        return r.provision(t.e7, t.z7)
+
+            return r
 
 
         def insert(t, e8, z8):
@@ -2062,11 +2102,7 @@ def gem():
 
         insert              = inject
         items_sorted_by_key = items_sorted_by_key__herd_many
-
-
-        def provision(t, k, v):
-            map__provide(t, k, v)
-            return t
+        provision           = provision__herd_many
 
 
         def provision_dual(t, _displace, Meta, k1, k2):

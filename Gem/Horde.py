@@ -15,6 +15,14 @@ def gem():
     map__provide = Map.setdefault
 
 
+    def increment_skip__horde_many(t):
+        assert t.skip is 0
+
+        t.skip += 1
+
+        return t
+
+
     class Horde_23(Object):
         __slots__ = ((
             'skip',                     #   Integer { 0 | 1 }
@@ -73,6 +81,9 @@ def gem():
                 return 2 + x.count_nested()
 
             return 3
+
+
+        increment_skip = increment_skip__horde_many
 
 
         def items_sorted_by_key(t):
@@ -144,7 +155,7 @@ def gem():
                 t.x = r
                 return r
 
-            displace(k1, create_horde_many(1, a, b, c, k3, v, t.w, t.x, r))
+            displace(k1, create_horde_4(1, a, b, c, k3, v, t.w, t.x, r))
 
             return r
 
@@ -179,7 +190,7 @@ def gem():
                 t.x = r
                 return r
 
-            displace(k3, create_horde_many(1, a, b, c, k2, v, t.w, t.x, r))
+            displace(k3, create_horde_4(1, a, b, c, k2, v, t.w, t.x, r))
 
             return r
 
@@ -355,18 +366,10 @@ def gem():
         k3      = absent
 
 
-        count_nested = count_nested__map
-
-
-        def increment_skip(t):
-            assert t.skip is 0
-
-            t.skip += 1
-
-            return t
-
-
+        count_nested        = count_nested__map
+        increment_skip      = increment_skip__horde_many
         items_sorted_by_key = items_sorted_by_key__herd_many
+        provision           = provision__herd_many
 
 
         def provision_triple(t, displace, Meta, k1, k2, k3):
@@ -502,7 +505,28 @@ def gem():
         return t
 
 
-    def create_horde_many(skip, a, b, c, d, v, w, x, y):
+    @share
+    def create_horde_3(skip, a, b, c, v, w, x):
+        assert skip is 1
+        assert (a is not absent) and (a is not b) and (a is not c)
+        assert (b is not absent) and (b is not c)
+        assert (c is not absent)
+
+        t = new_Horde_23()
+
+        t.skip = skip
+        t.a    = a
+        t.b    = b
+        t.c    = c
+        t.v    = v
+        t.w    = w
+        t.x    = x
+
+        return t
+
+
+    @share
+    def create_horde_4(skip, a, b, c, d, v, w, x, y):
         assert skip is 1
         assert (a is not absent) and (a is not b) and (a is not c) and (a is not d)
         assert (b is not absent) and (b is not c) and (b is not d)

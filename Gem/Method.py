@@ -3,6 +3,9 @@
 #
 @gem('Gem.Method')
 def gem():
+    map__provide = Map.setdefault
+
+
     #
     #   .count_nested
     #
@@ -36,6 +39,14 @@ def gem():
             for k in sorted_list(keys, key = keys[0].nub):
                 yield (( k, value(k) ))
 
+
+    #
+    #   def provision
+    #
+    @share
+    def provision__herd_many(t, k, v):
+        map__provide(t, k, v)
+        return t
 
     #
     #   .return_self
