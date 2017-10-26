@@ -27,7 +27,7 @@ def gem():
                     continue
 
                 if append_remove is 0:
-                    remove_many = [k]
+                    remove_many   = [k]
                     append_remove = remove_many.append
                     continue
 
@@ -38,7 +38,7 @@ def gem():
 
             if v is 0:
                 if append_remove is 0:
-                    remove_many = [k]
+                    remove_many   = [k]
                     append_remove = remove_many.append
                     continue
 

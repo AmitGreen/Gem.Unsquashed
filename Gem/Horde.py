@@ -211,7 +211,6 @@ def gem():
             return r
 
 
-
         def provision_triple_step2__312(t, displace, parent, Meta, k1, k2, k3):
             assert t.skip is 0
 
@@ -239,6 +238,107 @@ def gem():
             return r
 
 
+        def scrub(t):
+            v       = t.v
+            v_scrub = v.scrub
+            if v_scrub is 0:
+                if reference_count(v) is 3:
+                    v = 0
+            else:
+                v = v_scrub()
+
+            w       = t.w
+            w_scrub = w.scrub
+            if w_scrub is 0:
+                if reference_count(w) is 3:
+                    w = 0
+            else:
+                w = w_scrub()
+
+            if t.c is absent:
+                if v is 0:
+                    if w is 0:
+                        return 0
+
+                    w_increment = w.increment_skip
+                    return (w   if w_increment is 0 else    w_increment())
+
+                if w is 0:
+                    v_increment = v.increment_skip
+                    return (v   if v_increment is 0 else    v_increment())
+
+                t.v = v
+                t.w = w
+                return t
+
+            x       = t.x
+            x_scrub = x.scrub
+            if x_scrub is 0:
+                if reference_count(x) is 3:
+                    x = 0
+            else:
+                x = x_scrub()
+
+            if v is 0:
+                if w is 0:
+                    if x is 0:
+                        return 0
+
+                    x_increment = x.increment_skip
+                    return (x   if x_increment is 0 else    x_increment())
+
+                if x is 0:
+                    w_increment = w.increment_skip
+                    return (w   if w_increment is 0 else    w_increment())
+
+                #
+                #   scrub .a/.v
+                #
+                t.a = t.b
+                t.v = w
+
+                t.b = t.c
+                t.w = x
+
+                t.c = absent
+                del t.x
+                return t
+
+            if w is 0:
+                if x is 0:
+                    v_increment = v.increment_skip
+                    return (v   if v_increment is 0 else    v_increment())
+
+                #
+                #   scrub .b/.w
+                #
+                t.v = v
+
+                t.b = t.c
+                t.w = x
+
+                t.c = absent
+                del t.x
+                return t
+
+            if x is 0:
+                #
+                #   scrub .c/.x
+                #
+                t.v = v
+
+                t.w = w
+
+                t.c = absent
+                del t.x
+                return t
+
+            t.v = v
+            t.w = w
+            t.x = x
+            return t
+
+
     Horde_23.sample = Horde_23.v
 
 
@@ -255,7 +355,17 @@ def gem():
         k3      = absent
 
 
-        count_nested        = count_nested__map
+        count_nested = count_nested__map
+
+
+        def increment_skip(t):
+            assert t.skip is 0
+
+            t.skip += 1
+
+            return t
+
+
         items_sorted_by_key = items_sorted_by_key__herd_many
 
 
@@ -302,6 +412,74 @@ def gem():
 
             return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2, k3)))
 
+
+        def scrub(t):
+            append_remove = 0
+            value         = t.__getitem__
+            store         = t.__setitem__
+            
+            #
+            #   Need to delete t.sample, for reference counting purposes
+            #
+            del t.sample
+
+            for k in t.keys():
+                v       = value(k)
+                v_scrub = v.scrub
+
+                if v_scrub is 0:
+                    if reference_count(v) is not 3:
+                        sample = v
+                        continue
+
+                    if append_remove is 0:
+                        remove_many = [k]
+                        append_remove = remove_many.append
+                        continue
+
+                    append_remove(k)
+                    continue
+
+                v = v_scrub()
+
+                if v is 0:
+                    if append_remove is 0:
+                        remove_many = [k]
+                        append_remove = remove_many.append
+                        continue
+
+                    append_remove(k)
+                    continue
+
+                sample = v
+                store(k, v)
+
+            if append_remove is 0:
+                t.sample = sample
+                return t
+
+            if length(remove_many) == length(t):
+                return 0
+
+            zap = t.__delitem__
+
+            for k in remove_many:
+                zap(k)
+
+            if length(t) is 1:
+                if is_python_2:
+                    v = t.itervalues().next()
+                else:
+                    v = iterate(t.values()).__next__()
+
+                v_increment = v.increment_skip
+                return (v   if v_increment is 0 else    v_increment())
+
+            #
+            #   Restore a sample
+            #
+            t.sample = sample
+            return t
 
 
     new_Horde_23   = Method(Object.__new__, Horde_23)

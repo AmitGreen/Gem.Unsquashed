@@ -59,7 +59,8 @@ def gem():
 
 
             display_token = __repr__
-            scrub         = 0
+            increment_skip = 0
+            scrub          = 0
 
 
         Number.nub = Number.value.__get__
@@ -106,10 +107,17 @@ def gem():
 
 
             def __repr__(t):
-                return arrange('<numbered-colored-shape %d %s %s>', t.number.value, t.color.name, t.shape.name)
+                return arrange('<numbered-colored-shape %d %s %s>',
+                               t.number.value, t.color.name, t.shape.name)
+
+                #count = reference_count(t)
+                #return arrange('<numbered-colored-shape@%x#%d %d %s %s>',
+                #               address_of(t), count, t.number.value, t.color.name, t.shape.name)
 
 
-            display_token = __repr__
+            display_token  = __repr__
+            increment_skip = 0
+            scrub          = 0
 
 
         NumberedColoredShape.k1 = NumberedColoredShape.number
@@ -132,13 +140,14 @@ def gem():
                 t.shape  = shape
 
 
-            def __repr__(t):    
+            def __repr__(t):
                 count = reference_count(t)
                 return arrange('<numbered-shape@%x ->#%d %d %s>', address_of(t), count, t.number.value, t.shape.name)
 
 
-            display_token = __repr__
-            scrub         = 0
+            display_token  = __repr__
+            increment_skip = 0
+            scrub          = 0
 
 
         NumberedShape.k1 = NumberedShape.number
@@ -460,7 +469,8 @@ def gem():
                     ((   two,    silver, star        )),      #   Herd_Many.provision_triple_step2__312
                     ((   two,    white,  star        )),
 
-                    ((   one,    silver, pentagon    )),      #   Horde_23.provision_triple__312
+                    ((   one,    silver, pentagon    )),      #   Horde_23.provision_triple__312, & ...
+                    #                                         #     ... Horde_Many.increment_skip
                     ((   one,    black,  pentagon    )),
                     ((   one,    purple, pentagon    )),      #   Horde_Many.provision_triple__312
                     ((   one,    green,  pentagon    )),
@@ -476,11 +486,46 @@ def gem():
                 ))
 
 
-            for loop in [1, 2]:
+            keep = LiquidSet()
+            add  = keep.add
+
+            for loop in [7, 5, 3, 2, 1]:
+                total = 0
+
                 for [number, color, shape] in test_list:
-                    conjure_numbered_color_shape(number, color, shape)
+                    v = conjure_numbered_color_shape(number, color, shape)
+                    total += 1
+
+                    if not (total % loop):
+                        add(v)
+                    else:
+                        if v not in keep:
+                            my_line('will discard: %r', v)
+                del v
 
                 assert cache.count_nested() == length(test_list)
+
+                if 7 is 7:
+                    my_line('BEFORE: (loop %d)', loop)
+                    for v in keep:
+                        my_line('KEEP:%r', v)
+                    v=0
+                    dump_caches(cache.name)
+
+                cache.scrub()
+
+                if 7 is 7:
+                    my_line('AFTER: (loop %d)', loop)
+                    #for v in keep:
+                    #    my_line('KEEP:%r', v)
+                    v=0
+                    dump_caches(cache.name)
+
+                assert cache.count_nested() is length(keep)
+
+                if 7 is 7:
+                    my_line('keeping %d of %d', length(keep), length(test_list))
+                    line()
 
 
         def test_conjure_unique_triple():
@@ -629,8 +674,9 @@ def gem():
                         return arrange('<Simple-number %d>', t.value)
 
 
-                    display_token = __repr__
-                    scrub         = 0
+                    display_token  = __repr__
+                    increment_skip = 0
+                    scrub          = 0
 
 
                 simple_nub = SimpleNumber.value.__get__

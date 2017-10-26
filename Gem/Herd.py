@@ -387,20 +387,23 @@ def gem():
                         if reference_count(w) is 3:
                             return 0
 
-                        return w
+                        w_increment = w.increment_skip
+                        return (w   if w_increment is 0 else    w_increment())
 
                     return w_scrub()
 
                 if w_scrub is 0:
                     if reference_count(w) is 3:
-                        return v
+                        v_increment = v.increment_skip
+                        return (v   if v_increment is 0 else    v_increment())
 
                     return t
 
                 w = w_scrub()
 
                 if w is 0:
-                    return v
+                    v_increment = v.increment_skip
+                    return (v   if v_increment is 0 else    v_increment())
 
                 t.w = w
                 return t
@@ -412,13 +415,15 @@ def gem():
                     if reference_count(w) is 3:
                         return 0
 
-                    return w
+                    w_increment = w.increment_skip
+                    return (w   if w_increment is 0 else    w_increment())
 
                 return w_scrub()
 
             if w_scrub is 0:
                 if reference_count(w) is 3:
-                    return v
+                    v_increment = v.increment_skip
+                    return (v   if v_increment is 0 else    v_increment())
 
                 t.v = v
                 return t
@@ -426,7 +431,8 @@ def gem():
             w = w_scrub()
 
             if w is 0:
-                return v
+                v_increment = v.increment_skip
+                return (v   if v_increment is 0 else    v_increment())
 
             t.v = v
             t.w = w
@@ -750,13 +756,23 @@ def gem():
                 x = x_scrub()
 
             if v is 0:
-                if w is 0:  return x
-                if x is 0:  return w
+                if w is 0:
+                    if x is 0:
+                        return 0
+
+                    x_increment = x.increment_skip
+                    return (x   if x_increment is 0 else    x_increment())
+
+                if x is 0:
+                    w_increment = w.increment_skip
+                    return (w   if w_increment is 0 else    w_increment())
 
                 return create_herd_2(t.b, t.c, w, x)
 
             if w is 0:
-                if x is 0:  return v
+                if x is 0:
+                    v_increment = v.increment_skip
+                    return (v   if v_increment is 0 else    v_increment())
 
                 return create_herd_2(t.a, t.c, v, x)
 
@@ -1427,16 +1443,31 @@ def gem():
             else:
                 y = y_scrub()
 
+            #if 7 is 7:
+            #    my_line('v,w,x,y: %r,%r,%r,%r', v, w, x, y)
+            #    if t.e is not absent:
+            #        my_line('z:%r', t.z)
+            #        if t.e6 is not absent:
+            #            my_line('z6:%r', t.z6)
+            #            if t.e7 is not absent:
+            #                my_line('z7:%r', t.z7)
+
             if t.e is absent:
                 if v is 0:
                     if w is 0:
                         if x is 0:
+                            if y is 0:
+                                #my_line('0')
+                                return 0
+
                             #my_line('y')
-                            return y
+                            y_increment = y.increment_skip
+                            return (y   if y_increment is 0 else    y_increment())
 
                         if y is 0:
                             #my_line('x')
-                            return x
+                            x_increment = x.increment_skip
+                            return (x   if x_increment is 0 else    x_increment())
 
                         #my_line('c/x,d/y')
                         return create_herd_2(t.c, t.d, x, y)
@@ -1444,7 +1475,8 @@ def gem():
                     if x is 0:
                         if y is 0:
                             #my_line('w')
-                            return w
+                            w_increment = w.increment_skip
+                            return (w   if w_increment is 0 else    w_increment())
 
                         #my_line('b/w,d/y')
                         return create_herd_2(t.b, t.d, w, y)
@@ -1460,7 +1492,8 @@ def gem():
                     if x is 0:
                         if y is 0:
                             #my_line('v')
-                            return v
+                            v_increment = v.increment_skip
+                            return (v   if v_increment is 0 else    v_increment())
 
                         #my_line('a/v,d/y')
                         return create_herd_2(t.a, t.d, v, y)
@@ -1485,6 +1518,10 @@ def gem():
                     return create_herd_3(t.a, t.b, t.c, v, w, x)
 
                 #my_line('t')
+                t.v = v
+                t.w = w
+                t.x = x
+                t.y = y
                 return t
 
             z       = t.z
@@ -1770,10 +1807,18 @@ def gem():
                 assert t.e6 is not absent
             else:
                 if t.e6 is absent:
-                    if index is 0:  return 0
-                    if index is 1:  return v
-                    if index is 2:  return create_herd_2(a, b, v, w)
-                    if index is 3:  return create_herd_3(a, b, c, v, w, x)
+                    if index is 0:
+                        return 0
+
+                    if index is 1:
+                        v_increment = v.increment_skip
+                        return (v   if v_increment is 0 else    v_increment())
+
+                    if index is 2:
+                        return create_herd_2(a, b, v, w)
+
+                    if index is 3:
+                        return create_herd_3(a, b, c, v, w, x)
 
                     assert index is 4
 
@@ -1839,10 +1884,18 @@ def gem():
             #   .e6/.z6:    keep or scrub
             #   .e7/.z7:    unknown
             if t.e7 is absent:
-                if index is 0:  return 0
-                if index is 1:  return v
-                if index is 2:  return create_herd_2(a, b, v, w)
-                if index is 3:  return create_herd_3(a, b, c, v, w, x)
+                if index is 0:
+                    return 0
+
+                if index is 1:
+                    v_increment = v.increment_skip
+                    return (v   if v_increment is 0 else    v_increment())
+
+                if index is 2:
+                    return create_herd_2(a, b, v, w)
+
+                if index is 3:
+                    return create_herd_3(a, b, c, v, w, x)
 
                 t.a = a
                 t.b = b
@@ -1880,11 +1933,16 @@ def gem():
             #my_line('z7:%r', z7)
 
             if index is 0:
-                return z7
+                if z7 is 0:
+                    return 0
+
+                z7_increment = z7.increment_skip
+                return (z7   if z7_increment is 0 else    z7_increment())
 
             if index is 1:
                 if z7 is 0:
-                    return v
+                    v_increment = v.increment_skip
+                    return (v   if v_increment is 0 else    v_increment())
 
                 return create_herd_2(a, t.e7, v, z7)
 
@@ -2113,9 +2171,12 @@ def gem():
 
             if length(t) is 1:
                 if is_python_2:
-                    return t.itervalues().next()
+                    v = t.itervalues().next()
+                else:
+                    v = iterate(t.values()).__next__()
 
-                return iterate(t.values()).__next__()
+                v_increment = v.increment_skip
+                return (v   if v_increment is 0 else    v_increment())
 
             return t
 
