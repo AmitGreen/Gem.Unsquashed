@@ -133,6 +133,9 @@ def gem():
 
 
     triple_test_list__2 = ((
+            #
+            #   Test herds turning into hordes.
+            #
             ((   two,   red,     circle,    0   )),
             ((   two,   blue,    triangle,  7   )),
             ((   two,   blue,    moon,      7   )),     #   Herd_2.increment_skip
@@ -171,6 +174,16 @@ def gem():
             ((   seven, red,     oval,      7   )),
             ((   seven, red,     star,      7   )),
             ((   seven, red,     triangle,  7   )),     #   Herd_4567.increment_skip (7 elements)
+
+            #
+            #   Test a horde restoring a sample in Horde_4567.scrub
+            #
+            ((  eight,  green,  moon,       0   )),
+            ((  eight,  green,  ellipse,    7   )),
+            ((  eight,  green,  oval,       7   )),
+            ((  eight,  green,  star,       7   )),
+            ((  eight,  green,  triangle,   7   )),
+            ((  eight,  green,  square,     7   )),
         ))
 
 
@@ -201,7 +214,7 @@ def gem():
 
                 r = Meta(k1, k2, k3)
 
-                store(k1, create_horde_2(1, first.k3, k3, first, r))
+                store(k1, create_horde_2(1, r, first.k3, k3, first, r))
 
                 return r
 
@@ -294,7 +307,7 @@ def gem():
 
                 r = Meta(k1, k2, k3)
 
-                store(k3, create_horde_2(1, first.k2, k2, first, r))
+                store(k3, create_horde_2(1, r, first.k2, k2, first, r))
 
                 return r
 
@@ -431,6 +444,8 @@ def gem():
 
         simplified_cache_dump = dump_cache_to_string(cache)
 
+        test_final_scrub(cache)
+
         if cache_dump != simplified_cache_dump:
             write_binary_to_path('oops1.txt', cache_dump)
             write_binary_to_path('oops2.txt', simplified_cache_dump)
@@ -481,8 +496,9 @@ def gem():
                     add(v)
             del v
 
-            #my_line('BEFORE:')
-            #print_cache(cache.name)
+            #if loop is 1:
+            #    my_line('BEFORE:')
+            #    print_cache(cache.name)
 
             cache.scrub()
 

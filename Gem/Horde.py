@@ -35,9 +35,10 @@ def gem():
     class Horde_23(Object):
         __slots__ = ((
             'skip',                     #   Integer { 0 | 1 }
-            'a',                        #   Any
-            'b',                        #   Any
-            'c',                        #   Absent | Any
+            'sample',                   #   Any excluding Absent
+            'a',                        #   Any excluding Absent
+            'b',                        #   Any excluding Absent
+            'c',                        #   Absent | Any excluding Absent
             'v',                        #   Any
             'w',                        #   Any
             'x',                        #   Vacant | Any
@@ -473,10 +474,9 @@ def gem():
             value         = t.__getitem__
             store         = t.__setitem__
             
-            #
-            #   Need to delete t.sample, for reference counting purposes
-            #
-            del t.sample
+            sample = t.sample
+
+            assert (not sample.is_herd) and (sample is not absent)
 
             for k in t.keys():
                 v       = value(k)
@@ -484,8 +484,15 @@ def gem():
 
                 if v_scrub is 0:
                     if reference_count(v) is not 3:
-                        sample = v
-                        continue
+                        if v is sample:
+                            if reference_count(v) is not 5:
+                                continue
+
+                            sample = absent
+
+                            del t.sample
+                        else:
+                            continue
 
                     if append_remove is 0:
                         remove_many = [k]
@@ -510,7 +517,8 @@ def gem():
                 store(k, v)
 
             if append_remove is 0:
-                t.sample = sample
+                assert sample is not absent
+
                 return t
 
             if length(remove_many) == length(t):
@@ -533,7 +541,20 @@ def gem():
             #
             #   Restore a sample
             #
-            t.sample = sample
+            if sample is absent:
+                if is_python_2:
+                    sample = t.itervalues().next()
+                else:
+                    sample = iterate(t.values()).__next__()
+
+                while sample.is_herd:
+                    my_line('SEARCHING FOR SAMPLE ...')
+
+                    sample = sample.sample
+
+                #my_line('RESTORING SAMPLE ...: %r', sample)
+                t.sample = sample
+
             return t
 
 
@@ -542,17 +563,18 @@ def gem():
 
 
     @export
-    def create_horde_2(skip, a, b, v, w):
+    def create_horde_2(skip, sample, a, b, v, w):
         assert (skip is 1) and (a is not absent) and (a is not b) and (b is not absent)
 
         t = new_Horde_23()
 
-        t.skip = skip
-        t.a    = a
-        t.b    = b
-        t.c    = absent
-        t.v    = v
-        t.w    = w
+        t.skip   = skip
+        t.sample = sample
+        t.a      = a
+        t.b      = b
+        t.c      = absent
+        t.v      = v
+        t.w      = w
 
         return t
 

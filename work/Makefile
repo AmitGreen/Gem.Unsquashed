@@ -12,8 +12,8 @@ BERYL_FILES = \
 GEM_FILES = \
 	../Gem/__init__.py \
     ../Gem/Absent.py ../Gem/All.py ../Gem/Ascii.py \
-	../Gem/Boot.py \
-	../Gem/Cache.py ../Gem/Cache2.py ../Gem/Cadence.py ../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
+	../Gem/Boot.py \ ../Gem/Cache.py ../Gem/Cache2.py ../Gem/Cadence.py ../Gem/Codec.py ../Gem/ConjureQuadruple.py \
+        ../Gem/Core.py ../Gem/CatchException.py \
 	../Gem/DelayedFileOutput.py ../Gem/DumpCache.py \
 	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
@@ -155,7 +155,7 @@ clean:
 	rm -f d.py de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
-	rm -f gdc.py gdo.py gg.py ghe.py gho.py gq.py
+	rm -f gdc.py gdo.py gg.py ghe.py gho.py gj4.py gq.py
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -224,6 +224,7 @@ links:
 	ln -s ../Gem/Global.py                              gg.py
 	ln -s ../Gem/Herd.py                                ghe.py
 	ln -s ../Gem/Horde.py                               gho.py
+	ln -s ../Gem/ConjureQuadruple.py                    gj4.py
 	ln -s ../Gem/LiquidMap.py                           gq.py
 	ln -s ../Sapphire/Parse.py                          h0p.py
 	ln -s ../Sapphire/Parse1.py                         h1p.py

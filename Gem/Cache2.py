@@ -37,6 +37,7 @@ def gem():
         provide = cache.setdefault
 
 
+        @rename('conjure_%s', name)
         def conjure_by_name(k):
             r = lookup(k)
 
@@ -46,10 +47,6 @@ def gem():
             interned_k = intern_string(k)
 
             return provide(interned_k, Meta(interned_k))
-
-
-        if __debug__:
-           return rename_function(intern_arrange('conjure_%s', name), conjure_by_name)
 
 
         return conjure_by_name
@@ -65,16 +62,12 @@ def gem():
             store  = absent,
             nub    = none,
     ):
-        if cache is absent:
-            cache = create_cache(name, nub = nub)
-
-        if lookup is absent:
-            lookup = cache.get
-
-        if store is absent:
-            store = cache.__setitem__
+        if cache is absent:     cache = create_cache(name, nub = nub)
+        if lookup is absent:    lookup = cache.get
+        if store is absent:     store = cache.__setitem__
 
 
+        @rename('conjure_%s', name)
         def conjure_unique_dual(k1, k2):
             first = lookup(k1, absent)
 
@@ -91,9 +84,6 @@ def gem():
             return first.provision_dual(store, Meta, k1, k2)
 
 
-        if __debug__:
-            return rename_function(intern_arrange('conjure_%s', name), conjure_unique_dual)
-
         return conjure_unique_dual
 
 
@@ -107,16 +97,12 @@ def gem():
             store  = absent,
             nub    = none,
     ):
-        if cache is absent:
-            cache = create_cache(name, nub = nub)
-
-        if lookup is absent:
-            lookup = cache.get
-
-        if store is absent:
-            store = cache.__setitem__
+        if cache is absent:     cache = create_cache(name, nub = nub)
+        if lookup is absent:    lookup = cache.get
+        if store is absent:     store = cache.__setitem__
 
 
+        @rename('conjure_%s__21', name)
         def conjure_unique_dual__21(k1, k2):
             first = lookup(k2, absent)
 
@@ -133,9 +119,6 @@ def gem():
             return first.provision_dual__21(store, Meta, k1, k2)
 
 
-        if __debug__:
-            return rename_function(intern_arrange('conjure_%s__21', name), conjure_unique_dual__21)
-
         return conjure_unique_dual__21
 
 
@@ -149,16 +132,12 @@ def gem():
             store  = absent,
             nub    = none,
     ):
-        if cache is absent:
-            cache = create_cache(name, nub = nub)
-
-        if lookup is absent:
-            lookup = cache.get
-
-        if store is absent:
-            store = cache.__setitem__
+        if cache is absent:     cache = create_cache(name, nub = nub)
+        if lookup is absent:    lookup = cache.get
+        if store is absent:     store = cache.__setitem__
 
 
+        @rename('conjure_%s', name)
         def conjure_unique_triple(k1, k2, k3):
             first = lookup(k1, absent)
 
@@ -168,7 +147,7 @@ def gem():
 
                 r = Meta(k1, k2, k3)
 
-                store(k1, create_horde_2(1, first.k3, k3, first, r))
+                store(k1, create_horde_2(1, r, first.k3, k3, first, r))
 
                 return r
 
@@ -181,9 +160,6 @@ def gem():
 
             return first.provision_triple(store, Meta, k1, k2, k3)
 
-
-        if __debug__:
-            return rename_function(intern_arrange('conjure_%s', name), conjure_unique_triple)
 
         return conjure_unique_triple
 
@@ -198,16 +174,12 @@ def gem():
             store  = absent,
             nub    = none,
     ):
-        if cache is absent:
-            cache = create_cache(name, nub = nub)
-
-        if lookup is absent:
-            lookup = cache.get
-
-        if store is absent:
-            store = cache.__setitem__
+        if cache is absent:     cache = create_cache(name, nub = nub)
+        if lookup is absent:    lookup = cache.get
+        if store is absent:     store = cache.__setitem__
 
 
+        @rename('conjure_%s__312', name)
         def conjure_unique_triple__312(k1, k2, k3):
             first = lookup(k3, absent)
 
@@ -217,7 +189,7 @@ def gem():
 
                 r = Meta(k1, k2, k3)
 
-                store(k3, create_horde_2(1, first.k2, k2, first, r))
+                store(k3, create_horde_2(1, r, first.k2, k2, first, r))
 
                 return r
 
@@ -231,8 +203,6 @@ def gem():
             return first.provision_triple__312(store, Meta, k1, k2, k3)
 
 
-        if __debug__:
-            return rename_function(intern_arrange('conjure_%s__312', name), conjure_unique_triple__312)
 
         return conjure_unique_triple__312
 

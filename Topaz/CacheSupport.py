@@ -19,10 +19,6 @@ def gem():
         ))
 
 
-        is_color = true
-        is_shape = false
-
-
         def __init__(t, name):
             t.name = name
 
@@ -48,8 +44,7 @@ def gem():
         ))
 
 
-        is_herd  = false
-        is_shape = false
+        is_herd = false
 
 
         def __init__(t, name, value):
@@ -155,6 +150,9 @@ def gem():
         __slots__ = ((
             'name',                     #   String+
         ))
+
+
+        is_herd = false
 
 
         def __init__(t, name):

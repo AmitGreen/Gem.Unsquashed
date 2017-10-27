@@ -218,7 +218,9 @@ def gem():
 
 
         def increment_skip(t):
-            return create_horde_2(1, t.a, t.b, t.v, t.w)
+            a = t.a
+
+            return create_horde_2(1, (a.sample   if a.is_herd else   a), a, t.b, t.v, t.w)
 
 
         def insert(t, c, x):
