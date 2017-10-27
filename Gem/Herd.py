@@ -540,7 +540,7 @@ def gem():
         def insert(t, d, y):
             assert (d is not absent) and (t.a is not d) and (t.b is not d) and (t.c is not d)
 
-            return create_herd_4567(t.a, t.b, t.c, d, t.v, t.w, t.x, y)
+            return create_herd_4(t.a, t.b, t.c, d, t.v, t.w, t.x, y)
 
 
         def items_sorted_by_key(t):
@@ -585,7 +585,7 @@ def gem():
             c = t.c
             if c is d: return t
 
-            return create_herd_4567(a, b, c, d, t.v, t.w, t.x, y)
+            return create_herd_4(a, b, c, d, t.v, t.w, t.x, y)
 
 
         def provision_dual(t, displace, Meta, k1, k2):
@@ -600,7 +600,7 @@ def gem():
 
             r = Meta(k1, k2)
 
-            displace(k1, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
+            displace(k1, create_herd_4(a, b, c, k2, t.v, t.w, t.x, r))
 
             return r
 
@@ -617,7 +617,7 @@ def gem():
 
             r = Meta(k1, k2)
 
-            displace(k2, create_herd_4567(a, b, c, k1, t.v, t.w, t.x, r))
+            displace(k2, create_herd_4(a, b, c, k1, t.v, t.w, t.x, r))
 
             return r
 
@@ -661,7 +661,7 @@ def gem():
 
             r = Meta(k1, k2, k3)
 
-            displace(k1, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
+            displace(k1, create_herd_4(a, b, c, k2, t.v, t.w, t.x, r))
 
             return r
 
@@ -705,7 +705,7 @@ def gem():
 
             r = Meta(k1, k2, k3)
 
-            displace(k3, create_herd_4567(a, b, c, k1, t.v, t.w, t.x, r))
+            displace(k3, create_herd_4(a, b, c, k1, t.v, t.w, t.x, r))
 
             return r
 
@@ -723,10 +723,10 @@ def gem():
             r = Meta(k1, k2, k3)
 
             if parent.is_herd_many:
-                displace(parent, k2, create_herd_4567(a, b, c, k3, t.v, t.w, t.x, r))
+                displace(parent, k2, create_herd_4(a, b, c, k3, t.v, t.w, t.x, r))
                 return r
 
-            displace(parent, create_herd_4567(a, b, c, k3, t.v, t.w, t.x, r))
+            displace(parent, create_herd_4(a, b, c, k3, t.v, t.w, t.x, r))
             return r
 
 
@@ -743,10 +743,10 @@ def gem():
             r = Meta(k1, k2, k3)
 
             if parent.is_herd_many:
-                displace(parent, k1, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
+                displace(parent, k1, create_herd_4(a, b, c, k2, t.v, t.w, t.x, r))
                 return r
 
-            displace(parent, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
+            displace(parent, create_herd_4(a, b, c, k2, t.v, t.w, t.x, r))
             return r
 
 
@@ -2271,7 +2271,7 @@ def gem():
 
 
     @share
-    def create_herd_4567(a, b, c, d, v, w, x, y):
+    def create_herd_4(a, b, c, d, v, w, x, y):
         assert (a is not absent) and (a is not b) and (a is not c) and (a is not d)
         assert (b is not absent) and (b is not c) and (b is not d)
         assert (c is not absent) and (c is not d)

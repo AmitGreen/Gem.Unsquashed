@@ -13,12 +13,21 @@ def gem():
 
     map__lookup  = Map.get
     map__provide = Map.setdefault
+    map__store   = Map.__setitem__
 
 
     def increment_skip__horde_many(t):
         assert t.skip is 0
 
         t.skip += 1
+
+        return t
+
+
+    def remove_skip__horde(t):
+        assert t.skip is 1
+
+        t.skip = 0
 
         return t
 
@@ -81,6 +90,30 @@ def gem():
                 return 2 + x.count_nested()
 
             return 3
+
+
+        def glimpse(t, k, d = none):
+            if t.a is k: return t.v
+            if t.b is k: return t.w
+            if t.c is k: return t.x
+
+            assert k is not absent
+
+            return d
+
+
+        def insert(t, d, y):
+            assert (d is not absent) and (t.a is not d) and (t.b is not d) and (t.c is not d)
+
+            if t.c is absent:
+                t.c = d
+                t.x = y
+                return t
+
+            if t.skip is 0:
+                return create_herd_4(t.a, t.b, t.c, d, t.v, t.w, t.x, y)
+
+            return create_horde_4(t.skip, t.a, t.b, t.c, d, t.v, t.w, t.x, y)
 
 
         increment_skip = increment_skip__horde_many
@@ -155,6 +188,8 @@ def gem():
                 t.x = r
                 return r
 
+            assert t.skip is 1
+
             displace(k1, create_horde_4(1, a, b, c, k3, v, t.w, t.x, r))
 
             return r
@@ -215,10 +250,10 @@ def gem():
                 return r
 
             if parent.is_herd_many:
-                displace(parent, k2, create_herd_4567(a, b, c, k3, t.v, t.w, t.x, r))
+                displace(parent, k2, create_herd_4(a, b, c, k3, t.v, t.w, t.x, r))
                 return r
 
-            displace(parent, create_herd_4567(a, b, c, k3, t.v, t.w, t.x, r))
+            displace(parent, create_herd_4(a, b, c, k3, t.v, t.w, t.x, r))
             return r
 
 
@@ -242,10 +277,10 @@ def gem():
                 return r
 
             if parent.is_herd_many:
-                displace(parent, k1, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
+                displace(parent, k1, create_herd_4(a, b, c, k2, t.v, t.w, t.x, r))
                 return r
 
-            displace(parent, create_herd_4567(a, b, c, k2, t.v, t.w, t.x, r))
+            displace(parent, create_herd_4(a, b, c, k2, t.v, t.w, t.x, r))
             return r
 
 
@@ -350,6 +385,9 @@ def gem():
             return t
 
 
+        remove_skip = remove_skip__horde
+
+
     Horde_23.sample = Horde_23.v
 
 
@@ -368,6 +406,17 @@ def gem():
 
         count_nested        = count_nested__map
         increment_skip      = increment_skip__horde_many
+        glimpse             = map__lookup
+
+
+        def inject(t, k, v):
+            assert map__lookup(t, k) is none
+
+            map__store(t, k, v)
+            return t
+
+
+        insert              = inject
         items_sorted_by_key = items_sorted_by_key__herd_many
         provision           = provision__herd_many
 
@@ -414,6 +463,9 @@ def gem():
             assert t.skip is 0
 
             return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2, k3)))
+
+
+        remove_skip = remove_skip__horde
 
 
         def scrub(t):

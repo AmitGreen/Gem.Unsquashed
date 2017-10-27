@@ -225,20 +225,6 @@ def gem():
             #    my_line('keeping %d of %d', length(keep_set), length(dual_test_list))
 
 
-    def test_conjure_dual__X__verify(cache, simplified_conjure_dual):
-        cache_dump = dump_cache_to_string(cache)
-
-        test_final_scrub(cache)
-
-        for [number, shape] in dual_test_list:
-            simplified_conjure_dual(number, shape)
-
-        assert cache_dump == dump_cache_to_string(cache)
-
-        if show is 7:
-            partial(cache_dump)
-
-
     def test_conjure_unique_dual():
         numbered_shape_cache = create_cache('numbered_shape', nub = Number.value.__get__)
 
@@ -259,6 +245,20 @@ def gem():
                 cache = numbered_shape_cache,
             ),
         )
+
+
+    def test_conjure_dual__X__verify(cache, simplified_conjure_dual):
+        cache_dump = dump_cache_to_string(cache)
+
+        test_final_scrub(cache)
+
+        for [number, shape] in dual_test_list:
+            simplified_conjure_dual(number, shape)
+
+        assert cache_dump == dump_cache_to_string(cache)
+
+        if show is 7:
+            partial(cache_dump)
 
 
     def test_conjure_unique_dual__21():
