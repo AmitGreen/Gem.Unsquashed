@@ -12,7 +12,8 @@ BERYL_FILES = \
 GEM_FILES = \
 	../Gem/__init__.py \
     ../Gem/Absent.py ../Gem/All.py ../Gem/Ascii.py \
-	../Gem/Boot.py \ ../Gem/Cache.py ../Gem/Cache2.py ../Gem/Cadence.py ../Gem/Codec.py ../Gem/ConjureQuadruple.py \
+	../Gem/Boot.py \
+    ../Gem/Cache.py ../Gem/Cache2.py ../Gem/Cadence.py ../Gem/Codec.py ../Gem/ConjureQuadruple.py \
         ../Gem/Core.py ../Gem/CatchException.py \
 	../Gem/DelayedFileOutput.py ../Gem/DumpCache.py \
 	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \

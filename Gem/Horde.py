@@ -289,10 +289,47 @@ def gem():
             v       = t.v
             v_scrub = v.scrub
             if v_scrub is 0:
-                if reference_count(v) is 3:
-                    v = 0
+                if v is t.sample:
+                    #rc = reference_count(v)
+                    #my_line('v<%r> is t.sample; rc: %d', v, rc)
+
+                    if reference_count(v) is 4:
+                        del t.sample
+
+                        resample = 7
+                        v        = 0
+                    else:
+                        resample = 0
+                else:
+                    resample = 0
+
+                    if reference_count(v) is 3:
+                        v = 0
             else:
-                v = v_scrub()
+                if v is t.sample:
+                    resample = 0
+
+                    v__2 = v_scrub()
+
+                    if v is v__2:
+                        resample = 0
+                    else:
+                        del t.sample
+
+                        resample = 7
+
+                    v = v__2
+                else:
+                    #
+                    #   Need to free up 'sample' --- as it might affect v_scrub (as it looks at reference counts of
+                    #   objects it references, one of which may be sample; & decide that sample can be scrubed ...
+                    #
+                    #   Then restore 'sample' later.
+                    #
+                    resample = 7
+                    del t.sample
+
+                    v = v_scrub()
 
             w       = t.w
             w_scrub = w.scrub
@@ -313,6 +350,19 @@ def gem():
                 if w is 0:
                     v_increment = v.increment_skip
                     return (v   if v_increment is 0 else    v_increment())
+
+                if resample is 7:
+                    if v.is_herd:
+                        sample = v.sample
+
+                        while sample.is_herd:
+                            sample = sample.sample
+
+                        line('set sample: %r', sample)
+                        t.sample = sample
+                    else:
+                        line('set sample: %r', v)
+                        t.sample = v
 
                 t.v = v
                 t.w = w
@@ -341,7 +391,21 @@ def gem():
                 #
                 #   scrub .a/.v
                 #
-                t.a = t.b
+                assert resample is 7
+
+                if w.is_herd:
+                    sample = w.sample
+
+                    while sample.is_herd:
+                        sample = sample.sample
+
+                    line('set sample: %r', sample)
+                    t.sample = sample
+                else:
+                    line('set sample: %r', w)
+                    t.sample = w
+
+                t.a = a
                 t.v = w
 
                 t.b = t.c
@@ -359,6 +423,19 @@ def gem():
                 #
                 #   scrub .b/.w
                 #
+                if resample is 7:
+                    if v.is_herd:
+                        sample = v.herd
+
+                        while sample.is_herd:
+                            sample = sample.sample
+
+                        line('set sample: %r', sample)
+                        t.sample = sample
+                    else:
+                        line('set sample: %r', v)
+                        t.sample = v
+
                 t.v = v
 
                 t.b = t.c
@@ -368,28 +445,33 @@ def gem():
                 del t.x
                 return t
 
+            if resample is 7:
+                if v.is_herd:
+                    sample = v.sample
+
+                    while sample.is_herd:
+                        sample = sample.sample
+
+                    line('set sample: %r', sample)
+                    t.sample = sample
+                else:
+                    line('set sample: %r', v)
+                    t.sample = v
+
+            t.v = v
+            t.w = w
+
             if x is 0:
                 #
                 #   scrub .c/.x
                 #
-                t.v = v
-
-                t.w = w
-
                 t.c = absent
                 del t.x
-                return t
 
-            t.v = v
-            t.w = w
-            t.x = x
             return t
 
 
         remove_skip = remove_skip__horde
-
-
-    Horde_23.sample = Horde_23.v
 
 
     class Horde_Many(Map):
@@ -563,18 +645,28 @@ def gem():
 
 
     @export
-    def create_horde_2(skip, sample, a, b, v, w):
+    def create_horde_2(skip, a, b, v, w):
         assert (skip is 1) and (a is not absent) and (a is not b) and (b is not absent)
 
         t = new_Horde_23()
 
-        t.skip   = skip
-        t.sample = sample
-        t.a      = a
-        t.b      = b
-        t.c      = absent
-        t.v      = v
-        t.w      = w
+        t.skip = skip
+
+        if v.is_herd:
+            sample = v.sample
+
+            while sample.is_herd:
+                sample = sample.sample
+
+            t.sample = sample
+        else:
+            t.sample = v
+
+        t.a = a
+        t.b = b
+        t.c = absent
+        t.v = v
+        t.w = w
 
         return t
 
@@ -589,6 +681,17 @@ def gem():
         t = new_Horde_23()
 
         t.skip = skip
+
+        if v.is_herd:
+            sample = v.sample
+
+            while sample.is_herd:
+                sample = sample.sample
+
+            t.sample = sample
+        else:
+            t.sample = v
+
         t.a    = a
         t.b    = b
         t.c    = c

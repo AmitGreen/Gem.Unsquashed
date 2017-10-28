@@ -147,7 +147,7 @@ def gem():
 
                 r = Meta(k1, k2, k3)
 
-                store(k1, create_horde_2(1, r, first.k3, k3, first, r))
+                store(k1, create_horde_2(1, first.k3, k3, first, r))
 
                 return r
 
@@ -189,7 +189,7 @@ def gem():
 
                 r = Meta(k1, k2, k3)
 
-                store(k3, create_horde_2(1, r, first.k2, k2, first, r))
+                store(k3, create_horde_2(1, first.k2, k2, first, r))
 
                 return r
 

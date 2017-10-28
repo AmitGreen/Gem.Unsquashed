@@ -213,16 +213,12 @@ def gem():
                     return first
 
                 r = Meta(k1, k2, k3)
-
-                store(k1, create_horde_2(1, r, first.k3, k3, first, r))
-
+                store(k1, create_horde_2(1, first.k3, k3, first, r))
                 return r
 
             if not first.is_herd:
                 r = Meta(k1, k2, k3)
-
                 store(k1, (r   if first is absent else   create_herd_2(first.k2, k2, first, r)))
-
                 return r
 
             if first.skip is 0:
@@ -245,12 +241,12 @@ def gem():
                     first.displace(k2, create_herd_2(second.k3, k3, second, r))
                     return r
 
-                r = second.glimpse(k3)
+                third = second.glimpse(k3)
 
-                if r is not none:
-                    assert r.k3 is k3
+                if third is not none:
+                    assert third.k3 is k3
 
-                    return r
+                    return third
 
                 r = Meta(k1, k2, k3)
 
@@ -264,12 +260,12 @@ def gem():
             assert first.skip is 1
 
             if first.sample.k2 is k2:
-                r = first.glimpse(k3)
+                third = first.glimpse(k3)
 
-                if r is not none:
-                    assert (r.k2 is k2) and (r.k3 is k3)
+                if third is not none:
+                    assert (third.k2 is k2) and (third.k3 is k3)
 
-                    return r
+                    return third
 
                 r = Meta(k1, k2, k3)
 
@@ -283,9 +279,7 @@ def gem():
                 return r
 
             r = Meta(k1, k2, k3)
-
             store(k1, create_herd_2(first.sample.k2, k2, first.remove_skip(), r))
-
             return r
 
 
@@ -306,16 +300,12 @@ def gem():
                     return first
 
                 r = Meta(k1, k2, k3)
-
-                store(k3, create_horde_2(1, r, first.k2, k2, first, r))
-
+                store(k3, create_horde_2(1, first.k2, k2, first, r))
                 return r
 
             if not first.is_herd:
                 r = Meta(k1, k2, k3)
-
                 store(k3, (r   if first is absent else   create_herd_2(first.k1, k1, first, r)))
-
                 return r
 
             if first.skip is 0:
@@ -338,12 +328,12 @@ def gem():
                     first.displace(k1, create_herd_2(second.k2, k2, second, r))
                     return r
 
-                r = second.glimpse(k2)
+                third = second.glimpse(k2)
 
-                if r is not none:
-                    assert r.k2 is k2
+                if third is not none:
+                    assert third.k2 is k2
 
-                    return r
+                    return third
 
                 r = Meta(k1, k2, k3)
 
@@ -357,12 +347,12 @@ def gem():
             assert first.skip is 1
 
             if first.sample.k1 is k1:
-                r = first.glimpse(k2)
+                third = first.glimpse(k2)
 
-                if r is not none:
-                    assert (r.k1 is k1) and (r.k2 is k2)
+                if third is not none:
+                    assert (third.k1 is k1) and (third.k2 is k2)
 
-                    return r
+                    return third
 
                 r = Meta(k1, k2, k3)
 
@@ -376,9 +366,7 @@ def gem():
                 return r
 
             r = Meta(k1, k2, k3)
-
             store(k3, create_herd_2(first.sample.k1, k1, first.remove_skip(), r))
-
             return r
 
 

@@ -19,6 +19,9 @@ def gem():
         ))
 
 
+        is_herd = false
+
+
         def __init__(t, name):
             t.name = name
 
