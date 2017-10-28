@@ -93,6 +93,30 @@ def gem():
             return 3
 
 
+        def displace(t, k, v):
+            if t.a is k:
+                if v.is_herd:
+                    sample = v.sample
+
+                    while sample.is_herd:
+                        sample = sample.sample
+
+                    t.sample = sample
+                else:
+                    t.sample = v
+
+                t.v = v
+                return
+
+            if t.b is k:
+                t.w = v
+                return
+
+            assert t.c is k
+
+            t.x = v
+
+
         def glimpse(t, k, d = none):
             if t.a is k: return t.v
             if t.b is k: return t.w
@@ -107,6 +131,11 @@ def gem():
             assert (d is not absent) and (t.a is not d) and (t.b is not d) and (t.c is not d)
 
             if t.c is absent:
+                my_line('inserting %r,%r', d, y)
+
+                print_cache('numbered_colored_size_shape')
+                assert d.name != 'medium', 'BAD'
+
                 t.c = d
                 t.x = y
                 return t
@@ -137,6 +166,10 @@ def gem():
                     return ((av, bw))
 
                 return ((bw, av))
+
+            my_line('a,v: %r,%r', a, t.v)
+            my_line('b,w: %r,%r', b, t.w)
+            my_line('c,x: %r,%r', c, t.x)
 
             cx = ((c, t.x))
             kc = nub(c)
@@ -405,7 +438,7 @@ def gem():
                     line('set sample: %r', w)
                     t.sample = w
 
-                t.a = a
+                t.a = t.b
                 t.v = w
 
                 t.b = t.c
@@ -555,7 +588,7 @@ def gem():
             append_remove = 0
             value         = t.__getitem__
             store         = t.__setitem__
-            
+
             sample = t.sample
 
             assert (not sample.is_herd) and (sample is not absent)
@@ -584,6 +617,11 @@ def gem():
                     append_remove(k)
                     continue
 
+                if sample is not absent:
+                    sample = absent
+
+                    del t.sample
+
                 v = v_scrub()
 
                 if v is 0:
@@ -598,27 +636,23 @@ def gem():
                 sample = v
                 store(k, v)
 
-            if append_remove is 0:
-                assert sample is not absent
+            if append_remove is not 0:
+                if length(remove_many) == length(t):
+                    return 0
 
-                return t
+                zap = t.__delitem__
 
-            if length(remove_many) == length(t):
-                return 0
+                for k in remove_many:
+                    zap(k)
 
-            zap = t.__delitem__
+                if length(t) is 1:
+                    if is_python_2:
+                        v = t.itervalues().next()
+                    else:
+                        v = iterate(t.values()).__next__()
 
-            for k in remove_many:
-                zap(k)
-
-            if length(t) is 1:
-                if is_python_2:
-                    v = t.itervalues().next()
-                else:
-                    v = iterate(t.values()).__next__()
-
-                v_increment = v.increment_skip
-                return (v   if v_increment is 0 else    v_increment())
+                    v_increment = v.increment_skip
+                    return (v   if v_increment is 0 else    v_increment())
 
             #
             #   Restore a sample
@@ -646,7 +680,7 @@ def gem():
 
     @export
     def create_horde_2(skip, a, b, v, w):
-        assert (skip is 1) and (a is not absent) and (a is not b) and (b is not absent)
+        assert (1 <= skip <= 2) and (a is not absent) and (a is not b) and (b is not absent)
 
         t = new_Horde_23()
 
@@ -673,7 +707,7 @@ def gem():
 
     @share
     def create_horde_3(skip, a, b, c, v, w, x):
-        assert skip is 1
+        assert 1 <= skip <= 2
         assert (a is not absent) and (a is not b) and (a is not c)
         assert (b is not absent) and (b is not c)
         assert (c is not absent)
@@ -704,7 +738,7 @@ def gem():
 
     @share
     def create_horde_4(skip, a, b, c, d, v, w, x, y):
-        assert skip is 1
+        assert 1 <= skip <= 2
         assert (a is not absent) and (a is not b) and (a is not c) and (a is not d)
         assert (b is not absent) and (b is not c) and (b is not d)
         assert (c is not absent) and (c is not d)

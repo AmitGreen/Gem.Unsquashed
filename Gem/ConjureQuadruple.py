@@ -3,6 +3,7 @@
 #
 @gem('Gem.ConjureQuadruple')
 def gem():
+    @export
     def produce_conjure_unique_quadruple(name, Meta, cache):
         lookup = cache.get
         store  = cache.__setitem__
@@ -15,10 +16,12 @@ def gem():
             if first.k2 is k2:
                 if first.k3 is k3:
                     if first.k3 is k4:
+                        assert 0
+
                         return first
 
                     r = Meta(k1, k2, k3, k4)
-                    store(k1, create_horde_2(2, first.k3, k4, first, r))
+                    store(k1, create_horde_2(2, first.k4, k4, first, r))
                     return r
 
                 r = Meta(k1, k2, k3, k4)
@@ -34,7 +37,14 @@ def gem():
                 second = first.glimpse(k2, absent)
 
                 if second.k3 is k3:
-                    return second
+                    if second.k4 is k4:
+                        assert 0
+
+                        return second
+
+                    r = Meta(k1, k2, k3, k4)
+                    first.displace(k2, create_horde_2(1, second.k4, k4, second, r))
+                    return r
 
                 if not second.is_herd:
                     r = Meta(k1, k2, k3, k4)
@@ -47,48 +57,155 @@ def gem():
 
                         return r
 
+                    assert 0
+
                     first.displace(k2, create_herd_2(second.k3, k3, second, r))
                     return r
 
-                third = second.glimpse(k3, k4)
+                if second.skip is 0:
+                    assert 0
 
-                if third is not none:
-                    assert third.k3 is k3
+                    third = second.glimpse(k3, absent)
+
+                    if third.k4 is k4:
+                        assert (third.k1 is k1) and (third.k2 is k2)
+
+                        return third
+
+                    if not third.is_herd:
+                        r = Meta(k1, k2, k3, k4)
+
+                        if third is absent:
+                            second__2 = second.insert(k3, r)
+
+                            if second is not second__2:
+                                first.displace(k2, second__2)
+
+                            return r
+
+                        second.displace(k3, create_herd_2(third.k4, k4, third, r))
+                        return r
+
+                    fourth = third.glimpse(k4)
+
+                    if fourth is not none:
+                        return fourth
+
+                    r = Meta(k1, k2, k3, k4)
+
+                    third__2 = third.insert(k4, r)
+
+                    if third is not third__2:
+                        second.displace(k3, third__2)
+
+                    return r
+
+                assert second.skip is 1
+
+                second_k3 = second.sample.k3
+
+                if second_k3 is k3:
+                    fourth = second.glimpse(k4)
+
+                    if fourth is not none:
+                        assert 0
+
+                        return fourth
+
+                    r = Meta(k1, k2, k3, k4)
+
+                    second__2 = second.insert(k4, r)
+
+                    if second is not second__2:
+                        assert 0
+
+                        first.displace(k2, second__2)
+
+                    assert 0
+
+                    return r
+
+                r = Meta(k1, k2, k3, k4)
+                first.displace(k2, create_herd_2(second_k3, k3, second.remove_skip(), r))
+                return r
+
+            first_sample = first.sample
+            first_k2     = first_sample.k2
+
+            if first_k2 is not k2:
+                assert 0
+
+                r = Meta(k1, k2, k3, k4)
+                store(k1, create_herd_2(first_k2, k2, first.remove_skip(), r))
+                return r
+
+            if first.skip is 1:
+                third = first.glimpse(k3, absent)
+
+                if third.k4 is k4:
+                    assert 0
+
+                    assert (third.k1 is k1) and (third.k2 is k2)
 
                     return third
 
+                if not third.is_herd:
+                    r = Meta(k1, k2, k3, k4)
+
+                    if third is absent:
+                        assert 0
+
+                        first__2 = first.insert(k3, r)
+
+                        if first is not first__2:
+                            store(k1, first__2)
+
+                        return r
+
+                    first.displace(k3, create_herd_2(third.k4, k4, third, r))
+                    return r
+
+                fourth = third.glimpse(k4)
+
+                if fourth is not none:
+                    assert 0
+
+                    return fourth
+
                 r = Meta(k1, k2, k3, k4)
 
-                second__2 = second.insert(k3, r)
+                third__2 = third.insert(k4, r)
 
-                if second is not second__2:
-                    first.displace(k2, second__2)
+                if third is not third__2:
+                    first.displace(k3, third__2)
 
                 return r
 
-            assert first.skip is 1
+            assert first.skip is 2
 
-            if first.sample.k2 is k2:
-                third = first.glimpse(k3, k4)
+            first_k3 = first_sample.k3
 
-                if third is not none:
-                    assert (third.k2 is k2) and (third.k3 is k3, k4)
-
-                    return third
+            if first_k3 is not k3:
+                assert 0
 
                 r = Meta(k1, k2, k3, k4)
-
-                first__2 = first.insert(k3, r)
-
-                if first is not first__2:
-                    assert first__2.sample.k2 is k2
-
-                    store(k1, first__2)
-
+                store(k1, create_horde_2(1, first_k3, k3, first.remove_skip(2), r))
                 return r
+
+            fourth = first.glimpse(k4)
+
+            if fourth is not none:
+                assert 0
+
+                return fourth
 
             r = Meta(k1, k2, k3, k4)
-            store(k1, create_herd_2(first.sample.k2, k2, first.remove_skip(), r))
+
+            first__2 = first.insert(k4, r)
+
+            if first is not first__2:
+                store(k1, first__2)
+
             return r
 
 

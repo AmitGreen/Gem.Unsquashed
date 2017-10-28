@@ -22,9 +22,10 @@ def boot():
 @gem('Topaz.Main')
 def gem():
     require_gem('Topaz.ConjureDual')
+    require_gem('Topaz.ConjureQuadruple')
     require_gem('Topaz.ConjureSingle')
-    require_gem('Topaz.ConjureTriple')
     require_gem('Topaz.ConjureTreeComment')
+    require_gem('Topaz.ConjureTriple')
     require_gem('Topaz.ExceptionChain')
     require_gem('Topaz.Herd')
     require_gem('Topaz.Path')
@@ -36,6 +37,7 @@ def gem():
     @share
     def main(arguments):
         test_conjure_dual()
+        test_conjure_quadruple()
         test_conjure_single()
         test_conjure_triple()
         test_conjure_tree_comment()

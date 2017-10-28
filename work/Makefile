@@ -99,8 +99,8 @@ SAPPHIRE_FILES = \
     #
 
 TOPAZ_FILES = \
-    ../Topaz/CacheSupport.py ../Topaz/ConjureDual.py ../Topaz/ConjureSingle.py ../Topaz/ConjureTriple.py \
-        ../Topaz/ConjureTreeComment.py ../Topaz/Core.py \
+    ../Topaz/CacheSupport.py ../Topaz/ConjureDual.py ../Topaz/ConjureSingle.py ../Topaz/ConjureQuadruple.py \
+        ../Topaz/ConjureTriple.py ../Topaz/ConjureTreeComment.py ../Topaz/Core.py \
     ../Topaz/ExceptionChain.py \
     ../Topaz/Herd.py \
     ../Topaz/Main.py \
@@ -178,7 +178,7 @@ clean:
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f zco.py zcs.py ze.py zh.py zj1.py zj2.py zj3.py zjtc.py zm.py zpa.py zps.py zpt.py zso.py
+	rm -f zco.py zcs.py ze.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py zm.py zpa.py zps.py zpt.py zso.py
 
 
 files:
@@ -360,6 +360,7 @@ links:
 	ln -s ../Topaz/ConjureSingle.py                     zj1.py
 	ln -s ../Topaz/ConjureDual.py                       zj2.py
 	ln -s ../Topaz/ConjureTriple.py                     zj3.py
+	ln -s ../Topaz/ConjureQuadruple.py                  zj4.py
 	ln -s ../Topaz/ConjureTreeComment.py                zjtc.py
 	ln -s ../Topaz/Main.py                              zm.py
 	ln -s ../Topaz/Path.py                              zpa.py

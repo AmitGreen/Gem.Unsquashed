@@ -30,7 +30,7 @@ def gem():
     absent = Absent()
 
 
-    Absent.k3 = Absent.k2 = Absent.k1 = absent
+    Absent.k4 = Absent.k3 = Absent.k2 = Absent.k1 = absent
 
 
     built_in(

@@ -47,6 +47,7 @@ def gem():
         k1      = absent
         k2      = absent
         k3      = absent
+        k4      = absent
         skip    = 0
 
 
@@ -67,6 +68,7 @@ def gem():
         k1           = absent
         k2           = absent
         k3           = absent
+        k4           = absent
         skip         = 0
 
 
@@ -179,6 +181,7 @@ def gem():
         k1           = absent
         k2           = absent
         k3           = absent
+        k4           = absent
         skip         = 0
 
 
@@ -461,6 +464,9 @@ def gem():
             return ((t.v, t.w))
 
 
+    Herd_2.sample = Herd_2.v
+
+
     class Herd_3(Object):
         __slots__ = ((
             'a',                        #   Any
@@ -477,6 +483,7 @@ def gem():
         k1           = absent
         k2           = absent
         k3           = absent
+        k4           = absent
         skip         = 0
 
 
@@ -811,6 +818,9 @@ def gem():
             return ((t.v, t.w, t.x))
 
 
+    Herd_3.sample = Herd_3.v
+
+
     class Herd_4567(Object):
         __slots__ = ((
             'a',                        #   Any
@@ -835,6 +845,7 @@ def gem():
         k1           = absent
         k2           = absent
         k3           = absent
+        k4           = absent
         skip         = 0
 
 
@@ -2065,6 +2076,9 @@ def gem():
             return ((t.v, t.w, t.x, t.y, t.z, t.z6, t.z7))
 
 
+    Herd_4567.sample = Herd_4567.v
+
+
     class Herd_Many(Map):
         __slots__ = (())
 
@@ -2074,6 +2088,7 @@ def gem():
         k1           = absent
         k2           = absent
         k3           = absent
+        k4           = absent
         skip         = 0
 
 
@@ -2157,6 +2172,20 @@ def gem():
 
         def provision_triple_step2__312(t, _displace, _parent, Meta, k1, k2, k3):
             return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2, k3)))
+
+
+        if is_python_2:
+            @property
+            def sample(t):
+                assert 0
+
+                return t.itervalues().next()
+        else:
+            @property
+            def sample(t):
+                assert 0
+
+                return iterate(t.values()).__next__()
 
 
         def scrub(t):
