@@ -210,4 +210,4 @@ def gem():
         test_herd_scrub()
         test_herd_sorting()
 
-        line('PASSED: test_herd')
+        line('PASSED: herd')

@@ -314,4 +314,4 @@ def gem():
         test_conjure_unique_dual()
         test_conjure_unique_dual__21()
 
-        line('PASSED: test_conjure_dual')
+        line('PASSED: conjure_dual')

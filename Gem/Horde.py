@@ -16,18 +16,19 @@ def gem():
     map__store   = Map.__setitem__
 
 
-    def increment_skip__horde_many(t):
-        assert t.skip is 0
+    def increment_skip__horde_many(t, skip = 1):
+        assert (1 <= skip <= 2) and (0 <= t.skip <= 1) and (skip + t.skip <= 2)
 
-        t.skip += 1
+        t.skip += skip
 
         return t
 
 
-    def remove_skip__horde(t):
-        assert t.skip is 1
+    def remove_skip__horde(t, skip = 1):
+        assert skip <= t.skip <= 2
+        assert 1 <= skip <= 2
 
-        t.skip = 0
+        t.skip -= skip
 
         return t
 
@@ -49,6 +50,16 @@ def gem():
         k1      = absent
         k2      = absent
         k3      = absent
+        k4      = absent
+
+
+        def __repr__(t):
+            if t.c is absent:
+                return arrange('<Horde_23 %d %r; %r : %r; %r : %r>',
+                               t.skip, t.sample, t.a, t.v, t.b, t.w)
+
+            return arrange('<Horde_23 %d %r; %r : %r; %r : %r; %r : %r>',
+                           t.skip, t.sample, t.a, t.v, t.b, t.w, t.c, t.x)
 
 
         def count_nested(t):
@@ -131,11 +142,6 @@ def gem():
             assert (d is not absent) and (t.a is not d) and (t.b is not d) and (t.c is not d)
 
             if t.c is absent:
-                my_line('inserting %r,%r', d, y)
-
-                print_cache('numbered_colored_size_shape')
-                assert d.name != 'medium', 'BAD'
-
                 t.c = d
                 t.x = y
                 return t
@@ -166,10 +172,6 @@ def gem():
                     return ((av, bw))
 
                 return ((bw, av))
-
-            my_line('a,v: %r,%r', a, t.v)
-            my_line('b,w: %r,%r', b, t.w)
-            my_line('c,x: %r,%r', c, t.x)
 
             cx = ((c, t.x))
             kc = nub(c)
@@ -378,11 +380,11 @@ def gem():
                         return 0
 
                     w_increment = w.increment_skip
-                    return (w   if w_increment is 0 else    w_increment())
+                    return (w   if w_increment is 0 else    w_increment(t.skip + 1))
 
                 if w is 0:
                     v_increment = v.increment_skip
-                    return (v   if v_increment is 0 else    v_increment())
+                    return (v   if v_increment is 0 else    v_increment(t.skip + 1))
 
                 if resample is 7:
                     if v.is_herd:
@@ -391,10 +393,8 @@ def gem():
                         while sample.is_herd:
                             sample = sample.sample
 
-                        line('set sample: %r', sample)
                         t.sample = sample
                     else:
-                        line('set sample: %r', v)
                         t.sample = v
 
                 t.v = v
@@ -415,11 +415,11 @@ def gem():
                         return 0
 
                     x_increment = x.increment_skip
-                    return (x   if x_increment is 0 else    x_increment())
+                    return (x   if x_increment is 0 else    x_increment(t.skip + 1))
 
                 if x is 0:
                     w_increment = w.increment_skip
-                    return (w   if w_increment is 0 else    w_increment())
+                    return (w   if w_increment is 0 else    w_increment(t.skip + 1))
 
                 #
                 #   scrub .a/.v
@@ -432,10 +432,8 @@ def gem():
                     while sample.is_herd:
                         sample = sample.sample
 
-                    line('set sample: %r', sample)
                     t.sample = sample
                 else:
-                    line('set sample: %r', w)
                     t.sample = w
 
                 t.a = t.b
@@ -451,7 +449,7 @@ def gem():
             if w is 0:
                 if x is 0:
                     v_increment = v.increment_skip
-                    return (v   if v_increment is 0 else    v_increment())
+                    return (v   if v_increment is 0 else    v_increment(t.skip + 1))
 
                 #
                 #   scrub .b/.w
@@ -463,10 +461,8 @@ def gem():
                         while sample.is_herd:
                             sample = sample.sample
 
-                        line('set sample: %r', sample)
                         t.sample = sample
                     else:
-                        line('set sample: %r', v)
                         t.sample = v
 
                 t.v = v
@@ -485,10 +481,8 @@ def gem():
                     while sample.is_herd:
                         sample = sample.sample
 
-                    line('set sample: %r', sample)
                     t.sample = sample
                 else:
-                    line('set sample: %r', v)
                     t.sample = v
 
             t.v = v
@@ -518,11 +512,33 @@ def gem():
         k1      = absent
         k2      = absent
         k3      = absent
+        k4      = absent
 
 
-        count_nested        = count_nested__map
-        increment_skip      = increment_skip__horde_many
-        glimpse             = map__lookup
+        def __repr__(t):
+            return arrange('<Horde_Many %d %r; %s>',
+                           t.skip,
+                           t.sample,
+                           '; '.join(arrange('%r : %r', k, v)   for [k, v] in t.items_sorted_by_key()))
+
+
+        count_nested = count_nested__map
+
+
+        if __debug__:
+            #
+            #   Need to share this.  Also need to deal with samples
+            #
+            def displace(t, k, v):
+                assert k in t
+
+                t[k] = v
+        else:
+            displace = map__store
+
+
+        increment_skip = increment_skip__horde_many
+        glimpse        = map__lookup
 
 
         def inject(t, k, v):

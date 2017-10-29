@@ -523,7 +523,7 @@ def gem():
         test_conjure_unique_triple()
         test_conjure_unique_triple__312()
 
-        line('PASSED: test_conjure_triple')
+        line('PASSED: conjure_triple')
 
         #print_cache('numbered_colored_shape')
         #print_cache('shape_number_color__312')

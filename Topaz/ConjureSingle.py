@@ -81,4 +81,4 @@ def gem():
     @share
     def test_conjure_single():
         test_conjure_again()
-        line('PASSED: test_conjure_single')
+        line('PASSED: conjure_single')

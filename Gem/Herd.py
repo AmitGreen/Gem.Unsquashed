@@ -185,6 +185,10 @@ def gem():
         skip         = 0
 
 
+        def __repr__(t):
+            return arrange('<Herd_2 %r : %r; %r : %r>', t.a, t.v, t.b, t.w)
+
+
         def count_nested(t):
             v = t.v
             w = t.w
@@ -220,8 +224,10 @@ def gem():
             return d
 
 
-        def increment_skip(t):
-            return create_horde_2(1, t.a, t.b, t.v, t.w)
+        def increment_skip(t, skip = 1):
+            assert 1 <= skip <= 2
+
+            return create_horde_2(skip, t.a, t.b, t.v, t.w)
 
 
         def insert(t, c, x):
@@ -540,8 +546,10 @@ def gem():
             return d
 
 
-        def increment_skip(t):
-            return create_horde_3(1, t.a, t.b, t.c, t.v, t.w, t.x)
+        def increment_skip(t, skip = 1):
+            assert 1 <= skip <= 2
+
+            return create_horde_3(skip, t.a, t.b, t.c, t.v, t.w, t.x)
 
 
         def insert(t, d, y):
@@ -951,8 +959,10 @@ def gem():
             return d
 
 
-        def increment_skip(t):
-            r = create_horde_4(1, t.a, t.b, t.c, t.d, t.v, t.w, t.x, t.y)
+        def increment_skip(t, skip = 1):
+            assert 1 <= skip <= 2
+
+            r = create_horde_4(skip, t.a, t.b, t.c, t.d, t.v, t.w, t.x, t.y)
 
             if t.e is absent:
                 return r
@@ -2092,10 +2102,17 @@ def gem():
         skip         = 0
 
 
+        def __repr__(t):
+            return arrange('<Herd_Many %s>', '; '.join(arrange('%r : %r', k, v)   for [k, v] in t.items_sorted_by_key()))
+
+
         count_nested = count_nested__map
 
 
         if __debug__:
+            #
+            #   Need to share this
+            #
             def displace(t, k, v):
                 assert k in t
 
