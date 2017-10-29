@@ -259,7 +259,9 @@ def gem():
 
             assert first.skip is 1
 
-            if first.sample.k2 is k2:
+            first_k2 = first.sample().k2
+
+            if first_k2 is k2:
                 third = first.glimpse(k3)
 
                 if third is not none:
@@ -272,14 +274,14 @@ def gem():
                 first__2 = first.insert(k3, r)
 
                 if first is not first__2:
-                    assert first__2.sample.k2 is k2
+                    assert first__2.sample().k2 is k2
 
                     store(k1, first__2)
 
                 return r
 
             r = Meta(k1, k2, k3)
-            store(k1, create_herd_2(first.sample.k2, k2, first.remove_skip(), r))
+            store(k1, create_herd_2(first_k2, k2, first.remove_skip(), r))
             return r
 
 
@@ -346,7 +348,9 @@ def gem():
 
             assert first.skip is 1
 
-            if first.sample.k1 is k1:
+            first_k1 = first.sample().k1
+
+            if first_k1 is k1:
                 third = first.glimpse(k2)
 
                 if third is not none:
@@ -359,14 +363,14 @@ def gem():
                 first__2 = first.insert(k2, r)
 
                 if first is not first__2:
-                    assert first__2.sample.k1 is k1
+                    assert first__2.sample().k1 is k1
 
                     store(k3, first__2)
 
                 return r
 
             r = Meta(k1, k2, k3)
-            store(k3, create_herd_2(first.sample.k1, k1, first.remove_skip(), r))
+            store(k3, create_herd_2(first_k1, k1, first.remove_skip(), r))
             return r
 
 

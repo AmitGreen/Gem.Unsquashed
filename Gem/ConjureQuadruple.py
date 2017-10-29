@@ -94,7 +94,7 @@ def gem():
 
                 assert second.skip is 1
 
-                second_k3 = second.sample.k3
+                second_k3 = second.sample().k3
 
                 if second_k3 is k3:
                     fourth = second.glimpse(k4)
@@ -115,7 +115,7 @@ def gem():
                 first.displace(k2, create_herd_2(second_k3, k3, second.remove_skip(), r))
                 return r
 
-            first_sample = first.sample
+            first_sample = first.sample()
             first_k2     = first_sample.k2
 
             if first_k2 is not k2:

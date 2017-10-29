@@ -43,12 +43,14 @@ def gem():
         __slots__ = (())
 
 
-        is_herd = true
-        k1      = absent
-        k2      = absent
-        k3      = absent
-        k4      = absent
-        skip    = 0
+        is_herd      = true
+        is_herd_many = false
+        is_horde     = false
+        k1           = absent
+        k2           = absent
+        k3           = absent
+        k4           = absent
+        skip         = 0
 
 
         @static_method
@@ -65,6 +67,7 @@ def gem():
 
         is_herd      = true
         is_herd_many = false
+        is_horde     = false
         k1           = absent
         k2           = absent
         k3           = absent
@@ -73,14 +76,14 @@ def gem():
 
 
         def __init__(t, a, v):
-            assert a is not absent
+            assert (a is not absent) and (v is not absent)
 
             t.a = a
             t.v = v
 
 
         def displace(t, k, v):
-            assert t.a is k
+            assert (t.a is k) and (v is not absent)
 
             t.v = v
 
@@ -94,7 +97,7 @@ def gem():
 
 
         def insert(t, b, w):
-            assert (b is not absent) and (t.a is not b)
+            assert (b is not absent) and (t.a is not b) and (w is not absent)
 
             return create_herd_2(t.a, b, t.v, w)
 
@@ -178,6 +181,7 @@ def gem():
 
         is_herd      = true
         is_herd_many = false
+        is_horde     = false
         k1           = absent
         k2           = absent
         k3           = absent
@@ -206,6 +210,8 @@ def gem():
 
 
         def displace(t, k, v):
+            assert v is not absent
+
             if t.a is k:
                 t.v = v
                 return
@@ -231,7 +237,7 @@ def gem():
 
 
         def insert(t, c, x):
-            assert (c is not absent) and (t.a is not c) and (t.b is not c)
+            assert (c is not absent) and (t.a is not c) and (t.b is not c) and (x is not absent)
 
             return create_herd_3(t.a, t.b, c, t.v, t.w, x)
 
@@ -470,7 +476,7 @@ def gem():
             return ((t.v, t.w))
 
 
-    Herd_2.sample = Herd_2.v
+    Herd_2.first = Herd_2.v
 
 
     class Herd_3(Object):
@@ -486,6 +492,7 @@ def gem():
 
         is_herd      = true
         is_herd_many = false
+        is_horde     = false
         k1           = absent
         k2           = absent
         k3           = absent
@@ -523,6 +530,8 @@ def gem():
 
 
         def displace(t, k, v):
+            assert v is not absent
+
             if t.a is k:
                 t.v = v
                 return
@@ -553,7 +562,7 @@ def gem():
 
 
         def insert(t, d, y):
-            assert (d is not absent) and (t.a is not d) and (t.b is not d) and (t.c is not d)
+            assert (d is not absent) and (t.a is not d) and (t.b is not d) and (t.c is not d) and (y is not absent)
 
             return create_herd_4(t.a, t.b, t.c, d, t.v, t.w, t.x, y)
 
@@ -826,7 +835,7 @@ def gem():
             return ((t.v, t.w, t.x))
 
 
-    Herd_3.sample = Herd_3.v
+    Herd_3.first = Herd_3.v
 
 
     class Herd_4567(Object):
@@ -850,6 +859,7 @@ def gem():
 
         is_herd      = true
         is_herd_many = false
+        is_horde     = false
         k1           = absent
         k2           = absent
         k3           = absent
@@ -909,6 +919,8 @@ def gem():
 
 
         def displace(t, k, v):
+            assert v is not absent
+
             if t.a is k:
                 t.v = v
                 return
@@ -924,6 +936,8 @@ def gem():
             if t.d is k:
                 t.y = v
                 return
+
+            assert k is not absent
 
             if t.e is k:
                 t.z = v
@@ -981,7 +995,7 @@ def gem():
 
         def insert(t, e8, z8):
             assert (t.a is not e8) and (t.b is not e8) and (t.c is not e8) and (t.d is not e8)
-            assert e8 is not absent
+            assert (e8 is not absent) and (z8 is not absent)
 
             e = t.e
             if e is absent:
@@ -1067,7 +1081,7 @@ def gem():
             d = t.d
             if d is e8: return t
 
-            assert e8 is not absent
+            assert (e8 is not absent) and (z8 is not absent)
 
             e = t.e
             if e is e8: return t
@@ -2086,7 +2100,7 @@ def gem():
             return ((t.v, t.w, t.x, t.y, t.z, t.z6, t.z7))
 
 
-    Herd_4567.sample = Herd_4567.v
+    Herd_4567.first = Herd_4567.v
 
 
     class Herd_Many(Map):
@@ -2095,6 +2109,7 @@ def gem():
 
         is_herd      = true
         is_herd_many = true
+        is_horde     = false
         k1           = absent
         k2           = absent
         k3           = absent
@@ -2110,15 +2125,26 @@ def gem():
 
 
         if __debug__:
-            #
-            #   Need to share this
-            #
             def displace(t, k, v):
-                assert k in t
+                assert (k in t) and (v is not absent)
 
                 t[k] = v
         else:
             displace = map__store
+
+
+        if is_python_2:
+            @property
+            def first(t):
+                #assert 0   -- Untested
+
+                return t.itervalues().next()
+        else:
+            @property
+            def first(t):
+                #assert 0   -- Untested
+
+                return iterate(t.values()).__next__()
 
 
         glimpse = map__lookup
@@ -2126,7 +2152,7 @@ def gem():
 
 
         def inject(t, k, v):
-            assert map__lookup(t, k) is none
+            assert (map__lookup(t, k) is none) and (k is not absent) and (v is not absent)
 
             map__store(t, k, v)
             return t
@@ -2189,20 +2215,6 @@ def gem():
 
         def provision_triple_step2__312(t, _displace, _parent, Meta, k1, k2, k3):
             return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2, k3)))
-
-
-        if is_python_2:
-            @property
-            def sample(t):
-                assert 0
-
-                return t.itervalues().next()
-        else:
-            @property
-            def sample(t):
-                assert 0
-
-                return iterate(t.values()).__next__()
 
 
         def scrub(t):
@@ -2275,7 +2287,7 @@ def gem():
 
     @export
     def create_herd_1(a, v):
-        assert a is not absent
+        assert (a is not absent) and (v is not absent)
 
         t = new_Herd_1()
 
@@ -2287,7 +2299,7 @@ def gem():
 
     @export
     def create_herd_2(a, b, v, w):
-        assert (a is not absent) and (a is not b) and (b is not absent)
+        assert (a is not absent) and (a is not b) and (b is not absent) and (v is not absent) and (w is not absent)
 
         t = new_Herd_2()
 
@@ -2302,7 +2314,8 @@ def gem():
     def create_herd_3(a, b, c, v, w, x):
         assert (a is not absent) and (a is not b) and (a is not c)
         assert (b is not absent) and (b is not c)
-        assert (c is not absent)
+        assert c is not absent
+        assert (v is not absent) and (w is not absent) and (x is not absent)
 
         t = new_Herd_3()
 
@@ -2322,6 +2335,7 @@ def gem():
         assert (b is not absent) and (b is not c) and (b is not d)
         assert (c is not absent) and (c is not d)
         assert d is not absent
+        assert (v is not absent) and (w is not absent) and (x is not absent) and (y is not absent)
 
         t = new_Herd_4567()
 
@@ -2350,6 +2364,8 @@ def gem():
         assert (e6 is not absent) and (e6 is not e7) and (e6 is not e8)
         assert (e7 is not absent) and (e7 is not e8)
         assert e8 is not absent
+        assert (v is not absent) and (w is not absent) and (x is not absent) and (y is not absent)
+        assert (z is not absent) and (z6 is not absent) and (z7 is not absent) and (z8 is not absent)
 
         t = new_Herd_Many()
 

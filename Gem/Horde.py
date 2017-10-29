@@ -11,9 +11,10 @@ def gem():
     #
 
 
-    map__lookup  = Map.get
-    map__provide = Map.setdefault
-    map__store   = Map.__setitem__
+    map__contains = Map.__contains__
+    map__lookup   = Map.get
+    map__provide  = Map.setdefault
+    map__store    = Map.__setitem__
 
 
     def increment_skip__horde_many(t, skip = 1):
@@ -36,7 +37,7 @@ def gem():
     class Horde_23(Object):
         __slots__ = ((
             'skip',                     #   Integer { 0 | 1 }
-            'sample',                   #   Any excluding Absent
+            '_sample',                  #   Absent | Any excluding Absent
             'a',                        #   Any excluding Absent
             'b',                        #   Any excluding Absent
             'c',                        #   Absent | Any excluding Absent
@@ -46,20 +47,21 @@ def gem():
         ))
 
 
-        is_herd = true
-        k1      = absent
-        k2      = absent
-        k3      = absent
-        k4      = absent
+        is_herd  = true
+        is_horde = true
+        k1       = absent
+        k2       = absent
+        k3       = absent
+        k4       = absent
 
 
         def __repr__(t):
             if t.c is absent:
                 return arrange('<Horde_23 %d %r; %r : %r; %r : %r>',
-                               t.skip, t.sample, t.a, t.v, t.b, t.w)
+                               t.skip, t._sample, t.a, t.v, t.b, t.w)
 
             return arrange('<Horde_23 %d %r; %r : %r; %r : %r; %r : %r>',
-                           t.skip, t.sample, t.a, t.v, t.b, t.w, t.c, t.x)
+                           t.skip, t._sample, t.a, t.v, t.b, t.w, t.c, t.x)
 
 
         def count_nested(t):
@@ -105,18 +107,11 @@ def gem():
 
 
         def displace(t, k, v):
+            assert v is not absent
+
             if t.a is k:
-                if v.is_herd:
-                    sample = v.sample
-
-                    while sample.is_herd:
-                        sample = sample.sample
-
-                    t.sample = sample
-                else:
-                    t.sample = v
-
-                t.v = v
+                t._sample = absent
+                t.v       = v
                 return
 
             if t.b is k:
@@ -139,7 +134,7 @@ def gem():
 
 
         def insert(t, d, y):
-            assert (d is not absent) and (t.a is not d) and (t.b is not d) and (t.c is not d)
+            assert (d is not absent) and (t.a is not d) and (t.b is not d) and (t.c is not d) and (y is not absent)
 
             if t.c is absent:
                 t.c = d
@@ -320,51 +315,43 @@ def gem():
             return r
 
 
+        def sample(t):
+            sample = t._sample
+
+            if sample is not absent:
+                return sample
+
+            sample = t.v
+
+            while sample.is_herd:
+                if sample.is_horde:
+                    t._sample = sample = sample.sample()
+                    return sample
+
+                sample = sample.first
+
+            t._sample = sample
+
+            return sample
+
+
         def scrub(t):
             v       = t.v
             v_scrub = v.scrub
             if v_scrub is 0:
-                if v is t.sample:
+                if v is t._sample:
                     #rc = reference_count(v)
-                    #my_line('v<%r> is t.sample; rc: %d', v, rc)
+                    #my_line('v<%r> is t._sample; rc: %d', v, rc)
 
                     if reference_count(v) is 4:
-                        del t.sample
-
-                        resample = 7
-                        v        = 0
-                    else:
-                        resample = 0
+                        t._sample = absent
+                        v         = 0
                 else:
-                    resample = 0
-
                     if reference_count(v) is 3:
                         v = 0
             else:
-                if v is t.sample:
-                    resample = 0
-
-                    v__2 = v_scrub()
-
-                    if v is v__2:
-                        resample = 0
-                    else:
-                        del t.sample
-
-                        resample = 7
-
-                    v = v__2
-                else:
-                    #
-                    #   Need to free up 'sample' --- as it might affect v_scrub (as it looks at reference counts of
-                    #   objects it references, one of which may be sample; & decide that sample can be scrubed ...
-                    #
-                    #   Then restore 'sample' later.
-                    #
-                    resample = 7
-                    del t.sample
-
-                    v = v_scrub()
+                t._sample = absent
+                v         = v_scrub()
 
             w       = t.w
             w_scrub = w.scrub
@@ -386,19 +373,9 @@ def gem():
                     v_increment = v.increment_skip
                     return (v   if v_increment is 0 else    v_increment(t.skip + 1))
 
-                if resample is 7:
-                    if v.is_herd:
-                        sample = v.sample
-
-                        while sample.is_herd:
-                            sample = sample.sample
-
-                        t.sample = sample
-                    else:
-                        t.sample = v
-
-                t.v = v
-                t.w = w
+                t._sample = absent
+                t.v       = v
+                t.w       = w
                 return t
 
             x       = t.x
@@ -424,20 +401,9 @@ def gem():
                 #
                 #   scrub .a/.v
                 #
-                assert resample is 7
-
-                if w.is_herd:
-                    sample = w.sample
-
-                    while sample.is_herd:
-                        sample = sample.sample
-
-                    t.sample = sample
-                else:
-                    t.sample = w
-
-                t.a = t.b
-                t.v = w
+                t._sample = absent
+                t.a       = t.b
+                t.v       = w
 
                 t.b = t.c
                 t.w = x
@@ -454,18 +420,9 @@ def gem():
                 #
                 #   scrub .b/.w
                 #
-                if resample is 7:
-                    if v.is_herd:
-                        sample = v.herd
-
-                        while sample.is_herd:
-                            sample = sample.sample
-
-                        t.sample = sample
-                    else:
-                        t.sample = v
-
-                t.v = v
+                if t.v is not v:
+                    t._sample = absent
+                    t.v       = v
 
                 t.b = t.c
                 t.w = x
@@ -474,18 +431,10 @@ def gem():
                 del t.x
                 return t
 
-            if resample is 7:
-                if v.is_herd:
-                    sample = v.sample
+            if t.v is not v:
+                t._sample = absent
+                t.v       = v
 
-                    while sample.is_herd:
-                        sample = sample.sample
-
-                    t.sample = sample
-                else:
-                    t.sample = v
-
-            t.v = v
             t.w = w
 
             if x is 0:
@@ -494,6 +443,8 @@ def gem():
                 #
                 t.c = absent
                 del t.x
+            else:
+                t.x = x
 
             return t
 
@@ -504,21 +455,22 @@ def gem():
     class Horde_Many(Map):
         __slots__ = ((
             'skip',                     #   Integer { 0 | 1 }
-            'sample',                   #   Any
+            '_sample',                  #   Absent | Any excluding Absent
         ))
 
 
-        is_herd = true
-        k1      = absent
-        k2      = absent
-        k3      = absent
-        k4      = absent
+        is_herd  = true
+        is_horde = true
+        k1       = absent
+        k2       = absent
+        k3       = absent
+        k4       = absent
 
 
         def __repr__(t):
             return arrange('<Horde_Many %d %r; %s>',
                            t.skip,
-                           t.sample,
+                           t._sample,
                            '; '.join(arrange('%r : %r', k, v)   for [k, v] in t.items_sorted_by_key()))
 
 
@@ -526,13 +478,11 @@ def gem():
 
 
         if __debug__:
-            #
-            #   Need to share this.  Also need to deal with samples
-            #
             def displace(t, k, v):
-                assert k in t
+                assert (map__contains(t, k)) and (k is not absent) and (v is not absent)
 
-                t[k] = v
+                t._sample = absent
+                t[k]      = v
         else:
             displace = map__store
 
@@ -542,7 +492,7 @@ def gem():
 
 
         def inject(t, k, v):
-            assert map__lookup(t, k) is none
+            assert (map__lookup(t, k) is none) and (k is not absent) and (v is not absent)
 
             map__store(t, k, v)
             return t
@@ -556,7 +506,7 @@ def gem():
         def provision_triple(t, displace, Meta, k1, k2, k3):
             assert t.skip is 1
 
-            sample_k2 = t.sample.k2
+            sample_k2 = t.sample().k2
 
             if sample_k2 is not k2:
                 t.skip = 0
@@ -572,7 +522,7 @@ def gem():
         def provision_triple__312(t, displace, Meta, k1, k2, k3):
             assert t.skip is 1
 
-            sample_k1 = t.sample.k1
+            sample_k1 = t.sample().k1
 
             if sample_k1 is not k1:
                 t.skip = 0
@@ -600,14 +550,52 @@ def gem():
         remove_skip = remove_skip__horde
 
 
+        if is_python_2:
+            def sample(t):
+                sample = t._sample
+
+                if sample is not absent:
+                    return sample
+
+                sample = t.itervalues().next()
+
+                while sample.is_herd:
+                    if sample.is_horde:
+                        t._sample = sample = sample.sample()
+                        return sample
+
+                    sample = sample.first
+
+                t._sample = sample
+
+                return sample
+        else:
+            def sample(t):
+                sample = t._sample
+
+                if sample is not absent:
+                    return sample
+
+                sample = iterate(t.values()).__next__()
+
+                while sample.is_herd:
+                    if sample.is_horde:
+                        t._sample = sample = sample.sample()
+                        return sample
+
+                    sample = sample.first
+
+                t._sample = sample
+
+                return sample
+
+
         def scrub(t):
             append_remove = 0
             value         = t.__getitem__
             store         = t.__setitem__
 
-            sample = t.sample
-
-            assert (not sample.is_herd) and (sample is not absent)
+            t._sample = absent
 
             for k in t.keys():
                 v       = value(k)
@@ -615,15 +603,7 @@ def gem():
 
                 if v_scrub is 0:
                     if reference_count(v) is not 3:
-                        if v is sample:
-                            if reference_count(v) is not 5:
-                                continue
-
-                            sample = absent
-
-                            del t.sample
-                        else:
-                            continue
+                        continue
 
                     if append_remove is 0:
                         remove_many = [k]
@@ -633,10 +613,6 @@ def gem():
                     append_remove(k)
                     continue
 
-                if sample is not absent:
-                    sample = absent
-
-                    del t.sample
 
                 v = v_scrub()
 
@@ -649,43 +625,27 @@ def gem():
                     append_remove(k)
                     continue
 
-                sample = v
                 store(k, v)
 
-            if append_remove is not 0:
-                if length(remove_many) == length(t):
-                    return 0
+            if append_remove is 0:
+                return t
+                
+            if length(remove_many) == length(t):
+                return 0
 
-                zap = t.__delitem__
+            zap = t.__delitem__
 
-                for k in remove_many:
-                    zap(k)
+            for k in remove_many:
+                zap(k)
 
-                if length(t) is 1:
-                    if is_python_2:
-                        v = t.itervalues().next()
-                    else:
-                        v = iterate(t.values()).__next__()
-
-                    v_increment = v.increment_skip
-                    return (v   if v_increment is 0 else    v_increment())
-
-            #
-            #   Restore a sample
-            #
-            if sample is absent:
+            if length(t) is 1:
                 if is_python_2:
-                    sample = t.itervalues().next()
+                    v = t.itervalues().next()
                 else:
-                    sample = iterate(t.values()).__next__()
+                    v = iterate(t.values()).__next__()
 
-                while sample.is_herd:
-                    my_line('SEARCHING FOR SAMPLE ...')
-
-                    sample = sample.sample
-
-                #my_line('RESTORING SAMPLE ...: %r', sample)
-                t.sample = sample
+                v_increment = v.increment_skip
+                return (v   if v_increment is 0 else    v_increment(t.skip))
 
             return t
 
@@ -697,26 +657,17 @@ def gem():
     @export
     def create_horde_2(skip, a, b, v, w):
         assert (1 <= skip <= 2) and (a is not absent) and (a is not b) and (b is not absent)
+        assert (v is not absent) and (w is not absent)
 
         t = new_Horde_23()
 
-        t.skip = skip
-
-        if v.is_herd:
-            sample = v.sample
-
-            while sample.is_herd:
-                sample = sample.sample
-
-            t.sample = sample
-        else:
-            t.sample = v
-
-        t.a = a
-        t.b = b
-        t.c = absent
-        t.v = v
-        t.w = w
+        t.skip    = skip
+        t._sample = absent
+        t.a       = a
+        t.b       = b
+        t.c       = absent
+        t.v       = v
+        t.w       = w
 
         return t
 
@@ -726,28 +677,19 @@ def gem():
         assert 1 <= skip <= 2
         assert (a is not absent) and (a is not b) and (a is not c)
         assert (b is not absent) and (b is not c)
-        assert (c is not absent)
+        assert c is not absent
+        assert (v is not absent) and (w is not absent) and (x is not absent)
 
         t = new_Horde_23()
 
-        t.skip = skip
-
-        if v.is_herd:
-            sample = v.sample
-
-            while sample.is_herd:
-                sample = sample.sample
-
-            t.sample = sample
-        else:
-            t.sample = v
-
-        t.a    = a
-        t.b    = b
-        t.c    = c
-        t.v    = v
-        t.w    = w
-        t.x    = x
+        t.skip    = skip
+        t._sample = absent
+        t.a       = a
+        t.b       = b
+        t.c       = c
+        t.v       = v
+        t.w       = w
+        t.x       = x
 
         return t
 
@@ -759,14 +701,15 @@ def gem():
         assert (b is not absent) and (b is not c) and (b is not d)
         assert (c is not absent) and (c is not d)
         assert d is not absent
+        assert (v is not absent) and (w is not absent) and (x is not absent) and (y is not absent)
 
         t = new_Horde_Many()
 
-        t.skip   = skip
-        t.sample = v
-        t[a]     = v
-        t[b]     = w
-        t[c]     = x
-        t[d]     = y
+        t.skip    = skip
+        t._sample = v
+        t[a]      = v
+        t[b]      = w
+        t[c]      = x
+        t[d]      = y
 
         return t

@@ -36,7 +36,7 @@ def gem():
             prefix_1 = '  '
 
             if v.skip is not 0:
-                f.line('%sskip %d; sample: %s', prefix_1, v.skip, v.sample)
+                f.line('%sskip %d; sample: %s', prefix_1, v.skip, v.sample())
                 prefix_1 += ('  ' * v.skip)
 
             for [k2, w] in v.items_sorted_by_key():
@@ -64,7 +64,7 @@ def gem():
                 prefix_2 = prefix_1 + '  '
 
                 if w.skip is not 0:
-                    f.line('%sskip %d; sample: %s', prefix_2, w.skip, w.sample)
+                    f.line('%sskip %d; sample: %s', prefix_2, w.skip, w.sample())
                     prefix_2 += ('  ' * w.skip)
 
                 for [k3, x] in w.items_sorted_by_key():
