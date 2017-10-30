@@ -36,10 +36,10 @@ def gem():
             s2 = create_series_2(one, two)
             s3 = create_series_3(one, two, three)
 
-            assert s0.create_tuple() is (())
-            assert s1.create_tuple() == ((one,))
-            assert s2.create_tuple() == ((one, two))
-            assert s3.create_tuple() == ((one, two, three))
+            assert s0.finish() is (())
+            assert s1.finish() == ((one,))
+            assert s2.finish() == ((one, two))
+            assert s3.finish() == ((one, two, three))
 
             del s0, s1, s2, s3
             collect_garbage()
