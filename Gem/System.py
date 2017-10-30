@@ -4,12 +4,6 @@
 @gem('Gem.System')
 def gem():
     #
-    #   Types
-    #
-    Slice = PythonBuiltIn.slice
-
-
-    #
     #   Functions
     #
     python_frame = PythonSystem._getframe

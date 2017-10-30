@@ -31,6 +31,7 @@ def gem():
     require_gem('Topaz.Path')
     require_gem('Topaz.Pattern')
     require_gem('Topaz.PortrayString')
+    require_gem('Topaz.Series')
     require_gem('Topaz.StringOutput')
 
 
@@ -39,12 +40,13 @@ def gem():
         test_conjure_dual()
         test_conjure_quadruple()
         test_conjure_single()
-        test_conjure_triple()
+        #test_conjure_triple()
         test_conjure_tree_comment()
         test_herd()
         test_pattern()
         test_portray_raw_string()
         test_remove_path()
         test_rename_path()
+        test_series()
         test_string_output()
         #test_exception_chain()

@@ -96,6 +96,7 @@ def gem():
         'Map',              PythonBuiltIn.dict,
         'Method',           PythonTypes.MethodType,
         'Object',           PythonBuiltIn.object,
+        'Slice',            PythonBuiltIn.slice,
         'Tuple',            PythonBuiltIn.tuple,
         'Type',             PythonBuiltIn.type,
 

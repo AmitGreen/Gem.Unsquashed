@@ -629,7 +629,7 @@ def gem():
 
             if append_remove is 0:
                 return t
-                
+
             if length(remove_many) == length(t):
                 return 0
 

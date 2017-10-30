@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Topaz.Cache')
+@gem('Topaz.Herd')
 def gem():
     require_gem('Topaz.Core')
     require_gem('Topaz.CacheSupport')

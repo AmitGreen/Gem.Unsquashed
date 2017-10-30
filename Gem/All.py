@@ -74,3 +74,4 @@ from    Gem                 import  unknown_ascii                           #   
 from    Gem                 import  values_tuple_sorted_by_key              #   Gem.Map
 from    Gem                 import  write_binary_to_path                    #   Gem.Path
 from    Gem                 import  write_standard_output                   #   Gem.Boot
+from    Gem                 import  collect_garbage                         #   Gem.GarbageCollection

@@ -18,7 +18,7 @@ GEM_FILES = \
 	../Gem/DelayedFileOutput.py ../Gem/DumpCache.py \
 	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
-	../Gem/Global.py \
+	../Gem/GarbageCollection.py ../Gem/Global.py \
     ../Gem/Herd.py ../Gem/Horde.py \
     ../Gem/Import.py ../Gem/IO.py \
     ../Gem/LiquidMap.py \
@@ -26,7 +26,7 @@ GEM_FILES = \
     ../Gem/Output.py \
     ../Gem/Path.py ../Gem/PortrayString.py \
     ../Gem/RegularExpression.py \
-    ../Gem/SimpleStringIO.py ../Gem/StringOutput.py ../Gem/System.py \
+    ../Gem/Series.py ../Gem/SimpleStringIO.py ../Gem/StringOutput.py ../Gem/System.py \
     ../Gem/Traceback.py
 
 DRAVITE_FILES = \
@@ -105,7 +105,7 @@ TOPAZ_FILES = \
     ../Topaz/Herd.py \
     ../Topaz/Main.py \
     ../Topaz/Path.py ../Topaz/Pattern.py ../Topaz/PortrayString.py \
-    ../Topaz/StringOutput.py
+    ../Topaz/Series.py ../Topaz/StringOutput.py
 
 TREMOLITE_FILES = \
     ../Tremolite/Build.py \
@@ -156,7 +156,7 @@ clean:
 	rm -f d.py de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
-	rm -f gdc.py gdo.py gg.py ghe.py gho.py gj4.py gq.py
+	rm -f gc.py gdc.py gdo.py gg.py ghe.py gho.py gj4.py gq.py gs.py
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -178,7 +178,7 @@ clean:
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f zco.py zcs.py ze.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py zm.py zpa.py zps.py zpt.py zso.py
+	rm -f zco.py zcs.py ze.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py zm.py zpa.py zps.py zpt.py zse.py zso.py
 
 
 files:
@@ -220,6 +220,7 @@ links:
 	ln -s ../Gem/Exception.py                           ex.py
 	ln -s ../Gem/FileOutput.py                          fo.py
 	ln -s ../Gem/FileStatus.py                          fs.py
+	ln -s ../Gem/GarbageCollection.py                   gc.py
 	ln -s ../Gem/DumpCache.py                           gdc.py
 	ln -s ../Gem/Codec.py                               gdo.py
 	ln -s ../Gem/Global.py                              gg.py
@@ -227,6 +228,7 @@ links:
 	ln -s ../Gem/Horde.py                               gho.py
 	ln -s ../Gem/ConjureQuadruple.py                    gj4.py
 	ln -s ../Gem/LiquidMap.py                           gq.py
+	ln -s ../Gem/Series.py                              gs.py
 	ln -s ../Sapphire/Parse.py                          h0p.py
 	ln -s ../Sapphire/Parse1.py                         h1p.py
 	ln -s ../Sapphire/Parse1Atom.py                     h1pa.py
@@ -366,6 +368,7 @@ links:
 	ln -s ../Topaz/Path.py                              zpa.py
 	ln -s ../Topaz/PortrayString.py                     zps.py
 	ln -s ../Topaz/Pattern.py                           zpt.py
+	ln -s ../Topaz/Series.py                            zse.py
 	ln -s ../Topaz/StringOutput.py                      zso.py
 
 

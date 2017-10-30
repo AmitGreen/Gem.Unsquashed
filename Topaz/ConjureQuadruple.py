@@ -62,16 +62,16 @@ def gem():
             ((  two,    blue,   large,  triangle,   7   )),
             ((  two,    blue,   large,  oval,       7   )),     #   Test Horde_Many.scrub resampling
 
-            ((  three,  green,  small,  moon,       7   )), 
-            ((  three,  green,  medium, moon,       0   )), 
-            ((  three,  green,  small,  star,       7   )), 
-            ((  three,  green,  small,  trapazoid,  7   )), 
+            ((  three,  green,  small,  moon,       7   )),
+            ((  three,  green,  medium, moon,       0   )),
+            ((  three,  green,  small,  star,       7   )),
+            ((  three,  green,  small,  trapazoid,  7   )),
 
-            ((  four,   blue,   large,  moon,       7   )), 
-            ((  four,   blue,   large,  star,       7   )), 
-            ((  four,   white,  small,  square,     0   )), 
-            ((  four,   yellow, small,  square,     0   )), 
-            ((  four,   blue,   medium, moon,       0   )), 
+            ((  four,   blue,   large,  moon,       7   )),
+            ((  four,   blue,   large,  star,       7   )),
+            ((  four,   white,  small,  square,     0   )),
+            ((  four,   yellow, small,  square,     0   )),
+            ((  four,   blue,   medium, moon,       0   )),
 
             ((  five,   black,  medium, square,     7   )),
             ((  five,   white,  small,  star,       7   )),
