@@ -10,7 +10,7 @@ def gem():
 
 
     @export
-    def dump_cache(f, cache):
+    def dump_cache(f, cache, show_sample = true):
         f.line('===  %s  ===', cache.name)
 
         for [k, v] in cache.items_sorted_by_key():
@@ -36,7 +36,11 @@ def gem():
             prefix_1 = '  '
 
             if v.skip is not 0:
-                f.line('%sskip %d; sample: %s', prefix_1, v.skip, v.sample())
+                f.line('%sskip %d; sample: %s',
+                       prefix_1,
+                       v.skip,
+                       (v.sample()   if show_sample else   'not shown on purpose'))
+
                 prefix_1 += ('  ' * v.skip)
 
             for [k2, w] in v.items_sorted_by_key():
@@ -64,7 +68,11 @@ def gem():
                 prefix_2 = prefix_1 + '  '
 
                 if w.skip is not 0:
-                    f.line('%sskip %d; sample: %s', prefix_2, w.skip, w.sample())
+                    f.line('%sskip %d; sample: %s',
+                           prefix_2,
+                           w.skip,
+                           (w.sample()   if show_sample else   'not shown on purpose'))
+
                     prefix_2 += ('  ' * w.skip)
 
                 for [k3, x] in w.items_sorted_by_key():
@@ -81,9 +89,9 @@ def gem():
 
 
     @export
-    def dump_cache_to_string(cache):
+    def dump_cache_to_string(cache, show_sample = false):
         with create_StringOutput() as f:
-            dump_cache(f, cache)
+            dump_cache(f, cache, show_sample = show_sample)
 
         return f.result
 

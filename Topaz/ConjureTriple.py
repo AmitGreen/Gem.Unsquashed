@@ -429,12 +429,12 @@ def gem():
 
 
     def test_conjure_triple__X__verify(cache, simplified_conjure_triple):
-        cache_dump = dump_cache_to_string(cache)
+        cache_dump = dump_cache_to_string(cache, show_sample = false)
 
         test_final_scrub(cache)
         test_conjure_triple__X__scrub(cache, simplified_conjure_triple)
 
-        simplified_cache_dump = dump_cache_to_string(cache)
+        simplified_cache_dump = dump_cache_to_string(cache, show_sample = false)
 
         test_final_scrub(cache)
 

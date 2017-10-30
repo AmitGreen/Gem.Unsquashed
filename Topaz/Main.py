@@ -40,7 +40,7 @@ def gem():
         test_conjure_dual()
         test_conjure_quadruple()
         test_conjure_single()
-        #test_conjure_triple()
+        test_conjure_triple()
         test_conjure_tree_comment()
         test_herd()
         test_pattern()
