@@ -3,6 +3,9 @@
 #
 @gem('Sapphire.Tree')
 def gem():
+    require_gem('Sapphire.Nub')
+
+
     @share
     class SapphireTrunk(Object):
         __slots__ = (())
@@ -24,3 +27,6 @@ def gem():
 
         def display_full_token(t):
             return t.display_token()
+
+
+        nub = conjure_nub

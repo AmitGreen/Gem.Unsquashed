@@ -539,7 +539,7 @@ def gem():
 
 
         def display_token(t):
-            return arrange('<+%d {%s}>', t.identation.total, portray_string(t.token.s)[1:-1])
+            return arrange('<+%d {%s}>', t.indentation.total, portray_string(t.token.s)[1:-1])
 
 
     @share

@@ -6,7 +6,7 @@ def gem():
     @export
     def produce_conjure_unique_quadruple(
             name, Meta, cache,
-            
+
             lookup = absent,
             store  = absent,
     ):

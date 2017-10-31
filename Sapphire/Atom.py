@@ -162,9 +162,16 @@ def gem():
 
 
         display_token = __repr__
+        is_name       = is_name__0
+        nub           = conjure_nub
 
 
-        is_name = is_name__0
+
+        def order(a, b):
+            return (
+                          compare(a.class_order, b.class_order)
+                       or compare(a.s,           b.s)
+                   )
 
 
         def write(t, w):

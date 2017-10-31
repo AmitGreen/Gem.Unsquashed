@@ -4,6 +4,7 @@
 @gem('Sapphire.Elemental')
 def gem():
     require_gem('Sapphire.ActionWord')
+    require_gem('Sapphire.ClassOrder')
     require_gem('Sapphire.LineMarker')
     require_gem('Sapphire.Tree')
 
@@ -440,6 +441,7 @@ def gem():
 
     class OperatorComma(KeywordAndOperatorBase):
         __slots__                          = (())
+        class_order                        = CLASS_ORDER__NORMAL_TOKEN
         display_name                       = ','
         is__comma__or__right_parenthesis   = true
         is_comma                           = true
@@ -514,6 +516,7 @@ def gem():
 
     class OperatorEqualSign(KeywordAndOperatorBase):
         __slots__                               = (())
+        class_order                             = CLASS_ORDER__NORMAL_TOKEN
         display_name                            = '='
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true

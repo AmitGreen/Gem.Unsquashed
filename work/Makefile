@@ -65,8 +65,8 @@ SAPPHIRE_FILES = \
         ../Sapphire/BookcaseManyFrill.py ../Sapphire/BookcaseManyStatement.py ../Sapphire/BookcaseStatement.py \
         ../Sapphire/BookcaseTriple.py \
         ../Sapphire/BuildSymbolTable.py \
-    ../Sapphire/Cache.py ../Sapphire/CallStatement.py ../Sapphire/Comment.py ../Sapphire/Combine.py \
-        ../Sapphire/Core.py ../Sapphire/CreateMeta.py \
+    ../Sapphire/Cache.py ../Sapphire/CallStatement.py ../Sapphire/ClassOrder.py ../Sapphire/Comment.py \
+        ../Sapphire/Combine.py ../Sapphire/Core.py ../Sapphire/CreateMeta.py \
     ../Sapphire/DefinitionHeader.py ../Sapphire/Development.py ../Sapphire/DualFrill.py ../Sapphire/DualStatement.py \
         ../Sapphire/DualToken.py ../Sapphire/DualTwig.py ../Sapphire/DumpToken.py \
     ../Sapphire/Elemental.py \
@@ -74,6 +74,7 @@ SAPPHIRE_FILES = \
     ../Sapphire/LineMarker.py \
     ../Sapphire/Main.py ../Sapphire/ManyExpression.py ../Sapphire/ManyFrill.py ../Sapphire/MemberExpression.py \
         ../Sapphire/Method.py ../Sapphire/MosiacDefinition.py ../Sapphire/MosiacSymbol.py \
+    ../Sapphire/Nub.py \
     ../Sapphire/Parse.py \
         ../Sapphire/Parse1.py ../Sapphire/Parse1Atom.py ../Sapphire/Tokenize1Header.py ../Sapphire/Parse1Call.py \
         ../Sapphire/Parse1Complex.py ../Sapphire/Parse1Expression.py ../Sapphire/Parse1ExpressionStatement.py \
@@ -163,9 +164,9 @@ clean:
 	rm -f   h2f.py h2p.py h2ps.py h2s.py h2s.py h2t.py h2w.py
 	rm -f   h3e.py h3f.py h3p.py h3s.py h3t.py h3w.py
 	rm -f   h4f.py h4s.py h4t.py h4w.py
-	rm -f   hat.py haw.py hbe.py hby.py hca.py hcb.py hcc.py hcm.py hco.py hcs.py hd.py hdh.py hdt.py hel.py
+	rm -f   hat.py haw.py hbe.py hby.py hca.py hcb.py hcc.py hcm.py hco.py hcr.py hcs.py hd.py hdh.py hdt.py hel.py
 	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
-	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpa.py hpr.py hs.py
+	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hn.py hpa.py hpr.py hs.py
 	rm -f   htc.py hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
@@ -268,8 +269,9 @@ links:
 	ln -s ../Sapphire/Combine.py                        hcb.py
 	ln -s ../Sapphire/CreateMeta.py                     hcc.py
 	ln -s ../Sapphire/Comment.py                        hcm.py
-	ln -s ../Sapphire/Core.py                           hco.py
+	ln -s ../Sapphire/ClassOrder.py                     hco.py
 	ln -s ../Sapphire/CallStatement.py                  hcs.py
+	ln -s ../Sapphire/Core.py                           hcr.py
 	ln -s ../Sapphire/DefinitionHeader.py               hdh.py
 	ln -s ../Sapphire/DumpToken.py                      hdt.py
 	ln -s ../Sapphire/Elemental.py                      hel.py
@@ -295,6 +297,7 @@ links:
 	ln -s ../Sapphire/Method.py                         hmo.py
 	ln -s ../Sapphire/ManyExpression.py                 hmx.py
 	ln -s ../Sapphire/MosiacSymbol.py                   hmy.py
+	ln -s ../Sapphire/Nub.py                            hn.py
 	ln -s ../Sapphire/Pattern.py                        hpa.py
 	ln -s ../Sapphire/Priority.py                       hpr.py
 	ln -s ../Sapphire/Suite.py                          hs.py

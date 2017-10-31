@@ -8,7 +8,7 @@ def gem():
     #
     Python_GarbaseCollection = __import__('gc')
 
-    
+ 
     export(
         'collect_garbage',      Python_GarbaseCollection.collect,
     )
