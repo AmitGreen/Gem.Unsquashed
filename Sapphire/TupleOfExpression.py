@@ -12,7 +12,7 @@ def gem():
 
     class TupleOfExpression(TokenTuple):
         __slots__    = (())
-        class_order  = CLASS_ORDER__TUPLE_OF_EXPRESSION
+        class_order  = CLASS_ORDER__TUPLE
         display_name = 'expression-*'
 
 

@@ -23,6 +23,7 @@ def gem():
         ))
 
 
+        class_order         = CLASS_ORDER__UNARY_EXPRESSION
         is_colon            = false
         is_special_operator = false
 
@@ -50,6 +51,9 @@ def gem():
             r = t.a    .dump_token(f, false)
 
             return f.token_result(r, newline)
+
+
+        order = order__frill_a
 
 
         def write(t, w):

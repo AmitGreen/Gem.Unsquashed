@@ -108,6 +108,7 @@ def gem():
 
     class KeywordAs(KeywordAndOperatorBase):
         __slots__                               = (())
+        class_order                             = CLASS_ORDER__NORMAL_TOKEN
         display_name                            = 'as'
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
@@ -129,36 +130,42 @@ def gem():
 
     class KeywordAssert(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'assert'
         keyword      = 'assert'
 
 
     class KeywordBreak(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'break'
         keyword      = 'break'
 
 
     class KeywordClass(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'class'
         keyword      = 'class'
 
 
     class KeywordContinue(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'continue'
         keyword      = 'continue'
 
 
     class KeywordDelete(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'delete'
         keyword      = 'del'
 
 
     class KeywordElse(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = 'else'
         is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
@@ -176,42 +183,49 @@ def gem():
 
     class KeywordElseColon(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'else:'
         keyword      = 'else:'
 
 
     class KeywordElseIf(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'else-if'
         keyword      = 'elif'
 
 
     class KeywordExcept(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'except'
         keyword      = 'except'
 
 
     class KeywordExceptColon(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'except:'
         keyword      = 'except:'
 
 
     class KeywordFinally(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'finally'
         keyword      = 'finally'
 
 
     class KeywordFinallyColon(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'finally:'
         keyword      = 'finally:'
 
 
     class KeywordFor(KeywordAndOperatorBase):
         __slots__                         = (())
+        class_order                       = CLASS_ORDER__NORMAL_TOKEN
         display_name                      = 'for'
         is_end_of_arithmetic_expression   = true
         is_end_of_boolean_and_expression  = true
@@ -231,18 +245,21 @@ def gem():
 
     class KeywordFrom(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'from'
         keyword      = 'from'
 
 
     class KeywordFunction(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'function'
         keyword      = 'def'
 
 
     class KeywordIf(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = 'if'
         is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
@@ -261,6 +278,7 @@ def gem():
     @share
     class KeywordIn(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = 'in'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
@@ -277,6 +295,7 @@ def gem():
     @share
     class KeywordIs(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = 'is'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
@@ -291,12 +310,14 @@ def gem():
 
     class KeywordImport(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'import'
         keyword      = 'import'
 
 
     class KeywordNot(KeywordAndOperatorBase):
         __slots__      = (())
+        class_order    = CLASS_ORDER__NORMAL_TOKEN
         display_name   = 'not'
         is_keyword_not = true
         keyword        = 'not'
@@ -323,6 +344,7 @@ def gem():
 
     class KeywordOr(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = 'or'
         is_end_of_arithmetic_expression  = true
         is_end_of_boolean_and_expression = true
@@ -339,18 +361,21 @@ def gem():
 
     class KeywordPass(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'pass'
         keyword      = 'pass'
 
 
     class KeywordRaise(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'raise'
         keyword      = 'raise'
 
 
     class KeywordReturn(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'return'
         keyword      = 'return'
 
@@ -359,18 +384,21 @@ def gem():
 
     class KeywordTry(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'try'
         keyword      = 'try'
 
 
     class KeywordTryColon(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'try:'
         keyword      = 'try:'
 
 
     class KeywordWhile(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'while'
         keyword      = 'while'
 
@@ -378,6 +406,7 @@ def gem():
     @share
     class KeywordWith(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'with'
         keyword      = 'with'
 
@@ -385,12 +414,14 @@ def gem():
     @share
     class KeywordYield(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = 'yield'
         keyword      = 'yield'
 
 
     class OperatorAddModify(KeywordAndOperatorBase):
         __slots__                               = (())
+        class_order                             = CLASS_ORDER__NORMAL_TOKEN
         display_name                            = '+='
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
@@ -412,12 +443,14 @@ def gem():
 
     class OperatorAtSign(KeywordAndOperatorBase):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = '@'
         keyword      = '@'
 
 
     class OperatorColon(KeywordAndOperatorBase):
         __slots__                               = (())
+        class_order                             = CLASS_ORDER__NORMAL_TOKEN
         display_name                            = ':'
         is_colon                                = true
         is__atom__or__special_operator          = true
@@ -463,6 +496,7 @@ def gem():
     @share
     class OperatorCompareEqual(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = '=='
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
@@ -485,6 +519,7 @@ def gem():
     @share
     class OperatorCompareNotEqual(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = '!='
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
@@ -500,6 +535,7 @@ def gem():
     @share
     class OperatorDivide(KeywordAndOperatorBase):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__NORMAL_TOKEN
         display_name               = '/'
         is_multiply_operator       = true
         is_end_of_unary_expression = true
@@ -508,6 +544,7 @@ def gem():
 
     class OperatorDot(KeywordAndOperatorBase):
         __slots__           = (())
+        class_order         = CLASS_ORDER__NORMAL_TOKEN
         display_name        = '.'
         is_dot              = true
         is_postfix_operator = true
@@ -539,6 +576,7 @@ def gem():
     @share
     class OperatorGreaterThan(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = '>'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
@@ -568,6 +606,7 @@ def gem():
     @share
     class OperatorGreaterThanOrEqual(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = '>='
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
@@ -597,6 +636,7 @@ def gem():
     @share
     class OperatorIntegerDivide(KeywordAndOperatorBase):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__NORMAL_TOKEN
         display_name               = '//'
         is_multiply_operator       = true
         is_end_of_unary_expression = true
@@ -605,6 +645,7 @@ def gem():
 
     class OperatorLeftBrace(KeywordAndOperatorBase):
         __slots__     = (())
+        class_order   = CLASS_ORDER__NORMAL_TOKEN
         display_name  = '{'                                 #   }
         is_atom       = false
         is_left_brace = true
@@ -625,6 +666,7 @@ def gem():
     @export
     class OperatorLeftSquareBracket(KeywordAndOperatorBase):
         __slots__              = (())
+        class_order            = CLASS_ORDER__NORMAL_TOKEN
         display_name           = '['                        #   ]
         is_left_square_bracket = true
         is_postfix_operator    = true
@@ -634,6 +676,7 @@ def gem():
     @share
     class OperatorLessThan(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = '<'
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
@@ -663,6 +706,7 @@ def gem():
     @share
     class OperatorLessThanOrEqual(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = '<='
         is_compare_operator              = true
         is_end_of_arithmetic_expression  = true
@@ -692,6 +736,7 @@ def gem():
     @share
     class OperatorLogicalAndSign(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = '&'
         is_logical_and_operator          = true
         is_end_of_unary_expression       = true
@@ -715,6 +760,7 @@ def gem():
 
     class OperatorLogicalOrModify(KeywordAndOperatorBase):
         __slots__                               = (())
+        class_order                             = CLASS_ORDER__NORMAL_TOKEN
         display_name                            = '|='
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
@@ -737,6 +783,7 @@ def gem():
     @share
     class OperatorMinusSign(KeywordAndOperatorBase):
         __slots__                     = (())
+        class_order                   = CLASS_ORDER__NORMAL_TOKEN
         display_name                  = '-'
         is_minus_sign                 = true
         is_end_of_unary_expression    = true
@@ -748,6 +795,7 @@ def gem():
     @share
     class OperatorPercentSign(KeywordAndOperatorBase):
         __slots__                     = (())
+        class_order                   = CLASS_ORDER__NORMAL_TOKEN
         display_name                  = '%'
         is_multiply_operator          = true
         is_end_of_unary_expression    = true
@@ -757,6 +805,7 @@ def gem():
     @share
     class OperatorPower(KeywordAndOperatorBase):
         __slots__         = (())
+        class_order       = CLASS_ORDER__NORMAL_TOKEN
         display_name      = '**'
         is_power_operator = true
         keyword           = '**'
@@ -830,6 +879,7 @@ def gem():
     @export
     class OperatorRightSquareBracket(KeywordAndOperatorBase):
         __slots__                                = (())
+        class_order                              = CLASS_ORDER__NORMAL_TOKEN
         #   [
         display_name                             = ']'
         is__optional_comma__right_square_bracket = true
@@ -857,6 +907,7 @@ def gem():
     @share
     class OperatorStarSign(KeywordAndOperatorBase):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__NORMAL_TOKEN
         display_name               = '*'
         is_end_of_unary_expression = true
         is_multiply_operator       = true
@@ -866,6 +917,7 @@ def gem():
 
     class OperatorSubtractModify(KeywordAndOperatorBase):
         __slots__                               = (())
+        class_order                             = CLASS_ORDER__NORMAL_TOKEN
         display_name                            = '-='
         is_end_of_arithmetic_expression         = true
         is_end_of_boolean_and_expression        = true
@@ -888,6 +940,7 @@ def gem():
     @share
     class OperatorTildeSign(KeywordAndOperatorBase):
         __slots__     = (())
+        class_order   = CLASS_ORDER__NORMAL_TOKEN
         display_name  = '~'
         is_tilde_sign = true
         keyword       = '~'

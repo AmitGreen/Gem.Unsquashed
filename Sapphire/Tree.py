@@ -15,6 +15,7 @@ def gem():
         is_comment_line                       = false
         is_comment__or__empty_line            = false
         is_decorator_header                   = false
+        is_herd                               = false
         is_empty_line                         = false
         is_end_of_data                        = false
         is_end_of_data__or__unknown_line      = false

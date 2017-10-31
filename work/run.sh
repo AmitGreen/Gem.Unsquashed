@@ -39,7 +39,7 @@ Main_py=../Dravite/Main.py
 Main_py=../Topaz/Main.py
 Main_py=../Sapphire/Main.py
 
-show=3
+show=2
 all=true
 all=false
 

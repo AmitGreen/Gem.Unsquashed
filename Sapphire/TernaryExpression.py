@@ -32,6 +32,7 @@ def gem():
             return f.token_result(r, newline)
 
 
+        order           = order__frill_abc
         scout_variables = scout_variables__abc
 
 
@@ -177,13 +178,14 @@ def gem():
 
     class ComprehensionForExpression(TripleExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__TRIPLE_EXPRESSION
         display_name = 'comprehension-for'
         frill        = conjure_vw_frill(W__FOR__W, W__IN__W)
 
 
     class TernaryExpression(TripleExpression):
         __slots__    = (())
-        class_order  = CLASS_ORDER__TERNARY_EXPRESSION
+        class_order  = CLASS_ORDER__TRIPLE_EXPRESSION
         display_name = '?:'
         frill        = conjure_vw_frill(W__IF__W, W__ELSE__W)
 

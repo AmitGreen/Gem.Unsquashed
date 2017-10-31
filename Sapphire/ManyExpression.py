@@ -211,6 +211,7 @@ def gem():
 
     class AndExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__MANY_EXPRESSION
         display_name = 'and-*'
 
         scout_variables = scout_variables__many
@@ -218,7 +219,7 @@ def gem():
 
     class ArithmeticExpression_Many(ManyExpression):
         __slots__    = (())
-        class_order  = CLASS_ORDER__ARITHMETIC_MANY
+        class_order  = CLASS_ORDER__MANY_EXPRESSION
         display_name = 'arithmetic-*'
 
         scout_variables = scout_variables__many
@@ -226,6 +227,7 @@ def gem():
 
     class CommaExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__MANY_EXPRESSION
         display_name = ',-*'
 
         scout_variables = scout_variables__many
@@ -234,6 +236,7 @@ def gem():
 
     class CompareExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__MANY_EXPRESSION
         display_name = 'compare-*'
 
         scout_variables = scout_variables__many
@@ -241,8 +244,7 @@ def gem():
 
     class LogicalOrExpression_Many(ManyExpression):
         __slots__    = (())
-        class_order  = CLASS_ORDER__LOGICAL_OR_MANY
-
+        class_order  = CLASS_ORDER__MANY_EXPRESSION
         display_name = '|-*'
 
         order           = order__frill_many
@@ -251,6 +253,7 @@ def gem():
 
     class MultiplyExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BINARY_EXPRESSION
         display_name = 'multiply-*'
 
         scout_variables = scout_variables__many
@@ -258,6 +261,7 @@ def gem():
 
     class OrExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BINARY_EXPRESSION
         display_name = 'or-*'
 
         scout_variables = scout_variables__many

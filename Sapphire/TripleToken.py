@@ -503,6 +503,7 @@ def gem():
 
     class Whitespace_Atom_Whitespace(BaseTripleOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = 'whitespace+atom+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -513,6 +514,7 @@ def gem():
 
     class Whitespace_Name_Whitespace(BaseTripleOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__NORMAL_TOKEN
         display_name                   = 'whitespace+name+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true

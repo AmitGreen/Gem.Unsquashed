@@ -184,7 +184,7 @@ def gem():
 
     class Arguments_2(BookcaseDualExpression):
         __slots__    = (())
-        class_order  = CLASS_ORDER__ARGUMENTS_2
+        class_order  = CLASS_ORDER__BOOKCASE_DUAL_EXPRESSION
         display_name = '(2)'
         frill        = conjure_vwx_frill(LP, COMMA__W, RP)
 
@@ -193,6 +193,7 @@ def gem():
 
     class ListExpression_2(BookcaseDualExpression):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__BOOKCASE_DUAL_EXPRESSION
         display_name                   = '[2]'
         frill                          = conjure_vwx_frill(LSB, COMMA__W, RSB)
         is__atom__or__special_operator = true
@@ -205,6 +206,7 @@ def gem():
 
     class RangeIndex(BookcaseDualExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_DUAL_EXPRESSION
         display_name = 'range-index'
         frill        = conjure_vwx_frill(LSB, conjure_colon(' : '), RSB)
 
@@ -213,6 +215,7 @@ def gem():
 
     class TupleExpression_2(BookcaseDualExpression):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__BOOKCASE_DUAL_EXPRESSION
         display_name                   = '{,2}'
         frill                          = conjure_vwx_frill(LP, COMMA__W, RP)
         is__atom__or__special_operator = true

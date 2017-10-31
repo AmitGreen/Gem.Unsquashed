@@ -8,7 +8,7 @@ def gem():
 
     class CallExpression(DualTwig):
         __slots__          = (())
-        class_order        = CLASS_ORDER__CALL_EXPRESSION
+        class_order        = CLASS_ORDER__DUAL_TWIG
         display_name       = 'call'
         is_call_expression = true
 
@@ -17,7 +17,7 @@ def gem():
 
     class IndexExpression(DualTwig):
         __slots__    = (())
-        class_order  = CLASS_ORDER__INDEX_EXPRESSION
+        class_order  = CLASS_ORDER__DUAL_TWIG
         display_name = 'index'
 
         scout_variables = scout_variables__ab
@@ -30,7 +30,7 @@ def gem():
 
     class MethodCallExpression(DualTwig):
         __slots__    = (())
-        class_order  = CLASS_ORDER__CALL_EXPRESSION
+        class_order  = CLASS_ORDER__DUAL_TWIG
         display_name = 'method-call'
 
         scout_variables = scout_variables__ab

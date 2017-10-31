@@ -172,7 +172,7 @@ def gem():
 
     class Arguments_1(BookcaseExpression):
         __slots__      = (())
-        class_order    = CLASS_ORDER__ARGUMENTS_1
+        class_order    = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name   = 'arguments-(1)'
         frill          = LP_RP
         is_arguments_1 = true
@@ -182,6 +182,7 @@ def gem():
 
     class HeadIndex(BookcaseExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'head-index'
         frill        = conjure_vw_frill(LSB, COLON_RSB)
 
@@ -190,6 +191,7 @@ def gem():
 
     class ListExpression_1(BookcaseExpression):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name                   = '[1]'
         frill                          = LSB_RSB
         is__atom__or__special_operator = true
@@ -202,6 +204,7 @@ def gem():
 
     class MapExpression_1(BookcaseExpression):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name                   = '{:1:}'
         frill                          = conjure_vw_frill(conjure_left_brace ('{'), conjure_right_brace('}'))
         is__atom__or__special_operator = true
@@ -214,6 +217,7 @@ def gem():
 
     class NormalIndex(BookcaseExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'normal-index'
         frill        = LSB_RSB
 
@@ -222,6 +226,7 @@ def gem():
 
     class Parameters_1(BookcaseExpression):
         __slots__       = (())
+        class_order     = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name    = 'parameters-(1)'
         frill           = LP_RP
         is_parameters_1 =  true
@@ -241,7 +246,7 @@ def gem():
 
     class ParenthesizedExpression(BookcaseExpression):
         __slots__                      = (())
-        class_order                    = CLASS_ORDER__PARENTHESIZED_EXPRESSION
+        class_order                    = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name                   = '()'
         frill                          = LP_RP
         is__atom__or__special_operator = true
@@ -253,7 +258,7 @@ def gem():
 
     class ParenthesizedTupleExpression_1(BookcaseExpression):
         __slots__                      = (())
-        class_order                    = CLASS_ORDER__PARENTHESIZED_EXPRESSION
+        class_order                    = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name                   = '{,}'
         frill                          = conjure_vw_frill(LP, COMMA_RP)
         is__atom__or__special_operator = true
@@ -279,6 +284,7 @@ def gem():
 
     class TailIndex(BookcaseExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__BOOKCASE_EXPRESSION
         display_name = 'tail-index'
         frill        = conjure_vw_frill(LSB_COLON, RSB)
 

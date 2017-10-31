@@ -432,6 +432,22 @@ def gem():
 
 
     @share
+    def order__frill_abc(a, b):
+        a_order = a.class_order
+        b_order = b.class_order
+
+        if a_order is b_order:
+            return (a.frill.order(b.frill)) or (a.a.order(b.a)) or (a.b.order(b.b)) or (a.c.order(b.c))
+
+        if a_order < b_order:
+            return -1
+
+        assert a_order > b_order
+
+        return 1
+
+
+    @share
     def order__frill_many(a, b):
         a_order = a.class_order
         b_order = b.class_order
