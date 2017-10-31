@@ -24,6 +24,8 @@ def gem():
 
 
         def order(a, b):
+            if a is b:  return 0
+
             r = a.class_order - b.class_order
 
             if r < 0:   return -1
@@ -44,12 +46,10 @@ def gem():
 
                 total -= 1
 
-            if a_total < b_total:
-                return -1
+            if a_total < b_total:   return -1
+            if a_total > b_total:   return 1
 
-            assert a_total > b_total
-
-            return 1
+            raise_runtime_error('a<%r> == b<%r>: but not identical', a, b)
 
 
         def write(t, w):

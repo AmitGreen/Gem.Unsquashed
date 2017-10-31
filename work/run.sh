@@ -40,8 +40,8 @@ Main_py=../Topaz/Main.py
 Main_py=../Sapphire/Main.py
 
 show=3
-all=false
 all=true
+all=false
 
 command="python -sS $Main_py"
 commandO="python -O $Main_py"
@@ -65,22 +65,26 @@ cat $show
 
 while :
 do
-    $command $option <$tmp1 >&$tmp2
-    if cmp -s $tmp2 2; then
-        :
-    else
-        mv $tmp2 2
+    if [ $show = 2 -o $all = true ]; then
+        $command $option <$tmp1 >&$tmp2
+        if cmp -s $tmp2 2; then
+            :
+        else
+            mv $tmp2 2
 
-        if [ $show = 2 ]; then
-            echo -en '\E[H\E[J'
-            tail -60 2
+            if [ $show = 2 ]; then
+                echo -en '\E[H\E[J'
+                tail -60 2
+            fi
         fi
     fi
 
     if [ $all = true ]; then
        $commandO $option <$tmp1 >&$tmp3
        mv $tmp3 2o
+    fi
    
+    if [ $show = 3 -o $all = true ]; then
        $command3 $option <$tmp1 >&$tmp3
        if cmp -s $tmp3 3; then
            :
@@ -92,7 +96,9 @@ do
                tail -60 3
            fi
        fi
+    fi
    
+    if [ $all = true ]; then
        $command3O $option <$tmp1 >&$tmp3
        mv $tmp3 3o
     fi

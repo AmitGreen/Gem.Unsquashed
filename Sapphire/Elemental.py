@@ -613,6 +613,7 @@ def gem():
 
     class OperatorLeftParenthesis(KeywordAndOperatorBase):
         __slots__                             = (())
+        class_order                           = CLASS_ORDER__NORMAL_TOKEN
         display_name                          = '('         #   )
         is__arguments_0__or__left_parenthesis = true
         is_atom                               = false
@@ -702,6 +703,7 @@ def gem():
     @share
     class OperatorLogicalOrSign(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = '|'
         is_logical_or_operator           = true
         is_end_of_unary_expression       = true
@@ -763,6 +765,7 @@ def gem():
     @share
     class OperatorPlusSign(KeywordAndOperatorBase):
         __slots__                     = (())
+        class_order                   = CLASS_ORDER__NORMAL_TOKEN
         display_name                  = '+'
         is_arithmetic_operator        = true
         is_end_of_unary_expression    = true
@@ -772,6 +775,7 @@ def gem():
 
     class OperatorRightBrace(KeywordAndOperatorBase):
         __slots__                               = (())
+        class_order                             = CLASS_ORDER__NORMAL_TOKEN
         #  {
         display_name                            = '}'
         is__atom__or__special_operator          = true
@@ -797,6 +801,7 @@ def gem():
 
     class OperatorRightParenthesis(KeywordAndOperatorBase):
         __slots__                               = (())
+        class_order                             = CLASS_ORDER__NORMAL_TOKEN
         #  (
         display_name                            = ')'
         is__atom__or__special_operator          = true

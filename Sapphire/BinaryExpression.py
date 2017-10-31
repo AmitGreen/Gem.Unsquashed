@@ -66,6 +66,7 @@ def gem():
             return f.token_result(r, newline)
 
 
+        order           = order__frill_ab
         scout_variables = scout_variables__ab
 
 
@@ -167,7 +168,7 @@ def gem():
 
     class AddExpression(BinaryExpression):
         __slots__    = (())
-        class_order  = CLASS_ORDER__ARITHMETIC_EXPRESSION
+        class_order  = CLASS_ORDER__ARITHMETIC_1
         display_name = 'add'
         frill        = conjure_action_word('+', ' + ')
 
@@ -352,6 +353,7 @@ def gem():
 
     class LogicalOrExpression_1(BinaryExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__LOGICAL_OR_1
         display_name = '|'
         frill        = conjure_action_word('|', ' | ')
 

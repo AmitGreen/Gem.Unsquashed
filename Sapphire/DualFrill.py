@@ -13,7 +13,7 @@ def gem():
         comment   = DualTwig.a
         v         = DualTwig.b
 
-        class_order  = CLASS_ORDER__DUAL_FRILL
+        class_order  = CLASS_ORDER__FRILL_2
         display_name = '#v-frill'
 
 
@@ -41,7 +41,7 @@ def gem():
         v         = DualTwig.a
         w         = DualTwig.b
 
-        class_order    = CLASS_ORDER__DUAL_FRILL
+        class_order    = CLASS_ORDER__FRILL_2
         comment        = 0
         display_name   = 'vw-frill'
         frill_estimate = 2

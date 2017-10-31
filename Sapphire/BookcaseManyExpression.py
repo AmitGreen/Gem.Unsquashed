@@ -187,6 +187,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        order = order__frill_many
+
+
         def write(t, w):
             w(t.frill.begin.s)
 
@@ -240,6 +243,7 @@ def gem():
 
     class Arguments_Many(BookcaseManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__ARGUMENTS_MANY
         display_name = 'arguments-*'
 
 

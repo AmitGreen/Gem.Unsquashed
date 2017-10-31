@@ -13,6 +13,7 @@ def gem():
 
     class ManyFrill(TokenTuple):
         __slots__    = (())
+        class_order  = CLASS_ORDER__FRILL_MANY
         display_name = 'frill-*'
 
 

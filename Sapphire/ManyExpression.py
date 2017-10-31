@@ -108,6 +108,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        order = order__frill_many
+
+
         def write(t, w):
             many  = t.many
             frill = t.frill
@@ -215,6 +218,7 @@ def gem():
 
     class ArithmeticExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__ARITHMETIC_MANY
         display_name = 'arithmetic-*'
 
         scout_variables = scout_variables__many
@@ -237,8 +241,11 @@ def gem():
 
     class LogicalOrExpression_Many(ManyExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__LOGICAL_OR_MANY
+
         display_name = '|-*'
 
+        order           = order__frill_many
         scout_variables = scout_variables__many
 
 

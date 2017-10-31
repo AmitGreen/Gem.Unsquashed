@@ -183,6 +183,7 @@ def gem():
 
     class TernaryExpression(TripleExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__TERNARY_EXPRESSION
         display_name = '?:'
         frill        = conjure_vw_frill(W__IF__W, W__ELSE__W)
 

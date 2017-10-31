@@ -251,16 +251,9 @@ def gem():
         scout_variables = scout_variables__a
 
 
-    class TailIndex(BookcaseExpression):
-        __slots__    = (())
-        display_name = 'tail-index'
-        frill        = conjure_vw_frill(LSB_COLON, RSB)
-
-        scout_variables = scout_variables__a
-
-
-    class TupleExpression_1(BookcaseExpression):
+    class ParenthesizedTupleExpression_1(BookcaseExpression):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__PARENTHESIZED_EXPRESSION
         display_name                   = '{,}'
         frill                          = conjure_vw_frill(LP, COMMA_RP)
         is__atom__or__special_operator = true
@@ -278,8 +271,16 @@ def gem():
             if (frill is frill__2) and (a is a__2):
                 return t
 
-            return conjure_tuple_expression_1__with_frill(frill__2, a__2)
+            return conjure_parenthesized_tuple_expression_1__with_frill(frill__2, a__2)
 
+
+        scout_variables = scout_variables__a
+
+
+    class TailIndex(BookcaseExpression):
+        __slots__    = (())
+        display_name = 'tail-index'
+        frill        = conjure_vw_frill(LSB_COLON, RSB)
 
         scout_variables = scout_variables__a
 
@@ -317,8 +318,8 @@ def gem():
     ] = produce_conjure_bookcase_expression('tail-index', TailIndex)
 
     [
-        conjure_tuple_expression_1, conjure_tuple_expression_1__with_frill,
-    ] = produce_conjure_bookcase_expression('tuple-expression-1', TupleExpression_1)
+        conjure_parenthesized_tuple_expression_1, conjure_parenthesized_tuple_expression_1__with_frill,
+    ] = produce_conjure_bookcase_expression('parenthesized-tuple-expression-1', ParenthesizedTupleExpression_1)
 
 
     #
@@ -376,13 +377,13 @@ def gem():
 
 
     share(
-        'conjure_arguments_1',                      conjure_arguments_1,
-        'conjure_head_index',                       conjure_head_index,
-        'conjure_list_expression_1',                conjure_list_expression_1,
-        'conjure_map_expression_1',                 conjure_map_expression_1,
-        'conjure_normal_index',                     conjure_normal_index,
-        'conjure_parameters_1',                     conjure_parameters_1,
-        'conjure_parenthesized_expression',         conjure_parenthesized_expression,
-        'conjure_tail_index',                       conjure_tail_index,
-        'conjure_tuple_expression_1',               conjure_tuple_expression_1,
+        'conjure_arguments_1',                          conjure_arguments_1,
+        'conjure_head_index',                           conjure_head_index,
+        'conjure_list_expression_1',                    conjure_list_expression_1,
+        'conjure_map_expression_1',                     conjure_map_expression_1,
+        'conjure_normal_index',                         conjure_normal_index,
+        'conjure_parameters_1',                         conjure_parameters_1,
+        'conjure_parenthesized_expression',             conjure_parenthesized_expression,
+        'conjure_parenthesized_tuple_expression_1',     conjure_parenthesized_tuple_expression_1,
+        'conjure_tail_index',                           conjure_tail_index,
     )

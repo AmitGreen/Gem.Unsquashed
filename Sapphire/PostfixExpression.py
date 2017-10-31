@@ -17,6 +17,7 @@ def gem():
 
     class IndexExpression(DualTwig):
         __slots__    = (())
+        class_order  = CLASS_ORDER__INDEX_EXPRESSION
         display_name = 'index'
 
         scout_variables = scout_variables__ab

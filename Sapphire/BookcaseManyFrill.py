@@ -23,6 +23,7 @@ def gem():
         ))
 
 
+        class_order  = CLASS_ORDER__BOOKCASE_MANY_FRILL
         display_name = 'bookcase-*-frill'
 
 
@@ -30,6 +31,7 @@ def gem():
         count_newlines = count_newlines__123
         __repr__       = portray__123
         display_token  = display_token__123
+        order          = order__abc
 
 
     BookcaseManyFrill.a = BookcaseManyFrill.begin
