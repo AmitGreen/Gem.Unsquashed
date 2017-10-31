@@ -3,12 +3,17 @@
 #
 @gem('Sapphire.BinaryExpression')
 def gem():
-    require_gem('Sapphire.Cache')
+    #require_gem('Sapphire.Cache')
     require_gem('Sapphire.DualToken')
     require_gem('Sapphire.DualTwig')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.Priority')
     require_gem('Sapphire.Tree')
+
+
+    binary_frill_cache  = create_cache('binary_frill_cache')
+    lookup_binary_frill = binary_frill_cache.get
+    store_binary_frill  = binary_frill_cache.__setitem__
 
 
     def portray_frill(t):
@@ -121,7 +126,20 @@ def gem():
             return BinaryExpression_WithFrill(a, frill, b)
 
 
-        conjure_dual   = produce_conjure_unique_dual(name, Meta,                               cache, lookup, store)
+        conjure_dual = produce_conjure_unique_dual(name, Meta, cache, lookup, store)
+
+        if 0:
+         conjure_triple = produce_conjure_unique_triple__312(
+                             name,
+                             conjure_BinaryExpression_WithFrill,
+                             binary_frill_cache,
+                             lookup_binary_frill,
+                             store_binary_frill,
+                         )
+
+        #
+        #OLD
+        #
         conjure_triple = produce_conjure_triple__312(name, conjure_BinaryExpression_WithFrill, cache, lookup, store)
 
         meta_frill = Meta.frill

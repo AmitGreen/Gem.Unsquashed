@@ -6,27 +6,30 @@ def gem():
     require_gem('Sapphire.QuadrupleTwig')
 
 
-    quadruple_frill_cache  = {}
+    quadruple_frill_cache  = create_cache('quadruple_frill')
     lookup_quadruple_frill = quadruple_frill_cache.get
     store_quadruple_frill  = quadruple_frill_cache.__setitem__
 
 
     class VWXY_Frill(QuadrupleTwig):
-        __slots__ = (())
-        v         = QuadrupleTwig.a
-        w         = QuadrupleTwig.b
-        x         = QuadrupleTwig.c
-        y         = QuadrupleTwig.d
+        __slots__      = (())
+        v              = QuadrupleTwig.a
+        w              = QuadrupleTwig.b
+        x              = QuadrupleTwig.c
+        y              = QuadrupleTwig.d
 
+        display_name   = 'vwxy-frill'
         frill_estimate = 4
 
 
     class Commented_VWX_Frill(QuadrupleTwig):
-        __slots__ = (())
-        comment   = QuadrupleTwig.a
-        v         = QuadrupleTwig.b
-        w         = QuadrupleTwig.c
-        x         = QuadrupleTwig.d
+        __slots__    = (())
+        comment      = QuadrupleTwig.a
+        v            = QuadrupleTwig.b
+        w            = QuadrupleTwig.c
+        x            = QuadrupleTwig.d
+
+        display_name = '#vwx-frill'
 
 
         def transform(t, vary):
@@ -49,7 +52,7 @@ def gem():
             return conjure_commented_vwx_frill(comment__2, v__2, w__2, x__2)
 
 
-    conjure_vwxy_frill = produce_conjure_quadruple__4123(
+    conjure_vwxy_frill = produce_conjure_unique_quadruple(
                              'vwxy-frill',
                              VWXY_Frill,
                              quadruple_frill_cache,
@@ -57,14 +60,13 @@ def gem():
                              store_quadruple_frill,
                          )
 
-    conjure_commented_vwx_frill = produce_conjure_quadruple__4123(
+    conjure_commented_vwx_frill = produce_conjure_unique_quadruple(
                                       '#vwx-frill',
                                       Commented_VWX_Frill,
                                       quadruple_frill_cache,
                                       lookup_quadruple_frill,
                                       store_quadruple_frill,
                                   )
-
 
     VWXY_Frill.transform = produce_transform__abcd('vwxy_frill', conjure_vwxy_frill)
 

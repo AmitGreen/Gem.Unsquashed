@@ -36,12 +36,12 @@ Main_py=../Ivory/Main.py
 Main_py=../Tremolite/Main.py
 Main_py=../Quartz/Main.py
 Main_py=../Dravite/Main.py
-Main_py=../Sapphire/Main.py
 Main_py=../Topaz/Main.py
+Main_py=../Sapphire/Main.py
 
-show=3
-all=false
+show=2
 all=true
+all=false
 
 command="python -sS $Main_py"
 commandO="python -O $Main_py"

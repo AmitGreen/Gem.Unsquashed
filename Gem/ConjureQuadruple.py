@@ -4,9 +4,14 @@
 @gem('Gem.ConjureQuadruple')
 def gem():
     @export
-    def produce_conjure_unique_quadruple(name, Meta, cache):
-        lookup = cache.get
-        store  = cache.__setitem__
+    def produce_conjure_unique_quadruple(
+            name, Meta, cache,
+            
+            lookup = absent,
+            store  = absent,
+    ):
+        if lookup is absent:    lookup = cache.get
+        if store  is absent:    store  = cache.__setitem__
 
 
         @rename('conjure_%s', name)

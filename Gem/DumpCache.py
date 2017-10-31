@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Gem.Cache2')
+@gem('Gem.DumpCache')
 def gem():
     require_gem('Gem.Absent')
     require_gem('Gem.Herd')

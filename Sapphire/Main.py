@@ -24,7 +24,7 @@ def gem():
     require_gem('Sapphire.Core')
 
 
-    choice = 3
+    choice = 2
 
 
     def command_combine(
@@ -78,7 +78,7 @@ def gem():
 
         parse_python('test.py', vary = vary, test = 7, show = show)
 
-        print_cache()
+        print_cache('quadruple_frill')
 
 
     def test_parse2():

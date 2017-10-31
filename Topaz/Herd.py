@@ -52,7 +52,7 @@ def gem():
 
     def test_herd_scrub():
         for total in iterate_range(2, 10):
-            for mask in iterate_range(0, 2 << (total - 1)):
+            for mask in iterate_range(0, 2 ** total): #<< (total - 1)):
                 herd   = empty_herd
                 many   = []
                 append = many.append
@@ -71,7 +71,7 @@ def gem():
                     if mask & bits:
                         many[i] = 0
 
-                    bits <<= 1
+                    bits = bits * 2 #bits <<= 1
 
                 herd = herd.scrub()
 
