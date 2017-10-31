@@ -12,4 +12,6 @@ def gem():
         'CLASS_ORDER__EMPTY_LINE',              6,       #   EmptyLine token
         'CLASS_ORDER__COMMENT_LINE',            7,       #   CommentLine token
         'CLASS_ORDER__JOIN_TOKEN',              8,       #   Join token
+
+        'CLASS_ORDER__SUITE',                   9,       #   Suite
     )

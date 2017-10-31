@@ -20,6 +20,16 @@ def gem():
             return arrange('<%s %s>', t.display_name, ' '.join(v.display_token()   for v in t))
 
 
+        nub = conjure_nub
+
+
+        def order(a, b):
+            return (
+                          compare(a.class_order, b.class_order)
+                       or compare(a, b)
+                   )
+
+
         def write(t, w):
             for v in t:
                 v.write(w)

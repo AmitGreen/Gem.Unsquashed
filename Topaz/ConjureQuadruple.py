@@ -165,11 +165,23 @@ def gem():
         test_final_scrub(cache)
 
 
+    def test_conjure_unique_quadruple__4123():
+        cache = create_cache('numbered_colored_size_shape__4123', nub = Shape.name.__get__)
+
+        conjure_numbered_colored_size_shape__4123 = produce_conjure_unique_quadruple__4123(
+                                                        'numbered_colored_size_shape__4123',
+                                                        NumberedColoredSizeShape,
+                                                        cache,
+                                                    )
+
+        test_conjure_quadruple__X__scrub(cache, conjure_numbered_colored_size_shape__4123)
+        print_cache(cache)
+        test_final_scrub(cache)
+
+
     @share
     def test_conjure_quadruple():
         test_conjure_unique_quadruple()
+        test_conjure_unique_quadruple__4123()
 
         line('PASSED: conjure_quadruple')
-
-        #print_cache('numbered_colored_shape')
-        #print_cache('shape_number_color__312')

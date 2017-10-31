@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.Comment')
 def gem():
+    require_gem('Sapphire.ClassOrder')
     require_gem('Sapphire.Indentation')
 
 
@@ -24,6 +25,7 @@ def gem():
 
     class CommentLine(String):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__COMMENT_LINE
         ends_in_newline                  = true
         impression                       = empty_indentation
         indentation                      = none
@@ -76,6 +78,7 @@ def gem():
         ))
 
 
+        class_order                      = CLASS_ORDER__COMMENT_LINE
         ends_in_newline                  = true
         impression                       = empty_indentation
         indentation                      = none
@@ -126,6 +129,7 @@ def gem():
         ))
 
 
+        class_order                      = CLASS_ORDER__COMMENT_LINE
         ends_in_newline                  = true
         indentation                      = none
         is_any_else                      = false
@@ -179,6 +183,7 @@ def gem():
         ))
 
 
+        class_order                = CLASS_ORDER__COMMENT_LINE
         ends_in_newline            = true
         indentation                = none
         is_any_else                = false

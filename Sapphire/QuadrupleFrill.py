@@ -52,7 +52,7 @@ def gem():
             return conjure_commented_vwx_frill(comment__2, v__2, w__2, x__2)
 
 
-    conjure_vwxy_frill = produce_conjure_unique_quadruple(
+    conjure_vwxy_frill = produce_conjure_unique_quadruple__4123(
                              'vwxy-frill',
                              VWXY_Frill,
                              quadruple_frill_cache,
@@ -60,7 +60,7 @@ def gem():
                              store_quadruple_frill,
                          )
 
-    conjure_commented_vwx_frill = produce_conjure_unique_quadruple(
+    conjure_commented_vwx_frill = produce_conjure_unique_quadruple__4123(
                                       '#vwx-frill',
                                       Commented_VWX_Frill,
                                       quadruple_frill_cache,

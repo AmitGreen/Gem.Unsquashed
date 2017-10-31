@@ -80,7 +80,7 @@ def gem():
                         f.line('%s%s: %s', prefix_2, k3.display_token(), x.display_token())
                         continue
 
-                    f.line('%s%s:', prefix_2, k3.display_token())
+                    f.line('%s%s: (%s)', prefix_2, k3.display_token(), x.__class__.__name__)
 
                     prefix_3 = prefix_2 + '  '
 
@@ -89,7 +89,7 @@ def gem():
 
 
     @export
-    def dump_cache_to_string(cache, show_sample = false):
+    def dump_cache_to_string(cache, show_sample = true):
         with create_StringOutput() as f:
             dump_cache(f, cache, show_sample = show_sample)
 

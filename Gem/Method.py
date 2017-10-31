@@ -28,22 +28,6 @@ def gem():
             keys  = t.keys()
             value = t.__getitem__
 
-            saw = 0
-            for k in keys:
-                if type(k) is not saw:
-                    if saw is 0:
-                        saw = type(k)
-                    else:
-                        for k in keys:
-                            line('keys: %r', keys)
-                            line('MIXED: %r,%r', k, value(k))
-                            #if value(k).is_herd:
-                            #    line('a,v: %r,%r', value(k).a, value(k).v)
-                            #    line('b,w: %r,%r', value(k).b, value(k).w)
-                            #    line('c,x: %r,%r', value(k).c, value(k).x)
-                            yield (( k, value (k) ))
-                        return
-
             for k in sorted_list(keys, key = keys[0].nub):
                 yield (( k, value(k) ))
     else:

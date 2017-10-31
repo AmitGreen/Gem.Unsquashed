@@ -531,6 +531,7 @@ def gem():
 
     class Indented_Token(BaseDualOperator):
         __slots__    = (())
+        class_order  = CLASS_ORDER__INDENTATION
         display_name = 'indented-token'
 
 
