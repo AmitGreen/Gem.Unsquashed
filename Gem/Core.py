@@ -107,7 +107,6 @@ def gem():
         'address_of',       PythonBuiltIn.id,
         'attribute',        PythonBuiltIn.getattr,
         'character',        PythonBuiltIn.chr,
-        'compare',          PythonBuiltIn.cmp,
         'enumerate',        PythonBuiltIn.enumerate,
         'globals',          PythonBuiltIn.globals,
         'introspection',    PythonBuiltIn.dir,

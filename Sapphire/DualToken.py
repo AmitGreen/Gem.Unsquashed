@@ -185,6 +185,9 @@ def gem():
                            portray_string(b_s)   if '\n' in b_s else   b_s)
 
 
+        order = order__s
+
+
     def create_dual_token__with_newlines(Meta, s, a, b):
         assert s == a.s + b.s
 
@@ -379,6 +382,7 @@ def gem():
 
     class Atom_Whitespace(BaseDualOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__ATOM
         display_name                   = 'atom+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -478,6 +482,7 @@ def gem():
     class Dot_Name(BaseDualOperator):
         __slots__           = (())
         #   [
+        class_order         = CLASS_ORDER__NORMAL_TOKEN
         display_name        = '.name'
         is_postfix_operator = true
 
@@ -497,6 +502,7 @@ def gem():
 
     class DotNamePair(BaseDualOperator):
         __slots__           = (())
+        class_order         = CLASS_ORDER__NORMAL_TOKEN
         #   [
         display_name        = '.name-pair'
         is_postfix_operator = true
@@ -565,6 +571,7 @@ def gem():
 
     class Name_Whitespace(BaseDualOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__ATOM
         display_name                   = 'name+whitespace'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -600,6 +607,7 @@ def gem():
 
     class Whitespace_Atom(BaseDualOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__ATOM
         display_name                   = 'whitespace+atom'
         is__atom__or__special_operator = true
         is_atom                        = true
@@ -611,6 +619,7 @@ def gem():
 
     class Whitespace_Name(BaseDualOperator):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__ATOM
         display_name                   = 'whitespace+name'
         is__atom__or__special_operator = true
         is_atom                        = true

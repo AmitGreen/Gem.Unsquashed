@@ -58,6 +58,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        order = order__frill_a
+
+
         def write(t, w):
             frill = t.frill
 
@@ -169,6 +172,7 @@ def gem():
 
     class Arguments_1(BookcaseExpression):
         __slots__      = (())
+        class_order    = CLASS_ORDER__ARGUMENTS_1
         display_name   = 'arguments-(1)'
         frill          = LP_RP
         is_arguments_1 = true
@@ -237,6 +241,7 @@ def gem():
 
     class ParenthesizedExpression(BookcaseExpression):
         __slots__                      = (())
+        class_order                    = CLASS_ORDER__PARENTHESIZED_EXPRESSION
         display_name                   = '()'
         frill                          = LP_RP
         is__atom__or__special_operator = true

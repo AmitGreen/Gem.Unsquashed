@@ -29,4 +29,4 @@ def gem():
             return t.display_token()
 
 
-        nub = conjure_nub
+        nub = static_conjure_nub

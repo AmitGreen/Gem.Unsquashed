@@ -365,6 +365,59 @@ def gem():
 
 
     #
+    #   order
+    #
+    @share
+    def order__ab(a, b):
+        a_order = a.class_order
+        b_order = b.class_order
+
+        if a_order is b_order:
+            return (a.a.order(b.a)) or (a.b.order(b.b))
+
+        if a_order < b_order:
+            return -1
+
+        assert a_order > b_order
+
+        return 1
+
+
+    @share
+    def order__frill_a(a, b):
+        a_order = a.class_order
+        b_order = b.class_order
+
+        if a_order is b_order:
+            return (a.frill.order(b.frill)) or (a.a.order(b.a))
+
+        if a_order < b_order:
+            return -1
+
+        assert a_order > b_order
+
+        return 1
+
+
+    @share
+    def order__s(a, b):
+        a_order = a.class_order
+        b_order = b.class_order
+
+        if a_order is b_order:
+            if a.s < b.s:   return -1
+            if a.s > b.s:   return 1
+
+            return 0
+
+        if a_order < b_order: return -1
+
+        assert a_order > b_order
+
+        return 1
+
+
+    #
     #   parameters_1_named
     #
     @share

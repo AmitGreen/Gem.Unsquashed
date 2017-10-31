@@ -23,6 +23,9 @@ def gem():
         ))
 
 
+        display_name = 'bookcase-*-frill'
+
+
         __init__       = construct__123
         count_newlines = count_newlines__123
         __repr__       = portray__123

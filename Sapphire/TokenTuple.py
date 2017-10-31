@@ -20,14 +20,36 @@ def gem():
             return arrange('<%s %s>', t.display_name, ' '.join(v.display_token()   for v in t))
 
 
-        nub = conjure_nub
+        nub = static_conjure_nub
 
 
         def order(a, b):
-            return (
-                          compare(a.class_order, b.class_order)
-                       or compare(a, b)
-                   )
+            r = a.class_order - b.class_order
+
+            if r < 0:   return -1
+            if r > 0:   return 1
+
+            a_total = length(a)
+            b_total = length(b)
+            total   = minimum(a_total, b_total)
+
+            a_next = next_method(iterate(a))
+            b_next = next_method(iterate(b))
+
+            while total:
+                r = a_next().order(b_next())
+
+                if r < 0:   return -1
+                if r > 0:   return 1
+
+                total -= 1
+
+            if a_total < b_total:
+                return -1
+
+            assert a_total > b_total
+
+            return 1
 
 
         def write(t, w):

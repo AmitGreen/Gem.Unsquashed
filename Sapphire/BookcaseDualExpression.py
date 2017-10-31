@@ -184,6 +184,7 @@ def gem():
 
     class Arguments_2(BookcaseDualExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__ARGUMENTS_2
         display_name = '(2)'
         frill        = conjure_vwx_frill(LP, COMMA__W, RP)
 

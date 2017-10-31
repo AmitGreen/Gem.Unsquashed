@@ -25,6 +25,7 @@ def gem():
 
 
     choice = 2
+    show   = 0
 
 
     def command_combine(
@@ -78,7 +79,11 @@ def gem():
 
         parse_python('test.py', vary = vary, test = 7, show = show)
 
-        print_cache('quadruple_frill')
+        print_cache('add')
+        #print_cache('and-1')
+        #print_cache('quadruple_frill')
+        print_cache()
+        #print_cache('nub')
 
 
     def test_parse2():
@@ -118,7 +123,7 @@ def gem():
                     return command_parse1(
                                remove_comments    = true,
                                remove_indentation = true,
-                               show               = 7,
+                               show               = show,
                            )
 
                 if choice is 3:

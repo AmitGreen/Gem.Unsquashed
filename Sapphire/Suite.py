@@ -116,7 +116,7 @@ def gem():
             for v in many:
                 assert v.is_comment__or__empty_line
 
-            TokenTuple.__init__(t, many)
+            #TokenTuple.__init__(t, many)
 
 
         dump_token       = dump_token__no_impression

@@ -11,7 +11,7 @@ def gem():
     require_gem('Sapphire.Tree')
 
 
-    binary_frill_cache  = create_cache('binary_frill_cache')
+    binary_frill_cache  = create_cache('binary_frill_cache', conjure_nub)
     lookup_binary_frill = binary_frill_cache.get
     store_binary_frill  = binary_frill_cache.__setitem__
 
@@ -76,7 +76,7 @@ def gem():
 
 
     def produce_conjure_binary_expression(name, Meta):
-        cache  = create_cache(name)
+        cache  = create_cache(name, conjure_nub)
         lookup = cache.lookup
         store  = cache.store
 
@@ -128,19 +128,13 @@ def gem():
 
         conjure_dual = produce_conjure_unique_dual(name, Meta, cache, lookup, store)
 
-        if 0:
-         conjure_triple = produce_conjure_unique_triple__312(
+        conjure_triple = produce_conjure_unique_triple__312(
                              name,
                              conjure_BinaryExpression_WithFrill,
                              binary_frill_cache,
                              lookup_binary_frill,
                              store_binary_frill,
                          )
-
-        #
-        #OLD
-        #
-        conjure_triple = produce_conjure_triple__312(name, conjure_BinaryExpression_WithFrill, cache, lookup, store)
 
         meta_frill = Meta.frill
 
@@ -173,6 +167,7 @@ def gem():
 
     class AddExpression(BinaryExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__ARITHMETIC_EXPRESSION
         display_name = 'add'
         frill        = conjure_action_word('+', ' + ')
 
@@ -375,6 +370,7 @@ def gem():
 
     class MultiplyExpression_1(BinaryExpression):
         __slots__    = (())
+        class_order  = CLASS_ORDER__MULTIPLY_EXPRESSION
         display_name = '*'
         frill        = W__STAR_SIGN__W
 
