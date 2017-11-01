@@ -64,6 +64,7 @@ def gem():
         is_else_header_or_fragment = false
         is_statement_header        = false
         is_statement               = true
+        is_statement_suite         = false
         prefix                     = 0
         prefixed_display_name      = '#decorated-definition'
 

@@ -19,7 +19,7 @@ GEM_FILES = \
 	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
 	../Gem/GarbageCollection.py ../Gem/Global.py \
-    ../Gem/Herd.py ../Gem/Horde.py \
+    ../Gem/Herd.py ../Gem/Herd_2.py ../Gem/Herd_3.py ../Gem/Herd_4567.py ../Gem/HerdMany.py ../Gem/Horde.py \
     ../Gem/Import.py ../Gem/IO.py \
     ../Gem/LiquidMap.py \
     ../Gem/Map.py ../Gem/Method.py \
@@ -157,7 +157,7 @@ clean:
 	rm -f d.py de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
-	rm -f gc.py gdc.py gdo.py gg.py ghe.py gho.py gj4.py gq.py gs.py
+	rm -f gc.py gdc.py gdo.py gg.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py gj4.py gq.py gs.py
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -225,7 +225,11 @@ links:
 	ln -s ../Gem/DumpCache.py                           gdc.py
 	ln -s ../Gem/Codec.py                               gdo.py
 	ln -s ../Gem/Global.py                              gg.py
+	ln -s ../Gem/Herd_2.py                              gh2.py
+	ln -s ../Gem/Herd_3.py                              gh3.py
+	ln -s ../Gem/Herd_4567.py                           gh4.py
 	ln -s ../Gem/Herd.py                                ghe.py
+	ln -s ../Gem/HerdMany.py                            ghm.py
 	ln -s ../Gem/Horde.py                               gho.py
 	ln -s ../Gem/ConjureQuadruple.py                    gj4.py
 	ln -s ../Gem/LiquidMap.py                           gq.py

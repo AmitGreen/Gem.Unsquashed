@@ -33,11 +33,15 @@ def gem():
 
 
     @built_in
-    def iterate_values_sorted_by_key(mapping):
+    def iterate_values_sorted_by_key(mapping, key = none):
         value = mapping.__getitem__
 
-        for k in sorted_list(mapping):
-            yield value(k)
+        if key is none:
+            for k in sorted_list(mapping):
+                yield value(k)
+        else:
+            for k in sorted_list(mapping, key = key):
+                yield value(k)
 
 
     @export

@@ -350,6 +350,7 @@ def gem():
     def extract_gem_boot(vary):
         module_name = 'Gem.Boot'
         path        = '../Gem/Boot.py'
+        path        = 'b2.py'
 
         tree = parse_python(path)
 
@@ -456,9 +457,11 @@ def gem():
 
     @share
     def command_combine__X(module_name, vary, tree = true):
-        [boot_decorator, main_code] = extract_sapphire_main(vary)
-        sardnoyx_boot_code          = extract_sardnoyx_boot(vary)
+        #[boot_decorator, main_code] = extract_sapphire_main(vary)
+        #sardnoyx_boot_code          = extract_sardnoyx_boot(vary)
         gem_boot_code               = extract_gem_boot(vary)
+        return
+
 
         require_many = RequireMany(vary)
 
@@ -481,3 +484,6 @@ def gem():
             close_copyright(f)
 
         #partial(read_text_from_path(output_path))
+        #for name in ['cell-function-parameter']:
+        #    print_cache(name)
+        #print_cache()

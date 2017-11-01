@@ -224,6 +224,8 @@ def gem():
 
         def scout_definitions(t):
             def scout_nested_definition(v):
+                #line('Scouting: %r', v.a.name)
+
                 if v.is_function_definition:
                     art = BuildFunctionSymbolTable(
                               (t.write_global_variable   if t.is_global_symbol_table else   t.write_global_variable),

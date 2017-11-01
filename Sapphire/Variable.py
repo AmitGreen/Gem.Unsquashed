@@ -6,7 +6,7 @@ def gem():
     require_gem('Sapphire.Cache')
 
 
-    cell_function_parameter_cache = {}
+    cell_function_parameter_cache = create_cache('cell-function-parameter')
     cell_local_cache              = {}
     free_variable_cache           = {}
     function_parameter_cache      = {}
@@ -43,6 +43,7 @@ def gem():
 
         display_name       = 'cell-parameter'
         is_cell_variable   = true
+        is_herd            = false
         is_global_variable = false
 
 
@@ -51,9 +52,9 @@ def gem():
         display_token = portray__index_name__cell_index
 
 
-    CellFunctionParameter.k1  = CellFunctionParameter.index
-    CellFunctionParameter.k2  = CellFunctionParameter.name
-    #CellFunctionParameter.k3 = CellFunctionParameter.cell_index
+    CellFunctionParameter.k1 = CellFunctionParameter.index
+    CellFunctionParameter.k2 = CellFunctionParameter.name
+    CellFunctionParameter.k3 = CellFunctionParameter.cell_index
 
 
     class CellLocal(Object):
@@ -169,11 +170,22 @@ def gem():
     #LocalVariable.k2 = LocalVariable.name
 
 
-    conjure_cell_function_parameter = produce_conjure_triple__312(
-                                          'cell_function_parameter',
-                                          CellFunctionParameter,
-                                          cell_function_parameter_cache,
-                                      )
+    conjure_cell_function_parameter__X__unique = produce_conjure_unique_triple__312(
+                                                     'cell_function_parameter',
+                                                     CellFunctionParameter,
+                                                     cell_function_parameter_cache,
+                                                 )
+
+
+    def conjure_cell_function_parameter(index, name, cell_index):
+        my_line('%s %s %s', index, name, cell_index)
+
+        return conjure_cell_function_parameter__X__unique(
+                    intern_integer(index),
+                    name,
+                    intern_integer(cell_index),
+               )
+
 
     conjure_cell_local = produce_conjure_triple__312('cell_local', CellLocal, cell_local_cache)
 
@@ -185,8 +197,14 @@ def gem():
                                      function_parameter_cache,
                                  )
 
-    conjure_global_variable = produce_conjure_single  ('global_variable', GlobalVariable, global_variable_cache)
+    conjure_global_variable__X = produce_conjure_single  ('global_variable', GlobalVariable, global_variable_cache)
     conjure_local_variable  = produce_conjure_dual__21('local_variable',  LocalVariable,  local_variable_cache)
+
+
+    def conjure_global_variable(name):
+        my_line('%s', name)
+
+        return conjure_global_variable__X(name)
 
 
     append_cache('cell_function_parameter', cell_function_parameter_cache)
