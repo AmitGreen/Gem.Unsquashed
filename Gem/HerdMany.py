@@ -3,7 +3,7 @@
 #
 @gem('Gem.HerdMany')
 def gem():
-    require_gem('Gem.Method')
+    require_gem('Gem.DroveMany')
 
 
     map__lookup  = Map.get

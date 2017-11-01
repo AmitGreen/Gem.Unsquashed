@@ -26,6 +26,16 @@ def gem():
             return arrange('<Herd_2 %r : %r; %r : %r>', t.a, t.v, t.b, t.w)
 
 
+        def affix(t, c, x):
+            a = t.a
+            if a is c: return t
+
+            b = t.b
+            if b is c: return t
+
+            return create_herd_3(a, b, c, t.v, t.w, x)
+
+
         def count_nested(t):
             v = t.v
             w = t.w
@@ -90,14 +100,11 @@ def gem():
             return ((bw, av))
 
 
-        def provision(t, c, x):
-            a = t.a
-            if a is c: return t
+        def ordered_values(t):
+            return (( t.v, t.w ))
 
-            b = t.b
-            if b is c: return t
 
-            return create_herd_3(a, b, c, t.v, t.w, x)
+        provision = rename_function('provision', affix)
 
 
         def provision_dual(t, displace, Meta, k1, k2):
@@ -305,8 +312,7 @@ def gem():
             return t
 
 
-        def values(t):
-            return ((t.v, t.w))
+        values = ordered_values
 
 
     Herd_2.first = Herd_2.v

@@ -8,34 +8,6 @@ def gem():
 
 
     #
-    #   SimpleNumber
-    #
-    class SimpleNumber(Object):
-        __slots__ = ((
-            'value',                    #   String+
-        ))
-
-
-        is_herd = false
-
-
-        def __init__(t, value):
-            t.value = value
-
-
-        def __repr__(t):
-            return arrange('<Simple-number %d>', t.value)
-
-
-        display_token  = __repr__
-        increment_skip = 0
-        scrub          = 0
-
-
-    simple_nub = SimpleNumber.value.__get__
-
-
-    #
     #   Number: Specific instances
     #
     eight = conjure_number('eight', 8)

@@ -39,6 +39,47 @@ def gem():
         skip         = 0
 
 
+        def affix(t, e8, z8):
+            a = t.a
+            if a is e8: return t
+
+            b = t.b
+            if b is e8: return t
+
+            c = t.c
+            if c is e8: return t
+
+            d = t.d
+            if d is e8: return t
+
+            assert (e8 is not absent) and (z8 is not absent)
+
+            e = t.e
+            if e is e8: return t
+            if e is absent:
+                t.e  = e8
+                t.z  = z8
+                t.e6 = absent
+                return t
+
+            e6 = t.e6
+            if e6 is e8: return t
+            if e6 is absent:
+                t.e6 = e8
+                t.z6 = z8
+                t.e7 = absent
+                return t
+
+            e7 = t.e7
+            if e7 is e8: return t
+            if e7 is absent:
+                t.e7 = e8
+                t.z7 = z8
+                return t
+
+            return create_drove_many(a, b, c, d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
+
+
         def count_nested(t):
             v = t.v
             w = t.w
@@ -238,6 +279,19 @@ def gem():
             r.sort(key = nub_of_item_0)
 
             return r
+
+
+        def ordered_values(t):
+            if t.e is absent:
+                return ((t.v, t.w, t.x, t.y))
+
+            if t.e6 is absent:
+                return ((t.v, t.w, t.x, t.y, t.z))
+
+            if t.e7 is absent:
+                return ((t.v, t.w, t.x, t.y, t.z, t.z6))
+
+            return ((t.v, t.w, t.x, t.y, t.z, t.z6, t.z7))
 
 
         def provision(t, e8, z8):
@@ -1259,17 +1313,7 @@ def gem():
             return t
 
 
-        def values(t):
-            if t.e is absent:
-                return ((t.v, t.w, t.x, t.y))
-
-            if t.e6 is absent:
-                return ((t.v, t.w, t.x, t.y, t.z))
-
-            if t.e7 is absent:
-                return ((t.v, t.w, t.x, t.y, t.z, t.z6))
-
-            return ((t.v, t.w, t.x, t.y, t.z, t.z6, t.z7))
+        values = ordered_values
 
 
     Herd_4567.first = Herd_4567.v

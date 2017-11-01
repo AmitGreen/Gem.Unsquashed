@@ -56,6 +56,9 @@ def gem():
             return (())
 
 
+        ordered_values = items_sorted_by_key
+
+
     class Herd_1(Object):
         __slots__ = ((
             'a',                        #   Any
@@ -78,6 +81,13 @@ def gem():
 
             t.a = a
             t.v = v
+
+
+        def affix(t, b, w):
+            a = t.a
+            if a is b: return t
+
+            return create_herd_2(a, b, t.v, w)
 
 
         def displace(t, k, v):
@@ -104,11 +114,7 @@ def gem():
             return (( ((t.a, t.v)), ))
 
 
-        def provision(t, b, w):
-            a = t.a
-            if a is b: return t
-
-            return create_herd_2(a, b, t.v, w)
+        provision = rename_function('provision', affix)
 
 
         if 0:
@@ -168,6 +174,10 @@ def gem():
                 return r
 
 
+        def ordered_values(t):
+            return (( t.v, ))
+
+
     empty_herd = Herd_0()
 
 
@@ -189,7 +199,11 @@ def gem():
     displace_1v = Herd_1.v.__set__
 
 
-    Herd_0.provision = Herd_0.provide = Herd_0.inject = HerHerdrt = static_method(create_herd_1)
+    if __debug__:
+        Herd_0.affix     = static_method(rename_function('affix__herd_0',     create_herd_1))
+        Herd_0.provision = static_method(rename_function('provision__herd_0', create_herd_1))
+    else:
+        Herd_0.affix     = Herd_0.provision = static_method(create_herd_1)
 
 
     export(

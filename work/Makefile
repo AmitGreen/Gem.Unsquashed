@@ -15,7 +15,7 @@ GEM_FILES = \
 	../Gem/Boot.py \
     ../Gem/Cache.py ../Gem/Cache2.py ../Gem/Cadence.py ../Gem/Codec.py ../Gem/ConjureQuadruple.py \
         ../Gem/Core.py ../Gem/CatchException.py \
-	../Gem/DelayedFileOutput.py ../Gem/DumpCache.py \
+	../Gem/DelayedFileOutput.py ../Gem/DroveMany.py ../Gem/DumpCache.py \
 	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
 	../Gem/GarbageCollection.py ../Gem/Global.py \
@@ -102,6 +102,7 @@ SAPPHIRE_FILES = \
 TOPAZ_FILES = \
     ../Topaz/CacheSupport.py ../Topaz/ConjureDual.py ../Topaz/ConjureSingle.py ../Topaz/ConjureQuadruple.py \
         ../Topaz/ConjureTriple.py ../Topaz/ConjureTreeComment.py ../Topaz/Core.py \
+    ../Topaz/Drove.py \
     ../Topaz/ExceptionChain.py \
     ../Topaz/Herd.py \
     ../Topaz/Main.py \
@@ -157,7 +158,7 @@ clean:
 	rm -f d.py de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
-	rm -f gc.py gdc.py gdo.py gg.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py gj4.py gq.py gs.py
+	rm -f gc.py gdc.py gdm.py gdo.py gg.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py gj4.py gq.py gs.py
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -179,7 +180,7 @@ clean:
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f zco.py zcs.py ze.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py zm.py zpa.py zps.py zpt.py zse.py zso.py
+	rm -f zco.py zcs.py zd.py ze.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py zm.py zpa.py zps.py zpt.py zse.py zso.py
 
 
 files:
@@ -223,6 +224,7 @@ links:
 	ln -s ../Gem/FileStatus.py                          fs.py
 	ln -s ../Gem/GarbageCollection.py                   gc.py
 	ln -s ../Gem/DumpCache.py                           gdc.py
+	ln -s ../Gem/DroveMany.py                           gdm.py
 	ln -s ../Gem/Codec.py                               gdo.py
 	ln -s ../Gem/Global.py                              gg.py
 	ln -s ../Gem/Herd_2.py                              gh2.py
@@ -364,6 +366,7 @@ links:
 	ln -s ../Sapphire/Transform.py                      xf.py
 	ln -s ../Topaz/Core.py                              zco.py
 	ln -s ../Topaz/CacheSupport.py                      zcs.py
+	ln -s ../Topaz/Drove.py                             zd.py
 	ln -s ../Topaz/ExceptionChain.py                    ze.py
 	ln -s ../Topaz/Herd.py                              zh.py
 	ln -s ../Topaz/ConjureSingle.py                     zj1.py
