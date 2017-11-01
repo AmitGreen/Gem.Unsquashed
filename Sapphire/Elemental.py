@@ -93,6 +93,7 @@ def gem():
 
     class KeywordAnd(KeywordAndOperatorBase):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__NORMAL_TOKEN
         display_name                     = 'and'
         is_end_of_arithmetic_expression  = true
         is_end_of_compare_expression     = true

@@ -497,6 +497,14 @@ def gem():
         return 1
 
 
+    @share
+    def order__string(a, b):
+        if a < b:   return -1
+        if a > b:   return 1
+
+        return 0
+                
+
     #
     #   parameters_1_named
     #

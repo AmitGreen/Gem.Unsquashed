@@ -24,6 +24,7 @@ def gem():
 
     class DualStatement(DualTwig):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'dual-statement'
         is_any_else                = false
         is_any_except_or_finally   = false
@@ -39,6 +40,7 @@ def gem():
 
     class CommentedStatement(DualTwig):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = '#statement'
         is_any_else                = false
         is_any_except_or_finally   = false

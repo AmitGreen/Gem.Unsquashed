@@ -250,7 +250,7 @@ def gem():
             frill          = t.frill
             indented_token = frill.begin
 
-            return arrange('<delete-* +%d%s %s %s %s %s>',
+            return arrange('<delete-* +%d %s %s %s %s>',
                            indented_token.a   .total,
                            indented_token.b   .display_token(),
                            ' '.join(v         .display_token()   for v in t.many),

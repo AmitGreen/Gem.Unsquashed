@@ -35,7 +35,6 @@ def gem():
 
     class CommentSuite(TokenTuple):
         __slots__                  = (())
-        class_order                = CLASS_ORDER__TUPLE
         display_name               = 'comment-*'
         indentation                = none
         is_any_else                = false

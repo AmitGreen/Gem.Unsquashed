@@ -18,6 +18,7 @@ def gem():
 
     class EmptyLine(String):
         __slots__                        = (())
+        class_order                      = CLASS_ORDER__EMPTY_LINE
         ends_in_newline                  = true
         indentation                      = none
         impression                       = 0
@@ -60,6 +61,7 @@ def gem():
 
 
         find_require_gem = find_require_gem__0
+        order            = order__string
         scout_variables  = scout_variables__0
         transform        = transform__remove_comments_0
 

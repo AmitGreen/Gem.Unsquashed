@@ -17,6 +17,9 @@ def gem():
         __slots__ = (())
 
 
+        class_order = CLASS_ORDER__BOOKCASE_TRIPLE_EXPRESSION
+
+
         def count_newlines(t):
             return (
                          t.a    .count_newlines()
@@ -42,6 +45,9 @@ def gem():
             return f.token_result(r, newline)
 
 
+        order = order__frill_abc
+
+
         def write(t, w):
             frill = t.frill
 
@@ -55,9 +61,9 @@ def gem():
 
 
     def produce_conjure_bookcase_triple_expression(name, Meta):
-        cache  = {}
-        lookup = cache.get
-        store  = cache.__setitem__
+        cache  = create_cache(name, conjure_nub)
+        lookup = cache.lookup
+        store  = cache.store
 
 
         def conjure_Meta_WithFrill(a, b, c, frill):
@@ -112,7 +118,7 @@ def gem():
             return BookcaseTripleExpression_WithFrill(a, b, c, frill)
 
 
-        conjure_triple = produce_conjure_triple(name, Meta, cache, lookup, store)
+        conjure_triple = produce_conjure_unique_triple(name, Meta, cache, lookup, store)
 
         conjure_quadruple = produce_conjure_unique_quadruple__4123(
                                 name,

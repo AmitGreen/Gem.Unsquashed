@@ -10,6 +10,7 @@ def gem():
 
     class ClassDefinition(DualTwig):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'class-definition'
         is_any_else                = false
         is_any_except_or_finally   = false
@@ -28,6 +29,7 @@ def gem():
 
     class FunctionDefinition(DualTwig):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'function-definition'
         is_any_else                = false
         is_any_except_or_finally   = false

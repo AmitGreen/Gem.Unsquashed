@@ -141,8 +141,14 @@ def gem():
         display_name = 'method-call-statement'
 
 
-    conjure_call_statement        = produce_conjure_triple__312('call-statement',        CallStatement)
-    conjure_method_call_statement = produce_conjure_triple__312('method-call-statement', MethodCallStatement)
+    def produce_conjure_call_statement(name, meta):
+        cache = create_cache(name, conjure_nub)
+
+        return produce_conjure_unique_triple__312(name, meta, cache)
+
+
+    conjure_call_statement        = produce_conjure_call_statement('call-statement',        CallStatement)
+    conjure_method_call_statement = produce_conjure_call_statement('method-call-statement', MethodCallStatement)
 
 
     static_conjure_call_statement        = static_method(conjure_call_statement)

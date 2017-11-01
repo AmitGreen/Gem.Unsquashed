@@ -7,13 +7,7 @@ def gem():
     require_gem('Sapphire.DumpToken')
 
 
-    lookup_adjusted_meta        = Shared.lookup_adjusted_meta           #   due to privileged
-    produce_conjure_dual_twig   = Shared.produce_conjure_dual_twig      #   due to privileged
-    produce_conjure_triple__312 = Shared.produce_conjure_triple__312    #   due to privileged
-    store_adjusted_meta         = Shared.store_adjusted_meta            #   due to privileged
-
-
-    prefixed_dual_twig_cache  = {}
+    prefixed_dual_twig_cache  = create_cache('prefixed-dual-twig', conjure_nub)
     lookup_prefixed_dual_twig = prefixed_dual_twig_cache.get
     store_prefixed_dual_twig  = prefixed_dual_twig_cache.__setitem__
 
@@ -269,7 +263,6 @@ def gem():
 
 
     @share
-    @privileged
     def produce_conjure_dual_twig_functions(name, Meta):
         cache  = {}
         lookup = cache.get
@@ -278,6 +271,7 @@ def gem():
 
         def conjure_PrefixedDualTwig(prefix, a, b):
             PrefixedDualTwig = lookup_adjusted_meta(Meta)
+
 
             if PrefixedDualTwig is none:
                 class PrefixedDualTwig(Meta):
@@ -329,19 +323,22 @@ def gem():
                         t.b     .write(w)
 
 
-                PrefixedDualTwig.k3 = PrefixedDualTwig.prefix
+                PrefixedDualTwig.k1 = PrefixedDualTwig.prefix
+                PrefixedDualTwig.k2 = PrefixedDualTwig.a
+                PrefixedDualTwig.k3 = PrefixedDualTwig.b
 
                 if __debug__:
                     PrefixedDualTwig.__name__ = intern_arrange('Prefixed%s', Meta.__name__)
 
                 store_adjusted_meta(Meta, PrefixedDualTwig)
 
+
             return PrefixedDualTwig(prefix, a, b)
 
 
         return ((
                    produce_conjure_dual_twig(name, Meta),
-                   produce_conjure_triple__312(
+                   produce_conjure_unique_triple(
                        name,
                        conjure_PrefixedDualTwig,
                        prefixed_dual_twig_cache,

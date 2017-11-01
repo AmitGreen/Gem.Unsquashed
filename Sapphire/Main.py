@@ -24,7 +24,7 @@ def gem():
     require_gem('Sapphire.Core')
 
 
-    choice = 2
+    choice = 3
     show   = 0
 
 
@@ -79,7 +79,7 @@ def gem():
 
         parse_python('test.py', vary = vary, test = 7, show = show)
 
-        #for name in ['triple-expression-with-frill']:
+        #for name in ['arguments-2', 'list-expression-2', 'range-index', 'tuple-expression-2']:
         #    print_cache(name)
 
         print_cache()
