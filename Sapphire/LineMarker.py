@@ -20,6 +20,7 @@ def gem():
 
 
     class LineMarker(SapphireToken):
+        class_order                             = CLASS_ORDER__LINE_MARKER
         display_name                            = 'line-marker'
         ends_in_newline                         = true
         is_end_of_arithmetic_expression         = true
@@ -70,6 +71,9 @@ def gem():
                 return false
 
             return true
+
+
+        order = order__s
 
 
     @share

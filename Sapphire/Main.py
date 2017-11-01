@@ -79,18 +79,8 @@ def gem():
 
         parse_python('test.py', vary = vary, test = 7, show = show)
 
-        for name in [
-                'add', 'and-1', 'arguments_0_token', 'as-fragment', 'binary_frill_cache', 'comma-1',
-                'compare-contains', 'compare-different', 'compare-equal', 'compare-exclude', 'compare-greater-than',
-                'compare-greater-than-or-equal', 'compare-identity', 'compare-less-than',
-                'compare-less-than-or-equal', 'compare-not-equal', 'comprehension-if', 'divide', 'indentation',
-                'integer-divide', 'join_token', 'keyword-argument', 'keyword-parameter', 'line_marker_token',
-                'logical-and-1', 'logical-or-1', 'map-element', 'modulus', 'multiply-1', 'normal_token', 'nub',
-                'or-1', 'parameters_0_token', 'power', 'quadruple_frill', 'subtract',
-        ]:
-            pass
-            #line('ATTEMPT %s', name)
-            #print_cache(name)
+        #for name in ['triple-expression-with-frill']:
+        #    print_cache(name)
 
         print_cache()
 

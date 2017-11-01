@@ -18,8 +18,12 @@ def gem():
         x              = QuadrupleTwig.c
         y              = QuadrupleTwig.d
 
+        class_order    = CLASS_ORDER__QUADRUPLE_TWIG
         display_name   = 'vwxy-frill'
         frill_estimate = 4
+
+
+        order = order__abcd
 
 
     class Commented_VWX_Frill(QuadrupleTwig):
@@ -29,7 +33,11 @@ def gem():
         w            = QuadrupleTwig.c
         x            = QuadrupleTwig.d
 
+        class_order  = CLASS_ORDER__QUADRUPLE_TWIG
         display_name = '#vwx-frill'
+
+
+        order = order__abcd
 
 
         def transform(t, vary):

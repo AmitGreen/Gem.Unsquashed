@@ -175,7 +175,6 @@ def gem():
                                                     )
 
         test_conjure_quadruple__X__scrub(cache, conjure_numbered_colored_size_shape__4123)
-        print_cache(cache)
         test_final_scrub(cache)
 
 

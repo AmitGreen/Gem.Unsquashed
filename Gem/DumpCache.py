@@ -102,7 +102,7 @@ def gem():
             line('Total caches: %d', length(cache_names))
 
             for [name, cache] in cache_names.items_sorted_by_key():
-                line('%s: %d', name, length(cache))
+                line('%s: %d', name, cache.count_nested())
 
             return
 

@@ -20,6 +20,11 @@ def gem():
             return 'absent'
 
 
+        @static_method
+        def __repr__():
+            return '<absent>'
+
+
         display_token = __str__
 
 

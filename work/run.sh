@@ -40,8 +40,8 @@ Main_py=../Topaz/Main.py
 Main_py=../Sapphire/Main.py
 
 show=2
-all=true
 all=false
+all=true
 
 command="python -sS $Main_py"
 commandO="python -O $Main_py"

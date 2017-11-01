@@ -21,11 +21,13 @@ def gem():
         'CLASS_ORDER__BOOKCASE_DUAL_EXPRESSION',        21,     #   BookcaseDualExpression+
         'CLASS_ORDER__BOOKCASE_EXPRESSION',             22,     #   BookcaseExpression+
         'CLASS_ORDER__BOOKCASE_MANY_EXPRESSION',        23,     #   BookcaseManyExpression+
-        'CLASS_ORDER__DUAL_TWIG',                       24,     #   DualTwig
-        'CLASS_ORDER__MANY_EXPRESSION',                 25,     #   + expression
-        'CLASS_ORDER__MEMBER_EXPRESSION',               26,     #   Member expression
-        'CLASS_ORDER__TRIPLE_EXPRESSION',               27,     #   ?: expression
-        'CLASS_ORDER__TRIPLE_TWIG',                     28,     #   Commented_VW_Frill & VWX_Frill
-        'CLASS_ORDER__TUPLE',                           29,     #   Tuple of expressions
-        'CLASS_ORDER__UNARY_EXPRESSION',                30,     #   * expression
+        'CLASS_ORDER__CALL_STATEMENT',                  24,     #   CallStatementBase+
+        'CLASS_ORDER__DUAL_TWIG',                       25,     #   DualTwig
+        'CLASS_ORDER__MANY_EXPRESSION',                 26,     #   + expression
+        'CLASS_ORDER__MEMBER_EXPRESSION',               27,     #   Member expression
+        'CLASS_ORDER__QUADRUPLE_TWIG',                  28,     #   Commented_VW_Frill & VWX_Frill
+        'CLASS_ORDER__TRIPLE_EXPRESSION',               29,     #   ?: expression
+        'CLASS_ORDER__TRIPLE_TWIG',                     30,     #   Commented_VW_Frill & VWX_Frill
+        'CLASS_ORDER__TUPLE',                           31,     #   Tuple of expressions
+        'CLASS_ORDER__UNARY_EXPRESSION',                32,     #   * expression
     )

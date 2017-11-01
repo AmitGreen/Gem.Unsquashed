@@ -323,6 +323,7 @@ def gem():
 
     class DotNameQuadruplet(BaseQuadrupleOperator):
         __slots__           = (())
+        class_order         = CLASS_ORDER__NORMAL_TOKEN
         #   [
         display_name        = '.name-quadruplet'
         is_postfix_operator = true
@@ -331,6 +332,7 @@ def gem():
     @share
     class Indented_Else_Colon_LineMarker(BaseQuadrupleOperator):
         __slots__                  = (())
+        class_order                = CLASS_ORDER__LINE_MARKER
         display_name               = 'else'
         ends_in_newline            = true
         is_any_else                = true
@@ -355,6 +357,7 @@ def gem():
     @share
     class Indented_Except_Colon_LineMarker(BaseQuadrupleOperator):
         __slots__                = (())
+        class_order              = CLASS_ORDER__LINE_MARKER
         display_name             = 'except'
         ends_in_newline          = true
         is_any_else              = false
@@ -378,6 +381,7 @@ def gem():
     @share
     class Indented_Finally_Colon_LineMarker(BaseQuadrupleOperator):
         __slots__                = (())
+        class_order              = CLASS_ORDER__LINE_MARKER
         display_name             = 'finally'
         ends_in_newline          = true
         is_any_except_or_finally = true
@@ -400,6 +404,7 @@ def gem():
     @share
     class Indented_Try_Colon_LineMarker(BaseQuadrupleOperator):
         __slots__           = (())
+        class_order         = CLASS_ORDER__LINE_MARKER
         display_name        = 'try'
         ends_in_newline     = true
         is_any_else         = false

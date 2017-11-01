@@ -17,6 +17,7 @@ def gem():
         ))
 
 
+        class_order                = CLASS_ORDER__CALL_STATEMENT
         is_any_else                = false
         is_any_except_or_finally   = false
         is_else_header_or_fragment = false
@@ -97,6 +98,9 @@ def gem():
                 t.left     .dump_token(f)
                 t.arguments.dump_token(f)
                 frill.w    .dump_token(f)
+
+
+        order = order__frill_ab
 
 
         def scout_variables(t, art):

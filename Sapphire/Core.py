@@ -19,9 +19,10 @@ def gem():
 
     from Gem import create_cache, create_DelayedFileOutput, create_SimpleStringOutput, create_StringOutput
     from Gem import path_join, print_cache, print_exception_chain
-    from Gem import produce_conjure_dual, produce_conjure_dual__21, produce_conjure_quadruple__4123
+    from Gem import produce_conjure_dual, produce_conjure_dual__21
     from Gem import produce_conjure_single, produce_conjure_triple, produce_conjure_triple__213
-    from Gem import produce_conjure_triple__312, produce_conjure_tuple, produce_conjure_unique_dual
+    from Gem import produce_conjure_triple__312, produce_conjure_tuple
+    from Gem import produce_conjure_unique_dual, produce_conjure_unique_dual__21
     from Gem import produce_conjure_unique_quadruple__4123, produce_conjure_unique_triple__312
     from Gem import program_exit, read_text_from_path, return_self, slice_all, StringOutput
     from Pearl import la, parse_context, qd, qi, qj, qk, ql, qn, qs, raise_unknown_line
@@ -47,15 +48,15 @@ def gem():
         'print_exception_chain',                    print_exception_chain,
         'produce_conjure_dual__21',                 produce_conjure_dual__21,
         'produce_conjure_dual',                     produce_conjure_dual,
-        'produce_conjure_quadruple__4123',          produce_conjure_quadruple__4123,
         'produce_conjure_single',                   produce_conjure_single,
         'produce_conjure_triple__213',              produce_conjure_triple__213,
         'produce_conjure_triple__312',              produce_conjure_triple__312,
         'produce_conjure_triple',                   produce_conjure_triple,
         'produce_conjure_tuple',                    produce_conjure_tuple,
+        'produce_conjure_unique_dual__21',          produce_conjure_unique_dual__21,
         'produce_conjure_unique_dual',              produce_conjure_unique_dual,
-        'produce_conjure_unique_triple__312',       produce_conjure_unique_triple__312,
         'produce_conjure_unique_quadruple__4123',   produce_conjure_unique_quadruple__4123,
+        'produce_conjure_unique_triple__312',       produce_conjure_unique_triple__312,
         'program_exit',                             program_exit,
         'qd',                                       qd,
         'qi',                                       qi,

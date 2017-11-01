@@ -346,6 +346,7 @@ def gem():
 
     class AllIndex(BaseTripleOperator):
         __slots__           = (())
+        class_order         = CLASS_ORDER__NORMAL_TOKEN
         display_name        = '[:]'
         is_all_index        = true
         is_postfix_operator = true
@@ -355,6 +356,7 @@ def gem():
 
     class DotNameTriplet(BaseTripleOperator):
         __slots__           = (())
+        class_order         = CLASS_ORDER__NORMAL_TOKEN
         #   [
         display_name        = '.name-triplet'
         is_postfix_operator = true
@@ -364,6 +366,7 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
+        class_order                = CLASS_ORDER__LINE_MARKER
         display_name               = r'indented-break\n'
         ends_in_newline            = true
         is_any_else                = false
@@ -386,6 +389,7 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
+        class_order                = CLASS_ORDER__LINE_MARKER
         display_name               = r'indented-continue\n'
         ends_in_newline            = true
         indentation                = BaseTripleOperator.a
@@ -407,6 +411,7 @@ def gem():
 
     class Indented_Else_Colon(BaseTripleOperator):
         __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
         display_name = r'indented-else:'
         indentation  = BaseTripleOperator.a
 
@@ -417,6 +422,7 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
+        class_order                = CLASS_ORDER__LINE_MARKER
         display_name               = r'indented-pass\n'
         ends_in_newline            = true
         is_any_else                = false
@@ -439,6 +445,7 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
+        class_order                = CLASS_ORDER__LINE_MARKER
         display_name               = r'indented-raise\n'
         ends_in_newline            = true
         is_any_else                = false
@@ -461,6 +468,7 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
+        class_order                = CLASS_ORDER__LINE_MARKER
         display_name               = r'indented-return\n'
         ends_in_newline            = true
         is_any_else                = false
@@ -483,6 +491,7 @@ def gem():
         __slots__   = (())
         indentation = BaseTripleOperator.a
 
+        class_order                = CLASS_ORDER__LINE_MARKER
         display_name               = r'indented-yield\n'
         ends_in_newline            = true
         is_any_else                = false
