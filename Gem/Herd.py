@@ -49,6 +49,14 @@ def gem():
         k3           = absent
         k4           = absent
         skip         = 0
+        total        = 0
+
+
+        @static_method
+        def glimpse(k, d = none):
+            assert k is not absent
+
+            return d
 
 
         @static_method
@@ -74,6 +82,7 @@ def gem():
         k3           = absent
         k4           = absent
         skip         = 0
+        total        = 1
 
 
         def __init__(t, a, v):
@@ -169,6 +178,16 @@ def gem():
             return create_herd_2(t.a, b, t.v, w)
 
 
+        def install(t, b, w):
+            assert (b is not absent) and (w is not absent)
+
+            if t.a is b:
+                t.v = w
+                return t
+
+            return create_herd_2(t.a, b, t.v, w)
+
+
         def items_sorted_by_key(t):
             return (( ((t.a, t.v)), ))
 
@@ -177,7 +196,11 @@ def gem():
             return (( t.v, ))
 
 
-        provision = rename_function('provision', disperse)
+        def provision(t, b, w):
+            a = t.a
+            if a is b: return t
+
+            return create_herd_2(a, b, t.v, w)
 
 
     empty_herd = Herd_0()
@@ -203,9 +226,11 @@ def gem():
 
     if __debug__:
         Herd_0.disperse  = static_method(rename_function('disperse__herd_0',  create_herd_1))
+        Herd_0.insert    = static_method(rename_function('insert__herd_0',    create_herd_1))
+        Herd_0.install   = static_method(rename_function('install__herd_0',   create_herd_1))
         Herd_0.provision = static_method(rename_function('provision__herd_0', create_herd_1))
     else:
-        Herd_0.disperse = Herd_0.provision = static_method(create_herd_1)
+        Herd_0.disperse = Herd_0.insert = Herd_0.install = Herd_0.provision = static_method(create_herd_1)
 
 
     export(

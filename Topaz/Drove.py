@@ -47,6 +47,7 @@ def gem():
 
                 drove = drove.provision(v[0], v[1])
 
+            assert drove.total                        == total
             assert Tuple(drove.items_sorted_by_key()) == expected_items[:total]
             assert Tuple(drove.ordered_values())      == expected_values[:total]
 

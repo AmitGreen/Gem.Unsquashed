@@ -22,6 +22,7 @@ def gem():
         k3           = absent
         k4           = absent
         skip         = 0
+        total        = 3
 
 
         def count_nested(t):
@@ -272,6 +273,24 @@ def gem():
             return create_herd_4(t.a, t.b, t.c, d, t.v, t.w, t.x, y)
 
 
+        def install(t, d, y):
+            assert (d is not absent) and (y is not absent)
+
+            if t.a is d:
+                t.v = y
+                return t
+
+            if t.b is d:
+                t.w = y
+                return t
+
+            if t.c is d:
+                t.x = y
+                return t
+
+            return create_herd_4(t.a, t.b, t.c, d, t.v, t.w, t.x, y)
+
+
         def items_sorted_by_key(t):
             a = t.a
             b = t.b
@@ -308,7 +327,17 @@ def gem():
             return ((t.v, t.w, t.x))
 
 
-        provision = rename_function('provision', disperse)
+        def provision(t, d, y):
+            a = t.a
+            if a is d: return t
+
+            b = t.b
+            if b is d: return t
+
+            c = t.c
+            if c is d: return t
+
+            return create_herd_4(a, b, c, d, t.v, t.w, t.x, y)
 
 
         def scrub(t):

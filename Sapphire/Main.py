@@ -24,7 +24,7 @@ def gem():
     require_gem('Sapphire.Core')
 
 
-    choice = 3
+    choice = 1
     show   = 0
 
 

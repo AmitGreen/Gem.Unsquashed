@@ -624,6 +624,57 @@ def gem():
             return create_herd_many(t.a, t.b, t.c, t.d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
 
 
+        def install(t, e8, z8):
+            assert (e8 is not absent) and (z8 is not absent)
+
+            if t.a is e8:
+                t.v = z8
+                return t
+
+            if t.b is e8:
+                t.w = z8
+                return t
+
+            if t.c is e8:
+                t.x = z8
+                return t
+
+            if t.d is e8:
+                t.y = z8
+                return t
+
+            e = t.e
+            if e is e8:
+                t.z = z8
+                return t
+            if e is absent:
+                t.e  = e8
+                t.e6 = absent
+                t.z  = z8
+                return t
+
+            e6 = t.e6
+            if e6 is e8:
+                t.z6 = z8
+                return t
+            if e6 is absent:
+                t.e6 = e8
+                t.e7 = absent
+                t.z6 = z8
+                return t
+
+            e7 = t.e7
+            if e7 is e8:
+                t.z7 = z8
+                return t
+            if e7 is absent:
+                t.e7 = e8
+                t.z7 = z8
+                return t
+
+            return create_drove_many(t.a, t.b, t.c, t.d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
+
+
         def items_sorted_by_key(t):
             a = t.a
             e = t.e
@@ -1325,6 +1376,15 @@ def gem():
             t.e7 = absent
             del t.z7
             return t
+
+
+        @property
+        def total(t):
+            if t.e  is absent:   return 4
+            if t.e6 is absent:   return 5
+            if t.e7 is absent:   return 6
+
+            return 7
 
 
         values = ordered_values

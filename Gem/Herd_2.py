@@ -20,6 +20,7 @@ def gem():
         k3           = absent
         k4           = absent
         skip         = 0
+        total        = 2
 
 
         def __repr__(t):
@@ -215,6 +216,20 @@ def gem():
             return create_herd_3(t.a, t.b, c, t.v, t.w, x)
 
 
+        def install(t, c, x):
+            assert (c is not absent) and (x is not absent)
+
+            if t.a is c:
+                t.v = x
+                return t
+
+            if t.b is c:
+                t.w = x
+                return t
+
+            return create_herd_3(t.a, t.b, c, t.v, t.w, x)
+
+
         def items_sorted_by_key(t):
             a = t.a
             b = t.b
@@ -234,7 +249,14 @@ def gem():
             return (( t.v, t.w ))
 
 
-        provision = rename_function('provision', disperse)
+        def provision(t, c, x):
+            a = t.a
+            if a is c: return t
+
+            b = t.b
+            if b is c: return t
+
+            return create_herd_3(a, b, c, t.v, t.w, x)
 
 
         def scrub(t):

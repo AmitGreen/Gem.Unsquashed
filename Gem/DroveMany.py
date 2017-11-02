@@ -10,6 +10,7 @@ def gem():
     map__length  = Map.__len__
     map__provide = Map.setdefault
     map__lookup  = Map.get
+    map__store   = Map.__setitem__
 
 
     class Drove_Many(Map):
@@ -20,6 +21,9 @@ def gem():
         ))
 
 
+        is_herd_many = false
+
+
         def __repr__(t):
             return arrange('<Drove_Many %d, %s; %s>',
                            t.total,
@@ -27,36 +31,35 @@ def gem():
                            '; '.join(arrange('%r : %r', k, v)   for [k, v] in t.items_sorted_by_key()))
 
 
-        if __debug__:
-            def provision(t, k, v):
-                v__2 = map__provide(t, k, v)
+        def install(t, k, v):
+            map__store(t, k, v)
 
-                assert v is v__2
+            total = map__length(t)
 
-                total = map__length(t)
-
-                if t.total == total:
-                    return t
-
-                t.total = total
-                t._append(v)
+            if t.total == total:
                 return t
-        else:
-            def provision(t, k, v):
-                map__provide(t, k, v)
 
-                total = map__length(t)
+            t.total = total
+            t._append(v)
+            return t
 
-                if t.total == total:
-                    return t
 
-                t.total = total
-                t._append(v)
+        def provision(t, k, v):
+            map__provide(t, k, v)
+
+            total = map__length(t)
+
+            if t.total == total:
                 return t
+
+            t.total = total
+            t._append(v)
+            return t
 
 
         glimpse             = map__lookup
         items_sorted_by_key = items_sorted_by_key__herd_many
+
 
         def ordered_values(t):
             return Tuple(t.values)
