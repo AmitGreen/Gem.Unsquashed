@@ -20,6 +20,22 @@ def gem():
 
 
     #
+    #   disperse
+    #
+    if __debug__:
+        @share
+        def disperse__herd_many(t, k, v):
+            v__2 = map__provide(t, k, v)
+            assert v is v__2
+            return t
+    else:
+        @share
+        def disperse__herd_many(t, k, v):
+            map__provide(t, k, v)
+            return t
+
+
+    #
     #   .items_sorted_by_key
     #
     if is_python_2:
@@ -39,14 +55,6 @@ def gem():
             for k in sorted_list(keys, key = keys[0].nub):
                 yield (( k, value(k) ))
 
-
-    #
-    #   def provision
-    #
-    @share
-    def provision__herd_many(t, k, v):
-        map__provide(t, k, v)
-        return t
 
     #
     #   .return_self

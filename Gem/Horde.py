@@ -123,6 +123,132 @@ def gem():
             t.x = v
 
 
+        def distribute_triple(t, displace, Meta, k1, k2, k3):
+            assert t.skip is 1
+
+            v    = t.v
+            v_k2 = v.k2
+
+            if v_k2 is not k2:
+                t.skip = 0
+                r      = Meta(k1, k2, k3)
+
+                displace(k1, create_herd_2(v_k2, k2, t, r))
+
+                return r
+
+            a = t.a
+            if a is k3:     return v
+
+            b = t.b
+            if b is k3:     return t.w
+
+            c = t.c
+            if c is k3:     return t.x
+
+            r = Meta(k1, k2, k3)
+
+            if c is absent:
+                t.c = k3
+                t.x = r
+                return r
+
+            assert t.skip is 1
+
+            displace(k1, create_horde_4(1, a, b, c, k3, v, t.w, t.x, r))
+
+            return r
+
+
+        def distribute_triple__312(t, displace, Meta, k1, k2, k3):
+            assert t.skip is 1
+
+            v    = t.v
+            v_k1 = v.k1
+
+            if v_k1 is not k1:
+                t.skip = 0
+                r      = Meta(k1, k2, k3)
+
+                displace(k3, create_herd_2(v_k1, k1, t, r))
+
+                return r
+
+            a = t.a
+            if a is k2:     return v
+
+            b = t.b
+            if b is k2:     return t.w
+
+            c = t.c
+            if c is k2:     return t.x
+
+            r = Meta(k1, k2, k3)
+
+            if c is absent:
+                t.c = k2
+                t.x = r
+                return r
+
+            displace(k3, create_horde_4(1, a, b, c, k2, v, t.w, t.x, r))
+
+            return r
+
+
+        def distribute_triple_step2(t, displace, parent, Meta, k1, k2, k3):
+            assert t.skip is 0
+
+            a = t.a
+            if a is k3:     return t.v
+
+            b = t.b
+            if b is k3:     return t.w
+
+            c = t.c
+            if c is k3:     return t.w
+
+            r = Meta(k1, k2, k3)
+
+            if c is absent:
+                t.c = k3
+                t.x = r
+                return r
+
+            if parent.is_herd_many:
+                displace(parent, k2, create_herd_4(a, b, c, k3, t.v, t.w, t.x, r))
+                return r
+
+            displace(parent, create_herd_4(a, b, c, k3, t.v, t.w, t.x, r))
+            return r
+
+
+        def distribute_triple_step2__312(t, displace, parent, Meta, k1, k2, k3):
+            assert t.skip is 0
+
+            a = t.a
+            if a is k2:     return t.v
+
+            b = t.b
+            if b is k2:     return t.w
+
+            c = t.c
+            if c is k2:     return t.w
+
+            r = Meta(k1, k2, k3)
+
+            if c is absent:
+                t.c = k2
+                t.x = r
+                return r
+
+            if parent.is_herd_many:
+                displace(parent, k1, create_herd_4(a, b, c, k2, t.v, t.w, t.x, r))
+                return r
+
+            displace(parent, create_herd_4(a, b, c, k2, t.v, t.w, t.x, r))
+            return r
+
+
         def glimpse(t, k, d = none):
             if t.a is k: return t.v
             if t.b is k: return t.w
@@ -187,132 +313,6 @@ def gem():
                 return ((bw, cx, av))
 
             return ((cx, bw, av))
-
-
-        def provision_triple(t, displace, Meta, k1, k2, k3):
-            assert t.skip is 1
-
-            v    = t.v
-            v_k2 = v.k2
-
-            if v_k2 is not k2:
-                t.skip = 0
-                r      = Meta(k1, k2, k3)
-
-                displace(k1, create_herd_2(v_k2, k2, t, r))
-
-                return r
-
-            a = t.a
-            if a is k3:     return v
-
-            b = t.b
-            if b is k3:     return t.w
-
-            c = t.c
-            if c is k3:     return t.x
-
-            r = Meta(k1, k2, k3)
-
-            if c is absent:
-                t.c = k3
-                t.x = r
-                return r
-
-            assert t.skip is 1
-
-            displace(k1, create_horde_4(1, a, b, c, k3, v, t.w, t.x, r))
-
-            return r
-
-
-        def provision_triple__312(t, displace, Meta, k1, k2, k3):
-            assert t.skip is 1
-
-            v    = t.v
-            v_k1 = v.k1
-
-            if v_k1 is not k1:
-                t.skip = 0
-                r      = Meta(k1, k2, k3)
-
-                displace(k3, create_herd_2(v_k1, k1, t, r))
-
-                return r
-
-            a = t.a
-            if a is k2:     return v
-
-            b = t.b
-            if b is k2:     return t.w
-
-            c = t.c
-            if c is k2:     return t.x
-
-            r = Meta(k1, k2, k3)
-
-            if c is absent:
-                t.c = k2
-                t.x = r
-                return r
-
-            displace(k3, create_horde_4(1, a, b, c, k2, v, t.w, t.x, r))
-
-            return r
-
-
-        def provision_triple_step2(t, displace, parent, Meta, k1, k2, k3):
-            assert t.skip is 0
-
-            a = t.a
-            if a is k3:     return t.v
-
-            b = t.b
-            if b is k3:     return t.w
-
-            c = t.c
-            if c is k3:     return t.w
-
-            r = Meta(k1, k2, k3)
-
-            if c is absent:
-                t.c = k3
-                t.x = r
-                return r
-
-            if parent.is_herd_many:
-                displace(parent, k2, create_herd_4(a, b, c, k3, t.v, t.w, t.x, r))
-                return r
-
-            displace(parent, create_herd_4(a, b, c, k3, t.v, t.w, t.x, r))
-            return r
-
-
-        def provision_triple_step2__312(t, displace, parent, Meta, k1, k2, k3):
-            assert t.skip is 0
-
-            a = t.a
-            if a is k2:     return t.v
-
-            b = t.b
-            if b is k2:     return t.w
-
-            c = t.c
-            if c is k2:     return t.w
-
-            r = Meta(k1, k2, k3)
-
-            if c is absent:
-                t.c = k2
-                t.x = r
-                return r
-
-            if parent.is_herd_many:
-                displace(parent, k1, create_herd_4(a, b, c, k2, t.v, t.w, t.x, r))
-                return r
-
-            displace(parent, create_herd_4(a, b, c, k2, t.v, t.w, t.x, r))
-            return r
 
 
         def sample(t):
@@ -475,6 +475,7 @@ def gem():
 
 
         count_nested = count_nested__map
+        disperse     = disperse__herd_many
 
 
         if __debug__:
@@ -487,23 +488,7 @@ def gem():
             displace = map__store
 
 
-        increment_skip = increment_skip__horde_many
-        glimpse        = map__lookup
-
-
-        def inject(t, k, v):
-            assert (map__lookup(t, k) is none) and (k is not absent) and (v is not absent)
-
-            map__store(t, k, v)
-            return t
-
-
-        insert              = inject
-        items_sorted_by_key = items_sorted_by_key__herd_many
-        provision           = provision__herd_many
-
-
-        def provision_triple(t, displace, Meta, k1, k2, k3):
+        def distribute_triple(t, displace, Meta, k1, k2, k3):
             assert t.skip is 1
 
             sample_k2 = t.sample().k2
@@ -519,7 +504,7 @@ def gem():
             return (map__lookup(t, k3)) or (map__provide(t, k3, Meta(k1, k2, k3)))
 
 
-        def provision_triple__312(t, displace, Meta, k1, k2, k3):
+        def distribute_triple__312(t, displace, Meta, k1, k2, k3):
             assert t.skip is 1
 
             sample_k1 = t.sample().k1
@@ -535,16 +520,31 @@ def gem():
             return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2, k3)))
 
 
-        def provision_triple_step2(t, _displace, _parent, Meta, k1, k2, k3):
+        def distribute_triple_step2(t, _displace, _parent, Meta, k1, k2, k3):
             assert t.skip is 0
 
             return (map__lookup(t, k3)) or (map__provide(t, k3, Meta(k1, k2, k3)))
 
 
-        def provision_triple_step2__312(t, _displace, _parent, Meta, k1, k2, k3):
+        def distribute_triple_step2__312(t, _displace, _parent, Meta, k1, k2, k3):
             assert t.skip is 0
 
             return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2, k3)))
+
+
+        increment_skip = increment_skip__horde_many
+        glimpse        = map__lookup
+
+
+        def inject(t, k, v):
+            assert (map__lookup(t, k) is none) and (k is not absent) and (v is not absent)
+
+            map__store(t, k, v)
+            return t
+
+
+        insert              = inject
+        items_sorted_by_key = items_sorted_by_key__herd_many
 
 
         remove_skip = remove_skip__horde

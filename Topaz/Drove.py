@@ -22,7 +22,7 @@ def gem():
 
 
 
-    def test_drove_affix():
+    def test_drove_provision():
         expected_items = ((
                              ((zero,  zero .value)),
                              ((one,   one  .value)),
@@ -45,9 +45,7 @@ def gem():
             for i in iterate_range(0, total):
                 v = expected_items[i]
 
-                drove = drove.affix(v[0], v[1])
-
-            line('total: %d; drove: %r', total, type(drove))
+                drove = drove.provision(v[0], v[1])
 
             assert Tuple(drove.items_sorted_by_key()) == expected_items[:total]
             assert Tuple(drove.ordered_values())      == expected_values[:total]
@@ -55,6 +53,6 @@ def gem():
 
     @share
     def test_drove():
-        test_drove_affix()
+        test_drove_provision()
 
         line('PASSED: drove')

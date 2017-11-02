@@ -18,9 +18,9 @@ def gem():
     #
     #       All the verbs here do NOT have an 'is' inside them.
     #
+    #   .disperse
     #   .glimpse
     #   .insert
-    #   .provision
     #       Unique Keys: Use 'is' for comparing keys
     #
     #       NOTE: All the verbs here have an 'is' inside them.
@@ -83,9 +83,11 @@ def gem():
             t.v = v
 
 
-        def affix(t, b, w):
+        def disperse(t, b, w):
             a = t.a
-            if a is b: return t
+            if a is b:
+                assert t.v is w
+                return t
 
             return create_herd_2(a, b, t.v, w)
 
@@ -94,6 +96,63 @@ def gem():
             assert (t.a is k) and (v is not absent)
 
             t.v = v
+
+
+        if 0:
+            def distribute_triple(t, displace, Meta, k1, k2, k3):
+                a = t.a
+                if a is k2:
+                    v = t.v
+                    if v.k3 is k3:  return v
+
+                    if not v.is_herd:
+                        r   = Meta(k1, k2, k3)
+                        t.v = create_herd_2(v.k3, k3, v, r)
+                        return r
+
+                    return v.distribute_triple_step2(displace_1v, t, Meta, k1, k2, k3)
+
+                r = Meta(k1, k2, k3)
+
+                displace(k1, create_herd_2(a, k2, t.v, r))
+
+                return r
+
+
+        if 0:
+            def distribute_triple__312(t, displace, Meta, k1, k2, k3):
+                a = t.a
+                if a is k1:
+                    v = t.v
+                    if v.k2 is k2:  return v
+
+                    if not v.is_herd:
+                        r   = Meta(k1, k2, k3)
+                        t.v = create_herd_2(v.k2, k2, v, r)
+                        return r
+
+                    return v.distribute_triple_step2__312(displace_1v, t, Meta, k1, k2, k3)
+
+                r = Meta(k1, k2, k3)
+
+                displace(k3, create_herd_2(a, k1, t.v, r))
+
+                return r
+
+
+        if 0:
+            def distribute_triple_step2(t, displace, parent, Meta, k1, k2, k3):
+                a = t.a
+                if a is k3:     return t.v
+
+                r = Meta(k1, k2, k3)
+
+                if parent.is_herd_many:
+                    displace(parent, k2, create_herd_2(a, k3, t.v, r))
+                    return r
+
+                displace(parent, create_herd_2(a, k3, t.v, r))
+                return r
 
 
         def glimpse(t, k, d = none):
@@ -114,68 +173,11 @@ def gem():
             return (( ((t.a, t.v)), ))
 
 
-        provision = rename_function('provision', affix)
-
-
-        if 0:
-            def provision_triple(t, displace, Meta, k1, k2, k3):
-                a = t.a
-                if a is k2:
-                    v = t.v
-                    if v.k3 is k3:  return v
-
-                    if not v.is_herd:
-                        r   = Meta(k1, k2, k3)
-                        t.v = create_herd_2(v.k3, k3, v, r)
-                        return r
-
-                    return v.provision_triple_step2(displace_1v, t, Meta, k1, k2, k3)
-
-                r = Meta(k1, k2, k3)
-
-                displace(k1, create_herd_2(a, k2, t.v, r))
-
-                return r
-
-
-        if 0:
-            def provision_triple__312(t, displace, Meta, k1, k2, k3):
-                a = t.a
-                if a is k1:
-                    v = t.v
-                    if v.k2 is k2:  return v
-
-                    if not v.is_herd:
-                        r   = Meta(k1, k2, k3)
-                        t.v = create_herd_2(v.k2, k2, v, r)
-                        return r
-
-                    return v.provision_triple_step2__312(displace_1v, t, Meta, k1, k2, k3)
-
-                r = Meta(k1, k2, k3)
-
-                displace(k3, create_herd_2(a, k1, t.v, r))
-
-                return r
-
-
-        if 0:
-            def provision_triple_step2(t, displace, parent, Meta, k1, k2, k3):
-                a = t.a
-                if a is k3:     return t.v
-
-                r = Meta(k1, k2, k3)
-
-                if parent.is_herd_many:
-                    displace(parent, k2, create_herd_2(a, k3, t.v, r))
-                    return r
-
-                displace(parent, create_herd_2(a, k3, t.v, r))
-                return r
-
-
         def ordered_values(t):
             return (( t.v, ))
+
+
+        provision = rename_function('provision', disperse)
 
 
     empty_herd = Herd_0()
@@ -200,10 +202,10 @@ def gem():
 
 
     if __debug__:
-        Herd_0.affix     = static_method(rename_function('affix__herd_0',     create_herd_1))
+        Herd_0.disperse  = static_method(rename_function('disperse__herd_0',  create_herd_1))
         Herd_0.provision = static_method(rename_function('provision__herd_0', create_herd_1))
     else:
-        Herd_0.affix     = Herd_0.provision = static_method(create_herd_1)
+        Herd_0.disperse = Herd_0.provision = static_method(create_herd_1)
 
 
     export(

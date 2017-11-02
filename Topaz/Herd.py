@@ -31,7 +31,7 @@ def gem():
 
                 for i in iterate_range(total):
                     v    = SimpleNumber(i)
-                    herd = herd.provision(i, v)
+                    herd = herd.disperse(i, v)
 
                     append(v)
 
@@ -86,7 +86,7 @@ def gem():
         #   Verify sort of 1 element herd's
         #
         def test_herd_1__sort():
-            herd = empty_herd.provision(zero, zero.value)
+            herd = empty_herd.disperse(zero, zero.value)
 
             assert herd.items_sorted_by_key() == expected_items[:1]
 
@@ -100,14 +100,14 @@ def gem():
                     [one, zero],
             ]:
                 herd = empty_herd
-                herd = herd.provision(a, a.value)
-                herd = herd.provision(b, b.value)
+                herd = herd.disperse(a, a.value)
+                herd = herd.disperse(b, b.value)
 
                 herd__2 = herd
 
                 for loop in [1, 2]:
-                    herd__2 = herd__2.provision(a, a.value)
-                    herd__2 = herd__2.provision(b, b.value)
+                    herd__2 = herd__2.disperse(a, a.value)
+                    herd__2 = herd__2.disperse(b, b.value)
 
                 assert herd is herd__2
                 assert herd.items_sorted_by_key() == expected_items[:2]
@@ -122,16 +122,16 @@ def gem():
                     [two,  one,  zero],
             ]:
                 herd = empty_herd
-                herd = herd.provision(a, a.value)
-                herd = herd.provision(b, b.value)
-                herd = herd.provision(c, c.value)
+                herd = herd.disperse(a, a.value)
+                herd = herd.disperse(b, b.value)
+                herd = herd.disperse(c, c.value)
 
                 herd__2 = herd
 
                 for loop in [1, 2]:
-                    herd__2 = herd__2.provision(a, a.value)
-                    herd__2 = herd__2.provision(b, b.value)
-                    herd__2 = herd__2.provision(c, c.value)
+                    herd__2 = herd__2.disperse(a, a.value)
+                    herd__2 = herd__2.disperse(b, b.value)
+                    herd__2 = herd__2.disperse(c, c.value)
 
                 assert herd is herd__2
                 assert herd.items_sorted_by_key() == expected_items[:3]
@@ -150,7 +150,7 @@ def gem():
 
                 for loop in [1, 2]:
                     for v in add:
-                        herd = herd.provision(v, v.value)
+                        herd = herd.disperse(v, v.value)
 
                 assert Tuple(herd.items_sorted_by_key()) == expected_items[:length(add)]
 
@@ -165,7 +165,7 @@ def gem():
 
                 for loop in [1, 2]:
                     for v in add:
-                        herd = herd.provision(v, v.value)
+                        herd = herd.disperse(v, v.value)
 
                 assert Tuple(herd.items_sorted_by_key()) == expected_items[:length(add)]
 

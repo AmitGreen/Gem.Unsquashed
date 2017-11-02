@@ -9,6 +9,7 @@ def gem():
     require_gem('Gem.DelayedFileOutput')
     require_gem('Gem.DumpCache')
     require_gem('Gem.Exception')
+    require_gem('Gem.Herd')
     require_gem('Gem.Method')
     require_gem('Gem.Path')
     require_gem('Gem.StringOutput')
@@ -18,7 +19,7 @@ def gem():
 
 
     from Gem import create_cache, create_DelayedFileOutput, create_SimpleStringOutput, create_StringOutput
-    from Gem import path_join, print_cache, print_exception_chain
+    from Gem import empty_herd, path_join, print_cache, print_exception_chain
     from Gem import produce_conjure_dual, produce_conjure_dual__21
     from Gem import produce_conjure_single, produce_conjure_triple
     from Gem import produce_conjure_triple__312, produce_conjure_tuple
@@ -83,6 +84,7 @@ def gem():
         #
         #   Values
         #
+        'empty_herd',           empty_herd,
         'parse_context',        parse_context,
         'slice_all',            slice_all,
         'tuple_of_2_nones',     ((none, none)),

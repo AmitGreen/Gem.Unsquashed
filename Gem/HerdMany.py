@@ -30,6 +30,7 @@ def gem():
 
 
         count_nested = count_nested__map
+        disperse     = disperse__herd_many
 
 
         if __debug__:
@@ -39,6 +40,60 @@ def gem():
                 t[k] = v
         else:
             displace = map__store
+
+
+        def distribute_dual(t, _displace, Meta, k1, k2):
+            return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2)))
+
+
+        def distribute_dual__21(t, _displace, Meta, k1, k2):
+            return (map__lookup(t, k1)) or (map__provide(t, k1, Meta(k1, k2)))
+
+
+        def distribute_triple(t, displace, Meta, k1, k2, k3):
+            second = map__lookup(t, k2, absent)
+
+            if second.k3 is k3:
+                return second
+
+            if not second.is_herd:
+                r = Meta(k1, k2, k3)
+
+                if second is absent:
+                    return map__provide(t, k2, r)
+
+                map__store(t, k2, create_herd_2(second.k3, k3, second, r))
+
+                return r
+
+            return second.distribute_triple_step2(map__store, t, Meta, k1, k2, k3)
+
+
+        def distribute_triple__312(t, displace, Meta, k1, k2, k3):
+            second = map__lookup(t, k1, absent)
+
+            if second.k2 is k2:
+                return second
+
+            if not second.is_herd:
+                r = Meta(k1, k2, k3)
+
+                if second is absent:
+                    return map__provide(t, k1, r)
+
+                map__store(t, k1, create_herd_2(second.k2, k2, second, r))
+
+                return r
+
+            return second.distribute_triple_step2__312(map__store, t, Meta, k1, k2, k3)
+
+
+        def distribute_triple_step2(t, _displace, _parent, Meta, k1, k2, k3):
+            return (map__lookup(t, k3)) or (map__provide(t, k3, Meta(k1, k2, k3)))
+
+
+        def distribute_triple_step2__312(t, _displace, _parent, Meta, k1, k2, k3):
+            return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2, k3)))
 
 
         if is_python_2:
@@ -68,61 +123,6 @@ def gem():
 
         insert              = inject
         items_sorted_by_key = items_sorted_by_key__herd_many
-        provision           = provision__herd_many
-
-
-        def provision_dual(t, _displace, Meta, k1, k2):
-            return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2)))
-
-
-        def provision_dual__21(t, _displace, Meta, k1, k2):
-            return (map__lookup(t, k1)) or (map__provide(t, k1, Meta(k1, k2)))
-
-
-        def provision_triple(t, displace, Meta, k1, k2, k3):
-            second = map__lookup(t, k2, absent)
-
-            if second.k3 is k3:
-                return second
-
-            if not second.is_herd:
-                r = Meta(k1, k2, k3)
-
-                if second is absent:
-                    return map__provide(t, k2, r)
-
-                map__store(t, k2, create_herd_2(second.k3, k3, second, r))
-
-                return r
-
-            return second.provision_triple_step2(map__store, t, Meta, k1, k2, k3)
-
-
-        def provision_triple__312(t, displace, Meta, k1, k2, k3):
-            second = map__lookup(t, k1, absent)
-
-            if second.k2 is k2:
-                return second
-
-            if not second.is_herd:
-                r = Meta(k1, k2, k3)
-
-                if second is absent:
-                    return map__provide(t, k1, r)
-
-                map__store(t, k1, create_herd_2(second.k2, k2, second, r))
-
-                return r
-
-            return second.provision_triple_step2__312(map__store, t, Meta, k1, k2, k3)
-
-
-        def provision_triple_step2(t, _displace, _parent, Meta, k1, k2, k3):
-            return (map__lookup(t, k3)) or (map__provide(t, k3, Meta(k1, k2, k3)))
-
-
-        def provision_triple_step2__312(t, _displace, _parent, Meta, k1, k2, k3):
-            return (map__lookup(t, k2)) or (map__provide(t, k2, Meta(k1, k2, k3)))
 
 
         def scrub(t):

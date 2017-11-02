@@ -7,30 +7,52 @@ def gem():
     require_gem('Gem.Method')
 
 
-    map__lookup = Map.get
-    map__store  = Map.__setitem__
+    map__length  = Map.__len__
+    map__provide = Map.setdefault
+    map__lookup  = Map.get
 
 
     class Drove_Many(Map):
         __slots__ = ((
+            'total',                #   Integer
             'values',               #   List of Any excluding Absent
             '_append',              #   Method
         ))
 
 
         def __repr__(t):
-            return arrange('<Drove_Many %s; %s>',
+            return arrange('<Drove_Many %d, %s; %s>',
+                           t.total,
                            ', '.join(portray(v)   for v in t.values),
                            '; '.join(arrange('%r : %r', k, v)   for [k, v] in t.items_sorted_by_key()))
 
 
-        def affix(t, k, v):
-            assert (map__lookup(t, k) is none) and (k is not absent) and (v is not absent)
+        if __debug__:
+            def provision(t, k, v):
+                v__2 = map__provide(t, k, v)
 
-            map__store(t, k, v)
-            t._append(v)
+                assert v is v__2
 
-            return t
+                total = map__length(t)
+
+                if t.total == total:
+                    return t
+
+                t.total = total
+                t._append(v)
+                return t
+        else:
+            def provision(t, k, v):
+                map__provide(t, k, v)
+
+                total = map__length(t)
+
+                if t.total == total:
+                    return t
+
+                t.total = total
+                t._append(v)
+                return t
 
 
         glimpse             = map__lookup
@@ -61,6 +83,7 @@ def gem():
 
         t = new_Drove_Many()
 
+        t.total   = 8
         t.values  = values = [v, w, x, y, z, z6, z7, z8]
         t._append = values.append
 

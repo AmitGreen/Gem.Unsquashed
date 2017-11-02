@@ -141,6 +141,7 @@ def gem():
             'contains_definition',      #   Vacant | Method
             'store_definition',         #   Vacant | Method
 
+            'variable_drove',           #   Drove_*
             'variable_map',             #   Zero | Map { Name } of ( FunctionParameter | LocalVariable )
             'variable_index',           #   Integer
             'lookup_variable',          #   Vacant | Method
@@ -158,6 +159,8 @@ def gem():
            #t.definition_map      = vacant
            #t.contains_definition = vacant
            #t.store_definition    = vacant
+
+            t.variable_drove   = empty_herd
 
             t.variable_index   = t.variable_map = 0
            #t.lookup_variable  = vacant
@@ -213,6 +216,11 @@ def gem():
 
                         t.definition_map[v].dump_variables(arrange('%s.%s', name, s))
 
+            line('===  drove variables %s  ===', name)
+
+            for v in t.variable_drove.ordered_values():
+                line('  %s', v)
+
             variable_map = t.variable_map
 
             if variable_map is not 0:
@@ -266,6 +274,8 @@ def gem():
 
 
         def fetch_variable(t, name):
+            #t.variable_drove = t.variable_drove.affix(name, 0)
+
             variable_map = t.variable_map
 
             if variable_map is 0:

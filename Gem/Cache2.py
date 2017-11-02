@@ -83,7 +83,7 @@ def gem():
 
                 return r
 
-            return first.provision_dual(store, Meta, k1, k2)
+            return first.distribute_dual(store, Meta, k1, k2)
 
 
         return conjure_unique_dual
@@ -120,7 +120,7 @@ def gem():
 
                 return r
 
-            return first.provision_dual__21(store, Meta, k1, k2)
+            return first.distribute_dual__21(store, Meta, k1, k2)
 
 
         return conjure_unique_dual__21
@@ -164,7 +164,7 @@ def gem():
 
                 return r
 
-            return first.provision_triple(store, Meta, k1, k2, k3)
+            return first.distribute_triple(store, Meta, k1, k2, k3)
 
 
         return conjure_unique_triple
@@ -208,7 +208,7 @@ def gem():
 
                 return r
 
-            return first.provision_triple__312(store, Meta, k1, k2, k3)
+            return first.distribute_triple__312(store, Meta, k1, k2, k3)
 
 
 

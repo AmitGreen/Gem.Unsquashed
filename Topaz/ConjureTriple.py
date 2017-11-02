@@ -57,18 +57,18 @@ def gem():
             ((   one,   red,     trapazoid    )),
             ((   one,   red,     triangle     )),
 
-            ((   two,   cyan,    oval         )),       #   Herd_2.provision_triple__312
+            ((   two,   cyan,    oval         )),       #   Herd_2.distribute_triple__312
             ((   two,   cyan,    star         )),
             ((   two,   cyan,    triangle     )),
             ((   two,   cyan,    square       )),
-            ((   two,   red,     star         )),       #   Horde_Many.provision_triple_step2 ...
-            #                                           #       ... & Herd2.provision_triple_step2__312
+            ((   two,   red,     star         )),       #   Horde_Many.distribute_triple_step2 ...
+            #                                           #       ... & Herd2.distribute_triple_step2__312
             ((   two,   red,     square       )),       #   .displace_w
-            ((   two,   green,   star         )),       #   .displace_x & Herd3.provision_triple_step2__312
+            ((   two,   green,   star         )),       #   .displace_x & Herd3.distribute_triple_step2__312
             ((   two,   green,   moon         )),
-            ((   two,   blue,    star         )),       #   Herd_4567.provision_triple_step2__312
+            ((   two,   blue,    star         )),       #   Herd_4567.distribute_triple_step2__312
 
-            ((   three,  blue,   moon         )),       #   Herd_3.provision_triple__312
+            ((   three,  blue,   moon         )),       #   Herd_3.distribute_triple__312
             ((   three,  green,  moon         )),
             ((   three,  cyan,   star         )),
             ((   three,  red,    star         )),
@@ -80,20 +80,20 @@ def gem():
 
             ((   four,   black,  circle      )),
             ((   four,   green,  circle      )),
-            ((   four,   white,  oval        )),        #   Herd_4567.provision_triple__312
+            ((   four,   white,  oval        )),        #   Herd_4567.distribute_triple__312
             ((   four,   blue,   oval        )),
             ((   four,   red,    moon        )),
             ((   four,   purple, triangle    )),
             ((   four,   purple, star        )),        #   .displace_z6
             ((   four,   cyan,   square      )),
             ((   four,   cyan,   triangle    )),        #   .displace_z7
-            ((   four,   yellow, ellipse     )),        #   Herd_Many.provision_triple
+            ((   four,   yellow, ellipse     )),        #   Herd_Many.distribute_triple
             ((   four,   yellow, moon        )),
             ((   four,   silver, oval        )),
 
             ((   five,   silver, moon        )),
             ((   five,   silver, square      )),
-            ((   five,   purple, oval        )),        #   Horde_23.provision_triple_step2
+            ((   five,   purple, oval        )),        #   Horde_23.distribute_triple_step2
             ((   five,   silver, oval        )),
             ((   five,   silver, circle      )),        #   Horde_23 (with skip 0) calls create_herd_4567
 
@@ -106,29 +106,29 @@ def gem():
             #
             ((   five,   purple, triangle    )),
             ((   seven,  black,  triangle    )),
-            ((   eight,  white,  triangle    )),        #   Herd_Many.provision_triple__312
+            ((   eight,  white,  triangle    )),        #   Herd_Many.distribute_triple__312
             ((   nine,   blue,   triangle    )),
 
             ((   two,    black,  star        )),
             ((   two,    yellow, star        )),
             ((   two,    purple, star        )),
-            ((   two,    silver, star        )),        #   Herd_Many.provision_triple_step2__312
+            ((   two,    silver, star        )),        #   Herd_Many.distribute_triple_step2__312
             ((   two,    white,  star        )),
 
-            ((   one,    silver, pentagon    )),        #   Horde_23.provision_triple__312, & ...
+            ((   one,    silver, pentagon    )),        #   Horde_23.distribute_triple__312, & ...
             #                                           #     ... Horde_Many.increment_skip
             ((   one,    black,  pentagon    )),
-            ((   one,    purple, pentagon    )),        #   Horde_Many.provision_triple__312
+            ((   one,    purple, pentagon    )),        #   Horde_Many.distribute_triple__312
             ((   one,    green,  pentagon    )),
 
             ((   one,    green,  trapazoid   )),
-            ((   two,    green,  trapazoid   )),        #   Horde_23.provision_triple_step2__312
+            ((   two,    green,  trapazoid   )),        #   Horde_23.distribute_triple_step2__312
 
             ((   five,   white,  polygon     )),
             ((   five,   green,  polygon     )),
             ((   five,   silver, polygon     )),
             ((   five,   black,  polygon     )),
-            ((   seven,  silver, polygon     )),        #   Horde_Many.provision_triple_step2__312
+            ((   seven,  silver, polygon     )),        #   Horde_Many.distribute_triple_step2__312
         ))
 
 
