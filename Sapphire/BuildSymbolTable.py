@@ -114,9 +114,7 @@ def gem():
                 t.store_variable   = variable_map.__setitem__
 
                 my_line('%s: install %r : %r', t.name, name, variable)
-                assert t.variable_drove.total == 0
-                assert t.variable_drove.glimpse(name) is none
-                t.variable_drove = t.variable_drove.install(name, variable)
+                t.variable_drove = t.variable_drove.insert(name, variable)
                 assert not t.variable_drove.is_herd_many
 
                 return
@@ -131,8 +129,8 @@ def gem():
             index    = t.variable_index
             variable = conjure(index, name)
 
-            my_line('%s: install %r : %r', t.name, name, variable)
-            t.variable_drove = t.variable_drove.install(name, variable)
+            my_line('%s: insert %r : %r', t.name, name, variable)
+            t.variable_drove = t.variable_drove.insert(name, variable)
             assert not t.variable_drove.is_herd_many
 
             t.store_variable(name, variable)
@@ -366,14 +364,18 @@ def gem():
         def add_parameter(t, name):
             variable_map = t.variable_map
 
+            parameter = conjure_function_parameter(
+                            (0    if variable_map is 0 else    t.variable_index),
+                            name,
+                        )
+
             if variable_map is 0:
-                t.local_variables = parameter = conjure_function_parameter(0, name)
+                t.local_variables = parameter
 
                 assert t.variable_drove.total == 0
 
-                my_line('%s: install %r : %r', t.name, name, parameter)
-                t.variable_drove = t.variable_drove.install(name, parameter)
-                assert not t.variable_drove.is_herd_many
+                my_line('%s: insert %r : %r', t.name, name, parameter)
+                t.variable_drove = t.variable_drove.insert(name, parameter)
 
                 t.variable_map     = variable_map = { name : parameter }
                 t.variable_index   = 1
@@ -387,11 +389,8 @@ def gem():
             if t.lookup_variable(name):
                 raise_runtime_error('parameter %s declared multiple times', name)
 
-            parameter = conjure_function_parameter(t.variable_index, name)
-
-            my_line('%s: install %r : %r', t.name, name, parameter)
-            t.variable_drove = t.variable_drove.install(name, parameter)
-            assert not t.variable_drove.is_herd_many
+            my_line('%s: insert %r : %r', t.name, name, parameter)
+            t.variable_drove = t.variable_drove.insert(name, parameter)
 
             local_variables = t.local_variables
 

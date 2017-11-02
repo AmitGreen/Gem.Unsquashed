@@ -25,7 +25,7 @@ GEM_FILES = \
     ../Gem/Map.py ../Gem/Method.py \
     ../Gem/Output.py \
     ../Gem/Path.py ../Gem/PortrayString.py \
-    ../Gem/RegularExpression.py \
+    ../Gem/Rabble.py ../Gem/RegularExpression.py \
     ../Gem/Series.py ../Gem/SimpleStringIO.py ../Gem/StringOutput.py ../Gem/System.py \
     ../Gem/Traceback.py
 
@@ -158,7 +158,7 @@ clean:
 	rm -f d.py de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
-	rm -f gc.py gdc.py gdm.py gdo.py gg.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py gj4.py gl.py gq.py gs.py
+	rm -f gc.py gdc.py gdm.py gdo.py gg.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py gj4.py gl.py gq.py gr.py gs.py
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -236,6 +236,7 @@ links:
 	ln -s ../Gem/ConjureQuadruple.py                    gj4.py
 	ln -s ../Gem/Global.py                              gl.py
 	ln -s ../Gem/LiquidMap.py                           gq.py
+	ln -s ../Gem/Rabble.py                              gr.py
 	ln -s ../Gem/Series.py                              gs.py
 	ln -s ../Sapphire/Parse.py                          h0p.py
 	ln -s ../Sapphire/Parse1.py                         h1p.py
