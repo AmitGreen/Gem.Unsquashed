@@ -8,22 +8,19 @@ def gem():
     #
     #       Liquid (modifiable)
     #       Map (Associative Array)
-    #       Unordered
-    #       Key must not include absent
+    #       Ordered or Unordered (depending on methods)
+    #       Key & Value must not include absent
     #
-    #   .inject
-    #   .lookup
-    #   .provide
-    #       Use == for comparing keys
+    #   NOTE: All the verbs here have an 'is' inside them.
     #
-    #       All the verbs here do NOT have an 'is' inside them.
-    #
-    #   .disperse
-    #   .glimpse
-    #   .insert
-    #       Unique Keys: Use 'is' for comparing keys
-    #
-    #       NOTE: All the verbs here have an 'is' inside them.
+    #   Verb                Meaning                         Ordered     Exists          Nonexistent
+    #   ---------           ------------------------        ---         ------------    ---------------
+    #   .disperse           unordered optional store        No          must match      Insert
+    #   .displace           overwrite                       N/A         overwrite       ERROR
+    #   .glimpse            lookup                          N/A         => value        => none
+    #   .insert             ordered append                  Yes         error           append
+    #   .install            overwrite or ordered append     Yes         overwrite       append
+    #   .provision          ordered optional append         Yes         ignore          append
     #
 
 
@@ -83,13 +80,6 @@ def gem():
         k4           = absent
         skip         = 0
         total        = 1
-
-
-        def __init__(t, a, v):
-            assert (a is not absent) and (v is not absent)
-
-            t.a = a
-            t.v = v
 
 
         def disperse(t, b, w):
