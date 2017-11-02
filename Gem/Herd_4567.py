@@ -91,31 +91,13 @@ def gem():
 
 
         def disperse(t, e8, z8):
-            a = t.a
-            if a is e8:
-                assert t.v is z8
-                return t
-
-            b = t.b
-            if b is e8:
-                assert t.w is z8
-                return t
-
-            c = t.c
-            if c is e8:
-                assert t.x is z8
-                return t
-
-            d = t.d
-            if d is e8:
-                assert t.y is z8
+            if (t.a is e8) or (t.b is e8) or (t.c is e8) or (t.d is e8):
                 return t
 
             assert (e8 is not absent) and (z8 is not absent)
 
             e = t.e
             if e is e8:
-                assert t.z is z8
                 return t
             if e is absent:
                 t.e  = e8
@@ -125,7 +107,6 @@ def gem():
 
             e6 = t.e6
             if e6 is e8:
-                assert t.z6 is z8
                 return t
             if e6 is absent:
                 t.e6 = e8
@@ -135,14 +116,13 @@ def gem():
 
             e7 = t.e7
             if e7 is e8:
-                assert t.z7 is z8
                 return t
             if e7 is absent:
                 t.e7 = e8
                 t.z7 = z8
                 return t
 
-            return create_herd_many(a, b, c, d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
+            return create_herd_many(t.a, t.b, t.c, t.d, e, e6, e7, e8, t.v, t.w, t.x, t.y, t.z, t.z6, t.z7, z8)
 
 
         def displace(t, k, v):

@@ -100,14 +100,14 @@ def gem():
                     [one, zero],
             ]:
                 herd = empty_herd
-                herd = herd.disperse(a, a.value)
-                herd = herd.disperse(b, b.value)
+                herd = herd.insert(a, a.value)
+                herd = herd.insert(b, b.value)
 
                 herd__2 = herd
 
                 for loop in [1, 2]:
-                    herd__2 = herd__2.disperse(a, a.value)
-                    herd__2 = herd__2.disperse(b, b.value)
+                    herd__2 = herd__2.install(a, a.value)
+                    herd__2 = herd__2.install(b, b.value)
 
                 assert herd is herd__2
                 assert herd.items_sorted_by_key() == expected_items[:2]
@@ -122,16 +122,16 @@ def gem():
                     [two,  one,  zero],
             ]:
                 herd = empty_herd
-                herd = herd.disperse(a, a.value)
-                herd = herd.disperse(b, b.value)
-                herd = herd.disperse(c, c.value)
+                herd = herd.insert(a, a.value)
+                herd = herd.insert(b, b.value)
+                herd = herd.insert(c, c.value)
 
                 herd__2 = herd
 
                 for loop in [1, 2]:
-                    herd__2 = herd__2.disperse(a, a.value)
-                    herd__2 = herd__2.disperse(b, b.value)
-                    herd__2 = herd__2.disperse(c, c.value)
+                    herd__2 = herd__2.install(a, a.value)
+                    herd__2 = herd__2.install(b, b.value)
+                    herd__2 = herd__2.install(c, c.value)
 
                 assert herd is herd__2
                 assert herd.items_sorted_by_key() == expected_items[:3]
@@ -150,7 +150,7 @@ def gem():
 
                 for loop in [1, 2]:
                     for v in add:
-                        herd = herd.disperse(v, v.value)
+                        herd = herd.install(v, v.value)
 
                 assert Tuple(herd.items_sorted_by_key()) == expected_items[:length(add)]
 
@@ -165,7 +165,7 @@ def gem():
 
                 for loop in [1, 2]:
                     for v in add:
-                        herd = herd.disperse(v, v.value)
+                        herd = herd.install(v, v.value)
 
                 assert Tuple(herd.items_sorted_by_key()) == expected_items[:length(add)]
 

@@ -22,17 +22,10 @@ def gem():
     #
     #   disperse
     #
-    if __debug__:
-        @share
-        def disperse__herd_many(t, k, v):
-            v__2 = map__provide(t, k, v)
-            assert v is v__2
-            return t
-    else:
-        @share
-        def disperse__herd_many(t, k, v):
-            map__provide(t, k, v)
-            return t
+    @share
+    def disperse__herd_many(t, k, v):
+        map__provide(t, k, v)
+        return t
 
 
     #

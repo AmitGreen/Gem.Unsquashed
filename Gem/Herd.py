@@ -11,16 +11,25 @@ def gem():
     #       Ordered or Unordered (depending on methods)
     #       Key & Value must not include absent
     #
-    #   NOTE: All the verbs here have an 'is' inside them.
+    #   NOTE: All the verbs here have an 'is' or 'ix' inside them.
     #
-    #   Verb                Meaning                         Ordered     Exists          Nonexistent
-    #   ---------           ------------------------        ---         ------------    ---------------
-    #   .disperse           unordered optional store        No          must match      Insert
-    #   .displace           overwrite                       N/A         overwrite       ERROR
-    #   .glimpse            lookup                          N/A         => value        => none
-    #   .insert             ordered append                  Yes         error           append
-    #   .install            overwrite or ordered append     Yes         overwrite       append
-    #   .provision          ordered optional append         Yes         ignore          append
+    #   Verb                Meaning                                     Ordered     Exists?         Nonexistent
+    #   ---------           ------------------------                    ---         ------------    ---------------
+    #   .insert             unordered insert (error if exists)          No          error           insert
+    #   .install            unordered insert (must match if exists)     No          must match      insert
+    #   .distribute         unordered insert (or overwrite)             No          overwrite       insert
+    #   .disperse           unordered insert (ignore if exists)         No          ignore          insert
+    #
+    #   .suffix             ordered append (error if exists)            Yes         error           append
+    #   .affix              ordered append (must match if exists)       Yes         must match      append
+    #   .infuse             ordered append (or overwrite)               Yes         overwrite       append
+    #   .provision          ordered append (ignore if exists)           Yes         ignore          append
+    #
+    #   .displace           overwrite                                   N/A         overwrite       ERROR
+    #   .glimpse            lookup                                      N/A         => value        => none
+    #
+    #   Unused:
+    #   .furnish
     #
 
 
@@ -83,12 +92,10 @@ def gem():
 
 
         def disperse(t, b, w):
-            a = t.a
-            if a is b:
-                assert t.v is w
+            if t.a is b:
                 return t
 
-            return create_herd_2(a, b, t.v, w)
+            return create_herd_2(t.a, b, t.v, w)
 
 
         def displace(t, k, v):

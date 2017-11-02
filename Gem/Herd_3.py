@@ -55,22 +55,11 @@ def gem():
 
 
         def disperse(t, d, y):
-            a = t.a
-            if a is d:
-                assert t.v is y
+            if (t.a is d) or (t.b is d) or (t.c is d):
+                assert d is not absent
                 return t
 
-            b = t.b
-            if b is d:
-                assert t.w is y
-                return t
-
-            c = t.c
-            if c is d:
-                assert t.x is y
-                return t
-
-            return create_herd_4(a, b, c, d, t.v, t.w, t.x, y)
+            return create_herd_4(t.a, t.b, t.c, d, t.v, t.w, t.x, y)
 
 
         def displace(t, k, v):

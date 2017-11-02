@@ -52,10 +52,6 @@ def gem():
         raise_runtime_error('Series.length: .finish no longer valid; .finish already called')
 
 
-    def invalid_reuse():
-        raise_runtime_error('Series.reuse: .reuse not valid; .finish not called yet')
-
-
     @export
     def dump_series_statistics():
         line('series statistics: new: %d, delete %d, reused: %d', qn(), qd(), qr())
@@ -67,7 +63,15 @@ def gem():
             'append',                   #   Function
             'finish',                   #   Function
             'length',                   #   Function
-            'reuse',                    #   Function
+            '_construct_0',             #   Function
+            '_construct_1',             #   Function
+            '_construct_2',             #   Function
+            '_construct_3',             #   Function
+            '_construct_4',             #   Function
+            '_construct_5',             #   Function
+            '_construct_6',             #   Function
+            '_construct_7',             #   Function
+            '_construct_8',             #   Function
         ))
 
 
@@ -75,7 +79,6 @@ def gem():
     Series__write_append = Series.append.__set__
     Series__write_finish = Series.finish.__set__
     Series__write_length = Series.length.__set__
-    Series__write_reuse  = Series.reuse .__set__
     Series__write_total  = Series.total .__set__
 
 
@@ -98,14 +101,12 @@ def gem():
         write_append = Method(Series__write_append, t)
         write_length = Method(Series__write_length, t)
         write_finish = Method(Series__write_finish, t)
-        write_reuse  = Method(Series__write_reuse,  t)
         write_total  = Method(Series__write_total,  t)
 
         write_append_invalid = Method(write_append, invalid_append)
         write_finish_invalid = Method(write_finish, invalid_finish)
         write_length_many    = Method(write_length, length_many)
         write_length_invalid = Method(write_length, invalid_length)
-        write_reuse_invalid  = Method(write_reuse,  invalid_reuse)
 
         write_total_0 = Method(write_total, 0)
         write_total_1 = Method(write_total, 1)
@@ -290,7 +291,6 @@ def gem():
             write_append_invalid()
             write_finish_invalid()
             write_length_invalid()
-            write_reuse_reuse()
             wd(qd() + 1)
             append__t__to__unused()
 
@@ -307,85 +307,201 @@ def gem():
         write_length_total = Method(write_length, length__total)
 
 
-        def reuse():
-            wr(qr() + 1)
+        def construct_0():
             write_total_0()
             write_append_a()
             write_finish_finish()
             write_length_total()
-            write_reuse_invalid()
             return t
 
 
-        write_reuse_reuse = Method(write_reuse, reuse)
+        def construct_1(a):
+            wm0(a)
+            write_total_1()
+            write_append_b()
+            write_finish_finish()
+            write_length_total()
+            return t
 
-        write_total_0()
-        write_append_a()
-        write_finish_finish()
-        write_length_total()
-        write_reuse_invalid()
+
+        def construct_2(a, b):
+            wm0(a)
+            wm1(b)
+            write_total_2()
+            write_append_c()
+            write_finish_finish()
+            write_length_total()
+            return t
+
+
+        def construct_3(a, b, c):
+            wm0(a)
+            wm1(b)
+            wm2(c)
+            write_total_3()
+            write_append_d()
+            write_finish_finish()
+            write_length_total()
+            return t
+
+
+        def construct_4(a, b, c, d):
+            wm0(a)
+            wm1(b)
+            wm2(c)
+            wm3(d)
+            write_total_4()
+            write_append_e()
+            write_finish_finish()
+            write_length_total()
+            return t
+
+
+        def construct_5(a, b, c, d, e5):
+            wm0(a)
+            wm1(b)
+            wm2(c)
+            wm3(d)
+            wm4(e5)
+            write_total_5()
+            write_append_e6()
+            write_finish_finish()
+            write_length_total()
+            return t
+
+
+        def construct_6(a, b, c, d, e5, e6):
+            wm0(a)
+            wm1(b)
+            wm2(c)
+            wm3(d)
+            wm4(e5)
+            wm5(e6)
+            write_total_6()
+            write_append_e7()
+            write_finish_finish()
+            write_length_total()
+            return t
+
+
+        def construct_7(a, b, c, d, e5, e6, e7):
+            wm0(a)
+            wm1(b)
+            wm2(c)
+            wm3(d)
+            wm4(e5)
+            wm5(e6)
+            wm6(e7)
+            write_total_7()
+            write_append_e8()
+            write_finish_finish()
+            write_length_total()
+            return t
+
+
+        def construct_8(a, b, c, d, e5, e6, e7, e8):
+            wm0(a)
+            wm1(b)
+            wm2(c)
+            wm3(d)
+            wm4(e5)
+            wm5(e6)
+            wm6(e7)
+            wm7(e8)
+            write_total_8()
+            write_append_many()
+            write_length_many()
+
+
+        t._construct_0 = construct_0
+        t._construct_1 = construct_1
+        t._construct_2 = construct_2
+        t._construct_3 = construct_3
+        t._construct_4 = construct_4
+        t._construct_5 = construct_5
+        t._construct_6 = construct_6
+        t._construct_7 = construct_7
+        t._construct_8 = construct_8
 
         return t
 
 
     @export
     def create_series_0():
-        return (
-                   produce_series()    if length_unused() is 0 else   pop_unused().reuse()
-               )
+        if length_unused() is 0:
+            return produce_series()._construct_0()
+
+        wr(qr() + 1)
+        return pop_unused()._construct_0()
 
 
     @export
     def create_series_1(a):
-        return (
-                   produce_series()    if length_unused() is 0 else   pop_unused().reuse()
-               ).append(a)
+        if length_unused() is 0:
+            return produce_series()._construct_1(a)
+
+        wr(qr() + 1)
+        return pop_unused()._construct_1(a)
 
 
     @export
     def create_series_2(a, b):
-        return (
-                   produce_series()    if length_unused() is 0 else   pop_unused().reuse()
-               ).append(a).append(b)
+        if length_unused() is 0:
+            return produce_series()._construct_2(a, b)
+
+        wr(qr() + 1)
+        return pop_unused()._construct_2(a, b)
 
 
     @export
     def create_series_3(a, b, c):
-        return (
-                   produce_series()    if length_unused() is 0 else   pop_unused().reuse()
-               ).append(a).append(b).append(c)
+        if length_unused() is 0:
+            return produce_series()._construct_3(a, b, c)
+
+        wr(qr() + 1)
+        return pop_unused()._construct_3(a, b, c)
 
 
     @export
     def create_series_4(a, b, c, d):
-        return (
-                   produce_series()    if length_unused() is 0 else   pop_unused().reuse()
-               ).append(a).append(b).append(c).append(d)
+        if length_unused() is 0:
+            return produce_series()._construct_4(a, b, c, d)
+
+        wr(qr() + 1)
+        return pop_unused()._construct_4(a, b, c, d)
 
 
     @export
     def create_series_5(a, b, c, d, e5):
-        return (
-                   produce_series()    if length_unused() is 0 else   pop_unused().reuse()
-               ).append(a).append(b).append(c).append(d).append(e5)
+        if length_unused() is 0:
+            return produce_series()._construct_5(a, b, c, d, e5)
+
+        wr(qr() + 1)
+        return pop_unused()._construct_5(a, b, c, d, e5)
 
 
     @export
     def create_series_6(a, b, c, d, e5, e6):
-        return (
-                   produce_series()    if length_unused() is 0 else   pop_unused().reuse()
-               ).append(a).append(b).append(c).append(d).append(e5).append(e6)
+        if length_unused() is 0:
+            return produce_series()._construct_6(a, b, c, d, e5, e6)
+
+        wr(qr() + 1)
+        return pop_unused()._construct_6(a, b, c, d, e5, e6)
 
 
     @export
     def create_series_7(a, b, c, d, e5, e6, e7):
-        return (
-                   produce_series()    if length_unused() is 0 else   pop_unused().reuse()
-               ).append(a).append(b).append(c).append(d).append(e5).append(e6).append(e7)
+        if length_unused() is 0:
+            return produce_series()._construct_7(a, b, c, d, e5, e6, e7)
+
+        wr(qr() + 1)
+        return pop_unused()._construct_7(a, b, c, d, e5, e6, e7)
 
 
     @export
     def create_series_8(a, b, c, d, e5, e6, e7, e8):
-        return (
-                   produce_series()    if length_unused() is 0 else   pop_unused().reuse()
-               ).append(a).append(b).append(c).append(d).append(e5).append(e6).append(e7).append(e8)
+        if length_unused() is 0:
+            return produce_series()._construct_8(a, b, c, d, e5, e6, e7, e8)
+
+        wr(qr() + 1)
+        return pop_unused()._construct_8(a, b, c, d, e5, e6, e7, e8)
