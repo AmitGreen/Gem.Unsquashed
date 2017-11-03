@@ -27,7 +27,7 @@ GEM_FILES = \
     ../Gem/Output.py \
     ../Gem/Path.py ../Gem/PortrayString.py \
     ../Gem/Rabble.py ../Gem/RegularExpression.py \
-    ../Gem/Series.py ../Gem/SimpleStringIO.py ../Gem/StringOutput.py ../Gem/System.py \
+    ../Gem/Series.py ../Gem/Sequence.py ../Gem/SimpleStringIO.py ../Gem/StringOutput.py ../Gem/System.py \
     ../Gem/Traceback.py
 
 DRAVITE_FILES = \
@@ -108,7 +108,7 @@ TOPAZ_FILES = \
     ../Topaz/Herd.py \
     ../Topaz/Main.py \
     ../Topaz/Path.py ../Topaz/Pattern.py ../Topaz/PortrayString.py \
-    ../Topaz/Series.py ../Topaz/StringOutput.py
+    ../Topaz/Sequence.py ../Topaz/Series.py ../Topaz/StringOutput.py
 
 TREMOLITE_FILES = \
     ../Tremolite/Build.py \
@@ -160,7 +160,7 @@ clean:
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gc.py gdc.py gdm.py gdo.py gg.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
-	rm -f   gi.py gj4.py gl.py gq.py gr.py gs.py
+	rm -f   gi.py gj4.py gl.py gq.py gr.py gse.py gsq.py
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -182,7 +182,8 @@ clean:
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f zco.py zcs.py zd.py ze.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py zm.py zpa.py zps.py zpt.py zse.py zso.py
+	rm -f zco.py zcs.py zd.py ze.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
+	rm -f   zm.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
 
 
 files:
@@ -240,7 +241,8 @@ links:
 	ln -s ../Gem/Global.py                              gl.py
 	ln -s ../Gem/LiquidMap.py                           gq.py
 	ln -s ../Gem/Rabble.py                              gr.py
-	ln -s ../Gem/Series.py                              gs.py
+	ln -s ../Gem/Series.py                              gse.py
+	ln -s ../Gem/Sequence.py                            gsq.py
 	ln -s ../Sapphire/Parse.py                          h0p.py
 	ln -s ../Sapphire/Parse1.py                         h1p.py
 	ln -s ../Sapphire/Parse1Atom.py                     h1pa.py
@@ -385,6 +387,7 @@ links:
 	ln -s ../Topaz/Pattern.py                           zpt.py
 	ln -s ../Topaz/Series.py                            zse.py
 	ln -s ../Topaz/StringOutput.py                      zso.py
+	ln -s ../Topaz/Sequence.py                          zsq.py
 
 
 wc:

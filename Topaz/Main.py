@@ -32,6 +32,7 @@ def gem():
     require_gem('Topaz.Path')
     require_gem('Topaz.Pattern')
     require_gem('Topaz.PortrayString')
+    require_gem('Topaz.Sequence')
     require_gem('Topaz.Series')
     require_gem('Topaz.StringOutput')
 
@@ -49,6 +50,7 @@ def gem():
         test_portray_raw_string()
         test_remove_path()
         test_rename_path()
+        test_sequence()
         test_series()
         test_string_output()
         #test_exception_chain()
