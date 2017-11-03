@@ -41,6 +41,9 @@ IVORY_FILES = ../Ivory/Main.py
 LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
+MARBLE_FILES = \
+    ../Marble/ConjureDual.py ../Marble/Core.py \
+    ../Marble/Main.py
 
 PEARL_FILES = \
     ../Pearl/Comment.py ../Pearl/ConjureTreeComment.py ../Pearl/Core.py \
@@ -109,6 +112,10 @@ TOPAZ_FILES = \
     ../Topaz/Main.py \
     ../Topaz/Path.py ../Topaz/Pattern.py ../Topaz/PortrayString.py \
     ../Topaz/Sequence.py ../Topaz/Series.py ../Topaz/StringOutput.py
+    #
+    #   Excludes:
+    #       ../Topaz/GeneratedConjureDual.py
+    #
 
 TREMOLITE_FILES = \
     ../Tremolite/Build.py \
@@ -136,6 +143,7 @@ FILES = \
     $(GEM_FILES) \
     $(IVORY_FILES) \
     $(LICENSE_FILES) \
+    $(MARBLE_FILES) \
     $(PEARL_FILES) \
     $(QUARTZ_FILES) \
     $(SAPPHIRE_FILES) \
@@ -174,7 +182,7 @@ clean:
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
-	rm -f m map.py md.py m.txt
+	rm -f m map.py mc.py md.py mj2.py mm.py m.txt
 	rm -f o.py
 	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
@@ -182,7 +190,7 @@ clean:
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f zco.py zcs.py zd.py ze.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
+	rm -f zco.py zcs.py zd.py ze.py zg2.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
 	rm -f   zm.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
 
 
@@ -333,7 +341,10 @@ links:
 	ln -s Makefile                                      m
 	ln -s mine.txt                                      m.txt
 	ln -s ../Gem/Map.py                                 map.py
+	ln -s ../Marble/Core.py                             mc.py
 	ln -s ../Gem/Method.py                              md.py
+	ln -s ../Marble/ConjureDual.py                      mj2.py
+	ln -s ../Marble/Main.py                             mm.py
 	ln -s ../Gem/Output.py                              o.py
 	ln -s ../Gem/Path.py                                pa.py
 	ln -s ../Gem/Path2.py                               pa2.py
@@ -375,6 +386,7 @@ links:
 	ln -s ../Topaz/CacheSupport.py                      zcs.py
 	ln -s ../Topaz/Drove.py                             zd.py
 	ln -s ../Topaz/ExceptionChain.py                    ze.py
+	ln -s ../Topaz/GeneratedConjureDual.py              zg2.py
 	ln -s ../Topaz/Herd.py                              zh.py
 	ln -s ../Topaz/ConjureSingle.py                     zj1.py
 	ln -s ../Topaz/ConjureDual.py                       zj2.py
