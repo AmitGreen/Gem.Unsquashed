@@ -3,8 +3,10 @@
 #
 @gem('Marble.ConjureDual')
 def gem():
-    def create_conjure(f, prefix, suffix):
+    def create_conjure(f, prefix, suffix, k1, k2):
         name = arrange('%s_%s', prefix, suffix)
+
+        f.blank2()
 
         f.line('@share')
         with f.indent(arrange('def produce_%s(name, Meta, cache):', name)):
@@ -15,21 +17,22 @@ def gem():
 
             f.line('@rename(%r, name)', arrange('%s_%%s', prefix))
             with f.indent(arrange('def %s(k1, k2):', name)):
-                f.line('first = lookup(k1, absent)')
+                f.line('a = lookup(%s, absent)', k1)
 
                 f.blank()
 
-                with f.indent('if first.k2 is k2:'):
-                    f.line('return first')
+                with f.indent(arrange('if a.%s is %s:', k2, k2)):
+                    f.line('return a')
 
                 f.blank()
 
-                with f.indent('if not first.is_herd:'):
+                with f.indent('if not a.is_herd:'):
                     f.line('r = Meta(k1, k2)')
 
                     f.blank()
 
-                    f.line('store(k1, (r   if first is absent else   create_herd_2(first.k2, k2, first, r)))')
+                    f.line('store(%s, (r   if a is absent else   create_herd_2(a.%s, %s, a, r)))',
+                           k1, k2, k2)
 
                     f.blank()
 
@@ -37,12 +40,12 @@ def gem():
 
                 f.blank()
 
-                f.line('r = first.glimpse(k2)')
+                f.line('r = a.glimpse(%s)', k2)
 
                 f.blank()
 
                 with f.indent('if r is not none:'):
-                    f.line('assert r.k2 is k2')
+                    f.line('assert r.%s is %s', k2, k2)
 
                     f.blank()
 
@@ -54,12 +57,12 @@ def gem():
 
                 f.blank()
 
-                f.line('first__2 = first.insert(k2, r)')
+                f.line('a_ = a.insert(%s, r)', k2)
 
                 f.blank()
 
-                with f.indent('if first is not first__2:'):
-                    f.line('store(k1, first__2)')
+                with f.indent('if a is not a_:'):
+                    f.line('store(%s, a_)', k1)
 
                 f.blank()
 
@@ -79,7 +82,10 @@ def gem():
             f.line('@gem(%r)', module_name)
 
             with f.indent('def gem():'):
-                create_conjure(f, 'simplified_conjure', 'dual_v3')
+                f.blank_suppress()
+
+                #create_conjure(f, 'simplified_conjure', 'dual',     'k1', 'k2')
+                #create_conjure(f, 'simplified_conjure', 'dual__21', 'k2', 'k1')
 
             data = f.finish()
 
