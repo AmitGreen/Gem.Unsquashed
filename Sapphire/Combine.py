@@ -206,7 +206,7 @@ def gem():
                 first = index_latest_0()
 
                 if contains_processed(first):
-                    #line('Already processed %s', first)
+                    ##line('Already processed %s', first)
                     delete_latest_0()
                     continue
 
@@ -325,9 +325,9 @@ def gem():
 
         gem = tree[0]
 
-        #if gem.a is not conjure_gem_decorator_header(module):
-        #    dump_token('gem.a', gem.a)
-        #    dump_token('other', conjure_gem_decorator_header(module))
+        if gem.a is not conjure_gem_decorator_header(module):
+            dump_token('gem.a', gem.a)
+            dump_token('other', conjure_gem_decorator_header(module))
 
         assert gem.is_decorated_definition
         assert gem.a is conjure_gem_decorator_header(module)
@@ -350,7 +350,7 @@ def gem():
     def extract_gem_boot(vary):
         module_name = 'Gem.Boot'
         path        = '../Gem/Boot.py'
-        path        = 'b2.py'
+        #path        = 'b2.py'
 
         tree = parse_python(path)
 
@@ -457,11 +457,10 @@ def gem():
 
     @share
     def command_combine__X(module_name, vary, tree = true):
-        #[boot_decorator, main_code] = extract_sapphire_main(vary)
-        #sardnoyx_boot_code          = extract_sardnoyx_boot(vary)
+        [boot_decorator, main_code] = extract_sapphire_main(vary)
+        sardnoyx_boot_code          = extract_sardnoyx_boot(vary)
         gem_boot_code               = extract_gem_boot(vary)
-        return
-
+        #return
 
         require_many = RequireMany(vary)
 

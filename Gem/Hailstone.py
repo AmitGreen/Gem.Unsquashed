@@ -388,7 +388,7 @@ def gem():
         ))
 
 
-        def __init__(t, mapping, ordered_values)
+        def __init__(t, mapping, ordered_values):
             assert length(mapping) == length(ordered_values)
 
             Map__init(t, mapping)

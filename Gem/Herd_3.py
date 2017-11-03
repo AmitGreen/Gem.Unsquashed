@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Gem.Herd')
+@gem('Gem.Herd_3')
 def gem():
     class Herd_3(Object):
         __slots__ = ((
@@ -14,15 +14,16 @@ def gem():
         ))
 
 
-        is_herd      = true
-        is_herd_many = false
-        is_horde     = false
-        k1           = absent
-        k2           = absent
-        k3           = absent
-        k4           = absent
-        skip         = 0
-        total        = 3
+        herd_estimate = 3
+        is_herd_many  = false
+        is_herd       = true
+        is_horde      = false
+        k1            = absent
+        k2            = absent
+        k3            = absent
+        k4            = absent
+        skip          = 0
+        total         = 3
 
 
         def count_nested(t):
@@ -395,7 +396,7 @@ def gem():
     new_Herd_3 = Method(Object.__new__, Herd_3)
 
 
-    @share
+    @export
     def create_herd_3(a, b, c, v, w, x):
         assert (a is not absent) and (a is not b) and (a is not c)
         assert (b is not absent) and (b is not c)

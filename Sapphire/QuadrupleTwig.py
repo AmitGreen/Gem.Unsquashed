@@ -73,4 +73,4 @@ def gem():
 
     @share
     def produce_conjure_quadruple_twig(name, Meta):
-        return produce_conjure_unique_quadruple__4123(name, Meta, create_cache(name, conjure_nub))
+        return produce_conjure_quadruple__4123(name, Meta, create_cache(name, conjure_nub))

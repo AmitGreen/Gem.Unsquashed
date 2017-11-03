@@ -6,13 +6,6 @@ def gem():
     require_gem('Sapphire.Variable')
 
 
-    def construct__build_nested_symbol_table(t, write_global_variable, parent):
-        construct_BaseBuildSymbolTable(t)
-
-        t.write_global_variable = write_global_variable
-        t.parent                = parent
-
-
     def finalize_variables__build_nested_symbol_table(t):
         variable_map = t.variable_map
 
@@ -113,15 +106,15 @@ def gem():
                 t.provide_variable = variable_map.setdefault
                 t.store_variable   = variable_map.__setitem__
 
-                my_line('%s: install %r : %r', t.name, name, variable)
-                t.variable_drove = t.variable_drove.insert(name, variable)
-                assert not t.variable_drove.is_herd_many
+                #my_line('%s: install %r : %r', t.name, name, variable)
+                #t.variable_drove = t.variable_drove.insert(name, variable)
+                #assert not t.variable_drove.is_herd_many
 
                 return
 
             if t.lookup_variable(name):
-                my_line('%s: ignore %r', t.name, name)
-                assert t.variable_drove.glimpse(name) is not none
+                #my_line('%s: ignore %r', t.name, name)
+                #assert t.variable_drove.glimpse(name) is not none
                 return
 
             #assert t.variable_drove.total == t.variable_index
@@ -129,9 +122,9 @@ def gem():
             index    = t.variable_index
             variable = conjure(index, name)
 
-            my_line('%s: insert %r : %r', t.name, name, variable)
-            t.variable_drove = t.variable_drove.insert(name, variable)
-            assert not t.variable_drove.is_herd_many
+            #my_line('%s: insert %r : %r', t.name, name, variable)
+            #t.variable_drove = t.variable_drove.insert(name, variable)
+            #assert not t.variable_drove.is_herd_many
 
             t.store_variable(name, variable)
 
@@ -153,7 +146,7 @@ def gem():
             'contains_definition',      #   Vacant | Method
             'store_definition',         #   Vacant | Method
 
-            'variable_drove',           #   Drove_*
+            #'variable_drove',           #   Drove_*
             'variable_map',             #   Zero | Map { Name } of ( FunctionParameter | LocalVariable )
             'variable_index',           #   Integer
             'lookup_variable',          #   Vacant | Method
@@ -172,7 +165,7 @@ def gem():
            #t.contains_definition = vacant
            #t.store_definition    = vacant
 
-            t.variable_drove   = empty_herd
+            #t.variable_drove   = empty_herd
 
             t.variable_index   = t.variable_map = 0
            #t.lookup_variable  = vacant
@@ -228,10 +221,11 @@ def gem():
 
                         t.definition_map[v].dump_variables(arrange('%s.%s', name, s))
 
-            line('===  drove variables %s  ===', name)
-
-            for v in t.variable_drove.ordered_values():
-                line('  %s', v)
+            #if 0:
+            #    line('===  drove variables %s  ===', name)
+            #
+            #    for v in t.variable_drove.ordered_values():
+            #        line('  %s', v)
 
             variable_map = t.variable_map
 
@@ -293,9 +287,9 @@ def gem():
 
 
         def fetch_variable(t, name):
-            my_line('%s: provision %r : 0', t.name, name)
-            t.variable_drove = t.variable_drove.provision(name, 0)
-            assert not t.variable_drove.is_herd_many
+            #my_line('%s: provision %r : 0', t.name, name)
+            #t.variable_drove = t.variable_drove.provision(name, 0)
+            #assert not t.variable_drove.is_herd_many
 
             variable_map = t.variable_map
 
@@ -314,6 +308,7 @@ def gem():
 
     class BuildClassSymbolTable(BaseBuildSymbolTable):
         __slots__ = ((
+            'name',                     #   Name
             'write_global_variable',    #   Method
             'parent',                   #   BuildWrapperSymbolTable
         ))
@@ -326,7 +321,14 @@ def gem():
         is_nested_symbol_table   = true
 
 
-        __init__           = construct__build_nested_symbol_table
+        def __init__(t, name, write_global_variable, parent):
+            construct_BaseBuildSymbolTable(t)
+
+            t.name                  = name
+            t.write_global_variable = write_global_variable
+            t.parent                = parent
+
+
         finalize_variables = finalize_variables__build_nested_symbol_table
 
 
@@ -372,10 +374,9 @@ def gem():
             if variable_map is 0:
                 t.local_variables = parameter
 
-                assert t.variable_drove.total == 0
-
-                my_line('%s: insert %r : %r', t.name, name, parameter)
-                t.variable_drove = t.variable_drove.insert(name, parameter)
+                #assert t.variable_drove.total == 0
+                #my_line('%s: insert %r : %r', t.name, name, parameter)
+                #t.variable_drove = t.variable_drove.insert(name, parameter)
 
                 t.variable_map     = variable_map = { name : parameter }
                 t.variable_index   = 1
@@ -384,13 +385,13 @@ def gem():
                 t.store_variable   = variable_map.__setitem__
                 return
 
-            assert t.variable_drove.total == t.variable_index
+            #assert t.variable_drove.total == t.variable_index
 
             if t.lookup_variable(name):
                 raise_runtime_error('parameter %s declared multiple times', name)
 
-            my_line('%s: insert %r : %r', t.name, name, parameter)
-            t.variable_drove = t.variable_drove.insert(name, parameter)
+            #my_line('%s: insert %r : %r', t.name, name, parameter)
+            #t.variable_drove = t.variable_drove.insert(name, parameter)
 
             local_variables = t.local_variables
 
@@ -420,12 +421,12 @@ def gem():
 
 
         def write_global_variable(t, global_variable):
-            my_line('%s: glimpse %r', t.name, global_variable.name)
-            assert t.variable_drove.glimpse(global_variable.name) is none
+            #my_line('%s: glimpse %r', t.name, global_variable.name)
+            #assert t.variable_drove.glimpse(global_variable.name) is none
 
-            my_line('%s: install %r : %r', t.name, global_variable.name, global_variable)
-            t.variable_drove = t.variable_drove.install(global_variable.name, global_variable)
-            assert not t.variable_drove.is_herd_many
+            #my_line('%s: install %r : %r', t.name, global_variable.name, global_variable)
+            #t.variable_drove = t.variable_drove.install(global_variable.name, global_variable)
+            #assert not t.variable_drove.is_herd_many
 
             variable_map = t.variable_map
 
@@ -449,12 +450,12 @@ def gem():
                 t.provide_variable = variable_map.setdefault
                 t.store_variable   = variable_map.__setitem__
 
-                my_line('%s: glimpse %r is none', t.name, name)
-                assert t.variable_drove.glimpse(name) is none
+                #my_line('%s: glimpse %r is none', t.name, name)
+                #assert t.variable_drove.glimpse(name) is none
 
-                my_line('%s: install %r : %r', t.name, name, global_variable)
-                t.variable_drove = t.variable_drove.install(name, global_variable)
-                assert not t.variable_drove.is_herd_many
+                #my_line('%s: install %r : %r', t.name, name, global_variable)
+                #t.variable_drove = t.variable_drove.install(name, global_variable)
+                #assert not t.variable_drove.is_herd_many
 
                 return
 
@@ -462,8 +463,8 @@ def gem():
             #   NOTE:  Find if exists & non-zero
             #
             if t.lookup_variable(name):
-                my_line('%s: glimpse %r: %r', t.name, name, t.variable_drove.glimpse(name))
-                assert t.variable_drove.glimpse(name)
+                #my_line('%s: glimpse %r: %r', t.name, name, t.variable_drove.glimpse(name))
+                #assert t.variable_drove.glimpse(name)
                 return
 
             #
@@ -471,9 +472,9 @@ def gem():
             #
             global_variable = conjure_global_variable(name)
 
-            my_line('%s: install %r : %r', t.name, name, global_variable)
-            t.variable_drove = t.variable_drove.install(name, global_variable)
-            assert not t.variable_drove.is_herd_many
+            #my_line('%s: install %r : %r', t.name, name, global_variable)
+            #t.variable_drove = t.variable_drove.install(name, global_variable)
+            #assert not t.variable_drove.is_herd_many
 
             t.store_variable(name, global_variable)
 

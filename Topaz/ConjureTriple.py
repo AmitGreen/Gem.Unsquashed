@@ -5,6 +5,7 @@
 def gem():
     require_gem('Topaz.Core')
     require_gem('Topaz.CacheSupport')
+    require_gem('Topaz.GeneratedConjureTriple')
 
 
     show = 0
@@ -187,196 +188,6 @@ def gem():
         ))
 
 
-    #
-    #   A simplified version of produce_conjure_unique_triple (and also produce_conjure_unique_triple__312)
-    #
-    #       The version in Gem/Cache2.py that uses multiple functions (for speed optimization).
-    #
-    #       This simplified version is writen as a single function (to do exactly the same thing) for testing
-    #       that the speed optimization is identical to this version
-    #
-    #   NOTE:
-    #       These use the 'produce' metaphor so they look like the origianl produce functions in Gem/Cache2.py;
-    #       (rather than simplifying them -- since optimization is irrelevant for test code).
-    #
-    def produce_simplified_conjure_unique_triple(name, Meta, cache):
-        lookup = cache.get
-        store  = cache.__setitem__
-
-
-        @rename('simplified_conjure_%s', name)
-        def simplified_conjure_unique_triple(k1, k2, k3):
-            first = lookup(k1, absent)
-
-            if first.k2 is k2:
-                if first.k3 is k3:
-                    return first
-
-                r = Meta(k1, k2, k3)
-                store(k1, create_horde_2(1, first.k3, k3, first, r))
-                return r
-
-            if not first.is_herd:
-                r = Meta(k1, k2, k3)
-                store(k1, (r   if first is absent else   create_herd_2(first.k2, k2, first, r)))
-                return r
-
-            if first.skip is 0:
-                second = first.glimpse(k2, absent)
-
-                if second.k3 is k3:
-                    return second
-
-                if not second.is_herd:
-                    r = Meta(k1, k2, k3)
-
-                    if second is absent:
-                        first__2 = first.insert(k2, r)
-
-                        if first is not first__2:
-                            store(k1, first__2)
-
-                        return r
-
-                    first.displace(k2, create_herd_2(second.k3, k3, second, r))
-                    return r
-
-                third = second.glimpse(k3)
-
-                if third is not none:
-                    assert third.k3 is k3
-
-                    return third
-
-                r = Meta(k1, k2, k3)
-
-                second__2 = second.insert(k3, r)
-
-                if second is not second__2:
-                    first.displace(k2, second__2)
-
-                return r
-
-            assert first.skip is 1
-
-            first_k2 = first.sample().k2
-
-            if first_k2 is k2:
-                third = first.glimpse(k3)
-
-                if third is not none:
-                    assert (third.k2 is k2) and (third.k3 is k3)
-
-                    return third
-
-                r = Meta(k1, k2, k3)
-
-                first__2 = first.insert(k3, r)
-
-                if first is not first__2:
-                    assert first__2.sample().k2 is k2
-
-                    store(k1, first__2)
-
-                return r
-
-            r = Meta(k1, k2, k3)
-            store(k1, create_herd_2(first_k2, k2, first.remove_skip(), r))
-            return r
-
-
-        return simplified_conjure_unique_triple
-
-
-    def produce_simplified_conjure_unique_triple__312(name, Meta, cache):
-        lookup = cache.get
-        store  = cache.__setitem__
-
-
-        @rename('simplified_conjure_%s__312', name)
-        def simplified_conjure_unique_triple__312(k1, k2, k3):
-            first = lookup(k3, absent)
-
-            if first.k1 is k1:
-                if first.k2 is k2:
-                    return first
-
-                r = Meta(k1, k2, k3)
-                store(k3, create_horde_2(1, first.k2, k2, first, r))
-                return r
-
-            if not first.is_herd:
-                r = Meta(k1, k2, k3)
-                store(k3, (r   if first is absent else   create_herd_2(first.k1, k1, first, r)))
-                return r
-
-            if first.skip is 0:
-                second = first.glimpse(k1, absent)
-
-                if second.k2 is k2:
-                    return second
-
-                if not second.is_herd:
-                    r = Meta(k1, k2, k3)
-
-                    if second is absent:
-                        first__2 = first.insert(k1, r)
-
-                        if first is not first__2:
-                            store(k3, first__2)
-
-                        return r
-
-                    first.displace(k1, create_herd_2(second.k2, k2, second, r))
-                    return r
-
-                third = second.glimpse(k2)
-
-                if third is not none:
-                    assert third.k2 is k2
-
-                    return third
-
-                r = Meta(k1, k2, k3)
-
-                second__2 = second.insert(k2, r)
-
-                if second is not second__2:
-                    first.displace(k1, second__2)
-
-                return r
-
-            assert first.skip is 1
-
-            first_k1 = first.sample().k1
-
-            if first_k1 is k1:
-                third = first.glimpse(k2)
-
-                if third is not none:
-                    assert (third.k1 is k1) and (third.k2 is k2)
-
-                    return third
-
-                r = Meta(k1, k2, k3)
-
-                first__2 = first.insert(k2, r)
-
-                if first is not first__2:
-                    assert first__2.sample().k1 is k1
-
-                    store(k3, first__2)
-
-                return r
-
-            r = Meta(k1, k2, k3)
-            store(k3, create_herd_2(first_k1, k1, first.remove_skip(), r))
-            return r
-
-
-        return simplified_conjure_unique_triple__312
-
-
     def test_final_scrub(cache):
         cache.scrub()
 
@@ -436,8 +247,6 @@ def gem():
 
         simplified_cache_dump = dump_cache_to_string(cache, show_sample = false)
 
-        test_final_scrub(cache)
-
         if cache_dump != simplified_cache_dump:
             write_binary_to_path('oops1.txt', cache_dump)
             write_binary_to_path('oops2.txt', simplified_cache_dump)
@@ -458,18 +267,25 @@ def gem():
 
         test_conjure_triple__X__scrub(cache, conjure_numbered_colored_shape)
 
-
         #
-        #   Verify conjure_numbered_colored_shape & produce_simplified_conjure_unique_triple produce the same cache structure.
+        #   Verify the following produce the same cache structure:
+        #
+        #       1.  produce_conjure_unique_triple     (above)
+        #       2.  produce_simplified_conjure_triple
+        #       3.  produce_NEW_conjure_triple
         #
         test_conjure_triple__X__verify(
             cache,
-            produce_simplified_conjure_unique_triple(
-                'simplified_numbered_colored_shape',
-                NumberedColoredShape,
-                cache,
-            ),
+            produce_simplified_conjure_triple('simplified_numbered_colored_shape', NumberedColoredShape, cache),
         )
+
+        if produce_NEW_conjure_triple is not 0:
+            test_conjure_triple__X__verify(
+                cache,
+                produce_NEW_conjure_triple('NEW_numbered_colored_shape', NumberedColoredShape, cache),
+            )
+
+        test_final_scrub(cache)
 
         #
         #   Extra test with 'triple__test_list__2' to test herds turning into hordes.
@@ -510,14 +326,15 @@ def gem():
             produce_conjure_unique_triple__312('shape_number_color__312', NumberedColoredShape, cache),
         )
 
-        test_conjure_triple__X__verify(
-            cache,
-            produce_simplified_conjure_unique_triple__312(
-                'simplified_numbered_colored_shape__312',
-                NumberedColoredShape,
+        if produce_simplified_conjure_triple__312 is not 0:
+            test_conjure_triple__X__verify(
                 cache,
-            ),
-        )
+                produce_simplified_conjure_triple__312(
+                    'simplified_numbered_colored_shape__312',
+                    NumberedColoredShape,
+                    cache,
+                ),
+            )
 
         test_final_scrub(cache)
 

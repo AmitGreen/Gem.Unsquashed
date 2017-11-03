@@ -5,10 +5,10 @@
 def gem():
     require_gem('Gem.Cache')
     require_gem('Gem.Cache2')
-    require_gem('Gem.ConjureQuadruple')
     require_gem('Gem.DelayedFileOutput')
     require_gem('Gem.DumpCache')
     require_gem('Gem.Exception')
+    require_gem('Gem.GeneratedConjureQuadruple')
     require_gem('Gem.Herd')
     require_gem('Gem.Method')
     require_gem('Gem.Path')
@@ -24,7 +24,7 @@ def gem():
     from Gem import produce_conjure_single, produce_conjure_triple
     from Gem import produce_conjure_triple__312, produce_conjure_tuple
     from Gem import produce_conjure_unique_dual, produce_conjure_unique_dual__21
-    from Gem import produce_conjure_unique_quadruple__4123
+    from Gem import produce_conjure_quadruple__4123
     from Gem import produce_conjure_unique_triple, produce_conjure_unique_triple__312
     from Gem import program_exit, read_text_from_path, return_self, slice_all, StringOutput
     from Pearl import la, parse_context, qd, qi, qj, qk, ql, qn, qs, raise_unknown_line
@@ -40,45 +40,45 @@ def gem():
         #
         #   Imported functions
         #
-        'create_cache',                             create_cache,
-        'create_DelayedFileOutput',                 create_DelayedFileOutput,
-        'create_SimpleStringOutput',                create_SimpleStringOutput,
-        'create_StringOutput',                      create_StringOutput,
-        'la',                                       la,
-        'path_join',                                path_join,
-        'print_cache',                              print_cache,
-        'print_exception_chain',                    print_exception_chain,
-        'produce_conjure_dual__21',                 produce_conjure_dual__21,
-        'produce_conjure_dual',                     produce_conjure_dual,
-        'produce_conjure_single',                   produce_conjure_single,
-        'produce_conjure_triple__312',              produce_conjure_triple__312,
-        'produce_conjure_triple',                   produce_conjure_triple,
-        'produce_conjure_tuple',                    produce_conjure_tuple,
-        'produce_conjure_unique_dual__21',          produce_conjure_unique_dual__21,
-        'produce_conjure_unique_dual',              produce_conjure_unique_dual,
-        'produce_conjure_unique_quadruple__4123',   produce_conjure_unique_quadruple__4123,
-        'produce_conjure_unique_triple',            produce_conjure_unique_triple,
-        'produce_conjure_unique_triple__312',       produce_conjure_unique_triple__312,
-        'program_exit',                             program_exit,
-        'qd',                                       qd,
-        'qi',                                       qi,
-        'qj',                                       qj,
-        'qk',                                       qk,
-        'ql',                                       ql,
-        'qn',                                       qn,
-        'qs',                                       qs,
-        'raise_unknown_line',                       raise_unknown_line,
-        'read_text_from_path',                      read_text_from_path,
-        'return_self',                              return_self,
-        'wd0',                                      wd0,
-        'wd1',                                      wd1,
-        'wd',                                       wd,
-        'wi',                                       wi,
-        'wj',                                       wj,
-        'wk',                                       wk,
-        'wn',                                       wn,
-        'ws',                                       ws,
-        'z_initialize',                             z_initialize,
+        'create_cache',                         create_cache,
+        'create_DelayedFileOutput',             create_DelayedFileOutput,
+        'create_SimpleStringOutput',            create_SimpleStringOutput,
+        'create_StringOutput',                  create_StringOutput,
+        'la',                                   la,
+        'path_join',                            path_join,
+        'print_cache',                          print_cache,
+        'print_exception_chain',                print_exception_chain,
+        'produce_conjure_dual__21',             produce_conjure_dual__21,
+        'produce_conjure_dual',                 produce_conjure_dual,
+        'produce_conjure_single',               produce_conjure_single,
+        'produce_conjure_triple__312',          produce_conjure_triple__312,
+        'produce_conjure_triple',               produce_conjure_triple,
+        'produce_conjure_tuple',                produce_conjure_tuple,
+        'produce_conjure_unique_dual__21',      produce_conjure_unique_dual__21,
+        'produce_conjure_unique_dual',          produce_conjure_unique_dual,
+        'produce_conjure_quadruple__4123',      produce_conjure_quadruple__4123,
+        'produce_conjure_unique_triple',        produce_conjure_unique_triple,
+        'produce_conjure_unique_triple__312',   produce_conjure_unique_triple__312,
+        'program_exit',                         program_exit,
+        'qd',                                   qd,
+        'qi',                                   qi,
+        'qj',                                   qj,
+        'qk',                                   qk,
+        'ql',                                   ql,
+        'qn',                                   qn,
+        'qs',                                   qs,
+        'raise_unknown_line',                   raise_unknown_line,
+        'read_text_from_path',                  read_text_from_path,
+        'return_self',                          return_self,
+        'wd0',                                  wd0,
+        'wd1',                                  wd1,
+        'wd',                                   wd,
+        'wi',                                   wi,
+        'wj',                                   wj,
+        'wk',                                   wk,
+        'wn',                                   wn,
+        'ws',                                   ws,
+        'z_initialize',                         z_initialize,
 
 
         #

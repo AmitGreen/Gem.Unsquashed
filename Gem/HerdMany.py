@@ -15,14 +15,15 @@ def gem():
         __slots__ = (())
 
 
-        is_herd      = true
-        is_herd_many = true
-        is_horde     = false
-        k1           = absent
-        k2           = absent
-        k3           = absent
-        k4           = absent
-        skip         = 0
+        herd_estimate = 8
+        is_herd_many  = true
+        is_herd       = true
+        is_horde      = false
+        k1            = absent
+        k2            = absent
+        k3            = absent
+        k4            = absent
+        skip          = 0
 
 
         def __repr__(t):
@@ -186,7 +187,7 @@ def gem():
     new_Herd_Many = Method(Map   .__new__, Herd_Many)
 
 
-    @share
+    @export
     def create_herd_many(a, b, c, d, e, e6, e7, e8, v, w, x, y, z, z6, z7, z8):
         assert (a is not absent) and (a is not b) and (a is not c) and (a is not d) and (a is not e)
         assert (a is not e6) and (a is not e7) and (a is not e8)

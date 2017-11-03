@@ -19,7 +19,8 @@ def gem():
         ))
 
 
-        is_herd = false
+        herd_estimate = 0
+        is_herd       = false
 
 
         def __init__(t, name):
@@ -47,7 +48,8 @@ def gem():
         ))
 
 
-        is_herd = false
+        herd_estimate = 0
+        is_herd       = false
 
 
         def __init__(t, name, value):
@@ -79,7 +81,8 @@ def gem():
         ))
 
 
-        is_herd = false
+        herd_estimate = 0
+        is_herd       = false
 
 
         def __init__(t, number, color, shape):
@@ -122,7 +125,8 @@ def gem():
         ))
 
 
-        is_herd = false
+        herd_estimate = 0
+        is_herd       = false
 
 
         def __init__(t, number, color, size, shape):
@@ -165,7 +169,8 @@ def gem():
         ))
 
 
-        is_herd = false
+        herd_estimate = 0
+        is_herd       = false
 
 
         def __init__(t, number, shape):
@@ -200,7 +205,8 @@ def gem():
         ))
 
 
-        is_herd = false
+        herd_estimate = 0
+        is_herd       = false
 
 
         def __init__(t, name):
@@ -229,7 +235,8 @@ def gem():
         ))
 
 
-        is_herd = false
+        herd_estimate = 0
+        is_herd       = false
 
 
         def __init__(t, value):
@@ -257,7 +264,8 @@ def gem():
         ))
 
 
-        is_herd = false
+        herd_estimate = 0
+        is_herd       = false
 
 
         def __init__(t, name):

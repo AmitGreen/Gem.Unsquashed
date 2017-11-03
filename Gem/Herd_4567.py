@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Gem.Herd')
+@gem('Gem.Herd_4567')
 def gem():
     #require_gem('Gem.HerdMany')
 
@@ -29,14 +29,15 @@ def gem():
         ))
 
 
-        is_herd      = true
-        is_herd_many = false
-        is_horde     = false
-        k1           = absent
-        k2           = absent
-        k3           = absent
-        k4           = absent
-        skip         = 0
+        herd_estimate = 7
+        is_herd_many  = false
+        is_herd       = true
+        is_horde      = false
+        k1            = absent
+        k2            = absent
+        k3            = absent
+        k4            = absent
+        skip          = 0
 
 
         def count_nested(t):
@@ -557,7 +558,7 @@ def gem():
         def increment_skip(t, skip = 1):
             assert 1 <= skip <= 2
 
-            r = create_horde_4(skip, t.a, t.b, t.c, t.d, t.v, t.w, t.x, t.y)
+            r = create_horde_many(skip, t.a, t.b, t.c, t.d, t.v, t.w, t.x, t.y)
 
             if t.e is absent:
                 return r
@@ -1376,7 +1377,7 @@ def gem():
     new_Herd_4567 = Method(Object.__new__, Herd_4567)
 
 
-    @share
+    @export
     def create_herd_4(a, b, c, d, v, w, x, y):
         assert (a is not absent) and (a is not b) and (a is not c) and (a is not d)
         assert (b is not absent) and (b is not c) and (b is not d)
