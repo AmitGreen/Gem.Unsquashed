@@ -37,8 +37,8 @@ Main_py=../Tremolite/Main.py
 Main_py=../Quartz/Main.py
 Main_py=../Dravite/Main.py
 Main_py=../Sapphire/Main.py
-Main_py=../Marble/Main.py
 Main_py=../Topaz/Main.py
+Main_py=../Marble/Main.py
 
 show=2
 all=false
@@ -75,7 +75,7 @@ do
 
             if [ $show = 2 ]; then
                 echo -en '\E[H\E[J'
-                tail -60 2
+                tail -70 2
             fi
         fi
     fi
@@ -94,7 +94,7 @@ do
    
            if [ $show = 3 ]; then
                echo -en '\E[H\E[J'
-               tail -60 3
+               tail -70 3
            fi
        fi
     fi

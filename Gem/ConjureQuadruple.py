@@ -20,175 +20,147 @@ def gem():
 
             @rename('conjure_%s', name)
             def conjure_unique_quadruple(k1, k2, k3, k4):
-                first = lookup(k1, absent)
-
-                if first.k2 is k2:
-                    if first.k3 is k3:
-                        if first.k4 is k4:
-                            return first
+                a = lookup(k1, absent)
+                if a.k2 is k2:
+                    if a.k3 is k3:
+                        if a.k4 is k4: return a
 
                         r = Meta(k1, k2, k3, k4)
-                        store(k1, create_horde_2(2, first.k4, k4, first, r))
+                        store(k1, create_horde_2(2, a.k4, k4, a, r))
                         return r
 
                     r = Meta(k1, k2, k3, k4)
-                    store(k1, create_horde_2(1, first.k3, k3, first, r))
+                    store(k1, create_horde_2(1, a.k3, k3, a, r))
                     return r
 
-                if not first.is_herd:
+                if not a.is_herd:
                     r = Meta(k1, k2, k3, k4)
                     assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3) and (r.k4 is k4)
-                    store(k1, (r   if first is absent else   create_herd_2(first.k2, k2, first, r)))
+                    store(k1, (r   if a is absent else   create_herd_2(a.k2, k2, a, r)))
                     return r
 
-                if first.skip is 0:
-                    second = first.glimpse(k2, absent)
-
-                    if second.k3 is k3:
-                        if second.k4 is k4:
-                            return second
+                if a.skip is 0:
+                    b = a.glimpse(k2, absent)
+                    if b.k3 is k3:
+                        if b.k4 is k4: return b
 
                         r = Meta(k1, k2, k3, k4)
-                        first.displace(k2, create_horde_2(1, second.k4, k4, second, r))
+                        a.displace(k2, create_horde_2(1, b.k4, k4, b, r))
                         return r
 
-                    if not second.is_herd:
+                    if not b.is_herd:
                         r = Meta(k1, k2, k3, k4)
-
-                        if second is absent:
-                            first__2 = first.insert(k2, r)
-
-                            if first is not first__2:
-                                store(k1, first__2)
-
+                        if b is absent:
+                            a_ = a.insert(k2, r)
+                            if a is not a_: store(k1, a_)
                             return r
-
-                        first.displace(k2, create_herd_2(second.k3, k3, second, r))
+                        a.displace(k2, create_herd_2(b.k3, k3, b, r))
                         return r
 
-                    if second.skip is 0:
-                        third = second.glimpse(k3, absent)
+                    if b.skip is 0:
+                        c = b.glimpse(k3, absent)
+                        if c.k4 is k4:
+                            assert (c.k1 is k1) and (c.k2 is k2)
+                            return c
 
-                        if third.k4 is k4:
-                            assert (third.k1 is k1) and (third.k2 is k2)
-
-                            return third
-
-                        if not third.is_herd:
+                        if not c.is_herd:
                             r = Meta(k1, k2, k3, k4)
-
-                            if third is absent:
-                                second__2 = second.insert(k3, r)
-
-                                if second is not second__2:
-                                    first.displace(k2, second__2)
-
+                            if c is absent:
+                                b_ = b.insert(k3, r)
+                                if b is not b_: a.displace(k2, b_)
                                 return r
-
-                            second.displace(k3, create_herd_2(third.k4, k4, third, r))
+                            b.displace(k3, create_herd_2(c.k4, k4, c, r))
                             return r
 
-                        fourth = third.glimpse(k4)
-
-                        if fourth is not none:
-                            return fourth
+                        d = c.glimpse(k4)
+                        if d is not none: return d
 
                         r = Meta(k1, k2, k3, k4)
-
-                        third__2 = third.insert(k4, r)
-
-                        if third is not third__2:
-                            second.displace(k3, third__2)
-
+                        c_ = c.insert(k4, r)
+                        if c is not c_: b.displace(k3, c_)
                         return r
 
-                    assert second.skip is 1
+                    assert b.skip is 1
 
-                    second_k3 = second.sample().k3
-
-                    if second_k3 is k3:
-                        fourth = second.glimpse(k4)
-
-                        if fourth is not none:
-                            return fourth
+                    b_k3 = b.sample().k3
+                    if b_k3 is k3:
+                        d = b.glimpse(k4)
+                        if d is not none: return d
 
                         r = Meta(k1, k2, k3, k4)
-
-                        second__2 = second.insert(k4, r)
-
-                        if second is not second__2:
-                            first.displace(k2, second__2)
-
+                        b_ = b.insert(k4, r)
+                        if b is not b_:
+                            assert b_.sample().k3 is k3
+                            a.displace(k2, b_)
                         return r
 
                     r = Meta(k1, k2, k3, k4)
-                    first.displace(k2, create_herd_2(second_k3, k3, second.remove_skip(), r))
+                    a.displace(k2, create_herd_2(b_k3, k3, b.remove_skip(), r))
                     return r
 
-                first_sample = first.sample()
-                first_k2     = first_sample.k2
-
-                if first_k2 is not k2:
+                a_sample = a.sample()
+                a_k2     = a_sample.k2
+                if a_k2 is not k2:
                     r = Meta(k1, k2, k3, k4)
-                    store(k1, create_herd_2(first_k2, k2, first.remove_skip(), r))
+                    store(k1, create_herd_2(a_k2, k2, a.remove_skip(), r))
                     return r
 
-                if first.skip is 1:
-                    third = first.glimpse(k3, absent)
+                if a.skip is 1:
+                    c = a.glimpse(k3, absent)
 
-                    if third.k4 is k4:
-                        assert (third.k1 is k1) and (third.k2 is k2)
+                    if c.k4 is k4:
+                        assert (c.k1 is k1) and (c.k2 is k2)
 
-                        return third
+                        return c
 
-                    if not third.is_herd:
+                    if not c.is_herd:
                         r = Meta(k1, k2, k3, k4)
 
-                        if third is absent:
-                            first__2 = first.insert(k3, r)
+                        if c is absent:
+                            a_ = a.insert(k3, r)
 
-                            if first is not first__2:
-                                store(k1, first__2)
+                            if a is not a_:
+                                store(k1, a_)
 
                             return r
 
-                        first.displace(k3, create_herd_2(third.k4, k4, third, r))
+                        a.displace(k3, create_herd_2(c.k4, k4, c, r))
                         return r
 
-                    fourth = third.glimpse(k4)
+                    d = c.glimpse(k4)
 
-                    if fourth is not none:
-                        return fourth
+                    if d is not none:
+                        return d
 
                     r = Meta(k1, k2, k3, k4)
 
-                    third__2 = third.insert(k4, r)
+                    c_ = c.insert(k4, r)
 
-                    if third is not third__2:
-                        first.displace(k3, third__2)
+                    if c is not c_:
+                        a.displace(k3, c_)
 
                     return r
 
-                assert first.skip is 2
+                assert a.skip is 2
 
-                first_k3 = first_sample.k3
+                first_k3 = a_sample.k3
 
                 if first_k3 is not k3:
                     r = Meta(k1, k2, k3, k4)
-                    store(k1, create_horde_2(1, first_k3, k3, first.remove_skip(2), r))
+                    store(k1, create_horde_2(1, first_k3, k3, a.remove_skip(2), r))
                     return r
 
-                fourth = first.glimpse(k4)
+                d = a.glimpse(k4)
 
-                if fourth is not none:
-                    return fourth
+                if d is not none:
+                    return d
 
                 r = Meta(k1, k2, k3, k4)
 
-                first__2 = first.insert(k4, r)
+                a_ = a.insert(k4, r)
 
-                if first is not first__2:
-                    store(k1, first__2)
+                if a is not a_:
+                    store(k1, a_)
 
                 return r
 
@@ -209,175 +181,175 @@ def gem():
 
         @rename('conjure_%s', name)
         def conjure_unique_quadruple__4123(k1, k2, k3, k4):
-            first = lookup(k4, absent)
+            a = lookup(k4, absent)
 
-            if first.k1 is k1:
-                if first.k2 is k2:
-                    if first.k3 is k3:
-                        return first
+            if a.k1 is k1:
+                if a.k2 is k2:
+                    if a.k3 is k3:
+                        return a
 
                     r = Meta(k1, k2, k3, k4)
-                    store(k4, create_horde_2(2, first.k3, k3, first, r))
+                    store(k4, create_horde_2(2, a.k3, k3, a, r))
                     return r
 
                 r = Meta(k1, k2, k3, k4)
-                store(k4, create_horde_2(1, first.k2, k2, first, r))
+                store(k4, create_horde_2(1, a.k2, k2, a, r))
                 return r
 
-            if not first.is_herd:
+            if not a.is_herd:
                 r = Meta(k1, k2, k3, k4)
                 assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3) and (r.k4 is k4)
-                store(k4, (r   if first is absent else   create_herd_2(first.k1, k1, first, r)))
+                store(k4, (r   if a is absent else   create_herd_2(a.k1, k1, a, r)))
                 return r
 
-            if first.skip is 0:
-                second = first.glimpse(k1, absent)
+            if a.skip is 0:
+                b = a.glimpse(k1, absent)
 
-                if second.k2 is k2:
-                    if second.k3 is k3:
-                        return second
+                if b.k2 is k2:
+                    if b.k3 is k3:
+                        return b
 
                     r = Meta(k1, k2, k3, k4)
-                    first.displace(k1, create_horde_2(1, second.k3, k3, second, r))
+                    a.displace(k1, create_horde_2(1, b.k3, k3, b, r))
                     return r
 
-                if not second.is_herd:
+                if not b.is_herd:
                     r = Meta(k1, k2, k3, k4)
 
-                    if second is absent:
-                        first__2 = first.insert(k1, r)
+                    if b is absent:
+                        a_ = a.insert(k1, r)
 
-                        if first is not first__2:
-                            store(k4, first__2)
+                        if a is not a_:
+                            store(k4, a_)
 
                         return r
 
-                    first.displace(k1, create_herd_2(second.k2, k2, second, r))
+                    a.displace(k1, create_herd_2(b.k2, k2, b, r))
                     return r
 
-                if second.skip is 0:
-                    third = second.glimpse(k2, absent)
+                if b.skip is 0:
+                    c = b.glimpse(k2, absent)
 
-                    if third.k3 is k3:
-                        assert (third.k4 is k4) and (third.k1 is k1)
+                    if c.k3 is k3:
+                        assert (c.k4 is k4) and (c.k1 is k1)
 
-                        return third
+                        return c
 
-                    if not third.is_herd:
+                    if not c.is_herd:
                         r = Meta(k1, k2, k3, k4)
 
-                        if third is absent:
-                            second__2 = second.insert(k2, r)
+                        if c is absent:
+                            b_ = b.insert(k2, r)
 
-                            if second is not second__2:
-                                first.displace(k1, second__2)
+                            if b is not b_:
+                                a.displace(k1, b_)
 
                             return r
 
-                        second.displace(k2, create_herd_2(third.k3, k3, third, r))
+                        b.displace(k2, create_herd_2(c.k3, k3, c, r))
                         return r
 
-                    fourth = third.glimpse(k3)
+                    d = c.glimpse(k3)
 
-                    if fourth is not none:
-                        return fourth
+                    if d is not none:
+                        return d
 
                     r = Meta(k1, k2, k3, k4)
 
-                    third__2 = third.insert(k3, r)
+                    c_ = c.insert(k3, r)
 
-                    if third is not third__2:
-                        second.displace(k2, third__2)
+                    if c is not c_:
+                        b.displace(k2, c_)
 
                     return r
 
-                assert second.skip is 1
+                assert b.skip is 1
 
-                second_k2 = second.sample().k2
+                second_k2 = b.sample().k2
 
                 if second_k2 is k2:
-                    fourth = second.glimpse(k3)
+                    d = b.glimpse(k3)
 
-                    if fourth is not none:
-                        return fourth
+                    if d is not none:
+                        return d
 
                     r = Meta(k1, k2, k3, k4)
 
-                    second__2 = second.insert(k3, r)
+                    b_ = b.insert(k3, r)
 
-                    if second is not second__2:
-                        first.displace(k1, second__2)
+                    if b is not b_:
+                        a.displace(k1, b_)
 
                     return r
 
                 r = Meta(k1, k2, k3, k4)
-                first.displace(k1, create_herd_2(second_k2, k2, second.remove_skip(), r))
+                a.displace(k1, create_herd_2(second_k2, k2, b.remove_skip(), r))
                 return r
 
-            first_sample = first.sample()
-            first_k1     = first_sample.k1
+            a_sample = a.sample()
+            first_k1     = a_sample.k1
 
             if first_k1 is not k1:
                 r = Meta(k1, k2, k3, k4)
-                store(k4, create_herd_2(first_k1, k1, first.remove_skip(), r))
+                store(k4, create_herd_2(first_k1, k1, a.remove_skip(), r))
                 return r
 
-            if first.skip is 1:
-                third = first.glimpse(k2, absent)
+            if a.skip is 1:
+                c = a.glimpse(k2, absent)
 
-                if third.k3 is k3:
-                    assert (third.k4 is k4) and (third.k1 is k1)
+                if c.k3 is k3:
+                    assert (c.k4 is k4) and (c.k1 is k1)
 
-                    return third
+                    return c
 
-                if not third.is_herd:
+                if not c.is_herd:
                     r = Meta(k1, k2, k3, k4)
 
-                    if third is absent:
-                        first__2 = first.insert(k2, r)
+                    if c is absent:
+                        a_ = a.insert(k2, r)
 
-                        if first is not first__2:
-                            store(k4, first__2)
+                        if a is not a_:
+                            store(k4, a_)
 
                         return r
 
-                    first.displace(k2, create_herd_2(third.k3, k3, third, r))
+                    a.displace(k2, create_herd_2(c.k3, k3, c, r))
                     return r
 
-                fourth = third.glimpse(k3)
+                d = c.glimpse(k3)
 
-                if fourth is not none:
-                    return fourth
+                if d is not none:
+                    return d
 
                 r = Meta(k1, k2, k3, k4)
 
-                third__2 = third.insert(k3, r)
+                c_ = c.insert(k3, r)
 
-                if third is not third__2:
-                    first.displace(k2, third__2)
+                if c is not c_:
+                    a.displace(k2, c_)
 
                 return r
 
-            assert first.skip is 2
+            assert a.skip is 2
 
-            first_k2 = first_sample.k2
+            a_k2 = a_sample.k2
 
-            if first_k2 is not k2:
+            if a_k2 is not k2:
                 r = Meta(k1, k2, k3, k4)
-                store(k4, create_horde_2(1, first_k2, k2, first.remove_skip(2), r))
+                store(k4, create_horde_2(1, a_k2, k2, a.remove_skip(2), r))
                 return r
 
-            fourth = first.glimpse(k3)
+            d = a.glimpse(k3)
 
-            if fourth is not none:
-                return fourth
+            if d is not none:
+                return d
 
             r = Meta(k1, k2, k3, k4)
 
-            first__2 = first.insert(k3, r)
+            a_ = a.insert(k3, r)
 
-            if first is not first__2:
-                store(k4, first__2)
+            if a is not a_:
+                store(k4, a_)
 
             return r
 
