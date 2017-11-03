@@ -47,15 +47,16 @@ def gem():
         __slots__ = (())
 
 
-        is_herd      = true
-        is_herd_many = false
-        is_horde     = false
-        k1           = absent
-        k2           = absent
-        k3           = absent
-        k4           = absent
-        skip         = 0
-        total        = 0
+       #herd_estimate = absent
+        is_herd       = true
+        is_herd_many  = false
+        is_horde      = false
+        k1            = absent
+        k2            = absent
+        k3            = absent
+        k4            = absent
+        skip          = 0
+        total         = 0
 
 
         @static_method
@@ -80,15 +81,16 @@ def gem():
         ))
 
 
-        is_herd      = true
-        is_herd_many = false
-        is_horde     = false
-        k1           = absent
-        k2           = absent
-        k3           = absent
-        k4           = absent
-        skip         = 0
-        total        = 1
+        herd_estimate = 1
+        is_herd       = true
+        is_herd_many  = false
+        is_horde      = false
+        k1            = absent
+        k2            = absent
+        k3            = absent
+        k4            = absent
+        skip          = 0
+        total         = 1
 
 
         def disperse(t, b, w):

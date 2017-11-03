@@ -1,4 +1,3 @@
-
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
@@ -21,7 +20,8 @@ def gem():
         ))
 
 
-        is_herd_many = false
+        herd_estimate = 0
+        is_herd_many  = false
 
 
         def __repr__(t):

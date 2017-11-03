@@ -11,6 +11,7 @@ def gem():
         __slots__ = (())
 
 
+        herd_estimate                         = 0
         is_class_decorator_or_function_header = false
         is_comment_line                       = false
         is_comment__or__empty_line            = false

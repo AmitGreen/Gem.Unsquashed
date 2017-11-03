@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Gem.Herd')
+@gem('Gem.Herd_2')
 def gem():
     class Herd_2(Object):
         __slots__ = ((
@@ -12,15 +12,16 @@ def gem():
         ))
 
 
-        is_herd      = true
-        is_herd_many = false
-        is_horde     = false
-        k1           = absent
-        k2           = absent
-        k3           = absent
-        k4           = absent
-        skip         = 0
-        total        = 2
+        herd_estimate = 2
+        is_herd_many  = false
+        is_herd       = true
+        is_horde      = false
+        k1            = absent
+        k2            = absent
+        k3            = absent
+        k4            = absent
+        skip          = 0
+        total         = 2
 
 
         def __repr__(t):

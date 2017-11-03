@@ -42,6 +42,7 @@ def gem():
 
 
         display_name       = 'cell-parameter'
+        herd_estimate      = 0
         is_cell_variable   = true
         is_herd            = false
         is_global_variable = false
@@ -178,8 +179,7 @@ def gem():
 
 
     def conjure_cell_function_parameter(index, name, cell_index):
-        my_line('%s %s %s', index, name, cell_index)
-
+        #my_line('%s %s %s', index, name, cell_index)
         return conjure_cell_function_parameter__X__unique(
                     intern_integer(index),
                     name,
@@ -202,8 +202,7 @@ def gem():
 
 
     def conjure_global_variable(name):
-        my_line('%s', name)
-
+        #my_line('%s', name)
         return conjure_global_variable__X(name)
 
 

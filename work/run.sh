@@ -38,10 +38,12 @@ Main_py=../Quartz/Main.py
 Main_py=../Dravite/Main.py
 Main_py=../Sapphire/Main.py
 Main_py=../Topaz/Main.py
+Main_py=../Marble/Main.py
 
-show=3
-all=true
+show=2
 all=false
+#all=true
+total=75
 
 command="python -sS $Main_py"
 commandO="python -O $Main_py"
@@ -61,7 +63,7 @@ y
 END
 
 echo -en '\E[H\E[J'
-cat $show
+tail -$total $show
 
 while :
 do
@@ -74,7 +76,7 @@ do
 
             if [ $show = 2 ]; then
                 echo -en '\E[H\E[J'
-                tail -60 2
+                tail -$total 2
             fi
         fi
     fi
@@ -93,7 +95,7 @@ do
    
            if [ $show = 3 ]; then
                echo -en '\E[H\E[J'
-               tail -60 3
+               tail -$total 3
            fi
        fi
     fi

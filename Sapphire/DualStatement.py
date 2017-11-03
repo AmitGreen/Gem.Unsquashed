@@ -57,6 +57,9 @@ def gem():
                 t.b.dump_token(f)
 
 
+        find_require_gem = find_require_gem__b
+
+
         @property
         def indentation(t):
             return t.b.indentation

@@ -47,12 +47,13 @@ def gem():
         ))
 
 
-        is_herd  = true
-        is_horde = true
-        k1       = absent
-        k2       = absent
-        k3       = absent
-        k4       = absent
+        herd_estimate = 3
+        is_herd       = true
+        is_horde      = true
+        k1            = absent
+        k2            = absent
+        k3            = absent
+        k4            = absent
 
 
         def __repr__(t):
@@ -155,7 +156,7 @@ def gem():
 
             assert t.skip is 1
 
-            displace(k1, create_horde_4(1, a, b, c, k3, v, t.w, t.x, r))
+            displace(k1, create_horde_many(1, a, b, c, k3, v, t.w, t.x, r))
 
             return r
 
@@ -190,7 +191,7 @@ def gem():
                 t.x = r
                 return r
 
-            displace(k3, create_horde_4(1, a, b, c, k2, v, t.w, t.x, r))
+            displace(k3, create_horde_many(1, a, b, c, k2, v, t.w, t.x, r))
 
             return r
 
@@ -270,7 +271,7 @@ def gem():
             if t.skip is 0:
                 return create_herd_4(t.a, t.b, t.c, d, t.v, t.w, t.x, y)
 
-            return create_horde_4(t.skip, t.a, t.b, t.c, d, t.v, t.w, t.x, y)
+            return create_horde_many(t.skip, t.a, t.b, t.c, d, t.v, t.w, t.x, y)
 
 
         increment_skip = increment_skip__horde_many
@@ -459,12 +460,13 @@ def gem():
         ))
 
 
-        is_herd  = true
-        is_horde = true
-        k1       = absent
-        k2       = absent
-        k3       = absent
-        k4       = absent
+        herd_estimate = 8
+        is_herd       = true
+        is_horde      = true
+        k1            = absent
+        k2            = absent
+        k3            = absent
+        k4            = absent
 
 
         def __repr__(t):
@@ -694,8 +696,8 @@ def gem():
         return t
 
 
-    @share
-    def create_horde_4(skip, a, b, c, d, v, w, x, y):
+    @export
+    def create_horde_many(skip, a, b, c, d, v, w, x, y):
         assert 1 <= skip <= 2
         assert (a is not absent) and (a is not b) and (a is not c) and (a is not d)
         assert (b is not absent) and (b is not c) and (b is not d)

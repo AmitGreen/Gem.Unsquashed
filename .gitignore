@@ -1,6 +1,8 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
+bin/.pyxie
+*.gpy
 Match.py
 *.new
 *.old
@@ -11,4 +13,3 @@ __pycache__/
 tmp/
 [xyz]
 [xyz][1-9]
-bin/.pyxie
