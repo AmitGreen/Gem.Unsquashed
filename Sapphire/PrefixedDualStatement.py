@@ -56,7 +56,7 @@ def gem():
 
     class DecoratedDefinition(DualTwig):
         __slots__                  = (())
-        class_order                = CLASS_ORDER__DUAL_TWIG      
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'decorated-definition'
         is_any_else                = false
         is_any_except_or_finally   = false
@@ -77,7 +77,7 @@ def gem():
     @share
     class ElseFragment(DualTwig):
         __slots__                  = (())
-        class_order                = CLASS_ORDER__DUAL_TWIG      
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'else-fragment'
         is_any_else                = true
         is_any_except_or_finally   = false
@@ -99,7 +99,7 @@ def gem():
     @share
     class ElseIfFragment(DualTwig):
         __slots__                  = (())
-        class_order                = CLASS_ORDER__DUAL_TWIG      
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'else-if-fragment'
         is_any_else                = true
         is_any_except_or_finally   = false
@@ -121,7 +121,7 @@ def gem():
     @share
     class ExceptFragment(DualTwig):
         __slots__                  = (())
-        class_order                = CLASS_ORDER__DUAL_TWIG      
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'except-fragment'
         is_any_else                = false
         is_any_except_or_finally   = true
@@ -143,7 +143,7 @@ def gem():
     @share
     class FinallyFragment(DualTwig):
         __slots__                  = (())
-        class_order                = CLASS_ORDER__DUAL_TWIG      
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'finally-fragment'
         is_any_else                = false
         is_any_except_or_finally   = true
@@ -164,7 +164,7 @@ def gem():
 
     class ForStatement(DualTwig):
         __slots__                  = (())
-        class_order                = CLASS_ORDER__DUAL_TWIG      
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'for-statement'
         is_any_else                = false
         is_any_except_or_finally   = false
@@ -185,7 +185,7 @@ def gem():
     @share
     class IfStatement(DualTwig):
         __slots__                  = (())
-        class_order                = CLASS_ORDER__DUAL_TWIG      
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'if-statement'
         is_any_else                = false
         is_any_except_or_finally   = false
@@ -206,7 +206,7 @@ def gem():
     @share
     class TryStatement(DualTwig):
         __slots__                    = (())
-        class_order                  = CLASS_ORDER__DUAL_TWIG      
+        class_order                  = CLASS_ORDER__DUAL_TWIG
         display_name                 = 'try-statement'
         is_any_except_or_finally     = false
         is_finaly_header_or_fragment = false
@@ -225,7 +225,7 @@ def gem():
 
     class WhileStatement(DualTwig):
         __slots__                  = (())
-        class_order                = CLASS_ORDER__DUAL_TWIG      
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'while-statement'
         is_any_else                = false
         is_any_except_or_finally   = false
@@ -245,7 +245,7 @@ def gem():
 
     class WithStatement(DualTwig):
         __slots__                  = (())
-        class_order                = CLASS_ORDER__DUAL_TWIG      
+        class_order                = CLASS_ORDER__DUAL_TWIG
         display_name               = 'with-statement'
         is_any_else                = false
         is_any_except_or_finally   = false

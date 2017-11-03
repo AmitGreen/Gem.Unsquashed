@@ -194,7 +194,7 @@ def gem():
                         return r
 
                     assert total is 1
-                    
+
                     if query_a() is k:
                         if query_v() is 0:
                             t.incomplete -= 1
@@ -230,7 +230,7 @@ def gem():
                     return r
 
                 assert total is 3
-                
+
                 if query_c() is k:
                     t.incomplete -= 1
                     r = conjure(index, k)
@@ -276,7 +276,7 @@ def gem():
                     return r
 
                 assert total is 5
-                
+
                 if query_e5() is k:
                     t.incomplete -= 1
                     r = conjure(index, k)

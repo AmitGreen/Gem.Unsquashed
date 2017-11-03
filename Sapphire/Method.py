@@ -503,7 +503,7 @@ def gem():
         if a > b:   return 1
 
         return 0
-                
+
 
     #
     #   parameters_1_named
