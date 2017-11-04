@@ -5,6 +5,8 @@
 def gem():
     require_gem('Topaz.Core')
     require_gem('Topaz.CacheSupport')
+    require_gem('Topaz.GeneratedConjureQuadruple')
+    require_gem('Topaz.OldConjureQuadruple')
 
 
     show = 0
@@ -172,31 +174,44 @@ def gem():
 
 
     def test_conjure_unique_quadruple():
-        cache = create_cache('simplified_numbered_colored_size_shape', nub = Number.value.__get__)
+        cache = create_cache('numbered_colored_size_shape', nub = Number.value.__get__)
 
-        conjure_numbered_colored_size_shape = produce_simplified_conjure_quadruple(
-                                                  'simplified_numbered_colored_size_shape',
-                                                  NumberedColoredSizeShape,
-                                                  cache,
-                                              )
+        test_conjure_quadruple__X__scrub(
+            cache,
+            produce_OLD_conjure_quadruple(
+                'OLD_numbered_colored_size_shape',
+                NumberedColoredSizeShape,
+                cache,
+            ),
+        )
 
-        test_conjure_quadruple__X__scrub(cache, conjure_numbered_colored_size_shape)
-        test_final_scrub(cache)
+        #
+        #   Verify produce_OLD_conjure_quadruple & produce_simplified_conjure_quadruple produce the same cache structure.
+        #
+        test_conjure_quadruple__X__verify(
+            cache,
+            produce_simplified_conjure_quadruple(
+                'simplified_colored_size_shape__4123',
+                NumberedColoredSizeShape,
+                cache,
+            ),
+        )
 
 
     def test_conjure_unique_quadruple__4123():
         cache = create_cache('numbered_colored_size_shape__4123', nub = Shape.name.__get__)
 
-        conjure_numbered_colored_size_shape__4123 = produce_conjure_unique_quadruple__4123(
-                                                        'numbered_colored_size_shape__4123',
-                                                        NumberedColoredSizeShape,
-                                                        cache,
-                                                    )
-
-        test_conjure_quadruple__X__scrub(cache, conjure_numbered_colored_size_shape__4123)
+        test_conjure_quadruple__X__scrub(
+            cache,
+            produce_conjure_quadruple__4123(
+                'numbered_colored_size_shape__4123',
+                NumberedColoredSizeShape,
+                cache,
+            ),
+        )
 
         #
-        #   Verify conjure_numbered_colored_size_shape__4123 & produce_simplified_conjure_quadruple__4123 produce the
+        #   Verify produce_conjure_quadruple__4123 & produce_simplified_conjure_quadruple__4123 produce the
         #   same cache structure.
         #
         test_conjure_quadruple__X__verify(

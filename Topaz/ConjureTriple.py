@@ -5,6 +5,7 @@
 def gem():
     require_gem('Topaz.Core')
     require_gem('Topaz.CacheSupport')
+    require_gem('Topaz.GeneratedConjureTriple')
 
 
     show = 0

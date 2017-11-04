@@ -13,8 +13,7 @@ GEM_FILES = \
 	../Gem/__init__.py \
     ../Gem/Absent.py ../Gem/All.py ../Gem/Ascii.py \
 	../Gem/Boot.py \
-    ../Gem/Cache.py ../Gem/Cache2.py ../Gem/Cadence.py ../Gem/Codec.py ../Gem/ConjureQuadruple.py \
-        ../Gem/Core.py ../Gem/CatchException.py \
+    ../Gem/Cache.py ../Gem/Cache2.py ../Gem/Cadence.py ../Gem/Codec.py ../Gem/Core.py ../Gem/CatchException.py \
 	../Gem/DelayedFileOutput.py ../Gem/DroveMany.py ../Gem/DumpCache.py \
 	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
 	../Gem/FileOutput.py ../Gem/FileStatus.py \
@@ -29,6 +28,10 @@ GEM_FILES = \
     ../Gem/Rabble.py ../Gem/RegularExpression.py \
     ../Gem/Series.py ../Gem/Sequence.py ../Gem/SimpleStringIO.py ../Gem/StringOutput.py ../Gem/System.py \
     ../Gem/Traceback.py
+    #
+    #   Excludes:
+    #       ../Gem/GeneratedConjureQuadruple.py
+    #
 
 DRAVITE_FILES = \
     ../Dravite/Euclid.py \
@@ -42,7 +45,8 @@ LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
 MARBLE_FILES = \
-    ../Marble/ConjureDual.py ../Marble/Core.py \
+    ../Marble/Core.py \
+    ../Marble/NestedConjure.py \
     ../Marble/Main.py
 
 PEARL_FILES = \
@@ -115,6 +119,9 @@ TOPAZ_FILES = \
     #
     #   Excludes:
     #       ../Topaz/GeneratedConjureDual.py
+    #       ../Topaz/GeneratedConjureQuadruple.py
+    #       ../Topaz/GeneratedConjureTriple.py
+    #       ../Topaz/OldConjureQuadruple.py
     #
 
 TREMOLITE_FILES = \
@@ -167,8 +174,8 @@ clean:
 	rm -f d.py de.py dfo.py di.py dm.py dr.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
-	rm -f gc.py gdc.py gdm.py gdo.py gg.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
-	rm -f   gi.py gj4.py gl.py gq.py gr.py gse.py gsq.py
+	rm -f gc.py gdc.py gdm.py gdo.py gg.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
+	rm -f   gi.py gl.py gq.py gr.py gse.py gsq.py
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -182,7 +189,7 @@ clean:
 	rm -f in.py im.py io.py iv.py
 	rm -f jb.py
 	rm -f l.txt lr.txt
-	rm -f m map.py mc.py md.py mj2.py mm.py m.txt
+	rm -f m map.py mc.py md.py mm.py mn.py m.txt
 	rm -f o.py
 	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
@@ -190,8 +197,8 @@ clean:
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f zco.py zcs.py zd.py ze.py zg2.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
-	rm -f   zm.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
+	rm -f zco.py zcs.py zd.py ze.py zg[234].py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
+	rm -f   zm.py zo4.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
 
 
 files:
@@ -238,6 +245,7 @@ links:
 	ln -s ../Gem/DroveMany.py                           gdm.py
 	ln -s ../Gem/Codec.py                               gdo.py
 	ln -s ../Gem/Gaggle.py                              gg.py
+	ln -s ../Gem/GeneratedConjureQuadruple.py           gg4.py
 	ln -s ../Gem/Herd_2.py                              gh2.py
 	ln -s ../Gem/Herd_3.py                              gh3.py
 	ln -s ../Gem/Herd_4567.py                           gh4.py
@@ -245,7 +253,6 @@ links:
 	ln -s ../Gem/HerdMany.py                            ghm.py
 	ln -s ../Gem/Horde.py                               gho.py
 	ln -s ../Gem/Hailstone.py                           gi.py
-	ln -s ../Gem/ConjureQuadruple.py                    gj4.py
 	ln -s ../Gem/Global.py                              gl.py
 	ln -s ../Gem/LiquidMap.py                           gq.py
 	ln -s ../Gem/Rabble.py                              gr.py
@@ -343,8 +350,8 @@ links:
 	ln -s ../Gem/Map.py                                 map.py
 	ln -s ../Marble/Core.py                             mc.py
 	ln -s ../Gem/Method.py                              md.py
-	ln -s ../Marble/ConjureDual.py                      mj2.py
 	ln -s ../Marble/Main.py                             mm.py
+	ln -s ../Marble/NestedConjure.py                    mn.py
 	ln -s ../Gem/Output.py                              o.py
 	ln -s ../Gem/Path.py                                pa.py
 	ln -s ../Gem/Path2.py                               pa2.py
@@ -387,6 +394,8 @@ links:
 	ln -s ../Topaz/Drove.py                             zd.py
 	ln -s ../Topaz/ExceptionChain.py                    ze.py
 	ln -s ../Topaz/GeneratedConjureDual.py              zg2.py
+	ln -s ../Topaz/GeneratedConjureTriple.py            zg3.py
+	ln -s ../Topaz/GeneratedConjureQuadruple.py         zg4.py
 	ln -s ../Topaz/Herd.py                              zh.py
 	ln -s ../Topaz/ConjureSingle.py                     zj1.py
 	ln -s ../Topaz/ConjureDual.py                       zj2.py
@@ -394,6 +403,7 @@ links:
 	ln -s ../Topaz/ConjureQuadruple.py                  zj4.py
 	ln -s ../Topaz/ConjureTreeComment.py                zjtc.py
 	ln -s ../Topaz/Main.py                              zm.py
+	ln -s ../Topaz/OldConjureQuadruple.py               zo4.py
 	ln -s ../Topaz/Path.py                              zpa.py
 	ln -s ../Topaz/PortrayString.py                     zps.py
 	ln -s ../Topaz/Pattern.py                           zpt.py

@@ -22,14 +22,9 @@ def boot():
 @gem('Marble.Main')
 def gem():
     require_gem('Marble.Core')
-    require_gem('Marble.ConjureDual')
+    require_gem('Marble.NestedConjure')
 
 
     @share
     def main(arguments):
-        create_conjure_dual(
-            '../Topaz/GeneratedConjureDual.gpy',
-            'Amit Green',
-            2017,
-            'Topaz.GeneratedConjureDual',
-        )
+        create_nested_conjure('Amit Green', 2017)

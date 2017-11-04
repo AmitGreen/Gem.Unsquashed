@@ -3,6 +3,9 @@
 #
 @gem('Marble.ConjureDual')
 def gem():
+    require_gem('Marble.Core')
+
+
     show_assert = 7
 
 
@@ -196,7 +199,7 @@ def gem():
         f.blank()
 
 
-    def create_conjure(f, prefix, suffix, k1, k2, k3 = 0, k4 = 0):
+    def create_conjure(f, prefix, suffix, k1, k2, k3 = 0, k4 = 0, share = 7):
         if k3 is 0:
             chain = ((k1, k2))
         elif k4 is 0:
@@ -218,13 +221,16 @@ def gem():
 
         f.blank2()
 
-        f.line('@share')
-        with f.indent(arrange('def produce_%s(name, Meta, cache):', name)):
+        f.line( ('@share'   if share is 7 else   '@export') )
+        with f.indent(arrange('def produce_%s(', name), '):', 8):
+            f.line('name, Meta, cache,')
+            f.blank()
+            f.line('lookup = absent,')
+            f.line('store  = absent,')
+        with f.indent():
             f.line('lookup = cache.get')
-            f.line('store  = cache.__setitem__')
-
-            f.blank2()
-
+            f.line('store  = cache.__setitem__',)
+            f.blank()
             f.line('@rename(%r, name)', arrange('%s_%%s', prefix))
             with f.indent(arrange('def %s(%s):', name, keys)):
                 create_next(t, 0, 0, a, b, c, d, 0, 0, k1, k2, k3, k4)
@@ -234,8 +240,9 @@ def gem():
             f.line('return %s', name)
 
 
-    @export
-    def create_conjure_dual(path, year, author, module_name):
+    def create_nested_conjure__X(year, author, prefix, module_name, which, share = 0, show = 0):
+        path = path_join('..', arrange('%s.gpy', module_name.replace('.', '/')))
+
         with create_DelayedFileOutput(path) as f:
             f.line('#')
             f.line('#   Copyright (c) %s %s.  All rights reserved.', year, author)
@@ -245,13 +252,30 @@ def gem():
             with f.indent('def gem():'):
                 f.blank_suppress()
 
-                create_conjure(f, 'simplified_conjure', 'dual__21',        'k2', 'k1')
-                create_conjure(f, 'simplified_conjure', 'dual',            'k1', 'k2')
-                create_conjure(f, 'simplified_conjure', 'triple__312',     'k3', 'k1', 'k2')
-                create_conjure(f, 'simplified_conjure', 'triple',          'k1', 'k2', 'k3')
-                create_conjure(f, 'simplified_conjure', 'quadruple',       'k1', 'k2', 'k3', 'k4')
-                create_conjure(f, 'simplified_conjure', 'quadruple__4123', 'k4', 'k1', 'k2', 'k3')
+                if which == 2:
+                    create_conjure(f, prefix, 'dual__21',        'k2', 'k1', share = share)
+                    create_conjure(f, prefix, 'dual',            'k1', 'k2', share = share)
+
+                if which == 3:
+                    create_conjure(f, prefix, 'triple__312',     'k3', 'k1', 'k2', share = share)
+                    create_conjure(f, prefix, 'triple',          'k1', 'k2', 'k3', share = share)
+
+                if which == 4:
+                    create_conjure(f, prefix, 'quadruple',       'k1', 'k2', 'k3', 'k4', share = share)
+
+                if (which == 4) or (which == '4123'):
+                    create_conjure(f, prefix, 'quadruple__4123', 'k4', 'k1', 'k2', 'k3', share = share)
 
             data = f.finish()
 
-        partial(data)
+        if show is 7:
+            partial(data)
+
+
+    @export
+    def create_nested_conjure(author, year):
+        create_nested_conjure__X(author, year, 'simplified_conjure', 'Topaz.GeneratedConjureDual',      2, share = 7)
+        create_nested_conjure__X(author, year, 'simplified_conjure', 'Topaz.GeneratedConjureTriple',    3, share = 7)
+        create_nested_conjure__X(author, year, 'simplified_conjure', 'Topaz.GeneratedConjureQuadruple', 4, share = 7)
+
+        create_nested_conjure__X(author, year, 'conjure', 'Gem.GeneratedConjureQuadruple', '4123', show = 0)

@@ -120,7 +120,7 @@ def gem():
 
         conjure_triple = produce_conjure_unique_triple(name, Meta, cache, lookup, store)
 
-        conjure_quadruple = produce_simplified_conjure_unique_quadruple__4123(
+        conjure_quadruple = produce_conjure_quadruple__4123(
                                 name,
                                 conjure_Meta_WithFrill,
                                 triple_expression_cache,
