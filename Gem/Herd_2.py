@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
-@gem('Gem.Herd')
+@gem('Gem.Herd_2')
 def gem():
     class Herd_2(Object):
         __slots__ = ((

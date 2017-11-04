@@ -273,9 +273,9 @@ def gem():
 
 
     @export
-    def create_nested_conjure(author, year):
-        create_nested_conjure__X(author, year, 'simplified_conjure', 'Topaz.GeneratedConjureDual',      2, share = 7)
-        create_nested_conjure__X(author, year, 'simplified_conjure', 'Topaz.GeneratedConjureTriple',    3, share = 7)
-        create_nested_conjure__X(author, year, 'simplified_conjure', 'Topaz.GeneratedConjureQuadruple', 4, share = 7)
+    def create_nested_conjure(year, author):
+        create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureDual',      2, share = 7)
+        create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureTriple',    3, share = 7)
+        create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureQuadruple', 4, share = 7)
 
-        create_nested_conjure__X(author, year, 'conjure', 'Gem.GeneratedConjureQuadruple', '4123', show = 0)
+        create_nested_conjure__X(year, author, 'conjure', 'Gem.GeneratedConjureQuadruple', '4123', show = 0)

@@ -1,5 +1,5 @@
 #
-#   Copyright (c) Amit Green 2017.  All rights reserved.
+#   Copyright (c) 2017 Amit Green.  All rights reserved.
 #
 @gem('Topaz.GeneratedConjureDual')
 def gem():
