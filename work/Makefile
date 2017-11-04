@@ -121,6 +121,7 @@ TOPAZ_FILES = \
     #       ../Topaz/GeneratedConjureDual.py
     #       ../Topaz/GeneratedConjureQuadruple.py
     #       ../Topaz/GeneratedConjureTriple.py
+    #       ../Topaz/GeneratedNew.py
     #       ../Topaz/OldConjureQuadruple.py
     #
 
@@ -197,7 +198,7 @@ clean:
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f zco.py zcs.py zd.py ze.py zg[234].py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
+	rm -f zco.py zcs.py zd.py ze.py zg2.py zg3.py zg4.py zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
 	rm -f   zm.py zo4.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
 
 
@@ -396,6 +397,7 @@ links:
 	ln -s ../Topaz/GeneratedConjureDual.py              zg2.py
 	ln -s ../Topaz/GeneratedConjureTriple.py            zg3.py
 	ln -s ../Topaz/GeneratedConjureQuadruple.py         zg4.py
+	ln -s ../Topaz/GeneratedNew.py                      zgn.py
 	ln -s ../Topaz/Herd.py                              zh.py
 	ln -s ../Topaz/ConjureSingle.py                     zj1.py
 	ln -s ../Topaz/ConjureDual.py                       zj2.py

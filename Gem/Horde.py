@@ -47,12 +47,13 @@ def gem():
         ))
 
 
-        is_herd  = true
-        is_horde = true
-        k1       = absent
-        k2       = absent
-        k3       = absent
-        k4       = absent
+        herd_estimate = 3
+        is_herd       = true
+        is_horde      = true
+        k1            = absent
+        k2            = absent
+        k3            = absent
+        k4            = absent
 
 
         def __repr__(t):
@@ -459,12 +460,13 @@ def gem():
         ))
 
 
-        is_herd  = true
-        is_horde = true
-        k1       = absent
-        k2       = absent
-        k3       = absent
-        k4       = absent
+        herd_estimate = 8
+        is_herd       = true
+        is_horde      = true
+        k1            = absent
+        k2            = absent
+        k3            = absent
+        k4            = absent
 
 
         def __repr__(t):

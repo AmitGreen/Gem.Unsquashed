@@ -29,14 +29,15 @@ def gem():
         ))
 
 
-        is_herd      = true
-        is_herd_many = false
-        is_horde     = false
-        k1           = absent
-        k2           = absent
-        k3           = absent
-        k4           = absent
-        skip         = 0
+        herd_estimate = 7
+        is_herd_many  = false
+        is_herd       = true
+        is_horde      = false
+        k1            = absent
+        k2            = absent
+        k3            = absent
+        k4            = absent
+        skip          = 0
 
 
         def count_nested(t):

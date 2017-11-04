@@ -42,6 +42,7 @@ def gem():
 
 
         display_name       = 'cell-parameter'
+        herd_estimate      = 0
         is_cell_variable   = true
         is_herd            = false
         is_global_variable = false

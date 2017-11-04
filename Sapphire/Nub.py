@@ -17,7 +17,8 @@ def gem():
         ))
 
 
-        is_herd = false
+        herd_estimate = 0
+        is_herd       = false
 
 
         def __init__(t, a):

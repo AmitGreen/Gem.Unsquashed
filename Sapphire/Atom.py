@@ -93,6 +93,7 @@ def gem():
 
 
         ends_in_newline                  = false
+        herd_estimate                    = 0
         is_comma                         = false
         is_comment_line                  = false
         is_comment__or__empty_line       = false

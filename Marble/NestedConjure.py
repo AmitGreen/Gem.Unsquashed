@@ -11,16 +11,44 @@ def gem():
 
     class KeyData(Object):
         __slots__ = ((
-            'f',                        #   DelayedOutput
+            'f',                        #   DelayedOuput
+            'share',                    #   Boolean
             'chain',                    #   Tuple of String+
             'keys',                     #   String
+
+            'p2',                       #   Zero | String+
+            'p',                        #   Zero | String+
+            'a',                        #   String+
+            'b',                        #   String+
+            'c',                        #   Zero | String+
+            'd',                        #   Zero | String+
+            'k0',                       #   Zero | String+
+            'k1',                       #   String+
+            'k2',                       #   String+
+            'k3',                       #   Zero | String+
+            'k4',                       #   Zero | String+
         ))
 
 
-        def __init__(t, f, chain, keys):
+        def __init__(t, f, share, chain, keys, p2, p, a, b, c, d, _, k0, k1, k2, k3, k4):
+            assert _ is 0
+
             t.f     = f
+            t.share = share
             t.chain = chain
             t.keys  = keys
+
+            t.p2 = p2
+            t.p  = p
+            t.a  = a
+            t.b  = b
+            t.c  = c
+            t.d  = d
+            t.k0 = k0
+            t.k1 = k1
+            t.k2 = k2
+            t.k3 = k3
+            t.k4 = k4
 
 
         def create_assert(t, v):
@@ -40,24 +68,75 @@ def gem():
             t.create_assert_r()
 
 
-    def create_if_glimpse(t, previous, a, k1, k2, k3 = 0, k4 = 0, skip = 1):
-        f = t.f
+        def remove_b_k2(t):
+            if 0:
+                k_sample = t.k_sample
+
+                if k_sample is 0:
+                    k_sample = t.k2
+                elif type(k_sample) is not Tuple:
+                    k_sample = ((k_sample, t.k2))
+                else:
+                    k_sample += ((t.k2,))
+
+            return KeyData(
+                      t.f, t.share, t.chain, t.keys,
+                      t.p2, t.p,  t.a,  t.c,  t.d,  0,
+                      0,    t.k0, t.k1, t.k3, t.k4, 0,
+                   )
+
+
+        def remove_p2_k0(t):
+            return KeyData(
+                      t.f, t.share, t.chain, t.keys,
+                      t.p, t.a,  t.b,  t.c,  t.d,  0,
+                      0,   t.k1, t.k2, t.k3, t.k4, 0,
+                   )
+
+
+    def create_KeyData(f, share, k1, k2, k3 = 0, k4 = 0):
+        if k3 is 0:
+            chain = ((k1, k2))
+        elif k4 is 0:
+            chain = ((k1, k2, k3))
+        else:
+            chain = ((k1, k2, k3, k4))
+
+        keys = 'k1, k2'
+        if k3 is not 0:  keys += ', k3'
+        if k4 is not 0:  keys += ', k4'
+
+        return KeyData(
+                   f, share, chain, keys,
+                   0, 0, 'a', 'b', (0   if k3 is 0 else   'c'), (0   if k4 is 0 else   'd'),
+                   0, 0, k1,  k2,  k3,                          k4,
+               )
+
+
+    def create_if_glimpse(t, skip = 1):
+        f  = t.f
+        p  = t.p
+        a  = t.a
+        k1 = t.k1
+        k2 = t.k2
+        k3 = t.k3
+        k4 = t.k4
 
         if k3 is 0:
             f.line('if %s.%s is %s: return %s', a, k2, k2, a)
             f.blank()
             return
 
-        if previous is 0:
+        if p is 0:
             displace = 'store'
         else:
-            displace = arrange('%s.displace', previous)
+            displace = arrange('%s.displace', p)
 
         f.blank()
 
         with f.indent(arrange('if %s.%s is %s:', a, k2, k2)):
             f.blank_suppress()
-            create_if_glimpse(t, previous, a, k1, k3, k4, skip = skip + 1)
+            create_if_glimpse(t.remove_b_k2(), skip = skip + 1)
             t.create_r()
             f.line('%s(%s, create_horde_2(%d, %s.%s, %s, %s, r))', displace, k1, skip, a, k3, k3, a)
             f.line('return r')
@@ -65,15 +144,19 @@ def gem():
         f.blank()
 
 
-    def create_last(t, p, a, b, k1, k2, k_sample = 0):
-        f = t.f
+    def create_last(t, k_sample = 0):
+        f  = t.f
+        p  = t.p
+        a  = t.a
+        b  = t.b
+        k1 = t.k1
+        k2 = t.k2
 
-        if p is 0:
+        if t.p is 0:
             displace = 'store'
         else:
             displace = arrange('%s.displace', p)
 
-        #f.line('#<last>')
         f.line('%s = %s.glimpse(%s)', b, a, k2)
         if show_assert:
             with f.indent(arrange('if %s is not none:', b)):
@@ -98,13 +181,20 @@ def gem():
                 f.line('%s(%s, %s_)', displace, k1, a)
 
         f.line('return r')
-        #f.line('#</last>')
 
 
-    def create_next(t, p2, p, a, b, c, d, _, k0, k1, k2, k3, k4, k_sample = 0):
-        assert _ is 0
-
-        f = t.f
+    def create_next(t, k_sample = 0):
+        f  = t.f
+        p2 = t.p2
+        p  = t.p
+        a  = t.a
+        b  = t.b
+        c  = t.c
+        k0 = t.k0
+        k1 = t.k1
+        k2 = t.k2
+        k3 = t.k3
+        k4 = t.k4
 
         if p is 0:
             f.line('%s = lookup(%s, absent)', a, k1)
@@ -112,7 +202,7 @@ def gem():
             f.line('%s = %s.glimpse(%s, absent)', a, p, k1)
 
         f.blank_suppress()
-        create_if_glimpse(t, p, a, k1, k2, k3, k4, skip = 1)
+        create_if_glimpse(t)
 
         f.blank()
 
@@ -142,38 +232,45 @@ def gem():
         f.blank()
 
         if k3 is 0:
-            create_last(t, p, a, b, k1, k2)
+            create_last(t)
             return
 
         with f.indent(arrange('if %s.skip is 0:', a)):
-            create_next(t, p, a, b, c, d, 0, 0, k1, k2, k3, k4, 0)
+            create_next(t.remove_p2_k0())
 
         f.blank()
+
+        t2 = t.remove_b_k2()
 
         if k4 is 0:
             f.line('assert %s.skip is 1', a)
-            create_sample(t, 0, p, a, k1, k2)
-            create_last(t, p, a, c, k1, k3, k_sample = k2)
+            create_sample(t, 0)
+            create_last(t2, k_sample = k2)
             return
 
-        create_sample(t, 1, p, a, k1, k2)
+        create_sample(t, 1)
 
         with f.indent(arrange('if %s.skip is 1:', a)):
-            create_next(t, p, a, c, d, 0, 0, 0, k1, k3, k4, 0, 0, k_sample = k2)
+            create_next(t2.remove_p2_k0(), k_sample = k2)
 
         f.blank()
         f.line('assert %s.skip is 2', a)
-        create_sample(t, 2, p, a, k1, k3, skip = 2)
-        create_last(t, p, a, d, k1, k4, k_sample = ((k2,k3)) )
+
+        create_sample(t2, 2, skip = 2)
+        create_last(t2.remove_b_k2(), k_sample = ((k2,k3)) )
 
 
-    def create_sample(t, multiple, p, a, k1, k2, skip = 1):
+    def create_sample(t, multiple, skip = 1):
+        f  = t.f
+        p  = t.p
+        a  = t.a
+        k1 = t.k1
+        k2 = t.k2
+
         if p is 0:
             displace = 'store'
         else:
             displace = arrange('%s.displace', p)
-
-        f = t.f
 
         f.blank()
 
@@ -200,23 +297,7 @@ def gem():
 
 
     def create_conjure(f, prefix, suffix, k1, k2, k3 = 0, k4 = 0, share = 7):
-        if k3 is 0:
-            chain = ((k1, k2))
-        elif k4 is 0:
-            chain = ((k1, k2, k3))
-        else:
-            chain = ((k1, k2, k3, k4))
-
-        keys = 'k1, k2'
-        if k3 is not 0:  keys += ', k3'
-        if k4 is not 0:  keys += ', k4'
-
-        t = KeyData(f, chain, keys)
-
-        a    = 'a'
-        b    = 'b'
-        c    = 'c'
-        d    = 'd'
+        t    = create_KeyData(f, share, k1, k2, k3, k4)
         name = arrange('%s_%s', prefix, suffix)
 
         f.blank2()
@@ -232,8 +313,8 @@ def gem():
             f.line('store  = cache.__setitem__',)
             f.blank()
             f.line('@rename(%r, name)', arrange('%s_%%s', prefix))
-            with f.indent(arrange('def %s(%s):', name, keys)):
-                create_next(t, 0, 0, a, b, c, d, 0, 0, k1, k2, k3, k4)
+            with f.indent(arrange('def %s(%s):', name, t.keys)):
+                create_next(t)
 
             f.blank2()
 
@@ -253,15 +334,19 @@ def gem():
                 f.blank_suppress()
 
                 if which == 2:
-                    create_conjure(f, prefix, 'dual__21',        'k2', 'k1', share = share)
-                    create_conjure(f, prefix, 'dual',            'k1', 'k2', share = share)
+                    create_conjure(f, prefix, 'dual__21', 'k2', 'k1', share = share)
+
+                if (which == 2) or (which == '2'):
+                    create_conjure(f, prefix, 'dual', 'k1', 'k2', share = share)
 
                 if which == 3:
-                    create_conjure(f, prefix, 'triple__312',     'k3', 'k1', 'k2', share = share)
-                    create_conjure(f, prefix, 'triple',          'k1', 'k2', 'k3', share = share)
+                    create_conjure(f, prefix, 'triple__312', 'k3', 'k1', 'k2', share = share)
 
-                if which == 4:
-                    create_conjure(f, prefix, 'quadruple',       'k1', 'k2', 'k3', 'k4', share = share)
+                if (which == 3) or (which == '3'):
+                    create_conjure(f, prefix, 'triple', 'k1', 'k2', 'k3', share = share)
+
+                if (which == 4) or (which == '4'):
+                    create_conjure(f, prefix, 'quadruple', 'k1', 'k2', 'k3', 'k4', share = share)
 
                 if (which == 4) or (which == '4123'):
                     create_conjure(f, prefix, 'quadruple__4123', 'k4', 'k1', 'k2', 'k3', share = share)
@@ -274,6 +359,8 @@ def gem():
 
     @export
     def create_nested_conjure(year, author):
+        #create_nested_conjure__X(year, author, 'NEW_conjure', 'Topaz.GeneratedNew', '4', share = 7, show = 7)
+
         create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureDual',      2, share = 7)
         create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureTriple',    3, share = 7)
         create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureQuadruple', 4, share = 7)

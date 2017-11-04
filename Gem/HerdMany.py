@@ -15,14 +15,15 @@ def gem():
         __slots__ = (())
 
 
-        is_herd      = true
-        is_herd_many = true
-        is_horde     = false
-        k1           = absent
-        k2           = absent
-        k3           = absent
-        k4           = absent
-        skip         = 0
+        herd_estimate = 8
+        is_herd_many  = true
+        is_herd       = true
+        is_horde      = false
+        k1            = absent
+        k2            = absent
+        k3            = absent
+        k4            = absent
+        skip          = 0
 
 
         def __repr__(t):

@@ -23,9 +23,10 @@ def gem():
         ))
 
 
-        class_order  = CLASS_ORDER__BOOKCASE_MANY_FRILL
-        display_name = 'bookcase-*-frill'
-        is_herd      = false
+        class_order   = CLASS_ORDER__BOOKCASE_MANY_FRILL
+        display_name  = 'bookcase-*-frill'
+        herd_estimate = 0
+        is_herd       = false
 
 
         __init__       = construct__123

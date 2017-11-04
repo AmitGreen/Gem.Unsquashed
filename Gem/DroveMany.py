@@ -20,7 +20,8 @@ def gem():
         ))
 
 
-        is_herd_many = false
+        herd_estimate = 0
+        is_herd_many  = false
 
 
         def __repr__(t):
