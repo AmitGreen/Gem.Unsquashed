@@ -152,11 +152,30 @@ def gem():
             #    line()
 
 
-    def test_conjure_unique_quadruple():
-        cache = create_cache('numbered_colored_size_shape', nub = Number.value.__get__)
+    def test_conjure_quadruple__X__verify(cache, simplified_conjure_quadruple):
+        cache_dump = dump_cache_to_string(cache, show_sample = false)
 
-        conjure_numbered_colored_size_shape = produce_conjure_unique_quadruple(
-                                                  'numbered_colored_size_shape',
+        test_final_scrub(cache)
+        test_conjure_quadruple__X__scrub(cache, simplified_conjure_quadruple)
+
+        simplified_cache_dump = dump_cache_to_string(cache, show_sample = false)
+
+        test_final_scrub(cache)
+
+        if cache_dump != simplified_cache_dump:
+            write_binary_to_path('oops1.txt', cache_dump)
+            write_binary_to_path('oops2.txt', simplified_cache_dump)
+            raise_runtime_error('cache_dump != simplified_cache_dump (see oops1.txt & oops2.txt)')
+
+        if show is 7:
+            partial(cache_dump)
+
+
+    def test_conjure_unique_quadruple():
+        cache = create_cache('simplified_numbered_colored_size_shape', nub = Number.value.__get__)
+
+        conjure_numbered_colored_size_shape = produce_simplified_conjure_quadruple(
+                                                  'simplified_numbered_colored_size_shape',
                                                   NumberedColoredSizeShape,
                                                   cache,
                                               )
@@ -175,7 +194,19 @@ def gem():
                                                     )
 
         test_conjure_quadruple__X__scrub(cache, conjure_numbered_colored_size_shape__4123)
-        test_final_scrub(cache)
+
+        #
+        #   Verify conjure_numbered_colored_size_shape__4123 & produce_simplified_conjure_quadruple__4123 produce the
+        #   same cache structure.
+        #
+        test_conjure_quadruple__X__verify(
+            cache,
+            produce_simplified_conjure_quadruple__4123(
+                'simplified_numbered_colored_size_shape__4123',
+                NumberedColoredSizeShape,
+                cache,
+            ),
+        )
 
 
     @share

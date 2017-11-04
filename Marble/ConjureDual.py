@@ -3,7 +3,7 @@
 #
 @gem('Marble.ConjureDual')
 def gem():
-    show_assert = 0
+    show_assert = 7
 
 
     class KeyData(Object):
@@ -62,53 +62,15 @@ def gem():
         f.blank()
 
 
-    def create_glimpse(t, previous, a, k1, k2, k3 = 0, k4 = 0):
-        f = t.f
-
-        if previous is 0:
-            f.line('%s = lookup(%s, absent)', a, k1)
-        else:
-            f.line('%s = %s.glimpse(%s, absent)', a, previous, k1)
-
-        f.blank_suppress()
-        create_if_glimpse(t, previous, a, k1, k2, k3, k4, skip = 1)
-
-
-    def create_not_herd(t, a, b, k1, k2, k3):
-        f = t.f
-
-        f.blank()
-
-        with f.indent(arrange('if not %s.is_herd:', b)):
-            t.create_r()
-
-            if a is 0:
-                assert k1 is 0
-
-                f.line('store(%s, (r   if %s is absent else   create_herd_2(%s.%s, %s, %s, r)))',
-                       k2, b, b, k3, k3, b)
-            else:
-                with f.indent(arrange('if %s is absent:', b)):
-                    f.line('%s_ = %s.insert(%s, r)', a, a, k2)
-                    f.line('if %s is not %s_: store(%s, %s_)', a, a, k1, a)
-                    f.line('return r')
-
-                f.line('%s.displace(%s, create_herd_2(%s.%s, %s, %s, r))', a, k2, b, k3, k3, b)
-
-            f.line('return r')
-
-        f.blank()
-
-
     def create_last(t, p, a, b, k1, k2, k_sample = 0):
+        f = t.f
+
         if p is 0:
             displace = 'store'
         else:
             displace = arrange('%s.displace', p)
 
-        f = t.f
-
-        #f.line('#<create_last>')
+        #f.line('#<last>')
         f.line('%s = %s.glimpse(%s)', b, a, k2)
         if show_assert:
             with f.indent(arrange('if %s is not none:', b)):
@@ -125,14 +87,84 @@ def gem():
             f.line('if %s is not %s_: %s(%s, %s_)', a, a, displace, k1, a)
         else:
             with f.indent(arrange('if %s is not %s_:', a, a)):
-                f.line('assert %s_.sample().%s is %s', a, k_sample, k_sample)
+                if type(k_sample) is Tuple:
+                    f.line('assert %s',
+                           ' and '.join(arrange('(%s_.sample().%s is %s)', a, k, k)   for k in k_sample))
+                else:
+                    f.line('assert %s_.sample().%s is %s', a, k_sample, k_sample)
                 f.line('%s(%s, %s_)', displace, k1, a)
 
         f.line('return r')
-        #f.line('#</create_last>')
+        #f.line('#</last>')
 
 
-    def create_next(t, p, a, b, c, d, k0, k1, k2, k3 = 0, k4 = 0):
+    def create_next(t, p2, p, a, b, c, d, _, k0, k1, k2, k3, k4, k_sample = 0):
+        assert _ is 0
+
+        f = t.f
+
+        if p is 0:
+            f.line('%s = lookup(%s, absent)', a, k1)
+        else:
+            f.line('%s = %s.glimpse(%s, absent)', a, p, k1)
+
+        f.blank_suppress()
+        create_if_glimpse(t, p, a, k1, k2, k3, k4, skip = 1)
+
+        f.blank()
+
+        with f.indent(arrange('if not %s.is_herd:', a)):
+            t.create_r()
+
+            if p is 0:
+                assert k0 is 0
+
+                f.line('store(%s, (r   if %s is absent else   create_herd_2(%s.%s, %s, %s, r)))',
+                       k1, a, a, k2, k2, a)
+            else:
+                if p2 is 0:
+                    displace = 'store'
+                else:
+                    displace = arrange('%s.displace', p2)
+
+                with f.indent(arrange('if %s is absent:', a)):
+                    f.line('%s_ = %s.insert(%s, r)', p, p, k1)
+                    f.line('if %s is not %s_: %s(%s, %s_)', p, p, displace, k0, p)
+                    f.line('return r')
+
+                f.line('%s.displace(%s, create_herd_2(%s.%s, %s, %s, r))', p, k1, a, k2, k2, a)
+
+            f.line('return r')
+
+        f.blank()
+
+        if k3 is 0:
+            create_last(t, p, a, b, k1, k2)
+            return
+
+        with f.indent(arrange('if %s.skip is 0:', a)):
+            create_next(t, p, a, b, c, d, 0, 0, k1, k2, k3, k4, 0)
+
+        f.blank()
+
+        if k4 is 0:
+            f.line('assert %s.skip is 1', a)
+            create_sample(t, 0, p, a, k1, k2)
+            create_last(t, p, a, c, k1, k3, k_sample = k2)
+            return
+
+        create_sample(t, 1, p, a, k1, k2)
+
+        with f.indent(arrange('if %s.skip is 1:', a)):
+            create_next(t, p, a, c, d, 0, 0, 0, k1, k3, k4, 0, 0, k_sample = k2)
+
+        f.blank()
+        f.line('assert %s.skip is 2', a)
+        create_sample(t, 2, p, a, k1, k3, skip = 2)
+        create_last(t, p, a, d, k1, k4, k_sample = ((k2,k3)) )
+
+
+    def create_sample(t, multiple, p, a, k1, k2, skip = 1):
         if p is 0:
             displace = 'store'
         else:
@@ -140,32 +172,28 @@ def gem():
 
         f = t.f
 
-        with f.indent(arrange('if %s.skip is 0:', a)):
-            create_glimpse_next(t, a, b, c, d, 0, k1, k2, k3, k4, 0)
+        f.blank()
 
-        f.blank()
-        f.line('assert %s.skip is 1', a)
-        f.blank()
-        f.line('%s_%s = %s.sample().%s', a, k2, a, k2)
+        if multiple is 0:
+            f.line('%s_%s = %s.sample().%s', a, k2, a, k2)
+        elif multiple is 1:
+            f.line('%s_sample = %s.sample()', a, a)
+            f.line('%s_%s     = %s_sample.%s', a, k2, a, k2)
+        else:
+            assert multiple is 2
+            f.line('%s_%s = %s_sample.%s', a, k2, a, k2)
 
         with f.indent(arrange('if %s_%s is not %s:', a, k2, k2)):
             t.create_r()
-            f.line('%s(%s, create_herd_2(%s_%s, %s, %s.remove_skip(), r))', displace, k1, a, k2, k2, a)
+            if skip is 1:
+                f.line('%s(%s, create_herd_2(%s_%s, %s, %s.remove_skip(), r))', displace, k1, a, k2, k2, a)
+            else:
+                f.line('%s(%s, create_horde_2(%d, %s_%s, %s, %s.remove_skip(%d), r))',
+                       displace, k1, skip - 1, a, k2, k2, a, skip)
+
             f.line('return r')
 
         f.blank()
-        create_last(t, 0, a, c, k1, k3, k_sample = k2)
-
-
-    def create_glimpse_next(t, p, a, b, c, d, k0, k1, k2, k3 = 0, k4 = 0):
-        create_glimpse (t, p, a,     k1, k2, k3, k4)
-        create_not_herd(t, p, a, k0, k1, k2)
-
-        if k3 is 0:
-            create_last(t, p, a, b, k1, k2)
-            return
-
-        create_next(t, p, a, b, c, d, k0, k1, k2, k3, k4)
 
 
     def create_conjure(f, prefix, suffix, k1, k2, k3 = 0, k4 = 0):
@@ -199,7 +227,7 @@ def gem():
 
             f.line('@rename(%r, name)', arrange('%s_%%s', prefix))
             with f.indent(arrange('def %s(%s):', name, keys)):
-                create_glimpse_next(t, 0, a, b, c, d, 0, k1, k2, k3, k4)
+                create_next(t, 0, 0, a, b, c, d, 0, 0, k1, k2, k3, k4)
 
             f.blank2()
 
@@ -217,13 +245,12 @@ def gem():
             with f.indent('def gem():'):
                 f.blank_suppress()
 
-                if 7 is 7:
-                    create_conjure(f, 'simplified_conjure', 'dual__21',    'k2', 'k1')
-                    create_conjure(f, 'simplified_conjure', 'dual',        'k1', 'k2')
-                    create_conjure(f, 'simplified_conjure', 'triple__312', 'k3', 'k1', 'k2')
-                    create_conjure(f, 'simplified_conjure', 'triple',      'k1', 'k2', 'k3')
-                else:
-                    create_conjure(f,  'conjure', 'quadruple', 'k1', 'k2', 'k3', 'k4')
+                create_conjure(f, 'simplified_conjure', 'dual__21',        'k2', 'k1')
+                create_conjure(f, 'simplified_conjure', 'dual',            'k1', 'k2')
+                create_conjure(f, 'simplified_conjure', 'triple__312',     'k3', 'k1', 'k2')
+                create_conjure(f, 'simplified_conjure', 'triple',          'k1', 'k2', 'k3')
+                create_conjure(f, 'simplified_conjure', 'quadruple',       'k1', 'k2', 'k3', 'k4')
+                create_conjure(f, 'simplified_conjure', 'quadruple__4123', 'k4', 'k1', 'k2', 'k3')
 
             data = f.finish()
 
