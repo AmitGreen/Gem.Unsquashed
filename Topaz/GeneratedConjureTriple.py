@@ -13,6 +13,7 @@ def gem():
         lookup = cache.get
         store  = cache.__setitem__
 
+
         @rename('simplified_conjure_%s', name)
         def simplified_conjure_triple__312(k1, k2, k3):
             a = lookup(k3, absent)
@@ -25,35 +26,35 @@ def gem():
                 return r
 
             if not a.is_herd:
-                r = Meta(k1, k2, k3)
-                assert (r.k3 is k3) and (r.k1 is k1) and (r.k2 is k2)
-                store(k3, (r   if a is absent else   create_herd_2(a.k1, k1, a, r)))
-                return r
+                b = Meta(k1, k2, k3)
+                assert (b.k3 is k3) and (b.k1 is k1) and (b.k2 is k2)
+                store(k3, (b   if a is absent else   create_herd_2(a.k1, k1, a, b)))
+                return b
 
             if a.skip is 0:
                 b = a.glimpse(k1, absent)
                 if b.k2 is k2: return b
 
                 if not b.is_herd:
-                    r = Meta(k1, k2, k3)
-                    assert (r.k3 is k3) and (r.k1 is k1) and (r.k2 is k2)
+                    c = Meta(k1, k2, k3)
+                    assert (c.k3 is k3) and (c.k1 is k1) and (c.k2 is k2)
                     if b is absent:
-                        a_ = a.insert(k1, r)
+                        a_ = a.insert(k1, c)
                         if a is not a_: store(k3, a_)
-                        return r
-                    a.displace(k1, create_herd_2(b.k2, k2, b, r))
-                    return r
+                        return c
+                    a.displace(k1, create_herd_2(b.k2, k2, b, c))
+                    return c
 
                 c = b.glimpse(k2)
                 if c is not none:
                     assert (c.k3 is k3) and (c.k1 is k1) and (c.k2 is k2)
                     return c
 
-                r = Meta(k1, k2, k3)
-                assert (r.k3 is k3) and (r.k1 is k1) and (r.k2 is k2)
-                b_ = b.insert(k2, r)
+                c = Meta(k1, k2, k3)
+                assert (c.k3 is k3) and (c.k1 is k1) and (c.k2 is k2)
+                b_ = b.insert(k2, c)
                 if b is not b_: a.displace(k1, b_)
-                return r
+                return c
 
             assert a.skip is 1
 
@@ -69,13 +70,13 @@ def gem():
                 assert (c.k3 is k3) and (c.k1 is k1) and (c.k2 is k2)
                 return c
 
-            r = Meta(k1, k2, k3)
-            assert (r.k3 is k3) and (r.k1 is k1) and (r.k2 is k2)
-            a_ = a.insert(k2, r)
+            c = Meta(k1, k2, k3)
+            assert (c.k3 is k3) and (c.k1 is k1) and (c.k2 is k2)
+            a_ = a.insert(k2, c)
             if a is not a_:
                 assert a_.sample().k1 is k1
                 store(k3, a_)
-            return r
+            return c
 
 
         return simplified_conjure_triple__312
@@ -91,6 +92,7 @@ def gem():
         lookup = cache.get
         store  = cache.__setitem__
 
+
         @rename('simplified_conjure_%s', name)
         def simplified_conjure_triple(k1, k2, k3):
             a = lookup(k1, absent)
@@ -103,35 +105,35 @@ def gem():
                 return r
 
             if not a.is_herd:
-                r = Meta(k1, k2, k3)
-                assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3)
-                store(k1, (r   if a is absent else   create_herd_2(a.k2, k2, a, r)))
-                return r
+                b = Meta(k1, k2, k3)
+                assert (b.k1 is k1) and (b.k2 is k2) and (b.k3 is k3)
+                store(k1, (b   if a is absent else   create_herd_2(a.k2, k2, a, b)))
+                return b
 
             if a.skip is 0:
                 b = a.glimpse(k2, absent)
                 if b.k3 is k3: return b
 
                 if not b.is_herd:
-                    r = Meta(k1, k2, k3)
-                    assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3)
+                    c = Meta(k1, k2, k3)
+                    assert (c.k1 is k1) and (c.k2 is k2) and (c.k3 is k3)
                     if b is absent:
-                        a_ = a.insert(k2, r)
+                        a_ = a.insert(k2, c)
                         if a is not a_: store(k1, a_)
-                        return r
-                    a.displace(k2, create_herd_2(b.k3, k3, b, r))
-                    return r
+                        return c
+                    a.displace(k2, create_herd_2(b.k3, k3, b, c))
+                    return c
 
                 c = b.glimpse(k3)
                 if c is not none:
                     assert (c.k1 is k1) and (c.k2 is k2) and (c.k3 is k3)
                     return c
 
-                r = Meta(k1, k2, k3)
-                assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3)
-                b_ = b.insert(k3, r)
+                c = Meta(k1, k2, k3)
+                assert (c.k1 is k1) and (c.k2 is k2) and (c.k3 is k3)
+                b_ = b.insert(k3, c)
                 if b is not b_: a.displace(k2, b_)
-                return r
+                return c
 
             assert a.skip is 1
 
@@ -147,13 +149,13 @@ def gem():
                 assert (c.k1 is k1) and (c.k2 is k2) and (c.k3 is k3)
                 return c
 
-            r = Meta(k1, k2, k3)
-            assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3)
-            a_ = a.insert(k3, r)
+            c = Meta(k1, k2, k3)
+            assert (c.k1 is k1) and (c.k2 is k2) and (c.k3 is k3)
+            a_ = a.insert(k3, c)
             if a is not a_:
                 assert a_.sample().k2 is k2
                 store(k1, a_)
-            return r
+            return c
 
 
         return simplified_conjure_triple

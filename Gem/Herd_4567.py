@@ -1377,7 +1377,7 @@ def gem():
     new_Herd_4567 = Method(Object.__new__, Herd_4567)
 
 
-    @share
+    @export
     def create_herd_4(a, b, c, d, v, w, x, y):
         assert (a is not absent) and (a is not b) and (a is not c) and (a is not d)
         assert (b is not absent) and (b is not c) and (b is not d)

@@ -6,7 +6,7 @@ def gem():
     require_gem('Marble.Core')
 
 
-    show_assert       = 0
+    show_assert       = 7
     use_herd_estimate = 7
 
 
@@ -162,7 +162,7 @@ def gem():
         f.blank()
 
 
-    def create_test_herd_member(t, herd_k, herd_v, displace = 0):
+    def create_test_herd_member(t, herd_k, herd_v, displace = 0, herd_k_next = 0):
         common = t.common
 
         f  = common.f
@@ -187,13 +187,37 @@ def gem():
             f.line('if %s is %s: return %s.%s', ak, k2, a, herd_v)
 
         if displace:
-            with f.indent(arrange('if %s is absent:', ak)):
-                t.create_r(b, extra = arrange('%s.%s', a, herd_k))
-                f.line('return %s', b)
+            if displace is 7:
+                f.blank()
+                t.create_r(b)
+                f.blank()
+                with f.indent(arrange('if %s is absent:', ak)):
+                    f.line('%s.%s = %s', a, herd_k, k2)
+                    f.line('%s.%s = %s', a, herd_v, b)
+                    f.line('return %s', b)
+            else:
+                with f.indent(arrange('if %s is absent:', ak)):
+                    f.line('%s.%s = %s', a, herd_k, k2)
+                    f.line('%s.%s = absent', a, herd_k_next)
+                    t.create_r(b, extra = arrange('%s.%s', a, herd_v))
+                    f.line('return %s', b)
 
         f.blank()
 
         return ak
+
+
+    def create_assert_k_sample(t, v, k_sample):
+        common = t.common
+
+        f = common.f
+
+        if type(k_sample) is Tuple:
+            f.line('assert %s',
+                   ' and '.join(arrange('(%s.sample().%s is %s)', v, k, k)   for k in k_sample))
+            return
+
+        f.line('assert %s.sample().%s is %s', v, k_sample, k_sample)
 
 
     def create_last(t, estimate = 0, k_sample = 0):
@@ -205,6 +229,8 @@ def gem():
         b  = t.b
         k1 = t.k1
         k2 = t.k2
+
+        #if common.use_herd_estimate:    k_sample = 'FAKE'
 
         if t.p is 0:
             displace = 'store'
@@ -240,47 +266,61 @@ def gem():
             ab = create_test_herd_member(t, 'b', 'w')
 
             with f.indent(arrange('if %s is 2:', estimate)):
+                f.line('assert %s.skip is 0', a)
+                f.blank()
+
                 t.create_r(b)
 
-                if k_sample is 0:
-                    f.line('%s(%s, create_herd_3(%s, %s, %s, %s.v, %s.w, %s))',
-                           displace, k1, aa, ab, k2, a, a, b)
-                    f.line('return %s', b)
-                else:
-                    assert 0, 'incomplete'
+                f.line('%s(%s, create_herd_3(%s, %s, %s, %s.v, %s.w, %s))',
+                       displace, k1, aa, ab, k2, a, a, b)
+                f.line('return %s', b)
 
-            ac = create_test_herd_member(t, 'c', 'x', displace = 3)
+            if k_sample is 0:
+                ac = create_test_herd_member(t, 'c', 'x')
 
-            with f.indent(arrange('if %s is 3:', estimate)):
-                t.create_r(b)
+                with f.indent(arrange('if %s is 3:', estimate)):
+                    t.create_r(b)
 
-                if k_sample is 0:
                     f.line('%s(%s, create_herd_4(%s, %s, %s, %s, %s.v, %s.w, %s.x, %s))',
                            displace, k1, aa, ab, ac, k2, a, a, a, b)
                     f.line('return %s', b)
-                else:
-                    assert 0, 'incomplete'
 
-            f.blank()
+                f.blank()
 
-            f.line('assert %s is 7', estimate)
+                f.line('assert (%s is 7) and (%s.skip is 0)', estimate, a)
 
-            ad  = create_test_herd_member(t, 'd', 'y')
-            ae  = create_test_herd_member(t, 'e',  'z', 4)
-            ae5 = create_test_herd_member(t, 'e5', 'z5', 5)
-            ae6 = create_test_herd_member(t, 'e6', 'z6', 6)
+                ad  = create_test_herd_member(t, 'd', 'y')
+                ae  = create_test_herd_member(t, 'e',  'z',  5, herd_k_next = 'e6')
+                ae6 = create_test_herd_member(t, 'e6', 'z6', 6, herd_k_next = 'e7')
+                ae7 = create_test_herd_member(t, 'e7', 'z7', 7)     #   NOTE: Creates 'b'
 
-            t.create_r(b)
+                f.blank()
 
-            if k_sample is 0:
                 with f.indent(arrange('%s(', displace), arrange('%*s)', length(displace),  ' '), length(displace) + 4):
                     f.line('%s,', k1)
                     with f.indent('create_herd_many(', ')'):
-                        f.line('%s, %s, %s, %s, %s, %s, %s, %s,', aa,  ab, ac, ad, ae, ae5,ae6,k2)
+                        f.line('%s, %s, %s, %s, %s, %s, %s, %s,', aa,  ab, ac, ad, ae, ae6, ae7, k2)
                         f.line('%s.v, %s.w, %s.x, %s.y, %s.z, %s.z6, %s.z7, %s,', a, a, a, a, a, a, a, b)
-            else:
-                assert 0, 'incomplete'
 
+                f.blank()
+
+                f.line('return %s', b)
+                return
+
+            skip = (length(k_sample)   if type(k_sample) is Tuple else   1)
+
+            f.blank()
+
+            f.line('assert (%s is 3) and (%s.skip is %d)', estimate, a, skip)
+
+            ac = create_test_herd_member(t, 'c', 'x', 7)            #   NOTE: Creates 'b'
+
+            f.blank()
+
+            f.line('h = create_horde_4(%d, %s, %s, %s, %s, %s.v, %s.w, %s.x, %s)',
+                   skip, aa, ab, ac, k2, a, a, a, b)
+            create_assert_k_sample(t, 'h', k_sample)
+            f.line('%s(%s, h)', displace, k1)
             f.line('return %s', b)
             return
 
@@ -293,21 +333,20 @@ def gem():
             f.line('if %s is not none: return %s', b, b)
 
         f.blank()
-        t.create_r()
-        f.line('%s_ = %s.insert(%s, r)', a, a, k2)
+        t.create_r(b)
+
+        a_ = arrange('%s_', a)
+
+        f.line('%s = %s.insert(%s, %s)', a_, a, k2, b)
 
         if k_sample is 0:
-            f.line('if %s is not %s_: %s(%s, %s_)', a, a, displace, k1, a)
+            f.line('if %s is not %s: %s(%s, %s)', a, a_, displace, k1, a_)
         else:
-            with f.indent(arrange('if %s is not %s_:', a, a)):
-                if type(k_sample) is Tuple:
-                    f.line('assert %s',
-                           ' and '.join(arrange('(%s_.sample().%s is %s)', a, k, k)   for k in k_sample))
-                else:
-                    f.line('assert %s_.sample().%s is %s', a, k_sample, k_sample)
-                f.line('%s(%s, %s_)', displace, k1, a)
+            with f.indent(arrange('if %s is not %s:', a, a_)):
+                create_assert_k_sample(t, a_, k_sample)
+                f.line('%s(%s, %s)', displace, k1, a_)
 
-        f.line('return r')
+        f.line('return %s', b)
 
 
     def create_next(t, k_sample = 0):
@@ -345,13 +384,13 @@ def gem():
             if_not_herd = arrange('if not %s.is_herd:', a)
 
         with f.indent(if_not_herd):
-            t.create_r()
+            t.create_r(b)
 
             if p is 0:
                 assert k0 is 0
 
-                f.line('store(%s, (r   if %s is absent else   create_herd_2(%s.%s, %s, %s, r)))',
-                       k1, a, a, k2, k2, a)
+                f.line('store(%s, (%s   if %s is absent else   create_herd_2(%s.%s, %s, %s, %s)))',
+                       k1, b, a, a, k2, k2, a, b)
             else:
                 if p2 is 0:
                     displace = 'store'
@@ -359,13 +398,13 @@ def gem():
                     displace = arrange('%s.displace', p2)
 
                 with f.indent(arrange('if %s is absent:', a)):
-                    f.line('%s_ = %s.insert(%s, r)', p, p, k1)
+                    f.line('%s_ = %s.insert(%s, %s)', p, p, k1, b)
                     f.line('if %s is not %s_: %s(%s, %s_)', p, p, displace, k0, p)
-                    f.line('return r')
+                    f.line('return %s', b)
 
-                f.line('%s.displace(%s, create_herd_2(%s.%s, %s, %s, r))', p, k1, a, k2, k2, a)
+                f.line('%s.displace(%s, create_herd_2(%s.%s, %s, %s, %s))', p, k1, a, k2, k2, a, b)
 
-            f.line('return r')
+            f.line('return %s', b)
 
         f.blank()
 
@@ -486,6 +525,10 @@ def gem():
             with f.indent('def gem():'):
                 f.blank_suppress()
 
+                if use_herd_estimate:
+                    f.line('from Gem import create_herd_3, create_herd_4, create_herd_many')
+                    f.blank2()
+
                 if which == 2:
                     create_conjure(f, prefix, 'dual__21', 'k2', 'k1', share = share)
 
@@ -512,10 +555,11 @@ def gem():
 
     @export
     def create_nested_conjure(year, author):
-        create_nested_conjure__X(year, author, 'NEW_conjure', 'Topaz.GeneratedNew', '2', share = 7, show = 7)
+        create_nested_conjure__X(year, author, 'NEW_conjure', 'Topaz.GeneratedNew', 2, share = 7, show = 7)
 
-        #create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureDual',      2, share = 7)
-        #create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureTriple',    3, share = 7)
-        #create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureQuadruple', 4, share = 7)
+        if 7 is 7:
+            create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureDual',      2, share = 7)
+            create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureTriple',    3, share = 7)
+            create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureQuadruple', 4, share = 7)
 
-        #create_nested_conjure__X(year, author, 'conjure', 'Gem.GeneratedConjureQuadruple', '4123', show = 0)
+            create_nested_conjure__X(year, author, 'conjure', 'Gem.GeneratedConjureQuadruple', '4123', show = 0)

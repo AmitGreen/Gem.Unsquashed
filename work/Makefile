@@ -424,6 +424,7 @@ wc:
         $(GEM_FILES) \
         $(IVORY_FILES) \
         $(LICENSE_FILES) \
+        $(MARBLE_FILES) \
         $(QUARTZ_FILES) \
         $(SAPPHIRE_FILES) \
         $(TOPAZ_FILES) \
