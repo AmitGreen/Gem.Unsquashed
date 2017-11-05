@@ -6,15 +6,35 @@ def gem():
     require_gem('Marble.Core')
 
 
-    show_assert = 7
+    show_assert       = 0
+    use_herd_estimate = 7
 
 
-    class KeyData(Object):
+    class CommonKeyData(Object):
         __slots__ = ((
             'f',                        #   DelayedOuput
             'share',                    #   Boolean
+            'show_assert',              #   Boolean
+            'use_herd_estimate',        #   Boolean
+
             'chain',                    #   Tuple of String+
             'keys',                     #   String
+        ))
+
+
+        def __init__(t, f, share, show_assert, use_herd_estimate, chain, keys):
+            t.f                 = f
+            t.share             = share
+            t.show_assert       = show_assert
+            t.use_herd_estimate = use_herd_estimate
+
+            t.chain = chain
+            t.keys  = keys
+
+        
+    class KeyData(Object):
+        __slots__ = ((
+            'common',                   #   CommonKeyData
 
             'p2',                       #   Zero | String+
             'p',                        #   Zero | String+
@@ -30,13 +50,10 @@ def gem():
         ))
 
 
-        def __init__(t, f, share, chain, keys, p2, p, a, b, c, d, _, k0, k1, k2, k3, k4):
+        def __init__(t, common, p2, p, a, b, c, d, _, k0, k1, k2, k3, k4):
             assert _ is 0
 
-            t.f     = f
-            t.share = share
-            t.chain = chain
-            t.keys  = keys
+            t.common = common
 
             t.p2 = p2
             t.p  = p
@@ -52,20 +69,30 @@ def gem():
 
 
         def create_assert(t, v):
-            if show_assert:
-                t.f.line('assert %s',
-                         ' and '.join(arrange('(%s.%s is %s)', v, k, k)   for k in t.chain))
+            common = t.common
+
+            if common.show_assert:
+                common.f.line('assert %s',
+                              ' and '.join(arrange('(%s.%s is %s)', v, k, k)   for k in common.chain))
 
 
         def create_assert_r(t):
-            if show_assert:
-                t.f.line('assert %s',
-                         ' and '.join(arrange('(r.%s is %s)', k, k)   for k in t.chain))
+            common = t.common
+
+            if common.show_assert:
+                common.f.line('assert %s',
+                              ' and '.join(arrange('(r.%s is %s)', k, k)   for k in common.chain))
 
 
-        def create_r(t):
-            t.f.line('r = Meta(%s)', t.keys)
-            t.create_assert_r()
+        def create_r(t, r = 'r', extra = 0):
+            common = t.common
+
+            if extra is 0:
+                common.f.line('%s = Meta(%s)', r, common.keys)
+            else:
+                common.f.line('%s = %s = Meta(%s)', extra, r, common.keys)
+
+            t.create_assert(r)
 
 
         def remove_b_k2(t):
@@ -80,7 +107,7 @@ def gem():
                     k_sample += ((t.k2,))
 
             return KeyData(
-                      t.f, t.share, t.chain, t.keys,
+                      t.common,
                       t.p2, t.p,  t.a,  t.c,  t.d,  0,
                       0,    t.k0, t.k1, t.k3, t.k4, 0,
                    )
@@ -88,33 +115,24 @@ def gem():
 
         def remove_p2_k0(t):
             return KeyData(
-                      t.f, t.share, t.chain, t.keys,
+                      t.common,
                       t.p, t.a,  t.b,  t.c,  t.d,  0,
                       0,   t.k1, t.k2, t.k3, t.k4, 0,
                    )
 
 
-    def create_KeyData(f, share, k1, k2, k3 = 0, k4 = 0):
-        if k3 is 0:
-            chain = ((k1, k2))
-        elif k4 is 0:
-            chain = ((k1, k2, k3))
-        else:
-            chain = ((k1, k2, k3, k4))
-
-        keys = 'k1, k2'
-        if k3 is not 0:  keys += ', k3'
-        if k4 is not 0:  keys += ', k4'
-
+    def create_KeyData(common, k1, k2, k3 = 0, k4 = 0):
         return KeyData(
-                   f, share, chain, keys,
+                   common,
                    0, 0, 'a', 'b', (0   if k3 is 0 else   'c'), (0   if k4 is 0 else   'd'),
                    0, 0, k1,  k2,  k3,                          k4,
                )
 
 
     def create_if_glimpse(t, skip = 1):
-        f  = t.f
+        common = t.common
+
+        f  = common.f
         p  = t.p
         a  = t.a
         k1 = t.k1
@@ -144,8 +162,44 @@ def gem():
         f.blank()
 
 
-    def create_last(t, k_sample = 0):
-        f  = t.f
+    def create_test_herd_member(t, herd_k, herd_v, displace = 0):
+        common = t.common
+
+        f  = common.f
+        a  = t.a
+        b  = t.b
+        k2 = t.k2
+
+        f.blank()
+
+        if displace:
+            ak = arrange('%s%s', a, herd_k)
+            f.line('%s = %s.%s', ak, a, herd_k)
+        else:
+            ak = arrange('%s.%s', a, herd_k)
+
+        if common.show_assert:
+            with f.indent(arrange('if %s is %s:', ak, k2)):
+                f.line('%s = %s.%s', b, a, herd_v)
+                t.create_assert(b)
+                f.line('return %s', b)
+        else:
+            f.line('if %s is %s: return %s.%s', ak, k2, a, herd_v)
+
+        if displace:
+            with f.indent(arrange('if %s is absent:', ak)):
+                t.create_r(b, extra = arrange('%s.%s', a, herd_k))
+                f.line('return %s', b)
+
+        f.blank()
+
+        return ak
+
+
+    def create_last(t, estimate = 0, k_sample = 0):
+        common = t.common
+
+        f  = common.f
         p  = t.p
         a  = t.a
         b  = t.b
@@ -156,6 +210,79 @@ def gem():
             displace = 'store'
         else:
             displace = arrange('%s.displace', p)
+
+        if estimate is not 0:
+            with f.indent(arrange('if %s is 8:', estimate)):
+                f.line('%s = %s.glimpse(%s)', b, a, k2)
+                if show_assert:
+                    with f.indent(arrange('if %s is not none:', b)):
+                        t.create_assert(b)
+                        f.line('return %s', b)
+                else:
+                    f.line('if %s is not none: return %s', b, b)
+
+                f.blank()
+
+                t.create_r(b)
+
+                if common.show_assert:
+                    f.line('%s_ = %s.insert(%s, %s)', a, a, k2, b)
+                    f.line('assert %s_ is %s', a, a)
+                else:
+                    f.line('%s.insert(%s, %s)', a, k2, b)
+
+                f.line('return %s', b)
+
+                f.blank()
+
+            aa = create_test_herd_member(t, 'a', 'v')
+            f.blank_suppress()
+            ab = create_test_herd_member(t, 'b', 'w')
+
+            with f.indent(arrange('if %s is 2:', estimate)):
+                t.create_r(b)
+
+                if k_sample is 0:
+                    f.line('%s(%s, create_herd_3(%s, %s, %s, %s.v, %s.w, %s))',
+                           displace, k1, aa, ab, k2, a, a, b)
+                    f.line('return %s', b)
+                else:
+                    assert 0, 'incomplete'
+
+            ac = create_test_herd_member(t, 'c', 'x', displace = 3)
+
+            with f.indent(arrange('if %s is 3:', estimate)):
+                t.create_r(b)
+
+                if k_sample is 0:
+                    f.line('%s(%s, create_herd_4(%s, %s, %s, %s, %s.v, %s.w, %s.x, %s))',
+                           displace, k1, aa, ab, ac, k2, a, a, a, b)
+                    f.line('return %s', b)
+                else:
+                    assert 0, 'incomplete'
+
+            f.blank()
+
+            f.line('assert %s is 7', estimate)
+
+            ad  = create_test_herd_member(t, 'd', 'y')
+            ae  = create_test_herd_member(t, 'e',  'z', 4)
+            ae5 = create_test_herd_member(t, 'e5', 'z5', 5)
+            ae6 = create_test_herd_member(t, 'e6', 'z6', 6)
+
+            t.create_r(b)
+
+            if k_sample is 0:
+                with f.indent(arrange('%s(', displace), arrange('%*s)', length(displace),  ' '), length(displace) + 4):
+                    f.line('%s,', k1)
+                    with f.indent('create_herd_many(', ')'):
+                        f.line('%s, %s, %s, %s, %s, %s, %s, %s,', aa,  ab, ac, ad, ae, ae5,ae6,k2)
+                        f.line('%s.v, %s.w, %s.x, %s.y, %s.z, %s.z6, %s.z7, %s,', a, a, a, a, a, a, a, b)
+            else:
+                assert 0, 'incomplete'
+
+            f.line('return %s', b)
+            return
 
         f.line('%s = %s.glimpse(%s)', b, a, k2)
         if show_assert:
@@ -184,7 +311,9 @@ def gem():
 
 
     def create_next(t, k_sample = 0):
-        f  = t.f
+        common = t.common
+
+        f  = common.f
         p2 = t.p2
         p  = t.p
         a  = t.a
@@ -206,7 +335,16 @@ def gem():
 
         f.blank()
 
-        with f.indent(arrange('if not %s.is_herd:', a)):
+        if common.use_herd_estimate:
+            estimate = arrange('%she', a)
+
+            f.line('%s = %s.herd_estimate', estimate, a)
+            if_not_herd = arrange('if %s is 0:', estimate)
+        else:
+            estimate    = 0
+            if_not_herd = arrange('if not %s.is_herd:', a)
+
+        with f.indent(if_not_herd):
             t.create_r()
 
             if p is 0:
@@ -232,7 +370,7 @@ def gem():
         f.blank()
 
         if k3 is 0:
-            create_last(t)
+            create_last(t, estimate)
             return
 
         with f.indent(arrange('if %s.skip is 0:', a)):
@@ -261,7 +399,9 @@ def gem():
 
 
     def create_sample(t, multiple, skip = 1):
-        f  = t.f
+        common = t.common
+
+        f  = common.f
         p  = t.p
         a  = t.a
         k1 = t.k1
@@ -297,7 +437,20 @@ def gem():
 
 
     def create_conjure(f, prefix, suffix, k1, k2, k3 = 0, k4 = 0, share = 7):
-        t    = create_KeyData(f, share, k1, k2, k3, k4)
+        if k3 is 0:
+            chain = ((k1, k2))
+        elif k4 is 0:
+            chain = ((k1, k2, k3))
+        else:
+            chain = ((k1, k2, k3, k4))
+
+        keys = 'k1, k2'
+        if k3 is not 0:  keys += ', k3'
+        if k4 is not 0:  keys += ', k4'
+
+        common = CommonKeyData(f, share, show_assert, use_herd_estimate, chain, keys)
+
+        t    = create_KeyData(common, k1, k2, k3, k4)
         name = arrange('%s_%s', prefix, suffix)
 
         f.blank2()
@@ -311,9 +464,9 @@ def gem():
         with f.indent():
             f.line('lookup = cache.get')
             f.line('store  = cache.__setitem__',)
-            f.blank()
+            f.blank2()
             f.line('@rename(%r, name)', arrange('%s_%%s', prefix))
-            with f.indent(arrange('def %s(%s):', name, t.keys)):
+            with f.indent(arrange('def %s(%s):', name, t.common.keys)):
                 create_next(t)
 
             f.blank2()
@@ -359,10 +512,10 @@ def gem():
 
     @export
     def create_nested_conjure(year, author):
-        #create_nested_conjure__X(year, author, 'NEW_conjure', 'Topaz.GeneratedNew', '4', share = 7, show = 7)
+        create_nested_conjure__X(year, author, 'NEW_conjure', 'Topaz.GeneratedNew', '2', share = 7, show = 7)
 
-        create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureDual',      2, share = 7)
-        create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureTriple',    3, share = 7)
-        create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureQuadruple', 4, share = 7)
+        #create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureDual',      2, share = 7)
+        #create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureTriple',    3, share = 7)
+        #create_nested_conjure__X(year, author, 'simplified_conjure', 'Topaz.GeneratedConjureQuadruple', 4, share = 7)
 
-        create_nested_conjure__X(year, author, 'conjure', 'Gem.GeneratedConjureQuadruple', '4123', show = 0)
+        #create_nested_conjure__X(year, author, 'conjure', 'Gem.GeneratedConjureQuadruple', '4123', show = 0)
