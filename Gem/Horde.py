@@ -696,7 +696,7 @@ def gem():
         return t
 
 
-    @share
+    @export
     def create_horde_4(skip, a, b, c, d, v, w, x, y):
         assert 1 <= skip <= 2
         assert (a is not absent) and (a is not b) and (a is not c) and (a is not d)

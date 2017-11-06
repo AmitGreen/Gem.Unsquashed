@@ -247,8 +247,6 @@ def gem():
 
         simplified_cache_dump = dump_cache_to_string(cache, show_sample = false)
 
-        test_final_scrub(cache)
-
         if cache_dump != simplified_cache_dump:
             write_binary_to_path('oops1.txt', cache_dump)
             write_binary_to_path('oops2.txt', simplified_cache_dump)
@@ -269,18 +267,25 @@ def gem():
 
         test_conjure_triple__X__scrub(cache, conjure_numbered_colored_shape)
 
-
         #
-        #   Verify conjure_numbered_colored_shape & produce_simplified_conjure_triple produce the same cache structure.
+        #   Verify the following produce the same cache structure:
+        #
+        #       1.  produce_conjure_unique_triple     (above)
+        #       2.  produce_simplified_conjure_triple
+        #       3.  produce_NEW_conjure_triple
         #
         test_conjure_triple__X__verify(
             cache,
-            produce_simplified_conjure_triple(
-                'simplified_numbered_colored_shape',
-                NumberedColoredShape,
-                cache,
-            ),
+            produce_simplified_conjure_triple('simplified_numbered_colored_shape', NumberedColoredShape, cache),
         )
+
+        if produce_NEW_conjure_triple is not 0:
+            test_conjure_triple__X__verify(
+                cache,
+                produce_NEW_conjure_triple('NEW_numbered_colored_shape', NumberedColoredShape, cache),
+            )
+
+        test_final_scrub(cache)
 
         #
         #   Extra test with 'triple__test_list__2' to test herds turning into hordes.

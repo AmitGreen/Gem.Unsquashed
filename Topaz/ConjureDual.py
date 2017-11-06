@@ -152,47 +152,39 @@ def gem():
 
 
     def test_conjure_unique_dual():
-        numbered_shape_cache = create_cache('numbered_shape', nub = Number.value.__get__)
+        cache = create_cache('numbered_shape', nub = Number.value.__get__)
 
         test_conjure_dual__X__scrub(
-            numbered_shape_cache,
-            produce_conjure_unique_dual(
-                'numbered_shape',
-                NumberedShape,
-                cache = numbered_shape_cache,
-            ),
+            cache,
+            produce_conjure_unique_dual('numbered_shape', NumberedShape, cache),
+        )
+
+        #
+        #   Verify the following produce the same cache structure:
+        #
+        #       1.  produce_conjure_unique_dual     (above)
+        #       2.  produce_simplified_conjure_dual
+        #       3.  produce_NEW_conjure_dual
+        #
+        test_conjure_dual__X__verify(
+            cache,
+            produce_simplified_conjure_dual('simplified_numbered_shape', NumberedShape, cache),
         )
 
         test_conjure_dual__X__verify(
-            numbered_shape_cache,
-            produce_simplified_conjure_dual(
-                'simplified_numbered_shape',
-                NumberedShape,
-                cache = numbered_shape_cache,
-            ),
+            cache,
+            produce_NEW_conjure_dual('NEW_numbered_shape', NumberedShape, cache),
         )
 
-        test_conjure_dual__X__verify(
-            numbered_shape_cache,
-            produce_NEW_conjure_dual(
-                'NEW_numbered_shape',
-                NumberedShape,
-                cache = numbered_shape_cache,
-            ),
-        )
+        test_final_scrub(cache)
 
 
     def test_conjure_unique_dual__21():
-        shape_number_cache = create_cache('shape_number', nub = Shape.name.__get__)
-
+        cache = create_cache('shape_number', nub = Shape.name.__get__)
 
         test_conjure_dual__X__scrub(
-            shape_number_cache,
-            produce_conjure_unique_dual__21(
-                'shape_number',
-                NumberedShape,
-                cache = shape_number_cache,
-            ),
+            cache,
+            produce_conjure_unique_dual__21('shape_number', NumberedShape, cache),
         )
 
 
@@ -200,7 +192,7 @@ def gem():
         #   Verify that the dual test list is ordered as expected
         #
         for v in [circle, ellipse, moon, pentagon, square, star, trapazoid, triangle]:
-            w = shape_number_cache[v]
+            w = cache[v]
 
             if w.is_herd:
                 value = 1
@@ -218,25 +210,24 @@ def gem():
 
 
         #
-        #   Verify conjure_numbered_shape__21 & simplified_conjure_numbered_shape__21 produce the same cache structure.
+        #   Verify the following produce the same cache structure:
+        #
+        #       1.  produce_conjure_unique_dual__21     (above)
+        #       2.  produce_simplified_conjure_dual__21
+        #       3.  produce_NEW_conjure_dual__21
         #
         test_conjure_dual__X__verify(
-            shape_number_cache,
-            produce_simplified_conjure_dual__21(
-                'simplified_shape_number',
-                NumberedShape,
-                cache = shape_number_cache,
-            ),
+            cache,
+            produce_simplified_conjure_dual__21('simplified_shape_number', NumberedShape, cache),
         )
 
-        test_conjure_dual__X__verify(
-            shape_number_cache,
-            produce_NEW_conjure_dual__21(
-                'NEW_numbered_shape',
-                NumberedShape,
-                cache = shape_number_cache,
-            ),
-        )
+        if produce_NEW_conjure_dual__21 is not 0:
+            test_conjure_dual__X__verify(
+                cache,
+                produce_NEW_conjure_dual__21('NEW_numbered_shape', NumberedShape, cache),
+            )
+
+        test_final_scrub(cache)
 
 
     @share
