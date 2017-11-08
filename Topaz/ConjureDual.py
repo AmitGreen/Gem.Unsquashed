@@ -171,10 +171,11 @@ def gem():
             produce_simplified_conjure_dual('simplified_numbered_shape', NumberedShape, cache),
         )
 
-        test_conjure_dual__X__verify(
-            cache,
-            produce_NEW_conjure_dual('NEW_numbered_shape', NumberedShape, cache),
-        )
+        if produce_NEW_conjure_dual is not 0:
+            test_conjure_dual__X__verify(
+                cache,
+                produce_NEW_conjure_dual('NEW_numbered_shape', NumberedShape, cache),
+            )
 
         test_final_scrub(cache)
 

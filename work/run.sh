@@ -43,6 +43,7 @@ Main_py=../Marble/Main.py
 show=2
 all=false
 #all=true
+total=75
 
 command="python -sS $Main_py"
 commandO="python -O $Main_py"
@@ -62,7 +63,7 @@ y
 END
 
 echo -en '\E[H\E[J'
-cat $show
+tail -$total $show
 
 while :
 do
@@ -75,7 +76,7 @@ do
 
             if [ $show = 2 ]; then
                 echo -en '\E[H\E[J'
-                tail -70 2
+                tail -$total 2
             fi
         fi
     fi
@@ -94,7 +95,7 @@ do
    
            if [ $show = 3 ]; then
                echo -en '\E[H\E[J'
-               tail -70 3
+               tail -$total 3
            fi
        fi
     fi
