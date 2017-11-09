@@ -37,6 +37,7 @@ def gem():
     class KeyData(Object):
         __slots__ = ((
             'common',                   #   CommonKeyData
+            'shift',                    #   Integer
 
             'b2',                       #   Zero | String+
             'b1',                       #   Zero | String+
@@ -53,10 +54,11 @@ def gem():
         ))
 
 
-        def __init__(t, common, b2, b1, p, q, r, s, _, k0, k1, k2, k3, k4):
+        def __init__(t, common, shift, b2, b1, p, q, r, s, _, k0, k1, k2, k3, k4):
             assert _ is 0
 
             t.common = common
+            t.shift  = shift
 
             t.b2 = b2
             t.b1 = b1
@@ -110,7 +112,7 @@ def gem():
                     k_sample += ((t.k2,))
 
             return KeyData(
-                      t.common,
+                      t.common, t.shift + 1,
                       t.b2, t.b1, t.p,  t.r,  t.s,  0,
                       0,    t.k0, t.k1, t.k3, t.k4, 0,
                    )
@@ -118,7 +120,7 @@ def gem():
 
         def remove_p2_k0(t):
             return KeyData(
-                      t.common,
+                      t.common, t.shift + 1,
                       t.b1, t.p,  t.q,  t.r,  t.s,  0,
                       0,    t.k1, t.k2, t.k3, t.k4, 0,
                    )
@@ -126,7 +128,7 @@ def gem():
 
     def create_KeyData(common, k1, k2, k3 = 0, k4 = 0):
         return KeyData(
-                   common,
+                   common, 0,
                    0, 0, 'p', 'q', (0   if k3 is 0 else   'r'), (0   if k4 is 0 else   's'),
                    0, 0, k1,  k2,  k3,                          k4,
                )
@@ -216,7 +218,7 @@ def gem():
         return pk
 
 
-    def create_test_herd_glimpse(t, herd_k, herd_v, displace = 0, herd_k_next = 0, if_keyword = 'if'):
+    def create_test_herd_glimpse(t, herd_k, herd_v, test_absent = 0, displace = 0, herd_k_next = 0, if_keyword = 'if'):
         common = t.common
 
         f           = common.f
@@ -226,7 +228,7 @@ def gem():
         k1          = t.k1
         k3          = t.k3
 
-        if displace:
+        if test_absent:
             indent     = f.indent('else:')
             pk         = arrange('%s%s', b1, herd_k)
             if_keyword = 'if'
@@ -235,7 +237,7 @@ def gem():
             pk     = arrange('%s.%s', b1, herd_k)
 
         with indent:
-            if displace:
+            if test_absent:
                 f.line('%s = %s.%s', pk, b1, herd_k)
 
             with f.indent(arrange('%s %s is %s:', if_keyword, pk, k1)):
@@ -244,11 +246,13 @@ def gem():
                 if k3 is 0:
                     create_if_glimpse(t)
                     f.blank_suppress()
-                    f.line('%sh = %s.herd_estimate', p, p)
 
-                f.line('%sr = %s.displace_%s', p, b1, herd_v)
+                if displace is 0:
+                    f.line('%sr = %s.displace_%s', p, b1, herd_v)
+                else:
+                    f.line('%sr = %s', p, displace)
 
-            if displace:
+            if test_absent:
                 with f.indent(arrange('elif %s is absent:', pk)):
                     f.line('%s.%s = %s', b1, herd_k, k1)
 
@@ -296,18 +300,18 @@ def gem():
             if common.total is 2:
                 assert k_sample is 0
 
-                last_herd  = 7
-                last_horde = 0
+                possible_herd  = 7
+                possible_horde = 0
 
-                f.line('#herd only')
+                f.line('#create_last: herd only')
             else:
-                last_herd  = (k_sample is 0)
-                last_horde = 7
+                possible_herd  = (k_sample is 0)
+                possible_horde = 7
 
-                if last_herd:
-                    f.line('#herd or horde')
+                if possible_herd:
+                    f.line('#create_last: herd or horde')
                 else:
-                    f.line('#horde only')
+                    f.line('#create_last: horde only')
 
             if show_assert:
                 with f.indent(arrange('if %s is 8:', estimate)):
@@ -327,7 +331,7 @@ def gem():
                        estimate, p, k2, p, k2, common.keys)
 
 
-            if last_horde:
+            if not possible_herd:
                 f.line('assert %s is 3', estimate)
                 f.blank()
 
@@ -338,18 +342,23 @@ def gem():
 
             ab = create_test_herd_member(t, 'b', 'w')
 
-            if last_herd:
+            if possible_herd:
                 if not show_assert:
                     f.blank_suppress()
 
                 with f.indent(arrange('if %s is 2:', estimate)):
+                    herd = arrange('create_herd_3(%s, %s, %s, %s.v, %s.w, %s)', aa, ab, k2, p, p, q)
+
                     t.create_r(q)
-                    f.line('%s(%s, create_herd_3(%s, %s, %s, %s.v, %s.w, %s))',
-                           displace, k1, aa, ab, k2, p, p, q)
+
+                    with f.indent(arrange('if %sh is 8:', b1)):
+                        f.line('map__store(%s, %s, %s)', b1, k1, herd)
+                    with f.indent('else:'):
+                        f.line('%sr(%s, %s)', b1, b1, herd)
+
                     f.line('return %s', q)
 
-                #EXAMINE: How horde done with 3
-                ac = create_test_herd_member(t, 'c', 'x', (0   if last_herd else   3))
+                ac = create_test_herd_member(t, 'c', 'x', (3   if possible_horde else   0))
 
                 if not show_assert:
                     f.blank_suppress()
@@ -365,7 +374,7 @@ def gem():
 
                 f.line('assert %s is 7', estimate)
 
-                ad  = create_test_herd_member(t, 'd',  'y')
+                ad  = create_test_herd_member(t, 'd',  'y',  4)
                 ae  = create_test_herd_member(t, 'e',  'z',  5, herd_k_next = 'e6')
                 ae6 = create_test_herd_member(t, 'e6', 'z6', 6, herd_k_next = 'e7')
                 ae7 = create_test_herd_member(t, 'e7', 'z7', 7, create_result = 7)
@@ -425,6 +434,7 @@ def gem():
         common      = t.common
         show_assert = common.show_assert
         f           = common.f
+        shift       = t.shift
         b2          = t.b2
         b1          = t.b1
         p           = t.p
@@ -453,6 +463,21 @@ def gem():
             f.line('%s = %s.glimpse(%s, absent)', p, b1, k1)
             f.blank_suppress()
         else:
+            possible_herd  = (shift is 1) and (k_sample is 0)
+            possible_horde = (k_sample is not 0) or (k3 is not 0)
+
+            assert (possible_herd) or (possible_horde)
+
+            if possible_herd:
+                if possible_horde:
+                    f.line('#create_next: shift: %d; herd or horde', shift)
+                else:
+                    f.line('#create_next: shift: %d; herd only', shift)
+            else:
+                assert possible_horde
+
+                f.line('#create_next: shift: %d; horde only', shift)
+
             with f.indent(arrange('if %s is 8:', p_estimate)):
                 f.line('%s = map__lookup(%s, %s)', p, b1, k1)
                 
@@ -462,16 +487,12 @@ def gem():
                         f.line('return map__provide(%s, %s, %s)', b1, k1, q)
                 else:
                     f.line('if %s is none: return map__provide(%s, %s, Meta(%s))', p, b1, k1, common.keys)
-                    
 
                 if k3 is 0:
                     create_if_glimpse(t)
                     f.blank_suppress()
-                    f.line('%sh = %s.herd_estimate', p, p)
-
-                f.line('%sr = 0', p)
-
-            if k_sample is 0:
+                    
+            if possible_herd:
                 indent     = empty_context_manager
                 if_keyword = 'elif'
             else:
@@ -481,34 +502,61 @@ def gem():
             with indent:
                 f.blank_suppress()
 
-                if k_sample is not 0:
-                    if k_sample is not 0:
-                        f.line('assert %s is 3', p_estimate)
-                        f.blank()
+                if not possible_herd:
+                    f.line('assert %s is 3', p_estimate)
+                    f.blank()
 
-                pa = create_test_herd_glimpse(t, 'p', 'v', if_keyword = if_keyword)
-                pb = create_test_herd_glimpse(t, 'q', 'w', if_keyword = 'elif')
+                pa = create_test_herd_glimpse(t, 'a', 'v', if_keyword = if_keyword)
+                pb = create_test_herd_glimpse(t, 'b', 'w', if_keyword = 'elif')
 
-                if k_sample is 0:
+                if possible_herd:
                     f.blank_suppress()
                     with f.indent(arrange('elif %s is 2:', p_estimate)):
-                        f.line('%s  = absent', p)
-                        f.line('%sr = %sh = 0', p, p)
+                        if b2 is 0:
+                            displace = 'store'
+                        else:
+                            displace = arrange('%s.displace', b2)
 
-                    ac = create_test_herd_glimpse(t, 'c', 'x', (0   if common.total == 2 else   3))
+                        t.create_r(p)
+                        f.line('%s(%s, create_herd_3(%s.a, %s.b, %s, %s.v, %s.w, %s))', displace, k0, b1, b1, k1, b1, b1, p)
+                        f.line('return %s', p)
 
-                    with f.indent():
-                        with f.indent(arrange('elif %s is 3:', p_estimate)):
-                            f.line('%s  = absent', p)
-                            f.line('%sr = %sh = 0', p, p)
+                    ac = create_test_herd_glimpse(
+                             t, 'c', 'x',
+                             
+                             (3   if possible_horde else   0),
+                             (0   if possible_horde else   'displace_3x'),
+                             if_keyword = 'elif',
+                         )
+
+                    if possible_horde:
+                        indent     = f.indent('else:')
+                        if_keyword = 'if'
+                    else:
+                        indent     = empty_context_manager
+                        if_keyword = 'elif'
+
+                    with f.indent(arrange('%s %s is 3:', if_keyword, p_estimate)):
+                        if b2 is 0:
+                            displace = 'store'
+                        else:
+                            displace = arrange('%s.displace', b2)
+
+                        t.create_r(p)
+                        f.line('%s(%s, create_herd_4(%s.a, %s.b, %s.c, %s, %s.v, %s.w, %s.x, %s))',
+                                displace, k0, b1, b1, b1, k1, b1, b1, b1, p)
+                        f.line('return %s', p)
+
+
+                    with indent:
                         with f.indent('else:'):
                             f.line('assert %s is 7', p_estimate)
-                            ad  = create_test_herd_glimpse(t, 'd', 'y')
-                            ae  = create_test_herd_glimpse(t, 'e',  'z',  5, herd_k_next = 'e6')
+                            ad  = create_test_herd_glimpse(t, 'd', 'y',      displace = 'displace_4y')
+                            ae  = create_test_herd_glimpse(t, 'e',  'z',  5, displace = 'displace_4z', herd_k_next = 'e6')
                             with f.indent():
-                                ae6 = create_test_herd_glimpse(t, 'e6', 'z6', 6, herd_k_next = 'e7')
+                                ae6 = create_test_herd_glimpse(t, 'e6', 'z6', 6, displace = 'displace_4z6', herd_k_next = 'e7')
                                 with f.indent():
-                                    ae7 = create_test_herd_glimpse(t, 'e7', 'z7', 7)
+                                    ae7 = create_test_herd_glimpse(t, 'e7', 'z7', 7, displace = 'displace_4z7')
                                     with f.indent():
                                         with f.indent('else:'):
                                             f.line('%s  = absent', p)
@@ -519,10 +567,10 @@ def gem():
                         f.line('%s  = %s.glimpse(%s, absent)', p, b1, k1)
                         f.line('%sr = 0', p)
 
-            #H
             f.blank()
 
-        create_if_glimpse(t)
+        if k3 is not 0:
+            create_if_glimpse(t)
 
         f.blank()
 
@@ -538,22 +586,17 @@ def gem():
         with f.indent(if_not_herd):
             t.create_r(q)
 
+            herd = arrange('create_herd_2(%s.%s, %s, %s, %s)', p, k2, k2, p, q)
+
             if b1 is 0:
                 assert k0 is 0
 
-                f.line('store(%s, create_herd_2(%s.%s, %s, %s, %s))', k1, p, k2, k2, p, q)
+                f.line('store(%s, %s)', k1, herd)
             else:
-                if b2 is 0:
-                    displace = 'store'
-                else:
-                    displace = arrange('%s.displace', b2)
-
-                with f.indent(arrange('if %s is absent:', p)):
-                    f.line('%s_ = %s.insert(%s, %s)', b1, b1, k1, q)
-                    f.line('if %s is not %s_: %s(%s, %s_)', b1, b1, displace, k0, b1)
-                    f.line('return %s', q)
-
-                f.line('%s.displace(%s, create_herd_2(%s.%s, %s, %s, %s))', b1, k1, p, k2, k2, p, q)
+                with f.indent(arrange('if %s is 8:', p_estimate)):
+                    f.line('map__store(%s, %s, %s)', b1, k1, herd)
+                with f.indent('else:'):
+                    f.line('%sd(%s))', b1, herd)
 
             f.line('return %s', q)
 
@@ -757,8 +800,10 @@ def gem():
 
             data = f.finish()
 
-        if show is 5:
-            partial(''.join(data.splitlines(true)[42:110]))
+        if show is 4:
+            partial(''.join(data.splitlines(true)[42:102]))
+        elif show is 5:
+            partial(''.join(data.splitlines(true)[100:170]))
         elif show is 7:
             partial(data)
 
@@ -771,7 +816,7 @@ def gem():
             #which  = ((2, 21, 3)),
             which  = 3,
             share  = 7,
-            show   = 5,
+            show   = 4,
             blanks = 7,
         )
 
