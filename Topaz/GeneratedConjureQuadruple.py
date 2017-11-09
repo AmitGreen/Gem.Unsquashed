@@ -3,161 +3,193 @@
 #
 @gem('Topaz.GeneratedConjureQuadruple')
 def gem():
+    from Gem import create_herd_3, create_herd_4, create_herd_many
+
+
+    map__lookup  = Map.get
+    map__provide = Map.setdefault
+    map__store   = Map.__setitem__
+
+
     @share
     def produce_simplified_conjure_quadruple(
             name, Meta, cache,
 
-            lookup = absent,
-            store  = absent,
+            lookup  = absent,
+            provide = absent,
+            store   = absent,
     ):
-        lookup = cache.get
-        store  = cache.__setitem__
+        lookup  = cache.get
+        provide = cache.setdefault
+        store   = cache.__setitem__
 
 
         @rename('simplified_conjure_%s', name)
         def simplified_conjure_quadruple(k1, k2, k3, k4):
-            a = lookup(k1, absent)
-            if a.k2 is k2:
-                if a.k3 is k3:
-                    if a.k4 is k4: return a
+            p = lookup(k1)
+            if p is none:
+                q = Meta(k1, k2, k3, k4)
+                assert (q.k1 is k1) and (q.k2 is k2) and (q.k3 is k3) and (q.k4 is k4)
+                return provide(k1, q)
+            if p.k2 is k2:
+                if p.k3 is k3:
+                    if p.k4 is k4: return p
 
                     r = Meta(k1, k2, k3, k4)
                     assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3) and (r.k4 is k4)
-                    store(k1, create_horde_2(2, a.k4, k4, a, r))
+                    store(k1, create_horde_2(2, p.k4, k4, p, r))
                     return r
 
-                r = Meta(k1, k2, k3, k4)
-                assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3) and (r.k4 is k4)
-                store(k1, create_horde_2(1, a.k3, k3, a, r))
-                return r
+                q = Meta(k1, k2, k3, k4)
+                assert (q.k1 is k1) and (q.k2 is k2) and (q.k3 is k3) and (q.k4 is k4)
+                store(k1, create_horde_2(1, p.k3, k3, p, q))
+                return q
 
-            if not a.is_herd:
-                b = Meta(k1, k2, k3, k4)
-                assert (b.k1 is k1) and (b.k2 is k2) and (b.k3 is k3) and (b.k4 is k4)
-                store(k1, (b   if a is absent else   create_herd_2(a.k2, k2, a, b)))
-                return b
+            if not p.is_herd:
+                q = Meta(k1, k2, k3, k4)
+                assert (q.k1 is k1) and (q.k2 is k2) and (q.k3 is k3) and (q.k4 is k4)
+                herd = create_herd_2(p.k2, k2, p, q)
+                store(k1, herd)
+                return q
 
-            if a.skip is 0:
-                b = a.glimpse(k2, absent)
-                if b.k3 is k3:
-                    if b.k4 is k4: return b
+            if p.skip is 0:
+                q = p.glimpse(k2, absent)
+
+                if q.k3 is k3:
+                    if q.k4 is k4: return q
 
                     r = Meta(k1, k2, k3, k4)
                     assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3) and (r.k4 is k4)
-                    a.displace(k2, create_horde_2(1, b.k4, k4, b, r))
+                    p.displace(k2, create_horde_2(1, q.k4, k4, q, r))
                     return r
 
-                if not b.is_herd:
-                    c = Meta(k1, k2, k3, k4)
-                    assert (c.k1 is k1) and (c.k2 is k2) and (c.k3 is k3) and (c.k4 is k4)
-                    if b is absent:
-                        a_ = a.insert(k2, c)
-                        if a is not a_: store(k1, a_)
-                        return c
-                    a.displace(k2, create_herd_2(b.k3, k3, b, c))
-                    return c
+                if q.k3 is k3:
+                    if q.k4 is k4: return q
 
-                if b.skip is 0:
-                    c = b.glimpse(k3, absent)
-                    if c.k4 is k4: return c
-
-                    if not c.is_herd:
-                        d = Meta(k1, k2, k3, k4)
-                        assert (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3) and (d.k4 is k4)
-                        if c is absent:
-                            b_ = b.insert(k3, d)
-                            if b is not b_: a.displace(k2, b_)
-                            return d
-                        b.displace(k3, create_herd_2(c.k4, k4, c, d))
-                        return d
-
-                    d = c.glimpse(k4)
-                    if d is not none:
-                        assert (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3) and (d.k4 is k4)
-                        return d
-
-                    d = Meta(k1, k2, k3, k4)
-                    assert (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3) and (d.k4 is k4)
-                    c_ = c.insert(k4, d)
-                    if c is not c_: b.displace(k3, c_)
-                    return d
-
-                assert b.skip is 1
-
-                b_k3 = b.sample().k3
-                if b_k3 is not k3:
                     r = Meta(k1, k2, k3, k4)
                     assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3) and (r.k4 is k4)
-                    a.displace(k2, create_herd_2(b_k3, k3, b.remove_skip(), r))
+                    p.displace(k2, create_horde_2(1, q.k4, k4, q, r))
                     return r
 
-                d = b.glimpse(k4)
-                if d is not none:
-                    assert (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3) and (d.k4 is k4)
-                    return d
+                if not q.is_herd:
+                    r = Meta(k1, k2, k3, k4)
+                    assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3) and (r.k4 is k4)
+                    if q is absent:
+                        p_ = p.insert(k2, r)
+                        if p is not p_: store(k1, p_)
+                        return r
 
-                d = Meta(k1, k2, k3, k4)
-                assert (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3) and (d.k4 is k4)
-                b_ = b.insert(k4, d)
-                if b is not b_:
-                    assert b_.sample().k3 is k3
-                    a.displace(k2, b_)
-                return d
+                    herd = create_herd_2(q.k3, k3, q, r)
+                    p.displace(k2, herd)
+                    return r
 
-            a_sample = a.sample()
-            a_k2     = a_sample.k2
-            if a_k2 is not k2:
+                if q.skip is 0:
+                    r = q.glimpse(k3, absent)
+                    if r.k4 is k4: return r
+
+                    if not r.is_herd:
+                        s = Meta(k1, k2, k3, k4)
+                        assert (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3) and (s.k4 is k4)
+                        if r is absent:
+                            q_ = q.insert(k3, s)
+                            if q is not q_: p.displace(k2, q_)
+                            return s
+
+                        herd = create_herd_2(r.k4, k4, r, s)
+                        q.displace(k3, herd)
+                        return s
+
+                    s = r.glimpse(k4)
+                    if s is not none:
+                        assert (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3) and (s.k4 is k4)
+                        return s
+
+                    s = Meta(k1, k2, k3, k4)
+                    assert (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3) and (s.k4 is k4)
+                    r_ = r.insert(k4, s)
+                    if r is not r_: q.displace(k3, r_)
+                    return s
+
+                assert q.skip is 1
+
+                q_k3 = q.sample().k3
+                if q_k3 is not k3:
+                    r = Meta(k1, k2, k3, k4)
+                    assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3) and (r.k4 is k4)
+                    p.displace(k2, create_herd_2(q_k3, k3, q.remove_skip(), r))
+                    return r
+
+                s = q.glimpse(k4)
+                if s is not none:
+                    assert (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3) and (s.k4 is k4)
+                    return s
+
+                s = Meta(k1, k2, k3, k4)
+                assert (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3) and (s.k4 is k4)
+                q_ = q.insert(k4, s)
+                if q is not q_:
+                    assert q_.sample().k3 is k3
+                    p.displace(k2, q_)
+                return s
+
+            p_sample = p.sample()
+            p_k2     = p_sample.k2
+            if p_k2 is not k2:
                 r = Meta(k1, k2, k3, k4)
                 assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3) and (r.k4 is k4)
-                store(k1, create_herd_2(a_k2, k2, a.remove_skip(), r))
+                store(k1, create_herd_2(p_k2, k2, p.remove_skip(), r))
                 return r
 
-            if a.skip is 1:
-                c = a.glimpse(k3, absent)
-                if c.k4 is k4: return c
+            if p.skip is 1:
+                r = p.glimpse(k3, absent)
+                if r.k4 is k4: return r
 
-                if not c.is_herd:
-                    d = Meta(k1, k2, k3, k4)
-                    assert (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3) and (d.k4 is k4)
-                    if c is absent:
-                        a_ = a.insert(k3, d)
-                        if a is not a_: store(k1, a_)
-                        return d
-                    a.displace(k3, create_herd_2(c.k4, k4, c, d))
-                    return d
+                if not r.is_herd:
+                    s = Meta(k1, k2, k3, k4)
+                    assert (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3) and (s.k4 is k4)
+                    if r is absent:
+                        p_ = p.insert(k3, s)
+                        if p is not p_:
+                            assert p_.sample().k2 is k2
+                            store(k1, p_)
+                        return s
 
-                d = c.glimpse(k4)
-                if d is not none:
-                    assert (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3) and (d.k4 is k4)
-                    return d
+                    herd = create_herd_2(r.k4, k4, r, s)
+                    p.displace(k3, herd)
+                    return s
 
-                d = Meta(k1, k2, k3, k4)
-                assert (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3) and (d.k4 is k4)
-                c_ = c.insert(k4, d)
-                if c is not c_: a.displace(k3, c_)
-                return d
+                s = r.glimpse(k4)
+                if s is not none:
+                    assert (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3) and (s.k4 is k4)
+                    return s
 
-            assert a.skip is 2
+                s = Meta(k1, k2, k3, k4)
+                assert (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3) and (s.k4 is k4)
+                r_ = r.insert(k4, s)
+                if r is not r_: p.displace(k3, r_)
+                return s
 
-            a_k3 = a_sample.k3
-            if a_k3 is not k3:
+            assert p.skip is 2
+
+            p_k3 = p_sample.k3
+            if p_k3 is not k3:
                 r = Meta(k1, k2, k3, k4)
                 assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3) and (r.k4 is k4)
-                store(k1, create_horde_2(1, a_k3, k3, a.remove_skip(2), r))
+                store(k1, create_horde_2(1, p_k3, k3, p.remove_skip(2), r))
                 return r
 
-            d = a.glimpse(k4)
-            if d is not none:
-                assert (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3) and (d.k4 is k4)
-                return d
+            s = p.glimpse(k4)
+            if s is not none:
+                assert (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3) and (s.k4 is k4)
+                return s
 
-            d = Meta(k1, k2, k3, k4)
-            assert (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3) and (d.k4 is k4)
-            a_ = a.insert(k4, d)
-            if a is not a_:
-                assert (a_.sample().k2 is k2) and (a_.sample().k3 is k3)
-                store(k1, a_)
-            return d
+            s = Meta(k1, k2, k3, k4)
+            assert (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3) and (s.k4 is k4)
+            p_ = p.insert(k4, s)
+            if p is not p_:
+                assert (p_.sample().k2 is k2) and (p_.sample().k3 is k3)
+                store(k1, p_)
+            return s
 
 
         return simplified_conjure_quadruple
@@ -167,157 +199,181 @@ def gem():
     def produce_simplified_conjure_quadruple__4123(
             name, Meta, cache,
 
-            lookup = absent,
-            store  = absent,
+            lookup  = absent,
+            provide = absent,
+            store   = absent,
     ):
-        lookup = cache.get
-        store  = cache.__setitem__
+        lookup  = cache.get
+        provide = cache.setdefault
+        store   = cache.__setitem__
 
 
         @rename('simplified_conjure_%s', name)
         def simplified_conjure_quadruple__4123(k1, k2, k3, k4):
-            a = lookup(k4, absent)
-            if a.k1 is k1:
-                if a.k2 is k2:
-                    if a.k3 is k3: return a
+            p = lookup(k4)
+            if p is none:
+                q = Meta(k1, k2, k3, k4)
+                assert (q.k4 is k4) and (q.k1 is k1) and (q.k2 is k2) and (q.k3 is k3)
+                return provide(k4, q)
+            if p.k1 is k1:
+                if p.k2 is k2:
+                    if p.k3 is k3: return p
 
                     r = Meta(k1, k2, k3, k4)
                     assert (r.k4 is k4) and (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3)
-                    store(k4, create_horde_2(2, a.k3, k3, a, r))
+                    store(k4, create_horde_2(2, p.k3, k3, p, r))
                     return r
 
-                r = Meta(k1, k2, k3, k4)
-                assert (r.k4 is k4) and (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3)
-                store(k4, create_horde_2(1, a.k2, k2, a, r))
-                return r
+                q = Meta(k1, k2, k3, k4)
+                assert (q.k4 is k4) and (q.k1 is k1) and (q.k2 is k2) and (q.k3 is k3)
+                store(k4, create_horde_2(1, p.k2, k2, p, q))
+                return q
 
-            if not a.is_herd:
-                b = Meta(k1, k2, k3, k4)
-                assert (b.k4 is k4) and (b.k1 is k1) and (b.k2 is k2) and (b.k3 is k3)
-                store(k4, (b   if a is absent else   create_herd_2(a.k1, k1, a, b)))
-                return b
+            if not p.is_herd:
+                q = Meta(k1, k2, k3, k4)
+                assert (q.k4 is k4) and (q.k1 is k1) and (q.k2 is k2) and (q.k3 is k3)
+                herd = create_herd_2(p.k1, k1, p, q)
+                store(k4, herd)
+                return q
 
-            if a.skip is 0:
-                b = a.glimpse(k1, absent)
-                if b.k2 is k2:
-                    if b.k3 is k3: return b
+            if p.skip is 0:
+                q = p.glimpse(k1, absent)
+
+                if q.k2 is k2:
+                    if q.k3 is k3: return q
 
                     r = Meta(k1, k2, k3, k4)
                     assert (r.k4 is k4) and (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3)
-                    a.displace(k1, create_horde_2(1, b.k3, k3, b, r))
+                    p.displace(k1, create_horde_2(1, q.k3, k3, q, r))
                     return r
 
-                if not b.is_herd:
-                    c = Meta(k1, k2, k3, k4)
-                    assert (c.k4 is k4) and (c.k1 is k1) and (c.k2 is k2) and (c.k3 is k3)
-                    if b is absent:
-                        a_ = a.insert(k1, c)
-                        if a is not a_: store(k4, a_)
-                        return c
-                    a.displace(k1, create_herd_2(b.k2, k2, b, c))
-                    return c
+                if q.k2 is k2:
+                    if q.k3 is k3: return q
 
-                if b.skip is 0:
-                    c = b.glimpse(k2, absent)
-                    if c.k3 is k3: return c
-
-                    if not c.is_herd:
-                        d = Meta(k1, k2, k3, k4)
-                        assert (d.k4 is k4) and (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3)
-                        if c is absent:
-                            b_ = b.insert(k2, d)
-                            if b is not b_: a.displace(k1, b_)
-                            return d
-                        b.displace(k2, create_herd_2(c.k3, k3, c, d))
-                        return d
-
-                    d = c.glimpse(k3)
-                    if d is not none:
-                        assert (d.k4 is k4) and (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3)
-                        return d
-
-                    d = Meta(k1, k2, k3, k4)
-                    assert (d.k4 is k4) and (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3)
-                    c_ = c.insert(k3, d)
-                    if c is not c_: b.displace(k2, c_)
-                    return d
-
-                assert b.skip is 1
-
-                b_k2 = b.sample().k2
-                if b_k2 is not k2:
                     r = Meta(k1, k2, k3, k4)
                     assert (r.k4 is k4) and (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3)
-                    a.displace(k1, create_herd_2(b_k2, k2, b.remove_skip(), r))
+                    p.displace(k1, create_horde_2(1, q.k3, k3, q, r))
                     return r
 
-                d = b.glimpse(k3)
-                if d is not none:
-                    assert (d.k4 is k4) and (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3)
-                    return d
+                if not q.is_herd:
+                    r = Meta(k1, k2, k3, k4)
+                    assert (r.k4 is k4) and (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3)
+                    if q is absent:
+                        p_ = p.insert(k1, r)
+                        if p is not p_: store(k4, p_)
+                        return r
 
-                d = Meta(k1, k2, k3, k4)
-                assert (d.k4 is k4) and (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3)
-                b_ = b.insert(k3, d)
-                if b is not b_:
-                    assert b_.sample().k2 is k2
-                    a.displace(k1, b_)
-                return d
+                    herd = create_herd_2(q.k2, k2, q, r)
+                    p.displace(k1, herd)
+                    return r
 
-            a_sample = a.sample()
-            a_k1     = a_sample.k1
-            if a_k1 is not k1:
+                if q.skip is 0:
+                    r = q.glimpse(k2, absent)
+                    if r.k3 is k3: return r
+
+                    if not r.is_herd:
+                        s = Meta(k1, k2, k3, k4)
+                        assert (s.k4 is k4) and (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3)
+                        if r is absent:
+                            q_ = q.insert(k2, s)
+                            if q is not q_: p.displace(k1, q_)
+                            return s
+
+                        herd = create_herd_2(r.k3, k3, r, s)
+                        q.displace(k2, herd)
+                        return s
+
+                    s = r.glimpse(k3)
+                    if s is not none:
+                        assert (s.k4 is k4) and (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3)
+                        return s
+
+                    s = Meta(k1, k2, k3, k4)
+                    assert (s.k4 is k4) and (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3)
+                    r_ = r.insert(k3, s)
+                    if r is not r_: q.displace(k2, r_)
+                    return s
+
+                assert q.skip is 1
+
+                q_k2 = q.sample().k2
+                if q_k2 is not k2:
+                    r = Meta(k1, k2, k3, k4)
+                    assert (r.k4 is k4) and (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3)
+                    p.displace(k1, create_herd_2(q_k2, k2, q.remove_skip(), r))
+                    return r
+
+                s = q.glimpse(k3)
+                if s is not none:
+                    assert (s.k4 is k4) and (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3)
+                    return s
+
+                s = Meta(k1, k2, k3, k4)
+                assert (s.k4 is k4) and (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3)
+                q_ = q.insert(k3, s)
+                if q is not q_:
+                    assert q_.sample().k2 is k2
+                    p.displace(k1, q_)
+                return s
+
+            p_sample = p.sample()
+            p_k1     = p_sample.k1
+            if p_k1 is not k1:
                 r = Meta(k1, k2, k3, k4)
                 assert (r.k4 is k4) and (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3)
-                store(k4, create_herd_2(a_k1, k1, a.remove_skip(), r))
+                store(k4, create_herd_2(p_k1, k1, p.remove_skip(), r))
                 return r
 
-            if a.skip is 1:
-                c = a.glimpse(k2, absent)
-                if c.k3 is k3: return c
+            if p.skip is 1:
+                r = p.glimpse(k2, absent)
+                if r.k3 is k3: return r
 
-                if not c.is_herd:
-                    d = Meta(k1, k2, k3, k4)
-                    assert (d.k4 is k4) and (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3)
-                    if c is absent:
-                        a_ = a.insert(k2, d)
-                        if a is not a_: store(k4, a_)
-                        return d
-                    a.displace(k2, create_herd_2(c.k3, k3, c, d))
-                    return d
+                if not r.is_herd:
+                    s = Meta(k1, k2, k3, k4)
+                    assert (s.k4 is k4) and (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3)
+                    if r is absent:
+                        p_ = p.insert(k2, s)
+                        if p is not p_:
+                            assert p_.sample().k1 is k1
+                            store(k4, p_)
+                        return s
 
-                d = c.glimpse(k3)
-                if d is not none:
-                    assert (d.k4 is k4) and (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3)
-                    return d
+                    herd = create_herd_2(r.k3, k3, r, s)
+                    p.displace(k2, herd)
+                    return s
 
-                d = Meta(k1, k2, k3, k4)
-                assert (d.k4 is k4) and (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3)
-                c_ = c.insert(k3, d)
-                if c is not c_: a.displace(k2, c_)
-                return d
+                s = r.glimpse(k3)
+                if s is not none:
+                    assert (s.k4 is k4) and (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3)
+                    return s
 
-            assert a.skip is 2
+                s = Meta(k1, k2, k3, k4)
+                assert (s.k4 is k4) and (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3)
+                r_ = r.insert(k3, s)
+                if r is not r_: p.displace(k2, r_)
+                return s
 
-            a_k2 = a_sample.k2
-            if a_k2 is not k2:
+            assert p.skip is 2
+
+            p_k2 = p_sample.k2
+            if p_k2 is not k2:
                 r = Meta(k1, k2, k3, k4)
                 assert (r.k4 is k4) and (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3)
-                store(k4, create_horde_2(1, a_k2, k2, a.remove_skip(2), r))
+                store(k4, create_horde_2(1, p_k2, k2, p.remove_skip(2), r))
                 return r
 
-            d = a.glimpse(k3)
-            if d is not none:
-                assert (d.k4 is k4) and (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3)
-                return d
+            s = p.glimpse(k3)
+            if s is not none:
+                assert (s.k4 is k4) and (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3)
+                return s
 
-            d = Meta(k1, k2, k3, k4)
-            assert (d.k4 is k4) and (d.k1 is k1) and (d.k2 is k2) and (d.k3 is k3)
-            a_ = a.insert(k3, d)
-            if a is not a_:
-                assert (a_.sample().k1 is k1) and (a_.sample().k2 is k2)
-                store(k4, a_)
-            return d
+            s = Meta(k1, k2, k3, k4)
+            assert (s.k4 is k4) and (s.k1 is k1) and (s.k2 is k2) and (s.k3 is k3)
+            p_ = p.insert(k3, s)
+            if p is not p_:
+                assert (p_.sample().k1 is k1) and (p_.sample().k2 is k2)
+                store(k4, p_)
+            return s
 
 
         return simplified_conjure_quadruple__4123

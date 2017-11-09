@@ -326,14 +326,15 @@ def gem():
             produce_conjure_unique_triple__312('shape_number_color__312', NumberedColoredShape, cache),
         )
 
-        test_conjure_triple__X__verify(
-            cache,
-            produce_simplified_conjure_triple__312(
-                'simplified_numbered_colored_shape__312',
-                NumberedColoredShape,
+        if produce_simplified_conjure_triple__312 is not 0:
+            test_conjure_triple__X__verify(
                 cache,
-            ),
-        )
+                produce_simplified_conjure_triple__312(
+                    'simplified_numbered_colored_shape__312',
+                    NumberedColoredShape,
+                    cache,
+                ),
+            )
 
         test_final_scrub(cache)
 

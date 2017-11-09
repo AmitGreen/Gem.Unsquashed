@@ -558,7 +558,7 @@ def gem():
         def increment_skip(t, skip = 1):
             assert 1 <= skip <= 2
 
-            r = create_horde_4(skip, t.a, t.b, t.c, t.d, t.v, t.w, t.x, t.y)
+            r = create_horde_many(skip, t.a, t.b, t.c, t.d, t.v, t.w, t.x, t.y)
 
             if t.e is absent:
                 return r
