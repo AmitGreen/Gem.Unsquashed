@@ -252,9 +252,9 @@ def gem():
                     f.blank_suppress()
 
                 if displace is 0:
-                    f.line('%sr = %s.displace_%s', p, b1, herd_v)
+                    f.line('%sr = %s.displace_%s', b1, b1, herd_v)
                 else:
-                    f.line('%sr = %s', p, displace)
+                    f.line('%sr = %s', b1, displace)
 
             if test_absent:
                 if create_result:
@@ -885,7 +885,7 @@ def gem():
         elif show is 4:
             partial(''.join(data.splitlines(true)[100:170]))
         elif show is 5:
-            partial(''.join(data.splitlines(true)[100:170]))
+            partial(''.join(data.splitlines(true)[140:210]))
         elif show is 7:
             partial(data)
 
@@ -895,10 +895,10 @@ def gem():
         create_nested_conjure__X(
             year, author, 'NEW_conjure', 'Topaz.GeneratedNew',
 
-            #which  = ((2, 21, 3)),
-            which  = 4,
+            which  = ((2, 21, 3)),
+            #which  = 3,
             share  = 7,
-            show   = 7,
+            show   = 5,
             blanks = 7,
         )
 
