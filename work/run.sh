@@ -39,6 +39,7 @@ Main_py=../Dravite/Main.py
 Main_py=../Sapphire/Main.py
 Main_py=../Topaz/Main.py
 Main_py=../Marble/Main.py
+Main_py=../Crystal/Main.py
 
 show=2
 all=false

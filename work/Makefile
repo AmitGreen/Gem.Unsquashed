@@ -9,6 +9,12 @@ BERYL_FILES = \
     ../Beryl/BerylAnswer.py \
     ../Beryl/Main.py
 
+CRYSTAL_FILES = \
+    ../Crystal/__init__.py \
+    ../Crystal/Core.py \
+    ../Crystal/Main.py \
+    ../Crystal/Player.py
+
 GEM_FILES = \
 	../Gem/__init__.py \
     ../Gem/Absent.py ../Gem/All.py ../Gem/Ascii.py \
@@ -148,6 +154,7 @@ WORK_FILES = Makefile
 FILES = \
     $(AGATE_FILES) \
     $(BERYL_FILES) \
+    $(CRYSTAL_FILES) \
     $(DRAVITE_FILES) \
     $(GEM_FILES) \
     $(IVORY_FILES) \
@@ -199,6 +206,7 @@ clean:
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
+	rm -f yc.py yg.py ym.py yp.py
 	rm -f zco.py zcs.py zd.py ze.py zg2.py zg3.gpy zg3.py zg4.py zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
 	rm -f   zm.py zo4.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
 
@@ -392,6 +400,10 @@ links:
 	ln -s ../Tremolite/Compile.py                       tx.py
 	ln -s ../Sardonyx/Boot.py                           xb.py
 	ln -s ../Sapphire/Transform.py                      xf.py
+	ln -s ../Crystal/Core.py                            yc.py
+	ln -s ../Crystal/Game.py                            yg.py
+	ln -s ../Crystal/Main.py                            ym.py
+	ln -s ../Crystal/Player.py                          yp.py
 	ln -s ../Topaz/Core.py                              zco.py
 	ln -s ../Topaz/CacheSupport.py                      zcs.py
 	ln -s ../Topaz/Drove.py                             zd.py
@@ -423,6 +435,7 @@ wc:
 	#
 	wc -l \
 		$(BERYL_FILES) \
+		$(CRYSTAL_FILES) \
 		$(DRAVITE_FILES) \
         $(GEM_FILES) \
         $(IVORY_FILES) \
@@ -438,6 +451,7 @@ wc:
 test:
 	cat \
 		$(BERYL_FILES) \
+		$(CRYSTAL_FILES) \
 		$(DRAVITE_FILES) \
 		$(GEM_FILES) \
 		$(IVORY_FILES) \
