@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 AGATE_FILES = ../Agate/RUNME.py
 
@@ -8,6 +8,19 @@ BERYL_FILES = \
     ../Beryl/Ask.py \
     ../Beryl/BerylAnswer.py \
     ../Beryl/Main.py
+
+CRYSTAL_FILES = \
+    ../Crystal/__init__.py \
+    ../Crystal/Board.py ../Crystal/BlankSquare.py \
+    ../Crystal/CardRoot.py ../Crystal/ChessBishop.py ../Crystal/ChessKing.py ../Crystal/ChessKnight.py \
+        ../Crystal/ChessPawn.py ../Crystal/ChessRook.py ../Crystal/Core.py \
+    ../Crystal/Deck_7.py \
+    ../Crystal/FrozenChessCard.py ../Crystal/FrozenCardRoot.py \
+    ../Crystal/Game.py \
+    ../Crystal/Main.py \
+    ../Crystal/Player.py \
+    ../Crystal/Square.py \
+    ../Crystal/VoidSquare.py
 
 GEM_FILES = \
 	../Gem/__init__.py \
@@ -148,6 +161,7 @@ WORK_FILES = Makefile
 FILES = \
     $(AGATE_FILES) \
     $(BERYL_FILES) \
+    $(CRYSTAL_FILES) \
     $(DRAVITE_FILES) \
     $(GEM_FILES) \
     $(IVORY_FILES) \
@@ -199,6 +213,8 @@ clean:
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
+	rm -f ybd.py ybi.py ybq.py yco.py ycr.py yd7.py yg.py yki.py ykn.py
+	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zco.py zcs.py zd.py ze.py zg2.py zg3.gpy zg3.py zg4.py zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
 	rm -f   zm.py zo4.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
 
@@ -392,6 +408,23 @@ links:
 	ln -s ../Tremolite/Compile.py                       tx.py
 	ln -s ../Sardonyx/Boot.py                           xb.py
 	ln -s ../Sapphire/Transform.py                      xf.py
+	ln -s ../Crystal/Board.py                           ybd.py
+	ln -s ../Crystal/ChessBishop.py                     ybi.py
+	ln -s ../Crystal/BlankSquare.py                     ybq.py
+	ln -s ../Crystal/Core.py                            yco.py
+	ln -s ../Crystal/CardRoot.py                        ycr.py
+	ln -s ../Crystal/Deck_7.py                          yd7.py
+	ln -s ../Crystal/Game.py                            yg.py
+	ln -s ../Crystal/ChessKing.py                       yki.py
+	ln -s ../Crystal/ChessKnight.py                     ykn.py
+	ln -s ../Crystal/Main.py                            ym.py
+	ln -s ../Crystal/Player.py                          yp.py
+	ln -s ../Crystal/Square.py                          yq.py
+	ln -s ../Crystal/ChessRook.py                       yr.py
+	ln -s ../Crystal/VoidSquare.py                      yv.py
+	ln -s ../Crystal/ChessPawn.py                       yw.py
+	ln -s ../Crystal/FrozenChessCard.py                 yzc.py
+	ln -s ../Crystal/FrozenCardRoot.py                  yzr.py
 	ln -s ../Topaz/Core.py                              zco.py
 	ln -s ../Topaz/CacheSupport.py                      zcs.py
 	ln -s ../Topaz/Drove.py                             zd.py
@@ -423,6 +456,7 @@ wc:
 	#
 	wc -l \
 		$(BERYL_FILES) \
+		$(CRYSTAL_FILES) \
 		$(DRAVITE_FILES) \
         $(GEM_FILES) \
         $(IVORY_FILES) \
@@ -438,6 +472,7 @@ wc:
 test:
 	cat \
 		$(BERYL_FILES) \
+		$(CRYSTAL_FILES) \
 		$(DRAVITE_FILES) \
 		$(GEM_FILES) \
 		$(IVORY_FILES) \
