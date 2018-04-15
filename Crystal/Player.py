@@ -20,8 +20,8 @@ def gem():
             return arrange('<Player %s>', t.name)
 
 
-    alice = Player('alice')
-    bob   = Player('bob')
+    alice = Player('Alice')
+    bob   = Player('Bob')
 
     
     share(

@@ -1,16 +1,12 @@
 #
 #   Copyright (c) 2018 Amit Green.  All rights reserved.
 #
-@gem('Crystal.Player')
+@gem('Crystal.Chess')
 def gem():
     #require_gem('Crystal.Core')
 
 
     class Chess_King(Object):
-        attack         = 1
-        initial_health = 20
-
-
         __slots__ = ((
             'current_health',           #   Integer
             'maximum_health',           #   Integer
@@ -31,43 +27,52 @@ def gem():
             return arrange('<%s %d; maximum %d>', t.card_name, t.current_health, t.maximum_health)
 
 
+        def portray_abbreviation(t):
+            return t.abbreviation
+
+
+        def portray_numbers(t):
+            if t.maximum_health == t.initial_health:
+                return arrange('%d/%d', t.attack, t.current_health)
+
+            return arrange('%d/%d(%d)', t.attack, t.current_health, t.maximum_health)
+
+
 
     class Ally_Chess_King(Chess_King):
-        ally      = true
-        card_name = 'Ally_Chess_King'
-        enemy     = false
+        abbreviation   = 'WK'
+        ally           = true
+        attack         = 1
+        card_name      = 'Ally-Chess-King'
+        empty_square   = false
+        enemy          = false
+        initial_health = 20
 
 
-        @property
-        def mirror(t):
-            if t._mirror is not 0:
-                return t._mirror
+        def action(t, board, square):
+            assert square is square_a1
 
-            r = \
-                t._mirror = conjure_enemy_chess_king(t.current_health, t.maximum_health)
-
-            r._mirror = t
-
-            return r
+            board.a2 = board.a2.attacked(t.attack)
 
 
     class Enemy_Chess_King(Chess_King):
-        ally      = true
-        card_name = 'Enemy_Chess_King'
-        enemy     = false
+        abbreviation   = 'BK'
+        ally           = false
+        attack         = 1
+        card_name      = 'Enemy-Chess-King'
+        empty_square   = false
+        enemy          = true
+        initial_health = 20
 
 
-        @property
-        def mirror(t):
-            if t._mirror is not 0:
-                return t._mirror
+        def attacked(t, attack):
+            health = t.current_health - attack
 
-            r = \
-                t._mirror = conjure_ally_chess_king(t.current_health, t.maximum_health)
+            if health < 0:
+                health = 0
 
-            r._mirror = t
+            return conjure_enemy_chess_king(health, t.maximum_health)
 
-            return r
 
 
     Ally_Chess_King.k1 = Ally_Chess_King.current_health
@@ -82,8 +87,15 @@ def gem():
     conjure_enemy_chess_king = produce_conjure_dual('enemy_chess_king', Enemy_Chess_King)
 
 
-    initial_ally_chess_king  = conjure_ally_chess_king (Chess_King.initial_health, Chess_King.initial_health)
-    initial_enemy_chess_king = conjure_enemy_chess_king(Chess_King.initial_health, Chess_King.initial_health)
+    initial_ally_chess_king  = conjure_ally_chess_king(
+            Ally_Chess_King .initial_health,
+            Ally_Chess_King .initial_health,
+        )
+
+    initial_enemy_chess_king = conjure_enemy_chess_king(
+            Enemy_Chess_King.initial_health,
+            Enemy_Chess_King.initial_health,
+        )
 
 
     def produce_mirror_method(Meta, conjure_mirror):
