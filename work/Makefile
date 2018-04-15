@@ -11,7 +11,7 @@ BERYL_FILES = \
 
 CRYSTAL_FILES = \
     ../Crystal/__init__.py \
-    ../Crystal/Core.py \
+    ../Crystal/Chess.py ../Crystal/Core.py \
     ../Crystal/Main.py \
     ../Crystal/Player.py
 
@@ -206,7 +206,7 @@ clean:
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f yc.py yg.py ym.py yp.py
+	rm -f yc.py yco.py yg.py ym.py yp.py
 	rm -f zco.py zcs.py zd.py ze.py zg2.py zg3.gpy zg3.py zg4.py zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
 	rm -f   zm.py zo4.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
 
@@ -400,7 +400,8 @@ links:
 	ln -s ../Tremolite/Compile.py                       tx.py
 	ln -s ../Sardonyx/Boot.py                           xb.py
 	ln -s ../Sapphire/Transform.py                      xf.py
-	ln -s ../Crystal/Core.py                            yc.py
+	ln -s ../Crystal/Chess.py                           yc.py
+	ln -s ../Crystal/Core.py                            yco.py
 	ln -s ../Crystal/Game.py                            yg.py
 	ln -s ../Crystal/Main.py                            ym.py
 	ln -s ../Crystal/Player.py                          yp.py

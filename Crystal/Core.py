@@ -1,12 +1,15 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2018 Amit Green.  All rights reserved.
 #
 @gem('Crystal.Core')
 def gem():
-    require_gem('Gem.Global')
+    require_gem('Gem.Cache')
 
 
-    from Gem import gem_global
+    from Gem import produce_conjure_dual, produce_conjure_triple__312
 
 
-    gem_global.testing = true
+    share(
+        'produce_conjure_dual',             produce_conjure_dual,
+        'produce_conjure_triple__312',      produce_conjure_triple__312,
+    )
