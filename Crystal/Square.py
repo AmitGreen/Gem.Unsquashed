@@ -49,6 +49,10 @@ def gem():
             return '<Empty-Square>'
 
 
+        def mirror(t):
+            return t
+
+
         @static_method
         def portray_abbreviation():
             return 'Empty'
@@ -60,9 +64,6 @@ def gem():
 
 
     empty_square = EmptySquare()
-
-
-    empty_square.mirror = empty_square
 
 
     share(

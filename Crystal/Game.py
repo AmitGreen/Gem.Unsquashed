@@ -5,19 +5,16 @@
 def gem():
     require_gem('Crystal.Core')
     require_gem('Crystal.Board')
-    require_gem('Crystal.Chess')
+    require_gem('Crystal.ChessKing')
     require_gem('Crystal.Player')
     require_gem('Crystal.Square')
 
 
     def command_test():
-        assert initial_enemy_chess_king.mirror is initial_ally_chess_king
-        assert initial_ally_chess_king .mirror is initial_enemy_chess_king
+        pass
 
 
     def command_dump():
-        line('initial_ally_chess_king:  %s',  initial_ally_chess_king)
-        line('initial_enemy_chess_king:  %s', initial_enemy_chess_king)
         line('empty_square:  %s', empty_square)
 
 
@@ -26,7 +23,7 @@ def gem():
         command_test()
         command_dump()
 
-        board = GameBoard(1, alice, initial_enemy_chess_king, initial_ally_chess_king)
+        board = GameBoard(1, alice, create_enemy_chess_king(), create_ally_chess_king())
 
         board.dump_abbreviation()
 

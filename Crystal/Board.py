@@ -90,17 +90,17 @@ def gem():
 
 
         def mirror(t):
-            a2 = t.a1.mirror
-            b2 = t.b1.mirror
-            c2 = t.c1.mirror
-            d2 = t.d1.mirror
-            e2 = t.e1.mirror
+            a2 = t.a1.mirror()
+            b2 = t.b1.mirror()
+            c2 = t.c1.mirror()
+            d2 = t.d1.mirror()
+            e2 = t.e1.mirror()
 
-            a1 = t.a2.mirror
-            b1 = t.b2.mirror
-            c1 = t.c2.mirror
-            d1 = t.d2.mirror
-            e1 = t.e2.mirror
+            a1 = t.a2.mirror()
+            b1 = t.b2.mirror()
+            c1 = t.c2.mirror()
+            d1 = t.d2.mirror()
+            e1 = t.e2.mirror()
 
             t.a2 = a2
             t.b2 = b2
