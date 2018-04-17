@@ -3,9 +3,6 @@
 #
 @gem('Crystal.Square')
 def gem():
-    #require_gem('Crystal.
-
-
     class Square(Object):
         __slots__ = ((
             'name',                 #   String+
@@ -13,12 +10,14 @@ def gem():
             'row',                  #   Integer
             'blank',                #   Vacant | BlankSquare
 
+            'load_center',          #   Vacant | MethodWrapper
             'load_north_ww',        #   Vacant | MethodWrapper
             'load_north_west',      #   Vacant | MethodWrapper
             'load_north',           #   Vacant | MethodWrapper
             'load_north_east',      #   Vacant | MethodWrapper
             'load_north_ee',        #   Vacant | MethodWrapper
 
+            'store_center',         #   Vacant | MethodWrapper
             'store_north_ww',       #   Vacant | MethodWrapper
             'store_north_west',     #   Vacant | MethodWrapper
             'store_north',          #   Vacant | MethodWrapper

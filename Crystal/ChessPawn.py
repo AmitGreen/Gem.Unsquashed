@@ -9,9 +9,11 @@ def gem():
     @export
     class ChessPawn(Object):
         is_blank_square = false
+        is_card         = true
 
 
         __slots__ = ((
+            'square',                   #   Square
             'ally',                     #   Boolean
             'current_attack',           #   Integer
             'current_health',           #   Integer
@@ -19,7 +21,8 @@ def gem():
         ))
 
 
-        def __init__(t, ally, current_attack, current_health, maximum_health):
+        def __init__(t, square, ally, current_attack, current_health, maximum_health):
+            t.square         = square
             t.ally           = ally
             t.current_attack = current_attack
             t.current_health = current_health
@@ -31,10 +34,20 @@ def gem():
             return not t.ally
 
 
-        def action(t, board, square):
-            assert square is square_a1
+        def action(t, board):
+            north_east = t.square.load_north_east(board)
 
-            board.a2 = board.a2.attacked(t.current_attack)
+            if north_east.is_card:
+                north_east.attacked(board, t.current_attack)
+                return
+
+            north_west = t.square.load_north_west(board)
+
+            if north_west.is_card:
+                north_west.attacked(board, t.current_attack)
+                return
+
+            board.a2.attacked_ignore_shield(board, t.current_attack)
 
 
         def attacked(t, attack):
@@ -47,8 +60,9 @@ def gem():
             return t
 
 
-        def mirror(t):
-            t.ally = not t.ally
+        def mirror(t, square):
+            t.square = square
+            t.ally   = not t.ally
 
             return t
 
@@ -68,5 +82,5 @@ def gem():
 
             
     @export
-    def create_ally_chess_pawn(int health):
-        return ChessPawn(true, 1, health, health)k
+    def create_ally_chess_pawn(square, health):
+        return ChessPawn(square, true, 1, health, health)

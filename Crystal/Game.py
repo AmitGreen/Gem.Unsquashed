@@ -6,6 +6,7 @@ def gem():
     require_gem('Crystal.BlankSquare')
     require_gem('Crystal.Board')
     require_gem('Crystal.ChessKing')
+    require_gem('Crystal.ChessPawn')
     require_gem('Crystal.Core')
     require_gem('Crystal.FrozenChessKing')
     require_gem('Crystal.Player')
@@ -30,6 +31,16 @@ def gem():
         board = GameBoard(1, alice, create_enemy_chess_king(), create_ally_chess_king())
 
         board.dump_abbreviation()
+
+        square = board.lookup_square_x1()
+
+        if square != 0:
+            square.store_center(board, create_ally_chess_pawn(square, 2))
+
+        square = board.lookup_square_x1()
+
+        if square != 0:
+            square.store_center(board, create_ally_chess_pawn(square, 1))
 
         board.actions()
         line('---')

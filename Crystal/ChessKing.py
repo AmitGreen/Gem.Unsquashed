@@ -9,6 +9,7 @@ def gem():
     @export
     class ChessKing(Object):
         is_blank_square = false
+        is_card         = true
         initial_attack  = 1
         initial_health  = 20
 
@@ -46,6 +47,9 @@ def gem():
                 t.current_health = 0
 
             t.current_health = health
+
+
+        attacked_ignore_shield = attacked
 
 
         def mirror(t, square):

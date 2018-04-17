@@ -10,6 +10,7 @@ def gem():
         ally            = false
         enemy           = false
         is_blank_square = true
+        is_card         = false
 
 
         __slots__ = ((

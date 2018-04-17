@@ -7,6 +7,7 @@ def gem():
         ally            = false
         enemy           = false
         is_blank_square = false
+        is_card         = false
         is_void_square  = true
 
 

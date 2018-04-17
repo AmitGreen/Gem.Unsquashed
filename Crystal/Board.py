@@ -14,17 +14,17 @@ def gem():
 
             'v0',                       #   VoidSquare
 
-            'a2',                       #   Square
-            'b2',                       #   Square
-            'c2',                       #   Square
-            'd2',                       #   Square
-            'e2',                       #   Square
+            'a2',                       #   BlankSquare | Card+
+            'b2',                       #   BlankSquare | Card+
+            'c2',                       #   BlankSquare | Card+
+            'd2',                       #   BlankSquare | Card+
+            'e2',                       #   BlankSquare | Card+
 
-            'a1',                       #   Square
-            'b1',                       #   Square
-            'c1',                       #   Square
-            'd1',                       #   Square
-            'e1',                       #   Square
+            'a1',                       #   BlankSquare | Card+
+            'b1',                       #   BlankSquare | Card+
+            'c1',                       #   BlankSquare | Card+
+            'd1',                       #   BlankSquare | Card+
+            'e1',                       #   BlankSquare | Card+
         ))
 
 
@@ -47,12 +47,31 @@ def gem():
             t.e1 = blank_square_e1
 
 
+        def add_piece_x1(t, card):
+            if t.a1 is blank_square_a1:     t.a1 = card; return true
+            if t.b1 is blank_square_b1:     t.b1 = card; return true
+            if t.c1 is blank_square_c1:     t.c1 = card; return true
+            if t.d1 is blank_square_d1:     t.d1 = card; return true
+            if t.e1 is blank_square_e1:     t.e1 = card; return true
+
+            return false
+
+
+        def lookup_square_x1(t):
+            if t.b1 is blank_square_b1:     return square_b1
+            if t.c1 is blank_square_c1:     return square_c1
+            if t.d1 is blank_square_d1:     return square_d1
+            if t.e1 is blank_square_e1:     return square_e1
+
+            return 0
+
+
         def actions(t):
             if t.a1 is not blank_square_a1:    t.a1.action(t)
-            if t.b1 is not blank_square_b1:    t.a2.action(t)
-            if t.c1 is not blank_square_c1:    t.a3.action(t)
-            if t.d1 is not blank_square_d1:    t.a4.action(t)
-            if t.e1 is not blank_square_e1:    t.a5.action(t)
+            if t.b1 is not blank_square_b1:    t.b1.action(t)
+            if t.c1 is not blank_square_c1:    t.c1.action(t)
+            if t.d1 is not blank_square_d1:    t.d1.action(t)
+            if t.e1 is not blank_square_e1:    t.e1.action(t)
 
             if t.player is alice:
                 t.player = bob
@@ -180,13 +199,15 @@ def gem():
         ))
 
 
-    def fix_square(square, north_ww = 0, north_west = 0, north = 0, north_east = 0, north_ee = 0):
+    def fix_square(square, center, north_ww = 0, north_west = 0, north = 0, north_east = 0, north_ee = 0):
+        square.load_center     = load[center]
         square.load_north_ww   = load[north_ww]
         square.load_north_west = load[north_west]
         square.load_north      = load[north]
         square.load_north_east = load[north_east]
         square.load_north_ee   = load[north_ee]
 
+        square.store_center     = store[center]
         square.store_north_ww   = store[north_ww]
         square.store_north_west = store[north_west]
         square.store_north      = store[north]
@@ -194,17 +215,17 @@ def gem():
         square.store_north_ee   = store[north_ee]
 
 
-    fix_square(square_a2)                                                                          #1
-    fix_square(square_b2)                                                                          #2
-    fix_square(square_c2)                                                                          #3
-    fix_square(square_d2)                                                                          #4
-    fix_square(square_e2)                                                                          #5
+    fix_square(square_a2,  1)
+    fix_square(square_b2,  2)
+    fix_square(square_c2,  3)
+    fix_square(square_d2,  4)
+    fix_square(square_e2,  5)
 
-    fix_square(square_a1,                               north = 1, north_east = 2, north_ee = 3)   #6
-    fix_square(square_b1,               north_west = 1, north = 2, north_east = 3, north_ee = 4)   #7
-    fix_square(square_c1, north_ww = 1, north_west = 2, north = 3, north_east = 4, north_ee = 5)   #8
-    fix_square(square_d1, north_ww = 2, north_west = 3, north = 4, north_east = 5)                 #9
-    fix_square(square_e1, north_ww = 3, north_west = 4, north = 5)                                 #10
+    fix_square(square_a1,  6,                               north = 1, north_east = 2, north_ee = 3)
+    fix_square(square_b1,  7,               north_west = 1, north = 2, north_east = 3, north_ee = 4)
+    fix_square(square_c1,  8, north_ww = 1, north_west = 2, north = 3, north_east = 4, north_ee = 5)
+    fix_square(square_d1,  9, north_ww = 2, north_west = 3, north = 4, north_east = 5)
+    fix_square(square_e1, 10, north_ww = 3, north_west = 4, north = 5)
 
 
     share(
