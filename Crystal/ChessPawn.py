@@ -8,7 +8,7 @@ def gem():
 
     @export
     class ChessPawn(Object):
-        is_empty_square = false
+        is_blank_square = false
 
 
         __slots__ = ((

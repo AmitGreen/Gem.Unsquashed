@@ -3,7 +3,7 @@
 #
 @gem('Crystal.Square')
 def gem():
-    #require_gem('Crystal.Core')
+    #require_gem('Crystal.
 
 
     class Square(Object):
@@ -11,7 +11,19 @@ def gem():
             'name',                 #   String+
             'column',               #   Integer
             'row',                  #   Integer
-            'empty',                #   Vacant | EmptySquare
+            'blank',                #   Vacant | BlankSquare
+
+            'load_north_ww',        #   Vacant | MethodWrapper
+            'load_north_west',      #   Vacant | MethodWrapper
+            'load_north',           #   Vacant | MethodWrapper
+            'load_north_east',      #   Vacant | MethodWrapper
+            'load_north_ee',        #   Vacant | MethodWrapper
+
+            'store_north_ww',       #   Vacant | MethodWrapper
+            'store_north_west',     #   Vacant | MethodWrapper
+            'store_north',          #   Vacant | MethodWrapper
+            'store_north_east',     #   Vacant | MethodWrapper
+            'store_north_ee',       #   Vacant | MethodWrapper
         ))
 
 
@@ -19,7 +31,7 @@ def gem():
             t.name   = name
             t.column = column
             t.row    = row
-           #t.empty  = empty        #   Done in produce_empty_square
+           #t.blank  = blank                #   Done in produce_blank_square
 
 
         def __repr__(t):
@@ -43,14 +55,15 @@ def gem():
 
 
     share(
-        'square_a1',         square_a1,
         'square_a2',         square_a2,
-        'square_b1',         square_b1,
         'square_b2',         square_b2,
-        'square_c1',         square_c1,
         'square_c2',         square_c2,
-        'square_d1',         square_d1,
         'square_d2',         square_d2,
-        'square_e1',         square_e1,
         'square_e2',         square_e2,
+
+        'square_a1',         square_a1,
+        'square_b1',         square_b1,
+        'square_c1',         square_c1,
+        'square_d1',         square_d1,
+        'square_e1',         square_e1,
     )

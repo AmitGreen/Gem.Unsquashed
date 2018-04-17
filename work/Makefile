@@ -11,14 +11,14 @@ BERYL_FILES = \
 
 CRYSTAL_FILES = \
     ../Crystal/__init__.py \
-    ../Crystal/Board.py \
+    ../Crystal/Board.py ../Crystal/BlankSquare.py \
     ../Crystal/ChessKing.py ../Crystal/ChessPawn.py ../Crystal/Core.py \
-    ../Crystal/EmptySquare.py \
     ../Crystal/FrozenChessKing.py \
     ../Crystal/Game.py \
     ../Crystal/Main.py \
     ../Crystal/Player.py \
-    ../Crystal/Square.py
+    ../Crystal/Square.py \
+    ../Crystal/VoidSquare.py
 
 GEM_FILES = \
 	../Gem/__init__.py \
@@ -211,7 +211,7 @@ clean:
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f yb.py yc.py ye.py yg.py yk.py ym.py yp.py yq.py yw.py yzk.py
+	rm -f ybd.py ybq.py yc.py yg.py yk.py ym.py yp.py yq.py yv.py yw.py yzk.py
 	rm -f zco.py zcs.py zd.py ze.py zg2.py zg3.gpy zg3.py zg4.py zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
 	rm -f   zm.py zo4.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
 
@@ -405,14 +405,15 @@ links:
 	ln -s ../Tremolite/Compile.py                       tx.py
 	ln -s ../Sardonyx/Boot.py                           xb.py
 	ln -s ../Sapphire/Transform.py                      xf.py
-	ln -s ../Crystal/Board.py                           yb.py
+	ln -s ../Crystal/Board.py                           ybd.py
+	ln -s ../Crystal/BlankSquare.py                     ybq.py
 	ln -s ../Crystal/Core.py                            yc.py
-	ln -s ../Crystal/EmptySquare.py                     ye.py
 	ln -s ../Crystal/Game.py                            yg.py
 	ln -s ../Crystal/ChessKing.py                       yk.py
 	ln -s ../Crystal/Main.py                            ym.py
 	ln -s ../Crystal/Player.py                          yp.py
 	ln -s ../Crystal/Square.py                          yq.py
+	ln -s ../Crystal/VoidSquare.py                      yv.py
 	ln -s ../Crystal/ChessPawn.py                       yw.py
 	ln -s ../Crystal/FrozenChessKing.py                 yzk.py
 	ln -s ../Topaz/Core.py                              zco.py

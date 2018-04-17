@@ -45,7 +45,7 @@ def gem():
         card_name       = 'Frozen-Ally-Chess-King'
         enemy           = false
         initial_health  = 20
-        is_empty_square = false
+        is_blank_square = false
 
 
         def action(t, board, square):
@@ -61,7 +61,7 @@ def gem():
         card_name       = 'Frozen-Enemy-Chess-King'
         enemy          = true
         initial_health = 20
-        is_empty_square = false
+        is_blank_square = false
 
 
         def attacked(t, attack):

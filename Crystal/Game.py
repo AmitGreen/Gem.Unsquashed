@@ -3,13 +3,14 @@
 #
 @gem('Crystal.Game')
 def gem():
+    require_gem('Crystal.BlankSquare')
     require_gem('Crystal.Board')
     require_gem('Crystal.ChessKing')
     require_gem('Crystal.Core')
-    require_gem('Crystal.EmptySquare')
     require_gem('Crystal.FrozenChessKing')
     require_gem('Crystal.Player')
     require_gem('Crystal.Square')
+    require_gem('Crystal.VoidSquare')
 
 
     def command_test():
@@ -17,7 +18,8 @@ def gem():
 
 
     def command_dump():
-        line('empty_square_a1:  %s', empty_square_a1)
+        pass
+        #line('store_v0:  %s', store_v0)
 
 
     @share
