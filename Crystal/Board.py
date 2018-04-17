@@ -3,7 +3,7 @@
 #
 @gem('Crystal.Board')
 def gem():
-    require_gem('Crystal.Square')
+    require_gem('Crystal.EmptySquare')
 
 
     @share
@@ -31,24 +31,24 @@ def gem():
             t.player      = player
 
             t.a2 = a2
-            t.b2 = \
-                t.c2 = \
-                t.d2 = \
-                t.e2 = empty_square
+            t.b2 = empty_square_b2
+            t.c2 = empty_square_c2
+            t.d2 = empty_square_d2
+            t.e2 = empty_square_e2
 
             t.a1 = a1
-            t.b1 = \
-                t.c1 = \
-                t.d1 = \
-                t.e1 = empty_square
+            t.b1 = empty_square_b1
+            t.c1 = empty_square_c1
+            t.d1 = empty_square_d1
+            t.e1 = empty_square_e1
 
 
         def actions(t):
-            if t.a1 is not empty_square:    t.a1.action(t, square_a1)
-            if t.b1 is not empty_square:    t.a2.action(t, square_b1)
-            if t.c1 is not empty_square:    t.a3.action(t, square_c1)
-            if t.d1 is not empty_square:    t.a4.action(t, square_d1)
-            if t.e1 is not empty_square:    t.a5.action(t, square_e1)
+            if t.a1 is not empty_square_a1:    t.a1.action(t)
+            if t.b1 is not empty_square_b1:    t.a2.action(t)
+            if t.c1 is not empty_square_c1:    t.a3.action(t)
+            if t.d1 is not empty_square_d1:    t.a4.action(t)
+            if t.e1 is not empty_square_e1:    t.a5.action(t)
 
             if t.player is alice:
                 t.player = bob
@@ -90,17 +90,17 @@ def gem():
 
 
         def mirror(t):
-            a2 = t.a1.mirror()
-            b2 = t.b1.mirror()
-            c2 = t.c1.mirror()
-            d2 = t.d1.mirror()
-            e2 = t.e1.mirror()
+            a2 = t.a1.mirror(square_a2)
+            b2 = t.b1.mirror(square_b2)
+            c2 = t.c1.mirror(square_c2)
+            d2 = t.d1.mirror(square_d2)
+            e2 = t.e1.mirror(square_e2)
 
-            a1 = t.a2.mirror()
-            b1 = t.b2.mirror()
-            c1 = t.c2.mirror()
-            d1 = t.d2.mirror()
-            e1 = t.e2.mirror()
+            a1 = t.a2.mirror(square_a1)
+            b1 = t.b2.mirror(square_b1)
+            c1 = t.c2.mirror(square_c1)
+            d1 = t.d2.mirror(square_d1)
+            e1 = t.e2.mirror(square_e1)
 
             t.a2 = a2
             t.b2 = b2

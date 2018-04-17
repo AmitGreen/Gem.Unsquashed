@@ -7,10 +7,11 @@ def gem():
 
 
     class Square(Object):
-        __slot__ = ((
+        __slots__ = ((
             'name',                 #   String+
             'column',               #   Integer
             'row',                  #   Integer
+            'empty',                #   Vacant | EmptySquare
         ))
 
 
@@ -18,6 +19,7 @@ def gem():
             t.name   = name
             t.column = column
             t.row    = row
+           #t.empty  = empty        #   Done in produce_empty_square
 
 
         def __repr__(t):
@@ -37,38 +39,10 @@ def gem():
     square_e1 = Square('e1', 1, 5)
 
 
-
-    class EmptySquare(Object):
-        ally         = false
-        enemy        = false
-        empty_square = true
-
-
-        @static_method
-        def __repr__():
-            return '<Empty-Square>'
-
-
-        def mirror(t):
-            return t
-
-
-        @static_method
-        def portray_abbreviation():
-            return 'Empty'
-
-
-        @static_method
-        def portray_numbers():
-            return ''
-
-
-    empty_square = EmptySquare()
+    del Square.__init__
 
 
     share(
-        'empty_square',      empty_square,
-
         'square_a1',         square_a1,
         'square_a2',         square_a2,
         'square_b1',         square_b1,

@@ -3,9 +3,10 @@
 #
 @gem('Crystal.Game')
 def gem():
-    require_gem('Crystal.Core')
     require_gem('Crystal.Board')
     require_gem('Crystal.ChessKing')
+    require_gem('Crystal.Core')
+    require_gem('Crystal.EmptySquare')
     require_gem('Crystal.FrozenChessKing')
     require_gem('Crystal.Player')
     require_gem('Crystal.Square')
@@ -16,7 +17,7 @@ def gem():
 
 
     def command_dump():
-        line('empty_square:  %s', empty_square)
+        line('empty_square_a1:  %s', empty_square_a1)
 
 
     @share

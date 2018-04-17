@@ -39,13 +39,13 @@ def gem():
 
 
     class FrozenAllyChessKing(FrozenChessKing):
-        abbreviation   = 'ZWK'
-        ally           = true
-        attack         = 1
-        card_name      = 'Frozen-Ally-Chess-King'
-        empty_square   = false
-        enemy          = false
-        initial_health = 20
+        abbreviation    = 'ZWK'
+        ally            = true
+        attack          = 1
+        card_name       = 'Frozen-Ally-Chess-King'
+        enemy           = false
+        initial_health  = 20
+        is_empty_square = false
 
 
         def action(t, board, square):
@@ -55,13 +55,13 @@ def gem():
 
 
     class FrozenEnemyChessKing(FrozenChessKing):
-        abbreviation   = 'ZBK'
-        ally           = false
-        attack         = 1
-        card_name      = 'Frozen-Enemy-Chess-King'
-        empty_square   = false
+        abbreviation    = 'ZBK'
+        ally            = false
+        attack          = 1
+        card_name       = 'Frozen-Enemy-Chess-King'
         enemy          = true
         initial_health = 20
+        is_empty_square = false
 
 
         def attacked(t, attack):
