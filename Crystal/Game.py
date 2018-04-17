@@ -6,12 +6,13 @@ def gem():
     require_gem('Crystal.Core')
     require_gem('Crystal.Board')
     require_gem('Crystal.ChessKing')
+    require_gem('Crystal.FrozenChessKing')
     require_gem('Crystal.Player')
     require_gem('Crystal.Square')
 
 
     def command_test():
-        pass
+        line('ZAK: %s', conjure_frozen_ally_chess_king(20, 20))
 
 
     def command_dump():
