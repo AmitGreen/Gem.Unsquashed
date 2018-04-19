@@ -1,0 +1,83 @@
+#
+#   Copyright (c) 2018 Amit Green.  All rights reserved.
+#
+@gem('Crystal.ChessBishop')
+def gem():
+    require_gem('Crystal.CardRoot')
+
+
+    @export
+    class ChessBishop(CardRoot):
+        ally_abbreviation  = 'WB'
+        enemy_abbreviation = 'BB'
+        initial_attack     = 1
+        initial_health     = 3
+
+
+        __slots__ = (())
+
+
+        def prepare(t, board):
+            #
+            #   Heal myself, if injured
+            #
+            if t.current_health < t.maximum_health:
+                t.current_health += 1
+                return
+
+            #
+            #   Otherwise, heal everyone else
+            #
+            square = t.square
+
+            board.a1.heal_1()
+
+            if square != square_b1:
+                heal_1 = board.b1.heal_1
+
+                if heal_1 != 0:
+                    heal_1()
+
+            if square != square_c1:
+                heal_1 = board.c1.heal_1
+
+                if heal_1 != 0:
+                    heal_1()
+
+            if square != square_d1:
+                heal_1 = board.d1.heal_1
+
+                if heal_1 != 0:
+                    heal_1()
+
+            if square != square_e1:
+                heal_1 = board.e1.heal_1
+
+                if heal_1 != 0:
+                    heal_1()
+
+
+        def action(t, board):
+            north_east = t.square.load_north_east(board)
+            north_west = t.square.load_north_west(board)
+
+            if north_east.is_card:
+                north_east.attacked(board, t.current_attack)
+
+                if north_west.is_card:
+                    north_west.attacked(board, t.current_attack)
+
+                return
+
+            if north_west.is_card:
+                north_west.attacked(board, t.current_attack)
+                return
+
+            board.a2.attacked(board, t.current_attack)
+
+
+    @export
+    def create_ally_chess_bishop(square, special = false):
+        health = ChessBishop.initial_health + (1   if special else   0)
+
+        return ChessBishop(square, true, ChessBishop.initial_attack, health, health)

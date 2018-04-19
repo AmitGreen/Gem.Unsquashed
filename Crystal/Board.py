@@ -67,6 +67,31 @@ def gem():
 
 
         def actions(t):
+            prepare = t.a1.prepare
+
+            if prepare is not 0:
+                prepare(t)
+
+            prepare = t.b1.prepare
+
+            if prepare is not 0:
+                prepare(t)
+
+            prepare = t.c1.prepare
+
+            if prepare is not 0:
+                prepare(t)
+
+            prepare = t.d1.prepare
+
+            if prepare is not 0:
+                prepare(t)
+
+            prepare = t.e1.prepare
+
+            if prepare is not 0:
+                prepare(t)
+
             if t.a1 is not blank_square_a1:    t.a1.action(t)
             if t.b1 is not blank_square_b1:    t.b1.action(t)
             if t.c1 is not blank_square_c1:    t.c1.action(t)
@@ -83,7 +108,7 @@ def gem():
 
 
         def dump_abbreviation(t):
-            line('Player: %s #%d', t.player.name, t.turn_number)
+            line('Turn: #%d; Player: %s', t.turn_number, t.player.name)
 
             line('%10s  %10s  %10s  %10s  %10s',
                  t.a2.portray_abbreviation(),

@@ -5,6 +5,7 @@
 def gem():
     @export
     class CardRoot(Object):
+        prepare         = 0
         is_blank_square = false
         is_card         = true
 
@@ -34,7 +35,7 @@ def gem():
         def attacked(t, board, attack):
             health = t.current_health - attack
 
-            if health < 0:
+            if health <= 0:
                 square = t.square
                 square.store_center(board, square.blank)
 
@@ -46,6 +47,12 @@ def gem():
         attacked_ignore_shield = attacked
 
             
+        def heal_1(t):
+            if t.current_health < t.maximum_health:
+                t.current_health += 1
+                return
+
+
         def mirror(t, square):
             t.square = square
             t.ally   = not t.ally

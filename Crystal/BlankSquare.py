@@ -9,8 +9,10 @@ def gem():
     class BlankSquare(Object):
         ally            = false
         enemy           = false
+        heal_1          = 0
         is_blank_square = true
         is_card         = false
+        prepare         = 0
 
 
         __slots__ = ((

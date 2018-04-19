@@ -34,5 +34,7 @@ def gem():
 
 
     @export
-    def create_ally_chess_pawn(square, health):
+    def create_ally_chess_pawn(square, special = false):
+        health = ChessPawn.initial_health + (1   if special else   0)
+
         return ChessPawn(square, true, ChessPawn.initial_attack, health, health)

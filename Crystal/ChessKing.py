@@ -13,6 +13,7 @@ def gem():
         initial_attack     = 1
         initial_health     = 20
 
+
         __slots__ = (())
 
 

@@ -5,6 +5,7 @@
 def gem():
     require_gem('Crystal.BlankSquare')
     require_gem('Crystal.Board')
+    require_gem('Crystal.ChessBishop')
     require_gem('Crystal.ChessKing')
     require_gem('Crystal.ChessPawn')
     require_gem('Crystal.Core')
@@ -14,8 +15,40 @@ def gem():
     require_gem('Crystal.VoidSquare')
 
 
+    def action_and_dump(board):
+        board.actions()
+        line('---')
+        board.dump_abbreviation()
+
+
+    def bishop(board, special = false):
+        square = board.lookup_square_x1()
+
+        if square != 0:
+            square.store_center(board, create_ally_chess_bishop(square, special))
+
+
+    def pawn(board, special = false):
+        square = board.lookup_square_x1()
+
+        if square != 0:
+            square.store_center(board, create_ally_chess_pawn(square, special))
+
+
+    def bishop_pawn(board):
+        bishop(board, true)
+        pawn(board)
+        action_and_dump(board)
+
+
+    def pawn_pawn(board):
+        pawn(board, true)
+        pawn(board)
+        action_and_dump(board)
+
+
     def command_test():
-        line('ZAK: %s', conjure_frozen_ally_chess_king(20, 20))
+        pass
 
 
     def command_dump():
@@ -31,17 +64,6 @@ def gem():
         board = GameBoard(1, alice, create_enemy_chess_king(), create_ally_chess_king())
 
         board.dump_abbreviation()
-
-        square = board.lookup_square_x1()
-
-        if square != 0:
-            square.store_center(board, create_ally_chess_pawn(square, 2))
-
-        square = board.lookup_square_x1()
-
-        if square != 0:
-            square.store_center(board, create_ally_chess_pawn(square, 1))
-
-        board.actions()
-        line('---')
-        board.dump_abbreviation()
+        pawn_pawn(board)            #   Turn 1, Alice:  Pawn, Pawn
+        bishop_pawn(board)          #   Turn 1, Bob:    Bishop, Pawn
+        bishop_pawn(board)          #   Turn 2, Alice:  Bishop, Pawn
