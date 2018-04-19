@@ -18,17 +18,21 @@ def gem():
 
 
         def action(t, board):
-            t.square.load_north(board).attacked(board, t.current_attack)
+            t.square.load_north(board).attacked(board, t)
 
 
-        def attacked(t, board, attack):
-            health = t.current_health - attack
+        def attacked(t, board, attacked_by):
+            before_1 = attacked_by.portray()
+            before_2 = t          .portray()
+
+            health = t.current_health - attacked_by.current_attack
 
             if health < 0:
-                t.current_health = 0
-                return
+                health = 0
 
             t.current_health = health
+
+            line('%s: %s attacked %s; result %s', board.player.name, before_1, before_2, t.portray())
 
 
         attacked_ignore_shield = attacked

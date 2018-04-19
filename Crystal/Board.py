@@ -47,16 +47,54 @@ def gem():
             t.e1 = blank_square_e1
 
 
-        def add_piece_x1(t, card):
-            if t.a1 is blank_square_a1:     t.a1 = card; return true
-            if t.b1 is blank_square_b1:     t.b1 = card; return true
-            if t.c1 is blank_square_c1:     t.c1 = card; return true
-            if t.d1 is blank_square_d1:     t.d1 = card; return true
-            if t.e1 is blank_square_e1:     t.e1 = card; return true
+        def add_normal_x1(t, create):
+            if t.b1 is blank_square_b1:
+                t.b1 = create(square_b1)
+                line("%s created %s", t.player.name, t.b1.portray())
+                return true
+
+            if t.c1 is blank_square_c1:
+                t.c1 = create(square_c1)
+                line("%s created %s", t.player.name, t.c1.portray())
+                return true
+
+            if t.d1 is blank_square_d1:
+                t.d1 = create(square_d1)
+                line("%s created %s", t.player.name, t.d1.portray())
+                return true
+
+            if t.e1 is blank_square_e1:
+                t.e1 = create(square_e1)
+                line("%s created %s", t.player.name, t.e1.portray())
+                return true
 
             return false
 
 
+        def add_special_x1(t, create):
+            if t.b1 is blank_square_b1:
+                t.b1 = create(square_b1, true)
+                line("%s created %s", t.player.name, t.b1.portray())
+                return true
+
+            if t.c1 is blank_square_c1:
+                t.c1 = create(square_c1, true)
+                line("%s created %s", t.player.name, t.c1.portray())
+                return true
+
+            if t.d1 is blank_square_d1:
+                t.d1 = create(square_d1, true)
+                line("%s created %s", t.player.name, t.d1.portray())
+                return true
+
+            if t.e1 is blank_square_e1:
+                t.e1 = create(square_e1, true)
+                line("%s created %s", t.player.name, t.e1.portray())
+                return true
+
+            return false
+
+        
         def lookup_square_x1(t):
             if t.b1 is blank_square_b1:     return square_b1
             if t.c1 is blank_square_c1:     return square_c1

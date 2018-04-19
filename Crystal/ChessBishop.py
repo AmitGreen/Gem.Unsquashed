@@ -62,18 +62,18 @@ def gem():
             north_west = t.square.load_north_west(board)
 
             if north_east.is_card:
-                north_east.attacked(board, t.current_attack)
+                north_east.attacked(board, t)
 
                 if north_west.is_card:
-                    north_west.attacked(board, t.current_attack)
+                    north_west.attacked(board, t)
 
                 return
 
             if north_west.is_card:
-                north_west.attacked(board, t.current_attack)
+                north_west.attacked(board, t)
                 return
 
-            board.a2.attacked(board, t.current_attack)
+            board.a2.attacked(board, t)
 
 
     @export

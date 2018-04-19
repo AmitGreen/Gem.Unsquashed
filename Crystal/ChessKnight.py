@@ -17,11 +17,24 @@ def gem():
         __slots__ = (())
 
 
-
         def action(t, board):
-            t.square.load_north(board).attacked(board, t.current_attack)
+            north_ww = t.square.load_north_ww(board)
+
+            if north_ww.is_card:
+                north_ww.attacked(board, t)
+                return
+
+            north_ee = t.square.load_north_ee(board)
+
+            if north_ee.is_card:
+                north_ee.attacked(board, t)
+                return
+
+            board.a2.attacked(board, t)
 
 
     @export
-    def create_ally_chess_Knight(square):
-        return ChessKnight(square, true, ChessKnight.initial_attack, ChessKnight.initial_health, ChessKnight.initial_health)
+    def create_ally_chess_knight(square, special = false):
+        health = ChessKnight.initial_health + (1   if special else   0)
+
+        return ChessKnight(square, true, ChessKnight.initial_attack, health, health)

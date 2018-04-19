@@ -32,16 +32,24 @@ def gem():
             return not t.ally
 
 
-        def attacked(t, board, attack):
-            health = t.current_health - attack
+        def attacked(t, board, attacker):
+            before_1 = attacker.portray()
+            before_2 = t       .portray()
+
+            health = t.current_health - t.current_attack
 
             if health <= 0:
                 square = t.square
-                square.store_center(board, square.blank)
+                blank  = square.blank
 
+                square.store_center(board, blank)
+
+                line('%s: %s attacked %s; result %s', board.player.name, before_1, before_2, blank.portray())
                 return
 
             t.current_health = health
+
+            line('%s: %s attacked %s; result %s', board.player.name, before_1, before_2, t.portray())
 
 
         attacked_ignore_shield = attacked
@@ -60,12 +68,16 @@ def gem():
             return t
 
 
+        def portray(t):
+            return arrange("<%s %s>", t.portray_abbreviation(), t.portray_numbers())
+
+
         def portray_abbreviation(t):
             return arrange('%s: %s', t.square.name, (t.ally_abbreviation   if t.ally else   t.enemy_abbreviation))
 
 
         def portray_numbers(t):
-            if t.maximum_health == ChessKing.initial_health:
+            if t.maximum_health == t.initial_health:
                 return arrange('%d/%d', t.current_attack, t.current_health)
 
             return arrange('%d/%d(%d)', t.current_attack, t.current_health, t.maximum_health)

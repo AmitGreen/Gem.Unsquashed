@@ -32,6 +32,10 @@ def gem():
             return square.blank
 
 
+        def portray(t):
+            return arrange('<%s: blank>', t.square.name)
+
+
         def portray_abbreviation(t):
             return arrange('%s: blank', t.square.name)
 

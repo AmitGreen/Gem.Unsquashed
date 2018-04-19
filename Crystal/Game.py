@@ -7,6 +7,7 @@ def gem():
     require_gem('Crystal.Board')
     require_gem('Crystal.ChessBishop')
     require_gem('Crystal.ChessKing')
+    require_gem('Crystal.ChessKnight')
     require_gem('Crystal.ChessPawn')
     require_gem('Crystal.Core')
     require_gem('Crystal.FrozenChessKing')
@@ -21,29 +22,21 @@ def gem():
         board.dump_abbreviation()
 
 
-    def bishop(board, special = false):
-        square = board.lookup_square_x1()
-
-        if square != 0:
-            square.store_center(board, create_ally_chess_bishop(square, special))
-
-
-    def pawn(board, special = false):
-        square = board.lookup_square_x1()
-
-        if square != 0:
-            square.store_center(board, create_ally_chess_pawn(square, special))
-
-
     def bishop_pawn(board):
-        bishop(board, true)
-        pawn(board)
+        board.add_special_x1(create_ally_chess_bishop)
+        board.add_normal_x1 (create_ally_chess_pawn)
+        action_and_dump(board)
+
+
+    def knight_pawn(board):
+        board.add_special_x1(create_ally_chess_knight)
+        board.add_normal_x1 (create_ally_chess_pawn)
         action_and_dump(board)
 
 
     def pawn_pawn(board):
-        pawn(board, true)
-        pawn(board)
+        board.add_special_x1(create_ally_chess_pawn)
+        board.add_normal_x1 (create_ally_chess_pawn)
         action_and_dump(board)
 
 
@@ -66,4 +59,6 @@ def gem():
         board.dump_abbreviation()
         pawn_pawn(board)            #   Turn 1, Alice:  Pawn, Pawn
         bishop_pawn(board)          #   Turn 1, Bob:    Bishop, Pawn
+
         bishop_pawn(board)          #   Turn 2, Alice:  Bishop, Pawn
+        knight_pawn(board)          #   Turn 2, Bob:    Knight, Pawn
