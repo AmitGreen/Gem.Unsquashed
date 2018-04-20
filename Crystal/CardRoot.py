@@ -8,6 +8,7 @@ def gem():
         prepare         = 0
         is_blank_square = false
         is_card         = true
+        reset           = 0
 
 
         __slots__ = ((
@@ -15,6 +16,7 @@ def gem():
             'ally',                     #   Boolean
             'current_attack',           #   Integer
             'current_health',           #   Integer
+            'current_shield',           #   Integer
             'maximum_health',           #   Integer
         ))
 
@@ -24,6 +26,7 @@ def gem():
             t.ally           = ally
             t.current_attack = current_attack
             t.current_health = current_health
+            t.current_shield = 0
             t.maximum_health = maximum_health
 
 
@@ -32,9 +35,9 @@ def gem():
             return not t.ally
 
 
-        def attacked(t, board, attacker):
-            before_1 = attacker.portray()
-            before_2 = t       .portray()
+        def attacked(t, board, by_attacker):
+            before_1 = by_attacker.portray()
+            before_2 = t          .portray()
 
             health = t.current_health - t.current_attack
 
@@ -52,18 +55,54 @@ def gem():
             line('%s: %s attacked %s; result %s', board.player.name, before_1, before_2, t.portray())
 
 
-        attacked_ignore_shield = attacked
+        def attacked_ignore_shield(t, board, by_attacker):
+            before_1 = by_attacker.portray()
+            before_2 = t          .portray()
 
-            
-        def heal_1(t):
+            health = t.current_health - t.current_attack
+
+            if health <= 0:
+                square = t.square
+                blank  = square.blank
+
+                square.store_center(board, blank)
+
+                line('%s: %s attacked (ignore shield) %s; result %s',
+                     board.player.name,
+                     before_1,
+                     before_2,
+                     blank.portray())
+
+                return
+
+            t.current_health = health
+
+            line('%s: %s attacked (ignore shield) %s; result %s', board.player.name, before_1, before_2, t.portray())
+
+
+        def heal_1(t, board, healed_by):
             if t.current_health < t.maximum_health:
+                before_1 = healed_by.portray()
+                before_2 = t        .portray()
+
                 t.current_health += 1
+
+                line('%s: %s healed %s; result %s', board.player.name, before_1, before_2, t.portray())
                 return
 
 
         def mirror(t, square):
             t.square = square
             t.ally   = not t.ally
+
+            return t
+
+
+        def move(t, board, square):
+            before_1 = t.portray()
+            t.square = square
+
+            line("%s: moved %s to %s", board.player.name, before_1, t.portray())
 
             return t
 
@@ -78,6 +117,12 @@ def gem():
 
         def portray_numbers(t):
             if t.maximum_health == t.initial_health:
-                return arrange('%d/%d', t.current_attack, t.current_health)
+                if t.current_shield == 0:
+                    return arrange('%d/%d', t.current_attack, t.current_health)
 
-            return arrange('%d/%d(%d)', t.current_attack, t.current_health, t.maximum_health)
+                return arrange('%d/%d/%d', t.current_attack, t.current_health, t.current_shield)
+
+            if t.current_shield == 0:
+                return arrange('%d/%d(%d)', t.current_attack, t.current_health, t.maximum_health)
+
+            return arrange('%d/%d(%d)/%d', t.current_attack, t.current_health, t.maximum_health, t.current_shield)

@@ -94,7 +94,7 @@ def gem():
 
             return false
 
-        
+
         def lookup_square_x1(t):
             if t.b1 is blank_square_b1:     return square_b1
             if t.c1 is blank_square_c1:     return square_c1
@@ -104,7 +104,44 @@ def gem():
             return 0
 
 
-        def actions(t):
+        def actions(t, create_1, create_2):
+            #
+            #   Shift left & Add first piece
+            #
+            t.shift_left()
+            t.add_special_x1(create_1)
+
+            #
+            #   Reset phase
+            #
+            reset = t.a1.reset
+
+            if reset is not 0:
+                reset(t)
+
+            reset = t.b1.reset
+
+            if reset is not 0:
+                reset(t)
+
+            reset = t.c1.reset
+
+            if reset is not 0:
+                reset(t)
+
+            reset = t.d1.reset
+
+            if reset is not 0:
+                reset(t)
+
+            reset = t.e1.reset
+
+            if reset is not 0:
+                reset(t)
+
+            #
+            #   Prepare phase
+            #
             prepare = t.a1.prepare
 
             if prepare is not 0:
@@ -130,12 +167,25 @@ def gem():
             if prepare is not 0:
                 prepare(t)
 
+            #
+            #   Action phase
+            #
             if t.a1 is not blank_square_a1:    t.a1.action(t)
             if t.b1 is not blank_square_b1:    t.b1.action(t)
             if t.c1 is not blank_square_c1:    t.c1.action(t)
             if t.d1 is not blank_square_d1:    t.d1.action(t)
             if t.e1 is not blank_square_e1:    t.e1.action(t)
 
+            #
+            #   Shift left & add last piece
+            #
+            t.shift_left()
+            t.add_normal_x1(create_2)
+
+
+            #
+            #   Mirror board
+            #
             if t.player is alice:
                 t.player = bob
             else:
@@ -201,6 +251,204 @@ def gem():
             t.e1 = e1
 
 
+        def shift_left(t):
+            b1 = t.b1
+            c1 = t.c1
+            d1 = t.d1
+            e1 = t.e1
+
+            if b1 is blank_square_b1:
+                if c1 is blank_square_c1:
+                    if d1 is blank_square_d1:
+                        if e1 is blank_square_e1:
+                            #
+                            #   b1: blank
+                            #   c1: blank
+                            #   d1: blank
+                            #   e1: blank
+                            #
+                            return
+
+                        #
+                        #   b1: blank            (set to e1)
+                        #   c1: blank
+                        #   d1: blank
+                        #   e1: shift to b1 (then set to blank)
+                        #
+                        t.b1 = e1.move(t, square_b1)
+                        t.e1 = blank_square_e1
+                        return
+
+                    #
+                    #   b1: blank            (set to d1)
+                    #   c1: blank
+                    #   d1: shift to b1 (then TBD)
+                    #   e1: TBD
+                    #
+                    t.b1 = d1.move(t, square_b1)
+
+                    if t.e1 is blank_square_e1:
+                        #
+                        #   b1: blank            (set to d1)
+                        #   c1: blank
+                        #   d1: shift to b1 (then set to blank)
+                        #   e1: blank
+                        #
+                        t.d1 = blank_square_d1
+                        return
+
+                    #
+                    #   b1: blank            (set to d1)
+                    #   c1: blank            (set to e1)
+                    #   d1: shift to b1 (then set to blank)
+                    #   e1: shift to c1 (then set to blank)
+                    #
+                    t.c1 = e1.move(t, square_c1)
+                    t.d1 = blank_square_d1
+                    t.e1 = blank_square_e1
+                    return
+
+                #
+                #   b1: blank            (set to c1)
+                #   c1: shift to b1 (then TBD)
+                #   d1: TBD
+                #   e1: TBD
+                #
+                t.b1 = c1.move(t, square_b1)
+
+                if d1 is blank_square_d1:
+                    if e1 is blank_square_e1:
+                        #
+                        #   b1: blank            (set to c1)
+                        #   c1: shift to b1 (then set to blank)
+                        #   d1: blank
+                        #   e1: blank
+                        #
+                        t.c1 = blank_square_c1
+                        return
+
+                    #
+                    #   b1: blank            (set to c1)
+                    #   c1: shift to b1 (then set to e1)
+                    #   d1: blank
+                    #   e1: shift to c1 (then set to blank)
+                    #
+                    t.c1 = e1.move(t, square_c1)
+                    t.e1 = blank_square_e1
+                    return
+
+                #
+                #   b1: blank            (set to c1)
+                #   c1: shift to b1 (then set to d1)
+                #   d1: shift to c1 (then TBD)
+                #   e1: TBD
+                #
+                t.c1 = d1.move(t, square_c1)
+
+                if e1 is blank_square_e1:
+                    #
+                    #   b1: blank            (set to c1)
+                    #   c1: shift to b1 (then set to d1)
+                    #   d1: shift to c1 (then set to blank)
+                    #   e1: blank
+                    #
+                    t.d1 = blank_square_d1
+                    return
+
+                #
+                #   b1: blank            (set to c1)
+                #   c1: shift to b1 (then set to d1)
+                #   d1: shift to c1 (then set to e1)
+                #   e1: shift to d1 (then set to blank)
+                #
+                t.d1 = e1.move(t, square_d1)
+                t.e1 = blank_square_e1
+                return
+
+            if c1 is blank_square_c1:
+                if d1 is blank_square_d1:
+                    if e1 is blank_square_e1:
+                        #
+                        #   b1: keep
+                        #   c1: blank
+                        #   d1: blank
+                        #   e1: blank
+                        #
+                        return
+
+                    #
+                    #   b1: keep
+                    #   c1: blank            (set to e1)
+                    #   d1: blank
+                    #   e1: shift to b1 (then set to blank)
+                    #
+                    t.c1 = e1.move(t, square_c1)
+                    t.e1 = blank_square_e1
+                    return
+
+                #
+                #   b1: keep
+                #   c1: blank            (set to d1)
+                #   d1: shift to c1 (then TBD)
+                #   e1: TBD
+                #
+                t.c1 = d1.move(t, square_b1)
+
+                if t.e1 is blank_square_e1:
+                    #
+                    #   b1: keep
+                    #   c1: blank            (set to d1)
+                    #   d1: shift to c1 (then set to blank)
+                    #   e1: blank
+                    #
+                    t.d1 = blank_square_d1
+                    return
+
+                #
+                #   b1: keep
+                #   c1: blank            (set to d1)
+                #   d1: shift to c1 (then set to e1)
+                #   e1: shift to d1 (then set to blank)
+                #
+                t.d1 = e1.move(t, square_d1)
+                t.e1 = blank_square_e1
+                return
+
+            #
+            #   b1: keep
+            #   c1: keep
+            #   d1: TBD
+            #   e1: TBD
+            #
+            if d1 is blank_square_d1:
+                if e1 is blank_square_e1:
+                    #
+                    #   b1: keep
+                    #   c1: keep
+                    #   d1: blank
+                    #   e1: blank
+                    #
+                    return
+
+                #
+                #   b1: keep
+                #   c1: keep
+                #   d1: blank            (set to e1)
+                #   e1: shift to d1 (then set to blank)
+                #
+                t.d1 = e1.move(t, square_d1)
+                t.e1 = blank_square_e1
+                return
+
+            #
+            #   b1: keep
+            #   c1: keep
+            #   d1: keep
+            #   e1: keep (whether blank or not)
+            #
+            #return
+
+
     v0 = GameBoard.v0
 
     a2 = GameBoard.a2
@@ -217,7 +465,7 @@ def gem():
 
 
     load_v0 = v0.__get__
- 
+
     load_a2 = a2.__get__
     load_b2 = b2.__get__
     load_c2 = c2.__get__
@@ -232,7 +480,7 @@ def gem():
 
 
     store_v0 = v0.__set__
- 
+
     store_a2 = a2.__set__
     store_b2 = b2.__set__
     store_c2 = c2.__set__
@@ -262,13 +510,19 @@ def gem():
         ))
 
 
-    def fix_square(square, center, north_ww = 0, north_west = 0, north = 0, north_east = 0, north_ee = 0):
+    def fix_square(
+            square, center,
+            
+            north_ww = 0, north_west = 0, north = 0, north_east = 0, north_ee = 0, west = 0, east = 0,
+    ):
         square.load_center     = load[center]
         square.load_north_ww   = load[north_ww]
         square.load_north_west = load[north_west]
         square.load_north      = load[north]
         square.load_north_east = load[north_east]
         square.load_north_ee   = load[north_ee]
+        square.load_west       = load[west]
+        square.load_east       = load[east]
 
         square.store_center     = store[center]
         square.store_north_ww   = store[north_ww]
@@ -276,19 +530,41 @@ def gem():
         square.store_north      = store[north]
         square.store_north_east = store[north_east]
         square.store_north_ee   = store[north_ee]
+        square.store_west       = store[west]
+        square.store_east       = store[east]
 
 
-    fix_square(square_a2,  1)
-    fix_square(square_b2,  2)
-    fix_square(square_c2,  3)
-    fix_square(square_d2,  4)
-    fix_square(square_e2,  5)
 
-    fix_square(square_a1,  6,                               north = 1, north_east = 2, north_ee = 3)
-    fix_square(square_b1,  7,               north_west = 1, north = 2, north_east = 3, north_ee = 4)
-    fix_square(square_c1,  8, north_ww = 1, north_west = 2, north = 3, north_east = 4, north_ee = 5)
-    fix_square(square_d1,  9, north_ww = 2, north_west = 3, north = 4, north_east = 5)
-    fix_square(square_e1, 10, north_ww = 3, north_west = 4, north = 5)
+    fix_square(square_a2,  1, east = 2)
+    fix_square(square_b2,  2, east = 3, west = 1)
+    fix_square(square_c2,  3, east = 4, west = 2)
+    fix_square(square_d2,  4, east = 5, west = 3)
+    fix_square(square_e2,  5,           west = 4)
+
+    fix_square(
+            square_a1,   6,
+                                          north = 1, north_east = 2, north_ee = 3, east =  7,
+        )
+
+    fix_square(
+            square_b1,   7,
+                          north_west = 1, north = 2, north_east = 3, north_ee = 4, east =  8, west = 6,
+        )
+
+    fix_square(
+            square_c1,   8,
+            north_ww = 1, north_west = 2, north = 3, north_east = 4, north_ee = 5, east =  9, west = 7,
+        )
+
+    fix_square(
+            square_d1,   9,
+            north_ww = 2, north_west = 3, north = 4, north_east = 5,               east = 10, west = 8,
+        )
+
+    fix_square(
+            square_e1, 10,
+            north_ww = 3, north_west = 4, north = 5,                                          west = 9,
+        )
 
 
     share(

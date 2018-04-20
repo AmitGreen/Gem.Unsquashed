@@ -30,7 +30,7 @@ def gem():
                 north_ee.attacked(board, t)
                 return
 
-            board.a2.attacked(board, t)
+            board.a2.attacked_ignore_shield(board, t)
 
 
     @export

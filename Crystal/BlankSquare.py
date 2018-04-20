@@ -13,6 +13,7 @@ def gem():
         is_blank_square = true
         is_card         = false
         prepare         = 0
+        reset           = 0
 
 
         __slots__ = ((

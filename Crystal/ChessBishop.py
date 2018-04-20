@@ -30,31 +30,31 @@ def gem():
             #
             square = t.square
 
-            board.a1.heal_1()
+            board.a1.heal_1(board, t)
 
             if square != square_b1:
                 heal_1 = board.b1.heal_1
 
                 if heal_1 != 0:
-                    heal_1()
+                    heal_1(board, t)
 
             if square != square_c1:
                 heal_1 = board.c1.heal_1
 
                 if heal_1 != 0:
-                    heal_1()
+                    heal_1(board, t)
 
             if square != square_d1:
                 heal_1 = board.d1.heal_1
 
                 if heal_1 != 0:
-                    heal_1()
+                    heal_1(board, t)
 
             if square != square_e1:
                 heal_1 = board.e1.heal_1
 
                 if heal_1 != 0:
-                    heal_1()
+                    heal_1(board, t)
 
 
         def action(t, board):
@@ -73,7 +73,7 @@ def gem():
                 north_west.attacked(board, t)
                 return
 
-            board.a2.attacked(board, t)
+            board.a2.attacked_ignore_shield(board, t)
 
 
     @export

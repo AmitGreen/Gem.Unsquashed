@@ -16,6 +16,8 @@ def gem():
             'load_north',           #   Vacant | MethodWrapper
             'load_north_east',      #   Vacant | MethodWrapper
             'load_north_ee',        #   Vacant | MethodWrapper
+            'load_west',            #   Vacant | MethodWrapper
+            'load_east',            #   Vacant | MethodWrapper
 
             'store_center',         #   Vacant | MethodWrapper
             'store_north_ww',       #   Vacant | MethodWrapper
@@ -23,6 +25,8 @@ def gem():
             'store_north',          #   Vacant | MethodWrapper
             'store_north_east',     #   Vacant | MethodWrapper
             'store_north_ee',       #   Vacant | MethodWrapper
+            'store_west',           #   Vacant | MethodWrapper
+            'store_east',           #   Vacant | MethodWrapper
         ))
 
 

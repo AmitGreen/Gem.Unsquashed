@@ -220,7 +220,7 @@ def gem():
 
     def create_test_herd_glimpse(
             t, herd_k, herd_v,
-            
+
             test_absent = 0, displace = 0, herd_k_next = 0, if_keyword = 'if', create_result = 0,
     ):
         common = t.common
@@ -499,7 +499,7 @@ def gem():
 
             with f.indent(arrange('if %s is 8:', p_estimate)):
                 f.line('%s = map__lookup(%s, %s)', p, b1, k1)
-                
+
                 if show_assert:
                     with f.indent(arrange('if %s is none:', p)):
                         t.create_r(q)
@@ -510,7 +510,7 @@ def gem():
                 if k3 is 0:
                     create_if_glimpse(t)
                     f.blank_suppress()
-                    
+
             if possible_herd:
                 indent     = empty_context_manager
                 if_keyword = 'elif'
@@ -542,7 +542,7 @@ def gem():
 
                     ac = create_test_herd_glimpse(
                              t, 'c', 'x',
-                             
+
                              (3   if possible_horde else   0),
                              (0   if possible_horde else   'displace_3x'),
                              if_keyword = 'elif',
@@ -575,24 +575,24 @@ def gem():
 
                             ae = create_test_herd_glimpse(
                                      t, 'e',  'z',  5,
-                                     
+
                                      displace = 'displace_4z', herd_k_next = 'e6',
                                  )
 
                             with f.indent():
                                 ae6 = create_test_herd_glimpse(
                                           t, 'e6', 'z6', 6,
-                                          
+
                                           displace = 'displace_4z6', herd_k_next = 'e7',
                                       )
 
                                 with f.indent():
                                     ae7 = create_test_herd_glimpse(
                                               t, 'e7', 'z7', 7,
-                                              
+
                                               displace = 'displace_4z7', create_result = 7,
                                           )
-                                           
+
                                     with f.indent(prefix = 8):
                                         if b2 is 0:
                                             displace = 'store'
@@ -926,6 +926,6 @@ def gem():
 
             create_nested_conjure__X(
                 year, author, 'conjure', 'Gem.GeneratedConjureQuadruple',
-                
+
                 which = 4123,
             )

@@ -23,7 +23,7 @@ def gem():
     alice = Player('Alice')
     bob   = Player('Bob')
 
-    
+
     share(
         'alice',        alice,
         'bob',          bob,

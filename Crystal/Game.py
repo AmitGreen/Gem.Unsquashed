@@ -16,28 +16,22 @@ def gem():
     require_gem('Crystal.VoidSquare')
 
 
-    def action_and_dump(board):
-        board.actions()
+    def action_and_dump(board, create_1, create_2):
+        board.actions(create_1, create_2)
         line('---')
         board.dump_abbreviation()
 
 
     def bishop_pawn(board):
-        board.add_special_x1(create_ally_chess_bishop)
-        board.add_normal_x1 (create_ally_chess_pawn)
-        action_and_dump(board)
+        action_and_dump(board, create_ally_chess_bishop, create_ally_chess_pawn)
 
 
     def knight_pawn(board):
-        board.add_special_x1(create_ally_chess_knight)
-        board.add_normal_x1 (create_ally_chess_pawn)
-        action_and_dump(board)
+        action_and_dump(board, create_ally_chess_knight, create_ally_chess_pawn)
 
 
     def pawn_pawn(board):
-        board.add_special_x1(create_ally_chess_pawn)
-        board.add_normal_x1 (create_ally_chess_pawn)
-        action_and_dump(board)
+        action_and_dump(board, create_ally_chess_pawn, create_ally_chess_pawn)
 
 
     def command_test():
@@ -62,3 +56,8 @@ def gem():
 
         bishop_pawn(board)          #   Turn 2, Alice:  Bishop, Pawn
         knight_pawn(board)          #   Turn 2, Bob:    Knight, Pawn
+
+        knight_pawn(board)          #   Turn 3, Alice:  Knight, Pawn
+        bishop_pawn(board)          #   Turn 3, Bob:    Bishop, Pawn
+
+        pawn_pawn(board)            #   Turn 4, Alice:  Pawn, Pawn

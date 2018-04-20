@@ -18,7 +18,7 @@ def gem():
             t.current_health = current_health
             t.maximum_health = maximum_health
 
-        
+
         def __repr__(t):
             if t.initial_health == t.maximum_health:
                 return arrange('<%s %d>', t.card_name, t.current_health)
