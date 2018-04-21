@@ -5,10 +5,10 @@
 def gem():
     @export
     class CardRoot(Object):
+        adjust          = 0
         prepare         = 0
         is_blank_square = false
         is_card         = true
-        reset           = 0
 
 
         __slots__ = ((
@@ -36,10 +36,15 @@ def gem():
 
 
         def attacked(t, board, by_attacker):
+            damage = t.current_attack - t.current_shield
+
+            if damage <= 0:
+                return false
+
             before_1 = by_attacker.portray()
             before_2 = t          .portray()
 
-            health = t.current_health - t.current_attack
+            health = t.current_health - damage
 
             if health <= 0:
                 square = t.square
@@ -53,6 +58,8 @@ def gem():
             t.current_health = health
 
             line('%s: %s attacked %s; result %s', board.player.name, before_1, before_2, t.portray())
+
+            return true
 
 
         def attacked_ignore_shield(t, board, by_attacker):
@@ -99,10 +106,10 @@ def gem():
 
 
         def move(t, board, square):
-            before_1 = t.portray()
+            before = t.portray()
             t.square = square
 
-            line("%s: moved %s to %s", board.player.name, before_1, t.portray())
+            line("%s: moved %s to %s", board.player.name, before, t.portray())
 
             return t
 
@@ -126,3 +133,16 @@ def gem():
                 return arrange('%d/%d(%d)', t.current_attack, t.current_health, t.maximum_health)
 
             return arrange('%d/%d(%d)/%d', t.current_attack, t.current_health, t.maximum_health, t.current_shield)
+
+
+        def reset(t, board):
+            t.current_shield = 0
+
+
+        def shield(t, board, increased_by, add):
+            before_1 = increased_by.portray()
+            before_2 = t.portray()
+
+            t.current_shield += add
+
+            line('%s: %s increased shield of %s to %s', board.player.name, before_1, before_2, t.portray())

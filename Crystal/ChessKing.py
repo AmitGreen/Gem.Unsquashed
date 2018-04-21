@@ -22,10 +22,15 @@ def gem():
 
 
         def attacked(t, board, attacked_by):
+            damage = t.current_attack - t.current_shield
+
+            if damage <= 0:
+                return false
+
             before_1 = attacked_by.portray()
             before_2 = t          .portray()
 
-            health = t.current_health - attacked_by.current_attack
+            health = t.current_health - damage
 
             if health < 0:
                 health = 0
@@ -33,6 +38,8 @@ def gem():
             t.current_health = health
 
             line('%s: %s attacked %s; result %s', board.player.name, before_1, before_2, t.portray())
+
+            return true
 
 
         def attacked_ignore_shield(t, board, attacked_by):

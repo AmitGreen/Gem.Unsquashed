@@ -49,12 +49,6 @@ def gem():
         is_card         = true
 
 
-        def action(t, board, square):
-            assert square is square_a1
-
-            board.a2 = board.a2.attacked(t.attack)
-
-
     class FrozenEnemyChessKing(FrozenChessKing):
         abbreviation    = 'ZBK'
         ally            = false
@@ -64,15 +58,6 @@ def gem():
         initial_health  = 20
         is_blank_square = false
         is_card         = true
-
-
-        def attacked(t, attack):
-            health = t.current_health - attack
-
-            if health < 0:
-                health = 0
-
-            return conjure_frozen_enemy_chess_king(health, t.maximum_health)
 
 
 

@@ -49,26 +49,18 @@ def gem():
 
         def add_normal_x1(t, create):
             if t.b1 is blank_square_b1:
-                t.b1 = create(square_b1)
-                line("%s created %s", t.player.name, t.b1.portray())
-                return true
+                r = t.b1 = create(square_b1)
+            elif t.c1 is blank_square_c1:
+                r = t.c1 = create(square_c1)
+            elif t.d1 is blank_square_d1:
+                r = t.d1 = create(square_d1)
+            elif t.e1 is blank_square_e1:
+                r = t.e1 = create(square_e1)
+            else:
+                return 0
 
-            if t.c1 is blank_square_c1:
-                t.c1 = create(square_c1)
-                line("%s created %s", t.player.name, t.c1.portray())
-                return true
-
-            if t.d1 is blank_square_d1:
-                t.d1 = create(square_d1)
-                line("%s created %s", t.player.name, t.d1.portray())
-                return true
-
-            if t.e1 is blank_square_e1:
-                t.e1 = create(square_e1)
-                line("%s created %s", t.player.name, t.e1.portray())
-                return true
-
-            return false
+            line("%s created %s", t.player.name, r.portray())
+            return r
 
 
         def add_special_x1(t, create):
@@ -180,7 +172,38 @@ def gem():
             #   Shift left & add last piece
             #
             t.shift_left()
-            t.add_normal_x1(create_2)
+
+            square = t.add_normal_x1(create_2)
+
+
+            #
+            #   Adjust phase
+            #
+            if square is not 0:
+                adjust = t.a1.adjust
+
+                if adjust is not 0:
+                    adjust(t, square)
+
+                adjust = t.b1.adjust
+
+                if adjust is not 0:
+                    adjust(t, square)
+
+                adjust = t.c1.adjust
+
+                if adjust is not 0:
+                    adjust(t, square)
+
+                adjust = t.d1.adjust
+
+                if adjust is not 0:
+                    adjust(t, square)
+
+                adjust = t.e1.adjust
+
+                if adjust is not 0:
+                    adjust(t, square)
 
 
             #

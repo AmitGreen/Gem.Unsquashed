@@ -20,17 +20,16 @@ def gem():
         def action(t, board):
             north_ww = t.square.load_north_ww(board)
 
-            if north_ww.is_card:
-                north_ww.attacked(board, t)
+            if (north_ww.is_card) and (north_ww.attacked(board, t)):
                 return
 
             north_ee = t.square.load_north_ee(board)
 
-            if north_ee.is_card:
-                north_ee.attacked(board, t)
+            if (north_ee.is_card) and (north_ee.attacked(board, t)):
                 return
 
-            board.a2.attacked_ignore_shield(board, t)
+            if (not north_ww.is_card) and (not north_ee.is_card):
+                board.a2.attacked_ignore_shield(board, t)
 
 
     @export

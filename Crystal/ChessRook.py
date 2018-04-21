@@ -7,7 +7,7 @@ def gem():
 
 
     @export
-    class ChessRoot(CardRoot):
+    class ChessRook(CardRoot):
         ally_abbreviation  = 'WR'
         enemy_abbreviation = 'BR'
         initial_attack     = 2
@@ -20,15 +20,40 @@ def gem():
         def action(t, board):
             north = t.square.load_north(board)
 
-            if north_ww.is_card:
-                north_ww.attacked(board, t)
+            if (north.is_card) and (north.attacked(board, t)):
                 return
 
-            board.a2.attacked_ignore_shield(board, t)
+            if (not north.is_card):
+                board.a2.attacked_ignore_shield(board, t)
+
+
+        def adjust(t, board, created):
+            west = t.square.load_west(board)
+
+            if west is created:
+                west.shield(board, t, 1)
+                return
+
+            east = t.square.load_east(board)
+
+            if east is created:
+                east.shield(board, t, 1)
 
 
         def prepare(t, board):
-            line('Rook.prepare: incomplete')
+            west = t.square.load_west(board)
+
+            if west.is_card:
+                west.shield(board, t, 1)
+
+            east = t.square.load_east(board)
+
+            if east.is_card:
+                east.shield(board, t, 1)
+
+
+        def reset(t, board):
+            t.current_shield = 1
 
 
     @export

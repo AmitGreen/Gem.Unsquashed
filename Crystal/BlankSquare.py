@@ -7,6 +7,7 @@ def gem():
 
 
     class BlankSquare(Object):
+        adjust          = 0
         ally            = false
         enemy           = false
         heal_1          = 0
