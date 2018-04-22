@@ -1,13 +1,12 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Marble.ConjureDual')
 def gem():
     require_gem('Marble.Core')
 
 
-    show_assert       = 7
-    use_herd_estimate = 0
+    show_assert = 7
 
 
     class CommonKeyData(Object):
@@ -20,10 +19,13 @@ def gem():
             'total',                    #   Integer
             'chain',                    #   Tuple of String+
             'keys',                     #   String
+
+            'coverage_name',            #   0 | String+
+            'coverage_index',           #   Mutable Integer
         ))
 
 
-        def __init__(t, f, share, show_assert, use_herd_estimate, total, chain, keys):
+        def __init__(t, f, share, show_assert, use_herd_estimate, total, chain, keys, coverage_name):
             t.f                 = f
             t.share             = share
             t.show_assert       = show_assert
@@ -32,6 +34,31 @@ def gem():
             t.total = total
             t.chain = chain
             t.keys  = keys
+
+            t.coverage_name  = coverage_name
+            t.coverage_index = 0
+
+
+        def __repr__(t):
+            return arrange('<CommonKeyData %s %s %s %d %s %s; %s %s>',
+                           t.share,
+                           t.show_assert,
+                           t.use_herd_estimate,
+                           t.total,
+                           t.chain,
+                           t.keys,
+                           t.coverage_name, t.coverage_index)
+
+
+        def cover(t):
+            coverage_name = t.coverage_name
+
+            if coverage_name is 0:
+                return
+
+            t.f.line('%s[%d] += 1', coverage_name, t.coverage_index)
+
+            t.coverage_index += 1
 
 
     class KeyData(Object):
@@ -52,6 +79,13 @@ def gem():
             'k3',                       #   Zero | String+
             'k4',                       #   Zero | String+
         ))
+
+
+        def __repr__(t):
+            return arrange('<KeyData %s %d; %s %s %s %s %s %s; %s %s %s %s %s>',
+                           t.common, t.shift,
+                           t.b2, t.b1, t.p, t.q, t.r, t.s,
+                           t.k0, t.k1, t.k2, t.k3, t.k4)
 
 
         def __init__(t, common, shift, b2, b1, p, q, r, s, _, k0, k1, k2, k3, k4):
@@ -135,18 +169,25 @@ def gem():
 
 
     def create_if_glimpse(t, skip = 1):
-        common = t.common
-
-        f  = common.f
-        b1 = t.b1
-        p  = t.p
-        q  = t.q
-        k1 = t.k1
-        k2 = t.k2
-        k3 = t.k3
+        common        = t.common
+        coverage_name = common.coverage_name
+        cover         = common.cover
+        f             = common.f
+        b1            = t.b1
+        p             = t.p
+        q             = t.q
+        k1            = t.k1
+        k2            = t.k2
+        k3            = t.k3
 
         if k3 is 0:
-            f.line('if %s.%s is %s: return %s', p, k2, k2, p)
+            if coverage_name:
+                with f.line('if %s.%s is %s:', p, k2, k2):
+                    cover()
+                    f.line('return %s', p)
+            else:
+                f.line('if %s.%s is %s: return %s', p, k2, k2, p)
+
             f.blank()
             return
 
@@ -158,6 +199,7 @@ def gem():
         f.blank()
 
         with f.indent(arrange('if %s.%s is %s:', p, k2, k2)):
+            cover()
             f.blank_suppress()
             create_if_glimpse(t.remove_b_k2(), skip = skip + 1)
             t.create_r(q)
@@ -168,13 +210,14 @@ def gem():
 
 
     def create_test_herd_member(t, herd_k, herd_v, displace = 0, herd_k_next = 0, create_result = 0):
-        common = t.common
-
-        f           = common.f
-        show_assert = common.show_assert
-        p           = t.p
-        q           = t.q
-        k2          = t.k2
+        common        = t.common
+        coverage_name = common.coverage_name
+        cover         = common.cover
+        f             = common.f
+        show_assert   = common.show_assert
+        p             = t.p
+        q             = t.q
+        k2            = t.k2
 
         f.blank()
 
@@ -184,8 +227,9 @@ def gem():
         else:
             pk = arrange('%s.%s', p, herd_k)
 
-        if show_assert:
+        if (coverage_name) or (show_assert):
             with f.indent(arrange('if %s is %s:', pk, k2)):
+                cover()
                 f.line('%s = %s.%s', q, p, herd_v)
                 t.create_assert(q)
                 f.line('return %s', q)
@@ -198,11 +242,13 @@ def gem():
                 t.create_r(q)
                 f.blank()
                 with f.indent(arrange('if %s is absent:', pk)):
+                    cover()
                     f.line('%s.%s = %s', p, herd_k, k2)
                     f.line('%s.%s = %s', p, herd_v, q)
                     f.line('return %s', q)
             else:
                 with f.indent(arrange('if %s is absent:', pk)):
+                    cover()
                     f.line('%s.%s = %s', p, herd_k, k2)
 
                     if herd_k_next is not 0:
@@ -223,14 +269,15 @@ def gem():
 
             test_absent = 0, displace = 0, herd_k_next = 0, if_keyword = 'if', create_result = 0,
     ):
-        common = t.common
-
-        f           = common.f
-        show_assert = common.show_assert
-        b1          = t.b1
-        p           = t.p
-        k1          = t.k1
-        k3          = t.k3
+        common        = t.common
+        coverage_name = common.coverage_name
+        cover         = common.cover
+        f             = common.f
+        show_assert   = common.show_assert
+        b1            = t.b1
+        p             = t.p
+        k1            = t.k1
+        k3            = t.k3
 
         if test_absent:
             indent     = f.indent('else:')
@@ -242,9 +289,11 @@ def gem():
 
         with indent:
             if test_absent:
+                cover()
                 f.line('%s = %s.%s', pk, b1, herd_k)
 
             with f.indent(arrange('%s %s is %s:', if_keyword, pk, k1)):
+                cover()
                 f.line('%s = %s.%s', p, b1, herd_v)
 
                 if k3 is 0:
@@ -259,6 +308,7 @@ def gem():
             if test_absent:
                 if create_result:
                     with f.indent('else:'):
+                        cover()
                         assert herd_k_next is 0
 
                         t.create_r(p)
@@ -266,6 +316,7 @@ def gem():
                         f.blank()
 
                         with f.indent(arrange('if %s is absent:', pk)):
+                            cover()
                             f.line('%s.%s = %s', b1, herd_k, k1)
                             f.line('%s.%s = %s', b1, herd_v, p)
                             f.line('return %s', p)
@@ -273,6 +324,7 @@ def gem():
                         f.blank()
                 else:
                     with f.indent(arrange('elif %s is absent:', pk)):
+                        cover()
                         f.line('%s.%s = %s', b1, herd_k, k1)
 
                         if herd_k_next is not 0:
@@ -298,15 +350,16 @@ def gem():
 
 
     def create_last(t, estimate = 0, k_sample = 0):
-        common = t.common
-
-        f           = common.f
-        show_assert = common.show_assert
-        b1          = t.b1
-        p           = t.p
-        q           = t.q
-        k1          = t.k1
-        k2          = t.k2
+        common        = t.common
+        coverage_name = common.coverage_name
+        cover         = common.cover
+        f             = common.f
+        show_assert   = common.show_assert
+        b1            = t.b1
+        p             = t.p
+        q             = t.q
+        k1            = t.k1
+        k2            = t.k2
 
         #if common.use_herd_estimate:    k_sample = 'FAKE'
 
@@ -332,12 +385,16 @@ def gem():
                 else:
                     f.line('#create_last: horde only')
 
-            if show_assert:
+            if (coverage_name) or (show_assert):
                 with f.indent(arrange('if %s is 8:', estimate)):
+                    cover()
+
                     f.line('%s = map__lookup(%s, %s)', q, p, k2)
                     with f.indent(arrange('if %s is not none:', q)):
+                        cover()
                         t.create_assert(q)
                         f.line('return %s', q)
+                    cover()
 
                     f.blank()
 
@@ -348,7 +405,6 @@ def gem():
             else:
                 f.line('if %s is 8: return (map__lookup(%s, %s)) or (map__provide(%s, %s, Meta(%s)))',
                        estimate, p, k2, p, k2, common.keys)
-
 
             if not possible_herd:
                 f.line('assert %s is 3', estimate)
@@ -366,14 +422,21 @@ def gem():
                     f.blank_suppress()
 
                 with f.indent(arrange('if %s is 2:', estimate)):
+                    cover()
+
                     herd = arrange('create_herd_3(%s, %s, %s, %s.v, %s.w, %s)', aa, ab, k2, p, p, q)
 
                     t.create_r(q)
 
-                    with f.indent(arrange('if %sh is 8:', b1)):
-                        f.line('map__store(%s, %s, %s)', b1, k1, herd)
-                    with f.indent('else:'):
-                        f.line('%sr(%s, %s)', b1, b1, herd)
+                    if b1 is 0:
+                        f.line('%s(%s, %s)', displace, k1, herd)
+                    else:
+                        with f.indent(arrange('if %sh is 8:', b1)):
+                            cover()
+                            f.line('map__store(%s, %s, %s)', b1, k1, herd)
+                        with f.indent('else:'):
+                            cover()
+                            f.line('%sr(%s, %s)', b1, b1, herd)
 
                     f.line('return %s', q)
 
@@ -383,10 +446,23 @@ def gem():
                     f.blank_suppress()
 
                 with f.indent(arrange('if %s is 3:', estimate)):
+                    cover()
+
+                    herd = arrange('create_herd_4(%s, %s, %s, %s, %s.v, %s.w, %s.x, %s)',
+                                   aa, ab, ac, k2, p, p, p, q)
+
                     t.create_r(q)
 
-                    f.line('%s(%s, create_herd_4(%s, %s, %s, %s, %s.v, %s.w, %s.x, %s))',
-                           displace, k1, aa, ab, ac, k2, p, p, p, q)
+                    if b1 is 0:
+                        f.line('%s(%s, %s)', displace, k1, herd)
+                    else:
+                        with f.indent(arrange('if %sh is 8:', b1)):
+                            cover()
+                            f.line('map__store(%s, %s, %s)', b1, k1, herd)
+                        with f.indent('else:'):
+                            cover()
+                            f.line('%sr(%s, %s)', b1, b1, herd)
+
                     f.line('return %s', q)
 
                 f.blank()
@@ -400,11 +476,31 @@ def gem():
 
                 f.blank()
 
-                with f.indent(arrange('%s(', displace), arrange('%*s)', length(displace),  ' '), length(displace) + 4):
-                    f.line('%s,', k1)
-                    with f.indent('create_herd_many(', ')'):
+
+                def create_herd_many__from__herd_7():
+                    with f.indent('create_herd_many(', '),'):
                         f.line('%s, %s, %s, %s, %s, %s, %s, %s,', aa,  ab, ac, ad, ae, ae6, ae7, k2)
                         f.line('%s.v, %s.w, %s.x, %s.y, %s.z, %s.z6, %s.z7, %s,', p, p, p, p, p, p, p, q)
+
+
+                if b1 is 0:
+                    with f.indent(
+                            arrange('%s(', displace), arrange('%*s)', length(displace),  ' '), length(displace) + 4
+                    ):
+                        f.line('%s,', k1)
+                        create_herd_many__from__herd_7()
+                else:
+                    with f.indent(arrange('if %sh is 8:', b1)):
+                        cover()
+                        with f.indent('map__store(', ')'):
+                            f.line('%s,', b1)
+                            f.line('%s,', k1)
+                            create_herd_many__from__herd_7()
+                    with f.indent('else:'):
+                        cover()
+                        with f.indent(arrange('%sr(', b1), ')'):
+                            f.line('%s,', b1)
+                            create_herd_many__from__herd_7()
 
                 f.blank()
 
@@ -425,10 +521,12 @@ def gem():
             return
 
         f.line('%s = %s.glimpse(%s)', q, p, k2)
-        if show_assert:
+        if (coverage_name) or (show_assert):
             with f.indent(arrange('if %s is not none:', q)):
+                cover()
                 t.create_assert(q)
                 f.line('return %s', q)
+            cover()
         else:
             f.line('if %s is not none: return %s', q, q)
 
@@ -440,9 +538,18 @@ def gem():
         f.line('%s = %s.insert(%s, %s)', a_, p, k2, q)
 
         if k_sample is 0:
-            f.line('if %s is not %s: %s(%s, %s)', p, a_, displace, k1, a_)
+            if coverage_name:
+                with f.indent(arrange('if %s is not %s:', p, a_)):
+                    cover()
+                    f.line('%s(%s, %s)', displace, k1, a_)
+            else:
+                f.line('if %s is not %s: %s(%s, %s)', p, a_, displace, k1, a_)
+            cover()
+
+            f.blank()
         else:
             with f.indent(arrange('if %s is not %s:', p, a_)):
+                cover()
                 create_assert_k_sample(t, a_, k_sample)
                 f.line('%s(%s, %s)', displace, k1, a_)
 
@@ -450,19 +557,23 @@ def gem():
 
 
     def create_next(t, p_estimate = 0, k_sample = 0):
-        common      = t.common
-        show_assert = common.show_assert
-        f           = common.f
-        shift       = t.shift
-        b2          = t.b2
-        b1          = t.b1
-        p           = t.p
-        q           = t.q
-        k0          = t.k0
-        k1          = t.k1
-        k2          = t.k2
-        k3          = t.k3
-        k4          = t.k4
+        common        = t.common
+        coverage_name = common.coverage_name
+        cover         = common.cover
+        show_assert   = common.show_assert
+        f             = common.f
+        shift         = t.shift
+        b2            = t.b2
+        b1            = t.b1
+        p             = t.p
+        q             = t.q
+        k0            = t.k0
+        k1            = t.k1
+        k2            = t.k2
+        k3            = t.k3
+        k4            = t.k4
+
+        #f.line('#create_next(%s, %s, %s)', t, p_estimate, k_sample)
 
         if b1 is 0:
             assert p_estimate is 0
@@ -470,14 +581,18 @@ def gem():
 
             f.line('%s = lookup(%s)', p, k1)
 
-            if show_assert:
+            if (coverage_name) or (show_assert):
                 with f.indent(arrange('if %s is none:', p)):
+                    cover()
                     t.create_r(q)
                     f.line('return provide(%s, %s)', k1, q)
             else:
                 f.line('if %s is none: return provide(%s, Meta(%s))', p, k1, common.keys)
 
             f.blank_suppress()
+
+            if k3 is not 0:
+                create_if_glimpse(t)
         elif p_estimate is 0:
             f.line('%s = %s.glimpse(%s, absent)', p, b1, k1)
             create_if_glimpse(t)
@@ -498,10 +613,12 @@ def gem():
                 f.line('#create_next: shift: %d; horde only', shift)
 
             with f.indent(arrange('if %s is 8:', p_estimate)):
+                cover()
                 f.line('%s = map__lookup(%s, %s)', p, b1, k1)
 
-                if show_assert:
+                if (coverage_name) or (show_assert):
                     with f.indent(arrange('if %s is none:', p)):
+                        cover()
                         t.create_r(q)
                         f.line('return map__provide(%s, %s, %s)', b1, k1, q)
                 else:
@@ -531,6 +648,8 @@ def gem():
                 if possible_herd:
                     f.blank_suppress()
                     with f.indent(arrange('elif %s is 2:', p_estimate)):
+                        cover()
+
                         if b2 is 0:
                             displace = 'store'
                         else:
@@ -544,7 +663,7 @@ def gem():
                              t, 'c', 'x',
 
                              (3   if possible_horde else   0),
-                             (0   if possible_horde else   'displace_3x'),
+                             (0   if possible_horde else   arrange('%s.displace_x', b1)),
                              if_keyword = 'elif',
                          )
 
@@ -556,6 +675,8 @@ def gem():
                         if_keyword = 'elif'
 
                     with f.indent(arrange('%s %s is 3:', if_keyword, p_estimate)):
+                        cover()
+
                         if b2 is 0:
                             displace = 'store'
                         else:
@@ -569,6 +690,8 @@ def gem():
 
                     with indent:
                         with f.indent('else:'):
+                            cover()
+
                             f.line('assert %s is 7', p_estimate)
 
                             ad = create_test_herd_glimpse(t, 'd', 'y', displace = 'displace_4y')
@@ -613,6 +736,8 @@ def gem():
 
                 else:
                     with f.indent('else:'):
+                        cover()
+
                         f.line('%s  = %s.glimpse(%s, absent)', p, b1, k1)
                         f.line('%sr = 0', p)
 
@@ -620,8 +745,8 @@ def gem():
 
             f.blank()
 
-        if k3 is not 0:
-            create_if_glimpse(t)
+            if k3 is not 0:
+                create_if_glimpse(t)
 
         f.blank()
 
@@ -637,6 +762,17 @@ def gem():
         f.blank()
 
         with f.indent(if_not_herd):
+            cover()
+
+            if coverage_name:
+                with f.indent(arrange('if %s.%s is %s:', p, k2, k2)):
+                    cover()
+                    f.line('return %s', p)
+            else:
+                f.line('if %s.%s is %s: return %s', p, k2, k2, p)
+
+            cover()
+
             t.create_r(q)
 
             if b1 is 0:
@@ -647,6 +783,8 @@ def gem():
                 f.line('return %s', q)
             elif p_estimate is 0:
                 with f.indent(arrange('if %s is absent:', p)):
+                    cover()
+
                     if b2 is 0:
                         displace = 'store'
                     else:
@@ -656,9 +794,15 @@ def gem():
                     f.line('%s = %s.insert(%s, %s)', b1_, b1, k1, q)
 
                     if k_sample is 0:
-                        f.line('if %s is not %s: %s(%s, %s)', b1, b1_, displace, k0, b1_)
+                        if coverage_name:
+                            with f.indent('if %s is not %s', b1, b1_):
+                                cover()
+                                f.line('%s(%s, %s)', displace, k0, b1_)
+                        else:
+                            f.line('if %s is not %s: %s(%s, %s)', b1, b1_, displace, k0, b1_)
                     else:
                         with f.indent(arrange('if %s is not %s:', b1, b1_)):
+                            cover()
                             create_assert_k_sample(t, b1_, k_sample)
                             f.line('%s(%s, %s)', displace, k0, b1_)
 
@@ -673,12 +817,21 @@ def gem():
 
                 f.blank()
 
-                f.line('if %s is 8: map__store(%s, %s, herd)', p_estimate, b1, k1)
-                f.line('else:       %sr(herd)', b1)
+                if coverage_name:
+                    with f.indent('if %s is 8', p_estimate):
+                        cover()
+                        f.line('map__store(%s, %s, herd)', b1, k1)
+                    with f.indent('else:'):
+                        cover()
+                        f.line('%sr(%s, herd)', b1, b1)
+                else:
+                    f.line('if %s is 8: map__store(%s, %s, herd)', p_estimate, b1, k1)
+                    f.line('else:       %sr(%s, herd)', b1, b1)
 
                 f.blank()
 
                 f.line('return %s', q)
+        cover()
 
         f.blank()
 
@@ -687,7 +840,12 @@ def gem():
             return
 
         with f.indent(arrange('if %s.skip is 0:', p)):
+            cover()
             create_next(t.remove_p2_k0(), estimate)
+
+        f.blank()
+
+        cover()
 
         f.blank()
 
@@ -702,6 +860,7 @@ def gem():
         create_sample(t, 1)
 
         with f.indent(arrange('if %s.skip is 1:', p)):
+            cover()
             create_next(t2.remove_p2_k0(), k_sample = k2)
 
         f.blank()
@@ -752,7 +911,10 @@ def gem():
     def create_conjure(
             f, prefix, suffix, k1, k2, k3 = 0, k4 = 0,
 
-            share = 0, show_assert = 0, use_herd_estimate = 0,
+            coverage          = 0,
+            share             = 0,
+            show_assert       = 0,
+            use_herd_estimate = 0,
     ):
         if k3 is 0:
             total = 2
@@ -767,7 +929,11 @@ def gem():
             chain = ((k1, k2, k3, k4))
             keys  = 'k1, k2, k3, k4'
 
-        common = CommonKeyData(f, share, show_assert, use_herd_estimate, total, chain, keys)
+        coverage_name = (0   if coverage is 0 else   arrange('coverage_%s', suffix))
+
+        common = CommonKeyData(
+                         f, share, show_assert, use_herd_estimate, total, chain, keys, coverage_name,
+                     )
 
         t    = create_KeyData(common, k1, k2, k3, k4)
         name = arrange('%s_%s', prefix, suffix)
@@ -788,6 +954,7 @@ def gem():
             f.blank2()
             f.line('@rename(%r, name)', arrange('%s_%%s', prefix))
             with f.indent(arrange('def %s(%s):', name, t.common.keys)):
+                common.cover()
                 create_next(t)
 
             f.blank2()
@@ -796,14 +963,26 @@ def gem():
 
         f.blank2()
 
+        if coverage:
+            f.line('%s = [0] * %d', coverage_name, common.coverage_index)
+
+            f.blank2()
+
+            with f.indent('export(', ')'):
+                f.line('%r, %s', coverage_name, coverage_name)
+
+            f.blank2()
+
 
     def create_nested_conjure__X(
             year, author, prefix, module_name, which,
 
-            share       = 0,
-            show_assert = show_assert,
-            show        = 0,
-            blanks      = 0,
+            blanks            = 0,
+            coverage          = 0,
+            share             = 0,
+            show              = 0,
+            show_assert       = show_assert,
+            use_herd_estimate = 0,
     ):
         if type(which) is not Tuple:
             which = ((which,))
@@ -816,6 +995,8 @@ def gem():
             f.line('#')
             f.line('@gem(%r)', module_name)
 
+            create_horde_flags = [0]
+
 
             def process(
                     test, suffix, k1, k2, k3 = 0, k4 = 0,
@@ -823,10 +1004,15 @@ def gem():
                     use_herd_estimate = use_herd_estimate,
             ):
                 if test in which:
+                    if loop == 1:
+                        if k3 is not 0:
+                            create_horde_flags[0] = 7
+
                     if loop == 2:
                         create_conjure(
                             f, prefix, suffix, k1, k2, k3, k4,
 
+                            coverage          = coverage,
                             share             = share,
                             show_assert       = show_assert,
                             use_herd_estimate = use_herd_estimate,
@@ -845,8 +1031,13 @@ def gem():
 
                 for loop in [1, 2]:
                     if loop == 2:
-                        if create_herd_many:
-                            import_list.append('create_herd_many')
+                        if create_horde_flags[0]:
+                            import_list.append('create_horde_2')
+                            import_list.append('create_horde_many')
+                            import_list.append('displace_4y')
+                            import_list.append('displace_4z')
+                            import_list.append('displace_4z6')
+                            import_list.append('displace_4z7')
 
                         f.line('from Gem import %s', ', '.join(import_list))
 
@@ -895,37 +1086,49 @@ def gem():
         create_nested_conjure__X(
             year, author, 'NEW_conjure', 'Topaz.GeneratedNew',
 
-            which  = ((2, 21, 3)),
-            #which  = 3,
-            share  = 7,
-            show   = 5,
-            blanks = 7,
+            which  = 2,
+            #which  = ((2, 21, 3)),
+
+            coverage = 7,
+            share    = 7,
+            show     = 0,
+            blanks   = 7,
         )
 
         if 7 is 7:
-            create_nested_conjure__X(
-                year, author, 'simplified_conjure', 'Topaz.GeneratedConjureDual',
+            if 2:
+                create_nested_conjure__X(
+                    year, author, 'simplified_conjure', 'Topaz.GeneratedConjureDual',
 
-                which = ((21, 2)),
-                share = 7,
-            )
+                    #which             = 2,
+                    which             = ((21, 2)),
+                    #coverage          = 7,
+                    share             = 7,
+                    use_herd_estimate = 7,
+                )
 
-            create_nested_conjure__X(
-                year, author, 'simplified_conjure', 'Topaz.GeneratedConjureTriple',
+            if 0:
+                create_nested_conjure__X(
+                    year, author, 'simplified_conjure', 'Topaz.GeneratedConjureTriple',
 
-                which = ((312, 3)),
-                share = 7,
-            )
+                    which = ((312, 3)),
+                    #which             = 3,
+                    share             = 7,
+                    use_herd_estimate = 7,
+                )
 
-            create_nested_conjure__X(
-                year, author, 'simplified_conjure', 'Topaz.GeneratedConjureQuadruple',
+            if 0:
+                create_nested_conjure__X(
+                    year, author, 'simplified_conjure', 'Topaz.GeneratedConjureQuadruple',
 
-                which = ((4123, 4)),
-                share = 7,
-            )
+                    which = ((4123, 4)),
+                    #which = 4,
+                    share = 7,
+                )
 
-            create_nested_conjure__X(
-                year, author, 'conjure', 'Gem.GeneratedConjureQuadruple',
+            if 0:
+                create_nested_conjure__X(
+                    year, author, 'conjure', 'Gem.GeneratedConjureQuadruple',
 
-                which = 4123,
-            )
+                    which = 4123,
+                )

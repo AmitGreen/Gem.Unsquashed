@@ -1407,3 +1407,16 @@ def gem():
     displace_4z  = Herd_4567.z .__set__
     displace_4z6 = Herd_4567.z6.__set__
     displace_4z7 = Herd_4567.z7.__set__
+
+
+    Herd_4567.displace_v = displace_4v
+    Herd_4567.displace_w = displace_4w
+    Herd_4567.displace_x = displace_4x
+
+
+    export(
+        'displace_4y',      displace_4y,
+        'displace_4z',      displace_4z,
+        'displace_4z6',     displace_4z6,
+        'displace_4z7',     displace_4z7,
+    )

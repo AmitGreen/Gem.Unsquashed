@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 def boot(module_name):
     def execute(f):
@@ -27,4 +27,4 @@ def gem():
 
     @share
     def main(arguments):
-        create_nested_conjure(2017, 'Amit Green')
+        create_nested_conjure('2017-2018', 'Amit Green')

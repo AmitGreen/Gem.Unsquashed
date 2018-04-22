@@ -41,8 +41,11 @@ def gem():
     #
     #   dual_test_list
     #
+    dual_duplicates = 2
+
     dual_test_list = ((
             ((   one,   circle       )),
+            ((   one,   circle       )),        #   Duplicate #1
             ((   three, circle       )),
             ((   two,   circle       )),
 
@@ -86,6 +89,7 @@ def gem():
             ((   seven, trapazoid    )),
 
             ((   one, triangle       )),
+            ((   one, triangle       )),        #   Duplicate #2
         ))
 
 
@@ -113,7 +117,7 @@ def gem():
 
             del v
 
-            assert cache.count_nested() == length(dual_test_list)
+            assert cache.count_nested() == length(dual_test_list) - dual_duplicates
 
             #if 7 is 7:
             #    my_line('BEFORE: (loop %d)', loop)
@@ -235,5 +239,21 @@ def gem():
     def test_conjure_dual():
         test_conjure_unique_dual()
         test_conjure_unique_dual__21()
+
+        failed = false
+
+
+        for [i, v] in enumerate(coverage_dual):
+            if v is 0:
+                if failed:
+                    pass
+                else:
+                    failed = true
+                    line('coverage_dual: %s', coverage_dual)
+
+                line('coverage_dual[%d] is 0', i);
+
+        if failed:
+            assert 0, 'FAILED: conjure_dual'
 
         line('PASSED: conjure_dual')

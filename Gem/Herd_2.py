@@ -355,5 +355,5 @@ def gem():
         return t
 
 
-    displace_2v = Herd_2.v.__set__
-    displace_2w = Herd_2.w.__set__
+    Herd_2.displace_v = displace_2v = Herd_2.v.__set__
+    Herd_2.displace_w = displace_2w = Herd_2.w.__set__
