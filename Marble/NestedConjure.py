@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Marble.ConjureDual')
 def gem():
@@ -34,6 +34,16 @@ def gem():
             t.keys  = keys
 
 
+        def __repr__(t):
+            return arrange('<CommonKeyData %s %s %s %d %s %s>',
+                           t.share,
+                           t.show_assert,
+                           t.use_herd_estimate,
+                           t.total,
+                           t.chain,
+                           t.keys)
+
+
     class KeyData(Object):
         __slots__ = ((
             'common',                   #   CommonKeyData
@@ -52,6 +62,13 @@ def gem():
             'k3',                       #   Zero | String+
             'k4',                       #   Zero | String+
         ))
+
+
+        def __repr__(t):
+            return arrange('<KeyData %s %d; %s %s %s %s %s %s; %s %s %s %s %s>',
+                           t.common, t.shift,
+                           t.b2, t.b1, t.p, t.q, t.r, t.s,
+                           t.k0, t.k1, t.k2, t.k3, t.k4)
 
 
         def __init__(t, common, shift, b2, b1, p, q, r, s, _, k0, k1, k2, k3, k4):
@@ -464,6 +481,8 @@ def gem():
         k3          = t.k3
         k4          = t.k4
 
+        f.line('#create_next(%s, %s, %s)', t, p_estimate, k_sample)
+
         if b1 is 0:
             assert p_estimate is 0
             assert k0         is 0
@@ -478,6 +497,9 @@ def gem():
                 f.line('if %s is none: return provide(%s, Meta(%s))', p, k1, common.keys)
 
             f.blank_suppress()
+
+            if k3 is not 0:
+                create_if_glimpse(t)
         elif p_estimate is 0:
             f.line('%s = %s.glimpse(%s, absent)', p, b1, k1)
             create_if_glimpse(t)
@@ -620,8 +642,8 @@ def gem():
 
             f.blank()
 
-        if k3 is not 0:
-            create_if_glimpse(t)
+            if k3 is not 0:
+                create_if_glimpse(t)
 
         f.blank()
 
@@ -898,34 +920,37 @@ def gem():
             which  = ((2, 21, 3)),
             #which  = 3,
             share  = 7,
-            show   = 5,
+            show   = 0,
             blanks = 7,
         )
 
         if 7 is 7:
-            create_nested_conjure__X(
-                year, author, 'simplified_conjure', 'Topaz.GeneratedConjureDual',
+            if 0:
+                create_nested_conjure__X(
+                    year, author, 'simplified_conjure', 'Topaz.GeneratedConjureDual',
 
-                which = ((21, 2)),
-                share = 7,
-            )
+                    which = ((21, 2)),
+                    share = 7,
+                )
 
-            create_nested_conjure__X(
-                year, author, 'simplified_conjure', 'Topaz.GeneratedConjureTriple',
+                create_nested_conjure__X(
+                    year, author, 'simplified_conjure', 'Topaz.GeneratedConjureTriple',
 
-                which = ((312, 3)),
-                share = 7,
-            )
+                    which = ((312, 3)),
+                    share = 7,
+                )
 
             create_nested_conjure__X(
                 year, author, 'simplified_conjure', 'Topaz.GeneratedConjureQuadruple',
 
-                which = ((4123, 4)),
+                #which = ((4123, 4)),
+                which = 4,
                 share = 7,
             )
 
-            create_nested_conjure__X(
-                year, author, 'conjure', 'Gem.GeneratedConjureQuadruple',
+            if 0:
+                create_nested_conjure__X(
+                    year, author, 'conjure', 'Gem.GeneratedConjureQuadruple',
 
-                which = 4123,
-            )
+                    which = 4123,
+                )
