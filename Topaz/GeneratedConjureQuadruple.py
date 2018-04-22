@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Topaz.GeneratedConjureQuadruple')
 def gem():
@@ -26,6 +26,7 @@ def gem():
 
         @rename('simplified_conjure_%s', name)
         def simplified_conjure_quadruple(k1, k2, k3, k4):
+            #create_next(<KeyData <CommonKeyData 7 7 0 4 ('k1', 'k2', 'k3', 'k4') k1, k2, k3, k4> 0; 0 0 p q r s; 0 k1 k2 k3 k4>, 0, 0)
             p = lookup(k1)
             if p is none:
                 q = Meta(k1, k2, k3, k4)
@@ -53,15 +54,8 @@ def gem():
                 return q
 
             if p.skip is 0:
+                #create_next(<KeyData <CommonKeyData 7 7 0 4 ('k1', 'k2', 'k3', 'k4') k1, k2, k3, k4> 1; 0 p q r s 0; k1 k2 k3 k4 0>, 0, 0)
                 q = p.glimpse(k2, absent)
-
-                if q.k3 is k3:
-                    if q.k4 is k4: return q
-
-                    r = Meta(k1, k2, k3, k4)
-                    assert (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3) and (r.k4 is k4)
-                    p.displace(k2, create_horde_2(1, q.k4, k4, q, r))
-                    return r
 
                 if q.k3 is k3:
                     if q.k4 is k4: return q
@@ -84,6 +78,7 @@ def gem():
                     return r
 
                 if q.skip is 0:
+                    #create_next(<KeyData <CommonKeyData 7 7 0 4 ('k1', 'k2', 'k3', 'k4') k1, k2, k3, k4> 2; p q r s 0 0; k2 k3 k4 0 0>, 0, 0)
                     r = q.glimpse(k3, absent)
                     if r.k4 is k4: return r
 
@@ -141,6 +136,7 @@ def gem():
                 return r
 
             if p.skip is 1:
+                #create_next(<KeyData <CommonKeyData 7 7 0 4 ('k1', 'k2', 'k3', 'k4') k1, k2, k3, k4> 2; 0 p r s 0 0; k1 k3 k4 0 0>, 0, k2)
                 r = p.glimpse(k3, absent)
                 if r.k4 is k4: return r
 
@@ -210,6 +206,7 @@ def gem():
 
         @rename('simplified_conjure_%s', name)
         def simplified_conjure_quadruple__4123(k1, k2, k3, k4):
+            #create_next(<KeyData <CommonKeyData 7 7 0 4 ('k4', 'k1', 'k2', 'k3') k1, k2, k3, k4> 0; 0 0 p q r s; 0 k4 k1 k2 k3>, 0, 0)
             p = lookup(k4)
             if p is none:
                 q = Meta(k1, k2, k3, k4)
@@ -237,15 +234,8 @@ def gem():
                 return q
 
             if p.skip is 0:
+                #create_next(<KeyData <CommonKeyData 7 7 0 4 ('k4', 'k1', 'k2', 'k3') k1, k2, k3, k4> 1; 0 p q r s 0; k4 k1 k2 k3 0>, 0, 0)
                 q = p.glimpse(k1, absent)
-
-                if q.k2 is k2:
-                    if q.k3 is k3: return q
-
-                    r = Meta(k1, k2, k3, k4)
-                    assert (r.k4 is k4) and (r.k1 is k1) and (r.k2 is k2) and (r.k3 is k3)
-                    p.displace(k1, create_horde_2(1, q.k3, k3, q, r))
-                    return r
 
                 if q.k2 is k2:
                     if q.k3 is k3: return q
@@ -268,6 +258,7 @@ def gem():
                     return r
 
                 if q.skip is 0:
+                    #create_next(<KeyData <CommonKeyData 7 7 0 4 ('k4', 'k1', 'k2', 'k3') k1, k2, k3, k4> 2; p q r s 0 0; k1 k2 k3 0 0>, 0, 0)
                     r = q.glimpse(k2, absent)
                     if r.k3 is k3: return r
 
@@ -325,6 +316,7 @@ def gem():
                 return r
 
             if p.skip is 1:
+                #create_next(<KeyData <CommonKeyData 7 7 0 4 ('k4', 'k1', 'k2', 'k3') k1, k2, k3, k4> 2; 0 p r s 0 0; k4 k2 k3 0 0>, 0, k1)
                 r = p.glimpse(k2, absent)
                 if r.k3 is k3: return r
 
