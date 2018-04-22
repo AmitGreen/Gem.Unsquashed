@@ -11,7 +11,7 @@ def gem():
     require_gem('Crystal.ChessPawn')
     require_gem('Crystal.ChessRook')
     require_gem('Crystal.Core')
-    require_gem('Crystal.FrozenChessKing')
+    require_gem('Crystal.FrozenChessCard')
     require_gem('Crystal.Player')
     require_gem('Crystal.Square')
     require_gem('Crystal.VoidSquare')
@@ -40,7 +40,7 @@ def gem():
 
 
     def command_test():
-        pass
+        line('Z: %s', conjure_frozen_ally_chess_bishop(ChessBishop.initial_attack, ChessBishop.initial_health, ChessBishop.initial_health))
 
 
     def command_dump():
@@ -52,6 +52,8 @@ def gem():
     def command_game():
         command_test()
         command_dump()
+
+        return
 
         board = GameBoard(1, alice, create_enemy_chess_king(), create_ally_chess_king())
 

@@ -3,9 +3,6 @@
 #
 @gem('Crystal.Player')
 def gem():
-    #require_gem('Crystal.Core')
-
-
     class Player(Object):
         __slots__ = ((
             'name',                     #   String+

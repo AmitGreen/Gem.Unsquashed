@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 AGATE_FILES = ../Agate/RUNME.py
 
@@ -14,7 +14,7 @@ CRYSTAL_FILES = \
     ../Crystal/Board.py ../Crystal/BlankSquare.py \
     ../Crystal/CardRoot.py ../Crystal/ChessBishop.py ../Crystal/ChessKing.py ../Crystal/ChessKnight.py \
         ../Crystal/ChessPawn.py ../Crystal/ChessRook.py ../Crystal/Core.py \
-    ../Crystal/FrozenChessKing.py \
+    ../Crystal/FrozenChessCard.py ../Crystal/FrozenCardRoot.py \
     ../Crystal/Game.py \
     ../Crystal/Main.py \
     ../Crystal/Player.py \
@@ -212,7 +212,7 @@ clean:
 	rm -f so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f ybd.py ybi.py ybq.py yco.py ycr.py yg.py yki.py ykn.py ym.py yp.py yq.py yr.py yv.py yw.py yzk.py
+	rm -f ybd.py ybi.py ybq.py yco.py ycr.py yg.py yki.py ykn.py ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zco.py zcs.py zd.py ze.py zg2.py zg3.gpy zg3.py zg4.py zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
 	rm -f   zm.py zo4.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
 
@@ -420,7 +420,8 @@ links:
 	ln -s ../Crystal/ChessRook.py                       yr.py
 	ln -s ../Crystal/VoidSquare.py                      yv.py
 	ln -s ../Crystal/ChessPawn.py                       yw.py
-	ln -s ../Crystal/FrozenChessKing.py                 yzk.py
+	ln -s ../Crystal/FrozenChessCard.py                 yzc.py
+	ln -s ../Crystal/FrozenCardRoot.py                  yzr.py
 	ln -s ../Topaz/Core.py                              zco.py
 	ln -s ../Topaz/CacheSupport.py                      zcs.py
 	ln -s ../Topaz/Drove.py                             zd.py
