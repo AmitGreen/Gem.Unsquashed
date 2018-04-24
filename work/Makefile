@@ -215,7 +215,7 @@ clean:
 	rm -f xb.py xf.py
 	rm -f ybd.py ybi.py ybq.py yco.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
-	rm -f zco.py zcs.py zd.py ze.py zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
+	rm -f zco.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
 	rm -f   zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
 	rm -f   zm.py zo4.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
 
@@ -430,6 +430,7 @@ links:
 	ln -s ../Topaz/CacheSupport.py                      zcs.py
 	ln -s ../Topaz/Drove.py                             zd.py
 	ln -s ../Topaz/ExceptionChain.py                    ze.py
+	ln -s ../Topaz/GeneratedConjureDual.gpy             zg2.gpy
 	ln -s ../Topaz/GeneratedConjureDual.py              zg2.py
 	ln -s ../Topaz/GeneratedConjureTriple.gpy           zg3.gpy
 	ln -s ../Topaz/GeneratedConjureTriple.py            zg3.py

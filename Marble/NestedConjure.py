@@ -6,8 +6,7 @@ def gem():
     require_gem('Marble.Core')
 
 
-    show_assert       = 7
-    use_herd_estimate = 0
+    show_assert = 7
 
 
     class CommonKeyData(Object):
@@ -366,7 +365,6 @@ def gem():
                 f.line('if %s is 8: return (map__lookup(%s, %s)) or (map__provide(%s, %s, Meta(%s)))',
                        estimate, p, k2, p, k2, common.keys)
 
-
             if not possible_herd:
                 f.line('assert %s is 3', estimate)
                 f.blank()
@@ -387,10 +385,13 @@ def gem():
 
                     t.create_r(q)
 
-                    with f.indent(arrange('if %sh is 8:', b1)):
-                        f.line('map__store(%s, %s, %s)', b1, k1, herd)
-                    with f.indent('else:'):
-                        f.line('%sr(%s, %s)', b1, b1, herd)
+                    if b1 is 0:
+                        f.line('%s(%s, %s)', displace, k1, herd)
+                    else:
+                        with f.indent(arrange('if %sh is 8:', b1)):
+                            f.line('map__store(%s, %s, %s)', b1, k1, herd)
+                        with f.indent('else:'):
+                            f.line('%sr(%s, %s)', b1, b1, herd)
 
                     f.line('return %s', q)
 
@@ -400,10 +401,19 @@ def gem():
                     f.blank_suppress()
 
                 with f.indent(arrange('if %s is 3:', estimate)):
+                    herd = arrange('create_herd_4(%s, %s, %s, %s, %s.v, %s.w, %s.x, %s)',
+                                   aa, ab, ac, k2, p, p, p, q)
+
                     t.create_r(q)
 
-                    f.line('%s(%s, create_herd_4(%s, %s, %s, %s, %s.v, %s.w, %s.x, %s))',
-                           displace, k1, aa, ab, ac, k2, p, p, p, q)
+                    if b1 is 0:
+                        f.line('%s(%s, %s)', displace, k1, herd)
+                    else:
+                        with f.indent(arrange('if %sh is 8:', b1)):
+                            f.line('map__store(%s, %s, %s)', b1, k1, herd)
+                        with f.indent('else:'):
+                            f.line('%sr(%s, %s)', b1, b1, herd)
+
                     f.line('return %s', q)
 
                 f.blank()
@@ -417,11 +427,29 @@ def gem():
 
                 f.blank()
 
-                with f.indent(arrange('%s(', displace), arrange('%*s)', length(displace),  ' '), length(displace) + 4):
-                    f.line('%s,', k1)
-                    with f.indent('create_herd_many(', ')'):
+
+                def create_herd_many__from__herd_7():
+                    with f.indent('create_herd_many(', '),'):
                         f.line('%s, %s, %s, %s, %s, %s, %s, %s,', aa,  ab, ac, ad, ae, ae6, ae7, k2)
                         f.line('%s.v, %s.w, %s.x, %s.y, %s.z, %s.z6, %s.z7, %s,', p, p, p, p, p, p, p, q)
+
+
+                if b1 is 0:
+                    with f.indent(
+                            arrange('%s(', displace), arrange('%*s)', length(displace),  ' '), length(displace) + 4
+                    ):
+                        f.line('%s,', k1)
+                        create_herd_many__from__herd_7()
+                else:
+                    with f.indent(arrange('if %sh is 8:', b1)):
+                        with f.indent('map__store(', ')'):
+                            f.line('%s,', b1)
+                            f.line('%s,', k1)
+                            create_herd_many__from__herd_7()
+                    with f.indent('else:'):
+                        with f.indent(arrange('%sr(', b1), ')'):
+                            f.line('%s,', b1)
+                            create_herd_many__from__herd_7()
 
                 f.blank()
 
@@ -566,7 +594,7 @@ def gem():
                              t, 'c', 'x',
 
                              (3   if possible_horde else   0),
-                             (0   if possible_horde else   'displace_3x'),
+                             (0   if possible_horde else   arrange('%s.displace_x', b1)),
                              if_keyword = 'elif',
                          )
 
@@ -696,7 +724,7 @@ def gem():
                 f.blank()
 
                 f.line('if %s is 8: map__store(%s, %s, herd)', p_estimate, b1, k1)
-                f.line('else:       %sr(herd)', b1)
+                f.line('else:       %sr(%s, herd)', b1, b1)
 
                 f.blank()
 
@@ -822,10 +850,11 @@ def gem():
     def create_nested_conjure__X(
             year, author, prefix, module_name, which,
 
-            share       = 0,
-            show_assert = show_assert,
-            show        = 0,
-            blanks      = 0,
+            share             = 0,
+            show_assert       = show_assert,
+            show              = 0,
+            blanks            = 0,
+            use_herd_estimate = 0,
     ):
         if type(which) is not Tuple:
             which = ((which,))
@@ -838,6 +867,8 @@ def gem():
             f.line('#')
             f.line('@gem(%r)', module_name)
 
+            create_horde_flags = [0]
+
 
             def process(
                     test, suffix, k1, k2, k3 = 0, k4 = 0,
@@ -845,6 +876,10 @@ def gem():
                     use_herd_estimate = use_herd_estimate,
             ):
                 if test in which:
+                    if loop == 1:
+                        if k3 is not 0:
+                            create_horde_flags[0] = 7
+
                     if loop == 2:
                         create_conjure(
                             f, prefix, suffix, k1, k2, k3, k4,
@@ -867,8 +902,13 @@ def gem():
 
                 for loop in [1, 2]:
                     if loop == 2:
-                        if create_herd_many:
-                            import_list.append('create_herd_many')
+                        if create_horde_flags[0]:
+                            import_list.append('create_horde_2')
+                            import_list.append('create_horde_many')
+                            import_list.append('displace_4y')
+                            import_list.append('displace_4z')
+                            import_list.append('displace_4z6')
+                            import_list.append('displace_4z7')
 
                         f.line('from Gem import %s', ', '.join(import_list))
 
@@ -929,24 +969,30 @@ def gem():
                 create_nested_conjure__X(
                     year, author, 'simplified_conjure', 'Topaz.GeneratedConjureDual',
 
-                    which = ((21, 2)),
-                    share = 7,
+                    #which             = 2,
+                    which             = ((21, 2)),
+                    share             = 7,
+                    use_herd_estimate = 7,
                 )
 
+            if 7:
                 create_nested_conjure__X(
                     year, author, 'simplified_conjure', 'Topaz.GeneratedConjureTriple',
 
                     which = ((312, 3)),
-                    share = 7,
+                    #which             = 3,
+                    share             = 7,
+                    use_herd_estimate = 7,
                 )
 
-            create_nested_conjure__X(
-                year, author, 'simplified_conjure', 'Topaz.GeneratedConjureQuadruple',
+            if 0:
+                create_nested_conjure__X(
+                    year, author, 'simplified_conjure', 'Topaz.GeneratedConjureQuadruple',
 
-                #which = ((4123, 4)),
-                which = 4,
-                share = 7,
-            )
+                    which = ((4123, 4)),
+                    #which = 4,
+                    share = 7,
+                )
 
             if 0:
                 create_nested_conjure__X(
