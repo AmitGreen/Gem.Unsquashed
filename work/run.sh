@@ -64,6 +64,7 @@ y
 y
 END
 
+
 echo -en '\E[H\E[J'
 tail -$total $show
 
