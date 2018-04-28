@@ -26,7 +26,6 @@ def gem():
 
         @rename('simplified_conjure_%s', name)
         def simplified_conjure_dual__21(k1, k2):
-            #create_next(<KeyData <CommonKeyData 7 7 7 2 ('k2', 'k1') k1, k2> 0; 0 0 p q 0 0; 0 k2 k1 0 0>, 0, 0)
             p = lookup(k2)
             if p is none:
                 q = Meta(k1, k2)
@@ -35,6 +34,7 @@ def gem():
             ph = p.herd_estimate
 
             if ph is 0:
+                if p.k1 is k1: return p
                 q = Meta(k1, k2)
                 assert (q.k2 is k2) and (q.k1 is k1)
                 herd = create_herd_2(p.k1, k1, p, q)
@@ -160,7 +160,6 @@ def gem():
 
         @rename('simplified_conjure_%s', name)
         def simplified_conjure_dual(k1, k2):
-            #create_next(<KeyData <CommonKeyData 7 7 7 2 ('k1', 'k2') k1, k2> 0; 0 0 p q 0 0; 0 k1 k2 0 0>, 0, 0)
             p = lookup(k1)
             if p is none:
                 q = Meta(k1, k2)
@@ -169,6 +168,7 @@ def gem():
             ph = p.herd_estimate
 
             if ph is 0:
+                if p.k2 is k2: return p
                 q = Meta(k1, k2)
                 assert (q.k1 is k1) and (q.k2 is k2)
                 herd = create_herd_2(p.k2, k2, p, q)

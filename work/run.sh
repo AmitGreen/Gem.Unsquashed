@@ -70,7 +70,8 @@ while :
 do
     if [ $show = 2 -o $all = true ]; then
         $command $option <$tmp1 >&$tmp2
-        diff ../Topaz/GeneratedConjureTriple.gpy ../Topaz/GeneratedConjureTriple.py >>$tmp2
+        #diff ../Topaz/GeneratedConjureDual.gpy ../Topaz/GeneratedConjureDual.py >>$tmp2
+        diff ../Topaz/GeneratedNew.gpy ../Topaz/GeneratedNew.py >>$tmp2
         if cmp -s $tmp2 2; then
             :
         else

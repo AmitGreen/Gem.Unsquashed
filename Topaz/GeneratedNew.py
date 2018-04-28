@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Topaz.GeneratedNew')
 def gem():
@@ -11,24 +11,24 @@ def gem():
     map__store   = Map.__setitem__
 
 
-    produce_NEW_conjure_dual             = 0
     produce_NEW_conjure_dual__21         = 0
     produce_NEW_conjure_quadruple        = 0
     produce_NEW_conjure_quadruple__4123  = 0
+    produce_NEW_conjure_triple           = 0
     produce_NEW_conjure_triple__312      = 0
 
 
     share(
-        'produce_NEW_conjure_dual',             produce_NEW_conjure_dual,
         'produce_NEW_conjure_dual__21',         produce_NEW_conjure_dual__21,
         'produce_NEW_conjure_quadruple',        produce_NEW_conjure_quadruple,
         'produce_NEW_conjure_quadruple__4123',  produce_NEW_conjure_quadruple__4123,
+        'produce_NEW_conjure_triple',           produce_NEW_conjure_triple,
         'produce_NEW_conjure_triple__312',      produce_NEW_conjure_triple__312,
     )
 
 
     @share
-    def produce_NEW_conjure_triple(
+    def produce_NEW_conjure_dual(
             name, Meta, cache,
 
             lookup  = absent,
@@ -41,62 +41,51 @@ def gem():
 
 
         @rename('NEW_conjure_%s', name)
-        def NEW_conjure_triple(k1, k2, k3):
+        def NEW_conjure_dual(k1, k2):
+            coverage_dual[0] += 1
             p = lookup(k1)
-            if p is none: return provide(k1, Meta(k1, k2, k3))
-            if p.k2 is k2:
-                if p.k3 is k3: return p
-
-                q = Meta(k1, k2, k3)
-                store(k1, create_horde_2(1, p.k3, k3, p, q))
-                return q
-
+            if p is none:
+                coverage_dual[1] += 1
+                q = Meta(k1, k2)
+                assert (q.k1 is k1) and (q.k2 is k2)
+                return provide(k1, q)
             if not p.is_herd:
-                q = Meta(k1, k2, k3)
+                coverage_dual[2] += 1
+                if p.k2 is k2:
+                    coverage_dual[3] += 1
+                    return p
+                coverage_dual[4] += 1
+                q = Meta(k1, k2)
+                assert (q.k1 is k1) and (q.k2 is k2)
                 herd = create_herd_2(p.k2, k2, p, q)
                 store(k1, herd)
                 return q
+            coverage_dual[5] += 1
 
-            if p.skip is 0:
-                q = p.glimpse(k2, absent)
-                if q.k3 is k3: return q
+            q = p.glimpse(k2)
+            if q is not none:
+                coverage_dual[6] += 1
+                assert (q.k1 is k1) and (q.k2 is k2)
+                return q
+            coverage_dual[7] += 1
 
-                if not q.is_herd:
-                    r = Meta(k1, k2, k3)
-                    if q is absent:
-                        p_ = p.insert(k2, r)
-                        if p is not p_: store(k1, p_)
-                        return r
-
-                    herd = create_herd_2(q.k3, k3, q, r)
-                    p.displace(k2, herd)
-                    return r
-
-                r = q.glimpse(k3)
-                if r is not none: return r
-
-                r = Meta(k1, k2, k3)
-                q_ = q.insert(k3, r)
-                if q is not q_: p.displace(k2, q_)
-                return r
-
-            assert p.skip is 1
-
-            p_k2 = p.sample().k2
-            if p_k2 is not k2:
-                r = Meta(k1, k2, k3)
-                store(k1, create_herd_2(p_k2, k2, p.remove_skip(), r))
-                return r
-
-            r = p.glimpse(k3)
-            if r is not none: return r
-
-            r = Meta(k1, k2, k3)
-            p_ = p.insert(k3, r)
+            q = Meta(k1, k2)
+            assert (q.k1 is k1) and (q.k2 is k2)
+            p_ = p.insert(k2, q)
             if p is not p_:
-                assert p_.sample().k2 is k2
+                coverage_dual[8] += 1
                 store(k1, p_)
-            return r
+            coverage_dual[9] += 1
+
+            return q
 
 
-        return NEW_conjure_triple
+        return NEW_conjure_dual
+
+
+    coverage_dual = [0] * 10
+
+
+    export(
+        'coverage_dual', coverage_dual
+    )
