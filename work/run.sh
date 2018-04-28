@@ -40,6 +40,7 @@ Main_py=../Sapphire/Main.py
 Main_py=../Crystal/Main.py
 Main_py=../Topaz/Main.py
 Main_py=../Marble/Main.py
+Main_py=../Onyx/Main.py
 
 show=2
 all=false
@@ -71,7 +72,7 @@ do
     if [ $show = 2 -o $all = true ]; then
         $command $option <$tmp1 >&$tmp2
         #diff ../Topaz/GeneratedConjureDual.gpy ../Topaz/GeneratedConjureDual.py >>$tmp2
-        diff ../Topaz/GeneratedNew.gpy ../Topaz/GeneratedNew.py >>$tmp2
+        #diff ../Topaz/GeneratedNew.gpy ../Topaz/GeneratedNew.py >>$tmp2
         if cmp -s $tmp2 2; then
             :
         else
