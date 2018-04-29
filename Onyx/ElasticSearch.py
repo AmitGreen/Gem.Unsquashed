@@ -15,13 +15,29 @@ def gem():
 
 
         import  elasticsearch
+        import  elasticsearch_dsl                                       #   "dsl" means "Domain Specific Language"
 
 
         del sys.path[-1]
 
 
         share(
-            'ElasticSearch',    elasticsearch.Elasticsearch,            #   NOTE: exported with capital 'S'
+            #
+            #   Types
+            #
+            #       NOTE:
+            #           `ElasticSearch` would be exported with a capital 'S'
+            #
+            #           Howebver don't use this, intead use `elastic___create_connection`.
+            #
+            #'ElasticSearch',                   elasticsearch.Elasticsearch,
+            #
+            'Search',                           elasticsearch_dsl.Search,
+
+            #
+            #   Functions
+            #
+            'elastic___create_connection',     elasticsearch_dsl.connections.create_connection
         )
 
 
