@@ -68,6 +68,7 @@ ONYX_FILES = \
     ../Onyx/__init__.py \
     ../Onyx/Core.py \
     ../Onyx/Development.py \
+    ../Onyx/ElasticSearch.py \
     ../Onyx/Main.py \
 
 PEARL_FILES = \
@@ -214,7 +215,7 @@ clean:
 	rm -f jb.py
 	rm -f l.txt lr.txt
 	rm -f m map.py mc.py md.py mm.py mn.py m.txt
-	rm -f o.py oc.py od.py om.py
+	rm -f o.py oc.py od.py oe.py om.py
 	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
@@ -383,6 +384,7 @@ links:
 	ln -s ../Gem/Output.py                              o.py
 	ln -s ../Onyx/Core.py                               oc.py
 	ln -s ../Onyx/Development.py                        od.py
+	ln -s ../Onyx/ElasticSearch.py                      oe.py
 	ln -s ../Onyx/Main.py                               om.py
 	ln -s ../Gem/Path.py                                pa.py
 	ln -s ../Gem/Path2.py                               pa2.py

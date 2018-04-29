@@ -3,4 +3,4 @@
 #
 @gem('Onyx.Core')
 def gem():
-    pass
+    require_gem('Onyx.ElasticSearch')
