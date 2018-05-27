@@ -36,11 +36,12 @@ Main_py=../Ivory/Main.py
 Main_py=../Tremolite/Main.py
 Main_py=../Quartz/Main.py
 Main_py=../Dravite/Main.py
-Main_py=../Sapphire/Main.py
 Main_py=../Crystal/Main.py
 Main_py=../Topaz/Main.py
 Main_py=../Marble/Main.py
 Main_py=../Onyx/Main.py
+Main_py=../Jasper/Main.py
+Main_py=../Sapphire/Main.py
 
 show=2
 all=false
