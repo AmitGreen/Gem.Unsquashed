@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.Combine')
 def gem():
@@ -36,7 +36,7 @@ def gem():
 
     class Copyright(Object):
         __slots__ = ((
-            'year',                     #   Integer
+            'year',                     #   String+
             'author',                   #   String+
         ))
 
@@ -56,7 +56,7 @@ def gem():
                 wc(t)
 
                 f.blank2()
-                f.line('#<Copyright (c) %d %s.  All rights reserved.>', t.year, t.author)
+                f.line('#<Copyright (c) %s %s.  All rights reserved.>', t.year, t.author)
                 f.blank_suppress()
 
 
@@ -70,7 +70,7 @@ def gem():
 
 
     def conjure_copyright(year, author):
-        return conjure_copyright__X__dual(intern_integer(year), intern_string(author))
+        return conjure_copyright__X__dual(intern_string(year), intern_string(author))
 
 
     def close_copyright(f):
@@ -313,7 +313,7 @@ def gem():
         if m is none:
             raise_runtime_error('failed to extract copyright from: %r', copyright[1])
 
-        return conjure_copyright(Integer(m.group('year')), m.group('author'))
+        return conjure_copyright(m.group('year'), m.group('author'))
 
 
     def extract_gem(module, path, vary):
