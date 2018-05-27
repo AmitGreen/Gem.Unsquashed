@@ -56,6 +56,10 @@ DRAVITE_FILES = \
 IVORY_FILES = \
     ../Ivory/Main.py
 
+JASPER_FILES = \
+    ../Jasper/Core.py \
+    ../Jasper/Main.py
+
 LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
@@ -173,6 +177,7 @@ FILES = \
     $(DRAVITE_FILES) \
     $(GEM_FILES) \
     $(IVORY_FILES) \
+    $(JASPER_FILES) \
     $(LICENSE_FILES) \
     $(MARBLE_FILES) \
     $(ONYX_FILES) \
@@ -212,7 +217,7 @@ clean:
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hn.py hpa.py hpr.py hs.py
 	rm -f   htc.py hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
-	rm -f jb.py
+	rm -f jb.py jc.py jm.py
 	rm -f l.txt lr.txt
 	rm -f m map.py mc.py md.py mm.py mn.py m.txt
 	rm -f o.py oc.py od.py oe.py om.py
@@ -372,6 +377,8 @@ links:
 	ln -s ../Ivory/Main.py                              iv.py
 	ln -s ../Gem/IO.py                                  io.py
 	ln -s ../Junk/Boot.py                               jb.py
+	ln -s ../Jasper/Core.py                             jc.py
+	ln -s ../Jasper/Main.py                             jm.py
 	ln -s log.txt                                       l.txt
 	ln -s ../OtherLicenses/README.txt                   lr.txt
 	ln -s Makefile                                      m
@@ -477,6 +484,7 @@ wc:
 		$(DRAVITE_FILES) \
         $(GEM_FILES) \
         $(IVORY_FILES) \
+        $(JASPER_FILES) \
         $(LICENSE_FILES) \
         $(MARBLE_FILES) \
 		$(ONYX_FILES) \
@@ -494,6 +502,7 @@ test:
 		$(DRAVITE_FILES) \
 		$(GEM_FILES) \
 		$(IVORY_FILES) \
+		$(JASPER_FILES) \
 		$(ONYX_FILES) \
 		$(PEARL_FILES) \
 		$(QUARTZ_FILES) \

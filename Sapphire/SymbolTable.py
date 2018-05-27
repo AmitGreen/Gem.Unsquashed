@@ -6,7 +6,7 @@ def gem():
     require_gem('Sapphire.BuildSymbolTable')
 
 
-    dump = 7
+    dump = 0
 
 
     class GlobalSymbolTable(Object):
