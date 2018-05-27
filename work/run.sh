@@ -42,6 +42,7 @@ Main_py=../Marble/Main.py
 Main_py=../Onyx/Main.py
 Main_py=../Jasper/Main.py
 Main_py=../Sapphire/Main.py
+Main_py=../Diamond/Main.py
 
 show=2
 all=false
