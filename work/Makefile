@@ -22,6 +22,13 @@ CRYSTAL_FILES = \
     ../Crystal/Square.py \
     ../Crystal/VoidSquare.py
 
+DIAMOND_FILES = \
+    ../Diamond/__init__.py \
+    ../Diamond/Core.py \
+    ../Diamond/Development.py \
+    ../Diamond/Main.py \
+    ../Diamond/Thread.py
+
 GEM_FILES = \
 	../Gem/__init__.py \
     ../Gem/Absent.py ../Gem/All.py ../Gem/Ascii.py \
@@ -174,6 +181,7 @@ FILES = \
     $(AGATE_FILES) \
     $(BERYL_FILES) \
     $(CRYSTAL_FILES) \
+    $(DIAMOND_FILES) \
     $(DRAVITE_FILES) \
     $(GEM_FILES) \
     $(IVORY_FILES) \
@@ -201,7 +209,7 @@ clean:
 	rm -f a.py ab.py ac.py ag.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py ca2.py cd.py ce.py co.py
-	rm -f d.py de.py dfo.py di.py dm.py dr.py
+	rm -f d.py dc.py de.py dfo.py di.py dm.py dr.py dt.py dv.py dvm.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
@@ -263,11 +271,15 @@ links:
 	ln -s ../Gem/CatchException.py                      ce.py
 	ln -s ../Gem/Core.py                                co.py
 	ln -s ../Sapphire/Development.py                    d.py
+	ln -s ../Diamond/Core.py                            dc.py
 	ln -s ../Dravite/Euclid.py                          de.py
 	ln -s ../Gem/DelayedFileOutput.py                   dfo.py
 	ln -s ../Dravite/__init__.py                        di.py
-	ln -s ../Dravite/Main.py                            dm.py
+	ln -s ../Diamond/Main.py                            dm.py
 	ln -s ../Dravite/RSA_Example.py                     dr.py
+	ln -s ../Diamond/Thread.py                          dt.py
+	ln -s ../Diamond/Development.py                     dv.py
+	ln -s ../Dravite/Main.py                            dvm.py
 	ln -s ../Gem/ExecuteFile.py                         ef.py
 	ln -s ../Gem/ErrorNumber.py                         en.py
 	ln -s ../Gem/Exception.py                           ex.py
@@ -481,6 +493,7 @@ wc:
 	wc -l \
 		$(BERYL_FILES) \
 		$(CRYSTAL_FILES) \
+    	$(DIAMOND_FILES) \
 		$(DRAVITE_FILES) \
         $(GEM_FILES) \
         $(IVORY_FILES) \
@@ -499,6 +512,7 @@ test:
 	cat \
 		$(BERYL_FILES) \
 		$(CRYSTAL_FILES) \
+    	$(DIAMOND_FILES) \
 		$(DRAVITE_FILES) \
 		$(GEM_FILES) \
 		$(IVORY_FILES) \
