@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Gem.System')
 def gem():
@@ -41,10 +41,12 @@ def gem():
 
 
     export(
-        'caller_frame_1',   caller_frame_1,
-        'program_exit',     PythonSystem.exit,
-        'python_frame',     PythonSystem._getframe,
-        'python_version',   PythonSystem.version,
-        'reference_count',  PythonSystem.getrefcount,
-        'slice_all',        Slice(none, none),
+        'caller_frame_1',           caller_frame_1,
+        'change_check_interval',    PythonSystem.setcheckinterval,
+        'fetch_check_interval',     PythonSystem.getcheckinterval,
+        'program_exit',             PythonSystem.exit,
+        'python_frame',             PythonSystem._getframe,
+        'python_version',           PythonSystem.version,
+        'reference_count',          PythonSystem.getrefcount,
+        'slice_all',                Slice(none, none),
     )

@@ -408,6 +408,7 @@ def gem():
         boot_decorator = extract_boot_decorator('boot', path, tree, copyright, vary)
 
 
+
         #
         #   [1]: empty lines
         #
@@ -458,9 +459,9 @@ def gem():
     @share
     def command_combine__X(module_name, vary, tree = true):
         [boot_decorator, main_code] = extract_sapphire_main(vary)
+
         sardnoyx_boot_code          = extract_sardnoyx_boot(vary)
         gem_boot_code               = extract_gem_boot(vary)
-        #return
 
         require_many = RequireMany(vary)
 
