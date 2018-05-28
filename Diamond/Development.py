@@ -5,7 +5,7 @@
 def gem():
     require_gem('Diamond.Chore')
     require_gem('Diamond.Core')
-    require_gem('Diamond.Counter')
+    require_gem('Diamond.Fibonacci')
     require_gem('Diamond.Interval')
     require_gem('Diamond.Shared')
     require_gem('Diamond.Thread')
@@ -13,29 +13,31 @@ def gem():
 
     class DevelopmentThread(BaseThread):
         __slots__ = ((
-            'counter',                  #   Counter
+            'ephemeral',                #   FibonacciEphemeral
             'shared',                   #   Shared
         ))
 
 
-        def __init__(t, thread_number, lock, counter, shared):
+        def __init__(t, thread_number, lock, ephemeral, shared):
             BaseThread.__init__(t, thread_number, lock)
 
-            t.counter = counter
-            t.shared   = shared
+            t.ephemeral = ephemeral
+            t.shared    = shared
 
 
         def run(t):
             line('Now running: %s', t)
 
-            counter       = t.counter
+            ephemeral     = t.ephemeral
             shared        = t.shared
             thread_number = t.thread_number
             use_right     = (7   if thread_number & 1 else   0)
 
-            while counter.number < 10:
+            while ephemeral.atom.second < 100:
                 priority = t.shared.ATOMIC_INCREMENT__priority()
-                chore    = create_DiamondChore(t, priority, counter)
+                chore    = create_DiamondChore(priority, t, ephemeral)
+
+                line('#%d: created %s', thread_number, chore)
 
                 if use_right:
                     if shared.left is none:
@@ -80,8 +82,8 @@ def gem():
     def command_development():
         line('check_interval is %d', fetch_check_interval())
 
-        counter = create_Counter()
-        shared  = create_DiamondShared()
+        ephemeral = create_Fibonacci()
+        shared    = create_DiamondShared()
 
         line('shared: %s', shared)
 
@@ -90,7 +92,7 @@ def gem():
         append_thread = thread_many.append
 
         for thread_number in iterate_range(1):
-            thread = create_Thread(DevelopmentThread, thread_number, counter, shared)
+            thread = create_Thread(DevelopmentThread, thread_number, ephemeral, shared)
 
             append_thread(thread)
 

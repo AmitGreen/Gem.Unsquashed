@@ -17,6 +17,7 @@ def gem():
 
 
     STATUS_ACTIVE__1 = STATUS_ACTIVE | 1
+    STATUS_ACTIVE__2 = STATUS_ACTIVE | 2
     STATUS_USING__1  = STATUS_USING | 1
 
 
@@ -38,6 +39,8 @@ def gem():
         'STATUS_ZAPPING',       STATUS_ZAPPING,
 
         'STATUS_ACTIVE__1',     STATUS_ACTIVE__1,
+        'STATUS_ACTIVE__2',     STATUS_ACTIVE__2,
+        'STATUS_USING__1',      STATUS_USING__1,
 
         'status_map',           status_map,
     )
