@@ -24,8 +24,9 @@ CRYSTAL_FILES = \
 
 DIAMOND_FILES = \
     ../Diamond/__init__.py \
-    ../Diamond/Core.py \
+    ../Diamond/Core.py ../Diamond/Counter.py \
     ../Diamond/Development.py \
+    ../Diamond/Interval.py \
     ../Diamond/Main.py \
     ../Diamond/Thread.py
 
@@ -47,7 +48,7 @@ GEM_FILES = \
     ../Gem/Output.py \
     ../Gem/Path.py ../Gem/PortrayString.py \
     ../Gem/Rabble.py ../Gem/RegularExpression.py \
-    ../Gem/Series.py ../Gem/Sequence.py ../Gem/SimpleStringIO.py ../Gem/StringOutput.py ../Gem/System.py \
+    ../Gem/Series.py ../Gem/Sequence.py ../Gem/SimpleStringIO.py ../Gem/Sleep.py ../Gem/StringOutput.py ../Gem/System.py \
     ../Gem/Traceback.py
     #
     #   Excludes:
@@ -209,7 +210,7 @@ clean:
 	rm -f a.py ab.py ac.py ag.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py ca2.py cd.py ce.py co.py
-	rm -f d.py dc.py de.py dfo.py di.py dm.py dr.py dt.py dv.py dvm.py
+	rm -f d.py dc.py de.py dfo.py di.py dm.py dn.py dr.py dt.py dv.py dvm.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
@@ -232,7 +233,7 @@ clean:
 	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
-	rm -f so.py ssio.py sy.py
+	rm -f sl.py so.py ssio.py sy.py
 	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
 	rm -f ybd.py ybi.py ybq.py yco.py ycr.py yd7.py yg.py yki.py ykn.py
@@ -274,8 +275,9 @@ links:
 	ln -s ../Diamond/Core.py                            dc.py
 	ln -s ../Dravite/Euclid.py                          de.py
 	ln -s ../Gem/DelayedFileOutput.py                   dfo.py
-	ln -s ../Dravite/__init__.py                        di.py
+	ln -s ../Diamond/Interval.py                        di.py
 	ln -s ../Diamond/Main.py                            dm.py
+	ln -s ../Diamond/Counter.py                         dn.py
 	ln -s ../Dravite/RSA_Example.py                     dr.py
 	ln -s ../Diamond/Thread.py                          dt.py
 	ln -s ../Diamond/Development.py                     dv.py
@@ -423,6 +425,7 @@ links:
 	ln -s ../Quartz/Pattern.py                          qp.py
 	ln -s ../Agate/RUNME.py                             rm.py
 	ln -s ../Gem/RegularExpression.py                   rx.py
+	ln -s ../Gem/Sleep.py                               sl.py
 	ln -s ../Gem/StringOutput.py                        so.py
 	ln -s ../Gem/SimpleStringIO.py                      ssio.py
 	ln -s ../Gem/System.py                              sy.py

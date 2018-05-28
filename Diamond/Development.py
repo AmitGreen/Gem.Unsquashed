@@ -4,86 +4,112 @@
 @gem('Diamond.Development')
 def gem():
     require_gem('Diamond.Core')
+    require_gem('Diamond.Counter')
+    require_gem('Diamond.Interval')
     require_gem('Diamond.Thread')
-
-
-    import sys
-
-
-    check_interval        = sys.getcheckinterval
-    change_check_interval = sys.setcheckinterval
-
-
-    LARGE_CHECK_INTERVAL  = Method(change_check_interval, 7777777)
-    NORMAL_CHECK_INTERVAL = Method(change_check_interval, 100)
-
-    
-    import time
-
-
-    sleep = time.sleep
 
 
     class Shared(Object):
         __slots__ = ((
-            'number',                   #   Integer
+            'work',                     #   Work | None
         ))
 
 
         def __init__(t):
-            t.number = 0
+            t.work = none
 
 
-        def ATOMIC_ADD(t, thread_number, v):
+        def COMPARE_AND_SWAP__work(t, before, after):
             LARGE_CHECK_INTERVAL()
 
-            number = t.number
+            r = t.work
 
-            t.number += v
+            if r is before:
+                t.work = after
 
             NORMAL_CHECK_INTERVAL()
 
-            return number
+            return r
+                
 
 
     def create_Shared():
         return Shared()
 
 
+
+    class Work(Object):
+        __slots__ = ((
+            'counter',                  #   Shared
+        ))
+
+
+        def __init__(t, counter):
+            t.counter = counter
+
+
+        def work(t, thread_number):
+            number = t.counter.ATOMIC_ADD__number(thread_number, 1)
+
+            line('#%d: %d', thread_number, number)
+
+
+    def create_Work(counter):
+        return Work(counter)
+
+
+
     class DevelopmentThread(BaseThread):
         __slots__ = ((
+            'counter',                  #   Counter
             'shared',                   #   Shared
         ))
 
 
-        def __init__(t, thread_number, lock, shared):
+        def __init__(t, thread_number, lock, counter, shared):
             BaseThread.__init__(t, thread_number, lock)
 
-            t.shared = shared
+            t.counter = counter
+            t.shared   = shared
 
 
         def run(t):
             line('Now running: %s', t)
 
+            counter       = t.counter
             shared        = t.shared
             thread_number = t.thread_number
 
-            while shared.number < 10:
-                number = shared.ATOMIC_ADD(thread_number, 1)
+            while counter.number < 10:
+                work     = create_Work(counter)
+                previous = shared.COMPARE_AND_SWAP__work(none, work)
 
-                line('Thread %s says: %d', t, number)
+                sleep(0.00001)
+
+                if previous is not none:
+                    raise_runtime_error('run: previous is %s', previous)
+
+                work.work(thread_number)
+
+                previous = shared.COMPARE_AND_SWAP__work(work, none)
+
+                if previous is not work:
+                    raise_runtime_error('work.work: previous is %s', previous)
 
 
     @share
-    def command_development():  
-        shared = create_Shared()
+    def command_development():
+        line('check_interval is %d', fetch_check_interval())
+
+        counter = create_Counter()
+        shared  = create_Shared()
 
         thread_many = []
 
         append_thread = thread_many.append
 
-        for thread_number in iterate_range(2):
-            thread = create_Thread(DevelopmentThread, thread_number, shared)
+        for thread_number in iterate_range(1):
+            thread = create_Thread(DevelopmentThread, thread_number, counter, shared)
 
             append_thread(thread)
 
@@ -92,6 +118,4 @@ def gem():
         for v in thread_many:
             line("Waiting for %s to exit ...", v)
             v.wait()
-            line("... done waiting for %s to exit", v) 
-
-        line('check_interval is %d', check_interval())
+            line("... done waiting for %s to exit", v)

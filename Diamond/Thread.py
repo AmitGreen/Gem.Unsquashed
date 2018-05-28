@@ -31,10 +31,10 @@ def gem():
 
 
         def __repr__(t):
-            if t.thread_identifier is none:
-                return arrange("<Thread #%d>", t.thread_number)
+            #if t.thread_identifier is not none:
+            #    return arrange("<Thread #%d; identifier %s>", t.thread_number, t.thread_identifier)
 
-            return arrange("<Thread #%d; identifier %s>", t.thread_number, t.thread_identifier)
+            return arrange("<Thread #%d>", t.thread_number)
 
 
         def start(t):
