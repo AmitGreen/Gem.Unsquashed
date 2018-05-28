@@ -86,7 +86,7 @@ def gem():
                     if previous is not chore:
                         raise_runtime_error('run#3: previous is %s', previous)
 
-                    if chore is my_chore:
+                    if 0 and chore is my_chore:
                         status = my_chore.ATOMIC_DOUBLE_DECREMENT__status()
 
                         if status == STATUS_ACTIVE:

@@ -52,22 +52,28 @@ def gem():
             if atom is none:
                 atom = ephemeral.atom
 
-                previous = t.COMPARE_AND_SWAP__atom(none, atom)                 #   Step #1 [CAS]
+                previous = t.COMPARE_AND_SWAP__atom(none, atom)                 #   ATTEMPT: Step #1 [CAS]
 
-                if previous is none:
+                if previous is none:                                            #   SUCCESS: Step #1 [CAS]
                     line('#%d: step #1 done ... %s ...', thread_number, t)
 
-                    after = atom.next_atom()
+                    after = atom.next_atom() 
 
-                    previous = ephemeral.COMPARE_AND_SWAP__atom(atom, after)    #   Step #2 [CAS]
+                    previous = ephemeral.COMPARE_AND_SWAP__atom(atom, after)    #   ATTEMPT: Step #2 [CAS]
 
-                    t.done = 7                                                  #   Step #3 [OVERWRITE]
+                    t.done = 7                                                  #   STEP #3 [OVERWRITE]
 
-                    if previous is atom:
+                    if previous is atom:                                        #   SUCCESS: Step #2 [CAS]
                         line('#%d: step #2 done ... %s', thread_number, t)
-                    else:
+                    else:                                                       #   FAILED: Step #2 [CAS]
                         line('#%d: attempted to do step #2 ... BUT already done ... %s', thread_number, t)
 
+                    #
+                    #   PRIMARY PATH:
+                    #       We did Step #1
+                    #       Attempted to do Step #2 (Either we did it or someone else did it)
+                    #       We did Step #3
+                    #
                     return
 
                 #
@@ -79,7 +85,7 @@ def gem():
 
                     return
 
-                line('#%d: attempted to do step #1 ... BUT step #1 already done ... %s ...',
+                line('#%d: attempted to do step #1 ... BUT step #1 already done (step #3 NOT done) ... %s ...',
                      thread_number, t)
 
                 t.atom = previous
@@ -90,6 +96,16 @@ def gem():
 
                 line('#%d: step #1 already done ... %s ...', thread_number, t)
 
+            #
+            #   SECONDARY path:
+            #       1.  Someone else did step #1:
+            #               o   We may have attempted to do step #1 & failed; OR
+            #               o   Step #1 was already done before we started.
+            #       2.  We did not check if they did Step #2
+            #       3.  They did NOT do step #3.
+            #
+            #       So we need to check if Step #2 needs to be done
+            #
             if atom is not ephemeral.atom:                                      #   Step #2 already done
                 t.done = 7                                      
                 line('#%d: step #2 already done ... %s', thread_number, t)
@@ -97,11 +113,11 @@ def gem():
 
             previous = ephemeral.COMPARE_AND_SWAP__atom(atom, after)            #   Step #2 [CAS]
 
-            t.done = 7                                                          #   Step #3 [OVERWrITE]
+            t.done = 7                                                          #   Step #3 [OVERWRITE]
 
-            if previous is atom:
+            if previous is atom:                                                #   SUCCESS: Step #2 [CAS]
                 line('#%d: step #2 done ... %s', thread_number, t)
-            else:
+            else:                                                               #   FAILED: Step #2 [CAS]
                 line('#%d: attempted to do step #2 ... BUT already done ... %s', thread_number, t)
 
 
