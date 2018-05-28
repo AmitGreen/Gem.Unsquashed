@@ -1,62 +1,14 @@
 #
-#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
+#   Copyright (c) 2018 Amit Green.  All rights reserved.
 #
 @gem('Diamond.Development')
 def gem():
     require_gem('Diamond.Core')
     require_gem('Diamond.Counter')
     require_gem('Diamond.Interval')
+    require_gem('Diamond.Shared')
     require_gem('Diamond.Thread')
-
-
-    class Shared(Object):
-        __slots__ = ((
-            'work',                     #   Work | None
-        ))
-
-
-        def __init__(t):
-            t.work = none
-
-
-        def COMPARE_AND_SWAP__work(t, before, after):
-            LARGE_CHECK_INTERVAL()
-
-            r = t.work
-
-            if r is before:
-                t.work = after
-
-            NORMAL_CHECK_INTERVAL()
-
-            return r
-                
-
-
-    def create_Shared():
-        return Shared()
-
-
-
-    class Work(Object):
-        __slots__ = ((
-            'counter',                  #   Shared
-        ))
-
-
-        def __init__(t, counter):
-            t.counter = counter
-
-
-        def work(t, thread_number):
-            number = t.counter.ATOMIC_ADD__number(thread_number, 1)
-
-            line('#%d: %d', thread_number, number)
-
-
-    def create_Work(counter):
-        return Work(counter)
-
+    require_gem('Diamond.Work')
 
 
     class DevelopmentThread(BaseThread):

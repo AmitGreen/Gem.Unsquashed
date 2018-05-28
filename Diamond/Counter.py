@@ -1,20 +1,10 @@
 #
-#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
+#   Copyright (c) 2018 Amit Green.  All rights reserved.
 #
-@gem('Diamond.Development')
+@gem('Diamond.Counter')
 def gem():
     require_gem('Diamond.Core')
-
-
-    import sys
-
-
-    check_interval        = sys.getcheckinterval
-    change_check_interval = sys.setcheckinterval
-
-
-    LARGE_CHECK_INTERVAL  = Method(change_check_interval, 7777777)
-    NORMAL_CHECK_INTERVAL = Method(change_check_interval, 100)
+    require_gem('Diamond.Interval')
 
 
     class Counter(Object):

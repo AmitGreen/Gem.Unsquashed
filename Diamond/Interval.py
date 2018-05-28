@@ -1,7 +1,7 @@
 #
-#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
+#   Copyright (c) 2018 Amit Green.  All rights reserved.
 #
-@gem('Diamond.Development')
+@gem('Diamond.Interval')
 def gem():
     require_gem('Diamond.Core')
 

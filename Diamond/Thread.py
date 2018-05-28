@@ -1,18 +1,9 @@
 #
-#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
+#   Copyright (c) 2018 Amit Green.  All rights reserved.
 #
 @gem('Diamond.Thread')
 def gem():
     require_gem('Diamond.Core')
-
-
-    import  thread
-
-
-    allocate_lock     = thread.allocate_lock
-    start_new_thread  = thread.start_new_thread
-    thread_identifier = thread.get_ident
-
 
 
     @export

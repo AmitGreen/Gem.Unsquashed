@@ -7,12 +7,13 @@ def gem():
     require_gem('Gem.Exception')
     require_gem('Gem.Sleep')
     require_gem('Gem.System')
+    require_gem('Gem.Thread')
     require_gem('Gem.Traceback')
 
 
-    from Gem import change_check_interval, fetch_check_interval
+    from Gem import allocate_lock, change_check_interval, fetch_check_interval
     from Gem import print_exception_chain, produce_conjure_dual, produce_conjure_triple, produce_conjure_triple__312
-    from Gem import sleep
+    from Gem import sleep, start_new_thread, thread_identifier
 
 
     share(
@@ -23,4 +24,7 @@ def gem():
         'produce_conjure_triple',           produce_conjure_triple,
         'produce_conjure_triple__312',      produce_conjure_triple__312,
         'sleep',                            sleep,
+        'allocate_lock',                    allocate_lock,
+        'start_new_thread',                 start_new_thread,
+        'thread_identifier',                thread_identifier,
     )

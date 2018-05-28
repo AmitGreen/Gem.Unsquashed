@@ -28,7 +28,9 @@ DIAMOND_FILES = \
     ../Diamond/Development.py \
     ../Diamond/Interval.py \
     ../Diamond/Main.py \
-    ../Diamond/Thread.py
+    ../Diamond/Shared.py \
+    ../Diamond/Thread.py \
+    ../Diamond/Work.py \
 
 GEM_FILES = \
 	../Gem/__init__.py \
@@ -49,7 +51,7 @@ GEM_FILES = \
     ../Gem/Path.py ../Gem/PortrayString.py \
     ../Gem/Rabble.py ../Gem/RegularExpression.py \
     ../Gem/Series.py ../Gem/Sequence.py ../Gem/SimpleStringIO.py ../Gem/Sleep.py ../Gem/StringOutput.py ../Gem/System.py \
-    ../Gem/Traceback.py
+    ../Gem/Traceback.py ../Gem/Thread.py
     #
     #   Excludes:
     #       ../Gem/GeneratedConjureQuadruple.py
@@ -210,7 +212,7 @@ clean:
 	rm -f a.py ab.py ac.py ag.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py ca2.py cd.py ce.py co.py
-	rm -f d.py dc.py de.py dfo.py di.py dm.py dn.py dr.py dt.py dv.py dvm.py
+	rm -f d.py dc.py de.py dfo.py di.py dm.py dn.py dr.py ds.py dt.py dw.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
@@ -234,8 +236,9 @@ clean:
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f sl.py so.py ssio.py sy.py
-	rm -f t.py t1.py tb.py tcm.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
+	rm -f t.py t1.py tb.py tcm.py th.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
+	rm -f vm.py
 	rm -f ybd.py ybi.py ybq.py yco.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zco.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
@@ -271,7 +274,7 @@ links:
 	ln -s ../Gem/Cadence.py                             cd.py
 	ln -s ../Gem/CatchException.py                      ce.py
 	ln -s ../Gem/Core.py                                co.py
-	ln -s ../Sapphire/Development.py                    d.py
+	ln -s ../Diamond/Development.py                     d.py
 	ln -s ../Diamond/Core.py                            dc.py
 	ln -s ../Dravite/Euclid.py                          de.py
 	ln -s ../Gem/DelayedFileOutput.py                   dfo.py
@@ -279,9 +282,9 @@ links:
 	ln -s ../Diamond/Main.py                            dm.py
 	ln -s ../Diamond/Counter.py                         dn.py
 	ln -s ../Dravite/RSA_Example.py                     dr.py
+	ln -s ../Diamond/Shared.py                          ds.py
 	ln -s ../Diamond/Thread.py                          dt.py
-	ln -s ../Diamond/Development.py                     dv.py
-	ln -s ../Dravite/Main.py                            dvm.py
+	ln -s ../Diamond/Work.py                            dw.py
 	ln -s ../Gem/ExecuteFile.py                         ef.py
 	ln -s ../Gem/ErrorNumber.py                         en.py
 	ln -s ../Gem/Exception.py                           ex.py
@@ -348,6 +351,7 @@ links:
 	ln -s ../Sapphire/ClassOrder.py                     hco.py
 	ln -s ../Sapphire/CallStatement.py                  hcs.py
 	ln -s ../Sapphire/Core.py                           hcr.py
+	ln -s ../Sapphire/Development.py                    hd.py
 	ln -s ../Sapphire/DefinitionHeader.py               hdh.py
 	ln -s ../Sapphire/DumpToken.py                      hdt.py
 	ln -s ../Sapphire/Elemental.py                      hel.py
@@ -434,6 +438,7 @@ links:
 	ln -s ../Gem/Traceback.py                           tb.py
 	ln -s ../Tremolite/CreateMatch.py                   tcm.py
 	ln -s ../Tremolite/Core.py                          tco.py
+	ln -s ../Gem/Thread.py                              th.py
 	ln -s ../Tremolite/LicenseTemplate.txt              tlp.txt
 	ln -s ../Tremolite/Main.py                          tma.py
 	ln -s ../Tremolite/Match.py                         tmc.py
@@ -442,6 +447,7 @@ links:
 	ln -s ../Tremolite/Build.py                         tu.py
 	ln -s ../Tremolite/PatternWrapper.py                tw.py
 	ln -s ../Tremolite/Compile.py                       tx.py
+	ln -s ../Dravite/Main.py                            vm.py
 	ln -s ../Sardonyx/Boot.py                           xb.py
 	ln -s ../Sapphire/Transform.py                      xf.py
 	ln -s ../Crystal/Board.py                           ybd.py
