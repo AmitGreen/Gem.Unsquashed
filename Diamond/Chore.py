@@ -4,13 +4,14 @@
 @gem('Diamond.Chore')
 def gem():
     require_gem('Diamond.Core')
-    require_gem('Diamond.Status')
+    require_gem('Diamond.LifeCycle')
 
 
     class DiamondChore(Object):
         __slots__ = ((
-            'status',                   #   Integer
-            'done',                     #   Integer
+            'lifecycle',                #   Integer
+            'done',                     #   Integer {0 | 7}
+            'removing',                 #   Integer {0 | 7}
             'priority',                 #   Integer
             'thread',                   #   BaseThread+
             'ephemeral',                #   FibonacciEphemeral
@@ -19,24 +20,33 @@ def gem():
 
 
         def __init__(t, priority, thread, ephemeral):
-            t.status    = STATUS_ACTIVE__2
+            t.lifecycle = LIFE_CYCLE_ACTIVE__2
             t.done      = 0
+            t.removing  = 0
             t.priority  = priority
             t.thread    = thread
             t.ephemeral = ephemeral
             t.atom      = none
 
 
-        def ATOMIC_DOUBLE_DECREMENT__status(t):
+        def ATOMIC_DECREMENT__lifecycle(t):
             LARGE_CHECK_INTERVAL()
 
-            status = t.status - 2
-
-            t.status = status
+            lifecycle = t.lifecycle = t.lifecycle - 1
 
             NORMAL_CHECK_INTERVAL()
 
-            return status
+            return lifecycle
+
+
+        def ATOMIC_DECREMENT__lifecycle__DOUBLE(t):
+            LARGE_CHECK_INTERVAL()
+
+            lifecycle = t.lifecycle = t.lifecycle - 2
+
+            NORMAL_CHECK_INTERVAL()
+
+            return lifecycle
 
 
         #
@@ -134,13 +144,13 @@ def gem():
             return r
 
 
-        def COMPARE_AND_SWAP__status(t, before, after):
+        def COMPARE_AND_SWAP__lifecycle(t, before, after):
             LARGE_CHECK_INTERVAL()
 
-            r = t.status
+            r = t.lifecycle
 
             if r is before:
-                t.status = after
+                t.lifecycle = after
 
             NORMAL_CHECK_INTERVAL()
 
@@ -148,18 +158,23 @@ def gem():
 
 
         def __repr__(t):
-            status    = t.status
+            LARGE_CHECK_INTERVAL()
+
+            lifecycle = t.lifecycle
             done      = t.done
+            removing  = t.removing
             priority  = t.priority
             thread    = t.thread
             ephemeral = t.ephemeral
             atom      = t.atom
 
-            status_name = status_map[status & STATUS_MASK]
-            count       = status & COUNT_MASK
+            NORMAL_CHECK_INTERVAL()
 
-            return arrange('<DiamondChore %s %s %d; %d #%d; %s>',
-                           status_name, ('done'   if done else   'ready'), count,
+            status_name = life_cycle_map[lifecycle & LIFE_CYCLE_MASK]
+            count       = lifecycle & COUNT_MASK
+
+            return arrange('<DiamondChore %s %s %d %s; %d #%d; %s>',
+                           status_name, ('done'   if done else   '-'), count, ('removing'   if removing else   '-'),
                            priority, thread.thread_number,
                            ('none'   if atom is none else   atom))
 

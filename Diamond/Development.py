@@ -48,10 +48,10 @@ def gem():
                         success = 0
 
                     if success is 0:
-                        assert shared.right_status == STATUS_ACTIVE
+                        assert shared.right_status == LIFE_CYCLE_ACTIVE
                         assert shared.right        is none
 
-                        shared.right_status = STATUS_USING__1
+                        shared.right_status = LIFE_CYCLE_USING__1
                         shared.right        = my_chore
                 else:
                     if shared.right is none:
@@ -62,39 +62,45 @@ def gem():
                         success = 0
 
                     if success is 0:
-                        assert shared.left_status == STATUS_ACTIVE
+                        assert shared.left_status == LIFE_CYCLE_ACTIVE
                         assert shared.left        is none
 
-                        shared.left_status = STATUS_USING__1
+                        shared.left_status = LIFE_CYCLE_USING__1
                         shared.left        = my_chore
 
                 sleep(0.00001)
 
-                while 7 is 7:
+                while (my_chore is not 0) and (my_chore.done is 0):
                     chore = shared.chore
-
-                    if my_chore.done is 7:
-                        break
 
                     if my_chore is not chore:
                         raise_runtime_error('run#3: my_chore%s is not chore%s', my_chore, chore)
 
                     chore.chore()
 
+                    assert chore.done is 7
+
                     previous = shared.COMPARE_AND_SWAP__chore(chore, none)
 
                     if previous is not chore:
                         raise_runtime_error('run#3: previous is %s', previous)
 
-                    if 0 and chore is my_chore:
-                        status = my_chore.ATOMIC_DOUBLE_DECREMENT__status()
+                    chore.removing = 7
 
-                        if status == STATUS_ACTIVE:
-                            previous = my_chore.COMPARE_AND_SWAP__status(status, STATUS_REMOVING__1)
+                    if chore is my_chore:
+                        lifecycle = my_chore.ATOMIC_DECREMENT__lifecycle__DOUBLE()
+                        my_chore  = 0
+                    else:
+                        lifecycle = my_chore.ATOMIC_DECREMENT__lifecycle()
 
-                            if status != previous:
-                                line('#%d: attempted to remove %s; ...',
-                                     thread_number, my_chore)
+                    if lifecycle == LIFE_CYCLE_ACTIVE:
+                        previous = chore.COMPARE_AND_SWAP__lifecycle(LIFE_CYCLE_ACTIVE, LIFE_CYCLE_REMOVING__1)
+
+                        if lifecycle != previous:
+                            line('#%d: attempted to remove %s; BUT failed; so someone else\'s problem now ...',
+                                 thread_number, my_chore)
+                        else:
+                            line('#%d: removing %s ...', thread_number, chore)
 
 
     @share

@@ -28,6 +28,7 @@ DIAMOND_FILES = \
     ../Diamond/Development.py \
     ../Diamond/Fibonacci.py \
     ../Diamond/Interval.py \
+    ../Diamond/LifeCycle.py \
     ../Diamond/Main.py \
     ../Diamond/Shared.py ../Diamond/Status.py \
     ../Diamond/Thread.py
@@ -212,7 +213,7 @@ clean:
 	rm -f a.py ab.py ac.py ag.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py ca2.py cd.py ce.py co.py
-	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py
+	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
@@ -286,6 +287,7 @@ links:
 	ln -s ../Diamond/Status.py                          dst.py
 	ln -s ../Diamond/Thread.py                          dt.py
 	ln -s ../Diamond/Chore.py                           dw.py
+	ln -s ../Diamond/LifeCycle.py                       dy.py
 	ln -s ../Gem/ExecuteFile.py                         ef.py
 	ln -s ../Gem/ErrorNumber.py                         en.py
 	ln -s ../Gem/Exception.py                           ex.py

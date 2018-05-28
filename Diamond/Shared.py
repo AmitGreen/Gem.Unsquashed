@@ -1,11 +1,11 @@
 #
 #   Copyright (c) 2018 Amit Green.  All rights reserved.
 #
-@gem('Diamond.Status')
+@gem('Diamond.Shared')
 def gem():
     require_gem('Diamond.Core')
     require_gem('Diamond.Interval')
-    require_gem('Diamond.Status')
+    require_gem('Diamond.LifeCycle')
 
 
     class DiamondShared(Object):
@@ -23,14 +23,14 @@ def gem():
 
 
         def __init__(t):
-            t.status       = STATUS_ACTIVE__1
+            t.status       = LIFE_CYCLE_ACTIVE__1
             t.chore        = none
             t.priority     = 0
 
-            t.left_status = STATUS_ACTIVE
+            t.left_status = LIFE_CYCLE_ACTIVE
             t.left        = none
 
-            t.right_status = STATUS_ACTIVE
+            t.right_status = LIFE_CYCLE_ACTIVE
             t.right        = none
 
 
@@ -74,13 +74,13 @@ def gem():
 
             NORMAL_CHECK_INTERVAL()
 
-            status_name = status_map[status & STATUS_MASK]
+            status_name = life_cycle_map[status & LIFE_CYCLE_MASK]
             count       = status & COUNT_MASK
 
-            left_status_name = status_map[left_status & STATUS_MASK]
+            left_status_name = life_cycle_map[left_status & LIFE_CYCLE_MASK]
             left_count       = left_status & COUNT_MASK
 
-            right_status_name = status_map[right_status & STATUS_MASK]
+            right_status_name = life_cycle_map[right_status & LIFE_CYCLE_MASK]
             right_count       = right_status & COUNT_MASK
 
             return arrange('<DiamondShared %s %d %s; %d; %s %d %s; %s %d %s>',
