@@ -24,13 +24,12 @@ CRYSTAL_FILES = \
 
 DIAMOND_FILES = \
     ../Diamond/__init__.py \
-    ../Diamond/Core.py ../Diamond/Counter.py \
+    ../Diamond/Chore.py ../Diamond/Core.py ../Diamond/Counter.py \
     ../Diamond/Development.py \
     ../Diamond/Interval.py \
     ../Diamond/Main.py \
     ../Diamond/Shared.py ../Diamond/Status.py \
-    ../Diamond/Thread.py \
-    ../Diamond/Work.py \
+    ../Diamond/Thread.py
 
 GEM_FILES = \
 	../Gem/__init__.py \
@@ -285,7 +284,7 @@ links:
 	ln -s ../Diamond/Shared.py                          dsh.py
 	ln -s ../Diamond/Status.py                          dst.py
 	ln -s ../Diamond/Thread.py                          dt.py
-	ln -s ../Diamond/Work.py                            dw.py
+	ln -s ../Diamond/Chore.py                           dw.py
 	ln -s ../Gem/ExecuteFile.py                         ef.py
 	ln -s ../Gem/ErrorNumber.py                         en.py
 	ln -s ../Gem/Exception.py                           ex.py
