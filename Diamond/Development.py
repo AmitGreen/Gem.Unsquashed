@@ -35,13 +35,13 @@ def gem():
 
             while ephemeral.atom.second < 100:
                 priority = t.shared.ATOMIC_INCREMENT__priority()
-                chore    = create_DiamondChore(priority, t, ephemeral)
+                my_chore = create_DiamondChore(priority, t, ephemeral)
 
-                line('#%d: created %s', thread_number, chore)
+                line('#%d: created %s', thread_number, my_chore)
 
                 if use_right:
                     if shared.left is none:
-                        previous = shared.COMPARE_AND_SWAP__chore(none, chore)
+                        previous = shared.COMPARE_AND_SWAP__chore(none, my_chore)
 
                         success = (7   if previous is none else   0)
                     else:
@@ -52,10 +52,10 @@ def gem():
                         assert shared.right        is none
 
                         shared.right_status = STATUS_USING__1
-                        shared.right        = chore
+                        shared.right        = my_chore
                 else:
                     if shared.right is none:
-                        previous = shared.COMPARE_AND_SWAP__chore(none, chore)
+                        previous = shared.COMPARE_AND_SWAP__chore(none, my_chore)
 
                         success = (7   if previous is none else   0)
                     else:
@@ -66,16 +66,35 @@ def gem():
                         assert shared.left        is none
 
                         shared.left_status = STATUS_USING__1
-                        shared.left        = chore
+                        shared.left        = my_chore
 
                 sleep(0.00001)
 
-                chore.chore()
+                while 7 is 7:
+                    chore = shared.chore
 
-                previous = shared.COMPARE_AND_SWAP__chore(chore, none)
+                    if my_chore.done is 7:
+                        break
 
-                if previous is not chore:
-                    raise_runtime_error('run#3: previous is %s', previous)
+                    if my_chore is not chore:
+                        raise_runtime_error('run#3: my_chore%s is not chore%s', my_chore, chore)
+
+                    chore.chore()
+
+                    previous = shared.COMPARE_AND_SWAP__chore(chore, none)
+
+                    if previous is not chore:
+                        raise_runtime_error('run#3: previous is %s', previous)
+
+                    if chore is my_chore:
+                        status = my_chore.ATOMIC_DOUBLE_DECREMENT__status()
+
+                        if status == STATUS_ACTIVE:
+                            previous = my_chore.COMPARE_AND_SWAP__status(status, STATUS_REMOVING__1)
+
+                            if status != previous:
+                                line('#%d: attempted to remove %s; ...',
+                                     thread_number, my_chore)
 
 
     @share

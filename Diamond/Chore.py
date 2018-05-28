@@ -27,6 +27,18 @@ def gem():
             t.atom      = none
 
 
+        def ATOMIC_DOUBLE_DECREMENT__status(t):
+            LARGE_CHECK_INTERVAL()
+
+            status = t.status - 2
+
+            t.status = status
+
+            NORMAL_CHECK_INTERVAL()
+
+            return status
+
+
         #
         #   Step 1: t.atom        = ephemeral.atom      [CAS]
         #   Step 2: epemeral.atom = t.atom.next_atom()  [CAS]
@@ -100,6 +112,19 @@ def gem():
 
             if r is before:
                 t.atom = after
+
+            NORMAL_CHECK_INTERVAL()
+
+            return r
+
+
+        def COMPARE_AND_SWAP__status(t, before, after):
+            LARGE_CHECK_INTERVAL()
+
+            r = t.status
+
+            if r is before:
+                t.status = after
 
             NORMAL_CHECK_INTERVAL()
 

@@ -16,9 +16,10 @@ def gem():
     STATUS_ZAPPING  = 0x40
 
 
-    STATUS_ACTIVE__1 = STATUS_ACTIVE | 1
-    STATUS_ACTIVE__2 = STATUS_ACTIVE | 2
-    STATUS_USING__1  = STATUS_USING | 1
+    STATUS_ACTIVE__1   = STATUS_ACTIVE | 1
+    STATUS_ACTIVE__2   = STATUS_ACTIVE | 2
+    STATUS_REMOVING__1 = STATUS_REMOVING | 1
+    STATUS_USING__1    = STATUS_USING | 1
 
 
     status_map = {
@@ -40,6 +41,7 @@ def gem():
 
         'STATUS_ACTIVE__1',     STATUS_ACTIVE__1,
         'STATUS_ACTIVE__2',     STATUS_ACTIVE__2,
+        'STATUS_REMOVING__1',   STATUS_REMOVING__1,
         'STATUS_USING__1',      STATUS_USING__1,
 
         'status_map',           status_map,
