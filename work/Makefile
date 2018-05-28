@@ -28,7 +28,7 @@ DIAMOND_FILES = \
     ../Diamond/Development.py \
     ../Diamond/Interval.py \
     ../Diamond/Main.py \
-    ../Diamond/Shared.py \
+    ../Diamond/Shared.py ../Diamond/Status.py \
     ../Diamond/Thread.py \
     ../Diamond/Work.py \
 
@@ -212,7 +212,7 @@ clean:
 	rm -f a.py ab.py ac.py ag.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py ca2.py cd.py ce.py co.py
-	rm -f d.py dc.py de.py dfo.py di.py dm.py dn.py dr.py ds.py dt.py dw.py
+	rm -f d.py dc.py de.py dfo.py di.py dm.py dn.py dr.py dsh.py dst.py dt.py dw.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
@@ -282,7 +282,8 @@ links:
 	ln -s ../Diamond/Main.py                            dm.py
 	ln -s ../Diamond/Counter.py                         dn.py
 	ln -s ../Dravite/RSA_Example.py                     dr.py
-	ln -s ../Diamond/Shared.py                          ds.py
+	ln -s ../Diamond/Shared.py                          dsh.py
+	ln -s ../Diamond/Status.py                          dst.py
 	ln -s ../Diamond/Thread.py                          dt.py
 	ln -s ../Diamond/Work.py                            dw.py
 	ln -s ../Gem/ExecuteFile.py                         ef.py

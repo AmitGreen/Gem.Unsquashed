@@ -54,7 +54,7 @@ def gem():
         line('check_interval is %d', fetch_check_interval())
 
         counter = create_Counter()
-        shared  = create_Shared()
+        shared  = create_DiamondShared()
 
         thread_many = []
 
