@@ -206,7 +206,7 @@ def gem():
 
         append_thread = thread_many.append
 
-        for thread_number in iterate_range(1):
+        for thread_number in iterate_range(2):
             thread = create_Thread(DevelopmentThread, thread_number, ephemeral, shared)
 
             append_thread(thread)

@@ -59,6 +59,16 @@ def gem():
             return lifecycle
 
 
+        def ATOMIC_INCREMENT__lifecycle__DOUBLE(t):
+            LARGE_CHECK_INTERVAL()
+
+            lifecycle = t.lifecycle = t.lifecycle + 2
+
+            NORMAL_CHECK_INTERVAL()
+
+            return lifecycle
+
+
         def release(t, thread_number):
             lifecycle = t.ATOMIC_DECREMENT__lifecycle()
 
@@ -156,6 +166,8 @@ def gem():
                 t.done = 7                                      
                 line('#%d: step #2 already done ... %s', thread_number, t)
                 return
+
+            after = atom.next_atom() 
 
             previous = ephemeral.COMPARE_AND_SWAP__atom(atom, after)            #   Step #2 [CAS]
 
