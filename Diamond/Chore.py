@@ -49,6 +49,42 @@ def gem():
             return lifecycle
 
 
+        def ATOMIC_INCREMENT__lifecycle(t):
+            LARGE_CHECK_INTERVAL()
+
+            lifecycle = t.lifecycle = t.lifecycle + 1
+
+            NORMAL_CHECK_INTERVAL()
+
+            return lifecycle
+
+
+        def release(t, thread_number):
+            lifecycle = t.ATOMIC_DECREMENT__lifecycle()
+
+            if lifecycle == LIFE_CYCLE_ACTIVE:
+                previous = t.COMPARE_AND_SWAP__lifecycle(LIFE_CYCLE_ACTIVE, LIFE_CYCLE_REMOVING__1)
+
+                if lifecycle != previous:
+                    line('#%d: attempted to remove %s; BUT failed; so someone else\'s problem now ...',
+                         thread_number, t)
+                else:
+                    line('#%d: removing %s ...', thread_number, t)
+
+
+        def release__DOUBLE(t, thread_number):
+            lifecycle = t.ATOMIC_DECREMENT__lifecycle__DOUBLE()
+
+            if lifecycle == LIFE_CYCLE_ACTIVE:
+                previous = t.COMPARE_AND_SWAP__lifecycle(LIFE_CYCLE_ACTIVE, LIFE_CYCLE_REMOVING__1)
+
+                if lifecycle != previous:
+                    line('#%d: attempted to remove %s; BUT failed; so someone else\'s problem now ...',
+                         thread_number, t)
+                else:
+                    line('#%d: removing %s ...', thread_number, t)
+
+
         #
         #   Step 1: t.atom        = ephemeral.atom      [CAS]
         #   Step 2: epemeral.atom = t.atom.next_atom()  [CAS]

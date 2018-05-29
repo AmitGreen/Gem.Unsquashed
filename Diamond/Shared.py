@@ -11,35 +11,33 @@ def gem():
     class DiamondShared(Object):
         __slots__ = ((
             'status',                   #   Integer
-            'chore',                    #   DiamondChore | None
+            'chore',                    #   DiamondChore | Zero
             'priority',                 #   Integer
 
             'left_status',              #   Integer
-            'left',                     #   DiamondChore | None
+            'left',                     #   DiamondChore | Zero
 
             'right_status',             #   Integer
-            'right',                    #   DiamondChore | None
+            'right',                    #   DiamondChore | Zero
         ))
 
 
         def __init__(t):
             t.status       = LIFE_CYCLE_ACTIVE__1
-            t.chore        = none
+            t.chore        = 0
             t.priority     = 0
 
             t.left_status = LIFE_CYCLE_ACTIVE
-            t.left        = none
+            t.left        = 0
 
             t.right_status = LIFE_CYCLE_ACTIVE
-            t.right        = none
+            t.right        = 0
 
 
         def ATOMIC_INCREMENT__priority(t):
             LARGE_CHECK_INTERVAL()
 
-            priority = t.priority
-
-            t.priority += 1
+            priority = t.priority = t.priority +1
 
             NORMAL_CHECK_INTERVAL()
 
@@ -57,6 +55,108 @@ def gem():
             NORMAL_CHECK_INTERVAL()
 
             return r
+
+
+        def COMPARE_AND_SWAP__left(t, before, after):
+            LARGE_CHECK_INTERVAL()
+
+            r = t.left
+
+            if r is before:
+                t.left = after
+
+            NORMAL_CHECK_INTERVAL()
+
+            return r
+
+
+        def COMPARE_AND_SWAP__right(t, before, after):
+            LARGE_CHECK_INTERVAL()
+
+            r = t.right
+
+            if r is before:
+                t.right = after
+
+            NORMAL_CHECK_INTERVAL()
+
+            return r
+
+
+        def fetch_left_0(t, thread_number):
+            left = t.left
+
+            if left is 0:
+                return 0
+
+            left.ATOMIC_INCREMENT__lifecycle()
+
+            if left is t.left:
+                return left
+
+            #
+            #   left is no longer valid
+            #
+            line('#%d: OOPS -- grabbed an INVALID left %s ...', thread_number, left)
+            left.release()
+            return 0
+
+
+        def fetch_left_0__AND__increment_count(t, thread_number):
+            left = t.left
+
+            if left is 0:
+                return 0
+
+            left.ATOMIC_INCREMENT__lifecycle__DOUBLE()
+
+            if left is t.left:
+                return left
+
+            #
+            #   left is no longer valid
+            #
+            line('#%d: OOPS -- grabbed an INVALID left %s ...', thread_number, left)
+            left.release__DOUBLE()
+            return 0
+
+
+        def fetch_right_0(t, thread_number):
+            right = t.right
+
+            if right is 0:
+                return 0
+
+            right.ATOMIC_INCREMENT__lifecycle()
+
+            if right is t.right:
+                return right
+
+            #
+            #   right is no longer valid
+            #
+            line('#%d: OOPS -- grabbed an INVALID right %s ...', thread_number, right)
+            right.release()
+            return 0
+
+
+        def fetch_right_0__AND__increment_count(t, thread_number):
+            right = t.right
+
+            if right is 0:
+                return 0
+
+            right.ATOMIC_INCREMENT__lifecycle__DOUBLE()
+
+            if right is t.right:
+                return right
+
+            #
+            #   right is no longer valid
+            #
+            line('#%d: OOPS -- grabbed an INVALID right %s ...', thread_number, right)
+            right.release__DOUBLE()
+            return 0
 
 
         def __repr__(t):
