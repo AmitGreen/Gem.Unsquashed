@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.Pattern')
 def gem():
@@ -60,6 +60,7 @@ def gem():
         percent_sign        = NAME('percent_sign',        '%')
         plus_sign           = NAME('plus_sign',           '+')
         slash_sign          = NAME('slash_sign',          '/')
+        space               = NAME('space',               ' ')
         star_sign           = NAME('star',                '*')
         tilde_sign          = NAME('tilde',               '~')
 
@@ -147,7 +148,6 @@ def gem():
         name3                   = NAME('name3',                   name)
         name4                   = NAME('name4',                   name)
         ow_comma_ow             = NAME('ow_comma_ow',             ow + comma + ow)
-        ow_comment_newline      = NAME('ow_comment_newline',      ow + comment_newline)
         ow_dot_ow               = NAME('ow_dot_ow',               ow + period + ow)
         w_as_w                  = NAME('w_as_w',                  w + keyword_as + w)
         w_import_w              = NAME('w_import_w',              w + keyword_import + w)
@@ -160,12 +160,6 @@ def gem():
 
         OLD__right_parenthesis   = NAME('OLD__right_parenthesis',   ow + ')' + OLD__middle_ow)
         ow__left_parenthesis__ow = NAME('ow__left_parenthesis__ow', ow + '(' + ow)              #   )
-
-        #
-        #   With internal group
-        #
-        pound_G_comment = NAME('pound_G_comment', '#' + G('comment', ZERO_OR_MORE(DOT)))
-
 
         #
         #   Generic
@@ -181,8 +175,8 @@ def gem():
             'copyright_match',
             (
                   EXACT('   Copyright (c)')
-                + ' ' + G('year', '2017' + OPTIONAL('-2018'))
-                + ' ' + G('author', 'Amit Green')
+                + space + G('year', '2017' + OPTIONAL('-2018'))
+                + space + G('author', 'Amit Green')
                 + '.  All rights reserved.'
             ),
         )
@@ -221,13 +215,8 @@ def gem():
                           | G(left_brace__ow)          + P(G(right_brace)          + ow)
                       ),
                   )
-                + Q(
-                      'comment_newline',
-                      P(
-                            '#'
-                          + G('comment', ZERO_OR_MORE(ow + ONE_OR_MORE(NOT_ANY_OF('\x00-\x1F', ' '))))
-                          + ow
-                      )
+                + P(
+                        Q('comment', '#' + ZERO_OR_MORE(DOT))
                       + G('newline', LINEFEED + END_OF_PATTERN)
                   )
             ),
@@ -248,7 +237,7 @@ def gem():
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
                 | G(left_brace__ow)          + P(G(right_brace)          + ow)
-            ) + Q(comment_newline),
+            ) + Q('newline', comment_newline),
         )
 
         MATCH(
@@ -256,7 +245,7 @@ def gem():
             #   Same as 'atom_match', but without ')', ']', or '}'.
             #
             #   NOTE:
-            #       'name' is also analyze to see if it a keyword such as 'return'.
+            #       'name' is also analyzed to see if it a keyword such as 'return'.
             #
             'simple_statement_match',
             (
@@ -269,7 +258,7 @@ def gem():
                 | G(left_parenthesis__ow)    + P(G(right_parenthesis)    + ow)
                 | G(left_square_bracket__ow) + P(G(right_square_bracket) + ow)
                 | G(left_brace__ow)          + P(G(right_brace)          + ow)
-            ) + Q(comment_newline),
+            ) + Q('newline', comment_newline),
         )
 
         MATCH(
@@ -320,7 +309,7 @@ def gem():
 
 
         #
-        #   Statements - Parse 1
+        #   Statements
         #
         MATCH(
             'definition_header_parenthesis_match',
@@ -352,7 +341,7 @@ def gem():
 
         MATCH(
             'from_module_match1',
-            ow + G('operator', period | 'import') + ow,
+            ow + G('operator', period | keyword_import) + ow,
         )
 
         MATCH(

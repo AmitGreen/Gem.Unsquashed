@@ -425,7 +425,7 @@ def gem():
         assert (b is not absent)
         assert (v is not absent) and (w is not absent)
 
-        t = new_Hailstone_1()
+        t = new_Hailstone_2()
 
         if nub(a) < nub(b):
             t.a = a
@@ -453,7 +453,7 @@ def gem():
         kb = nub(b)
         kc = nub(c)
 
-        t = new_Hailstone_1()
+        t = new_Hailstone_3()
 
         if ka < kb:
             if kb < kc:
@@ -528,7 +528,7 @@ def gem():
         assert (d is not absent)
         assert (v is not absent) and (w is not absent) and (x is not absent) and (y is not absent)
 
-        t = new_Hailstone_1()
+        t = new_Hailstone_4()
 
         keys = [a, b, c, d]
         keys.sort(key = nub)
@@ -607,7 +607,7 @@ def gem():
         assert (v  is not absent) and (w is not absent) and (x is not absent) and (y is not absent)
         assert (z5 is not absent)
 
-        t = new_Hailstone_1()
+        t = new_Hailstone_5()
 
         keys = [a, b, c, d, e5]
         keys.sort(key = nub)
@@ -719,7 +719,7 @@ def gem():
         assert (v  is not absent) and (w  is not absent) and (x is not absent) and (y is not absent)
         assert (z5 is not absent) and (z6 is not absent)
 
-        t = new_Hailstone_1()
+        t = new_Hailstone_6()
 
         keys = [a, b, c, d, e5, e6]
         keys.sort(key = nub)
@@ -870,7 +870,7 @@ def gem():
         assert (v  is not absent) and (w  is not absent) and (x  is not absent) and (y is not absent)
         assert (z5 is not absent) and (z6 is not absent) and (z7 is not absent)
 
-        t = new_Hailstone_1()
+        t = new_Hailstone_7()
 
         keys = [a, b, c, d, e5, e6, e7]
         keys.sort(key = nub)

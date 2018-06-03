@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.Parse1Import')
 def gem():
@@ -28,7 +28,7 @@ def gem():
         #</name>
 
         #
-        #<module: name ||| ['.' name] ... ('as' | ',' | newline)
+        #<module: name ['.' name] ... ('as' | ',' | newline)
         #
         while true:
             m = import_module_match1(s, qj())
@@ -115,7 +115,7 @@ def gem():
 
     @share
     def parse1_statement_import(m):
-        if m.end('comment_newline') is not -1:
+        if m.end('newline') is not -1:
             raise_unknown_line()
 
         j = m.end()

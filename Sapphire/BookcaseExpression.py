@@ -1,22 +1,14 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.BookcaseExpression')
 def gem():
-    require_gem('Sapphire.CreateMeta')
     require_gem('Sapphire.DualFrill')
     require_gem('Sapphire.DualToken')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.Priority')
     require_gem('Sapphire.Tree')
     require_gem('Sapphire.TripleToken')
-
-
-    append_cache             = Shared.append_cache                  #   Due to privileged
-    conjure_vw_frill         = Shared.conjure_vw_frill              #   Due to privileged
-    lookup_adjusted_meta     = Shared.lookup_adjusted_meta          #   Due to privileged
-    produce_conjure_dual__21 = Shared.produce_conjure_dual__21      #   Due to privileged
-    store_adjusted_meta      = Shared.store_adjusted_meta           #   Due to privileged
 
 
     LP_RP   = conjure_vw_frill(LP,  RP)
@@ -73,7 +65,6 @@ def gem():
 
 
     @share
-    @privileged
     def produce_conjure_bookcase_expression(name, Meta):
         cache   = {}
         lookup  = cache.get
@@ -143,6 +134,7 @@ def gem():
         meta_frill_w = meta_frill.w
 
 
+        @rename('conjure_%s', name)
         def conjure_bookcase_expression(frill_v, a, frill_w):
             if (frill_v is meta_frill_v) and (frill_w is meta_frill_w):
                 return (lookup(a)) or (provide(a, Meta(a)))
@@ -150,6 +142,7 @@ def gem():
             return conjure_dual__with_frill(a, conjure_vw_frill(frill_v, frill_w))
 
 
+        @rename('conjure_%s__with_frill', name)
         def conjure_with_frill(frill, a):
             if frill is meta_frill:
                 return (lookup(a)) or (provide(a, Meta(a)))
@@ -158,9 +151,6 @@ def gem():
 
 
         if __debug__:
-            conjure_bookcase_expression.__name__ = intern_arrange('conjure_%s', name)
-            conjure_with_frill         .__name__ = intern_arrange('conjure_%s__with_frill', name)
-
             append_cache(name, cache)
 
 

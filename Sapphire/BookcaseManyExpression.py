@@ -1,15 +1,10 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.BookcaseManyExpression')
 def gem():
     require_gem('Sapphire.BookcaseManyFrill')
     require_gem('Sapphire.TupleOfExpression')
-
-    append_cache                     = Shared.append_cache                      #   Due to privileged
-    conjure_bookcase_many_frill      = Shared.conjure_bookcase_many_frill       #   Due to privileged
-    produce_conjure_dual             = Shared.produce_conjure_dual              #   Due to privileged
-    conjure_tuple_of_many_expression = Shared.conjure_tuple_of_many_expression  #   Due to privileged
 
 
     @share
@@ -201,7 +196,6 @@ def gem():
 
 
     @share
-    @privileged
     def produce_conjure_bookcase_many_expression(
             name, Meta,
 
@@ -214,6 +208,7 @@ def gem():
         conjure_dual = produce_conjure_dual(name + '__X2', Meta, cache)
 
 
+        @rename('conjure_%s', name)
         def conjure_bookcase_many_expression(begin, many, frill_many, end):
             return conjure_dual(
                        conjure_bookcase_many_frill(begin, frill_many, end),
@@ -222,13 +217,11 @@ def gem():
 
 
         if __debug__:
-            conjure_bookcase_many_expression.__name__ = intern_arrange('conjure_%s', name)
-
             append_cache(name, cache)
 
         if produce_conjure_with_frill == 1:
             if __debug__:
-                conjure_dual.__name__ = intern_arrange('conjure_%s__with_frill', name)
+                conjure_dual = rename('conjure_%s__with_frill', name)(conjure_dual)
 
             return ((
                        conjure_bookcase_many_expression,

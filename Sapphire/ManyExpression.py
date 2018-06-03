@@ -1,16 +1,10 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.ManyExpression')
 def gem():
     require_gem('Sapphire.ManyFrill')
     require_gem('Sapphire.TupleOfExpression')
-
-
-    append_cache                     = Shared.append_cache                      #   Due to privileged
-    conjure_many_frill               = Shared.conjure_many_frill                #   Due to privileged
-    conjure_tuple_of_many_expression = Shared.conjure_tuple_of_many_expression  #   Due to privileged
-    produce_conjure_dual             = Shared.produce_conjure_dual              #   Due to privileged
 
 
     if __debug__:
@@ -175,7 +169,6 @@ def gem():
     ManyExpression.k2 = ManyExpression.many
 
 
-    @privileged
     def produce_conjure_many_expression(
             name, Meta,
 
@@ -188,18 +181,17 @@ def gem():
         conjure_dual = produce_conjure_dual(name + '__X2', Meta, cache)
 
 
+        @rename('conjure_%s', name)
         def conjure_many_expression(list, frill_list):
             return conjure_dual(conjure_many_frill(frill_list), conjure_tuple_of_many_expression(list))
 
 
         if __debug__:
-            conjure_many_expression.__name__ = intern_arrange('conjure_%s', name)
-
             append_cache(name, cache)
 
         if produce_conjure_with_frill:
             if __debug__:
-                conjure_dual.__name__ = intern_arrange('conjure_%s__with_frill', name)
+                conjure_dual= rename('conjure_%s__with_frill', name)(conjure_dual)
 
             return ((
                        conjure_many_expression,

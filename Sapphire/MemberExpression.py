@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.MemberExpression')
 def gem():
@@ -87,7 +87,7 @@ def gem():
 
 
     MemberExpression.call_expression = static_method(conjure_method_call_expression)
-    SapphireToken   .call_expression = static_conjure_call_expression
+    PearlToken      .call_expression = static_conjure_call_expression
     SapphireTrunk   .call_expression = static_conjure_call_expression
 
 

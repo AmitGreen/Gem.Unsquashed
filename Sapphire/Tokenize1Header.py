@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.Tokenize1Header')
 def gem():
@@ -60,7 +60,7 @@ def gem():
             assert qi() == qj()
 
             my_line(portray_string(s[qi() : ]))
-            my_line(portray_string(m.group('comment_newline')))
+            my_line(portray_string(m.group('newline')))
 
             raise_unknown_line()
 
@@ -185,7 +185,7 @@ def gem():
             comma_RP_end = m.end('comma_RP')
 
             if comma_RP_end is not -1:
-                if m.end('comment_newline') is not -1:
+                if m.end('newline') is not -1:
                     raise_unknown_line()
 
                 d = qd()

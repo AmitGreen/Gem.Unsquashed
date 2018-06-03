@@ -1,16 +1,13 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.BookcaseDualStatement')
 def gem():
     require_gem('Sapphire.BookcaseDualExpression')
 
 
-    conjure_commented_vwx_frill = Shared.conjure_commented_vwx_frill    #   due to privileged
-
-
-    @privileged
     def produce_add_comment(name, conjure_with_frill):
+        @rename('add_comment__%s', name)
         def add_comment(t, comment):
             frill = t.frill
 
@@ -22,9 +19,6 @@ def gem():
                        t.b,
                    )
 
-
-        if __debug__:
-            add_comment.__name__ = intern_arrange('add_comment__%s', name)
 
         return add_comment
 
