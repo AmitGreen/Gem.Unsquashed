@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Pearl.Tokenizer')
 def gem():
@@ -17,15 +17,21 @@ def gem():
     lt = Method(Tuple, line_tokens)
     lz = Method(line_tokens.__delitem__, slice_all)
 
-    qs = Method(query, 0)
-    qd = Method(query, 1)
-    qi = Method(query, 2)
-    qj = Method(query, 3)
-    qk = Method(query, 4)
-    ql = Method(query, 5)
-    qn = Method(query, 6)
-    qp = Method(query, 7)
+    #
+    #   q = Query
+    #
+    qs = Method(query, 0)                   #   `s` - The line being parsed
+    qd = Method(query, 1)                   #   `d` - Depth of '(', '[', & '{'
+    qi = Method(query, 2)                   #   `i` - Where the current token begins
+    qj = Method(query, 3)                   #   `j` - Where the current token ends
+    qk = Method(query, 4)                   #   `k` - Unknown
+    ql = Method(query, 5)                   #   `l` - Line number
+    qn = Method(query, 6)                   #   `n` - Python Line Marker (Newline)
+    qp = Method(query, 7)                   #   `p` - Unknown
 
+    #
+    #   w = write
+    #
     ws = Method(write, 0)
     wd = Method(write, 1)
     wi = Method(write, 2)
@@ -35,10 +41,13 @@ def gem():
     wn = Method(write, 6)
     wp = Method(write, 7)
 
-    wd0 = Method(wd, 0)
-    wd1 = Method(wd, 1)
-    wi0 = Method(wi, 0)
-    wj0 = Method(wj, 0)
+    #
+    #   Very fast writes
+    #
+    wd0 = Method(wd, 0)                     #   `d` = 0
+    wd1 = Method(wd, 1)                     #   `d` = 1
+    wi0 = Method(wi, 0)                     #   `i` = 0
+    wj0 = Method(wj, 0)                     #   `j` = 0
 
 
     construct_Exception = Exception.__init__
@@ -216,7 +225,7 @@ def gem():
         caller_name  = caller_frame.f_code.co_name
         basename     = path_basename(caller_frame.f_code.co_filename)
 
-        line('%s#%s: %s; %s:%s', basename, caller_frame.f_lineno, caller_name, qp(), ql())
+        line('??? %s#%s: %s; %s:%s', basename, caller_frame.f_lineno, caller_name, qp(), ql())
 
         unknown_line_error = UnknownLineException(
                                  arrange('parse incomplete: %s#%s: %s; %s:%s',

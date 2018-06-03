@@ -1,22 +1,15 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.DualToken')
 def gem():
+    require_gem('Sapphire.ClassOrder')
     require_gem('Sapphire.Comment')
+    require_gem('Sapphire.CreateMeta')
     require_gem('Sapphire.DualTwig')
     require_gem('Sapphire.Elemental')
+    require_gem('Sapphire.TokenCache')
     require_gem('Sapphire.Whitespace')
-
-
-    conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged
-    lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   Due to privileged
-    lookup_line_marker   = Shared.lookup_line_marker        #   Due to privileged
-    lookup_normal_token  = Shared.lookup_normal_token       #   Due to privileged
-    provide_line_marker  = Shared.provide_line_marker       #   Due to privileged
-    provide_normal_token = Shared.provide_normal_token      #   Due to privileged
-    qi                   = Shared.qi                        #   Due to privileged
-    qs                   = Shared.qs                        #   Due to privileged
 
 
     def construct_dual_token(t, s, a, b):
@@ -67,8 +60,8 @@ def gem():
 
 
 
-    @privileged
     def produce_mutate_atom_whitespace(name, conjure):
+        @rename('mutate_%s', name)
         def mutate(t, vary, priority):
             a    = t.a
             a__2 = a.mutate(vary, priority)
@@ -85,14 +78,11 @@ def gem():
             return conjure(a__2, b__2)
 
 
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
-
         return mutate
 
 
-    @privileged
     def produce_transform_atom_whitespace(name, conjure):
+        @rename('transform_%s', name)
         def transform(t, vary):
             a    = t.a
             a__2 = a.transform(vary)
@@ -109,14 +99,12 @@ def gem():
             return conjure(a__2, b__2)
 
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
-
         return transform
 
 
-    @privileged
+
     def produce_mutate_whitespace_atom(name, conjure):
+        @rename('mutate_%s', name)
         def mutate(t, vary, priority):
             b    = t.b
             b__2 = b.mutate(vary, priority)
@@ -132,9 +120,6 @@ def gem():
 
             return conjure(a__2, b__2)
 
-
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
 
         return mutate
 
@@ -216,7 +201,6 @@ def gem():
                )
 
 
-    @privileged
     def produce_conjure_dual_token(
             name, Meta,
 
@@ -234,6 +218,7 @@ def gem():
             create_dual_token = create_dual_token__with_newlines
 
 
+        @rename('conjure_%s', name)
         def conjure_dual_token(a, b):
             s = a.s + b.s
 
@@ -249,13 +234,9 @@ def gem():
             return provide(s, create_dual_token(Meta, s, a, b))
 
 
-        if __debug__:
-            conjure_dual_token.__name__ = intern_arrange('conjure_%s', name)
-
         return conjure_dual_token
 
 
-    @privileged
     def produce_evoke_dual_token(
             name, Meta, conjure_first,
 
@@ -274,6 +255,7 @@ def gem():
             assert conjure_second is not absent
 
         if line_marker:
+            @rename('evoke_%s', name)
             def evoke_dual_token(a_end):
                 assert qi() < a_end
 
@@ -299,6 +281,7 @@ def gem():
                            ),
                        )
         elif conjure_second__ends_in_newline is none:
+            @rename('evoke_%s', name)
             def evoke_dual_token(middle, end):
                 #
                 #   Indentation tokens may have 0 length, hence 'qi() <= middle'
@@ -329,6 +312,8 @@ def gem():
         else:
             assert conjure_second__ends_in_newline is not absent
 
+
+            @rename('evoke_%s', name)
             def evoke_dual_token(middle, end):
                 if end is none:
                     assert qi() < middle
@@ -361,10 +346,6 @@ def gem():
                                (conjure_second__ends_in_newline   if end is none else   conjure_second)(s[middle : end]),
                            ),
                        )
-
-
-        if __debug__:
-            evoke_dual_token.__name__ = intern_arrange('evoke_%s', name)
 
 
         return evoke_dual_token

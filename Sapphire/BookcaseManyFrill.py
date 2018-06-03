@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.BookcaseManyFrill')
 def gem():
@@ -17,9 +17,9 @@ def gem():
     #
     class BookcaseManyFrill(Object):
         __slots__ = ((
-            'begin',                    #   SapphireToken+
+            'begin',                    #   PearlToken+
             'many',                     #   ManyFrill
-            'end',                      #   SapphireToken+
+            'end',                      #   PearlToken+
         ))
 
 

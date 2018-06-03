@@ -1,9 +1,8 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.Comment')
 def gem():
-    require_gem('Sapphire.ClassOrder')
     require_gem('Sapphire.Indentation')
 
 
@@ -72,7 +71,7 @@ def gem():
             w('#' + t + '\n')
 
 
-    class CommentLine_WithTrailer(SapphireToken):
+    class CommentLine_WithTrailer(PearlToken):
         __slots__ = ((
             'comment',                  #   CommentLine
             'newline',                  #   EmptyLine
@@ -124,7 +123,7 @@ def gem():
         transform        = transform__remove_comments_0
 
 
-    class IndentedCommentLine(SapphireToken):
+    class IndentedCommentLine(PearlToken):
         __slots__ = ((
             'impression',               #   Indentation
             'comment',                  #   CommentLine
@@ -178,7 +177,7 @@ def gem():
         transform        = transform__remove_comments_0
 
 
-    class IndentedCommentLine_WithTrailer(SapphireToken):
+    class IndentedCommentLine_WithTrailer(PearlToken):
         __slots__ = ((
             'impression',               #   Indentation
             'comment',                  #   CommentLine

@@ -1,12 +1,9 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.BookcaseManyStatement')
 def gem():
     require_gem('Sapphire.BookcaseManyExpression')
-
-
-    dump_token = Shared.dump_token      #   due to privileged
 
 
     def write__comment_many(t, w):
@@ -35,11 +32,11 @@ def gem():
             v.write_variables(art)
 
 
-    @privileged
     def produce_transform_comment_statement_many(
                 name, first_priority, middle_priority, last_priority, conjure_with_frill,
                 conjure_uncommented__with_frill,
     ):
+        @rename('transform_%s', name)
         def transform(t, vary):
             frill    = t.frill
             many     = t.many
@@ -56,14 +53,11 @@ def gem():
                    )(frill__2, many__2)
 
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
-
         return transform
 
 
-    @privileged
     def produce_transform_statement_many(name, first_priority, middle_priority, last_priority, conjure_with_frill):
+        @rename('transform_%s', name)
         def transform(t, vary):
             frill    = t.frill
             many     = t.many
@@ -76,9 +70,6 @@ def gem():
 
             return conjure_with_frill(frill__2, many__2)
 
-
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
 
         return transform
 

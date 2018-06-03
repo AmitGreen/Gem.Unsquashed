@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Tremolite.Build')
 def gem():
@@ -742,64 +742,81 @@ def gem():
 
         valid = [ordinal_space <= i <= ordinal_tilde   for i in iterate_range(0, 256)]
 
-        for s in arguments:
-            if length(s) is 1:
-                a = lookup_ascii(s, unknown_ascii)
+        for v in arguments:
+            if type(v) is not String:
+                assert (v.is_tremolite_name) and (v.pattern.is_tremolite_exact) and (v.pattern.singular)
+
+                v = v.pattern.exact
+
+                assert length(v) is 1
+
+                a = lookup_ascii(v, unknown_ascii)
 
                 if not a.is_printable:
-                    raise_invalid_printable_minus_character(s, s)
+                    raise_invalid_printable_minus_character(v, v)
 
                 if not valid[a.ordinal]:
-                    raise_already_not_allowed_printable_minus_character(s, s)
+                    raise_already_not_allowed_printable_minus_character(v, v)
 
                 valid[a.ordinal] = false
                 continue
 
-            assert (length(s) is 3) and (s[1] is '-')
+            if length(v) is 1:
+                a = lookup_ascii(v, unknown_ascii)
 
-            a0 = lookup_ascii(s[0], unknown_ascii)
-            a2 = lookup_ascii(s[2], unknown_ascii)
+                if not a.is_printable:
+                    raise_invalid_printable_minus_character(v, v)
+
+                if not valid[a.ordinal]:
+                    raise_already_not_allowed_printable_minus_character(v, v)
+
+                valid[a.ordinal] = false
+                continue
+
+            assert (length(v) is 3) and (v[1] is '-')
+
+            a0 = lookup_ascii(v[0], unknown_ascii)
+            a2 = lookup_ascii(v[2], unknown_ascii)
 
             if not a0.is_printable:
-                raise_invalid_printable_minus_character(s[0], s)
+                raise_invalid_printable_minus_character(v[0], v)
 
             if not a2.is_printable:
-                raise_invalid_printable_minus_character(s[2], s)
+                raise_invalid_printable_minus_character(v[2], v)
 
             if a0.ordinal > a2.ordinal:
-                raise_runtime_error('invalid backwards range PRINTABLE_MINUS(%s)', portray_string(s))
+                raise_runtime_error('invalid backwards range PRINTABLE_MINUS(%s)', portray_string(v))
 
             for i in iterate_range(a0.ordinal, a2.ordinal):
                 if not valid[i]:
-                    raise_already_not_allowed_printable_minus_character(character(i), s)
+                    raise_already_not_allowed_printable_minus_character(character(i), v)
 
                 valid[i] = false
 
-        many   = ['[']
-        append = many.append
-        lowest = none
-
+        regular_expressions       = ['[']
+        append_regular_expression = regular_expressions.append
+        lowest                    = none
 
         def add_range(lowest, highest):
             if show:
                 line('add_range(%d, %d)', lowest, highest)
 
             if lowest == ordinal_minus:
-                many.insert(0, '-')
+                regular_expressions.insert(0, '-')
                 lowest += 1
 
             if highest == ordinal_minus:
-                many.insert(0, '-')
+                regular_expressions.insert(0, '-')
                 highest -= 1
 
             if lowest == highest:
-                many.append(lookup_ascii(lowest).pattern)
+                append_regular_expression(lookup_ascii(lowest).pattern)
                 return
 
             if lowest > highest:
                 return
 
-            many.append(arrange('%s-%s', lookup_ascii(lowest).pattern, lookup_ascii(highest).pattern))
+            append_regular_expression(arrange('%s-%s', lookup_ascii(lowest).pattern, lookup_ascii(highest).pattern))
 
 
         for i in iterate_range(0, 256):
@@ -815,12 +832,25 @@ def gem():
             if lowest is not none:
                 add_range(lowest, 255)
 
-        many.append(']')
+        append_regular_expression(']')
+
+        portray        = []
+        append_portray = portray.append
+        many           = []
+        append_many    = many.append
+
+        for v in arguments:
+            if type(v) is not String:
+                append_portray(v.portray)
+                append_many   (v)
+            else:
+                append_portray(portray_string(v))
+                append_many   (intern_string (v))
 
         return TremoliteAnyOf(
-                   intern_string(''.join(many)),
-                   intern_arrange('PRINTABLE_MINUS(%s)', ', '.join(portray_string(s)   for s in arguments)),
-                   Tuple(intern_string(s)   for s in arguments)
+                   intern_string(''.join(regular_expressions)),
+                   intern_arrange('PRINTABLE_MINUS(%s)', ', '.join(portray)),
+                   Tuple(many),
                )
     #</PRINTABLE_MINUS>
 

@@ -1,16 +1,9 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.UnaryExpression')
 def gem():
     require_gem('Sapphire.Tree')
-
-
-    append_cache                    = Shared.append_cache                       #   due to privileged
-    lookup_adjusted_meta            = Shared.lookup_adjusted_meta               #   due to privileged
-    produce_conjure_dual__21        = Shared.produce_conjure_dual__21           #   due to privileged
-    produce_conjure_unique_dual__21 = Shared.produce_conjure_unique_dual__21    #   due to privileged
-    store_adjusted_meta             = Shared.store_adjusted_meta                #   due to privileged
 
 
     @share

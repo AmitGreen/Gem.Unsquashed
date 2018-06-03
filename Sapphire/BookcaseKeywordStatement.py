@@ -1,16 +1,13 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.BookcaseKeywordStatement')
 def gem():
-    conjure_commented_vw_frill = Shared.conjure_commented_vw_frill      #   due to privileged
-
-
     empty_indentation__at_sign = conjure_indented_token(empty_indentation, conjure_at_sign('@'))
 
 
-    @privileged
     def produce_add_comment(name, conjure_with_frill = 0):
+        @rename('add_comment__%s', name)
         def add_comment(t, comment):
             frill = t.frill
 
@@ -20,9 +17,6 @@ def gem():
                        conjure_commented_vw_frill(comment, frill.v, frill.w),
                        t.a,
                    )
-
-        if __debug__:
-            add_comment.__name__ = intern_arrange('add_comment__%s', name)
 
         return add_comment
 

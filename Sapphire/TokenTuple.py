@@ -1,8 +1,11 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.TokenTuple')
 def gem():
+    require_gem('Sapphire.ClassOrder')
+
+
     @share
     class TokenTuple(Tuple):
         __slots__ = (())

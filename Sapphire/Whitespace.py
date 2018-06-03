@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.Whitespace')
 def gem():
@@ -70,7 +70,7 @@ def gem():
             w(t)
 
 
-    class TokenWhitespace(SapphireToken):
+    class TokenWhitespace(PearlToken):
         display_name = 'whitespace'
 
 

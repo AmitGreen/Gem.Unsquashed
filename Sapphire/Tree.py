@@ -1,11 +1,8 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.Tree')
 def gem():
-    require_gem('Sapphire.Nub')
-
-
     @share
     class SapphireTrunk(Object):
         __slots__ = (())

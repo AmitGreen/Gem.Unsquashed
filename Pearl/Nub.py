@@ -1,9 +1,9 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.Nub')
+@gem('Pearl.Nub')
 def gem():
-    require_gem('Sapphire.Core')
+    require_gem('Pearl.Core')
 
 
     nub_cache   = create_cache('nub')
@@ -50,6 +50,6 @@ def gem():
         return (lookup_nub(a)) or (provide_nub(a, Nub(a)))
 
 
-    share(
+    export(
         'static_conjure_nub',   static_method(conjure_nub),
     )
