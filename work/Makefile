@@ -69,7 +69,12 @@ IVORY_FILES = \
 
 JASPER_FILES = \
     ../Jasper/Core.py \
-    ../Jasper/Main.py
+    ../Jasper/Main.py \
+    ../Jasper/Parse.py ../Jasper/Parse1.py \
+        ../Jasper/Pattern.py
+    #
+    #   Excludes:
+    #       ../Jasper/Match.py
 
 LICENSE_FILES = \
     ../OtherLicenses/README.txt
@@ -229,7 +234,7 @@ clean:
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hn.py hpa.py hpr.py hs.py
 	rm -f   htc.py hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
-	rm -f jb.py jc.py jm.py
+	rm -f j0p.py j1p.py jb.py jc.py jma.py jmc.py jp.py
 	rm -f l.txt lr.txt
 	rm -f m map.py mc.py md.py mm.py mn.py m.txt
 	rm -f o.py oc.py od.py oe.py om.py
@@ -397,9 +402,13 @@ links:
 	ln -s ../Gem/Import.py                              im.py
 	ln -s ../Ivory/Main.py                              iv.py
 	ln -s ../Gem/IO.py                                  io.py
+	ln -s ../Jasper/Parse.py                            j0p.py
+	ln -s ../Jasper/Parse1.py                           j1p.py
 	ln -s ../Junk/Boot.py                               jb.py
 	ln -s ../Jasper/Core.py                             jc.py
-	ln -s ../Jasper/Main.py                             jm.py
+	ln -s ../Jasper/Main.py                             jma.py
+	ln -s ../Jasper/Match.py                            jmc.py
+	ln -s ../Jasper/Pattern.py                          jp.py
 	ln -s log.txt                                       l.txt
 	ln -s ../OtherLicenses/README.txt                   lr.txt
 	ln -s Makefile                                      m

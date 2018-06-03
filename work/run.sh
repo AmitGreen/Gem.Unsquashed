@@ -40,9 +40,9 @@ Main_py=../Crystal/Main.py
 Main_py=../Topaz/Main.py
 Main_py=../Marble/Main.py
 Main_py=../Onyx/Main.py
-Main_py=../Jasper/Main.py
-Main_py=../Sapphire/Main.py
 Main_py=../Diamond/Main.py
+Main_py=../Sapphire/Main.py
+Main_py=../Jasper/Main.py
 
 show=2
 all=false
