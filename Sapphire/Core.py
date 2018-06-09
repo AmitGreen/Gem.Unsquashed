@@ -17,6 +17,7 @@ def gem():
     require_gem('Gem.Traceback')
     require_gem('Pearl.ActionWord')
     require_gem('Pearl.CreateMeta')
+    require_gem('Pearl.Nub')
     require_gem('Pearl.Tokenizer')
 
 
@@ -30,11 +31,11 @@ def gem():
     from Gem import produce_conjure_unique_triple, produce_conjure_unique_triple__312
     from Gem import program_exit, read_text_from_path, return_self, slice_all, StringOutput
     from Pearl import conjure_action_word, conjure_ActionWord_WithNewlines
-    from Pearl import conjure_action_word__ends_in_newline
+    from Pearl import conjure_action_word__ends_in_newline, conjure_nub
     from Pearl import initialize_action_word__Meta, la, lookup_adjusted_meta, lookup_normal_token
     from Pearl import parse_context, produce_conjure_action_word, provide_normal_token
-    from Pearl import qd, qi, qj, qk, ql, qn, qs
-    from Pearl import store_adjusted_meta, raise_unknown_line, wd, wd0, wd1, wi, wj, wk, wn, ws, z_initialize
+    from Pearl import qd, qi, qj, qk, ql, qn, qs, static_conjure_nub, store_adjusted_meta
+    from Pearl import raise_unknown_line, wd, wd0, wd1, wi, wj, wk, wn, ws, z_initialize
 
 
     share(
@@ -75,6 +76,7 @@ def gem():
         'conjure_action_word',                      conjure_action_word,
         'conjure_action_word__ends_in_newline',     conjure_action_word__ends_in_newline,
         'conjure_ActionWord_WithNewlines',          conjure_ActionWord_WithNewlines,
+        'conjure_nub',                              conjure_nub,
         'initialize_action_word__Meta',             initialize_action_word__Meta,
         'la',                                       la,
         'lookup_adjusted_meta',                     lookup_adjusted_meta,
@@ -89,6 +91,7 @@ def gem():
         'qn',                                       qn,
         'qs',                                       qs,
         'raise_unknown_line',                       raise_unknown_line,
+        'static_conjure_nub',                       static_conjure_nub,
         'store_adjusted_meta',                      store_adjusted_meta,
         'wd0',                                      wd0,
         'wd1',                                      wd1,

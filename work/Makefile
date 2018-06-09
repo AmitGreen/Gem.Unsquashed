@@ -95,6 +95,7 @@ PEARL_FILES = \
 	../Pearl/ActionWord.py \
     ../Pearl/Cache.py ../Pearl/Comment.py ../Pearl/ConjureTreeComment.py ../Pearl/Core.py ../Pearl/CreateMeta.py \
     ../Pearl/Line.py \
+    ../Pearl/Nub.py \
     ../Pearl/TokenCache.py ../Pearl/Tokenizer.py ../Pearl/Token.py
 
 QUARTZ_FILES = \
@@ -125,7 +126,6 @@ SAPPHIRE_FILES = \
     ../Sapphire/LineMarker.py \
     ../Sapphire/Main.py ../Sapphire/ManyExpression.py ../Sapphire/ManyFrill.py ../Sapphire/MemberExpression.py \
         ../Sapphire/Method.py ../Sapphire/MosiacDefinition.py ../Sapphire/MosiacSymbol.py \
-    ../Sapphire/Nub.py \
     ../Sapphire/Parse.py \
         ../Sapphire/Parse1.py ../Sapphire/Parse1Atom.py ../Sapphire/Tokenize1Header.py ../Sapphire/Parse1Call.py \
         ../Sapphire/Parse1Complex.py ../Sapphire/Parse1Expression.py ../Sapphire/Parse1ExpressionStatement.py \
@@ -231,14 +231,14 @@ clean:
 	rm -f   h4f.py h4s.py h4t.py h4w.py
 	rm -f   hat.py hbe.py hby.py hca.py hcb.py hcc.py hcm.py hco.py hcr.py hcs.py hd.py hdh.py hdt.py hel.py
 	rm -f   hk.py hkc.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
-	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hn.py hpr.py hpt.py hs.py
+	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpr.py hpt.py hs.py
 	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f j0p.py j1p.py jb.py jc.py jma.py jmc.py jp.py
 	rm -f l.txt lr.txt
 	rm -f m map.py mc.py md.py mm.py mn.py m.txt
 	rm -f o.py oc.py od.py oe.py om.py
-	rm -f pa2.py pat.py paw.py pca.py pcc.py pcr.py pcm.py pj.py pk.py pkc.py pl.py ps.py ps3.py pz.py
+	rm -f pa2.py pat.py paw.py pca.py pcc.py pcr.py pcm.py pel.py pj.py pk.py pkc.py pl.py pn.py ps.py ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f sl.py so.py ssio.py sy.py
@@ -385,7 +385,6 @@ links:
 	ln -s ../Sapphire/Method.py                         hmo.py
 	ln -s ../Sapphire/ManyExpression.py                 hmx.py
 	ln -s ../Sapphire/MosiacSymbol.py                   hmy.py
-	ln -s ../Sapphire/Nub.py                            hn.py
 	ln -s ../Sapphire/Priority.py                       hpr.py
 	ln -s ../Sapphire/Pattern.py                        hpt.py
 	ln -s ../Sapphire/Suite.py                          hs.py
@@ -429,10 +428,12 @@ links:
 	ln -s ../Pearl/CreateMeta.py                        pcc.py
 	ln -s ../Pearl/Comment.py                           pcm.py
 	ln -s ../Pearl/Core.py                              pcr.py
+	ln -s ../Pearl/Elemental.py                         pel.py
 	ln -s ../Pearl/ConjureTreeComment.py                pj.py
 	ln -s ../Pearl/Token.py                             pk.py
 	ln -s ../Pearl/TokenCache.py                        pkc.py
 	ln -s ../Pearl/Line.py                              pl.py
+	ln -s ../Pearl/Nub.py                               pn.py
 	ln -s ../Gem/PortrayString.py                       ps.py
 	ln -s ../Junk/PortrayString_3.py                    ps3.py
 	ln -s ../Pearl/Tokenizer.py                         pz.py
