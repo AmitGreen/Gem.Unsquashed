@@ -1,9 +1,10 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.Indentation')
 def gem():
     require_gem('Sapphire.Atom')
+    require_gem('Sapphire.TokenCache')
 
 
     next_indentation_cache   = {}

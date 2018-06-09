@@ -1,10 +1,10 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
-@gem('Sapphire.ActionWord')
+@gem('Pearl.ActionWord')
 def gem():
-    require_gem('Sapphire.CreateMeta')
-    require_gem('Sapphire.TokenCache')
+    require_gem('Pearl.CreateMeta')
+    require_gem('Pearl.TokenCache')
 
 
     conjure_ActionWord_WithNewlines = Shared.conjure_ActionWord_WithNewlines     #   Due to 'privileged'
@@ -25,7 +25,7 @@ def gem():
         t.newlines        = newlines
 
 
-    @share
+    @export
     def conjure_action_word(full, s):
         assert s[-1] != '\n'
 
@@ -51,7 +51,7 @@ def gem():
                )
 
 
-    @share
+    @export
     def conjure_action_word__ends_in_newline(full, s):
         assert s[-1] == '\n'
 
@@ -72,7 +72,7 @@ def gem():
                )
 
 
-    @share
+    @export
     def initialize_action_word__Meta(many):
         provide_action_word__Meta = action_word__Meta__cache.setdefault
 
@@ -82,7 +82,7 @@ def gem():
         assert length(many) == length(action_word__Meta__cache)
 
 
-    @share
+    @export
     @privileged
     def produce_conjure_action_word(name, Meta, produce_ends_in_newline = false):
         assert type(name)                    is String

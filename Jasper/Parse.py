@@ -9,6 +9,6 @@ def gem():
 
     @share
     def parse_java(path, show = 0, test = 0):
-        line("parse_java(path<%s>, show<%d>, test<%d>)", path, show, test);
+        #line("parse_java(path<%s>, show<%d>, test<%d>)", path, show, test);
 
-        [data, data_lines, data_many] = parse1_java_from_path(path)
+        [data, data_lines, data_many] = parse_java_from_path(path)

@@ -59,6 +59,7 @@ def gem():
         not_equal           = NAME('not_equal',           '!=')
         percent_sign        = NAME('percent_sign',        '%')
         plus_sign           = NAME('plus_sign',           '+')
+        semicolon           = NAME('semicolon',           ';')
         slash_sign          = NAME('slash_sign',          '/')
         star_sign           = NAME('star',                '*')
         tilde_sign          = NAME('tilde',               '~')
@@ -69,9 +70,15 @@ def gem():
 
 
         #   [(
-        right_brace             = NAME('right_brace',             '}')
-        right_parenthesis       = NAME('right_parenthesis',       ')')
-        right_square_bracket    = NAME('right_square_bracket',    ']')
+        right_brace          = NAME('right_brace',             '}')
+        right_parenthesis    = NAME('right_parenthesis',       ')')
+        right_square_bracket = NAME('right_square_bracket',    ']')
+
+
+        #
+        #   More complicated patterns
+        #
+        ow_semicolon = NAME('ow_semicolon',   ow + semicolon)
 
 
         #
@@ -80,7 +87,20 @@ def gem():
         MATCH(
             'line_match',
             (
-                keyword_import + w + name + G('newline', LINEFEED + END_OF_PATTERN)
+                  ow
+                + P(
+                      G('keyword', keyword_import) + w
+                  )
+                + Q(
+                      'comment_newline',
+                      P(
+                            slash_sign
+                          + slash_sign
+                          + G('comment', ZERO_OR_MORE(ow + ONE_OR_MORE(NOT_ANY_OF('\x00-\x1F', ' '))))
+                          + ow
+                      )
+                      + G('newline', LINEFEED + END_OF_PATTERN)
+                  )
             ),
         )
 

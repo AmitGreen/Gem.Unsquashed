@@ -1,10 +1,11 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Pearl.Core')
 def gem():
     require_gem('Gem.Absent')
     require_gem('Gem.Cache')
+    require_gem('Gem.Cache2')
     require_gem('Gem.Cadence')
     require_gem('Gem.Exception')
     require_gem('Gem.Global')
@@ -13,7 +14,7 @@ def gem():
 
 
     from Gem import cadence_constructing, cadence_entered, cadence_exception, cadence_exited, cadence_initialized
-    from Gem import cadence_reuse, caller_frame_1, Exception, gem_global
+    from Gem import cadence_reuse, caller_frame_1, create_cache, Exception, gem_global
     from Gem import path_basename,  produce_cache_functions, produce_conjure_by_name, slice_all
 
 
@@ -27,6 +28,7 @@ def gem():
         #   Functions
         #
         'caller_frame_1',               caller_frame_1,
+        'create_cache',                 create_cache,
         'path_basename',                path_basename,
         'produce_cache_functions',      produce_cache_functions,
         'produce_conjure_by_name',      produce_conjure_by_name,

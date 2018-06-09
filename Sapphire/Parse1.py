@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.Parse1')
 def gem():
@@ -53,7 +53,6 @@ def gem():
                              'while'    : parse1_statement_while,
                              'with'     : parse1_statement_with,
                          }.get
-
 
 
     @share

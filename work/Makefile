@@ -92,9 +92,10 @@ ONYX_FILES = \
     ../Onyx/Main.py \
 
 PEARL_FILES = \
-    ../Pearl/Comment.py ../Pearl/ConjureTreeComment.py ../Pearl/Core.py \
+	../Pearl/ActionWord.py \
+    ../Pearl/Cache.py ../Pearl/Comment.py ../Pearl/ConjureTreeComment.py ../Pearl/Core.py ../Pearl/CreateMeta.py \
     ../Pearl/Line.py \
-    ../Pearl/Token.py ../Pearl/Tokenizer.py
+    ../Pearl/TokenCache.py ../Pearl/Tokenizer.py ../Pearl/Token.py
 
 QUARTZ_FILES = \
 	../Quartz/Parse1.py \
@@ -108,7 +109,7 @@ QUARTZ_FILES = \
     #
 
 SAPPHIRE_FILES = \
-    ../Sapphire/ActionWord.py ../Sapphire/Atom.py \
+    ../Sapphire/Atom.py \
     ../Sapphire/BinaryExpression.py ../Sapphire/BookcaseDualExpression.py ../Sapphire/BookcaseDualStatement.py \
         ../Sapphire/BookcaseExpression.py ../Sapphire/BookcaseKeywordStatement.py \
         ../Sapphire/BookcaseKeywordDualStatement.py ../Sapphire/BookcaseManyExpression.py \
@@ -183,7 +184,6 @@ TREMOLITE_FILES = \
 SARDONYX_FILES = \
     ../Sardonyx/Boot.py
 
-
 WORK_FILES = Makefile
 
 FILES = \
@@ -217,7 +217,7 @@ clean:
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
 	rm -f a.py ab.py ac.py ag.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
-	rm -f ca.py ca2.py cd.py ce.py co.py
+	rm -f ca.py ca2.py cd.py ce.py cr.py
 	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
@@ -229,25 +229,25 @@ clean:
 	rm -f   h2f.py h2p.py h2ps.py h2s.py h2s.py h2t.py h2w.py
 	rm -f   h3e.py h3f.py h3p.py h3s.py h3t.py h3w.py
 	rm -f   h4f.py h4s.py h4t.py h4w.py
-	rm -f   hat.py haw.py hbe.py hby.py hca.py hcb.py hcc.py hcm.py hco.py hcr.py hcs.py hd.py hdh.py hdt.py hel.py
-	rm -f   hk.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
-	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hn.py hpa.py hpr.py hs.py
-	rm -f   htc.py hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
+	rm -f   hat.py hbe.py hby.py hca.py hcb.py hcc.py hcm.py hco.py hcr.py hcs.py hd.py hdh.py hdt.py hel.py
+	rm -f   hk.py hkc.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
+	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hn.py hpr.py hpt.py hs.py
+	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
 	rm -f j0p.py j1p.py jb.py jc.py jma.py jmc.py jp.py
 	rm -f l.txt lr.txt
 	rm -f m map.py mc.py md.py mm.py mn.py m.txt
 	rm -f o.py oc.py od.py oe.py om.py
-	rm -f pa.py pa2.py pco.py pcm.py pj.py pk.py pl.py ps.py ps3.py pz.py
+	rm -f pa2.py pat.py paw.py pca.py pcc.py pcr.py pcm.py pj.py pk.py pkc.py pl.py ps.py ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f sl.py so.py ssio.py sy.py
-	rm -f t.py t1.py tb.py tcm.py th.py tco.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
+	rm -f t.py t1.py tb.py tcm.py th.py tcr.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
 	rm -f vm.py
-	rm -f ybd.py ybi.py ybq.py yco.py ycr.py yd7.py yg.py yki.py ykn.py
+	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
-	rm -f zco.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
+	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
 	rm -f   zgn.gpy zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
 	rm -f   zm.py zo4.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
 
@@ -279,7 +279,7 @@ links:
 	ln -s ../Gem/Cache2.py                              ca2.py
 	ln -s ../Gem/Cadence.py                             cd.py
 	ln -s ../Gem/CatchException.py                      ce.py
-	ln -s ../Gem/Core.py                                co.py
+	ln -s ../Gem/Core.py                                cr.py
 	ln -s ../Diamond/Development.py                     d.py
 	ln -s ../Diamond/Core.py                            dc.py
 	ln -s ../Dravite/Euclid.py                          de.py
@@ -349,7 +349,6 @@ links:
 	ln -s ../Sapphire/QuadrupleToken.py                 h4t.py
 	ln -s ../Sapphire/QuadrupleTwig.py                  h4w.py
 	ln -s ../Sapphire/Atom.py                           hat.py
-	ln -s ../Sapphire/ActionWord.py                     haw.py
 	ln -s ../Sapphire/BinaryExpression.py               hbe.py
 	ln -s ../Sapphire/BuildSymbolTable.py               hby.py
 	ln -s ../Sapphire/Cache.py                          hca.py
@@ -364,6 +363,7 @@ links:
 	ln -s ../Sapphire/DumpToken.py                      hdt.py
 	ln -s ../Sapphire/Elemental.py                      hel.py
 	ln -s ../Sapphire/BookcaseExpression.py             hk.py
+	ln -s ../Sapphire/TokenCache.py                     hkc.py
 	ln -s ../Sapphire/BookcaseDualExpression.py         hkd.py
 	ln -s ../Sapphire/BookcaseDualStatement.py          hkds.py
 	ln -s ../Sapphire/BookcaseManyFrill.py              hkf.py
@@ -386,10 +386,9 @@ links:
 	ln -s ../Sapphire/ManyExpression.py                 hmx.py
 	ln -s ../Sapphire/MosiacSymbol.py                   hmy.py
 	ln -s ../Sapphire/Nub.py                            hn.py
-	ln -s ../Sapphire/Pattern.py                        hpa.py
 	ln -s ../Sapphire/Priority.py                       hpr.py
+	ln -s ../Sapphire/Pattern.py                        hpt.py
 	ln -s ../Sapphire/Suite.py                          hs.py
-	ln -s ../Sapphire/TokenCache.py                     htc.py
 	ln -s ../Sapphire/TupleOfExpression.py              hto.py
 	ln -s ../Sapphire/Tree.py                           htr.py
 	ln -s ../Sapphire/TokenTuple.py                     htt.py
@@ -423,12 +422,16 @@ links:
 	ln -s ../Onyx/Development.py                        od.py
 	ln -s ../Onyx/ElasticSearch.py                      oe.py
 	ln -s ../Onyx/Main.py                               om.py
-	ln -s ../Gem/Path.py                                pa.py
 	ln -s ../Gem/Path2.py                               pa2.py
+	ln -s ../Gem/Path.py                                pat.py
+	ln -s ../Pearl/ActionWord.py                        paw.py
+	ln -s ../Pearl/Cache.py                             pca.py
+	ln -s ../Pearl/CreateMeta.py                        pcc.py
 	ln -s ../Pearl/Comment.py                           pcm.py
-	ln -s ../Pearl/Core.py                              pco.py
+	ln -s ../Pearl/Core.py                              pcr.py
 	ln -s ../Pearl/ConjureTreeComment.py                pj.py
 	ln -s ../Pearl/Token.py                             pk.py
+	ln -s ../Pearl/TokenCache.py                        pkc.py
 	ln -s ../Pearl/Line.py                              pl.py
 	ln -s ../Gem/PortrayString.py                       ps.py
 	ln -s ../Junk/PortrayString_3.py                    ps3.py
@@ -449,7 +452,7 @@ links:
 	ln -s test.py                                       t1.py
 	ln -s ../Gem/Traceback.py                           tb.py
 	ln -s ../Tremolite/CreateMatch.py                   tcm.py
-	ln -s ../Tremolite/Core.py                          tco.py
+	ln -s ../Tremolite/Core.py                          tcr.py
 	ln -s ../Gem/Thread.py                              th.py
 	ln -s ../Tremolite/LicenseTemplate.txt              tlp.txt
 	ln -s ../Tremolite/Main.py                          tma.py
@@ -465,8 +468,8 @@ links:
 	ln -s ../Crystal/Board.py                           ybd.py
 	ln -s ../Crystal/ChessBishop.py                     ybi.py
 	ln -s ../Crystal/BlankSquare.py                     ybq.py
-	ln -s ../Crystal/Core.py                            yco.py
-	ln -s ../Crystal/CardRoot.py                        ycr.py
+	ln -s ../Crystal/CardRoot.py                        ycb.py
+	ln -s ../Crystal/Core.py                            ycr.py
 	ln -s ../Crystal/Deck_7.py                          yd7.py
 	ln -s ../Crystal/Game.py                            yg.py
 	ln -s ../Crystal/ChessKing.py                       yki.py
@@ -479,7 +482,7 @@ links:
 	ln -s ../Crystal/ChessPawn.py                       yw.py
 	ln -s ../Crystal/FrozenChessCard.py                 yzc.py
 	ln -s ../Crystal/FrozenCardRoot.py                  yzr.py
-	ln -s ../Topaz/Core.py                              zco.py
+	ln -s ../Topaz/Core.py                              zcr.py
 	ln -s ../Topaz/CacheSupport.py                      zcs.py
 	ln -s ../Topaz/Drove.py                             zd.py
 	ln -s ../Topaz/ExceptionChain.py                    ze.py

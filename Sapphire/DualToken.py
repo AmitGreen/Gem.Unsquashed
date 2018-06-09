@@ -1,11 +1,13 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.DualToken')
 def gem():
     require_gem('Sapphire.Comment')
+    require_gem('Sapphire.CreateMeta')
     require_gem('Sapphire.DualTwig')
     require_gem('Sapphire.Elemental')
+    require_gem('Sapphire.TokenCache')
     require_gem('Sapphire.Whitespace')
 
 

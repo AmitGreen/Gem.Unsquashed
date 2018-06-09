@@ -1,8 +1,11 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.QuadrupleToken')
 def gem():
+    require_gem('Sapphire.CreateMeta')
+
+
     conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged
     lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   Due to privileged
     lookup_line_marker   = Shared.lookup_line_marker        #   Due to privileged

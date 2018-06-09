@@ -1,12 +1,13 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.TripleToken')
 def gem():
-    require_gem('Sapphire.Whitespace')
+    require_gem('Sapphire.CreateMeta')
+    require_gem('Sapphire.DualStatement')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.TripleTwig')
-    require_gem('Sapphire.DualStatement')
+    require_gem('Sapphire.Whitespace')
 
 
     conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged

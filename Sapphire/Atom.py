@@ -1,12 +1,10 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.Atom')
 def gem():
     require_gem('Sapphire.ClassOrder')
-    require_gem('Sapphire.CreateMeta')
     require_gem('Sapphire.Method')
-    require_gem('Sapphire.TokenCache')
 
 
     lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   due to privileged

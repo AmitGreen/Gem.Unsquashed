@@ -1,9 +1,8 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.BookcaseDualExpression')
 def gem():
-    require_gem('Sapphire.CreateMeta')
     require_gem('Sapphire.Elemental')
     require_gem('Sapphire.TripleFrill')
 
