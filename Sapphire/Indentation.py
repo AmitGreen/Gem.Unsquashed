@@ -12,7 +12,7 @@ def gem():
     provide_next_indentation = next_indentation_cache.setdefault
 
 
-    class Indentation(SapphireToken):
+    class Indentation(PearlToken):
         __slots__ = ((
             'total',                    #   Integer {> 0}
         ))

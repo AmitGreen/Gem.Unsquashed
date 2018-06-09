@@ -15,7 +15,7 @@ def gem():
         t.newlines = newlines
 
 
-    class LineMarker(SapphireToken):
+    class LineMarker(PearlToken):
         class_order                             = CLASS_ORDER__LINE_MARKER
         display_name                            = 'line-marker'
         ends_in_newline                         = true

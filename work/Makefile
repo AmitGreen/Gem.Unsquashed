@@ -92,9 +92,10 @@ ONYX_FILES = \
     ../Onyx/Main.py \
 
 PEARL_FILES = \
-	../Pearl/ActionWord.py \
+	../Pearl/ActionWord.py ../Pearl/Atom.py \
     ../Pearl/Cache.py ../Pearl/Comment.py ../Pearl/ConjureTreeComment.py ../Pearl/Core.py ../Pearl/CreateMeta.py \
     ../Pearl/Line.py \
+    ../Pearl/Method.py \
     ../Pearl/Nub.py \
     ../Pearl/TokenCache.py ../Pearl/Tokenizer.py ../Pearl/Token.py
 
@@ -238,7 +239,8 @@ clean:
 	rm -f l.txt lr.txt
 	rm -f m map.py mc.py md.py mm.py mn.py m.txt
 	rm -f o.py oc.py od.py oe.py om.py
-	rm -f pa2.py pat.py paw.py pca.py pcc.py pcr.py pcm.py pel.py pj.py pk.py pkc.py pl.py pn.py ps.py ps3.py pz.py
+	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pcr.py pcm.py pel.py
+	rm -f   pj.py pk.py pkc.py pl.py pmo.py pn.py ps.py ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f sl.py so.py ssio.py sy.py
@@ -422,7 +424,8 @@ links:
 	ln -s ../Onyx/ElasticSearch.py                      oe.py
 	ln -s ../Onyx/Main.py                               om.py
 	ln -s ../Gem/Path2.py                               pa2.py
-	ln -s ../Gem/Path.py                                pat.py
+	ln -s ../Pearl/Atom.py                              pat.py
+	ln -s ../Gem/Path.py                                path.py
 	ln -s ../Pearl/ActionWord.py                        paw.py
 	ln -s ../Pearl/Cache.py                             pca.py
 	ln -s ../Pearl/CreateMeta.py                        pcc.py
@@ -433,6 +436,7 @@ links:
 	ln -s ../Pearl/Token.py                             pk.py
 	ln -s ../Pearl/TokenCache.py                        pkc.py
 	ln -s ../Pearl/Line.py                              pl.py
+	ln -s ../Pearl/Method.py                            pmo.py
 	ln -s ../Pearl/Nub.py                               pn.py
 	ln -s ../Gem/PortrayString.py                       ps.py
 	ln -s ../Junk/PortrayString_3.py                    ps3.py
