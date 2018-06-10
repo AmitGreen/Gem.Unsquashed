@@ -232,13 +232,6 @@ def gem():
         keyword                          = 'is'
 
 
-    class KeywordImport(KeywordAndOperatorBase):
-        __slots__    = (())
-        class_order  = CLASS_ORDER__NORMAL_TOKEN
-        display_name = 'import'
-        keyword      = 'import'
-
-
     class KeywordNot(KeywordAndOperatorBase):
         __slots__      = (())
         class_order    = CLASS_ORDER__NORMAL_TOKEN
@@ -928,7 +921,6 @@ def gem():
     conjure_keyword_for      = produce_conjure_action_word('keyword_for',      KeywordFor)
     conjure_keyword_from     = produce_conjure_action_word('keyword_from',     KeywordFrom)
     conjure_keyword_if       = produce_conjure_action_word('keyword_if',       KeywordIf)
-    conjure_keyword_import   = produce_conjure_action_word('keyword_import',   KeywordImport)
     conjure_keyword_is       = produce_conjure_action_word('keyword_is',       KeywordIs)
     conjure_star_sign        = produce_conjure_action_word('star_sign',        OperatorStarSign)
 
@@ -1254,7 +1246,6 @@ def gem():
         'conjure_keyword_from',                             conjure_keyword_from,
         'conjure_keyword_function',                         conjure_keyword_function,
         'conjure_keyword_if',                               conjure_keyword_if,
-        'conjure_keyword_import',                           conjure_keyword_import,
         'conjure_keyword_in',                               conjure_keyword_in,
         'conjure_keyword_in__ends_in_newline',              conjure_keyword_in__ends_in_newline,
         'conjure_keyword_is',                               conjure_keyword_is,

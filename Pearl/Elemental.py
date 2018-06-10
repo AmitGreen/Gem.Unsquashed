@@ -79,3 +79,19 @@ def gem():
 
 
         display_token = display_short_token
+
+
+    @export
+    class KeywordImport(KeywordAndOperatorBase):
+        __slots__    = (())
+        class_order  = CLASS_ORDER__NORMAL_TOKEN
+        display_name = 'import'
+        keyword      = 'import'
+
+
+    conjure_keyword_import   = produce_conjure_action_word('keyword_import',   KeywordImport)
+
+
+    export(
+        'conjure_keyword_import',   conjure_keyword_import,
+    )

@@ -35,9 +35,10 @@ def gem():
     from Gem import produce_conjure_unique_triple, produce_conjure_unique_triple__312
     from Gem import program_exit, read_text_from_path, return_self, slice_all, StringOutput
     from Pearl import CLASS_ORDER__NORMAL_TOKEN, CLASS_ORDER__PYTHON_END, CLASS_ORDER__PYTHON_START
-    from Pearl import conjure_action_word, conjure_action_word__ends_in_newline, conjure_nub
+    from Pearl import conjure_action_word, conjure_action_word__ends_in_newline, conjure_keyword_import, conjure_nub
     from Pearl import conjure_ActionWord_WithNewlines
     from Pearl import initialize_action_word__Meta, is_name__0, KeywordAndOperatorBase
+    from Pearl import KeywordImport
     from Pearl import la, lookup_adjusted_meta, lookup_normal_token, order__s
     from Pearl import parse_context, PearlToken, produce_conjure_action_word, provide_normal_token
     from Pearl import qd, qi, qj, qk, ql, qn, qs, static_conjure_nub, store_adjusted_meta
@@ -54,6 +55,7 @@ def gem():
         #   Imported types (Pearl)
         #
         'KeywordAndOperatorBase',   KeywordAndOperatorBase,
+        'KeywordImport',            KeywordImport,
         'PearlToken',               PearlToken,
 
         #
@@ -88,6 +90,7 @@ def gem():
         'conjure_action_word',                      conjure_action_word,
         'conjure_action_word__ends_in_newline',     conjure_action_word__ends_in_newline,
         'conjure_ActionWord_WithNewlines',          conjure_ActionWord_WithNewlines,
+        'conjure_keyword_import',                   conjure_keyword_import,
         'conjure_nub',                              conjure_nub,
         'initialize_action_word__Meta',             initialize_action_word__Meta,
         'is_name__0',                               is_name__0,
