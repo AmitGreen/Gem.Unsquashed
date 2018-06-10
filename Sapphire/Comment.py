@@ -3,7 +3,6 @@
 #
 @gem('Sapphire.Comment')
 def gem():
-    require_gem('Sapphire.ClassOrder')
     require_gem('Sapphire.Indentation')
 
 

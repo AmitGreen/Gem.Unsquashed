@@ -3,7 +3,6 @@
 #
 @gem('Sapphire.Atom')
 def gem():
-    require_gem('Sapphire.ClassOrder')
     require_gem('Sapphire.Method')
 
 
