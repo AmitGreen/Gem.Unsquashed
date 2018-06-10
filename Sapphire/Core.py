@@ -18,6 +18,7 @@ def gem():
     require_gem('Pearl.ActionWord')
     require_gem('Pearl.Atom')
     require_gem('Pearl.CreateMeta')
+    require_gem('Pearl.Elemental')
     require_gem('Pearl.Method')
     require_gem('Pearl.Nub')
     require_gem('Pearl.Tokenizer')
@@ -34,7 +35,8 @@ def gem():
     from Gem import program_exit, read_text_from_path, return_self, slice_all, StringOutput
     from Pearl import conjure_action_word, conjure_ActionWord_WithNewlines
     from Pearl import conjure_action_word__ends_in_newline, conjure_nub
-    from Pearl import initialize_action_word__Meta, is_name__0, la, lookup_adjusted_meta, lookup_normal_token, order__s
+    from Pearl import initialize_action_word__Meta, is_name__0, KeywordAndOperatorBase
+    from Pearl import la, lookup_adjusted_meta, lookup_normal_token, order__s
     from Pearl import parse_context, PearlToken, produce_conjure_action_word, provide_normal_token
     from Pearl import qd, qi, qj, qk, ql, qn, qs, static_conjure_nub, store_adjusted_meta
     from Pearl import raise_unknown_line, wd, wd0, wd1, wi, wj, wk, wn, ws, z_initialize
@@ -49,7 +51,8 @@ def gem():
         #
         #   Imported types (Pearl)
         #
-        'PearlToken',       PearlToken,
+        'KeywordAndOperatorBase',   KeywordAndOperatorBase,
+        'PearlToken',               PearlToken,
 
         #
         #   Imported functions (Gem)

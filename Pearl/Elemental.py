@@ -3,12 +3,11 @@
 #
 @gem('Pearl.Elemental')
 def gem():
-    require_gem('Sapphire.ClassOrder')
-    require_gem('Sapphire.Tree')
+    require_gem('Pearl.Atom')
 
 
     @export
-    class KeywordAndOperatorBase(SapphireToken):
+    class KeywordAndOperatorBase(PearlToken):
         is_all_index                               = false
         is_arguments_0                             = false
         is__arguments_0__or__left_parenthesis      = false
