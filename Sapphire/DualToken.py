@@ -3,6 +3,7 @@
 #
 @gem('Sapphire.DualToken')
 def gem():
+    require_gem('Sapphire.ClassOrder')
     require_gem('Sapphire.Comment')
     require_gem('Sapphire.CreateMeta')
     require_gem('Sapphire.DualTwig')

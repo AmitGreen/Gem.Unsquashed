@@ -34,18 +34,9 @@ def gem():
     from Gem import produce_conjure_quadruple__4123
     from Gem import produce_conjure_unique_triple, produce_conjure_unique_triple__312
     from Gem import program_exit, read_text_from_path, return_self, slice_all, StringOutput
-    from Pearl import CLASS_ORDER__ARGUMENT_0, CLASS_ORDER__BINARY_EXPRESSION, CLASS_ORDER__BOOKCASE_DUAL_EXPRESSION
-    from Pearl import CLASS_ORDER__BOOKCASE_EXPRESSION, CLASS_ORDER__BOOKCASE_MANY_EXPRESSION
-    from Pearl import CLASS_ORDER__BOOKCASE_MANY_FRILL, CLASS_ORDER__BOOKCASE_TRIPLE_EXPRESSION
-    from Pearl import CLASS_ORDER__CALL_STATEMENT, CLASS_ORDER__COMMENT_LINE, CLASS_ORDER__COMMENT_LINE__STRING
-    from Pearl import CLASS_ORDER__DEFINITION_HEADER, CLASS_ORDER__DUAL_TWIG, CLASS_ORDER__EMPTY_LINE
-    from Pearl import CLASS_ORDER__FRILL_2, CLASS_ORDER__FRILL_MANY, CLASS_ORDER__INDENTATION
-    from Pearl import CLASS_ORDER__LINE_MARKER, CLASS_ORDER__MANY_EXPRESSION, CLASS_ORDER__MEMBER_EXPRESSION
-    from Pearl import CLASS_ORDER__NORMAL_TOKEN, CLASS_ORDER__PARAMETERS_0, CLASS_ORDER__QUADRUPLE_TWIG
-    from Pearl import CLASS_ORDER__TRIPLE_EXPRESSION, CLASS_ORDER__TRIPLE_TWIG, CLASS_ORDER__TUPLE
-    from Pearl import CLASS_ORDER__UNARY_EXPRESSION
-    from Pearl import conjure_action_word, conjure_ActionWord_WithNewlines
-    from Pearl import conjure_action_word__ends_in_newline, conjure_nub
+    from Pearl import CLASS_ORDER__NORMAL_TOKEN, CLASS_ORDER__PYTHON_END, CLASS_ORDER__PYTHON_START
+    from Pearl import conjure_action_word, conjure_action_word__ends_in_newline, conjure_nub
+    from Pearl import conjure_ActionWord_WithNewlines
     from Pearl import initialize_action_word__Meta, is_name__0, KeywordAndOperatorBase
     from Pearl import la, lookup_adjusted_meta, lookup_normal_token, order__s
     from Pearl import parse_context, PearlToken, produce_conjure_action_word, provide_normal_token
@@ -138,31 +129,8 @@ def gem():
         #
         #   Values (Pearl)
         #
-        'CLASS_ORDER__ARGUMENT_0',                  CLASS_ORDER__ARGUMENT_0,
-        'CLASS_ORDER__BINARY_EXPRESSION',           CLASS_ORDER__BINARY_EXPRESSION,
-        'CLASS_ORDER__BOOKCASE_DUAL_EXPRESSION',    CLASS_ORDER__BOOKCASE_DUAL_EXPRESSION,
-        'CLASS_ORDER__BOOKCASE_EXPRESSION',         CLASS_ORDER__BOOKCASE_EXPRESSION,
-        'CLASS_ORDER__BOOKCASE_MANY_EXPRESSION',    CLASS_ORDER__BOOKCASE_MANY_EXPRESSION,
-        'CLASS_ORDER__BOOKCASE_MANY_FRILL',         CLASS_ORDER__BOOKCASE_MANY_FRILL,
-        'CLASS_ORDER__BOOKCASE_TRIPLE_EXPRESSION',  CLASS_ORDER__BOOKCASE_TRIPLE_EXPRESSION,
-        'CLASS_ORDER__CALL_STATEMENT',              CLASS_ORDER__CALL_STATEMENT,
-        'CLASS_ORDER__COMMENT_LINE',                CLASS_ORDER__COMMENT_LINE,
-        'CLASS_ORDER__COMMENT_LINE__STRING',        CLASS_ORDER__COMMENT_LINE__STRING,
-        'CLASS_ORDER__DEFINITION_HEADER',           CLASS_ORDER__DEFINITION_HEADER,
-        'CLASS_ORDER__DUAL_TWIG',                   CLASS_ORDER__DUAL_TWIG,
-        'CLASS_ORDER__EMPTY_LINE',                  CLASS_ORDER__EMPTY_LINE,
-        'CLASS_ORDER__FRILL_2',                     CLASS_ORDER__FRILL_2,
-        'CLASS_ORDER__FRILL_MANY',                  CLASS_ORDER__FRILL_MANY,
-        'CLASS_ORDER__INDENTATION',                 CLASS_ORDER__INDENTATION,
-        'CLASS_ORDER__LINE_MARKER',                 CLASS_ORDER__LINE_MARKER,
-        'CLASS_ORDER__MANY_EXPRESSION',             CLASS_ORDER__MANY_EXPRESSION,
-        'CLASS_ORDER__MEMBER_EXPRESSION',           CLASS_ORDER__MEMBER_EXPRESSION,
         'CLASS_ORDER__NORMAL_TOKEN',                CLASS_ORDER__NORMAL_TOKEN,
-        'CLASS_ORDER__PARAMETERS_0',                CLASS_ORDER__PARAMETERS_0,
-        'CLASS_ORDER__QUADRUPLE_TWIG',              CLASS_ORDER__QUADRUPLE_TWIG,
-        'CLASS_ORDER__TRIPLE_EXPRESSION',           CLASS_ORDER__TRIPLE_EXPRESSION,
-        'CLASS_ORDER__TRIPLE_TWIG',                 CLASS_ORDER__TRIPLE_TWIG,
-        'CLASS_ORDER__TUPLE',                       CLASS_ORDER__TUPLE,
-        'CLASS_ORDER__UNARY_EXPRESSION',            CLASS_ORDER__UNARY_EXPRESSION,
+        'CLASS_ORDER__PYTHON_END',                  CLASS_ORDER__PYTHON_END,
+        'CLASS_ORDER__PYTHON_START',                CLASS_ORDER__PYTHON_START,
         'parse_context',                            parse_context,
     )
