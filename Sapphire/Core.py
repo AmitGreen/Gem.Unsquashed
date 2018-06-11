@@ -35,14 +35,14 @@ def gem():
     from Gem import produce_conjure_unique_triple, produce_conjure_unique_triple__312
     from Gem import program_exit, read_text_from_path, return_self, slice_all, StringOutput
     from Pearl import CLASS_ORDER__NORMAL_TOKEN, CLASS_ORDER__PYTHON_END, CLASS_ORDER__PYTHON_START
-    from Pearl import conjure_action_word, conjure_action_word__ends_in_newline, conjure_keyword_import, conjure_nub
-    from Pearl import conjure_ActionWord_WithNewlines
-    from Pearl import initialize_action_word__Meta, is_name__0, KeywordAndOperatorBase
-    from Pearl import KeywordImport
-    from Pearl import la, lookup_adjusted_meta, lookup_normal_token, order__s
-    from Pearl import parse_context, PearlToken, produce_conjure_action_word, provide_normal_token
+    from Pearl import conjure_action_word, conjure_action_word__ends_in_newline, conjure_keyword_import, conjure_name
+    from Pearl import conjure_nub, conjure_ActionWord_WithNewlines
+    from Pearl import Identifier, initialize_action_word__Meta, is_name__0, KeywordAndOperatorBase
+    from Pearl import KeywordImport, la, lookup_adjusted_meta, lookup_normal_token, mutate__self, order__s
+    from Pearl import parse_context, PearlToken, produce_conjure_action_word, produce_conjure_atom
+    from Pearl import provide_normal_token
     from Pearl import qd, qi, qj, qk, ql, qn, qs, static_conjure_nub, store_adjusted_meta
-    from Pearl import raise_unknown_line, wd, wd0, wd1, wi, wj, wk, wn, ws, z_initialize
+    from Pearl import raise_unknown_line, transform__self, wd, wd0, wd1, wi, wj, wk, wn, ws, z_initialize
 
 
     share(
@@ -54,6 +54,7 @@ def gem():
         #
         #   Imported types (Pearl)
         #
+        'Identifier',               Identifier,
         'KeywordAndOperatorBase',   KeywordAndOperatorBase,
         'KeywordImport',            KeywordImport,
         'PearlToken',               PearlToken,
@@ -91,14 +92,17 @@ def gem():
         'conjure_action_word__ends_in_newline',     conjure_action_word__ends_in_newline,
         'conjure_ActionWord_WithNewlines',          conjure_ActionWord_WithNewlines,
         'conjure_keyword_import',                   conjure_keyword_import,
+        'conjure_name',                             conjure_name,
         'conjure_nub',                              conjure_nub,
         'initialize_action_word__Meta',             initialize_action_word__Meta,
         'is_name__0',                               is_name__0,
         'la',                                       la,
         'lookup_adjusted_meta',                     lookup_adjusted_meta,
         'lookup_normal_token',                      lookup_normal_token,
+        'mutate__self',                             mutate__self,
         'order__s',                                 order__s,
         'produce_conjure_action_word',              produce_conjure_action_word,
+        'produce_conjure_atom',                     produce_conjure_atom,
         'provide_normal_token',                     provide_normal_token,
         'qd',                                       qd,
         'qi',                                       qi,
@@ -110,6 +114,7 @@ def gem():
         'raise_unknown_line',                       raise_unknown_line,
         'static_conjure_nub',                       static_conjure_nub,
         'store_adjusted_meta',                      store_adjusted_meta,
+        'transform__self',                          transform__self,
         'wd0',                                      wd0,
         'wd1',                                      wd1,
         'wd',                                       wd,

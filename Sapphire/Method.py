@@ -124,14 +124,6 @@ def gem():
         t.b.find_require_gem(e)
 
 
-    #
-    #   mutate
-    #
-    @share
-    def mutate__self(t, vary, priority):
-        return t
-
-
     @share
     @privileged
     def produce_mutate__ab(name, conjure):
@@ -499,11 +491,6 @@ def gem():
     #   scout_default_values
     #
     @share
-    def scout_default_values__0(t, art):
-        pass
-
-
-    @share
     def scout_default_values__a(t, art):
         t.a.scout_default_values(art)
 
@@ -584,11 +571,6 @@ def gem():
         if vary.remove_comments:
             return 0
 
-        return t
-
-
-    @share
-    def transform__self(t, vary):
         return t
 
 

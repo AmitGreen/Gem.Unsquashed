@@ -8,15 +8,35 @@ def gem():
 
 
     def parse_java_statement_import(m):
-        if m.end('comment_newline') is not -1:
-            raise_unknown_line()
-
         j = m.end()
+        s = qs()
 
-        indented_keyword = evoke_indented_import(m.end('indented'), j)
+        if m.end('newline') == -1:
+            keyword = conjure_keyword_import(s[:j])
+        else:
+            keyword = conjure_keyword_import__ends_in_newline(s[:j])
 
         wi(j)
         wj(j)
+
+
+        #
+        #<name>
+        #
+        m = name_match(s, qj())
+
+        if m is none:
+            raise_unknown_line()
+
+        package = conjure_name(m.group())
+
+        j = m.end()
+
+        wi(j)
+        wj(j)
+        #</name>
+
+        line('keyword: %s; package: %s', keyword, package)
 
         raise_unknown_line()
 
@@ -41,8 +61,6 @@ def gem():
                 for s in iterate_lines:
                     line('s: %s', s)
 
-                    assert qd() is 0
-
                     m = line_match(s)
 
                     if m is none:
@@ -56,10 +74,11 @@ def gem():
                         if parse1_line is not none:
                             append(parse1_line(m))
 
-                            assert qd() is 0
                             continue
 
                         raise_unknown_line()
+
+                    raise_unknown_line()
 
                     comment_end = m.end('comment')
 

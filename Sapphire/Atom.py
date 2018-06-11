@@ -115,54 +115,6 @@ def gem():
 
 
     @share
-    class Identifier(PearlToken):
-        __slots__                      = (())
-        class_order                    = CLASS_ORDER__NORMAL_TOKEN
-        display_name                   = 'Identifier'
-        is__atom__or__special_operator = true
-        is_atom                        = true
-        is_colon                       = false
-        is_identifier                  = true
-        is_right_brace                 = false
-        is_special_operator            = false
-
-
-        def add_parameters(t, art):
-            art.add_parameter(t)
-
-
-        def display_token(t):
-            return t.s
-
-
-        find_identifier = return_self
-
-
-        def is_name(t, s):
-            return t.s == s
-
-
-        mutate = mutate__self
-
-
-        scout_default_values = scout_default_values__0
-
-
-        def scout_variables(t, art):
-            art.fetch_variable(t)
-
-
-        transform = transform__self
-
-
-        def write_variables(t, art):
-            art.write_variable(t)
-
-
-        write_import = write_variables
-
-
-    @share
     class Number(PearlToken):
         __slots__                      = (())
         class_order                    = CLASS_ORDER__NORMAL_TOKEN
@@ -207,36 +159,8 @@ def gem():
         scout_variables = scout_variables__0
 
 
-    @share
-    @privileged
-    def produce_conjure_atom(name, Meta):
-        assert type(name) is String
-        assert type(Meta) is Type
-
-
-        def conjure_atom(s):
-            r = lookup_atom(s)
-
-            if r is not none:
-                return r
-
-            assert s.count('\n') is 0
-
-            s = intern_string(s)
-
-            return provide_atom(s, Meta(s))
-
-
-        if __debug__:
-            conjure_atom.__name__ = intern_arrange('conjure_%s', name)
-
-
-        return conjure_atom
-
-
     conjure_double_quote                = produce_conjure_atom                ('double-quote', DoubleQuote)
     conjure_double_quote__with_newlines = produce_conjure_quote__with_newlines('double-quote', DoubleQuote)
-    conjure_name                        = produce_conjure_atom                ('name',         Identifier)
     conjure_number                      = produce_conjure_atom                ('number',       Number)
     conjure_single_quote                = produce_conjure_atom                ('single-quote', SingleQuote)
     conjure_single_quote__with_newlines = produce_conjure_quote__with_newlines('single-quote', SingleQuote)
@@ -248,7 +172,6 @@ def gem():
     share(
         'conjure_double_quote',                 conjure_double_quote,
         'conjure_double_quote__with_newlines',  conjure_double_quote__with_newlines,
-        'conjure_name',                         conjure_name,
         'conjure_number',                       conjure_number,
         'conjure_single_quote',                 conjure_single_quote,
         'conjure_single_quote__with_newlines',  conjure_single_quote__with_newlines,

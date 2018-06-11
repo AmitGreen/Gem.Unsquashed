@@ -78,18 +78,23 @@ def gem():
         #
         #   More complicated patterns
         #
-        ow_semicolon = NAME('ow_semicolon',   ow + semicolon)
+        ow_semicolon = NAME('ow_semicolon', ow + semicolon)
 
 
         #
-        #   Expressions 1
+        #   Generic
+        #
+        name_match = MATCH('name_match', name)
+
+        #
+        #   Line
         #
         MATCH(
             'line_match',
             (
                   ow
                 + P(
-                      G('keyword', keyword_import) + w
+                      G('keyword', keyword_import) + ow
                   )
                 + Q(
                       'comment_newline',

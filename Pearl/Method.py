@@ -12,7 +12,15 @@ def gem():
 
 
     #
-    #   is_name
+    #   mutate
+    #
+    @export
+    def mutate__self(t, vary, priority):
+        return t
+
+
+    #
+    #   order__s
     #
     @export
     def order__s(a, b):
@@ -30,3 +38,19 @@ def gem():
         assert a_order > b_order
 
         return 1
+
+
+    #
+    #   scout_default_values
+    #
+    @share
+    def scout_default_values__0(t, art):
+        pass
+
+
+    #
+    #   transform
+    #
+    @export
+    def transform__self(t, vary):
+        return t

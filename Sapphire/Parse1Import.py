@@ -28,7 +28,7 @@ def gem():
         #</name>
 
         #
-        #<module: name ||| ['.' name] ... ('as' | ',' | newline)
+        #<module: name ['.' name] ... ('as' | ',' | newline)
         #
         while true:
             m = import_module_match1(s, qj())

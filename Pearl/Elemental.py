@@ -3,7 +3,9 @@
 #
 @gem('Pearl.Elemental')
 def gem():
+    require_gem('Pearl.ActionWord')
     require_gem('Pearl.Atom')
+    require_gem('Pearl.ClassOrder')
 
 
     @export
@@ -89,9 +91,12 @@ def gem():
         keyword      = 'import'
 
 
-    conjure_keyword_import   = produce_conjure_action_word('keyword_import',   KeywordImport)
+    [
+            conjure_keyword_import, conjure_keyword_import__ends_in_newline,
+    ] = produce_conjure_action_word('keyword_import', KeywordImport, produce_ends_in_newline = true)
 
 
     export(
-        'conjure_keyword_import',   conjure_keyword_import,
+        'conjure_keyword_import',                   conjure_keyword_import,
+        'conjure_keyword_import__ends_in_newline',  conjure_keyword_import__ends_in_newline,
     )

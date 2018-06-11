@@ -3,6 +3,9 @@
 #
 @gem('Pearl.Nub')
 def gem():
+    require_gem('Pearl.Core')
+
+
     nub_cache   = create_cache('nub')
     lookup_nub  = nub_cache.lookup
     provide_nub = nub_cache.provide
