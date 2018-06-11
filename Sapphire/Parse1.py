@@ -86,7 +86,7 @@ def gem():
                             assert qd() is 0
                             continue
 
-                        if m.start('comment_newline') is not -1:
+                        if m.start('newline') is not -1:
                             append(
                                 conjure_expression_statement(
                                     conjure_indentation(m.group('indented')),

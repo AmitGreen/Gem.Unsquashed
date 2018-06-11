@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.Tokenize1Atom')
 def gem():
@@ -118,7 +118,7 @@ def gem():
     #
     @share
     def analyze_atom(m):
-        if m.start('comment_newline') is -1:
+        if m.start('newline') is -1:
             atom_s = m.group('atom')
 
             if atom_s is not none:

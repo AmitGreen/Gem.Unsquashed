@@ -111,6 +111,15 @@ def gem():
 
 
         #
+        #   Statements
+        #
+        MATCH(
+            'import_pattern_match',
+            ow + G('operator', period | 'import') + ow,
+        )
+
+
+        #
         #   Create ../Jasper/Match.py
         #
         create_match_code('../Jasper/Match.py', '2017-2018', 'Amit Green', 'Jasper.Match')
