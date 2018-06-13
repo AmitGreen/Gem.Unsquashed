@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.Parse1Atom')
 def gem():
@@ -139,6 +139,8 @@ def gem():
             operator_1 = tokenize_operator()
         else:
             wk(none)
+
+        my_line('operator_1: %r', operator_1)
 
         if not operator_1.is_end_of_ternary_expression:
             middle_1 = parse1_ternary_expression__X__any_expression(middle_1, operator_1)

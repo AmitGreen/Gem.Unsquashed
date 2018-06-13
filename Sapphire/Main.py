@@ -25,7 +25,7 @@ def gem():
 
 
     choice = 3
-    show   = 0
+    show   = 7
 
 
     def command_combine(
@@ -82,7 +82,7 @@ def gem():
         #for name in ['arguments-2', 'list-expression-2', 'range-index', 'tuple-expression-2']:
         #    print_cache(name)
 
-        print_cache()
+        #print_cache()
 
 
     def test_parse2():
@@ -97,7 +97,7 @@ def gem():
             total = length(arguments)
 
             if total is 0:
-                return command_parse1()
+                return command_parse1(show = show)
 
             if total is not 1:
                 raise_runtime_error('must have zero or one argument')

@@ -51,7 +51,7 @@ def gem():
 
         s = qs()
 
-        #my_line('d: %d; s: %s', qd(), portray_string(s[qj() : ]))
+        my_line('d: %d; full: %r; s: %r', qd(), s, portray_string(s[qj() : ]))
 
         m = operator_match(s, qj())
 
