@@ -3,11 +3,6 @@
 #
 @gem('Sapphire.LineMarker')
 def gem():
-    conjure_ActionWord_LineMarker_Many = Shared.conjure_ActionWord_LineMarker_Many  #   Due to privileged
-    lookup_line_marker                 = Shared.lookup_line_marker                  #   Due to privileged
-    provide_line_marker                = Shared.provide_line_marker                 #   Due to privileged
-
-
     def construct_token__line_marker__many(t, s, newlines):
         assert (t.ends_in_newline is t.line_marker is true) and (newlines > 1)
 
@@ -85,8 +80,8 @@ def gem():
 
 
     @share
-    @privileged
     def produce_conjure_action_word__line_marker(name, Meta):
+        @rename('conjure_%s__line_marker', name)
         def conjure_action_word__line_marker(s):
             assert s[-1] == '\n'
 
@@ -110,9 +105,6 @@ def gem():
                        ),
                    )
 
-
-        if __debug__:
-            conjure_action_word__line_marker.__name__ = intern_arrange('conjure_%s__line_marker', name)
 
         return conjure_action_word__line_marker
 

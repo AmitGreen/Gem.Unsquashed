@@ -6,9 +6,6 @@ def gem():
     require_gem('Sapphire.DumpToken')
     require_gem('Sapphire.TupleOfExpression')
 
-    conjure_tuple_of_many_expression = Shared.conjure_tuple_of_many_expression      #   Due to privileged
-    dump_token                       = Shared.dump_token                            #   Due to privileged
-
 
     #
     #   add_parameters
@@ -33,8 +30,8 @@ def gem():
     #
     if 0:
         @share
-        @privileged
         def produce_adorn__ab(name, conjure):
+            @rename('adorn_%s', name)
             def adorn(t, art):
                 a = t.a
                 b = t.b
@@ -47,9 +44,6 @@ def gem():
 
                 return conjure(a__2, b__2)
 
-
-            if __debug__:
-                adorn.__name__ = intern_arrange('adorn_%s', name)
 
             return adorn
 
@@ -125,8 +119,8 @@ def gem():
 
 
     @share
-    @privileged
     def produce_mutate__ab(name, conjure):
+        @rename('mutate_%s', name)
         def mutate(t, vary, priority):
             a = t.a
             b = t.b
@@ -140,15 +134,12 @@ def gem():
             return conjure(a__2, b__2)
 
 
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
-
         return mutate
 
 
     @share
-    @privileged
     def produce__mutate__ab__priority(name, conjure, a_priority, b_priority):
+        @rename('mutate_%s', name)
         def mutate(t, vary, priority):
             a = t.a
             b = t.b
@@ -162,15 +153,12 @@ def gem():
             return conjure(a__2, b__2)
 
 
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
-
         return mutate
 
 
     @share
-    @privileged
     def produce_mutate__abc(name, conjure):
+        @rename('mutate_%s', name)
         def mutate(t, vary, priority):
             a = t.a
             b = t.b
@@ -186,15 +174,12 @@ def gem():
             return conjure(a__2, b__2, c__2)
 
 
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
-
         return mutate
 
 
     @share
-    @privileged
     def produce_mutate__abcd(name, conjure):
+        @rename('mutate_%s', name)
         def mutate(t, vary, priority):
             a = t.a
             b = t.b
@@ -212,15 +197,12 @@ def gem():
             return conjure(a__2, b__2, c__2, d__2)
 
 
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
-
         return mutate
 
 
     @share
-    @privileged
     def produce_mutate__frill__a__priority(name, priority):
+        @rename('mutate_%s', name)
         def mutate(t, vary, priority):
             frill = t.frill
             a     = t.a
@@ -234,15 +216,12 @@ def gem():
             return t.conjure_with_frill(frill__2, a__2)
 
 
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
-
         return mutate
 
 
     @share
-    @privileged
     def produce_mutate__frill__a_with_priority(name, a_priority, conjure_with_frill):
+        @rename('mutate_%s', name)
         def mutate(t, vary, priority):
             frill = t.frill
             a     = t.a
@@ -256,15 +235,12 @@ def gem():
             return conjure_with_frill(frill__2, a__2)
 
 
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
-
         return mutate
 
 
     @share
-    @privileged
     def produce_mutate__frill__ab__priority(name, frill_priority, a_priority, b_priority, conjure_with_frill = 0):
+        @rename('mutate_%s', name)
         def mutate(t, vary, priority):
             frill = t.frill
             a     = t.a
@@ -280,15 +256,12 @@ def gem():
             return ((conjure_with_frill) or (t.conjure_with_frill))(frill__2, a__2, b__2)
 
 
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
-
         return mutate
 
 
     @share
-    @privileged
     def produce_mutate__frill__ab_with_priority(name, a_priority, b_priority, conjure_with_frill):
+        @rename('mutate_%s', name)
         def mutate(t, vary, priority):
             frill = t.frill
             a     = t.a
@@ -304,15 +277,12 @@ def gem():
             return conjure_with_frill(frill__2, a__2, b__2)
 
 
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
-
         return mutate
 
 
     @share
-    @privileged
     def produce_mutate__frill__many(name, first_priority, middle_priority, last_priority, conjure_with_frill):
+        @rename('mutate_%s', name)
         def mutate(t, vary, priority):
             frill = t.frill
             many  = t.many
@@ -326,24 +296,18 @@ def gem():
             return conjure_with_frill(frill__2, many__2)
 
 
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
-
         return mutate
 
 
     @share
-    @privileged
     def produce_mutate__uncommented(name, uncommented):
+        @rename('mutate_%s', name)
         def mutate(t, vary, priority):
             if vary.remove_comments:
                 return uncommented
 
             return t
 
-
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
 
         return mutate
 
@@ -575,8 +539,8 @@ def gem():
 
 
     @share
-    @privileged
     def produce_transform__ab(name, conjure):
+        @rename('transform_%s', name)
         def transform(t, vary):
             a = t.a
             b = t.b
@@ -590,15 +554,12 @@ def gem():
             return conjure(a__2, b__2)
 
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
-
         return transform
 
 
     @share
-    @privileged
     def produce_transform__a__b_with_indentation(name, conjure):
+        @rename('transform_%s', name)
         def transform(t, vary):
             a = t.a
             b = t.b
@@ -617,15 +578,13 @@ def gem():
 
             return conjure(a__2, b__2)
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
 
         return transform
 
 
     @share
-    @privileged
     def produce_transform__abc(name, conjure):
+        @rename('transform_%s', name)
         def transform(t, vary):
             a = t.a
             b = t.b
@@ -641,15 +600,12 @@ def gem():
             return conjure(a__2, b__2, c__2)
 
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
-
         return transform
 
 
     @share
-    @privileged
     def produce_transform__abcd(name, conjure):
+        @rename('transform_%s', name)
         def transform(t, vary):
             a = t.a
             b = t.b
@@ -667,15 +623,12 @@ def gem():
             return conjure(a__2, b__2, c__2, d__2)
 
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
-
         return transform
 
 
     @share
-    @privileged
     def produce_transform__frill_a(name, conjure_with_frill):
+        @rename('transform_%s', name)
         def transform(t, vary):
             frill = t.frill
             a     = t.a
@@ -689,15 +642,12 @@ def gem():
             return conjure_with_frill(frill__2, a__2)
 
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
-
         return transform
 
 
     @share
-    @privileged
     def produce_transform__frill_ab(name, conjure_with_frill):
+        @rename('transform_%s', name)
         def transform(t, vary):
             frill = t.frill
             a     = t.a
@@ -713,15 +663,12 @@ def gem():
             return conjure_with_frill(frill__2, a__2, b__2)
 
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
-
         return transform
 
 
     @share
-    @privileged
     def produce_transform__frill__a_with_priority(name, priority, conjure_with_frill):
+        @rename('transform_%s', name)
         def transform(t, vary):
             frill = t.frill
             a     = t.a
@@ -735,15 +682,12 @@ def gem():
             return conjure_with_frill(frill__2, a__2)
 
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
-
         return transform
 
 
     @share
-    @privileged
     def produce_transform__frill__a__b_with_priority(name, b_priority, conjure_with_frill):
+        @rename('transform_%s', name)
         def transform(t, vary):
             frill = t.frill
             a     = t.a
@@ -759,15 +703,12 @@ def gem():
             return conjure_with_frill(frill__2, a__2, b__2)
 
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
-
         return transform
 
 
     @share
-    @privileged
     def produce_transform__frill__ab_with_priority(name, a_priority, b_priority, conjure_with_frill):
+        @rename('transform_%s', name)
         def transform(t, vary):
             frill = t.frill
             a     = t.a
@@ -783,15 +724,12 @@ def gem():
             return conjure_with_frill(frill__2, a__2, b__2)
 
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
-
         return transform
 
 
     @share
-    @privileged
     def produce_transform_many(name, conjure):
+        @rename('transform_%s', name)
         def transform(t, vary):
             iterator = iterate(t)
 
@@ -823,15 +761,12 @@ def gem():
             return conjure(many__2)
 
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
-
         return transform
 
 
     @share
-    @privileged
     def produce_transform__uncommented(name, uncommented):
+        @rename('transform_%s', name)
         def transform(t, vary):
             if vary.remove_comments:
                 return uncommented
@@ -839,15 +774,12 @@ def gem():
             return t
 
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
-
         return transform
 
 
     @share
-    @privileged
     def produce_transform__frill__many(name, many_priority, conjure_with_frill):
+        @rename('transform_%s', name)
         def transform(t, vary):
             frill    = t.frill
             many     = t.many
@@ -885,9 +817,6 @@ def gem():
 
             return conjure_with_frill(frill_2, conjure_tuple_of_many_expression(many__2))
 
-
-        if __debug__:
-            transform.__name__ = intern_arrange('transform_%s', name)
 
         return transform
 

@@ -10,17 +10,6 @@ def gem():
     require_gem('Sapphire.Whitespace')
 
 
-    conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged
-    LINE_MARKER          = Shared.LINE_MARKER               #   Due to privileged
-    lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   Due to privileged
-    lookup_line_marker   = Shared.lookup_line_marker        #   Due to privileged
-    lookup_normal_token  = Shared.lookup_normal_token       #   Due to privileged
-    provide_line_marker  = Shared.provide_line_marker       #   Due to privileged
-    provide_normal_token = Shared.provide_normal_token      #   Due to privileged
-    qi                   = Shared.qi                        #   Due to privileged
-    qs                   = Shared.qs                        #   Due to privileged
-
-
     def add_comment__commented_statement(t, comment):
         return conjure_commented_statement(comment, t)
 
@@ -84,8 +73,8 @@ def gem():
         return f.token_result(r, newline)
 
 
-    @privileged
     def produce_transform__indented__keyword__c(name, conjure, keyword, uncommented_c):
+        @rename('transform_%s', name)
         def transform(t, vary):
             a = t.a
             b = t.b
@@ -108,14 +97,11 @@ def gem():
             return conjure(a__2, b, c)
 
 
-        if __debug__:
-            transform.__name__ = intern_arrange('transform__%s', name)
-
         return transform
 
 
-    @privileged
     def produce_mutate_whitespace_atom_whitespace(name, conjure):
+        @rename('mutate_%s', name)
         def mutate(t, vary, priority):
             b    = t.b
             b__2 = b.mutate(vary, priority)
@@ -134,9 +120,6 @@ def gem():
 
             return conjure(a__2, b__2, c__3)
 
-
-        if __debug__:
-            mutate.__name__ = intern_arrange('mutate_%s', name)
 
         return mutate
 
@@ -222,7 +205,6 @@ def gem():
                )
 
 
-    @privileged
     def produce_conjure_triple_token(
             name, Meta,
 
@@ -240,6 +222,7 @@ def gem():
             create_triple_token = create_triple_token__with_newlines
 
 
+        @rename('conjure_%s', name)
         def conjure_triple_token(a, b, c):
             s = a.s + b.s + c.s
 
@@ -255,13 +238,9 @@ def gem():
             return provide(s, create_triple_token(Meta, s, a, b, c))
 
 
-        if __debug__:
-            conjure_triple_token.__name__ = intern_arrange('conjure_%s', name)
-
         return conjure_triple_token
 
 
-    @privileged
     def produce_evoke_triple_token(
             name, Meta, conjure_a, conjure_b,
 
@@ -279,6 +258,7 @@ def gem():
             assert (conjure_c is conjure_c__ends_in_newline is absent)
 
 
+            @rename('evoke_%s', name)
             def evoke_triple_token(a_end, b_end):
                 #
                 #   For an indented token with 0 indentation 'qi() == a_end'
@@ -308,6 +288,7 @@ def gem():
                            ),
                        )
         else:
+            @rename('evoke_%s', name)
             def evoke_triple_token(a_end, b_end, c_end):
                 #
                 #   For empty indentation: "qi() == a_end"
@@ -336,10 +317,6 @@ def gem():
                                (conjure_c__ends_in_newline   if c_end is none else   conjure_c)(s[b_end : c_end]),
                            ),
                        )
-
-
-        if __debug__:
-            evoke_triple_token.__name__ = intern_arrange('evoke_%s', name)
 
 
         return evoke_triple_token

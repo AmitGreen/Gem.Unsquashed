@@ -140,7 +140,7 @@ def gem():
         else:
             wk(none)
 
-        my_line('operator_1: %r', operator_1)
+        #my_line('operator_1: %r', operator_1)
 
         if not operator_1.is_end_of_ternary_expression:
             middle_1 = parse1_ternary_expression__X__any_expression(middle_1, operator_1)

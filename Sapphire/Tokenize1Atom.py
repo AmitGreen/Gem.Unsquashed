@@ -91,13 +91,13 @@ def gem():
     tokenize_multiline_double_quote = produce_tokenize_multiline_quote(
                                           'double',
                                           next_triple_double_quote_line_match,
-                                          conjure_double_quote__with_newlines,
+                                          conjure_triple_double_quote__with_newlines,
                                       )
 
     tokenize_multiline_single_quote = produce_tokenize_multiline_quote(
                                           'single',
                                           next_triple_single_quote_line_match,
-                                          conjure_single_quote__with_newlines,
+                                          conjure_triple_single_quote__with_newlines,
                                       )
 
 

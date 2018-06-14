@@ -6,10 +6,6 @@ def gem():
     require_gem('Sapphire.Method')
 
 
-    lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   due to privileged
-    store_adjusted_meta  = Shared.store_adjusted_meta       #   due to privileged
-
-
     lookup_atom  = lookup_normal_token
     provide_atom = provide_normal_token
 
@@ -27,9 +23,9 @@ def gem():
         return t.newlines
 
 
-    @privileged
-    def produce_conjure_quote__with_newlines(name, Meta):
-        def conjure_quote__with_newlines(s):
+    def produce_conjure_triple_quote__with_newlines(name, Meta):
+        @rename('conjure_%s__with_newlines', name)
+        def conjure_triple_quote__with_newlines(s):
             assert s[-1] != '\n'
 
             r = lookup_atom(s)
@@ -37,10 +33,10 @@ def gem():
             if r is not none:
                 return r
 
-            Quote_WithNewlines = lookup_adjusted_meta(Meta)
+            TripleXQuote_WithNewlines = lookup_adjusted_meta(Meta)
 
-            if Quote_WithNewlines is none:
-                class Quote_WithNewlines(Meta):
+            if TripleXQuote_WithNewlines is none:
+                class TripleXQuote_WithNewlines(Meta):
                     __slots__ = ((
                         'newlines',                                 #   Integer > 0
                     ))
@@ -51,19 +47,16 @@ def gem():
 
 
                 if __debug__:
-                    Quote_WithNewlines.__name__ = intern_arrange('%s_WithNewlines', Meta.__name__)
+                    TripleXQuote_WithNewlines.__name__ = intern_arrange('%s_WithNewlines', Meta.__name__)
 
-                store_adjusted_meta(Meta, Quote_WithNewlines)
+                store_adjusted_meta(Meta, TripleXQuote_WithNewlines)
 
             s = intern_string(s)
 
-            return provide_atom(s, Quote_WithNewlines(s, s.count('\n')))
+            return provide_atom(s, TripleXQuote_WithNewlines(s, s.count('\n')))
 
 
-        if __debug__:
-            conjure_quote__with_newlines.__name__ = intern_arrange('conjure_%s__with_newlines', name)
-
-        return conjure_quote__with_newlines
+        return conjure_triple_quote__with_newlines
 
 
     @share
@@ -159,21 +152,28 @@ def gem():
         scout_variables = scout_variables__0
 
 
-    conjure_double_quote                = produce_conjure_atom                ('double-quote', DoubleQuote)
-    conjure_double_quote__with_newlines = produce_conjure_quote__with_newlines('double-quote', DoubleQuote)
-    conjure_number                      = produce_conjure_atom                ('number',       Number)
-    conjure_single_quote                = produce_conjure_atom                ('single-quote', SingleQuote)
-    conjure_single_quote__with_newlines = produce_conjure_quote__with_newlines('single-quote', SingleQuote)
+    conjure_double_quote = produce_conjure_atom('double-quote', DoubleQuote)
+    conjure_number       = produce_conjure_atom('number',       Number)
+    conjure_single_quote = produce_conjure_atom('single-quote', SingleQuote)
 
+    conjure_triple_double_quote__with_newlines = produce_conjure_triple_quote__with_newlines(
+            'triple-double-quote',
+            DoubleQuote,
+        )
+
+    conjure_triple_single_quote__with_newlines = produce_conjure_triple_quote__with_newlines(
+            'triple-single-quote',
+            SingleQuote,
+        )
 
     end_of_data = EndOfData(intern_string('<end-of-data>'))
 
 
     share(
-        'conjure_double_quote',                 conjure_double_quote,
-        'conjure_double_quote__with_newlines',  conjure_double_quote__with_newlines,
-        'conjure_number',                       conjure_number,
-        'conjure_single_quote',                 conjure_single_quote,
-        'conjure_single_quote__with_newlines',  conjure_single_quote__with_newlines,
-        'end_of_data',                          end_of_data,
+        'conjure_double_quote',                         conjure_double_quote,
+        'conjure_number',                               conjure_number,
+        'conjure_single_quote',                         conjure_single_quote,
+        'conjure_triple_double_quote__with_newlines',   conjure_triple_double_quote__with_newlines,
+        'conjure_triple_single_quote__with_newlines',   conjure_triple_single_quote__with_newlines,
+        'end_of_data',                                  end_of_data,
     )

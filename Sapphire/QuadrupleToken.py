@@ -6,18 +6,6 @@ def gem():
     require_gem('Sapphire.CreateMeta')
 
 
-    conjure_line_marker  = Shared.conjure_line_marker       #   Due to privileged
-    lookup_adjusted_meta = Shared.lookup_adjusted_meta      #   Due to privileged
-    lookup_line_marker   = Shared.lookup_line_marker        #   Due to privileged
-    lookup_normal_token  = Shared.lookup_normal_token       #   Due to privileged
-    provide_line_marker  = Shared.provide_line_marker       #   Due to privileged
-    provide_normal_token = Shared.provide_normal_token      #   Due to privileged
-    qi                   = Shared.qi                        #   Due to privileged
-    qs                   = Shared.qs                        #   Due to privileged
-    COLON                = Shared.COLON                     #   Due to privileged
-    LINE_MARKER          = Shared.LINE_MARKER               #   Due to privileged
-
-
     def construct_quadruple_token(t, s, a, b, c, d):
         assert (t.ends_in_newline is t.line_marker is false) and (t.newlines is 0)
         assert s == a.s + b.s + c.s + d.s
@@ -92,8 +80,8 @@ def gem():
                        t.d.display_token())
 
 
-    @privileged
     def produce_transform__indented__keyword__colon__line_marker(name, conjure, keyword):
+        @rename('transform_%s', name)
         def transform(t, vary):
             a = t.a
             b = t.b
@@ -117,9 +105,6 @@ def gem():
 
             return conjure(a__2, b, c, d)
 
-
-        if __debug__:
-            transform.__name__ = intern_arrange('transform__%s', name)
 
         return transform
 
@@ -202,7 +187,6 @@ def gem():
                )
 
 
-    @privileged
     def produce_conjure_quadruple_token(
             name, Meta,
 
@@ -220,6 +204,7 @@ def gem():
             create_quadruple_token = create_quadruple_token__with_newlines
 
 
+        @rename('conjure_%s', name)
         def conjure_quadruple_token(a, b, c, d):
             s = a.s + b.s + c.s + d.s
 
@@ -235,13 +220,9 @@ def gem():
             return provide(s, create_quadruple_token(Meta, s, a, b, c, d))
 
 
-        if __debug__:
-            conjure_quadruple_token.__name__ = intern_arrange('conjure_%s', name)
-
         return conjure_quadruple_token
 
 
-    @privileged
     def produce_evoke_quadruple_token(
             name, Meta, conjure_a, conjure_b, conjure_c,
 
@@ -259,6 +240,7 @@ def gem():
             assert (conjure_d is conjure_d__ends_in_newline is absent)
 
 
+            @rename('evoke_%s', name)
             def evoke_quadruple_token(a_end, b_end, c_end):
                 #
                 #   Note: 'qi() <= a_end', since for indented token there might be no indentation
@@ -289,6 +271,7 @@ def gem():
                            ),
                        )
         else:
+            @rename('evoke_%s', name)
             def evoke_quadruple_token(a_end, b_end, c_end, d_end):
                 assert qi() < a_end < b_end < c_end < d_end
 
@@ -315,10 +298,6 @@ def gem():
                                (conjure_d__ends_in_newline   if d_end is none else   conjure_d)(s[c_end : d_end]),
                            ),
                        )
-
-
-        if __debug__:
-            evoke_quadruple_token.__name__ = intern_arrange('evoke_%s', name)
 
 
         return evoke_quadruple_token

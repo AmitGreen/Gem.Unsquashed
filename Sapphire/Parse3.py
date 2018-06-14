@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Sapphire.Parse3')
 def gem():
@@ -12,13 +12,6 @@ def gem():
     require_gem('Sapphire.QuadrupleStatement')
     require_gem('Sapphire.Suite')
     require_gem('Sapphire.TripleStatement')
-
-
-    conjure_dual_statement         = Shared.conjure_dual_statement              #   due to privileged
-    conjure_else_fragment          = Shared.conjure_else_fragment               #   due to privileged
-    conjure_else_fragment          = Shared.conjure_else_fragment               #   due to privileged
-    conjure_mixed_suite            = Shared.conjure_mixed_suite                 #   due to privileged
-    conjure_prefixed_else_fragment = Shared.conjure_prefixed_else_fragment      #   due to privileged
 
 
     @share
@@ -623,8 +616,8 @@ def gem():
             return conjure_prefixed_decorated_definition(prefix, header, v.parse_header())
 
 
-        @privileged
         def produce_parse_header__with_optional_else(name, conjure_statement, conjure_prefixed_statement):
+            @rename(name)
             def parse_header__with_optional_else(v):
                 indentation = v.indentation
 
@@ -676,9 +669,6 @@ def gem():
 
                 return conjure_dual_statement(v, w)
 
-
-            if __debug__:
-                parse_header__with_optional_else.__name__ = intern_string(name)
 
             return parse_header__with_optional_else
 

@@ -7,9 +7,6 @@ def gem():
     require_gem('Pearl.TokenCache')
 
 
-    conjure_ActionWord_WithNewlines = Shared.conjure_ActionWord_WithNewlines     #   Due to 'privileged'
-    lookup_adjusted_meta            = Shared.lookup_adjusted_meta                #   Due to 'privileged'
-
     lookup_action_word  = lookup_normal_token
     provide_action_word = provide_normal_token
 
@@ -83,13 +80,13 @@ def gem():
 
 
     @export
-    @privileged
     def produce_conjure_action_word(name, Meta, produce_ends_in_newline = false):
         assert type(name)                    is String
         assert type(Meta)                    is Type
         assert type(produce_ends_in_newline) is Boolean
 
 
+        @rename('conjure_%s', name)
         def conjure_action_word(s):
             assert s[-1] != '\n'
 
@@ -114,14 +111,11 @@ def gem():
                    )
 
 
-        if __debug__:
-            conjure_action_word.__name__ = intern_arrange('conjure_%s', name)
-
-
         if produce_ends_in_newline is false:
             return conjure_action_word
 
 
+        @rename('conjure_%s__ends_in_newline', name)
         def conjure_action_word__ends_in_newline(s):
             assert s[-1] == '\n'
 
@@ -139,8 +133,5 @@ def gem():
                        )(s, true, s.count('\n'))
                    )
 
-
-        if __debug__:
-            conjure_action_word__ends_in_newline.__name__ = intern_arrange('conjure_%s__ends_in_newline', name)
 
         return ((conjure_action_word, conjure_action_word__ends_in_newline))

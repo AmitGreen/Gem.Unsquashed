@@ -25,7 +25,7 @@ def gem():
 
 
     choice = 3
-    show   = 7
+    show   = 0
 
 
     def command_combine(
@@ -120,8 +120,8 @@ def gem():
 
                 if choice is 2:
                     return command_parse1(
-                               remove_comments    = true,
-                               remove_indentation = true,
+                               #remove_comments    = true,
+                               #remove_indentation = true,
                                show               = show,
                            )
 
