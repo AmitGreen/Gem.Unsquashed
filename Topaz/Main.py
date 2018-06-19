@@ -53,4 +53,4 @@ def gem():
         test_sequence()
         test_series()
         test_string_output()
-        #test_exception_chain()
+        test_exception_chain()

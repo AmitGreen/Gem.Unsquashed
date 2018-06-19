@@ -138,7 +138,6 @@ def gem():
                 return command_parse1(show = 7)
 
             raise_runtime_error('unknown option: %r', option)
-
         except:
             with except_any_clause() as e:
                 print_exception_chain(e)

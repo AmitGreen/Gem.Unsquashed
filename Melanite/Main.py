@@ -19,31 +19,10 @@ def boot():
     import Gem
 
 
-@gem('Jasper.Main')
+@gem('Melanite.Main')
 def gem():
-    require_gem('Jasper.Core')
-
-
-    show  = 0
-
-
-    def command_parse1(
-            remove_comments    = false,
-            remove_indentation = false,
-            show               = 0,
-    ):
-        require_gem('Jasper.Pattern')
-
-        create_jasper_match()
-
-        require_gem('Jasper.Parse')                       #   Must be after 'create_jasper_match'
-
-        parse_java('test.java', test = 7, show = show)
-
-        #for name in ['arguments-2', 'list-expression-2', 'range-index', 'tuple-expression-2']:
-        #    print_cache(name)
-
-        print_cache()
+    require_gem('Melanite.Core')
+    require_gem('Melanite.Development')
 
 
     @share
@@ -52,7 +31,7 @@ def gem():
             total = length(arguments)
 
             if total is 0:
-                return command_parse1()
+                return command_development()
 
             if total is not 1:
                 raise_runtime_error('must have zero or one argument')
@@ -60,7 +39,7 @@ def gem():
             option = arguments[0]
 
             if option == 'dev':
-                return command_parse1()
+                return command_development()
 
             raise_runtime_error('unknown option: %r', option)
         except:
