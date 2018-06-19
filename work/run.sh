@@ -43,6 +43,7 @@ Main_py=../Onyx/Main.py
 Main_py=../Diamond/Main.py
 Main_py=../Jasper/Main.py
 Main_py=../Sapphire/Main.py
+Main_py=../Melanite/Main.py
 
 show=2
 all=false

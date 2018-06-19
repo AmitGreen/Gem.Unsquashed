@@ -84,6 +84,10 @@ MARBLE_FILES = \
     ../Marble/NestedConjure.py \
     ../Marble/Main.py
 
+MELANITE_FILES = \
+    ../Melanite/Core.py \
+    ../Melanite/Main.py
+
 ONYX_FILES = \
     ../Onyx/__init__.py \
     ../Onyx/Core.py \
@@ -198,6 +202,7 @@ FILES = \
     $(JASPER_FILES) \
     $(LICENSE_FILES) \
     $(MARBLE_FILES) \
+    $(MELANITE_FILES) \
     $(ONYX_FILES) \
     $(PEARL_FILES) \
     $(QUARTZ_FILES) \
@@ -237,7 +242,7 @@ clean:
 	rm -f in.py im.py io.py iv.py
 	rm -f j0p.py j1p.py jb.py jcr.py jma.py jmc.py jp.py
 	rm -f l.txt lr.txt
-	rm -f m map.py mc.py md.py mm.py mn.py m.txt
+	rm -f m m.txt m2c.py m2m.py map.py mc.py md.py mm.py mn.py
 	rm -f o.py oc.py od.py oe.py om.py
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py pel.py
 	rm -f   pj.py pk.py pkc.py pl.py pmo.py pn.py ps.py ps3.py pz.py
@@ -413,6 +418,8 @@ links:
 	ln -s ../OtherLicenses/README.txt                   lr.txt
 	ln -s Makefile                                      m
 	ln -s mine.txt                                      m.txt
+	ln -s ../Melanite/Core.py                           m2c.py
+	ln -s ../Melanite/Main.py                           m2m.py
 	ln -s ../Gem/Map.py                                 map.py
 	ln -s ../Marble/Core.py                             mc.py
 	ln -s ../Gem/Method.py                              md.py
@@ -531,6 +538,7 @@ wc:
         $(JASPER_FILES) \
         $(LICENSE_FILES) \
         $(MARBLE_FILES) \
+        $(MELANITE_FILES) \
 		$(ONYX_FILES) \
         $(QUARTZ_FILES) \
         $(SAPPHIRE_FILES) \
@@ -548,6 +556,7 @@ test:
 		$(GEM_FILES) \
 		$(IVORY_FILES) \
 		$(JASPER_FILES) \
+        $(MELANITE_FILES) \
 		$(ONYX_FILES) \
 		$(PEARL_FILES) \
 		$(QUARTZ_FILES) \
