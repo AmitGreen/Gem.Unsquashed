@@ -189,6 +189,16 @@ TREMOLITE_FILES = \
     #
 
 
+TREMOLITE_2_FILES = \
+    ../Tremolite_2/Core.py \
+    ../Tremolite_2/Main.py \
+    ../Tremolite_2/Parse.py ../Tremolite_2/Parse1.py \
+        ../Tremolite_2/Pattern.py
+    #
+    #   Excludes:
+    #       ../Tremolite_2/Match.py
+
+
 SARDONYX_FILES = \
     ../Sardonyx/Boot.py
 
@@ -212,6 +222,7 @@ FILES = \
     $(SAPPHIRE_FILES) \
     $(TOPAZ_FILES) \
     $(TREMOLITE_FILES) \
+    $(TREMOLITE_2_FILES) \
     $(SARDONYX_FILES) \
     $(WORK_FILES)
 
@@ -252,7 +263,8 @@ clean:
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f sl.py so.py ssio.py sy.py
-	rm -f t.java t1.py t2.py tb.py tcm.py th.py tcr.py tlp.txt tma.py tmc.py tn.py tp.py tu.py tw.py tx.py
+	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
+	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
 	rm -f vm.py
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
@@ -468,17 +480,23 @@ links:
 	ln -s ../Gem/SimpleStringIO.py                      ssio.py
 	ln -s ../Gem/System.py                              sy.py
 	ln -s test.java                                     t.java
+	ln -s ../Tremolite_2/Parse.py                       t0p.py
 	ln -s test.py                                       t1.py
+	ln -s ../Tremolite_2/Parse1.py                      t1p.py
 	ln -s test2.py                                      t2.py
 	ln -s ../Gem/Traceback.py                           tb.py
 	ln -s ../Tremolite/CreateMatch.py                   tcm.py
 	ln -s ../Tremolite/Core.py                          tcr.py
+	ln -s ../Tremolite_2/Core.py                        tcr1.py
 	ln -s ../Gem/Thread.py                              th.py
 	ln -s ../Tremolite/LicenseTemplate.txt              tlp.txt
-	ln -s ../Tremolite/Main.py                          tma.py
-	ln -s ../Tremolite/Match.py                         tmc.py
+	ln -s ../Tremolite_2/Main.py                        tma.py
+	ln -s ../Tremolite/Main.py                          tma1.py
+	ln -s ../Tremolite_2/Match.py                       tmc.py
+	ln -s ../Tremolite/Match.py                         tmc1.py
 	ln -s ../Tremolite/Name.py                          tn.py
-	ln -s ../Tremolite/Parse.py                         tp.py
+	ln -s ../Tremolite_2/Pattern.py                     tp.py
+	ln -s ../Tremolite/Parse.py                         tp1.py
 	ln -s ../Tremolite/Build.py                         tu.py
 	ln -s ../Tremolite/PatternWrapper.py                tw.py
 	ln -s ../Tremolite/Compile.py                       tx.py
@@ -551,6 +569,7 @@ wc:
         $(SARDONYX_FILES) \
         $(TOPAZ_FILES) \
         $(TREMOLITE_FILES) \
+        $(TREMOLITE_2_FILES) \
         $(WORK_FILES)
 
 test:
@@ -570,5 +589,6 @@ test:
 		$(SARDONYX_FILES) \
 		$(TOPAZ_FILES) \
 		$(TREMOLITE_FILES) \
+		$(TREMOLITE_2_FILES) \
             >test.py
 	bash run.sh
