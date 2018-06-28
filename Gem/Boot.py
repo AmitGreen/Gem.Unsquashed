@@ -272,7 +272,7 @@ def gem():
                    )
     else:
         @localize3_or_privileged2
-        def rename_function(name, f, code = none, scope = none):
+        def rename_function(actual_name, f, code = none, scope = none):
             if code is scope is none:
                 return f
 
@@ -291,7 +291,7 @@ def gem():
     if __debug__:
         def rename(format, *arguments):
             def rename(f):
-                return rename_function(intern_string(format % arguments   if arguments else   format), f)
+                return rename_function((format % arguments   if arguments else   format), f)
 
             return rename
     else:
