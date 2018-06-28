@@ -1,7 +1,7 @@
 #
 #   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
-@gem('Marble.ConjureDual')
+@gem('Marble.NestedConjure')
 def gem():
     require_gem('Marble.Core')
 
