@@ -8,10 +8,19 @@ def gem():
     require_gem('Gem.System')
 
 
-    from Gem import print_exception_chain, program_exit
+    from Gem import execute, Exception, print_exception_chain, program_exit
 
 
     share(
+        #
+        #   Types
+        #
+        'Exception',                Exception,
+
+        #
+        #   Functions
+        #
+        'execute',                  execute,
         'print_exception_chain',    print_exception_chain,
         'program_exit',             program_exit,
     )

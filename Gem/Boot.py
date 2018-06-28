@@ -100,6 +100,25 @@ def gem():
 
 
     #
+    #   Debugging
+    #
+    if 7:
+        flush_standard_output = PythonSystem.stdout.flush
+        write_standard_output = PythonSystem.stdout.write
+
+
+        def debug(format = none, *arguments):
+            if format is none:
+                assert length(arguments) is 0
+
+                write_standard_output('\n')
+            else:
+                write_standard_output((format % arguments   if arguments else   format) + '\n')
+
+            flush_standard_output()
+
+
+    #
     #   boot
     #
     def boot():
@@ -558,7 +577,7 @@ def gem():
 
         if Shared is none:
             Shared_name = intern_string(arrange('%s.Shared', module_name))
-            Shared      = Module(interned_Shared_name)
+            Shared      = Module(Shared_name)
         else:
             Shared_name = Shared.__name__
 
@@ -725,25 +744,6 @@ def gem():
     #   Main
     #
     Main = python_modules['__main__']
-
-
-    #
-    #   Debugging
-    #
-    if 7:
-        flush_standard_output = PythonSystem.stdout.flush
-        write_standard_output = PythonSystem.stdout.write
-
-
-        def debug(format = none, *arguments):
-            if format is none:
-                assert length(arguments) is 0
-
-                write_standard_output('\n')
-            else:
-                write_standard_output((format % arguments   if arguments else   format) + '\n')
-
-            flush_standard_output()
 
 
     #

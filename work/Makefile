@@ -85,8 +85,11 @@ MARBLE_FILES = \
     ../Marble/Main.py
 
 MELANITE_FILES = \
+    ../Melanite/Child.py \
     ../Melanite/Core.py \
-    ../Melanite/Main.py
+    ../Melanite/Development.py \
+    ../Melanite/Main.py \
+    ../Melanite/Multiprocessing.py \
 
 ONYX_FILES = \
     ../Onyx/__init__.py \
@@ -253,7 +256,7 @@ clean:
 	rm -f in.py im.py io.py iv.py
 	rm -f j0p.py j1p.py jb.py jcr.py jma.py jmc.py jp.py
 	rm -f l.txt lr.txt
-	rm -f m m.txt m2c.py m2m.py map.py mc.py md.py mm.py mn.py
+	rm -f m m.txt m1c.py m1m.py m2c.py m2m.py m3m.py map.py mc.py md.py me.py mm.py mn.py
 	rm -f o.py oc.py od.py oe.py om.py
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py pel.py
 	rm -f   pj.py pk.py pkc.py pl.py pmo.py pn.py ps.py ps3.py pz.py
@@ -430,12 +433,15 @@ links:
 	ln -s ../OtherLicenses/README.txt                   lr.txt
 	ln -s Makefile                                      m
 	ln -s mine.txt                                      m.txt
+	ln -s ../Marble/Core.py                             m1c.py
+	ln -s ../Marble/Main.py                             m1m.py
 	ln -s ../Melanite/Core.py                           m2c.py
 	ln -s ../Melanite/Main.py                           m2m.py
 	ln -s ../Gem/Map.py                                 map.py
-	ln -s ../Marble/Core.py                             mc.py
-	ln -s ../Gem/Method.py                              md.py
-	ln -s ../Marble/Main.py                             mm.py
+	ln -s ../Melanite/Child.py                          mc.py
+	ln -s ../Melanite/Development.py                    md.py
+	ln -s ../Gem/Method.py                              me.py
+	ln -s ../Melanite/Multiprocessing.py                mm.py
 	ln -s ../Marble/NestedConjure.py                    mn.py
 	ln -s ../Gem/Output.py                              o.py
 	ln -s ../Onyx/Core.py                               oc.py

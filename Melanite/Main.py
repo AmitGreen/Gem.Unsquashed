@@ -22,10 +22,7 @@ def boot():
 @gem('Melanite.Main')
 def gem():
     require_gem('Melanite.Core')
-
-
-    def command_development():
-        raise_runtime_error('incomplete: command_development')
+    require_gem('Melanite.Development')
 
 
     @share
