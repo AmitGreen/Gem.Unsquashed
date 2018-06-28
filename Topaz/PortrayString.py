@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
 @gem('Topaz.PortrayString')
 def gem():
@@ -10,10 +10,7 @@ def gem():
     from Gem import N_N
 
 
-    def test_portray_raw_string__raw_string():
-        saw_2 = false
-
-        for row in [
+    portray_string_many = [
             #<A_A>
                 #
                 #   A_A: ra
@@ -1024,11 +1021,18 @@ def gem():
                     """'''"lots of ''\\''\\' - lots!"'''""",
                 ],
             #</Others>
-        ]:
+        ]
+
+
+    def test_portray_raw_string__raw_string():
+        saw_2 = false
+
+        for row in portray_string_many:
             if row is 0:
                 break
 
             if row is 2:
+                assert 0
                 saw_2 = true
                 continue
 
@@ -1050,6 +1054,8 @@ def gem():
             if saw_2:
                 continue
 
+            assert expected
+            
             if expected is not none:
                 actual = portray_string(s)
 
@@ -1277,3 +1283,12 @@ def gem():
         test_portray_raw_string__raw_string()
 
         line('PASSED: portray_raw_string')
+
+
+    #
+    #   Export `portray_string_many` which is used by "Marble/GenerateTestPortrayString.py", which is uses this
+    #   python table to generate a java table (also named `portray_string_many`).
+    #
+    export(
+            'portray_string_many',  portray_string_many,
+        )

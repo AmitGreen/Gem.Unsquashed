@@ -14,7 +14,7 @@ def gem():
             'thread_lock',              #   thread.LockType
         ))
 
-        
+
         def __init__(t, thread_number, thread_lock):
             t.thread_number     = thread_number
             t.thread_identifier = none

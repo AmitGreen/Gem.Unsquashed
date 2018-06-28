@@ -148,7 +148,7 @@ def gem():
     _  = 7
 
     #           '   \   L   "   ra  rq  pc  ps
-    E .overall (U,  K,  L,  T,  0)
+    E .overall (U,  K,  L,  T,  RA, RQ, PC, PS)
     K .overall (_,  K,  L,  _,  RA, RQ, KC, KS, is_K = 7)
     L .overall (_,  L,  L,  _,  0,  _,  KC, KS)
     N .overall (N,  K,  L,  N,  RA, RQ, PC, PS)
@@ -165,7 +165,7 @@ def gem():
     #
     #       A = '
     #       B = ''
-    #       C = ''
+    #       C = '''
     #
     #       K = \
     #       N = normal
@@ -393,13 +393,13 @@ def gem():
     #           '     \     N     "     ra  rq  kc  ks  pc  ps
     A_A  .setup(A_B,  A_K,  A_N,  AQ_Q, RQ, _)                              #   Has '; ends in '
     A_B  .setup(C_C,  A_K,  A_N,  AQ_Q, RQ, _)                              #   Has '; ends in ''
-    A_K  .setup(A_N,  A_N,  A_N,  A_N)                                      #   Has '; ends in \
+    A_K  .setup(A_N,  A_N,  A_N,  A_N,  0,  _,  _,  _,  0)                  #   Has '; ends in \
     A_N  .setup(A_A,  A_K,  A_N,  AQ_Q, RQ, _)                              #   Has '
 
     #           '     \     N     "     ra  rq  kc  ks  pc  ps
     AQ_A .setup(AQ_B, AQ_K, AQ_N, AQ_Q, RS, _,  KS, _,  KS, _)              #   Has ' & "; ends in '
     AQ_B .setup(CQ_C, AQ_K, AQ_N, AQ_Q, RS, _,  KS, _,  KS, _)              #   Has ' & "; ends in ''
-    AQ_K .setup(AQ_N, AQ_N, AQ_N, AQ_N, 0,  _,  KC, KS, PC, PS)             #   Has ' & "; ends in \
+    AQ_K .setup(AQ_N, AQ_N, AQ_N, AQ_N, 0,  _,  KC, KS, 0,  _)              #   Has ' & "; ends in \
     AQ_N .setup(AQ_A, AQ_K, AQ_N, AQ_Q, RC, RS, KC, KS, PC, PS)             #   Has ' & "
     AQ_Q .setup(AQ_A, AQ_K, AQ_N, AQ_R, RC, _,  KC, _,  KC, _)              #   Has ' & "; ends in "
     AQ_R .setup(AQ_A, AQ_K, AQ_N, AS_S, RC, _,  KC, _,  KC, _)              #   Has ' & "; ends in ""
@@ -407,7 +407,7 @@ def gem():
     #           '     \     N     "     ra  rq  kc  ks  pc  ps
     AS_A .setup(AS_B, AS_K, AS_N, AS_Q, 0,  _,  KS, _,  KS, _)              #   Has ' & """; ends in '
     AS_B .setup(CS_C, AS_K, AS_N, AS_Q, 0,  _,  KS, _,  KS, _)              #   Has ' & """; ends in ''
-    AS_K .setup(AS_N, AS_N, AS_N, AS_N, 0,  _,  KC, _,  PC, _)              #   Has ' & """; ends in \
+    AS_K .setup(AS_N, AS_N, AS_N, AS_N, 0,  _,  KC, _,  0,  _)              #   Has ' & """; ends in \
     AS_N .setup(AS_A, AS_K, AS_N, AS_Q, RC, _,  KC, _,  PC, _)              #   Has ' & """
     AS_Q .setup(AS_A, AS_K, AS_N, AS_R, RC, _,  KC, _,  KC, _)              #   Has ' & """; ends in "
     AS_R .setup(AS_A, AS_K, AS_N, AS_S, RC, _,  KC, _,  KC, _)              #   Has ' & """; ends in ""
@@ -417,14 +417,14 @@ def gem():
     C_A  .setup(C_B,  C_K,  C_N,  CQ_Q, RQ, _)                              #   Has '''; ends in '
     C_B  .setup(C_C,  C_K,  C_N,  CQ_Q, RQ, _)                              #   Has '''; ends in ''
     C_C  .setup(C_B,  C_K,  C_N,  CQ_Q, RQ, _,  F3 = -1)                    #   Has '''; ends in '''
-    C_K  .setup(C_N,  C_N,  C_N,  C_N)                                      #   Has '''; ends in \
+    C_K  .setup(C_N,  C_N,  C_N,  C_N,  0,  _,  _,  _,  0)                  #   Has '''; ends in \
     C_N  .setup(C_A,  C_K,  C_N,  CQ_Q, RQ, _)                              #   Has '''
 
     #           '     \     N     "     ra  rq  kc  ks  pc  ps
     CQ_A .setup(CQ_B, CQ_K, CQ_N, CQ_Q, RS, _,  KS, _,  PS, _)              #   Has ''' & "; ends in '
     CQ_B .setup(CQ_C, CQ_K, CQ_N, CQ_Q, RS, _,  KS, _,  PS, _)              #   Has ''' & "; ends in ''
     CQ_C .setup(CQ_B, CQ_K, CQ_N, CQ_Q, RS, _,  KS, _,  PS, _,  F3 = -1)    #   Has ''' & "; ends in '''
-    CQ_K .setup(CQ_N, CQ_N, CQ_N, CQ_N, 0,  _,  KS, _,  PS, _)              #   Has ''' & "; ends in \
+    CQ_K .setup(CQ_N, CQ_N, CQ_N, CQ_N, 0,  _,  KS, _,   0, _)              #   Has ''' & "; ends in \
     CQ_N .setup(CQ_A, CQ_K, CQ_N, CQ_Q, RS, _,  KS, _,  PS, _)              #   Has ''' & "
     CQ_Q .setup(CQ_A, CQ_K, CQ_N, CQ_R, 0,  _,  KC, _,  KC, _)              #   Has ''' & "; ends in "
     CQ_R .setup(CQ_A, CQ_K, CQ_N, CS_S, 0,  _,  KC, _,  KC, _)              #   Has ''' & "; ends in ""
@@ -443,13 +443,13 @@ def gem():
     N_N  .setup(A_A,  N_K,  N_N,  Q_Q,  RA, RQ)                             #   normal
 
     #           '     \     N     "     ra  rq  kc  ks  pc  ps
-    Q_K  .setup(Q_N,  Q_N,  Q_N,  Q_N)                                      #   Has "; ends in \
+    Q_K  .setup(Q_N,  Q_N,  Q_N,  Q_N,   0, _,  _,  _,  0)                  #   Has "; ends in \
     Q_N  .setup(AQ_A, Q_K,  Q_N,  Q_Q,  RA, _)                              #   Has "
     Q_Q  .setup(AQ_A, Q_K,  Q_N,  Q_R,  RA, _)                              #   Has "; ends in "
     Q_R  .setup(AQ_A, Q_K,  Q_N,  S_S,  RA, _)                              #   Has "; ends in ""
 
     #           '     \     N     "     ra  rq  kc  ks  pc  ps
-    S_K  .setup(S_N,  S_N,  S_N,  S_N)                                      #   Has """: ends in \
+    S_K  .setup(S_N,  S_N,  S_N,  S_N,   0, _,  _,  _,  0)                  #   Has """: ends in \
     S_N  .setup(AS_A, S_K,  S_N,  S_Q,  RA, _)                              #   Has """
     S_Q  .setup(AS_A, S_K,  S_N,  S_R,  RA, _)                              #   Has """; ends in "
     S_R  .setup(AS_A, S_K,  S_N,  S_S,  RA, _)                              #   Has """; ends in ""
@@ -475,7 +475,7 @@ def gem():
             if not a.is_portray_boring:
                 break
 
-            overall  = N
+            overall = N
         else:
             #line('portray_raw_string(%r): simple', s)
 
@@ -529,16 +529,15 @@ def gem():
             if a.is_apostrophe:
                 #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.A.name, state.name, state.A.name)
 
-                raw_state   = raw_state.A
-                state       = state.A
-                favorite   -= 1
-                C          += state.favorite_3
+                raw_state = raw_state.A
+                state     = state.A
+                favorite -= 1
+                C        += state.favorite_3
                 continue
 
             if a.is_backslash:
                 #line('  %r: backslash: %s => %s, %s => %s', c, raw_state.name, raw_state.K.name, state.name, state.N.name)
 
-                backslash = 7
                 overall   = overall.K
                 raw_state = raw_state.K
                 state     = state.N
@@ -547,10 +546,10 @@ def gem():
             if a.is_quotation_mark:
                 #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.Q.name, state.name, state.Q.name)
 
-                raw_state   = raw_state.Q
-                state       = state.Q
-                favorite   += 1
-                S          -= state.favorite_3
+                raw_state = raw_state.Q
+                state     = state.Q
+                favorite += 1
+                S        -= state.favorite_3
                 continue
 
             assert not a.is_printable
@@ -661,7 +660,6 @@ def gem():
             if a.is_backslash:
                 #line('  %r: backslash: %s => %s, %s => %s', c, raw_state.name, raw_state.K.name, state.name, state.N.name)
 
-                backslash = 7
                 overall   = overall.K
                 raw_state = raw_state.K
                 state     = state.N

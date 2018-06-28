@@ -1,6 +1,8 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
+set -e$-
+
 usage=false
 
 case $# in
@@ -38,14 +40,14 @@ Main_py=../Quartz/Main.py
 Main_py=../Dravite/Main.py
 Main_py=../Crystal/Main.py
 Main_py=../Topaz/Main.py
-Main_py=../Marble/Main.py
 Main_py=../Onyx/Main.py
 Main_py=../Diamond/Main.py
 Main_py=../Jasper/Main.py
 Main_py=../Sapphire/Main.py
 Main_py=../Melanite/Main.py
+Main_py=../Marble/Main.py
 
-show=2
+show=j
 all=false
 #all=true
 total=75
@@ -67,14 +69,21 @@ y
 y
 END
 
-
 echo -en '\E[H\E[J'
-tail -$total $show
+
+if [ -f $show ]; then
+    tail -$total $show
+else
+    touch $show
+fi
 
 while :
 do
     if [ $show = 2 -o $all = true ]; then
-        $command $option <$tmp1 >&$tmp2
+        if $command $option <$tmp1 >&$tmp2; then
+            :
+        fi
+
         #diff ../Topaz/GeneratedConjureDual.gpy ../Topaz/GeneratedConjureDual.py >>$tmp2
         #diff ../Topaz/GeneratedNew.gpy ../Topaz/GeneratedNew.py >>$tmp2
         if cmp -s $tmp2 2; then
@@ -89,29 +98,90 @@ do
         fi
     fi
 
-    if [ $all = true ]; then
-       $commandO $option <$tmp1 >&$tmp3
-       mv $tmp3 2o
+    if [ $show = 2o -o $all = true ]; then
+        if $commandO $option <$tmp1 >&$tmp3; then
+            :
+        fi
+
+        mv $tmp3 2o
     fi
    
     if [ $show = 3 -o $all = true ]; then
-       $command3 $option <$tmp1 >&$tmp3
-       if cmp -s $tmp3 3; then
-           :
-       else
-           mv $tmp3 3
+        $command3 $option <$tmp1 >&$tmp3
+        if cmp -s $tmp3 3; then
+            :
+        else
+            mv $tmp3 3
    
-           if [ $show = 3 ]; then
-               echo -en '\E[H\E[J'
-               tail -$total 3
-           fi
-       fi
+            if [ $show = 3 ]; then
+                echo -en '\E[H\E[J'
+                tail -$total 3
+            fi
+        fi
     fi
    
-    if [ $all = true ]; then
+    if [ $show = 3o -o $all = true ]; then
        $command3O $option <$tmp1 >&$tmp3
        mv $tmp3 3o
     fi
 
-   sleep 0.01
+    if [ $show = j ]; then
+        (
+            cd ../Jacinth
+
+            if mvn package -DskipTests; then
+                if java -ea -cp target/Jacinth-1.0-SNAPSHOT.jar link.crystal.Jacinth.Main; then
+                    :
+                fi
+            fi
+
+        ) <$tmp1 >&$tmp2
+
+        sed \
+            -e '/^\[ERROR\] COMPILATION ERROR : $/d' \
+            -e '/^\[ERROR\] $/d' \
+            -e '/^\[ERROR\] Failed to execute goal [-0-9.:a-z]* (default-compile) on project Jacinth: Compilation failure$/d' \
+            -e '/^\[ERROR\] For more information about the errors and possible solutions, please read the following articles:$/d' \
+            -e '/^\[ERROR\] -> \[Help 1\]/d' \
+            -e '/^\[ERROR\] \[Help 1\] http:\/\/cwiki\.apache\.org\/confluence\/display\/MAVEN\/MojoFailureException$/d' \
+            -e '/^\[ERROR\] Re-run Maven using the -X switch to enable full debug logging.$/d' \
+            -e '/^\[ERROR\] To see the full stack trace of the errors, re-run Maven with the -e switch\.$/d' \
+            -e '/^\[INFO\] 1 error$/d' \
+            -e '/^\[INFO\] 1 warning$/d' \
+            -e '/^\[INFO\] BUILD FAILURE$/d' \
+            -e '/^\[INFO\] Building Jacinth 1\.0-SNAPSHOT$/d' \
+            -e '/^\[INFO\] Building jar: /d' \
+            -e '/^\[INFO\] BUILD SUCCESS$/d' \
+            -e '/^\[INFO\] Changes detected - recompiling the module!$/d' \
+            -e '/^\[INFO\] Compiling [1-9][0-9]* source files to /d' \
+            -e '/^\[INFO\] Compiling 1 source file to /d' \
+            -e '/^\[INFO\] --- .* ---$/d' \
+            -e '/^\[INFO\] -*$/d' \
+            -e '/^\[INFO\] $/d' \
+            -e '/^\[INFO\] Final Memory: /d' \
+            -e '/^\[INFO\] Finished at: /d' \
+            -e '/^\[INFO\] Nothing to compile - all classes are up to date$/d' \
+            -e '/^\[INFO\] Scanning for projects\.\.\.$/d' \
+            -e '/^\[INFO\] skip non existing resourceDirectory /d' \
+            -e '/^\[INFO\] Tests are skipped\.$/d' \
+            -e '/^\[INFO\] Total time: /d' \
+            -e '/^\[WARNING\] COMPILATION WARNING : $/d' \
+            -e '/^\[WARNING\] File encoding has not been set, using platform encoding /d' \
+            -e '/^\[WARNING\] Some messages have been simplified; recompile with -Xdiags:verbose to get full output$/d' \
+            -e '/^\[WARNING\] Using platform encoding /d' \
+                <$tmp2 >$tmp3
+
+        cp $tmp2 /tmp/run.txt
+
+        if cmp -s $tmp3 j; then
+            :
+        else
+            mv $tmp3 j
+
+            echo -en '\E[H\E[J'
+            tail -$total j
+        fi
+    fi
+
+    sleep 0.01
 done

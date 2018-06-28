@@ -535,7 +535,7 @@ def gem():
 
     def fix_square(
             square, center,
-            
+
             north_ww = 0, north_west = 0, north = 0, north_east = 0, north_ee = 0, west = 0, east = 0,
     ):
         square.load_center     = load[center]
