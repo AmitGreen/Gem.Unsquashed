@@ -4,12 +4,12 @@
 package link.crystal.Mirror;
 
 
-import link.crystal.Silver.Proxy;
 import link.crystal.Silver.SilverModule;
+import link.crystal.Silver.SilverProxy;
 
 
 public class    Shape
-    extends     Proxy<Shape, link.crystal.Jacinth.Shape>
+    extends     SilverProxy<Shape, link.crystal.Jacinth.Shape>
 {
     //
     //  Constructor & Factory
@@ -26,6 +26,10 @@ public class    Shape
             SilverModule.initialize();
         }
 
+        Class<link.crystal.Jacinth.Shape>   meta = link.crystal.Jacinth.Shape.class;
+
+        System.out.println(meta.getCanonicalName());
+        System.out.println(meta.getTypeName());
         System.out.println("Mirror.shape: create(" + shape_name + ")");
 
         link.crystal.Jacinth.Shape                   client = link.crystal.Jacinth.Shape.create(shape_name);

@@ -71,8 +71,8 @@ JACINTH_FILES = \
     ../Jacinth/source/link/crystal/Jacinth/Main.java \
     ../Jacinth/source/link/crystal/Jacinth/Shape.java \
     ../Jacinth/source/link/crystal/Mirror/Shape.java \
-    ../Jacinth/source/link/crystal/Silver/Proxy.java \
     ../Jacinth/source/link/crystal/Silver/SilverModule.java \
+    ../Jacinth/source/link/crystal/Silver/SilverProxy.java \
     ../Jacinth/pom.xml
 
 JASPER_FILES = \
@@ -445,7 +445,7 @@ links:
 	ln -s ../Jasper/Pattern.py                                      jp.py
 	ln -s ../Jacinth/source/link/crystal/Jacinth/Shape.java         js.java
 	ln -s ../Jacinth/source/link/crystal/Silver/SilverModule.java   jsm.java
-	ln -s ../Jacinth/source/link/crystal/Silver/Proxy.java          jsp.java
+	ln -s ../Jacinth/source/link/crystal/Silver/SilverProxy.java    jsp.java
 	ln -s log.txt                                                   l.txt
 	ln -s ../OtherLicenses/README.txt                               lr.txt
 	ln -s Makefile                                                  m
