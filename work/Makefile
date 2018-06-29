@@ -34,14 +34,14 @@ DIAMOND_FILES = \
     ../Diamond/Thread.py
 
 GEM_FILES = \
-	../Gem/__init__.py \
+    ../Gem/__init__.py \
     ../Gem/Absent.py ../Gem/All.py ../Gem/Ascii.py \
-	../Gem/Boot.py \
+    ../Gem/Boot.py \
     ../Gem/Cache.py ../Gem/Cache2.py ../Gem/Cadence.py ../Gem/Codec.py ../Gem/ContextManager.py ../Gem/Core.py \
         ../Gem/CatchException.py \
-	../Gem/DelayedFileOutput.py ../Gem/DroveMany.py ../Gem/DumpCache.py \
-	../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
-	../Gem/FileOutput.py ../Gem/FileStatus.py \
+    ../Gem/DelayedFileOutput.py ../Gem/DroveMany.py ../Gem/DumpCache.py \
+    ../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
+    ../Gem/FileOutput.py ../Gem/FileStatus.py \
     ../Gem/Gaggle.py ../Gem/GarbageCollection.py ../Gem/Global.py \
     ../Gem/Hailstone.py ../Gem/Herd.py ../Gem/Herd_2.py ../Gem/Herd_3.py ../Gem/Herd_4567.py ../Gem/HerdMany.py \
         ../Gem/Horde.py \
@@ -103,7 +103,7 @@ ONYX_FILES = \
     ../Onyx/Main.py \
 
 PEARL_FILES = \
-	../Pearl/ActionWord.py ../Pearl/Atom.py \
+    ../Pearl/ActionWord.py ../Pearl/Atom.py \
     ../Pearl/Cache.py ../Pearl/ClassOrder.py ../Pearl/Comment.py ../Pearl/ConjureTreeComment.py ../Pearl/Core.py \
         ../Pearl/CreateMeta.py \
     ../Pearl/Line.py \
@@ -112,7 +112,7 @@ PEARL_FILES = \
     ../Pearl/TokenCache.py ../Pearl/Tokenizer.py ../Pearl/Token.py
 
 QUARTZ_FILES = \
-	../Quartz/Parse1.py \
+    ../Quartz/Parse1.py \
     ../Quartz/Core.py \
     ../Quartz/Main.py \
     ../Quartz/Line.py \
@@ -560,10 +560,10 @@ wc:
 	#  Excludes $(AGATE_FILES)
 	#
 	wc -l \
-		$(BERYL_FILES) \
-		$(CRYSTAL_FILES) \
-    	$(DIAMOND_FILES) \
-		$(DRAVITE_FILES) \
+        $(BERYL_FILES) \
+        $(CRYSTAL_FILES) \
+        $(DIAMOND_FILES) \
+        $(DRAVITE_FILES) \
         $(GEM_FILES) \
         $(IVORY_FILES) \
         $(JACINTH_FILES) \
@@ -571,7 +571,7 @@ wc:
         $(LICENSE_FILES) \
         $(MARBLE_FILES) \
         $(MELANITE_FILES) \
-		$(ONYX_FILES) \
+        $(ONYX_FILES) \
         $(QUARTZ_FILES) \
         $(SAPPHIRE_FILES) \
         $(SARDONYX_FILES) \
@@ -582,22 +582,21 @@ wc:
 
 test:
 	cat \
-		$(BERYL_FILES) \
-		$(CRYSTAL_FILES) \
-    	$(DIAMOND_FILES) \
-		$(DRAVITE_FILES) \
-		$(GEM_FILES) \
-		$(IVORY_FILES) \
-        $(JACINTH_FILES) \
-		$(JASPER_FILES) \
+        $(BERYL_FILES) \
+        $(CRYSTAL_FILES) \
+        $(DIAMOND_FILES) \
+        $(DRAVITE_FILES) \
+        $(GEM_FILES) \
+        $(IVORY_FILES) \
+        $(JASPER_FILES) \
         $(MELANITE_FILES) \
-		$(ONYX_FILES) \
-		$(PEARL_FILES) \
-		$(QUARTZ_FILES) \
-		$(SAPPHIRE_FILES) \
-		$(SARDONYX_FILES) \
-		$(TOPAZ_FILES) \
-		$(TREMOLITE_FILES) \
-		$(TREMOLITE_2_FILES) \
+        $(ONYX_FILES) \
+        $(PEARL_FILES) \
+        $(QUARTZ_FILES) \
+        $(SAPPHIRE_FILES) \
+        $(SARDONYX_FILES) \
+        $(TOPAZ_FILES) \
+        $(TREMOLITE_FILES) \
+        $(TREMOLITE_2_FILES) \
             >test.py
 	bash run.sh
