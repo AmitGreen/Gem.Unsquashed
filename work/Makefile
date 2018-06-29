@@ -595,6 +595,9 @@ wc:
         $(TREMOLITE_2_FILES) \
         $(WORK_FILES)
 
+wcj:
+	wc -l $(JACINTH_FILES)
+
 test:
 	cat \
         $(BERYL_FILES) \

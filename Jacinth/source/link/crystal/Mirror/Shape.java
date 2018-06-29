@@ -32,9 +32,8 @@ public class    Shape
 
         Class<link.crystal.Jacinth.Shape>   meta = link.crystal.Jacinth.Shape.class;
 
-        System.out.println(meta.getCanonicalName());
-        System.out.println(meta.getTypeName());
-        System.out.println("Mirror.shape: create(" + shape_name + ")");
+        line(meta.getCanonicalName());
+        line("Mirror.shape: create({0)", shape_name);
 
         link.crystal.Jacinth.Shape                   client = link.crystal.Jacinth.Shape.create(shape_name);
 

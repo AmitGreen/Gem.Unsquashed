@@ -4,10 +4,12 @@
 package link.crystal.Silver;
 
 
-import java.lang.Object;
+import link.crystal.Silver.SilverObject;
 
 
-public class    SilverProxy<PROXY extends SilverProxy, CLIENT extends Object> 
+public abstract class   SilverProxy<PROXY extends SilverProxy, CLIENT extends Object> 
+    extends             SilverObject
+//  extends             Object
 {
     //
     //  Members
@@ -16,10 +18,16 @@ public class    SilverProxy<PROXY extends SilverProxy, CLIENT extends Object>
 
 
     //
-    //  Constructor & Factory
+    //  Constructor
     //
     protected                           SilverProxy(CLIENT client)
     {
         this.client = client;
     }
+
+
+    //
+    //  Abstract SilverObject
+    //
+    public abstract Inspection          inspect();
 }
