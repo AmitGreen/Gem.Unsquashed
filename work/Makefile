@@ -68,13 +68,13 @@ IVORY_FILES = \
     ../Ivory/Main.py
 
 JACINTH_FILES = \
+    ../Jacinth/pom.xml \
     ../Jacinth/source/link/crystal/Jacinth/Main.java \
     ../Jacinth/source/link/crystal/Jacinth/Shape.java \
     ../Jacinth/source/link/crystal/Mirror/Shape.java \
     ../Jacinth/source/link/crystal/Silver/Inspection.java \
-    ../Jacinth/source/link/crystal/Silver/SilverModule.java \
-    ../Jacinth/source/link/crystal/Silver/SilverProxy.java \
-    ../Jacinth/pom.xml
+    ../Jacinth/source/link/crystal/Silver/SilverModule.java ../Jacinth/source/link/crystal/Silver/SilverObject.java \
+        ../Jacinth/source/link/crystal/Silver/SilverProxy.java
 
 JASPER_FILES = \
     ../Jasper/Core.py \
@@ -278,7 +278,7 @@ clean:
 	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f vi.java vm.java vm.py vp.java
+	rm -f vi.java vm.java vm.py vo.java vp.java
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
@@ -519,6 +519,7 @@ links:
 	ln -s ../Dravite/Main.py                                            vm.py
 	ln -s ../Jacinth/source/link/crystal/Silver/Inspection.java         vi.java
 	ln -s ../Jacinth/source/link/crystal/Silver/SilverModule.java       vm.java
+	ln -s ../Jacinth/source/link/crystal/Silver/SilverObject.java       vo.java
 	ln -s ../Jacinth/source/link/crystal/Silver/SilverProxy.java        vp.java
 	ln -s ../Sardonyx/Boot.py                                           xb.py
 	ln -s ../Sapphire/Transform.py                                      xf.py

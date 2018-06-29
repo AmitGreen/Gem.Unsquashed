@@ -4,16 +4,20 @@
 package link.crystal.Silver;
 
 
-import java.lang.Object;
+import link.crystal.Silver.SilverObject;
 
 
 public class    Inspection
-    extends     Object
+    extends     SilverObject
+//  extends     Object
 {
+    private static Inspection           inspection = Inspection.create("Silver.SilverObject");
+
+
     //
     //  Members
     //
-    private static String               simple_class_name;
+    private String                      simple_class_name;
 
 
     //
@@ -28,5 +32,14 @@ public class    Inspection
     public static Inspection            create(String simple_class_name)
     {
         return new Inspection(simple_class_name);
+    }
+
+
+    //
+    //  Abstract SilverObject
+    //
+    public Inspection                   inspect()
+    {
+        return /*static*/ this.inspection;
     }
 }

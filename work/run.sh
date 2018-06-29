@@ -122,25 +122,33 @@ do
     if [ $show = j ]; then
         (
             cd ../Jacinth
-            mvn package -DskipTests
-            java -cp target/Jacinth-1.0-SNAPSHOT.jar link.crystal.Jacinth.Main
+
+            if mvn package -DskipTests; then
+                :
+            fi
+
+            if java -cp target/Jacinth-1.0-SNAPSHOT.jar link.crystal.Jacinth.Main; then
+                :
+            fi
         ) <$tmp1 >&$tmp2
 
         sed \
-            -e '/^\[INFO\] *$/d' \
-            -e '/^\[INFO\] -*$/d' \
-            -e '/^\[INFO\] --- .* ---$/d' \
-            -e '/^\[INFO\] BUILD SUCCESS$/d' \
             -e '/^\[INFO\] Building Jacinth 1\.0-SNAPSHOT$/d' \
+            -e '/^\[INFO\] Building jar: /d' \
+            -e '/^\[INFO\] BUILD SUCCESS$/d' \
             -e '/^\[INFO\] Changes detected - recompiling the module!$/d' \
+            -e '/^\[INFO\] Compiling [1-9][0-9]* source files to /d' \
             -e '/^\[INFO\] Compiling 1 source file to /d' \
+            -e '/^\[INFO\] --- .* ---$/d' \
+            -e '/^\[INFO\] -*$/d' \
+            -e '/^\[INFO\] *$/d' \
             -e '/^\[INFO\] Final Memory: /d' \
             -e '/^\[INFO\] Finished at: /d' \
             -e '/^\[INFO\] Nothing to compile - all classes are up to date *$/d' \
             -e '/^\[INFO\] Scanning for projects\.\.\.$/d' \
+            -e '/^\[INFO\] skip non existing resourceDirectory /d' \
             -e '/^\[INFO\] Tests are skipped\.$/d' \
             -e '/^\[INFO\] Total time: /d' \
-            -e '/^\[INFO\] skip non existing resourceDirectory /d' \
             -e '/^\[WARNING\] File encoding has not been set, using platform encoding /d' \
             -e '/^\[WARNING\] Using platform encoding /d' \
                 <$tmp2 >$tmp3
@@ -155,5 +163,5 @@ do
         fi
     fi
 
-   sleep 0.01
+    sleep 0.01
 done
