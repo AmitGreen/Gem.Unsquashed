@@ -1,6 +1,8 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
 #
+set -e$-
+
 usage=false
 
 case $# in
@@ -45,7 +47,7 @@ Main_py=../Jasper/Main.py
 Main_py=../Sapphire/Main.py
 Main_py=../Melanite/Main.py
 
-show=2
+show=j
 all=false
 #all=true
 total=75
@@ -67,9 +69,13 @@ y
 y
 END
 
-
 echo -en '\E[H\E[J'
-tail -$total $show
+
+if [ -f $show ]; then
+    tail -$total $show
+else
+    touch $show
+fi
 
 while :
 do
@@ -89,28 +95,64 @@ do
         fi
     fi
 
-    if [ $all = true ]; then
+    if [ $show = 2 -o $all = true ]; then
        $commandO $option <$tmp1 >&$tmp3
        mv $tmp3 2o
     fi
    
     if [ $show = 3 -o $all = true ]; then
-       $command3 $option <$tmp1 >&$tmp3
-       if cmp -s $tmp3 3; then
-           :
-       else
-           mv $tmp3 3
+        $command3 $option <$tmp1 >&$tmp3
+        if cmp -s $tmp3 3; then
+            :
+        else
+            mv $tmp3 3
    
-           if [ $show = 3 ]; then
-               echo -en '\E[H\E[J'
-               tail -$total 3
-           fi
-       fi
+            if [ $show = 3 ]; then
+                echo -en '\E[H\E[J'
+                tail -$total 3
+            fi
+        fi
     fi
    
-    if [ $all = true ]; then
+    if [ $show = 3 -o $all = true ]; then
        $command3O $option <$tmp1 >&$tmp3
        mv $tmp3 3o
+    fi
+
+    if [ $show = j ]; then
+        (
+            cd ../Jacinth
+            mvn package -DskipTests
+            java -cp target/Jacinth-1.0-SNAPSHOT.jar link.crystal.Jacinth.Main
+        ) <$tmp1 >&$tmp2
+
+        sed \
+            -e '/^\[INFO\] *$/d' \
+            -e '/^\[INFO\] -*$/d' \
+            -e '/^\[INFO\] --- .* ---$/d' \
+            -e '/^\[INFO\] BUILD SUCCESS$/d' \
+            -e '/^\[INFO\] Building Jacinth 1\.0-SNAPSHOT$/d' \
+            -e '/^\[INFO\] Changes detected - recompiling the module!$/d' \
+            -e '/^\[INFO\] Compiling 1 source file to /d' \
+            -e '/^\[INFO\] Final Memory: /d' \
+            -e '/^\[INFO\] Finished at: /d' \
+            -e '/^\[INFO\] Nothing to compile - all classes are up to date *$/d' \
+            -e '/^\[INFO\] Scanning for projects\.\.\.$/d' \
+            -e '/^\[INFO\] Tests are skipped\.$/d' \
+            -e '/^\[INFO\] Total time: /d' \
+            -e '/^\[INFO\] skip non existing resourceDirectory /d' \
+            -e '/^\[WARNING\] File encoding has not been set, using platform encoding /d' \
+            -e '/^\[WARNING\] Using platform encoding /d' \
+                <$tmp2 >$tmp3
+
+        if cmp -s $tmp3 j; then
+            :
+        else
+            mv $tmp3 j
+
+            echo -en '\E[H\E[J'
+            tail -$total j
+        fi
     fi
 
    sleep 0.01
