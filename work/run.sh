@@ -124,15 +124,24 @@ do
             cd ../Jacinth
 
             if mvn package -DskipTests; then
-                :
+                if java -cp target/Jacinth-1.0-SNAPSHOT.jar link.crystal.Jacinth.Main; then
+                    :
+                fi
             fi
 
-            if java -cp target/Jacinth-1.0-SNAPSHOT.jar link.crystal.Jacinth.Main; then
-                :
-            fi
         ) <$tmp1 >&$tmp2
 
         sed \
+            -e '/^\[ERROR\] COMPILATION ERROR : $/d' \
+            -e '/^\[ERROR\] $/d' \
+            -e '/^\[ERROR\] Failed to execute goal [-0-9.:a-z]* (default-compile) on project Jacinth: Compilation failure$/d' \
+            -e '/^\[ERROR\] For more information about the errors and possible solutions, please read the following articles:$/d' \
+            -e '/^\[ERROR\] -> \[Help 1\]/d' \
+            -e '/^\[ERROR\] \[Help 1\] http:\/\/cwiki\.apache\.org\/confluence\/display\/MAVEN\/MojoFailureException$/d' \
+            -e '/^\[ERROR\] Re-run Maven using the -X switch to enable full debug logging.$/d' \
+            -e '/^\[ERROR\] To see the full stack trace of the errors, re-run Maven with the -e switch\.$/d' \
+            -e '/^\[INFO\] 1 error$/d' \
+            -e '/^\[INFO\] BUILD FAILURE$/d' \
             -e '/^\[INFO\] Building Jacinth 1\.0-SNAPSHOT$/d' \
             -e '/^\[INFO\] Building jar: /d' \
             -e '/^\[INFO\] BUILD SUCCESS$/d' \
@@ -141,10 +150,10 @@ do
             -e '/^\[INFO\] Compiling 1 source file to /d' \
             -e '/^\[INFO\] --- .* ---$/d' \
             -e '/^\[INFO\] -*$/d' \
-            -e '/^\[INFO\] *$/d' \
+            -e '/^\[INFO\] $/d' \
             -e '/^\[INFO\] Final Memory: /d' \
             -e '/^\[INFO\] Finished at: /d' \
-            -e '/^\[INFO\] Nothing to compile - all classes are up to date *$/d' \
+            -e '/^\[INFO\] Nothing to compile - all classes are up to date$/d' \
             -e '/^\[INFO\] Scanning for projects\.\.\.$/d' \
             -e '/^\[INFO\] skip non existing resourceDirectory /d' \
             -e '/^\[INFO\] Tests are skipped\.$/d' \
@@ -152,6 +161,8 @@ do
             -e '/^\[WARNING\] File encoding has not been set, using platform encoding /d' \
             -e '/^\[WARNING\] Using platform encoding /d' \
                 <$tmp2 >$tmp3
+
+        cp $tmp2 /tmp/x
 
         if cmp -s $tmp3 j; then
             :

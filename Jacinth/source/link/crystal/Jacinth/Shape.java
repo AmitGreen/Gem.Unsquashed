@@ -4,7 +4,11 @@
 package link.crystal.Jacinth;
 
 
+import link.crystal.Jacinth.JacinthObject;
+
+
 public class    Shape 
+    extends     JacinthObject
 {
     public final String                 shape_name;
 
@@ -26,6 +30,6 @@ public class    Shape
     
     public void                         skew()
     {
-        System.out.println("Shape.skew: " + this.shape_name);
+        line("Shape.skew: " + this.shape_name);
     }
 }

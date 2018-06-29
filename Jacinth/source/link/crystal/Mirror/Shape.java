@@ -6,11 +6,15 @@ package link.crystal.Mirror;
 
 import link.crystal.Silver.SilverModule;
 import link.crystal.Silver.SilverProxy;
+import link.crystal.Silver.Inspection;
 
 
 public class    Shape
     extends     SilverProxy<Shape, link.crystal.Jacinth.Shape>
 {
+    private static Inspection           inspection = Inspection.create("Mirror.Shape");
+
+
     //
     //  Constructor & Factory
     //
@@ -37,9 +41,18 @@ public class    Shape
         return new Shape(client);
     }
 
+
+    //
+    //  Abstract SilverObject
+    //
+    public Inspection                   inspect()
+    {
+        return /*static*/ this.inspection;
+    }
+
     
     //
-    //  Methods
+    //  Public
     //
     public void                         skew()
     {

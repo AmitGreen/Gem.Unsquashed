@@ -17,21 +17,23 @@ public class    Inspection
     //
     //  Members
     //
-    private String                      simple_class_name;
+    public String                       simple_class_name;
+    public boolean                      is_silver_proxy;
 
 
     //
     //  Constructor & Factory
     //
-    private                             Inspection(String simple_class_name)
+    private                             Inspection(String simple_class_name, boolean is_silver_proxy)
     {
         this.simple_class_name = simple_class_name;
+        this.is_silver_proxy   = is_silver_proxy;
     }
 
 
     public static Inspection            create(String simple_class_name)
     {
-        return new Inspection(simple_class_name);
+        return new Inspection(simple_class_name, false);
     }
 
 

@@ -69,6 +69,7 @@ IVORY_FILES = \
 
 JACINTH_FILES = \
     ../Jacinth/pom.xml \
+    ../Jacinth/source/link/crystal/Jacinth/JacinthObject.java \
     ../Jacinth/source/link/crystal/Jacinth/Main.java \
     ../Jacinth/source/link/crystal/Jacinth/Shape.java \
     ../Jacinth/source/link/crystal/Mirror/Shape.java \
@@ -266,7 +267,7 @@ clean:
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpr.py hpt.py hs.py
 	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
-	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
+	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jo.java jp.py js.java
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1c.py m1m.py m2c.py m2m.py m3m.py map.py mc.py md.py me.py mm.py mn.py
 	rm -f o.py oc.py od.py oe.py om.py
@@ -443,6 +444,7 @@ links:
 	ln -s ../Jasper/Main.py                                             jma.py
 	ln -s ../Jasper/Match.py                                            jmc.py
 	ln -s ../Jacinth/source/link/crystal/Mirror/Shape.java              jms.java
+	ln -s ../Jacinth/source/link/crystal/Jacinth/JacinthObject.java     jo.java
 	ln -s ../Jasper/Pattern.py                                          jp.py
 	ln -s ../Jacinth/source/link/crystal/Jacinth/Shape.java             js.java
 	ln -s log.txt                                                       l.txt
