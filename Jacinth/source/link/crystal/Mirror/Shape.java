@@ -1,4 +1,4 @@
-//   Copyright (c) 2018 Amit Green.  All rights reserved.
+//  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
 package link.crystal.Mirror;
@@ -33,7 +33,7 @@ public class    Shape
         Class<link.crystal.Jacinth.Shape>   meta = link.crystal.Jacinth.Shape.class;
 
         line(meta.getCanonicalName());
-        line("Mirror.shape: create({0)", shape_name);
+        line("Mirror.shape: create: {0}", shape_name);
 
         link.crystal.Jacinth.Shape                   client = link.crystal.Jacinth.Shape.create(shape_name);
 

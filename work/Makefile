@@ -69,7 +69,9 @@ IVORY_FILES = \
 
 JACINTH_FILES = \
     ../Jacinth/pom.xml \
-    ../Jacinth/source/link/crystal/Jacinth/JacinthObject.java \
+    ../Jacinth/source/link/crystal/Gem/GemObject.java \
+    ../Jacinth/source/link/crystal/Gem/MessageFormattable.java \
+    ../Jacinth/source/link/crystal/Gem/ParseFormat.java ../Jacinth/source/link/crystal/Gem/PortrayFunctions.java \
     ../Jacinth/source/link/crystal/Jacinth/Main.java \
     ../Jacinth/source/link/crystal/Jacinth/Shape.java \
     ../Jacinth/source/link/crystal/Mirror/Shape.java \
@@ -255,7 +257,7 @@ clean:
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
-	rm -f   gi.py gl.py gq.py gr.py gse.py gsq.py
+	rm -f   gi.py gl.py go.java gq.py gr.py gse.py gsq.py
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -267,11 +269,11 @@ clean:
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpr.py hpt.py hs.py
 	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
-	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jo.java jp.py js.java
+	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
-	rm -f m m.txt m1c.py m1m.py m2c.py m2m.py m3m.py map.py mc.py md.py me.py mm.py mn.py
+	rm -f m m.txt m1c.py m1m.py m2c.py m2m.py m3m.py map.py mc.py md.py me.py mf.java mm.py mn.py
 	rm -f o.py oc.py od.py oe.py om.py
-	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py pel.py
+	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py pel.py pf.java
 	rm -f   pj.py pk.py pkc.py pl.py pmo.py pn.py ps.py ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
@@ -280,7 +282,7 @@ clean:
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
 	rm -f vi.java vm.java vm.py vo.java vp.java
-	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
+	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yf.java yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
 	rm -f   zgn.gpy zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
@@ -348,6 +350,7 @@ links:
 	ln -s ../Gem/Horde.py                                               gho.py
 	ln -s ../Gem/Hailstone.py                                           gi.py
 	ln -s ../Gem/Global.py                                              gl.py
+	ln -s ../Jacinth/source/link/crystal/Gem/GemObject.java             go.java
 	ln -s ../Gem/LiquidMap.py                                           gq.py
 	ln -s ../Gem/Rabble.py                                              gr.py
 	ln -s ../Gem/Series.py                                              gse.py
@@ -444,7 +447,6 @@ links:
 	ln -s ../Jasper/Main.py                                             jma.py
 	ln -s ../Jasper/Match.py                                            jmc.py
 	ln -s ../Jacinth/source/link/crystal/Mirror/Shape.java              jms.java
-	ln -s ../Jacinth/source/link/crystal/Jacinth/JacinthObject.java     jo.java
 	ln -s ../Jasper/Pattern.py                                          jp.py
 	ln -s ../Jacinth/source/link/crystal/Jacinth/Shape.java             js.java
 	ln -s log.txt                                                       l.txt
@@ -459,6 +461,7 @@ links:
 	ln -s ../Melanite/Child.py                                          mc.py
 	ln -s ../Melanite/Development.py                                    md.py
 	ln -s ../Gem/Method.py                                              me.py
+	ln -s ../Jacinth/source/link/crystal/Gem/MessageFormattable.java    mf.java
 	ln -s ../Melanite/Multiprocessing.py                                mm.py
 	ln -s ../Marble/NestedConjure.py                                    mn.py
 	ln -s ../Gem/Output.py                                              o.py
@@ -476,6 +479,7 @@ links:
 	ln -s ../Pearl/ClassOrder.py                                        pco.py
 	ln -s ../Pearl/Core.py                                              pcr.py
 	ln -s ../Pearl/Elemental.py                                         pel.py
+	ln -s ../Jacinth/source/link/crystal/Gem/ParseFormat.java           pf.java
 	ln -s ../Pearl/ConjureTreeComment.py                                pj.py
 	ln -s ../Pearl/Token.py                                             pk.py
 	ln -s ../Pearl/TokenCache.py                                        pkc.py
@@ -531,6 +535,7 @@ links:
 	ln -s ../Crystal/CardRoot.py                                        ycb.py
 	ln -s ../Crystal/Core.py                                            ycr.py
 	ln -s ../Crystal/Deck_7.py                                          yd7.py
+	ln -s ../Jacinth/source/link/crystal/Gem/PortrayFunctions.java      yf.java
 	ln -s ../Crystal/Game.py                                            yg.py
 	ln -s ../Crystal/ChessKing.py                                       yki.py
 	ln -s ../Crystal/ChessKnight.py                                     ykn.py

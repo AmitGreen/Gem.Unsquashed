@@ -1,4 +1,4 @@
-//   Copyright (c) 2018 Amit Green.  All rights reserved.
+//  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
 package link.crystal.Jacinth;
