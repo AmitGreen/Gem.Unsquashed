@@ -1,7 +1,7 @@
 //   Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package crystal.link;
+package crystal.link.Jacinth;
 
 
 public class    Shape 
@@ -18,7 +18,8 @@ public class    Shape
     }
 
 
-    public static Shape                 create(String shape_name) {
+    public static Shape                 create(String shape_name)
+    {
         return new Shape(shape_name);
     }
 

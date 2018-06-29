@@ -1,10 +1,10 @@
 //   Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package crystal.link;
+package crystal.link.Jacinth;
 
 
-import crystal.link.Shape;
+import crystal.link.Jacinth.Shape;
 
 
 public class    Main 
