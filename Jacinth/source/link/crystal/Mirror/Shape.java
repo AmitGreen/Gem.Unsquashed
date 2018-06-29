@@ -5,6 +5,7 @@ package link.crystal.Mirror;
 
 
 import link.crystal.Silver.Proxy;
+import link.crystal.Silver.SilverModule;
 
 
 public class    Shape
@@ -21,6 +22,10 @@ public class    Shape
 
     public static Shape                 create(String shape_name)
     {
+        if (SilverModule.startup) {
+            SilverModule.initialize();
+        }
+
         System.out.println("Mirror.shape: create(" + shape_name + ")");
 
         link.crystal.Jacinth.Shape                   client = link.crystal.Jacinth.Shape.create(shape_name);
