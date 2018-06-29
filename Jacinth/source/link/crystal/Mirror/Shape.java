@@ -4,17 +4,18 @@
 package link.crystal.Mirror;
 
 
-public class    Shape 
+import link.crystal.Silver.Proxy;
+
+
+public class    Shape
+    extends     Proxy<Shape, link.crystal.Jacinth.Shape>
 {
-    public final link.crystal.Jacinth.Shape          client;
-
-
     //
     //  Constructor & Factory
     //
     private                             Shape(link.crystal.Jacinth.Shape client)
     {
-        this.client = client;
+        super(client);
     }
 
 
@@ -28,6 +29,9 @@ public class    Shape
     }
 
     
+    //
+    //  Methods
+    //
     public void                         skew()
     {
         link.crystal.Jacinth.Shape                   client = this.client;
