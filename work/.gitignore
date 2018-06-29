@@ -5,6 +5,7 @@
 [23]o
 Agreements/
 files
+*.java
 lr.txt
 l.txt
 m

@@ -67,6 +67,10 @@ DRAVITE_FILES = \
 IVORY_FILES = \
     ../Ivory/Main.py
 
+JACINTH_FILES = \
+    ../Jacinth/source/Main.java \
+    ../Jacinth/source/Shape.java
+
 JASPER_FILES = \
     ../Jasper/Core.py \
     ../Jasper/Main.py \
@@ -212,6 +216,7 @@ FILES = \
     $(DRAVITE_FILES) \
     $(GEM_FILES) \
     $(IVORY_FILES) \
+    $(JACINTH_FILES) \
     $(JASPER_FILES) \
     $(LICENSE_FILES) \
     $(MARBLE_FILES) \
@@ -254,7 +259,7 @@ clean:
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpr.py hpt.py hs.py
 	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
 	rm -f in.py im.py io.py iv.py
-	rm -f j0p.py j1p.py jb.py jcr.py jma.py jmc.py jp.py
+	rm -f j0p.py j1p.py jb.py jcr.py jm.java jma.py jmc.py jp.py js.java
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1c.py m1m.py m2c.py m2m.py m3m.py map.py mc.py md.py me.py mm.py mn.py
 	rm -f o.py oc.py od.py oe.py om.py
@@ -426,9 +431,11 @@ links:
 	ln -s ../Jasper/Parse1.py                           j1p.py
 	ln -s ../Junk/Boot.py                               jb.py
 	ln -s ../Jasper/Core.py                             jcr.py
+	ln -s ../Jacinth/source/Main.java                   jm.java
 	ln -s ../Jasper/Main.py                             jma.py
 	ln -s ../Jasper/Match.py                            jmc.py
 	ln -s ../Jasper/Pattern.py                          jp.py
+	ln -s ../Jacinth/source/Shape.java                  js.java
 	ln -s log.txt                                       l.txt
 	ln -s ../OtherLicenses/README.txt                   lr.txt
 	ln -s Makefile                                      m
@@ -559,6 +566,7 @@ wc:
 		$(DRAVITE_FILES) \
         $(GEM_FILES) \
         $(IVORY_FILES) \
+        $(JACINTH_FILES) \
         $(JASPER_FILES) \
         $(LICENSE_FILES) \
         $(MARBLE_FILES) \
@@ -580,6 +588,7 @@ test:
 		$(DRAVITE_FILES) \
 		$(GEM_FILES) \
 		$(IVORY_FILES) \
+        $(JACINTH_FILES) \
 		$(JASPER_FILES) \
         $(MELANITE_FILES) \
 		$(ONYX_FILES) \
