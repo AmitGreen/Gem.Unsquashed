@@ -4,11 +4,12 @@
 package link.crystal.Silver;
 
 
-import link.crystal.Silver.SilverObject;
+import link.crystal.Gem.Inspection;
+import link.crystal.Gem.GemObject;
 
 
 public abstract class   SilverProxy<PROXY extends SilverProxy, CLIENT extends Object> 
-    extends             SilverObject
+    extends             GemObject
 //  extends             Object
 {
     //
@@ -27,7 +28,7 @@ public abstract class   SilverProxy<PROXY extends SilverProxy, CLIENT extends Ob
 
 
     //
-    //  Abstract SilverObject
+    //  Abstract GemObject
     //
     public abstract Inspection          inspect();
 }

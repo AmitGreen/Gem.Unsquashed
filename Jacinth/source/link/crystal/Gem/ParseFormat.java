@@ -49,13 +49,23 @@ public abstract class   ParseFormat
         boolean                         found = braces_matcher.find();
 
         if ( ! found) {
-            throw new RuntimeException("SilverObject.line: format string does not contain the opening brace '{': " + portray_string(format));
+            throw new RuntimeException(
+                    (
+                          "ParseFormat.parse_format: format string does not contain the opening brace '{': "
+                        + portray_string(format)
+                    )
+                );
         }
 
         int                             end_2 = braces_matcher.end(2);
 
         if (end_2 == -1) {
-            throw new RuntimeException("SilverObject.line: format string is malformed': " + portray_string(format));
+            throw new RuntimeException(
+                    (
+                          "ParseFormat.parse_format format string is malformed': "
+                        + portray_string(format)
+                    )
+                );
         }
 
         int                             start        = braces_matcher.start();
@@ -81,7 +91,12 @@ public abstract class   ParseFormat
         found = braces_matcher.find();
 
         if (found) {
-            throw new RuntimeException("SilverObject.line: unimplemented, more than one '{#}': " + portray_string(format));
+            throw new RuntimeException(
+                    (
+                          "ParseFormat.parse_format unimplemented, more than one '{#}': "
+                        + portray_string(format)
+                    )
+                );
         }
 
         if (end_2 == format.length()) {

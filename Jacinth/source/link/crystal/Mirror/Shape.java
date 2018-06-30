@@ -4,9 +4,9 @@
 package link.crystal.Mirror;
 
 
+import link.crystal.Gem.Inspection;
 import link.crystal.Silver.SilverModule;
 import link.crystal.Silver.SilverProxy;
-import link.crystal.Silver.Inspection;
 
 
 public class    Shape
@@ -42,7 +42,7 @@ public class    Shape
 
 
     //
-    //  Abstract SilverObject
+    //  Abstract GemObject
     //
     public Inspection                   inspect()
     {

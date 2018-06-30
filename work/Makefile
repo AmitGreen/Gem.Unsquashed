@@ -70,6 +70,8 @@ IVORY_FILES = \
 JACINTH_FILES = \
     ../Jacinth/pom.xml \
     ../Jacinth/source/link/crystal/Gem/GemObject.java \
+    ../Jacinth/source/link/crystal/Gem/Inspection.java \
+    ../Jacinth/source/link/crystal/Gem/PermenantString.java \
     ../Jacinth/source/link/crystal/Gem/MessageFormattable.java \
         ../Jacinth/source/link/crystal/Gem/MessageFormatter_1.java \
         ../Jacinth/source/link/crystal/Gem/MessageFormatter_1__Suffix.java \
@@ -77,8 +79,7 @@ JACINTH_FILES = \
     ../Jacinth/source/link/crystal/Jacinth/Main.java \
     ../Jacinth/source/link/crystal/Jacinth/Shape.java \
     ../Jacinth/source/link/crystal/Mirror/Shape.java \
-    ../Jacinth/source/link/crystal/Silver/Inspection.java \
-    ../Jacinth/source/link/crystal/Silver/SilverModule.java ../Jacinth/source/link/crystal/Silver/SilverObject.java \
+    ../Jacinth/source/link/crystal/Silver/SilverModule.java \
         ../Jacinth/source/link/crystal/Silver/SilverProxy.java
 
 JASPER_FILES = \
@@ -259,7 +260,7 @@ clean:
 	rm -f ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
-	rm -f   gi.py gl.py go.java gq.py gr.py gse.py gsq.py
+	rm -f   gi.py gi.java gl.py go.java gq.py gr.py gse.py gsq.py
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -276,14 +277,14 @@ clean:
 	rm -f m m.txt m1c.py m1m.py m2c.py m2m.py m3m.py map.py mc.py md.py me.py mf.java mf1.java mf1s.java mm.py mn.py
 	rm -f o.py oc.py od.py oe.py om.py
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py pel.py pf.java
-	rm -f   pj.py pk.py pkc.py pl.py pmo.py pn.py ps.py ps3.py pz.py
+	rm -f   pj.py pk.py pkc.py pl.py pmo.py pn.py ps.py ps.java ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f sl.py so.py ssio.py sy.py
 	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
-	rm -f vi.java vm.java vm.py vo.java vp.java
+	rm -f vm.java vm.py vp.java
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yf.java yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
@@ -351,6 +352,7 @@ links:
 	ln -s ../Gem/HerdMany.py                                                    ghm.py
 	ln -s ../Gem/Horde.py                                                       gho.py
 	ln -s ../Gem/Hailstone.py                                                   gi.py
+	ln -s ../Jacinth/source/link/crystal/Gem/Inspection.java                    gi.java
 	ln -s ../Gem/Global.py                                                      gl.py
 	ln -s ../Jacinth/source/link/crystal/Gem/GemObject.java                     go.java
 	ln -s ../Gem/LiquidMap.py                                                   gq.py
@@ -491,6 +493,7 @@ links:
 	ln -s ../Pearl/Method.py                                                    pmo.py
 	ln -s ../Pearl/Nub.py                                                       pn.py
 	ln -s ../Gem/PortrayString.py                                               ps.py
+	ln -s ../Jacinth/source/link/crystal/Gem/PermenantString.java               ps.java
 	ln -s ../Junk/PortrayString_3.py                                            ps3.py
 	ln -s ../Pearl/Tokenizer.py                                                 pz.py
 	ln -s ../Quartz/Parse1.py                                                   q1p.py
@@ -527,9 +530,7 @@ links:
 	ln -s ../Tremolite/PatternWrapper.py                                        tw.py
 	ln -s ../Tremolite/Compile.py                                               tx.py
 	ln -s ../Dravite/Main.py                                                    vm.py
-	ln -s ../Jacinth/source/link/crystal/Silver/Inspection.java                 vi.java
 	ln -s ../Jacinth/source/link/crystal/Silver/SilverModule.java               vm.java
-	ln -s ../Jacinth/source/link/crystal/Silver/SilverObject.java               vo.java
 	ln -s ../Jacinth/source/link/crystal/Silver/SilverProxy.java                vp.java
 	ln -s ../Sardonyx/Boot.py                                                   xb.py
 	ln -s ../Sapphire/Transform.py                                              xf.py

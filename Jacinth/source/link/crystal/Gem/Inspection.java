@@ -1,17 +1,17 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Silver;
+package link.crystal.Gem;
 
 
-import link.crystal.Silver.SilverObject;
+import link.crystal.Gem.GemObject;
 
 
 public class    Inspection
-    extends     SilverObject
+    extends     GemObject
 //  extends     Object
 {
-    private static Inspection           inspection = Inspection.create("Silver.SilverObject");
+    private static Inspection           inspection = Inspection.create("Gem.Inspection");
 
 
     //
@@ -38,7 +38,7 @@ public class    Inspection
 
 
     //
-    //  Abstract SilverObject
+    //  Abstract GemObject
     //
     public Inspection                   inspect()
     {
