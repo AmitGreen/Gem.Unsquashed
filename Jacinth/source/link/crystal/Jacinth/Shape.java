@@ -4,11 +4,11 @@
 package link.crystal.Jacinth;
 
 
-import link.crystal.Jacinth.JacinthObject;
+import link.crystal.Gem.GemObject;
 
 
 public class    Shape 
-    extends     JacinthObject
+    extends     GemObject
 {
     public final String                 shape_name;
 

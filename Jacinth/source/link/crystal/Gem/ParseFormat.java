@@ -5,18 +5,20 @@ package link.crystal.Gem;
 
 
 import java.io.PrintStream;
-import java.lang.Object;
 import java.lang.RuntimeException;
 import java.lang.String;
 import java.lang.StringBuilder;
 import java.lang.System;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import link.crystal.Gem.GemObject;
 import link.crystal.Gem.MessageFormattable;
+import link.crystal.Gem.MessageFormatter_1;
+import link.crystal.Gem.MessageFormatter_1__Suffix;
 
 
 public abstract class   ParseFormat
-    extends             Object
+    extends             GemObject
 {
     //
     //  Public Static
@@ -70,10 +72,10 @@ public abstract class   ParseFormat
             start_s = format.substring(0, start);
         }
 
-        line("start: " + start);
-        line("start_s: " + portray_string(start_s));
-        line("group: " + Integer.toString(first_number));
-        line("end_2: " + Integer.toString(end_2));
+        //line("start: " + start);
+        //line("start_s: " + portray_string(start_s));
+        //line("group: " + Integer.toString(first_number));
+        //line("end_2: " + Integer.toString(end_2));
         //line("end_2: " + portray_string(end_s));
 
         found = braces_matcher.find();
@@ -86,61 +88,7 @@ public abstract class   ParseFormat
             return MessageFormatter_1.create(start_s);
         }
 
-        String                          end_s = format.substring(end_2);
 
-        throw new RuntimeException("SilverObject.line: #2");
-    }
-}
-
-
-class           MessageFormatter_1
-    extends     Object
-    implements  MessageFormattable
-{
-    //
-    //  Members
-    //
-    private String                      prefix;                         //  May be `null`
-
-
-    //
-    //  Constructor & Factory
-    //
-    private                             MessageFormatter_1(String prefix)
-    {
-        this.prefix = prefix;
-    }
-
-
-    static public MessageFormatter_1    create(String prefix)
-    {
-        return new MessageFormatter_1(prefix);
-    }
-
-
-    //
-    //  Interface MessageFormattable
-    //
-    public String                       arrange(Object first_argument, Object ... other_arguments)
-    {
-        if (other_arguments.length != 0) {
-            throw new RuntimeException(
-                    (
-                          "MessageFormatter_1.arrange: "
-                        + Integer.toString(1 + other_arguments.length)
-                        + " arguments given (expected 1)"
-                    )
-                );
-        }
-
-        String                          prefix = this.prefix;
-
-        String                          first = ParseFormat.portray(first_argument);
-
-        if (prefix == null) {
-            return first;
-        }
-
-        return prefix + first;
+        return MessageFormatter_1__Suffix.create(start_s, format.substring(end_2));
     }
 }

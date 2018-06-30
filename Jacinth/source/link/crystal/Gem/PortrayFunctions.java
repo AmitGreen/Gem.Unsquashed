@@ -8,10 +8,11 @@ import java.lang.Object;
 import java.lang.RuntimeException;
 import java.lang.String;
 import java.lang.StringBuilder;
+import link.crystal.Gem.GemObject;
 
 
 public abstract class   PortrayFunctions
-    extends             Object
+    extends             GemObject
 {
     //
     //  Public Static
@@ -19,6 +20,10 @@ public abstract class   PortrayFunctions
     public static String                portray(Object v)
     {
         Class<?>                        v_class = v.getClass();
+
+        if (v_class == String$class) {
+            return (String) v;
+        }
 
         throw new RuntimeException("unknown class: " + v_class.getSimpleName());
 

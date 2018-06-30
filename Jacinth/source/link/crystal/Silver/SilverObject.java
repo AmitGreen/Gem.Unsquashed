@@ -9,8 +9,9 @@ import java.lang.Object;
 import java.lang.RuntimeException;
 import java.lang.String;
 import java.lang.System;
-import link.crystal.Silver.Inspection;
+import link.crystal.Gem.MessageFormattable;
 import link.crystal.Gem.ParseFormat;
+import link.crystal.Silver.Inspection;
 
 
 public abstract class   SilverObject
@@ -45,6 +46,8 @@ public abstract class   SilverObject
 
     public static void                  line(String format, Object first_argument, Object ... other_arguments)
     {
-        ParseFormat.parse_format(format);
+        MessageFormattable              formattable = ParseFormat.parse_format(format);
+
+        formattable.line(first_argument, other_arguments);
     }
 }
