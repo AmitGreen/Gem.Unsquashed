@@ -4,8 +4,8 @@
 package link.crystal.Jacinth;
 
 
+import link.crystal.Gem.Core.PermenantString;
 import link.crystal.Mirror.Shape;
-import link.crystal.Gem.PermenantString;
 
 
 public class    Main 

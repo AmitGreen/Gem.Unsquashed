@@ -71,10 +71,13 @@ J = ../Jacinth/source/link/crystal
 
 JACINTH_FILES = \
     ../Jacinth/pom.xml \
-    $J/Gem/GemObject.java \
-    $J/Gem/Inspection.java $J/Gem/Interface/Inspectable.java $J/Gem/Interface/MessageFormattable.java \
+    $J/Gem/Core/GemObject.java \
+    $J/Gem/Core/Inspection.java \
+    $J/Gem/Core/ParseFormat.java \
+    $J/Gem/Core/PermenantString.java \
+    $J/Gem/Interface/Inspectable.java $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/MessageFormatter_1.java $J/Gem/MessageFormatter_1__Suffix.java \
-    $J/Gem/ParseFormat.java $J/Gem/PermenantString.java $J/Gem/PortrayFunctions.java \
+    $J/Gem/PortrayFunctions.java \
     $J/Jacinth/Main.java \
     $J/Jacinth/Shape.java \
     $J/Mirror/Shape.java \
@@ -351,9 +354,9 @@ links:
 	ln -s ../Gem/HerdMany.py                                                    ghm.py
 	ln -s ../Gem/Horde.py                                                       gho.py
 	ln -s ../Gem/Hailstone.py                                                   gi.py
-	ln -s $J/Gem/Inspection.java                                                gi.java
+	ln -s $J/Gem/Core/Inspection.java                                           gi.java
 	ln -s ../Gem/Global.py                                                      gl.py
-	ln -s $J/Gem/GemObject.java                                                 go.java
+	ln -s $J/Gem/Core/GemObject.java                                            go.java
 	ln -s ../Gem/LiquidMap.py                                                   gq.py
 	ln -s ../Gem/Rabble.py                                                      gr.py
 	ln -s ../Gem/Series.py                                                      gse.py
@@ -485,7 +488,7 @@ links:
 	ln -s ../Pearl/ClassOrder.py                                                pco.py
 	ln -s ../Pearl/Core.py                                                      pcr.py
 	ln -s ../Pearl/Elemental.py                                                 pel.py
-	ln -s $J/Gem/ParseFormat.java                                               pf.java
+	ln -s $J/Gem/Core/ParseFormat.java                                          pf.java
 	ln -s ../Pearl/ConjureTreeComment.py                                        pj.py
 	ln -s ../Pearl/Token.py                                                     pk.py
 	ln -s ../Pearl/TokenCache.py                                                pkc.py
@@ -493,7 +496,7 @@ links:
 	ln -s ../Pearl/Method.py                                                    pmo.py
 	ln -s ../Pearl/Nub.py                                                       pn.py
 	ln -s ../Gem/PortrayString.py                                               ps.py
-	ln -s $J/Gem/PermenantString.java                                           ps.java
+	ln -s $J/Gem/Core/PermenantString.java                                      ps.java
 	ln -s ../Junk/PortrayString_3.py                                            ps3.py
 	ln -s ../Pearl/Tokenizer.py                                                 pz.py
 	ln -s ../Quartz/Parse1.py                                                   q1p.py

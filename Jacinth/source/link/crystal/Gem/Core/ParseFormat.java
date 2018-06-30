@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Gem;
+package link.crystal.Gem.Core;
 
 
 import java.lang.RuntimeException;
@@ -9,7 +9,7 @@ import java.lang.String;
 import java.lang.StringBuilder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import link.crystal.Gem.GemObject;
+import link.crystal.Gem.Core.GemObject;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.MessageFormatter_1;
 import link.crystal.Gem.MessageFormatter_1__Suffix;

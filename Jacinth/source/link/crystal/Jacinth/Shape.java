@@ -4,8 +4,8 @@
 package link.crystal.Jacinth;
 
 
-import link.crystal.Gem.GemObject;
-import link.crystal.Gem.Inspection;
+import link.crystal.Gem.Core.GemObject;
+import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 
 

@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Gem;
+package link.crystal.Gem.Core;
 
 
 import java.lang.RuntimeException;
@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import link.crystal.Gem.GemObject;
-import link.crystal.Gem.Inspection;
+import link.crystal.Gem.Core.GemObject;
+import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 
 
@@ -19,7 +19,7 @@ public class    PermenantString
     extends     HashMap<String, String>
     implements  Inspectable<Inspection>//,
 {
-    private static Inspection           inspection = Inspection.create("Gem.PermenantString");
+    private static Inspection           inspection = Inspection.create("Gem.Core.PermenantString");
 
 
     //

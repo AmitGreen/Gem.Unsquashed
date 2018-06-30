@@ -6,13 +6,14 @@ package link.crystal.Gem;
 
 import java.lang.RuntimeException;
 import java.lang.String;
-import link.crystal.Gem.GemObject;
-import link.crystal.Gem.Inspection;
+import link.crystal.Gem.Core.GemObject;
+import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 
 
-class           MessageFormatter_1
+public class    MessageFormatter_1
     extends     GemObject<Inspection>
 //  extends     Object
     implements  MessageFormattable,

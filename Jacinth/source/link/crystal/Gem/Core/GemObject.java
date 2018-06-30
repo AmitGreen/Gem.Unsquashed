@@ -1,20 +1,20 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Gem;
+package link.crystal.Gem.Core;
 
 
 import java.io.PrintStream;
 import java.lang.Class;
 import java.lang.Object;
 import java.lang.String;
-import java.lang.String;
 import java.lang.System;
-import link.crystal.Gem.Inspection;
+import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.ParseFormat;
+import link.crystal.Gem.Core.PermenantString;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.ParseFormat;
-import link.crystal.Gem.PermenantString;
+import link.crystal.Gem.PortrayFunctions;
 
 
 public abstract class   GemObject<INSPECTION extends Inspection>

@@ -4,7 +4,7 @@
 package link.crystal.Mirror;
 
 
-import link.crystal.Gem.Inspection;
+import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Silver.SilverModule;
 import link.crystal.Silver.SilverProxy;

@@ -1,10 +1,10 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Gem;
+package link.crystal.Gem.Core;
 
 
-import link.crystal.Gem.GemObject;
+import link.crystal.Gem.Core.GemObject;
 import link.crystal.Gem.Interface.Inspectable;
 
 
