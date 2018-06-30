@@ -13,12 +13,11 @@ import link.crystal.Gem.GemObject;
 import link.crystal.Gem.MessageFormattable;
 import link.crystal.Gem.MessageFormatter_1;
 import link.crystal.Gem.MessageFormatter_1__Suffix;
-import link.crystal.Gem.Interface.Inspectable;
 
 
 public abstract class   ParseFormat
     extends             GemObject<Inspection>
-    implements          Inspectable<Inspection>//,                      //  Via GemObject
+//  extends             Object
 {
     //
     //  Public Static

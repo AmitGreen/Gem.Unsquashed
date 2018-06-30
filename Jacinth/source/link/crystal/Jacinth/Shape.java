@@ -11,6 +11,7 @@ import link.crystal.Gem.Interface.Inspectable;
 
 public class    Shape 
     extends     GemObject<Inspection>
+//  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via GemObject
 {
     private static Inspection           inspection = Inspection.create("Shape");

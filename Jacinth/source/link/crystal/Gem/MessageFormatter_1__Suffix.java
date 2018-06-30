@@ -14,6 +14,7 @@ import link.crystal.Gem.MessageFormattable;
 
 class           MessageFormatter_1__Suffix
     extends     GemObject<Inspection>
+//  extends     Object
     implements  MessageFormattable,
                 Inspectable<Inspection>//,                              //  Via GemObject
 {

@@ -13,6 +13,7 @@ import link.crystal.Gem.GemObject;
 
 public abstract class   PortrayFunctions
     extends             GemObject<Inspection>
+//  extends             Object
 {
     //
     //  Public Static

@@ -35,7 +35,9 @@ public class    Inspection
 
     public static Inspection            create(String simple_class_name)
     {
-        return new Inspection(simple_class_name, false);
+        String                          interned__simple_class_name = intern_permenant_string(simple_class_name);
+
+        return new Inspection(interned__simple_class_name, false);
     }
 
 
