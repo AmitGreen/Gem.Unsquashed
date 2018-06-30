@@ -9,7 +9,7 @@ import java.lang.String;
 import link.crystal.Gem.GemObject;
 import link.crystal.Gem.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.MessageFormattable;
+import link.crystal.Gem.Interface.MessageFormattable;
 
 
 class           MessageFormatter_1__Suffix
@@ -24,23 +24,26 @@ class           MessageFormatter_1__Suffix
     //
     //  Members
     //
-    private String                      prefix;                         //  May be `null`
-    private String                      suffix;                         //  May be `null`
+    private String                      prefix_0;
+    private String                      suffix;
 
 
     //
     //  Constructor & Factory
     //
-    private                             MessageFormatter_1__Suffix(String prefix, String suffix)
+    private                             MessageFormatter_1__Suffix(String prefix_0, String suffix)
     {
-        this.prefix = prefix;
-        this.suffix = suffix;
+        this.prefix_0 = prefix_0;
+        this.suffix   = suffix;
     }
 
 
-    static public MessageFormatter_1__Suffix    create(String prefix, String suffix)
+    static public MessageFormatter_1__Suffix    create(String prefix_0, String suffix)
     {
-        return new MessageFormatter_1__Suffix(prefix, suffix);
+        String                          interned__prefix_0 = intern_permenant_string_0(prefix_0);
+        String                          interned__suffix   = intern_permenant_string  (suffix);
+
+        return new MessageFormatter_1__Suffix(interned__prefix_0, suffix);
     }
 
 
@@ -68,16 +71,16 @@ class           MessageFormatter_1__Suffix
                 );
         }
 
-        String                          prefix = this.prefix;
+        String                          prefix_0 = this.prefix_0;
         String                          suffix = this.suffix;
 
         String                          first = ParseFormat.portray(first_argument);
 
-        if (prefix == null) {
+        if (prefix_0 == null) {
             return first + suffix;
         }
 
-        return prefix + first + suffix;
+        return prefix_0 + first + suffix;
     }
 
 
@@ -93,15 +96,15 @@ class           MessageFormatter_1__Suffix
                 );
         }
 
-        String                          prefix = this.prefix;
+        String                          prefix_0 = this.prefix_0;
         String                          suffix = this.suffix;
 
         String                          first = ParseFormat.portray(first_argument);
 
-        if (prefix == null) {
+        if (prefix_0 == null) {
             standard_output.println(first + suffix);
         }
 
-        standard_output.println(prefix + first + suffix);
+        standard_output.println(prefix_0 + first + suffix);
     }
 }

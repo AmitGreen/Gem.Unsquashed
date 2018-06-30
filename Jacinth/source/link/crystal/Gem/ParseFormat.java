@@ -10,7 +10,7 @@ import java.lang.StringBuilder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import link.crystal.Gem.GemObject;
-import link.crystal.Gem.MessageFormattable;
+import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.MessageFormatter_1;
 import link.crystal.Gem.MessageFormatter_1__Suffix;
 

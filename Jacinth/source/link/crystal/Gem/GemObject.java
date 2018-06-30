@@ -12,7 +12,7 @@ import java.lang.String;
 import java.lang.System;
 import link.crystal.Gem.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.MessageFormattable;
+import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.ParseFormat;
 import link.crystal.Gem.PermenantString;
 
@@ -44,6 +44,16 @@ public abstract class   GemObject<INSPECTION extends Inspection>
     //
     public static String                intern_permenant_string(String s)
     {
+        return PermenantString.intern_permenant_string(s);
+    }
+
+
+    public static String                intern_permenant_string_0(String s)
+    {
+        if (s == null) {
+            return null;
+        }
+
         return PermenantString.intern_permenant_string(s);
     }
 

@@ -67,21 +67,19 @@ DRAVITE_FILES = \
 IVORY_FILES = \
     ../Ivory/Main.py
 
+J = ../Jacinth/source/link/crystal
+
 JACINTH_FILES = \
     ../Jacinth/pom.xml \
-    ../Jacinth/source/link/crystal/Gem/GemObject.java \
-    ../Jacinth/source/link/crystal/Gem/Inspection.java \
-    ../Jacinth/source/link/crystal/Gem/Interface/Inspectable.java \
-    ../Jacinth/source/link/crystal/Gem/PermenantString.java \
-    ../Jacinth/source/link/crystal/Gem/MessageFormattable.java \
-        ../Jacinth/source/link/crystal/Gem/MessageFormatter_1.java \
-        ../Jacinth/source/link/crystal/Gem/MessageFormatter_1__Suffix.java \
-    ../Jacinth/source/link/crystal/Gem/ParseFormat.java ../Jacinth/source/link/crystal/Gem/PortrayFunctions.java \
-    ../Jacinth/source/link/crystal/Jacinth/Main.java \
-    ../Jacinth/source/link/crystal/Jacinth/Shape.java \
-    ../Jacinth/source/link/crystal/Mirror/Shape.java \
-    ../Jacinth/source/link/crystal/Silver/SilverModule.java \
-        ../Jacinth/source/link/crystal/Silver/SilverProxy.java
+    $J/Gem/GemObject.java \
+    $J/Gem/Inspection.java $J/Gem/Interface/Inspectable.java $J/Gem/Interface/MessageFormattable.java \
+    $J/Gem/MessageFormatter_1.java $J/Gem/MessageFormatter_1__Suffix.java \
+    $J/Gem/ParseFormat.java $J/Gem/PermenantString.java $J/Gem/PortrayFunctions.java \
+    $J/Jacinth/Main.java \
+    $J/Jacinth/Shape.java \
+    $J/Mirror/Shape.java \
+    $J/Silver/SilverModule.java \
+        $J/Silver/SilverProxy.java
 
 JASPER_FILES = \
     ../Jasper/Core.py \
@@ -353,9 +351,9 @@ links:
 	ln -s ../Gem/HerdMany.py                                                    ghm.py
 	ln -s ../Gem/Horde.py                                                       gho.py
 	ln -s ../Gem/Hailstone.py                                                   gi.py
-	ln -s ../Jacinth/source/link/crystal/Gem/Inspection.java                    gi.java
+	ln -s $J/Gem/Inspection.java                                                gi.java
 	ln -s ../Gem/Global.py                                                      gl.py
-	ln -s ../Jacinth/source/link/crystal/Gem/GemObject.java                     go.java
+	ln -s $J/Gem/GemObject.java                                                 go.java
 	ln -s ../Gem/LiquidMap.py                                                   gq.py
 	ln -s ../Gem/Rabble.py                                                      gr.py
 	ln -s ../Gem/Series.py                                                      gse.py
@@ -439,7 +437,7 @@ links:
 	ln -s ../Sapphire/Whitespace.py                                             hw.py
 	ln -s ../Sapphire/PostfixExpression.py                                      hx.py
 	ln -s ../Sapphire/SymbolTable.py                                            hy.py
-	ln -s ../Jacinth/source/link/crystal/Gem/Interface/Inspectable.java         ii.java
+	ln -s $J/Gem/Interface/Inspectable.java                                     ii.java
 	ln -s ../Gem/__init__.py                                                    in.py
 	ln -s ../Gem/Import.py                                                      im.py
 	ln -s ../Ivory/Main.py                                                      iv.py
@@ -448,13 +446,13 @@ links:
 	ln -s ../Jasper/Parse1.py                                                   j1p.py
 	ln -s ../Junk/Boot.py                                                       jb.py
 	ln -s ../Jasper/Core.py                                                     jcr.py
-	ln -s ../Jacinth/source/link/crystal/Jacinth/Main.java                      jm.java
+	ln -s $J/Jacinth/Main.java                                                  jm.java
 	ln -s ../Jacinth/pom.xml                                                    jm.xml
 	ln -s ../Jasper/Main.py                                                     jma.py
 	ln -s ../Jasper/Match.py                                                    jmc.py
-	ln -s ../Jacinth/source/link/crystal/Mirror/Shape.java                      jms.java
+	ln -s $J/Mirror/Shape.java                                                  jms.java
 	ln -s ../Jasper/Pattern.py                                                  jp.py
-	ln -s ../Jacinth/source/link/crystal/Jacinth/Shape.java                     js.java
+	ln -s $J/Jacinth/Shape.java                                                 js.java
 	ln -s log.txt                                                               l.txt
 	ln -s ../OtherLicenses/README.txt                                           lr.txt
 	ln -s Makefile                                                              m
@@ -467,9 +465,9 @@ links:
 	ln -s ../Melanite/Child.py                                                  mc.py
 	ln -s ../Melanite/Development.py                                            md.py
 	ln -s ../Gem/Method.py                                                      me.py
-	ln -s ../Jacinth/source/link/crystal/Gem/MessageFormattable.java            mf.java
-	ln -s ../Jacinth/source/link/crystal/Gem/MessageFormatter_1.java            mf1.java
-	ln -s ../Jacinth/source/link/crystal/Gem/MessageFormatter_1__Suffix.java    mf1s.java
+	ln -s $J/Gem/MessageFormattable.java                                        mf.java
+	ln -s $J/Gem/MessageFormatter_1.java                                        mf1.java
+	ln -s $J/Gem/MessageFormatter_1__Suffix.java                                mf1s.java
 	ln -s ../Melanite/Multiprocessing.py                                        mm.py
 	ln -s ../Marble/NestedConjure.py                                            mn.py
 	ln -s ../Gem/Output.py                                                      o.py
@@ -487,7 +485,7 @@ links:
 	ln -s ../Pearl/ClassOrder.py                                                pco.py
 	ln -s ../Pearl/Core.py                                                      pcr.py
 	ln -s ../Pearl/Elemental.py                                                 pel.py
-	ln -s ../Jacinth/source/link/crystal/Gem/ParseFormat.java                   pf.java
+	ln -s $J/Gem/ParseFormat.java                                               pf.java
 	ln -s ../Pearl/ConjureTreeComment.py                                        pj.py
 	ln -s ../Pearl/Token.py                                                     pk.py
 	ln -s ../Pearl/TokenCache.py                                                pkc.py
@@ -495,7 +493,7 @@ links:
 	ln -s ../Pearl/Method.py                                                    pmo.py
 	ln -s ../Pearl/Nub.py                                                       pn.py
 	ln -s ../Gem/PortrayString.py                                               ps.py
-	ln -s ../Jacinth/source/link/crystal/Gem/PermenantString.java               ps.java
+	ln -s $J/Gem/PermenantString.java                                           ps.java
 	ln -s ../Junk/PortrayString_3.py                                            ps3.py
 	ln -s ../Pearl/Tokenizer.py                                                 pz.py
 	ln -s ../Quartz/Parse1.py                                                   q1p.py
@@ -532,8 +530,8 @@ links:
 	ln -s ../Tremolite/PatternWrapper.py                                        tw.py
 	ln -s ../Tremolite/Compile.py                                               tx.py
 	ln -s ../Dravite/Main.py                                                    vm.py
-	ln -s ../Jacinth/source/link/crystal/Silver/SilverModule.java               vm.java
-	ln -s ../Jacinth/source/link/crystal/Silver/SilverProxy.java                vp.java
+	ln -s $J/Silver/SilverModule.java                                           vm.java
+	ln -s $J/Silver/SilverProxy.java                                            vp.java
 	ln -s ../Sardonyx/Boot.py                                                   xb.py
 	ln -s ../Sapphire/Transform.py                                              xf.py
 	ln -s ../Crystal/Board.py                                                   ybd.py
@@ -542,7 +540,7 @@ links:
 	ln -s ../Crystal/CardRoot.py                                                ycb.py
 	ln -s ../Crystal/Core.py                                                    ycr.py
 	ln -s ../Crystal/Deck_7.py                                                  yd7.py
-	ln -s ../Jacinth/source/link/crystal/Gem/PortrayFunctions.java              yf.java
+	ln -s $J/Gem/PortrayFunctions.java                                          yf.java
 	ln -s ../Crystal/Game.py                                                    yg.py
 	ln -s ../Crystal/ChessKing.py                                               yki.py
 	ln -s ../Crystal/ChessKnight.py                                             ykn.py

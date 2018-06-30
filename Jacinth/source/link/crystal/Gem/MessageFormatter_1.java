@@ -9,7 +9,7 @@ import java.lang.String;
 import link.crystal.Gem.GemObject;
 import link.crystal.Gem.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.MessageFormattable;
+import link.crystal.Gem.Interface.MessageFormattable;
 
 
 class           MessageFormatter_1
@@ -24,21 +24,23 @@ class           MessageFormatter_1
     //
     //  Members
     //
-    private String                      prefix;                         //  May be `null`
+    private String                      prefix_0;
 
 
     //
     //  Constructor & Factory
     //
-    private                             MessageFormatter_1(String prefix)
+    private                             MessageFormatter_1(String prefix_0)
     {
-        this.prefix = prefix;
+        this.prefix_0 = prefix_0;
     }
 
 
-    static public MessageFormatter_1    create(String prefix)
+    static public MessageFormatter_1    create(String prefix_0)
     {
-        return new MessageFormatter_1(prefix);
+        String                          interned__prefix_0 = intern_permenant_string_0(prefix_0);
+            
+        return new MessageFormatter_1(interned__prefix_0);
     }
 
 
@@ -66,15 +68,15 @@ class           MessageFormatter_1
                 );
         }
 
-        String                          prefix = this.prefix;
+        String                          prefix_0 = this.prefix_0;
 
         String                          first = ParseFormat.portray(first_argument);
 
-        if (prefix == null) {
+        if (prefix_0 == null) {
             return first;
         }
 
-        return prefix + first;
+        return prefix_0 + first;
     }
 
 
@@ -90,14 +92,14 @@ class           MessageFormatter_1
                 );
         }
 
-        String                          prefix = this.prefix;
+        String                          prefix_0 = this.prefix_0;
 
         String                          first = ParseFormat.portray(first_argument);
 
-        if (prefix == null) {
+        if (prefix_0 == null) {
             standard_output.println(first);
         }
 
-        standard_output.println(prefix + first);
+        standard_output.println(prefix_0 + first);
     }
 }

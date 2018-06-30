@@ -4,11 +4,13 @@
 package link.crystal.Gem;
 
 
+import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import link.crystal.Gem.GemObject;
 import link.crystal.Gem.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 
@@ -91,7 +93,7 @@ public class    PermenantString
         GemObject.line("      size: " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
-            GemObject.line("  value[" + Integer.toString(i) + "]: " + values.get(i));
+            GemObject.line("  value[" + Integer.toString(i) + "]: " + GemObject.portray_string(values.get(i)));
         }
 
         GemObject.line("End of dump of PermenantString");
@@ -100,6 +102,10 @@ public class    PermenantString
 
     public static String                intern_permenant_string(String s)
     {
+        if (s == null) {
+            throw new RuntimeException("PermenantString.intern_permenant_string: `s` is null");
+        }
+
         PermenantString                 singleton = PermenantString.singleton;
 
         if (singleton == null) {
