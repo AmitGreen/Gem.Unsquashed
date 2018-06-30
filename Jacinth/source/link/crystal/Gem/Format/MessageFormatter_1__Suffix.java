@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Gem.Core;
+package link.crystal.Gem.Format;
 
 
 import java.lang.RuntimeException;
@@ -19,7 +19,7 @@ public class    MessageFormatter_1__Suffix
     implements  MessageFormattable,
                 Inspectable<Inspection>//,                              //  Via GemObject
 {
-    private static Inspection           inspection = Inspection.create("Gem.Core.MessageFormatter_1__Suffix");
+    private static Inspection           inspection = Inspection.create("Gem.Format.MessageFormatter_1__Suffix");
 
 
     //

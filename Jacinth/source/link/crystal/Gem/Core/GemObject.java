@@ -72,7 +72,13 @@ public abstract class   GemObject<INSPECTION extends Inspection>
 
     public static void                  line(String format, Object first_argument, Object ... other_arguments)
     {
-        MessageFormattable              formattable = PermenantMessageFormattable.conjure(format);
+        MessageFormattable              formattable = PermenantMessageFormattable.lookup(format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(format);
+
+            PermenantMessageFormattable.insert(format, formattable);
+        }
 
         formattable.line(first_argument, other_arguments);
     }

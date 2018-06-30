@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Gem.Core;
+package link.crystal.Gem.Format;
 
 
 import java.lang.RuntimeException;
@@ -13,26 +13,35 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 
 
-public class    MessageFormatter_1__Simple
+public class    MessageFormatter_1__Prefix
     extends     GemObject<Inspection>
 //  extends     Object
     implements  MessageFormattable,
                 Inspectable<Inspection>//,                              //  Via GemObject
 {
-    private static Inspection           inspection = Inspection.create("Gem.Core.MessageFormatter_1__Simple");
+    private static Inspection           inspection = Inspection.create("Gem.Format.MessageFormatter_1__Prefix");
+
+
+    //
+    //  Members
+    //
+    private String                      prefix;
 
 
     //
     //  Constructor & Factory
     //
-    private                             MessageFormatter_1__Simple()
+    private                             MessageFormatter_1__Prefix(String prefix)
     {
+        this.prefix = prefix;
     }
 
 
-    static public MessageFormatter_1__Simple    create()
+    static public MessageFormatter_1__Prefix    create(String prefix)
     {
-        return new MessageFormatter_1__Simple();
+        String                          interned__prefix = intern_permenant_string(prefix);
+            
+        return new MessageFormatter_1__Prefix(interned__prefix);
     }
 
 
@@ -53,14 +62,14 @@ public class    MessageFormatter_1__Simple
         if (other_arguments.length != 0) {
             throw new RuntimeException(
                     (
-                          "MessageFormatter_1__Simple.arrange: "
+                          "MessageFormatter_1__Prefix.arrange: "
                         + Integer.toString(1 + other_arguments.length)
                         + " arguments given (expected 1)"
                     )
                 );
         }
 
-        return PortrayFunctions.portray(first_argument);
+        return this.prefix + PortrayFunctions.portray(first_argument);
     }
 
 
@@ -69,19 +78,19 @@ public class    MessageFormatter_1__Simple
         if (other_arguments.length != 0) {
             throw new RuntimeException(
                     (
-                          "MessageFormatter_1__Simple.line: "
+                          "MessageFormatter_1__Prefix.line: "
                         + Integer.toString(1 + other_arguments.length)
                         + " arguments given (expected 1)"
                     )
                 );
         }
 
-        standard_output.println(PortrayFunctions.portray(first_argument));
+        standard_output.println(this.prefix + PortrayFunctions.portray(first_argument));
     }
 
 
     public String                       portray()
     {
-        return "<MessageFormatter_1__Simple>";
+        return "<MessageFormatter_1__Prefix " + PortrayFunctions.portray_string(this.prefix) + ">";
     }
 }
