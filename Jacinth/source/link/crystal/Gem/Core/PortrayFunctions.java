@@ -4,6 +4,7 @@
 package link.crystal.Gem.Core;
 
 
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.RuntimeException;
 import java.lang.String;
@@ -20,7 +21,15 @@ public abstract class   PortrayFunctions
     //
     public static String                portray(Object v)
     {
+        if (v == null) {
+            return "<null>";
+        }
+
         Class<?>                        v_class = v.getClass();
+
+        if (v_class == Integer$class) {
+            return Integer.toString((Integer) v);
+        }
 
         if (v_class == String$class) {
             return (String) v;

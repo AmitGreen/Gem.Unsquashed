@@ -8,11 +8,14 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import link.crystal.Gem.Core.ArrayFunctions;
+import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Format.MessageFormatter_1__Prefix;
 import link.crystal.Gem.Format.MessageFormatter_1__Simple;
 import link.crystal.Gem.Format.MessageFormatter_1__Suffix;
-import link.crystal.Gem.Core.PortrayFunctions;
+import link.crystal.Gem.Format.PermenantArgumentFormatter;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Interface.SegmentFormattable;
 
 
 public abstract class   ParseFormat
@@ -37,7 +40,7 @@ public abstract class   ParseFormat
         if ( ! braces_matcher.find()) {
             throw new RuntimeException(
                     (
-                          "PermenantMessageFormattable.conjure: format string does not contain the opening brace '{': "
+                          "ParseFormat.parse_format: format string does not contain the opening brace '{': "
                         + PortrayFunctions.portray_string(format)
                     )
                 );
@@ -51,7 +54,7 @@ public abstract class   ParseFormat
         if (end_2 == -1) {
             throw new RuntimeException(
                     (
-                          "PermenantMessageFormattable.conjure: format string is malformed: "
+                          "ParseFormat.parse_format: format string is malformed: "
                         + PortrayFunctions.portray_string(format)
                     )
                 );
@@ -75,7 +78,7 @@ public abstract class   ParseFormat
             if (argument_index != 0) {
                 throw new RuntimeException(
                         (
-                              "PermenantMessageFormattable.conjure: format string must use {0} for only one argument: "
+                              "ParseFormat.parse_format: format string must use {0} for only one argument: "
                             + PortrayFunctions.portray_string(format)
                         )
                     );
@@ -96,50 +99,117 @@ public abstract class   ParseFormat
 
 
         //
-        //  Second argument
+        //  Create array of SegmentFormattable
         //
-        int                         last = end_2;
+        int                             many_total = 11;
+        SegmentFormattable[]            many       = new SegmentFormattable[many_total];
 
-        end_2 = braces_matcher.end(2);
+        if (start_s == null) {
+            many[0] = PermenantArgumentFormatter.conjure(argument_index);
+        } else {
+            throw new RuntimeException("ParseFormat.parse_format: unimplemented, segment with string");
+        }
 
-        if (end_2 == -1) {
+        int                             many_index = 1;
+
+
+        //
+        //  Subsequent arguments
+        //
+        for (;;) {
+            int                         next_end_2 = braces_matcher.end(2);
+
+            if (next_end_2 == -1) {
+                throw new RuntimeException(
+                        (
+                              "ParseFormat.parse_format: format string is malformed: "
+                            + PortrayFunctions.portray_string(format)
+                        )
+                    );
+            }
+
+            start          = braces_matcher.start();
+            argument_index = 0;
+            start_s        = null;
+
+            if (next_end_2 - start == 3) {
+                argument_index = format.codePointAt(start + 1) - 48;
+            } else {
+                argument_index = Integer.parseInt(braces_matcher.group(1));
+            }
+
+            if (end_2 < start) {
+                start_s = format.substring(end_2, start);
+            }
+
+            GemObject.line("start: " + start);
+            GemObject.line("start_s: " + portray(start_s));
+            GemObject.line("group: " + portray(argument_index));
+            GemObject.line("next_end_2: " + portray(next_end_2));
+
+
+            if (many_index == many_total) {
+                if (many_total == 101) {
+                    throw new RuntimeException("ParseFormat.parse_format: maximum of 100 '{#}' allowed");
+                }
+
+                many = ArrayFunctions.<SegmentFormattable>grow_array(
+                        many,
+                        many_total,
+                        new SegmentFormattable[101],
+                        101//,
+                    );
+
+                many_total = 101;
+            }
+
+            if (start_s == null) {
+                many[many_index] = PermenantArgumentFormatter.conjure(argument_index);
+            } else {
+                throw new RuntimeException("ParseFormat.parse_format: unimplemented, segment with string");
+            }
+
+            end_2 = next_end_2;
+
+            many_index += 1;
+
+            if ( ! braces_matcher.find()) {
+                break;
+            }
+        }
+
+        if (end_2 < format.length()) {
             throw new RuntimeException(
                     (
-                          "PermenantMessageFormattable.conjure: format string is malformed: "
+                          "ParseFormat.parse_format: unimplemented, more than one '{#}' (with trailing string): "
                         + PortrayFunctions.portray_string(format)
                     )
+              );
+        }
+
+        if (many_index < many_total) {
+            many = ArrayFunctions.<SegmentFormattable>shrink_array(
+                    many,
+                    many_total,
+                    new SegmentFormattable[many_index],
+                    many_index//,
                 );
+
+            many_total = many_index;
         }
 
-        start          = braces_matcher.start();
-        argument_index = 0;
-        start_s        = null;
 
-        if (end_2 - start == 3) {
-            argument_index = format.codePointAt(start + 1) - 48;
-        } else {
-            argument_index = Integer.parseInt(braces_matcher.group(1));
+        if (true) {
+            for (int                        i = 0; i < many_total; i ++) {
+                line(Integer.toString(i) + ": " + portray(many[i]));
+            }
         }
-
-        if (last < start) {
-            start_s = format.substring(last, start);
-        }
-
-        GemObject.line("start: " + start);
-        GemObject.line("start_s: " + PortrayFunctions.portray_string(start_s));
-        GemObject.line("group: " + Integer.toString(argument_index));
-        GemObject.line("end_2: " + Integer.toString(end_2));
 
         throw new RuntimeException(
                 (
-                      "PermenantMessageFormattable.conjure: unimplemented, more than one '{#}': "
+                      "ParseFormat.parse_format: unimplemented, more than one '{#}' (without trailing string): "
                     + PortrayFunctions.portray_string(format)
                 )
             );
-
-
-        //
-        //  Create array of MessageSegment
-        //
     }
 }

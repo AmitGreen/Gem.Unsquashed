@@ -6,6 +6,7 @@ package link.crystal.Gem.Core;
 
 import java.io.PrintStream;
 import java.lang.Class;
+import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
 import java.lang.System;
@@ -24,7 +25,8 @@ public abstract class   GemObject<INSPECTION extends Inspection>
     //
     //  Static types
     //
-    public static final Class<String>   String$class = String.class;
+    public static final Class<String>   String$class  = String.class;
+    public static final Class<Integer>  Integer$class = Integer.class;
 
 
     //

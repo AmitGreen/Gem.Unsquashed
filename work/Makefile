@@ -71,16 +71,18 @@ J = ../Jacinth/source/link/crystal
 
 JACINTH_FILES = \
     ../Jacinth/pom.xml \
+    $J/Gem/Core/ArrayFunctions.java \
     $J/Gem/Core/GemObject.java \
     $J/Gem/Core/Inspection.java \
     $J/Gem/Core/PermenantMessageFormattable.java \
     $J/Gem/Core/PermenantString.java \
     $J/Gem/Core/PortrayFunctions.java \
+    $J/Gem/Format/ArgumentFormatter.java \
     $J/Gem/Format/MessageFormatter_1__Prefix.java \
     $J/Gem/Format/MessageFormatter_1__Simple.java \
     $J/Gem/Format/MessageFormatter_1__Suffix.java \
     $J/Gem/Format/ParseFormat.java \
-    $J/Gem/Format/SegmentFormatter.java \
+    $J/Gem/Format/PermenantArgumentFormatter.java \
     $J/Gem/Interface/Inspectable.java \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
@@ -261,7 +263,7 @@ clean:
 	rm -f *.old *.new *.pyc
 	rm -f 2re.py 2sf.py 2sp.py 2sc.py
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
-	rm -f a.py ab.py ac.py ag.py
+	rm -f a.py ab.py af.java ac.py ag.py am.java
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py ca2.py cd.py ce.py cr.py
 	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
@@ -284,11 +286,11 @@ clean:
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1c.py m1m.py m2c.py m2m.py m3m.py map.py mc.py md.py me.py mf1p.java mf1s.java mf1x.java mm.py mn.py
 	rm -f o.py oc.py od.py oe.py om.py
-	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py pel.py pf.py pf.java
+	rm -f pa2.py pam.java pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py pel.py pf.py pf.java
 	rm -f   pj.py pk.py pkc.py pl.py pmf.java pmo.py pn.py ps.py ps.java ps3.py px.java
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
-	rm -f sf.java sl.py so.py ssio.py sy.py
+	rm -f sl.py so.py ssio.py sy.py
 	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
@@ -317,7 +319,9 @@ links:
 	ln -s ../Gem/All.py                                                         a.py
 	ln -s ../Gem/Absent.py                                                      ab.py
 	ln -s ../Gem/Ascii.py                                                       ac.py
+	ln -s $J/Gem/Core/ArrayFunctions.java                                       af.java
 	ln -s ../Agate/RUNME.py                                                     ag.py
+	ln -s $J/Gem/Format/ArgumentFormatter.java                                  am.java
 	ln -s ../Beryl/BerylAnswer.py                                               ba.py
 	ln -s ../Beryl/__init__.py                                                  bi.py
 	ln -s ../Beryl/Ask.py                                                       bk.py
@@ -487,6 +491,7 @@ links:
 	ln -s ../Onyx/ElasticSearch.py                                              oe.py
 	ln -s ../Onyx/Main.py                                                       om.py
 	ln -s ../Gem/Path2.py                                                       pa2.py
+	ln -s $J/Gem/Format/PermenantArgumentFormatter.java                         pam.java
 	ln -s ../Pearl/Atom.py                                                      pat.py
 	ln -s ../Gem/Path.py                                                        path.py
 	ln -s ../Pearl/ActionWord.py                                                paw.py
@@ -516,7 +521,6 @@ links:
 	ln -s ../Quartz/Pattern.py                                                  qp.py
 	ln -s ../Agate/RUNME.py                                                     rm.py
 	ln -s ../Gem/RegularExpression.py                                           rx.py
-	ln -s $J/Gem/Format/SegmentFormatter.java                                   sf.java
 	ln -s ../Gem/Sleep.py                                                       sl.py
 	ln -s ../Gem/StringOutput.py                                                so.py
 	ln -s ../Gem/SimpleStringIO.py                                              ssio.py
