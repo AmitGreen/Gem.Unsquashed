@@ -8,7 +8,7 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import link.crystal.Gem.Core.GemObject;
 import link.crystal.Gem.Core.Inspection;
-import link.crystal.Gem.Core.ParseFormat;
+import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 
@@ -75,7 +75,7 @@ public class    MessageFormatter_1__Suffix
         String                          prefix_0 = this.prefix_0;
         String                          suffix = this.suffix;
 
-        String                          first = ParseFormat.portray(first_argument);
+        String                          first = PortrayFunctions.portray(first_argument);
 
         if (prefix_0 == null) {
             return first + suffix;
@@ -100,7 +100,7 @@ public class    MessageFormatter_1__Suffix
         String                          prefix_0 = this.prefix_0;
         String                          suffix = this.suffix;
 
-        String                          first = ParseFormat.portray(first_argument);
+        String                          first = PortrayFunctions.portray(first_argument);
 
         if (prefix_0 == null) {
             standard_output.println(first + suffix);

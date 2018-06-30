@@ -12,9 +12,9 @@ import java.lang.System;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Core.PermenantString;
+import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.PortrayFunctions;
 
 
 public abstract class   GemObject<INSPECTION extends Inspection>

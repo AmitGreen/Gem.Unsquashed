@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Gem;
+package link.crystal.Gem.Core;
 
 
 import java.lang.Object;

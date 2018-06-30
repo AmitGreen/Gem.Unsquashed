@@ -75,9 +75,9 @@ JACINTH_FILES = \
     $J/Gem/Core/Inspection.java \
     $J/Gem/Core/ParseFormat.java \
     $J/Gem/Core/PermenantString.java \
+    $J/Gem/Core/PortrayFunctions.java \
     $J/Gem/Interface/Inspectable.java $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/MessageFormatter_1.java $J/Gem/MessageFormatter_1__Suffix.java \
-    $J/Gem/PortrayFunctions.java \
     $J/Jacinth/Main.java \
     $J/Jacinth/Shape.java \
     $J/Mirror/Shape.java \
@@ -543,7 +543,7 @@ links:
 	ln -s ../Crystal/CardRoot.py                                                ycb.py
 	ln -s ../Crystal/Core.py                                                    ycr.py
 	ln -s ../Crystal/Deck_7.py                                                  yd7.py
-	ln -s $J/Gem/PortrayFunctions.java                                          yf.java
+	ln -s $J/Gem/Core/PortrayFunctions.java                                     yf.java
 	ln -s ../Crystal/Game.py                                                    yg.py
 	ln -s ../Crystal/ChessKing.py                                               yki.py
 	ln -s ../Crystal/ChessKnight.py                                             ykn.py
