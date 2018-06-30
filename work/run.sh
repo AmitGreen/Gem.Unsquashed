@@ -162,8 +162,6 @@ do
             -e '/^\[WARNING\] Using platform encoding /d' \
                 <$tmp2 >$tmp3
 
-        cp $tmp2 /tmp/x
-
         if cmp -s $tmp3 j; then
             :
         else

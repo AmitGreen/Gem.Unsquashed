@@ -9,6 +9,7 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import java.lang.System;
 import link.crystal.Gem.GemObject;
+import link.crystal.Gem.Inspection;
 import link.crystal.Gem.MessageFormattable;
 
 
@@ -16,6 +17,9 @@ class           MessageFormatter_1
     extends     GemObject
     implements  MessageFormattable
 {
+    private static Inspection           inspection = Inspection.create("Gem.MessageFormatter_1");
+
+
     //
     //  Members
     //
@@ -34,6 +38,15 @@ class           MessageFormatter_1
     static public MessageFormatter_1    create(String prefix)
     {
         return new MessageFormatter_1(prefix);
+    }
+
+
+    //
+    //  Abstract GemObject
+    //
+    public Inspection                   inspect()
+    {
+        return /*static*/ this.inspection;
     }
 
 

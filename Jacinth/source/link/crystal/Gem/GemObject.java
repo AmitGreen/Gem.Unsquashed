@@ -10,6 +10,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.lang.String;
 import java.lang.System;
+import link.crystal.Gem.Inspection;
 import link.crystal.Gem.MessageFormattable;
 import link.crystal.Gem.ParseFormat;
 
@@ -27,6 +28,12 @@ public abstract class   GemObject
     //  Public Static
     //
     public static final PrintStream     standard_output = System.out;
+
+
+    //
+    //  Abstract GemObject
+    //
+    public abstract Inspection          inspect();
 
 
     //

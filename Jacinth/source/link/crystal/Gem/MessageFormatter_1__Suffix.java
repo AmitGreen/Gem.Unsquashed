@@ -10,12 +10,16 @@ import java.lang.String;
 import java.lang.System;
 import link.crystal.Gem.GemObject;
 import link.crystal.Gem.MessageFormattable;
+import link.crystal.Gem.Inspection;
 
 
 class           MessageFormatter_1__Suffix
     extends     GemObject
     implements  MessageFormattable
 {
+    private static Inspection           inspection = Inspection.create("Gem.MessageFormatter_1__Suffix");
+
+
     //
     //  Members
     //
@@ -36,6 +40,15 @@ class           MessageFormatter_1__Suffix
     static public MessageFormatter_1__Suffix    create(String prefix, String suffix)
     {
         return new MessageFormatter_1__Suffix(prefix, suffix);
+    }
+
+
+    //
+    //  Abstract GemObject
+    //
+    public Inspection                   inspect()
+    {
+        return /*static*/ this.inspection;
     }
 
 
