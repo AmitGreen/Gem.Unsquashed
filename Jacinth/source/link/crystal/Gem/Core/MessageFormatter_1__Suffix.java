@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Gem;
+package link.crystal.Gem.Core;
 
 
 import java.lang.RuntimeException;
@@ -19,7 +19,7 @@ public class    MessageFormatter_1__Suffix
     implements  MessageFormattable,
                 Inspectable<Inspection>//,                              //  Via GemObject
 {
-    private static Inspection           inspection = Inspection.create("Gem.MessageFormatter_1__Suffix");
+    private static Inspection           inspection = Inspection.create("Gem.Core.MessageFormatter_1__Suffix");
 
 
     //
@@ -98,12 +98,13 @@ public class    MessageFormatter_1__Suffix
         }
 
         String                          prefix_0 = this.prefix_0;
-        String                          suffix = this.suffix;
+        String                          suffix   = this.suffix;
 
         String                          first = PortrayFunctions.portray(first_argument);
 
         if (prefix_0 == null) {
             standard_output.println(first + suffix);
+            return;
         }
 
         standard_output.println(prefix_0 + first + suffix);
@@ -115,6 +116,12 @@ public class    MessageFormatter_1__Suffix
         String                          prefix_0 = this.prefix_0;
         String                          suffix   = this.suffix;
 
-        return "<MessageFormatter_1__Suffix " + (prefix_0 == null ? "<null>" : prefix_0) + " " + suffix + ">";
+        return (
+                     "<MessageFormatter_1__Suffix "
+                   + (prefix_0 == null ? "<null>" : PortrayFunctions.portray_string(prefix_0))
+                   + " "
+                   + PortrayFunctions.portray_string(suffix)
+                   + ">"
+              );
     }
-}
+} 

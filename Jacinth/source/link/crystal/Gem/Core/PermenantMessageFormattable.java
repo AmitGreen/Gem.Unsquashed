@@ -13,11 +13,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.MessageFormatter_1__Prefix;
+import link.crystal.Gem.Core.MessageFormatter_1__Simple;
+import link.crystal.Gem.Core.MessageFormatter_1__Suffix;
 import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.MessageFormatter_1;
-import link.crystal.Gem.MessageFormatter_1__Suffix;
 
 
 public class    PermenantMessageFormattable
@@ -149,11 +150,21 @@ public class    PermenantMessageFormattable
                 );
         }
 
+        MessageFormattable              r = null;
+
         if (end_2 == format.length()) {
-            return MessageFormatter_1.create(start_s);
+            if (start_s == null) {
+                r = MessageFormatter_1__Simple.create();
+            } else {
+                r = MessageFormatter_1__Prefix.create(start_s);
+            }
+
+            singleton.put(format, r);
+
+            return r;
         }
 
-        MessageFormattable              r = MessageFormatter_1__Suffix.create(start_s, format.substring(end_2));
+        r = MessageFormatter_1__Suffix.create(start_s, format.substring(end_2));
 
         singleton.put(format, r);
 
@@ -176,13 +187,13 @@ public class    PermenantMessageFormattable
         int                             total = values.size();
 
         GemObject.line("Dump of PermenantMessageFormattable");
-        GemObject.line("      size: " + Integer.toString(total));
+        GemObject.line("  " + String.format("%30s", "size") + ": " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
             String                      k = values.get(i);
             MessageFormattable          v = singleton.get(k);
 
-            GemObject.line("  value[" + Integer.toString(i) + "]: " + v.portray());
+            GemObject.line("  " + String.format("%30s", PortrayFunctions.portray_string(k)) + ": " + v.portray());
         }
 
         GemObject.line("End of dump of PermenantMessageFormattable");

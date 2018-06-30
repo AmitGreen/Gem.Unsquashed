@@ -73,11 +73,13 @@ JACINTH_FILES = \
     ../Jacinth/pom.xml \
     $J/Gem/Core/GemObject.java \
     $J/Gem/Core/Inspection.java \
+    $J/Gem/Core/MessageFormatter_1__Prefix.java \
+    $J/Gem/Core/MessageFormatter_1__Simple.java \
+    $J/Gem/Core/MessageFormatter_1__Suffix.java \
     $J/Gem/Core/PermenantMessageFormattable.java \
     $J/Gem/Core/PermenantString.java \
     $J/Gem/Core/PortrayFunctions.java \
     $J/Gem/Interface/Inspectable.java $J/Gem/Interface/MessageFormattable.java \
-    $J/Gem/MessageFormatter_1.java $J/Gem/MessageFormatter_1__Suffix.java \
     $J/Jacinth/Main.java \
     $J/Jacinth/Shape.java \
     $J/Mirror/Shape.java \
@@ -276,7 +278,7 @@ clean:
 	rm -f ii.java in.py im.py imf.java io.py iv.py
 	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
-	rm -f m m.txt m1c.py m1m.py m2c.py m2m.py m3m.py map.py mc.py md.py me.py mf1.java mf1s.java mm.py mn.py
+	rm -f m m.txt m1c.py m1m.py m2c.py m2m.py m3m.py map.py mc.py md.py me.py mf1p.java mf1s.java mf1x.java mm.py mn.py
 	rm -f o.py oc.py od.py oe.py om.py
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py pel.py
 	rm -f   pj.py pk.py pkc.py pl.py pmf.java pmo.py pn.py ps.py ps.java ps3.py pz.py
@@ -469,8 +471,9 @@ links:
 	ln -s ../Melanite/Child.py                                                  mc.py
 	ln -s ../Melanite/Development.py                                            md.py
 	ln -s ../Gem/Method.py                                                      me.py
-	ln -s $J/Gem/MessageFormatter_1.java                                        mf1.java
-	ln -s $J/Gem/MessageFormatter_1__Suffix.java                                mf1s.java
+	ln -s $J/Gem/Core/MessageFormatter_1__Prefix.java                           mf1p.java
+	ln -s $J/Gem/Core/MessageFormatter_1__Simple.java                           mf1s.java
+	ln -s $J/Gem/Core/MessageFormatter_1__Suffix.java                           mf1x.java
 	ln -s ../Melanite/Multiprocessing.py                                        mm.py
 	ln -s ../Marble/NestedConjure.py                                            mn.py
 	ln -s ../Gem/Output.py                                                      o.py
