@@ -12,4 +12,5 @@ public interface   MessageFormattable
 {
     String                              arrange(Object first_argument, Object ... other_arguments);
     void                                line   (Object first_argument, Object ... other_arguments);
+    String                              portray();
 }

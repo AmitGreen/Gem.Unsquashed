@@ -103,4 +103,16 @@ public class    MessageFormatter_1
 
         standard_output.println(prefix_0 + first);
     }
+
+
+    public String                       portray()
+    {
+        String                          prefix_0 = this.prefix_0;
+
+        if (prefix_0 == null) {
+            return "<MessageFormatter_1>";
+        }
+
+        return "<MessageFormatter_1 " + prefix_0 + ">";
+    }
 }

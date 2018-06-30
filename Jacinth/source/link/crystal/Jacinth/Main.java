@@ -4,6 +4,7 @@
 package link.crystal.Jacinth;
 
 
+import link.crystal.Gem.Core.PermenantMessageFormattable;
 import link.crystal.Gem.Core.PermenantString;
 import link.crystal.Mirror.Shape;
 
@@ -16,6 +17,7 @@ public class    Main
 
         circle.skew();
 
+        PermenantMessageFormattable.dump();
         PermenantString.dump();
     }
 }

@@ -10,7 +10,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.lang.System;
 import link.crystal.Gem.Core.Inspection;
-import link.crystal.Gem.Core.ParseFormat;
+import link.crystal.Gem.Core.PermenantMessageFormattable;
 import link.crystal.Gem.Core.PermenantString;
 import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
@@ -72,7 +72,7 @@ public abstract class   GemObject<INSPECTION extends Inspection>
 
     public static void                  line(String format, Object first_argument, Object ... other_arguments)
     {
-        MessageFormattable              formattable = ParseFormat.parse_format(format);
+        MessageFormattable              formattable = PermenantMessageFormattable.conjure(format);
 
         formattable.line(first_argument, other_arguments);
     }

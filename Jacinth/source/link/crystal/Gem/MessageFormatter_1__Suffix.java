@@ -108,4 +108,13 @@ public class    MessageFormatter_1__Suffix
 
         standard_output.println(prefix_0 + first + suffix);
     }
+
+
+    public String                       portray()
+    {
+        String                          prefix_0 = this.prefix_0;
+        String                          suffix   = this.suffix;
+
+        return "<MessageFormatter_1__Suffix " + (prefix_0 == null ? "<null>" : prefix_0) + " " + suffix + ">";
+    }
 }

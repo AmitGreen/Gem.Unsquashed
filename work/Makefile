@@ -73,7 +73,7 @@ JACINTH_FILES = \
     ../Jacinth/pom.xml \
     $J/Gem/Core/GemObject.java \
     $J/Gem/Core/Inspection.java \
-    $J/Gem/Core/ParseFormat.java \
+    $J/Gem/Core/PermenantMessageFormattable.java \
     $J/Gem/Core/PermenantString.java \
     $J/Gem/Core/PortrayFunctions.java \
     $J/Gem/Interface/Inspectable.java $J/Gem/Interface/MessageFormattable.java \
@@ -273,13 +273,13 @@ clean:
 	rm -f   hk.py hkc.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpr.py hpt.py hs.py
 	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
-	rm -f ii.java in.py im.py io.py iv.py
+	rm -f ii.java in.py im.py imf.java io.py iv.py
 	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
-	rm -f m m.txt m1c.py m1m.py m2c.py m2m.py m3m.py map.py mc.py md.py me.py mf.java mf1.java mf1s.java mm.py mn.py
+	rm -f m m.txt m1c.py m1m.py m2c.py m2m.py m3m.py map.py mc.py md.py me.py mf1.java mf1s.java mm.py mn.py
 	rm -f o.py oc.py od.py oe.py om.py
-	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py pel.py pf.java
-	rm -f   pj.py pk.py pkc.py pl.py pmo.py pn.py ps.py ps.java ps3.py pz.py
+	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py pel.py
+	rm -f   pj.py pk.py pkc.py pl.py pmf.java pmo.py pn.py ps.py ps.java ps3.py pz.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
 	rm -f sl.py so.py ssio.py sy.py
@@ -443,6 +443,7 @@ links:
 	ln -s $J/Gem/Interface/Inspectable.java                                     ii.java
 	ln -s ../Gem/__init__.py                                                    in.py
 	ln -s ../Gem/Import.py                                                      im.py
+	ln -s $J/Gem/Interface/MessageFormattable.java                              imf.java
 	ln -s ../Ivory/Main.py                                                      iv.py
 	ln -s ../Gem/IO.py                                                          io.py
 	ln -s ../Jasper/Parse.py                                                    j0p.py
@@ -468,7 +469,6 @@ links:
 	ln -s ../Melanite/Child.py                                                  mc.py
 	ln -s ../Melanite/Development.py                                            md.py
 	ln -s ../Gem/Method.py                                                      me.py
-	ln -s $J/Gem/MessageFormattable.java                                        mf.java
 	ln -s $J/Gem/MessageFormatter_1.java                                        mf1.java
 	ln -s $J/Gem/MessageFormatter_1__Suffix.java                                mf1s.java
 	ln -s ../Melanite/Multiprocessing.py                                        mm.py
@@ -488,11 +488,11 @@ links:
 	ln -s ../Pearl/ClassOrder.py                                                pco.py
 	ln -s ../Pearl/Core.py                                                      pcr.py
 	ln -s ../Pearl/Elemental.py                                                 pel.py
-	ln -s $J/Gem/Core/ParseFormat.java                                          pf.java
 	ln -s ../Pearl/ConjureTreeComment.py                                        pj.py
 	ln -s ../Pearl/Token.py                                                     pk.py
 	ln -s ../Pearl/TokenCache.py                                                pkc.py
 	ln -s ../Pearl/Line.py                                                      pl.py
+	ln -s $J/Gem/Core/PermenantMessageFormattable.java                          pmf.java
 	ln -s ../Pearl/Method.py                                                    pmo.py
 	ln -s ../Pearl/Nub.py                                                       pn.py
 	ln -s ../Gem/PortrayString.py                                               ps.py
