@@ -6,11 +6,13 @@ package link.crystal.Silver;
 
 import link.crystal.Gem.Inspection;
 import link.crystal.Gem.GemObject;
+import link.crystal.Gem.Interface.Inspectable;
 
 
 public abstract class   SilverProxy<PROXY extends SilverProxy, CLIENT extends Object> 
-    extends             GemObject
+    extends             GemObject<Inspection>
 //  extends             Object
+    implements          Inspectable<Inspection>//,                      //  Via GemObject
 {
     //
     //  Members
@@ -28,7 +30,7 @@ public abstract class   SilverProxy<PROXY extends SilverProxy, CLIENT extends Ob
 
 
     //
-    //  Abstract GemObject
+    //  Interface Inspectable
     //
     public abstract Inspection          inspect();
 }

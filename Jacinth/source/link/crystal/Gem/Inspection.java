@@ -5,11 +5,13 @@ package link.crystal.Gem;
 
 
 import link.crystal.Gem.GemObject;
+import link.crystal.Gem.Interface.Inspectable;
 
 
 public class    Inspection
-    extends     GemObject
+    extends     GemObject<Inspection>
 //  extends     Object
+    implements  Inspectable<Inspection>//,                              //  Via GemObject
 {
     private static Inspection           inspection = Inspection.create("Gem.Inspection");
 
@@ -38,7 +40,7 @@ public class    Inspection
 
 
     //
-    //  Abstract GemObject
+    //  Interface Inspectable
     //
     public Inspection                   inspect()
     {

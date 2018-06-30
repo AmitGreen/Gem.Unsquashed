@@ -13,10 +13,12 @@ import java.lang.System;
 import link.crystal.Gem.Inspection;
 import link.crystal.Gem.MessageFormattable;
 import link.crystal.Gem.ParseFormat;
+import link.crystal.Gem.Interface.Inspectable;
 
 
-public abstract class   GemObject
+public abstract class   GemObject<INSPECTION extends Inspection>
     extends             Object
+    implements          Inspectable<INSPECTION>//,
 {
     //
     //  Static types
@@ -31,9 +33,9 @@ public abstract class   GemObject
 
 
     //
-    //  Abstract GemObject
+    //  Interface Inspectable
     //
-    public abstract Inspection          inspect();
+    public abstract INSPECTION          inspect();
 
 
     //

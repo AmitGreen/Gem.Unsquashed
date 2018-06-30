@@ -4,18 +4,18 @@
 package link.crystal.Gem;
 
 
-import java.io.PrintStream;
 import java.lang.RuntimeException;
 import java.lang.String;
-import java.lang.System;
 import link.crystal.Gem.GemObject;
 import link.crystal.Gem.Inspection;
+import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.MessageFormattable;
 
 
 class           MessageFormatter_1
-    extends     GemObject
-    implements  MessageFormattable
+    extends     GemObject<Inspection>
+    implements  MessageFormattable,
+                Inspectable<Inspection>//,                              //  Via GemObject
 {
     private static Inspection           inspection = Inspection.create("Gem.MessageFormatter_1");
 
@@ -42,7 +42,7 @@ class           MessageFormatter_1
 
 
     //
-    //  Abstract GemObject
+    //  Interface Inspectable
     //
     public Inspection                   inspect()
     {

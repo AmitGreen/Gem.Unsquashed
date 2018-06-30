@@ -4,44 +4,31 @@
 package link.crystal.Gem;
 
 
-import java.io.PrintStream;
 import java.lang.RuntimeException;
 import java.lang.String;
 import java.lang.StringBuilder;
-import java.lang.System;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import link.crystal.Gem.GemObject;
 import link.crystal.Gem.MessageFormattable;
 import link.crystal.Gem.MessageFormatter_1;
 import link.crystal.Gem.MessageFormatter_1__Suffix;
+import link.crystal.Gem.Interface.Inspectable;
 
 
 public abstract class   ParseFormat
-    extends             GemObject
+    extends             GemObject<Inspection>
+    implements          Inspectable<Inspection>//,                      //  Via GemObject
 {
     //
     //  Public Static
     //
-    public static final PrintStream     standard_output = System.out;
     public static final Matcher         braces_matcher  = Pattern.compile("\\{(0|[1-9][0-9]*)?(\\})?").matcher("");
 
 
     //
     //  Public
     //
-    public static void                  line()
-    {
-        standard_output.println();
-    }
-
-
-    public static void                  line(String s)
-    {
-        standard_output.println(s);
-    }
-
-
     public static MessageFormattable    parse_format(String format)
     {
         braces_matcher.reset(format);

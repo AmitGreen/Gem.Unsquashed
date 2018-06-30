@@ -6,10 +6,12 @@ package link.crystal.Jacinth;
 
 import link.crystal.Gem.GemObject;
 import link.crystal.Gem.Inspection;
+import link.crystal.Gem.Interface.Inspectable;
 
 
 public class    Shape 
-    extends     GemObject
+    extends     GemObject<Inspection>
+    implements  Inspectable<Inspection>//,                              //  Via GemObject
 {
     private static Inspection           inspection = Inspection.create("Shape");
 
@@ -36,7 +38,7 @@ public class    Shape
 
 
     //
-    //  Abstract GemObject
+    //  Interface Inspectable
     //
     public Inspection                   inspect()
     {

@@ -71,6 +71,7 @@ JACINTH_FILES = \
     ../Jacinth/pom.xml \
     ../Jacinth/source/link/crystal/Gem/GemObject.java \
     ../Jacinth/source/link/crystal/Gem/Inspection.java \
+    ../Jacinth/source/link/crystal/Gem/Interface/Inspectable.java \
     ../Jacinth/source/link/crystal/Gem/PermenantString.java \
     ../Jacinth/source/link/crystal/Gem/MessageFormattable.java \
         ../Jacinth/source/link/crystal/Gem/MessageFormatter_1.java \
@@ -271,7 +272,7 @@ clean:
 	rm -f   hk.py hkc.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpr.py hpt.py hs.py
 	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
-	rm -f in.py im.py io.py iv.py
+	rm -f ii.java in.py im.py io.py iv.py
 	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1c.py m1m.py m2c.py m2m.py m3m.py map.py mc.py md.py me.py mf.java mf1.java mf1s.java mm.py mn.py
@@ -438,6 +439,7 @@ links:
 	ln -s ../Sapphire/Whitespace.py                                             hw.py
 	ln -s ../Sapphire/PostfixExpression.py                                      hx.py
 	ln -s ../Sapphire/SymbolTable.py                                            hy.py
+	ln -s ../Jacinth/source/link/crystal/Gem/Interface/Inspectable.java         ii.java
 	ln -s ../Gem/__init__.py                                                    in.py
 	ln -s ../Gem/Import.py                                                      im.py
 	ln -s ../Ivory/Main.py                                                      iv.py
