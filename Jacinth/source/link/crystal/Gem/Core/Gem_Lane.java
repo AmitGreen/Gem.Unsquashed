@@ -6,10 +6,9 @@ package link.crystal.Gem.Core;
 
 import java.lang.RuntimeException;
 import java.lang.Thread;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Core.ParseFormat;
 
 
 public class    Gem_Lane
@@ -23,16 +22,15 @@ public class    Gem_Lane
     //
     //  Static members
     //
-    private static Pattern              braces_pattern = Pattern.compile("\\{(0|[1-9][0-9]*)?(\\})?");
-    private static Thread               first_thread   = null;
-    private static Gem_Lane             first_lane     = null;
+    private static Thread               first_thread = null;
+    private static Gem_Lane             first_lane   = null;
 
 
     //
     //  Members
     //
     private static Thread               lane_thread;
-    private static Matcher              braces_matcher;
+    private ParseFormat                 parse_format;
 
 
     //
@@ -40,8 +38,8 @@ public class    Gem_Lane
     //
     private                             Gem_Lane(Thread lane_thread)
     {
-        this.lane_thread    = lane_thread;
-        this.braces_matcher = null;
+        this.lane_thread  = lane_thread;
+        this.parse_format = null;
     }
 
 
@@ -61,40 +59,27 @@ public class    Gem_Lane
 
 
     //
-    //  Public (braces_matcher)
-    //
-    //
-    //  NOTE:
-    //      Due to possible nested called in a single thread, we might need multiple copies of the 'Matcher'.
-    //
-    //      Hence 'fetch_braces_matcher' will *always* return a "clean" braces_matcher; Either:
-    //
-    //          1.  A newly created one (first time & when nesting); OR
-    //          2.  A previously use one (that is no longer used & been reset)
+    //  Public (parse_format)
     //
     //  NOTE:
-    //      The `store_braces_matcher` routine *ONLY* saves the last version of `braces_matcher`; any previous
+    //      Due to possible nested called in a single thread, we might need multiple copies of the 'parse_format'.
+    //
+    //      The `store_parse_format` routine *ONLY* saves the last version of `pares_format`; any previous
     //      version is discarded, as we only bother to "cache" a single value per thread.
     //
-    public Matcher                      pop_or_create__braces_matcher(String s)
+    public ParseFormat                  pop__parse_format__OR__null()
     {
-        Matcher                         braces_matcher = this.braces_matcher;
+        ParseFormat                     parse_format = this.parse_format;
 
-        if (braces_matcher != null) {
-            braces_matcher.reset(s);
+        this.parse_format = null;
 
-            this.braces_matcher = null;
-
-            return braces_matcher;
-        }
-
-        return Gem_Lane.braces_pattern.matcher(s);
+        return parse_format;
     }
 
 
-    public void                         store_braces_matcher(Matcher braces_matcher)
+    public void                         store_parse_format(ParseFormat parse_format)
     {
-        this.braces_matcher = braces_matcher;       //  Overwrite any previously saved copy of braces_matcher
+        this.parse_format = parse_format;                       //  Overwrite any previously saved copy of parse_format
     }
 
 
