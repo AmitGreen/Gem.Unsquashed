@@ -22,7 +22,7 @@ import link.crystal.Gem.Interface.SegmentFormattable;
 public abstract class   ParseFormat
     extends             Gem_Object//<Inspection>
 {
-    private static Inspection           inspection = Inspection.create("Gem.Core.ParseFormat");
+    private static Inspection           inspection = Inspection.create_with_portrait("Gem.Core.ParseFormat");
 
 
     //

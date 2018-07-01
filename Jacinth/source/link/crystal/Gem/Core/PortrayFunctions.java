@@ -10,6 +10,7 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import java.lang.StringBuilder;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Interface.Inspectable;
 
 
 public abstract class   PortrayFunctions
@@ -23,6 +24,10 @@ public abstract class   PortrayFunctions
     {
         if (v == null) {
             return "<null>";
+        }
+
+        if (v instanceof Inspectable) {
+            return ((Inspectable) v).portray();
         }
 
         Class<?>                        v_class = v.getClass();

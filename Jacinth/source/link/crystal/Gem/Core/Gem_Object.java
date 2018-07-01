@@ -41,6 +41,20 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     public abstract INSPECTION          inspect();
 
 
+    public String                       portray()
+    {
+        INSPECTION                      inspection = this.inspect();
+
+        String                          portrait_0 = inspection.portrait_0;
+
+        if (portrait_0 == null) {
+            throw new RuntimeException("Gem_Object.portray: `.inspect().portrait_0` is `null`");
+        }
+
+        return portrait_0;
+    }
+
+
     //
     //  Public
     //

@@ -55,6 +55,12 @@ public class    PermenantString
     }
 
 
+    public String                       portray()
+    {
+        return "<Gem.Core.PermenantString>";
+    }
+
+
     //
     //  Private
     //

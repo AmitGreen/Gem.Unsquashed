@@ -46,6 +46,11 @@ public class    Shape
         return /*static*/ this.inspection;
     }
 
+    public String                       portray()
+    {
+        return "<Shape " + this.shape_name + ">";
+    }
+
 
     //
     //  Public

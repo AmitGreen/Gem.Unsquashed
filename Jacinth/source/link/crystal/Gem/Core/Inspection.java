@@ -20,24 +20,36 @@ public class    Inspection
     //  Members
     //
     public String                       simple_class_name;
+    public String                       portrait_0;
     public boolean                      is_silver_proxy;
 
 
     //
     //  Constructor & Factory
     //
-    private                             Inspection(String simple_class_name, boolean is_silver_proxy)
+    private                             Inspection(String simple_class_name, String portrait_0, boolean is_silver_proxy)
     {
-        this.simple_class_name = simple_class_name;
         this.is_silver_proxy   = is_silver_proxy;
+        this.portrait_0        = portrait_0;
+        this.simple_class_name = simple_class_name;
     }
 
 
     public static Inspection            create(String simple_class_name)
     {
+        String                          interned__simple_class_name = intern_permenant_string  (simple_class_name);
+
+        return new Inspection(interned__simple_class_name, null, false);
+    }
+
+
+    public static Inspection            create_with_portrait(String simple_class_name)
+    {
         String                          interned__simple_class_name = intern_permenant_string(simple_class_name);
 
-        return new Inspection(interned__simple_class_name, false);
+        String                          interned__portrait = intern_permenant_string("<" + simple_class_name + ">");
+
+        return new Inspection(interned__simple_class_name, interned__portrait, false);
     }
 
 
@@ -47,5 +59,11 @@ public class    Inspection
     public Inspection                   inspect()
     {
         return /*static*/ this.inspection;
+    }
+
+
+    public String                       portray()
+    {
+        return "<Gem.Inspection " + this.simple_class_name + ">";
     }
 }

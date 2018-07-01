@@ -21,7 +21,7 @@ public class    PermenantMessageFormattable
     extends     HashMap<String, MessageFormattable>
     implements  Inspectable<Inspection>//,
 {
-    private static Inspection           inspection = Inspection.create("Gem.Core.PermenantMessageFormattable");
+    private static Inspection           inspection = Inspection.create_with_portrait("Gem.Core.PermenantMessageFormattable");
 
 
     //
@@ -53,6 +53,12 @@ public class    PermenantMessageFormattable
     public Inspection                   inspect()
     {
         return /*static*/ this.inspection;
+    }
+
+
+    public String                       portray()
+    {
+        return "<Gem.Core.PermenantMessageFormattable>";
     }
 
 

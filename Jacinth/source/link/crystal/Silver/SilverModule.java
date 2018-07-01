@@ -5,6 +5,7 @@ package link.crystal.Silver;
 
 
 import java.lang.Object;
+import link.crystal.Gem.Core.Gem_Lane;
 
 
 public class    SilverModule
@@ -22,6 +23,8 @@ public class    SilverModule
     public static void                  initialize()
     {
         SilverModule.startup = false;
+
+        Gem_Lane.initialize();
         
         System.out.println("SilverModule.initialize");
     }

@@ -16,7 +16,7 @@ public class    Shape
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Mirror.Shape");
+    private static Inspection           inspection = Inspection.create_with_portrait("Mirror.Shape");
 
 
     //
