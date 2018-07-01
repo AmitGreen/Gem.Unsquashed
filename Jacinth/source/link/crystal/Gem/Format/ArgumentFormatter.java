@@ -55,9 +55,25 @@ public class    ArgumentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public void                         build(StringBuilder builder, String[] arguments)
+    public String                       select_2(String a, String b)
     {
-        throw new RuntimeException("ArgumentFormatter.build: incomplete");
+        int                             argument_index = this.argument_index;
+
+        if (argument_index == 0) {
+            return a;
+        }
+
+        if (argument_index == 1) {
+            return b;
+        }
+
+        throw new RuntimeException(
+                (
+                      "ArgumentFormatter.select_2: argument_index is "
+                    + Integer.toString(argument_index)
+                    + " (expected 0 or 1)"
+                )
+            );
     }
 
 

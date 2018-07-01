@@ -15,6 +15,7 @@ import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Format.MessageFormatter_1__Prefix;
 import link.crystal.Gem.Format.MessageFormatter_1__Simple;
 import link.crystal.Gem.Format.MessageFormatter_1__Suffix;
+import link.crystal.Gem.Format.MessageFormatter_2;
 import link.crystal.Gem.Format.PermenantArgumentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
@@ -39,6 +40,9 @@ public class   ParseFormat
     //
     private String                      format;
     private Matcher                     braces_matcher;
+    private int                         segment_index;
+    private int                         segment_total;
+    private SegmentFormattable[]        segment_many;
 
 
     //
@@ -48,6 +52,9 @@ public class   ParseFormat
     {
         this.format         = format;
         this.braces_matcher = braces_matcher;
+        this.segment_index  = 0;
+        this.segment_total  = 0;
+        this.segment_many   = null;
     }
 
 
@@ -78,6 +85,49 @@ public class   ParseFormat
     //
     //  Private
     //
+    private int                         grow_segments()
+    {
+        int                             previous_total = this.segment_total;
+        int                             segment_total;
+
+        if (previous_total == 0) {
+            segment_total = 21;
+        } else if (previous_total == 21) {
+            segment_total = 201;
+        } else {
+            throw new RuntimeException("ParseFormat.grow_segments: maximum of 100 '{#}' allowed");
+        }
+
+        SegmentFormattable[]            segment_many = ArrayFunctions.<SegmentFormattable>grow_array(
+                this.segment_many,
+                previous_total,
+                new SegmentFormattable[segment_total],
+                segment_total//,
+            );
+
+        this.segment_many  = segment_many;
+        this.segment_total = segment_total;
+
+        return segment_total;
+    }
+
+
+    private SegmentFormattable[]        steal_segments()
+    {
+        SegmentFormattable[]            segment_many = this.segment_many;
+
+        if (segment_many == null) {
+            throw new RuntimeException("ParseFormat.steal_segments: no segments to steal");
+        }
+
+        this.segment_index = 0;
+        this.segment_total = 0;
+        this.segment_many  = null;
+
+        return segment_many;
+    }
+
+
     private MessageFormattable          parse_format__work()
     {
         String                          format         = this.format;
@@ -148,16 +198,23 @@ public class   ParseFormat
         //
         //  Create array of SegmentFormattable
         //
-        int                             many_total = 11;
-        SegmentFormattable[]            many       = new SegmentFormattable[many_total];
+        int                         segment_total = this.segment_total;
+
+        if (segment_total == 0) {
+            segment_total = this.grow_segments();
+        }
+
+        SegmentFormattable[]        segment_many = this.segment_many;
 
         if (start_s == null) {
-            many[0] = PermenantArgumentFormatter.conjure(argument_index);
+            segment_many[0] = PermenantArgumentFormatter.conjure(argument_index);
         } else {
             throw new RuntimeException("ParseFormat.parse_format__work: unimplemented, segment with string");
         }
 
-        int                             many_index = 1;
+        int                         segment_index = 1;
+
+        this.segment_index = segment_index;             //  Commit `segment_index` in catch exception is thrown
 
 
         //
@@ -194,31 +251,22 @@ public class   ParseFormat
             Gem_Object.line("group: " + portray(argument_index));
             Gem_Object.line("next_end_2: " + portray(next_end_2));
 
-
-            if (many_index == many_total) {
-                if (many_total == 101) {
-                    throw new RuntimeException("ParseFormat.parse_format__work: maximum of 100 '{#}' allowed");
-                }
-
-                many = ArrayFunctions.<SegmentFormattable>grow_array(
-                        many,
-                        many_total,
-                        new SegmentFormattable[101],
-                        101//,
-                    );
-
-                many_total = 101;
+            if (segment_index == segment_total) {
+                segment_total = this.grow_segments();
+                segment_many  = this.segment_many;
             }
 
             if (start_s == null) {
-                many[many_index] = PermenantArgumentFormatter.conjure(argument_index);
+                segment_many[segment_index] = PermenantArgumentFormatter.conjure(argument_index);
             } else {
                 throw new RuntimeException("ParseFormat.parse_format__work: unimplemented, segment with string");
             }
 
             end_2 = next_end_2;
 
-            many_index += 1;
+            segment_index += 1;
+
+            this.segment_index = segment_index;             //  Commit `segment_index` in catch exception is thrown
 
             if ( ! braces_matcher.find()) {
                 break;
@@ -234,23 +282,32 @@ public class   ParseFormat
               );
         }
 
-        if (many_index < many_total) {
-            many = ArrayFunctions.<SegmentFormattable>shrink_array(
-                    many,
-                    many_total,
-                    new SegmentFormattable[many_index],
-                    many_index//,
-                );
-
-            many_total = many_index;
-        }
-
-
         if (true) {
-            for (int                        i = 0; i < many_total; i ++) {
-                line(Integer.toString(i) + ": " + portray(many[i]));
+            for (int                        i = 0; i < segment_index; i ++) {
+                line(Integer.toString(i) + ": " + portray(segment_many[i]));
             }
         }
+
+
+        if (segment_index == 2) {
+            return MessageFormatter_2.create(segment_many[0], segment_many[1]);
+        }
+
+
+        SegmentFormattable[]        shrunk_many;
+        int                         shrunk_total = segment_index;
+
+        if (segment_index < segment_total) {
+            shrunk_many = ArrayFunctions.<SegmentFormattable>shrink_array(
+                                 segment_many,
+                                 segment_total,
+                                 new SegmentFormattable[segment_index],
+                                 segment_index//,
+                             );
+        } else {
+            shrunk_many = this.steal_segments();
+        }
+
 
         throw new RuntimeException(
                 (
@@ -262,12 +319,28 @@ public class   ParseFormat
 
 
     //
-    //  Remove any references to `format` (for garbage collection purposes)
+    //  Null any references (for garbage collection purposes)
+    //
+    //  NOTE:
+    //      Not really useful, since all the same data is saved elsewhere, and will never be garbage collectd ...
+    //      ...  However, doing this just on principle anyway ...
     //
     private void                        scrub()
     {
+        int                             segment_index = this.segment_index;
+
         this.format = null;
         this.braces_matcher.reset();
+
+        if (segment_index > 0) {
+            SegmentFormattable[]        segment_many = this.segment_many;
+
+            for (int                    i = 0; i < segment_index; i ++) {
+                segment_many[i] = null;
+            }
+           
+            this.segment_index = 0;
+        }
     }
 
 

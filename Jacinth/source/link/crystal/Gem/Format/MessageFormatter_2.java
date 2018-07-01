@@ -1,0 +1,93 @@
+//  Copyright (c) 2018 Amit Green.  All rights reserved.
+
+
+package link.crystal.Gem.Format;
+
+
+import java.lang.RuntimeException;
+import java.lang.String;
+import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.PortrayFunctions;
+import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Interface.SegmentFormattable;
+
+
+public class    MessageFormatter_2
+    extends     Gem_Object<Inspection>
+//  extends     Object
+    implements  MessageFormattable,
+                Inspectable<Inspection>//,                              //  Via Gem_Object
+{
+    private static Inspection           inspection = Inspection.create("Gem.Format.MessageFormatter_2");
+
+
+    //
+    //  Members
+    //
+    private SegmentFormattable          a;
+    private SegmentFormattable          b;
+
+
+    //
+    //  Constructor & Factory
+    //
+    private                             MessageFormatter_2(SegmentFormattable a, SegmentFormattable b)
+    {
+        this.a = a;
+        this.b = b;
+    }
+
+
+    static public MessageFormatter_2    create(SegmentFormattable a, SegmentFormattable b)
+    {
+        return new MessageFormatter_2(a, b);
+    }
+
+
+    //
+    //  Interface Inspectable
+    //
+    public Inspection                   inspect()
+    {
+        return /*static*/ this.inspection;
+    }
+
+
+    //
+    //  Interface MessageFormattable
+    //
+    public String                       arrange(Object first_argument, Object ... other_arguments)
+    {
+        if (other_arguments.length != 1) {
+            throw new RuntimeException(
+                    (
+                          "MessageFormatter_2.arrange: "
+                        + Integer.toString(1 + other_arguments.length)
+                        + " arguments given (expected 2)"
+                    )
+                );
+        }
+
+        String                          argument_1 = PortrayFunctions.portray(first_argument);
+        String                          argument_2 = PortrayFunctions.portray(other_arguments[0]);
+
+        return (
+                     this.a.select_2(argument_1, argument_2)
+                   + this.b.select_2(argument_1, argument_2)
+               );
+    }
+
+
+    public void                         line(Object first_argument, Object ... other_arguments)
+    {
+        standard_output.println(this.arrange(first_argument, other_arguments));
+    }
+
+
+    public String                       portray()
+    {
+        return "<MessageFormatter_2 " + this.a.portray() + " " + this.b.portray() + ">";
+    }
+}
