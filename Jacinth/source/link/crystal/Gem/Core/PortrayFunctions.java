@@ -9,11 +9,11 @@ import java.lang.Object;
 import java.lang.RuntimeException;
 import java.lang.String;
 import java.lang.StringBuilder;
-import link.crystal.Gem.Core.GemObject;
+import link.crystal.Gem.Core.Gem_Object;
 
 
 public abstract class   PortrayFunctions
-    extends             GemObject//<Inspection>
+    extends             Gem_Object//<Inspection>
 //  extends             Object
 {
     //

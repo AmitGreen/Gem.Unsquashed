@@ -6,12 +6,12 @@ package link.crystal.Gem.Format;
 
 import java.lang.RuntimeException;
 import java.lang.String;
-import link.crystal.Gem.Core.GemObject;
+import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Format.ArgumentFormatter;
 
 
 public abstract class   PermenantArgumentFormatter
-    extends             GemObject//<Inspection>
+    extends             Gem_Object//<Inspection>
 //  extends     Object
 {
     //
@@ -59,8 +59,8 @@ public abstract class   PermenantArgumentFormatter
         ArgumentFormatter[]             many  = PermenantArgumentFormatter.many;
         int                             total = many.length;
 
-        GemObject.line("Dump of PermenantArgumentFormatter");
-        GemObject.line("  size:  " + Integer.toString(total));
+        Gem_Object.line("Dump of PermenantArgumentFormatter");
+        Gem_Object.line("  size:  " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
             ArgumentFormatter           argument_formatter = many[i];
@@ -69,9 +69,9 @@ public abstract class   PermenantArgumentFormatter
                 continue;
             }
 
-            GemObject.line("  " + Integer.toString(i) + ": " + argument_formatter.portray());
+            Gem_Object.line("  " + Integer.toString(i) + ": " + argument_formatter.portray());
         }
 
-        GemObject.line("End of dump of PermenantArgumentFormatter");
+        Gem_Object.line("End of dump of PermenantArgumentFormatter");
     }
 }

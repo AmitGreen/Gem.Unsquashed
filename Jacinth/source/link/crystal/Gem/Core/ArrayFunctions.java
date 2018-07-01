@@ -8,11 +8,11 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.RuntimeException;
 import java.lang.String;
-import link.crystal.Gem.Core.GemObject;
+import link.crystal.Gem.Core.Gem_Object;
 
 
 public abstract class   ArrayFunctions
-    extends             GemObject//<Inspection>
+    extends             Gem_Object//<Inspection>
 //  extends             Object
 {
     //

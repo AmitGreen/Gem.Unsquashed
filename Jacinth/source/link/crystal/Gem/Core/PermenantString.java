@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
@@ -89,14 +90,14 @@ public class    PermenantString
 
         int                             total = values.size();
 
-        GemObject.line("Dump of PermenantString");
-        GemObject.line("      size: " + Integer.toString(total));
+        Gem_Object.line("Dump of PermenantString");
+        Gem_Object.line("      size: " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
-            GemObject.line("  value[" + Integer.toString(i) + "]: " + PortrayFunctions.portray_string(values.get(i)));
+            Gem_Object.line("  value[" + Integer.toString(i) + "]: " + PortrayFunctions.portray_string(values.get(i)));
         }
 
-        GemObject.line("End of dump of PermenantString");
+        Gem_Object.line("End of dump of PermenantString");
     }
 
 

@@ -4,14 +4,14 @@
 package link.crystal.Gem.Core;
 
 
-import link.crystal.Gem.Core.GemObject;
+import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Interface.Inspectable;
 
 
 public class    Inspection
-    extends     GemObject<Inspection>
+    extends     Gem_Object<Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via GemObject
+    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
     private static Inspection           inspection = Inspection.create("Gem.Inspection");
 

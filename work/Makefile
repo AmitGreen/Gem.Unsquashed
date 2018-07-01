@@ -72,7 +72,7 @@ J = ../Jacinth/source/link/crystal
 JACINTH_FILES = \
     ../Jacinth/pom.xml \
     $J/Gem/Core/ArrayFunctions.java \
-    $J/Gem/Core/GemObject.java \
+    $J/Gem/Core/Gem_Object.java \
     $J/Gem/Core/Inspection.java \
     $J/Gem/Core/PermenantMessageFormattable.java \
     $J/Gem/Core/PermenantString.java \
@@ -284,7 +284,7 @@ clean:
 	rm -f ii.java in.py im.py isf.java imf.java io.py iv.py
 	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
-	rm -f m m.txt m1c.py m1m.py m2c.py m2m.py m3m.py map.py mc.py md.py me.py mf1p.java mf1s.java mf1x.java mm.py mn.py
+	rm -f m m.txt m1c.py m1m.py m1p.java m1s.java m1x.java m2c.py m2m.py m3m.py map.py mc.py md.py me.py mm.py mn.py
 	rm -f o.py oc.py od.py oe.py om.py
 	rm -f pa2.py pam.java pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py pel.py pf.py pf.java
 	rm -f   pj.py pk.py pkc.py pl.py pmf.java pmo.py pn.py ps.py ps.java ps3.py px.java
@@ -366,7 +366,7 @@ links:
 	ln -s ../Gem/Hailstone.py                                                   gi.py
 	ln -s $J/Gem/Core/Inspection.java                                           gi.java
 	ln -s ../Gem/Global.py                                                      gl.py
-	ln -s $J/Gem/Core/GemObject.java                                            go.java
+	ln -s $J/Gem/Core/Gem_Object.java                                           go.java
 	ln -s ../Gem/LiquidMap.py                                                   gq.py
 	ln -s ../Gem/Rabble.py                                                      gr.py
 	ln -s ../Gem/Series.py                                                      gse.py
@@ -474,15 +474,15 @@ links:
 	ln -s mine.txt                                                              m.txt
 	ln -s ../Marble/Core.py                                                     m1c.py
 	ln -s ../Marble/Main.py                                                     m1m.py
+	ln -s $J/Gem/Format/MessageFormatter_1__Prefix.java                         m1p.java
+	ln -s $J/Gem/Format/MessageFormatter_1__Simple.java                         m1s.java
+	ln -s $J/Gem/Format/MessageFormatter_1__Suffix.java                         m1x.java
 	ln -s ../Melanite/Core.py                                                   m2c.py
 	ln -s ../Melanite/Main.py                                                   m2m.py
 	ln -s ../Gem/Map.py                                                         map.py
 	ln -s ../Melanite/Child.py                                                  mc.py
 	ln -s ../Melanite/Development.py                                            md.py
 	ln -s ../Gem/Method.py                                                      me.py
-	ln -s $J/Gem/Format/MessageFormatter_1__Prefix.java                         mf1p.java
-	ln -s $J/Gem/Format/MessageFormatter_1__Simple.java                         mf1s.java
-	ln -s $J/Gem/Format/MessageFormatter_1__Suffix.java                         mf1x.java
 	ln -s ../Melanite/Multiprocessing.py                                        mm.py
 	ln -s ../Marble/NestedConjure.py                                            mn.py
 	ln -s ../Gem/Output.py                                                      o.py

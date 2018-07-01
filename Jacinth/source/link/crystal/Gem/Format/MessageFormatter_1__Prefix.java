@@ -6,7 +6,7 @@ package link.crystal.Gem.Format;
 
 import java.lang.RuntimeException;
 import java.lang.String;
-import link.crystal.Gem.Core.GemObject;
+import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
@@ -14,10 +14,10 @@ import link.crystal.Gem.Interface.MessageFormattable;
 
 
 public class    MessageFormatter_1__Prefix
-    extends     GemObject<Inspection>
+    extends     Gem_Object<Inspection>
 //  extends     Object
     implements  MessageFormattable,
-                Inspectable<Inspection>//,                              //  Via GemObject
+                Inspectable<Inspection>//,                              //  Via Gem_Object
 {
     private static Inspection           inspection = Inspection.create("Gem.Format.MessageFormatter_1__Prefix");
 

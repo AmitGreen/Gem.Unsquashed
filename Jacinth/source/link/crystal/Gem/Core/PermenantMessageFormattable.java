@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
@@ -90,17 +91,17 @@ public class    PermenantMessageFormattable
 
         int                             total = values.size();
 
-        GemObject.line("Dump of PermenantMessageFormattable");
-        GemObject.line("  " + String.format("%30s", "size") + ": " + Integer.toString(total));
+        Gem_Object.line("Dump of PermenantMessageFormattable");
+        Gem_Object.line("  " + String.format("%30s", "size") + ": " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
             String                      k = values.get(i);
             MessageFormattable          v = singleton.get(k);
 
-            GemObject.line("  " + String.format("%30s", PortrayFunctions.portray_string(k)) + ": " + v.portray());
+            Gem_Object.line("  " + String.format("%30s", PortrayFunctions.portray_string(k)) + ": " + v.portray());
         }
 
-        GemObject.line("End of dump of PermenantMessageFormattable");
+        Gem_Object.line("End of dump of PermenantMessageFormattable");
     }
 
 

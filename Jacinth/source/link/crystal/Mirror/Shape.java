@@ -12,9 +12,9 @@ import link.crystal.Silver.SilverProxy;
 
 public class    Shape
     extends     SilverProxy<Shape, link.crystal.Jacinth.Shape>
-//  extends     GemObject<Inspection>
+//  extends     Gem_Object<Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via GemObject
+    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
     private static Inspection           inspection = Inspection.create("Mirror.Shape");
 

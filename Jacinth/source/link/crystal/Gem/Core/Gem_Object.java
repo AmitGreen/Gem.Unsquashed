@@ -18,7 +18,7 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 
 
-public abstract class   GemObject<INSPECTION extends Inspection>
+public abstract class   Gem_Object<INSPECTION extends Inspection>
     extends             Object
     implements          Inspectable<INSPECTION>//,
 {

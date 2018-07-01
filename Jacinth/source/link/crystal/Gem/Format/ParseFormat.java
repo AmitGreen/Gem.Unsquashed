@@ -9,6 +9,7 @@ import java.lang.String;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import link.crystal.Gem.Core.ArrayFunctions;
+import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Format.MessageFormatter_1__Prefix;
 import link.crystal.Gem.Format.MessageFormatter_1__Simple;
@@ -19,7 +20,7 @@ import link.crystal.Gem.Interface.SegmentFormattable;
 
 
 public abstract class   ParseFormat
-    extends             GemObject//<Inspection>
+    extends             Gem_Object//<Inspection>
 {
     private static Inspection           inspection = Inspection.create("Gem.Core.ParseFormat");
 
@@ -142,10 +143,10 @@ public abstract class   ParseFormat
                 start_s = format.substring(end_2, start);
             }
 
-            GemObject.line("start: " + start);
-            GemObject.line("start_s: " + portray(start_s));
-            GemObject.line("group: " + portray(argument_index));
-            GemObject.line("next_end_2: " + portray(next_end_2));
+            Gem_Object.line("start: " + start);
+            Gem_Object.line("start_s: " + portray(start_s));
+            Gem_Object.line("group: " + portray(argument_index));
+            Gem_Object.line("next_end_2: " + portray(next_end_2));
 
 
             if (many_index == many_total) {
