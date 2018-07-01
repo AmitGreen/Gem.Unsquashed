@@ -141,6 +141,7 @@ do
             -e '/^\[ERROR\] Re-run Maven using the -X switch to enable full debug logging.$/d' \
             -e '/^\[ERROR\] To see the full stack trace of the errors, re-run Maven with the -e switch\.$/d' \
             -e '/^\[INFO\] 1 error$/d' \
+            -e '/^\[INFO\] 1 warning$/d' \
             -e '/^\[INFO\] BUILD FAILURE$/d' \
             -e '/^\[INFO\] Building Jacinth 1\.0-SNAPSHOT$/d' \
             -e '/^\[INFO\] Building jar: /d' \
@@ -158,9 +159,13 @@ do
             -e '/^\[INFO\] skip non existing resourceDirectory /d' \
             -e '/^\[INFO\] Tests are skipped\.$/d' \
             -e '/^\[INFO\] Total time: /d' \
+            -e '/^\[WARNING\] COMPILATION WARNING : $/d' \
             -e '/^\[WARNING\] File encoding has not been set, using platform encoding /d' \
+            -e '/^\[WARNING\] Some messages have been simplified; recompile with -Xdiags:verbose to get full output$/d' \
             -e '/^\[WARNING\] Using platform encoding /d' \
                 <$tmp2 >$tmp3
+
+        cp $tmp2 /tmp/run.txt
 
         if cmp -s $tmp3 j; then
             :
