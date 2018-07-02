@@ -19,7 +19,7 @@ import link.crystal.Gem.Format.MessageFormatter_2;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.Support.Storehouse_ArgumentFormatter;
+import link.crystal.Gem.Support.Storehouse_ArgumentSegmentFormatter;
 
 
 public class   ParseFormat
@@ -207,7 +207,7 @@ public class   ParseFormat
         SegmentFormattable[]        segment_many = this.segment_many;
 
         if (start_s == null) {
-            segment_many[0] = Storehouse_ArgumentFormatter.conjure(argument_index);
+            segment_many[0] = Storehouse_ArgumentSegmentFormatter.conjure(argument_index);
         } else {
             throw new RuntimeException("ParseFormat.parse_format__work: unimplemented, segment with string");
         }
@@ -257,7 +257,7 @@ public class   ParseFormat
             }
 
             if (start_s == null) {
-                segment_many[segment_index] = Storehouse_ArgumentFormatter.conjure(argument_index);
+                segment_many[segment_index] = Storehouse_ArgumentSegmentFormatter.conjure(argument_index);
             } else {
                 throw new RuntimeException("ParseFormat.parse_format__work: unimplemented, segment with string");
             }

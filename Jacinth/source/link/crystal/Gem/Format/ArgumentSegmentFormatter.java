@@ -13,13 +13,13 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 
 
-public class    ArgumentFormatter
+public class    ArgumentSegmentFormatter
     extends     Gem_Object<Inspection>
 //  extends     Object
     implements  SegmentFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Gem.Format.ArgumentFormatter");
+    private static Inspection           inspection = Inspection.create("Gem.Format.ArgumentSegmentFormatter");
 
 
     //
@@ -31,15 +31,15 @@ public class    ArgumentFormatter
     //
     //  Constructor & Factory
     //
-    private                             ArgumentFormatter(int argument_index)
+    private                             ArgumentSegmentFormatter(int argument_index)
     {
         this.argument_index = argument_index;
     }
 
 
-    static public ArgumentFormatter     create__ALLY__Storehouse_ArgumentFormatter(int argument_index)
+    static public ArgumentSegmentFormatter  create__ALLY__Storehouse_ArgumentSegmentFormatter(int argument_index)
     {
-        return new ArgumentFormatter(argument_index);
+        return new ArgumentSegmentFormatter(argument_index);
     }
 
 
@@ -69,7 +69,7 @@ public class    ArgumentFormatter
 
         throw new RuntimeException(
                 (
-                      "ArgumentFormatter.select_2: argument_index is "
+                      "ArgumentSegmentFormatter.select_2: argument_index is "
                     + Integer.toString(argument_index)
                     + " (expected 0 or 1)"
                 )
@@ -79,6 +79,6 @@ public class    ArgumentFormatter
 
     public String                       portray()
     {
-        return "<ArgumentFormatter " + Integer.toString(this.argument_index) + ">";
+        return "<ArgumentSegmentFormatter " + Integer.toString(this.argument_index) + ">";
     }
 }

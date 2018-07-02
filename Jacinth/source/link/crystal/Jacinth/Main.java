@@ -4,9 +4,10 @@
 package link.crystal.Jacinth;
 
 
-import link.crystal.Gem.Support.Storehouse_ArgumentFormatter;
+import link.crystal.Gem.Support.Storehouse_ArgumentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
+import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
 import link.crystal.Mirror.Shape;
 
 
@@ -18,8 +19,9 @@ public class    Main
 
         circle.skew();
 
-        Storehouse_ArgumentFormatter .dump();
-        Storehouse_MessageFormattable.dump();
-        Storehouse_String            .dump();
+        Storehouse_ArgumentSegmentFormatter.dump();
+        Storehouse_MessageFormattable      .dump();
+        Storehouse_String                  .dump();
+        Storehouse_StringSegmentFormatter  .dump();
     }
 }

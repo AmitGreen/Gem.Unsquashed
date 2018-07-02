@@ -93,17 +93,17 @@ public class    Storehouse_MessageFormattable
             singleton = Storehouse_MessageFormattable.singleton();
         }
 
-        List<String>                    values = new ArrayList<String>(singleton.keySet());
+        List<String>                    keys = new ArrayList<String>(singleton.keySet());
 
-        Collections.sort(values);
+        Collections.sort(keys);
 
-        int                             total = values.size();
+        int                             total = keys.size();
 
         Gem_Object.line("Dump of Storehouse_MessageFormattable");
         Gem_Object.line("  " + String.format("%30s", "size") + ": " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
-            String                      k = values.get(i);
+            String                      k = keys.get(i);
             MessageFormattable          v = singleton.get(k);
 
             Gem_Object.line("  " + String.format("%30s", PortrayFunctions.portray_string(k)) + ": " + v.portray());

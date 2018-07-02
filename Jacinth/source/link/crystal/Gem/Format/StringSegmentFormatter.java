@@ -13,13 +13,13 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 
 
-public class    StringFormatter
+public class    StringSegmentFormatter
     extends     Gem_Object<Inspection>
 //  extends     Object
     implements  SegmentFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Gem.Format.StringFormatter");
+    private static Inspection           inspection = Inspection.create("Gem.Format.StringSegmentFormatter");
 
 
     //
@@ -31,15 +31,15 @@ public class    StringFormatter
     //
     //  Constructor & Factory
     //
-    private                             StringFormatter(String s)
+    private                             StringSegmentFormatter(String s)
     {
         this.s = s;
     }
 
 
-    static public StringFormatter       create__ALLY__Storehouse_StringFormatter(String s)
+    static public StringSegmentFormatter    create__ALLY__Storehouse_StringSegmentFormatter(String s)
     {
-        return new StringFormatter(s);
+        return new StringSegmentFormatter(s);
     }
 
 
@@ -63,6 +63,6 @@ public class    StringFormatter
 
     public String                       portray()
     {
-        return "<StringFormatter " + PortrayFunctions.portray_string(this.s) + ">";
+        return "<StringSegmentFormatter " + PortrayFunctions.portray_string(this.s) + ">";
     }
 }

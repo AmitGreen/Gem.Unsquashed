@@ -90,17 +90,17 @@ public class    Storehouse_String
             singleton = Storehouse_String.singleton();
         }
 
-        List<String>                    values = new ArrayList<String>(singleton.keySet());
+        List<String>                    keys = new ArrayList<String>(singleton.keySet());
 
-        Collections.sort(values);
+        Collections.sort(keys);
 
-        int                             total = values.size();
+        int                             total = keys.size();
 
         Gem_Object.line("Dump of Storehouse_String");
         Gem_Object.line("      size: " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
-            Gem_Object.line("  value[" + Integer.toString(i) + "]: " + PortrayFunctions.portray_string(values.get(i)));
+            Gem_Object.line("  value[" + Integer.toString(i) + "]: " + PortrayFunctions.portray_string(keys.get(i)));
         }
 
         Gem_Object.line("End of dump of Storehouse_String");
