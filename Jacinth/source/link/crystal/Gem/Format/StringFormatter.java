@@ -37,7 +37,7 @@ public class    StringFormatter
     }
 
 
-    static public StringFormatter       create__ALLY__PermenantStringFormatter(String s)
+    static public StringFormatter       create__ALLY__Storehouse_StringFormatter(String s)
     {
         return new StringFormatter(s);
     }

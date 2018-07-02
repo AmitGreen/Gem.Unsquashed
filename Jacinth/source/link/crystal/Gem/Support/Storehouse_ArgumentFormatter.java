@@ -10,7 +10,7 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Format.ArgumentFormatter;
 
 
-public abstract class   PermenantCache_ArgumentFormatter
+public abstract class   Storehouse_ArgumentFormatter
     extends             Gem_Object//<Inspection>
 //  extends     Object
 {
@@ -25,13 +25,13 @@ public abstract class   PermenantCache_ArgumentFormatter
     //
     public static ArgumentFormatter     conjure(int argument_index)
     {
-        ArgumentFormatter[]             many  = PermenantCache_ArgumentFormatter.many;
+        ArgumentFormatter[]             many  = Storehouse_ArgumentFormatter.many;
         int                             total = many.length;
 
         if ( ! (0 <= argument_index && argument_index < total)) {
             throw new RuntimeException(
                     (
-                          "PermenantCache_ArgumentFormatter.conjure: `argument_index` must be between 0 and "
+                          "Storehouse_ArgumentFormatter.conjure: `argument_index` must be between 0 and "
                         + Integer.toString(total + 1)
                         + " (actual value: "
                         + Integer.toString(argument_index)
@@ -46,7 +46,7 @@ public abstract class   PermenantCache_ArgumentFormatter
             return previous;
         }
 
-        ArgumentFormatter               r = ArgumentFormatter.create__ALLY__PermenantCache_ArgumentFormatter(
+        ArgumentFormatter               r = ArgumentFormatter.create__ALLY__Storehouse_ArgumentFormatter(
                 argument_index//,
             );
 
@@ -58,10 +58,10 @@ public abstract class   PermenantCache_ArgumentFormatter
 
     public static void                  dump()
     {
-        ArgumentFormatter[]             many  = PermenantCache_ArgumentFormatter.many;
+        ArgumentFormatter[]             many  = Storehouse_ArgumentFormatter.many;
         int                             total = many.length;
 
-        Gem_Object.line("Dump of PermenantCache_ArgumentFormatter");
+        Gem_Object.line("Dump of Storehouse_ArgumentFormatter");
         Gem_Object.line("  size:  " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
@@ -74,6 +74,6 @@ public abstract class   PermenantCache_ArgumentFormatter
             Gem_Object.line("  " + Integer.toString(i) + ": " + argument_formatter.portray());
         }
 
-        Gem_Object.line("End of dump of PermenantCache_ArgumentFormatter");
+        Gem_Object.line("End of dump of Storehouse_ArgumentFormatter");
     }
 }

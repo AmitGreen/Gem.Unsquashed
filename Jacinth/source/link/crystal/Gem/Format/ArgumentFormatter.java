@@ -37,7 +37,7 @@ public class    ArgumentFormatter
     }
 
 
-    static public ArgumentFormatter     create__ALLY__PermenantCache_ArgumentFormatter(int argument_index)
+    static public ArgumentFormatter     create__ALLY__Storehouse_ArgumentFormatter(int argument_index)
     {
         return new ArgumentFormatter(argument_index);
     }

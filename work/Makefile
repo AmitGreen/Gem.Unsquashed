@@ -86,9 +86,9 @@ JACINTH_FILES = \
     $J/Gem/Interface/Inspectable.java \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
-    $J/Gem/Support/PermenantCache_ArgumentFormatter.java \
-    $J/Gem/Support/PermenantCache_MessageFormattable.java \
-    $J/Gem/Support/PermenantCache_String.java \
+    $J/Gem/Support/Storehouse_ArgumentFormatter.java \
+    $J/Gem/Support/Storehouse_MessageFormattable.java \
+    $J/Gem/Support/Storehouse_String.java \
     $J/Jacinth/Main.java \
     $J/Jacinth/Shape.java \
     $J/Mirror/Shape.java \
@@ -290,11 +290,11 @@ clean:
 	rm -f m m.txt m1c.py m1m.py m1p.java m1s.java m1x.java
 	rm -f   m2.java m2c.py m2m.py m3m.py map.py mc.py md.py me.py mm.py mn.py
 	rm -f o.py oc.py od.py oe.py om.py
-	rm -f pa2.py pat.py path.py paw.py pca.java pca.py pcc.py pco.py pcr.py pcm.py pcm.java pcs.java
+	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py
 	rm -f   pel.py pf.py pf.java pj.py pk.py pkc.py pl.py pmo.py pn.py ps.py psc.java ps3.py px.java
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
-	rm -f sf.java sl.py so.py ssio.py sy.py
+	rm -f sha.java shm.java shs.java sf.java sl.py so.py ssio.py sy.py
 	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
@@ -501,11 +501,8 @@ links:
 	ln -s ../Gem/Path.py                                                        path.py
 	ln -s ../Pearl/ActionWord.py                                                paw.py
 	ln -s ../Pearl/Cache.py                                                     pca.py
-	ln -s $J/Gem/Support/PermenantCache_ArgumentFormatter.java                  pca.java
 	ln -s ../Pearl/CreateMeta.py                                                pcc.py
 	ln -s ../Pearl/Comment.py                                                   pcm.py
-	ln -s $J/Gem/Support/PermenantCache_MessageFormattable.java                 pcm.java
-	ln -s $J/Gem/Support/PermenantCache_String.java                             pcs.java
 	ln -s ../Pearl/ClassOrder.py                                                pco.py
 	ln -s ../Pearl/Core.py                                                      pcr.py
 	ln -s ../Pearl/Elemental.py                                                 pel.py
@@ -527,6 +524,9 @@ links:
 	ln -s ../Quartz/Pattern.py                                                  qp.py
 	ln -s ../Agate/RUNME.py                                                     rm.py
 	ln -s ../Gem/RegularExpression.py                                           rx.py
+	ln -s $J/Gem/Support/Storehouse_ArgumentFormatter.java                      sha.java
+	ln -s $J/Gem/Support/Storehouse_MessageFormattable.java                     shm.java
+	ln -s $J/Gem/Support/Storehouse_String.java                                 shs.java
 	ln -s $J/Gem/Format/StringFormatter.java                                    sf.java
 	ln -s ../Gem/Sleep.py                                                       sl.py
 	ln -s ../Gem/StringOutput.py                                                so.py

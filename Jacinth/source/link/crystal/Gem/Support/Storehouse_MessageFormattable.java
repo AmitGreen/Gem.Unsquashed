@@ -17,35 +17,35 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 
 
-public class    PermenantCache_MessageFormattable
+public class    Storehouse_MessageFormattable
     extends     HashMap<String, MessageFormattable>
     implements  Inspectable<Inspection>//,
 {
     private static Inspection           inspection = Inspection.create_with_portrait(
-            "Gem.Core.PermenantCache_MessageFormattable"//,
+            "Gem.Core.Storehouse_MessageFormattable"//,
         );
 
 
     //
     //  Private static
     //
-    private static final int                            initial_capacity = 1009;
-    private static PermenantCache_MessageFormattable    singleton        = null;
+    private static final int                        initial_capacity = 1009;
+    private static Storehouse_MessageFormattable    singleton        = null;
 
 
 
     //
     //  Constructor & Factory
     //
-    private                             PermenantCache_MessageFormattable(int initial_capacity)
+    private                             Storehouse_MessageFormattable(int initial_capacity)
     {
         super(initial_capacity);
     }
 
 
-    private static PermenantCache_MessageFormattable    create()
+    private static Storehouse_MessageFormattable    create()
     {
-        return new PermenantCache_MessageFormattable(PermenantCache_MessageFormattable.initial_capacity);
+        return new Storehouse_MessageFormattable(Storehouse_MessageFormattable.initial_capacity);
     }
 
 
@@ -60,23 +60,23 @@ public class    PermenantCache_MessageFormattable
 
     public String                       portray()
     {
-        return "<Gem.Core.PermenantCache_MessageFormattable>";
+        return "<Gem.Core.Storehouse_MessageFormattable>";
     }
 
 
     //
     //  Private
     //
-    private static PermenantCache_MessageFormattable    singleton()
+    private static Storehouse_MessageFormattable    singleton()
     {
-        PermenantCache_MessageFormattable   singleton = PermenantCache_MessageFormattable.singleton;
+        Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
 
         if (singleton != null) {
             return singleton;
         }
 
         singleton =
-            PermenantCache_MessageFormattable.singleton = PermenantCache_MessageFormattable.create();
+            Storehouse_MessageFormattable.singleton = Storehouse_MessageFormattable.create();
 
         return singleton;
     }
@@ -87,10 +87,10 @@ public class    PermenantCache_MessageFormattable
     //
     public static void                  dump()
     {
-        PermenantCache_MessageFormattable   singleton = PermenantCache_MessageFormattable.singleton;
+        Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
 
         if (singleton == null) {
-            singleton = PermenantCache_MessageFormattable.singleton();
+            singleton = Storehouse_MessageFormattable.singleton();
         }
 
         List<String>                    values = new ArrayList<String>(singleton.keySet());
@@ -99,7 +99,7 @@ public class    PermenantCache_MessageFormattable
 
         int                             total = values.size();
 
-        Gem_Object.line("Dump of PermenantCache_MessageFormattable");
+        Gem_Object.line("Dump of Storehouse_MessageFormattable");
         Gem_Object.line("  " + String.format("%30s", "size") + ": " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
@@ -109,16 +109,16 @@ public class    PermenantCache_MessageFormattable
             Gem_Object.line("  " + String.format("%30s", PortrayFunctions.portray_string(k)) + ": " + v.portray());
         }
 
-        Gem_Object.line("End of dump of PermenantCache_MessageFormattable");
+        Gem_Object.line("End of dump of Storehouse_MessageFormattable");
     }
 
 
     public static void                  insert(String k, MessageFormattable v)
     {
-        PermenantCache_MessageFormattable   singleton = PermenantCache_MessageFormattable.singleton;
+        Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
 
         if (singleton == null) {
-            singleton = PermenantCache_MessageFormattable.singleton();
+            singleton = Storehouse_MessageFormattable.singleton();
         }
 
         MessageFormattable              previous = singleton.putIfAbsent(k, v);
@@ -126,7 +126,7 @@ public class    PermenantCache_MessageFormattable
         if (previous != null) {
             throw new RuntimeException(
                     (
-                          "PermenantCache_MessageFormattable.insert: previos value for "
+                          "Storehouse_MessageFormattable.insert: previos value for "
                         + PortrayFunctions.portray_string(k)
                         + " already exists: "
                         + previous.portray()
@@ -138,10 +138,10 @@ public class    PermenantCache_MessageFormattable
 
     public static MessageFormattable    lookup(String k)
     {
-        PermenantCache_MessageFormattable   singleton = PermenantCache_MessageFormattable.singleton;
+        Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
 
         if (singleton == null) {
-            singleton = PermenantCache_MessageFormattable.singleton();
+            singleton = Storehouse_MessageFormattable.singleton();
         }
 
         return singleton.get(k);

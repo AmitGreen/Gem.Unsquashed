@@ -16,33 +16,33 @@ import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
 
 
-public class    PermenantCache_String
+public class    Storehouse_String
     extends     HashMap<String, String>
     implements  Inspectable<Inspection>//,
 {
-    private static Inspection           inspection = Inspection.create("Gem.Support.PermenantCache_String");
+    private static Inspection           inspection = Inspection.create("Gem.Support.Storehouse_String");
 
 
     //
     //  Private static
     //
-    private static final int                initial_capacity = 1009;
-    private static PermenantCache_String    singleton        = null;
+    private static final int            initial_capacity = 1009;
+    private static Storehouse_String    singleton        = null;
 
 
 
     //
     //  Constructor & Factory
     //
-    private                             PermenantCache_String(int initial_capacity)
+    private                             Storehouse_String(int initial_capacity)
     {
         super(initial_capacity);
     }
 
 
-    private static PermenantCache_String    create()
+    private static Storehouse_String    create()
     {
-        return new PermenantCache_String(PermenantCache_String.initial_capacity);
+        return new Storehouse_String(Storehouse_String.initial_capacity);
     }
 
 
@@ -57,23 +57,23 @@ public class    PermenantCache_String
 
     public String                       portray()
     {
-        return "<Gem.Support.PermenantCache_String>";
+        return "<Gem.Support.Storehouse_String>";
     }
 
 
     //
     //  Private
     //
-    private static PermenantCache_String    singleton()
+    private static Storehouse_String    singleton()
     {
-        PermenantCache_String           singleton = PermenantCache_String.singleton;
+        Storehouse_String               singleton = Storehouse_String.singleton;
 
         if (singleton != null) {
             return singleton;
         }
 
         singleton =
-            PermenantCache_String.singleton = PermenantCache_String.create();
+            Storehouse_String.singleton = Storehouse_String.create();
 
         return singleton;
     }
@@ -84,10 +84,10 @@ public class    PermenantCache_String
     //
     public static void                  dump()
     {
-        PermenantCache_String           singleton = PermenantCache_String.singleton;
+        Storehouse_String               singleton = Storehouse_String.singleton;
 
         if (singleton == null) {
-            singleton = PermenantCache_String.singleton();
+            singleton = Storehouse_String.singleton();
         }
 
         List<String>                    values = new ArrayList<String>(singleton.keySet());
@@ -96,27 +96,27 @@ public class    PermenantCache_String
 
         int                             total = values.size();
 
-        Gem_Object.line("Dump of PermenantCache_String");
+        Gem_Object.line("Dump of Storehouse_String");
         Gem_Object.line("      size: " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
             Gem_Object.line("  value[" + Integer.toString(i) + "]: " + PortrayFunctions.portray_string(values.get(i)));
         }
 
-        Gem_Object.line("End of dump of PermenantCache_String");
+        Gem_Object.line("End of dump of Storehouse_String");
     }
 
 
     public static String                intern_permenant_string(String s)
     {
         if (s == null) {
-            throw new RuntimeException("PermenantCache_String.intern_permenant_string: `s` is null");
+            throw new RuntimeException("Storehouse_String.intern_permenant_string: `s` is null");
         }
 
-        PermenantCache_String           singleton = PermenantCache_String.singleton;
+        Storehouse_String               singleton = Storehouse_String.singleton;
 
         if (singleton == null) {
-            singleton = PermenantCache_String.singleton();
+            singleton = Storehouse_String.singleton();
         }
 
         String                          previous = singleton.putIfAbsent(s, s);
