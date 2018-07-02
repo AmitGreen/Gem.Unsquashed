@@ -4,22 +4,19 @@
 package link.crystal.Gem.Support;
 
 
-import java.lang.RuntimeException;
 import java.lang.String;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringMap;
 import link.crystal.Gem.Core.Inspection;
-import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Format.StringSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 
 
 public class    Storehouse_StringSegmentFormatter
-    extends     HashMap<String, StringSegmentFormatter>
-    implements  Inspectable<Inspection>//,
+    extends     Gem_StringMap  <StringSegmentFormatter>
+//  extends     HashMap        <String, StringSegmentFormatter>
+//  extends     AbstractHashMap<String, StringSegmentFormatter>
+//  extends     Object
+    implements  Inspectable<Inspection>//,                              //  Via Gem_StringMap<StringSegmentFormatter>
 {
     private static Inspection           inspection = Inspection.create("Gem.Support.Storehouse_StringSegmentFormatter");
 
@@ -56,12 +53,6 @@ public class    Storehouse_StringSegmentFormatter
     }
 
 
-    public String                       portray()
-    {
-        return "<Gem.Support.Storehouse_StringSegmentFormatter>";
-    }
-
-
     //
     //  Private
     //
@@ -91,22 +82,6 @@ public class    Storehouse_StringSegmentFormatter
             singleton = Storehouse_StringSegmentFormatter.singleton();
         }
 
-        List<String>                    keys = new ArrayList<String>(singleton.keySet());
-
-        Collections.sort(keys);
-
-        int                             total = keys.size();
-
-        Gem_Object.line("Dump of Storehouse_StringSegmentFormatter");
-        Gem_Object.line("      size: " + Integer.toString(total));
-
-        for (int                        i = 0; i < total; i ++) {
-            String                      k = keys.get(i);
-            StringSegmentFormatter      v = singleton.get(k);
-
-            Gem_Object.line("  " + String.format("%30s", PortrayFunctions.portray_string(k)) + ": " + v.portray());
-        }
-
-        Gem_Object.line("End of dump of Storehouse_StringSegmentFormatter");
+        singleton.dump("Storehouse_StringSegmentFormatter.singleton");
     }
 }

@@ -23,9 +23,9 @@ public abstract class   Gem_StringMap<V>
     //
     //  Constructor
     //
-    protected                           Gem_StringMap()
+    protected                           Gem_StringMap(int initial_capacity)
     {
-        super();
+        super(initial_capacity);
     }
 
 
