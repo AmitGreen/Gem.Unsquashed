@@ -8,9 +8,9 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
-import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.SegmentFormattable;
+import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public class    StringSegmentFormatter

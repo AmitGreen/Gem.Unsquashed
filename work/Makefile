@@ -78,7 +78,6 @@ JACINTH_FILES = \
     $J/Gem/Core/Gem_StringMap.java \
     $J/Gem/Core/Gem_StringSet.java \
     $J/Gem/Core/Inspection.java \
-    $J/Gem/Core/PortrayFunctions.java \
     $J/Gem/Format/ArgumentSegmentFormatter.java \
     $J/Gem/Format/MessageFormatter_1__Prefix.java \
     $J/Gem/Format/MessageFormatter_1__Simple.java \
@@ -89,6 +88,7 @@ JACINTH_FILES = \
     $J/Gem/Interface/Inspectable.java \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
+    $J/Gem/Support/PortrayFunctions.java \
     $J/Gem/Support/Storehouse_ArgumentSegmentFormatter.java \
     $J/Gem/Support/Storehouse_MessageFormattable.java \
     $J/Gem/Support/Storehouse_String.java \
@@ -572,7 +572,7 @@ links:
 	ln -s ../Crystal/CardRoot.py                                                ycb.py
 	ln -s ../Crystal/Core.py                                                    ycr.py
 	ln -s ../Crystal/Deck_7.py                                                  yd7.py
-	ln -s $J/Gem/Core/PortrayFunctions.java                                     yf.java
+	ln -s $J/Gem/Support/PortrayFunctions.java                                  yf.java
 	ln -s ../Crystal/Game.py                                                    yg.py
 	ln -s ../Crystal/ChessKing.py                                               yki.py
 	ln -s ../Crystal/ChessKnight.py                                             ykn.py

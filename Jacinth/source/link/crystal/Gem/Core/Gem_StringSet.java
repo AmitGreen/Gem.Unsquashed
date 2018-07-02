@@ -8,19 +8,19 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
-import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Support.PortrayFunctions;
 
 
-public abstract class   Gem_StringSet
-    extends             HashMap<String, String>
-//  extends             AbstractHashMap<String, String>
+public abstract class   Gem_StringSet<INSPECTION extends Inspection>
+    extends             Gem_Map<INSPECTION, String, String>
+//  extends             HashMap            <String, String>
+//  extends             AbstractHashMap    <String, String>
 //  extends             Object
-    implements          Inspectable<Inspection>//,
+    implements          Inspectable<INSPECTION>//,
 {
     //
     //  Constructor
@@ -36,7 +36,7 @@ public abstract class   Gem_StringSet
     //
     public String                       portray()
     {
-        Inspection                      inspection = this.inspect();
+        INSPECTION                      inspection = this.inspect();
 
         StringBuilder                   b = new StringBuilder();
 
@@ -75,7 +75,7 @@ public abstract class   Gem_StringSet
     //
     public void                         dump(String name)
     {
-        Inspection                      inspection = this.inspect();
+        INSPECTION                      inspection = this.inspect();
 
         String                          simple_class_name = inspection.simple_class_name;
 

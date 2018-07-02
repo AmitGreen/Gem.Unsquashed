@@ -12,9 +12,10 @@ import link.crystal.Gem.Interface.Inspectable;
 
 
 public class    Storehouse_StringSegmentFormatter
-    extends     Gem_StringMap  <StringSegmentFormatter>
-//  extends     HashMap        <String, StringSegmentFormatter>
-//  extends     AbstractHashMap<String, StringSegmentFormatter>
+    extends     Gem_StringMap  <Inspection,         StringSegmentFormatter>
+//  extends     Gem_Map        <Inspection, String, StringSegmentFormatter>
+//  extends     HashMap                    <String, StringSegmentFormatter>
+//  extends     AbstractHashMap            <String, StringSegmentFormatter>
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_StringMap<StringSegmentFormatter>
 {

@@ -11,9 +11,9 @@ import java.lang.Object;
 import java.lang.String;
 import java.lang.System;
 import link.crystal.Gem.Core.Inspection;
-import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Support.PortrayFunctions;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
 

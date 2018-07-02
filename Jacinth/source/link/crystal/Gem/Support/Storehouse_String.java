@@ -6,21 +6,18 @@ package link.crystal.Gem.Support;
 
 import java.lang.RuntimeException;
 import java.lang.String;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 import link.crystal.Gem.Core.Gem_Object;
-import link.crystal.Gem.Core.Inspection;
-import link.crystal.Gem.Core.PortrayFunctions;
-import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Core.Gem_StringSet;
+import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public class    Storehouse_String
-    extends     Gem_StringSet
-//  extends     HashMap        <String, String>
-//  extends     AbstractHashMap<String, String>
+    extends     Gem_StringSet  <Inspection>
+//  extends     Gem_Map        <Inspection, String, String>
+//  extends     HashMap                    <String, String>
+//  extends     AbstractHashMap            <String, String>
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_StringSet
 {

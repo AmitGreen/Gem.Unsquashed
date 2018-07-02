@@ -8,17 +8,20 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
+import link.crystal.Gem.Core.Gem_Map;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
-import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Support.PortrayFunctions;
 
 
-public abstract class   Gem_StringMap<V>
-    extends             HashMap<String, V>
-    implements          Inspectable<Inspection>//,
+public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
+    extends             Gem_Map<INSPECTION, String, V>
+//  extends             HashMap            <String, V>
+//  extends             AbstractHashMap    <String, V>
+//  extends             Object
+    implements          Inspectable<INSPECTION>//,
 {
     //
     //  Constructor

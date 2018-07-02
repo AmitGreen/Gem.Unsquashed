@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import link.crystal.Gem.Core.ArrayFunctions;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
-import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Format.MessageFormatter_1__Prefix;
 import link.crystal.Gem.Format.MessageFormatter_1__Simple;
 import link.crystal.Gem.Format.MessageFormatter_1__Suffix;
@@ -19,6 +18,7 @@ import link.crystal.Gem.Format.MessageFormatter_2;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
+import link.crystal.Gem.Support.PortrayFunctions;
 import link.crystal.Gem.Support.Storehouse_ArgumentSegmentFormatter;
 
 

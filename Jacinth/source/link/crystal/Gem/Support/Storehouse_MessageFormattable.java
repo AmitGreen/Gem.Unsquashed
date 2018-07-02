@@ -8,18 +8,21 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
+import link.crystal.Gem.Core.Gem_StringMap;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
-import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public class    Storehouse_MessageFormattable
-    extends     HashMap<String, MessageFormattable>
-    implements  Inspectable<Inspection>//,
+    extends     Gem_StringMap<Inspection,         MessageFormattable>
+//  extends     HashMap                  <String, MessageFormattable>
+//  extends     AbstractHashMap          <String, MessageFormattable>
+//  extends     Object
+    implements  Inspectable<Inspection>//,                              //  Via Gem_Map<?, ?, ?>
 {
     private static Inspection           inspection = Inspection.create_with_portrait(
             "Gem.Core.Storehouse_MessageFormattable"//,
