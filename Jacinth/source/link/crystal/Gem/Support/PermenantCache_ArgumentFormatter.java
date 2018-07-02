@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Gem.Format;
+package link.crystal.Gem.Support;
 
 
 import java.lang.RuntimeException;
@@ -10,7 +10,7 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Format.ArgumentFormatter;
 
 
-public abstract class   PermenantArgumentFormatter
+public abstract class   PermenantCache_ArgumentFormatter
     extends             Gem_Object//<Inspection>
 //  extends     Object
 {
@@ -25,13 +25,13 @@ public abstract class   PermenantArgumentFormatter
     //
     public static ArgumentFormatter     conjure(int argument_index)
     {
-        ArgumentFormatter[]             many  = PermenantArgumentFormatter.many;
+        ArgumentFormatter[]             many  = PermenantCache_ArgumentFormatter.many;
         int                             total = many.length;
 
         if ( ! (0 <= argument_index && argument_index < total)) {
             throw new RuntimeException(
                     (
-                          "PermenantArgumentFormatter.conjure: `argument_index` must be between 0 and "
+                          "PermenantCache_ArgumentFormatter.conjure: `argument_index` must be between 0 and "
                         + Integer.toString(total + 1)
                         + " (actual value: "
                         + Integer.toString(argument_index)
@@ -46,7 +46,9 @@ public abstract class   PermenantArgumentFormatter
             return previous;
         }
 
-        ArgumentFormatter               r = ArgumentFormatter.create__ALLY__PermenantArgumentFormatter(argument_index);
+        ArgumentFormatter               r = ArgumentFormatter.create__ALLY__PermenantCache_ArgumentFormatter(
+                argument_index//,
+            );
 
         many[argument_index] = r;
 
@@ -56,10 +58,10 @@ public abstract class   PermenantArgumentFormatter
 
     public static void                  dump()
     {
-        ArgumentFormatter[]             many  = PermenantArgumentFormatter.many;
+        ArgumentFormatter[]             many  = PermenantCache_ArgumentFormatter.many;
         int                             total = many.length;
 
-        Gem_Object.line("Dump of PermenantArgumentFormatter");
+        Gem_Object.line("Dump of PermenantCache_ArgumentFormatter");
         Gem_Object.line("  size:  " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
@@ -72,6 +74,6 @@ public abstract class   PermenantArgumentFormatter
             Gem_Object.line("  " + Integer.toString(i) + ": " + argument_formatter.portray());
         }
 
-        Gem_Object.line("End of dump of PermenantArgumentFormatter");
+        Gem_Object.line("End of dump of PermenantCache_ArgumentFormatter");
     }
 }

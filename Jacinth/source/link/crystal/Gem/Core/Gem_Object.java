@@ -11,11 +11,11 @@ import java.lang.Object;
 import java.lang.String;
 import java.lang.System;
 import link.crystal.Gem.Core.Inspection;
-import link.crystal.Gem.Core.PermenantMessageFormattable;
-import link.crystal.Gem.Core.PermenantString;
 import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Support.PermenantCache_MessageFormattable;
+import link.crystal.Gem.Support.PermenantCache_String;
 
 
 public abstract class   Gem_Object<INSPECTION extends Inspection>
@@ -60,7 +60,7 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     //
     public static String                intern_permenant_string(String s)
     {
-        return PermenantString.intern_permenant_string(s);
+        return PermenantCache_String.intern_permenant_string(s);
     }
 
 
@@ -70,7 +70,7 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
             return null;
         }
 
-        return PermenantString.intern_permenant_string(s);
+        return PermenantCache_String.intern_permenant_string(s);
     }
 
     
@@ -88,12 +88,12 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
 
     public static void                  line(String format, Object first_argument, Object ... other_arguments)
     {
-        MessageFormattable              formattable = PermenantMessageFormattable.lookup(format);
+        MessageFormattable              formattable = PermenantCache_MessageFormattable.lookup(format);
 
         if (formattable == null) {
             formattable = ParseFormat.parse_format(format);
 
-            PermenantMessageFormattable.insert(format, formattable);
+            PermenantCache_MessageFormattable.insert(format, formattable);
         }
 
         formattable.line(first_argument, other_arguments);

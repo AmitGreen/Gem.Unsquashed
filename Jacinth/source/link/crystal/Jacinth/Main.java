@@ -4,9 +4,9 @@
 package link.crystal.Jacinth;
 
 
-import link.crystal.Gem.Core.PermenantMessageFormattable;
-import link.crystal.Gem.Core.PermenantString;
-import link.crystal.Gem.Format.PermenantArgumentFormatter;
+import link.crystal.Gem.Support.PermenantCache_ArgumentFormatter;
+import link.crystal.Gem.Support.PermenantCache_MessageFormattable;
+import link.crystal.Gem.Support.PermenantCache_String;
 import link.crystal.Mirror.Shape;
 
 
@@ -18,8 +18,8 @@ public class    Main
 
         circle.skew();
 
-        PermenantArgumentFormatter .dump();
-        PermenantMessageFormattable.dump();
-        PermenantString            .dump();
+        PermenantCache_ArgumentFormatter .dump();
+        PermenantCache_MessageFormattable.dump();
+        PermenantCache_String            .dump();
     }
 }

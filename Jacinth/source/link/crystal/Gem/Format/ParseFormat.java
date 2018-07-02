@@ -16,10 +16,10 @@ import link.crystal.Gem.Format.MessageFormatter_1__Prefix;
 import link.crystal.Gem.Format.MessageFormatter_1__Simple;
 import link.crystal.Gem.Format.MessageFormatter_1__Suffix;
 import link.crystal.Gem.Format.MessageFormatter_2;
-import link.crystal.Gem.Format.PermenantArgumentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
+import link.crystal.Gem.Support.PermenantCache_ArgumentFormatter;
 
 
 public class   ParseFormat
@@ -207,7 +207,7 @@ public class   ParseFormat
         SegmentFormattable[]        segment_many = this.segment_many;
 
         if (start_s == null) {
-            segment_many[0] = PermenantArgumentFormatter.conjure(argument_index);
+            segment_many[0] = PermenantCache_ArgumentFormatter.conjure(argument_index);
         } else {
             throw new RuntimeException("ParseFormat.parse_format__work: unimplemented, segment with string");
         }
@@ -257,7 +257,7 @@ public class   ParseFormat
             }
 
             if (start_s == null) {
-                segment_many[segment_index] = PermenantArgumentFormatter.conjure(argument_index);
+                segment_many[segment_index] = PermenantCache_ArgumentFormatter.conjure(argument_index);
             } else {
                 throw new RuntimeException("ParseFormat.parse_format__work: unimplemented, segment with string");
             }
