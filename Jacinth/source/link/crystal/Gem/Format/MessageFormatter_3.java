@@ -1,0 +1,135 @@
+//  Copyright (c) 2018 Amit Green.  All rights reserved.
+
+
+package link.crystal.Gem.Format;
+
+
+import java.lang.RuntimeException;
+import java.lang.String;
+import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Interface.SegmentFormattable;
+import link.crystal.Gem.Support.OutputFunctions;
+import link.crystal.Gem.Support.PortrayFunctions;
+
+
+public class    MessageFormatter_3
+    extends     Gem_Object<Inspection>
+//  extends     Object
+    implements  MessageFormattable,
+                Inspectable<Inspection>//,                              //  Via Gem_Object
+{
+    private static Inspection           inspection = Inspection.create("Gem.Format.MessageFormatter_3");
+
+
+    //
+    //  Members
+    //
+    private int                         expected;
+    private SegmentFormattable          a;
+    private SegmentFormattable          b;
+    private SegmentFormattable          c;
+
+
+    //
+    //  Constructor & Factory
+    //
+    private                             MessageFormatter_3(
+            int                             expected,
+            SegmentFormattable              a,
+            SegmentFormattable              b,
+            SegmentFormattable              c//,
+        )
+    {
+        this.expected = expected;
+        this.a        = a;
+        this.b        = b;
+        this.c        = c;
+    }
+
+
+    static public MessageFormatter_3    create(
+            int                             expected,
+            SegmentFormattable              a,
+            SegmentFormattable              b,
+            SegmentFormattable              c//,
+        )
+    {
+        if ( ! (2 <= expected && expected <= 3)) {
+            throw new RuntimeException("MessageFormatter_3.create: invalid value for `expected`<" + Integer.toString(expected) + ">");
+        }
+
+        return new MessageFormatter_3(expected, a, b, c);
+    }
+
+
+    //
+    //  Interface Inspectable
+    //
+    public Inspection                   inspect()
+    {
+        return /*static*/ this.inspection;
+    }
+
+
+    //
+    //  Interface MessageFormattable
+    //
+    public String                       arrange(Object first_argument, Object ... other_arguments)
+    {
+        int                             expected = this.expected;
+
+        int                             actual   = 1 + other_arguments.length;
+
+        if (actual != expected) {
+            throw new RuntimeException(
+                    (
+                          "MessageFormatter_3.arrange: "
+                        + Integer.toString(actual)
+                        + " arguments given (expected "
+                        + Integer.toString(expected)
+                        + ")"
+                    )
+                );
+        }
+
+        SegmentFormattable              a        = this.a;
+        SegmentFormattable              b        = this.b;
+        SegmentFormattable              c        = this.c;
+
+        String                          argument_1 = PortrayFunctions.portray(first_argument);
+        String                          argument_2 = PortrayFunctions.portray(other_arguments[0]);
+
+        StringBuilder                   builder = new StringBuilder();
+
+        if (expected == 2) {
+            builder.append(a.select_2(argument_1, argument_2));
+            builder.append(b.select_2(argument_1, argument_2));
+            builder.append(c.select_2(argument_1, argument_2));
+
+            return builder.toString();
+        }
+
+        String                          argument_3 = PortrayFunctions.portray(other_arguments[1]);
+
+        builder.append(a.select_3(argument_1, argument_2, argument_3));
+        builder.append(b.select_3(argument_1, argument_2, argument_3));
+        builder.append(c.select_3(argument_1, argument_2, argument_3));
+
+        return builder.toString();
+    }
+
+
+    public void                         line(Object first_argument, Object ... other_arguments)
+    {
+        OutputFunctions.line(this.arrange(first_argument, other_arguments));
+    }
+
+
+    public String                       portray()
+    {
+        return "<MessageFormatter_3 " + this.a.portray() + " " + this.b.portray() + " " + this.c.portray() + ">";
+    }
+}

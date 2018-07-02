@@ -77,6 +77,32 @@ public class    ArgumentSegmentFormatter
     }
 
 
+    public String                       select_3(String a, String b, String c)
+    {
+        int                             argument_index = this.argument_index;
+
+        if (argument_index == 0) {
+            return a;
+        }
+
+        if (argument_index == 1) {
+            return b;
+        }
+
+        if (argument_index == 2) {
+            return c;
+        }
+
+        throw new RuntimeException(
+                (
+                      "ArgumentSegmentFormatter.select_3: argument_index is "
+                    + Integer.toString(argument_index)
+                    + " (expected 0, 1, or 2)"
+                )
+            );
+    }
+
+
     public String                       portray()
     {
         return "<ArgumentSegmentFormatter " + Integer.toString(this.argument_index) + ">";

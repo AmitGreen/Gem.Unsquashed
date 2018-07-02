@@ -38,7 +38,9 @@ public class    StringSegmentFormatter
 
     static public StringSegmentFormatter    create__ALLY__Storehouse_StringSegmentFormatter(String s)
     {
-        return new StringSegmentFormatter(s);
+        String                              interned_s = intern_permenant_string(s);
+
+        return new StringSegmentFormatter(interned_s);
     }
 
 
@@ -60,8 +62,20 @@ public class    StringSegmentFormatter
     }
 
 
+    public String                       select_3(String a, String b, String c)
+    {
+        return this.s;
+    }
+
+
     public String                       portray()
     {
         return "<StringSegmentFormatter " + portray_string(this.s) + ">";
+    }
+
+
+    public String                       s()
+    {
+        return this.s;
     }
 }

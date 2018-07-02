@@ -86,7 +86,8 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     }
 
 
-    public static int                   limit_to_between(int minimum, int v, int maximum) {
+    public static int                   limit_to_between(int minimum, int v, int maximum)
+    {
         if (v < minimum) {
             return minimum;
         }

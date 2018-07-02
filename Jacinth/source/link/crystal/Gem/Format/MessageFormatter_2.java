@@ -61,17 +61,30 @@ public class    MessageFormatter_2
     //
     public String                       arrange(Object first_argument, Object ... other_arguments)
     {
-        if (other_arguments.length != 1) {
+        SegmentFormattable              a = this.a;
+        SegmentFormattable              b = this.b;
+
+        int                             actual   = 1 + other_arguments.length;
+        int                             expected = (a == b ? 1 : 2);
+
+        if (actual != expected) {
             throw new RuntimeException(
                     (
                           "MessageFormatter_2.arrange: "
-                        + Integer.toString(1 + other_arguments.length)
-                        + " arguments given (expected 2)"
+                        + Integer.toString(actual)
+                        + " arguments given (expected "
+                        + Integer.toString(expected)
+                        + ")"
                     )
                 );
         }
 
         String                          argument_1 = PortrayFunctions.portray(first_argument);
+
+        if (expected == 1) {
+            return argument_1 + argument_1;
+        }
+
         String                          argument_2 = PortrayFunctions.portray(other_arguments[0]);
 
         return (

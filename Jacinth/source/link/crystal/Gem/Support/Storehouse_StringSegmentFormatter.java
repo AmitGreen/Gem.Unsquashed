@@ -75,6 +75,28 @@ public class    Storehouse_StringSegmentFormatter
     //
     //  Public
     //
+    public static StringSegmentFormatter    conjure(String s)
+    {
+        Storehouse_StringSegmentFormatter   singleton = Storehouse_StringSegmentFormatter.singleton;
+
+        if (singleton == null) {
+            singleton = Storehouse_StringSegmentFormatter.singleton();
+        }
+
+        StringSegmentFormatter          r = singleton.get(s);
+
+        if (r != null) {
+            return null;
+        }
+
+        r = StringSegmentFormatter.create__ALLY__Storehouse_StringSegmentFormatter(s);
+
+        singleton.put(r.s(), r);
+
+        return r;
+    }
+
+
     public static void                  dump()
     {
         Storehouse_StringSegmentFormatter   singleton = Storehouse_StringSegmentFormatter.singleton;
