@@ -1,0 +1,99 @@
+//  Copyright (c) 2018 Amit Green.  All rights reserved.
+
+
+package link.crystal.Gem.Core;
+
+
+import java.lang.RuntimeException;
+import java.lang.String;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.PortrayFunctions;
+import link.crystal.Gem.Interface.Inspectable;
+
+
+public abstract class   Gem_StringSet
+    extends             HashMap<String, String>
+//  extends             AbstractHashMap<String, String>
+//  extends             Object
+    implements          Inspectable<Inspection>//,
+{
+    //
+    //  Constructor
+    //
+    protected                           Gem_StringSet(int initial_capacity)
+    {
+        super(initial_capacity);
+    }
+
+
+    //
+    //  Interface Inspectable
+    //
+    public String                       portray()
+    {
+        Inspection                      inspection = this.inspect();
+
+        StringBuilder                   b = new StringBuilder();
+
+        List<String>                    keys = new ArrayList<String>(this.keySet());
+
+        Collections.sort(keys);
+
+        int                             total = keys.size();
+
+        b.append("<");
+        b.append(inspection.simple_class_name);
+        b.append(" size<");
+        b.append(Integer.toString(total));
+        b.append(">");
+
+        for (int                        i = 0; i < total; i ++) {
+            String                      k = keys.get(i);
+
+            if (i == 0) {
+                b.append("; ");
+            } else {
+                b.append(", ");
+            }
+
+            b.append(PortrayFunctions.portray_string(k));
+        }
+
+        b.append(">");
+
+        return b.toString();
+    }
+
+
+    //
+    //  Public
+    //
+    public void                         dump(String name)
+    {
+        Inspection                      inspection = this.inspect();
+
+        String                          simple_class_name = inspection.simple_class_name;
+
+        List<String>                    keys = new ArrayList<String>(this.keySet());
+
+        Collections.sort(keys);
+
+        int                             total = keys.size();
+
+        Gem_Object.line("Dump of {0}", simple_class_name + " " + name);
+        Gem_Object.line("      size: " + Integer.toString(total));
+
+        for (int                        i = 0; i < total; i ++) {
+            String                      k = keys.get(i);
+
+            Gem_Object.line("  " + PortrayFunctions.portray_string(k));
+        }
+
+        Gem_Object.line("End of dump of {0}", simple_class_name + " " + name);
+    }
+}

@@ -14,11 +14,15 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.PortrayFunctions;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Core.Gem_StringSet;
 
 
 public class    Storehouse_String
-    extends     HashMap<String, String>
-    implements  Inspectable<Inspection>//,
+    extends     Gem_StringSet
+//  extends     HashMap        <String, String>
+//  extends     AbstractHashMap<String, String>
+//  extends     Object
+    implements  Inspectable<Inspection>//,                              //  Via Gem_StringSet
 {
     private static Inspection           inspection = Inspection.create("Gem.Support.Storehouse_String");
 
@@ -55,12 +59,6 @@ public class    Storehouse_String
     }
 
 
-    public String                       portray()
-    {
-        return "<Gem.Support.Storehouse_String>";
-    }
-
-
     //
     //  Private
     //
@@ -90,20 +88,7 @@ public class    Storehouse_String
             singleton = Storehouse_String.singleton();
         }
 
-        List<String>                    keys = new ArrayList<String>(singleton.keySet());
-
-        Collections.sort(keys);
-
-        int                             total = keys.size();
-
-        Gem_Object.line("Dump of Storehouse_String");
-        Gem_Object.line("      size: " + Integer.toString(total));
-
-        for (int                        i = 0; i < total; i ++) {
-            Gem_Object.line("  value[" + Integer.toString(i) + "]: " + PortrayFunctions.portray_string(keys.get(i)));
-        }
-
-        Gem_Object.line("End of dump of Storehouse_String");
+        singleton.dump("Storehouse_String.singleton");
     }
 
 
