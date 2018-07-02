@@ -63,8 +63,8 @@ public abstract class   Storehouse_ArgumentSegmentFormatter
 
         int                             segment_total = segment_many.length;
 
-        Gem_Object.line("Dump of Storehouse_ArgumentSegmentFormatter");
-        Gem_Object.line("  size:  " + Integer.toString(segment_total));
+        line("Dump of Storehouse_ArgumentSegmentFormatter");
+        line("  size:  " + Integer.toString(segment_total));
 
         for (int                        i = 0; i < segment_total; i ++) {
             ArgumentSegmentFormatter    argument_formatter = segment_many[i];
@@ -73,9 +73,9 @@ public abstract class   Storehouse_ArgumentSegmentFormatter
                 continue;
             }
 
-            Gem_Object.line("  " + Integer.toString(i) + ": " + argument_formatter.portray());
+            line("  " + Integer.toString(i) + ": " + argument_formatter.portray());
         }
 
-        Gem_Object.line("End of dump of Storehouse_ArgumentSegmentFormatter");
+        line("End of dump of Storehouse_ArgumentSegmentFormatter");
     }
 }

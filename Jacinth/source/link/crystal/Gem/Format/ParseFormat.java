@@ -246,10 +246,10 @@ public class   ParseFormat
                 start_s = format.substring(end_2, start);
             }
 
-            Gem_Object.line("start: " + start);
-            Gem_Object.line("start_s: " + portray(start_s));
-            Gem_Object.line("group: " + portray(argument_index));
-            Gem_Object.line("next_end_2: " + portray(next_end_2));
+            line("start: " + start);
+            line("start_s: " + portray(start_s));
+            line("group: " + portray(argument_index));
+            line("next_end_2: " + portray(next_end_2));
 
             if (segment_index == segment_total) {
                 segment_total = this.grow_segments();

@@ -4,7 +4,6 @@
 package link.crystal.Gem.Core;
 
 
-import java.io.PrintStream;
 import java.lang.Class;
 import java.lang.Integer;
 import java.lang.Object;
@@ -13,6 +12,7 @@ import java.lang.System;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Support.OutputFunctions;
 import link.crystal.Gem.Support.PortrayFunctions;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
@@ -27,12 +27,6 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     //
     public static final Class<String>   String$class  = String.class;
     public static final Class<Integer>  Integer$class = Integer.class;
-
-
-    //
-    //  Public Static
-    //
-    public static final PrintStream     standard_output = System.out;
 
 
     //
@@ -76,27 +70,19 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     
     public static void                  line()
     {
-        standard_output.println();
+        OutputFunctions.line();
     }
 
 
     public static void                  line(String s)
     {
-        standard_output.println(s);
+        OutputFunctions.line(s);
     }
 
 
     public static void                  line(String format, Object first_argument, Object ... other_arguments)
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(format);
-
-            Storehouse_MessageFormattable.insert(format, formattable);
-        }
-
-        formattable.line(first_argument, other_arguments);
+        OutputFunctions.line(format, first_argument, other_arguments);
     }
 
 

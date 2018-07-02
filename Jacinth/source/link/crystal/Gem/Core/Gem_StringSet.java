@@ -9,7 +9,6 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.PortrayFunctions;
@@ -85,15 +84,15 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
 
         int                             total = keys.size();
 
-        Gem_Object.line("Dump of {0}", simple_class_name + " " + name);
-        Gem_Object.line("      size: " + Integer.toString(total));
+        line("Dump of {0}", simple_class_name + " " + name);
+        line("      size: " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
             String                      k = keys.get(i);
 
-            Gem_Object.line("  " + PortrayFunctions.portray_string(k));
+            line("  " + PortrayFunctions.portray_string(k));
         }
 
-        Gem_Object.line("End of dump of {0}", simple_class_name + " " + name);
+        line("End of dump of {0}", simple_class_name + " " + name);
     }
 }

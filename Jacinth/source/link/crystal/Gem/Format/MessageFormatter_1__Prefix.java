@@ -10,6 +10,7 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Support.OutputFunctions;
 import link.crystal.Gem.Support.PortrayFunctions;
 
 
@@ -85,7 +86,7 @@ public class    MessageFormatter_1__Prefix
                 );
         }
 
-        standard_output.println(this.prefix + PortrayFunctions.portray(first_argument));
+        OutputFunctions.line(this.prefix + PortrayFunctions.portray(first_argument));
     }
 
 

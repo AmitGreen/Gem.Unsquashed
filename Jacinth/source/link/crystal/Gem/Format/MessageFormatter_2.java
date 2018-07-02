@@ -11,6 +11,7 @@ import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
+import link.crystal.Gem.Support.OutputFunctions;
 import link.crystal.Gem.Support.PortrayFunctions;
 
 
@@ -82,7 +83,7 @@ public class    MessageFormatter_2
 
     public void                         line(Object first_argument, Object ... other_arguments)
     {
-        standard_output.println(this.arrange(first_argument, other_arguments));
+        OutputFunctions.line(this.arrange(first_argument, other_arguments));
     }
 
 

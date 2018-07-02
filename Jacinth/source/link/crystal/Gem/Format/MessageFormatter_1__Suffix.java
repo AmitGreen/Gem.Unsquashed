@@ -10,6 +10,7 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Support.OutputFunctions;
 import link.crystal.Gem.Support.PortrayFunctions;
 
 
@@ -103,11 +104,11 @@ public class    MessageFormatter_1__Suffix
         String                          first = PortrayFunctions.portray(first_argument);
 
         if (prefix_0 == null) {
-            standard_output.println(first + suffix);
+            OutputFunctions.line(first + suffix);
             return;
         }
 
-        standard_output.println(prefix_0 + first + suffix);
+        OutputFunctions.line(prefix_0 + first + suffix);
     }
 
 

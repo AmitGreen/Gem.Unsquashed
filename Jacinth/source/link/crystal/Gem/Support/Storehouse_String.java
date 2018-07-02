@@ -6,7 +6,6 @@ package link.crystal.Gem.Support;
 
 import java.lang.RuntimeException;
 import java.lang.String;
-import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringSet;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;

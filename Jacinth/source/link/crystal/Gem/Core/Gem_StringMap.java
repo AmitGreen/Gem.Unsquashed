@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import link.crystal.Gem.Core.Gem_Map;
-import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.PortrayFunctions;
@@ -89,14 +88,14 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
 
         int                             total = keys.size();
 
-        Gem_Object.line("Dump of {0}", simple_class_name + " " + name);
-        Gem_Object.line("      size: " + Integer.toString(total));
+        line("Dump of {0}", simple_class_name + " " + name);
+        line("      size: " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
             String                      k = keys.get(i);
             V                           v = this.get(k);
 
-            Gem_Object.line(
+            line(
                       "  "
                     + String.format("%30s", PortrayFunctions.portray_string(k))
                     + ": "
@@ -104,6 +103,6 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
                 );
         }
 
-        Gem_Object.line("End of dump of {0}", simple_class_name + " " + name);
+        line("End of dump of {0}", simple_class_name + " " + name);
     }
 }

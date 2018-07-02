@@ -88,6 +88,7 @@ JACINTH_FILES = \
     $J/Gem/Interface/Inspectable.java \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
+    $J/Gem/Support/OutputFunctions.java \
     $J/Gem/Support/PortrayFunctions.java \
     $J/Gem/Support/Storehouse_ArgumentSegmentFormatter.java \
     $J/Gem/Support/Storehouse_MessageFormattable.java \
@@ -293,7 +294,7 @@ clean:
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1c.py m1m.py m1p.java m1s.java m1x.java
 	rm -f   m2.java m2c.py m2m.py m3m.py map.py mc.py md.py me.py mm.py mn.py
-	rm -f o.py oc.py od.py oe.py om.py
+	rm -f o.py oc.py od.py oe.py of.java om.py
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py
 	rm -f   pel.py pf.py pf.java pj.py pk.py pkc.py pl.py pmo.py pn.py ps.py psc.java ps3.py px.java
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
@@ -502,6 +503,7 @@ links:
 	ln -s ../Onyx/Core.py                                                       oc.py
 	ln -s ../Onyx/Development.py                                                od.py
 	ln -s ../Onyx/ElasticSearch.py                                              oe.py
+	ln -s $J/Gem/Support/OutputFunctions.java                                   of.java
 	ln -s ../Onyx/Main.py                                                       om.py
 	ln -s ../Gem/Path2.py                                                       pa2.py
 	ln -s ../Pearl/Atom.py                                                      pat.py

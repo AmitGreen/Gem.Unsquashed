@@ -8,6 +8,7 @@ import java.util.HashMap;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Support.OutputFunctions;
 import link.crystal.Gem.Support.PortrayFunctions;
 
 
@@ -42,6 +43,24 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
     //
     //  Public
     //
+    public static void                  line()
+    {
+        OutputFunctions.line();
+    }
+
+
+    public static void                  line(String s)
+    {
+        OutputFunctions.line(s);
+    }
+
+
+    public static void                  line(String format, Object first_argument, Object ... other_arguments)
+    {
+        OutputFunctions.line(format, first_argument, other_arguments);
+    }
+
+
     public static String                portray_string(String s)
     {
         return PortrayFunctions.portray_string(s);
