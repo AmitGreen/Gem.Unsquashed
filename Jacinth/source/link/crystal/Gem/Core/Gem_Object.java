@@ -86,6 +86,19 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     }
 
 
+    public static int                   limit_to_between(int minimum, int v, int maximum) {
+        if (v < minimum) {
+            return minimum;
+        }
+
+        if (v > maximum) {
+            return maximum;
+        }
+
+        return v;
+    }
+
+
     public static String                portray(Object v)
     {
         return PortrayFunctions.portray(v);

@@ -11,7 +11,6 @@ import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.OutputFunctions;
-import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public class    MessageFormatter_1__Prefix
@@ -70,7 +69,7 @@ public class    MessageFormatter_1__Prefix
                 );
         }
 
-        return this.prefix + PortrayFunctions.portray(first_argument);
+        return this.prefix + portray(first_argument);
     }
 
 
@@ -86,12 +85,12 @@ public class    MessageFormatter_1__Prefix
                 );
         }
 
-        OutputFunctions.line(this.prefix + PortrayFunctions.portray(first_argument));
+        OutputFunctions.line(this.prefix + portray(first_argument));
     }
 
 
     public String                       portray()
     {
-        return "<MessageFormatter_1__Prefix " + PortrayFunctions.portray_string(this.prefix) + ">";
+        return "<MessageFormatter_1__Prefix " + portray_string(this.prefix) + ">";
     }
 }

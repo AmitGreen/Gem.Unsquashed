@@ -13,7 +13,6 @@ import link.crystal.Gem.Core.Gem_StringMap;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public class    Storehouse_MessageFormattable
@@ -108,7 +107,7 @@ public class    Storehouse_MessageFormattable
             String                      k = keys.get(i);
             MessageFormattable          v = singleton.get(k);
 
-            line("  " + String.format("%30s", PortrayFunctions.portray_string(k)) + ": " + v.portray());
+            line("  " + String.format("%30s", portray_string(k)) + ": " + v.portray());
         }
 
         line("End of dump of Storehouse_MessageFormattable");
@@ -129,7 +128,7 @@ public class    Storehouse_MessageFormattable
             throw new RuntimeException(
                     (
                           "Storehouse_MessageFormattable.insert: previos value for "
-                        + PortrayFunctions.portray_string(k)
+                        + portray_string(k)
                         + " already exists: "
                         + previous.portray()
                     )

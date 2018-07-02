@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public abstract class   Gem_StringSet<INSPECTION extends Inspection>
@@ -60,7 +59,7 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
                 b.append(", ");
             }
 
-            b.append(PortrayFunctions.portray_string(k));
+            b.append(portray_string(k));
         }
 
         b.append(">");
@@ -90,7 +89,7 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
         for (int                        i = 0; i < total; i ++) {
             String                      k = keys.get(i);
 
-            line("  " + PortrayFunctions.portray_string(k));
+            line("  " + portray_string(k));
         }
 
         line("End of dump of {0}", simple_class_name + " " + name);

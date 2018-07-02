@@ -10,7 +10,6 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public class    StringSegmentFormatter
@@ -63,6 +62,6 @@ public class    StringSegmentFormatter
 
     public String                       portray()
     {
-        return "<StringSegmentFormatter " + PortrayFunctions.portray_string(this.s) + ">";
+        return "<StringSegmentFormatter " + portray_string(this.s) + ">";
     }
 }

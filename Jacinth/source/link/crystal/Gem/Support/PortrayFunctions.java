@@ -49,7 +49,7 @@ public abstract class   PortrayFunctions
     public static String                portray_string(String s)
     {
         if (s == null) {
-            throw new RuntimeException("PortrayFunctions.portray_string: `s` is null");
+            throw new RuntimeException("portray_string: `s` is null");
         }
 
         StringBuilder                   b     = null;

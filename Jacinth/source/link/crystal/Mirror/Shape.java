@@ -38,7 +38,7 @@ public class    Shape
 
         line(meta.getCanonicalName());
         line("Mirror.shape: create: {0}", shape_name);
-        line("{0}{1}", shape_name, "hello");
+        line("{1}{0}", shape_name, "hello");
 
         link.crystal.Jacinth.Shape                   client = link.crystal.Jacinth.Shape.create(shape_name);
 

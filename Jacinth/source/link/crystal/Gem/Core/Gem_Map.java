@@ -61,6 +61,12 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
     }
 
 
+    public static String                portray(Object v)
+    {
+        return PortrayFunctions.portray(v);
+    }
+
+
     public static String                portray_string(String s)
     {
         return PortrayFunctions.portray_string(s);

@@ -20,17 +20,50 @@ public abstract class   ArrayFunctions
     //
     public static<T> T[]                shrink_array(T[] previous, int previous_total, T[] current, int new_total)
     {
-        if (previous_total < 1) {
-            throw new RuntimeException("ArrayFunctions.grow_array: previous_total < 1 (actual: " + portray(previous_total) + ")");
+        if (previous_total == 0) {
+            if (previous != null) {
+                throw new RuntimeException("ArrayFunctions.shrink_array: previous_total == 0 && previous != null");
+            }
+        } else {
+            if (previous_total < 1) {
+                throw new RuntimeException(
+                        "ArrayFunctions.shrink_array: previous_total < 1 (actual: " + portray(previous_total) + ")"//,
+                    );
+            }
+
+            if (previous_total <= new_total) {
+                throw new RuntimeException(
+                        (
+                              "ArrayFunctions.shrink_array: previous_total<"
+                            + portray(previous_total)
+                            + "> <= new_total<"
+                            + portray(new_total)
+                        )
+                    );
+            }
         }
 
         if (previous_total < new_total) {
             throw new RuntimeException(
                     (
-                          "ArrayFunctions.grow_array: previous_total<"
+                          "ArrayFunctions.shrink_array: previous_total<"
                         + portray(previous_total)
                         + "> < new_total<"
                         + portray(new_total)
+                    )
+                );
+        }
+
+        if (current == null) {
+            throw new RuntimeException("ArrayFunctions.shrink_array: `current` == null");
+        }
+
+        if (new_total <= 0) {
+            throw new RuntimeException(
+                    (
+                          "ArrayFunctions.shrink_array: `new_total`<"
+                        + portray(previous_total)
+                        + "> <= 0"
                     )
                 );
         }
@@ -51,7 +84,9 @@ public abstract class   ArrayFunctions
             }
         } else {
             if (previous_total < 0) {
-                throw new RuntimeException("ArrayFunctions.grow_array: previous_total < 0 (actual: " + portray(previous_total) + ")");
+                throw new RuntimeException(
+                        "ArrayFunctions.grow_array: previous_total < 0 (actual: " + portray(previous_total) + ")"//,
+                    );
             }
 
             if (previous_total >= new_total) {
@@ -66,10 +101,81 @@ public abstract class   ArrayFunctions
             }
         }
 
-        if (previous_total > 0) {
-            for (int                    i = 0; i < previous_total; i ++) {
-                current[i] = previous[i];
+        if (current == null) {
+            throw new RuntimeException("ArrayFunctions.grow_array: `current` == null");
+        }
+
+        if (new_total <= 0) {
+            throw new RuntimeException(
+                    (
+                          "ArrayFunctions.grow_array: `new_total`<"
+                        + portray(previous_total)
+                        + "> <= 0"
+                    )
+                );
+        }
+
+        for (int                    i = 0; i < previous_total; i ++) {
+            current[i] = previous[i];
+        }
+
+        return current;
+    }
+
+
+    public static int[]                 grow_primitive_integer_array(
+            int[]                               previous,
+            int                                 previous_total,
+            int[]                               current,
+            int                                 new_total//,
+        )
+    {
+        if (previous_total == 0) {
+            if (previous != null) {
+                throw new RuntimeException(
+                        "ArrayFunctions.grow_primitive_integer_array: `previous_total`<0> && `previous` != null"//,
+                    );
             }
+        } else {
+            if (previous_total < 0) {
+                throw new RuntimeException(
+                        (
+                              "ArrayFunctions.grow_primitive_integer_array: `previous_total`<"
+                            + portray(previous_total)
+                            + "> < 0"
+                        )
+                    );
+            }
+
+            if (previous_total >= new_total) {
+                throw new RuntimeException(
+                        (
+                              "ArrayFunctions.grow_primitive_integer_array: `previous_total`<"
+                            + portray(previous_total)
+                            + "> >= `new_total`<"
+                            + portray(new_total)
+                            + ">"
+                        )
+                    );
+            }
+        }
+
+        if (current == null) {
+            throw new RuntimeException("ArrayFunctions.grow_primitive_integer_array: `current` == null");
+        }
+
+        if (new_total <= 0) {
+            throw new RuntimeException(
+                    (
+                          "ArrayFunctions.grow_primitive_integer_array: `new_total`<"
+                        + portray(previous_total)
+                        + "> <= 0"
+                    )
+                );
+        }
+
+        for (int                    i = 0; i < previous_total; i ++) {
+            current[i] = previous[i];
         }
 
         return current;

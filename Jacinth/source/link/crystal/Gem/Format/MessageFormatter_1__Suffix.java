@@ -11,7 +11,6 @@ import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.OutputFunctions;
-import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public class    MessageFormatter_1__Suffix
@@ -76,7 +75,7 @@ public class    MessageFormatter_1__Suffix
         String                          prefix_0 = this.prefix_0;
         String                          suffix = this.suffix;
 
-        String                          first = PortrayFunctions.portray(first_argument);
+        String                          first = portray(first_argument);
 
         if (prefix_0 == null) {
             return first + suffix;
@@ -101,7 +100,7 @@ public class    MessageFormatter_1__Suffix
         String                          prefix_0 = this.prefix_0;
         String                          suffix   = this.suffix;
 
-        String                          first = PortrayFunctions.portray(first_argument);
+        String                          first = portray(first_argument);
 
         if (prefix_0 == null) {
             OutputFunctions.line(first + suffix);
@@ -119,9 +118,9 @@ public class    MessageFormatter_1__Suffix
 
         return (
                      "<MessageFormatter_1__Suffix "
-                   + (prefix_0 == null ? "<null>" : PortrayFunctions.portray_string(prefix_0))
+                   + (prefix_0 == null ? "<null>" : portray_string(prefix_0))
                    + " "
-                   + PortrayFunctions.portray_string(suffix)
+                   + portray_string(suffix)
                    + ">"
               );
     }

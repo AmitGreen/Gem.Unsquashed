@@ -18,7 +18,6 @@ import link.crystal.Gem.Format.MessageFormatter_2;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.Support.PortrayFunctions;
 import link.crystal.Gem.Support.Storehouse_ArgumentSegmentFormatter;
 
 
@@ -40,9 +39,18 @@ public class   ParseFormat
     //
     private String                      format;
     private Matcher                     braces_matcher;
-    private int                         segment_index;
-    private int                         segment_total;
+
     private SegmentFormattable[]        segment_many;
+    private int                         segment_total;
+    private int                         segment_index;
+
+    private int[]                       used_index_many;
+    private int                         used_index_total;
+    private int                         used_index_allocated;
+
+    private int[]                       missing_many;
+    private int                         missing_total;
+    private int                         missing_allocated;
 
 
     //
@@ -52,9 +60,18 @@ public class   ParseFormat
     {
         this.format         = format;
         this.braces_matcher = braces_matcher;
-        this.segment_index  = 0;
-        this.segment_total  = 0;
+
         this.segment_many   = null;
+        this.segment_total  = 0;
+        this.segment_index  = 0;
+
+        this.used_index_many      = null;
+        this.used_index_total     = 0;
+        this.used_index_allocated = 0;
+
+        this.missing_many      = null;
+        this.missing_total     = 0;
+        this.missing_allocated = 0;
     }
 
 
@@ -70,6 +87,10 @@ public class   ParseFormat
     {
         this.format = format;
         this.braces_matcher.reset(format);
+
+        this.used_index_total = 0;
+
+        this.missing_total = 0;
     }
 
 
@@ -85,6 +106,133 @@ public class   ParseFormat
     //
     //  Private
     //
+    private void                        add_missing(int missing)
+    {
+        int[]                           missing_many      = this.missing_many;
+        int                             missing_total     = this.missing_total;
+        int                             missing_allocated = this.missing_allocated;
+        int                             needed            = missing_total + 1;
+
+        if (missing_allocated < needed) {
+            int                         new_allocated = limit_to_between(20, needed * 2, 100);
+
+            missing_many = ArrayFunctions.grow_primitive_integer_array(
+                    missing_many,
+                    missing_total,
+                    new int[new_allocated],
+                    new_allocated//,
+                );
+
+            this.missing_many      = missing_many;
+            this.missing_allocated = new_allocated;
+        }
+
+        missing_many[missing_total] = missing;
+
+        this.missing_total = missing_total + 1;
+    }
+
+
+    private void                        add_used_index(int argument_index)
+    {
+        int[]                           used_index_many      = this.used_index_many;
+        int                             used_index_total     = this.used_index_total;
+        int                             used_index_allocated = this.used_index_allocated;
+        int                             needed               = argument_index + 1;
+
+        if (used_index_allocated < needed) {
+            int                         new_allocated = limit_to_between(20, needed * 2, 100);
+
+            used_index_many = ArrayFunctions.grow_primitive_integer_array(
+                    used_index_many,
+                    used_index_total,
+                    new int[new_allocated],
+                    new_allocated//,
+                );
+
+            this.used_index_many      = used_index_many;
+            this.used_index_allocated = new_allocated;
+        }
+
+        for (int                    i = used_index_total; i <= argument_index; i ++) {
+            used_index_many[i] = 0;
+        }
+
+        used_index_many[argument_index] += 1;
+
+        if (used_index_total < needed) {
+            this.used_index_total = needed;
+        }
+    }
+
+
+    private void                        examine_missing()
+    {
+        int[]                           used_index_many  = this.used_index_many;
+        int                             used_index_total = this.used_index_total;
+
+        for (int                        i = 0; i < used_index_total; i ++) {
+            if (used_index_many[i] == 0) {
+                this.add_missing(i);
+            }
+        }
+
+        int                             missing_total = this.missing_total;
+
+        if (missing_total == 0) {
+            return;
+        }
+
+        int[]                           missing_many = this.missing_many;
+
+        if (missing_total == 1) {
+            throw new RuntimeException(
+                    (
+                          "ParseFormat.examine_missing: format string is missing {"
+                        + Integer.toString(missing_many[0])
+                        + "}: "
+                        + portray_string(this.format)
+                    )
+                );
+        }
+
+        if (missing_total == 2) {
+            throw new RuntimeException(
+                    (
+                          "ParseFormat.examine_missing: format string is missing {"
+                        + Integer.toString(missing_many[0])
+                        + "} and {"
+                        + Integer.toString(missing_many[1])
+                        + "}: "
+                        + portray_string(this.format)
+                    )
+                );
+        }
+
+
+        StringBuilder                   b = new StringBuilder();
+
+        for (int                        i = 0; i < missing_total; i ++) {
+            if (i == missing_total - 1) {
+                b.append(", and ");
+            } else if (i > 0) {
+                b.append(", ");
+            }
+
+            b.append("{" + Integer.toString(missing_many[i]) + "}");
+        }
+
+        throw new RuntimeException(
+                (
+                      "ParseFormat.examine_missing: format string is missing "
+                    + b.toString()
+                    + ": "
+                    + portray_string(this.format)
+                )
+            );
+    }
+
+
     private int                         grow_segments()
     {
         int                             previous_total = this.segment_total;
@@ -137,7 +285,7 @@ public class   ParseFormat
             throw new RuntimeException(
                     (
                           "ParseFormat.parse_format__work: format string does not contain the opening brace '{': "
-                        + PortrayFunctions.portray_string(format)
+                        + portray_string(format)
                     )
                 );
         }
@@ -152,7 +300,7 @@ public class   ParseFormat
             throw new RuntimeException(
                     (
                           "ParseFormat.parse_format__work: format string is malformed: "
-                        + PortrayFunctions.portray_string(format)
+                        + portray_string(format)
                     )
                 );
         }
@@ -176,7 +324,7 @@ public class   ParseFormat
                 throw new RuntimeException(
                         (
                               "ParseFormat.parse_format__work: format string must use {0} for only one argument: "
-                            + PortrayFunctions.portray_string(format)
+                            + portray_string(format)
                         )
                     );
             }
@@ -216,6 +364,8 @@ public class   ParseFormat
 
         this.segment_index = segment_index;             //  Commit `segment_index` in catch exception is thrown
 
+        add_used_index(argument_index);
+
 
         //
         //  Subsequent arguments
@@ -227,7 +377,7 @@ public class   ParseFormat
                 throw new RuntimeException(
                         (
                               "ParseFormat.parse_format__work: format string is malformed: "
-                            + PortrayFunctions.portray_string(format)
+                            + portray_string(format)
                         )
                     );
             }
@@ -246,10 +396,10 @@ public class   ParseFormat
                 start_s = format.substring(end_2, start);
             }
 
-            line("start: " + start);
-            line("start_s: " + portray(start_s));
-            line("group: " + portray(argument_index));
-            line("next_end_2: " + portray(next_end_2));
+            //line("start: " + start);
+            //line("start_s: " + portray(start_s));
+            //line("group: " + portray(argument_index));
+            //line("next_end_2: " + portray(next_end_2));
 
             if (segment_index == segment_total) {
                 segment_total = this.grow_segments();
@@ -268,6 +418,8 @@ public class   ParseFormat
 
             this.segment_index = segment_index;             //  Commit `segment_index` in catch exception is thrown
 
+            add_used_index(argument_index);
+
             if ( ! braces_matcher.find()) {
                 break;
             }
@@ -277,10 +429,12 @@ public class   ParseFormat
             throw new RuntimeException(
                     (
                           "ParseFormat.parse_format__work: unimplemented, more than one '{#}' (with trailing string): "
-                        + PortrayFunctions.portray_string(format)
+                        + portray_string(format)
                     )
               );
         }
+
+        this.examine_missing();
 
         if (true) {
             for (int                        i = 0; i < segment_index; i ++) {
@@ -312,7 +466,7 @@ public class   ParseFormat
         throw new RuntimeException(
                 (
                       "ParseFormat.parse_format__work: unimplemented, more than one '{#}' (without trailing string): "
-                    + PortrayFunctions.portray_string(format)
+                    + portray_string(format)
                 )
             );
     }

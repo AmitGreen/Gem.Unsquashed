@@ -12,7 +12,6 @@ import java.util.List;
 import link.crystal.Gem.Core.Gem_Map;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
@@ -62,9 +61,9 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
                 b.append(", ");
             }
 
-            b.append(PortrayFunctions.portray_string(k));
+            b.append(portray_string(k));
             b.append(" : ");
-            b.append(PortrayFunctions.portray(v));
+            b.append(portray(v));
         }
 
         b.append(">");
@@ -95,12 +94,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
             String                      k = keys.get(i);
             V                           v = this.get(k);
 
-            line(
-                      "  "
-                    + String.format("%30s", PortrayFunctions.portray_string(k))
-                    + ": "
-                    + PortrayFunctions.portray(v)
-                );
+            line("  " + String.format("%30s", portray_string(k)) + ": " + portray(v));
         }
 
         line("End of dump of {0}", simple_class_name + " " + name);
