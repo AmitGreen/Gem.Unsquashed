@@ -4,8 +4,8 @@
 package link.crystal.Mirror;
 
 
-import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Silver.SilverProxy;
 
@@ -28,7 +28,7 @@ public class    Shape
     }
 
 
-    public static Shape                 create(Gem_Lane z, String shape_name)
+    public static Shape                 create(Zone z, String shape_name)
     {
         Class<link.crystal.Jacinth.Shape>   meta = link.crystal.Jacinth.Shape.class;
 
@@ -54,7 +54,7 @@ public class    Shape
     //
     //  Public
     //
-    public void                         skew(Gem_Lane z)
+    public void                         skew(Zone z)
     {
         link.crystal.Jacinth.Shape                   client = this.client;
 

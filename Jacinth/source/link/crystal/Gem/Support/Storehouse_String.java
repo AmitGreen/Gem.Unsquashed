@@ -5,9 +5,9 @@ package link.crystal.Gem.Support;
 
 
 import java.lang.String;
-import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Gem_StringSet;
 import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.PortrayFunctions;
 
@@ -76,7 +76,7 @@ public class    Storehouse_String
     //
     //  Public
     //
-    public static void                  dump(Gem_Lane z)
+    public static void                  dump(Zone z)
     {
         Storehouse_String               singleton = Storehouse_String.singleton;
 

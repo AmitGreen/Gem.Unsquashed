@@ -8,9 +8,9 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Gem_Map;
 import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 
 
@@ -75,7 +75,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     //
     //  Public
     //
-    public void                         dump(Gem_Lane z, String name)
+    public void                         dump(Zone z, String name)
     {
         Inspection                      inspection = this.inspect();
 

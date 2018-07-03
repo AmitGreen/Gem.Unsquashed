@@ -5,8 +5,8 @@ package link.crystal.Gem.Support;
 
 
 import java.lang.String;
-import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
 
 
@@ -52,7 +52,7 @@ public abstract class   Storehouse_ArgumentSegmentFormatter
     }
 
 
-    public static void                  dump(Gem_Lane z)
+    public static void                  dump(Zone z)
     {
         ArgumentSegmentFormatter[]      segment_many = Storehouse_ArgumentSegmentFormatter.segment_many;
 

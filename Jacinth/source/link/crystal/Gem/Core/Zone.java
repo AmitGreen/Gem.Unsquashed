@@ -12,19 +12,19 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.OutputFunctions;
 
 
-public class    Gem_Lane
+public class    Zone
     extends     Gem_Object<Inspection>
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create_with_portrait("Gem.Gem_Lane");
+    private static Inspection           inspection = Inspection.create_with_portrait("Gem.Core.Zone");
 
 
     //
     //  Static members
     //
     private static Thread               first_thread = null;
-    private static Gem_Lane             first_lane   = null;
+    private static Zone                 first_zone   = null;
 
 
     //
@@ -37,16 +37,16 @@ public class    Gem_Lane
     //
     //  Constructor & Factory
     //
-    private                             Gem_Lane(Thread lane_thread)
+    private                             Zone(Thread lane_thread)
     {
         this.lane_thread  = lane_thread;
         this.parse_format = null;
     }
 
 
-    public static Gem_Lane              create(Thread lane_thread)
+    public static Zone                  create(Thread lane_thread)
     {
-        return new Gem_Lane(lane_thread);
+        return new Zone(lane_thread);
     }
 
 
@@ -87,15 +87,15 @@ public class    Gem_Lane
     //
     //  Public
     //
-    public static Gem_Lane              current_lane()
+    public static Zone                  current_zone()
     {
         Thread                          thread = Thread.currentThread();
 
-        if (Gem_Lane.first_thread == thread) {
-            return Gem_Lane.first_lane;
+        if (Zone.first_thread == thread) {
+            return Zone.first_zone;
         }
 
-        if (Gem_Lane.first_thread != null) {
+        if (Zone.first_thread != null) {
             //
             //  NOTE:
             //
@@ -103,15 +103,15 @@ public class    Gem_Lane
             //
             //      (since calling `RAISE_runtime_exception` might internally call this routine, leading to recursive calls)
             //
-            throw new RuntimeException("Gem_Lane.current_lane: only single threaded currently supported");
+            throw new RuntimeException("Zone.current_zone: only single threaded currently supported");
         }
 
-        Gem_Lane                first_lane = Gem_Lane.create(thread);
+        Zone                    first_zone = Zone.create(thread);
 
-        Gem_Lane.first_thread = thread;
-        Gem_Lane.first_lane   = first_lane;
+        Zone.first_thread = thread;
+        Zone.first_zone   = first_zone;
 
-        return first_lane;
+        return first_zone;
     }
 
 

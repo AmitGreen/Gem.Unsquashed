@@ -72,12 +72,12 @@ J = ../Jacinth/source/link/crystal
 JACINTH_FILES = \
     ../Jacinth/pom.xml \
     $J/Gem/Core/ArrayFunctions.java \
-    $J/Gem/Core/Gem_Lane.java \
     $J/Gem/Core/Gem_Map.java \
     $J/Gem/Core/Gem_Object.java \
     $J/Gem/Core/Gem_StringMap.java \
     $J/Gem/Core/Gem_StringSet.java \
     $J/Gem/Core/Inspection.java \
+    $J/Gem/Core/Zone.java \
     $J/Gem/Format/ArgumentSegmentFormatter.java \
     $J/Gem/Format/MessageFormatter_1__Prefix.java \
     $J/Gem/Format/MessageFormatter_1__Simple.java \
@@ -283,7 +283,7 @@ clean:
 	rm -f ef.java ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
-	rm -f   gi.py gi.java gl.py gl.java go.java gm.java gq.py gr.py gse.py gsm.java gsq.py gss.java
+	rm -f   gi.py gi.java gl.py go.java gm.java gq.py gr.py gse.py gsm.java gsq.py gss.java gz.java
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -381,7 +381,6 @@ links:
 	ln -s ../Gem/Hailstone.py                                                   gi.py
 	ln -s $J/Gem/Core/Inspection.java                                           gi.java
 	ln -s ../Gem/Global.py                                                      gl.py
-	ln -s $J/Gem/Core/Gem_Lane.java                                             gl.java
 	ln -s $J/Gem/Core/Gem_Map.java                                              gm.java
 	ln -s $J/Gem/Core/Gem_Object.java                                           go.java
 	ln -s ../Gem/LiquidMap.py                                                   gq.py
@@ -390,6 +389,7 @@ links:
 	ln -s $J/Gem/Core/Gem_StringMap.java                                        gsm.java
 	ln -s ../Gem/Sequence.py                                                    gsq.py
 	ln -s $J/Gem/Core/Gem_StringSet.java                                        gss.java
+	ln -s $J/Gem/Core/Zone.java                                                 gz.java
 	ln -s ../Sapphire/Parse.py                                                  h0p.py
 	ln -s ../Sapphire/Parse1.py                                                 h1p.py
 	ln -s ../Sapphire/Parse1Atom.py                                             h1pa.py

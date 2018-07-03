@@ -4,7 +4,7 @@
 package link.crystal.Jacinth;
 
 
-import link.crystal.Gem.Core.Gem_Lane;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Support.Storehouse_ArgumentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
@@ -16,7 +16,7 @@ public class    Main
 {
     public static void                  main(String[] args)
     {
-        Gem_Lane                        z = Gem_Lane.current_lane();
+        Zone                            z = Zone.current_zone();
 
         Shape                           circle = Shape.create(z, "circle");
 

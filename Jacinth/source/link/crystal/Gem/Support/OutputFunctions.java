@@ -8,9 +8,9 @@ import java.io.PrintStream;
 import java.lang.Object;
 import java.lang.String;
 import java.lang.System;
-import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.ParseFormat;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 
@@ -28,20 +28,20 @@ public abstract class   OutputFunctions
     //
     //  Public
     //
-    public static void                  line(Gem_Lane z)
+    public static void                  line(Zone z)
     {
         standard_output.println();
     }
 
 
-    public static void                  line(Gem_Lane z, String s)
+    public static void                  line(Zone z, String s)
     {
         standard_output.println(s);
     }
 
 
     public static void                  line(
-            Gem_Lane                            z,
+            Zone                                z,
             String                              format,
             Object                              first_argument,
             Object ...                          other_arguments//,

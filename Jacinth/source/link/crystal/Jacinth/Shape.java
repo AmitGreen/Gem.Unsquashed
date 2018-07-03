@@ -4,9 +4,9 @@
 package link.crystal.Jacinth;
 
 
-import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 
 
@@ -33,7 +33,7 @@ public class    Shape
     }
 
 
-    public static Shape                 create(Gem_Lane z, String shape_name)
+    public static Shape                 create(Zone z, String shape_name)
     {
         return new Shape(shape_name);
     }
@@ -56,7 +56,7 @@ public class    Shape
     //
     //  Public
     //
-    public void                         skew(Gem_Lane z)
+    public void                         skew(Zone z)
     {
         z.line("Shape.skew: " + this.shape_name);
     }

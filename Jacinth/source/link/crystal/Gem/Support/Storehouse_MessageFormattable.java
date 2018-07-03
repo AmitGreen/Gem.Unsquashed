@@ -8,9 +8,9 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Gem_StringMap;
 import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 
@@ -86,7 +86,7 @@ public class    Storehouse_MessageFormattable
     //
     //  Public
     //
-    public static void                  dump(Gem_Lane z)
+    public static void                  dump(Zone z)
     {
         Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
 

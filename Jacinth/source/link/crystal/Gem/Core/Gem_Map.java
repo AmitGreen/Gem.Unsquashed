@@ -5,8 +5,8 @@ package link.crystal.Gem.Core;
 
 
 import java.util.HashMap;
-import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.ExceptionFunctions;
 import link.crystal.Gem.Support.OutputFunctions;
@@ -38,7 +38,7 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
     //
     //  Abstract
     //
-    public abstract void                dump(Gem_Lane z, String name);
+    public abstract void                dump(Zone z, String name);
 
 
     //
