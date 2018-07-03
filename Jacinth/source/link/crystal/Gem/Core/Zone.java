@@ -30,23 +30,23 @@ public class    Zone
     //
     //  Members
     //
-    private static Thread               lane_thread;
+    private Thread                      zone_thread;
     private ParseFormat                 parse_format;
 
 
     //
     //  Constructor & Factory
     //
-    private                             Zone(Thread lane_thread)
+    private                             Zone(Thread zone_thread)
     {
-        this.lane_thread  = lane_thread;
+        this.zone_thread  = zone_thread;
         this.parse_format = null;
     }
 
 
-    public static Zone                  create(Thread lane_thread)
+    public static Zone                  create(Thread zone_thread)
     {
-        return new Zone(lane_thread);
+        return new Zone(zone_thread);
     }
 
 

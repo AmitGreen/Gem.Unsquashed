@@ -9,6 +9,7 @@ import java.lang.Object;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.ParseFormat;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 
@@ -32,15 +33,17 @@ public abstract class   ExceptionFunctions
             Object ...                          other_arguments//,
         )
     {
+        Zone                            z = Zone.current_zone();
+
         MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(format);
 
         if (formattable == null) {
-            formattable = ParseFormat.parse_format(format);
+            formattable = ParseFormat.parse_format(z, format);
 
             Storehouse_MessageFormattable.insert(format, formattable);
         }
 
-        String                          error_message = formattable.arrange(first_argument, other_arguments);
+        String                          error_message = formattable.arrange(z, first_argument, other_arguments);
 
         throw new RuntimeException(error_message);
     }

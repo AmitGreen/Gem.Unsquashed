@@ -7,6 +7,7 @@ package link.crystal.Gem.Format;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.OutputFunctions;
@@ -56,7 +57,7 @@ public class    MessageFormatter_1__Prefix
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Object first_argument, Object ... other_arguments)
+    public String                       arrange(Zone z, Object first_argument, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
             RAISE_runtime_exception("MessageFormatter_1__Prefix.arrange: {0} arguments given (expected 1)",
@@ -67,14 +68,14 @@ public class    MessageFormatter_1__Prefix
     }
 
 
-    public void                         line(Object first_argument, Object ... other_arguments)
+    public void                         line(Zone z, Object first_argument, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
             RAISE_runtime_exception("MessageFormatter_1__Prefix.line: {0} arguments given (expected 1)",
                                     1 + other_arguments.length);
         }
 
-        OutputFunctions.line(this.prefix + portray(first_argument));
+        z.line(this.prefix + portray(first_argument));
     }
 
 

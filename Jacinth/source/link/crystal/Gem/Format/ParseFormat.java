@@ -490,9 +490,8 @@ public class   ParseFormat
     //
     //  Public static
     //
-    public static MessageFormattable    parse_format(String format)
+    public static MessageFormattable    parse_format(Zone z, String format)
     {
-        Zone                            z            = Zone.current_zone();
         ParseFormat                     parse_format = z.pop__parse_format__OR__null();
 
         if (parse_format == null) {

@@ -7,6 +7,7 @@ package link.crystal.Gem.Format;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
@@ -80,7 +81,7 @@ public class    MessageFormatter_4
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Object first_argument, Object ... other_arguments)
+    public String                       arrange(Zone z, Object first_argument, Object ... other_arguments)
     {
         int                             expected = this.expected;
 
@@ -133,9 +134,9 @@ public class    MessageFormatter_4
     }
 
 
-    public void                         line(Object first_argument, Object ... other_arguments)
+    public void                         line(Zone z, Object first_argument, Object ... other_arguments)
     {
-        OutputFunctions.line(this.arrange(first_argument, other_arguments));
+        z.line(this.arrange(z, first_argument, other_arguments));
     }
 
 

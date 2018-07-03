@@ -50,31 +50,11 @@ public abstract class   OutputFunctions
         MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(format);
 
         if (formattable == null) {
-            formattable = ParseFormat.parse_format(format);
+            formattable = ParseFormat.parse_format(z, format);
 
             Storehouse_MessageFormattable.insert(format, formattable);
         }
 
-        formattable.line(first_argument, other_arguments);
-    }
-
-
-    public static void                  line(String s)
-    {
-        standard_output.println(s);
-    }
-
-
-    public static void                  line(String format, Object first_argument, Object ... other_arguments)
-    {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(format);
-
-            Storehouse_MessageFormattable.insert(format, formattable);
-        }
-
-        formattable.line(first_argument, other_arguments);
+        formattable.line(z, first_argument, other_arguments);
     }
 }
