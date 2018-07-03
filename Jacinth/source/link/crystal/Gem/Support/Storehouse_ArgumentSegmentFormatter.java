@@ -68,7 +68,7 @@ public abstract class   Storehouse_ArgumentSegmentFormatter
                 continue;
             }
 
-            z.line("  " + Integer.toString(i) + ": " + argument_formatter.portray());
+            z.line("  " + Integer.toString(i) + ": " + argument_formatter.portray(z));
         }
 
         z.line("End of dump of Storehouse_ArgumentSegmentFormatter");

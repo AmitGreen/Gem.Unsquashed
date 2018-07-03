@@ -162,7 +162,7 @@ public class    ArgumentSegmentFormatter
     }
 
 
-    public String                       portray()
+    public String                       portray(Zone z)
     {
         return "<ArgumentSegmentFormatter " + Integer.toString(this.argument_index) + ">";
     }

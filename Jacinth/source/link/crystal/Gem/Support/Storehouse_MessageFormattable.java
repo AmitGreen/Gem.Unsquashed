@@ -59,12 +59,6 @@ public class    Storehouse_MessageFormattable
     }
 
 
-    public String                       portray()
-    {
-        return "<Gem.Core.Storehouse_MessageFormattable>";
-    }
-
-
     //
     //  Private
     //
@@ -107,7 +101,7 @@ public class    Storehouse_MessageFormattable
             String                      k = keys.get(i);
             MessageFormattable          v = singleton.get(k);
 
-            z.line("  " + String.format("%30s", z.quote_string(k)) + ": " + v.portray());
+            z.line("  " + String.format("%30s", z.quote_string(k)) + ": " + v.portray(z));
         }
 
         z.line("End of dump of Storehouse_MessageFormattable");
@@ -127,7 +121,7 @@ public class    Storehouse_MessageFormattable
         if (previous != null) {
             z.RAISE_runtime_exception("Storehouse_MessageFormattable.insert: previous value for {0} already exists: {1}",
                                       z.quote_string(k),
-                                      previous.portray());
+                                      previous.portray(z));
         }
     }
 

@@ -13,5 +13,5 @@ public interface   MessageFormattable
 {
     String                              arrange(Zone z, Object first_argument, Object ... other_arguments);
     void                                line   (Zone z, Object first_argument, Object ... other_arguments);
-    String                              portray();
+    String                              portray(Zone z);
 }

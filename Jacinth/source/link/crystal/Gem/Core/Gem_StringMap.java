@@ -33,10 +33,8 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     //
     //  Interface Inspectable
     //
-    public String                       portray()
+    public String                       portray(Zone z)
     {
-        Zone                            z = Zone.current_zone();
-
         Inspection                      inspection = this.inspect();
 
         StringBuilder                   b = new StringBuilder();

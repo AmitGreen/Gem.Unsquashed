@@ -101,10 +101,8 @@ public class    MessageFormatter_1__Suffix
     }
 
 
-    public String                       portray()
+    public String                       portray(Zone z)
     {
-        Zone                            z = Zone.current_zone();
-
         String                          prefix_0 = this.prefix_0;
         String                          suffix   = this.suffix;
 

@@ -27,7 +27,7 @@ public abstract class   PortrayFunctions
         }
 
         if (v instanceof Inspectable) {
-            return ((Inspectable) v).portray();
+            return ((Inspectable) v).portray(z);
         }
 
         Class<?>                        v_class = v.getClass();

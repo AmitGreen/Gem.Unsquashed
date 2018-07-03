@@ -86,10 +86,8 @@ public class    StringSegmentFormatter
     }
 
 
-    public String                       portray()
+    public String                       portray(Zone z)
     {
-        Zone                            z = Zone.current_zone();
-
         return "<StringSegmentFormatter " + z.quote_string(this.s) + ">";
     }
 

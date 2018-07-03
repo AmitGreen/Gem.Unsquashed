@@ -47,7 +47,7 @@ public class    Shape
         return /*static*/ this.inspection;
     }
 
-    public String                       portray()
+    public String                       portray(Zone z)
     {
         return "<Shape " + this.shape_name + ">";
     }

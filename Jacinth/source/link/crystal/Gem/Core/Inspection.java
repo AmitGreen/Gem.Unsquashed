@@ -67,7 +67,7 @@ public class    Inspection
     }
 
 
-    public String                       portray()
+    public String                       portray(Zone z)
     {
         return "<Gem.Inspection " + this.simple_class_name + ">";
     }

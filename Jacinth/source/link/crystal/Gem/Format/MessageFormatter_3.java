@@ -122,8 +122,8 @@ public class    MessageFormatter_3
     }
 
 
-    public String                       portray()
+    public String                       portray(Zone z)
     {
-        return "<MessageFormatter_3 " + this.a.portray() + " " + this.b.portray() + " " + this.c.portray() + ">";
+        return "<MessageFormatter_3 " + this.a.portray(z) + " " + this.b.portray(z) + " " + this.c.portray(z) + ">";
     }
 }

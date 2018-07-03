@@ -32,10 +32,8 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
     //
     //  Interface Inspectable
     //
-    public String                       portray()
+    public String                       portray(Zone z)
     {
-        Zone                            z = Zone.current_zone();
-
         INSPECTION                      inspection = this.inspect();
 
         StringBuilder                   b = new StringBuilder();

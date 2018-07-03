@@ -32,7 +32,7 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
     //  Interface Inspectable
     //
     public abstract INSPECTION          inspect();
-    public abstract String              portray();
+    public abstract String              portray(Zone z);
 
 
     //

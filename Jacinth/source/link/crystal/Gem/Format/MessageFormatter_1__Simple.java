@@ -70,7 +70,7 @@ public class    MessageFormatter_1__Simple
     }
 
 
-    public String                       portray()
+    public String                       portray(Zone z)
     {
         return "<MessageFormatter_1__Simple>";
     }

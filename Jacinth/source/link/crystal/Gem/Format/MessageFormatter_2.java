@@ -93,8 +93,8 @@ public class    MessageFormatter_2
     }
 
 
-    public String                       portray()
+    public String                       portray(Zone z)
     {
-        return "<MessageFormatter_2 " + this.a.portray() + " " + this.b.portray() + ">";
+        return "<MessageFormatter_2 " + this.a.portray(z) + " " + this.b.portray(z) + ">";
     }
 }

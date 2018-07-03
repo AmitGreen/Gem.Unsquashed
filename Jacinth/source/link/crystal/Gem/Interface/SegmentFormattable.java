@@ -11,7 +11,7 @@ import link.crystal.Gem.Core.Zone;
 
 public interface   SegmentFormattable
 {
-    String                              portray    ();
+    String                              portray    (Zone z);
     String                              select_2   (Zone z, String a, String b);
     String                              select_3   (Zone z, String a, String b, String c);
     String                              select_4   (Zone z, String a, String b, String c, String d);

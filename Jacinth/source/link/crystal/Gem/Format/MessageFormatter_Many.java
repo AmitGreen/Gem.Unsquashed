@@ -158,7 +158,7 @@ public class    MessageFormatter_Many
     }
 
 
-    public String                       portray()
+    public String                       portray(Zone z)
     {
         int                             expected     = this.expected;
         SegmentFormattable[]            segment_many = this.segment_many;
@@ -177,7 +177,7 @@ public class    MessageFormatter_Many
             SegmentFormattable          segment = segment_many[i];
 
             builder.append(" ");
-            builder.append(segment.portray());
+            builder.append(segment.portray(z));
         }
 
         builder.append(">");

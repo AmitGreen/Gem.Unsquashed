@@ -79,10 +79,8 @@ public class    MessageFormatter_1__Prefix
     }
 
 
-    public String                       portray()
+    public String                       portray(Zone z)
     {
-        Zone                            z = Zone.current_zone();
-
         return "<MessageFormatter_1__Prefix " + z.quote_string(this.prefix) + ">";
     }
 }

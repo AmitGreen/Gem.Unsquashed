@@ -37,10 +37,8 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     public abstract INSPECTION          inspect();
 
 
-    public String                       portray()
+    public String                       portray(Zone z)
     {
-        Zone                            z = Zone.current_zone();
-
         INSPECTION                      inspection = this.inspect();
 
         String                          portrait_0 = inspection.portrait_0;
