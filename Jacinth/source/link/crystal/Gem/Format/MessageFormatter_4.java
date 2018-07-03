@@ -4,7 +4,6 @@
 package link.crystal.Gem.Format;
 
 
-import java.lang.RuntimeException;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
@@ -62,7 +61,7 @@ public class    MessageFormatter_4
         )
     {
         if ( ! (2 <= expected && expected <= 4)) {
-            throw new RuntimeException("MessageFormatter_4.create: invalid value for `expected`<" + Integer.toString(expected) + ">");
+            raise_runtime_exception("MessageFormatter_4.create: invalid value for `expected`<{0}>", expected);
         }
 
         return new MessageFormatter_4(expected, a, b, c, d);
@@ -88,15 +87,9 @@ public class    MessageFormatter_4
         int                             actual   = 1 + other_arguments.length;
 
         if (actual != expected) {
-            throw new RuntimeException(
-                    (
-                          "MessageFormatter_4.arrange: "
-                        + Integer.toString(actual)
-                        + " arguments given (expected "
-                        + Integer.toString(expected)
-                        + ")"
-                    )
-                );
+            raise_runtime_exception("MessageFormatter_4.arrange: {0} arguments given (expected {1})",
+                                    actual,
+                                    expected);
         }
 
         SegmentFormattable              a = this.a;

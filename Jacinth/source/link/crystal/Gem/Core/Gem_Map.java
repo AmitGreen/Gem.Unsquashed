@@ -6,8 +6,8 @@ package link.crystal.Gem.Core;
 
 import java.util.HashMap;
 import link.crystal.Gem.Core.Inspection;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Support.ExceptionFunctions;
 import link.crystal.Gem.Support.OutputFunctions;
 import link.crystal.Gem.Support.PortrayFunctions;
 
@@ -70,5 +70,21 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
     public static String                portray_string(String s)
     {
         return PortrayFunctions.portray_string(s);
+    }
+
+
+    public static void                  raise_runtime_exception(String error_message)
+    {
+        ExceptionFunctions.raise_runtime_exception(error_message);
+    }
+
+
+    public static void                  raise_runtime_exception(
+            String                              format,
+            Object                              first_argument,
+            Object ...                          other_arguments//,
+        )
+    {
+        ExceptionFunctions.raise_runtime_exception(format, first_argument, other_arguments);
     }
 }

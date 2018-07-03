@@ -4,7 +4,6 @@
 package link.crystal.Gem.Support;
 
 
-import java.lang.RuntimeException;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringSet;
 import link.crystal.Gem.Core.Inspection;
@@ -91,7 +90,7 @@ public class    Storehouse_String
     public static String                intern_permenant_string(String s)
     {
         if (s == null) {
-            throw new RuntimeException("Storehouse_String.intern_permenant_string: `s` is null");
+            raise_runtime_exception("Storehouse_String.intern_permenant_string: `s` is null");
         }
 
         Storehouse_String               singleton = Storehouse_String.singleton;

@@ -4,7 +4,6 @@
 package link.crystal.Gem.Support;
 
 
-import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -125,14 +124,9 @@ public class    Storehouse_MessageFormattable
         MessageFormattable              previous = singleton.putIfAbsent(k, v);
 
         if (previous != null) {
-            throw new RuntimeException(
-                    (
-                          "Storehouse_MessageFormattable.insert: previos value for "
-                        + portray_string(k)
-                        + " already exists: "
-                        + previous.portray()
-                    )
-                );
+            raise_runtime_exception("Storehouse_MessageFormattable.insert: previous value for {0} already exists: {1}",
+                                    portray_string(k),
+                                    previous.portray());
         }
     }
 

@@ -4,7 +4,6 @@
 package link.crystal.Gem.Format;
 
 
-import java.lang.RuntimeException;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
@@ -63,13 +62,8 @@ public class    MessageFormatter_1__Suffix
     public String                       arrange(Object first_argument, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
-            throw new RuntimeException(
-                    (
-                          "MessageFormatter_1__Suffix.arrange: "
-                        + Integer.toString(1 + other_arguments.length)
-                        + " arguments given (expected 1)"
-                    )
-                );
+            raise_runtime_exception("MessageFormatter_1__Suffix.arrange: {0} arguments given (expected 1)",
+                                    1 + other_arguments.length);
         }
 
         String                          prefix_0 = this.prefix_0;
@@ -88,13 +82,8 @@ public class    MessageFormatter_1__Suffix
     public void                         line(Object first_argument, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
-            throw new RuntimeException(
-                    (
-                          "MessageFormatter_1__Suffix.line: "
-                        + Integer.toString(1 + other_arguments.length)
-                        + " arguments given (expected 1)"
-                    )
-                );
+            raise_runtime_exception("MessageFormatter_1__Simple.line: {0} arguments given (expected 1)",
+                                    1 + other_arguments.length);
         }
 
         String                          prefix_0 = this.prefix_0;

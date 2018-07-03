@@ -4,7 +4,6 @@
 package link.crystal.Gem.Format;
 
 
-import java.lang.RuntimeException;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;

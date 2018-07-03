@@ -12,6 +12,7 @@ import java.lang.System;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Support.ExceptionFunctions;
 import link.crystal.Gem.Support.OutputFunctions;
 import link.crystal.Gem.Support.PortrayFunctions;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
@@ -42,7 +43,7 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
         String                          portrait_0 = inspection.portrait_0;
 
         if (portrait_0 == null) {
-            throw new RuntimeException("Gem_Object.portray: `.inspect().portrait_0` is `null`");
+            raise_runtime_exception("Gem_Object.portray: `.inspect().portrait_0` is `null`");
         }
 
         return portrait_0;
@@ -109,5 +110,21 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     public static String                portray_string(String s)
     {
         return PortrayFunctions.portray_string(s);
+    }
+
+
+    public static void                  raise_runtime_exception(String error_message)
+    {
+        ExceptionFunctions.raise_runtime_exception(error_message);
+    }
+
+
+    public static void                  raise_runtime_exception(
+            String                              format,
+            Object                              first_argument,
+            Object ...                          other_arguments//,
+        )
+    {
+        ExceptionFunctions.raise_runtime_exception(format, first_argument, other_arguments);
     }
 }

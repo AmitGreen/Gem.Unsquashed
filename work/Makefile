@@ -92,6 +92,7 @@ JACINTH_FILES = \
     $J/Gem/Interface/Inspectable.java \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
+    $J/Gem/Support/ExceptionFunctions.java \
     $J/Gem/Support/OutputFunctions.java \
     $J/Gem/Support/PortrayFunctions.java \
     $J/Gem/Support/Storehouse_ArgumentSegmentFormatter.java \
@@ -279,7 +280,7 @@ clean:
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py ca2.py cd.py ce.py cr.py
 	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
-	rm -f ef.py en.py ex.py
+	rm -f ef.java ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
 	rm -f   gi.py gi.java gl.py gl.java go.java gm.java gq.py gr.py gse.py gsm.java gsq.py gss.java
@@ -358,6 +359,7 @@ links:
 	ln -s ../Diamond/Thread.py                                                  dt.py
 	ln -s ../Diamond/Chore.py                                                   dw.py
 	ln -s ../Diamond/LifeCycle.py                                               dy.py
+	ln -s $J/Gem/Support/ExceptionFunctions.java                                ef.java
 	ln -s ../Gem/ExecuteFile.py                                                 ef.py
 	ln -s ../Gem/ErrorNumber.py                                                 en.py
 	ln -s ../Gem/Exception.py                                                   ex.py

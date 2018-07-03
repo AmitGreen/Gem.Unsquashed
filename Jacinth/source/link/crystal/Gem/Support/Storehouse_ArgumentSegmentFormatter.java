@@ -4,7 +4,6 @@
 package link.crystal.Gem.Support;
 
 
-import java.lang.RuntimeException;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
@@ -30,15 +29,10 @@ public abstract class   Storehouse_ArgumentSegmentFormatter
         int                             segment_total = segment_many.length;
 
         if ( ! (0 <= argument_index && argument_index < segment_total)) {
-            throw new RuntimeException(
-                    (
-                          "Storehouse_ArgumentSegmentFormatter.conjure: `argument_index` must be between 0 and "
-                        + Integer.toString(segment_total + 1)
-                        + " (actual value: "
-                        + Integer.toString(argument_index)
-                        + ")"
-                    )
-                );
+            raise_runtime_exception("{0}: `argument_index`<{1}> must be between 0 and {2}",
+                                    "Storehouse_ArgumentSegmentFormatter.conjure",
+                                    argument_index,
+                                    segment_total + 1);
         }
 
         ArgumentSegmentFormatter        previous = segment_many[argument_index];

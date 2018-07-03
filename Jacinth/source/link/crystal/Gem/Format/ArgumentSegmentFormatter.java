@@ -4,7 +4,6 @@
 package link.crystal.Gem.Format;
 
 
-import java.lang.RuntimeException;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
@@ -67,13 +66,10 @@ public class    ArgumentSegmentFormatter
             return b;
         }
 
-        throw new RuntimeException(
-                (
-                      "ArgumentSegmentFormatter.select_2: argument_index is "
-                    + Integer.toString(argument_index)
-                    + " (expected 0 or 1)"
-                )
-            );
+        raise_runtime_exception("ArgumentSegmentFormatter.select_2: argument_index is {0} (expected 0 or 1)",
+                                argument_index);
+
+        return null;
     }
 
 
@@ -93,13 +89,10 @@ public class    ArgumentSegmentFormatter
             return c;
         }
 
-        throw new RuntimeException(
-                (
-                      "ArgumentSegmentFormatter.select_3: argument_index is "
-                    + Integer.toString(argument_index)
-                    + " (expected 0, 1, or 2)"
-                )
-            );
+        raise_runtime_exception("ArgumentSegmentFormatter.select_3: argument_index is {0} (expected 0, 1, or 2)",
+                                argument_index);
+
+        return null;
     }
 
 
@@ -123,13 +116,11 @@ public class    ArgumentSegmentFormatter
             return d;
         }
 
-        throw new RuntimeException(
-                (
-                      "ArgumentSegmentFormatter.select_4: argument_index is "
-                    + Integer.toString(argument_index)
-                    + " (expected number between 0 and 3)"
-                )
-            );
+        raise_runtime_exception("{0}: argument_index is {1} (expected number between 0 and 3)",
+                                "ArgumentSegmentFormatter.select_4",
+                                argument_index);
+
+        return null;
     }
 
 
@@ -157,13 +148,11 @@ public class    ArgumentSegmentFormatter
             return e;
         }
 
-        throw new RuntimeException(
-                (
-                      "ArgumentSegmentFormatter.select_5: argument_index is "
-                    + Integer.toString(argument_index)
-                    + " (expected number between 0 and 4)"
-                )
-            );
+        raise_runtime_exception("{0}: argument_index is {1} (expected number between 0 and 4)",
+                                "ArgumentSegmentFormatter.select_4",
+                                argument_index);
+
+        return null;
     }
 
 

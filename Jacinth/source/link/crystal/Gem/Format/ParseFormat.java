@@ -4,7 +4,6 @@
 package link.crystal.Gem.Core;
 
 
-import java.lang.RuntimeException;
 import java.lang.String;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -182,7 +181,7 @@ public class   ParseFormat
 
         if (segment_allocated < needed) {
             if (segment_allocated == 201) {
-                throw new RuntimeException("ParseFormat.append_segment: maximum of 100 '{#}' allowed");
+                raise_runtime_exception("ParseFormat.append_segment: maximum of 100 '{#}' allowed");
             }
 
             int                         new_allocated = limit_to_between(21, needed * 2, 201);
@@ -224,7 +223,7 @@ public class   ParseFormat
         int[]                           missing_many = this.missing_many;
 
         if (missing_total == 1) {
-            throw new RuntimeException(
+            raise_runtime_exception(
                     (
                           "ParseFormat.examine_missing: format string is missing {"
                         + Integer.toString(missing_many[0])
@@ -260,14 +259,9 @@ public class   ParseFormat
             b.append("{" + Integer.toString(missing_many[i]) + "}");
         }
 
-        throw new RuntimeException(
-                (
-                      "ParseFormat.examine_missing: format string is missing "
-                    + b.toString()
-                    + ": "
-                    + portray_string(this.format)
-                )
-            );
+        raise_runtime_exception("ParseFormat.examine_missing: format string is missing {0}: {1}",
+                                b.toString(),
+                                portray_string(this.format));
     }
 
 
@@ -276,7 +270,7 @@ public class   ParseFormat
         SegmentFormattable[]            segment_many = this.segment_many;
 
         if (segment_many == null) {
-            throw new RuntimeException("ParseFormat.steal_segments: no segments to steal");
+            raise_runtime_exception("ParseFormat.steal_segments: no segments to steal");
         }
 
         this.segment_many      = null;
@@ -308,12 +302,8 @@ public class   ParseFormat
         int                             end_2 = braces_matcher.end(2);
 
         if (end_2 == -1) {
-            throw new RuntimeException(
-                    (
-                          "ParseFormat.parse_format__work: format string is malformed: "
-                        + portray_string(format)
-                    )
-                );
+            raise_runtime_exception("ParseFormat.parse_format__work: format string is malformed: {0}",
+                                    portray_string(format));
         }
 
         int                             start          = braces_matcher.start();
@@ -373,12 +363,7 @@ public class   ParseFormat
             int                         next_end_2 = braces_matcher.end(2);
 
             if (next_end_2 == -1) {
-                throw new RuntimeException(
-                        (
-                              "ParseFormat.parse_format__work: format string is malformed: "
-                            + portray_string(format)
-                        )
-                    );
+                raise_runtime_exception("ParseFormat.parse_format__work: format string is malformed: {0}", format);
             }
 
             start          = braces_matcher.start();

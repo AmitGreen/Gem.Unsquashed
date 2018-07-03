@@ -4,7 +4,6 @@
 package link.crystal.Gem.Format;
 
 
-import java.lang.RuntimeException;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
@@ -68,15 +67,9 @@ public class    MessageFormatter_2
         int                             expected = (a == b ? 1 : 2);
 
         if (actual != expected) {
-            throw new RuntimeException(
-                    (
-                          "MessageFormatter_2.arrange: "
-                        + Integer.toString(actual)
-                        + " arguments given (expected "
-                        + Integer.toString(expected)
-                        + ")"
-                    )
-                );
+            raise_runtime_exception("MessageFormatter_2.arrange: {0} arguments given (expected {1})",
+                                    actual,
+                                    expected);
         }
 
         String                          argument_1 = PortrayFunctions.portray(first_argument);

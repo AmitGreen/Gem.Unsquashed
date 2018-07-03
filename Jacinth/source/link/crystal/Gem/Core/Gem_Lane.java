@@ -7,8 +7,8 @@ package link.crystal.Gem.Core;
 import java.lang.RuntimeException;
 import java.lang.Thread;
 import link.crystal.Gem.Core.Gem_Object;
-import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Core.ParseFormat;
+import link.crystal.Gem.Interface.Inspectable;
 
 
 public class    Gem_Lane
@@ -91,11 +91,22 @@ public class    Gem_Lane
         Gem_Lane                        first_lane = Gem_Lane.first_lane;
 
         if (first_lane == null) {
+            //
+            //  NOTE:
+            //
+            //      throw `RuntimeException` directly here, to avoid recursive calls
+            //
+            //      (since calling `raise_runtime_exception` will internally call this routine, leading to recursive calls)
+            //
             throw new RuntimeException("Gem_Lane.current_lane: Gem_Lane.initialize not yet called");
         }
 
 
         if (Gem_Lane.first_thread != Thread.currentThread()) {
+            //
+            //  NOTE:
+            //      See previous note on throw `RuntimeException` directly here, to avoid recursive calls.
+            //
             throw new RuntimeException("Gem_Lane.current_lane: only single threaded currently supported");
         }
 
@@ -106,6 +117,10 @@ public class    Gem_Lane
     public static void                  initialize()
     {
         if (Gem_Lane.first_lane != null) {
+            //
+            //  NOTE:
+            //      See previous note on throw `RuntimeException` directly here, to avoid recursive calls.
+            //
             throw new RuntimeException("Gem_Lane.initialize: called more than once");
         }
 

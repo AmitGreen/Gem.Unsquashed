@@ -6,7 +6,6 @@ package link.crystal.Gem.Support;
 
 import java.lang.Integer;
 import java.lang.Object;
-import java.lang.RuntimeException;
 import java.lang.String;
 import java.lang.StringBuilder;
 import link.crystal.Gem.Core.Gem_Object;
@@ -40,16 +39,18 @@ public abstract class   PortrayFunctions
             return (String) v;
         }
 
-        throw new RuntimeException("unknown class: " + v_class.getSimpleName());
+        raise_runtime_exception("PortrayFuntions.portray: unknown class {0} for `v`: {1}",
+                                v_class.getSimpleName(),
+                                v.toString());
 
-        //return "<" + v_class.getSimpleName() + ">";
+        return "<" + v_class.getSimpleName() + ">";
     }
 
 
     public static String                portray_string(String s)
     {
         if (s == null) {
-            throw new RuntimeException("portray_string: `s` is null");
+            raise_runtime_exception("portray_string: `s` is null");
         }
 
         StringBuilder                   b     = null;
