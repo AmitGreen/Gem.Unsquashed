@@ -36,7 +36,9 @@ public class   ParseFormat
     //
     //  Static members
     //
-    private static Pattern              braces_pattern = Pattern.compile("\\{(0|[1-9][0-9]*)?(\\})?");
+    private static Pattern              braces_pattern = Pattern.compile(
+            "(?:[^{}]|\\{\\{|\\}\\})*(\\{)(0|[1-9][0-9]*)?(\\})?"//,
+        );
 
 
     //
@@ -300,7 +302,9 @@ public class   ParseFormat
         String                          format         = this.format;
         Matcher                         braces_matcher = this.braces_matcher;
 
-        if ( ! braces_matcher.find()) {
+        int                             format_total = format.length();
+
+        if ( ! braces_matcher.lookingAt()) {
             throw new RuntimeException(
                     (
                           "ParseFormat.parse_format__work: format string does not contain the opening brace '{': "
@@ -313,28 +317,43 @@ public class   ParseFormat
         //
         //  First argument
         //
-        int                             end_2 = braces_matcher.end(2);
+        int                             end_3 = braces_matcher.end(3);
 
-        if (end_2 == -1) {
+        if (end_3 == -1) {
             z.RAISE_runtime_exception("ParseFormat.parse_format__work: format string is malformed: {0}",
                                       z.quote_string(format));
         }
 
-        int                             start          = braces_matcher.start();
-        int                             argument_index = 0;
-        String                          start_s        = null;
+        int                             start_1 = braces_matcher.start(1);
+        int                             delta   = end_3 - start_1;
 
-        if (end_2 - start == 3) {
-            argument_index = format.codePointAt(start + 1) - 48;
+        //z.line("delta: " + Integer.toString(delta) + "; " + format + "; start_1: " + Integer.toString(start_1));
+
+        int                             automatic_index;
+        int                             argument_index;
+
+        if (delta == 2) {
+            automatic_index = 0;
+            argument_index  = 0;
+        } else if (delta == 3) {
+            automatic_index = -1;
+            argument_index  = format.codePointAt(start_1 + 1) - 48;
         } else {
-            argument_index = Integer.parseInt(braces_matcher.group(1));
+            automatic_index = -1;
+            argument_index  = Integer.parseInt(braces_matcher.group(2));
         }
 
-        if (0 < start) {
-            start_s = format.substring(0, start);
+        String                          start_s;
+
+        if (0 < start_1) {
+            start_s = format.substring(0, start_1);
+        } else {
+            start_s = null;
         }
 
-        if ( ! braces_matcher.find()) {
+        braces_matcher.region(end_3, format_total);
+
+        if ( ! braces_matcher.lookingAt()) {
             if (argument_index != 0) {
                 throw new RuntimeException(
                         (
@@ -346,7 +365,7 @@ public class   ParseFormat
 
             MessageFormattable          r = null;
 
-            if (end_2 == format.length()) {
+            if (end_3 == format_total) {
                 if (start_s == null) {
                     return MessageFormatter_1__Simple.create(z);
                 }
@@ -354,7 +373,7 @@ public class   ParseFormat
                 return MessageFormatter_1__Prefix.create(z, start_s);
             }
 
-            return MessageFormatter_1__Suffix.create(z, start_s, format.substring(end_2));
+            return MessageFormatter_1__Suffix.create(z, start_s, format.substring(end_3));
         }
 
 
@@ -374,40 +393,60 @@ public class   ParseFormat
         //  Subsequent segments
         //
         for (;;) {
-            int                         next_end_2 = braces_matcher.end(2);
+            int                         next_end_3 = braces_matcher.end(3);
 
-            if (next_end_2 == -1) {
+            if (next_end_3 == -1) {
                 z.RAISE_runtime_exception("ParseFormat.parse_format__work: format string is malformed: {0}", format);
             }
 
-            start          = braces_matcher.start();
-            argument_index = 0;
+            start_1 = braces_matcher.start(1);
+            
+            delta = next_end_3 - start_1;
 
-            if (next_end_2 - start == 3) {
-                argument_index = format.codePointAt(start + 1) - 48;
+            if (delta == 2) {
+                if (automatic_index == -1) {
+                    z.RAISE_runtime_exception(
+                        "ParseFormat.parse_format__work: format string has both automatic & manual field numbering: {0}",
+                        format);
+                }
+
+                automatic_index += 1;
+                argument_index  = automatic_index;
             } else {
-                argument_index = Integer.parseInt(braces_matcher.group(1));
+                if (automatic_index != -1) {
+                    z.RAISE_runtime_exception(
+                        "ParseFormat.parse_format__work: format string has both automatic & manual field numbering: {0}",
+                        format);
+                }
+
+                if (delta == 3) {
+                    argument_index = format.codePointAt(start_1 + 1) - 48;
+                } else {
+                    argument_index = Integer.parseInt(braces_matcher.group(2));
+                }
             }
 
-            if (end_2 < start) {
-                start_s = format.substring(end_2, start);
+            if (end_3 < start_1) {
+                start_s = format.substring(end_3, start_1);
 
                 this.append_segment(Storehouse_StringSegmentFormatter.conjure(z, start_s));
             }
 
             this.append_segment(Storehouse_ArgumentSegmentFormatter.conjure(z, argument_index));
 
-            end_2 = next_end_2;
+            end_3 = next_end_3;
 
             add_used_index(argument_index);
 
-            if ( ! braces_matcher.find()) {
+            braces_matcher.region(end_3, format_total);
+
+            if ( ! braces_matcher.lookingAt()) {
                 break;
             }
         }
 
-        if (end_2 < format.length()) {
-            String                      end_s = format.substring(end_2);
+        if (end_3 < format_total) {
+            String                      end_s = format.substring(end_3);
 
             this.append_segment(Storehouse_StringSegmentFormatter.conjure(z, end_s));
         }

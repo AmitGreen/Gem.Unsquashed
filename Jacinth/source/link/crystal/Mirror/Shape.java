@@ -34,7 +34,7 @@ public class    Shape
 
         z.line(meta.getCanonicalName());
         z.line("Mirror.shape: create: {0}", shape_name);
-        z.line("{0} + {2} = {1}; and even more {3} -- yep", shape_name, "hello", "greetings", "stuff");
+        z.line("{} + {} = {}; and {{even}} more {} -- yep", shape_name, "hello", "greetings", "stuff");
 
         link.crystal.Jacinth.Shape      client = link.crystal.Jacinth.Shape.create(z, shape_name);
 
