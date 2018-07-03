@@ -17,6 +17,7 @@ import link.crystal.Gem.Format.MessageFormatter_1__Suffix;
 import link.crystal.Gem.Format.MessageFormatter_2;
 import link.crystal.Gem.Format.MessageFormatter_3;
 import link.crystal.Gem.Format.MessageFormatter_4;
+import link.crystal.Gem.Format.MessageFormatter_5;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
@@ -434,6 +435,17 @@ public class   ParseFormat
                     segment_many[1],
                     segment_many[2],
                     segment_many[3]//,
+                );
+        }
+ 
+        if (segment_total == 5) {
+            return MessageFormatter_5.create(
+                    this.used_index_total,
+                    segment_many[0],
+                    segment_many[1],
+                    segment_many[2],
+                    segment_many[3],
+                    segment_many[4]//,
                 );
         }
  

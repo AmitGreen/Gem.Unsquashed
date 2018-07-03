@@ -133,6 +133,40 @@ public class    ArgumentSegmentFormatter
     }
 
 
+    public String                       select_5(String a, String b, String c, String d, String e)
+    {
+        int                             argument_index = this.argument_index;
+
+        if (argument_index == 0) {
+            return a;
+        }
+
+        if (argument_index == 1) {
+            return b;
+        }
+
+        if (argument_index == 2) {
+            return c;
+        }
+
+        if (argument_index == 3) {
+            return c;
+        }
+
+        if (argument_index == 4) {
+            return d;
+        }
+
+        throw new RuntimeException(
+                (
+                      "ArgumentSegmentFormatter.select_5: argument_index is "
+                    + Integer.toString(argument_index)
+                    + " (expected number between 0 and 4)"
+                )
+            );
+    }
+
+
     public String                       portray()
     {
         return "<ArgumentSegmentFormatter " + Integer.toString(this.argument_index) + ">";
