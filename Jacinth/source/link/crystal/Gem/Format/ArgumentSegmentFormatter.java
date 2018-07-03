@@ -7,6 +7,7 @@ package link.crystal.Gem.Format;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Support.PortrayFunctions;
@@ -54,7 +55,7 @@ public class    ArgumentSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public String                       select_2(String a, String b)
+    public String                       select_2(Zone z, String a, String b)
     {
         int                             argument_index = this.argument_index;
 
@@ -66,14 +67,14 @@ public class    ArgumentSegmentFormatter
             return b;
         }
 
-        RAISE_runtime_exception("ArgumentSegmentFormatter.select_2: argument_index is {0} (expected 0 or 1)",
-                                argument_index);
+        z.RAISE_runtime_exception("ArgumentSegmentFormatter.select_2: argument_index is {0} (expected 0 or 1)",
+                                  argument_index);
 
         return null;
     }
 
 
-    public String                       select_3(String a, String b, String c)
+    public String                       select_3(Zone z, String a, String b, String c)
     {
         int                             argument_index = this.argument_index;
 
@@ -89,14 +90,14 @@ public class    ArgumentSegmentFormatter
             return c;
         }
 
-        RAISE_runtime_exception("ArgumentSegmentFormatter.select_3: argument_index is {0} (expected 0, 1, or 2)",
-                                argument_index);
+        z.RAISE_runtime_exception("ArgumentSegmentFormatter.select_3: argument_index is {0} (expected 0, 1, or 2)",
+                                  argument_index);
 
         return null;
     }
 
 
-    public String                       select_4(String a, String b, String c, String d)
+    public String                       select_4(Zone z, String a, String b, String c, String d)
     {
         int                             argument_index = this.argument_index;
 
@@ -116,15 +117,15 @@ public class    ArgumentSegmentFormatter
             return d;
         }
 
-        RAISE_runtime_exception("{0}: argument_index is {1} (expected number between 0 and 3)",
-                                "ArgumentSegmentFormatter.select_4",
-                                argument_index);
+        z.RAISE_runtime_exception("{0}: argument_index is {1} (expected number between 0 and 3)",
+                                  "ArgumentSegmentFormatter.select_4",
+                                  argument_index);
 
         return null;
     }
 
 
-    public String                       select_5(String a, String b, String c, String d, String e)
+    public String                       select_5(Zone z, String a, String b, String c, String d, String e)
     {
         int                             argument_index = this.argument_index;
 
@@ -148,15 +149,15 @@ public class    ArgumentSegmentFormatter
             return e;
         }
 
-        RAISE_runtime_exception("{0}: argument_index is {1} (expected number between 0 and 4)",
-                                "ArgumentSegmentFormatter.select_4",
-                                argument_index);
+        z.RAISE_runtime_exception("{0}: argument_index is {1} (expected number between 0 and 4)",
+                                  "ArgumentSegmentFormatter.select_4",
+                                  argument_index);
 
         return null;
     }
 
 
-    public String                       select_many(String[] arguments)
+    public String                       select_many(Zone z, String[] arguments)
     {
         return arguments[this.argument_index];
     }

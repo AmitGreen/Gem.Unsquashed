@@ -37,7 +37,7 @@ public class    MessageFormatter_1__Prefix
     }
 
 
-    static public MessageFormatter_1__Prefix    create(String prefix)
+    static public MessageFormatter_1__Prefix    create(Zone z, String prefix)
     {
         String                          interned__prefix = intern_permenant_string(prefix);
             
@@ -60,7 +60,7 @@ public class    MessageFormatter_1__Prefix
     public String                       arrange(Zone z, Object first_argument, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
-            RAISE_runtime_exception("MessageFormatter_1__Prefix.arrange: {0} arguments given (expected 1)",
+            z.RAISE_runtime_exception("MessageFormatter_1__Prefix.arrange: {0} arguments given (expected 1)",
                                     1 + other_arguments.length);
         }
 
@@ -71,7 +71,7 @@ public class    MessageFormatter_1__Prefix
     public void                         line(Zone z, Object first_argument, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
-            RAISE_runtime_exception("MessageFormatter_1__Prefix.line: {0} arguments given (expected 1)",
+            z.RAISE_runtime_exception("MessageFormatter_1__Prefix.line: {0} arguments given (expected 1)",
                                     1 + other_arguments.length);
         }
 

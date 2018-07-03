@@ -52,7 +52,7 @@ public abstract class   OutputFunctions
         if (formattable == null) {
             formattable = ParseFormat.parse_format(z, format);
 
-            Storehouse_MessageFormattable.insert(format, formattable);
+            Storehouse_MessageFormattable.insert(z, format, formattable);
         }
 
         formattable.line(z, first_argument, other_arguments);

@@ -57,6 +57,7 @@ public class    MessageFormatter_5
 
 
     static public MessageFormatter_5    create(
+            Zone                            z,
             int                             expected,
             SegmentFormattable              a,
             SegmentFormattable              b,
@@ -66,7 +67,7 @@ public class    MessageFormatter_5
         )
     {
         if ( ! (2 <= expected && expected <= 5)) {
-            RAISE_runtime_exception("MessageFormatter_5.create: invalid value for `expected`<{0}>", expected);
+            z.RAISE_runtime_exception("MessageFormatter_5.create: invalid value for `expected`<{0}>", expected);
         }
 
         return new MessageFormatter_5(expected, a, b, c, d, e);
@@ -92,9 +93,9 @@ public class    MessageFormatter_5
         int                             actual   = 1 + other_arguments.length;
 
         if (actual != expected) {
-            RAISE_runtime_exception("MessageFormatter_5.arrange: {0} arguments given (expected {1})",
-                                    actual,
-                                    expected);
+            z.RAISE_runtime_exception("MessageFormatter_5.arrange: {0} arguments given (expected {1})",
+                                      actual,
+                                      expected);
         }
 
         SegmentFormattable              a = this.a;
@@ -109,11 +110,11 @@ public class    MessageFormatter_5
         StringBuilder                   builder = new StringBuilder();
 
         if (expected == 2) {
-            builder.append(a.select_2(argument_1, argument_2));
-            builder.append(b.select_2(argument_1, argument_2));
-            builder.append(c.select_2(argument_1, argument_2));
-            builder.append(d.select_2(argument_1, argument_2));
-            builder.append(e.select_2(argument_1, argument_2));
+            builder.append(a.select_2(z, argument_1, argument_2));
+            builder.append(b.select_2(z, argument_1, argument_2));
+            builder.append(c.select_2(z, argument_1, argument_2));
+            builder.append(d.select_2(z, argument_1, argument_2));
+            builder.append(e.select_2(z, argument_1, argument_2));
 
             return builder.toString();
         }
@@ -121,11 +122,11 @@ public class    MessageFormatter_5
         String                          argument_3 = PortrayFunctions.portray(other_arguments[1]);
 
         if (expected == 3) {
-            builder.append(a.select_3(argument_1, argument_2, argument_3));
-            builder.append(b.select_3(argument_1, argument_2, argument_3));
-            builder.append(c.select_3(argument_1, argument_2, argument_3));
-            builder.append(d.select_3(argument_1, argument_2, argument_3));
-            builder.append(e.select_3(argument_1, argument_2, argument_3));
+            builder.append(a.select_3(z, argument_1, argument_2, argument_3));
+            builder.append(b.select_3(z, argument_1, argument_2, argument_3));
+            builder.append(c.select_3(z, argument_1, argument_2, argument_3));
+            builder.append(d.select_3(z, argument_1, argument_2, argument_3));
+            builder.append(e.select_3(z, argument_1, argument_2, argument_3));
 
             return builder.toString();
         }
@@ -133,22 +134,22 @@ public class    MessageFormatter_5
         String                          argument_4 = PortrayFunctions.portray(other_arguments[2]);
 
         if (expected == 4) {
-            builder.append(a.select_4(argument_1, argument_2, argument_3, argument_4));
-            builder.append(b.select_4(argument_1, argument_2, argument_3, argument_4));
-            builder.append(c.select_4(argument_1, argument_2, argument_3, argument_4));
-            builder.append(d.select_4(argument_1, argument_2, argument_3, argument_4));
-            builder.append(e.select_4(argument_1, argument_2, argument_3, argument_4));
+            builder.append(a.select_4(z, argument_1, argument_2, argument_3, argument_4));
+            builder.append(b.select_4(z, argument_1, argument_2, argument_3, argument_4));
+            builder.append(c.select_4(z, argument_1, argument_2, argument_3, argument_4));
+            builder.append(d.select_4(z, argument_1, argument_2, argument_3, argument_4));
+            builder.append(e.select_4(z, argument_1, argument_2, argument_3, argument_4));
 
             return builder.toString();
         }
 
         String                          argument_5 = PortrayFunctions.portray(other_arguments[3]);
 
-        builder.append(a.select_5(argument_1, argument_2, argument_3, argument_4, argument_5));
-        builder.append(b.select_5(argument_1, argument_2, argument_3, argument_4, argument_5));
-        builder.append(c.select_5(argument_1, argument_2, argument_3, argument_4, argument_5));
-        builder.append(d.select_5(argument_1, argument_2, argument_3, argument_4, argument_5));
-        builder.append(e.select_5(argument_1, argument_2, argument_3, argument_4, argument_5));
+        builder.append(a.select_5(z, argument_1, argument_2, argument_3, argument_4, argument_5));
+        builder.append(b.select_5(z, argument_1, argument_2, argument_3, argument_4, argument_5));
+        builder.append(c.select_5(z, argument_1, argument_2, argument_3, argument_4, argument_5));
+        builder.append(d.select_5(z, argument_1, argument_2, argument_3, argument_4, argument_5));
+        builder.append(e.select_5(z, argument_1, argument_2, argument_3, argument_4, argument_5));
 
         return builder.toString();
     }

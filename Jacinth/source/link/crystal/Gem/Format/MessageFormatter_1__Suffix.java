@@ -39,7 +39,7 @@ public class    MessageFormatter_1__Suffix
     }
 
 
-    static public MessageFormatter_1__Suffix    create(String prefix_0, String suffix)
+    static public MessageFormatter_1__Suffix    create(Zone z, String prefix_0, String suffix)
     {
         String                          interned__prefix_0 = intern_permenant_string_0(prefix_0);
         String                          interned__suffix   = intern_permenant_string  (suffix);
@@ -63,7 +63,7 @@ public class    MessageFormatter_1__Suffix
     public String                       arrange(Zone z, Object first_argument, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
-            RAISE_runtime_exception("MessageFormatter_1__Suffix.arrange: {0} arguments given (expected 1)",
+            z.RAISE_runtime_exception("MessageFormatter_1__Suffix.arrange: {0} arguments given (expected 1)",
                                     1 + other_arguments.length);
         }
 
@@ -83,7 +83,7 @@ public class    MessageFormatter_1__Suffix
     public void                         line(Zone z, Object first_argument, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
-            RAISE_runtime_exception("MessageFormatter_1__Simple.line: {0} arguments given (expected 1)",
+            z.RAISE_runtime_exception("MessageFormatter_1__Simple.line: {0} arguments given (expected 1)",
                                     1 + other_arguments.length);
         }
 

@@ -41,10 +41,10 @@ public class    MessageFormatter_Many
     }
 
 
-    static public MessageFormatter_Many     create(int expected, SegmentFormattable[] segment_many)
+    static public MessageFormatter_Many     create(Zone z, int expected, SegmentFormattable[] segment_many)
     {
         if ( ! (2 <= expected && expected <= segment_many.length)) {
-            RAISE_runtime_exception("MessageFormatter_Many.create: invalid value for `expected`<{0}>", expected);
+            z.RAISE_runtime_exception("MessageFormatter_Many.create: invalid value for `expected`<{0}>", expected);
         }
 
         return new MessageFormatter_Many(expected, segment_many);
@@ -70,9 +70,9 @@ public class    MessageFormatter_Many
         int                             actual   = 1 + other_arguments.length;
 
         if (actual != expected) {
-            RAISE_runtime_exception("MessageFormatter_Many.arrange: {0} arguments given (expected {1})",
-                                    actual,
-                                    expected);
+            z.RAISE_runtime_exception("MessageFormatter_Many.arrange: {0} arguments given (expected {1})",
+                                      actual,
+                                      expected);
         }
 
         SegmentFormattable[]            segment_many = this.segment_many;
@@ -88,7 +88,7 @@ public class    MessageFormatter_Many
             for (int                    i = 0; i < segment_total; i ++) {
                 SegmentFormattable      segment = segment_many[i];
 
-                builder.append(segment.select_2(argument_1, argument_2));
+                builder.append(segment.select_2(z, argument_1, argument_2));
             }
 
             return builder.toString();
@@ -100,7 +100,7 @@ public class    MessageFormatter_Many
             for (int                    i = 0; i < segment_total; i ++) {
                 SegmentFormattable      segment = segment_many[i];
 
-                builder.append(segment.select_3(argument_1, argument_2, argument_3));
+                builder.append(segment.select_3(z, argument_1, argument_2, argument_3));
             }
 
             return builder.toString();
@@ -112,7 +112,7 @@ public class    MessageFormatter_Many
             for (int                    i = 0; i < segment_total; i ++) {
                 SegmentFormattable      segment = segment_many[i];
 
-                builder.append(segment.select_4(argument_1, argument_2, argument_3, argument_4));
+                builder.append(segment.select_4(z, argument_1, argument_2, argument_3, argument_4));
             }
 
             return builder.toString();
@@ -124,7 +124,7 @@ public class    MessageFormatter_Many
             for (int                    i = 0; i < segment_total; i ++) {
                 SegmentFormattable      segment = segment_many[i];
 
-                builder.append(segment.select_5(argument_1, argument_2, argument_3, argument_4, argument_5));
+                builder.append(segment.select_5(z, argument_1, argument_2, argument_3, argument_4, argument_5));
             }
 
 
@@ -146,9 +146,8 @@ public class    MessageFormatter_Many
         for (int                        i = 0; i < segment_total; i ++) {
             SegmentFormattable          segment = segment_many[i];
 
-            builder.append(segment.select_many(argument_many));
+            builder.append(segment.select_many(z, argument_many));
         }
-
 
         return builder.toString();
     }

@@ -41,7 +41,7 @@ public class    MessageFormatter_2
     }
 
 
-    static public MessageFormatter_2    create(SegmentFormattable a, SegmentFormattable b)
+    static public MessageFormatter_2    create(Zone z, SegmentFormattable a, SegmentFormattable b)
     {
         return new MessageFormatter_2(a, b);
     }
@@ -68,7 +68,7 @@ public class    MessageFormatter_2
         int                             expected = (a == b ? 1 : 2);
 
         if (actual != expected) {
-            RAISE_runtime_exception("MessageFormatter_2.arrange: {0} arguments given (expected {1})",
+            z.RAISE_runtime_exception("MessageFormatter_2.arrange: {0} arguments given (expected {1})",
                                     actual,
                                     expected);
         }
@@ -82,8 +82,8 @@ public class    MessageFormatter_2
         String                          argument_2 = PortrayFunctions.portray(other_arguments[0]);
 
         return (
-                     this.a.select_2(argument_1, argument_2)
-                   + this.b.select_2(argument_1, argument_2)
+                     a.select_2(z, argument_1, argument_2)
+                   + b.select_2(z, argument_1, argument_2)
                );
     }
 

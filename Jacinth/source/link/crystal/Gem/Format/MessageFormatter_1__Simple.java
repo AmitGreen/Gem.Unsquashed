@@ -31,7 +31,7 @@ public class    MessageFormatter_1__Simple
     }
 
 
-    static public MessageFormatter_1__Simple    create()
+    static public MessageFormatter_1__Simple    create(Zone z)
     {
         return new MessageFormatter_1__Simple();
     }
@@ -52,7 +52,7 @@ public class    MessageFormatter_1__Simple
     public String                       arrange(Zone z, Object first_argument, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
-            RAISE_runtime_exception("MessageFormatter_1__Simple.arrange: {0} arguments given (expected 1)",
+            z.RAISE_runtime_exception("MessageFormatter_1__Simple.arrange: {0} arguments given (expected 1)",
                                     1 + other_arguments.length);
         }
 
@@ -63,7 +63,7 @@ public class    MessageFormatter_1__Simple
     public void                         line(Zone z, Object first_argument, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
-            RAISE_runtime_exception("MessageFormatter_1__Simple.line: {0} arguments given (expected 1)",
+            z.RAISE_runtime_exception("MessageFormatter_1__Simple.line: {0} arguments given (expected 1)",
                                     1 + other_arguments.length);
         }
 

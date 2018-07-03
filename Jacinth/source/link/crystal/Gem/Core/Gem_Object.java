@@ -10,6 +10,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.lang.System;
 import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.ExceptionFunctions;
@@ -38,12 +39,14 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
 
     public String                       portray()
     {
+        Zone                            z = Zone.current_zone();
+
         INSPECTION                      inspection = this.inspect();
 
         String                          portrait_0 = inspection.portrait_0;
 
         if (portrait_0 == null) {
-            RAISE_runtime_exception("Gem_Object.portray: `.inspect().portrait_0` is `null`");
+            z.RAISE_runtime_exception("Gem_Object.portray: `.inspect().portrait_0` is `null`");
         }
 
         return portrait_0;
@@ -55,7 +58,9 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     //
     public static String                intern_permenant_string(String s)
     {
-        return Storehouse_String.intern_permenant_string(s);
+        Zone                            z = Zone.current_zone();
+
+        return Storehouse_String.intern_permenant_string(z, s);
     }
 
 
@@ -65,7 +70,9 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
             return null;
         }
 
-        return Storehouse_String.intern_permenant_string(s);
+        Zone                            z = Zone.current_zone();
+
+        return Storehouse_String.intern_permenant_string(z, s);
     }
 
     
@@ -92,21 +99,5 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     public static String                portray_string(String s)
     {
         return PortrayFunctions.portray_string(s);
-    }
-
-
-    public static void                  RAISE_runtime_exception(String error_message)
-    {
-        ExceptionFunctions.RAISE_runtime_exception(error_message);
-    }
-
-
-    public static void                  RAISE_runtime_exception(
-            String                              format,
-            Object                              first_argument,
-            Object ...                          other_arguments//,
-        )
-    {
-        ExceptionFunctions.RAISE_runtime_exception(format, first_argument, other_arguments);
     }
 }

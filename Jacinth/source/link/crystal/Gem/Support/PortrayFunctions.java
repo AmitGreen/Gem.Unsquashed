@@ -9,6 +9,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.lang.StringBuilder;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 
 
@@ -39,9 +40,11 @@ public abstract class   PortrayFunctions
             return (String) v;
         }
 
-        RAISE_runtime_exception("PortrayFuntions.portray: unknown class {0} for `v`: {1}",
-                                v_class.getSimpleName(),
-                                v.toString());
+        Zone                            z = Zone.current_zone();
+
+        z.RAISE_runtime_exception("PortrayFuntions.portray: unknown class {0} for `v`: {1}",
+                                  v_class.getSimpleName(),
+                                  v.toString());
 
         return "<" + v_class.getSimpleName() + ">";
     }
@@ -50,7 +53,9 @@ public abstract class   PortrayFunctions
     public static String                portray_string(String s)
     {
         if (s == null) {
-            RAISE_runtime_exception("portray_string: `s` is null");
+            Zone                        z = Zone.current_zone();
+
+            z.RAISE_runtime_exception("portray_string: `s` is null");
         }
 
         StringBuilder                   b     = null;

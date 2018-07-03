@@ -9,6 +9,7 @@ import java.lang.Thread;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Support.ExceptionFunctions;
 import link.crystal.Gem.Support.OutputFunctions;
 
 
@@ -101,7 +102,7 @@ public class    Zone
             //
             //      throw `RuntimeException` directly here, to avoid recursive calls
             //
-            //      (since calling `RAISE_runtime_exception` might internally call this routine, leading to recursive calls)
+            //      (since calling `.RAISE_runtime_exception` might internally call this routine, leading to recursive calls)
             //
             throw new RuntimeException("Zone.current_zone: only single threaded currently supported");
         }
@@ -130,5 +131,22 @@ public class    Zone
     public void                         line(String format, Object first_argument, Object ... other_arguments)
     {
         OutputFunctions.line(this, format, first_argument, other_arguments);
+    }
+
+
+
+    public void                         RAISE_runtime_exception(String error_message)
+    {
+        ExceptionFunctions.RAISE_runtime_exception(this, error_message);
+    }
+
+
+    public void                         RAISE_runtime_exception(
+            String                              format,
+            Object                              first_argument,
+            Object ...                          other_arguments//,
+        )
+    {
+        ExceptionFunctions.RAISE_runtime_exception(this, format, first_argument, other_arguments);
     }
 }

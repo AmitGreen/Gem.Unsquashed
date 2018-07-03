@@ -114,7 +114,7 @@ public class    Storehouse_MessageFormattable
     }
 
 
-    public static void                  insert(String k, MessageFormattable v)
+    public static void                  insert(Zone z, String k, MessageFormattable v)
     {
         Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
 
@@ -125,9 +125,9 @@ public class    Storehouse_MessageFormattable
         MessageFormattable              previous = singleton.putIfAbsent(k, v);
 
         if (previous != null) {
-            RAISE_runtime_exception("Storehouse_MessageFormattable.insert: previous value for {0} already exists: {1}",
-                                    portray_string(k),
-                                    previous.portray());
+            z.RAISE_runtime_exception("Storehouse_MessageFormattable.insert: previous value for {0} already exists: {1}",
+                                      portray_string(k),
+                                      previous.portray());
         }
     }
 

@@ -23,17 +23,17 @@ public abstract class   Storehouse_ArgumentSegmentFormatter
     //
     //  Public
     //
-    public static ArgumentSegmentFormatter  conjure(int argument_index)
+    public static ArgumentSegmentFormatter  conjure(Zone z, int argument_index)
     {
         ArgumentSegmentFormatter[]      segment_many = Storehouse_ArgumentSegmentFormatter.segment_many;
 
         int                             segment_total = segment_many.length;
 
         if ( ! (0 <= argument_index && argument_index < segment_total)) {
-            RAISE_runtime_exception("{0}: `argument_index`<{1}> must be between 0 and {2}",
-                                    "Storehouse_ArgumentSegmentFormatter.conjure",
-                                    argument_index,
-                                    segment_total + 1);
+            z.RAISE_runtime_exception("{0}: `argument_index`<{1}> must be between 0 and {2}",
+                                      "Storehouse_ArgumentSegmentFormatter.conjure",
+                                      argument_index,
+                                      segment_total + 1);
         }
 
         ArgumentSegmentFormatter        previous = segment_many[argument_index];
