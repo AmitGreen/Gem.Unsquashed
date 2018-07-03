@@ -13,4 +13,5 @@ public interface   SegmentFormattable
     String                              portray();
     String                              select_2(String a, String b);
     String                              select_3(String a, String b, String c);
+    String                              select_4(String a, String b, String c, String d);
 }

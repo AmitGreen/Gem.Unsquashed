@@ -68,6 +68,12 @@ public class    StringSegmentFormatter
     }
 
 
+    public String                       select_4(String a, String b, String c, String d)
+    {
+        return this.s;
+    }
+
+
     public String                       portray()
     {
         return "<StringSegmentFormatter " + portray_string(this.s) + ">";
