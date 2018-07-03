@@ -33,15 +33,15 @@ public class    Storehouse_String
     //
     //  Constructor & Factory
     //
-    private                             Storehouse_String(int initial_capacity)
+    private                             Storehouse_String(Zone z, int initial_capacity)
     {
-        super(initial_capacity);
+        super(z, initial_capacity);
     }
 
 
-    private static Storehouse_String    create()
+    private static Storehouse_String    create(Zone z)
     {
-        return new Storehouse_String(Storehouse_String.initial_capacity);
+        return new Storehouse_String(z, Storehouse_String.initial_capacity);
     }
 
 
@@ -57,7 +57,7 @@ public class    Storehouse_String
     //
     //  Private
     //
-    private static Storehouse_String    singleton()
+    private static Storehouse_String    singleton(Zone z)
     {
         Storehouse_String               singleton = Storehouse_String.singleton;
 
@@ -66,7 +66,7 @@ public class    Storehouse_String
         }
 
         singleton =
-            Storehouse_String.singleton = Storehouse_String.create();
+            Storehouse_String.singleton = Storehouse_String.create(z);
 
         return singleton;
     }
@@ -80,7 +80,7 @@ public class    Storehouse_String
         Storehouse_String               singleton = Storehouse_String.singleton;
 
         if (singleton == null) {
-            singleton = Storehouse_String.singleton();
+            singleton = Storehouse_String.singleton(z);
         }
 
         singleton.dump(z, "Storehouse_String.singleton");
@@ -96,7 +96,7 @@ public class    Storehouse_String
         Storehouse_String               singleton = Storehouse_String.singleton;
 
         if (singleton == null) {
-            singleton = Storehouse_String.singleton();
+            singleton = Storehouse_String.singleton(z);
         }
 
         String                          previous = singleton.putIfAbsent(s, s);

@@ -42,7 +42,7 @@ public class   ParseFormat
     //
     //  Members
     //
-    private Zone                        z;
+    private final Zone                  z;
 
     private String                      format;
     private Matcher                     braces_matcher;
@@ -128,7 +128,7 @@ public class   ParseFormat
             int                         new_allocated = limit_to_between(20, needed * 2, 100);
 
             used_index_many = ArrayFunctions.grow_primitive_integer_array(
-                    z,
+                    this.z,
                     used_index_many,
                     used_index_total,
                     new int[new_allocated],
@@ -162,7 +162,7 @@ public class   ParseFormat
             int                         new_allocated = limit_to_between(20, needed * 2, 100);
 
             missing_many = ArrayFunctions.grow_primitive_integer_array(
-                    z,
+                    this.z,
                     missing_many,
                     missing_total,
                     new int[new_allocated],
@@ -181,13 +181,14 @@ public class   ParseFormat
 
     private void                        append_segment(SegmentFormattable segment)
     {
-        Zone                            z                 = this.z;
         SegmentFormattable[]            segment_many      = this.segment_many;
         int                             segment_total     = this.segment_total;
         int                             segment_allocated = this.segment_allocated;
         int                             needed            = segment_total + 1;
 
         if (segment_allocated < needed) {
+            Zone                         z = this.z;
+
             if (segment_allocated == 201) {
                 z.RAISE_runtime_exception("ParseFormat.append_segment: maximum of 100 '{#}' allowed");
             }
@@ -277,10 +278,11 @@ public class   ParseFormat
 
     private SegmentFormattable[]        steal_segments()
     {
-        Zone                            z            = this.z;
         SegmentFormattable[]            segment_many = this.segment_many;
 
         if (segment_many == null) {
+            Zone                        z = this.z;
+
             z.RAISE_runtime_exception("ParseFormat.steal_segments: no segments to steal");
         }
 

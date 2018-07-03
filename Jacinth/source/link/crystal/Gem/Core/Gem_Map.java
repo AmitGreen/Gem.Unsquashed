@@ -20,11 +20,19 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
     implements          Inspectable<INSPECTION>//,
 {
     //
+    //  Members
+    //
+    protected final Zone                z;
+
+
+    //
     //  Constructor
     //
-    protected                           Gem_Map(int initial_capacity)
+    protected                           Gem_Map(Zone z, int initial_capacity)
     {
         super(initial_capacity);
+
+        this.z = z;
     }
 
 

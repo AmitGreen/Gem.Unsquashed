@@ -38,15 +38,15 @@ public class    Storehouse_MessageFormattable
     //
     //  Constructor & Factory
     //
-    private                             Storehouse_MessageFormattable(int initial_capacity)
+    private                             Storehouse_MessageFormattable(Zone z, int initial_capacity)
     {
-        super(initial_capacity);
+        super(z, initial_capacity);
     }
 
 
-    private static Storehouse_MessageFormattable    create()
+    private static Storehouse_MessageFormattable    create(Zone z)
     {
-        return new Storehouse_MessageFormattable(Storehouse_MessageFormattable.initial_capacity);
+        return new Storehouse_MessageFormattable(z, Storehouse_MessageFormattable.initial_capacity);
     }
 
 
@@ -62,7 +62,7 @@ public class    Storehouse_MessageFormattable
     //
     //  Private
     //
-    private static Storehouse_MessageFormattable    singleton()
+    private static Storehouse_MessageFormattable    singleton(Zone z)
     {
         Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
 
@@ -71,7 +71,7 @@ public class    Storehouse_MessageFormattable
         }
 
         singleton =
-            Storehouse_MessageFormattable.singleton = Storehouse_MessageFormattable.create();
+            Storehouse_MessageFormattable.singleton = Storehouse_MessageFormattable.create(z);
 
         return singleton;
     }
@@ -85,7 +85,7 @@ public class    Storehouse_MessageFormattable
         Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
 
         if (singleton == null) {
-            singleton = Storehouse_MessageFormattable.singleton();
+            singleton = Storehouse_MessageFormattable.singleton(z);
         }
 
         List<String>                    keys = new ArrayList<String>(singleton.keySet());
@@ -113,7 +113,7 @@ public class    Storehouse_MessageFormattable
         Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
 
         if (singleton == null) {
-            singleton = Storehouse_MessageFormattable.singleton();
+            singleton = Storehouse_MessageFormattable.singleton(z);
         }
 
         MessageFormattable              previous = singleton.putIfAbsent(k, v);
@@ -126,12 +126,12 @@ public class    Storehouse_MessageFormattable
     }
 
 
-    public static MessageFormattable    lookup(String k)
+    public static MessageFormattable    lookup(Zone z, String k)
     {
         Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
 
         if (singleton == null) {
-            singleton = Storehouse_MessageFormattable.singleton();
+            singleton = Storehouse_MessageFormattable.singleton(z);
         }
 
         return singleton.get(k);

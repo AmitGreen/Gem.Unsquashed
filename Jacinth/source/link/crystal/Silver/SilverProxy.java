@@ -6,6 +6,7 @@ package link.crystal.Silver;
 
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 
 
@@ -17,14 +18,16 @@ public abstract class   SilverProxy<PROXY extends SilverProxy, CLIENT extends Ob
     //
     //  Members
     //
+    protected final Zone                z;
     protected final CLIENT              client;
 
 
     //
     //  Constructor
     //
-    protected                           SilverProxy(CLIENT client)
+    protected                           SilverProxy(Zone z, CLIENT client)
     {
+        this.z      = z;
         this.client = client;
     }
 

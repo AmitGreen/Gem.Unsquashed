@@ -34,15 +34,15 @@ public class    Storehouse_StringSegmentFormatter
     //
     //  Constructor & Factory
     //
-    private                             Storehouse_StringSegmentFormatter(int initial_capacity)
+    private                             Storehouse_StringSegmentFormatter(Zone z, int initial_capacity)
     {
-        super(initial_capacity);
+        super(z, initial_capacity);
     }
 
 
-    private static Storehouse_StringSegmentFormatter    create()
+    private static Storehouse_StringSegmentFormatter    create(Zone z)
     {
-        return new Storehouse_StringSegmentFormatter(Storehouse_StringSegmentFormatter.initial_capacity);
+        return new Storehouse_StringSegmentFormatter(z, Storehouse_StringSegmentFormatter.initial_capacity);
     }
 
 
@@ -58,7 +58,7 @@ public class    Storehouse_StringSegmentFormatter
     //
     //  Private
     //
-    private static Storehouse_StringSegmentFormatter    singleton()
+    private static Storehouse_StringSegmentFormatter    singleton(Zone z)
     {
         Storehouse_StringSegmentFormatter   singleton = Storehouse_StringSegmentFormatter.singleton;
 
@@ -67,7 +67,7 @@ public class    Storehouse_StringSegmentFormatter
         }
 
         singleton =
-            Storehouse_StringSegmentFormatter.singleton = Storehouse_StringSegmentFormatter.create();
+            Storehouse_StringSegmentFormatter.singleton = Storehouse_StringSegmentFormatter.create(z);
 
         return singleton;
     }
@@ -81,7 +81,7 @@ public class    Storehouse_StringSegmentFormatter
         Storehouse_StringSegmentFormatter   singleton = Storehouse_StringSegmentFormatter.singleton;
 
         if (singleton == null) {
-            singleton = Storehouse_StringSegmentFormatter.singleton();
+            singleton = Storehouse_StringSegmentFormatter.singleton(z);
         }
 
         StringSegmentFormatter          r = singleton.get(s);
@@ -103,7 +103,7 @@ public class    Storehouse_StringSegmentFormatter
         Storehouse_StringSegmentFormatter   singleton = Storehouse_StringSegmentFormatter.singleton;
 
         if (singleton == null) {
-            singleton = Storehouse_StringSegmentFormatter.singleton();
+            singleton = Storehouse_StringSegmentFormatter.singleton(z);
         }
 
         singleton.dump(z, "Storehouse_StringSegmentFormatter.singleton");

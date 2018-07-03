@@ -24,9 +24,9 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     //
     //  Constructor
     //
-    protected                           Gem_StringMap(int initial_capacity)
+    protected                           Gem_StringMap(Zone z, int initial_capacity)
     {
-        super(initial_capacity);
+        super(z, initial_capacity);
     }
 
 

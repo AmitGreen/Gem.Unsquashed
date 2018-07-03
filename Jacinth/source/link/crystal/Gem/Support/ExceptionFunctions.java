@@ -34,7 +34,7 @@ public abstract class   ExceptionFunctions
             Object ...                          other_arguments//,
         )
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(format);
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
 
         if (formattable == null) {
             formattable = ParseFormat.parse_format(z, format);

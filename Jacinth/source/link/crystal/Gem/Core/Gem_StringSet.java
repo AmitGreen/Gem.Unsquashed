@@ -23,9 +23,9 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
     //
     //  Constructor
     //
-    protected                           Gem_StringSet(int initial_capacity)
+    protected                           Gem_StringSet(Zone z, int initial_capacity)
     {
-        super(initial_capacity);
+        super(z, initial_capacity);
     }
 
 

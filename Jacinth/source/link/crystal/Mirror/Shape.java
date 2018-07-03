@@ -22,9 +22,9 @@ public class    Shape
     //
     //  Constructor & Factory
     //
-    private                             Shape(link.crystal.Jacinth.Shape client)
+    private                             Shape(Zone z, link.crystal.Jacinth.Shape client)
     {
-        super(client);
+        super(z, client);
     }
 
 
@@ -38,7 +38,7 @@ public class    Shape
 
         link.crystal.Jacinth.Shape      client = link.crystal.Jacinth.Shape.create(z, shape_name);
 
-        return new Shape(client);
+        return new Shape(z, client);
     }
 
 
