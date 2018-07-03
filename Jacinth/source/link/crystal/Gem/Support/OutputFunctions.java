@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.lang.Object;
 import java.lang.String;
 import java.lang.System;
+import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Interface.MessageFormattable;
@@ -27,9 +28,34 @@ public abstract class   OutputFunctions
     //
     //  Public
     //
-    public static void                  line()
+    public static void                  line(Gem_Lane z)
     {
         standard_output.println();
+    }
+
+
+    public static void                  line(Gem_Lane z, String s)
+    {
+        standard_output.println(s);
+    }
+
+
+    public static void                  line(
+            Gem_Lane                            z,
+            String                              format,
+            Object                              first_argument,
+            Object ...                          other_arguments//,
+        )
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(format);
+
+            Storehouse_MessageFormattable.insert(format, formattable);
+        }
+
+        formattable.line(first_argument, other_arguments);
     }
 
 

@@ -4,9 +4,9 @@
 package link.crystal.Mirror;
 
 
+import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Silver.SilverModule;
 import link.crystal.Silver.SilverProxy;
 
 
@@ -28,19 +28,15 @@ public class    Shape
     }
 
 
-    public static Shape                 create(String shape_name)
+    public static Shape                 create(Gem_Lane z, String shape_name)
     {
-        if (SilverModule.startup) {
-            SilverModule.initialize();
-        }
-
         Class<link.crystal.Jacinth.Shape>   meta = link.crystal.Jacinth.Shape.class;
 
-        line(meta.getCanonicalName());
-        line("Mirror.shape: create: {0}", shape_name);
-        line("{0} + {2} = {1}; and even more {3} -- yep", shape_name, "hello", "greetings", "stuff");
+        z.line(meta.getCanonicalName());
+        z.line("Mirror.shape: create: {0}", shape_name);
+        z.line("{0} + {2} = {1}; and even more {3} -- yep", shape_name, "hello", "greetings", "stuff");
 
-        link.crystal.Jacinth.Shape                   client = link.crystal.Jacinth.Shape.create(shape_name);
+        link.crystal.Jacinth.Shape      client = link.crystal.Jacinth.Shape.create(z, shape_name);
 
         return new Shape(client);
     }
@@ -58,12 +54,12 @@ public class    Shape
     //
     //  Public
     //
-    public void                         skew()
+    public void                         skew(Gem_Lane z)
     {
         link.crystal.Jacinth.Shape                   client = this.client;
 
         System.out.println("Mirror.skew");
 
-        client.skew();
+        client.skew(z);
     }
 }

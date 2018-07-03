@@ -5,6 +5,7 @@ package link.crystal.Gem.Support;
 
 
 import java.lang.String;
+import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Gem_StringMap;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Format.StringSegmentFormatter;
@@ -97,7 +98,7 @@ public class    Storehouse_StringSegmentFormatter
     }
 
 
-    public static void                  dump()
+    public static void                  dump(Gem_Lane z)
     {
         Storehouse_StringSegmentFormatter   singleton = Storehouse_StringSegmentFormatter.singleton;
 
@@ -105,6 +106,6 @@ public class    Storehouse_StringSegmentFormatter
             singleton = Storehouse_StringSegmentFormatter.singleton();
         }
 
-        singleton.dump("Storehouse_StringSegmentFormatter.singleton");
+        singleton.dump(z, "Storehouse_StringSegmentFormatter.singleton");
     }
 }

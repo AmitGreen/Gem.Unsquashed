@@ -8,6 +8,7 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 
@@ -70,7 +71,7 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
     //
     //  Public
     //
-    public void                         dump(String name)
+    public void                         dump(Gem_Lane z, String name)
     {
         INSPECTION                      inspection = this.inspect();
 
@@ -82,15 +83,15 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
 
         int                             total = keys.size();
 
-        line("Dump of {0}", simple_class_name + " " + name);
-        line("      size: " + Integer.toString(total));
+        z.line("Dump of {0}", simple_class_name + " " + name);
+        z.line("      size: " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
             String                      k = keys.get(i);
 
-            line("  " + portray_string(k));
+            z.line("  " + portray_string(k));
         }
 
-        line("End of dump of {0}", simple_class_name + " " + name);
+        z.line("End of dump of {0}", simple_class_name + " " + name);
     }
 }

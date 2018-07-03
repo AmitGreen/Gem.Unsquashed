@@ -69,24 +69,6 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     }
 
     
-    public static void                  line()
-    {
-        OutputFunctions.line();
-    }
-
-
-    public static void                  line(String s)
-    {
-        OutputFunctions.line(s);
-    }
-
-
-    public static void                  line(String format, Object first_argument, Object ... other_arguments)
-    {
-        OutputFunctions.line(format, first_argument, other_arguments);
-    }
-
-
     public static int                   limit_to_between(int minimum, int v, int maximum)
     {
         if (v < minimum) {

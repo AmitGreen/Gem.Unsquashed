@@ -9,6 +9,7 @@ import java.lang.Thread;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Support.OutputFunctions;
 
 
 public class    Gem_Lane
@@ -88,45 +89,46 @@ public class    Gem_Lane
     //
     public static Gem_Lane              current_lane()
     {
-        Gem_Lane                        first_lane = Gem_Lane.first_lane;
+        Thread                          thread = Thread.currentThread();
 
-        if (first_lane == null) {
+        if (Gem_Lane.first_thread == thread) {
+            return Gem_Lane.first_lane;
+        }
+
+        if (Gem_Lane.first_thread != null) {
             //
             //  NOTE:
             //
             //      throw `RuntimeException` directly here, to avoid recursive calls
             //
-            //      (since calling `RAISE_runtime_exception` will internally call this routine, leading to recursive calls)
-            //
-            throw new RuntimeException("Gem_Lane.current_lane: Gem_Lane.initialize not yet called");
-        }
-
-
-        if (Gem_Lane.first_thread != Thread.currentThread()) {
-            //
-            //  NOTE:
-            //      See previous note on throw `RuntimeException` directly here, to avoid recursive calls.
+            //      (since calling `RAISE_runtime_exception` might internally call this routine, leading to recursive calls)
             //
             throw new RuntimeException("Gem_Lane.current_lane: only single threaded currently supported");
         }
+
+        Gem_Lane                first_lane = Gem_Lane.create(thread);
+
+        Gem_Lane.first_thread = thread;
+        Gem_Lane.first_lane   = first_lane;
 
         return first_lane;
     }
 
 
-    public static void                  initialize()
+    public void                         line()
     {
-        if (Gem_Lane.first_lane != null) {
-            //
-            //  NOTE:
-            //      See previous note on throw `RuntimeException` directly here, to avoid recursive calls.
-            //
-            throw new RuntimeException("Gem_Lane.initialize: called more than once");
-        }
+        OutputFunctions.line(this);
+    }
 
-        Thread                          first_thread = Thread.currentThread();
 
-        Gem_Lane.first_thread = first_thread;
-        Gem_Lane.first_lane   = Gem_Lane.create(first_thread);
+    public void                         line(String s)
+    {
+        OutputFunctions.line(this, s);
+    }
+
+
+    public void                         line(String format, Object first_argument, Object ... other_arguments)
+    {
+        OutputFunctions.line(this, format, first_argument, other_arguments);
     }
 }

@@ -8,6 +8,7 @@ import java.lang.String;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import link.crystal.Gem.Core.ArrayFunctions;
+import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Format.MessageFormatter_1__Prefix;
@@ -41,6 +42,8 @@ public class   ParseFormat
     //
     //  Members
     //
+    private Gem_Lane                    z;
+
     private String                      format;
     private Matcher                     braces_matcher;
 
@@ -60,8 +63,10 @@ public class   ParseFormat
     //
     //  Constructor, Factory, & Recycle
     //
-    private                             ParseFormat(String format, Matcher braces_matcher)
+    private                             ParseFormat(Gem_Lane z, String format, Matcher braces_matcher)
     {
+        this.z = z;
+
         this.format         = format;
         this.braces_matcher = braces_matcher;
 
@@ -79,11 +84,11 @@ public class   ParseFormat
     }
 
 
-    public static ParseFormat           create(String format)
+    public static ParseFormat           create(Gem_Lane z, String format)
     {
         Matcher                         braces_matcher = ParseFormat.braces_pattern.matcher(format);
 
-        return new ParseFormat(format, braces_matcher);
+        return new ParseFormat(z, format, braces_matcher);
     }
 
 
@@ -283,6 +288,7 @@ public class   ParseFormat
 
     private MessageFormattable          parse_format__work()
     {
+        Gem_Lane                        z              = this.z;
         String                          format         = this.format;
         Matcher                         braces_matcher = this.braces_matcher;
 
@@ -402,7 +408,7 @@ public class   ParseFormat
 
         if (true) {
             for (int                        i = 0; i < segment_total; i ++) {
-                line(Integer.toString(i) + ": " + portray(segment_many[i]));
+                z.line(Integer.toString(i) + ": " + portray(segment_many[i]));
             }
         }
 
@@ -490,17 +496,16 @@ public class   ParseFormat
         ParseFormat                     parse_format = z.pop__parse_format__OR__null();
 
         if (parse_format == null) {
-            parse_format = ParseFormat.create(format);
+            parse_format = ParseFormat.create(z, format);
         } else {
             parse_format.recycle(format);
         }
 
-        try {
-            return parse_format.parse_format__work();
-        } finally {
-            parse_format.scrub();
+        MessageFormattable              r =  parse_format.parse_format__work();
 
-            z.store_parse_format(parse_format);
-        }
+        parse_format.scrub();
+        z.store_parse_format(parse_format);
+
+        return r;
     }
 }

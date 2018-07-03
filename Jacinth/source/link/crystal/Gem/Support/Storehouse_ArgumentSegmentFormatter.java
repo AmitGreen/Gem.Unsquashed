@@ -5,6 +5,7 @@ package link.crystal.Gem.Support;
 
 
 import java.lang.String;
+import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
 
@@ -51,14 +52,14 @@ public abstract class   Storehouse_ArgumentSegmentFormatter
     }
 
 
-    public static void                  dump()
+    public static void                  dump(Gem_Lane z)
     {
         ArgumentSegmentFormatter[]      segment_many = Storehouse_ArgumentSegmentFormatter.segment_many;
 
         int                             segment_total = segment_many.length;
 
-        line("Dump of Storehouse_ArgumentSegmentFormatter");
-        line("  size:  " + Integer.toString(segment_total));
+        z.line("Dump of Storehouse_ArgumentSegmentFormatter");
+        z.line("  size:  " + Integer.toString(segment_total));
 
         for (int                        i = 0; i < segment_total; i ++) {
             ArgumentSegmentFormatter    argument_formatter = segment_many[i];
@@ -67,9 +68,9 @@ public abstract class   Storehouse_ArgumentSegmentFormatter
                 continue;
             }
 
-            line("  " + Integer.toString(i) + ": " + argument_formatter.portray());
+            z.line("  " + Integer.toString(i) + ": " + argument_formatter.portray());
         }
 
-        line("End of dump of Storehouse_ArgumentSegmentFormatter");
+        z.line("End of dump of Storehouse_ArgumentSegmentFormatter");
     }
 }

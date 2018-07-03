@@ -8,6 +8,7 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Gem_StringMap;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
@@ -85,7 +86,7 @@ public class    Storehouse_MessageFormattable
     //
     //  Public
     //
-    public static void                  dump()
+    public static void                  dump(Gem_Lane z)
     {
         Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
 
@@ -99,17 +100,17 @@ public class    Storehouse_MessageFormattable
 
         int                             total = keys.size();
 
-        line("Dump of Storehouse_MessageFormattable");
-        line("  " + String.format("%30s", "size") + ": " + Integer.toString(total));
+        z.line("Dump of Storehouse_MessageFormattable");
+        z.line("  " + String.format("%30s", "size") + ": " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
             String                      k = keys.get(i);
             MessageFormattable          v = singleton.get(k);
 
-            line("  " + String.format("%30s", portray_string(k)) + ": " + v.portray());
+            z.line("  " + String.format("%30s", portray_string(k)) + ": " + v.portray());
         }
 
-        line("End of dump of Storehouse_MessageFormattable");
+        z.line("End of dump of Storehouse_MessageFormattable");
     }
 
 

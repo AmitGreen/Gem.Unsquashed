@@ -5,6 +5,7 @@ package link.crystal.Gem.Core;
 
 
 import java.util.HashMap;
+import link.crystal.Gem.Core.Gem_Lane;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.ExceptionFunctions;
@@ -37,30 +38,12 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
     //
     //  Abstract
     //
-    public abstract void                dump(String name);
+    public abstract void                dump(Gem_Lane z, String name);
 
 
     //
     //  Public
     //
-    public static void                  line()
-    {
-        OutputFunctions.line();
-    }
-
-
-    public static void                  line(String s)
-    {
-        OutputFunctions.line(s);
-    }
-
-
-    public static void                  line(String format, Object first_argument, Object ... other_arguments)
-    {
-        OutputFunctions.line(format, first_argument, other_arguments);
-    }
-
-
     public static String                portray(Object v)
     {
         return PortrayFunctions.portray(v);
