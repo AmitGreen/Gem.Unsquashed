@@ -57,7 +57,7 @@ public class    MessageFormatter_3
             SegmentFormattable              c//,
         )
     {
-        if ( ! (2 <= expected && expected <= 3)) {
+        if ( ! (1 <= expected && expected <= 3)) {
             z.RAISE_runtime_exception("MessageFormatter_3.create: invalid value for `expected`<{0}>", expected);
         }
 
@@ -94,9 +94,18 @@ public class    MessageFormatter_3
         SegmentFormattable              c        = this.c;
 
         String                          argument_1 = z.portray(first_argument);
-        String                          argument_2 = z.portray(other_arguments[0]);
 
         StringBuilder                   builder = new StringBuilder();
+
+        if (expected == 1) {
+            builder.append(a.select_1(z, argument_1));
+            builder.append(b.select_1(z, argument_1));
+            builder.append(c.select_1(z, argument_1));
+
+            return builder.toString();
+        }
+
+        String                          argument_2 = z.portray(other_arguments[0]);
 
         if (expected == 2) {
             builder.append(a.select_2(z, argument_1, argument_2));

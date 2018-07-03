@@ -12,35 +12,50 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 
 
-public class    StringSegmentFormatter
+public class    MethodNameSegmentFormatter
     extends     Gem_Object<Inspection>
 //  extends     Object
     implements  SegmentFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Gem.Format.StringSegmentFormatter");
+    private static Inspection           inspection = Inspection.create("Gem.Format.MethodNameSegmentFormatter");
 
 
     //
-    //  Members
+    //  Private static
     //
-    private String                      s;
+    private static MethodNameSegmentFormatter   singleton = null;
+
 
 
     //
     //  Constructor & Factory
     //
-    private                             StringSegmentFormatter(String s)
+    private                             MethodNameSegmentFormatter()
     {
-        this.s = s;
     }
 
 
-    static public StringSegmentFormatter    create__ALLY__Storehouse_StringSegmentFormatter(Zone z, String s)
+    static public MethodNameSegmentFormatter    conjure(Zone z)
     {
-        String                              interned_s = z.intern_permenant_string(s);
+        MethodNameSegmentFormatter      singleton = MethodNameSegmentFormatter.singleton;
 
-        return new StringSegmentFormatter(interned_s);
+        if (singleton != null) {
+            return singleton;
+        }
+
+        singleton =
+            MethodNameSegmentFormatter.singleton = new MethodNameSegmentFormatter();
+
+        return singleton;
+    }
+
+
+    //
+    //  Private
+    //
+    static String                       method_name(Zone z) {
+        return "?";
     }
 
 
@@ -58,48 +73,42 @@ public class    StringSegmentFormatter
     //
     public String                       select_1(Zone z, String a)
     {
-        return this.s;
+        return this.method_name(z);
     }
 
 
     public String                       select_2(Zone z, String a, String b)
     {
-        return this.s;
+        return this.method_name(z);
     }
 
 
     public String                       select_3(Zone z, String a, String b, String c)
     {
-        return this.s;
+        return this.method_name(z);
     }
 
 
     public String                       select_4(Zone z, String a, String b, String c, String d)
     {
-        return this.s;
+        return this.method_name(z);
     }
 
 
     public String                       select_5(Zone z, String a, String b, String c, String d, String e)
     {
-        return this.s;
+        return this.method_name(z);
     }
 
 
     public String                       select_many(Zone z, String[] arguments)
     {
-        return this.s;
+        return this.method_name(z);
     }
 
 
     public String                       portray(Zone z)
     {
-        return "<StringSegmentFormatter " + z.quote_string(this.s) + ">";
-    }
-
-
-    public String                       s()
-    {
-        return this.s;
+        return "<MethodNameSegmentFormatter>";
     }
 }

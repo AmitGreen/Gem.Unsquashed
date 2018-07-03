@@ -24,6 +24,7 @@ import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Support.Storehouse_ArgumentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
+import link.crystal.Gem.Format.MethodNameSegmentFormatter;
 
 
 public class   ParseFormat
@@ -37,7 +38,7 @@ public class   ParseFormat
     //  Static members
     //
     private static Pattern              braces_pattern = Pattern.compile(
-            "(?:[^{}]|\\{\\{|\\}\\})*(\\{)(0|[1-9][0-9]*)?(\\})?"//,
+            "(?:[^{}]|\\{\\{|\\}\\})*(\\{)(0|[1-9][0-9]*|\\+)?(\\})?"//,
         );
 
 
@@ -278,6 +279,17 @@ public class   ParseFormat
     }
 
 
+    private void                        raise_both_automatic_and_manual_field_number()
+    {
+        Zone                            z      = this.z;
+        String                          format = this.format;
+
+        z.RAISE_runtime_exception(
+            "ParseFormat.parse_format__work: format string has both automatic & manual field numbering: {0}",
+            format);
+    }
+
+
     private SegmentFormattable[]        steal_segments()
     {
         SegmentFormattable[]            segment_many = this.segment_many;
@@ -336,8 +348,15 @@ public class   ParseFormat
             automatic_index = 0;
             argument_index  = 0;
         } else if (delta == 3) {
-            automatic_index = -1;
-            argument_index  = format.codePointAt(start_1 + 1) - 48;
+            int                         code_point = format.codePointAt(start_1 + 1);
+
+            if (code_point == 43) {                                     //  ordinal('+') == 43
+                automatic_index = -7;
+                argument_index  = -7;
+            } else {
+                automatic_index = -1;
+                argument_index  = format.codePointAt(start_1 + 1) - 48;
+            }
         } else {
             automatic_index = -1;
             argument_index  = Integer.parseInt(braces_matcher.group(2));
@@ -384,9 +403,12 @@ public class   ParseFormat
             this.append_segment(Storehouse_StringSegmentFormatter.conjure(z, start_s));
         }
 
-        this.append_segment(Storehouse_ArgumentSegmentFormatter.conjure(z, argument_index));
-
-        add_used_index(argument_index);
+        if (argument_index == -7) {
+            this.append_segment(MethodNameSegmentFormatter.conjure(z));
+        } else {
+            this.append_segment(Storehouse_ArgumentSegmentFormatter.conjure(z, argument_index));
+            add_used_index(argument_index);
+        }
 
 
         //
@@ -405,23 +427,35 @@ public class   ParseFormat
 
             if (delta == 2) {
                 if (automatic_index == -1) {
-                    z.RAISE_runtime_exception(
-                        "ParseFormat.parse_format__work: format string has both automatic & manual field numbering: {0}",
-                        format);
+                    this.raise_both_automatic_and_manual_field_number();
+                }
+
+                if (automatic_index == -7) {
+                    automatic_index = 0;
                 }
 
                 automatic_index += 1;
                 argument_index  = automatic_index;
             } else {
-                if (automatic_index != -1) {
-                    z.RAISE_runtime_exception(
-                        "ParseFormat.parse_format__work: format string has both automatic & manual field numbering: {0}",
-                        format);
-                }
-
                 if (delta == 3) {
-                    argument_index = format.codePointAt(start_1 + 1) - 48;
+                    int                 code_point = format.codePointAt(start_1 + 1);
+
+                    if (code_point == 43) {                                     //  ordinal('+') == 43
+                        argument_index = -7;
+                    } else {
+                        if (automatic_index >= 0) {
+                            this.raise_both_automatic_and_manual_field_number();
+                        }
+
+                        automatic_index = -1;
+                        argument_index = format.codePointAt(start_1 + 1) - 48;
+                    }
                 } else {
+                    if (automatic_index >= 0) {
+                        this.raise_both_automatic_and_manual_field_number();
+                    }
+
+                    automatic_index = -1;
                     argument_index = Integer.parseInt(braces_matcher.group(2));
                 }
             }
@@ -432,11 +466,14 @@ public class   ParseFormat
                 this.append_segment(Storehouse_StringSegmentFormatter.conjure(z, start_s));
             }
 
-            this.append_segment(Storehouse_ArgumentSegmentFormatter.conjure(z, argument_index));
+            if (argument_index == -7) {
+                this.append_segment(MethodNameSegmentFormatter.conjure(z));
+            } else {
+                this.append_segment(Storehouse_ArgumentSegmentFormatter.conjure(z, argument_index));
+                add_used_index(argument_index);
+            }
 
             end_3 = next_end_3;
-
-            add_used_index(argument_index);
 
             braces_matcher.region(end_3, format_total);
 

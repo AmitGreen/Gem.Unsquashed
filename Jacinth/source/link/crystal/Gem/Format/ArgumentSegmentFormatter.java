@@ -54,6 +54,21 @@ public class    ArgumentSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
+    public String                       select_1(Zone z, String a)
+    {
+        int                             argument_index = this.argument_index;
+
+        if (argument_index == 0) {
+            return a;
+        }
+
+        z.RAISE_runtime_exception("ArgumentSegmentFormatter.select_1: argument_index is {0} (expected 0)",
+                                  argument_index);
+
+        return null;
+    }
+
+
     public String                       select_2(Zone z, String a, String b)
     {
         int                             argument_index = this.argument_index;
