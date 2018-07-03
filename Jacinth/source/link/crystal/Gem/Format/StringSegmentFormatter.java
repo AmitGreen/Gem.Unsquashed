@@ -80,6 +80,12 @@ public class    StringSegmentFormatter
     }
 
 
+    public String                       select_many(String[] arguments)
+    {
+        return this.s;
+    }
+
+
     public String                       portray()
     {
         return "<StringSegmentFormatter " + portray_string(this.s) + ">";

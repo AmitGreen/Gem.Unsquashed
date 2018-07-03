@@ -120,7 +120,7 @@ public class    ArgumentSegmentFormatter
         }
 
         if (argument_index == 3) {
-            return c;
+            return d;
         }
 
         throw new RuntimeException(
@@ -150,11 +150,11 @@ public class    ArgumentSegmentFormatter
         }
 
         if (argument_index == 3) {
-            return c;
+            return d;
         }
 
         if (argument_index == 4) {
-            return d;
+            return e;
         }
 
         throw new RuntimeException(
@@ -164,6 +164,12 @@ public class    ArgumentSegmentFormatter
                     + " (expected number between 0 and 4)"
                 )
             );
+    }
+
+
+    public String                       select_many(String[] arguments)
+    {
+        return arguments[this.argument_index];
     }
 
 

@@ -18,6 +18,7 @@ import link.crystal.Gem.Format.MessageFormatter_2;
 import link.crystal.Gem.Format.MessageFormatter_3;
 import link.crystal.Gem.Format.MessageFormatter_4;
 import link.crystal.Gem.Format.MessageFormatter_5;
+import link.crystal.Gem.Format.MessageFormatter_Many;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
@@ -409,7 +410,7 @@ public class   ParseFormat
         if (end_2 < format.length()) {
             String                      end_s = format.substring(end_2);
 
-            this.append_segment(Storehouse_StringSegmentFormatter.conjure(start_s));
+            this.append_segment(Storehouse_StringSegmentFormatter.conjure(end_s));
         }
 
         this.examine_missing();
@@ -424,13 +425,15 @@ public class   ParseFormat
             return MessageFormatter_2.create(segment_many[0], segment_many[1]);
         }
 
+        int                                 expected = this.used_index_total;
+
         if (segment_total == 3) {
-            return MessageFormatter_3.create(this.used_index_total, segment_many[0], segment_many[1], segment_many[2]);
+            return MessageFormatter_3.create(expected, segment_many[0], segment_many[1], segment_many[2]);
         }
 
         if (segment_total == 4) {
             return MessageFormatter_4.create(
-                    this.used_index_total,
+                    expected,
                     segment_many[0],
                     segment_many[1],
                     segment_many[2],
@@ -440,7 +443,7 @@ public class   ParseFormat
  
         if (segment_total == 5) {
             return MessageFormatter_5.create(
-                    this.used_index_total,
+                    expected,
                     segment_many[0],
                     segment_many[1],
                     segment_many[2],
@@ -463,13 +466,7 @@ public class   ParseFormat
             shrunk_many = this.steal_segments();
         }
 
-
-        throw new RuntimeException(
-                (
-                      "ParseFormat.parse_format__work: unimplemented, more than one '{#}' (without trailing string): "
-                    + portray_string(format)
-                )
-            );
+        return MessageFormatter_Many.create(expected, shrunk_many);
     }
 
 
