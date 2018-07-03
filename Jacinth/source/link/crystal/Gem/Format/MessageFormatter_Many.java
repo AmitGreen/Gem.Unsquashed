@@ -43,7 +43,7 @@ public class    MessageFormatter_Many
     static public MessageFormatter_Many     create(int expected, SegmentFormattable[] segment_many)
     {
         if ( ! (2 <= expected && expected <= segment_many.length)) {
-            raise_runtime_exception("MessageFormatter_Many.create: invalid value for `expected`<{0}>", expected);
+            RAISE_runtime_exception("MessageFormatter_Many.create: invalid value for `expected`<{0}>", expected);
         }
 
         return new MessageFormatter_Many(expected, segment_many);
@@ -69,7 +69,7 @@ public class    MessageFormatter_Many
         int                             actual   = 1 + other_arguments.length;
 
         if (actual != expected) {
-            raise_runtime_exception("MessageFormatter_Many.arrange: {0} arguments given (expected {1})",
+            RAISE_runtime_exception("MessageFormatter_Many.arrange: {0} arguments given (expected {1})",
                                     actual,
                                     expected);
         }

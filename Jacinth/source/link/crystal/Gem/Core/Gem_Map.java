@@ -73,18 +73,18 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
     }
 
 
-    public static void                  raise_runtime_exception(String error_message)
+    public static void                  RAISE_runtime_exception(String error_message)
     {
-        ExceptionFunctions.raise_runtime_exception(error_message);
+        ExceptionFunctions.RAISE_runtime_exception(error_message);
     }
 
 
-    public static void                  raise_runtime_exception(
+    public static void                  RAISE_runtime_exception(
             String                              format,
             Object                              first_argument,
             Object ...                          other_arguments//,
         )
     {
-        ExceptionFunctions.raise_runtime_exception(format, first_argument, other_arguments);
+        ExceptionFunctions.RAISE_runtime_exception(format, first_argument, other_arguments);
     }
 }

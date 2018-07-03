@@ -62,7 +62,7 @@ public class    MessageFormatter_1__Suffix
     public String                       arrange(Object first_argument, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
-            raise_runtime_exception("MessageFormatter_1__Suffix.arrange: {0} arguments given (expected 1)",
+            RAISE_runtime_exception("MessageFormatter_1__Suffix.arrange: {0} arguments given (expected 1)",
                                     1 + other_arguments.length);
         }
 
@@ -82,7 +82,7 @@ public class    MessageFormatter_1__Suffix
     public void                         line(Object first_argument, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
-            raise_runtime_exception("MessageFormatter_1__Simple.line: {0} arguments given (expected 1)",
+            RAISE_runtime_exception("MessageFormatter_1__Simple.line: {0} arguments given (expected 1)",
                                     1 + other_arguments.length);
         }
 

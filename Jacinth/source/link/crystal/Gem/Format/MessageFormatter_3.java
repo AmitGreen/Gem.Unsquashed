@@ -57,7 +57,7 @@ public class    MessageFormatter_3
         )
     {
         if ( ! (2 <= expected && expected <= 3)) {
-            raise_runtime_exception("MessageFormatter_3.create: invalid value for `expected`<{0}>", expected);
+            RAISE_runtime_exception("MessageFormatter_3.create: invalid value for `expected`<{0}>", expected);
         }
 
         return new MessageFormatter_3(expected, a, b, c);
@@ -83,7 +83,7 @@ public class    MessageFormatter_3
         int                             actual   = 1 + other_arguments.length;
 
         if (actual != expected) {
-            raise_runtime_exception("MessageFormatter_3.arrange: {0} arguments given (expected {1})",
+            RAISE_runtime_exception("MessageFormatter_3.arrange: {0} arguments given (expected {1})",
                                     actual,
                                     expected);
         }

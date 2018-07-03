@@ -20,13 +20,13 @@ public abstract class   ExceptionFunctions
     //
     //  Public
     //
-    public static void                  raise_runtime_exception(String error_message)
+    public static void                  RAISE_runtime_exception(String error_message)
     {
         throw new RuntimeException(error_message);
     }
 
 
-    public static void                  raise_runtime_exception(
+    public static void                  RAISE_runtime_exception(
             String                              format,
             Object                              first_argument,
             Object ...                          other_arguments//,

@@ -66,7 +66,7 @@ public class    ArgumentSegmentFormatter
             return b;
         }
 
-        raise_runtime_exception("ArgumentSegmentFormatter.select_2: argument_index is {0} (expected 0 or 1)",
+        RAISE_runtime_exception("ArgumentSegmentFormatter.select_2: argument_index is {0} (expected 0 or 1)",
                                 argument_index);
 
         return null;
@@ -89,7 +89,7 @@ public class    ArgumentSegmentFormatter
             return c;
         }
 
-        raise_runtime_exception("ArgumentSegmentFormatter.select_3: argument_index is {0} (expected 0, 1, or 2)",
+        RAISE_runtime_exception("ArgumentSegmentFormatter.select_3: argument_index is {0} (expected 0, 1, or 2)",
                                 argument_index);
 
         return null;
@@ -116,7 +116,7 @@ public class    ArgumentSegmentFormatter
             return d;
         }
 
-        raise_runtime_exception("{0}: argument_index is {1} (expected number between 0 and 3)",
+        RAISE_runtime_exception("{0}: argument_index is {1} (expected number between 0 and 3)",
                                 "ArgumentSegmentFormatter.select_4",
                                 argument_index);
 
@@ -148,7 +148,7 @@ public class    ArgumentSegmentFormatter
             return e;
         }
 
-        raise_runtime_exception("{0}: argument_index is {1} (expected number between 0 and 4)",
+        RAISE_runtime_exception("{0}: argument_index is {1} (expected number between 0 and 4)",
                                 "ArgumentSegmentFormatter.select_4",
                                 argument_index);
 

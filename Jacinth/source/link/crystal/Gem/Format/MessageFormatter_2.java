@@ -67,7 +67,7 @@ public class    MessageFormatter_2
         int                             expected = (a == b ? 1 : 2);
 
         if (actual != expected) {
-            raise_runtime_exception("MessageFormatter_2.arrange: {0} arguments given (expected {1})",
+            RAISE_runtime_exception("MessageFormatter_2.arrange: {0} arguments given (expected {1})",
                                     actual,
                                     expected);
         }

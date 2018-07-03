@@ -43,7 +43,7 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
         String                          portrait_0 = inspection.portrait_0;
 
         if (portrait_0 == null) {
-            raise_runtime_exception("Gem_Object.portray: `.inspect().portrait_0` is `null`");
+            RAISE_runtime_exception("Gem_Object.portray: `.inspect().portrait_0` is `null`");
         }
 
         return portrait_0;
@@ -113,18 +113,18 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     }
 
 
-    public static void                  raise_runtime_exception(String error_message)
+    public static void                  RAISE_runtime_exception(String error_message)
     {
-        ExceptionFunctions.raise_runtime_exception(error_message);
+        ExceptionFunctions.RAISE_runtime_exception(error_message);
     }
 
 
-    public static void                  raise_runtime_exception(
+    public static void                  RAISE_runtime_exception(
             String                              format,
             Object                              first_argument,
             Object ...                          other_arguments//,
         )
     {
-        ExceptionFunctions.raise_runtime_exception(format, first_argument, other_arguments);
+        ExceptionFunctions.RAISE_runtime_exception(format, first_argument, other_arguments);
     }
 }

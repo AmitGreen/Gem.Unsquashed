@@ -96,7 +96,7 @@ public class    Gem_Lane
             //
             //      throw `RuntimeException` directly here, to avoid recursive calls
             //
-            //      (since calling `raise_runtime_exception` will internally call this routine, leading to recursive calls)
+            //      (since calling `RAISE_runtime_exception` will internally call this routine, leading to recursive calls)
             //
             throw new RuntimeException("Gem_Lane.current_lane: Gem_Lane.initialize not yet called");
         }

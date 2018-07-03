@@ -124,7 +124,7 @@ public class    Storehouse_MessageFormattable
         MessageFormattable              previous = singleton.putIfAbsent(k, v);
 
         if (previous != null) {
-            raise_runtime_exception("Storehouse_MessageFormattable.insert: previous value for {0} already exists: {1}",
+            RAISE_runtime_exception("Storehouse_MessageFormattable.insert: previous value for {0} already exists: {1}",
                                     portray_string(k),
                                     previous.portray());
         }
