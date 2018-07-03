@@ -4,6 +4,7 @@
 package link.crystal.Gem.Format;
 
 
+import java.lang.StackTraceElement;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
@@ -54,8 +55,26 @@ public class    MethodNameSegmentFormatter
     //
     //  Private
     //
-    static String                       method_name(Zone z) {
-        return "?";
+    static String                       method_name(Zone z)
+    {
+        StackTraceElement[]             stack_trace_many = z.zone_thread.getStackTrace();
+
+        int                             depth = 7;
+        int                             total = stack_trace_many.length;
+
+        if (depth < total) {
+            StackTraceElement           stack_trace = stack_trace_many[depth];
+            String                      class_name  = stack_trace.getClassName();
+            int                         dot_index   = class_name.lastIndexOf(46);       //  46 = '.'
+
+            if (dot_index != -1) {
+                class_name = class_name.substring(dot_index + 1);
+            }
+
+            return class_name + "." + stack_trace.getMethodName();
+        }
+
+        return "???.???";
     }
 
 

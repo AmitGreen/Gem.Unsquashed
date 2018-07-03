@@ -7,8 +7,8 @@ package link.crystal.Gem.Support;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
-import java.lang.StringBuilder;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 
@@ -33,18 +33,25 @@ public abstract class   PortrayFunctions
         Class<?>                        v_class = v.getClass();
 
         if (v_class == Integer$class) {
-            return Integer.toString((Integer) v);
+            return v.toString();
         }
 
         if (v_class == String$class) {
             return (String) v;
         }
 
-        z.RAISE_runtime_exception("PortrayFuntions.portray: unknown class {0} for `v`: {1}",
-                                  v_class.getSimpleName(),
-                                  v.toString());
+        if (v_class == Thread$class) {
+            return "<" + v.toString() + ">";
+        }
 
-        return "<" + v_class.getSimpleName() + ">";
+        if (v_class == Gem_StringBuilder$array$class)
+        {
+            Gem_StringBuilder[]     v2 = (Gem_StringBuilder[]) v;
+
+            return z.arrange("<Gem_StringBuilder size<{0}>>", v2.length);
+        }
+
+        return "<" + v_class.getSimpleName() + ": " + v.toString() + ">";
     }
 
 
@@ -54,7 +61,7 @@ public abstract class   PortrayFunctions
             z.RAISE_runtime_exception("quote_string: `s` is null");
         }
 
-        StringBuilder                   b     = null;
+        Gem_StringBuilder               builder = null;
         int                             start = 0;
         int                             total = s.length();
 
@@ -63,14 +70,13 @@ public abstract class   PortrayFunctions
 
             if (code_point == 34) {
                 if (start < i) {
-                    if (b == null) {
-                        b = new StringBuilder(1 + 2 * total + 1);
+                    if (builder == null) {
+                        builder = z.conjure__StringBuilder();
 
-                        b.append("\\\"");
+                        builder.append("\\\"");
                     }
 
-                    b.append(s.substring(start, i));
-                    b.append("\\\"");
+                    builder.append(s.substring(start, i), "\\\"");
                     start = i + 1;
                     continue;
                 }
@@ -78,28 +84,30 @@ public abstract class   PortrayFunctions
 
             if (code_point == 92) {
                 if (start < i) {
-                    if (b == null) {
-                        b = new StringBuilder(1 + 2 * total + 1);
+                    if (builder == null) {
+                        builder = z.conjure__StringBuilder();
 
-                        b.append("\\\"");
+                        builder.append("\\\"");
                     }
 
-                    b.append(s.substring(start, i));
-                    b.append("\\\\");
+                    builder.append(s.substring(start, i), "\\\\");
                     start = i + 1;
                     continue;
                 }
             }
         }
 
-        if (b == null) {
+        if (builder == null) {
             return "\"" + s + "\"";
         }
 
-        b.append(s.substring(start));
-        b.append("\"");
+        if (start < total) {
+            builder.append(s.substring(start));
+        }
 
-        return b.toString();
+        builder.append("\"");
+
+        return builder.finish__AND__recycle();
     }
 
 

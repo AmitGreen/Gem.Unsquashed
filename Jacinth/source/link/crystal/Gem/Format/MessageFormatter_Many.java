@@ -6,6 +6,7 @@ package link.crystal.Gem.Format;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
@@ -81,7 +82,7 @@ public class    MessageFormatter_Many
         String                          argument_1 = z.portray(first_argument);
         String                          argument_2 = z.portray(other_arguments[0]);
 
-        StringBuilder                   builder = new StringBuilder();
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         if (expected == 2) {
             for (int                    i = 0; i < segment_total; i ++) {
@@ -90,7 +91,7 @@ public class    MessageFormatter_Many
                 builder.append(segment.select_2(z, argument_1, argument_2));
             }
 
-            return builder.toString();
+            return builder.finish__AND__recycle();
         }
 
         String                          argument_3 = z.portray(other_arguments[1]);
@@ -102,7 +103,7 @@ public class    MessageFormatter_Many
                 builder.append(segment.select_3(z, argument_1, argument_2, argument_3));
             }
 
-            return builder.toString();
+            return builder.finish__AND__recycle();
         }
 
         String                          argument_4 = z.portray(other_arguments[2]);
@@ -127,7 +128,7 @@ public class    MessageFormatter_Many
             }
 
 
-            return builder.toString();
+            return builder.finish__AND__recycle();
         }
 
         String[]                        argument_many = new String[expected];
@@ -148,7 +149,7 @@ public class    MessageFormatter_Many
             builder.append(segment.select_many(z, argument_many));
         }
 
-        return builder.toString();
+        return builder.finish__AND__recycle();
     }
 
 

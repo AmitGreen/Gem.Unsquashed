@@ -6,6 +6,7 @@ package link.crystal.Gem.Format;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
@@ -95,33 +96,39 @@ public class    MessageFormatter_3
 
         String                          argument_1 = z.portray(first_argument);
 
-        StringBuilder                   builder = new StringBuilder();
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         if (expected == 1) {
-            builder.append(a.select_1(z, argument_1));
-            builder.append(b.select_1(z, argument_1));
-            builder.append(c.select_1(z, argument_1));
+            builder.append(
+                    a.select_1(z, argument_1),
+                    b.select_1(z, argument_1),
+                    c.select_1(z, argument_1)//,
+                );
 
-            return builder.toString();
+            return builder.finish__AND__recycle();
         }
 
         String                          argument_2 = z.portray(other_arguments[0]);
 
         if (expected == 2) {
-            builder.append(a.select_2(z, argument_1, argument_2));
-            builder.append(b.select_2(z, argument_1, argument_2));
-            builder.append(c.select_2(z, argument_1, argument_2));
+            builder.append(
+                    a.select_2(z, argument_1, argument_2),
+                    b.select_2(z, argument_1, argument_2),
+                    c.select_2(z, argument_1, argument_2)//,
+                );
 
-            return builder.toString();
+            return builder.finish__AND__recycle();
         }
 
         String                          argument_3 = z.portray(other_arguments[1]);
 
-        builder.append(a.select_3(z, argument_1, argument_2, argument_3));
-        builder.append(b.select_3(z, argument_1, argument_2, argument_3));
-        builder.append(c.select_3(z, argument_1, argument_2, argument_3));
+        builder.append(
+                a.select_3(z, argument_1, argument_2, argument_3),
+                b.select_3(z, argument_1, argument_2, argument_3),
+                c.select_3(z, argument_1, argument_2, argument_3)//,
+            );
 
-        return builder.toString();
+        return builder.finish__AND__recycle();
     }
 
 

@@ -9,6 +9,7 @@ import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
 import java.lang.System;
+import java.lang.Thread;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
@@ -18,6 +19,7 @@ import link.crystal.Gem.Support.OutputFunctions;
 import link.crystal.Gem.Support.PortrayFunctions;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 
 
 public abstract class   Gem_Object<INSPECTION extends Inspection>
@@ -27,8 +29,10 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     //
     //  Static types
     //
-    public static final Class<String>   String$class  = String.class;
-    public static final Class<Integer>  Integer$class = Integer.class;
+    public static final Class<Gem_StringBuilder[]>  Gem_StringBuilder$array$class = Gem_StringBuilder[].class;
+    public static final Class<Integer>              Integer$class                 = Integer.class;
+    public static final Class<String>               String$class                  = String.class;
+    public static final Class<Thread>               Thread$class                  = Thread.class;
 
 
     //

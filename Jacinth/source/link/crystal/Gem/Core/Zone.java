@@ -7,11 +7,14 @@ package link.crystal.Gem.Core;
 import java.lang.RuntimeException;
 import java.lang.Thread;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.ExceptionFunctions;
 import link.crystal.Gem.Support.OutputFunctions;
 import link.crystal.Gem.Support.PortrayFunctions;
+import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
 
 
@@ -26,30 +29,39 @@ public class    Zone
     //
     //  Static members
     //
-    private static Thread               first_thread = null;
-    private static Zone                 first_zone   = null;
+    private static Thread               first_thread          = null;
+    private static Zone                 first_zone            = null;
+    private static final int            gem_builder_allocated = 10;
 
 
     //
     //  Members
     //
-    private Thread                      zone_thread;
-    private ParseFormat                 parse_format;
+    public final Thread                 zone_thread;
+    private      ParseFormat            parse_format;
+
+    private final Gem_StringBuilder[]   gem_builder_many;
+    private       int                   gem_builder_total;
 
 
     //
     //  Constructor & Factory
     //
-    private                             Zone(Thread zone_thread)
+    private                             Zone(Thread zone_thread, Gem_StringBuilder[] gem_builder_many)
     {
-        this.zone_thread  = zone_thread;
-        this.parse_format = null;
+        this.zone_thread       = zone_thread;
+        this.parse_format      = null;
+
+        this.gem_builder_many  = gem_builder_many;
+        this.gem_builder_total = 0;
     }
 
 
     public static Zone                  create(Thread zone_thread)
     {
-        return new Zone(zone_thread);
+        final Gem_StringBuilder[]       gem_builder_many = new Gem_StringBuilder[Zone.gem_builder_allocated];
+
+        return new Zone(zone_thread, gem_builder_many);
     }
 
 
@@ -59,6 +71,37 @@ public class    Zone
     public Inspection                   inspect()
     {
         return /*static*/ this.inspection;
+    }
+
+
+    //
+    //  Public (gem_builder)
+    //
+    public Gem_StringBuilder            conjure__StringBuilder()
+    {
+        int                             gem_builder_total = this.gem_builder_total;
+
+        if (gem_builder_total > 0) {
+            gem_builder_total -= 1;
+
+            this.gem_builder_total = gem_builder_total;
+
+            return this.gem_builder_many[gem_builder_total].recycle();
+        }
+
+        return Gem_StringBuilder.create__ALLY__Gem_Zone(this);
+    }
+
+
+    public void                         recycle__StringBuilder(Gem_StringBuilder builder)
+    {
+        final int                       gem_builder_total = this.gem_builder_total;
+
+        if (gem_builder_total < Zone.gem_builder_allocated) {
+            this.gem_builder_many[gem_builder_total] = builder;
+
+            this.gem_builder_total = gem_builder_total + 1;
+        }
     }
 
 
@@ -90,6 +133,20 @@ public class    Zone
     //
     //  Public
     //
+    public String                       arrange(String format, Object first_argument, Object ... other_arguments)
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        return formattable.arrange(this, first_argument, other_arguments);
+    }
+
+
     public static Zone                  current_zone()
     {
         Thread                          thread = Thread.currentThread();
@@ -115,6 +172,25 @@ public class    Zone
         Zone.first_zone   = first_zone;
 
         return first_zone;
+    }
+
+
+    public void                         dump(Zone z)
+    {
+        final Gem_StringBuilder[]       gem_builder_many  = this.gem_builder_many;
+        final int                       gem_builder_total = this.gem_builder_total;
+
+        z.line("Dump of Gem_Zone");
+        z.line("           zone_thread: {}", this.zone_thread);
+        z.line("          parse_format: {}", this.parse_format);
+        z.line("      gem_builder_many: {}", gem_builder_many);
+        z.line("     gem_builder_total: {}", gem_builder_total);
+
+        for (int                        i = 0; i < gem_builder_total; i ++) {
+            z.line("  gem_builder_many[{}]: {}", i, gem_builder_many[i]);
+        }
+
+        z.line("End of dump of GemZone");
     }
 
 

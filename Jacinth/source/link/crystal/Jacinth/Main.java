@@ -22,9 +22,13 @@ public class    Main
 
         circle.skew(z);
 
-        Storehouse_ArgumentSegmentFormatter.dump(z);
-        Storehouse_MessageFormattable      .dump(z);
-        Storehouse_String                  .dump(z);
-        Storehouse_StringSegmentFormatter  .dump(z);
+        if (false) {
+            Storehouse_ArgumentSegmentFormatter.dump(z);
+            Storehouse_MessageFormattable      .dump(z);
+            Storehouse_String                  .dump(z);
+            Storehouse_StringSegmentFormatter  .dump(z);
+        }
+
+        z.dump(z);
     }
 }

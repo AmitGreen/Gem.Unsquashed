@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import link.crystal.Gem.Core.ArrayFunctions;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.MessageFormatter_1__Prefix;
@@ -19,12 +20,12 @@ import link.crystal.Gem.Format.MessageFormatter_3;
 import link.crystal.Gem.Format.MessageFormatter_4;
 import link.crystal.Gem.Format.MessageFormatter_5;
 import link.crystal.Gem.Format.MessageFormatter_Many;
+import link.crystal.Gem.Format.MethodNameSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Support.Storehouse_ArgumentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
-import link.crystal.Gem.Format.MethodNameSegmentFormatter;
 
 
 public class   ParseFormat
@@ -261,20 +262,20 @@ public class   ParseFormat
         }
 
 
-        StringBuilder                   b = new StringBuilder();
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         for (int                        i = 0; i < missing_total; i ++) {
             if (i == missing_total - 1) {
-                b.append(", and ");
+                builder.append(", and ");
             } else if (i > 0) {
-                b.append(", ");
+                builder.append(", ");
             }
 
-            b.append("{" + Integer.toString(missing_many[i]) + "}");
+            builder.append("{", missing_many[i], "}");
         }
 
         z.RAISE_runtime_exception("ParseFormat.examine_missing: format string is missing {0}: {1}",
-                                  b.toString(),
+                                  builder.finish__AND__recycle(),
                                   z.quote_string(this.format));
     }
 
@@ -490,7 +491,7 @@ public class   ParseFormat
 
         this.examine_missing();
 
-        if (true) {
+        if (false) {
             for (int                        i = 0; i < segment_total; i ++) {
                 z.line(Integer.toString(i) + ": " + z.portray(segment_many[i]));
             }

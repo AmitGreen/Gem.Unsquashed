@@ -36,7 +36,7 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
     {
         INSPECTION                      inspection = this.inspect();
 
-        StringBuilder                   b = new StringBuilder();
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         List<String>                    keys = new ArrayList<String>(this.keySet());
 
@@ -44,27 +44,23 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
 
         int                             total = keys.size();
 
-        b.append("<");
-        b.append(inspection.simple_class_name);
-        b.append(" size<");
-        b.append(Integer.toString(total));
-        b.append(">");
+        builder.append("<", inspection.simple_class_name, " size<", total, ">");
 
         for (int                        i = 0; i < total; i ++) {
             String                      k = keys.get(i);
 
             if (i == 0) {
-                b.append("; ");
+                builder.append("; ");
             } else {
-                b.append(", ");
+                builder.append(", ");
             }
 
-            b.append(z.quote_string(k));
+            builder.append(z.quote_string(k));
         }
 
-        b.append(">");
+        builder.append(">");
 
-        return b.toString();
+        return builder.finish__AND__recycle();
     }
 
 
