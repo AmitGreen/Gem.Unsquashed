@@ -36,9 +36,9 @@ public class    StringSegmentFormatter
     }
 
 
-    static public StringSegmentFormatter    create__ALLY__Storehouse_StringSegmentFormatter(String s)
+    static public StringSegmentFormatter    create__ALLY__Storehouse_StringSegmentFormatter(Zone z, String s)
     {
-        String                              interned_s = intern_permenant_string(s);
+        String                              interned_s = z.intern_permenant_string(s);
 
         return new StringSegmentFormatter(interned_s);
     }
@@ -88,7 +88,9 @@ public class    StringSegmentFormatter
 
     public String                       portray()
     {
-        return "<StringSegmentFormatter " + portray_string(this.s) + ">";
+        Zone                            z = Zone.current_zone();
+
+        return "<StringSegmentFormatter " + z.quote_string(this.s) + ">";
     }
 
 

@@ -20,7 +20,7 @@ public abstract class   PortrayFunctions
     //
     //  Public Static
     //
-    public static String                portray(Object v)
+    public static String                portray(Zone z, Object v)
     {
         if (v == null) {
             return "<null>";
@@ -40,8 +40,6 @@ public abstract class   PortrayFunctions
             return (String) v;
         }
 
-        Zone                            z = Zone.current_zone();
-
         z.RAISE_runtime_exception("PortrayFuntions.portray: unknown class {0} for `v`: {1}",
                                   v_class.getSimpleName(),
                                   v.toString());
@@ -50,12 +48,10 @@ public abstract class   PortrayFunctions
     }
 
 
-    public static String                portray_string(String s)
+    public static String                quote_string(Zone z, String s)
     {
         if (s == null) {
-            Zone                        z = Zone.current_zone();
-
-            z.RAISE_runtime_exception("portray_string: `s` is null");
+            z.RAISE_runtime_exception("quote_string: `s` is null");
         }
 
         StringBuilder                   b     = null;
@@ -107,12 +103,12 @@ public abstract class   PortrayFunctions
     }
 
 
-    public static String                portray_string_or_null(String s)
+    public static String                quote_string_or_null(Zone z, String s)
     {
         if (s == null) {
             return "<null>";
         }
 
-        return portray_string(s);
+        return quote_string(z, s);
     }
 }

@@ -12,7 +12,6 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Support.OutputFunctions;
-import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public class    MessageFormatter_5
@@ -104,8 +103,8 @@ public class    MessageFormatter_5
         SegmentFormattable              d = this.d;
         SegmentFormattable              e = this.e;
 
-        String                          argument_1 = PortrayFunctions.portray(first_argument);
-        String                          argument_2 = PortrayFunctions.portray(other_arguments[0]);
+        String                          argument_1 = z.portray(first_argument);
+        String                          argument_2 = z.portray(other_arguments[0]);
 
         StringBuilder                   builder = new StringBuilder();
 
@@ -119,7 +118,7 @@ public class    MessageFormatter_5
             return builder.toString();
         }
 
-        String                          argument_3 = PortrayFunctions.portray(other_arguments[1]);
+        String                          argument_3 = z.portray(other_arguments[1]);
 
         if (expected == 3) {
             builder.append(a.select_3(z, argument_1, argument_2, argument_3));
@@ -131,7 +130,7 @@ public class    MessageFormatter_5
             return builder.toString();
         }
 
-        String                          argument_4 = PortrayFunctions.portray(other_arguments[2]);
+        String                          argument_4 = z.portray(other_arguments[2]);
 
         if (expected == 4) {
             builder.append(a.select_4(z, argument_1, argument_2, argument_3, argument_4));
@@ -143,7 +142,7 @@ public class    MessageFormatter_5
             return builder.toString();
         }
 
-        String                          argument_5 = PortrayFunctions.portray(other_arguments[3]);
+        String                          argument_5 = z.portray(other_arguments[3]);
 
         builder.append(a.select_5(z, argument_1, argument_2, argument_3, argument_4, argument_5));
         builder.append(b.select_5(z, argument_1, argument_2, argument_3, argument_4, argument_5));

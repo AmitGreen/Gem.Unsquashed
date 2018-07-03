@@ -11,7 +11,6 @@ import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.OutputFunctions;
-import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public class    MessageFormatter_1__Simple
@@ -56,7 +55,7 @@ public class    MessageFormatter_1__Simple
                                     1 + other_arguments.length);
         }
 
-        return PortrayFunctions.portray(first_argument);
+        return z.portray(first_argument);
     }
 
 
@@ -67,7 +66,7 @@ public class    MessageFormatter_1__Simple
                                     1 + other_arguments.length);
         }
 
-        z.line(PortrayFunctions.portray(first_argument));
+        z.line(z.portray(first_argument));
     }
 
 

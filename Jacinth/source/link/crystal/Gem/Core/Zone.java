@@ -11,6 +11,8 @@ import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.ExceptionFunctions;
 import link.crystal.Gem.Support.OutputFunctions;
+import link.crystal.Gem.Support.PortrayFunctions;
+import link.crystal.Gem.Support.Storehouse_String;
 
 
 public class    Zone
@@ -107,12 +109,28 @@ public class    Zone
             throw new RuntimeException("Zone.current_zone: only single threaded currently supported");
         }
 
-        Zone                    first_zone = Zone.create(thread);
+        Zone                            first_zone = Zone.create(thread);
 
         Zone.first_thread = thread;
         Zone.first_zone   = first_zone;
 
         return first_zone;
+    }
+
+
+    public String                       intern_permenant_string(String s)
+    {
+        return Storehouse_String.intern_permenant_string(this, s);
+    }
+
+
+    public String                       intern_permenant_string_0(String s)
+    {
+        if (s == null) {
+            return null;
+        }
+
+        return Storehouse_String.intern_permenant_string(this, s);
     }
 
 
@@ -133,6 +151,18 @@ public class    Zone
         OutputFunctions.line(this, format, first_argument, other_arguments);
     }
 
+
+    public String                       portray(Object v)
+    {
+        return PortrayFunctions.portray(this, v);
+    }
+
+
+
+    public String                       quote_string(String s)
+    {
+        return PortrayFunctions.quote_string(this, s);
+    }
 
 
     public void                         RAISE_runtime_exception(String error_message)

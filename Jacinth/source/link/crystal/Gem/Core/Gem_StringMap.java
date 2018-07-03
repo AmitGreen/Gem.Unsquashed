@@ -35,6 +35,8 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     //
     public String                       portray()
     {
+        Zone                            z = Zone.current_zone();
+
         Inspection                      inspection = this.inspect();
 
         StringBuilder                   b = new StringBuilder();
@@ -61,9 +63,9 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
                 b.append(", ");
             }
 
-            b.append(portray_string(k));
+            b.append(z.quote_string(k));
             b.append(" : ");
-            b.append(portray(v));
+            b.append(z.portray(v));
         }
 
         b.append(">");
@@ -94,7 +96,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
             String                      k = keys.get(i);
             V                           v = this.get(k);
 
-            z.line("  " + String.format("%30s", portray_string(k)) + ": " + portray(v));
+            z.line("  " + String.format("%30s", z.quote_string(k)) + ": " + z.portray(v));
         }
 
         z.line("End of dump of {0}", simple_class_name + " " + name);

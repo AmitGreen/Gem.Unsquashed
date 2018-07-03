@@ -39,7 +39,7 @@ public class    MessageFormatter_1__Prefix
 
     static public MessageFormatter_1__Prefix    create(Zone z, String prefix)
     {
-        String                          interned__prefix = intern_permenant_string(prefix);
+        String                          interned__prefix = z.intern_permenant_string(prefix);
             
         return new MessageFormatter_1__Prefix(interned__prefix);
     }
@@ -64,7 +64,7 @@ public class    MessageFormatter_1__Prefix
                                     1 + other_arguments.length);
         }
 
-        return this.prefix + portray(first_argument);
+        return this.prefix + z.portray(first_argument);
     }
 
 
@@ -75,12 +75,14 @@ public class    MessageFormatter_1__Prefix
                                     1 + other_arguments.length);
         }
 
-        z.line(this.prefix + portray(first_argument));
+        z.line(this.prefix + z.portray(first_argument));
     }
 
 
     public String                       portray()
     {
-        return "<MessageFormatter_1__Prefix " + portray_string(this.prefix) + ">";
+        Zone                            z = Zone.current_zone();
+
+        return "<MessageFormatter_1__Prefix " + z.quote_string(this.prefix) + ">";
     }
 }

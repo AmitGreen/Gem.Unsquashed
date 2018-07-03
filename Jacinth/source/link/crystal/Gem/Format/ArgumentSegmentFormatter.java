@@ -10,7 +10,6 @@ import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public class    ArgumentSegmentFormatter

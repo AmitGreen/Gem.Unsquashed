@@ -76,7 +76,7 @@ public class    Storehouse_StringSegmentFormatter
     //
     //  Public
     //
-    public static StringSegmentFormatter    conjure(String s)
+    public static StringSegmentFormatter    conjure(Zone z, String s)
     {
         Storehouse_StringSegmentFormatter   singleton = Storehouse_StringSegmentFormatter.singleton;
 
@@ -90,7 +90,7 @@ public class    Storehouse_StringSegmentFormatter
             return null;
         }
 
-        r = StringSegmentFormatter.create__ALLY__Storehouse_StringSegmentFormatter(s);
+        r = StringSegmentFormatter.create__ALLY__Storehouse_StringSegmentFormatter(z, s);
 
         singleton.put(r.s(), r);
 

@@ -34,6 +34,8 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
     //
     public String                       portray()
     {
+        Zone                            z = Zone.current_zone();
+
         INSPECTION                      inspection = this.inspect();
 
         StringBuilder                   b = new StringBuilder();
@@ -59,7 +61,7 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
                 b.append(", ");
             }
 
-            b.append(portray_string(k));
+            b.append(z.quote_string(k));
         }
 
         b.append(">");
@@ -89,7 +91,7 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
         for (int                        i = 0; i < total; i ++) {
             String                      k = keys.get(i);
 
-            z.line("  " + portray_string(k));
+            z.line("  " + z.quote_string(k));
         }
 
         z.line("End of dump of {0}", simple_class_name + " " + name);

@@ -41,8 +41,8 @@ public class    MessageFormatter_1__Suffix
 
     static public MessageFormatter_1__Suffix    create(Zone z, String prefix_0, String suffix)
     {
-        String                          interned__prefix_0 = intern_permenant_string_0(prefix_0);
-        String                          interned__suffix   = intern_permenant_string  (suffix);
+        String                          interned__prefix_0 = z.intern_permenant_string_0(prefix_0);
+        String                          interned__suffix   = z.intern_permenant_string  (suffix);
 
         return new MessageFormatter_1__Suffix(interned__prefix_0, suffix);
     }
@@ -70,7 +70,7 @@ public class    MessageFormatter_1__Suffix
         String                          prefix_0 = this.prefix_0;
         String                          suffix = this.suffix;
 
-        String                          first = portray(first_argument);
+        String                          first = z.portray(first_argument);
 
         if (prefix_0 == null) {
             return first + suffix;
@@ -90,7 +90,7 @@ public class    MessageFormatter_1__Suffix
         String                          prefix_0 = this.prefix_0;
         String                          suffix   = this.suffix;
 
-        String                          first = portray(first_argument);
+        String                          first = z.portray(first_argument);
 
         if (prefix_0 == null) {
             z.line(first + suffix);
@@ -103,14 +103,16 @@ public class    MessageFormatter_1__Suffix
 
     public String                       portray()
     {
+        Zone                            z = Zone.current_zone();
+
         String                          prefix_0 = this.prefix_0;
         String                          suffix   = this.suffix;
 
         return (
                      "<MessageFormatter_1__Suffix "
-                   + (prefix_0 == null ? "<null>" : portray_string(prefix_0))
+                   + (prefix_0 == null ? "<null>" : z.quote_string(prefix_0))
                    + " "
-                   + portray_string(suffix)
+                   + z.quote_string(suffix)
                    + ">"
               );
     }

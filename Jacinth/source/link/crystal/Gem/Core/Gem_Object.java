@@ -56,26 +56,6 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     //
     //  Public
     //
-    public static String                intern_permenant_string(String s)
-    {
-        Zone                            z = Zone.current_zone();
-
-        return Storehouse_String.intern_permenant_string(z, s);
-    }
-
-
-    public static String                intern_permenant_string_0(String s)
-    {
-        if (s == null) {
-            return null;
-        }
-
-        Zone                            z = Zone.current_zone();
-
-        return Storehouse_String.intern_permenant_string(z, s);
-    }
-
-    
     public static int                   limit_to_between(int minimum, int v, int maximum)
     {
         if (v < minimum) {
@@ -87,17 +67,5 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
         }
 
         return v;
-    }
-
-
-    public static String                portray(Object v)
-    {
-        return PortrayFunctions.portray(v);
-    }
-
-
-    public static String                portray_string(String s)
-    {
-        return PortrayFunctions.portray_string(s);
     }
 }

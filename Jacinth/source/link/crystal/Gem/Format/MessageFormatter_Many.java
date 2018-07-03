@@ -12,7 +12,6 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Support.OutputFunctions;
-import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public class    MessageFormatter_Many
@@ -79,8 +78,8 @@ public class    MessageFormatter_Many
 
         int                             segment_total = segment_many.length;
 
-        String                          argument_1 = PortrayFunctions.portray(first_argument);
-        String                          argument_2 = PortrayFunctions.portray(other_arguments[0]);
+        String                          argument_1 = z.portray(first_argument);
+        String                          argument_2 = z.portray(other_arguments[0]);
 
         StringBuilder                   builder = new StringBuilder();
 
@@ -94,7 +93,7 @@ public class    MessageFormatter_Many
             return builder.toString();
         }
 
-        String                          argument_3 = PortrayFunctions.portray(other_arguments[1]);
+        String                          argument_3 = z.portray(other_arguments[1]);
 
         if (expected == 3) {
             for (int                    i = 0; i < segment_total; i ++) {
@@ -106,7 +105,7 @@ public class    MessageFormatter_Many
             return builder.toString();
         }
 
-        String                          argument_4 = PortrayFunctions.portray(other_arguments[2]);
+        String                          argument_4 = z.portray(other_arguments[2]);
 
         if (expected == 4) {
             for (int                    i = 0; i < segment_total; i ++) {
@@ -118,7 +117,7 @@ public class    MessageFormatter_Many
             return builder.toString();
         }
 
-        String                          argument_5 = PortrayFunctions.portray(other_arguments[3]);
+        String                          argument_5 = z.portray(other_arguments[3]);
 
         if (expected == 5) {
             for (int                    i = 0; i < segment_total; i ++) {
@@ -140,7 +139,7 @@ public class    MessageFormatter_Many
         argument_many[4] = argument_5;
 
         for (int                        i = 5; i < expected; i ++) {
-            argument_many[i] = PortrayFunctions.portray(other_arguments[i - 1]);
+            argument_many[i] = z.portray(other_arguments[i - 1]);
         }
 
         for (int                        i = 0; i < segment_total; i ++) {

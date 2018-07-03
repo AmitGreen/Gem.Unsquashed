@@ -238,7 +238,7 @@ public class   ParseFormat
                           "ParseFormat.examine_missing: format string is missing {"
                         + Integer.toString(missing_many[0])
                         + "}: "
-                        + portray_string(this.format)
+                        + z.quote_string(this.format)
                     )
                 );
         }
@@ -251,7 +251,7 @@ public class   ParseFormat
                         + "} and {"
                         + Integer.toString(missing_many[1])
                         + "}: "
-                        + portray_string(this.format)
+                        + z.quote_string(this.format)
                     )
                 );
         }
@@ -271,7 +271,7 @@ public class   ParseFormat
 
         z.RAISE_runtime_exception("ParseFormat.examine_missing: format string is missing {0}: {1}",
                                   b.toString(),
-                                  portray_string(this.format));
+                                  z.quote_string(this.format));
     }
 
 
@@ -302,7 +302,7 @@ public class   ParseFormat
             throw new RuntimeException(
                     (
                           "ParseFormat.parse_format__work: format string does not contain the opening brace '{': "
-                        + portray_string(format)
+                        + z.quote_string(format)
                     )
                 );
         }
@@ -315,7 +315,7 @@ public class   ParseFormat
 
         if (end_2 == -1) {
             z.RAISE_runtime_exception("ParseFormat.parse_format__work: format string is malformed: {0}",
-                                      portray_string(format));
+                                      z.quote_string(format));
         }
 
         int                             start          = braces_matcher.start();
@@ -337,7 +337,7 @@ public class   ParseFormat
                 throw new RuntimeException(
                         (
                               "ParseFormat.parse_format__work: format string must use {0} for only one argument: "
-                            + portray_string(format)
+                            + z.quote_string(format)
                         )
                     );
             }
@@ -360,7 +360,7 @@ public class   ParseFormat
         //  First segment
         //
         if (start_s != null) {
-            this.append_segment(Storehouse_StringSegmentFormatter.conjure(start_s));
+            this.append_segment(Storehouse_StringSegmentFormatter.conjure(z, start_s));
         }
 
         this.append_segment(Storehouse_ArgumentSegmentFormatter.conjure(z, argument_index));
@@ -390,7 +390,7 @@ public class   ParseFormat
             if (end_2 < start) {
                 start_s = format.substring(end_2, start);
 
-                this.append_segment(Storehouse_StringSegmentFormatter.conjure(start_s));
+                this.append_segment(Storehouse_StringSegmentFormatter.conjure(z, start_s));
             }
 
             this.append_segment(Storehouse_ArgumentSegmentFormatter.conjure(z, argument_index));
@@ -407,14 +407,14 @@ public class   ParseFormat
         if (end_2 < format.length()) {
             String                      end_s = format.substring(end_2);
 
-            this.append_segment(Storehouse_StringSegmentFormatter.conjure(end_s));
+            this.append_segment(Storehouse_StringSegmentFormatter.conjure(z, end_s));
         }
 
         this.examine_missing();
 
         if (true) {
             for (int                        i = 0; i < segment_total; i ++) {
-                z.line(Integer.toString(i) + ": " + portray(segment_many[i]));
+                z.line(Integer.toString(i) + ": " + z.portray(segment_many[i]));
             }
         }
 
