@@ -78,7 +78,7 @@ public class    MessageFormatter_3
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, Object first_argument, Object ... other_arguments)
+    public String                       arrange(Zone z, Object v, Object ... other_arguments)
     {
         int                             expected = this.expected;
 
@@ -90,51 +90,43 @@ public class    MessageFormatter_3
                                       expected);
         }
 
-        SegmentFormattable              a        = this.a;
-        SegmentFormattable              b        = this.b;
-        SegmentFormattable              c        = this.c;
-
-        String                          argument_1 = z.portray(first_argument);
+        SegmentFormattable              a = this.a;
+        SegmentFormattable              b = this.b;
+        SegmentFormattable              c = this.c;
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         if (expected == 1) {
-            builder.append(
-                    a.select_1(z, argument_1),
-                    b.select_1(z, argument_1),
-                    c.select_1(z, argument_1)//,
-                );
+            a.select_1(builder, v);
+            b.select_1(builder, v);
+            c.select_1(builder, v);
 
             return builder.finish__AND__recycle();
         }
 
-        String                          argument_2 = z.portray(other_arguments[0]);
+        Object                          w = other_arguments[0];
 
         if (expected == 2) {
-            builder.append(
-                    a.select_2(z, argument_1, argument_2),
-                    b.select_2(z, argument_1, argument_2),
-                    c.select_2(z, argument_1, argument_2)//,
-                );
+            a.select_2(builder, v, w);
+            b.select_2(builder, v, w);
+            c.select_2(builder, v, w);
 
             return builder.finish__AND__recycle();
         }
 
-        String                          argument_3 = z.portray(other_arguments[1]);
+        Object                          x = other_arguments[1];
 
-        builder.append(
-                a.select_3(z, argument_1, argument_2, argument_3),
-                b.select_3(z, argument_1, argument_2, argument_3),
-                c.select_3(z, argument_1, argument_2, argument_3)//,
-            );
+        a.select_3(builder, v, w, x);
+        b.select_3(builder, v, w, x);
+        c.select_3(builder, v, w, x);
 
         return builder.finish__AND__recycle();
     }
 
 
-    public void                         line(Zone z, Object first_argument, Object ... other_arguments)
+    public void                         line(Zone z, Object v, Object ... other_arguments)
     {
-        z.line(this.arrange(z, first_argument, other_arguments));
+        z.line(this.arrange(z, v, other_arguments));
     }
 
 

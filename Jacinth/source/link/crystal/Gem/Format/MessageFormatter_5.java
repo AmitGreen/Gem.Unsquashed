@@ -86,7 +86,7 @@ public class    MessageFormatter_5
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, Object first_argument, Object ... other_arguments)
+    public String                       arrange(Zone z, Object v, Object ... other_arguments)
     {
         int                             expected = this.expected;
 
@@ -104,51 +104,48 @@ public class    MessageFormatter_5
         SegmentFormattable              d = this.d;
         SegmentFormattable              e = this.e;
 
-        String                          argument_1 = z.portray(first_argument);
-        String                          argument_2 = z.portray(other_arguments[0]);
-
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
+        Object                          w = other_arguments[0];
+
         if (expected == 2) {
-            builder.append(
-                    a.select_2(z, argument_1, argument_2),
-                    b.select_2(z, argument_1, argument_2),
-                    c.select_2(z, argument_1, argument_2),
-                    d.select_2(z, argument_1, argument_2),
-                    e.select_2(z, argument_1, argument_2)//,
-                );
+            a.select_2(builder, v, w);
+            b.select_2(builder, v, w);
+            c.select_2(builder, v, w);
+            d.select_2(builder, v, w);
+            e.select_2(builder, v, w);
 
             return builder.finish__AND__recycle();
         }
 
-        String                          argument_3 = z.portray(other_arguments[1]);
+        Object                          x = other_arguments[1];
 
         if (expected == 3) {
-            builder.append(
-                    a.select_3(z, argument_1, argument_2, argument_3),
-                    b.select_3(z, argument_1, argument_2, argument_3),
-                    c.select_3(z, argument_1, argument_2, argument_3),
-                    d.select_3(z, argument_1, argument_2, argument_3),
-                    e.select_3(z, argument_1, argument_2, argument_3)//,
-                );
+            a.select_3(builder, v, w, x);
+            b.select_3(builder, v, w, x);
+            c.select_3(builder, v, w, x);
+            d.select_3(builder, v, w, x);
+            e.select_3(builder, v, w, x);
 
             return builder.finish__AND__recycle();
         }
 
-        String                          argument_4 = z.portray(other_arguments[2]);
+        Object                          y = other_arguments[2];
 
         if (expected == 4) {
-            builder.append(
-                    a.select_4(z, argument_1, argument_2, argument_3, argument_4),
-                    b.select_4(z, argument_1, argument_2, argument_3, argument_4),
-                    c.select_4(z, argument_1, argument_2, argument_3, argument_4),
-                    d.select_4(z, argument_1, argument_2, argument_3, argument_4),
-                    e.select_4(z, argument_1, argument_2, argument_3, argument_4)//,
-                );
+            a.select_4(builder, v, w, x, y);
+            b.select_4(builder, v, w, x, y);
+            c.select_4(builder, v, w, x, y);
+            d.select_4(builder, v, w, x, y);
+            e.select_4(builder, v, w, x, y);
 
             return builder.toString();
         }
 
+        String                          argument_1 = z.portray(v);
+        String                          argument_2 = z.portray(w);
+        String                          argument_3 = z.portray(x);
+        String                          argument_4 = z.portray(y);
         String                          argument_5 = z.portray(other_arguments[3]);
 
         builder.append(
@@ -163,9 +160,9 @@ public class    MessageFormatter_5
     }
 
 
-    public void                         line(Zone z, Object first_argument, Object ... other_arguments)
+    public void                         line(Zone z, Object v, Object ... other_arguments)
     {
-        z.line(this.arrange(z, first_argument, other_arguments));
+        z.line(this.arrange(z, v, other_arguments));
     }
 
 

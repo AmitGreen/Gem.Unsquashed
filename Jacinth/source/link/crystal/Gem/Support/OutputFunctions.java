@@ -43,7 +43,7 @@ public abstract class   OutputFunctions
     public static void                  line(
             Zone                                z,
             String                              format,
-            Object                              first_argument,
+            Object                              v,
             Object ...                          other_arguments//,
         )
     {
@@ -55,6 +55,6 @@ public abstract class   OutputFunctions
             Storehouse_MessageFormattable.insert(z, format, formattable);
         }
 
-        formattable.line(z, first_argument, other_arguments);
+        formattable.line(z, v, other_arguments);
     }
 }

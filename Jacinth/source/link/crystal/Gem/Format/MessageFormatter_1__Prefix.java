@@ -57,25 +57,25 @@ public class    MessageFormatter_1__Prefix
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, Object first_argument, Object ... other_arguments)
+    public String                       arrange(Zone z, Object v, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
             z.RAISE_runtime_exception("MessageFormatter_1__Prefix.arrange: {0} arguments given (expected 1)",
                                     1 + other_arguments.length);
         }
 
-        return this.prefix + z.portray(first_argument);
+        return this.prefix + z.portray(v);
     }
 
 
-    public void                         line(Zone z, Object first_argument, Object ... other_arguments)
+    public void                         line(Zone z, Object v, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
             z.RAISE_runtime_exception("MessageFormatter_1__Prefix.line: {0} arguments given (expected 1)",
                                     1 + other_arguments.length);
         }
 
-        z.line(this.prefix + z.portray(first_argument));
+        z.line(this.prefix + z.portray(v));
     }
 
 

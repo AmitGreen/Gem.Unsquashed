@@ -63,7 +63,7 @@ public class    MessageFormatter_Many
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, Object first_argument, Object ... other_arguments)
+    public String                       arrange(Zone z, Object v, Object ... other_arguments)
     {
         int                             expected = this.expected;
 
@@ -79,45 +79,48 @@ public class    MessageFormatter_Many
 
         int                             segment_total = segment_many.length;
 
-        String                          argument_1 = z.portray(first_argument);
-        String                          argument_2 = z.portray(other_arguments[0]);
-
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
+
+        Object                          w = other_arguments[0];
 
         if (expected == 2) {
             for (int                    i = 0; i < segment_total; i ++) {
                 SegmentFormattable      segment = segment_many[i];
 
-                builder.append(segment.select_2(z, argument_1, argument_2));
+                segment.select_2(builder, v, w);
             }
 
             return builder.finish__AND__recycle();
         }
 
-        String                          argument_3 = z.portray(other_arguments[1]);
+        Object                          x = other_arguments[1];
 
         if (expected == 3) {
             for (int                    i = 0; i < segment_total; i ++) {
                 SegmentFormattable      segment = segment_many[i];
 
-                builder.append(segment.select_3(z, argument_1, argument_2, argument_3));
+                segment.select_3(builder, v, w, x);
             }
 
             return builder.finish__AND__recycle();
         }
 
-        String                          argument_4 = z.portray(other_arguments[2]);
+        Object                          y = other_arguments[2];
 
         if (expected == 4) {
             for (int                    i = 0; i < segment_total; i ++) {
                 SegmentFormattable      segment = segment_many[i];
 
-                builder.append(segment.select_4(z, argument_1, argument_2, argument_3, argument_4));
+                segment.select_4(builder, v, w, x, y);
             }
 
             return builder.toString();
         }
 
+        String                          argument_1 = z.portray(v);
+        String                          argument_2 = z.portray(w);
+        String                          argument_3 = z.portray(x);
+        String                          argument_4 = z.portray(y);
         String                          argument_5 = z.portray(other_arguments[3]);
 
         if (expected == 5) {
@@ -153,9 +156,9 @@ public class    MessageFormatter_Many
     }
 
 
-    public void                         line(Zone z, Object first_argument, Object ... other_arguments)
+    public void                         line(Zone z, Object v, Object ... other_arguments)
     {
-        z.line(this.arrange(z, first_argument, other_arguments));
+        z.line(this.arrange(z, v, other_arguments));
     }
 
 

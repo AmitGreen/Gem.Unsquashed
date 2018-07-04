@@ -6,6 +6,7 @@ package link.crystal.Gem.Format;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
@@ -56,9 +57,15 @@ public class    StringSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public String                       select_1(Zone z, String a)
+    public void                         select_1(Gem_StringBuilder builder, Object a)
     {
-        return this.s;
+        builder.append(this.s);
+    }
+
+
+    public void                         select_2(Gem_StringBuilder builder, Object a, Object b)
+    {
+        builder.append(this.s);
     }
 
 
@@ -68,15 +75,15 @@ public class    StringSegmentFormatter
     }
 
 
-    public String                       select_3(Zone z, String a, String b, String c)
+    public void                         select_3(Gem_StringBuilder builder, Object a, Object b, Object c)
     {
-        return this.s;
+        builder.append(this.s);
     }
 
 
-    public String                       select_4(Zone z, String a, String b, String c, String d)
+    public void                         select_4(Gem_StringBuilder builder, Object a, Object b, Object c, Object d)
     {
-        return this.s;
+        builder.append(this.s);
     }
 
 

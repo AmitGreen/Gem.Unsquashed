@@ -21,7 +21,7 @@ public class    Gem_StringBuilder
     //
     //  Members
     //
-    private final Zone                  z;
+    public final Zone                   z;
     private final StringBuilder         builder;
     private boolean                     finished;
 

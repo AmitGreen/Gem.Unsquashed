@@ -7,6 +7,7 @@ package link.crystal.Gem.Format;
 import java.lang.StackTraceElement;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
@@ -90,9 +91,19 @@ public class    MethodNameSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public String                       select_1(Zone z, String a)
+    public void                         select_1(Gem_StringBuilder builder, Object a)
     {
-        return this.method_name(z);
+        final Zone                      z = builder.z;
+
+        builder.append(this.method_name(z));
+    }
+
+
+    public void                         select_2(Gem_StringBuilder builder, Object a, Object b)
+    {
+        final Zone                      z = builder.z;
+
+        builder.append(this.method_name(z));
     }
 
 
@@ -102,15 +113,19 @@ public class    MethodNameSegmentFormatter
     }
 
 
-    public String                       select_3(Zone z, String a, String b, String c)
+    public void                         select_3(Gem_StringBuilder builder, Object a, Object b, Object c)
     {
-        return this.method_name(z);
+        final Zone                      z = builder.z;
+
+        builder.append(this.method_name(z));
     }
 
 
-    public String                       select_4(Zone z, String a, String b, String c, String d)
+    public void                         select_4(Gem_StringBuilder builder, Object a, Object b, Object c, Object d)
     {
-        return this.method_name(z);
+        final Zone                      z = builder.z;
+
+        builder.append(this.method_name(z));
     }
 
 

@@ -60,7 +60,7 @@ public class    MessageFormatter_1__Suffix
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, Object first_argument, Object ... other_arguments)
+    public String                       arrange(Zone z, Object v, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
             z.RAISE_runtime_exception("MessageFormatter_1__Suffix.arrange: {0} arguments given (expected 1)",
@@ -70,7 +70,7 @@ public class    MessageFormatter_1__Suffix
         String                          prefix_0 = this.prefix_0;
         String                          suffix = this.suffix;
 
-        String                          first = z.portray(first_argument);
+        String                          first = z.portray(v);
 
         if (prefix_0 == null) {
             return first + suffix;
@@ -80,7 +80,7 @@ public class    MessageFormatter_1__Suffix
     }
 
 
-    public void                         line(Zone z, Object first_argument, Object ... other_arguments)
+    public void                         line(Zone z, Object v, Object ... other_arguments)
     {
         if (other_arguments.length != 0) {
             z.RAISE_runtime_exception("MessageFormatter_1__Simple.line: {0} arguments given (expected 1)",
@@ -90,7 +90,7 @@ public class    MessageFormatter_1__Suffix
         String                          prefix_0 = this.prefix_0;
         String                          suffix   = this.suffix;
 
-        String                          first = z.portray(first_argument);
+        String                          first = z.portray(v);
 
         if (prefix_0 == null) {
             z.line(first + suffix);

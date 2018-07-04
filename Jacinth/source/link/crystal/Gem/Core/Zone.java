@@ -133,7 +133,7 @@ public class    Zone
     //
     //  Public
     //
-    public String                       arrange(String format, Object first_argument, Object ... other_arguments)
+    public String                       arrange(String format, Object v, Object ... other_arguments)
     {
         MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
 
@@ -143,7 +143,7 @@ public class    Zone
             Storehouse_MessageFormattable.insert(this, format, formattable);
         }
 
-        return formattable.arrange(this, first_argument, other_arguments);
+        return formattable.arrange(this, v, other_arguments);
     }
 
 
@@ -222,9 +222,9 @@ public class    Zone
     }
 
 
-    public void                         line(String format, Object first_argument, Object ... other_arguments)
+    public void                         line(String format, Object v, Object ... other_arguments)
     {
-        OutputFunctions.line(this, format, first_argument, other_arguments);
+        OutputFunctions.line(this, format, v, other_arguments);
     }
 
 
@@ -232,7 +232,6 @@ public class    Zone
     {
         return PortrayFunctions.portray(this, v);
     }
-
 
 
     public String                       quote_string(String s)
@@ -249,10 +248,10 @@ public class    Zone
 
     public void                         RAISE_runtime_exception(
             String                              format,
-            Object                              first_argument,
+            Object                              v,
             Object ...                          other_arguments//,
         )
     {
-        ExceptionFunctions.RAISE_runtime_exception(this, format, first_argument, other_arguments);
+        ExceptionFunctions.RAISE_runtime_exception(this, format, v, other_arguments);
     }
 }

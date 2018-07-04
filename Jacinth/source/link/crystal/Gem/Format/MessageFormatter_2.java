@@ -58,7 +58,7 @@ public class    MessageFormatter_2
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, Object first_argument, Object ... other_arguments)
+    public String                       arrange(Zone z, Object v, Object ... other_arguments)
     {
         SegmentFormattable              a = this.a;
         SegmentFormattable              b = this.b;
@@ -72,7 +72,7 @@ public class    MessageFormatter_2
                                     expected);
         }
 
-        String                          argument_1 = z.portray(first_argument);
+        String                          argument_1 = z.portray(v);
 
         if (expected == 1) {
             return argument_1 + argument_1;
@@ -87,9 +87,9 @@ public class    MessageFormatter_2
     }
 
 
-    public void                         line(Zone z, Object first_argument, Object ... other_arguments)
+    public void                         line(Zone z, Object v, Object ... other_arguments)
     {
-        z.line(this.arrange(z, first_argument, other_arguments));
+        z.line(this.arrange(z, v, other_arguments));
     }
 
 

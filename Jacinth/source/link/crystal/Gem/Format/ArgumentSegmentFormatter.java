@@ -6,6 +6,7 @@ package link.crystal.Gem.Format;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
@@ -54,24 +55,45 @@ public class    ArgumentSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public String                       select_1(Zone z, String a)
+    public void                         select_1(Gem_StringBuilder builder, Object a)
     {
-        int                             argument_index = this.argument_index;
+        final int                       argument_index = this.argument_index;
+
+        final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            return a;
+            builder.append(z.portray(a));
+            return;
         }
 
-        z.RAISE_runtime_exception("ArgumentSegmentFormatter.select_1: argument_index is {0} (expected 0)",
-                                  argument_index);
+        z.RAISE_runtime_exception("argument_index is {} (expected 0)", argument_index);
+    }
 
-        return null;
+
+    public void                         select_2(Gem_StringBuilder builder, Object a, Object b)
+    {
+        final int                       argument_index = this.argument_index;
+
+        final Zone                      z = builder.z;
+
+        if (argument_index == 0) {
+            builder.append(z.portray(a));
+            return;
+        }
+
+        if (argument_index == 1) {
+            builder.append(z.portray(b));
+            return;
+        }
+
+        z.RAISE_runtime_exception("ArgumentSegmentFormatter.s)elect_2: argument_index is {} (expected 0 or 1)",
+                                  argument_index);
     }
 
 
     public String                       select_2(Zone z, String a, String b)
     {
-        int                             argument_index = this.argument_index;
+        final int                       argument_index = this.argument_index;
 
         if (argument_index == 0) {
             return a;
@@ -81,67 +103,71 @@ public class    ArgumentSegmentFormatter
             return b;
         }
 
-        z.RAISE_runtime_exception("ArgumentSegmentFormatter.select_2: argument_index is {0} (expected 0 or 1)",
+        z.RAISE_runtime_exception("ArgumentSegmentFormatter.select_2: argument_index is {} (expected 0 or 1)",
                                   argument_index);
 
         return null;
     }
 
 
-    public String                       select_3(Zone z, String a, String b, String c)
+    public void                         select_3(Gem_StringBuilder builder, Object a, Object b, Object c)
     {
-        int                             argument_index = this.argument_index;
+        final int                       argument_index = this.argument_index;
+
+        final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            return a;
+            builder.append(z.portray(a));
+            return;
         }
 
         if (argument_index == 1) {
-            return b;
+            builder.append(z.portray(b));
+            return;
         }
 
         if (argument_index == 2) {
-            return c;
+            builder.append(z.portray(c));
+            return;
         }
 
-        z.RAISE_runtime_exception("ArgumentSegmentFormatter.select_3: argument_index is {0} (expected 0, 1, or 2)",
-                                  argument_index);
-
-        return null;
+        z.RAISE_runtime_exception("argument_index is {} (expected 0, 1, or 2)", argument_index);
     }
 
 
-    public String                       select_4(Zone z, String a, String b, String c, String d)
+    public void                         select_4(Gem_StringBuilder builder, Object a, Object b, Object c, Object d)
     {
-        int                             argument_index = this.argument_index;
+        final int                       argument_index = this.argument_index;
+
+        final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            return a;
+            builder.append(z.portray(a));
+            return;
         }
 
         if (argument_index == 1) {
-            return b;
+            builder.append(z.portray(b));
+            return;
         }
 
         if (argument_index == 2) {
-            return c;
+            builder.append(z.portray(c));
+            return;
         }
 
         if (argument_index == 3) {
-            return d;
+            builder.append(z.portray(d));
+            return;
         }
 
-        z.RAISE_runtime_exception("{0}: argument_index is {1} (expected number between 0 and 3)",
-                                  "ArgumentSegmentFormatter.select_4",
-                                  argument_index);
-
-        return null;
+        z.RAISE_runtime_exception("argument_index is {} (expected number between 0 and 3)", argument_index);
     }
 
 
     public String                       select_5(Zone z, String a, String b, String c, String d, String e)
     {
-        int                             argument_index = this.argument_index;
+        final int                       argument_index = this.argument_index;
 
         if (argument_index == 0) {
             return a;
@@ -163,9 +189,7 @@ public class    ArgumentSegmentFormatter
             return e;
         }
 
-        z.RAISE_runtime_exception("{0}: argument_index is {1} (expected number between 0 and 4)",
-                                  "ArgumentSegmentFormatter.select_4",
-                                  argument_index);
+        z.RAISE_runtime_exception("argument_index is {} (expected number between 0 and 4)", argument_index);
 
         return null;
     }
