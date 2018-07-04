@@ -91,25 +91,6 @@ public class    ArgumentSegmentFormatter
     }
 
 
-    public String                       select_2(Zone z, String a, String b)
-    {
-        final int                       argument_index = this.argument_index;
-
-        if (argument_index == 0) {
-            return a;
-        }
-
-        if (argument_index == 1) {
-            return b;
-        }
-
-        z.RAISE_runtime_exception("ArgumentSegmentFormatter.select_2: argument_index is {} (expected 0 or 1)",
-                                  argument_index);
-
-        return null;
-    }
-
-
     public void                         select_3(Gem_StringBuilder builder, Object a, Object b, Object c)
     {
         final int                       argument_index = this.argument_index;
@@ -165,39 +146,88 @@ public class    ArgumentSegmentFormatter
     }
 
 
-    public String                       select_5(Zone z, String a, String b, String c, String d, String e)
+    public void                         select_5(
+            Gem_StringBuilder                   builder,
+            Object                              a,
+            Object                              b,
+            Object                              c,
+            Object                              d,
+            Object                              e//,
+        )
     {
         final int                       argument_index = this.argument_index;
 
+        final Zone                      z = builder.z;
+
         if (argument_index == 0) {
-            return a;
+            builder.append(z.portray(a));
+            return;
         }
 
         if (argument_index == 1) {
-            return b;
+            builder.append(z.portray(b));
+            return;
         }
 
         if (argument_index == 2) {
-            return c;
+            builder.append(z.portray(c));
+            return;
         }
 
         if (argument_index == 3) {
-            return d;
+            builder.append(z.portray(d));
+            return;
         }
 
         if (argument_index == 4) {
-            return e;
+            builder.append(z.portray(e));
+            return;
         }
 
         z.RAISE_runtime_exception("argument_index is {} (expected number between 0 and 4)", argument_index);
-
-        return null;
     }
 
 
-    public String                       select_many(Zone z, String[] arguments)
+    public void                         select_many(
+            Gem_StringBuilder                   builder,
+            Object                              a,
+            Object                              b,
+            Object                              c,
+            Object                              d,
+            Object                              e,
+            Object ...                          other_arguments//,
+        )
     {
-        return arguments[this.argument_index];
+        final int                       argument_index = this.argument_index;
+
+        final Zone                      z = builder.z;
+
+        if (argument_index == 0) {
+            builder.append(z.portray(a));
+            return;
+        }
+
+        if (argument_index == 1) {
+            builder.append(z.portray(b));
+            return;
+        }
+
+        if (argument_index == 2) {
+            builder.append(z.portray(c));
+            return;
+        }
+
+        if (argument_index == 3) {
+            builder.append(z.portray(d));
+            return;
+        }
+
+        if (argument_index == 4) {
+            builder.append(z.portray(e));
+            return;
+        }
+
+        builder.append(z.portray(other_arguments[argument_index - 5]));
     }
 
 

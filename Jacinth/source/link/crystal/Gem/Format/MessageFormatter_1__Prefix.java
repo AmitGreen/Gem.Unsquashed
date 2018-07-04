@@ -57,25 +57,29 @@ public class    MessageFormatter_1__Prefix
     //
     //  Interface MessageFormattable
     //
+    public String                       arrange(Zone z, Object v)
+    {
+        return this.prefix + z.portray(v);
+    }
+
+
     public String                       arrange(Zone z, Object v, Object ... other_arguments)
     {
-        if (other_arguments.length != 0) {
-            z.RAISE_runtime_exception("MessageFormatter_1__Prefix.arrange: {0} arguments given (expected 1)",
-                                    1 + other_arguments.length);
-        }
+        z.RAISE_runtime_exception("should never get called");
 
-        return this.prefix + z.portray(v);
+        return null;
+    }
+
+
+    public void                         line(Zone z, Object v)
+    {
+        z.line(this.prefix + z.portray(v));
     }
 
 
     public void                         line(Zone z, Object v, Object ... other_arguments)
     {
-        if (other_arguments.length != 0) {
-            z.RAISE_runtime_exception("MessageFormatter_1__Prefix.line: {0} arguments given (expected 1)",
-                                    1 + other_arguments.length);
-        }
-
-        z.line(this.prefix + z.portray(v));
+        z.RAISE_runtime_exception("should never get called");
     }
 
 

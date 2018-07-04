@@ -27,6 +27,22 @@ public abstract class   ExceptionFunctions
     }
 
 
+    public static void                  RAISE_runtime_exception(Zone z, String format, Object v)
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(z, format);
+
+            Storehouse_MessageFormattable.insert(z, format, formattable);
+        }
+
+        String                          error_message = formattable.arrange(z, v);
+
+        throw new RuntimeException(error_message);
+    }
+
+
     public static void                  RAISE_runtime_exception(
             Zone                                z,
             String                              format,

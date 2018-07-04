@@ -86,16 +86,42 @@ public class    MessageFormatter_5
     //
     //  Interface MessageFormattable
     //
+    public String                       arrange(Zone z, Object v)
+    {
+        int                             expected = this.expected;
+
+        int                             actual = 1;
+
+        if (actual != expected) {
+            z.RAISE_runtime_exception("{0} arguments given (expected {1})", actual, expected);
+        }
+
+        SegmentFormattable              a = this.a;
+        SegmentFormattable              b = this.b;
+        SegmentFormattable              c = this.c;
+        SegmentFormattable              d = this.d;
+        SegmentFormattable              e = this.e;
+
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+
+        a.select_1(builder, v);
+        b.select_1(builder, v);
+        c.select_1(builder, v);
+        d.select_1(builder, v);
+        e.select_1(builder, v);
+
+        return builder.finish__AND__recycle();
+    }
+
+
     public String                       arrange(Zone z, Object v, Object ... other_arguments)
     {
         int                             expected = this.expected;
 
-        int                             actual   = 1 + other_arguments.length;
+        int                             actual = 1 + other_arguments.length;
 
         if (actual != expected) {
-            z.RAISE_runtime_exception("MessageFormatter_5.arrange: {0} arguments given (expected {1})",
-                                      actual,
-                                      expected);
+            z.RAISE_runtime_exception("{0} arguments given (expected {1})", actual, expected);
         }
 
         SegmentFormattable              a = this.a;
@@ -142,21 +168,21 @@ public class    MessageFormatter_5
             return builder.toString();
         }
 
-        String                          argument_1 = z.portray(v);
-        String                          argument_2 = z.portray(w);
-        String                          argument_3 = z.portray(x);
-        String                          argument_4 = z.portray(y);
-        String                          argument_5 = z.portray(other_arguments[3]);
+        Object                          z5 = other_arguments[3];
 
-        builder.append(
-                a.select_5(z, argument_1, argument_2, argument_3, argument_4, argument_5),
-                b.select_5(z, argument_1, argument_2, argument_3, argument_4, argument_5),
-                c.select_5(z, argument_1, argument_2, argument_3, argument_4, argument_5),
-                d.select_5(z, argument_1, argument_2, argument_3, argument_4, argument_5),
-                e.select_5(z, argument_1, argument_2, argument_3, argument_4, argument_5)//,
-            );
+        a.select_5(builder, v, w, x, y, z5);
+        b.select_5(builder, v, w, x, y, z5);
+        c.select_5(builder, v, w, x, y, z5);
+        d.select_5(builder, v, w, x, y, z5);
+        e.select_5(builder, v, w, x, y, z5);
 
         return builder.finish__AND__recycle();
+    }
+
+
+    public void                         line(Zone z, Object v)
+    {
+        z.line(this.arrange(z, v));
     }
 
 

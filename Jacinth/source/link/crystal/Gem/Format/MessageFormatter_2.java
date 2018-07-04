@@ -6,6 +6,7 @@ package link.crystal.Gem.Format;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
@@ -58,12 +59,12 @@ public class    MessageFormatter_2
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, Object v, Object ... other_arguments)
+    public String                       arrange(Zone z, Object v)
     {
         SegmentFormattable              a = this.a;
         SegmentFormattable              b = this.b;
 
-        int                             actual   = 1 + other_arguments.length;
+        int                             actual   = 1;
         int                             expected = (a == b ? 1 : 2);
 
         if (actual != expected) {
@@ -72,18 +73,43 @@ public class    MessageFormatter_2
                                     expected);
         }
 
-        String                          argument_1 = z.portray(v);
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        if (expected == 1) {
-            return argument_1 + argument_1;
+        a.select_1(builder, v);
+        b.select_1(builder, v);
+
+        return builder.finish__AND__recycle();
+    }
+
+
+    public String                       arrange(Zone z, Object v, Object ... other_arguments)
+    {
+        SegmentFormattable              a = this.a;
+        SegmentFormattable              b = this.b;
+
+        int                             actual   = 1 + other_arguments.length;
+        int                             expected = 2;
+
+        if (actual != expected) {
+            z.RAISE_runtime_exception("MessageFormatter_2.arrange: {0} arguments given (expected {1})",
+                                    actual,
+                                    expected);
         }
 
-        String                          argument_2 = z.portray(other_arguments[0]);
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        return (
-                     a.select_2(z, argument_1, argument_2)
-                   + b.select_2(z, argument_1, argument_2)
-               );
+        Object                          w = other_arguments[0];
+
+        a.select_2(builder, v, w);
+        b.select_2(builder, v, w);
+
+        return builder.finish__AND__recycle();
+    }
+
+
+    public void                         line(Zone z, Object v)
+    {
+        z.line(this.arrange(z, v));
     }
 
 

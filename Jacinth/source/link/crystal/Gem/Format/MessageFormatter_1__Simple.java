@@ -48,25 +48,29 @@ public class    MessageFormatter_1__Simple
     //
     //  Interface MessageFormattable
     //
+    public String                       arrange(Zone z, Object v)
+    {
+        return z.portray(v);
+    }
+
+
     public String                       arrange(Zone z, Object v, Object ... other_arguments)
     {
-        if (other_arguments.length != 0) {
-            z.RAISE_runtime_exception("MessageFormatter_1__Simple.arrange: {0} arguments given (expected 1)",
-                                    1 + other_arguments.length);
-        }
+        z.RAISE_runtime_exception("should never get called");
 
-        return z.portray(v);
+        return null;
+    }
+
+
+    public void                         line(Zone z, Object v)
+    {
+        z.line(z.portray(v));
     }
 
 
     public void                         line(Zone z, Object v, Object ... other_arguments)
     {
-        if (other_arguments.length != 0) {
-            z.RAISE_runtime_exception("MessageFormatter_1__Simple.line: {0} arguments given (expected 1)",
-                                    1 + other_arguments.length);
-        }
-
-        z.line(z.portray(v));
+        z.RAISE_runtime_exception("should never get called");
     }
 
 

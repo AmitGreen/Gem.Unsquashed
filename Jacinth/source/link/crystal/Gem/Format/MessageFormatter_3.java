@@ -78,11 +78,11 @@ public class    MessageFormatter_3
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, Object v, Object ... other_arguments)
+    public String                       arrange(Zone z, Object v)
     {
         int                             expected = this.expected;
 
-        int                             actual   = 1 + other_arguments.length;
+        int                             actual   = 1;
 
         if (actual != expected) {
             z.RAISE_runtime_exception("MessageFormatter_3.arrange: {0} arguments given (expected {1})",
@@ -96,13 +96,31 @@ public class    MessageFormatter_3
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        if (expected == 1) {
-            a.select_1(builder, v);
-            b.select_1(builder, v);
-            c.select_1(builder, v);
+        a.select_1(builder, v);
+        b.select_1(builder, v);
+        c.select_1(builder, v);
 
-            return builder.finish__AND__recycle();
+        return builder.finish__AND__recycle();
+    }
+
+
+    public String                       arrange(Zone z, Object v, Object ... other_arguments)
+    {
+        int                             expected = this.expected;
+
+        int                             actual = 1 + other_arguments.length;
+
+        if (actual != expected) {
+            z.RAISE_runtime_exception("MessageFormatter_3.arrange: {0} arguments given (expected {1})",
+                                      actual,
+                                      expected);
         }
+
+        SegmentFormattable              a = this.a;
+        SegmentFormattable              b = this.b;
+        SegmentFormattable              c = this.c;
+
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         Object                          w = other_arguments[0];
 
@@ -121,6 +139,12 @@ public class    MessageFormatter_3
         c.select_3(builder, v, w, x);
 
         return builder.finish__AND__recycle();
+    }
+
+
+    public void                         line(Zone z, Object v)
+    {
+        z.line(this.arrange(z, v));
     }
 
 

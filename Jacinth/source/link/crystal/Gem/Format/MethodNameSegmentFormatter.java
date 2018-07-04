@@ -107,12 +107,6 @@ public class    MethodNameSegmentFormatter
     }
 
 
-    public String                       select_2(Zone z, String a, String b)
-    {
-        return this.method_name(z);
-    }
-
-
     public void                         select_3(Gem_StringBuilder builder, Object a, Object b, Object c)
     {
         final Zone                      z = builder.z;
@@ -129,15 +123,34 @@ public class    MethodNameSegmentFormatter
     }
 
 
-    public String                       select_5(Zone z, String a, String b, String c, String d, String e)
+    public void                         select_5(
+            Gem_StringBuilder                   builder,
+            Object                              a,
+            Object                              b,
+            Object                              c,
+            Object                              d,
+            Object                              e//,
+        )
     {
-        return this.method_name(z);
+        final Zone                      z = builder.z;
+
+        builder.append(this.method_name(z));
     }
 
 
-    public String                       select_many(Zone z, String[] arguments)
+    public void                         select_many(
+            Gem_StringBuilder                   builder,
+            Object                              a,
+            Object                              b,
+            Object                              c,
+            Object                              d,
+            Object                              e,
+            Object ...                          other_arguments//,
+        )
     {
-        return this.method_name(z);
+        final Zone                      z = builder.z;
+
+        builder.append(this.method_name(z));
     }
 
 

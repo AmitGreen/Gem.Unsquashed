@@ -69,12 +69,6 @@ public class    StringSegmentFormatter
     }
 
 
-    public String                       select_2(Zone z, String a, String b)
-    {
-        return this.s;
-    }
-
-
     public void                         select_3(Gem_StringBuilder builder, Object a, Object b, Object c)
     {
         builder.append(this.s);
@@ -87,15 +81,30 @@ public class    StringSegmentFormatter
     }
 
 
-    public String                       select_5(Zone z, String a, String b, String c, String d, String e)
+    public void                         select_5(
+            Gem_StringBuilder                   builder,
+            Object                              a,
+            Object                              b,
+            Object                              c,
+            Object                              d,
+            Object                              e//,
+        )
     {
-        return this.s;
+        builder.append(this.s);
     }
 
 
-    public String                       select_many(Zone z, String[] arguments)
+    public void                         select_many(
+            Gem_StringBuilder                   builder,
+            Object                              a,
+            Object                              b,
+            Object                              c,
+            Object                              d,
+            Object                              e,
+            Object ...                          other_arguments//,
+        )
     {
-        return this.s;
+        builder.append(this.s);
     }
 
 

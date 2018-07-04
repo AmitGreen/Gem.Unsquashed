@@ -40,6 +40,20 @@ public abstract class   OutputFunctions
     }
 
 
+    public static void                  line(Zone z, String format, Object v)
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(z, format);
+
+            Storehouse_MessageFormattable.insert(z, format, formattable);
+        }
+
+        formattable.line(z, v);
+    }
+
+
     public static void                  line(
             Zone                                z,
             String                              format,

@@ -11,12 +11,28 @@ import link.crystal.Gem.Core.Zone;
 
 public interface   SegmentFormattable
 {
-    String                              portray    (Zone z);
-    void                                select_1   (Gem_StringBuilder builder, Object a);
-    void                                select_2   (Gem_StringBuilder builder, Object a, Object b);
-    String                              select_2   (Zone z, String a, String b);
-    void                                select_3   (Gem_StringBuilder builder, Object a, Object b, Object c);
-    void                                select_4   (Gem_StringBuilder builder, Object a, Object b, Object c, Object d);
-    String                              select_5   (Zone z, String a, String b, String c, String d, String e);
-    String                              select_many(Zone z, String[] arguments);
+    String                              portray (Zone z);
+    void                                select_1(Gem_StringBuilder builder, Object a);
+    void                                select_2(Gem_StringBuilder builder, Object a, Object b);
+    void                                select_3(Gem_StringBuilder builder, Object a, Object b, Object c);
+    void                                select_4(Gem_StringBuilder builder, Object a, Object b, Object c, Object d);
+
+    void                                select_5(
+            Gem_StringBuilder                   builder,
+            Object                              a,
+            Object                              b,
+            Object                              c,
+            Object                              d,
+            Object                              e//,
+        );
+
+    void                                select_many(
+            Gem_StringBuilder                   builder,
+            Object                              a,
+            Object                              b,
+            Object                              c,
+            Object                              d,
+            Object                              e,
+            Object ...                          other_arguments//,
+        );
 }
