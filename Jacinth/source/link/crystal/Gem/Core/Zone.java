@@ -194,7 +194,52 @@ public class    Zone
             Object                              v,
             Object                              w,
             Object                              x,
-            Object                              y,
+            Object                              y4,
+            Object                              y5//,
+        )
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        return formattable.arrange(this, 2, v, w, x, y4, y5);
+    }
+
+
+    public String                       arrange(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6//,
+        )
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        return formattable.arrange(this, 2, v, w, x, y4, y5, y6);
+    }
+
+    public String                       arrange(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6,
+            Object                              y7,
             Object ...                          other_arguments//,
         )
     {
@@ -206,7 +251,7 @@ public class    Zone
             Storehouse_MessageFormattable.insert(this, format, formattable);
         }
 
-        return formattable.arrange(this, 2, v, w, x, y, other_arguments);
+        return formattable.arrange(this, 2, v, w, x, y4, y5, y6, y7, other_arguments);
     }
 
 
@@ -287,13 +332,131 @@ public class    Zone
 
     public void                         line(String format, Object v)
     {
-        OutputFunctions.line(this, 2, format, v);
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        String                          s = formattable.arrange(this, 2, v);
+
+        OutputFunctions.line(this, s);
     }
 
 
-    public void                         line(String format, Object v, Object ... other_arguments)
+    public void                         line(String format, Object v, Object w)
     {
-        OutputFunctions.line(this, format, v, other_arguments);
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        String                          s = formattable.arrange(this, 2, v, w);
+
+        OutputFunctions.line(this, s);
+    }
+
+
+    public void                         line(String format, Object v, Object w, Object x)
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        String                          s = formattable.arrange(this, 2, v, w, x);
+
+        OutputFunctions.line(this, s);
+    }
+
+
+    public void                         line(String format, Object v, Object w, Object x, Object y)
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        String                          s = formattable.arrange(this, 2, v, w, x, y);
+
+        OutputFunctions.line(this, s);
+    }
+
+
+    public void                         line(String format, Object v, Object w, Object x, Object y4, Object y5)
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        String                          s = formattable.arrange(this, 2, v, w, x, y4, y5);
+
+        OutputFunctions.line(this, s);
+    }
+
+
+    public void                         line(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6//,
+        )
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        String                          s = formattable.arrange(this, 2, v, w, x, y4, y5, y6);
+
+        OutputFunctions.line(this, s);
+    }
+
+
+    public void                         line(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6,
+            Object                              y7,
+            Object ...                          other_arguments//,
+        )
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        String                          s = formattable.arrange(this, 2, v, w, x, y4, y5, y6, y7, other_arguments);
+
+        OutputFunctions.line(this, s);
     }
 
 

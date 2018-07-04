@@ -168,18 +168,14 @@ public class    MessageFormatter_5
             Object                              w,
             Object                              x,
             Object                              y4,
-            Object ...                          other_arguments//,
+            Object                              y5//,
         )
     {
-        int                             actual = 4 + other_arguments.length;
-
-        if (this.expected != actual) {
-            z.RAISE_runtime_exception("{} arguments given (expected {})", actual, this.expected);
+        if (this.expected != 5) {
+            z.RAISE_runtime_exception("5 arguments given (expected {})", this.expected);
         }
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
-
-        Object                          y5 = other_arguments[1];
 
         this.a.select_5(builder, v, w, x, y4, y5);
         this.b.select_5(builder, v, w, x, y4, y5);

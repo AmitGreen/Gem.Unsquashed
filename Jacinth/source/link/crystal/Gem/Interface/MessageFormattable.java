@@ -15,6 +15,7 @@ public interface   MessageFormattable
     String                              arrange(Zone z, int depth, Object v, Object w);
     String                              arrange(Zone z, int depth, Object v, Object w, Object x);
     String                              arrange(Zone z, int depth, Object v, Object w, Object x, Object y);
+    String                              arrange(Zone z, int depth, Object v, Object w, Object x, Object y4, Object y5);
 
     String                              arrange(
             Zone                                z,
@@ -22,7 +23,21 @@ public interface   MessageFormattable
             Object                              v,
             Object                              w,
             Object                              x,
-            Object                              y,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6//,
+        );
+
+    String                              arrange(
+            Zone                                z,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6,
+            Object                              y7,
             Object ...                          other_arguments//,
         );
 
@@ -30,6 +45,7 @@ public interface   MessageFormattable
     void                                line(Zone z, int depth, Object v, Object w);
     void                                line(Zone z, int depth, Object v, Object w, Object x);
     void                                line(Zone z, int depth, Object v, Object w, Object x, Object y);
+    void                                line(Zone z, int depth, Object v, Object w, Object x, Object y4, Object y5);
 
     void                                line(
             Zone                                z,
@@ -37,7 +53,21 @@ public interface   MessageFormattable
             Object                              v,
             Object                              w,
             Object                              x,
-            Object                              y,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6//,
+        );
+
+    void                                line(
+            Zone                                z,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6,
+            Object                              y7,
             Object ...                          other_arguments//,
         );
 
