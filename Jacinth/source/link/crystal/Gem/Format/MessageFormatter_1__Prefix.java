@@ -63,10 +63,16 @@ public class    MessageFormatter_1__Prefix
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object ... other_arguments)
+    public String                       arrange(Zone z, int depth, Object v, Object w)
     {
-        z.RAISE_runtime_exception("should never get called");
+        z.INVALID_ROUTINE();
+        return null;
+    }
 
+
+    public String                       arrange(Zone z, int depth, Object v, Object w, Object ... other_arguments)
+    {
+        z.INVALID_ROUTINE();
         return null;
     }
 

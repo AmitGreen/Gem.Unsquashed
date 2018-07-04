@@ -147,7 +147,7 @@ public class    Zone
     }
 
 
-    public String                       arrange(String format, Object v, Object ... other_arguments)
+    public String                       arrange(String format, Object v, Object w)
     {
         MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
 
@@ -157,7 +157,21 @@ public class    Zone
             Storehouse_MessageFormattable.insert(this, format, formattable);
         }
 
-        return formattable.arrange(this, 2, v, other_arguments);
+        return formattable.arrange(this, 2, v, w);
+    }
+
+
+    public String                       arrange(String format, Object v, Object w, Object ... other_arguments)
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        return formattable.arrange(this, 2, v, w, other_arguments);
     }
 
 
@@ -257,6 +271,12 @@ public class    Zone
     public String                       quote_string(String s)
     {
         return PortrayFunctions.quote_string(this, s);
+    }
+
+
+    public void                         INVALID_ROUTINE()
+    {
+        ExceptionFunctions.RAISE_runtime_exception(this, "invalid routine");
     }
 
 

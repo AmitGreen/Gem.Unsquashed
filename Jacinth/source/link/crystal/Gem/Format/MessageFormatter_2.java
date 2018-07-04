@@ -68,9 +68,7 @@ public class    MessageFormatter_2
         int                             expected = (a == b ? 1 : 2);
 
         if (actual != expected) {
-            z.RAISE_runtime_exception("MessageFormatter_2.arrange: {0} arguments given (expected {1})",
-                                    actual,
-                                    expected);
+            z.RAISE_runtime_exception("{0} arguments given (expected {1})", actual, expected);
         }
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
@@ -84,28 +82,24 @@ public class    MessageFormatter_2
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object ... other_arguments)
+    public String                       arrange(Zone z, int depth, Object v, Object w)
     {
         SegmentFormattable              a = this.a;
         SegmentFormattable              b = this.b;
 
-        int                             actual   = 1 + other_arguments.length;
-        int                             expected = 2;
-
-        if (actual != expected) {
-            z.RAISE_runtime_exception("MessageFormatter_2.arrange: {0} arguments given (expected {1})",
-                                    actual,
-                                    expected);
-        }
-
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
-
-        Object                          w = other_arguments[0];
 
         a.select_2(builder, v, w);
         b.select_2(builder, v, w);
 
         return builder.finish__AND__recycle();
+    }
+
+
+    public String                       arrange(Zone z, int depth, Object v, Object w, Object ... other_arguments)
+    {
+        z.INVALID_ROUTINE();
+        return null;
     }
 
 

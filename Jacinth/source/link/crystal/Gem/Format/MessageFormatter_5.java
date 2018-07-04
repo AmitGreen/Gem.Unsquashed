@@ -88,35 +88,43 @@ public class    MessageFormatter_5
     //
     public String                       arrange(Zone z, int depth, Object v)
     {
-        int                             expected = this.expected;
-
-        int                             actual = 1;
-
-        if (actual != expected) {
-            z.RAISE_runtime_exception("{0} arguments given (expected {1})", actual, expected);
+        if (this.expected != 1) {
+            z.RAISE_runtime_exception("1 argument given (expected {})", this.expected);
         }
-
-        SegmentFormattable              a = this.a;
-        SegmentFormattable              b = this.b;
-        SegmentFormattable              c = this.c;
-        SegmentFormattable              d = this.d;
-        SegmentFormattable              e = this.e;
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         depth += 1;
 
-        a.choose(builder, depth, v);
-        b.choose(builder, depth, v);
-        c.choose(builder, depth, v);
-        d.choose(builder, depth, v);
-        e.choose(builder, depth, v);
+        this.a.choose(builder, depth, v);
+        this.b.choose(builder, depth, v);
+        this.c.choose(builder, depth, v);
+        this.d.choose(builder, depth, v);
+        this.e.choose(builder, depth, v);
 
         return builder.finish__AND__recycle();
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object ... other_arguments)
+    public String                       arrange(Zone z, int depth, Object v, Object w)
+    {
+        if (this.expected != 2) {
+            z.RAISE_runtime_exception("2 arguments given (expected {})", this.expected);
+        }
+
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+
+        this.a.select_2(builder, v, w);
+        this.b.select_2(builder, v, w);
+        this.c.select_2(builder, v, w);
+        this.d.select_2(builder, v, w);
+        this.e.select_2(builder, v, w);
+
+        return builder.finish__AND__recycle();
+    }
+
+
+    public String                       arrange(Zone z, int depth, Object v, Object w, Object ... other_arguments)
     {
         int                             expected = this.expected;
 
@@ -134,8 +142,6 @@ public class    MessageFormatter_5
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        Object                          w = other_arguments[0];
-
         if (expected == 2) {
             a.select_2(builder, v, w);
             b.select_2(builder, v, w);
@@ -146,7 +152,7 @@ public class    MessageFormatter_5
             return builder.finish__AND__recycle();
         }
 
-        Object                          x = other_arguments[1];
+        Object                          x = other_arguments[0];
 
         if (expected == 3) {
             a.select_3(builder, v, w, x);
@@ -158,7 +164,7 @@ public class    MessageFormatter_5
             return builder.finish__AND__recycle();
         }
 
-        Object                          y = other_arguments[2];
+        Object                          y = other_arguments[1];
 
         if (expected == 4) {
             a.select_4(builder, v, w, x, y);
@@ -170,7 +176,7 @@ public class    MessageFormatter_5
             return builder.toString();
         }
 
-        Object                          z5 = other_arguments[3];
+        Object                          z5 = other_arguments[2];
 
         a.select_5(builder, v, w, x, y, z5);
         b.select_5(builder, v, w, x, y, z5);

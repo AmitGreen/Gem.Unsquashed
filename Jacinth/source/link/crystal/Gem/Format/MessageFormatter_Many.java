@@ -91,11 +91,35 @@ public class    MessageFormatter_Many
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object ... other_arguments)
+    public String                       arrange(Zone z, int depth, Object v, Object w)
     {
         int                             expected = this.expected;
 
-        int                             actual = 1 + other_arguments.length;
+        if (this.expected != 2) {
+            z.RAISE_runtime_exception("2 arguments given (expected {0})", expected);
+        }
+
+        SegmentFormattable[]            segment_many = this.segment_many;
+
+        int                             segment_total = segment_many.length;
+
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+
+        for (int                    i = 0; i < segment_total; i ++) {
+            SegmentFormattable      segment = segment_many[i];
+
+            segment.select_2(builder, v, w);
+        }
+
+        return builder.finish__AND__recycle();
+    }
+
+
+    public String                       arrange(Zone z, int depth, Object v, Object w, Object ... other_arguments)
+    {
+        int                             expected = this.expected;
+
+        int                             actual = 2 + other_arguments.length;
 
         if (actual != expected) {
             z.RAISE_runtime_exception("{0} arguments given (expected {1})", actual, expected);
@@ -107,8 +131,6 @@ public class    MessageFormatter_Many
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        Object                          w = other_arguments[0];
-
         if (expected == 2) {
             for (int                    i = 0; i < segment_total; i ++) {
                 SegmentFormattable      segment = segment_many[i];
@@ -119,7 +141,7 @@ public class    MessageFormatter_Many
             return builder.finish__AND__recycle();
         }
 
-        Object                          x = other_arguments[1];
+        Object                          x = other_arguments[0];
 
         if (expected == 3) {
             for (int                    i = 0; i < segment_total; i ++) {
@@ -131,7 +153,7 @@ public class    MessageFormatter_Many
             return builder.finish__AND__recycle();
         }
 
-        Object                          y = other_arguments[2];
+        Object                          y = other_arguments[1];
 
         if (expected == 4) {
             for (int                    i = 0; i < segment_total; i ++) {
@@ -143,7 +165,7 @@ public class    MessageFormatter_Many
             return builder.toString();
         }
 
-        Object                          z5 = other_arguments[3];
+        Object                          z5 = other_arguments[2];
 
         if (expected == 5) {
             for (int                    i = 0; i < segment_total; i ++) {
