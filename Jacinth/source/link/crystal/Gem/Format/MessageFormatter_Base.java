@@ -35,7 +35,29 @@ public abstract class   MessageFormatter_Base
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object w, Object ... other_arguments)
+    public String                       arrange(Zone z, int depth, Object v, Object w, Object x)
+    {
+        z.INVALID_ROUTINE();
+        return null;
+    }
+
+
+    public String                       arrange(Zone z, int depth, Object v, Object w, Object x, Object y)
+    {
+        z.INVALID_ROUTINE();
+        return null;
+    }
+
+    
+    public String                       arrange(
+            Zone                                z,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y,
+            Object ...                          other_arguments//,
+        )
     {
         z.INVALID_ROUTINE();
         return null;
@@ -48,8 +70,34 @@ public abstract class   MessageFormatter_Base
     }
 
 
-    public void                         line(Zone z, int depth, Object v, Object ... other_arguments)
+    public void                         line(Zone z, int depth, Object v, Object w)
     {
-        z.line(this.arrange(z, depth + 1, v, other_arguments));
+        z.line(this.arrange(z, depth + 1, v, w));
+    }
+
+
+    public void                         line(Zone z, int depth, Object v, Object w, Object x)
+    {
+        z.line(this.arrange(z, depth + 1, v, w, x));
+    }
+
+
+    public void                         line(Zone z, int depth, Object v, Object w, Object x, Object y)
+    {
+        z.line(this.arrange(z, depth + 1, v, w, x, y));
+    }
+
+
+    public void                         line(
+            Zone                                z,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y,
+            Object ...                          other_arguments//,
+        )
+    {
+        z.line(this.arrange(z, depth + 1, v, w, x, y, other_arguments));
     }
 }

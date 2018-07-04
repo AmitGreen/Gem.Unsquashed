@@ -119,49 +119,35 @@ public class    MessageFormatter_4
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object w, Object ... other_arguments)
+    public String                       arrange(Zone z, int depth, Object v, Object w, Object x)
     {
-        int                             expected = this.expected;
-
-        int                             actual   = 1 + other_arguments.length;
-
-        if (actual != expected) {
-            z.RAISE_runtime_exception("{0} arguments given (expected {1})", actual, expected);
+        if (this.expected != 3) {
+            z.RAISE_runtime_exception("3 arguments given (expected {})", this.expected);
         }
-
-        SegmentFormattable              a = this.a;
-        SegmentFormattable              b = this.b;
-        SegmentFormattable              c = this.c;
-        SegmentFormattable              d = this.d;
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        if (expected == 2) {
-            a.select_2(builder, v, w);
-            b.select_2(builder, v, w);
-            c.select_2(builder, v, w);
-            d.select_2(builder, v, w);
+        this.a.select_3(builder, v, w, x);
+        this.b.select_3(builder, v, w, x);
+        this.c.select_3(builder, v, w, x);
+        this.d.select_3(builder, v, w, x);
 
-            return builder.finish__AND__recycle();
+        return builder.finish__AND__recycle();
+    }
+
+
+    public String                       arrange(Zone z, int depth, Object v, Object w, Object x, Object y)
+    {
+        if (this.expected != 4) {
+            z.RAISE_runtime_exception("4 arguments given (expected {0})", this.expected);
         }
 
-        Object                          x = other_arguments[0];
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        if (expected == 3) {
-            a.select_3(builder, v, w, x);
-            b.select_3(builder, v, w, x);
-            c.select_3(builder, v, w, x);
-            d.select_3(builder, v, w, x);
-
-            return builder.finish__AND__recycle();
-        }
-
-        Object                          y = other_arguments[1];
-
-        a.select_4(builder, v, w, x, y);
-        b.select_4(builder, v, w, x, y);
-        c.select_4(builder, v, w, x, y);
-        d.select_4(builder, v, w, x, y);
+        this.a.select_4(builder, v, w, x, y);
+        this.b.select_4(builder, v, w, x, y);
+        this.c.select_4(builder, v, w, x, y);
+        this.d.select_4(builder, v, w, x, y);
 
         return builder.finish__AND__recycle();
     }

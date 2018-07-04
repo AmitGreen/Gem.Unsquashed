@@ -110,14 +110,10 @@ public class    MessageFormatter_Many
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object w, Object ... other_arguments)
+    public String                       arrange(Zone z, int depth, Object v, Object w, Object x)
     {
-        int                             expected = this.expected;
-
-        int                             actual = 2 + other_arguments.length;
-
-        if (actual != expected) {
-            z.RAISE_runtime_exception("{0} arguments given (expected {1})", actual, expected);
+        if (this.expected != 3) {
+            z.RAISE_runtime_exception("3 arguments given (expected {})", this.expected);
         }
 
         SegmentFormattable[]            segment_many = this.segment_many;
@@ -126,47 +122,69 @@ public class    MessageFormatter_Many
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        if (expected == 2) {
-            for (int                    i = 0; i < segment_total; i ++) {
-                SegmentFormattable      segment = segment_many[i];
+        for (int                        i = 0; i < segment_total; i ++) {
+            SegmentFormattable          segment = segment_many[i];
 
-                segment.select_2(builder, v, w);
-            }
-
-            return builder.finish__AND__recycle();
+            segment.select_3(builder, v, w, x);
         }
 
-        Object                          x = other_arguments[0];
+        return builder.finish__AND__recycle();
+    }
 
-        if (expected == 3) {
-            for (int                    i = 0; i < segment_total; i ++) {
-                SegmentFormattable      segment = segment_many[i];
 
-                segment.select_3(builder, v, w, x);
-            }
-
-            return builder.finish__AND__recycle();
+    public String                       arrange(Zone z, int depth, Object v, Object w, Object x, Object y)
+    {
+        if (this.expected != 4) {
+            z.RAISE_runtime_exception("4 arguments given (expected {})", this.expected);
         }
 
-        Object                          y = other_arguments[1];
+        SegmentFormattable[]            segment_many = this.segment_many;
 
-        if (expected == 4) {
-            for (int                    i = 0; i < segment_total; i ++) {
-                SegmentFormattable      segment = segment_many[i];
+        int                             segment_total = segment_many.length;
 
-                segment.select_4(builder, v, w, x, y);
-            }
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-            return builder.toString();
+        for (int                        i = 0; i < segment_total; i ++) {
+            SegmentFormattable          segment = segment_many[i];
+
+            segment.select_4(builder, v, w, x, y);
         }
 
-        Object                          z5 = other_arguments[2];
+        return builder.finish__AND__recycle();
+    }
+
+
+    public String                       arrange(
+            Zone                                z,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object ...                          other_arguments//,
+        )
+    {
+        int                             expected = this.expected;
+
+        int                             actual = 4 + other_arguments.length;
+
+        if (this.expected != actual) {
+            z.RAISE_runtime_exception("{} arguments given (expected {})", actual, this.expected);
+        }
+
+        SegmentFormattable[]            segment_many = this.segment_many;
+
+        int                             segment_total = segment_many.length;
+
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+
+        Object                          y5 = other_arguments[0];
 
         if (expected == 5) {
             for (int                    i = 0; i < segment_total; i ++) {
                 SegmentFormattable      segment = segment_many[i];
 
-                segment.select_5(builder, v, w, x, y, z5);
+                segment.select_5(builder, v, w, x, y4, y5);
             }
 
 
@@ -176,13 +194,13 @@ public class    MessageFormatter_Many
         Object[]                        adjusted_other_arguments = new Object[expected - 5];
 
         for (int                        i = 5; i < expected; i ++) {
-            adjusted_other_arguments[i - 5] = other_arguments[i - 1];
+            adjusted_other_arguments[i - 5] = other_arguments[i - 4];
         }
 
         for (int                        i = 0; i < segment_total; i ++) {
             SegmentFormattable          segment = segment_many[i];
 
-            segment.select_many(builder, v, w, x, y, z5, adjusted_other_arguments);
+            segment.select_many(builder, v, w, x, y4, y5, adjusted_other_arguments);
         }
 
         return builder.finish__AND__recycle();

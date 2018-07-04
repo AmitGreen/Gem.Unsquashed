@@ -161,7 +161,7 @@ public class    Zone
     }
 
 
-    public String                       arrange(String format, Object v, Object w, Object ... other_arguments)
+    public String                       arrange(String format, Object v, Object w, Object x)
     {
         MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
 
@@ -171,7 +171,42 @@ public class    Zone
             Storehouse_MessageFormattable.insert(this, format, formattable);
         }
 
-        return formattable.arrange(this, 2, v, w, other_arguments);
+        return formattable.arrange(this, 2, v, w, x);
+    }
+
+
+    public String                       arrange(String format, int depth, Object v, Object w, Object x, Object y)
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        return formattable.arrange(this, 2, v, w, x, y);
+    }
+
+
+    public String                       arrange(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y,
+            Object ...                          other_arguments//,
+        )
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        return formattable.arrange(this, 2, v, w, x, y, other_arguments);
     }
 
 

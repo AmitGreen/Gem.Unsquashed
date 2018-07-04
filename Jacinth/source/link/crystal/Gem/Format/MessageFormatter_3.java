@@ -99,12 +99,8 @@ public class    MessageFormatter_3
 
     public String                       arrange(Zone z, int depth, Object v, Object w)
     {
-        int                             expected = this.expected;
-
-        int                             actual = 2;
-
-        if (actual != expected) {
-            z.RAISE_runtime_exception("{0} arguments given (expected {1})", actual, expected);
+        if (this.expected != 2) {
+            z.RAISE_runtime_exception("2 arguments given (expected {})", this.expected);
         }
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
@@ -117,35 +113,17 @@ public class    MessageFormatter_3
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object w, Object ... other_arguments)
+    public String                       arrange(Zone z, int depth, Object v, Object w, Object x)
     {
-        int                             expected = this.expected;
-
-        int                             actual = 1 + other_arguments.length;
-
-        if (actual != expected) {
-            z.RAISE_runtime_exception("{0} arguments given (expected {1})", actual, expected);
+        if (this.expected != 3) {
+            z.RAISE_runtime_exception("3 arguments given (expected {})", this.expected);
         }
-
-        SegmentFormattable              a = this.a;
-        SegmentFormattable              b = this.b;
-        SegmentFormattable              c = this.c;
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        if (expected == 2) {
-            a.select_2(builder, v, w);
-            b.select_2(builder, v, w);
-            c.select_2(builder, v, w);
-
-            return builder.finish__AND__recycle();
-        }
-
-        Object                          x = other_arguments[0];
-
-        a.select_3(builder, v, w, x);
-        b.select_3(builder, v, w, x);
-        c.select_3(builder, v, w, x);
+        this.a.select_3(builder, v, w, x);
+        this.b.select_3(builder, v, w, x);
+        this.c.select_3(builder, v, w, x);
 
         return builder.finish__AND__recycle();
     }
