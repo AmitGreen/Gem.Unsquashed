@@ -8,13 +8,14 @@ import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Format.MessageFormatter_Base;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.Support.OutputFunctions;
 
 
 public class    MessageFormatter_1__Suffix
-    extends     Gem_Object<Inspection>
+    extends     MessageFormatter_Base
+//  extends     Gem_Object<Inspection>
 //  extends     Object
     implements  MessageFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
@@ -72,42 +73,6 @@ public class    MessageFormatter_1__Suffix
         }
 
         return prefix_0 + first + suffix;
-    }
-
-
-    public String                       arrange(Zone z, int depth, Object v, Object w)
-    {
-        z.INVALID_ROUTINE();
-        return null;
-    }
-
-
-    public String                       arrange(Zone z, int depth, Object v, Object w, Object ... other_arguments)
-    {
-        z.INVALID_ROUTINE();
-        return null;
-    }
-
-
-    public void                         line(Zone z, int depth, Object v)
-    {
-        String                          prefix_0 = this.prefix_0;
-        String                          suffix   = this.suffix;
-
-        String                          first = z.portray(v);
-
-        if (prefix_0 == null) {
-            z.line(first + suffix);
-            return;
-        }
-
-        z.line(prefix_0 + first + suffix);
-    }
-
-
-    public void                         line(Zone z, int depth, Object v, Object ... other_arguments)
-    {
-        z.RAISE_runtime_exception("should never get called");
     }
 
 

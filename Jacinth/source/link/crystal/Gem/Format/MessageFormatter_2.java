@@ -9,14 +9,15 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Format.MessageFormatter_Base;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.Support.OutputFunctions;
 
 
 public class    MessageFormatter_2
-    extends     Gem_Object<Inspection>
+    extends     MessageFormatter_Base
+//  extends     Gem_Object<Inspection>
 //  extends     Object
     implements  MessageFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
@@ -93,25 +94,6 @@ public class    MessageFormatter_2
         b.select_2(builder, v, w);
 
         return builder.finish__AND__recycle();
-    }
-
-
-    public String                       arrange(Zone z, int depth, Object v, Object w, Object ... other_arguments)
-    {
-        z.INVALID_ROUTINE();
-        return null;
-    }
-
-
-    public void                         line(Zone z, int depth, Object v)
-    {
-        z.line(this.arrange(z, depth + 1, v));
-    }
-
-
-    public void                         line(Zone z, int depth, Object v, Object ... other_arguments)
-    {
-        z.line(this.arrange(z, depth + 1, v, other_arguments));
     }
 
 

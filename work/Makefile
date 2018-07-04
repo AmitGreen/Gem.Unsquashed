@@ -87,6 +87,7 @@ JACINTH_FILES = \
     $J/Gem/Format/MessageFormatter_3.java \
     $J/Gem/Format/MessageFormatter_4.java \
     $J/Gem/Format/MessageFormatter_5.java \
+    $J/Gem/Format/MessageFormatter_Base.java      \
     $J/Gem/Format/MessageFormatter_Many.java \
     $J/Gem/Format/MethodNameSegmentFormatter.java \
     $J/Gem/Format/ParseFormat.java \
@@ -300,7 +301,8 @@ clean:
 	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1c.py m1m.py m1p.java m1s.java m1x.java
-	rm -f   m2.java m2c.py m3.java m2m.py m3m.py m4.java m5.java map.py mc.py md.py me.py mm.java mm.py mn.java mn.py
+	rm -f   m2.java m2c.py m3.java m2m.py m3m.py m4.java m5.java
+	rm -f   map.py mb.java mc.py md.py me.py mm.java mm.py mn.java mn.py
 	rm -f o.py oc.py od.py oe.py of.java om.py
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py
 	rm -f   pel.py pf.py pf.java pj.py pk.py pkc.py pl.py pmo.py pn.py ps.py psc.java ps3.py px.java
@@ -506,6 +508,7 @@ links:
 	ln -s ../Melanite/Core.py                                                   m2c.py
 	ln -s ../Melanite/Main.py                                                   m2m.py
 	ln -s ../Gem/Map.py                                                         map.py
+	ln -s $J/Gem/Format/MessageFormatter_Base.java                              mb.java
 	ln -s ../Melanite/Child.py                                                  mc.py
 	ln -s ../Melanite/Development.py                                            md.py
 	ln -s ../Gem/Method.py                                                      me.py

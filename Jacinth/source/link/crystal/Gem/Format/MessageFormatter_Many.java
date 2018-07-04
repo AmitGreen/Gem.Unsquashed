@@ -9,14 +9,15 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Format.MessageFormatter_Base;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.Support.OutputFunctions;
 
 
 public class    MessageFormatter_Many
-    extends     Gem_Object<Inspection>
+    extends     MessageFormatter_Base
+//  extends     Gem_Object<Inspection>
 //  extends     Object
     implements  MessageFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
@@ -65,12 +66,8 @@ public class    MessageFormatter_Many
     //
     public String                       arrange(Zone z, int depth, Object v)
     {
-        int                             expected = this.expected;
-
-        int                             actual = 1;
-
-        if (actual != expected) {
-            z.RAISE_runtime_exception("{0} arguments given (expected {1})", actual, expected);
+        if (this.expected != 1) {
+            z.RAISE_runtime_exception("1 argument given (expected {})", this.expected);
         }
 
         SegmentFormattable[]            segment_many = this.segment_many;
@@ -93,10 +90,8 @@ public class    MessageFormatter_Many
 
     public String                       arrange(Zone z, int depth, Object v, Object w)
     {
-        int                             expected = this.expected;
-
         if (this.expected != 2) {
-            z.RAISE_runtime_exception("2 arguments given (expected {0})", expected);
+            z.RAISE_runtime_exception("2 arguments given (expected {})", this.expected);
         }
 
         SegmentFormattable[]            segment_many = this.segment_many;
@@ -191,18 +186,6 @@ public class    MessageFormatter_Many
         }
 
         return builder.finish__AND__recycle();
-    }
-
-
-    public void                         line(Zone z, int depth, Object v)
-    {
-        z.line(this.arrange(z, depth + 1, v));
-    }
-
-
-    public void                         line(Zone z, int depth, Object v, Object ... other_arguments)
-    {
-        z.line(this.arrange(z, depth + 1, v, other_arguments));
     }
 
 
