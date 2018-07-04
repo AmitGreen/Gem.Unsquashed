@@ -10,14 +10,18 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Format.MessageFormatter_Base;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 
 
 public class    MethodNameSegmentFormatter
-    extends     Gem_Object<Inspection>
+    extends     MessageFormatter_Base
+//  extends     Gem_Object<Inspection>
 //  extends     Object
-    implements  SegmentFormattable,
+    implements  MessageFormattable,
+                SegmentFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
 {
     private static Inspection           inspection = Inspection.create("Gem.Format.MethodNameSegmentFormatter");
@@ -119,6 +123,19 @@ public class    MethodNameSegmentFormatter
     public Inspection                   inspect()
     {
         return /*static*/ this.inspection;
+    }
+
+
+    //
+    //  Interface MessageFormattable
+    //
+    public String                       arrange(Zone z, int depth)
+    {
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+
+        this.method_name(builder, depth + 1);
+
+        return builder.finish__AND__recycle();
     }
 
 

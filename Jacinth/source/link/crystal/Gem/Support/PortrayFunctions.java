@@ -37,7 +37,7 @@ public abstract class   PortrayFunctions
         }
 
         if (v_class == String$class) {
-            return (String) v;
+            return PortrayFunctions.quote_string(z, (String) v);
         }
 
         if (v_class == Thread$class) {

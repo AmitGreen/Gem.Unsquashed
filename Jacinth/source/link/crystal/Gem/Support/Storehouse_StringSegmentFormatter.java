@@ -87,7 +87,7 @@ public class    Storehouse_StringSegmentFormatter
         StringSegmentFormatter          r = singleton.get(s);
 
         if (r != null) {
-            return null;
+            return r;
         }
 
         r = StringSegmentFormatter.create__ALLY__Storehouse_StringSegmentFormatter(z, s);

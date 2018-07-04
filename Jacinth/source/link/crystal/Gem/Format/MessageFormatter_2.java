@@ -28,6 +28,7 @@ public class    MessageFormatter_2
     //
     //  Members
     //
+    private final int                   expected;
     private SegmentFormattable          a;
     private SegmentFormattable          b;
 
@@ -35,16 +36,25 @@ public class    MessageFormatter_2
     //
     //  Constructor & Factory
     //
-    private                             MessageFormatter_2(SegmentFormattable a, SegmentFormattable b)
+    private                             MessageFormatter_2(int expected, SegmentFormattable a, SegmentFormattable b)
     {
-        this.a = a;
-        this.b = b;
+        this.expected = expected;
+        this.a        = a;
+        this.b        = b;
     }
 
 
-    static public MessageFormatter_2    create(Zone z, SegmentFormattable a, SegmentFormattable b)
+    static public MessageFormatter_2    create(Zone z, int expected, SegmentFormattable a, SegmentFormattable b)
     {
-        return new MessageFormatter_2(a, b);
+        if (a == null) {
+            z.RUNTIME("`a` == null");
+        }
+
+        if (b == null) {
+            z.RUNTIME("`b` == null");
+        }
+
+        return new MessageFormatter_2(expected, a, b);
     }
 
 
@@ -60,24 +70,35 @@ public class    MessageFormatter_2
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, int depth, Object v)
+    public String                       arrange(Zone z, int depth)
     {
-        SegmentFormattable              a = this.a;
-        SegmentFormattable              b = this.b;
-
-        int                             actual   = 1;
-        int                             expected = (a == b ? 1 : 2);
-
-        if (actual != expected) {
-            z.RUNTIME("{} arguments given (expected {})", actual, expected);
+        if (this.expected != 0) {
+            z.RUNTIME("0 arguments given (expected {})", this.expected);
         }
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         depth += 1;
 
-        a.choose(builder, depth, v);
-        b.choose(builder, depth, v);
+        this.a.choose(builder, depth);
+        this.b.choose(builder, depth);
+
+        return builder.finish__AND__recycle();
+    }
+
+
+    public String                       arrange(Zone z, int depth, Object v)
+    {
+        if (this.expected != 1) {
+            z.RUNTIME("1 argument given (expected {})", this.expected);
+        }
+
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+
+        depth += 1;
+
+        this.a.choose(builder, depth, v);
+        this.b.choose(builder, depth, v);
 
         return builder.finish__AND__recycle();
     }
@@ -85,15 +106,16 @@ public class    MessageFormatter_2
 
     public String                       arrange(Zone z, int depth, Object v, Object w)
     {
-        SegmentFormattable              a = this.a;
-        SegmentFormattable              b = this.b;
+        if (this.expected != 2) {
+            z.RUNTIME("2 arguments given (expected {})", this.expected);
+        }
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         depth += 1;
 
-        a.choose(builder, depth, v, w);
-        b.choose(builder, depth, v, w);
+        this.a.choose(builder, depth, v, w);
+        this.b.choose(builder, depth, v, w);
 
         return builder.finish__AND__recycle();
     }

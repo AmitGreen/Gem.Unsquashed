@@ -135,6 +135,20 @@ public class    Zone
     //
     //  Public
     //
+    public String                       arrange(String format)
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        return formattable.arrange(this, 2);
+    }
+
+
     public String                       arrange(String format, Object v)
     {
         MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
@@ -326,8 +340,18 @@ public class    Zone
     }
 
 
-    public void                         line(String s)
+    public void                         line(String format)
     {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(this, format);
+
+            Storehouse_MessageFormattable.insert(this, format, formattable);
+        }
+
+        String                          s = formattable.arrange(this, 2);
+
         standard_output.println(s);
     }
 

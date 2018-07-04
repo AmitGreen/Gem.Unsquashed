@@ -22,9 +22,15 @@ public class    Main
 
         circle.skew(z);
 
+        z.line("{+}");
+        z.line("{}", "{}");
         z.line("{+}: test {}", 7);
+        z.line("that: {+}");
+        z.line("that: {}", "hi");
+        z.line("that: {0}", "bye");
+        z.line("prefixl {0} suffix", "middle");
 
-        if (false) {
+        if (true) {
             Storehouse_ArgumentSegmentFormatter.dump(z);
             Storehouse_MessageFormattable      .dump(z);
             Storehouse_String                  .dump(z);

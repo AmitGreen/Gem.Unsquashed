@@ -81,7 +81,6 @@ JACINTH_FILES = \
     $J/Gem/Core/Zone.java \
     $J/Gem/Format/ArgumentSegmentFormatter.java \
     $J/Gem/Format/MessageFormatter_1__Prefix.java \
-    $J/Gem/Format/MessageFormatter_1__Simple.java \
     $J/Gem/Format/MessageFormatter_1__Suffix.java \
     $J/Gem/Format/MessageFormatter_1.java \
     $J/Gem/Format/MessageFormatter_2.java \
@@ -500,7 +499,6 @@ links:
 	ln -s ../Marble/Core.py                                                     m1c.py
 	ln -s ../Marble/Main.py                                                     m1m.py
 	ln -s $J/Gem/Format/MessageFormatter_1__Prefix.java                         m1p.java
-	ln -s $J/Gem/Format/MessageFormatter_1__Simple.java                         m1s.java
 	ln -s $J/Gem/Format/MessageFormatter_1__Suffix.java                         m1x.java
 	ln -s $J/Gem/Format/MessageFormatter_2.java                                 m2.java
 	ln -s $J/Gem/Format/MessageFormatter_3.java                                 m3.java

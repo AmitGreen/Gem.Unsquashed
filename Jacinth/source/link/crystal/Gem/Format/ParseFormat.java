@@ -12,8 +12,8 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Format.ArgumentSegmentFormatter;
 import link.crystal.Gem.Format.MessageFormatter_1__Prefix;
-import link.crystal.Gem.Format.MessageFormatter_1__Simple;
 import link.crystal.Gem.Format.MessageFormatter_1__Suffix;
 import link.crystal.Gem.Format.MessageFormatter_2;
 import link.crystal.Gem.Format.MessageFormatter_3;
@@ -21,9 +21,11 @@ import link.crystal.Gem.Format.MessageFormatter_4;
 import link.crystal.Gem.Format.MessageFormatter_5;
 import link.crystal.Gem.Format.MessageFormatter_Many;
 import link.crystal.Gem.Format.MethodNameSegmentFormatter;
+import link.crystal.Gem.Format.StringSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
+import link.crystal.Gem.Support.PortrayFunctions;
 import link.crystal.Gem.Support.Storehouse_ArgumentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
 
@@ -304,17 +306,12 @@ public class   ParseFormat
         String                          format         = this.format;
         Matcher                         braces_matcher = this.braces_matcher;
 
-        int                             format_total = format.length();
-
         if ( ! braces_matcher.lookingAt()) {
-            throw new RuntimeException(
-                    (
-                          "ParseFormat.parse_format__work: format string does not contain the opening brace '{': "
-                        + z.quote_string(format)
-                    )
-                );
+            return Storehouse_StringSegmentFormatter.conjure(z, format);
         }
 
+
+        int                             format_total = format.length();
 
         //
         //  First argument
@@ -351,44 +348,67 @@ public class   ParseFormat
             argument_index  = Integer.parseInt(braces_matcher.group(2));
         }
 
-        String                          start_s;
 
-        if (0 < start_1) {
-            start_s = format.substring(0, start_1);
+        //
+        //  Second segment?
+        //
+        boolean                         found;
+
+        if (end_3 == format_total) {
+            found = false;
         } else {
-            start_s = null;
-        }
+            braces_matcher.region(end_3, format_total);
 
-        braces_matcher.region(end_3, format_total);
-
-        if ( ! braces_matcher.lookingAt()) {
-            if (argument_index != 0) {
-                throw new RuntimeException(
-                        (
-                              "ParseFormat.parse_format__work: format string must use {0} for only one argument: "
-                            + z.quote_string(format)
-                        )
-                    );
-            }
-
-            MessageFormattable          r = null;
-
-            if (end_3 == format_total) {
-                if (start_s == null) {
-                    return MessageFormatter_1__Simple.create(z);
-                }
-
-                return MessageFormatter_1__Prefix.create(z, start_s);
-            }
-
-            return MessageFormatter_1__Suffix.create(z, start_s, format.substring(end_3));
+            found = braces_matcher.lookingAt();
         }
 
 
         //
         //  First segment
         //
-        if (start_s != null) {
+        String                          start_s;
+
+        if (start_1 == 0) {
+            start_s = null;
+        } else {
+            start_s = format.substring(0, start_1);
+        }
+
+        //
+        //  First segment: Special cases:
+        //
+        //      1.  "{+}"                   becomes     MethodNameSegmentFormatter
+        //      2.  "{}"                    becomes     ArgumentSegmentFormatter
+        //      2.  "prefix: {}"            becomes     MessageFormatter_1__Prefix
+        //      3.  "prefix: {0} suffix"    becomes     MessageFormatter_1__Suffix
+        //
+        if ( ! found) {
+            if (start_s == null) {
+                if (end_3 == format_total) {
+                    if (argument_index == -1) {
+                        return MethodNameSegmentFormatter.conjure(z);
+                    } else {
+                        return Storehouse_ArgumentSegmentFormatter.conjure(z, 0);
+                    }
+                }
+            } else {
+                if (argument_index == 0) {
+                    if (end_3 == format_total) {
+                        return MessageFormatter_1__Prefix.create(z, start_s);
+                    }
+
+                    String              end_s = format.substring(end_3);
+
+                    return MessageFormatter_1__Suffix.create(z, start_s, end_s);
+                }
+            }
+        }
+
+
+        //
+        //  First segment: Normal cases
+        //
+        if (0 < start_1) {
             this.append_segment(Storehouse_StringSegmentFormatter.conjure(z, start_s));
         }
 
@@ -403,7 +423,7 @@ public class   ParseFormat
         //
         //  Subsequent segments
         //
-        for (;;) {
+        while (found) {
             int                         next_end_3 = braces_matcher.end(3);
 
             if (next_end_3 == -1) {
@@ -476,16 +496,18 @@ public class   ParseFormat
         this.examine_missing();
 
         if (false) {
-            for (int                        i = 0; i < segment_total; i ++) {
+            z.standard_output.println("format: " + PortrayFunctions.quote_string(z, format));
+
+            for (int                    i = 0; i < segment_total; i ++) {
                 z.line(Integer.toString(i) + ": " + z.portray(segment_many[i]));
             }
         }
 
-        if (segment_total == 2) {
-            return MessageFormatter_2.create(z, segment_many[0], segment_many[1]);
-        }
+        int                             expected = this.used_index_total;
 
-        int                                 expected = this.used_index_total;
+        if (segment_total == 2) {
+            return MessageFormatter_2.create(z, expected, segment_many[0], segment_many[1]);
+        }
 
         if (segment_total == 3) {
             return MessageFormatter_3.create(z, expected, segment_many[0], segment_many[1], segment_many[2]);
