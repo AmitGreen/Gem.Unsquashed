@@ -13,6 +13,7 @@ import link.crystal.Gem.Format.MessageFormatter_Base;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
+import link.crystal.Gem.Support.Storehouse_ArgumentSegmentFormatter;
 
 
 public class    ArgumentSegmentFormatter
@@ -44,6 +45,23 @@ public class    ArgumentSegmentFormatter
     static public ArgumentSegmentFormatter  create__ALLY__Storehouse_ArgumentSegmentFormatter(int argument_index)
     {
         return new ArgumentSegmentFormatter(argument_index);
+    }
+
+    static public ArgumentSegmentFormatter  conjure(Zone z, int argument_index)
+    {
+        Storehouse_ArgumentSegmentFormatter     cache = Storehouse_ArgumentSegmentFormatter.singleton;
+
+        ArgumentSegmentFormatter            r = cache.lookup(argument_index);
+
+        if (r != null) {
+            return r;
+        }
+
+        r = new ArgumentSegmentFormatter(argument_index);
+
+        cache.insert(argument_index, r);
+
+        return r;
     }
 
 

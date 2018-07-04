@@ -46,4 +46,25 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
     //  Abstract
     //
     public abstract void                dump(Zone z, String name);
+
+
+    //
+    //  Public
+    //
+    public V                            lookup(K k)
+    {
+        return this.get(k);
+    }
+
+
+    public void                         insert(K k, V v)
+    {
+        final V                         previous = this.putIfAbsent(k, v);
+
+        if (previous != null) {
+            final Zone                  z = this.z;
+
+            z.RUNTIME("previous value for {0} already exists: {1}", k, v);
+        }
+    }
 }

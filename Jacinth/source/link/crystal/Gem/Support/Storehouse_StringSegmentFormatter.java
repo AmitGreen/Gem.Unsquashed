@@ -24,10 +24,9 @@ public class    Storehouse_StringSegmentFormatter
 
 
     //
-    //  Private static
+    //  Static members
     //
-    private static final int                            initial_capacity = 101;
-    private static Storehouse_StringSegmentFormatter    singleton        = null;
+    public static Storehouse_StringSegmentFormatter singleton = Storehouse_StringSegmentFormatter.create(101);
 
 
 
@@ -40,9 +39,11 @@ public class    Storehouse_StringSegmentFormatter
     }
 
 
-    private static Storehouse_StringSegmentFormatter    create(Zone z)
+    private static Storehouse_StringSegmentFormatter    create(int initial_capacity)
     {
-        return new Storehouse_StringSegmentFormatter(z, Storehouse_StringSegmentFormatter.initial_capacity);
+        final Zone                      z = Zone.current_zone();
+
+        return new Storehouse_StringSegmentFormatter(z, initial_capacity);
     }
 
 
@@ -52,60 +53,5 @@ public class    Storehouse_StringSegmentFormatter
     public Inspection                   inspect()
     {
         return /*static*/ this.inspection;
-    }
-
-
-    //
-    //  Private
-    //
-    private static Storehouse_StringSegmentFormatter    singleton(Zone z)
-    {
-        Storehouse_StringSegmentFormatter   singleton = Storehouse_StringSegmentFormatter.singleton;
-
-        if (singleton != null) {
-            return singleton;
-        }
-
-        singleton =
-            Storehouse_StringSegmentFormatter.singleton = Storehouse_StringSegmentFormatter.create(z);
-
-        return singleton;
-    }
-
-
-    //
-    //  Public
-    //
-    public static StringSegmentFormatter    conjure(Zone z, String s)
-    {
-        Storehouse_StringSegmentFormatter   singleton = Storehouse_StringSegmentFormatter.singleton;
-
-        if (singleton == null) {
-            singleton = Storehouse_StringSegmentFormatter.singleton(z);
-        }
-
-        StringSegmentFormatter          r = singleton.get(s);
-
-        if (r != null) {
-            return r;
-        }
-
-        r = StringSegmentFormatter.create__ALLY__Storehouse_StringSegmentFormatter(z, s);
-
-        singleton.put(r.s(), r);
-
-        return r;
-    }
-
-
-    public static void                  dump(Zone z)
-    {
-        Storehouse_StringSegmentFormatter   singleton = Storehouse_StringSegmentFormatter.singleton;
-
-        if (singleton == null) {
-            singleton = Storehouse_StringSegmentFormatter.singleton(z);
-        }
-
-        singleton.dump(z, "Storehouse_StringSegmentFormatter.singleton");
     }
 }

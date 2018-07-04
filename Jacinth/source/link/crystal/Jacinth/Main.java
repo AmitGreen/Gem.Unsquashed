@@ -31,12 +31,13 @@ public class    Main
         z.line("prefixl {0} suffix", "middle");
 
         if (true) {
-            Storehouse_ArgumentSegmentFormatter.dump(z);
+            Storehouse_ArgumentSegmentFormatter.singleton.dump(z);
             Storehouse_MessageFormattable      .dump(z);
             Storehouse_String                  .dump(z);
-            Storehouse_StringSegmentFormatter  .dump(z);
+            Storehouse_StringSegmentFormatter  .singleton.dump(z, "Storehouse_StringSegmentFormatter.singleton");
+
+            z.dump(z);
         }
 
-        z.dump(z);
     }
 }

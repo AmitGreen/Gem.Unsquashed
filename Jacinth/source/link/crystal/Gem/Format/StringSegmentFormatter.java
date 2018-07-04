@@ -13,6 +13,7 @@ import link.crystal.Gem.Format.MessageFormatter_Base;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
+import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
 
 
 public class    StringSegmentFormatter
@@ -46,6 +47,24 @@ public class    StringSegmentFormatter
         String                              interned_s = z.intern_permenant_string(s);
 
         return new StringSegmentFormatter(interned_s);
+    }
+
+
+    static public StringSegmentFormatter    conjure(Zone z, String s)
+    {
+        Storehouse_StringSegmentFormatter   cache = Storehouse_StringSegmentFormatter.singleton;
+
+        StringSegmentFormatter              r = cache.lookup(s);
+
+        if (r != null) {
+            return r;
+        }
+
+        r = new StringSegmentFormatter(s);
+
+        cache.insert(s, r);
+
+        return r;
     }
 
 

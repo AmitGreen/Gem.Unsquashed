@@ -82,7 +82,6 @@ JACINTH_FILES = \
     $J/Gem/Format/ArgumentSegmentFormatter.java \
     $J/Gem/Format/MessageFormatter_1__Prefix.java \
     $J/Gem/Format/MessageFormatter_1__Suffix.java \
-    $J/Gem/Format/MessageFormatter_1.java \
     $J/Gem/Format/MessageFormatter_2.java \
     $J/Gem/Format/MessageFormatter_3.java \
     $J/Gem/Format/MessageFormatter_4.java \
@@ -320,8 +319,9 @@ clean:
 
 
 files:
-	echo $(FILES) >files.new
-	mv files.new files
+	echo $(FILES) >files.1.tmp
+	tr ' ' '\n' <files.1.tmp >files.2.tmp
+	mv files.2.tmp files
 
 
 links:
@@ -495,7 +495,6 @@ links:
 	ln -s ../OtherLicenses/README.txt                                           lr.txt
 	ln -s Makefile                                                              m
 	ln -s mine.txt                                                              m.txt
-	ln -s $J/Gem/Format/MessageFormatter_1.java                                 m1.java
 	ln -s ../Marble/Core.py                                                     m1c.py
 	ln -s ../Marble/Main.py                                                     m1m.py
 	ln -s $J/Gem/Format/MessageFormatter_1__Prefix.java                         m1p.java
