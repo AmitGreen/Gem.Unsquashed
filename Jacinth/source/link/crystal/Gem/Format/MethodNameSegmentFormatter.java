@@ -125,37 +125,37 @@ public class    MethodNameSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public void                         choose(Gem_StringBuilder builder, int depth, Object a)
+    public void                         choose(Gem_StringBuilder builder, int depth, Object v)
     {
         this.method_name(builder, depth + 1);
     }
 
 
-    public void                         select_2(Gem_StringBuilder builder, Object a, Object b)
+    public void                         choose(Gem_StringBuilder builder, Object v, Object w)
     {
         this.method_name(builder, 0);
     }
 
 
-    public void                         select_3(Gem_StringBuilder builder, Object a, Object b, Object c)
+    public void                         choose(Gem_StringBuilder builder, Object v, Object w, Object x)
     {
         this.method_name(builder, 0);
     }
 
 
-    public void                         select_4(Gem_StringBuilder builder, Object a, Object b, Object c, Object d)
+    public void                         choose(Gem_StringBuilder builder, Object v, Object w, Object x, Object y)
     {
         this.method_name(builder, 0);
     }
 
 
-    public void                         select_5(
+    public void                         choose(
             Gem_StringBuilder                   builder,
-            Object                              a,
-            Object                              b,
-            Object                              c,
-            Object                              d,
-            Object                              e//,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5//,
         )
     {
         this.method_name(builder, 0);
@@ -164,11 +164,11 @@ public class    MethodNameSegmentFormatter
 
     public void                         select_many(
             Gem_StringBuilder                   builder,
-            Object                              a,
-            Object                              b,
-            Object                              c,
-            Object                              d,
-            Object                              e,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
             Object ...                          other_arguments//,
         )
     {

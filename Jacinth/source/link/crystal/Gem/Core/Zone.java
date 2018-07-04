@@ -4,7 +4,9 @@
 package link.crystal.Gem.Core;
 
 
+import java.io.PrintStream;
 import java.lang.RuntimeException;
+import java.lang.System;
 import java.lang.Thread;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
@@ -12,7 +14,6 @@ import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.ExceptionFunctions;
-import link.crystal.Gem.Support.OutputFunctions;
 import link.crystal.Gem.Support.PortrayFunctions;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
@@ -32,6 +33,7 @@ public class    Zone
     private static Thread               first_thread          = null;
     private static Zone                 first_zone            = null;
     private static final int            gem_builder_allocated = 10;
+    public static final PrintStream     standard_output = System.out;
 
 
     //
@@ -320,13 +322,13 @@ public class    Zone
 
     public void                         line()
     {
-        OutputFunctions.line(this);
+        standard_output.println();
     }
 
 
     public void                         line(String s)
     {
-        OutputFunctions.line(this, s);
+        standard_output.println(s);
     }
 
 
@@ -342,7 +344,7 @@ public class    Zone
 
         String                          s = formattable.arrange(this, 2, v);
 
-        OutputFunctions.line(this, s);
+        standard_output.println(s);
     }
 
 
@@ -358,7 +360,7 @@ public class    Zone
 
         String                          s = formattable.arrange(this, 2, v, w);
 
-        OutputFunctions.line(this, s);
+        standard_output.println(s);
     }
 
 
@@ -374,7 +376,7 @@ public class    Zone
 
         String                          s = formattable.arrange(this, 2, v, w, x);
 
-        OutputFunctions.line(this, s);
+        standard_output.println(s);
     }
 
 
@@ -390,7 +392,7 @@ public class    Zone
 
         String                          s = formattable.arrange(this, 2, v, w, x, y);
 
-        OutputFunctions.line(this, s);
+        standard_output.println(s);
     }
 
 
@@ -406,7 +408,7 @@ public class    Zone
 
         String                          s = formattable.arrange(this, 2, v, w, x, y4, y5);
 
-        OutputFunctions.line(this, s);
+        standard_output.println(s);
     }
 
 
@@ -430,7 +432,7 @@ public class    Zone
 
         String                          s = formattable.arrange(this, 2, v, w, x, y4, y5, y6);
 
-        OutputFunctions.line(this, s);
+        standard_output.println(s);
     }
 
 
@@ -456,7 +458,7 @@ public class    Zone
 
         String                          s = formattable.arrange(this, 2, v, w, x, y4, y5, y6, y7, other_arguments);
 
-        OutputFunctions.line(this, s);
+        standard_output.println(s);
     }
 
 

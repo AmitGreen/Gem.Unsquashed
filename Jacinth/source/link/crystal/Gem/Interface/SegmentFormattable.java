@@ -12,27 +12,27 @@ import link.crystal.Gem.Core.Zone;
 public interface   SegmentFormattable
 {
     String                              portray (Zone z);
-    void                                choose(Gem_StringBuilder builder, int depth, Object a);
-    void                                select_2(Gem_StringBuilder builder, Object a, Object b);
-    void                                select_3(Gem_StringBuilder builder, Object a, Object b, Object c);
-    void                                select_4(Gem_StringBuilder builder, Object a, Object b, Object c, Object d);
+    void                                choose(Gem_StringBuilder builder, int depth, Object v);
+    void                                choose(Gem_StringBuilder builder, Object v, Object w);
+    void                                choose(Gem_StringBuilder builder, Object v, Object w, Object x);
+    void                                choose(Gem_StringBuilder builder, Object v, Object w, Object x, Object y);
 
-    void                                select_5(
+    void                                choose(
             Gem_StringBuilder                   builder,
-            Object                              a,
-            Object                              b,
-            Object                              c,
-            Object                              d,
-            Object                              e//,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5//,
         );
 
     void                                select_many(
             Gem_StringBuilder                   builder,
-            Object                              a,
-            Object                              b,
-            Object                              c,
-            Object                              d,
-            Object                              e,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
             Object ...                          other_arguments//,
         );
 }

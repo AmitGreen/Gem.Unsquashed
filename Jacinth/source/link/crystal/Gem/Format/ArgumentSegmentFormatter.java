@@ -55,14 +55,14 @@ public class    ArgumentSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public void                         choose(Gem_StringBuilder builder, int depth, Object a)
+    public void                         choose(Gem_StringBuilder builder, int depth, Object v)
     {
         final int                       argument_index = this.argument_index;
 
         final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            builder.append(z.portray(a));
+            builder.append(z.portray(v));
             return;
         }
 
@@ -70,19 +70,19 @@ public class    ArgumentSegmentFormatter
     }
 
 
-    public void                         select_2(Gem_StringBuilder builder, Object a, Object b)
+    public void                         choose(Gem_StringBuilder builder, Object v, Object w)
     {
         final int                       argument_index = this.argument_index;
 
         final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            builder.append(z.portray(a));
+            builder.append(z.portray(v));
             return;
         }
 
         if (argument_index == 1) {
-            builder.append(z.portray(b));
+            builder.append(z.portray(w));
             return;
         }
 
@@ -91,24 +91,24 @@ public class    ArgumentSegmentFormatter
     }
 
 
-    public void                         select_3(Gem_StringBuilder builder, Object a, Object b, Object c)
+    public void                         choose(Gem_StringBuilder builder, Object v, Object w, Object x)
     {
         final int                       argument_index = this.argument_index;
 
         final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            builder.append(z.portray(a));
+            builder.append(z.portray(v));
             return;
         }
 
         if (argument_index == 1) {
-            builder.append(z.portray(b));
+            builder.append(z.portray(w));
             return;
         }
 
         if (argument_index == 2) {
-            builder.append(z.portray(c));
+            builder.append(z.portray(x));
             return;
         }
 
@@ -116,29 +116,29 @@ public class    ArgumentSegmentFormatter
     }
 
 
-    public void                         select_4(Gem_StringBuilder builder, Object a, Object b, Object c, Object d)
+    public void                         choose(Gem_StringBuilder builder, Object v, Object w, Object x, Object y)
     {
         final int                       argument_index = this.argument_index;
 
         final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            builder.append(z.portray(a));
+            builder.append(z.portray(v));
             return;
         }
 
         if (argument_index == 1) {
-            builder.append(z.portray(b));
+            builder.append(z.portray(w));
             return;
         }
 
         if (argument_index == 2) {
-            builder.append(z.portray(c));
+            builder.append(z.portray(x));
             return;
         }
 
         if (argument_index == 3) {
-            builder.append(z.portray(d));
+            builder.append(z.portray(y));
             return;
         }
 
@@ -146,13 +146,13 @@ public class    ArgumentSegmentFormatter
     }
 
 
-    public void                         select_5(
+    public void                         choose(
             Gem_StringBuilder                   builder,
-            Object                              a,
-            Object                              b,
-            Object                              c,
-            Object                              d,
-            Object                              e//,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5//,
         )
     {
         final int                       argument_index = this.argument_index;
@@ -160,27 +160,27 @@ public class    ArgumentSegmentFormatter
         final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            builder.append(z.portray(a));
+            builder.append(z.portray(v));
             return;
         }
 
         if (argument_index == 1) {
-            builder.append(z.portray(b));
+            builder.append(z.portray(w));
             return;
         }
 
         if (argument_index == 2) {
-            builder.append(z.portray(c));
+            builder.append(z.portray(x));
             return;
         }
 
         if (argument_index == 3) {
-            builder.append(z.portray(d));
+            builder.append(z.portray(y4));
             return;
         }
 
         if (argument_index == 4) {
-            builder.append(z.portray(e));
+            builder.append(z.portray(y5));
             return;
         }
 
@@ -190,11 +190,11 @@ public class    ArgumentSegmentFormatter
 
     public void                         select_many(
             Gem_StringBuilder                   builder,
-            Object                              a,
-            Object                              b,
-            Object                              c,
-            Object                              d,
-            Object                              e,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
             Object ...                          other_arguments//,
         )
     {
@@ -203,27 +203,27 @@ public class    ArgumentSegmentFormatter
         final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            builder.append(z.portray(a));
+            builder.append(z.portray(v));
             return;
         }
 
         if (argument_index == 1) {
-            builder.append(z.portray(b));
+            builder.append(z.portray(w));
             return;
         }
 
         if (argument_index == 2) {
-            builder.append(z.portray(c));
+            builder.append(z.portray(x));
             return;
         }
 
         if (argument_index == 3) {
-            builder.append(z.portray(d));
+            builder.append(z.portray(y4));
             return;
         }
 
         if (argument_index == 4) {
-            builder.append(z.portray(e));
+            builder.append(z.portray(y5));
             return;
         }
 

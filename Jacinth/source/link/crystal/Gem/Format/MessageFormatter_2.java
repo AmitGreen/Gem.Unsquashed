@@ -90,8 +90,8 @@ public class    MessageFormatter_2
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        a.select_2(builder, v, w);
-        b.select_2(builder, v, w);
+        a.choose(builder, v, w);
+        b.choose(builder, v, w);
 
         return builder.finish__AND__recycle();
     }

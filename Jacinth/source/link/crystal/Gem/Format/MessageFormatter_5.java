@@ -115,11 +115,11 @@ public class    MessageFormatter_5
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        this.a.select_2(builder, v, w);
-        this.b.select_2(builder, v, w);
-        this.c.select_2(builder, v, w);
-        this.d.select_2(builder, v, w);
-        this.e.select_2(builder, v, w);
+        this.a.choose(builder, v, w);
+        this.b.choose(builder, v, w);
+        this.c.choose(builder, v, w);
+        this.d.choose(builder, v, w);
+        this.e.choose(builder, v, w);
 
         return builder.finish__AND__recycle();
     }
@@ -133,11 +133,11 @@ public class    MessageFormatter_5
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        this.a.select_3(builder, v, w, x);
-        this.b.select_3(builder, v, w, x);
-        this.c.select_3(builder, v, w, x);
-        this.d.select_3(builder, v, w, x);
-        this.e.select_3(builder, v, w, x);
+        this.a.choose(builder, v, w, x);
+        this.b.choose(builder, v, w, x);
+        this.c.choose(builder, v, w, x);
+        this.d.choose(builder, v, w, x);
+        this.e.choose(builder, v, w, x);
 
         return builder.finish__AND__recycle();
     }
@@ -151,11 +151,11 @@ public class    MessageFormatter_5
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        this.a.select_4(builder, v, w, x, y);
-        this.b.select_4(builder, v, w, x, y);
-        this.c.select_4(builder, v, w, x, y);
-        this.d.select_4(builder, v, w, x, y);
-        this.e.select_4(builder, v, w, x, y);
+        this.a.choose(builder, v, w, x, y);
+        this.b.choose(builder, v, w, x, y);
+        this.c.choose(builder, v, w, x, y);
+        this.d.choose(builder, v, w, x, y);
+        this.e.choose(builder, v, w, x, y);
 
         return builder.toString();
     }
@@ -177,11 +177,11 @@ public class    MessageFormatter_5
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        this.a.select_5(builder, v, w, x, y4, y5);
-        this.b.select_5(builder, v, w, x, y4, y5);
-        this.c.select_5(builder, v, w, x, y4, y5);
-        this.d.select_5(builder, v, w, x, y4, y5);
-        this.e.select_5(builder, v, w, x, y4, y5);
+        this.a.choose(builder, v, w, x, y4, y5);
+        this.b.choose(builder, v, w, x, y4, y5);
+        this.c.choose(builder, v, w, x, y4, y5);
+        this.d.choose(builder, v, w, x, y4, y5);
+        this.e.choose(builder, v, w, x, y4, y5);
 
         return builder.finish__AND__recycle();
     }

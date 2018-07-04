@@ -103,7 +103,7 @@ public class    MessageFormatter_Many
         for (int                    i = 0; i < segment_total; i ++) {
             SegmentFormattable      segment = segment_many[i];
 
-            segment.select_2(builder, v, w);
+            segment.choose(builder, v, w);
         }
 
         return builder.finish__AND__recycle();
@@ -125,7 +125,7 @@ public class    MessageFormatter_Many
         for (int                        i = 0; i < segment_total; i ++) {
             SegmentFormattable          segment = segment_many[i];
 
-            segment.select_3(builder, v, w, x);
+            segment.choose(builder, v, w, x);
         }
 
         return builder.finish__AND__recycle();
@@ -147,7 +147,7 @@ public class    MessageFormatter_Many
         for (int                        i = 0; i < segment_total; i ++) {
             SegmentFormattable          segment = segment_many[i];
 
-            segment.select_4(builder, v, w, x, y);
+            segment.choose(builder, v, w, x, y);
         }
 
         return builder.finish__AND__recycle();
@@ -179,7 +179,7 @@ public class    MessageFormatter_Many
         for (int                    i = 0; i < segment_total; i ++) {
             SegmentFormattable      segment = segment_many[i];
 
-            segment.select_5(builder, v, w, x, y4, y5);
+            segment.choose(builder, v, w, x, y4, y5);
         }
 
         return builder.finish__AND__recycle();

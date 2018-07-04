@@ -57,37 +57,37 @@ public class    StringSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public void                         choose(Gem_StringBuilder builder, int depth, Object a)
+    public void                         choose(Gem_StringBuilder builder, int depth, Object v)
     {
         builder.append(this.s);
     }
 
 
-    public void                         select_2(Gem_StringBuilder builder, Object a, Object b)
+    public void                         choose(Gem_StringBuilder builder, Object v, Object w)
     {
         builder.append(this.s);
     }
 
 
-    public void                         select_3(Gem_StringBuilder builder, Object a, Object b, Object c)
+    public void                         choose(Gem_StringBuilder builder, Object v, Object w, Object x)
     {
         builder.append(this.s);
     }
 
 
-    public void                         select_4(Gem_StringBuilder builder, Object a, Object b, Object c, Object d)
+    public void                         choose(Gem_StringBuilder builder, Object v, Object w, Object x, Object y)
     {
         builder.append(this.s);
     }
 
 
-    public void                         select_5(
+    public void                         choose(
             Gem_StringBuilder                   builder,
-            Object                              a,
-            Object                              b,
-            Object                              c,
-            Object                              d,
-            Object                              e//,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5//,
         )
     {
         builder.append(this.s);
@@ -96,11 +96,11 @@ public class    StringSegmentFormatter
 
     public void                         select_many(
             Gem_StringBuilder                   builder,
-            Object                              a,
-            Object                              b,
-            Object                              c,
-            Object                              d,
-            Object                              e,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
             Object ...                          other_arguments//,
         )
     {

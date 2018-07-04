@@ -110,10 +110,10 @@ public class    MessageFormatter_4
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        this.a.select_2(builder, v, w);
-        this.b.select_2(builder, v, w);
-        this.c.select_2(builder, v, w);
-        this.d.select_2(builder, v, w);
+        this.a.choose(builder, v, w);
+        this.b.choose(builder, v, w);
+        this.c.choose(builder, v, w);
+        this.d.choose(builder, v, w);
 
         return builder.finish__AND__recycle();
     }
@@ -127,10 +127,10 @@ public class    MessageFormatter_4
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        this.a.select_3(builder, v, w, x);
-        this.b.select_3(builder, v, w, x);
-        this.c.select_3(builder, v, w, x);
-        this.d.select_3(builder, v, w, x);
+        this.a.choose(builder, v, w, x);
+        this.b.choose(builder, v, w, x);
+        this.c.choose(builder, v, w, x);
+        this.d.choose(builder, v, w, x);
 
         return builder.finish__AND__recycle();
     }
@@ -144,10 +144,10 @@ public class    MessageFormatter_4
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        this.a.select_4(builder, v, w, x, y);
-        this.b.select_4(builder, v, w, x, y);
-        this.c.select_4(builder, v, w, x, y);
-        this.d.select_4(builder, v, w, x, y);
+        this.a.choose(builder, v, w, x, y);
+        this.b.choose(builder, v, w, x, y);
+        this.c.choose(builder, v, w, x, y);
+        this.d.choose(builder, v, w, x, y);
 
         return builder.finish__AND__recycle();
     }
