@@ -12,7 +12,7 @@ import link.crystal.Gem.Core.Zone;
 public interface   SegmentFormattable
 {
     String                              portray (Zone z);
-    void                                select_1(Gem_StringBuilder builder, Object a);
+    void                                choose(Gem_StringBuilder builder, int depth, Object a);
     void                                select_2(Gem_StringBuilder builder, Object a, Object b);
     void                                select_3(Gem_StringBuilder builder, Object a, Object b, Object c);
     void                                select_4(Gem_StringBuilder builder, Object a, Object b, Object c, Object d);

@@ -123,6 +123,12 @@ public class    Gem_StringBuilder
     }
 
 
+    public void                         append(String a, String b, String c, String d, int e)
+    {
+        this.builder.append(a).append(b).append(c).append(d).append(e);
+    }
+
+
     public String                       finish__AND__recycle()
     {
         if (this.finished) {

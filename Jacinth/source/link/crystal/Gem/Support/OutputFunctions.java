@@ -40,6 +40,20 @@ public abstract class   OutputFunctions
     }
 
 
+    public static void                  line(Zone z, int depth, String format, Object v)
+    {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(z, format);
+
+            Storehouse_MessageFormattable.insert(z, format, formattable);
+        }
+
+        formattable.line(z, depth + 1, v);
+    }
+
+
     public static void                  line(Zone z, String format, Object v)
     {
         MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
@@ -50,7 +64,7 @@ public abstract class   OutputFunctions
             Storehouse_MessageFormattable.insert(z, format, formattable);
         }
 
-        formattable.line(z, v);
+        formattable.line(z, 2, v);
     }
 
 
@@ -69,6 +83,6 @@ public abstract class   OutputFunctions
             Storehouse_MessageFormattable.insert(z, format, formattable);
         }
 
-        formattable.line(z, v, other_arguments);
+        formattable.line(z, 1, v, other_arguments);
     }
 }

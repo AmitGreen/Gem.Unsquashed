@@ -37,7 +37,7 @@ public abstract class   ExceptionFunctions
             Storehouse_MessageFormattable.insert(z, format, formattable);
         }
 
-        String                          error_message = formattable.arrange(z, v);
+        String                          error_message = formattable.arrange(z, 2, v);
 
         throw new RuntimeException(error_message);
     }
@@ -58,7 +58,7 @@ public abstract class   ExceptionFunctions
             Storehouse_MessageFormattable.insert(z, format, formattable);
         }
 
-        String                          error_message = formattable.arrange(z, v, other_arguments);
+        String                          error_message = formattable.arrange(z, 2, v, other_arguments);
 
         throw new RuntimeException(error_message);
     }

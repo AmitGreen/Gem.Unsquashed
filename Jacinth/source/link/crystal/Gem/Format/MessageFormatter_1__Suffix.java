@@ -60,7 +60,7 @@ public class    MessageFormatter_1__Suffix
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, Object v)
+    public String                       arrange(Zone z, int depth, Object v)
     {
         String                          prefix_0 = this.prefix_0;
         String                          suffix = this.suffix;
@@ -75,7 +75,7 @@ public class    MessageFormatter_1__Suffix
     }
 
 
-    public String                       arrange(Zone z, Object v, Object ... other_arguments)
+    public String                       arrange(Zone z, int depth, Object v, Object ... other_arguments)
     {
         z.RAISE_runtime_exception("should never get called");
 
@@ -83,7 +83,7 @@ public class    MessageFormatter_1__Suffix
     }
 
 
-    public void                         line(Zone z, Object v)
+    public void                         line(Zone z, int depth, Object v)
     {
         String                          prefix_0 = this.prefix_0;
         String                          suffix   = this.suffix;
@@ -99,7 +99,7 @@ public class    MessageFormatter_1__Suffix
     }
 
 
-    public void                         line(Zone z, Object v, Object ... other_arguments)
+    public void                         line(Zone z, int depth, Object v, Object ... other_arguments)
     {
         z.RAISE_runtime_exception("should never get called");
     }

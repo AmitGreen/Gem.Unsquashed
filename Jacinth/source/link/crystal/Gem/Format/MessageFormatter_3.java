@@ -78,7 +78,7 @@ public class    MessageFormatter_3
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, Object v)
+    public String                       arrange(Zone z, int depth, Object v)
     {
         int                             expected = this.expected;
 
@@ -96,15 +96,17 @@ public class    MessageFormatter_3
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        a.select_1(builder, v);
-        b.select_1(builder, v);
-        c.select_1(builder, v);
+        depth += 1;
+
+        a.choose(builder, depth, v);
+        b.choose(builder, depth, v);
+        c.choose(builder, depth, v);
 
         return builder.finish__AND__recycle();
     }
 
 
-    public String                       arrange(Zone z, Object v, Object ... other_arguments)
+    public String                       arrange(Zone z, int depth, Object v, Object ... other_arguments)
     {
         int                             expected = this.expected;
 
@@ -142,15 +144,15 @@ public class    MessageFormatter_3
     }
 
 
-    public void                         line(Zone z, Object v)
+    public void                         line(Zone z, int depth, Object v)
     {
-        z.line(this.arrange(z, v));
+        z.line(this.arrange(z, depth + 1, v));
     }
 
 
-    public void                         line(Zone z, Object v, Object ... other_arguments)
+    public void                         line(Zone z, int depth, Object v, Object ... other_arguments)
     {
-        z.line(this.arrange(z, v, other_arguments));
+        z.line(this.arrange(z, depth + 1, v, other_arguments));
     }
 
 

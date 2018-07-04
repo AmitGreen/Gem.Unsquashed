@@ -11,9 +11,9 @@ import link.crystal.Gem.Core.Zone;
 
 public interface   MessageFormattable
 {
-    String                              arrange(Zone z, Object v);
-    String                              arrange(Zone z, Object v, Object ... other_arguments);
-    void                                line   (Zone z, Object v);
-    void                                line   (Zone z, Object v, Object ... other_arguments);
+    String                              arrange(Zone z, int depth, Object v);
+    String                              arrange(Zone z, int depth, Object v, Object ... other_arguments);
+    void                                line   (Zone z, int depth, Object v);
+    void                                line   (Zone z, int depth, Object v, Object ... other_arguments);
     String                              portray(Zone z);
 }

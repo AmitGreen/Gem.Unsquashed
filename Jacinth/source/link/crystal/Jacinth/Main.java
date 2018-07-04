@@ -22,6 +22,8 @@ public class    Main
 
         circle.skew(z);
 
+        z.line("{+}: test {}", 7);
+
         if (false) {
             Storehouse_ArgumentSegmentFormatter.dump(z);
             Storehouse_MessageFormattable      .dump(z);

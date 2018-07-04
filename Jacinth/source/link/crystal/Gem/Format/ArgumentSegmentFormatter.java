@@ -55,7 +55,7 @@ public class    ArgumentSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public void                         select_1(Gem_StringBuilder builder, Object a)
+    public void                         choose(Gem_StringBuilder builder, int depth, Object a)
     {
         final int                       argument_index = this.argument_index;
 

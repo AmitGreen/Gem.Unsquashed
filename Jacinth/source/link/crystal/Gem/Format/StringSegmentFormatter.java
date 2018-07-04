@@ -57,7 +57,7 @@ public class    StringSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public void                         select_1(Gem_StringBuilder builder, Object a)
+    public void                         choose(Gem_StringBuilder builder, int depth, Object a)
     {
         builder.append(this.s);
     }

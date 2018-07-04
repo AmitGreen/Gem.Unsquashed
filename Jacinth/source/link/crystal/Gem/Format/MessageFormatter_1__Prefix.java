@@ -57,13 +57,13 @@ public class    MessageFormatter_1__Prefix
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, Object v)
+    public String                       arrange(Zone z, int depth, Object v)
     {
         return this.prefix + z.portray(v);
     }
 
 
-    public String                       arrange(Zone z, Object v, Object ... other_arguments)
+    public String                       arrange(Zone z, int depth, Object v, Object ... other_arguments)
     {
         z.RAISE_runtime_exception("should never get called");
 
@@ -71,13 +71,13 @@ public class    MessageFormatter_1__Prefix
     }
 
 
-    public void                         line(Zone z, Object v)
+    public void                         line(Zone z, int depth, Object v)
     {
         z.line(this.prefix + z.portray(v));
     }
 
 
-    public void                         line(Zone z, Object v, Object ... other_arguments)
+    public void                         line(Zone z, int depth, Object v, Object ... other_arguments)
     {
         z.RAISE_runtime_exception("should never get called");
     }

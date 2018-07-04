@@ -56,12 +56,45 @@ public class    MethodNameSegmentFormatter
     //
     //  Private
     //
-    static String                       method_name(Zone z)
+    static void                         method_name(Gem_StringBuilder builder, int depth)
     {
-        StackTraceElement[]             stack_trace_many = z.zone_thread.getStackTrace();
+        final Zone                      z = builder.z;
+        final StackTraceElement[]       stack_trace_many = z.zone_thread.getStackTrace();
+       
+        final int                       total = stack_trace_many.length;
 
-        int                             depth = 7;
-        int                             total = stack_trace_many.length;
+        if (false) {
+            z.line("MethodNameSegmentFormatter.method_name: total<" + Integer.toString(total) + ">");
+
+            for (int                    i = 0; i < total; i ++) {
+                StackTraceElement       stack_trace = stack_trace_many[i];
+                String                  class_name  = stack_trace.getClassName();
+                int                     dot_index   = class_name.lastIndexOf(46);       //  46 = '.'
+
+                if (dot_index != -1) {
+                    class_name = class_name.substring(dot_index + 1);
+                }
+
+                z.line((
+                             "  "
+                           + Integer.toString(i)
+                           + ": "
+                           + class_name
+                           + "."
+                           + stack_trace.getMethodName()
+                           + "@"
+                           + Integer.toString(stack_trace.getLineNumber())
+                      ));
+            }
+        }
+
+        //
+        //  NOTE:
+        //      The stack trace includes `Thread.GetStackTrace` as element 0.
+        //
+        //      So add `1` to `depth`
+        //
+        depth += 1;
 
         if (depth < total) {
             StackTraceElement           stack_trace = stack_trace_many[depth];
@@ -72,10 +105,11 @@ public class    MethodNameSegmentFormatter
                 class_name = class_name.substring(dot_index + 1);
             }
 
-            return class_name + "." + stack_trace.getMethodName();
+            builder.append(class_name, ".", stack_trace.getMethodName(), "@", stack_trace.getLineNumber());
+            return;
         }
 
-        return "???.???";
+        builder.append("???.???@???");
     }
 
 
@@ -91,35 +125,27 @@ public class    MethodNameSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public void                         select_1(Gem_StringBuilder builder, Object a)
+    public void                         choose(Gem_StringBuilder builder, int depth, Object a)
     {
-        final Zone                      z = builder.z;
-
-        builder.append(this.method_name(z));
+        this.method_name(builder, depth + 1);
     }
 
 
     public void                         select_2(Gem_StringBuilder builder, Object a, Object b)
     {
-        final Zone                      z = builder.z;
-
-        builder.append(this.method_name(z));
+        this.method_name(builder, 0);
     }
 
 
     public void                         select_3(Gem_StringBuilder builder, Object a, Object b, Object c)
     {
-        final Zone                      z = builder.z;
-
-        builder.append(this.method_name(z));
+        this.method_name(builder, 0);
     }
 
 
     public void                         select_4(Gem_StringBuilder builder, Object a, Object b, Object c, Object d)
     {
-        final Zone                      z = builder.z;
-
-        builder.append(this.method_name(z));
+        this.method_name(builder, 0);
     }
 
 
@@ -132,9 +158,7 @@ public class    MethodNameSegmentFormatter
             Object                              e//,
         )
     {
-        final Zone                      z = builder.z;
-
-        builder.append(this.method_name(z));
+        this.method_name(builder, 0);
     }
 
 
@@ -148,9 +172,7 @@ public class    MethodNameSegmentFormatter
             Object ...                          other_arguments//,
         )
     {
-        final Zone                      z = builder.z;
-
-        builder.append(this.method_name(z));
+        this.method_name(builder, 0);
     }
 
 

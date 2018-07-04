@@ -143,7 +143,7 @@ public class    Zone
             Storehouse_MessageFormattable.insert(this, format, formattable);
         }
 
-        return formattable.arrange(this, v);
+        return formattable.arrange(this, 2, v);
     }
 
 
@@ -157,7 +157,7 @@ public class    Zone
             Storehouse_MessageFormattable.insert(this, format, formattable);
         }
 
-        return formattable.arrange(this, v, other_arguments);
+        return formattable.arrange(this, 2, v, other_arguments);
     }
 
 
@@ -238,7 +238,7 @@ public class    Zone
 
     public void                         line(String format, Object v)
     {
-        OutputFunctions.line(this, format, v);
+        OutputFunctions.line(this, 2, format, v);
     }
 
 

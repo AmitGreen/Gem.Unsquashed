@@ -123,6 +123,12 @@ public class   ParseFormat
     //
     private void                        add_used_index(int argument_index)
     {
+        if (false) {
+            final Zone                  z = this.z;
+
+            z.line("add_used_index(" + Integer.toString(argument_index) + ")");
+        }
+
         int[]                           used_index_many      = this.used_index_many;
         int                             used_index_total     = this.used_index_total;
         int                             used_index_allocated = this.used_index_allocated;
@@ -352,14 +358,14 @@ public class   ParseFormat
             int                         code_point = format.codePointAt(start_1 + 1);
 
             if (code_point == 43) {                                     //  ordinal('+') == 43
-                automatic_index = -7;
-                argument_index  = -7;
-            } else {
                 automatic_index = -1;
+                argument_index  = -1;
+            } else {
+                automatic_index = -6;
                 argument_index  = format.codePointAt(start_1 + 1) - 48;
             }
         } else {
-            automatic_index = -1;
+            automatic_index = -6;
             argument_index  = Integer.parseInt(braces_matcher.group(2));
         }
 
@@ -404,7 +410,7 @@ public class   ParseFormat
             this.append_segment(Storehouse_StringSegmentFormatter.conjure(z, start_s));
         }
 
-        if (argument_index == -7) {
+        if (argument_index == -1) {
             this.append_segment(MethodNameSegmentFormatter.conjure(z));
         } else {
             this.append_segment(Storehouse_ArgumentSegmentFormatter.conjure(z, argument_index));
@@ -427,12 +433,8 @@ public class   ParseFormat
             delta = next_end_3 - start_1;
 
             if (delta == 2) {
-                if (automatic_index == -1) {
+                if (automatic_index == -6) {
                     this.raise_both_automatic_and_manual_field_number();
-                }
-
-                if (automatic_index == -7) {
-                    automatic_index = 0;
                 }
 
                 automatic_index += 1;
@@ -442,13 +444,13 @@ public class   ParseFormat
                     int                 code_point = format.codePointAt(start_1 + 1);
 
                     if (code_point == 43) {                                     //  ordinal('+') == 43
-                        argument_index = -7;
+                        argument_index = -1;
                     } else {
                         if (automatic_index >= 0) {
                             this.raise_both_automatic_and_manual_field_number();
                         }
 
-                        automatic_index = -1;
+                        automatic_index = -6;
                         argument_index = format.codePointAt(start_1 + 1) - 48;
                     }
                 } else {
@@ -456,7 +458,7 @@ public class   ParseFormat
                         this.raise_both_automatic_and_manual_field_number();
                     }
 
-                    automatic_index = -1;
+                    automatic_index = -6;
                     argument_index = Integer.parseInt(braces_matcher.group(2));
                 }
             }
@@ -467,7 +469,7 @@ public class   ParseFormat
                 this.append_segment(Storehouse_StringSegmentFormatter.conjure(z, start_s));
             }
 
-            if (argument_index == -7) {
+            if (argument_index == -1) {
                 this.append_segment(MethodNameSegmentFormatter.conjure(z));
             } else {
                 this.append_segment(Storehouse_ArgumentSegmentFormatter.conjure(z, argument_index));
