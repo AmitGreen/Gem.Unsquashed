@@ -28,33 +28,28 @@ public abstract class   ArrayFunctions
     {
         if (previous_total == 0) {
             if (previous != null) {
-                z.RAISE_runtime_exception("ArrayFunctions.shrink_array: previous_total == 0 && previous != null");
+                z.RUNTIME("previous_total == 0 && previous != null");
             }
         } else {
             if (previous_total < 1) {
-                z.RAISE_runtime_exception("ArrayFunctions.shrink_array: previous_total < 1 (actual: {0})",
-                                          previous_total);
+                z.RUNTIME(".shrink_array: previous_total < 1 (actual: {0})", previous_total);
             }
 
             if (previous_total <= new_total) {
-                z.RAISE_runtime_exception("ArrayFunctions.shrink_array: previous_total<{0}> <= new_total<{1}>",
-                                          previous_total,
-                                          new_total);
+                z.RUNTIME("previous_total<{0}> <= new_total<{1}>", previous_total, new_total);
             }
         }
 
         if (previous_total < new_total) {
-            z.RAISE_runtime_exception("ArrayFunctions.shrink_array: previous_total<{0}> < new_total<{1}>",
-                                      previous_total,
-                                      new_total);
+            z.RUNTIME("previous_total<{0}> < new_total<{1}>", previous_total, new_total);
         }
 
         if (current == null) {
-            z.RAISE_runtime_exception("ArrayFunctions.shrink_array: `current` == null");
+            z.RUNTIME("`current` == null");
         }
 
         if (new_total <= 0) {
-            z.RAISE_runtime_exception("ArrayFunctions.shrink_array: `new_total`<{0}>", previous_total);
+            z.RUNTIME("`new_total`<{0}>", previous_total);
         }
 
         for (int                        i = 0; i < new_total; i ++) {
@@ -75,26 +70,26 @@ public abstract class   ArrayFunctions
     {
         if (previous_total == 0) {
             if (previous != null) {
-                z.RAISE_runtime_exception("ArrayFunctions.grow_array: previous_total == 0 && previous != null");
+                z.RUNTIME("previous_total == 0 && previous != null");
             }
         } else {
             if (previous_total < 0) {
-                z.RAISE_runtime_exception("ArrayFunctions.grow_array: previous_total < 0 (actual: {0})", previous_total);
+                z.RUNTIME("previous_total < 0 (actual: {0})", previous_total);
             }
 
             if (previous_total >= new_total) {
-                z.RAISE_runtime_exception("ArrayFunctions.grow_array: previous_total<{0}> >= new_total<{1}>",
-                                        previous_total,
-                                        new_total);
+                z.RUNTIME("previous_total<{0}> >= new_total<{1}>",
+                          previous_total,
+                          new_total);
             }
         }
 
         if (current == null) {
-            z.RAISE_runtime_exception("ArrayFunctions.grow_array: `current` == null");
+            z.RUNTIME("`current` == null");
         }
 
         if (new_total <= 0) {
-            z.RAISE_runtime_exception("ArrayFunctions.grow_array: `new_total`<{0}>", previous_total);
+            z.RUNTIME("`new_total`<{0}>", previous_total);
         }
 
         for (int                    i = 0; i < previous_total; i ++) {
@@ -115,31 +110,24 @@ public abstract class   ArrayFunctions
     {
         if (previous_total == 0) {
             if (previous != null) {
-                z.RAISE_runtime_exception(
-                        "ArrayFunctions.grow_primitive_integer_array: `previous_total`<0> && `previous` != null"//,
-                    );
+                z.RUNTIME("`previous_total`<0> && `previous` != null");
             }
         } else {
             if (previous_total < 0) {
-                z.RAISE_runtime_exception("ArrayFunctions.grow_primitive_integer_array: `previous_total`<{0}> < 0",
-                                          previous_total);
+                z.RUNTIME("`previous_total`<{0}> < 0", previous_total);
             }
 
             if (previous_total >= new_total) {
-                z.RAISE_runtime_exception("{0} `previous_total`<{1}> >= `new_total`<{2}>",
-                                          "ArrayFunctions.grow_primitive_integer_array",
-                                          previous_total,
-                                          new_total);
+                z.RUNTIME("`previous_total`<{}> >= `new_total`<{}>", previous_total, new_total);
             }
         }
 
         if (current == null) {
-            z.RAISE_runtime_exception("ArrayFunctions.grow_primitive_integer_array: `current` == null");
+            z.RUNTIME("`current` == null");
         }
 
         if (new_total <= 0) {
-            z.RAISE_runtime_exception("ArrayFunctions.grow_primitive_integer_array: `new_total`<{0}> <= 0",
-                                    previous_total);
+            z.RUNTIME("`new_total`<{0}> <= 0", previous_total);
         }
 
         for (int                    i = 0; i < previous_total; i ++) {

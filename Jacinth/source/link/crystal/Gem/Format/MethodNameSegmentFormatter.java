@@ -60,7 +60,7 @@ public class    MethodNameSegmentFormatter
     {
         final Zone                      z = builder.z;
         final StackTraceElement[]       stack_trace_many = z.zone_thread.getStackTrace();
-       
+     
         final int                       total = stack_trace_many.length;
 
         if (false) {
@@ -125,32 +125,44 @@ public class    MethodNameSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
+    public void                         choose(Gem_StringBuilder builder, int depth)
+    {
+        this.method_name(builder, depth + 1);
+    }
+
+
     public void                         choose(Gem_StringBuilder builder, int depth, Object v)
     {
         this.method_name(builder, depth + 1);
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, Object v, Object w)
+    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w)
     {
-        this.method_name(builder, 0);
+        this.method_name(builder, depth + 1);
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, Object v, Object w, Object x)
+    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
     {
-        this.method_name(builder, 0);
-    }
-
-
-    public void                         choose(Gem_StringBuilder builder, Object v, Object w, Object x, Object y)
-    {
-        this.method_name(builder, 0);
+        this.method_name(builder, depth + 1);
     }
 
 
     public void                         choose(
             Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y//,
+        )
+    {
+        this.method_name(builder, depth + 1);
+    }
+    public void                         choose(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
             Object                              v,
             Object                              w,
             Object                              x,
@@ -158,21 +170,39 @@ public class    MethodNameSegmentFormatter
             Object                              y5//,
         )
     {
-        this.method_name(builder, 0);
+        this.method_name(builder, depth + 1);
     }
 
 
-    public void                         select_many(
+    public void                         choose(
             Gem_StringBuilder                   builder,
+            int                                 depth,
             Object                              v,
             Object                              w,
             Object                              x,
             Object                              y4,
             Object                              y5,
+            Object                              y6//,
+        )
+    {
+        this.method_name(builder, depth + 1);
+    }
+
+
+    public void                         choose(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6,
+            Object                              y7,
             Object ...                          other_arguments//,
         )
     {
-        this.method_name(builder, 0);
+        this.method_name(builder, depth + 1);
     }
 
 

@@ -90,7 +90,7 @@ public class    Storehouse_String
     public static String                intern_permenant_string(Zone z, String s)
     {
         if (s == null) {
-            z.RAISE_runtime_exception("Storehouse_String.intern_permenant_string: `s` is null");
+            z.RUNTIME("`s` is null");
         }
 
         Storehouse_String               singleton = Storehouse_String.singleton;

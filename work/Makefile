@@ -83,6 +83,7 @@ JACINTH_FILES = \
     $J/Gem/Format/MessageFormatter_1__Prefix.java \
     $J/Gem/Format/MessageFormatter_1__Simple.java \
     $J/Gem/Format/MessageFormatter_1__Suffix.java \
+    $J/Gem/Format/MessageFormatter_1.java \
     $J/Gem/Format/MessageFormatter_2.java \
     $J/Gem/Format/MessageFormatter_3.java \
     $J/Gem/Format/MessageFormatter_4.java \
@@ -299,7 +300,7 @@ clean:
 	rm -f ii.java in.py im.py isf.java imf.java io.py iv.py
 	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
-	rm -f m m.txt m1c.py m1m.py m1p.java m1s.java m1x.java
+	rm -f m m.txt m1.java m1c.py m1m.py m1p.java m1s.java m1x.java
 	rm -f   m2.java m2c.py m3.java m2m.py m3m.py m4.java m5.java
 	rm -f   map.py mb.java mc.py md.py me.py mm.java mm.py mn.java mn.py
 	rm -f o.py oc.py od.py oe.py om.py
@@ -495,6 +496,7 @@ links:
 	ln -s ../OtherLicenses/README.txt                                           lr.txt
 	ln -s Makefile                                                              m
 	ln -s mine.txt                                                              m.txt
+	ln -s $J/Gem/Format/MessageFormatter_1.java                                 m1.java
 	ln -s ../Marble/Core.py                                                     m1c.py
 	ln -s ../Marble/Main.py                                                     m1m.py
 	ln -s $J/Gem/Format/MessageFormatter_1__Prefix.java                         m1p.java

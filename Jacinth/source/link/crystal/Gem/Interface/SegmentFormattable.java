@@ -11,14 +11,23 @@ import link.crystal.Gem.Core.Zone;
 
 public interface   SegmentFormattable
 {
-    String                              portray (Zone z);
+    void                                choose(Gem_StringBuilder builder, int depth);
     void                                choose(Gem_StringBuilder builder, int depth, Object v);
-    void                                choose(Gem_StringBuilder builder, Object v, Object w);
-    void                                choose(Gem_StringBuilder builder, Object v, Object w, Object x);
-    void                                choose(Gem_StringBuilder builder, Object v, Object w, Object x, Object y);
+    void                                choose(Gem_StringBuilder builder, int depth, Object v, Object w);
+    void                                choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x);
 
     void                                choose(
             Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y//,
+        );
+
+    void                                choose(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
             Object                              v,
             Object                              w,
             Object                              x,
@@ -26,13 +35,29 @@ public interface   SegmentFormattable
             Object                              y5//,
         );
 
-    void                                select_many(
+    void                                choose(
             Gem_StringBuilder                   builder,
+            int                                 depth,
             Object                              v,
             Object                              w,
             Object                              x,
             Object                              y4,
             Object                              y5,
+            Object                              y6//,
+        );
+
+    void                                choose(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6,
+            Object                              y7,
             Object ...                          other_arguments//,
         );
+
+    String                              portray (Zone z);
 }

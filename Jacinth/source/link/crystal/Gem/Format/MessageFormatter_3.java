@@ -60,7 +60,7 @@ public class    MessageFormatter_3
         )
     {
         if ( ! (1 <= expected && expected <= 3)) {
-            z.RAISE_runtime_exception("MessageFormatter_3.create: invalid value for `expected`<{0}>", expected);
+            z.RUNTIME("invalid value for `expected`<{}>", expected);
         }
 
         return new MessageFormatter_3(expected, a, b, c);
@@ -79,10 +79,28 @@ public class    MessageFormatter_3
     //
     //  Interface MessageFormattable
     //
+    public String                       arrange(Zone z, int depth)
+    {
+        if (this.expected != 0) {
+            z.RUNTIME("0 arguments given (expected {})", this.expected);
+        }
+
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+
+        depth += 1;
+
+        this.a.choose(builder, depth);
+        this.b.choose(builder, depth);
+        this.c.choose(builder, depth);
+
+        return builder.finish__AND__recycle();
+    }
+
+
     public String                       arrange(Zone z, int depth, Object v)
     {
         if (this.expected != 1) {
-            z.RAISE_runtime_exception("1 argument given (expected {})", this.expected);
+            z.RUNTIME("1 argument given (expected {})", this.expected);
         }
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
@@ -100,14 +118,16 @@ public class    MessageFormatter_3
     public String                       arrange(Zone z, int depth, Object v, Object w)
     {
         if (this.expected != 2) {
-            z.RAISE_runtime_exception("2 arguments given (expected {})", this.expected);
+            z.RUNTIME("2 arguments given (expected {})", this.expected);
         }
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        this.a.choose(builder, v, w);
-        this.b.choose(builder, v, w);
-        this.c.choose(builder, v, w);
+        depth += 1;
+
+        this.a.choose(builder, depth, v, w);
+        this.b.choose(builder, depth, v, w);
+        this.c.choose(builder, depth, v, w);
 
         return builder.finish__AND__recycle();
     }
@@ -116,14 +136,16 @@ public class    MessageFormatter_3
     public String                       arrange(Zone z, int depth, Object v, Object w, Object x)
     {
         if (this.expected != 3) {
-            z.RAISE_runtime_exception("3 arguments given (expected {})", this.expected);
+            z.RUNTIME("3 arguments given (expected {})", this.expected);
         }
 
         Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
-        this.a.choose(builder, v, w, x);
-        this.b.choose(builder, v, w, x);
-        this.c.choose(builder, v, w, x);
+        depth += 1;
+
+        this.a.choose(builder, depth, v, w, x);
+        this.b.choose(builder, depth, v, w, x);
+        this.c.choose(builder, depth, v, w, x);
 
         return builder.finish__AND__recycle();
     }

@@ -200,7 +200,7 @@ public class   ParseFormat
             Zone                         z = this.z;
 
             if (segment_allocated == 201) {
-                z.RAISE_runtime_exception("ParseFormat.append_segment: maximum of 100 '{#}' allowed");
+                z.RUNTIME("maximum of 100 '{#}' allowed");
             }
 
             int                         new_allocated = limit_to_between(21, needed * 2, 201);
@@ -244,27 +244,14 @@ public class   ParseFormat
         int[]                           missing_many = this.missing_many;
 
         if (missing_total == 1) {
-            z.RAISE_runtime_exception(
-                    (
-                          "ParseFormat.examine_missing: format string is missing {"
-                        + Integer.toString(missing_many[0])
-                        + "}: "
-                        + z.quote_string(this.format)
-                    )
-                );
+            z.RUNTIME("format string is missing {{{}}}: {}", missing_many[0], z.quote_string(this.format));
         }
 
         if (missing_total == 2) {
-            throw new RuntimeException(
-                    (
-                          "ParseFormat.examine_missing: format string is missing {"
-                        + Integer.toString(missing_many[0])
-                        + "} and {"
-                        + Integer.toString(missing_many[1])
-                        + "}: "
-                        + z.quote_string(this.format)
-                    )
-                );
+            z.RUNTIME("format string is missing {{{}}} and {{{}}}: {}",
+                      missing_many[0],
+                      missing_many[1],
+                      z.quote_string(this.format));
         }
 
 
@@ -280,9 +267,7 @@ public class   ParseFormat
             builder.append("{", missing_many[i], "}");
         }
 
-        z.RAISE_runtime_exception("ParseFormat.examine_missing: format string is missing {0}: {1}",
-                                  builder.finish__AND__recycle(),
-                                  z.quote_string(this.format));
+        z.RUNTIME("format string is missing {}: {}", builder.finish__AND__recycle(), z.quote_string(this.format));
     }
 
 
@@ -291,9 +276,7 @@ public class   ParseFormat
         Zone                            z      = this.z;
         String                          format = this.format;
 
-        z.RAISE_runtime_exception(
-            "ParseFormat.parse_format__work: format string has both automatic & manual field numbering: {0}",
-            format);
+        z.RUNTIME("format string has both automatic & manual field numbering: {}", format);
     }
 
 
@@ -304,7 +287,7 @@ public class   ParseFormat
         if (segment_many == null) {
             Zone                        z = this.z;
 
-            z.RAISE_runtime_exception("ParseFormat.steal_segments: no segments to steal");
+            z.RUNTIME("no segments to steal");
         }
 
         this.segment_many      = null;
@@ -339,8 +322,7 @@ public class   ParseFormat
         int                             end_3 = braces_matcher.end(3);
 
         if (end_3 == -1) {
-            z.RAISE_runtime_exception("ParseFormat.parse_format__work: format string is malformed: {0}",
-                                      z.quote_string(format));
+            z.RUNTIME("format string is malformed: {}", z.quote_string(format));
         }
 
         int                             start_1 = braces_matcher.start(1);
@@ -425,11 +407,11 @@ public class   ParseFormat
             int                         next_end_3 = braces_matcher.end(3);
 
             if (next_end_3 == -1) {
-                z.RAISE_runtime_exception("ParseFormat.parse_format__work: format string is malformed: {0}", format);
+                z.RUNTIME("format string is malformed: {}", format);
             }
 
             start_1 = braces_matcher.start(1);
-            
+
             delta = next_end_3 - start_1;
 
             if (delta == 2) {
@@ -519,7 +501,7 @@ public class   ParseFormat
                     segment_many[3]//,
                 );
         }
- 
+
         if (segment_total == 5) {
             return MessageFormatter_5.create(
                     z,
@@ -531,7 +513,7 @@ public class   ParseFormat
                     segment_many[4]//,
                 );
         }
- 
+
         SegmentFormattable[]        shrunk_many;
         int                         shrunk_total = segment_total;
 
@@ -571,7 +553,7 @@ public class   ParseFormat
             for (int                    i = 0; i < segment_total; i ++) {
                 segment_many[i] = null;
             }
-           
+
             this.segment_total = 0;
         }
     }

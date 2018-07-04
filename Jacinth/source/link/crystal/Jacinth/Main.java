@@ -12,7 +12,7 @@ import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
 import link.crystal.Mirror.Shape;
 
 
-public class    Main 
+public class    Main
 {
     public static void                  main(String[] args)
     {

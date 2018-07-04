@@ -10,7 +10,7 @@ import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 
 
-public abstract class   SilverProxy<PROXY extends SilverProxy, CLIENT extends Object> 
+public abstract class   SilverProxy<PROXY extends SilverProxy, CLIENT extends Object>
     extends             Gem_Object<Inspection>
 //  extends             Object
     implements          Inspectable<Inspection>//,                      //  Via Gem_Object

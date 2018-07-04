@@ -132,7 +132,7 @@ public class    Gem_StringBuilder
     public String                       finish__AND__recycle()
     {
         if (this.finished) {
-            this.z.RAISE_runtime_exception("`.finished` already set");
+            this.z.RUNTIME("`.finished` already set");
         }
 
         this.finished = true;

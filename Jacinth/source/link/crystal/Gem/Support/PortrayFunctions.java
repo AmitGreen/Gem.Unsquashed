@@ -58,7 +58,7 @@ public abstract class   PortrayFunctions
     public static String                quote_string(Zone z, String s)
     {
         if (s == null) {
-            z.RAISE_runtime_exception("quote_string: `s` is null");
+            z.RUNTIME("quote_string: `s` is null");
         }
 
         Gem_StringBuilder               builder = null;

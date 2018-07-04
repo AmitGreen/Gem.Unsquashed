@@ -47,7 +47,7 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
         String                          portrait_0 = inspection.portrait_0;
 
         if (portrait_0 == null) {
-            z.RAISE_runtime_exception("Gem_Object.portray: `{0}.inspect().portrait_0` is `null`",
+            z.RUNTIME("`{0}.inspect().portrait_0` is `null`",
                                       inspection.simple_class_name);
         }
 

@@ -21,6 +21,13 @@ public abstract class   MessageFormatter_Base
     //
     //  Interface MessageFormattable
     //
+    public String                       arrange(Zone z, int depth)
+    {
+        z.INVALID_ROUTINE();
+        return null;
+    }
+
+
     public String                       arrange(Zone z, int depth, Object v)
     {
         z.INVALID_ROUTINE();
@@ -48,7 +55,7 @@ public abstract class   MessageFormatter_Base
         return null;
     }
 
-    
+  
     public String                       arrange(
             Zone                                z,
             int                                 depth,

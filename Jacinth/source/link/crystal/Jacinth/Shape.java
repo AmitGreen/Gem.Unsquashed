@@ -10,7 +10,7 @@ import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 
 
-public class    Shape 
+public class    Shape
     extends     Gem_Object<Inspection>
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object

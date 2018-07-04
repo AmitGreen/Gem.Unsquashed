@@ -271,7 +271,7 @@ public class    Zone
             //
             //      throw `RuntimeException` directly here, to avoid recursive calls
             //
-            //      (since calling `.RAISE_runtime_exception` might internally call this routine, leading to recursive calls)
+            //      (since calling `.RUNTIME` might internally call this routine, leading to recursive calls)
             //
             throw new RuntimeException("Zone.current_zone: only single threaded currently supported");
         }
@@ -291,10 +291,10 @@ public class    Zone
         final int                       gem_builder_total = this.gem_builder_total;
 
         z.line("Dump of Gem_Zone");
-        z.line("           zone_thread: {}", this.zone_thread);
-        z.line("          parse_format: {}", this.parse_format);
-        z.line("      gem_builder_many: {}", gem_builder_many);
-        z.line("     gem_builder_total: {}", gem_builder_total);
+        z.line("          zone_thread: {}", this.zone_thread);
+        z.line("         parse_format: {}", this.parse_format);
+        z.line("     gem_builder_many: {}", gem_builder_many);
+        z.line("    gem_builder_total: {}", gem_builder_total);
 
         for (int                        i = 0; i < gem_builder_total; i ++) {
             z.line("  gem_builder_many[{}]: {}", i, gem_builder_many[i]);
@@ -476,22 +476,22 @@ public class    Zone
 
     public void                         INVALID_ROUTINE()
     {
-        ExceptionFunctions.RAISE_runtime_exception(this, "invalid routine");
+        ExceptionFunctions.RUNTIME(this, "invalid routine");
     }
 
 
-    public void                         RAISE_runtime_exception(String error_message)
+    public void                         RUNTIME(String error_message)
     {
-        ExceptionFunctions.RAISE_runtime_exception(this, error_message);
+        ExceptionFunctions.RUNTIME(this, error_message);
     }
 
 
-    public void                         RAISE_runtime_exception(
+    public void                         RUNTIME(
             String                              format,
             Object                              v,
             Object ...                          other_arguments//,
         )
     {
-        ExceptionFunctions.RAISE_runtime_exception(this, format, v, other_arguments);
+        ExceptionFunctions.RUNTIME(this, format, v, other_arguments);
     }
 }

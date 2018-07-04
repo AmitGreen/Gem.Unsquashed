@@ -30,10 +30,7 @@ public abstract class   Storehouse_ArgumentSegmentFormatter
         int                             segment_total = segment_many.length;
 
         if ( ! (0 <= argument_index && argument_index < segment_total)) {
-            z.RAISE_runtime_exception("{0}: `argument_index`<{1}> must be between 0 and {2}",
-                                      "Storehouse_ArgumentSegmentFormatter.conjure",
-                                      argument_index,
-                                      segment_total + 1);
+            z.RUNTIME("`argument_index`<{1}> must be between 0 and {2}", argument_index, segment_total + 1);
         }
 
         ArgumentSegmentFormatter        previous = segment_many[argument_index];

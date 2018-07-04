@@ -113,7 +113,7 @@ def gem():
                 if previous is none:                                            #   SUCCESS: Step #1 [CAS]
                     line('#%d: step #1 done ... %s ...', thread_number, t)
 
-                    after = atom.next_atom() 
+                    after = atom.next_atom()
 
                     previous = ephemeral.COMPARE_AND_SWAP__atom(atom, after)    #   ATTEMPT: Step #2 [CAS]
 
@@ -163,11 +163,11 @@ def gem():
             #       So we need to check if Step #2 needs to be done
             #
             if atom is not ephemeral.atom:                                      #   Step #2 already done
-                t.done = 7                                      
+                t.done = 7
                 line('#%d: step #2 already done ... %s', thread_number, t)
                 return
 
-            after = atom.next_atom() 
+            after = atom.next_atom()
 
             previous = ephemeral.COMPARE_AND_SWAP__atom(atom, after)            #   Step #2 [CAS]
 

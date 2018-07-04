@@ -57,25 +57,25 @@ public class    StringSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
+    public void                         choose(Gem_StringBuilder builder, int depth)
+    {
+        builder.append(this.s);
+    }
+
+
     public void                         choose(Gem_StringBuilder builder, int depth, Object v)
     {
         builder.append(this.s);
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, Object v, Object w)
+    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w)
     {
         builder.append(this.s);
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, Object v, Object w, Object x)
-    {
-        builder.append(this.s);
-    }
-
-
-    public void                         choose(Gem_StringBuilder builder, Object v, Object w, Object x, Object y)
+    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
     {
         builder.append(this.s);
     }
@@ -83,6 +83,20 @@ public class    StringSegmentFormatter
 
     public void                         choose(
             Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y//,
+        )
+    {
+        builder.append(this.s);
+    }
+
+
+    public void                         choose(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
             Object                              v,
             Object                              w,
             Object                              x,
@@ -94,13 +108,31 @@ public class    StringSegmentFormatter
     }
 
 
-    public void                         select_many(
+    public void                         choose(
             Gem_StringBuilder                   builder,
+            int                                 depth,
             Object                              v,
             Object                              w,
             Object                              x,
             Object                              y4,
             Object                              y5,
+            Object                              y6//,
+        )
+    {
+        builder.append(this.s);
+    }
+
+
+    public void                         choose(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6,
+            Object                              y7,
             Object ...                          other_arguments//,
         )
     {
