@@ -79,75 +79,71 @@ public class    MessageFormatter_3
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, int depth)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth)
     {
         if (this.expected != 0) {
+            final Zone                  z = builder.z;
+
             z.RUNTIME("0 arguments given (expected {})", this.expected);
         }
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         depth += 1;
 
         this.a.choose(builder, depth);
         this.b.choose(builder, depth);
         this.c.choose(builder, depth);
-
-        return builder.finish__AND__recycle();
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
         if (this.expected != 1) {
+            final Zone                  z = builder.z;
+
             z.RUNTIME("1 argument given (expected {})", this.expected);
         }
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         depth += 1;
 
         this.a.choose(builder, depth, v);
         this.b.choose(builder, depth, v);
         this.c.choose(builder, depth, v);
-
-        return builder.finish__AND__recycle();
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object w)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w)
     {
         if (this.expected != 2) {
+            final Zone                  z = builder.z;
+
             z.RUNTIME("2 arguments given (expected {})", this.expected);
         }
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         depth += 1;
 
         this.a.choose(builder, depth, v, w);
         this.b.choose(builder, depth, v, w);
         this.c.choose(builder, depth, v, w);
-
-        return builder.finish__AND__recycle();
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object w, Object x)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
     {
         if (this.expected != 3) {
+            final Zone                  z = builder.z;
+
             z.RUNTIME("3 arguments given (expected {})", this.expected);
         }
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         depth += 1;
 
         this.a.choose(builder, depth, v, w, x);
         this.b.choose(builder, depth, v, w, x);
         this.c.choose(builder, depth, v, w, x);
-
-        return builder.finish__AND__recycle();
     }
 
 

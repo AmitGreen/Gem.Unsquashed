@@ -6,6 +6,7 @@ package link.crystal.Gem.Format;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.MessageFormatter_Base;
@@ -58,9 +59,12 @@ public class    MessageFormatter_1__Prefix
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, int depth, Object v)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
-        return this.prefix + z.portray(v);
+        final Zone                      z = builder.z;
+
+        builder.append(this.prefix, z.portray(v));
     }
 
 

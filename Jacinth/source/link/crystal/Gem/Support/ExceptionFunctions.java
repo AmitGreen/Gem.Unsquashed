@@ -8,6 +8,7 @@ import java.lang.RuntimeException;
 import java.lang.Object;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.MessageFormattable;
@@ -21,8 +22,22 @@ public abstract class   ExceptionFunctions
     //
     //  Public
     //
-    public static void                  RUNTIME(Zone z, String error_message)
+    public static void                  RUNTIME(Zone z, String format)
     {
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(z, format);
+
+            Storehouse_MessageFormattable.insert(z, format, formattable);
+        }
+
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+
+        formattable.arrange(builder, 2);
+
+        String                      error_message = builder.finish__AND__recycle();
+
         throw new RuntimeException(error_message);
     }
 
@@ -37,10 +52,14 @@ public abstract class   ExceptionFunctions
             Storehouse_MessageFormattable.insert(z, format, formattable);
         }
 
+        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+
         int                             other_arguments_total = other_arguments.length;
 
         if (other_arguments_total == 0) {
-            String                      error_message = formattable.arrange(z, 2, v);
+            formattable.arrange(builder, 2, v);
+
+            String                      error_message = builder.finish__AND__recycle();
 
             throw new RuntimeException(error_message);
         }
@@ -48,7 +67,9 @@ public abstract class   ExceptionFunctions
         Object                          w = other_arguments[0];
 
         if (other_arguments_total == 1) {
-            String                      error_message = formattable.arrange(z, 2, v, w);
+            formattable.arrange(builder, 2, v, w);
+
+            String                      error_message = builder.finish__AND__recycle();
 
             throw new RuntimeException(error_message);
         }
@@ -56,7 +77,9 @@ public abstract class   ExceptionFunctions
         Object                          x = other_arguments[1];
 
         if (other_arguments_total == 2) {
-            String                      error_message = formattable.arrange(z, 2, v, w, x);
+            formattable.arrange(builder, 2, v, w, x);
+
+            String                      error_message = builder.finish__AND__recycle();
 
             throw new RuntimeException(error_message);
         }
@@ -64,7 +87,9 @@ public abstract class   ExceptionFunctions
         Object                          y4 = other_arguments[2];
 
         if (other_arguments_total == 3) {
-            String                      error_message = formattable.arrange(z, 2, v, w, x, y4);
+            formattable.arrange(builder, 2, v, w, x, y4);
+
+            String                      error_message = builder.finish__AND__recycle();
 
             throw new RuntimeException(error_message);
         }
@@ -72,7 +97,9 @@ public abstract class   ExceptionFunctions
         Object                          y5 = other_arguments[3];
 
         if (other_arguments_total == 4) {
-            String                      error_message = formattable.arrange(z, 2, v, w, x, y4, y5);
+            formattable.arrange(builder, 2, v, w, x, y4, y5);
+
+            String                      error_message = builder.finish__AND__recycle();
 
             throw new RuntimeException(error_message);
         }
@@ -80,7 +107,9 @@ public abstract class   ExceptionFunctions
         Object                          y6 = other_arguments[4];
 
         if (other_arguments_total == 5) {
-            String                      error_message = formattable.arrange(z, 2, v, w, x, y4, y5, y6);
+            formattable.arrange(builder, 2, v, w, x, y4, y5, y6);
+
+            String                      error_message = builder.finish__AND__recycle();
 
             throw new RuntimeException(error_message);
         }
@@ -97,7 +126,9 @@ public abstract class   ExceptionFunctions
             }
         }
 
-        String                          error_message = formattable.arrange(z, 2, v, w, x, y4, y5, y6, y7, adjusted);
+        formattable.arrange(builder, 2, v, w, x, y4, y5, y6, y7, adjusted);
+
+        String                          error_message = builder.finish__AND__recycle();
 
         throw new RuntimeException(error_message);
     }

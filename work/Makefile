@@ -79,6 +79,7 @@ JACINTH_FILES = \
     $J/Gem/Core/Gem_StringSet.java \
     $J/Gem/Core/Inspection.java \
     $J/Gem/Core/Zone.java \
+    $J/Gem/Format/AdornmentSegmentFormatter.java \
     $J/Gem/Format/MessageFormatter_1__Prefix.java \
     $J/Gem/Format/MessageFormatter_1__Suffix.java \
     $J/Gem/Format/MessageFormatter_2.java \
@@ -279,7 +280,7 @@ clean:
 	rm -f *.old *.new *.pyc
 	rm -f 2re.py 2sf.py 2sp.py 2sc.py
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
-	rm -f a.py ab.py af.java ac.py ag.py
+	rm -f a.py ab.py af.java ac.py ag.py as.java
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py ca2.py cd.py ce.py cr.py
 	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
@@ -340,6 +341,7 @@ links:
 	ln -s ../Gem/Ascii.py                                                       ac.py
 	ln -s $J/Gem/Core/ArrayFunctions.java                                       af.java
 	ln -s ../Agate/RUNME.py                                                     ag.py
+	ln -s $J/Gem/Format/AdornmentSegmentFormatter.java                          as.java
 	ln -s ../Beryl/BerylAnswer.py                                               ba.py
 	ln -s ../Beryl/__init__.py                                                  bi.py
 	ln -s ../Beryl/Ask.py                                                       bk.py

@@ -64,128 +64,131 @@ public class    MessageFormatter_Many
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, int depth)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth)
     {
         if (this.expected != 0) {
+            final Zone                  z = builder.z;
+
             z.RUNTIME("0 arguments given (expected {})", this.expected);
         }
 
-        SegmentFormattable[]            segment_many = this.segment_many;
+        final SegmentFormattable[]      segment_many = this.segment_many;
 
-        int                             segment_total = segment_many.length;
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+        final int                       segment_total = segment_many.length;
 
         depth += 1;
 
         for (int                        i       = 0; i < segment_total; i ++) {
-            SegmentFormattable          segment = segment_many[i];
+            final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth);
         }
-
-        return builder.finish__AND__recycle();
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
         if (this.expected != 1) {
+            final Zone                  z = builder.z;
+
             z.RUNTIME("1 argument given (expected {})", this.expected);
         }
 
-        SegmentFormattable[]            segment_many = this.segment_many;
+        final SegmentFormattable[]      segment_many = this.segment_many;
 
-        int                             segment_total = segment_many.length;
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+        final int                       segment_total = segment_many.length;
 
         depth += 1;
 
         for (int                        i       = 0; i < segment_total; i ++) {
-            SegmentFormattable          segment = segment_many[i];
+            final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v);
         }
-
-        return builder.finish__AND__recycle();
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object w)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w)
     {
         if (this.expected != 2) {
+            final Zone                  z = builder.z;
+
             z.RUNTIME("2 arguments given (expected {})", this.expected);
         }
 
-        SegmentFormattable[]            segment_many = this.segment_many;
+        final SegmentFormattable[]      segment_many = this.segment_many;
 
-        int                             segment_total = segment_many.length;
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+        final int                       segment_total = segment_many.length;
 
         depth += 1;
 
         for (int                        i       = 0; i < segment_total; i ++) {
-            SegmentFormattable          segment = segment_many[i];
+            final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v, w);
         }
-
-        return builder.finish__AND__recycle();
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object w, Object x)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
     {
         if (this.expected != 3) {
+            final Zone                  z = builder.z;
+
             z.RUNTIME("3 arguments given (expected {})", this.expected);
         }
 
-        SegmentFormattable[]            segment_many = this.segment_many;
+        final SegmentFormattable[]      segment_many = this.segment_many;
 
-        int                             segment_total = segment_many.length;
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+        final int                       segment_total = segment_many.length;
 
         depth += 1;
 
         for (int                        i       = 0; i < segment_total; i ++) {
-            SegmentFormattable          segment = segment_many[i];
+            final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v, w, x);
         }
-
-        return builder.finish__AND__recycle();
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object w, Object x, Object y)
+    @Override
+    public void                         arrange(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y//,
+        )
     {
         if (this.expected != 4) {
+            final Zone                  z = builder.z;
+
             z.RUNTIME("4 arguments given (expected {})", this.expected);
         }
 
-        SegmentFormattable[]            segment_many = this.segment_many;
+        final SegmentFormattable[]      segment_many = this.segment_many;
 
-        int                             segment_total = segment_many.length;
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+        final int                       segment_total = segment_many.length;
 
         depth += 1;
 
         for (int                        i       = 0; i < segment_total; i ++) {
-            SegmentFormattable          segment = segment_many[i];
+            final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v, w, x, y);
         }
-
-        return builder.finish__AND__recycle();
     }
 
 
-    public String                       arrange(
-            Zone                                z,
+    @Override
+    public void                         arrange(
+            Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
             Object                              w,
@@ -194,32 +197,29 @@ public class    MessageFormatter_Many
             Object                              y5//,
         )
     {
-        int                             expected = this.expected;
-
         if (this.expected != 5) {
+            final Zone                  z = builder.z;
+
             z.RUNTIME("5 arguments given (expected {})", this.expected);
         }
 
-        SegmentFormattable[]            segment_many = this.segment_many;
+        final SegmentFormattable[]      segment_many = this.segment_many;
 
-        int                             segment_total = segment_many.length;
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+        final int                       segment_total = segment_many.length;
 
         depth += 1;
 
         for (int                        i       = 0; i < segment_total; i ++) {
-            SegmentFormattable          segment = segment_many[i];
+            final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v, w, x, y4, y5);
         }
-
-        return builder.finish__AND__recycle();
     }
 
 
-    public String                       arrange(
-            Zone                                z,
+    @Override
+    public void                         arrange(
+            Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
             Object                              w,
@@ -230,29 +230,28 @@ public class    MessageFormatter_Many
         )
     {
         if (this.expected != 6) {
+            final Zone                  z = builder.z;
+
             z.RUNTIME("6 arguments given (expected {})", this.expected);
         }
 
-        SegmentFormattable[]            segment_many = this.segment_many;
+        final SegmentFormattable[]      segment_many = this.segment_many;
 
-        int                             segment_total = segment_many.length;
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+        final int                       segment_total = segment_many.length;
 
         depth += 1;
 
-        for (int                        i = 0; i < segment_total; i ++) {
-            SegmentFormattable          segment = segment_many[i];
+        for (int                        i       = 0; i < segment_total; i ++) {
+            final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v, w, x, y4, y5, y6);
         }
-
-        return builder.finish__AND__recycle();
     }
 
 
-    public String                       arrange(
-            Zone                                z,
+    @Override
+    public void                         arrange(
+            Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
             Object                              w,
@@ -264,29 +263,25 @@ public class    MessageFormatter_Many
             Object ...                          other_arguments//,
         )
     {
-        int                             expected = this.expected;
-
-        int                             actual = 7 + other_arguments.length;
+        final int                       actual = 7 + other_arguments.length;
 
         if (this.expected != actual) {
+            final Zone                  z = builder.z;
+
             z.RUNTIME("{} arguments given (expected {})", actual, this.expected);
         }
 
-        SegmentFormattable[]            segment_many = this.segment_many;
+        final SegmentFormattable[]      segment_many = this.segment_many;
 
-        int                             segment_total = segment_many.length;
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+        final int                       segment_total = segment_many.length;
 
         depth += 1;
 
-        for (int                        i = 0; i < segment_total; i ++) {
-            SegmentFormattable          segment = segment_many[i];
+        for (int                        i       = 0; i < segment_total; i ++) {
+            final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v, w, x, y4, y5, y6, y7, other_arguments);
         }
-
-        return builder.finish__AND__recycle();
     }
 
 

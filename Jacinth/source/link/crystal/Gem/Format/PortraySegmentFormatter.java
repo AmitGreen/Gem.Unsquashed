@@ -72,9 +72,12 @@ public class    PortraySegmentFormatter
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, int depth, Object v)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
-        return z.portray(v);
+        final Zone                      z = builder.z;
+
+        builder.append(z.portray(v));
     }
 
 

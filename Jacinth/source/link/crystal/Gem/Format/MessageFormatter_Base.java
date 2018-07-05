@@ -6,6 +6,7 @@ package link.crystal.Gem.Format;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
@@ -21,43 +22,65 @@ public abstract class   MessageFormatter_Base
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, int depth)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth)
     {
-        z.INVALID_ROUTINE();
-        return null;
+        final Zone                      z = builder.z;
+
+        Inspection                      inspection = this.inspect();
+
+        z.RUNTIME("invalid routine (derived class: {0})", inspection.simple_class_name);
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
-        z.INVALID_ROUTINE();
-        return null;
+        final Zone                      z = builder.z;
+
+        Inspection                      inspection = this.inspect();
+
+        z.RUNTIME("invalid routine (derived class: {0})", inspection.simple_class_name);
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object w)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w)
     {
+        final Zone                      z = builder.z;
+
         z.INVALID_ROUTINE();
-        return null;
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object w, Object x)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
     {
+        final Zone                      z = builder.z;
+
         z.INVALID_ROUTINE();
-        return null;
     }
 
 
-    public String                       arrange(Zone z, int depth, Object v, Object w, Object x, Object y)
+    @Override
+    public void                         arrange(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y//,
+        )
     {
+        final Zone                      z = builder.z;
+
         z.INVALID_ROUTINE();
-        return null;
     }
 
   
-    public String                       arrange(
-            Zone                                z,
+    @Override
+    public void                         arrange(
+            Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
             Object                              w,
@@ -66,13 +89,15 @@ public abstract class   MessageFormatter_Base
             Object                              y5//,
         )
     {
+        final Zone                      z = builder.z;
+
         z.INVALID_ROUTINE();
-        return null;
     }
 
 
-    public String                       arrange(
-            Zone                                z,
+    @Override
+    public void                         arrange(
+            Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
             Object                              w,
@@ -82,13 +107,15 @@ public abstract class   MessageFormatter_Base
             Object                              y6//,
         )
     {
+        final Zone                      z = builder.z;
+
         z.INVALID_ROUTINE();
-        return null;
     }
 
 
-    public String                       arrange(
-            Zone                                z,
+    @Override
+    public void                         arrange(
+            Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
             Object                              w,
@@ -100,7 +127,8 @@ public abstract class   MessageFormatter_Base
             Object ...                          other_arguments//,
         )
     {
+        final Zone                      z = builder.z;
+
         z.INVALID_ROUTINE();
-        return null;
     }
 }

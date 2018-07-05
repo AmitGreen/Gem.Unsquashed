@@ -74,9 +74,10 @@ public class    AdornmentSegmentFormatter
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, int depth)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth)
     {
-        return this.s;
+        builder.append(this.s);
     }
 
 

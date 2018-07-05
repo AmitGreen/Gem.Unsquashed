@@ -129,13 +129,10 @@ public class    MethodNameSegmentFormatter
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, int depth)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth)
     {
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
-
         this.method_name(builder, depth + 1);
-
-        return builder.finish__AND__recycle();
     }
 
 
@@ -177,6 +174,8 @@ public class    MethodNameSegmentFormatter
     {
         this.method_name(builder, depth + 1);
     }
+
+
     public void                         choose(
             Gem_StringBuilder                   builder,
             int                                 depth,

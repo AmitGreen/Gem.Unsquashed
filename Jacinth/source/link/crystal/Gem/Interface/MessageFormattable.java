@@ -6,20 +6,38 @@ package link.crystal.Gem.Interface;
 
 import java.lang.Object;
 import java.lang.String;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 
 
 public interface   MessageFormattable
 {
-    String                              arrange(Zone z, int depth);
-    String                              arrange(Zone z, int depth, Object v);
-    String                              arrange(Zone z, int depth, Object v, Object w);
-    String                              arrange(Zone z, int depth, Object v, Object w, Object x);
-    String                              arrange(Zone z, int depth, Object v, Object w, Object x, Object y);
-    String                              arrange(Zone z, int depth, Object v, Object w, Object x, Object y4, Object y5);
+    void                                arrange(Gem_StringBuilder builder, int depth);
+    void                                arrange(Gem_StringBuilder builder, int depth, Object v);
+    void                                arrange(Gem_StringBuilder builder, int depth, Object v, Object w);
+    void                                arrange(Gem_StringBuilder builder, int depth, Object v, Object w, Object x);
 
-    String                              arrange(
-            Zone                                z,
+    void                                arrange(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y//,
+        );
+
+    void                                arrange(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5//,
+        );
+
+    void                                arrange(
+            Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
             Object                              w,
@@ -29,8 +47,8 @@ public interface   MessageFormattable
             Object                              y6//,
         );
 
-    String                              arrange(
-            Zone                                z,
+    void                                arrange(
+            Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
             Object                              w,

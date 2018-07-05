@@ -72,9 +72,10 @@ public class    StringSegmentFormatter
     //
     //  Interface MessageFormattable
     //
-    public String                       arrange(Zone z, int depth, Object v)
+    @Override
+    public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
-        return v.toString();
+        builder.append(v.toString());
     }
 
 
