@@ -89,6 +89,7 @@ JACINTH_FILES = \
     $J/Gem/Format/MessageFormatter_Base.java      \
     $J/Gem/Format/MessageFormatter_Many.java \
     $J/Gem/Format/MethodNameSegmentFormatter.java \
+    $J/Gem/Format/NormalSegmentFormatter.java \
     $J/Gem/Format/ParseFormat.java \
     $J/Gem/Format/PortraySegmentFormatter.java \
     $J/Gem/Format/StringSegmentFormatter.java \
@@ -99,6 +100,7 @@ JACINTH_FILES = \
     $J/Gem/Support/PortrayFunctions.java \
     $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java \
     $J/Gem/Support/Storehouse_MessageFormattable.java \
+    $J/Gem/Support/Storehouse_NormalSegmentFormatter.java \
     $J/Gem/Support/Storehouse_PortraySegmentFormatter.java \
     $J/Gem/Support/Storehouse_SmallList.java \
     $J/Gem/Support/Storehouse_String.java \
@@ -304,12 +306,13 @@ clean:
 	rm -f m m.txt m1.java m1c.py m1m.py m1p.java m1s.java m1x.java
 	rm -f   m2.java m2c.py m3.java m2m.py m3m.py m4.java m5.java
 	rm -f   map.py mb.java mc.py md.py me.py mm.java mm.py mn.java mn.py
+	rm -f ns.java
 	rm -f o.py oc.py od.py oe.py om.py
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py
 	rm -f   pel.py pf.py pf.java pj.py pk.py pkc.py pl.py pmo.py pn.py ps.java ps.py psc.java ps3.py px.java
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
-	rm -f sha.java shl.java shm.java shp.java shs.java shsf.java sf.java sl.py so.py ssio.py sy.py
+	rm -f sha.java shl.java shm.java shn.java shp.java shs.java shsf.java sf.java sl.py so.py ssio.py sy.py
 	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
@@ -517,6 +520,7 @@ links:
 	ln -s ../Melanite/Multiprocessing.py                                        mm.py
 	ln -s $J/Gem/Format/MethodNameSegmentFormatter.java                         mn.java
 	ln -s ../Marble/NestedConjure.py                                            mn.py
+	ln -s $J/Gem/Format/NormalSegmentFormatter.java                             ns.java
 	ln -s ../Gem/Output.py                                                      o.py
 	ln -s ../Onyx/Core.py                                                       oc.py
 	ln -s ../Onyx/Development.py                                                od.py
@@ -554,6 +558,7 @@ links:
 	ln -s $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java              sha.java
 	ln -s $J/Gem/Support/Storehouse_SmallList.java                              shl.java
 	ln -s $J/Gem/Support/Storehouse_MessageFormattable.java                     shm.java
+	ln -s $J/Gem/Support/Storehouse_NormalSegmentFormatter.java                 shn.java
 	ln -s $J/Gem/Support/Storehouse_PortraySegmentFormatter.java                shp.java
 	ln -s $J/Gem/Support/Storehouse_String.java                                 shs.java
 	ln -s $J/Gem/Support/Storehouse_StringSegmentFormatter.java                 shsf.java

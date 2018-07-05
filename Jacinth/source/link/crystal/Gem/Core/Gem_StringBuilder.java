@@ -141,4 +141,51 @@ public class    Gem_StringBuilder
 
         return this.builder.toString();
     }
+
+
+    public void                         format(Object v)
+    {
+        final StringBuilder             builder = this.builder;
+
+        if (v == null) {
+            builder.append("<null>");
+            return;
+        }
+
+        if (v instanceof Inspectable) {
+            final Zone                   z = this.z;
+
+            builder.append(((Inspectable) v).portray(z));
+            return;
+        }
+
+        Class<?>                        v_class = v.getClass();
+
+        if (v_class == Integer$class) {
+            builder.append((Integer) v);
+            return;
+        }
+
+        if (v_class == String$class) {
+            builder.append((String) v);
+            return;
+        }
+
+        if (v_class == Thread$class) {
+            builder.append("<").append(v.toString()).append(">");
+            return;
+        }
+
+        if (v_class == Gem_StringBuilder$array$class)
+        {
+            Gem_StringBuilder[]     v2 = (Gem_StringBuilder[]) v;
+
+            builder.append(z.arrange("<Gem_StringBuilder size<{0}>>", v2.length));
+            return;
+        }
+
+        builder.append("<").append(v_class.getSimpleName()).append(": ").append(v.toString()).append(">");
+        return;
+    }
+
 }
