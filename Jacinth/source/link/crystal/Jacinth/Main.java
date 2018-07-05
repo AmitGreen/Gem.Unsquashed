@@ -33,10 +33,9 @@ public class    Main
         if (true) {
             //Storehouse_MessageFormattable       .dump(z);
             //Storehouse_PortraySegmentFormatter  .singleton.dump(z);
-            Storehouse_String                   .dump(z);
-            Storehouse_AdornmentSegmentFormatter.singleton.dump(z, "Storehouse_AdornmentSegmentFormatter.singleton");
-
-            //z.dump(z);
+            //Storehouse_String                   .dump(z);
+            //Storehouse_AdornmentSegmentFormatter.singleton.dump(z, "Storehouse_AdornmentSegmentFormatter.singleton");
+            z.dump(z);
         }
 
     }

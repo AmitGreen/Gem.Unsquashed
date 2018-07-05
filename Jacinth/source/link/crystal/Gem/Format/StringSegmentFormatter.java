@@ -5,7 +5,6 @@ package link.crystal.Gem.Format;
 
 
 import java.lang.String;
-import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
@@ -17,14 +16,14 @@ import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
 
 
 public class    StringSegmentFormatter
-    extends     MessageFormatter_Base
+    extends     MessageFormatter_Base<Inspection>
 //  extends     Gem_Object<Inspection>
 //  extends     Object
     implements  MessageFormattable,
                 SegmentFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Gem.Format.StringSegmentFormatter");
+    private static Inspection           inspection = Inspection.create("StringSegmentFormatter");
 
 
     //

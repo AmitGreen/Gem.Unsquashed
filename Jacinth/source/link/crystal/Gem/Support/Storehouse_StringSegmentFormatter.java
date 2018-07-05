@@ -18,7 +18,7 @@ public class    Storehouse_StringSegmentFormatter
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Gem.Format.Storehouse_StringSegmentFormatter");
+    private static Inspection           inspection = Inspection.create("Storehouse_StringSegmentFormatter");
 
 
     //

@@ -20,9 +20,7 @@ public class    Storehouse_AdornmentSegmentFormatter
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_StringMap<?>
 {
-    private static Inspection           inspection = (
-            Inspection.create("Gem.Support.Storehouse_AdornmentSegmentFormatter")
-        );
+    private static Inspection           inspection = Inspection.create("Storehouse_AdornmentSegmentFormatter");
 
 
     //

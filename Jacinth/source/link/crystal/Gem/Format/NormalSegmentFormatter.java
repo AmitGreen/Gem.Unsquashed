@@ -4,12 +4,11 @@
 package link.crystal.Gem.Format;
 
 
-import java.lang.String;
-import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
-import link.crystal.Gem.Format.MessageFormatter_Base;
+import link.crystal.Gem.Format.ArgumentSegmentFormatter;
+import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
@@ -17,20 +16,17 @@ import link.crystal.Gem.Support.Storehouse_NormalSegmentFormatter;
 
 
 public class    NormalSegmentFormatter
-    extends     MessageFormatter_Base
-//  extends     Gem_Object<Inspection>
+    extends     ArgumentSegmentFormatter<ArgumentSegmentFormatter_Inspection>
+//  extends     MessageFormatter_Base   <ArgumentSegmentFormatter_Inspection>
+//  extends     Gem_Object              <ArgumentSegmentFormatter_Inspection>
 //  extends     Object
     implements  MessageFormattable,
                 SegmentFormattable,
-                Inspectable<Inspection>//,                              //  Via Gem_Object
+                Inspectable<ArgumentSegmentFormatter_Inspection>//,     //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Gem.Format.NormalSegmentFormatter");
-
-
-    //
-    //  Members
-    //
-    private int                         argument_index;
+    public static NormalSegmentFormatter_Inspection     inspection = (
+            NormalSegmentFormatter_Inspection.create("NormalSegmentFormatter")
+        );
 
 
     //
@@ -38,7 +34,7 @@ public class    NormalSegmentFormatter
     //
     private                             NormalSegmentFormatter(int argument_index)
     {
-        this.argument_index = argument_index;
+        super(argument_index);
     }
 
 
@@ -63,7 +59,7 @@ public class    NormalSegmentFormatter
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    public NormalSegmentFormatter_Inspection    inspect()
     {
         return /*static*/ this.inspection;
     }
@@ -327,10 +323,52 @@ public class    NormalSegmentFormatter
 
         builder.format(other_arguments[argument_index - 7]);
     }
+}
 
 
-    public String                       portray(Zone z)
+class           NormalSegmentFormatter_Inspection
+    extends     ArgumentSegmentFormatter_Inspection<NormalSegmentFormatter>
+//  extends     Inspection
+//  extends     Gem_Object<Inspection>
+//  extends     Object
+    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
+{
+    private static Inspection           inspection = Inspection.create("NormalSegmentFormatter_Inspection");
+
+
+    //
+    //  Constructor & Factory
+    //
+    protected                           NormalSegmentFormatter_Inspection(String simple_class_name)
     {
-        return "<NormalSegmentFormatter " + Integer.toString(this.argument_index) + ">";
+        super(simple_class_name);
+    }
+
+
+    public static NormalSegmentFormatter_Inspection     create(String simple_class_name)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final String                    interned__simple_class_name = z.intern_permenant_string(simple_class_name);
+
+        return new NormalSegmentFormatter_Inspection(interned__simple_class_name);
+    }
+
+
+    //
+    //  Abstract ArgumentSegmentFormatter_Inspection
+    //
+    public NormalSegmentFormatter       conjure(Zone z, int argument_index)
+    {
+        return NormalSegmentFormatter.conjure(z, argument_index);
+    }
+
+
+    //
+    //  Interface Inspectable
+    //
+    public Inspection                   inspect()
+    {
+        return /*static*/ this.inspection;
     }
 }

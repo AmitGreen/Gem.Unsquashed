@@ -5,81 +5,71 @@ package link.crystal.Gem.Format;
 
 
 import java.lang.String;
-import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
+import link.crystal.Gem.Format.MessageFormatter_Base;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Interface.SegmentFormattable;
 
 
-public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
-    extends             Gem_Object<INSPECTION>
+public abstract class   ArgumentSegmentFormatter<INSPECTION extends ArgumentSegmentFormatter_Inspection>
+    extends             MessageFormatter_Base   <INSPECTION>
+//  extends             Gem_Object              <INSPECTION>
 //  extends             Object
     implements          MessageFormattable,
-                        Inspectable<INSPECTION>//,                      //  Via Gem_Object
+                        SegmentFormattable,
+                        Inspectable<INSPECTION>//,                              //  Via Gem_Object
 {
+    //
+    //  Members
+    //
+    protected int                       argument_index;
+
+
+    //
+    //  Constructor
+    //
+    protected                           ArgumentSegmentFormatter(int argument_index)
+    {
+        this.argument_index = argument_index;
+    }
+
+
+    //
+    //  Interface Inspectable
+    //
+    public abstract INSPECTION          inspect();
+
+
     //
     //  Interface MessageFormattable
     //
-    @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth)
-    {
-        final Zone                      z = builder.z;
-
-        Inspection                      inspection = this.inspect();
-
-        z.RUNTIME("invalid routine (derived class: {0})", inspection.simple_class_name);
-    }
+    public abstract void                arrange(Gem_StringBuilder builder, int depth, Object v);
 
 
-    @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
-    {
-        final Zone                      z = builder.z;
-
-        Inspection                      inspection = this.inspect();
-
-        z.RUNTIME("invalid routine (derived class: {0})", inspection.simple_class_name);
-    }
+    //
+    //  Interface SegmentFormattable
+    //
+    public abstract void                choose(Gem_StringBuilder builder, int depth);
+    public abstract void                choose(Gem_StringBuilder builder, int depth, Object v);
+    public abstract void                choose(Gem_StringBuilder builder, int depth, Object v, Object w);
+    public abstract void                choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x);
 
 
-    @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w)
-    {
-        final Zone                      z = builder.z;
-
-        z.INVALID_ROUTINE();
-    }
-
-
-    @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
-    {
-        final Zone                      z = builder.z;
-
-        z.INVALID_ROUTINE();
-    }
-
-
-    @Override
-    public void                         arrange(
+    public abstract void                choose(
             Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
             Object                              w,
             Object                              x,
             Object                              y//,
-        )
-    {
-        final Zone                      z = builder.z;
+        );
 
-        z.INVALID_ROUTINE();
-    }
 
-  
-    @Override
-    public void                         arrange(
+    public abstract void                choose(
             Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
@@ -87,16 +77,10 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
             Object                              x,
             Object                              y4,
             Object                              y5//,
-        )
-    {
-        final Zone                      z = builder.z;
-
-        z.INVALID_ROUTINE();
-    }
+        );
 
 
-    @Override
-    public void                         arrange(
+    public abstract void                choose(
             Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
@@ -105,16 +89,10 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
             Object                              y4,
             Object                              y5,
             Object                              y6//,
-        )
-    {
-        final Zone                      z = builder.z;
-
-        z.INVALID_ROUTINE();
-    }
+        );
 
 
-    @Override
-    public void                         arrange(
+    public abstract void                choose(
             Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
@@ -125,10 +103,16 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
             Object                              y6,
             Object                              y7,
             Object ...                          other_arguments//,
-        )
-    {
-        final Zone                      z = builder.z;
+        );
 
-        z.INVALID_ROUTINE();
+
+    //
+    //  Public
+    //
+    public String                       portray(Zone z)
+    {
+        Inspection                      inspection = this.inspect();
+
+        return "<" + inspection.simple_class_name + " " + Integer.toString(this.argument_index) + ">";
     }
 }

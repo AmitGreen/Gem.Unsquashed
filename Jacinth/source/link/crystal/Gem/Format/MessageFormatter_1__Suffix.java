@@ -5,7 +5,6 @@ package link.crystal.Gem.Format;
 
 
 import java.lang.String;
-import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
@@ -15,13 +14,13 @@ import link.crystal.Gem.Interface.MessageFormattable;
 
 
 public class    MessageFormatter_1__Suffix
-    extends     MessageFormatter_Base
+    extends     MessageFormatter_Base<Inspection>
 //  extends     Gem_Object<Inspection>
 //  extends     Object
     implements  MessageFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Gem.Format.MessageFormatter_1__Suffix");
+    private static Inspection           inspection = Inspection.create("MessageFormatter_1__Suffix");
 
 
     //

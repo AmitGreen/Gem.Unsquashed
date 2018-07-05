@@ -89,6 +89,9 @@ JACINTH_FILES = \
     $J/Gem/Format/MessageFormatter_Base.java      \
     $J/Gem/Format/MessageFormatter_Many.java \
     $J/Gem/Format/MethodNameSegmentFormatter.java \
+    $J/Gem/Format/ArgumentSegmentFormatter.java \
+    $J/Gem/Format/Map__String__ArgumentSegmentFormatter_Inspection.java \
+    $J/Gem/Format/ArgumentSegmentFormatter_Inspection.java \
     $J/Gem/Format/NormalSegmentFormatter.java \
     $J/Gem/Format/ParseFormat.java \
     $J/Gem/Format/PortraySegmentFormatter.java \
@@ -282,7 +285,7 @@ clean:
 	rm -f *.old *.new *.pyc
 	rm -f 2re.py 2sf.py 2sp.py 2sc.py
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
-	rm -f a.py ab.py af.java ac.py ag.py as.java
+	rm -f a.py ab.py af.java ac.py ads.java ag.py ags.java agsi.java
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py ca2.py cd.py ce.py cr.py
 	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
@@ -305,7 +308,7 @@ clean:
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1.java m1c.py m1m.py m1p.java m1s.java m1x.java
 	rm -f   m2.java m2c.py m3.java m2m.py m3m.py m4.java m5.java
-	rm -f   map.py mb.java mc.py md.py me.py mm.java mm.py mn.java mn.py
+	rm -f   map.py mb.java mc.py md.py me.py mm.java mm.py mn.java mn.py msa.java
 	rm -f ns.java
 	rm -f o.py oc.py od.py oe.py om.py
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py
@@ -342,9 +345,11 @@ links:
 	ln -s ../Gem/All.py                                                         a.py
 	ln -s ../Gem/Absent.py                                                      ab.py
 	ln -s ../Gem/Ascii.py                                                       ac.py
+	ln -s $J/Gem/Format/AdornmentSegmentFormatter.java                          ads.java
 	ln -s $J/Gem/Core/ArrayFunctions.java                                       af.java
 	ln -s ../Agate/RUNME.py                                                     ag.py
-	ln -s $J/Gem/Format/AdornmentSegmentFormatter.java                          as.java
+	ln -s $J/Gem/Format/ArgumentSegmentFormatter.java                           ags.java
+	ln -s $J/Gem/Format/ArgumentSegmentFormatter_Inspection.java                agsi.java
 	ln -s ../Beryl/BerylAnswer.py                                               ba.py
 	ln -s ../Beryl/__init__.py                                                  bi.py
 	ln -s ../Beryl/Ask.py                                                       bk.py
@@ -520,6 +525,7 @@ links:
 	ln -s ../Melanite/Multiprocessing.py                                        mm.py
 	ln -s $J/Gem/Format/MethodNameSegmentFormatter.java                         mn.java
 	ln -s ../Marble/NestedConjure.py                                            mn.py
+	ln -s $J/Gem/Format/Map__String__ArgumentSegmentFormatter_Inspection.java   msa.java
 	ln -s $J/Gem/Format/NormalSegmentFormatter.java                             ns.java
 	ln -s ../Gem/Output.py                                                      o.py
 	ln -s ../Onyx/Core.py                                                       oc.py

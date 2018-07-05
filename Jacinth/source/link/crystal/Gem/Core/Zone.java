@@ -17,6 +17,7 @@ import link.crystal.Gem.Support.ExceptionFunctions;
 import link.crystal.Gem.Support.PortrayFunctions;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
+import link.crystal.Gem.Format.Map__String__ArgumentSegmentFormatter_Inspection;
 
 
 public class    Zone
@@ -24,7 +25,7 @@ public class    Zone
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create_with_portrait("Gem.Core.Zone");
+    private static Inspection           inspection = Inspection.create_with_portrait("Zone");
 
 
     //
@@ -45,6 +46,8 @@ public class    Zone
     private final Gem_StringBuilder[]   gem_builder_many;
     private       int                   gem_builder_total;
 
+    private final Map__String__ArgumentSegmentFormatter_Inspection  format_map;
+
 
     //
     //  Constructor & Factory
@@ -56,6 +59,8 @@ public class    Zone
 
         this.gem_builder_many  = gem_builder_many;
         this.gem_builder_total = 0;
+
+        this.format_map = Map__String__ArgumentSegmentFormatter_Inspection.CREATE_AND_POPULATE(this);
     }
 
 
@@ -346,8 +351,11 @@ public class    Zone
         z.line("Dump of Gem_Zone");
         z.line("          zone_thread: {}", this.zone_thread);
         z.line("         parse_format: {}", this.parse_format);
+        z.line("---");
         z.line("     gem_builder_many: {}", gem_builder_many);
         z.line("    gem_builder_total: {}", gem_builder_total);
+        z.line("---");
+        z.line("           format_map: {}", this.format_map);
 
         for (int                        i = 0; i < gem_builder_total; i ++) {
             z.line("  gem_builder_many[{}]: {}", i, gem_builder_many[i]);

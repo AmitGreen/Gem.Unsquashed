@@ -4,12 +4,10 @@
 package link.crystal.Gem.Format;
 
 
-import java.lang.String;
-import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
-import link.crystal.Gem.Format.MessageFormatter_Base;
+import link.crystal.Gem.Format.ArgumentSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
@@ -17,20 +15,17 @@ import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
 
 
 public class    PortraySegmentFormatter
-    extends     MessageFormatter_Base
-//  extends     Gem_Object<Inspection>
+    extends     ArgumentSegmentFormatter<PortraySegmentFormatter_Inspection>
+//  extends     MessageFormatter_Base   <PortraySegmentFormatter_Inspection>
+//  extends     Gem_Object              <PortraySegmentFormatter_Inspection>
 //  extends     Object
     implements  MessageFormattable,
                 SegmentFormattable,
-                Inspectable<Inspection>//,                              //  Via Gem_Object
+                Inspectable<PortraySegmentFormatter_Inspection>//,      //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Gem.Format.PortraySegmentFormatter");
-
-
-    //
-    //  Members
-    //
-    private int                         argument_index;
+    public static PortraySegmentFormatter_Inspection    inspection = (
+            PortraySegmentFormatter_Inspection.create("PortraySegmentFormatter")
+        );
 
 
     //
@@ -38,7 +33,7 @@ public class    PortraySegmentFormatter
     //
     private                             PortraySegmentFormatter(int argument_index)
     {
-        this.argument_index = argument_index;
+        super(argument_index);
     }
 
 
@@ -63,7 +58,7 @@ public class    PortraySegmentFormatter
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    public PortraySegmentFormatter_Inspection   inspect()
     {
         return /*static*/ this.inspection;
     }
@@ -327,10 +322,52 @@ public class    PortraySegmentFormatter
 
         builder.append(z.portray(other_arguments[argument_index - 7]));
     }
+}
 
 
-    public String                       portray(Zone z)
+class           PortraySegmentFormatter_Inspection
+    extends     ArgumentSegmentFormatter_Inspection<PortraySegmentFormatter>
+//  extends     Inspection
+//  extends     Gem_Object<Inspection>
+//  extends     Object
+    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
+{
+    private static Inspection           inspection = Inspection.create("PortraySegmentFormatter_Inspection");
+
+
+    //
+    //  Constructor & Factory
+    //
+    protected                           PortraySegmentFormatter_Inspection(String simple_class_name)
     {
-        return "<PortraySegmentFormatter " + Integer.toString(this.argument_index) + ">";
+        super(simple_class_name);
+    }
+
+
+    public static PortraySegmentFormatter_Inspection    create(String simple_class_name)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final String                    interned__simple_class_name = z.intern_permenant_string(simple_class_name);
+
+        return new PortraySegmentFormatter_Inspection(interned__simple_class_name);
+    }
+
+
+    //
+    //  Abstract ArgumentSegmentFormatter_Inspection
+    //
+    public PortraySegmentFormatter     conjure(Zone z, int argument_index)
+    {
+        return PortraySegmentFormatter.conjure(z, argument_index);
+    }
+
+
+    //
+    //  Interface Inspectable
+    //
+    public Inspection                   inspect()
+    {
+        return /*static*/ this.inspection;
     }
 }

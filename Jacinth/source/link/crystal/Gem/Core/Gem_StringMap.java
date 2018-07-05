@@ -16,9 +16,9 @@ import link.crystal.Gem.Interface.Inspectable;
 
 
 public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
-    extends             Gem_Map<INSPECTION, String, V>
-//  extends             HashMap            <String, V>
-//  extends             AbstractHashMap    <String, V>
+    extends             Gem_Map      <INSPECTION, String,            V>
+//  extends             HashMap                  <String,            V>
+//  extends             AbstractHashMap          <String,            V>
 //  extends             Object
     implements          Inspectable<INSPECTION>//,
 {

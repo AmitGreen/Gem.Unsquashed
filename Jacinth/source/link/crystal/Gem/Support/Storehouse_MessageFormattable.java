@@ -5,9 +5,6 @@ package link.crystal.Gem.Support;
 
 
 import java.lang.String;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import link.crystal.Gem.Core.Gem_StringMap;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
@@ -22,9 +19,7 @@ public class    Storehouse_MessageFormattable
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Map<?, ?, ?>
 {
-    private static Inspection           inspection = Inspection.create_with_portrait(
-            "Gem.Core.Storehouse_MessageFormattable"//,
-        );
+    private static Inspection           inspection = Inspection.create_with_portrait("Storehouse_MessageFormattable");
 
 
     //
@@ -88,23 +83,7 @@ public class    Storehouse_MessageFormattable
             singleton = Storehouse_MessageFormattable.singleton(z);
         }
 
-        List<String>                    keys = new ArrayList<String>(singleton.keySet());
-
-        Collections.sort(keys);
-
-        int                             total = keys.size();
-
-        z.line("Dump of Storehouse_MessageFormattable");
-        z.line("  {s}: {}", String.format("%30s", "size"), total);
-
-        for (int                        i = 0; i < total; i ++) {
-            String                      k = keys.get(i);
-            MessageFormattable          v = singleton.get(k);
-
-            z.line("  {s}: {}", String.format("%30s", z.quote_string(k)), v);
-        }
-
-        z.line("End of dump of Storehouse_MessageFormattable");
+        singleton.dump(z, "Storehouse_MessageFormattable.singleton");
     }
 
 

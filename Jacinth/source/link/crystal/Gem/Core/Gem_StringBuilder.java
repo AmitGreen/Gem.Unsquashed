@@ -6,6 +6,7 @@ package link.crystal.Gem.Core;
 
 import java.lang.StringBuilder;
 import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 
@@ -15,7 +16,7 @@ public class    Gem_StringBuilder
 //  extends     Object
     implements  Inspectable<Inspection>//,
 {
-    private static Inspection           inspection = Inspection.create_with_portrait("Gem.Core.Gem_StringBuilder");
+    private static Inspection           inspection = Inspection.create_with_portrait("Gem_StringBuilder");
 
 
     //

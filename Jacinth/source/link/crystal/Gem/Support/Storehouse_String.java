@@ -19,7 +19,7 @@ public class    Storehouse_String
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_StringSet
 {
-    private static Inspection           inspection = Inspection.create("Gem.Support.Storehouse_String");
+    private static Inspection           inspection = Inspection.create("Storehouse_String");
 
 
     //
