@@ -23,20 +23,20 @@ public class    Main
         circle.skew(z);
 
         z.line("{+}");
-        z.line("{}", "{}");
+        z.line("{s}", "{}");
         z.line("{+}: test {}", 7);
         z.line("that: {+}");
         z.line("that: {}", "hi");
         z.line("that: {0}", "bye");
-        z.line("prefixl {0} suffix", "middle");
+        z.line("prefix {0} suffix", "middle");
 
         if (true) {
-            Storehouse_MessageFormattable       .dump(z);
-            Storehouse_PortraySegmentFormatter  .singleton.dump(z);
+            //Storehouse_MessageFormattable       .dump(z);
+            //Storehouse_PortraySegmentFormatter  .singleton.dump(z);
             Storehouse_String                   .dump(z);
             Storehouse_AdornmentSegmentFormatter.singleton.dump(z, "Storehouse_AdornmentSegmentFormatter.singleton");
 
-            z.dump(z);
+            //z.dump(z);
         }
 
     }

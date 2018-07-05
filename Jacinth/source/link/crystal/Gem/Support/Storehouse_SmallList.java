@@ -9,7 +9,6 @@ import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
-import link.crystal.Gem.Format.PortraySegmentFormatter;
 
 
 public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_SmallList, ELEMENT extends Gem_Object>

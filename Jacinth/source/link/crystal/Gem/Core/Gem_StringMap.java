@@ -82,14 +82,14 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
 
         int                             total = keys.size();
 
-        z.line("Dump of {0}", simple_class_name + " " + name);
+        z.line("Dump of {}", simple_class_name + " " + name);
         z.line("      size: " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
             String                      k = keys.get(i);
             V                           v = this.get(k);
 
-            z.line("  " + String.format("%30s", z.quote_string(k)) + ": " + z.portray(v));
+            z.line("  {s}: {}",  String.format("%30s", z.quote_string(k)), v);
         }
 
         z.line("End of dump of {0}", simple_class_name + " " + name);

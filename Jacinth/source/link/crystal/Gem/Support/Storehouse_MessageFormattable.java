@@ -95,14 +95,13 @@ public class    Storehouse_MessageFormattable
         int                             total = keys.size();
 
         z.line("Dump of Storehouse_MessageFormattable");
-        z.line("  {}: {}", String.format("%30s", "size"), total);
+        z.line("  {s}: {}", String.format("%30s", "size"), total);
 
         for (int                        i = 0; i < total; i ++) {
             String                      k = keys.get(i);
             MessageFormattable          v = singleton.get(k);
 
-            z.line("  {}: {}", k, v);
-            //z.line("  {s}: {}", String.format("%30s", z.quote_string(k)), v);
+            z.line("  {s}: {}", String.format("%30s", z.quote_string(k)), v);
         }
 
         z.line("End of dump of Storehouse_MessageFormattable");

@@ -79,15 +79,15 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
 
         int                             total = keys.size();
 
-        z.line("Dump of {0}", simple_class_name + " " + name);
+        z.line("Dump of {}", simple_class_name + " " + name);
         z.line("      size: " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
             String                      k = keys.get(i);
 
-            z.line("  " + z.quote_string(k));
+            z.line("  {}", k);
         }
 
-        z.line("End of dump of {0}", simple_class_name + " " + name);
+        z.line("End of dump of {}", simple_class_name + " " + name);
     }
 }

@@ -8,17 +8,17 @@ import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringMap;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
-import link.crystal.Gem.Format.StringSegmentFormatter;
+import link.crystal.Gem.Format.AdornmentSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 
 
 public class    Storehouse_AdornmentSegmentFormatter
-    extends     Gem_StringMap  <Inspection,         StringSegmentFormatter>
-//  extends     Gem_Map        <Inspection, String, StringSegmentFormatter>
-//  extends     HashMap                    <String, StringSegmentFormatter>
-//  extends     AbstractHashMap            <String, StringSegmentFormatter>
+    extends     Gem_StringMap  <Inspection,         AdornmentSegmentFormatter>
+//  extends     Gem_Map        <Inspection, String, AdornmentSegmentFormatter>
+//  extends     HashMap                    <String, AdornmentSegmentFormatter>
+//  extends     AbstractHashMap            <String, AdornmentSegmentFormatter>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_StringMap<StringSegmentFormatter>
+    implements  Inspectable<Inspection>//,                              //  Via Gem_StringMap<?>
 {
     private static Inspection           inspection = (
             Inspection.create("Gem.Support.Storehouse_AdornmentSegmentFormatter")
