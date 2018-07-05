@@ -37,7 +37,10 @@ public class    PortraySegmentFormatter
     }
 
 
-    static public PortraySegmentFormatter   conjure(Zone z, int argument_index)
+    static public PortraySegmentFormatter   conjure__ALLY__PortraySegmentFormatter_Inspection(
+            Zone                                z,
+            int                                 argument_index//,
+        )
     {
         final Storehouse_PortraySegmentFormatter    cache = Storehouse_PortraySegmentFormatter.singleton;
 
@@ -357,9 +360,9 @@ class           PortraySegmentFormatter_Inspection
     //
     //  Abstract ArgumentSegmentFormatter_Inspection
     //
-    public PortraySegmentFormatter     conjure(Zone z, int argument_index)
+    public PortraySegmentFormatter     conjure_argument_segment(Zone z, int argument_index)
     {
-        return PortraySegmentFormatter.conjure(z, argument_index);
+        return PortraySegmentFormatter.conjure__ALLY__PortraySegmentFormatter_Inspection(z, argument_index);
     }
 
 

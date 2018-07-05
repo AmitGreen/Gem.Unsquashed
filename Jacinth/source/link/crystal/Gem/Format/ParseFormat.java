@@ -21,12 +21,11 @@ import link.crystal.Gem.Format.MessageFormatter_4;
 import link.crystal.Gem.Format.MessageFormatter_5;
 import link.crystal.Gem.Format.MessageFormatter_Many;
 import link.crystal.Gem.Format.MethodNameSegmentFormatter;
-import link.crystal.Gem.Format.PortraySegmentFormatter;
-import link.crystal.Gem.Format.StringSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Support.PortrayFunctions;
+import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
 
 
 public class   ParseFormat
@@ -40,7 +39,7 @@ public class   ParseFormat
     //  Static members
     //
     private static Pattern              braces_pattern = Pattern.compile(
-            "(?:[^{}]|\\{\\{|\\}\\})*(\\{)(?:(\\+)|(0|[1-9][0-9]*)?(s)?)(\\})?"//,
+            "(?:[^{}]|\\{\\{|\\}\\})*(\\{)(?:(\\+)|(0|[1-9][0-9]*)?([ps]?))(\\})?"//,
         );
 
 
@@ -323,7 +322,8 @@ public class   ParseFormat
 
         int                             start_1             = braces_matcher.start(1);
         boolean                         method_name_segment = (braces_matcher.start(2) != -1);
-        boolean                         string_segment;
+
+        ArgumentSegmentFormatter_Inspection     argument_inspection;
 
         int                             automatic_index;
         int                             argument_index;
@@ -331,7 +331,8 @@ public class   ParseFormat
         if (method_name_segment) {
             automatic_index = -1;
             argument_index  = -1;
-            string_segment  = false;
+
+            argument_inspection = null;
         } else {
             String                      group_3 = braces_matcher.group(3);
 
@@ -343,7 +344,7 @@ public class   ParseFormat
                 argument_index  = Integer.parseInt(group_3);
             }
 
-            string_segment = (braces_matcher.start(4) != -1);
+            argument_inspection = z.format_map.find(braces_matcher.group(4));
         }
 
 
@@ -377,8 +378,8 @@ public class   ParseFormat
         //
         //      1.  "{+}"                   becomes     MethodNameSegmentFormatter
         //      2.  "{}"                    becomes     PortraySegmentFormatter
-        //      3.  "{s}"                   becomes     StringSegmentFormatter
-        //      4.  "prefix: {s}"           becomes     MessageFormatter_1__Prefix
+        //      3.  "{p}"                   becomes     StringSegmentFormatter
+        //      4.  "prefix: {p}"           becomes     MessageFormatter_1__Prefix
         //      5.  "prefix: {0} suffix"    becomes     MessageFormatter_1__Suffix
         //
         if ( ! found) {
@@ -388,11 +389,7 @@ public class   ParseFormat
                         return MethodNameSegmentFormatter.conjure(z);
                     }
 
-                    if (string_segment) {
-                        return StringSegmentFormatter.conjure(z, 0);
-                    }
-
-                    return PortraySegmentFormatter.conjure(z, 0);
+                    return argument_inspection.conjure_argument_segment(z, 0);
                 }
             } else {
                 if (argument_index == 0) {
@@ -418,15 +415,7 @@ public class   ParseFormat
         if (argument_index == -1) {
             this.append_segment(MethodNameSegmentFormatter.conjure(z));
         } else {
-            SegmentFormattable          segment;
-
-            if (string_segment) {
-                segment = StringSegmentFormatter.conjure(z, argument_index);
-            } else {
-                segment = PortraySegmentFormatter.conjure(z, argument_index);
-            }
-
-            this.append_segment(segment);
+            this.append_segment(argument_inspection.conjure_argument_segment(z, argument_index));
             add_used_index(argument_index);
         }
 
@@ -445,7 +434,7 @@ public class   ParseFormat
             method_name_segment = (braces_matcher.start(2) != -1);
 
             if (method_name_segment) {
-                string_segment = false;
+                argument_inspection = null;
             } else {
                 String                      group_3 = braces_matcher.group(3);
 
@@ -464,7 +453,7 @@ public class   ParseFormat
                     argument_index = Integer.parseInt(group_3);
                 }
 
-                string_segment = (braces_matcher.start(4) != -1);
+                argument_inspection = z.format_map.find(braces_matcher.group(4));
             }
 
             if (end_5 < start_1) {
@@ -476,15 +465,7 @@ public class   ParseFormat
             if (argument_index == -1) {
                 this.append_segment(MethodNameSegmentFormatter.conjure(z));
             } else {
-                SegmentFormattable          segment;
-
-                if (string_segment) {
-                    segment = StringSegmentFormatter.conjure(z, argument_index);
-                } else {
-                    segment = PortraySegmentFormatter.conjure(z, argument_index);
-                }
-
-                this.append_segment(segment);
+                this.append_segment(argument_inspection.conjure_argument_segment(z, argument_index));
                 add_used_index(argument_index);
             }
 

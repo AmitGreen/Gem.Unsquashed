@@ -38,7 +38,10 @@ public class    NormalSegmentFormatter
     }
 
 
-    static public NormalSegmentFormatter    conjure(Zone z, int argument_index)
+    static public NormalSegmentFormatter    conjure__ALLY__NormalSegmentFormatter_Inspection(
+            Zone                                z,
+            int                                 argument_index//,
+        )
     {
         final Storehouse_NormalSegmentFormatter     cache = Storehouse_NormalSegmentFormatter.singleton;
 
@@ -358,9 +361,9 @@ class           NormalSegmentFormatter_Inspection
     //
     //  Abstract ArgumentSegmentFormatter_Inspection
     //
-    public NormalSegmentFormatter       conjure(Zone z, int argument_index)
+    public NormalSegmentFormatter       conjure_argument_segment(Zone z, int argument_index)
     {
-        return NormalSegmentFormatter.conjure(z, argument_index);
+        return NormalSegmentFormatter.conjure__ALLY__NormalSegmentFormatter_Inspection(z, argument_index);
     }
 
 

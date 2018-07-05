@@ -34,6 +34,26 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     //
     //  Interface Inspectable
     //
+    public V                            find(String k)
+    {
+        if (k == null) {
+            final Zone                  z = this.z;
+
+            z.RUNTIME("`k` is null");
+        }
+
+        V                               r = this.get(k);
+
+        if (r == null) {
+            final Zone                  z = this.z;
+
+            z.RUNTIME("cannot find key {}", k);
+        }
+
+        return r;
+    }
+
+
     public String                       portray(Zone z)
     {
         Inspection                      inspection = this.inspect();
@@ -89,7 +109,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
             String                      k = keys.get(i);
             V                           v = this.get(k);
 
-            z.line("  {s}: {}",  String.format("%30s", z.quote_string(k)), v);
+            z.line("  {}: {}",  String.format("%30s", z.quote_string(k)), v);
         }
 
         z.line("End of dump of {0}", simple_class_name + " " + name);

@@ -46,7 +46,7 @@ public class    Zone
     private final Gem_StringBuilder[]   gem_builder_many;
     private       int                   gem_builder_total;
 
-    private final Map__String__ArgumentSegmentFormatter_Inspection  format_map;
+    public final Map__String__ArgumentSegmentFormatter_Inspection  format_map;
 
 
     //

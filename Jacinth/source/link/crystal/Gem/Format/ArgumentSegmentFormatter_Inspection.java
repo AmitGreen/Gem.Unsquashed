@@ -28,5 +28,5 @@ public abstract class   ArgumentSegmentFormatter_Inspection<ARGUMENT_SEGMENT ext
     //
     //  Abstract
     //
-    public abstract ARGUMENT_SEGMENT    conjure(Zone z, int argument_index);
+    public abstract ARGUMENT_SEGMENT    conjure_argument_segment(Zone z, int argument_index);
 }

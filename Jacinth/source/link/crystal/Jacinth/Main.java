@@ -23,7 +23,7 @@ public class    Main
         circle.skew(z);
 
         z.line("{+}");
-        z.line("{s}", "{}");
+        z.line("{p}", "{}");
         z.line("{+}: test {}", 7);
         z.line("that: {+}");
         z.line("that: {}", "hi");
