@@ -79,7 +79,6 @@ JACINTH_FILES = \
     $J/Gem/Core/Gem_StringSet.java \
     $J/Gem/Core/Inspection.java \
     $J/Gem/Core/Zone.java \
-    $J/Gem/Format/ArgumentSegmentFormatter.java \
     $J/Gem/Format/MessageFormatter_1__Prefix.java \
     $J/Gem/Format/MessageFormatter_1__Suffix.java \
     $J/Gem/Format/MessageFormatter_2.java \
@@ -90,14 +89,17 @@ JACINTH_FILES = \
     $J/Gem/Format/MessageFormatter_Many.java \
     $J/Gem/Format/MethodNameSegmentFormatter.java \
     $J/Gem/Format/ParseFormat.java \
+    $J/Gem/Format/PortraySegmentFormatter.java \
     $J/Gem/Format/StringSegmentFormatter.java \
     $J/Gem/Interface/Inspectable.java \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
     $J/Gem/Support/ExceptionFunctions.java \
     $J/Gem/Support/PortrayFunctions.java \
-    $J/Gem/Support/Storehouse_ArgumentSegmentFormatter.java \
+    $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java \
     $J/Gem/Support/Storehouse_MessageFormattable.java \
+    $J/Gem/Support/Storehouse_PortraySegmentFormatter.java \
+    $J/Gem/Support/Storehouse_SmallList.java \
     $J/Gem/Support/Storehouse_String.java \
     $J/Gem/Support/Storehouse_StringSegmentFormatter.java \
     $J/Jacinth/Main.java \
@@ -277,7 +279,7 @@ clean:
 	rm -f *.old *.new *.pyc
 	rm -f 2re.py 2sf.py 2sp.py 2sc.py
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
-	rm -f a.py ab.py af.java ac.py ag.py am.java
+	rm -f a.py ab.py af.java ac.py ag.py
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py ca2.py cd.py ce.py cr.py
 	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
@@ -303,10 +305,10 @@ clean:
 	rm -f   map.py mb.java mc.py md.py me.py mm.java mm.py mn.java mn.py
 	rm -f o.py oc.py od.py oe.py om.py
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py
-	rm -f   pel.py pf.py pf.java pj.py pk.py pkc.py pl.py pmo.py pn.py ps.py psc.java ps3.py px.java
+	rm -f   pel.py pf.py pf.java pj.py pk.py pkc.py pl.py pmo.py pn.py ps.java ps.py psc.java ps3.py px.java
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
-	rm -f sha.java shm.java shs.java shsf.java sf.java sl.py so.py ssio.py sy.py
+	rm -f sha.java shl.java shm.java shp.java shs.java shsf.java sf.java sl.py so.py ssio.py sy.py
 	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
@@ -338,7 +340,6 @@ links:
 	ln -s ../Gem/Ascii.py                                                       ac.py
 	ln -s $J/Gem/Core/ArrayFunctions.java                                       af.java
 	ln -s ../Agate/RUNME.py                                                     ag.py
-	ln -s $J/Gem/Format/ArgumentSegmentFormatter.java                           am.java
 	ln -s ../Beryl/BerylAnswer.py                                               ba.py
 	ln -s ../Beryl/__init__.py                                                  bi.py
 	ln -s ../Beryl/Ask.py                                                       bk.py
@@ -537,6 +538,7 @@ links:
 	ln -s ../Pearl/Line.py                                                      pl.py
 	ln -s ../Pearl/Method.py                                                    pmo.py
 	ln -s ../Pearl/Nub.py                                                       pn.py
+	ln -s $J/Gem/Format/PortraySegmentFormatter.java                            ps.java
 	ln -s ../Gem/PortrayString.py                                               ps.py
 	ln -s ../Junk/PortrayString_3.py                                            ps3.py
 	ln -s ../Quartz/Parse1.py                                                   q1p.py
@@ -547,8 +549,10 @@ links:
 	ln -s ../Quartz/Pattern.py                                                  qp.py
 	ln -s ../Agate/RUNME.py                                                     rm.py
 	ln -s ../Gem/RegularExpression.py                                           rx.py
-	ln -s $J/Gem/Support/Storehouse_ArgumentSegmentFormatter.java               sha.java
+	ln -s $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java              sha.java
+	ln -s $J/Gem/Support/Storehouse_SmallList.java                              shl.java
 	ln -s $J/Gem/Support/Storehouse_MessageFormattable.java                     shm.java
+	ln -s $J/Gem/Support/Storehouse_PortraySegmentFormatter.java                shp.java
 	ln -s $J/Gem/Support/Storehouse_String.java                                 shs.java
 	ln -s $J/Gem/Support/Storehouse_StringSegmentFormatter.java                 shsf.java
 	ln -s $J/Gem/Format/StringSegmentFormatter.java                             sf.java

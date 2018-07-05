@@ -12,7 +12,7 @@ import link.crystal.Gem.Format.StringSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 
 
-public class    Storehouse_StringSegmentFormatter
+public class    Storehouse_AdornmentSegmentFormatter
     extends     Gem_StringMap  <Inspection,         StringSegmentFormatter>
 //  extends     Gem_Map        <Inspection, String, StringSegmentFormatter>
 //  extends     HashMap                    <String, StringSegmentFormatter>
@@ -20,30 +20,32 @@ public class    Storehouse_StringSegmentFormatter
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_StringMap<StringSegmentFormatter>
 {
-    private static Inspection           inspection = Inspection.create("Gem.Support.Storehouse_StringSegmentFormatter");
+    private static Inspection           inspection = (
+            Inspection.create("Gem.Support.Storehouse_AdornmentSegmentFormatter")
+        );
 
 
     //
     //  Static members
     //
-    public static Storehouse_StringSegmentFormatter singleton = Storehouse_StringSegmentFormatter.create(101);
+    public static Storehouse_AdornmentSegmentFormatter  singleton = Storehouse_AdornmentSegmentFormatter.create(101);
 
 
 
     //
     //  Constructor & Factory
     //
-    private                             Storehouse_StringSegmentFormatter(Zone z, int initial_capacity)
+    private                             Storehouse_AdornmentSegmentFormatter(Zone z, int initial_capacity)
     {
         super(z, initial_capacity);
     }
 
 
-    private static Storehouse_StringSegmentFormatter    create(int initial_capacity)
+    private static Storehouse_AdornmentSegmentFormatter     create(int initial_capacity)
     {
         final Zone                      z = Zone.current_zone();
 
-        return new Storehouse_StringSegmentFormatter(z, initial_capacity);
+        return new Storehouse_AdornmentSegmentFormatter(z, initial_capacity);
     }
 
 

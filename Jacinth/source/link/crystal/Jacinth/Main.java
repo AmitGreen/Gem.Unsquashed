@@ -5,10 +5,10 @@ package link.crystal.Jacinth;
 
 
 import link.crystal.Gem.Core.Zone;
-import link.crystal.Gem.Support.Storehouse_ArgumentSegmentFormatter;
+import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
-import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
+import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 import link.crystal.Mirror.Shape;
 
 
@@ -31,10 +31,10 @@ public class    Main
         z.line("prefixl {0} suffix", "middle");
 
         if (true) {
-            Storehouse_ArgumentSegmentFormatter.singleton.dump(z);
-            Storehouse_MessageFormattable      .dump(z);
-            Storehouse_String                  .dump(z);
-            Storehouse_StringSegmentFormatter  .singleton.dump(z, "Storehouse_StringSegmentFormatter.singleton");
+            Storehouse_MessageFormattable       .dump(z);
+            Storehouse_PortraySegmentFormatter  .singleton.dump(z);
+            Storehouse_String                   .dump(z);
+            Storehouse_AdornmentSegmentFormatter.singleton.dump(z, "Storehouse_AdornmentSegmentFormatter.singleton");
 
             z.dump(z);
         }

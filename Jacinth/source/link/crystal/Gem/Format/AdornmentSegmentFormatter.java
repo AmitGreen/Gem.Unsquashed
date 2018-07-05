@@ -13,10 +13,10 @@ import link.crystal.Gem.Format.MessageFormatter_Base;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
+import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 
 
-public class    StringSegmentFormatter
+public class    AdornmentSegmentFormatter
     extends     MessageFormatter_Base
 //  extends     Gem_Object<Inspection>
 //  extends     Object
@@ -24,7 +24,7 @@ public class    StringSegmentFormatter
                 SegmentFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Gem.Format.StringSegmentFormatter");
+    private static Inspection           inspection = Inspection.create("Gem.Format.AdornmentSegmentFormatter");
 
 
     //
@@ -36,33 +36,27 @@ public class    StringSegmentFormatter
     //
     //  Constructor & Factory
     //
-    private                             StringSegmentFormatter(String s)
+    private                             AdornmentSegmentFormatter(String s)
     {
         this.s = s;
     }
 
 
-    static public StringSegmentFormatter    create__ALLY__Storehouse_StringSegmentFormatter(Zone z, String s)
+    static public AdornmentSegmentFormatter     conjure(Zone z, String s)
     {
-        String                              interned_s = z.intern_permenant_string(s);
+        Storehouse_AdornmentSegmentFormatter    cache = Storehouse_AdornmentSegmentFormatter.singleton;
 
-        return new StringSegmentFormatter(interned_s);
-    }
-
-
-    static public StringSegmentFormatter    conjure(Zone z, String s)
-    {
-        Storehouse_StringSegmentFormatter   cache = Storehouse_StringSegmentFormatter.singleton;
-
-        StringSegmentFormatter              r = cache.lookup(s);
+        AdornmentSegmentFormatter       r = cache.lookup(s);
 
         if (r != null) {
             return r;
         }
 
-        r = new StringSegmentFormatter(s);
+        String                          interned_s = z.intern_permenant_string(s);
 
-        cache.insert(s, r);
+        r = new AdornmentSegmentFormatter(interned_s);
+
+        cache.insert(interned_s, r);
 
         return r;
     }
@@ -174,7 +168,7 @@ public class    StringSegmentFormatter
 
     public String                       portray(Zone z)
     {
-        return "<StringSegmentFormatter " + z.quote_string(this.s) + ">";
+        return "<AdornmentSegmentFormatter " + z.quote_string(this.s) + ">";
     }
 
 

@@ -13,10 +13,10 @@ import link.crystal.Gem.Format.MessageFormatter_Base;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.Support.Storehouse_ArgumentSegmentFormatter;
+import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
 
 
-public class    ArgumentSegmentFormatter
+public class    PortraySegmentFormatter
     extends     MessageFormatter_Base
 //  extends     Gem_Object<Inspection>
 //  extends     Object
@@ -24,7 +24,7 @@ public class    ArgumentSegmentFormatter
                 SegmentFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Gem.Format.ArgumentSegmentFormatter");
+    private static Inspection           inspection = Inspection.create("Gem.Format.PortraySegmentFormatter");
 
 
     //
@@ -36,28 +36,23 @@ public class    ArgumentSegmentFormatter
     //
     //  Constructor & Factory
     //
-    private                             ArgumentSegmentFormatter(int argument_index)
+    private                             PortraySegmentFormatter(int argument_index)
     {
         this.argument_index = argument_index;
     }
 
 
-    static public ArgumentSegmentFormatter  create__ALLY__Storehouse_ArgumentSegmentFormatter(int argument_index)
+    static public PortraySegmentFormatter   conjure(Zone z, int argument_index)
     {
-        return new ArgumentSegmentFormatter(argument_index);
-    }
+        final Storehouse_PortraySegmentFormatter    cache = Storehouse_PortraySegmentFormatter.singleton;
 
-    static public ArgumentSegmentFormatter  conjure(Zone z, int argument_index)
-    {
-        Storehouse_ArgumentSegmentFormatter     cache = Storehouse_ArgumentSegmentFormatter.singleton;
-
-        ArgumentSegmentFormatter            r = cache.lookup(argument_index);
+        PortraySegmentFormatter             r = cache.lookup(argument_index);
 
         if (r != null) {
             return r;
         }
 
-        r = new ArgumentSegmentFormatter(argument_index);
+        r = new PortraySegmentFormatter(argument_index);
 
         cache.insert(argument_index, r);
 
@@ -333,6 +328,6 @@ public class    ArgumentSegmentFormatter
 
     public String                       portray(Zone z)
     {
-        return "<ArgumentSegmentFormatter " + Integer.toString(this.argument_index) + ">";
+        return "<PortraySegmentFormatter " + Integer.toString(this.argument_index) + ">";
     }
 }

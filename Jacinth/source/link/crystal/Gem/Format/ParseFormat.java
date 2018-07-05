@@ -12,7 +12,7 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
-import link.crystal.Gem.Format.ArgumentSegmentFormatter;
+import link.crystal.Gem.Format.AdornmentSegmentFormatter;
 import link.crystal.Gem.Format.MessageFormatter_1__Prefix;
 import link.crystal.Gem.Format.MessageFormatter_1__Suffix;
 import link.crystal.Gem.Format.MessageFormatter_2;
@@ -21,7 +21,7 @@ import link.crystal.Gem.Format.MessageFormatter_4;
 import link.crystal.Gem.Format.MessageFormatter_5;
 import link.crystal.Gem.Format.MessageFormatter_Many;
 import link.crystal.Gem.Format.MethodNameSegmentFormatter;
-import link.crystal.Gem.Format.StringSegmentFormatter;
+import link.crystal.Gem.Format.PortraySegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
@@ -305,7 +305,7 @@ public class   ParseFormat
         Matcher                         braces_matcher = this.braces_matcher;
 
         if ( ! braces_matcher.lookingAt()) {
-            return StringSegmentFormatter.conjure(z, format);
+            return AdornmentSegmentFormatter.conjure(z, format);
         }
 
 
@@ -376,7 +376,7 @@ public class   ParseFormat
         //  First segment: Special cases:
         //
         //      1.  "{+}"                   becomes     MethodNameSegmentFormatter
-        //      2.  "{}"                    becomes     ArgumentSegmentFormatter
+        //      2.  "{}"                    becomes     PortraySegmentFormatter
         //      2.  "prefix: {}"            becomes     MessageFormatter_1__Prefix
         //      3.  "prefix: {0} suffix"    becomes     MessageFormatter_1__Suffix
         //
@@ -386,7 +386,7 @@ public class   ParseFormat
                     if (argument_index == -1) {
                         return MethodNameSegmentFormatter.conjure(z);
                     } else {
-                        return ArgumentSegmentFormatter.conjure(z, 0);
+                        return PortraySegmentFormatter.conjure(z, 0);
                     }
                 }
             } else {
@@ -407,13 +407,13 @@ public class   ParseFormat
         //  First segment: Normal cases
         //
         if (0 < start_1) {
-            this.append_segment(StringSegmentFormatter.conjure(z, start_s));
+            this.append_segment(AdornmentSegmentFormatter.conjure(z, start_s));
         }
 
         if (argument_index == -1) {
             this.append_segment(MethodNameSegmentFormatter.conjure(z));
         } else {
-            this.append_segment(ArgumentSegmentFormatter.conjure(z, argument_index));
+            this.append_segment(PortraySegmentFormatter.conjure(z, argument_index));
             add_used_index(argument_index);
         }
 
@@ -466,13 +466,13 @@ public class   ParseFormat
             if (end_3 < start_1) {
                 start_s = format.substring(end_3, start_1);
 
-                this.append_segment(StringSegmentFormatter.conjure(z, start_s));
+                this.append_segment(AdornmentSegmentFormatter.conjure(z, start_s));
             }
 
             if (argument_index == -1) {
                 this.append_segment(MethodNameSegmentFormatter.conjure(z));
             } else {
-                this.append_segment(ArgumentSegmentFormatter.conjure(z, argument_index));
+                this.append_segment(PortraySegmentFormatter.conjure(z, argument_index));
                 add_used_index(argument_index);
             }
 
@@ -488,7 +488,7 @@ public class   ParseFormat
         if (end_3 < format_total) {
             String                      end_s = format.substring(end_3);
 
-            this.append_segment(StringSegmentFormatter.conjure(z, end_s));
+            this.append_segment(AdornmentSegmentFormatter.conjure(z, end_s));
         }
 
         this.examine_missing();
