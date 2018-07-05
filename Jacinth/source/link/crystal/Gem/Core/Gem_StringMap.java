@@ -54,17 +54,15 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     }
 
 
-    public String                       portray(Zone z)
+    public void                         portray(Gem_StringBuilder builder)
     {
         Inspection                      inspection = this.inspect();
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
 
         List<String>                    keys = new ArrayList<String>(this.keySet());
 
         Collections.sort(keys);
 
-        int                             total = keys.size();
+        final int                       total = keys.size();
 
         builder.append("<", inspection.simple_class_name, " size<", total, ">");
 
@@ -82,8 +80,6 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
         }
 
         builder.append(">");
-
-        return builder.finish__AND__recycle();
     }
 
 

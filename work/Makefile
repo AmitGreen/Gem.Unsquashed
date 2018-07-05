@@ -100,7 +100,6 @@ JACINTH_FILES = \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
     $J/Gem/Support/ExceptionFunctions.java \
-    $J/Gem/Support/PortrayFunctions.java \
     $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java \
     $J/Gem/Support/Storehouse_MessageFormattable.java \
     $J/Gem/Support/Storehouse_NormalSegmentFormatter.java \
@@ -320,7 +319,7 @@ clean:
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
 	rm -f vm.java vm.py vp.java
-	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yf.java yg.py yki.py ykn.py
+	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
 	rm -f   zgn.gpy zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
@@ -605,7 +604,6 @@ links:
 	ln -s ../Crystal/CardRoot.py                                                ycb.py
 	ln -s ../Crystal/Core.py                                                    ycr.py
 	ln -s ../Crystal/Deck_7.py                                                  yd7.py
-	ln -s $J/Gem/Support/PortrayFunctions.java                                  yf.java
 	ln -s ../Crystal/Game.py                                                    yg.py
 	ln -s ../Crystal/ChessKing.py                                               yki.py
 	ln -s ../Crystal/ChessKnight.py                                             ykn.py

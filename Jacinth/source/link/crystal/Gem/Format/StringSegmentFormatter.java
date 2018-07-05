@@ -326,8 +326,8 @@ public class    StringSegmentFormatter
     }
 
 
-    public String                       portray(Zone z)
+    public void                         portray(Gem_StringBuilder builder)
     {
-        return "<StringSegmentFormatter " + Integer.toString(this.argument_index) + ">";
+        builder.append("<StringSegmentFormatter ", this.argument_index, ">");
     }
 }

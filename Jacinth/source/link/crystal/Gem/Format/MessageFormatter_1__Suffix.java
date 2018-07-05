@@ -70,17 +70,12 @@ public class    MessageFormatter_1__Suffix
     }
 
     
-    public String                       portray(Zone z)
+    public void                         portray(Gem_StringBuilder builder)
     {
-        String                          prefix = this.prefix;
-        String                          suffix   = this.suffix;
-
-        return (
-                     "<MessageFormatter_1__Suffix "
-                   + z.quote_string(prefix)
-                   + " "
-                   + z.quote_string(suffix)
-                   + ">"
-              );
+        builder.append("<MessageFormatter_1__Suffix ");
+        builder.quote(this.prefix);
+        builder.append(" ");
+        builder.quote(this.suffix);
+        builder.append(">");
     }
 }

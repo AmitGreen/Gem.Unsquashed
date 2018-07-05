@@ -6,7 +6,6 @@ package link.crystal.Gem.Interface;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.Zone;
 
 
 public interface   SegmentFormattable
@@ -58,6 +57,4 @@ public interface   SegmentFormattable
             Object                              y7,
             Object ...                          other_arguments//,
         );
-
-    String                              portray (Zone z);
 }

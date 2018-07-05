@@ -10,15 +10,14 @@ import java.lang.Object;
 import java.lang.String;
 import java.lang.System;
 import java.lang.Thread;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.ExceptionFunctions;
-import link.crystal.Gem.Support.PortrayFunctions;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
-import link.crystal.Gem.Core.Gem_StringBuilder;
 
 
 public abstract class   Gem_Object<INSPECTION extends Inspection>
@@ -40,18 +39,19 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     public abstract INSPECTION          inspect();
 
 
-    public String                       portray(Zone z)
+    public void                         portray(Gem_StringBuilder builder)
     {
-        INSPECTION                      inspection = this.inspect();
+        final INSPECTION                inspection = this.inspect();
 
-        String                          portrait_0 = inspection.portrait_0;
+        final String                    portrait_0 = inspection.portrait_0;
 
         if (portrait_0 == null) {
-            z.RUNTIME("`{0}.inspect().portrait_0` is `null`",
-                                      inspection.simple_class_name);
+            final Zone                  z = builder.z;
+
+            z.RUNTIME("`{0}.inspect().portrait_0` is `null`", inspection.simple_class_name);
         }
 
-        return portrait_0;
+        builder.append(portrait_0);
     }
 
 

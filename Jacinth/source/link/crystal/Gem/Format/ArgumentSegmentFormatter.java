@@ -109,10 +109,10 @@ public abstract class   ArgumentSegmentFormatter<INSPECTION extends ArgumentSegm
     //
     //  Public
     //
-    public String                       portray(Zone z)
+    public void                         portray(Gem_StringBuilder builder)
     {
         Inspection                      inspection = this.inspect();
 
-        return "<" + inspection.simple_class_name + " " + Integer.toString(this.argument_index) + ">";
+        builder.append("<", inspection.simple_class_name, " ", this.argument_index, ">");
     }
 }

@@ -66,8 +66,10 @@ public class    MessageFormatter_1__Prefix
     }
 
 
-    public String                       portray(Zone z)
+    public void                         portray(Gem_StringBuilder builder)
     {
-        return "<MessageFormatter_1__Prefix " + z.quote_string(this.prefix) + ">";
+        builder.append("<MessageFormatter_1__Prefix ");
+        builder.quote(this.prefix);
+        builder.append(">");
     }
 }

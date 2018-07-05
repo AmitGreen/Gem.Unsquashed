@@ -215,8 +215,18 @@ public class    MessageFormatter_5
     }
 
 
-    public String                       portray(Zone z)
+    public void                         portray(Gem_StringBuilder builder)
     {
-        return "<MessageFormatter_5 " + this.a.portray(z) + " " + this.b.portray(z) + " " + this.c.portray(z) + ">";
+        builder.append("<MessageFormatter_5 ");
+        builder.portray(this.a);
+        builder.append(" ");
+        builder.portray(this.b);
+        builder.append(" ");
+        builder.portray(this.c);
+        builder.append(" ");
+        builder.portray(this.d);
+        builder.append(" ");
+        builder.portray(this.e);
+        builder.append(">");
     }
 }

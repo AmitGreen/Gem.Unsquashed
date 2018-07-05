@@ -7,7 +7,6 @@ package link.crystal.Gem.Interface;
 import java.lang.Object;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.Zone;
 
 
 public interface   MessageFormattable
@@ -60,5 +59,5 @@ public interface   MessageFormattable
             Object ...                          other_arguments//,
         );
 
-    String                              portray(Zone z);
+    void                                portray(Gem_StringBuilder builder);
 }

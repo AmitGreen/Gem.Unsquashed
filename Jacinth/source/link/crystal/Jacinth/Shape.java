@@ -4,6 +4,7 @@
 package link.crystal.Jacinth;
 
 
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
@@ -47,9 +48,10 @@ public class    Shape
         return /*static*/ this.inspection;
     }
 
-    public String                       portray(Zone z)
+
+    public void                         portray(Gem_StringBuilder builder)
     {
-        return "<Shape " + this.shape_name + ">";
+        builder.append("<Shape ", this.shape_name, ">");
     }
 
 

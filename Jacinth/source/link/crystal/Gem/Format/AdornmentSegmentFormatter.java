@@ -166,9 +166,11 @@ public class    AdornmentSegmentFormatter
     }
 
 
-    public String                       portray(Zone z)
+    public void                         portray(Gem_StringBuilder builder)
     {
-        return "<AdornmentSegmentFormatter " + z.quote_string(this.s) + ">";
+        builder.append("<AdornmentSegmentFormatter ");
+        builder.quote(this.s);
+        builder.append(">");
     }
 
 

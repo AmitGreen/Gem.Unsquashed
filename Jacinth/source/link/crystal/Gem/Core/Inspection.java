@@ -4,6 +4,7 @@
 package link.crystal.Gem.Core;
 
 
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
@@ -67,10 +68,10 @@ public class    Inspection
     }
 
 
-    public String                       portray(Zone z)
+    public void                         portray(Gem_StringBuilder builder)
     {
         final Inspection                meta_inspection = this.inspect();
 
-        return "<" + meta_inspection.simple_class_name + " " + this.simple_class_name + ">";
+        builder.append("<", meta_inspection.simple_class_name, " ", this.simple_class_name, ">");
     }
 }

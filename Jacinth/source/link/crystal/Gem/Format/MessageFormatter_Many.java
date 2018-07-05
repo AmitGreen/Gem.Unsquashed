@@ -284,30 +284,22 @@ public class    MessageFormatter_Many
     }
 
 
-    public String                       portray(Zone z)
+    public void                         portray(Gem_StringBuilder builder)
     {
         int                             expected     = this.expected;
         SegmentFormattable[]            segment_many = this.segment_many;
 
         int                             segment_total = segment_many.length;
 
-        StringBuilder                   builder = new StringBuilder();
-
-        builder.append("<MessageFormatter_Many expected<");
-        builder.append(Integer.toString(expected));
-        builder.append("> total<");
-        builder.append(Integer.toString(segment_total));
-        builder.append(">;");
+        builder.append("<MessageFormatter_Many expected<", expected, "> total<", segment_total, ">;");
 
         for (int                        i = 0; i < segment_total; i ++) {
             SegmentFormattable          segment = segment_many[i];
 
             builder.append(" ");
-            builder.append(segment.portray(z));
+            builder.portray(segment);
         }
 
         builder.append(">");
-
-        return builder.toString();
     }
 }

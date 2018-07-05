@@ -14,7 +14,6 @@ import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.ExceptionFunctions;
-import link.crystal.Gem.Support.PortrayFunctions;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.Format.Map__String__ArgumentSegmentFormatter_Inspection;
@@ -549,15 +548,19 @@ public class    Zone
     }
 
 
-    public String                       portray(Object v)
+    public void                         output(String s)
     {
-        return PortrayFunctions.portray(this, v);
+        standard_output.println(s);
     }
 
 
     public String                       quote_string(String s)
     {
-        return PortrayFunctions.quote_string(this, s);
+        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+
+        builder.quote(s);
+
+        return builder.finish__AND__recycle();
     }
 
 

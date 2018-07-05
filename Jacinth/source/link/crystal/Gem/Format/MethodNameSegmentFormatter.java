@@ -23,7 +23,7 @@ public class    MethodNameSegmentFormatter
                 SegmentFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("MethodNameSegmentFormatter");
+    private static Inspection           inspection = Inspection.create_with_portrait("MethodNameSegmentFormatter");
 
 
     //
@@ -218,11 +218,5 @@ public class    MethodNameSegmentFormatter
         )
     {
         this.method_name(builder, depth + 1);
-    }
-
-
-    public String                       portray(Zone z)
-    {
-        return "<MethodNameSegmentFormatter>";
     }
 }

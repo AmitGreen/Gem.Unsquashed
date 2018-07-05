@@ -117,8 +117,12 @@ public class    MessageFormatter_2
     }
 
 
-    public String                       portray(Zone z)
+    public void                         portray(Gem_StringBuilder builder)
     {
-        return "<MessageFormatter_2 " + this.a.portray(z) + " " + this.b.portray(z) + ">";
+        builder.append("<MessageFormatter_2 ");
+        builder.portray(this.a);
+        builder.append(" ");
+        builder.portray(this.b);
+        builder.append(">");
     }
 }

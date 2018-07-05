@@ -8,6 +8,7 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
@@ -32,22 +33,20 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
     //
     //  Interface Inspectable
     //
-    public String                       portray(Zone z)
+    public void                         portray(Gem_StringBuilder builder)
     {
-        INSPECTION                      inspection = this.inspect();
+        final INSPECTION                inspection = this.inspect();
 
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
-
-        List<String>                    keys = new ArrayList<String>(this.keySet());
+        final List<String>              keys = new ArrayList<String>(this.keySet());
 
         Collections.sort(keys);
 
-        int                             total = keys.size();
+        final int                       keys_total = keys.size();
 
-        builder.append("<", inspection.simple_class_name, " size<", total, ">");
+        builder.append("<", inspection.simple_class_name, " size<", keys_total, ">");
 
-        for (int                        i = 0; i < total; i ++) {
-            String                      k = keys.get(i);
+        for (int                        i = 0; i < keys_total; i ++) {
+            final String                k = keys.get(i);
 
             if (i == 0) {
                 builder.append("; ");
@@ -55,12 +54,10 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
                 builder.append(", ");
             }
 
-            builder.append(z.quote_string(k));
+            builder.quote(k);
         }
 
         builder.append(">");
-
-        return builder.finish__AND__recycle();
     }
 
 

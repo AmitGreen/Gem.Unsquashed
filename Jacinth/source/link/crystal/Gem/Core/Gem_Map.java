@@ -5,11 +5,11 @@ package link.crystal.Gem.Core;
 
 
 import java.util.HashMap;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.ExceptionFunctions;
-import link.crystal.Gem.Support.PortrayFunctions;
 
 
 public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
@@ -39,7 +39,7 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
     //  Interface Inspectable
     //
     public abstract INSPECTION          inspect();
-    public abstract String              portray(Zone z);
+    public abstract void                portray(Gem_StringBuilder builder);
 
 
     //

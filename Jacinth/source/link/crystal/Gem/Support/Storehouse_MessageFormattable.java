@@ -98,7 +98,7 @@ public class    Storehouse_MessageFormattable
         MessageFormattable              previous = singleton.putIfAbsent(k, v);
 
         if (previous != null) {
-            z.RUNTIME("previous value for {0} already exists: {1}", z.quote_string(k), previous.portray(z));
+            z.RUNTIME("previous value for {p} already exists: {}", k, z);
         }
     }
 

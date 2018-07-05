@@ -69,12 +69,6 @@ public class    Gem_StringBuilder
     }
 
 
-    public String                       portray(Zone z)
-    {
-        return "<Gem.Core.Gem_StringBuilder>";
-    }
-
-
     //
     //  Public (append)
     //
@@ -87,6 +81,12 @@ public class    Gem_StringBuilder
     public void                         append(String s)
     {
         this.builder.append(s);
+    }
+
+
+    public void                         append(int a, String b)
+    {
+        this.builder.append(a).append(b);
     }
 
 
@@ -114,19 +114,25 @@ public class    Gem_StringBuilder
     }
 
 
+    public void                         append(String a, int b, String c, int d, String e)
+    {
+        this.builder.append(a).append(b).append(c).append(d).append(e);
+    }
+
+
     public void                         append(String a, String b, String c, int d, String e)
     {
         this.builder.append(a).append(b).append(c).append(d).append(e);
     }
 
 
-    public void                         append(String a, String b, String c, String d, String e)
+    public void                         append(String a, String b, String c, String d, int e)
     {
         this.builder.append(a).append(b).append(c).append(d).append(e);
     }
 
 
-    public void                         append(String a, String b, String c, String d, int e)
+    public void                         append(String a, String b, String c, String d, String e)
     {
         this.builder.append(a).append(b).append(c).append(d).append(e);
     }
@@ -319,9 +325,7 @@ public class    Gem_StringBuilder
         }
 
         if (v instanceof Inspectable) {
-            final Zone                   z = this.z;
-
-            this.builder.append(((Inspectable) v).portray(z));
+            ((Inspectable) v).portray(this);
             return;
         }
 
@@ -362,9 +366,7 @@ public class    Gem_StringBuilder
         }
 
         if (v instanceof Inspectable) {
-            final Zone                   z = this.z;
-
-            this.builder.append(((Inspectable) v).portray(z));
+            ((Inspectable) v).portray(this);
             return;
         }
 

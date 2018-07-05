@@ -24,7 +24,6 @@ import link.crystal.Gem.Format.MethodNameSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.Support.PortrayFunctions;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
 
 
@@ -487,10 +486,21 @@ public class   ParseFormat
         this.examine_missing();
 
         if (false) {
-            z.standard_output.println("format: " + PortrayFunctions.quote_string(z, format));
+            final Gem_StringBuilder     builder = z.conjure__StringBuilder();
+
+            builder.append("format: ");
+            builder.quote(format);
+
+            z.output(builder.finish__AND__recycle());
 
             for (int                    i = 0; i < segment_total; i ++) {
-                z.line(Integer.toString(i) + ": " + z.portray(segment_many[i]));
+                final SegmentFormattable    segment = segment_many[i];
+                final Gem_StringBuilder     b2 = z.conjure__StringBuilder();
+
+                b2.append(i, " :");
+                b2.portray(segment);
+
+                z.output(b2.finish__AND__recycle());
             }
         }
 
