@@ -26,26 +26,26 @@ public class    MessageFormatter_1__Suffix
     //
     //  Members
     //
-    private String                      prefix_0;
+    private String                      prefix;
     private String                      suffix;
 
 
     //
     //  Constructor & Factory
     //
-    private                             MessageFormatter_1__Suffix(String prefix_0, String suffix)
+    private                             MessageFormatter_1__Suffix(String prefix, String suffix)
     {
-        this.prefix_0 = prefix_0;
-        this.suffix   = suffix;
+        this.prefix = prefix;
+        this.suffix = suffix;
     }
 
 
-    static public MessageFormatter_1__Suffix    create(Zone z, String prefix_0, String suffix)
+    static public MessageFormatter_1__Suffix    create(Zone z, String prefix, String suffix)
     {
-        String                          interned__prefix_0 = z.intern_permenant_string_0(prefix_0);
-        String                          interned__suffix   = z.intern_permenant_string  (suffix);
+        String                          interned__prefix = z.intern_permenant_string(prefix);
+        String                          interned__suffix = z.intern_permenant_string(suffix);
 
-        return new MessageFormatter_1__Suffix(interned__prefix_0, suffix);
+        return new MessageFormatter_1__Suffix(interned__prefix, suffix);
     }
 
 
@@ -64,20 +64,20 @@ public class    MessageFormatter_1__Suffix
     @Override
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
-        final Zone                      z = builder.z;
-
-        builder.append(this.prefix_0, z.portray(v), this.suffix);
+        builder.append(this.prefix);
+        builder.portray(v);
+        builder.append(this.suffix);
     }
 
     
     public String                       portray(Zone z)
     {
-        String                          prefix_0 = this.prefix_0;
+        String                          prefix = this.prefix;
         String                          suffix   = this.suffix;
 
         return (
                      "<MessageFormatter_1__Suffix "
-                   + (prefix_0 == null ? "<null>" : z.quote_string(prefix_0))
+                   + z.quote_string(prefix)
                    + " "
                    + z.quote_string(suffix)
                    + ">"

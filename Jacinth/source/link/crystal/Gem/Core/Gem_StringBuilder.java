@@ -5,10 +5,12 @@ package link.crystal.Gem.Core;
 
 
 import java.lang.StringBuilder;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 
 
 public class    Gem_StringBuilder
@@ -74,7 +76,7 @@ public class    Gem_StringBuilder
 
 
     //
-    //  Public
+    //  Public (append)
     //
     public void                         append(int v)
     {
@@ -130,6 +132,171 @@ public class    Gem_StringBuilder
     }
 
 
+    //
+    //  Public (arrange)
+    //
+    public void                         arrange(String format)
+    {
+        final Zone                      z = this.z;
+
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(z, format);
+
+            Storehouse_MessageFormattable.insert(z, format, formattable);
+        }
+
+        formattable.arrange(this, 2);
+    }
+
+
+    public void                         arrange(String format, Object v)
+    {
+        final Zone                      z = this.z;
+
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(z, format);
+
+            Storehouse_MessageFormattable.insert(z, format, formattable);
+        }
+
+        formattable.arrange(this, 2, v);
+    }
+
+
+    public void                         arrange(String format, Object v, Object w)
+    {
+        final Zone                      z = this.z;
+
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(z, format);
+
+            Storehouse_MessageFormattable.insert(z, format, formattable);
+        }
+
+        formattable.arrange(this, 2, v, w);
+    }
+
+
+    public void                         arrange(String format, Object v, Object w, Object x)
+    {
+        final Zone                      z = this.z;
+
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(z, format);
+
+            Storehouse_MessageFormattable.insert(z, format, formattable);
+        }
+
+        formattable.arrange(this, 2, v, w, x);
+    }
+
+
+    public void                         arrange(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y//
+        )
+    {
+        final Zone                      z = this.z;
+
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(z, format);
+
+            Storehouse_MessageFormattable.insert(z, format, formattable);
+        }
+
+        formattable.arrange(this, 2, v, w, x, y);
+    }
+
+
+    public void                         arrange(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5//,
+        )
+    {
+        final Zone                      z = this.z;
+
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(z, format);
+
+            Storehouse_MessageFormattable.insert(z, format, formattable);
+        }
+
+        formattable.arrange(this, 2, v, w, x, y4, y5);
+    }
+
+
+    public void                         arrange(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6//,
+        )
+    {
+        final Zone                      z = this.z;
+
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(z, format);
+
+            Storehouse_MessageFormattable.insert(z, format, formattable);
+        }
+
+        formattable.arrange(this, 2, v, w, x, y4, y5, y6);
+    }
+
+
+    public void                         arrange(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6,
+            Object                              y7,
+            Object ...                          other_arguments//,
+        )
+    {
+        final Zone                      z = this.z;
+
+        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
+
+        if (formattable == null) {
+            formattable = ParseFormat.parse_format(z, format);
+
+            Storehouse_MessageFormattable.insert(z, format, formattable);
+        }
+
+        formattable.arrange(this, 2, v, w, x, y4, y5, y6, y7, other_arguments);
+    }
+
+
+    //
+    //  Public (others)
+    //
     public String                       finish__AND__recycle()
     {
         if (this.finished) {
@@ -146,34 +313,32 @@ public class    Gem_StringBuilder
 
     public void                         format(Object v)
     {
-        final StringBuilder             builder = this.builder;
-
         if (v == null) {
-            builder.append("<null>");
+            this.builder.append("<null>");
             return;
         }
 
         if (v instanceof Inspectable) {
             final Zone                   z = this.z;
 
-            builder.append(((Inspectable) v).portray(z));
+            this.builder.append(((Inspectable) v).portray(z));
             return;
         }
 
         Class<?>                        v_class = v.getClass();
 
         if (v_class == Integer$class) {
-            builder.append((Integer) v);
+            this.builder.append((Integer) v);
             return;
         }
 
         if (v_class == String$class) {
-            builder.append((String) v);
+            this.builder.append((String) v);
             return;
         }
 
         if (v_class == Thread$class) {
-            builder.append("<").append(v.toString()).append(">");
+            this.builder.append("<").append(v.toString()).append(">");
             return;
         }
 
@@ -181,12 +346,94 @@ public class    Gem_StringBuilder
         {
             Gem_StringBuilder[]     v2 = (Gem_StringBuilder[]) v;
 
-            builder.append(z.arrange("<Gem_StringBuilder size<{0}>>", v2.length));
+            this.builder.append(z.arrange("<Gem_StringBuilder size<{0}>>", v2.length));
             return;
         }
 
-        builder.append("<").append(v_class.getSimpleName()).append(": ").append(v.toString()).append(">");
-        return;
+        this.builder.append("<").append(v_class.getSimpleName()).append(": ").append(v.toString()).append(">");
     }
 
+
+    public void                         portray(Object v)
+    {
+        if (v == null) {
+            this.builder.append("<null>");
+            return;
+        }
+
+        if (v instanceof Inspectable) {
+            final Zone                   z = this.z;
+
+            this.builder.append(((Inspectable) v).portray(z));
+            return;
+        }
+
+        Class<?>                        v_class = v.getClass();
+
+        if (v_class == Integer$class) {
+            this.builder.append((Integer) v);
+            return;
+        }
+
+        if (v_class == String$class) {
+            this.quote((String) v);
+            return;
+        }
+
+        if (v_class == Thread$class) {
+            this.builder.append("<").append(v.toString()).append(">");
+            return;
+        }
+
+        if (v_class == Gem_StringBuilder$array$class)
+        {
+            Gem_StringBuilder[]     v2 = (Gem_StringBuilder[]) v;
+
+            this.builder.append(z.arrange("<Gem_StringBuilder size<{0}>>", v2.length));
+            return;
+        }
+
+        this.builder.append("<").append(v_class.getSimpleName()).append(": ").append(v.toString()).append(">");
+    }
+
+
+    public void                         quote(String s)
+    {
+        if (s == null) {
+            final Zone                  z = this.z;
+
+            z.RUNTIME("`s` is null");
+        }
+
+        builder.append("\"");
+
+        int                             start = 0;
+        int                             total = s.length();
+
+        for (int                        i = 0; i < total; i ++) {
+            int                         code_point = s.codePointAt(i);
+
+            if (code_point == 34) {
+                if (start < i) {
+                    builder.append(s.substring(start, i)).append("\\\"");
+                    start = i + 1;
+                    continue;
+                }
+            }
+
+            if (code_point == 92) {
+                if (start < i) {
+                    builder.append(s.substring(start, i)).append("\\\\");
+                    start = i + 1;
+                    continue;
+                }
+            }
+        }
+
+        if (start < total) {
+            builder.append(s.substring(start));
+        }
+
+        builder.append("\"");
+    }
 }

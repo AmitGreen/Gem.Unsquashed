@@ -61,9 +61,8 @@ public class    MessageFormatter_1__Prefix
     @Override
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
-        final Zone                      z = builder.z;
-
-        builder.append(this.prefix, z.portray(v));
+        builder.append(this.prefix);
+        builder.portray(v);
     }
 
 

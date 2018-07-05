@@ -73,9 +73,7 @@ public class    PortraySegmentFormatter
     @Override
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
-        final Zone                      z = builder.z;
-
-        builder.append(z.portray(v));
+        builder.portray(v);
     }
 
 
@@ -96,7 +94,7 @@ public class    PortraySegmentFormatter
         final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            builder.append(z.portray(v));
+            builder.portray(v);
             return;
         }
 
@@ -111,12 +109,12 @@ public class    PortraySegmentFormatter
         final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            builder.append(z.portray(v));
+            builder.portray(v);
             return;
         }
 
         if (argument_index == 1) {
-            builder.append(z.portray(w));
+            builder.portray(w);
             return;
         }
 
@@ -131,17 +129,17 @@ public class    PortraySegmentFormatter
         final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            builder.append(z.portray(v));
+            builder.portray(v);
             return;
         }
 
         if (argument_index == 1) {
-            builder.append(z.portray(w));
+            builder.portray(w);
             return;
         }
 
         if (argument_index == 2) {
-            builder.append(z.portray(x));
+            builder.portray(x);
             return;
         }
 
@@ -156,22 +154,22 @@ public class    PortraySegmentFormatter
         final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            builder.append(z.portray(v));
+            builder.portray(v);
             return;
         }
 
         if (argument_index == 1) {
-            builder.append(z.portray(w));
+            builder.portray(w);
             return;
         }
 
         if (argument_index == 2) {
-            builder.append(z.portray(x));
+            builder.portray(x);
             return;
         }
 
         if (argument_index == 3) {
-            builder.append(z.portray(y));
+            builder.portray(y);
             return;
         }
 
@@ -194,27 +192,27 @@ public class    PortraySegmentFormatter
         final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            builder.append(z.portray(v));
+            builder.portray(v);
             return;
         }
 
         if (argument_index == 1) {
-            builder.append(z.portray(w));
+            builder.portray(w);
             return;
         }
 
         if (argument_index == 2) {
-            builder.append(z.portray(x));
+            builder.portray(x);
             return;
         }
 
         if (argument_index == 3) {
-            builder.append(z.portray(y4));
+            builder.portray(y4);
             return;
         }
 
         if (argument_index == 4) {
-            builder.append(z.portray(y5));
+            builder.portray(y5);
             return;
         }
 
@@ -238,32 +236,32 @@ public class    PortraySegmentFormatter
         final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            builder.append(z.portray(v));
+            builder.portray(v);
             return;
         }
 
         if (argument_index == 1) {
-            builder.append(z.portray(w));
+            builder.portray(w);
             return;
         }
 
         if (argument_index == 2) {
-            builder.append(z.portray(x));
+            builder.portray(x);
             return;
         }
 
         if (argument_index == 3) {
-            builder.append(z.portray(y4));
+            builder.portray(y4);
             return;
         }
 
         if (argument_index == 4) {
-            builder.append(z.portray(y5));
+            builder.portray(y5);
             return;
         }
 
         if (argument_index == 5) {
-            builder.append(z.portray(y6));
+            builder.portray(y6);
             return;
         }
 
@@ -289,41 +287,41 @@ public class    PortraySegmentFormatter
         final Zone                      z = builder.z;
 
         if (argument_index == 0) {
-            builder.append(z.portray(v));
+            builder.portray(v);
             return;
         }
 
         if (argument_index == 1) {
-            builder.append(z.portray(w));
+            builder.portray(w);
             return;
         }
 
         if (argument_index == 2) {
-            builder.append(z.portray(x));
+            builder.portray(x);
             return;
         }
 
         if (argument_index == 3) {
-            builder.append(z.portray(y4));
+            builder.portray(y4);
             return;
         }
 
         if (argument_index == 4) {
-            builder.append(z.portray(y5));
+            builder.portray(y5);
             return;
         }
 
         if (argument_index == 5) {
-            builder.append(z.portray(y6));
+            builder.portray(y6);
             return;
         }
 
         if (argument_index == 6) {
-            builder.append(z.portray(y7));
+            builder.portray(y7);
             return;
         }
 
-        builder.append(z.portray(other_arguments[argument_index - 7]));
+        builder.portray(other_arguments[argument_index - 7]);
     }
 }
 
