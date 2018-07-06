@@ -29,7 +29,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
         Inspection                      inspection = this.inspect();
 
-        z.RUNTIME("invalid routine (derived class: {0})", inspection.simple_class_name);
+        z.RUNTIME("invalid routine (derived class: {})", inspection.simple_class_name);
     }
 
 
@@ -40,25 +40,21 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
         Inspection                      inspection = this.inspect();
 
-        z.RUNTIME("invalid routine (derived class: {0})", inspection.simple_class_name);
+        z.RUNTIME("invalid routine (derived class: {})", inspection.simple_class_name);
     }
 
 
     @Override
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w)
     {
-        final Zone                      z = builder.z;
-
-        z.INVALID_ROUTINE();
+        INVALID_ROUTINE();
     }
 
 
     @Override
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
     {
-        final Zone                      z = builder.z;
-
-        z.INVALID_ROUTINE();
+        INVALID_ROUTINE();
     }
 
 
@@ -72,9 +68,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
             Object                              y//,
         )
     {
-        final Zone                      z = builder.z;
-
-        z.INVALID_ROUTINE();
+        INVALID_ROUTINE();
     }
 
   
@@ -89,9 +83,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
             Object                              y5//,
         )
     {
-        final Zone                      z = builder.z;
-
-        z.INVALID_ROUTINE();
+        INVALID_ROUTINE();
     }
 
 
@@ -107,9 +99,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
             Object                              y6//,
         )
     {
-        final Zone                      z = builder.z;
-
-        z.INVALID_ROUTINE();
+        INVALID_ROUTINE();
     }
 
 
@@ -127,8 +117,6 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
             Object ...                          other_arguments//,
         )
     {
-        final Zone                      z = builder.z;
-
-        z.INVALID_ROUTINE();
+        INVALID_ROUTINE();
     }
 }

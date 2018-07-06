@@ -44,7 +44,7 @@ public class    MessageFormatter_Many
     static public MessageFormatter_Many     create(Zone z, int expected, SegmentFormattable[] segment_many)
     {
         if ( ! (2 <= expected && expected <= segment_many.length)) {
-            z.RUNTIME("invalid value for `expected`<{0}>", expected);
+            z.RUNTIME("invalid value for `expected`<{}>", expected);
         }
 
         return new MessageFormatter_Many(expected, segment_many);

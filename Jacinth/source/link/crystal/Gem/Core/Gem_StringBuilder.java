@@ -18,7 +18,7 @@ public class    Gem_StringBuilder
 //  extends     Object
     implements  Inspectable<Inspection>//,
 {
-    private static Inspection           inspection = Inspection.create_with_portrait("Gem_StringBuilder");
+    private static Inspection           inspection = Inspection.create("Gem_StringBuilder");
 
 
     //
@@ -66,6 +66,23 @@ public class    Gem_StringBuilder
     public Inspection                   inspect()
     {
         return /*static*/ this.inspection;
+    }
+
+
+    public void                         portray(Gem_StringBuilder builder)
+    {
+        StringBuilder                   client = builder.builder;
+
+        if (this == builder) {
+            //
+            //  NOTE:
+            //      Special case, we are using this Gem_StringBuilder to show itself ...
+            //
+            builder.arrange("<GemStringBuilder builder<{} of {}>; MYSELF>", client.length(), client.capacity());
+            return;
+        }
+
+        builder.arrange("<GemStringBuilder builder<{} of {}; {p}>>", client.length(), client.capacity(), client.toString());
     }
 
 
@@ -145,13 +162,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(z, format);
-
-            Storehouse_MessageFormattable.insert(z, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
         formattable.arrange(this, 2);
     }
@@ -161,13 +172,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(z, format);
-
-            Storehouse_MessageFormattable.insert(z, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
         formattable.arrange(this, 2, v);
     }
@@ -177,13 +182,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(z, format);
-
-            Storehouse_MessageFormattable.insert(z, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
         formattable.arrange(this, 2, v, w);
     }
@@ -193,13 +192,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(z, format);
-
-            Storehouse_MessageFormattable.insert(z, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
         formattable.arrange(this, 2, v, w, x);
     }
@@ -215,13 +208,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(z, format);
-
-            Storehouse_MessageFormattable.insert(z, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
         formattable.arrange(this, 2, v, w, x, y);
     }
@@ -238,13 +225,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(z, format);
-
-            Storehouse_MessageFormattable.insert(z, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
         formattable.arrange(this, 2, v, w, x, y4, y5);
     }
@@ -262,13 +243,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(z, format);
-
-            Storehouse_MessageFormattable.insert(z, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
         formattable.arrange(this, 2, v, w, x, y4, y5, y6);
     }
@@ -288,13 +263,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(z, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(z, format);
-
-            Storehouse_MessageFormattable.insert(z, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
         formattable.arrange(this, 2, v, w, x, y4, y5, y6, y7, other_arguments);
     }
@@ -350,7 +319,7 @@ public class    Gem_StringBuilder
         {
             Gem_StringBuilder[]     v2 = (Gem_StringBuilder[]) v;
 
-            this.builder.append(z.arrange("<Gem_StringBuilder size<{0}>>", v2.length));
+            this.arrange("<Gem_StringBuilder size{p}>", v2.length);
             return;
         }
 
@@ -373,7 +342,7 @@ public class    Gem_StringBuilder
         Class<?>                        v_class = v.getClass();
 
         if (v_class == Integer$class) {
-            this.builder.append((Integer) v);
+            this.builder.append("<int ").append((Integer) v).append(">");
             return;
         }
 
@@ -391,7 +360,7 @@ public class    Gem_StringBuilder
         {
             Gem_StringBuilder[]     v2 = (Gem_StringBuilder[]) v;
 
-            this.builder.append(z.arrange("<Gem_StringBuilder size<{0}>>", v2.length));
+            this.arrange("<Gem_StringBuilder size{p}>", v2.length);
             return;
         }
 

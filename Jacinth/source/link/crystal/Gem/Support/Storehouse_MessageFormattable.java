@@ -7,6 +7,7 @@ package link.crystal.Gem.Support;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringMap;
 import link.crystal.Gem.Core.Inspection;
+import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
@@ -19,7 +20,7 @@ public class    Storehouse_MessageFormattable
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Map<?, ?, ?>
 {
-    private static Inspection           inspection = Inspection.create_with_portrait("Storehouse_MessageFormattable");
+    private static Inspection           inspection = Inspection.create("Storehouse_MessageFormattable");
 
 
     //
@@ -87,7 +88,7 @@ public class    Storehouse_MessageFormattable
     }
 
 
-    public static void                  insert(Zone z, String k, MessageFormattable v)
+    public static MessageFormattable    conjure(Zone z, String format)
     {
         Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
 
@@ -95,22 +96,16 @@ public class    Storehouse_MessageFormattable
             singleton = Storehouse_MessageFormattable.singleton(z);
         }
 
-        MessageFormattable              previous = singleton.putIfAbsent(k, v);
+        final MessageFormattable        previous = singleton.get(format);
 
         if (previous != null) {
-            z.RUNTIME("previous value for {p} already exists: {}", k, z);
-        }
-    }
-
-
-    public static MessageFormattable    lookup(Zone z, String k)
-    {
-        Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
-
-        if (singleton == null) {
-            singleton = Storehouse_MessageFormattable.singleton(z);
+            return previous;
         }
 
-        return singleton.get(k);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+
+        singleton.insert(format, formattable);
+
+        return formattable;
     }
 }

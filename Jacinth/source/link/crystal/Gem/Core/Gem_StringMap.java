@@ -108,6 +108,6 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
             z.line("  {}: {}", String.format("%30s", z.quote_string(k)), v);
         }
 
-        z.line("End of dump of {0}", simple_class_name + " " + name);
+        z.line("End of dump of {}", simple_class_name + " " + name);
     }
 }

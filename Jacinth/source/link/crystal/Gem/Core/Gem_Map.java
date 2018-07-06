@@ -9,7 +9,6 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Support.ExceptionFunctions;
 
 
 public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
@@ -64,7 +63,7 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
         if (previous != null) {
             final Zone                  z = this.z;
 
-            z.RUNTIME("previous value for {0} already exists: {1}", k, v);
+            z.RUNTIME("previous value for {} already exists: {}", k, v);
         }
     }
 }

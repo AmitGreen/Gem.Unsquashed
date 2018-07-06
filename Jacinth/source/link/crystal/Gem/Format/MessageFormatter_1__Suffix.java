@@ -65,7 +65,7 @@ public class    MessageFormatter_1__Suffix
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
         builder.append(this.prefix);
-        builder.portray(v);
+        builder.format(v);
         builder.append(this.suffix);
     }
 

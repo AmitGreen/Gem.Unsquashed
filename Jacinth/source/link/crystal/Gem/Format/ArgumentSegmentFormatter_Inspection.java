@@ -21,7 +21,7 @@ public abstract class   ArgumentSegmentFormatter_Inspection<ARGUMENT_SEGMENT ext
     //
     protected                           ArgumentSegmentFormatter_Inspection(String simple_class_name)
     {
-        super(simple_class_name, null, false);
+        super(simple_class_name, false);
     }
 
 

@@ -74,7 +74,7 @@ public class    NormalSegmentFormatter
     @Override
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
-        final Zone                      z = builder.z;
+        builder.z.output("Hmm ... " + v);
 
         builder.format(v);
     }
@@ -85,9 +85,7 @@ public class    NormalSegmentFormatter
     //
     public void                         choose(Gem_StringBuilder builder, int depth)
     {
-        final Zone                      z = builder.z;
-
-        z.INVALID_ROUTINE();
+        INVALID_ROUTINE();
     }
 
     public void                         choose(Gem_StringBuilder builder, int depth, Object v)

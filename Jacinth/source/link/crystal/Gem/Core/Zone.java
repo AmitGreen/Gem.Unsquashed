@@ -13,7 +13,6 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.Support.ExceptionFunctions;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.Format.Map__String__ArgumentSegmentFormatter_Inspection;
@@ -24,7 +23,7 @@ public class    Zone
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create_with_portrait("Zone");
+    private static Inspection           inspection = Inspection.create("Zone");
 
 
     //
@@ -77,6 +76,14 @@ public class    Zone
     public Inspection                   inspect()
     {
         return /*static*/ this.inspection;
+    }
+
+
+    public void                         portray(Gem_StringBuilder builder)
+    {
+        builder.arrange("<Zone zone_thread{p} ... gem_builder_total{p} ...>",
+                        this.zone_thread,
+                        this.gem_builder_total);
     }
 
 
@@ -141,13 +148,7 @@ public class    Zone
     //
     public String                       arrange(String format)
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -159,13 +160,7 @@ public class    Zone
 
     public String                       arrange(String format, Object v)
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -177,13 +172,7 @@ public class    Zone
 
     public String                       arrange(String format, Object v, Object w)
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -195,13 +184,7 @@ public class    Zone
 
     public String                       arrange(String format, Object v, Object w, Object x)
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -219,13 +202,7 @@ public class    Zone
             Object                              y//
         )
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -244,13 +221,7 @@ public class    Zone
             Object                              y5//,
         )
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -270,13 +241,7 @@ public class    Zone
             Object                              y6//,
         )
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -298,13 +263,7 @@ public class    Zone
             Object ...                          other_arguments//,
         )
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -347,18 +306,20 @@ public class    Zone
         final Gem_StringBuilder[]       gem_builder_many  = this.gem_builder_many;
         final int                       gem_builder_total = this.gem_builder_total;
 
-        z.line("Dump of Gem_Zone");
+        z.line("Dump of Gem_Zone: {}", this);
         z.line("          zone_thread: {}", this.zone_thread);
         z.line("         parse_format: {}", this.parse_format);
         z.line("---");
         z.line("     gem_builder_many: {}", gem_builder_many);
         z.line("    gem_builder_total: {}", gem_builder_total);
-        z.line("---");
-        z.line("           format_map: {}", this.format_map);
 
         for (int                        i = 0; i < gem_builder_total; i ++) {
             z.line("  gem_builder_many[{}]: {}", i, gem_builder_many[i]);
         }
+
+        z.line("---");
+        z.line("           format_map: {}", this.format_map);
+
 
         z.line("End of dump of GemZone");
     }
@@ -388,13 +349,7 @@ public class    Zone
 
     public void                         line(String format)
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -406,13 +361,7 @@ public class    Zone
 
     public void                         line(String format, Object v)
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -424,13 +373,7 @@ public class    Zone
 
     public void                         line(String format, Object v, Object w)
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -442,13 +385,7 @@ public class    Zone
 
     public void                         line(String format, Object v, Object w, Object x)
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -460,13 +397,7 @@ public class    Zone
 
     public void                         line(String format, Object v, Object w, Object x, Object y)
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -478,13 +409,7 @@ public class    Zone
 
     public void                         line(String format, Object v, Object w, Object x, Object y4, Object y5)
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -504,13 +429,7 @@ public class    Zone
             Object                              y6//,
         )
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -532,13 +451,7 @@ public class    Zone
             Object ...                          other_arguments//,
         )
     {
-        MessageFormattable              formattable = Storehouse_MessageFormattable.lookup(this, format);
-
-        if (formattable == null) {
-            formattable = ParseFormat.parse_format(this, format);
-
-            Storehouse_MessageFormattable.insert(this, format, formattable);
-        }
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
         Gem_StringBuilder               builder = this.conjure__StringBuilder();
 
@@ -561,27 +474,5 @@ public class    Zone
         builder.quote(s);
 
         return builder.finish__AND__recycle();
-    }
-
-
-    public void                         INVALID_ROUTINE()
-    {
-        ExceptionFunctions.RUNTIME(this, "invalid routine");
-    }
-
-
-    public void                         RUNTIME(String error_message)
-    {
-        ExceptionFunctions.RUNTIME(this, error_message);
-    }
-
-
-    public void                         RUNTIME(
-            String                              format,
-            Object                              v,
-            Object ...                          other_arguments//,
-        )
-    {
-        ExceptionFunctions.RUNTIME(this, format, v, other_arguments);
     }
 }

@@ -13,9 +13,9 @@ import java.lang.Thread;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.Support.ExceptionFunctions;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
 
@@ -43,15 +43,34 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     {
         final INSPECTION                inspection = this.inspect();
 
-        final String                    portrait_0 = inspection.portrait_0;
+        builder.append("<", inspection.simple_class_name, ">");
+    }
 
-        if (portrait_0 == null) {
-            final Zone                  z = builder.z;
 
-            z.RUNTIME("`{0}.inspect().portrait_0` is `null`", inspection.simple_class_name);
+    //
+    //  Public
+    //
+    public static void                  assert_null(Object p, String name)
+    {
+        if (p == null) {
+            return;
         }
 
-        builder.append(portrait_0);
+        final Zone                      z = Zone.current_zone();
+
+        ExceptionFunctions.ASSERT(2, "`{}` is not null", name);
+    }
+
+
+    public static void                  assert_pointer(Object p, String name)
+    {
+        if (p != null) {
+            return;
+        }
+
+        final Zone                      z = Zone.current_zone();
+
+        ExceptionFunctions.ASSERT(2, "`{}` is null", name);
     }
 
 
@@ -69,5 +88,20 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
         }
 
         return v;
+    }
+
+
+    //
+    //  Public (ERRORS)
+    //
+    public void                         INVALID_ROUTINE()
+    {
+        ExceptionFunctions.RUNTIME(2, "invalid routine");
+    }
+
+
+    public void                         RUNTIME(String error_message, Object ... arguments)
+    {
+        ExceptionFunctions.RUNTIME(2, error_message, arguments);
     }
 }

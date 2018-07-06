@@ -32,16 +32,16 @@ public abstract class   ArrayFunctions
             }
         } else {
             if (previous_total < 1) {
-                z.RUNTIME(".shrink_array: previous_total < 1 (actual: {0})", previous_total);
+                z.RUNTIME(".shrink_array: previous_total < 1 (actual: {})", previous_total);
             }
 
             if (previous_total <= new_total) {
-                z.RUNTIME("previous_total<{0}> <= new_total<{1}>", previous_total, new_total);
+                z.RUNTIME("previous_total<{}> <= new_total<{}>", previous_total, new_total);
             }
         }
 
         if (previous_total < new_total) {
-            z.RUNTIME("previous_total<{0}> < new_total<{1}>", previous_total, new_total);
+            z.RUNTIME("previous_total<{}> < new_total<{}>", previous_total, new_total);
         }
 
         if (current == null) {
@@ -49,7 +49,7 @@ public abstract class   ArrayFunctions
         }
 
         if (new_total <= 0) {
-            z.RUNTIME("`new_total`<{0}>", previous_total);
+            z.RUNTIME("`new_total`<{}>", previous_total);
         }
 
         for (int                        i = 0; i < new_total; i ++) {
@@ -74,11 +74,11 @@ public abstract class   ArrayFunctions
             }
         } else {
             if (previous_total < 0) {
-                z.RUNTIME("previous_total < 0 (actual: {0})", previous_total);
+                z.RUNTIME("previous_total < 0 (actual: {})", previous_total);
             }
 
             if (previous_total >= new_total) {
-                z.RUNTIME("previous_total<{0}> >= new_total<{1}>",
+                z.RUNTIME("previous_total<{}> >= new_total<{}>",
                           previous_total,
                           new_total);
             }
@@ -89,7 +89,7 @@ public abstract class   ArrayFunctions
         }
 
         if (new_total <= 0) {
-            z.RUNTIME("`new_total`<{0}>", previous_total);
+            z.RUNTIME("`new_total`<{}>", previous_total);
         }
 
         for (int                    i = 0; i < previous_total; i ++) {
@@ -114,7 +114,7 @@ public abstract class   ArrayFunctions
             }
         } else {
             if (previous_total < 0) {
-                z.RUNTIME("`previous_total`<{0}> < 0", previous_total);
+                z.RUNTIME("`previous_total`<{}> < 0", previous_total);
             }
 
             if (previous_total >= new_total) {
@@ -127,7 +127,7 @@ public abstract class   ArrayFunctions
         }
 
         if (new_total <= 0) {
-            z.RUNTIME("`new_total`<{0}> <= 0", previous_total);
+            z.RUNTIME("`new_total`<{}> <= 0", previous_total);
         }
 
         for (int                    i = 0; i < previous_total; i ++) {

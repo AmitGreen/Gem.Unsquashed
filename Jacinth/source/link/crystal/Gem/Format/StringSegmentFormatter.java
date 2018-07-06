@@ -83,9 +83,7 @@ public class    StringSegmentFormatter
     //
     public void                         choose(Gem_StringBuilder builder, int depth)
     {
-        final Zone                      z = builder.z;
-
-        z.INVALID_ROUTINE();
+        INVALID_ROUTINE();
     }
 
     public void                         choose(Gem_StringBuilder builder, int depth, Object v)

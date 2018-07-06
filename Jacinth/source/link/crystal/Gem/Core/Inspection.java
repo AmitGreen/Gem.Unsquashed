@@ -22,17 +22,15 @@ public class    Inspection
     //  Members
     //
     public final String                 simple_class_name;
-    public final String                 portrait_0;
     public final boolean                is_silver_proxy;
 
 
     //
     //  Constructor & Factory
     //
-    protected                           Inspection(String simple_class_name, String portrait_0, boolean is_silver_proxy)
+    protected                           Inspection(String simple_class_name, boolean is_silver_proxy)
     {
         this.simple_class_name = simple_class_name;
-        this.portrait_0        = portrait_0;
         this.is_silver_proxy   = is_silver_proxy;
     }
 
@@ -43,19 +41,7 @@ public class    Inspection
 
         final String                    interned__simple_class_name = z.intern_permenant_string(simple_class_name);
 
-        return new Inspection(interned__simple_class_name, null, false);
-    }
-
-
-    public static Inspection            create_with_portrait(String simple_class_name)
-    {
-        final Zone                      z = Zone.current_zone();
-
-        final String                    interned__simple_class_name = z.intern_permenant_string(simple_class_name);
-
-        final String                    interned__portrait = z.intern_permenant_string("<" + simple_class_name + ">");
-
-        return new Inspection(interned__simple_class_name, interned__portrait, false);
+        return new Inspection(interned__simple_class_name, false);
     }
 
 

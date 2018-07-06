@@ -79,7 +79,11 @@ JACINTH_FILES = \
     $J/Gem/Core/Gem_StringSet.java \
     $J/Gem/Core/Inspection.java \
     $J/Gem/Core/Zone.java \
+    $J/Gem/Exception/AssertionError.java \
     $J/Gem/Format/AdornmentSegmentFormatter.java \
+    $J/Gem/Format/ArgumentSegmentFormatter_Inspection.java \
+    $J/Gem/Format/ArgumentSegmentFormatter.java \
+    $J/Gem/Format/Map__String__ArgumentSegmentFormatter_Inspection.java \
     $J/Gem/Format/MessageFormatter_1__Prefix.java \
     $J/Gem/Format/MessageFormatter_1__Suffix.java \
     $J/Gem/Format/MessageFormatter_2.java \
@@ -87,11 +91,9 @@ JACINTH_FILES = \
     $J/Gem/Format/MessageFormatter_4.java \
     $J/Gem/Format/MessageFormatter_5.java \
     $J/Gem/Format/MessageFormatter_Base.java      \
+    $J/Gem/Exception/ExceptionFunctions.java \
     $J/Gem/Format/MessageFormatter_Many.java \
     $J/Gem/Format/MethodNameSegmentFormatter.java \
-    $J/Gem/Format/ArgumentSegmentFormatter.java \
-    $J/Gem/Format/Map__String__ArgumentSegmentFormatter_Inspection.java \
-    $J/Gem/Format/ArgumentSegmentFormatter_Inspection.java \
     $J/Gem/Format/NormalSegmentFormatter.java \
     $J/Gem/Format/ParseFormat.java \
     $J/Gem/Format/PortraySegmentFormatter.java \
@@ -99,7 +101,6 @@ JACINTH_FILES = \
     $J/Gem/Interface/Inspectable.java \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
-    $J/Gem/Support/ExceptionFunctions.java \
     $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java \
     $J/Gem/Support/Storehouse_MessageFormattable.java \
     $J/Gem/Support/Storehouse_NormalSegmentFormatter.java \
@@ -284,7 +285,7 @@ clean:
 	rm -f *.old *.new *.pyc
 	rm -f 2re.py 2sf.py 2sp.py 2sc.py
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
-	rm -f a.py ab.py af.java ac.py ads.java ag.py ags.java agsi.java
+	rm -f a.py ab.py ae.java af.java ac.py ads.java ag.py ags.java agsi.java
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py ca2.py cd.py ce.py cr.py
 	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
@@ -345,6 +346,7 @@ links:
 	ln -s ../Gem/Absent.py                                                      ab.py
 	ln -s ../Gem/Ascii.py                                                       ac.py
 	ln -s $J/Gem/Format/AdornmentSegmentFormatter.java                          ads.java
+	ln -s $J/Gem/Exception/AssertionError.java                                  ae.java
 	ln -s $J/Gem/Core/ArrayFunctions.java                                       af.java
 	ln -s ../Agate/RUNME.py                                                     ag.py
 	ln -s $J/Gem/Format/ArgumentSegmentFormatter.java                           ags.java
@@ -372,7 +374,7 @@ links:
 	ln -s ../Diamond/Thread.py                                                  dt.py
 	ln -s ../Diamond/Chore.py                                                   dw.py
 	ln -s ../Diamond/LifeCycle.py                                               dy.py
-	ln -s $J/Gem/Support/ExceptionFunctions.java                                ef.java
+	ln -s $J/Gem/Exception/ExceptionFunctions.java                              ef.java
 	ln -s ../Gem/ExecuteFile.py                                                 ef.py
 	ln -s ../Gem/ErrorNumber.py                                                 en.py
 	ln -s ../Gem/Exception.py                                                   ex.py

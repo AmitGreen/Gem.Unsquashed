@@ -4,11 +4,12 @@
 package link.crystal.Jacinth;
 
 
+import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
-import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
-import link.crystal.Gem.Support.Storehouse_MessageFormattable;
-import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
+import link.crystal.Gem.Support.Storehouse_MessageFormattable;
+import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
+import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Mirror.Shape;
 
 
@@ -22,13 +23,15 @@ public class    Main
 
         circle.skew(z);
 
-        z.line("{+}");
-        z.line("{p}", "{}");
-        z.line("{+}: test {}", 7);
-        z.line("that: {+}");
-        z.line("that: {}", "hi");
-        z.line("that: {0}", "bye");
-        z.line("prefix {0} suffix", "middle");
+        Gem_Object.assert_pointer(null, "test");
+
+        //z.line("{+}");
+        //z.line("{p}", "{}");
+        //z.line("{+}: test {}", 7);
+        //z.line("that: {+}");
+        //z.line("that: {}", "hi");
+        //z.line("that: {0}", "bye");
+        //z.line("prefix {0} suffix", "middle");
 
         if (true) {
             //Storehouse_MessageFormattable       .dump(z);

@@ -31,7 +31,7 @@ public class   ParseFormat
     extends    Gem_Object<Inspection>
     implements Inspectable<Inspection>//,                               //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create_with_portrait("Gem.Core.ParseFormat");
+    private static Inspection           inspection = Inspection.create("Gem.Core.ParseFormat");
 
 
     //
