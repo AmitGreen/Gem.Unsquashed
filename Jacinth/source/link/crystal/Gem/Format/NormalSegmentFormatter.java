@@ -53,7 +53,7 @@ public class    NormalSegmentFormatter
 
         r = new NormalSegmentFormatter(argument_index);
 
-        cache.insert(argument_index, r);
+        cache.insert(z, argument_index, r);
 
         return r;
     }
@@ -74,8 +74,6 @@ public class    NormalSegmentFormatter
     @Override
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
-        builder.z.output("Hmm ... " + v);
-
         builder.format(v);
     }
 

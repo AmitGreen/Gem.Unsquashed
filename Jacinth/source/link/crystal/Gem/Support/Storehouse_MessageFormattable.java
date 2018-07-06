@@ -104,7 +104,7 @@ public class    Storehouse_MessageFormattable
 
         final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
-        singleton.insert(format, formattable);
+        singleton.insert(z, format, formattable);
 
         return formattable;
     }

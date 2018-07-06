@@ -272,13 +272,23 @@ public class    Gem_StringBuilder
     //
     //  Public (others)
     //
-    public String                       finish__AND__recycle()
+    public String                       finish_AND_keep()
     {
         assert fact( ! this.finished, "! this.finished");
 
         this.finished = true;
 
-        this.z.recycle__StringBuilder(this);
+        return this.builder.toString();
+    }
+
+
+    public String                       finish_AND_recycle()
+    {
+        assert fact( ! this.finished, "! this.finished");
+
+        this.finished = true;
+
+        this.z.recycle__StringBuilder__ALLY__Gem_StringBuilder(this);
 
         return this.builder.toString();
     }

@@ -4,9 +4,7 @@
 package link.crystal.Gem.Core;
 
 
-import java.io.PrintStream;
 import java.lang.RuntimeException;
-import java.lang.System;
 import java.lang.Thread;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
@@ -32,7 +30,6 @@ public class    Zone
     private static Thread               first_thread          = null;
     private static Zone                 first_zone            = null;
     private static final int            gem_builder_allocated = 10;
-    public static final PrintStream     standard_output = System.out;
 
 
     //
@@ -90,7 +87,7 @@ public class    Zone
     //
     //  Public (gem_builder)
     //
-    public Gem_StringBuilder            conjure__StringBuilder()
+    public Gem_StringBuilder            summon_StringBuilder()
     {
         int                             gem_builder_total = this.gem_builder_total;
 
@@ -106,7 +103,7 @@ public class    Zone
     }
 
 
-    public void                         recycle__StringBuilder(Gem_StringBuilder builder)
+    public void                         recycle__StringBuilder__ALLY__Gem_StringBuilder(Gem_StringBuilder builder)
     {
         final int                       gem_builder_total = this.gem_builder_total;
 
@@ -150,11 +147,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2);
 
-        return builder.finish__AND__recycle();
+        return builder.finish_AND_recycle();
     }
 
 
@@ -162,11 +159,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v);
 
-        return builder.finish__AND__recycle();
+        return builder.finish_AND_recycle();
     }
 
 
@@ -174,11 +171,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w);
 
-        return builder.finish__AND__recycle();
+        return builder.finish_AND_recycle();
     }
 
 
@@ -186,11 +183,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x);
 
-        return builder.finish__AND__recycle();
+        return builder.finish_AND_recycle();
     }
 
 
@@ -204,11 +201,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x, y);
 
-        return builder.finish__AND__recycle();
+        return builder.finish_AND_recycle();
     }
 
 
@@ -223,11 +220,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x, y4, y5);
 
-        return builder.finish__AND__recycle();
+        return builder.finish_AND_recycle();
     }
 
 
@@ -243,11 +240,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x, y4, y5, y6);
 
-        return builder.finish__AND__recycle();
+        return builder.finish_AND_recycle();
     }
 
 
@@ -265,11 +262,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x, y4, y5, y6, y7, other_arguments);
 
-        return builder.finish__AND__recycle();
+        return builder.finish_AND_recycle();
     }
 
 
@@ -320,6 +317,7 @@ public class    Zone
         z.line("---");
         z.line("           format_map: {}", this.format_map);
 
+        this.format_map.dump(z, "Gem_Zone.format_map");
 
         z.line("End of dump of GemZone");
     }
@@ -343,7 +341,7 @@ public class    Zone
 
     public void                         line()
     {
-        standard_output.println();
+        Gem_Object.standard_output.println();
     }
 
 
@@ -351,11 +349,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2);
 
-        standard_output.println(builder.finish__AND__recycle());
+        Gem_Object.standard_output.println(builder.finish_AND_recycle());
     }
 
 
@@ -363,11 +361,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v);
 
-        standard_output.println(builder.finish__AND__recycle());
+        Gem_Object.standard_output.println(builder.finish_AND_recycle());
     }
 
 
@@ -375,11 +373,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w);
 
-        standard_output.println(builder.finish__AND__recycle());
+        Gem_Object.standard_output.println(builder.finish_AND_recycle());
     }
 
 
@@ -387,11 +385,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x);
 
-        standard_output.println(builder.finish__AND__recycle());
+        Gem_Object.standard_output.println(builder.finish_AND_recycle());
     }
 
 
@@ -399,11 +397,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x, y);
 
-        standard_output.println(builder.finish__AND__recycle());
+        Gem_Object.standard_output.println(builder.finish_AND_recycle());
     }
 
 
@@ -411,11 +409,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x, y4, y5);
 
-        standard_output.println(builder.finish__AND__recycle());
+        Gem_Object.standard_output.println(builder.finish_AND_recycle());
     }
 
 
@@ -431,11 +429,11 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x, y4, y5, y6);
 
-        standard_output.println(builder.finish__AND__recycle());
+        Gem_Object.standard_output.println(builder.finish_AND_recycle());
     }
 
 
@@ -453,26 +451,20 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x, y4, y5, y6, y7, other_arguments);
 
-        standard_output.println(builder.finish__AND__recycle());
-    }
-
-
-    public void                         output(String s)
-    {
-        standard_output.println(s);
+        Gem_Object.standard_output.println(builder.finish_AND_recycle());
     }
 
 
     public String                       quote_string(String s)
     {
-        Gem_StringBuilder               builder = this.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_StringBuilder();
 
         builder.quote(s);
 
-        return builder.finish__AND__recycle();
+        return builder.finish_AND_recycle();
     }
 }

@@ -4,10 +4,12 @@
 package link.crystal.Gem.Core;
 
 
+import java.io.PrintStream;
 import java.lang.Class;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
+import java.lang.System;
 import java.lang.System;
 import java.lang.Thread;
 import link.crystal.Gem.Core.Gem_StringBuilder;
@@ -31,6 +33,12 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
     public static final Class<Integer>              Integer$class                 = Integer.class;
     public static final Class<String>               String$class                  = String.class;
     public static final Class<Thread>               Thread$class                  = Thread.class;
+
+
+    //
+    //  Public static
+    //
+    public static final PrintStream     standard_output = System.out;
 
 
     //
@@ -129,5 +137,11 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
         }
 
         return v;
+    }
+
+
+    public static void                  output(String s)
+    {
+        Gem_Object.standard_output.println(s);
     }
 }

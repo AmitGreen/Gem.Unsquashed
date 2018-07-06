@@ -53,7 +53,7 @@ public class    StringSegmentFormatter
 
         r = new StringSegmentFormatter(argument_index);
 
-        cache.insert(argument_index, r);
+        cache.insert(z, argument_index, r);
 
         return r;
     }

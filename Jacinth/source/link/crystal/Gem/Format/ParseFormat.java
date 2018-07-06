@@ -38,7 +38,12 @@ public class   ParseFormat
     //  Static members
     //
     private static Pattern              braces_pattern = Pattern.compile(
-            "(?:[^{}]|\\{\\{|\\}\\})*(\\{)(?:(\\+)|(0|[1-9][0-9]*)?([ps]?))(\\})?"//,
+              "(?:[^{}]*)"
+            + "(\\{)"                                                   //  Group 1 = '{'
+            + "(?:(\\{)"                                                //  Group 2 = '{'
+            +   "|(?:(\\+)|(0|[1-9][0-9]*)?([ps]?))"                    //  Group 3 = '+', Group 4 = #, Group 5 = [ps]?
+            +    "(\\})?"                                               //  Group 6 = '}'
+            + ")"
         );
 
 
@@ -49,6 +54,8 @@ public class   ParseFormat
 
     private String                      format;
     private Matcher                     braces_matcher;
+
+    private Gem_StringBuilder           builder;
 
     private SegmentFormattable[]        segment_many;
     private int                         segment_total;
@@ -72,6 +79,8 @@ public class   ParseFormat
 
         this.format         = format;
         this.braces_matcher = braces_matcher;
+
+        this.builder = null;
 
         this.segment_many      = null;
         this.segment_total     = 0;
@@ -250,8 +259,7 @@ public class   ParseFormat
             RUNTIME("format string is missing {{{}}} and {{{}}}: {p}", missing_many[0], missing_many[1], this.format);
         }
 
-
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+        Gem_StringBuilder               builder = this.summon_builder();
 
         for (int                        i = 0; i < missing_total; i ++) {
             if (i == missing_total - 1) {
@@ -263,29 +271,7 @@ public class   ParseFormat
             builder.append("{", missing_many[i], "}");
         }
 
-        RUNTIME("format string is missing {}: {p}", builder.finish__AND__recycle(), this.format);
-    }
-
-
-    private void                        raise_both_automatic_and_manual_field_number()
-    {
-        RUNTIME("format string has both automatic & manual field numbering: {p}", this.format);
-    }
-
-
-    private SegmentFormattable[]        steal_segments()
-    {
-        SegmentFormattable[]            segment_many = this.segment_many;
-
-        if (segment_many == null) {
-            RUNTIME("no segments to steal");
-        }
-
-        this.segment_many      = null;
-        this.segment_allocated = 0;
-        this.segment_total     = 0;
-
-        return segment_many;
+        RUNTIME("format string is missing {s}: {p}", builder.finish_AND_keep(), this.format);
     }
 
 
@@ -299,137 +285,85 @@ public class   ParseFormat
             return AdornmentSegmentFormatter.conjure(z, format);
         }
 
+        int                             argument_index  = -1;
+        int                             automatic_index = -1;
+        Gem_StringBuilder               builder         = null;
+        boolean                         has_prefix      = false;
+        int                             format_total    = format.length();
+        int                             start           = 0;
 
-        int                             format_total = format.length();
+        for (;;) {
+            int                         end_6 = braces_matcher.end(6);
 
-        //
-        //  First argument
-        //
-        int                             end_5 = braces_matcher.end(5);
+            if (end_6 == -1) {
+                int                     start_2 = braces_matcher.start(2);
 
-        if (end_5 == -1) {
-            RUNTIME("format string is malformed: {p}", format);
-        }
+                if (start_2 == -1) {
+                    RUNTIME("format string is malformed: {p}", format);
+                }
 
-        int                             start_1             = braces_matcher.start(1);
-        boolean                         method_name_segment = (braces_matcher.start(2) != -1);
+                String                  prefix = format.substring(start, start_2);
 
-        ArgumentSegmentFormatter_Inspection     argument_inspection;
+                start = start_2 + 1;
 
-        int                             automatic_index;
-        int                             argument_index;
+                if (start == format_total) {
+                    if (has_prefix) {
+                        builder.append(prefix);
 
-        if (method_name_segment) {
-            automatic_index = -1;
-            argument_index  = -1;
+                        this.append_segment(AdornmentSegmentFormatter.conjure(z, builder.finish_AND_keep()));
 
-            argument_inspection = null;
-        } else {
-            String                      group_3 = braces_matcher.group(3);
-
-            if (group_3 == null) {
-                automatic_index = 0;
-                argument_index  = 0;
-            } else {
-                automatic_index = -6;
-                argument_index  = Integer.parseInt(group_3);
-            }
-
-            argument_inspection = z.format_map.find(braces_matcher.group(4));
-        }
-
-
-        //
-        //  Second segment?
-        //
-        boolean                         found;
-
-        if (end_5 == format_total) {
-            found = false;
-        } else {
-            braces_matcher.region(end_5, format_total);
-
-            found = braces_matcher.lookingAt();
-        }
-
-
-        //
-        //  First segment
-        //
-        String                          start_s;
-
-        if (start_1 == 0) {
-            start_s = null;
-        } else {
-            start_s = format.substring(0, start_1);
-        }
-
-        //
-        //  First segment: Special cases:
-        //
-        //      1.  "{+}"                   becomes     MethodNameSegmentFormatter
-        //      2.  "{}"                    becomes     PortraySegmentFormatter
-        //      3.  "{p}"                   becomes     StringSegmentFormatter
-        //      4.  "prefix: {p}"           becomes     MessageFormatter_1__Prefix
-        //      5.  "prefix: {0} suffix"    becomes     MessageFormatter_1__Suffix
-        //
-        if ( ! found) {
-            if (start_s == null) {
-                if (end_5 == format_total) {
-                    if (method_name_segment) {
-                        return MethodNameSegmentFormatter.conjure(z);
+                        has_prefix = false;
+                        break;
                     }
 
-                    return argument_inspection.conjure_argument_segment(z, 0);
+                    this.append_segment(AdornmentSegmentFormatter.conjure(z, prefix));
+                    break;
                 }
-            } else {
-                if (argument_index == 0) {
-                    if (end_5 == format_total) {
-                        return MessageFormatter_1__Prefix.create(z, start_s);
-                    }
 
-                    String              end_s = format.substring(end_5);
-
-                    return MessageFormatter_1__Suffix.create(z, start_s, end_s);
+                if (builder == null) {
+                    builder = summon_builder();
                 }
-            }
-        }
 
+                builder.append(prefix);
+                has_prefix = true;
 
-        //
-        //  First segment: Normal cases
-        //
-        if (0 < start_1) {
-            this.append_segment(AdornmentSegmentFormatter.conjure(z, start_s));
-        }
+                braces_matcher.region(start, format_total);
 
-        if (argument_index == -1) {
-            this.append_segment(MethodNameSegmentFormatter.conjure(z));
-        } else {
-            this.append_segment(argument_inspection.conjure_argument_segment(z, argument_index));
-            add_used_index(argument_index);
-        }
+                if ( ! braces_matcher.lookingAt()) {
+                    break;
+                }
 
-
-        //
-        //  Subsequent segments
-        //
-        while (found) {
-            int                         next_end_5 = braces_matcher.end(5);
-
-            if (next_end_5 == -1) {
-                RUNTIME("format string is malformed: {p}", format);
+                continue;
             }
 
-            start_1             = braces_matcher.start(1);
-            method_name_segment = (braces_matcher.start(2) != -1);
+            int                         start_1 = braces_matcher.start(1);
 
-            if (method_name_segment) {
-                argument_inspection = null;
+            if (start < start_1) {
+                String                  start_s = format.substring(start, start_1);
+
+                if (has_prefix) {
+                    builder.append(start_s);
+
+                    this.append_segment(AdornmentSegmentFormatter.conjure(z, builder.finish_AND_keep()));
+
+                    has_prefix = false;
+                } else {
+                    this.append_segment(AdornmentSegmentFormatter.conjure(z, start_s));
+                }
             } else {
-                String                      group_3 = braces_matcher.group(3);
+                if (has_prefix) {
+                    this.append_segment(AdornmentSegmentFormatter.conjure(z, builder.finish_AND_keep()));
 
-                if (group_3 == null) {
+                    has_prefix = false;
+                }
+            }
+
+            if (braces_matcher.start(3) != -1) {
+                this.append_segment(MethodNameSegmentFormatter.conjure(z));
+            } else {
+                String                  group_4 = braces_matcher.group(4);
+
+                if (group_4 == null) {
                     if (automatic_index == -6) {
                         this.raise_both_automatic_and_manual_field_number();
                     }
@@ -441,62 +375,65 @@ public class   ParseFormat
                         this.raise_both_automatic_and_manual_field_number();
                     }
 
-                    argument_index = Integer.parseInt(group_3);
+                    argument_index = Integer.parseInt(group_4);
                 }
 
-                argument_inspection = z.format_map.find(braces_matcher.group(4));
-            }
+                ArgumentSegmentFormatter_Inspection     argument_inspection = (
+                        argument_inspection = z.format_map.find(braces_matcher.group(5))
+                    );
 
-            if (end_5 < start_1) {
-                start_s = format.substring(end_5, start_1);
-
-                this.append_segment(AdornmentSegmentFormatter.conjure(z, start_s));
-            }
-
-            if (argument_index == -1) {
-                this.append_segment(MethodNameSegmentFormatter.conjure(z));
-            } else {
                 this.append_segment(argument_inspection.conjure_argument_segment(z, argument_index));
+
                 add_used_index(argument_index);
             }
 
-            end_5 = next_end_5;
+            start = end_6;
 
-            braces_matcher.region(end_5, format_total);
+            braces_matcher.region(end_6, format_total);
 
             if ( ! braces_matcher.lookingAt()) {
                 break;
             }
         }
 
-        if (end_5 < format_total) {
-            String                      end_s = format.substring(end_5);
+        if (start < format_total) {
+            String                      end_s = format.substring(start);
 
-            this.append_segment(AdornmentSegmentFormatter.conjure(z, end_s));
+            if (has_prefix) {
+                builder.append(end_s);
+
+                this.append_segment(AdornmentSegmentFormatter.conjure(z, builder.finish_AND_keep()));
+            } else {
+                this.append_segment(AdornmentSegmentFormatter.conjure(z, end_s));
+            }
         }
 
         this.examine_missing();
 
         if (false) {
-            final Gem_StringBuilder     builder = z.conjure__StringBuilder();
+            final Gem_StringBuilder     b2 = z.summon_StringBuilder();
 
-            builder.append("format: ");
-            builder.quote(format);
+            b2.append("format: ");
+            b2.quote(format);
 
-            z.output(builder.finish__AND__recycle());
+            output(b2.finish_AND_recycle());
 
             for (int                    i = 0; i < segment_total; i ++) {
                 final SegmentFormattable    segment = segment_many[i];
-                final Gem_StringBuilder     b2 = z.conjure__StringBuilder();
+                final Gem_StringBuilder     b3      = z.summon_StringBuilder();
 
-                b2.append(i, " :");
-                b2.portray(segment);
+                b3.append(i, " :");
+                b3.portray(segment);
 
-                z.output(b2.finish__AND__recycle());
+                output(b3.finish_AND_recycle());
             }
         }
 
         int                             expected = this.used_index_total;
+
+        if (segment_total == 1) {
+            return segment_many[0];
+        }
 
         if (segment_total == 2) {
             return MessageFormatter_2.create(z, expected, segment_many[0], segment_many[1]);
@@ -548,6 +485,12 @@ public class   ParseFormat
     }
 
 
+    private void                        raise_both_automatic_and_manual_field_number()
+    {
+        RUNTIME("format string has both automatic & manual field numbering: {p}", this.format);
+    }
+
+
     //
     //  Null any references (for garbage collection purposes)
     //
@@ -574,6 +517,37 @@ public class   ParseFormat
     }
 
 
+    private SegmentFormattable[]        steal_segments()
+    {
+        SegmentFormattable[]            segment_many = this.segment_many;
+
+        if (segment_many == null) {
+            RUNTIME("no segments to steal");
+        }
+
+        this.segment_many      = null;
+        this.segment_allocated = 0;
+        this.segment_total     = 0;
+
+        return segment_many;
+    }
+
+
+    private Gem_StringBuilder           summon_builder()
+    {
+        Gem_StringBuilder               builder = this.builder;
+
+        if (builder != null) {
+            return builder.recycle();
+        }
+
+        builder =
+            this.builder = z.summon_StringBuilder();
+
+        return builder;
+    }
+
+
     //
     //  Public static
     //
@@ -587,7 +561,7 @@ public class   ParseFormat
             parse_format.recycle(format);
         }
 
-        MessageFormattable              r =  parse_format.parse_format__work();
+        MessageFormattable              r = parse_format.parse_format__work();
 
         parse_format.scrub();
         z.store_parse_format(parse_format);

@@ -8,7 +8,8 @@ import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 
 
-public interface   SegmentFormattable
+public interface    SegmentFormattable
+    extends         MessageFormattable
 {
     void                                choose(Gem_StringBuilder builder, int depth);
     void                                choose(Gem_StringBuilder builder, int depth, Object v);

@@ -36,8 +36,10 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
     //
     //  Public
     //
-    public void                         insert(int argument_index, ELEMENT segment)
+    public void                         insert(Zone z, int argument_index, ELEMENT segment)
     {
+        assert fact(this.z == z, "this.z == z");
+
         final ELEMENT[]                 segment_many = this.segment_many;
 
         final int                       segment_allocated = segment_many.length;

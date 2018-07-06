@@ -52,7 +52,7 @@ public class    PortraySegmentFormatter
 
         r = new PortraySegmentFormatter(argument_index);
 
-        cache.insert(argument_index, r);
+        cache.insert(z, argument_index, r);
 
         return r;
     }

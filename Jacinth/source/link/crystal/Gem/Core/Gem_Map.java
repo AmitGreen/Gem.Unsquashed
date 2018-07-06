@@ -107,12 +107,20 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
     }
 
 
-    public void                         insert(K k, V v)
+    public void                         insert(Zone z, K k, V v)
     {
+        assert fact(this.z == z, "this.z == z");
+
         final V                         previous = this.putIfAbsent(k, v);
 
         if (previous != null) {
             RUNTIME("previous value for {} already exists: {}", k, v);
         }
+    }
+
+
+    public static void                  output(String s)
+    {
+        Gem_Object.standard_output.println(s);
     }
 }

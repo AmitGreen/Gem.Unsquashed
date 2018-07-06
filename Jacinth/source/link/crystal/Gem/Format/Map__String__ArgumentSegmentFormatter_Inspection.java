@@ -30,7 +30,7 @@ public class    Map__String__ArgumentSegmentFormatter_Inspection
     //
     //  Static members
     //
-    public static final int             initial_capacity = 11;
+    private static final int            initial_capacity = 11;
 
 
 
@@ -52,8 +52,9 @@ public class    Map__String__ArgumentSegmentFormatter_Inspection
                 )
             );
 
-        r.put("",  NormalSegmentFormatter.inspection);
+        r.put("",  NormalSegmentFormatter .inspection);
         r.put("p", PortraySegmentFormatter.inspection);
+        r.put("s", NormalSegmentFormatter .inspection);
 
         return r;
     }

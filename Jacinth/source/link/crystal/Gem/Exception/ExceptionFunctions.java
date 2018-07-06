@@ -36,7 +36,7 @@ public abstract class   ExceptionFunctions
 
         depth += 1;
 
-        Gem_StringBuilder               builder = z.conjure__StringBuilder();
+        Gem_StringBuilder               builder = z.summon_StringBuilder();
 
         MethodNameSegmentFormatter.method_name(builder, depth);
 
@@ -51,7 +51,7 @@ public abstract class   ExceptionFunctions
         if (arguments_total == 0) {
             formattable.arrange(builder, depth);
 
-            return builder.finish__AND__recycle();
+            return builder.finish_AND_recycle();
         }
 
         Object                          v = arguments[0];
@@ -59,7 +59,7 @@ public abstract class   ExceptionFunctions
         if (arguments_total == 1) {
             formattable.arrange(builder, depth, v);
 
-            return builder.finish__AND__recycle();
+            return builder.finish_AND_recycle();
         }
 
         Object                          w = arguments[1];
@@ -67,7 +67,7 @@ public abstract class   ExceptionFunctions
         if (arguments_total == 2) {
             formattable.arrange(builder, depth, v, w);
 
-            return builder.finish__AND__recycle();
+            return builder.finish_AND_recycle();
         }
 
         Object                          x = arguments[2];
@@ -75,7 +75,7 @@ public abstract class   ExceptionFunctions
         if (arguments_total == 3) {
             formattable.arrange(builder, depth, v, w, x);
 
-            return builder.finish__AND__recycle();
+            return builder.finish_AND_recycle();
         }
 
         Object                          y4 = arguments[3];
@@ -83,7 +83,7 @@ public abstract class   ExceptionFunctions
         if (arguments_total == 4) {
             formattable.arrange(builder, depth, v, w, x, y4);
 
-            return builder.finish__AND__recycle();
+            return builder.finish_AND_recycle();
         }
 
         Object                          y5 = arguments[4];
@@ -91,7 +91,7 @@ public abstract class   ExceptionFunctions
         if (arguments_total == 5) {
             formattable.arrange(builder, depth, v, w, x, y4, y5);
 
-            return builder.finish__AND__recycle();
+            return builder.finish_AND_recycle();
         }
 
         Object                          y6 = arguments[5];
@@ -99,7 +99,7 @@ public abstract class   ExceptionFunctions
         if (arguments_total == 6) {
             formattable.arrange(builder, depth, v, w, x, y4, y5, y6);
 
-            return builder.finish__AND__recycle();
+            return builder.finish_AND_recycle();
         }
 
         Object                          y7             = arguments[6];
@@ -116,7 +116,7 @@ public abstract class   ExceptionFunctions
 
         formattable.arrange(builder, depth, v, w, x, y4, y5, y6, y7, adjusted);
 
-        return builder.finish__AND__recycle();
+        return builder.finish_AND_recycle();
     }
 
 

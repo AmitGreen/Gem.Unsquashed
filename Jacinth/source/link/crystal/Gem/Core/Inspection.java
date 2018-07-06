@@ -8,6 +8,7 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Support.Map_String_Inspection;
 
 
 public class    Inspection
@@ -22,16 +23,14 @@ public class    Inspection
     //  Members
     //
     public final String                 simple_class_name;
-    public final boolean                is_silver_proxy;
 
 
     //
     //  Constructor & Factory
     //
-    protected                           Inspection(String simple_class_name, boolean is_silver_proxy)
+    protected                           Inspection(String simple_class_name)
     {
         this.simple_class_name = simple_class_name;
-        this.is_silver_proxy   = is_silver_proxy;
     }
 
 
@@ -41,7 +40,11 @@ public class    Inspection
 
         final String                    interned__simple_class_name = z.intern_permenant_string(simple_class_name);
 
-        return new Inspection(interned__simple_class_name, false);
+        final Inspection                r = new Inspection(interned__simple_class_name);
+
+        Map_String_Inspection.insert_or_cache(r);
+
+        return r;
     }
 
 
@@ -56,8 +59,33 @@ public class    Inspection
 
     public void                         portray(Gem_StringBuilder builder)
     {
+        assert fact_pointer(this,    "this");
+        assert fact_pointer(builder, "builder");
+
         final Inspection                meta_inspection = this.inspect();
 
-        builder.append("<", meta_inspection.simple_class_name, " ", this.simple_class_name, ">");
+        //
+        //  NOTE:
+        //      During startup initialization, it could be that any (or all) of the following could be null:
+        //
+        //      1.  `meta_inspection`,
+        //      2.  `meta_inspection.simple_class_name`, AND/OR
+        //      3.  `this.simple_class_name`
+        //
+        builder.append(
+            "<",
+            (
+                (meta_inspection == null || meta_inspection.simple_class_name == null)
+                    ? "<INSPECTION extends Inspection>"
+                    : meta_inspection.simple_class_name
+            ),
+            " ",
+            (
+                this.simple_class_name == null
+                    ? "<INSPECTION extends Inspection>"
+                    : meta_inspection.simple_class_name
+            ),
+            ">"
+        );
     }
 }

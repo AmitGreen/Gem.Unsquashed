@@ -52,28 +52,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     {
         Inspection                      inspection = this.inspect();
 
-        List<String>                    keys = new ArrayList<String>(this.keySet());
-
-        Collections.sort(keys);
-
-        final int                       total = keys.size();
-
-        builder.append("<", inspection.simple_class_name, " size<", total, ">");
-
-        for (int                        i = 0; i < total; i ++) {
-            String                      k = keys.get(i);
-            V                           v = this.get(k);
-
-            if (i == 0) {
-                builder.append("; ");
-            } else {
-                builder.append(", ");
-            }
-
-            builder.arrange("{p} : {}", k, v);
-        }
-
-        builder.append(">");
+        builder.append("<", inspection.simple_class_name, " size<", this.size(), ">>");
     }
 
 

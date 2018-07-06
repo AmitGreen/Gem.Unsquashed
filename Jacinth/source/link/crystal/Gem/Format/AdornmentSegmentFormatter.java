@@ -55,7 +55,7 @@ public class    AdornmentSegmentFormatter
 
         r = new AdornmentSegmentFormatter(interned_s);
 
-        cache.insert(interned_s, r);
+        cache.insert(z, interned_s, r);
 
         return r;
     }

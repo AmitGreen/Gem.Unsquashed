@@ -80,6 +80,7 @@ JACINTH_FILES = \
     $J/Gem/Core/Inspection.java \
     $J/Gem/Core/Zone.java \
     $J/Gem/Exception/AssertionError.java \
+    $J/Gem/Exception/ExceptionFunctions.java \
     $J/Gem/Format/AdornmentSegmentFormatter.java \
     $J/Gem/Format/ArgumentSegmentFormatter_Inspection.java \
     $J/Gem/Format/ArgumentSegmentFormatter.java \
@@ -91,16 +92,17 @@ JACINTH_FILES = \
     $J/Gem/Format/MessageFormatter_4.java \
     $J/Gem/Format/MessageFormatter_5.java \
     $J/Gem/Format/MessageFormatter_Base.java      \
-    $J/Gem/Exception/ExceptionFunctions.java \
     $J/Gem/Format/MessageFormatter_Many.java \
     $J/Gem/Format/MethodNameSegmentFormatter.java \
     $J/Gem/Format/NormalSegmentFormatter.java \
     $J/Gem/Format/ParseFormat.java \
     $J/Gem/Format/PortraySegmentFormatter.java \
+    $J/Gem/Format/SegmentFormatter_Inspection.java \
     $J/Gem/Format/StringSegmentFormatter.java \
     $J/Gem/Interface/Inspectable.java \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
+    $J/Gem/Support/Map_String_Inspection.java \
     $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java \
     $J/Gem/Support/Storehouse_MessageFormattable.java \
     $J/Gem/Support/Storehouse_NormalSegmentFormatter.java \
@@ -308,14 +310,14 @@ clean:
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1.java m1c.py m1m.py m1p.java m1s.java m1x.java
 	rm -f   m2.java m2c.py m3.java m2m.py m3m.py m4.java m5.java
-	rm -f   map.py mb.java mc.py md.py me.py mm.java mm.py mn.java mn.py msa.java
+	rm -f   map.py mb.java mc.py md.py me.py mm.java mm.py mn.java mn.py msa.java msi.java
 	rm -f ns.java
 	rm -f o.py oc.py od.py oe.py om.py
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py
 	rm -f   pel.py pf.py pf.java pj.py pk.py pkc.py pl.py pmo.py pn.py ps.java ps.py psc.java ps3.py px.java
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py rx.py
-	rm -f sha.java shl.java shm.java shn.java shp.java shs.java shsf.java sf.java sl.py so.py ssio.py sy.py
+	rm -f sha.java shl.java shm.java shn.java shp.java shs.java shsf.java sfi.java sl.py so.py ss.java ssio.py sy.py
 	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
@@ -527,6 +529,7 @@ links:
 	ln -s $J/Gem/Format/MethodNameSegmentFormatter.java                         mn.java
 	ln -s ../Marble/NestedConjure.py                                            mn.py
 	ln -s $J/Gem/Format/Map__String__ArgumentSegmentFormatter_Inspection.java   msa.java
+	ln -s $J/Gem/Support/Map_String_Inspection.java                             msi.java
 	ln -s $J/Gem/Format/NormalSegmentFormatter.java                             ns.java
 	ln -s ../Gem/Output.py                                                      o.py
 	ln -s ../Onyx/Core.py                                                       oc.py
@@ -569,9 +572,10 @@ links:
 	ln -s $J/Gem/Support/Storehouse_PortraySegmentFormatter.java                shp.java
 	ln -s $J/Gem/Support/Storehouse_String.java                                 shs.java
 	ln -s $J/Gem/Support/Storehouse_StringSegmentFormatter.java                 shsf.java
-	ln -s $J/Gem/Format/StringSegmentFormatter.java                             sf.java
+	ln -s $J/Gem/Format/SegmentFormatter_Inspection.java                        sfi.java
 	ln -s ../Gem/Sleep.py                                                       sl.py
 	ln -s ../Gem/StringOutput.py                                                so.py
+	ln -s $J/Gem/Format/StringSegmentFormatter.java                             ss.java
 	ln -s ../Gem/SimpleStringIO.py                                              ssio.py
 	ln -s ../Gem/System.py                                                      sy.py
 	ln -s test.java                                                             t.java

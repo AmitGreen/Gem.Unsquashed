@@ -27,7 +27,7 @@ public class    Main
         //assert Gem_Object.fact_between(7, 6, 77);
 
         //z.line("{+}");
-        //z.line("{p}", "{}");
+        z.line("hi: {p}", "{}");
         //z.line("{+}: test {}", 7);
         //z.line("that: {+}");
         //z.line("that: {}", "hi");
@@ -35,11 +35,11 @@ public class    Main
         //z.line("prefix {0} suffix", "middle");
 
         if (true) {
-            //Storehouse_MessageFormattable       .dump(z);
+            Storehouse_MessageFormattable       .dump(z);
             //Storehouse_PortraySegmentFormatter  .singleton.dump(z);
             //Storehouse_String                   .dump(z);
             //Storehouse_AdornmentSegmentFormatter.singleton.dump(z, "Storehouse_AdornmentSegmentFormatter.singleton");
-            //z.dump(z);
+            z.dump(z);
         }
 
     }

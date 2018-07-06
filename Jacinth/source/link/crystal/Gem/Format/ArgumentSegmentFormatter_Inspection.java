@@ -8,10 +8,12 @@ import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Format.SegmentFormatter_Inspection;
 
 
 public abstract class   ArgumentSegmentFormatter_Inspection<ARGUMENT_SEGMENT extends ArgumentSegmentFormatter>
-    extends             Inspection
+    extends             SegmentFormatter_Inspection
+//  extends             Inspection
 //  extends             Gem_Object<Inspection>
 //  extends             Object
     implements          Inspectable<Inspection>//,                      //  Via Gem_Object
@@ -21,7 +23,7 @@ public abstract class   ArgumentSegmentFormatter_Inspection<ARGUMENT_SEGMENT ext
     //
     protected                           ArgumentSegmentFormatter_Inspection(String simple_class_name)
     {
-        super(simple_class_name, false);
+        super(simple_class_name);
     }
 
 
