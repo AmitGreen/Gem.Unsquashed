@@ -6,6 +6,7 @@ package link.crystal.Jacinth;
 
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Support.Map_String_Inspection;
 import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
@@ -35,11 +36,13 @@ public class    Main
         //z.line("prefix {0} suffix", "middle");
 
         if (true) {
-            Storehouse_MessageFormattable       .dump(z);
+            Map_String_Inspection.singleton().dump(z, "Inspections");
+
+            //Storehouse_MessageFormattable       .dump(z);
             //Storehouse_PortraySegmentFormatter  .singleton.dump(z);
             //Storehouse_String                   .dump(z);
             //Storehouse_AdornmentSegmentFormatter.singleton.dump(z, "Storehouse_AdornmentSegmentFormatter.singleton");
-            z.dump(z);
+            //z.dump(z);
         }
 
     }

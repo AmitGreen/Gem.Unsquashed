@@ -26,7 +26,7 @@ public class    Map_String_Inspection
     //
     //  Initialization
     //
-    private static Map_String_Inspection    singleton = Map_String_Inspection.initialize();
+    private static Map_String_Inspection    singleton = Map_String_Inspection.singleton();
 
 
     //
@@ -47,13 +47,17 @@ public class    Map_String_Inspection
     }
 
 
-    private static Map_String_Inspection    initialize()
+    public static Map_String_Inspection     singleton()
     {
+        Map_String_Inspection               singleton = Map_String_Inspection.singleton;
+
+        if (singleton != null) {
+            return singleton;
+        }
+
         final Zone                          z = Zone.current_zone();
 
-        final Map_String_Inspection         singleton = (
-                new Map_String_Inspection(z, Map_String_Inspection.initial_capacity)
-            );
+        singleton = new Map_String_Inspection(z, Map_String_Inspection.initial_capacity);
 
         //
         //  NOTE:
@@ -61,7 +65,6 @@ public class    Map_String_Inspection
         //      that `.singleton` is set when `.cache_or_insert` is called.
         //
         Map_String_Inspection.singleton = singleton;
-
 
         //
         //  Clear the cache ...

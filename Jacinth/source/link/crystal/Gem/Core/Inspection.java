@@ -83,7 +83,7 @@ public class    Inspection
             (
                 this.simple_class_name == null
                     ? "<INSPECTION extends Inspection>"
-                    : meta_inspection.simple_class_name
+                    : this.simple_class_name
             ),
             ">"
         );
