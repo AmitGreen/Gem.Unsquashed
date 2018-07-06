@@ -45,14 +45,6 @@ public class    MessageFormatter_2
 
     static public MessageFormatter_2    create(Zone z, int expected, SegmentFormattable a, SegmentFormattable b)
     {
-        if (a == null) {
-            z.RUNTIME("`a` == null");
-        }
-
-        if (b == null) {
-            z.RUNTIME("`b` == null");
-        }
-
         return new MessageFormatter_2(expected, a, b);
     }
 
@@ -73,9 +65,7 @@ public class    MessageFormatter_2
     public void                         arrange(Gem_StringBuilder builder, int depth)
     {
         if (this.expected != 0) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("0 arguments given (expected {})", this.expected);
+            RUNTIME("0 arguments given (expected {})", this.expected);
         }
 
         depth += 1;
@@ -89,9 +79,7 @@ public class    MessageFormatter_2
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
         if (this.expected != 1) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("1 argument given (expected {})", this.expected);
+            RUNTIME("1 argument given (expected {})", this.expected);
         }
 
         depth += 1;
@@ -105,9 +93,7 @@ public class    MessageFormatter_2
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w)
     {
         if (this.expected != 2) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("2 arguments given (expected {})", this.expected);
+            RUNTIME("2 arguments given (expected {})", this.expected);
         }
 
         depth += 1;

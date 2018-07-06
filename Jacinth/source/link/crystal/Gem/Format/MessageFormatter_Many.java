@@ -43,9 +43,7 @@ public class    MessageFormatter_Many
 
     static public MessageFormatter_Many     create(Zone z, int expected, SegmentFormattable[] segment_many)
     {
-        if ( ! (2 <= expected && expected <= segment_many.length)) {
-            z.RUNTIME("invalid value for `expected`<{}>", expected);
-        }
+        assert fact_between(2, expected, segment_many.length);
 
         return new MessageFormatter_Many(expected, segment_many);
     }
@@ -67,9 +65,7 @@ public class    MessageFormatter_Many
     public void                         arrange(Gem_StringBuilder builder, int depth)
     {
         if (this.expected != 0) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("0 arguments given (expected {})", this.expected);
+            RUNTIME("0 arguments given (expected {})", this.expected);
         }
 
         final SegmentFormattable[]      segment_many = this.segment_many;
@@ -90,9 +86,7 @@ public class    MessageFormatter_Many
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
         if (this.expected != 1) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("1 argument given (expected {})", this.expected);
+            RUNTIME("1 argument given (expected {})", this.expected);
         }
 
         final SegmentFormattable[]      segment_many = this.segment_many;
@@ -113,9 +107,7 @@ public class    MessageFormatter_Many
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w)
     {
         if (this.expected != 2) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("2 arguments given (expected {})", this.expected);
+            RUNTIME("2 arguments given (expected {})", this.expected);
         }
 
         final SegmentFormattable[]      segment_many = this.segment_many;
@@ -136,9 +128,7 @@ public class    MessageFormatter_Many
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
     {
         if (this.expected != 3) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("3 arguments given (expected {})", this.expected);
+            RUNTIME("3 arguments given (expected {})", this.expected);
         }
 
         final SegmentFormattable[]      segment_many = this.segment_many;
@@ -166,9 +156,7 @@ public class    MessageFormatter_Many
         )
     {
         if (this.expected != 4) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("4 arguments given (expected {})", this.expected);
+            RUNTIME("4 arguments given (expected {})", this.expected);
         }
 
         final SegmentFormattable[]      segment_many = this.segment_many;
@@ -197,9 +185,7 @@ public class    MessageFormatter_Many
         )
     {
         if (this.expected != 5) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("5 arguments given (expected {})", this.expected);
+            RUNTIME("5 arguments given (expected {})", this.expected);
         }
 
         final SegmentFormattable[]      segment_many = this.segment_many;
@@ -229,9 +215,7 @@ public class    MessageFormatter_Many
         )
     {
         if (this.expected != 6) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("6 arguments given (expected {})", this.expected);
+            RUNTIME("6 arguments given (expected {})", this.expected);
         }
 
         final SegmentFormattable[]      segment_many = this.segment_many;
@@ -265,9 +249,7 @@ public class    MessageFormatter_Many
         final int                       actual = 7 + other_arguments.length;
 
         if (this.expected != actual) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("{} arguments given (expected {})", actual, this.expected);
+            RUNTIME("{} arguments given (expected {})", actual, this.expected);
         }
 
         final SegmentFormattable[]      segment_many = this.segment_many;

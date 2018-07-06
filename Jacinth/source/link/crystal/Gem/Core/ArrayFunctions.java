@@ -26,31 +26,11 @@ public abstract class   ArrayFunctions
             int                                 new_total//,
         )
     {
-        if (previous_total == 0) {
-            if (previous != null) {
-                z.RUNTIME("previous_total == 0 && previous != null");
-            }
-        } else {
-            if (previous_total < 1) {
-                z.RUNTIME(".shrink_array: previous_total < 1 (actual: {})", previous_total);
-            }
-
-            if (previous_total <= new_total) {
-                z.RUNTIME("previous_total<{}> <= new_total<{}>", previous_total, new_total);
-            }
-        }
-
-        if (previous_total < new_total) {
-            z.RUNTIME("previous_total<{}> < new_total<{}>", previous_total, new_total);
-        }
-
-        if (current == null) {
-            z.RUNTIME("`current` == null");
-        }
-
-        if (new_total <= 0) {
-            z.RUNTIME("`new_total`<{}>", previous_total);
-        }
+        assert fact_pointer(previous,                   "previous");
+        assert fact        (1 < previous_total,         "1 < previous_total");
+        assert fact_pointer(current,                    "current");
+        assert fact        (1 < new_total,              "1 < new_total");
+        assert fact        (new_total < previous_total, "new_total < previous_total");
 
         for (int                        i = 0; i < new_total; i ++) {
             current[i] = previous[i];
@@ -69,28 +49,15 @@ public abstract class   ArrayFunctions
         )
     {
         if (previous_total == 0) {
-            if (previous != null) {
-                z.RUNTIME("previous_total == 0 && previous != null");
-            }
+            assert fact_null(previous, "previous");
         } else {
-            if (previous_total < 0) {
-                z.RUNTIME("previous_total < 0 (actual: {})", previous_total);
-            }
-
-            if (previous_total >= new_total) {
-                z.RUNTIME("previous_total<{}> >= new_total<{}>",
-                          previous_total,
-                          new_total);
-            }
+            assert fact_pointer(previous,           "previous");
+            assert fact        (1 < previous_total, "1 < previous_total");
         }
 
-        if (current == null) {
-            z.RUNTIME("`current` == null");
-        }
-
-        if (new_total <= 0) {
-            z.RUNTIME("`new_total`<{}>", previous_total);
-        }
+        assert fact_pointer(current,                    "current");
+        assert fact        (1 < new_total,              "1 < new_total");
+        assert fact        (previous_total < new_total, "previous_total < new_total");
 
         for (int                    i = 0; i < previous_total; i ++) {
             current[i] = previous[i];
@@ -109,26 +76,15 @@ public abstract class   ArrayFunctions
         )
     {
         if (previous_total == 0) {
-            if (previous != null) {
-                z.RUNTIME("`previous_total`<0> && `previous` != null");
-            }
+            assert fact_null(previous, "previous");
         } else {
-            if (previous_total < 0) {
-                z.RUNTIME("`previous_total`<{}> < 0", previous_total);
-            }
-
-            if (previous_total >= new_total) {
-                z.RUNTIME("`previous_total`<{}> >= `new_total`<{}>", previous_total, new_total);
-            }
+            assert fact_pointer(previous,           "previous");
+            assert fact        (1 < previous_total, "1 < previous_total");
         }
 
-        if (current == null) {
-            z.RUNTIME("`current` == null");
-        }
-
-        if (new_total <= 0) {
-            z.RUNTIME("`new_total`<{}> <= 0", previous_total);
-        }
+        assert fact_pointer(current,                    "current");
+        assert fact        (1 < new_total,              "1 < new_total");
+        assert fact        (previous_total < new_total, "previous_total < new_total");
 
         for (int                    i = 0; i < previous_total; i ++) {
             current[i] = previous[i];

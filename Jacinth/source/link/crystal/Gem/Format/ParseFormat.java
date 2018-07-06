@@ -196,11 +196,11 @@ public class   ParseFormat
         int                             needed            = segment_total + 1;
 
         if (segment_allocated < needed) {
-            Zone                         z = this.z;
-
             if (segment_allocated == 201) {
-                z.RUNTIME("maximum of 100 '{#}' allowed");
+                RUNTIME("maximum of 100 '{#}' allowed");
             }
+
+            Zone                        z = this.z;
 
             int                         new_allocated = limit_to_between(21, needed * 2, 201);
 
@@ -243,14 +243,11 @@ public class   ParseFormat
         int[]                           missing_many = this.missing_many;
 
         if (missing_total == 1) {
-            z.RUNTIME("format string is missing {{{}}}: {}", missing_many[0], z.quote_string(this.format));
+            RUNTIME("format string is missing {{{}}}: {p}", missing_many[0], this.format);
         }
 
         if (missing_total == 2) {
-            z.RUNTIME("format string is missing {{{}}} and {{{}}}: {}",
-                      missing_many[0],
-                      missing_many[1],
-                      z.quote_string(this.format));
+            RUNTIME("format string is missing {{{}}} and {{{}}}: {p}", missing_many[0], missing_many[1], this.format);
         }
 
 
@@ -266,16 +263,13 @@ public class   ParseFormat
             builder.append("{", missing_many[i], "}");
         }
 
-        z.RUNTIME("format string is missing {}: {}", builder.finish__AND__recycle(), z.quote_string(this.format));
+        RUNTIME("format string is missing {}: {p}", builder.finish__AND__recycle(), this.format);
     }
 
 
     private void                        raise_both_automatic_and_manual_field_number()
     {
-        Zone                            z      = this.z;
-        String                          format = this.format;
-
-        z.RUNTIME("format string has both automatic & manual field numbering: {}", format);
+        RUNTIME("format string has both automatic & manual field numbering: {p}", this.format);
     }
 
 
@@ -284,9 +278,7 @@ public class   ParseFormat
         SegmentFormattable[]            segment_many = this.segment_many;
 
         if (segment_many == null) {
-            Zone                        z = this.z;
-
-            z.RUNTIME("no segments to steal");
+            RUNTIME("no segments to steal");
         }
 
         this.segment_many      = null;
@@ -316,7 +308,7 @@ public class   ParseFormat
         int                             end_5 = braces_matcher.end(5);
 
         if (end_5 == -1) {
-            z.RUNTIME("format string is malformed: {}", z.quote_string(format));
+            RUNTIME("format string is malformed: {p}", format);
         }
 
         int                             start_1             = braces_matcher.start(1);
@@ -426,7 +418,7 @@ public class   ParseFormat
             int                         next_end_5 = braces_matcher.end(5);
 
             if (next_end_5 == -1) {
-                z.RUNTIME("format string is malformed: {}", format);
+                RUNTIME("format string is malformed: {p}", format);
             }
 
             start_1             = braces_matcher.start(1);

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Interface.Inspectable;
 
 
@@ -48,6 +49,56 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
 
 
     //
+    //  Public (ASSERT)
+    //
+    public static boolean               fact(boolean condition, String format)
+    {
+        if (condition) {
+            return true;
+        }
+
+        ExceptionFunctions.ASSERTION_FAILED(2, "assertion failed: {}", format);
+
+        return false;
+    }
+
+
+    public static boolean               fact_null(Object p, String name)
+    {
+        if (p == null) {
+            return true;
+        }
+
+        ExceptionFunctions.ASSERT(2, "`{}` is not null", name);
+
+        return false;
+    }
+
+
+    public static boolean               fact_pointer(Object p, String name)
+    {
+        if (p != null) {
+            return true;
+        }
+
+        final Zone                      z = Zone.current_zone();
+
+        ExceptionFunctions.ASSERT(2, "`{}` is null", name);
+
+        return false;
+    }
+
+
+    //
+    //  Public (ERRORS)
+    //
+    public void                         RUNTIME(String error_message, Object ... arguments)
+    {
+        ExceptionFunctions.RUNTIME(2, error_message, arguments);
+    }
+
+
+    //
     //  Public
     //
     public V                            lookup(K k)
@@ -61,9 +112,7 @@ public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
         final V                         previous = this.putIfAbsent(k, v);
 
         if (previous != null) {
-            final Zone                  z = this.z;
-
-            z.RUNTIME("previous value for {} already exists: {}", k, v);
+            RUNTIME("previous value for {} already exists: {}", k, v);
         }
     }
 }

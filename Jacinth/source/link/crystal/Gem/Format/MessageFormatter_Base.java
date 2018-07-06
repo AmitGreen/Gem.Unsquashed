@@ -25,22 +25,18 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
     @Override
     public void                         arrange(Gem_StringBuilder builder, int depth)
     {
-        final Zone                      z = builder.z;
-
         Inspection                      inspection = this.inspect();
 
-        z.RUNTIME("invalid routine (derived class: {})", inspection.simple_class_name);
+        RUNTIME("invalid routine (derived class: {})", inspection.simple_class_name);
     }
 
 
     @Override
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
-        final Zone                      z = builder.z;
-
         Inspection                      inspection = this.inspect();
 
-        z.RUNTIME("invalid routine (derived class: {})", inspection.simple_class_name);
+        RUNTIME("invalid routine (derived class: {})", inspection.simple_class_name);
     }
 
 

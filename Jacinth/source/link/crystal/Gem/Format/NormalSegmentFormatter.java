@@ -92,22 +92,18 @@ public class    NormalSegmentFormatter
     {
         final int                       argument_index = this.argument_index;
 
-        final Zone                      z = builder.z;
-
         if (argument_index == 0) {
             builder.format(v);
             return;
         }
 
-        z.RUNTIME("argument_index is {} (expected 0)", argument_index);
+        RUNTIME("argument_index is {} (expected 0)", argument_index);
     }
 
 
     public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w)
     {
         final int                       argument_index = this.argument_index;
-
-        final Zone                      z = builder.z;
 
         if (argument_index == 0) {
             builder.format(v);
@@ -119,15 +115,13 @@ public class    NormalSegmentFormatter
             return;
         }
 
-        z.RUNTIME("argument_index is {} (expected 0 or 1)", argument_index);
+        RUNTIME("argument_index is {} (expected 0 or 1)", argument_index);
     }
 
 
     public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
     {
         final int                       argument_index = this.argument_index;
-
-        final Zone                      z = builder.z;
 
         if (argument_index == 0) {
             builder.format(v);
@@ -144,15 +138,13 @@ public class    NormalSegmentFormatter
             return;
         }
 
-        z.RUNTIME("argument_index is {} (expected 0, 1, or 2)", argument_index);
+        RUNTIME("argument_index is {} (expected 0, 1, or 2)", argument_index);
     }
 
 
     public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x, Object y)
     {
         final int                       argument_index = this.argument_index;
-
-        final Zone                      z = builder.z;
 
         if (argument_index == 0) {
             builder.format(v);
@@ -174,7 +166,7 @@ public class    NormalSegmentFormatter
             return;
         }
 
-        z.RUNTIME("argument_index is {} (expected number between 0 and 3)", argument_index);
+        RUNTIME("argument_index is {} (expected number between 0 and 3)", argument_index);
     }
 
 
@@ -189,8 +181,6 @@ public class    NormalSegmentFormatter
         )
     {
         final int                       argument_index = this.argument_index;
-
-        final Zone                      z = builder.z;
 
         if (argument_index == 0) {
             builder.format(v);
@@ -217,7 +207,7 @@ public class    NormalSegmentFormatter
             return;
         }
 
-        z.RUNTIME("argument_index is {} (expected number between 0 and 4)", argument_index);
+        RUNTIME("argument_index is {} (expected number between 0 and 4)", argument_index);
     }
 
 
@@ -233,8 +223,6 @@ public class    NormalSegmentFormatter
         )
     {
         final int                       argument_index = this.argument_index;
-
-        final Zone                      z = builder.z;
 
         if (argument_index == 0) {
             builder.format(v);
@@ -266,7 +254,7 @@ public class    NormalSegmentFormatter
             return;
         }
 
-        z.RUNTIME("argument_index is {} (expected number between 0 and 5)", argument_index);
+        RUNTIME("argument_index is {} (expected number between 0 and 5)", argument_index);
     }
 
 

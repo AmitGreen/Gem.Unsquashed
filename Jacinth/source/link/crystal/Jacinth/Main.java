@@ -23,7 +23,8 @@ public class    Main
 
         circle.skew(z);
 
-        Gem_Object.assert_pointer(null, "test");
+        //assert Gem_Object.fact_pointer(null, "test");
+        //assert Gem_Object.fact_between(7, 6, 77);
 
         //z.line("{+}");
         //z.line("{p}", "{}");
@@ -38,7 +39,7 @@ public class    Main
             //Storehouse_PortraySegmentFormatter  .singleton.dump(z);
             //Storehouse_String                   .dump(z);
             //Storehouse_AdornmentSegmentFormatter.singleton.dump(z, "Storehouse_AdornmentSegmentFormatter.singleton");
-            z.dump(z);
+            //z.dump(z);
         }
 
     }

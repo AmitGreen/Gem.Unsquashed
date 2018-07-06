@@ -89,9 +89,7 @@ public class    Storehouse_String
 
     public static String                intern_permenant_string(Zone z, String s)
     {
-        if (s == null) {
-            z.RUNTIME("`s` is null");
-        }
+        assert fact_pointer(s, "s");
 
         Storehouse_String               singleton = Storehouse_String.singleton;
 

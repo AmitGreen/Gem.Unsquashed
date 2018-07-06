@@ -42,17 +42,8 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
 
         final int                       segment_allocated = segment_many.length;
 
-        if ( ! (0 <= argument_index && argument_index < segment_allocated)) {
-            final Zone                  z = this.z;
-
-            z.RUNTIME("`argument_index`<{}> must be between 0 and {}", argument_index, segment_allocated - 1);
-        }
-
-        if (segment_many[argument_index] != null) {
-            final Zone                  z = this.z;
-
-            z.RUNTIME("`segment_many[{}]` != null", argument_index);
-        }
+        assert fact_between(0, argument_index, segment_allocated - 1);
+        assert fact_null   (segment_many[argument_index], "segment_many[argument_index]");
 
         segment_many[argument_index] = segment;
     }
@@ -64,11 +55,7 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
 
         final int                       segment_allocated = segment_many.length;
 
-        if ( ! (0 <= argument_index && argument_index < segment_allocated)) {
-            final Zone                  z = this.z;
-
-            z.RUNTIME("`argument_index`<{}> must be between 0 and {}", argument_index, segment_allocated - 1);
-        }
+        assert fact_between(0, argument_index, segment_allocated - 1);
 
         return this.segment_many[argument_index];
     }

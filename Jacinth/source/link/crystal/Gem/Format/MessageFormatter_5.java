@@ -66,10 +66,6 @@ public class    MessageFormatter_5
             SegmentFormattable              e//,
         )
     {
-        if ( ! (2 <= expected && expected <= 5)) {
-            z.RUNTIME("invalid value for `expected`<{}>", expected);
-        }
-
         return new MessageFormatter_5(expected, a, b, c, d, e);
     }
 
@@ -90,9 +86,7 @@ public class    MessageFormatter_5
     public void                         arrange(Gem_StringBuilder builder, int depth)
     {
         if (this.expected != 0) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("0 arguments given (expected {})", this.expected);
+            RUNTIME("0 arguments given (expected {})", this.expected);
         }
 
         depth += 1;
@@ -109,9 +103,7 @@ public class    MessageFormatter_5
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
         if (this.expected != 1) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("1 argument given (expected {})", this.expected);
+            RUNTIME("1 argument given (expected {})", this.expected);
         }
 
         depth += 1;
@@ -128,9 +120,7 @@ public class    MessageFormatter_5
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w)
     {
         if (this.expected != 2) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("2 arguments given (expected {})", this.expected);
+            RUNTIME("2 arguments given (expected {})", this.expected);
         }
 
         depth += 1;
@@ -147,9 +137,7 @@ public class    MessageFormatter_5
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
     {
         if (this.expected != 3) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("3 arguments given (expected {})", this.expected);
+            RUNTIME("3 arguments given (expected {})", this.expected);
         }
 
         depth += 1;
@@ -173,9 +161,7 @@ public class    MessageFormatter_5
         )
     {
         if (this.expected != 4) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("4 arguments given (expected {})", this.expected);
+            RUNTIME("4 arguments given (expected {})", this.expected);
         }
 
         depth += 1;
@@ -200,9 +186,7 @@ public class    MessageFormatter_5
         )
     {
         if (this.expected != 5) {
-            final Zone                  z = builder.z;
-
-            z.RUNTIME("5 arguments given (expected {})", this.expected);
+            RUNTIME("5 arguments given (expected {})", this.expected);
         }
 
         depth += 1;

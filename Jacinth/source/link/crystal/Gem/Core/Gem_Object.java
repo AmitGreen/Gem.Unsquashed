@@ -48,29 +48,70 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
 
 
     //
-    //  Public
+    //  Public (ASSERT)
     //
-    public static void                  assert_null(Object p, String name)
+    public static boolean               fact(boolean condition, String format)
     {
-        if (p == null) {
-            return;
+        if (condition) {
+            return true;
         }
 
-        final Zone                      z = Zone.current_zone();
+        ExceptionFunctions.ASSERTION_FAILED(2, "assertion failed: {}", format);
 
-        ExceptionFunctions.ASSERT(2, "`{}` is not null", name);
+        return false;
     }
 
 
-    public static void                  assert_pointer(Object p, String name)
+    public static boolean               fact_between(int start, int v, int end)
+    {
+        if (start <= v && v <= end) {
+            return true;
+        }
+
+        ExceptionFunctions.ASSERT(2, "{} is not between {} and {}", v, start, end);
+
+        return false;
+    }
+
+
+    public static boolean               fact_null(Object p, String name)
+    {
+        if (p == null) {
+            return true;
+        }
+
+        ExceptionFunctions.ASSERT(2, "`{}` is not null", name);
+
+        return false;
+    }
+
+
+    public static boolean               fact_pointer(Object p, String name)
     {
         if (p != null) {
-            return;
+            return true;
         }
 
         final Zone                      z = Zone.current_zone();
 
         ExceptionFunctions.ASSERT(2, "`{}` is null", name);
+
+        return false;
+    }
+
+
+    //
+    //  Public (ERRORS)
+    //
+    public void                         INVALID_ROUTINE()
+    {
+        ExceptionFunctions.RUNTIME(2, "invalid routine");
+    }
+
+
+    public void                         RUNTIME(String error_message, Object ... arguments)
+    {
+        ExceptionFunctions.RUNTIME(2, error_message, arguments);
     }
 
 
@@ -88,20 +129,5 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
         }
 
         return v;
-    }
-
-
-    //
-    //  Public (ERRORS)
-    //
-    public void                         INVALID_ROUTINE()
-    {
-        ExceptionFunctions.RUNTIME(2, "invalid routine");
-    }
-
-
-    public void                         RUNTIME(String error_message, Object ... arguments)
-    {
-        ExceptionFunctions.RUNTIME(2, error_message, arguments);
     }
 }

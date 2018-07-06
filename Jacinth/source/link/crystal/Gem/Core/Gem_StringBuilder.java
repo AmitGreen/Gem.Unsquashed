@@ -274,9 +274,7 @@ public class    Gem_StringBuilder
     //
     public String                       finish__AND__recycle()
     {
-        if (this.finished) {
-            this.z.RUNTIME("`.finished` already set");
-        }
+        assert fact( ! this.finished, "! this.finished");
 
         this.finished = true;
 
@@ -370,11 +368,7 @@ public class    Gem_StringBuilder
 
     public void                         quote(String s)
     {
-        if (s == null) {
-            final Zone                  z = this.z;
-
-            z.RUNTIME("`s` is null");
-        }
+        assert fact_pointer(s, "s");
 
         builder.append("\"");
 

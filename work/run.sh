@@ -124,7 +124,7 @@ do
             cd ../Jacinth
 
             if mvn package -DskipTests; then
-                if java -cp target/Jacinth-1.0-SNAPSHOT.jar link.crystal.Jacinth.Main; then
+                if java -ea -cp target/Jacinth-1.0-SNAPSHOT.jar link.crystal.Jacinth.Main; then
                     :
                 fi
             fi

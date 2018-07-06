@@ -36,18 +36,12 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     //
     public V                            find(String k)
     {
-        if (k == null) {
-            final Zone                  z = this.z;
-
-            z.RUNTIME("`k` is null");
-        }
+        assert fact_pointer(k, "k");
 
         V                               r = this.get(k);
 
         if (r == null) {
-            final Zone                  z = this.z;
-
-            z.RUNTIME("cannot find key {}", k);
+            RUNTIME("cannot find key {}", k);
         }
 
         return r;
