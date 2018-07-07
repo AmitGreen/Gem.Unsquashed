@@ -109,6 +109,7 @@ JACINTH_FILES = \
     $J/Gem/Support/Storehouse_SmallList.java \
     $J/Gem/Support/Storehouse_String.java \
     $J/Gem/Support/Storehouse_StringSegmentFormatter.java \
+    $J/Gem/World/Comparable_Inspection.java \
     $J/Gem/World/Inspection.java \
     $J/Gem/World/World_Inspection.java \
     $J/Gem/World/World_Integer.java \
@@ -292,7 +293,7 @@ clean:
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
 	rm -f a.py ab.py ae.java af.java ac.py ads.java ag.py ags.java agsi.java
 	rm -f ba.py bi.py bk.py bm.py bo.py
-	rm -f ca.py ca2.py cd.py ce.py cr.py
+	rm -f ca.py ca2.py cd.py ce.py ci.java cr.py
 	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
 	rm -f ef.java ef.py en.py ex.py
 	rm -f files fo.py fs.py
@@ -367,6 +368,7 @@ links:
 	ln -s ../Gem/Cache2.py                                                      ca2.py
 	ln -s ../Gem/Cadence.py                                                     cd.py
 	ln -s ../Gem/CatchException.py                                              ce.py
+	ln -s $J/Gem/World/Comparable_Inspection.java                               ci.java
 	ln -s ../Gem/Core.py                                                        cr.py
 	ln -s ../Diamond/Development.py                                             d.py
 	ln -s ../Diamond/Core.py                                                    dc.py

@@ -9,33 +9,30 @@ import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.World.World_Inspection;
 
 
 public class    World_Inspection
-    extends     Inspection
+    extends     Comparable_Inspection
+//  extends     Inspection
 //  extends     Gem_Object <World_Inspection>
 //  extends     Object
     implements  Gem_Comparable,
-                Inspectable<World_Inspection>//,                        //  Via Gem_Object
+                Inspectable<World_Inspection>//,                        //  Via Comparable_Inspection
 {
-    private static final World_Inspection   inspection = World_Inspection.create("World_Inspection", 6);
-
-
-    //
-    //  Members
-    //
-    public final int                    class_order;
+    private static final World_Inspection   inspection = World_Inspection.create("World_Inspection", 7);
 
 
     //
     //  Constructor & Factory
     //
-    protected                           World_Inspection(String simple_class_name, int class_order)
+    private                             World_Inspection(String simple_class_name, int class_order)
     {
-        super(simple_class_name);
-
-        this.class_order = class_order;
+        super(
+                simple_class_name,
+                class_order,
+                /*is_world_inspection=*/ true//,
+            );
     }
 
 
@@ -67,23 +64,4 @@ public class    World_Inspection
     {
         return /*static*/ this.inspection;
     }
-
-
-    public void                         portray(Gem_StringBuilder builder)
-    {
-        final World_Inspection          meta_inspection = this.inspect();
-
-        builder.append("<", meta_inspection.simple_class_name, " ", this.simple_class_name, " ", this.class_order, ">");
-    }
 }
-
-
-//
-//  class_order
-//      Inspection                          1
-//      NormalSegmentFormatter_Inspection   2
-//      PortraySegmentFormatter_Inspection  3
-//      SegmentFormatter_Inspection         4
-//      StringSegmentFormatter_Inspection   5
-//      World_Inspection                    6
-//
