@@ -11,6 +11,7 @@ import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
 import link.crystal.Gem.Format.NormalSegmentFormatter;
 import link.crystal.Gem.Format.PortraySegmentFormatter;
+import link.crystal.Gem.Format.StringSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 
 
@@ -54,7 +55,7 @@ public class    Map__String__ArgumentSegmentFormatter_Inspection
 
         r.put("",  NormalSegmentFormatter .inspection);
         r.put("p", PortraySegmentFormatter.inspection);
-        r.put("s", NormalSegmentFormatter .inspection);
+        r.put("s", StringSegmentFormatter .inspection);
 
         return r;
     }

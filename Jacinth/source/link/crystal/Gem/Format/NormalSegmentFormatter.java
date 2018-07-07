@@ -4,6 +4,7 @@
 package link.crystal.Gem.Format;
 
 
+import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
@@ -21,8 +22,8 @@ public class    NormalSegmentFormatter
 //  extends     Gem_Object              <ArgumentSegmentFormatter_Inspection>
 //  extends     Object
     implements  MessageFormattable,
-                SegmentFormattable,
-                Inspectable<ArgumentSegmentFormatter_Inspection>//,     //  Via Gem_Object
+                SegmentFormattable      <ArgumentSegmentFormatter_Inspection>,
+                Inspectable             <ArgumentSegmentFormatter_Inspection>//,    //  Via Gem_Object
 {
     public static NormalSegmentFormatter_Inspection     inspection = (
             NormalSegmentFormatter_Inspection.create("NormalSegmentFormatter")

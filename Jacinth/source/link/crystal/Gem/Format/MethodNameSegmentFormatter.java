@@ -7,23 +7,25 @@ package link.crystal.Gem.Format;
 import java.lang.StackTraceElement;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.MessageFormatter_Base;
+import link.crystal.Gem.Format.SegmentFormatter_Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 
 
 public class    MethodNameSegmentFormatter
-    extends     MessageFormatter_Base<Inspection>
-//  extends     Gem_Object<Inspection>
+    extends     MessageFormatter_Base<SegmentFormatter_Inspection>
+//  extends     Gem_Object           <SegmentFormatter_Inspection>
 //  extends     Object
     implements  MessageFormattable,
-                SegmentFormattable,
-                Inspectable<Inspection>//,                              //  Via Gem_Object
+                SegmentFormattable   <SegmentFormatter_Inspection>,
+                Inspectable          <SegmentFormatter_Inspection>//,   //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("MethodNameSegmentFormatter");
+    private static SegmentFormatter_Inspection  inspection = (
+            SegmentFormatter_Inspection.create("MethodNameSegmentFormatter")
+        );
 
 
     //
@@ -59,7 +61,7 @@ public class    MethodNameSegmentFormatter
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    public SegmentFormatter_Inspection  inspect()
     {
         return /*static*/ this.inspection;
     }

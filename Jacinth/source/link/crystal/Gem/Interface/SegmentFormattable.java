@@ -6,10 +6,13 @@ package link.crystal.Gem.Interface;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringBuilder;
+import link.crystal.Gem.Format.SegmentFormatter_Inspection;
+import link.crystal.Gem.Interface.Inspectable;
 
 
-public interface    SegmentFormattable
-    extends         MessageFormattable
+public interface    SegmentFormattable<INSPECTION extends SegmentFormatter_Inspection>
+    extends         MessageFormattable,
+                    Inspectable       <INSPECTION>//,
 {
     void                                choose(Gem_StringBuilder builder, int depth);
     void                                choose(Gem_StringBuilder builder, int depth, Object v);

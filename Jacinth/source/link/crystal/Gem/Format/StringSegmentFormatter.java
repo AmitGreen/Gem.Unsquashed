@@ -8,7 +8,8 @@ import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
-import link.crystal.Gem.Format.MessageFormatter_Base;
+import link.crystal.Gem.Format.ArgumentSegmentFormatter;
+import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
@@ -16,20 +17,17 @@ import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
 
 
 public class    StringSegmentFormatter
-    extends     MessageFormatter_Base<Inspection>
-//  extends     Gem_Object<Inspection>
+    extends     ArgumentSegmentFormatter<StringSegmentFormatter_Inspection>
+//  extends     MessageFormatter_Base   <StringSegmentFormatter_Inspection>
+//  extends     Gem_Object              <StringSegmentFormatter_Inspection>
 //  extends     Object
     implements  MessageFormattable,
-                SegmentFormattable,
-                Inspectable<Inspection>//,                              //  Via Gem_Object
+                SegmentFormattable      <StringSegmentFormatter_Inspection>,
+                Inspectable             <StringSegmentFormatter_Inspection>//,  //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("StringSegmentFormatter");
-
-
-    //
-    //  Members
-    //
-    private int                         argument_index;
+    public static StringSegmentFormatter_Inspection     inspection = (
+            StringSegmentFormatter_Inspection.create("StringSegmentFormatter")
+        );
 
 
     //
@@ -37,11 +35,14 @@ public class    StringSegmentFormatter
     //
     private                             StringSegmentFormatter(int argument_index)
     {
-        this.argument_index = argument_index;
+        super(argument_index);
     }
 
 
-    static public StringSegmentFormatter    conjure(Zone z, int argument_index)
+    static public StringSegmentFormatter    conjure__ALLY__StringSegmentFormatter_Inspection(
+            Zone                                z,
+            int                                 argument_index//,
+        )
     {
         final Storehouse_StringSegmentFormatter     cache = Storehouse_StringSegmentFormatter.singleton;
 
@@ -62,7 +63,7 @@ public class    StringSegmentFormatter
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    public StringSegmentFormatter_Inspection    inspect()
     {
         return /*static*/ this.inspection;
     }
@@ -308,10 +309,52 @@ public class    StringSegmentFormatter
 
         builder.append(other_arguments[argument_index - 7].toString());
     }
+}
 
 
-    public void                         portray(Gem_StringBuilder builder)
+class           StringSegmentFormatter_Inspection
+    extends     ArgumentSegmentFormatter_Inspection<StringSegmentFormatter>
+//  extends     Inspection
+//  extends     Gem_Object<Inspection>
+//  extends     Object
+    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
+{
+    private static Inspection           inspection = Inspection.create("StringSegmentFormatter_Inspection");
+
+
+    //
+    //  Constructor & Factory
+    //
+    protected                           StringSegmentFormatter_Inspection(String simple_class_name)
     {
-        builder.append("<StringSegmentFormatter ", this.argument_index, ">");
+        super(simple_class_name);
+    }
+
+
+    public static StringSegmentFormatter_Inspection     create(String simple_class_name)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final String                    interned__simple_class_name = z.intern_permenant_string(simple_class_name);
+
+        return new StringSegmentFormatter_Inspection(interned__simple_class_name);
+    }
+
+
+    //
+    //  Abstract ArgumentSegmentFormatter_Inspection
+    //
+    public StringSegmentFormatter   conjure_argument_segment(Zone z, int argument_index)
+    {
+        return StringSegmentFormatter.conjure__ALLY__StringSegmentFormatter_Inspection(z, argument_index);
+    }
+
+
+    //
+    //  Interface Inspectable
+    //
+    public Inspection                   inspect()
+    {
+        return /*static*/ this.inspection;
     }
 }

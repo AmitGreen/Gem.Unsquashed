@@ -31,6 +31,8 @@ public class    Inspection
     protected                           Inspection(String simple_class_name)
     {
         this.simple_class_name = simple_class_name;
+
+        Map_String_Inspection.insert_or_cache(this);
     }
 
 
@@ -40,11 +42,7 @@ public class    Inspection
 
         final String                    interned__simple_class_name = z.intern_permenant_string(simple_class_name);
 
-        final Inspection                r = new Inspection(interned__simple_class_name);
-
-        Map_String_Inspection.insert_or_cache(r);
-
-        return r;
+        return new Inspection(interned__simple_class_name);
     }
 
 
