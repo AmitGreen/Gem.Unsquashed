@@ -8,17 +8,17 @@ import java.io.PrintStream;
 import java.lang.System;
 import java.util.HashMap;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
+import link.crystal.Gem.World.Inspection;
 
 
-public abstract class   Gem_Map<INSPECTION extends Inspection, K, V>
-    extends             HashMap        <K, V>
-//  extends             AbstractHashMap<K, V>
+public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
+    extends             HashMap                                    <K, V>
+//  extends             AbstractHashMap                            <K, V>
 //  extends             Object
     implements          Inspectable<INSPECTION>//,
 {

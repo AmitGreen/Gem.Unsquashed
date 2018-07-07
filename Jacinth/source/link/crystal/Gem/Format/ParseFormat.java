@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 import link.crystal.Gem.Core.ArrayFunctions;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.AdornmentSegmentFormatter;
 import link.crystal.Gem.Format.MessageFormatter_1__Prefix;
@@ -24,10 +23,11 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
+import link.crystal.Gem.World.Inspection;
 
 
 public class   ParseFormat
-    extends    Gem_Object<Inspection>
+    extends    Gem_Object <Inspection>
     implements Inspectable<Inspection>//,                               //  Via Gem_Object
 {
     private static final Inspection     inspection = Inspection.create("Gem.Core.ParseFormat");

@@ -4,7 +4,6 @@
 package link.crystal.Gem.Format;
 
 
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;

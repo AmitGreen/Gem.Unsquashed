@@ -77,7 +77,6 @@ JACINTH_FILES = \
     $J/Gem/Core/Gem_StringBuilder.java \
     $J/Gem/Core/Gem_StringMap.java \
     $J/Gem/Core/Gem_StringSet.java \
-    $J/Gem/Core/Inspection.java \
     $J/Gem/Core/Zone.java \
     $J/Gem/Exception/AssertionError.java \
     $J/Gem/Exception/ExceptionFunctions.java \
@@ -98,6 +97,7 @@ JACINTH_FILES = \
     $J/Gem/Format/PortraySegmentFormatter.java \
     $J/Gem/Format/SegmentFormatter_Inspection.java \
     $J/Gem/Format/StringSegmentFormatter.java \
+    $J/Gem/Interface/Gem_Comparable.java \
     $J/Gem/Interface/Inspectable.java \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
@@ -109,8 +109,9 @@ JACINTH_FILES = \
     $J/Gem/Support/Storehouse_SmallList.java \
     $J/Gem/Support/Storehouse_String.java \
     $J/Gem/Support/Storehouse_StringSegmentFormatter.java \
-    $J/Gem/World/World_Integer.java \
+    $J/Gem/World/Inspection.java \
     $J/Gem/World/World_Inspection.java \
+    $J/Gem/World/World_Integer.java \
     $J/Jacinth/Main.java \
     $J/Jacinth/Shape.java \
     $J/Mirror/Shape.java \
@@ -295,7 +296,7 @@ clean:
 	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
 	rm -f ef.java ef.py en.py ex.py
 	rm -f files fo.py fs.py
-	rm -f gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
+	rm -f gc.java gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
 	rm -f   gi.py gi.java gl.py go.java gm.java gq.py gr.py gsb.java gse.py gsm.java gsq.py gss.java gz.java
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
@@ -386,6 +387,7 @@ links:
 	ln -s ../Gem/Exception.py                                                   ex.py
 	ln -s ../Gem/FileOutput.py                                                  fo.py
 	ln -s ../Gem/FileStatus.py                                                  fs.py
+	ln -s $J/Gem/Interface/Gem_Comparable.java                                  gc.java
 	ln -s ../Gem/ContextManager.py                                              gcm.py
 	ln -s ../Gem/DumpCache.py                                                   gdc.py
 	ln -s ../Gem/DroveMany.py                                                   gdm.py
@@ -400,7 +402,7 @@ links:
 	ln -s ../Gem/HerdMany.py                                                    ghm.py
 	ln -s ../Gem/Horde.py                                                       gho.py
 	ln -s ../Gem/Hailstone.py                                                   gi.py
-	ln -s $J/Gem/Core/Inspection.java                                           gi.java
+	ln -s $J/Gem/World/Inspection.java                                          gi.java
 	ln -s ../Gem/Global.py                                                      gl.py
 	ln -s $J/Gem/Core/Gem_Map.java                                              gm.java
 	ln -s $J/Gem/Core/Gem_Object.java                                           go.java

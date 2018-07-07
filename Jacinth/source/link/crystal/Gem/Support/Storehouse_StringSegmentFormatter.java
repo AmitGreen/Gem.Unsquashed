@@ -5,16 +5,16 @@ package link.crystal.Gem.Support;
 
 
 import java.lang.String;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.StringSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_SmallList;
+import link.crystal.Gem.World.Inspection;
 
 
 public class    Storehouse_StringSegmentFormatter
     extends     Storehouse_SmallList<Storehouse_StringSegmentFormatter, StringSegmentFormatter>
-//  extends     Gem_Object<Inspection>
+//  extends     Gem_Object <Inspection>
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {

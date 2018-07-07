@@ -9,15 +9,16 @@ import java.lang.Thread;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.ParseFormat;
+import link.crystal.Gem.Format.Map__String__ArgumentSegmentFormatter_Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
-import link.crystal.Gem.Format.Map__String__ArgumentSegmentFormatter_Inspection;
+import link.crystal.Gem.World.Inspection;
 
 
 public class    Zone
-    extends     Gem_Object<Inspection>
+    extends     Gem_Object <Inspection>
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {

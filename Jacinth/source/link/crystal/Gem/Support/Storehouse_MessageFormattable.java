@@ -6,11 +6,11 @@ package link.crystal.Gem.Support;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringMap;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.World.Inspection;
 
 
 public class    Storehouse_MessageFormattable
@@ -18,7 +18,7 @@ public class    Storehouse_MessageFormattable
 //  extends     HashMap                  <String, MessageFormattable>
 //  extends     AbstractHashMap          <String, MessageFormattable>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_Map<?, ?, ?>
+    implements  Inspectable  <Inspection>//,                            //  Via Gem_Map<?, ?, ?>
 {
     private static final Inspection     inspection = Inspection.create("Storehouse_MessageFormattable");
 

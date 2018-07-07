@@ -13,16 +13,16 @@ import java.lang.System;
 import java.lang.System;
 import java.lang.Thread;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
+import link.crystal.Gem.World.Inspection;
 
 
-public abstract class   Gem_Object<INSPECTION extends Inspection>
+public abstract class   Gem_Object <INSPECTION extends Inspection>
     extends             Object
     implements          Inspectable<INSPECTION>//,
 {

@@ -6,15 +6,15 @@ package link.crystal.Gem.Core;
 
 import java.lang.StringBuilder;
 import link.crystal.Gem.Core.Gem_Object;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
+import link.crystal.Gem.World.Inspection;
 
 
 public class    Gem_StringBuilder
-    extends     Gem_Object<Inspection>
+    extends     Gem_Object <Inspection>
 //  extends     Object
     implements  Inspectable<Inspection>//,
 {

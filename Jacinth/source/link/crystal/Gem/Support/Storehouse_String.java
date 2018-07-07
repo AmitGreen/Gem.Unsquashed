@@ -6,18 +6,18 @@ package link.crystal.Gem.Support;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringSet;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.World.Inspection;
 
 
 public class    Storehouse_String
-    extends     Gem_StringSet  <Inspection>
-//  extends     Gem_Map        <Inspection, String, String>
-//  extends     HashMap                    <String, String>
-//  extends     AbstractHashMap            <String, String>
+    extends     Gem_StringSet<Inspection>
+//  extends     Gem_Map      <Inspection, String, String>
+//  extends     HashMap                  <String, String>
+//  extends     AbstractHashMap          <String, String>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_StringSet
+    implements  Inspectable  <Inspection>//,                             //  Via Gem_StringSet
 {
     private static final Inspection     inspection = Inspection.create("Storehouse_String");
 

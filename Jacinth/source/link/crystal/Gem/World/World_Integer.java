@@ -6,12 +6,12 @@ package link.crystal.Gem.World;
 
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.World.Inspection;
 
 
 public class    World_Integer
-    extends     Gem_Object<Inspection>
+    extends     Gem_Object <Inspection>
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {

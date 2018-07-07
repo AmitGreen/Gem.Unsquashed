@@ -4,14 +4,14 @@
 package link.crystal.Silver;
 
 
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.World.Inspection;
 
 
 public abstract class   SilverProxy<PROXY extends SilverProxy, CLIENT extends Object>
-    extends             Gem_Object<Inspection>
+    extends             Gem_Object <Inspection>
 //  extends             Object
     implements          Inspectable<Inspection>//,                      //  Via Gem_Object
 {

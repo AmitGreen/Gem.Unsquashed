@@ -6,13 +6,13 @@ package link.crystal.Gem.Format;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringMap;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
 import link.crystal.Gem.Format.NormalSegmentFormatter;
 import link.crystal.Gem.Format.PortraySegmentFormatter;
 import link.crystal.Gem.Format.StringSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.World.Inspection;
 
 
 public class    Map__String__ArgumentSegmentFormatter_Inspection

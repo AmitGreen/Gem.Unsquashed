@@ -7,17 +7,17 @@ package link.crystal.Gem.Format;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.World.Inspection;
 
 
 public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
-    extends             Gem_Object<INSPECTION>
+    extends             Gem_Object           <INSPECTION>
 //  extends             Object
     implements          MessageFormattable,
-                        Inspectable<INSPECTION>//,                      //  Via Gem_Object
+                        Inspectable          <INSPECTION>//,            //  Via Gem_Object
 {
     //
     //  Interface MessageFormattable
@@ -25,7 +25,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
     @Override
     public void                         arrange(Gem_StringBuilder builder, int depth)
     {
-        final Inspection                inspection = this.inspect();
+        final INSPECTION                inspection = this.inspect();
 
         RUNTIME("invalid routine (derived class: {})", inspection.simple_class_name);
     }
@@ -34,7 +34,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
     @Override
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
-        final Inspection                inspection = this.inspect();
+        final INSPECTION                inspection = this.inspect();
 
         RUNTIME("invalid routine (derived class: {})", inspection.simple_class_name);
     }

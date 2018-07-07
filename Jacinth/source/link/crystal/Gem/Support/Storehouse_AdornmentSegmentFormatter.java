@@ -6,10 +6,10 @@ package link.crystal.Gem.Support;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringMap;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.AdornmentSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.World.Inspection;
 
 
 public class    Storehouse_AdornmentSegmentFormatter
@@ -18,7 +18,7 @@ public class    Storehouse_AdornmentSegmentFormatter
 //  extends     HashMap                    <String, AdornmentSegmentFormatter>
 //  extends     AbstractHashMap            <String, AdornmentSegmentFormatter>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_StringMap<?>
+    implements  Inspectable    <Inspection>//,                          //  Via Gem_StringMap<?>
 {
     private static final Inspection     inspection = Inspection.create("Storehouse_AdornmentSegmentFormatter");
 

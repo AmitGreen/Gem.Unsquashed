@@ -6,7 +6,6 @@ package link.crystal.Gem.Format;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;

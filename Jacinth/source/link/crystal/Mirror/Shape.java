@@ -4,15 +4,15 @@
 package link.crystal.Mirror;
 
 
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Silver.SilverProxy;
+import link.crystal.Gem.World.Inspection;
 
 
 public class    Shape
     extends     SilverProxy<Shape, link.crystal.Jacinth.Shape>
-//  extends     Gem_Object<Inspection>
+//  extends     Gem_Object <Inspection>
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {

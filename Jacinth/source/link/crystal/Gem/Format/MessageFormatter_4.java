@@ -6,20 +6,20 @@ package link.crystal.Gem.Format;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.MessageFormatter_Base;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
+import link.crystal.Gem.World.Inspection;
 
 
 public class    MessageFormatter_4
     extends     MessageFormatter_Base<Inspection>
-//  extends     Gem_Object<Inspection>
+//  extends     Gem_Object           <Inspection>
 //  extends     Object
     implements  MessageFormattable,
-                Inspectable<Inspection>//,                              //  Via Gem_Object
+                Inspectable          <Inspection>//,                    //  Via Gem_Object
 {
     private static final Inspection     inspection = Inspection.create("MessageFormatter_4");
 

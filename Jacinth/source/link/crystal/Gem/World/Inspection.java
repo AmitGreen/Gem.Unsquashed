@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Gem.Core;
+package link.crystal.Gem.World;
 
 
 import link.crystal.Gem.Core.Gem_Object;

@@ -6,9 +6,9 @@ package link.crystal.Gem.Exception;
 
 import java.lang.RuntimeException;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.World.Inspection;
 
 
 public class        AssertionError
