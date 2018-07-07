@@ -109,11 +109,13 @@ JACINTH_FILES = \
     $J/Gem/Support/Storehouse_SmallList.java \
     $J/Gem/Support/Storehouse_String.java \
     $J/Gem/Support/Storehouse_StringSegmentFormatter.java \
+    $J/Gem/World/World_Integer.java \
     $J/Jacinth/Main.java \
     $J/Jacinth/Shape.java \
     $J/Mirror/Shape.java \
     $J/Silver/SilverModule.java \
-    $J/Silver/SilverProxy.java
+    $J/Silver/SilverProxy.java \
+    $J/Silver/UnitTest/UnitTest.java
 
 JASPER_FILES = \
     ../Jasper/Core.py \
@@ -319,8 +321,10 @@ clean:
 	rm -f sha.java shl.java shm.java shn.java shp.java shs.java shsf.java sfi.java sl.py so.py ss.java ssio.py sy.py
 	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
+	rm -f ut.java
 	rm -f xb.py xf.py
 	rm -f vm.java vm.py vp.java
+	rm -f wi.java
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
@@ -597,9 +601,11 @@ links:
 	ln -s ../Tremolite/Build.py                                                 tu.py
 	ln -s ../Tremolite/PatternWrapper.py                                        tw.py
 	ln -s ../Tremolite/Compile.py                                               tx.py
+	ln -s $J/Silver/UnitTest/UnitTest.java                                      ut.java
 	ln -s ../Dravite/Main.py                                                    vm.py
 	ln -s $J/Silver/SilverModule.java                                           vm.java
 	ln -s $J/Silver/SilverProxy.java                                            vp.java
+	ln -s $J/Gem/World/World_Integer.java                                       wi.java
 	ln -s ../Sardonyx/Boot.py                                                   xb.py
 	ln -s ../Sapphire/Transform.py                                              xf.py
 	ln -s ../Crystal/Board.py                                                   ybd.py

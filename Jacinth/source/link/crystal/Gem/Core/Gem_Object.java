@@ -124,7 +124,146 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
 
 
     //
-    //  Public
+    //  Public (line)
+    //
+    public void                         line()
+    {
+        standard_output.println();
+    }
+
+
+    public void                         line(String format)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        Gem_StringBuilder               builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2);
+
+        standard_output.println(builder.finish_AND_recycle());
+    }
+
+
+    public void                         line(String format, Object v)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        Gem_StringBuilder               builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v);
+
+        standard_output.println(builder.finish_AND_recycle());
+    }
+
+
+    public void                         line(String format, Object v, Object w)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        Gem_StringBuilder               builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v, w);
+
+        standard_output.println(builder.finish_AND_recycle());
+    }
+
+
+    public void                         line(String format, Object v, Object w, Object x)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        Gem_StringBuilder               builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v, w, x);
+
+        standard_output.println(builder.finish_AND_recycle());
+    }
+
+
+    public void                         line(String format, Object v, Object w, Object x, Object y)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        Gem_StringBuilder               builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v, w, x, y);
+
+        standard_output.println(builder.finish_AND_recycle());
+    }
+
+
+    public void                         line(String format, Object v, Object w, Object x, Object y4, Object y5)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        Gem_StringBuilder               builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v, w, x, y4, y5);
+
+        standard_output.println(builder.finish_AND_recycle());
+    }
+
+
+    public void                         line(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6//,
+        )
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        Gem_StringBuilder               builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v, w, x, y4, y5, y6);
+
+        standard_output.println(builder.finish_AND_recycle());
+    }
+
+
+    public void                         line(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6,
+            Object                              y7,
+            Object ...                          other_arguments//,
+        )
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        Gem_StringBuilder               builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v, w, x, y4, y5, y6, y7, other_arguments);
+
+        standard_output.println(builder.finish_AND_recycle());
+    }
+
+
+    //
+    //  Public (other)
     //
     public static int                   limit_to_between(int minimum, int v, int maximum)
     {
@@ -142,6 +281,6 @@ public abstract class   Gem_Object<INSPECTION extends Inspection>
 
     public static void                  output(String s)
     {
-        Gem_Object.standard_output.println(s);
+        standard_output.println(s);
     }
 }
