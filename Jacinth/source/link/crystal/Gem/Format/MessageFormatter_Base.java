@@ -25,7 +25,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
     @Override
     public void                         arrange(Gem_StringBuilder builder, int depth)
     {
-        Inspection                      inspection = this.inspect();
+        final Inspection                inspection = this.inspect();
 
         RUNTIME("invalid routine (derived class: {})", inspection.simple_class_name);
     }
@@ -34,7 +34,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
     @Override
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
-        Inspection                      inspection = this.inspect();
+        final Inspection                inspection = this.inspect();
 
         RUNTIME("invalid routine (derived class: {})", inspection.simple_class_name);
     }

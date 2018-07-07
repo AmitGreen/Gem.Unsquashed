@@ -35,13 +35,13 @@ public class    Zone
     //
     //  Members
     //
-    public final Thread                 zone_thread;
-    private      ParseFormat            parse_format;
+    public  final Thread                zone_thread;
+    private       ParseFormat           parse_format;
 
     private final Gem_StringBuilder[]   gem_builder_many;
     private       int                   gem_builder_total;
 
-    public final Map__String__ArgumentSegmentFormatter_Inspection  format_map;
+    public  final Map__String__ArgumentSegmentFormatter_Inspection  format_map;
 
 
     //
@@ -126,7 +126,7 @@ public class    Zone
     //
     public ParseFormat                  pop__parse_format__OR__null()
     {
-        ParseFormat                     parse_format = this.parse_format;
+        final ParseFormat               parse_format = this.parse_format;
 
         this.parse_format = null;
 
@@ -147,7 +147,7 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.summon_StringBuilder();
+        final Gem_StringBuilder         builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2);
 
@@ -159,7 +159,7 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.summon_StringBuilder();
+        final Gem_StringBuilder         builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v);
 
@@ -171,7 +171,7 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.summon_StringBuilder();
+        final Gem_StringBuilder         builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w);
 
@@ -183,7 +183,7 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.summon_StringBuilder();
+        final Gem_StringBuilder         builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x);
 
@@ -201,7 +201,7 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.summon_StringBuilder();
+        final Gem_StringBuilder         builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x, y);
 
@@ -220,7 +220,7 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.summon_StringBuilder();
+        final Gem_StringBuilder         builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x, y4, y5);
 
@@ -240,7 +240,7 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.summon_StringBuilder();
+        final Gem_StringBuilder         builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x, y4, y5, y6);
 
@@ -262,7 +262,7 @@ public class    Zone
     {
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(this, format);
 
-        Gem_StringBuilder               builder = this.summon_StringBuilder();
+        final Gem_StringBuilder         builder = this.summon_StringBuilder();
 
         formattable.arrange(builder, 2, v, w, x, y4, y5, y6, y7, other_arguments);
 
@@ -272,7 +272,7 @@ public class    Zone
 
     public static Zone                  current_zone()
     {
-        Thread                          thread = Thread.currentThread();
+        final Thread                    thread = Thread.currentThread();
 
         if (Zone.first_thread == thread) {
             return Zone.first_zone;
@@ -289,7 +289,7 @@ public class    Zone
             throw new RuntimeException("Zone.current_zone: only single threaded currently supported");
         }
 
-        Zone                            first_zone = Zone.create(thread);
+        final Zone                      first_zone = Zone.create(thread);
 
         Zone.first_thread = thread;
         Zone.first_zone   = first_zone;
@@ -339,11 +339,9 @@ public class    Zone
     }
 
 
-
-
     public String                       quote_string(String s)
     {
-        Gem_StringBuilder               builder = this.summon_StringBuilder();
+        final Gem_StringBuilder         builder = this.summon_StringBuilder();
 
         builder.quote(s);
 

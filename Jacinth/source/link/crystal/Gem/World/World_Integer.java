@@ -15,7 +15,7 @@ public class    World_Integer
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("World_Integer");
+    private static final Inspection     inspection = Inspection.create("World_Integer");
 
 
     //

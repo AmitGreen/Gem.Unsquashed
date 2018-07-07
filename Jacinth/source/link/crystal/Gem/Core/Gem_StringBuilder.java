@@ -24,9 +24,9 @@ public class    Gem_StringBuilder
     //
     //  Members
     //
-    public final Zone                   z;
+    public  final Zone                  z;
     private final StringBuilder         builder;
-    private boolean                     finished;
+    private       boolean               finished;
 
 
     //
@@ -71,7 +71,7 @@ public class    Gem_StringBuilder
 
     public void                         portray(Gem_StringBuilder builder)
     {
-        StringBuilder                   client = builder.builder;
+        final StringBuilder             client = builder.builder;
 
         if (this == builder) {
             //
@@ -306,7 +306,7 @@ public class    Gem_StringBuilder
             return;
         }
 
-        Class<?>                        v_class = v.getClass();
+        final Class<?>                  v_class = v.getClass();
 
         if (v_class == Integer$class) {
             this.builder.append((Integer) v);
@@ -325,7 +325,7 @@ public class    Gem_StringBuilder
 
         if (v_class == Gem_StringBuilder$array$class)
         {
-            Gem_StringBuilder[]     v2 = (Gem_StringBuilder[]) v;
+            final Gem_StringBuilder[]   v2 = (Gem_StringBuilder[]) v;
 
             this.arrange("<Gem_StringBuilder size{p}>", v2.length);
             return;
@@ -347,7 +347,7 @@ public class    Gem_StringBuilder
             return;
         }
 
-        Class<?>                        v_class = v.getClass();
+        final Class<?>                  v_class = v.getClass();
 
         if (v_class == Integer$class) {
             this.builder.append("<int ").append((Integer) v).append(">");
@@ -366,7 +366,7 @@ public class    Gem_StringBuilder
 
         if (v_class == Gem_StringBuilder$array$class)
         {
-            Gem_StringBuilder[]     v2 = (Gem_StringBuilder[]) v;
+            final Gem_StringBuilder[]   v2 = (Gem_StringBuilder[]) v;
 
             this.arrange("<Gem_StringBuilder size{p}>", v2.length);
             return;
@@ -383,10 +383,10 @@ public class    Gem_StringBuilder
         builder.append("\"");
 
         int                             start = 0;
-        int                             total = s.length();
+        final int                       total = s.length();
 
         for (int                        i = 0; i < total; i ++) {
-            int                         code_point = s.codePointAt(i);
+            final int                   code_point = s.codePointAt(i);
 
             if (code_point == 34) {
                 if (start < i) {

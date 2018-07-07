@@ -20,13 +20,13 @@ public class    MessageFormatter_1__Prefix
     implements  MessageFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("MessageFormatter_1__Prefix");
+    private static final Inspection     inspection = Inspection.create("MessageFormatter_1__Prefix");
 
 
     //
     //  Members
     //
-    private String                      prefix;
+    private final String                prefix;
 
 
     //
@@ -40,7 +40,7 @@ public class    MessageFormatter_1__Prefix
 
     static public MessageFormatter_1__Prefix    create(Zone z, String prefix)
     {
-        String                          interned__prefix = z.intern_permenant_string(prefix);
+        final String                    interned__prefix = z.intern_permenant_string(prefix);
            
         return new MessageFormatter_1__Prefix(interned__prefix);
     }

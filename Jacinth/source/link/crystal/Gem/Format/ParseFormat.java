@@ -42,7 +42,7 @@ public class   ParseFormat
     //          Third  most likely match:   group 7                     //  Example: }}
     //          Fourth most likely:         FAIL                        //  Example: {, or } by themselves
     //
-    private static Pattern              braces_pattern = Pattern.compile(
+    private static final Pattern        braces_pattern = Pattern.compile(
               "(?:[^{}]*)"
             + "(?:"
             +    "(\\{)"                                                //  Group 1 = '{'
@@ -62,22 +62,22 @@ public class   ParseFormat
     //
     private final Zone                  z;
 
-    private String                      format;
-    private Matcher                     braces_matcher;
+    private       String                format;
+    private final Matcher               braces_matcher;
 
-    private Gem_StringBuilder           builder;
+    private       Gem_StringBuilder     builder;
 
-    private SegmentFormattable[]        segment_many;
-    private int                         segment_total;
-    private int                         segment_allocated;
+    private       SegmentFormattable[]  segment_many;
+    private       int                   segment_total;
+    private       int                   segment_allocated;
 
-    private int[]                       used_index_many;
-    private int                         used_index_total;
-    private int                         used_index_allocated;
+    private       int[]                 used_index_many;
+    private       int                   used_index_total;
+    private       int                   used_index_allocated;
 
-    private int[]                       missing_many;
-    private int                         missing_total;
-    private int                         missing_allocated;
+    private       int[]                 missing_many;
+    private       int                   missing_total;
+    private       int                   missing_allocated;
 
 
     //
@@ -108,7 +108,7 @@ public class   ParseFormat
 
     public static ParseFormat           create(Zone z, String format)
     {
-        Matcher                         braces_matcher = ParseFormat.braces_pattern.matcher(format);
+        final Matcher                   braces_matcher = ParseFormat.braces_pattern.matcher(format);
 
         return new ParseFormat(z, format, braces_matcher);
     }
@@ -146,12 +146,12 @@ public class   ParseFormat
         }
 
         int[]                           used_index_many      = this.used_index_many;
-        int                             used_index_total     = this.used_index_total;
-        int                             used_index_allocated = this.used_index_allocated;
-        int                             needed               = argument_index + 1;
+        final int                       used_index_total     = this.used_index_total;
+        final int                       used_index_allocated = this.used_index_allocated;
+        final int                       needed               = argument_index + 1;
 
         if (used_index_allocated < needed) {
-            int                         new_allocated = limit_to_between(20, needed * 2, 100);
+            final int                   new_allocated = limit_to_between(20, needed * 2, 100);
 
             used_index_many = ArrayFunctions.grow_primitive_integer_array(
                     this.z,
@@ -180,12 +180,12 @@ public class   ParseFormat
     private void                        append_missing(int missing)
     {
         int[]                           missing_many      = this.missing_many;
-        int                             missing_total     = this.missing_total;
-        int                             missing_allocated = this.missing_allocated;
-        int                             needed            = missing_total + 1;
+        final int                       missing_total     = this.missing_total;
+        final int                       missing_allocated = this.missing_allocated;
+        final int                       needed            = missing_total + 1;
 
         if (missing_allocated < needed) {
-            int                         new_allocated = limit_to_between(20, needed * 2, 100);
+            final int                   new_allocated = limit_to_between(20, needed * 2, 100);
 
             missing_many = ArrayFunctions.grow_primitive_integer_array(
                     this.z,
@@ -208,18 +208,18 @@ public class   ParseFormat
     private void                        append_segment(SegmentFormattable segment)
     {
         SegmentFormattable[]            segment_many      = this.segment_many;
-        int                             segment_total     = this.segment_total;
-        int                             segment_allocated = this.segment_allocated;
-        int                             needed            = segment_total + 1;
+        final int                       segment_total     = this.segment_total;
+        final int                       segment_allocated = this.segment_allocated;
+        final int                       needed            = segment_total + 1;
 
         if (segment_allocated < needed) {
             if (segment_allocated == 201) {
                 RUNTIME("maximum of 100 '{#}' allowed");
             }
 
-            Zone                        z = this.z;
+            final Zone                  z = this.z;
 
-            int                         new_allocated = limit_to_between(21, needed * 2, 201);
+            final int                   new_allocated = limit_to_between(21, needed * 2, 201);
 
             segment_many = ArrayFunctions.<SegmentFormattable>grow_array(
                     z,
@@ -241,9 +241,9 @@ public class   ParseFormat
 
     private void                        examine_missing()
     {
-        Zone                            z                = this.z;
-        int[]                           used_index_many  = this.used_index_many;
-        int                             used_index_total = this.used_index_total;
+        final Zone                      z                = this.z;
+        final int[]                     used_index_many  = this.used_index_many;
+        final int                       used_index_total = this.used_index_total;
 
         for (int                        i = 0; i < used_index_total; i ++) {
             if (used_index_many[i] == 0) {
@@ -251,13 +251,13 @@ public class   ParseFormat
             }
         }
 
-        int                             missing_total = this.missing_total;
+        final int                       missing_total = this.missing_total;
 
         if (missing_total == 0) {
             return;
         }
 
-        int[]                           missing_many = this.missing_many;
+        final int[]                     missing_many = this.missing_many;
 
         if (missing_total == 1) {
             RUNTIME("format string is missing {{{}}}: {p}", missing_many[0], this.format);
@@ -267,7 +267,7 @@ public class   ParseFormat
             RUNTIME("format string is missing {{{}}} and {{{}}}: {p}", missing_many[0], missing_many[1], this.format);
         }
 
-        Gem_StringBuilder               builder = this.summon_builder();
+        final Gem_StringBuilder         builder = this.summon_builder();
 
         for (int                        i = 0; i < missing_total; i ++) {
             if (i == missing_total - 1) {
@@ -285,9 +285,9 @@ public class   ParseFormat
 
     private MessageFormattable          parse_format__work()
     {
-        Zone                            z              = this.z;
-        String                          format         = this.format;
-        Matcher                         braces_matcher = this.braces_matcher;
+        final Zone                      z              = this.z;
+        final String                    format         = this.format;
+        final Matcher                   braces_matcher = this.braces_matcher;
 
         if ( ! braces_matcher.lookingAt()) {
             return AdornmentSegmentFormatter.conjure(z, format);
@@ -310,7 +310,7 @@ public class   ParseFormat
             //          2 or 7                                          //  Example: {{ or }}
             //          FAIL                                            //  Example: {, or } by themselves
             //
-            int                         end_6 = braces_matcher.end(6);
+            final int                   end_6 = braces_matcher.end(6);
 
             if (end_6 == -1) {
                 int                     start_brace_pair = braces_matcher.start(2);
@@ -323,7 +323,7 @@ public class   ParseFormat
                     }
                 }
 
-                String                  prefix = format.substring(start, start_brace_pair);
+                final String            prefix = format.substring(start, start_brace_pair);
 
                 start = start_brace_pair + 1;
 
@@ -353,7 +353,7 @@ public class   ParseFormat
                 continue;
             }
 
-            int                         start_1 = braces_matcher.start(1);
+            final int                   start_1 = braces_matcher.start(1);
 
             if (start < start_1) {
                 String                  start_s = format.substring(start, start_1);
@@ -374,7 +374,7 @@ public class   ParseFormat
                 }
             } else {
                 if (has_prefix) {
-                    String              previous = builder.finish_AND_keep();
+                    final String        previous = builder.finish_AND_keep();
 
                     if (this.segment_total == 0) {
                         prefix_0 = previous;
@@ -390,7 +390,7 @@ public class   ParseFormat
             if (braces_matcher.start(3) != -1) {
                 this.append_segment(MethodNameSegmentFormatter.conjure(z));
             } else {
-                String                  group_4 = braces_matcher.group(4);
+                final String            group_4 = braces_matcher.group(4);
 
                 if (group_4 == null) {
                     if (automatic_index == -6) {
@@ -407,8 +407,8 @@ public class   ParseFormat
                     argument_index = Integer.parseInt(group_4);
                 }
 
-                ArgumentSegmentFormatter_Inspection     argument_inspection = (
-                        argument_inspection = z.format_map.find(braces_matcher.group(5))
+                final ArgumentSegmentFormatter_Inspection   argument_inspection = (
+                        z.format_map.find(braces_matcher.group(5))
                     );
 
                 this.append_segment(argument_inspection.conjure_argument_segment(z, argument_index));
@@ -426,7 +426,7 @@ public class   ParseFormat
         }
 
         if (start < format_total) {
-            String                      end_s = format.substring(start);
+            final String                end_s = format.substring(start);
 
             if (has_prefix) {
                 builder.append(end_s);
@@ -462,7 +462,7 @@ public class   ParseFormat
             }
         }
 
-        int                             expected = this.used_index_total;
+        final int                       expected = this.used_index_total;
 
         if (segment_total == 1) {
             assert fact_null(prefix_0, "prefix_0");
@@ -518,7 +518,7 @@ public class   ParseFormat
         }
 
         SegmentFormattable[]        shrunk_many;
-        int                         shrunk_total = segment_total;
+        final int                   shrunk_total = segment_total;
 
         if (segment_total < segment_allocated) {
             shrunk_many = ArrayFunctions.<SegmentFormattable>shrink_array(
@@ -551,7 +551,7 @@ public class   ParseFormat
     //
     private void                        scrub()
     {
-        int                             segment_total = this.segment_total;
+        final int                       segment_total = this.segment_total;
 
         this.format = null;
         this.braces_matcher.reset();
@@ -570,7 +570,7 @@ public class   ParseFormat
 
     private SegmentFormattable[]        steal_segments()
     {
-        SegmentFormattable[]            segment_many = this.segment_many;
+        final SegmentFormattable[]      segment_many = this.segment_many;
 
         if (segment_many == null) {
             RUNTIME("no segments to steal");
@@ -612,7 +612,7 @@ public class   ParseFormat
             parse_format.recycle(format);
         }
 
-        MessageFormattable              r = parse_format.parse_format__work();
+        final MessageFormattable        r = parse_format.parse_format__work();
 
         parse_format.scrub();
         z.store_parse_format(parse_format);

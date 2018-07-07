@@ -19,14 +19,14 @@ public class    Storehouse_String
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_StringSet
 {
-    private static Inspection           inspection = Inspection.create("Storehouse_String");
+    private static final Inspection     inspection = Inspection.create("Storehouse_String");
 
 
     //
     //  Private static
     //
-    private static final int            initial_capacity = 1009;
-    private static Storehouse_String    singleton        = null;
+    private static final int                initial_capacity = 1009;
+    private static       Storehouse_String  singleton        = null;
 
 
 
@@ -99,7 +99,7 @@ public class    Storehouse_String
             singleton = Storehouse_String.singleton(z);
         }
 
-        String                          previous = singleton.putIfAbsent(s, s);
+        final String                    previous = singleton.putIfAbsent(s, s);
 
         if (previous != null) {
             return previous;

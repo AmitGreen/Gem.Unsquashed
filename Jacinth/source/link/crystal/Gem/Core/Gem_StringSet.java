@@ -66,21 +66,21 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
     //
     public void                         dump(String name)
     {
-        INSPECTION                      inspection = this.inspect();
+        final INSPECTION                inspection = this.inspect();
 
-        String                          simple_class_name = inspection.simple_class_name;
+        final String                    simple_class_name = inspection.simple_class_name;
 
         List<String>                    keys = new ArrayList<String>(this.keySet());
 
         Collections.sort(keys);
 
-        int                             total = keys.size();
+        final int                       total = keys.size();
 
         line("Dump of {}", simple_class_name + " " + name);
         line("      size: " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
-            String                      k = keys.get(i);
+            final String                k = keys.get(i);
 
             line("  {}", k);
         }

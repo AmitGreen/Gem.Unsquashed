@@ -21,14 +21,14 @@ public class    MessageFormatter_Many
     implements  MessageFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("MessageFormatter_Many");
+    private static final Inspection     inspection = Inspection.create("MessageFormatter_Many");
 
 
     //
     //  Members
     //
-    private int                         expected;
-    private SegmentFormattable[]        segment_many;
+    private final int                   expected;
+    private final SegmentFormattable[]  segment_many;
 
 
     //
@@ -266,17 +266,18 @@ public class    MessageFormatter_Many
     }
 
 
+    @Override
     public void                         portray(Gem_StringBuilder builder)
     {
-        int                             expected     = this.expected;
-        SegmentFormattable[]            segment_many = this.segment_many;
+        final int                       expected     = this.expected;
+        final SegmentFormattable[]      segment_many = this.segment_many;
 
-        int                             segment_total = segment_many.length;
+        final int                       segment_total = segment_many.length;
 
         builder.append("<MessageFormatter_Many expected<", expected, "> total<", segment_total, ">;");
 
         for (int                        i = 0; i < segment_total; i ++) {
-            SegmentFormattable          segment = segment_many[i];
+            final SegmentFormattable    segment = segment_many[i];
 
             builder.append(" ");
             builder.portray(segment);

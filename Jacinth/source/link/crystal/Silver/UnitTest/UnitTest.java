@@ -52,7 +52,7 @@ public class    UnitTest
     //
     private boolean                     test_development()
     {
-        World_Integer                   seven = World_Integer.create(7);
+        final World_Integer             seven = World_Integer.create(7);
 
         line("{+}: created: {}", seven);
 
@@ -62,9 +62,9 @@ public class    UnitTest
 
     private boolean                     test_old()
     {
-        Zone                            z = Zone.current_zone();
+        final Zone                      z = Zone.current_zone();
 
-        Shape                           circle = Shape.create(z, "circle");
+        final Shape                     circle = Shape.create(z, "circle");
 
         circle.skew();
 

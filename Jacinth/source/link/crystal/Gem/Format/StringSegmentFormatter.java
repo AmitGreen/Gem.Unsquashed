@@ -25,7 +25,7 @@ public class    StringSegmentFormatter
                 SegmentFormattable      <StringSegmentFormatter_Inspection>,
                 Inspectable             <StringSegmentFormatter_Inspection>//,  //  Via Gem_Object
 {
-    public static StringSegmentFormatter_Inspection     inspection = (
+    public static final StringSegmentFormatter_Inspection   inspection = (
             StringSegmentFormatter_Inspection.create("StringSegmentFormatter")
         );
 
@@ -46,13 +46,13 @@ public class    StringSegmentFormatter
     {
         final Storehouse_StringSegmentFormatter     cache = Storehouse_StringSegmentFormatter.singleton;
 
-        StringSegmentFormatter              r = cache.lookup(argument_index);
+        final StringSegmentFormatter        previous = cache.lookup(argument_index);
 
-        if (r != null) {
-            return r;
+        if (previous != null) {
+            return previous;
         }
 
-        r = new StringSegmentFormatter(argument_index);
+        final StringSegmentFormatter        r = new StringSegmentFormatter(argument_index);
 
         cache.insert(z, argument_index, r);
 
@@ -319,7 +319,7 @@ class           StringSegmentFormatter_Inspection
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("StringSegmentFormatter_Inspection");
+    private static final Inspection     inspection = Inspection.create("StringSegmentFormatter_Inspection");
 
 
     //

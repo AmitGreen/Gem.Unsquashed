@@ -21,15 +21,15 @@ public class    MessageFormatter_2
     implements  MessageFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("MessageFormatter_2");
+    private static final Inspection     inspection = Inspection.create("MessageFormatter_2");
 
 
     //
     //  Members
     //
     private final int                   expected;
-    private SegmentFormattable          a;
-    private SegmentFormattable          b;
+    private final SegmentFormattable    a;
+    private final SegmentFormattable    b;
 
 
     //

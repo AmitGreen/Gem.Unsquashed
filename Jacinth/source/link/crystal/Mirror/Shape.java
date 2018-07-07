@@ -30,9 +30,9 @@ public class    Shape
 
     public static Shape                 create(Zone z, String shape_name)
     {
-        Class<link.crystal.Jacinth.Shape>   meta = link.crystal.Jacinth.Shape.class;
+        final Class<link.crystal.Jacinth.Shape>     meta = link.crystal.Jacinth.Shape.class;
 
-        link.crystal.Jacinth.Shape      client = link.crystal.Jacinth.Shape.create(z, shape_name);
+        final link.crystal.Jacinth.Shape    client = link.crystal.Jacinth.Shape.create(z, shape_name);
 
         return new Shape(z, client);
     }
@@ -52,7 +52,7 @@ public class    Shape
     //
     public void                         skew()
     {
-        link.crystal.Jacinth.Shape      client = this.client;
+        final link.crystal.Jacinth.Shape    client = this.client;
 
         line("Mirror.skew");
 

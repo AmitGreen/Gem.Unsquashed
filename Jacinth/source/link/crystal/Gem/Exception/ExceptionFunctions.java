@@ -36,7 +36,7 @@ public abstract class   ExceptionFunctions
 
         depth += 1;
 
-        Gem_StringBuilder               builder = z.summon_StringBuilder();
+        final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
         MethodNameSegmentFormatter.method_name(builder, depth);
 
@@ -46,7 +46,7 @@ public abstract class   ExceptionFunctions
             builder.append(extra);
         }
 
-        int                             arguments_total = arguments.length;
+        final int                       arguments_total = arguments.length;
 
         if (arguments_total == 0) {
             formattable.arrange(builder, depth);
@@ -54,7 +54,7 @@ public abstract class   ExceptionFunctions
             return builder.finish_AND_recycle();
         }
 
-        Object                          v = arguments[0];
+        final Object                    v = arguments[0];
 
         if (arguments_total == 1) {
             formattable.arrange(builder, depth, v);
@@ -62,7 +62,7 @@ public abstract class   ExceptionFunctions
             return builder.finish_AND_recycle();
         }
 
-        Object                          w = arguments[1];
+        final Object                    w = arguments[1];
 
         if (arguments_total == 2) {
             formattable.arrange(builder, depth, v, w);
@@ -70,7 +70,7 @@ public abstract class   ExceptionFunctions
             return builder.finish_AND_recycle();
         }
 
-        Object                          x = arguments[2];
+        final Object                    x = arguments[2];
 
         if (arguments_total == 3) {
             formattable.arrange(builder, depth, v, w, x);
@@ -78,7 +78,7 @@ public abstract class   ExceptionFunctions
             return builder.finish_AND_recycle();
         }
 
-        Object                          y4 = arguments[3];
+        final Object                    y4 = arguments[3];
 
         if (arguments_total == 4) {
             formattable.arrange(builder, depth, v, w, x, y4);
@@ -86,7 +86,7 @@ public abstract class   ExceptionFunctions
             return builder.finish_AND_recycle();
         }
 
-        Object                          y5 = arguments[4];
+        final Object                    y5 = arguments[4];
 
         if (arguments_total == 5) {
             formattable.arrange(builder, depth, v, w, x, y4, y5);
@@ -94,7 +94,7 @@ public abstract class   ExceptionFunctions
             return builder.finish_AND_recycle();
         }
 
-        Object                          y6 = arguments[5];
+        final Object                    y6 = arguments[5];
 
         if (arguments_total == 6) {
             formattable.arrange(builder, depth, v, w, x, y4, y5, y6);
@@ -102,9 +102,9 @@ public abstract class   ExceptionFunctions
             return builder.finish_AND_recycle();
         }
 
-        Object                          y7             = arguments[6];
+        final Object                    y7             = arguments[6];
         Object []                       adjusted       = null;
-        int                             adjusted_total = arguments_total - 6;
+        final int                       adjusted_total = arguments_total - 6;
 
         if (adjusted_total > 0) {
             adjusted = new Object[adjusted_total];

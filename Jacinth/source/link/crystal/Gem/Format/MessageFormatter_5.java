@@ -21,18 +21,18 @@ public class    MessageFormatter_5
     implements  MessageFormattable,
                 Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("MessageFormatter_5");
+    private static final Inspection         inspection = Inspection.create("MessageFormatter_5");
 
 
     //
     //  Members
     //
-    private int                         expected;
-    private SegmentFormattable          a;
-    private SegmentFormattable          b;
-    private SegmentFormattable          c;
-    private SegmentFormattable          d;
-    private SegmentFormattable          e;
+    private final int                       expected;
+    private final SegmentFormattable        a;
+    private final SegmentFormattable        b;
+    private final SegmentFormattable        c;
+    private final SegmentFormattable        d;
+    private final SegmentFormattable        e;
 
 
     //
@@ -199,6 +199,7 @@ public class    MessageFormatter_5
     }
 
 
+    @Override
     public void                         portray(Gem_StringBuilder builder)
     {
         builder.append("<MessageFormatter_5 ");

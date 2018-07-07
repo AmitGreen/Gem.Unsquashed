@@ -23,7 +23,7 @@ public class    MethodNameSegmentFormatter
                 SegmentFormattable   <SegmentFormatter_Inspection>,
                 Inspectable          <SegmentFormatter_Inspection>//,   //  Via Gem_Object
 {
-    private static SegmentFormatter_Inspection  inspection = (
+    private static final SegmentFormatter_Inspection    inspection = (
             SegmentFormatter_Inspection.create("MethodNameSegmentFormatter")
         );
 
@@ -178,9 +178,9 @@ public class    MethodNameSegmentFormatter
             output("MethodNameSegmentFormatter.method_name: total<" + Integer.toString(total) + ">");
 
             for (int                    i = 0; i < total; i ++) {
-                StackTraceElement       stack_trace = stack_trace_many[i];
-                String                  class_name  = stack_trace.getClassName();
-                int                     dot_index   = class_name.lastIndexOf(46);       //  46 = '.'
+                final StackTraceElement     stack_trace = stack_trace_many[i];
+                String                      class_name  = stack_trace.getClassName();
+                final int                   dot_index   = class_name.lastIndexOf(46);   //  46 = '.'
 
                 if (dot_index != -1) {
                     class_name = class_name.substring(dot_index + 1);
@@ -208,9 +208,9 @@ public class    MethodNameSegmentFormatter
         depth += 1;
 
         if (depth < total) {
-            StackTraceElement           stack_trace = stack_trace_many[depth];
+            final StackTraceElement     stack_trace = stack_trace_many[depth];
             String                      class_name  = stack_trace.getClassName();
-            int                         dot_index   = class_name.lastIndexOf(46);       //  46 = '.'
+            final int                   dot_index   = class_name.lastIndexOf(46);       //  46 = '.'
 
             if (dot_index != -1) {
                 class_name = class_name.substring(dot_index + 1);

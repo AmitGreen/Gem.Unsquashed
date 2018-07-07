@@ -25,7 +25,7 @@ public class    NormalSegmentFormatter
                 SegmentFormattable      <ArgumentSegmentFormatter_Inspection>,
                 Inspectable             <ArgumentSegmentFormatter_Inspection>//,    //  Via Gem_Object
 {
-    public static NormalSegmentFormatter_Inspection     inspection = (
+    public static final NormalSegmentFormatter_Inspection   inspection = (
             NormalSegmentFormatter_Inspection.create("NormalSegmentFormatter")
         );
 
@@ -46,13 +46,13 @@ public class    NormalSegmentFormatter
     {
         final Storehouse_NormalSegmentFormatter     cache = Storehouse_NormalSegmentFormatter.singleton;
 
-        NormalSegmentFormatter             r = cache.lookup(argument_index);
+        NormalSegmentFormatter          previous = cache.lookup(argument_index);
 
-        if (r != null) {
-            return r;
+        if (previous != null) {
+            return previous;
         }
 
-        r = new NormalSegmentFormatter(argument_index);
+        final NormalSegmentFormatter    r = new NormalSegmentFormatter(argument_index);
 
         cache.insert(z, argument_index, r);
 
@@ -271,8 +271,6 @@ public class    NormalSegmentFormatter
         )
     {
         final int                       argument_index = this.argument_index;
-
-        final Zone                      z = builder.z;
 
         if (argument_index == 0) {
             builder.format(v);

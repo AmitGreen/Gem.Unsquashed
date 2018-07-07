@@ -25,7 +25,7 @@ public class    PortraySegmentFormatter
                 SegmentFormattable      <PortraySegmentFormatter_Inspection>,
                 Inspectable             <PortraySegmentFormatter_Inspection>//, //  Via Gem_Object
 {
-    public static PortraySegmentFormatter_Inspection    inspection = (
+    public static final PortraySegmentFormatter_Inspection  inspection = (
             PortraySegmentFormatter_Inspection.create("PortraySegmentFormatter")
         );
 
@@ -46,13 +46,13 @@ public class    PortraySegmentFormatter
     {
         final Storehouse_PortraySegmentFormatter    cache = Storehouse_PortraySegmentFormatter.singleton;
 
-        PortraySegmentFormatter             r = cache.lookup(argument_index);
+        final PortraySegmentFormatter       previous = cache.lookup(argument_index);
 
-        if (r != null) {
-            return r;
+        if (previous != null) {
+            return previous;
         }
 
-        r = new PortraySegmentFormatter(argument_index);
+        final PortraySegmentFormatter       r = new PortraySegmentFormatter(argument_index);
 
         cache.insert(z, argument_index, r);
 
@@ -319,7 +319,7 @@ class           PortraySegmentFormatter_Inspection
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("PortraySegmentFormatter_Inspection");
+    private static final Inspection     inspection = Inspection.create("PortraySegmentFormatter_Inspection");
 
 
     //

@@ -20,13 +20,13 @@ public class    Map_String_Inspection
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_StringMap<?>
 {
-    private static Inspection           inspection = Inspection.create("Map_String_Inspection");
+    private static final Inspection         inspection = Inspection.create("Map_String_Inspection");
 
 
     //
     //  Initialization
     //
-    private static Map_String_Inspection    singleton = Map_String_Inspection.singleton();
+    private static       Map_String_Inspection  singleton = Map_String_Inspection.singleton();
 
 
     //
@@ -55,7 +55,7 @@ public class    Map_String_Inspection
             return singleton;
         }
 
-        final Zone                          z = Zone.current_zone();
+        final Zone                      z = Zone.current_zone();
 
         singleton = new Map_String_Inspection(z, Map_String_Inspection.initial_capacity);
 
@@ -69,11 +69,11 @@ public class    Map_String_Inspection
         //
         //  Clear the cache ...
         //
-        final Inspection[]      cache       = Map_String_Inspection.cache;
-        final int               cache_index = Map_String_Inspection.cache_index;
+        final Inspection[]              cache       = Map_String_Inspection.cache;
+        final int                       cache_index = Map_String_Inspection.cache_index;
 
-        for (int                i        = 0; i < cache_index; i ++) {
-            Inspection          previous = cache[i];
+        for (int                        i        = 0; i < cache_index; i ++) {
+            final Inspection            previous = cache[i];
 
             singleton.insert(z, previous.simple_class_name, previous);
         }
@@ -106,7 +106,7 @@ public class    Map_String_Inspection
         final Map_String_Inspection     singleton = Map_String_Inspection.singleton;
 
         if (singleton != null) {
-            Zone                        z = singleton.z;
+            final Zone                  z = singleton.z;
 
             singleton.insert(z, v.simple_class_name, v);
 

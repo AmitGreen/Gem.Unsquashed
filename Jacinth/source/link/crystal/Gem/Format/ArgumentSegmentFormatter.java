@@ -26,7 +26,7 @@ public abstract class   ArgumentSegmentFormatter<INSPECTION extends ArgumentSegm
     //
     //  Members
     //
-    protected int                       argument_index;
+    protected final int                 argument_index;
 
 
     //

@@ -18,7 +18,7 @@ public class    Storehouse_PortraySegmentFormatter
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Storehouse_PortraySegmentFormatter");
+    private static final Inspection     inspection = Inspection.create("Storehouse_PortraySegmentFormatter");
 
 
     //

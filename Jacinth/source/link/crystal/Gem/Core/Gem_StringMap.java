@@ -38,7 +38,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     {
         assert fact_pointer(k, "k");
 
-        V                               r = this.get(k);
+        final V                         r = this.get(k);
 
         if (r == null) {
             RUNTIME("cannot find key {}", k);
@@ -50,7 +50,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
 
     public void                         portray(Gem_StringBuilder builder)
     {
-        Inspection                      inspection = this.inspect();
+        final Inspection                inspection = this.inspect();
 
         builder.append("<", inspection.simple_class_name, " size<", this.size(), ">>");
     }
@@ -61,22 +61,22 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     //
     public void                         dump(String name)
     {
-        Inspection                      inspection = this.inspect();
+        final Inspection                inspection = this.inspect();
 
-        String                          simple_class_name = inspection.simple_class_name;
+        final String                    simple_class_name = inspection.simple_class_name;
 
-        List<String>                    keys = new ArrayList<String>(this.keySet());
+        final List<String>              keys = new ArrayList<String>(this.keySet());
 
         Collections.sort(keys);
 
-        int                             total = keys.size();
+        final int                       total = keys.size();
 
         line("Dump of {}", simple_class_name + " " + name);
         line("  size: {}", total);
 
         for (int                        i = 0; i < total; i ++) {
-            String                      k = keys.get(i);
-            V                           v = this.get(k);
+            final String                k = keys.get(i);
+            final V                     v = this.get(k);
 
             line("  {}: {}", String.format("%40s", z.quote_string(k)), v);
         }

@@ -23,7 +23,7 @@ public class    Map__String__ArgumentSegmentFormatter_Inspection
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_StringMap<?>
 {
-    private static Inspection           inspection = (
+    private static final Inspection     inspection = (
             Inspection.create("Map__String__ArgumentSegmentFormatter_Inspection")
         );
 
