@@ -291,6 +291,7 @@ public class   ParseFormat
         boolean                         has_prefix      = false;
         int                             format_total    = format.length();
         int                             start           = 0;
+        String                          prefix_0        = null;
 
         for (;;) {
             int                         end_6 = braces_matcher.end(6);
@@ -309,10 +310,6 @@ public class   ParseFormat
                 if (start == format_total) {
                     if (has_prefix) {
                         builder.append(prefix);
-
-                        this.append_segment(AdornmentSegmentFormatter.conjure(z, builder.finish_AND_keep()));
-
-                        has_prefix = false;
                         break;
                     }
 
@@ -344,15 +341,27 @@ public class   ParseFormat
                 if (has_prefix) {
                     builder.append(start_s);
 
-                    this.append_segment(AdornmentSegmentFormatter.conjure(z, builder.finish_AND_keep()));
+                    start_s = builder.finish_AND_keep();
 
                     has_prefix = false;
+                }
+
+                if (this.segment_total == 0) {
+                    prefix_0 = start_s;
+                    this.append_segment(null);
                 } else {
                     this.append_segment(AdornmentSegmentFormatter.conjure(z, start_s));
                 }
             } else {
                 if (has_prefix) {
-                    this.append_segment(AdornmentSegmentFormatter.conjure(z, builder.finish_AND_keep()));
+                    String              previous = builder.finish_AND_keep();
+
+                    if (this.segment_total == 0) {
+                        prefix_0 = previous;
+                        this.append_segment(null);
+                    } else {
+                        this.append_segment(AdornmentSegmentFormatter.conjure(z, previous));
+                    }
 
                     has_prefix = false;
                 }
@@ -406,6 +415,10 @@ public class   ParseFormat
             } else {
                 this.append_segment(AdornmentSegmentFormatter.conjure(z, end_s));
             }
+        } else {
+            if (has_prefix) {
+                this.append_segment(AdornmentSegmentFormatter.conjure(z, builder.finish_AND_keep()));
+            }
         }
 
         this.examine_missing();
@@ -432,7 +445,25 @@ public class   ParseFormat
         int                             expected = this.used_index_total;
 
         if (segment_total == 1) {
+            assert fact_null(prefix_0, "prefix_0");
+
             return segment_many[0];
+        }
+
+        if (prefix_0 != null) {
+            assert fact_null(segment_many[0], "segment_many[0]");
+
+            if (segment_total == 2) {
+                final SegmentFormattable    b = segment_many[1];
+
+                if (b.inspect().is_portray_segment_formatter) {
+                    return MessageFormatter_1__Prefix.create(z, prefix_0);
+                }
+            }
+
+            segment_many[0] = AdornmentSegmentFormatter.conjure(z, prefix_0);
+        } else {
+            assert fact_pointer(segment_many[0], "segment_many[0]");
         }
 
         if (segment_total == 2) {

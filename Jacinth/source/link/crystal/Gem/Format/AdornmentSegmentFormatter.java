@@ -31,7 +31,7 @@ public class    AdornmentSegmentFormatter
     //
     //  Members
     //
-    private String                      s;
+    public final String                 s;
 
 
     //

@@ -14,6 +14,16 @@ public interface    SegmentFormattable<INSPECTION extends SegmentFormatter_Inspe
     extends         MessageFormattable,
                     Inspectable       <INSPECTION>//,
 {
+    //
+    //  Interface Inspectable
+    //
+    public INSPECTION                   inspect();
+    public void                         portray(Gem_StringBuilder builder);
+
+
+    //
+    //  Interface SegmentFormattable
+    //
     void                                choose(Gem_StringBuilder builder, int depth);
     void                                choose(Gem_StringBuilder builder, int depth, Object v);
     void                                choose(Gem_StringBuilder builder, int depth, Object v, Object w);

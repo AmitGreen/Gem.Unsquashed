@@ -28,7 +28,7 @@ public class    Main
         //assert Gem_Object.fact_between(7, 6, 77);
 
         //z.line("{+}");
-        z.line("hi: {p} from {+}, {s}", "{}", "ok");
+        z.line("hi: {p}", "hmm");
         //z.line("{+}: test {}", 7);
         //z.line("that: {+}");
         //z.line("that: {}", "hi");
@@ -36,12 +36,12 @@ public class    Main
         //z.line("prefix {0} suffix", "middle");
 
         if (true) {
-            Map_String_Inspection.singleton().dump(z, "Inspections");
+            //Map_String_Inspection.singleton().dump(z, "Inspections");
 
-            //Storehouse_MessageFormattable       .dump(z);
+            Storehouse_MessageFormattable       .dump(z);
             //Storehouse_PortraySegmentFormatter  .singleton.dump(z);
             //Storehouse_String                   .dump(z);
-            //Storehouse_AdornmentSegmentFormatter.singleton.dump(z, "Storehouse_AdornmentSegmentFormatter.singleton");
+            Storehouse_AdornmentSegmentFormatter.singleton.dump(z, "Storehouse_AdornmentSegmentFormatter.singleton");
             //z.dump(z);
         }
 

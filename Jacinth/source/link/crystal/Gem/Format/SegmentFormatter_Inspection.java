@@ -23,7 +23,9 @@ public class    SegmentFormatter_Inspection
     //
     //  Members
     //
-    boolean                             is_adornment_segment_formatter;
+    public final boolean                is_adornment_segment_formatter;
+    public final boolean                is_portray_segment_formatter;
+
 
     //
     //  Constructor & Factory
@@ -33,6 +35,7 @@ public class    SegmentFormatter_Inspection
         super(simple_class_name);
 
         this.is_adornment_segment_formatter = simple_class_name.equals("AdornmentSegmentFormatter");
+        this.is_portray_segment_formatter   = simple_class_name.equals("PortraySegmentFormatter");
     }
 
 
@@ -63,6 +66,10 @@ public class    SegmentFormatter_Inspection
 
         if (this.is_adornment_segment_formatter) {
             builder.append("; is_adornment_segment_formatter");
+        }
+
+        if (this.is_portray_segment_formatter) {
+            builder.append("; is_portray_segment_formatter");
         }
 
         builder.append(">");

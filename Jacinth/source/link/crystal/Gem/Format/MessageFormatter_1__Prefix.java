@@ -62,7 +62,7 @@ public class    MessageFormatter_1__Prefix
     public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
     {
         builder.append(this.prefix);
-        builder.format(v);
+        builder.portray(v);
     }
 
 
