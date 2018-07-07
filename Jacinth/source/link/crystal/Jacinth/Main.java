@@ -28,7 +28,7 @@ public class    Main
         //assert Gem_Object.fact_between(7, 6, 77);
 
         //z.line("{+}");
-        z.line("hi: {p}", "hmm");
+        z.line("hi: {{ and {{ yes {p} then }}", "hmm");
         //z.line("{+}: test {}", 7);
         //z.line("that: {+}");
         //z.line("that: {}", "hi");

@@ -14,7 +14,6 @@ import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.AdornmentSegmentFormatter;
 import link.crystal.Gem.Format.MessageFormatter_1__Prefix;
-import link.crystal.Gem.Format.MessageFormatter_1__Suffix;
 import link.crystal.Gem.Format.MessageFormatter_2;
 import link.crystal.Gem.Format.MessageFormatter_3;
 import link.crystal.Gem.Format.MessageFormatter_4;
@@ -37,12 +36,23 @@ public class   ParseFormat
     //
     //  Static members
     //
+    //      Matching rules:
+    //          Most likely match:          group 6                     //  Example: {}, {1}, {s} {3p}
+    //          Second most likely match:   group 2                     //  Example: {{
+    //          Third  most likely match:   group 7                     //  Example: }}
+    //          Fourth most likely:         FAIL                        //  Example: {, or } by themselves
+    //
     private static Pattern              braces_pattern = Pattern.compile(
               "(?:[^{}]*)"
-            + "(\\{)"                                                   //  Group 1 = '{'
-            + "(?:(\\{)"                                                //  Group 2 = '{'
-            +   "|(?:(\\+)|(0|[1-9][0-9]*)?([ps]?))"                    //  Group 3 = '+', Group 4 = #, Group 5 = [ps]?
-            +    "(\\})?"                                               //  Group 6 = '}'
+            + "(?:"
+            +    "(\\{)"                                                //  Group 1 = '{'
+            +    "(?:"
+            +       "(\\{)"                                             //  Group 2 = '{'
+            +      "|(?:(\\+)|(0|[1-9][0-9]*)?([ps]?))"                 //  Group 3 = '+', Group 4 = #, Group 5 = [ps]?
+            +       "(\\})?"                                            //  Group 6 = '}'
+            +    ")"
+            +   "|\\}"
+            +    "(\\})?"                                               //  Group 7 = '}'
             + ")"
         );
 
@@ -294,18 +304,30 @@ public class   ParseFormat
         String                          prefix_0        = null;
 
         for (;;) {
+            //
+            //  NOTE:
+            //      See "matching" rules above, as to why this is done in the order:
+            //
+            //          6                                               //  Example: {}, {1}, {s} {3p}
+            //          2 or 7                                          //  Example: {{ or }}
+            //          FAIL                                            //  Example: {, or } by themselves
+            //
             int                         end_6 = braces_matcher.end(6);
 
             if (end_6 == -1) {
-                int                     start_2 = braces_matcher.start(2);
+                int                     start_brace_pair = braces_matcher.start(2);
 
-                if (start_2 == -1) {
-                    RUNTIME("format string is malformed: {p}", format);
+                if (start_brace_pair == -1) {
+                    start_brace_pair = braces_matcher.start(7);
+
+                    if (start_brace_pair == -1) {
+                        RUNTIME("format string is malformed: {p}", format);
+                    }
                 }
 
-                String                  prefix = format.substring(start, start_2);
+                String                  prefix = format.substring(start, start_brace_pair);
 
-                start = start_2 + 1;
+                start = start_brace_pair + 1;
 
                 if (start == format_total) {
                     if (has_prefix) {
