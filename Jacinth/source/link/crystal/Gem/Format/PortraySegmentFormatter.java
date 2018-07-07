@@ -14,6 +14,7 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
+import link.crystal.Gem.World.World_Inspection;
 
 
 public class    PortraySegmentFormatter
@@ -315,11 +316,13 @@ public class    PortraySegmentFormatter
 class           PortraySegmentFormatter_Inspection
     extends     ArgumentSegmentFormatter_Inspection<PortraySegmentFormatter>
 //  extends     Inspection
-//  extends     Gem_Object<Inspection>
+//  extends     Gem_Object <World_Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
+    implements  Inspectable<World_Inspection>//,                        //  Via Gem_Object
 {
-    private static final Inspection     inspection = Inspection.create("PortraySegmentFormatter_Inspection");
+    private static final World_Inspection   inspection = (
+            World_Inspection.create("PortraySegmentFormatter_Inspection", 3)
+        );
 
 
     //
@@ -353,7 +356,7 @@ class           PortraySegmentFormatter_Inspection
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    public World_Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }

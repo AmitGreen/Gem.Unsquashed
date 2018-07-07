@@ -79,16 +79,6 @@ public class    UnitTest
         //line("that: {0}", "bye");
         //line("prefix {0} suffix", "middle");
 
-        if (true) {
-            //Map_String_Inspection.singleton().dump(z, "Inspections");
-
-            Storehouse_MessageFormattable       .dump(z);
-            //Storehouse_PortraySegmentFormatter  .singleton.dump(z);
-            //Storehouse_String                   .dump(z);
-            Storehouse_AdornmentSegmentFormatter.singleton.dump("Storehouse_AdornmentSegmentFormatter.singleton");
-            //z.dump(z);
-        }
-
         return true;
     }
 
@@ -134,5 +124,15 @@ public class    UnitTest
         final UnitTest                  unit_test = UnitTest.create(z);
 
         unit_test.run_test(arguments);
+
+        if (true) {
+            Map_String_Inspection.singleton().dump("Inspections");
+
+            //Storehouse_MessageFormattable       .dump(z);
+            //Storehouse_PortraySegmentFormatter  .singleton.dump(z);
+            //Storehouse_String                   .dump(z);
+            //Storehouse_AdornmentSegmentFormatter.singleton.dump("Storehouse_AdornmentSegmentFormatter.singleton");
+            //z.dump(z);
+        }
     }
 }

@@ -110,6 +110,7 @@ JACINTH_FILES = \
     $J/Gem/Support/Storehouse_String.java \
     $J/Gem/Support/Storehouse_StringSegmentFormatter.java \
     $J/Gem/World/World_Integer.java \
+    $J/Gem/World/World_Inspection.java \
     $J/Jacinth/Main.java \
     $J/Jacinth/Shape.java \
     $J/Mirror/Shape.java \
@@ -324,7 +325,7 @@ clean:
 	rm -f ut.java
 	rm -f xb.py xf.py
 	rm -f vm.java vm.py vp.java
-	rm -f wi.java
+	rm -f wi.java win.java
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
@@ -606,6 +607,7 @@ links:
 	ln -s $J/Silver/SilverModule.java                                           vm.java
 	ln -s $J/Silver/SilverProxy.java                                            vp.java
 	ln -s $J/Gem/World/World_Integer.java                                       wi.java
+	ln -s $J/Gem/World/World_Inspection.java                                    win.java
 	ln -s ../Sardonyx/Boot.py                                                   xb.py
 	ln -s ../Sapphire/Transform.py                                              xf.py
 	ln -s ../Crystal/Board.py                                                   ybd.py

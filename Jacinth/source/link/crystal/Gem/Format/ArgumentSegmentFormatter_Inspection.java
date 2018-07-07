@@ -9,14 +9,15 @@ import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Format.SegmentFormatter_Inspection;
+import link.crystal.Gem.World.World_Inspection;
 
 
 public abstract class   ArgumentSegmentFormatter_Inspection<ARGUMENT_SEGMENT extends ArgumentSegmentFormatter>
     extends             SegmentFormatter_Inspection
 //  extends             Inspection
-//  extends             Gem_Object<Inspection>
+//  extends             Gem_Object <World_Inspection>
 //  extends             Object
-    implements          Inspectable<Inspection>//,                      //  Via Gem_Object
+    implements          Inspectable<World_Inspection>//,                //  Via Gem_Object
 {
     //
     //  Constructor & Factory

@@ -14,6 +14,7 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
+import link.crystal.Gem.World.World_Inspection;
 
 
 public class    StringSegmentFormatter
@@ -315,11 +316,13 @@ public class    StringSegmentFormatter
 class           StringSegmentFormatter_Inspection
     extends     ArgumentSegmentFormatter_Inspection<StringSegmentFormatter>
 //  extends     Inspection
-//  extends     Gem_Object<Inspection>
+//  extends     Gem_Object <World_Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
+    implements  Inspectable<World_Inspection>//,                        //  Via Gem_Object
 {
-    private static final Inspection     inspection = Inspection.create("StringSegmentFormatter_Inspection");
+    private static final World_Inspection   inspection = (
+            World_Inspection.create("StringSegmentFormatter_Inspection", 5)
+        );
 
 
     //
@@ -353,7 +356,7 @@ class           StringSegmentFormatter_Inspection
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    public World_Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }

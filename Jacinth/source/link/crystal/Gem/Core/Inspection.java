@@ -4,19 +4,20 @@
 package link.crystal.Gem.Core;
 
 
-import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Map_String_Inspection;
+import link.crystal.Gem.World.World_Inspection;
 
 
 public class    Inspection
-    extends     Gem_Object<Inspection>
+    extends     Gem_Object <World_Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
+    implements  Inspectable<World_Inspection>//,                        //  Via Gem_Object
 {
-    private static final Inspection     inspection = Inspection.create("Inspection");
+    private static final World_Inspection   inspection = World_Inspection.create("Inspection", 1);
 
 
     //
@@ -49,7 +50,7 @@ public class    Inspection
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    public World_Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
@@ -60,7 +61,7 @@ public class    Inspection
         assert fact_pointer(this,    "this");
         assert fact_pointer(builder, "builder");
 
-        final Inspection                meta_inspection = this.inspect();
+        final World_Inspection          meta_inspection = this.inspect();
 
         //
         //  NOTE:
@@ -74,7 +75,7 @@ public class    Inspection
             "<",
             (
                 (meta_inspection == null || meta_inspection.simple_class_name == null)
-                    ? "<INSPECTION extends Inspection>"
+                    ? "<INSPECTION extends World_Inspection>"
                     : meta_inspection.simple_class_name
             ),
             " ",

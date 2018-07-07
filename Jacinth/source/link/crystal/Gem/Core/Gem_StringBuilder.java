@@ -155,6 +155,12 @@ public class    Gem_StringBuilder
     }
 
 
+    public void                         append(String a, String b, String c, String d, String e, int f, String g)
+    {
+        this.builder.append(a).append(b).append(c).append(d).append(e).append(f).append(g);
+    }
+
+
     //
     //  Public (arrange)
     //

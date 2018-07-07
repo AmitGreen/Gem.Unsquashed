@@ -14,6 +14,7 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Support.Storehouse_NormalSegmentFormatter;
+import link.crystal.Gem.World.World_Inspection;
 
 
 public class    NormalSegmentFormatter
@@ -315,11 +316,13 @@ public class    NormalSegmentFormatter
 class           NormalSegmentFormatter_Inspection
     extends     ArgumentSegmentFormatter_Inspection<NormalSegmentFormatter>
 //  extends     Inspection
-//  extends     Gem_Object<Inspection>
+//  extends     Gem_Object <World_Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
+    implements  Inspectable<World_Inspection>//,                        //  Via Gem_Object
 {
-    private static final Inspection     inspection = Inspection.create("NormalSegmentFormatter_Inspection");
+    private static final World_Inspection   inspection = (
+            World_Inspection.create("NormalSegmentFormatter_Inspection", 2)
+        );
 
 
     //
@@ -353,7 +356,7 @@ class           NormalSegmentFormatter_Inspection
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    public World_Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }

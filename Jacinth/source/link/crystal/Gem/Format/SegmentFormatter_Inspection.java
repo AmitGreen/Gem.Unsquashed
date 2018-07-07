@@ -9,15 +9,16 @@ import link.crystal.Gem.Core.Inspection;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.World.World_Inspection;
 
 
 public class    SegmentFormatter_Inspection
     extends     Inspection
-//  extends     Gem_Object<Inspection>
+//  extends     Gem_Object <World_Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
+    implements  Inspectable<World_Inspection>//,                        //  Via Gem_Object
 {
-    private static final Inspection     inspection = Inspection.create("SegmentFormatter_Inspection");
+    private static final World_Inspection   inspection = World_Inspection.create("SegmentFormatter_Inspection", 4);
 
 
     //
@@ -52,7 +53,7 @@ public class    SegmentFormatter_Inspection
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    public World_Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
@@ -60,7 +61,7 @@ public class    SegmentFormatter_Inspection
 
     public void                         portray(Gem_StringBuilder builder)
     {
-        final Inspection                meta_inspection = this.inspect();
+        final World_Inspection          meta_inspection = this.inspect();
 
         builder.append("<", meta_inspection.simple_class_name, " ", this.simple_class_name);
 
