@@ -175,7 +175,7 @@ public class    MethodNameSegmentFormatter
         final int                       total = stack_trace_many.length;
 
         if (false) {
-            z.line("MethodNameSegmentFormatter.method_name: total<" + Integer.toString(total) + ">");
+            output("MethodNameSegmentFormatter.method_name: total<" + Integer.toString(total) + ">");
 
             for (int                    i = 0; i < total; i ++) {
                 StackTraceElement       stack_trace = stack_trace_many[i];
@@ -186,16 +186,16 @@ public class    MethodNameSegmentFormatter
                     class_name = class_name.substring(dot_index + 1);
                 }
 
-                z.line((
-                             "  "
-                           + Integer.toString(i)
-                           + ": "
-                           + class_name
-                           + "."
-                           + stack_trace.getMethodName()
-                           + "@"
-                           + Integer.toString(stack_trace.getLineNumber())
-                      ));
+                output((
+                              "  "
+                            + Integer.toString(i)
+                            + ": "
+                            + class_name
+                            + "."
+                            + stack_trace.getMethodName()
+                            + "@"
+                            + Integer.toString(stack_trace.getLineNumber())
+                    ));
             }
         }
 

@@ -50,12 +50,12 @@ public class    Shape
     //
     //  Public
     //
-    public void                         skew(Zone z)
+    public void                         skew()
     {
-        link.crystal.Jacinth.Shape                   client = this.client;
+        link.crystal.Jacinth.Shape      client = this.client;
 
-        System.out.println("Mirror.skew");
+        line("Mirror.skew");
 
-        client.skew(z);
+        client.skew();
     }
 }

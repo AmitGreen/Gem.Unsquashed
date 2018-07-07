@@ -63,7 +63,7 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
     }
 
 
-    public void                         dump(Zone z)
+    public void                         dump()
     {
         final Inspection                inspection = this.inspect();
 
@@ -73,8 +73,8 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
 
         final int                       segment_allocated = segment_many.length;
 
-        z.line("Dump of {}", simple_class_name);
-        z.line("  size:  {}", segment_allocated);
+        line("Dump of {}", simple_class_name);
+        line("  size:  {}", segment_allocated);
 
         for (int                        i       = 0; i < segment_allocated; i ++) {
             final ELEMENT               segment = segment_many[i];
@@ -83,9 +83,9 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
                 continue;
             }
 
-            z.line("  {}:  {}", i, segment);
+            line("  {}:  {}", i, segment);
         }
 
-        z.line("End of dump of {}", simple_class_name);
+        line("End of dump of {}", simple_class_name);
     }
 }

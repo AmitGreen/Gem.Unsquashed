@@ -84,7 +84,7 @@ public class    Storehouse_MessageFormattable
             singleton = Storehouse_MessageFormattable.singleton(z);
         }
 
-        singleton.dump(z, "Storehouse_MessageFormattable.singleton");
+        singleton.dump("Storehouse_MessageFormattable.singleton");
     }
 
 

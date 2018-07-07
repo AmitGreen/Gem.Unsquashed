@@ -59,7 +59,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     //
     //  Public
     //
-    public void                         dump(Zone z, String name)
+    public void                         dump(String name)
     {
         Inspection                      inspection = this.inspect();
 
@@ -71,16 +71,16 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
 
         int                             total = keys.size();
 
-        z.line("Dump of {}", simple_class_name + " " + name);
-        z.line("  size: {}", total);
+        line("Dump of {}", simple_class_name + " " + name);
+        line("  size: {}", total);
 
         for (int                        i = 0; i < total; i ++) {
             String                      k = keys.get(i);
             V                           v = this.get(k);
 
-            z.line("  {}: {}", String.format("%40s", z.quote_string(k)), v);
+            line("  {}: {}", String.format("%40s", z.quote_string(k)), v);
         }
 
-        z.line("End of dump of {}", simple_class_name + " " + name);
+        line("End of dump of {}", simple_class_name + " " + name);
     }
 }

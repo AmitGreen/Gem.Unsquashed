@@ -64,7 +64,7 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
     //
     //  Public
     //
-    public void                         dump(Zone z, String name)
+    public void                         dump(String name)
     {
         INSPECTION                      inspection = this.inspect();
 
@@ -76,15 +76,15 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
 
         int                             total = keys.size();
 
-        z.line("Dump of {}", simple_class_name + " " + name);
-        z.line("      size: " + Integer.toString(total));
+        line("Dump of {}", simple_class_name + " " + name);
+        line("      size: " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
             String                      k = keys.get(i);
 
-            z.line("  {}", k);
+            line("  {}", k);
         }
 
-        z.line("End of dump of {}", simple_class_name + " " + name);
+        line("End of dump of {}", simple_class_name + " " + name);
     }
 }

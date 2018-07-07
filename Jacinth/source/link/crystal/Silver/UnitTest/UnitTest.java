@@ -54,7 +54,7 @@ public class    UnitTest
     {
         World_Integer                   seven = World_Integer.create(7);
 
-        line("created: {}", seven);
+        line("{+}: created: {}", seven);
 
         return true;
     }
@@ -66,18 +66,18 @@ public class    UnitTest
 
         Shape                           circle = Shape.create(z, "circle");
 
-        circle.skew(z);
+        circle.skew();
 
         //assert Gem_Object.fact_pointer(null, "test");
         //assert Gem_Object.fact_between(7, 6, 77);
 
-        //z.line("{+}");
-        z.line("hi: {{ and {{ yes {p} then }}", "hmm");
-        //z.line("{+}: test {}", 7);
-        //z.line("that: {+}");
-        //z.line("that: {}", "hi");
-        //z.line("that: {0}", "bye");
-        //z.line("prefix {0} suffix", "middle");
+        //line("{+}");
+        line("hi: {{ and {{ yes {p} then }}", "hmm");
+        //line("{+}: test {}", 7);
+        //line("that: {+}");
+        //line("that: {}", "hi");
+        //line("that: {0}", "bye");
+        //line("prefix {0} suffix", "middle");
 
         if (true) {
             //Map_String_Inspection.singleton().dump(z, "Inspections");
@@ -85,7 +85,7 @@ public class    UnitTest
             Storehouse_MessageFormattable       .dump(z);
             //Storehouse_PortraySegmentFormatter  .singleton.dump(z);
             //Storehouse_String                   .dump(z);
-            Storehouse_AdornmentSegmentFormatter.singleton.dump(z, "Storehouse_AdornmentSegmentFormatter.singleton");
+            Storehouse_AdornmentSegmentFormatter.singleton.dump("Storehouse_AdornmentSegmentFormatter.singleton");
             //z.dump(z);
         }
 

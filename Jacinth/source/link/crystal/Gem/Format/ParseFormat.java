@@ -142,9 +142,7 @@ public class   ParseFormat
     private void                        add_used_index(int argument_index)
     {
         if (false) {
-            final Zone                  z = this.z;
-
-            z.line("add_used_index(" + Integer.toString(argument_index) + ")");
+            output("add_used_index(" + Integer.toString(argument_index) + ")");
         }
 
         int[]                           used_index_many      = this.used_index_many;

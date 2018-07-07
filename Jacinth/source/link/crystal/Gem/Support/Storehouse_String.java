@@ -75,15 +75,17 @@ public class    Storehouse_String
     //
     //  Public
     //
-    public static void                  dump(Zone z)
+    public static void                  dump()
     {
         Storehouse_String               singleton = Storehouse_String.singleton;
 
         if (singleton == null) {
+            final Zone                  z = Zone.current_zone();
+
             singleton = Storehouse_String.singleton(z);
         }
 
-        singleton.dump(z, "Storehouse_String.singleton");
+        singleton.dump("Storehouse_String.singleton");
     }
 
 

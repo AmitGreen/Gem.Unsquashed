@@ -58,8 +58,8 @@ public class    Shape
     //
     //  Public
     //
-    public void                         skew(Zone z)
+    public void                         skew()
     {
-        z.line("Shape.skew: " + this.shape_name);
+        line("Shape.skew: " + this.shape_name);
     }
 }

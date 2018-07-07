@@ -298,28 +298,28 @@ public class    Zone
     }
 
 
-    public void                         dump(Zone z)
+    public void                         dump()
     {
         final Gem_StringBuilder[]       gem_builder_many  = this.gem_builder_many;
         final int                       gem_builder_total = this.gem_builder_total;
 
-        z.line("Dump of Gem_Zone: {}", this);
-        z.line("          zone_thread: {}", this.zone_thread);
-        z.line("         parse_format: {}", this.parse_format);
-        z.line("---");
-        z.line("     gem_builder_many: {}", gem_builder_many);
-        z.line("    gem_builder_total: {}", gem_builder_total);
+        line("Dump of Gem_Zone: {}", this);
+        line("          zone_thread: {}", this.zone_thread);
+        line("         parse_format: {}", this.parse_format);
+        line("---");
+        line("     gem_builder_many: {}", gem_builder_many);
+        line("    gem_builder_total: {}", gem_builder_total);
 
         for (int                        i = 0; i < gem_builder_total; i ++) {
-            z.line("  gem_builder_many[{}]: {}", i, gem_builder_many[i]);
+            line("  gem_builder_many[{}]: {}", i, gem_builder_many[i]);
         }
 
-        z.line("---");
-        z.line("           format_map: {}", this.format_map);
+        line("---");
+        line("           format_map: {}", this.format_map);
 
-        this.format_map.dump(z, "Gem_Zone.format_map");
+        this.format_map.dump("Gem_Zone.format_map");
 
-        z.line("End of dump of GemZone");
+        line("End of dump of GemZone");
     }
 
 
