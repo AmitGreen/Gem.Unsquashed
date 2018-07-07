@@ -18,7 +18,7 @@ public class    Gem_StringBuilder
 //  extends     Object
     implements  Inspectable<Inspection>//,
 {
-    private static Inspection           inspection = Inspection.create("Gem_StringBuilder");
+    private static final Inspection     inspection = Inspection.create("Gem_StringBuilder");
 
 
     //

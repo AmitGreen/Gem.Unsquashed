@@ -21,7 +21,7 @@ public class    Zone
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Zone");
+    private static final Inspection     inspection = Inspection.create("Zone");
 
 
     //

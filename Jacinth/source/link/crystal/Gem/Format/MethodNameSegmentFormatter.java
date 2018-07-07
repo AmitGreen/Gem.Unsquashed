@@ -171,7 +171,7 @@ public class    MethodNameSegmentFormatter
         final Zone                      z = builder.z;
 
         final StackTraceElement[]       stack_trace_many = z.zone_thread.getStackTrace();
-     
+
         final int                       total = stack_trace_many.length;
 
         if (false) {

@@ -16,7 +16,7 @@ public class    Shape
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("Shape");
+    private static final Inspection     inspection = Inspection.create("Shape");
 
 
     //

@@ -67,7 +67,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
         INVALID_ROUTINE();
     }
 
-  
+
     @Override
     public void                         arrange(
             Gem_StringBuilder                   builder,

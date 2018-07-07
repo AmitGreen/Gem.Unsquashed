@@ -41,7 +41,7 @@ public class    MessageFormatter_1__Prefix
     static public MessageFormatter_1__Prefix    create(Zone z, String prefix)
     {
         final String                    interned__prefix = z.intern_permenant_string(prefix);
-           
+
         return new MessageFormatter_1__Prefix(interned__prefix);
     }
 

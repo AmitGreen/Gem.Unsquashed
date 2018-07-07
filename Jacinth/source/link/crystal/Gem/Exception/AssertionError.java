@@ -15,7 +15,7 @@ public class        AssertionError
     extends         RuntimeException
     implements      Inspectable<Inspection>//,
 {
-    private static Inspection           inspection = Inspection.create("AssertionError");
+    private static final Inspection     inspection = Inspection.create("AssertionError");
 
 
     //

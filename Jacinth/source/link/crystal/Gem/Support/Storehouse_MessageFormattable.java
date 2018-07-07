@@ -20,7 +20,7 @@ public class    Storehouse_MessageFormattable
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Map<?, ?, ?>
 {
-    private static Inspection           inspection = Inspection.create("Storehouse_MessageFormattable");
+    private static final Inspection     inspection = Inspection.create("Storehouse_MessageFormattable");
 
 
     //

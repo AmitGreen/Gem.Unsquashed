@@ -23,7 +23,7 @@ public class    UnitTest
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_Object
 {
-    private static Inspection           inspection = Inspection.create("UnitTest");
+    private static final Inspection     inspection = Inspection.create("UnitTest");
 
 
     //
@@ -113,7 +113,7 @@ public class    UnitTest
 
         return false;
     }
-    
+
 
     //
     //  Interface Inspectable
