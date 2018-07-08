@@ -101,6 +101,8 @@ JACINTH_FILES = \
     $J/Gem/Interface/Inspectable.java \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
+    $J/Gem/Interface/WeakReferenceable.java \
+    $J/Gem/Support/Gem_WeakReference.java \
     $J/Gem/Support/Map_String_Inspection.java \
     $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java \
     $J/Gem/Support/Storehouse_MessageFormattable.java \
@@ -309,7 +311,7 @@ clean:
 	rm -f   hk.py hkc.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpr.py hpt.py hs.py
 	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
-	rm -f ig.java ii.java in.py im.py isf.java imf.java io.py iv.py
+	rm -f ig.java ii.java in.py im.py isf.java imf.java io.py iv.py iwr.java
 	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1.java m1c.py m1m.py m1p.java m1s.java
@@ -327,7 +329,7 @@ clean:
 	rm -f ut.java
 	rm -f xb.py xf.py
 	rm -f vm.java vm.py vp.java
-	rm -f wi.java win.java
+	rm -f wi.java win.java wr.java
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
@@ -501,6 +503,7 @@ links:
 	ln -s $J/Gem/Interface/MessageFormattable.java                              imf.java
 	ln -s $J/Gem/Interface/SegmentFormattable.java                              isf.java
 	ln -s ../Ivory/Main.py                                                      iv.py
+	ln -s $J/Gem/Interface/WeakReferenceable.java                               iwr.java
 	ln -s ../Gem/IO.py                                                          io.py
 	ln -s ../Jasper/Parse.py                                                    j0p.py
 	ln -s ../Jasper/Parse1.py                                                   j1p.py
@@ -612,6 +615,7 @@ links:
 	ln -s $J/Silver/SilverProxy.java                                            vp.java
 	ln -s $J/Gem/World/World_Integer.java                                       wi.java
 	ln -s $J/Gem/World/World_Inspection.java                                    win.java
+	ln -s $J/Gem/Support/Gem_WeakReference.java                                 wr.java
 	ln -s ../Sardonyx/Boot.py                                                   xb.py
 	ln -s ../Sapphire/Transform.py                                              xf.py
 	ln -s ../Crystal/Board.py                                                   ybd.py
