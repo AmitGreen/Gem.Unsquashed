@@ -27,15 +27,6 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     implements          Inspectable<INSPECTION>//,
 {
     //
-    //  Static types
-    //
-    public static final Class<Gem_StringBuilder[]>  Gem_StringBuilder$array$class = Gem_StringBuilder[].class;
-    public static final Class<Integer>              Integer$class                 = Integer.class;
-    public static final Class<String>               String$class                  = String.class;
-    public static final Class<Thread>               Thread$class                  = Thread.class;
-
-
-    //
     //  Public static
     //
     public static final PrintStream     standard_output = System.out;
@@ -100,8 +91,6 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
             return true;
         }
 
-        final Zone                      z = Zone.current_zone();
-
         ExceptionFunctions.ASSERT(2, "`{}` is null", name);
 
         return false;
@@ -120,6 +109,152 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     public void                         RUNTIME(String error_message, Object ... arguments)
     {
         ExceptionFunctions.RUNTIME(2, error_message, arguments);
+    }
+
+
+    //
+    //  Public (arrange)
+    //
+    public String                       arrange(String format)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        final Gem_StringBuilder         builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2);
+
+        return builder.finish_AND_recycle();
+    }
+
+
+    public String                       arrange(String format, Object v)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        final Gem_StringBuilder         builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v);
+
+        return builder.finish_AND_recycle();
+    }
+
+
+    public String                       arrange(String format, Object v, Object w)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        final Gem_StringBuilder         builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v, w);
+
+        return builder.finish_AND_recycle();
+    }
+
+
+    public String                       arrange(String format, Object v, Object w, Object x)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        final Gem_StringBuilder         builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v, w, x);
+
+        return builder.finish_AND_recycle();
+    }
+
+
+    public String                       arrange(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y//
+        )
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        final Gem_StringBuilder         builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v, w, x, y);
+
+        return builder.finish_AND_recycle();
+    }
+
+
+    public String                       arrange(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5//,
+        )
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        final Gem_StringBuilder         builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v, w, x, y4, y5);
+
+        return builder.finish_AND_recycle();
+    }
+
+
+    public String                       arrange(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6//,
+        )
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        final Gem_StringBuilder         builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v, w, x, y4, y5, y6);
+
+        return builder.finish_AND_recycle();
+    }
+
+
+    public String                       arrange(
+            String                              format,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6,
+            Object                              y7,
+            Object ...                          other_arguments//,
+        )
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+
+        final Gem_StringBuilder         builder = z.summon_StringBuilder();
+
+        formattable.arrange(builder, 2, v, w, x, y4, y5, y6, y7, other_arguments);
+
+        return builder.finish_AND_recycle();
     }
 
 

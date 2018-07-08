@@ -55,7 +55,7 @@ public class    UnitTest
         final World_Integer             seven = World_Integer.create(7);
 
         line("{+}: created: {}", seven);
-        line("hi: {{ and {{ yes {p} then }}", "hmm");
+        line("hi: {{ and {{ yes {p} then }}", arrange("arrange {}", 7));
 
         return true;
     }

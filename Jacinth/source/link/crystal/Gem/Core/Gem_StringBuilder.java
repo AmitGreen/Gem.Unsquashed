@@ -7,6 +7,7 @@ package link.crystal.Gem.Core;
 import java.lang.StringBuilder;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
@@ -14,11 +15,20 @@ import link.crystal.Gem.World.Inspection;
 
 
 public class    Gem_StringBuilder
-    extends     Gem_Object <Inspection>
+//  extends     Gem_Object <Inspection>
 //  extends     Object
     implements  Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Gem_StringBuilder");
+
+
+    //
+    //  Static types
+    //
+    public static final Class<Gem_StringBuilder[]>  Gem_StringBuilder$array$class = Gem_StringBuilder[].class;
+    public static final Class<Integer>              Integer$class                 = Integer.class;
+    public static final Class<String>               String$class                  = String.class;
+    public static final Class<Thread>               Thread$class                  = Thread.class;
 
 
     //
@@ -84,6 +94,35 @@ public class    Gem_StringBuilder
 
         builder.arrange("<GemStringBuilder builder<{} of {}; {p}>>", client.length(), client.capacity(), client.toString());
     }
+
+
+    //
+    //  private (ASSERT)
+    //
+    private static boolean              fact(boolean condition, String format)
+    {
+        if (condition) {
+            return true;
+        }
+
+        ExceptionFunctions.ASSERTION_FAILED(2, "assertion failed: {}", format);
+
+        return false;
+    }
+
+
+    private static boolean              fact_pointer(Object p, String name)
+    {
+        if (p != null) {
+            return true;
+        }
+
+        ExceptionFunctions.ASSERT(2, "`{}` is null", name);
+
+        return false;
+    }
+
+
 
 
     //
