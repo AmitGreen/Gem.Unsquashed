@@ -6,16 +6,18 @@ package link.crystal.Gem.World;
 
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
+import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.World.Comparable_Inspection;
 
 
 public class    World_Integer
-    extends     Gem_Object <Inspection>
+    extends     Gem_Object    <Comparable_Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
+    implements  Gem_Comparable<Comparable_Inspection>,
+                Inspectable   <Comparable_Inspection>//,                //  Via Gem_Object
 {
-    private static final Inspection     inspection = Inspection.create("World_Integer");
+    private static final Comparable_Inspection  inspection = Comparable_Inspection.create("World_Integer", 8);
 
 
     //
@@ -42,9 +44,26 @@ public class    World_Integer
 
 
     //
+    //  Interface Gem_Comparable
+    //
+    public int                          compareTo(Gem_Comparable that)
+    {
+        final int                       class_compare = 8 - that.inspect().class_order;
+
+        if (class_compare != 0) {
+            return class_compare;
+        }
+
+        final World_Integer             that_2 = (World_Integer) that;
+
+        return this.value - that_2.value;
+    }
+
+
+    //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    public Comparable_Inspection        inspect()
     {
         return /*static*/ this.inspection;
     }

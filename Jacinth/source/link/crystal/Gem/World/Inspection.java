@@ -10,6 +10,7 @@ import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Map_String_Inspection;
+import link.crystal.Gem.World.Comparable_Inspection;
 import link.crystal.Gem.World.World_Inspection;
 
 
@@ -58,7 +59,7 @@ public class    Inspection
             return 0;
         }
 
-        final World_Inspection          that_inspection = that.inspect();
+        final Comparable_Inspection     that_inspection = that.inspect();
 
         if ( ! that_inspection.is_world_inspection) {
             final World_Inspection      this_inspection = this.inspect();

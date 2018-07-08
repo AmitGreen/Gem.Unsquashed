@@ -92,4 +92,5 @@ public class    Comparable_Inspection
 //      StringSegmentFormatter_Inspection   5
 //      Comparable_Inspection               6
 //      World_Inspection                    7
+//      World_Integer                       8
 //

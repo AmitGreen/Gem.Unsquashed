@@ -53,9 +53,9 @@ public class    UnitTest
     private boolean                     test_development()
     {
         final World_Integer             seven = World_Integer.create(7);
+        final World_Integer             eight = World_Integer.create(8);
 
-        line("{+}: created: {}", seven);
-        line("hi: {{ and {{ yes {p} then }}", arrange("arrange {}", 7));
+        line("{} .vs {}: {}", seven, eight, seven.compareTo(eight));
 
         return true;
     }
@@ -71,6 +71,9 @@ public class    UnitTest
 
         //assert Gem_Object.fact_pointer(null, "test");
         //assert Gem_Object.fact_between(7, 6, 77);
+
+        line("{+}: created: {}", 7);
+        line("hi: {{ and {{ yes {p} then }}", arrange("arrange {}", 7));
 
         //line("{+}");
         //line("{+}: test {}", 7);
@@ -131,8 +134,7 @@ public class    UnitTest
             //Storehouse_PortraySegmentFormatter  .singleton  .dump(z);
             //Storehouse_String                               .dump(z);
             //Storehouse_AdornmentSegmentFormatter.singleton  .dump("Storehouse_AdornmentSegmentFormatter.singleton");
-
-            z.dump();
+            //z.dump();
         }
     }
 }
