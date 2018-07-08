@@ -24,9 +24,7 @@ public class    Storehouse_NormalSegmentFormatter
     //
     //  Static members
     //
-    public static final Storehouse_NormalSegmentFormatter   singleton = (
-            Storehouse_NormalSegmentFormatter.create(100)
-        );
+    public static final int             initial_capacity = 100;
 
 
     //
@@ -41,11 +39,11 @@ public class    Storehouse_NormalSegmentFormatter
     }
 
 
-    private static Storehouse_NormalSegmentFormatter    create(int capacity)
+    public static Storehouse_NormalSegmentFormatter    create__ALLY__Zone(Zone z)
     {
-        final Zone                      z = Zone.current_zone();
-
-        final NormalSegmentFormatter[]  segment_many = new NormalSegmentFormatter[capacity];
+        final NormalSegmentFormatter[]  segment_many = (
+                new NormalSegmentFormatter[Storehouse_NormalSegmentFormatter.initial_capacity]
+            );
 
         return new Storehouse_NormalSegmentFormatter(z, segment_many);
     }

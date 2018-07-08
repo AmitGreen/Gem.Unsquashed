@@ -12,7 +12,6 @@ import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.Support.Storehouse_NormalSegmentFormatter;
 import link.crystal.Gem.World.Inspection;
 import link.crystal.Gem.World.World_Inspection;
 
@@ -40,24 +39,9 @@ public class    NormalSegmentFormatter
     }
 
 
-    static public NormalSegmentFormatter    conjure__ALLY__NormalSegmentFormatter_Inspection(
-            Zone                                z,
-            int                                 argument_index//,
-        )
+    static public NormalSegmentFormatter    create__ALLY__Zone(Zone z, int argument_index)
     {
-        final Storehouse_NormalSegmentFormatter     cache = Storehouse_NormalSegmentFormatter.singleton;
-
-        NormalSegmentFormatter          previous = cache.lookup(argument_index);
-
-        if (previous != null) {
-            return previous;
-        }
-
-        final NormalSegmentFormatter    r = new NormalSegmentFormatter(argument_index);
-
-        cache.insert(z, argument_index, r);
-
-        return r;
+        return new NormalSegmentFormatter(argument_index);
     }
 
 
@@ -349,7 +333,7 @@ class           NormalSegmentFormatter_Inspection
     //
     public NormalSegmentFormatter       conjure_argument_segment(Zone z, int argument_index)
     {
-        return NormalSegmentFormatter.conjure__ALLY__NormalSegmentFormatter_Inspection(z, argument_index);
+        return z.conjure_NormalSegmentFormatter(argument_index);
     }
 
 

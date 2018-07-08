@@ -304,7 +304,7 @@ public class   ParseFormat
         final Matcher                   braces_matcher = this.braces_matcher;
 
         if ( ! braces_matcher.lookingAt()) {
-            return z.conjure__AdornmentSegmentFormatter(format);
+            return z.conjure_AdornmentSegmentFormatter(format);
         }
 
         int                             argument_index    = -1;
@@ -347,7 +347,7 @@ public class   ParseFormat
                         break;
                     }
 
-                    this.append_segment(z.conjure__AdornmentSegmentFormatter(prefix));
+                    this.append_segment(z.conjure_AdornmentSegmentFormatter(prefix));
                     break;
                 }
 
@@ -384,7 +384,7 @@ public class   ParseFormat
                     prefix_at_index_0 = start_s;
                     this.append_segment(null);
                 } else {
-                    this.append_segment(z.conjure__AdornmentSegmentFormatter(start_s));
+                    this.append_segment(z.conjure_AdornmentSegmentFormatter(start_s));
                 }
             } else {
                 if (has_prefix) {
@@ -394,7 +394,7 @@ public class   ParseFormat
                         prefix_at_index_0 = previous;
                         this.append_segment(null);
                     } else {
-                        this.append_segment(z.conjure__AdornmentSegmentFormatter(previous));
+                        this.append_segment(z.conjure_AdornmentSegmentFormatter(previous));
                     }
 
                     has_prefix = false;
@@ -445,13 +445,13 @@ public class   ParseFormat
             if (has_prefix) {
                 builder.append(end_s);
 
-                this.append_segment(z.conjure__AdornmentSegmentFormatter(builder.finish_AND_keep()));
+                this.append_segment(z.conjure_AdornmentSegmentFormatter(builder.finish_AND_keep()));
             } else {
-                this.append_segment(z.conjure__AdornmentSegmentFormatter(end_s));
+                this.append_segment(z.conjure_AdornmentSegmentFormatter(end_s));
             }
         } else {
             if (has_prefix) {
-                this.append_segment(z.conjure__AdornmentSegmentFormatter(builder.finish_AND_keep()));
+                this.append_segment(z.conjure_AdornmentSegmentFormatter(builder.finish_AND_keep()));
             }
         }
 
@@ -495,7 +495,7 @@ public class   ParseFormat
                 }
             }
 
-            segment_many[0] = z.conjure__AdornmentSegmentFormatter(prefix_at_index_0);
+            segment_many[0] = z.conjure_AdornmentSegmentFormatter(prefix_at_index_0);
         } else {
             assert fact_pointer(segment_many[0], "segment_many[0]");
         }

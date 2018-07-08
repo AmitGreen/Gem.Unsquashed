@@ -24,7 +24,7 @@ public class    Storehouse_StringSegmentFormatter
     //
     //  Static members
     //
-    public static final Storehouse_StringSegmentFormatter   singleton = Storehouse_StringSegmentFormatter.create(100);
+    public static final int             initial_capacity = 100;
 
 
     //
@@ -32,18 +32,18 @@ public class    Storehouse_StringSegmentFormatter
     //
     private                             Storehouse_StringSegmentFormatter(
             Zone                                z,
-            StringSegmentFormatter[]           segment_many//,
+            StringSegmentFormatter[]            segment_many//,
         )
     {
         super(z, segment_many);
     }
 
 
-    private static Storehouse_StringSegmentFormatter    create(int capacity)
+    public static Storehouse_StringSegmentFormatter     create__ALLY__Zone(Zone z)
     {
-        final Zone                      z = Zone.current_zone();
-
-        final StringSegmentFormatter[]  segment_many = new StringSegmentFormatter[capacity];
+        final StringSegmentFormatter[]     segment_many = (
+                new StringSegmentFormatter[Storehouse_StringSegmentFormatter.initial_capacity]
+            );
 
         return new Storehouse_StringSegmentFormatter(z, segment_many);
     }

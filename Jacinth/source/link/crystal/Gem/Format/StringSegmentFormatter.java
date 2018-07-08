@@ -12,7 +12,6 @@ import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
 import link.crystal.Gem.World.World_Inspection;
 
 
@@ -39,24 +38,9 @@ public class    StringSegmentFormatter
     }
 
 
-    static public StringSegmentFormatter    conjure__ALLY__StringSegmentFormatter_Inspection(
-            Zone                                z,
-            int                                 argument_index//,
-        )
+    static public StringSegmentFormatter    create__ALLY__Zone(Zone z, int argument_index)
     {
-        final Storehouse_StringSegmentFormatter     cache = Storehouse_StringSegmentFormatter.singleton;
-
-        final StringSegmentFormatter        previous = cache.lookup(argument_index);
-
-        if (previous != null) {
-            return previous;
-        }
-
-        final StringSegmentFormatter        r = new StringSegmentFormatter(argument_index);
-
-        cache.insert(z, argument_index, r);
-
-        return r;
+        return new StringSegmentFormatter(argument_index);
     }
 
 
@@ -348,7 +332,7 @@ class           StringSegmentFormatter_Inspection
     //
     public StringSegmentFormatter   conjure_argument_segment(Zone z, int argument_index)
     {
-        return StringSegmentFormatter.conjure__ALLY__StringSegmentFormatter_Inspection(z, argument_index);
+        return z.conjure_StringSegmentFormatter(argument_index);
     }
 
 

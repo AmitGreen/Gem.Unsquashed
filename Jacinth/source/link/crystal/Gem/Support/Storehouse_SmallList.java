@@ -51,8 +51,10 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
     }
 
 
-    public ELEMENT                      lookup(int argument_index)
+    public ELEMENT                      lookup(Zone Z, int argument_index)
     {
+        assert fact(this.z == z, "this.z == z");
+
         final ELEMENT[]                 segment_many = this.segment_many;
 
         final int                       segment_allocated = segment_many.length;
