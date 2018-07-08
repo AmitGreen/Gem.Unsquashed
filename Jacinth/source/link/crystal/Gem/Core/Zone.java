@@ -46,7 +46,10 @@ public class    Zone
     private final Gem_StringBuilder[]   string_builder_many;
     private       int                   string_builder_total;
 
+    private       Storehouse_String     storehouse_string;
+
     private       Map__String__ArgumentSegmentFormatter_Inspection  format_map;
+
 
 
     //
@@ -66,6 +69,16 @@ public class    Zone
 
         this.string_builder_many  = string_builder_many;
         this.string_builder_total = 0;
+
+        //
+        //  NOTE:
+        //      To avoid class initialization loops both `storehouse_string` and `format_map` CANNOT be initialized
+        //      here.
+        //
+        //  HENCE:
+        //      Neither can be `final` either ...
+        //
+        this.storehouse_string = null;
 
         this.format_map = null;
     }
@@ -121,7 +134,8 @@ public class    Zone
 
         //
         //  NOTE:
-        //      Must allocate `format_map` after initialization -- trying this during class initialization causes nasty loops
+        //      Must allocate `format_map` after initialization -- trying this during class initialization causes
+        //      nasty loops.
         //
         Map__String__ArgumentSegmentFormatter_Inspection    format_map = this.format_map;
 
@@ -236,17 +250,19 @@ public class    Zone
 
     public String                       intern_permenant_string(String s)
     {
-        return Storehouse_String.intern_permenant_string(this, s);
-    }
+        //
+        //  NOTE:
+        //      Must allocate `storehouse_string` after initialization -- trying this during class initialization
+        //      causes nasty loops.
+        //
+        Storehouse_String               storehouse_string = this.storehouse_string;
 
-
-    public String                       intern_permenant_string_0(String s)
-    {
-        if (s == null) {
-            return null;
+        if (storehouse_string == null) {
+            storehouse_string =
+                this.storehouse_string = Storehouse_String.create__ALLY__Zone(this);
         }
 
-        return Storehouse_String.intern_permenant_string(this, s);
+        return storehouse_string.intern_permenant_string(this, s);
     }
 
 

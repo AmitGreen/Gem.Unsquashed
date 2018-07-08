@@ -47,7 +47,7 @@ public class    AdornmentSegmentFormatter
     {
         Storehouse_AdornmentSegmentFormatter    cache = Storehouse_AdornmentSegmentFormatter.singleton;
 
-        AdornmentSegmentFormatter       r = cache.lookup(s);
+        AdornmentSegmentFormatter       r = cache.lookup(z, s);
 
         if (r != null) {
             return r;

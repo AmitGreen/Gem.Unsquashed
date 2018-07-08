@@ -26,7 +26,6 @@ public class    Storehouse_String
     //  Private static
     //
     private static final int                initial_capacity = 1009;
-    private static       Storehouse_String  singleton        = null;
 
 
 
@@ -39,7 +38,7 @@ public class    Storehouse_String
     }
 
 
-    private static Storehouse_String    create(Zone z)
+    public static Storehouse_String     create__ALLY__Zone(Zone z)
     {
         return new Storehouse_String(z, Storehouse_String.initial_capacity);
     }
@@ -55,51 +54,14 @@ public class    Storehouse_String
 
 
     //
-    //  Private
-    //
-    private static Storehouse_String    singleton(Zone z)
-    {
-        Storehouse_String               singleton = Storehouse_String.singleton;
-
-        if (singleton != null) {
-            return singleton;
-        }
-
-        singleton =
-            Storehouse_String.singleton = Storehouse_String.create(z);
-
-        return singleton;
-    }
-
-
-    //
     //  Public
     //
-    public static void                  dump()
+    public String                       intern_permenant_string(Zone z, String s)
     {
-        Storehouse_String               singleton = Storehouse_String.singleton;
-
-        if (singleton == null) {
-            final Zone                  z = Zone.current_zone();
-
-            singleton = Storehouse_String.singleton(z);
-        }
-
-        singleton.dump("Storehouse_String.singleton");
-    }
-
-
-    public static String                intern_permenant_string(Zone z, String s)
-    {
+        assert fact        (this.z == z, "this.z == z");
         assert fact_pointer(s, "s");
 
-        Storehouse_String               singleton = Storehouse_String.singleton;
-
-        if (singleton == null) {
-            singleton = Storehouse_String.singleton(z);
-        }
-
-        final String                    previous = singleton.putIfAbsent(s, s);
+        final String                    previous = this.putIfAbsent(s, s);
 
         if (previous != null) {
             return previous;
@@ -107,4 +69,4 @@ public class    Storehouse_String
 
         return s;
     }
-}
+}   
