@@ -43,23 +43,11 @@ public class    AdornmentSegmentFormatter
     }
 
 
-    static public AdornmentSegmentFormatter     conjure(Zone z, String s)
+    static public AdornmentSegmentFormatter     create__ALLY__Zone(Zone z, String s)
     {
-        Storehouse_AdornmentSegmentFormatter    cache = Storehouse_AdornmentSegmentFormatter.singleton;
+        final String                    interned_s = z.intern_permenant_string(s);
 
-        AdornmentSegmentFormatter       r = cache.lookup(z, s);
-
-        if (r != null) {
-            return r;
-        }
-
-        String                          interned_s = z.intern_permenant_string(s);
-
-        r = new AdornmentSegmentFormatter(interned_s);
-
-        cache.insert(z, interned_s, r);
-
-        return r;
+        return new AdornmentSegmentFormatter(interned_s);
     }
 
 

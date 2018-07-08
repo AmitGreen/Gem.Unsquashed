@@ -304,16 +304,16 @@ public class   ParseFormat
         final Matcher                   braces_matcher = this.braces_matcher;
 
         if ( ! braces_matcher.lookingAt()) {
-            return AdornmentSegmentFormatter.conjure(z, format);
+            return z.conjure__AdornmentSegmentFormatter(format);
         }
 
-        int                             argument_index  = -1;
-        int                             automatic_index = -1;
-        Gem_StringBuilder               builder         = null;
-        boolean                         has_prefix      = false;
-        int                             format_total    = format.length();
-        int                             start           = 0;
-        String                          prefix_0        = null;
+        int                             argument_index    = -1;
+        int                             automatic_index   = -1;
+        Gem_StringBuilder               builder           = null;
+        boolean                         has_prefix        = false;
+        int                             format_total      = format.length();
+        int                             start             = 0;
+        String                          prefix_at_index_0 = null;
 
         for (;;) {
             //
@@ -347,7 +347,7 @@ public class   ParseFormat
                         break;
                     }
 
-                    this.append_segment(AdornmentSegmentFormatter.conjure(z, prefix));
+                    this.append_segment(z.conjure__AdornmentSegmentFormatter(prefix));
                     break;
                 }
 
@@ -381,20 +381,20 @@ public class   ParseFormat
                 }
 
                 if (this.segment_total == 0) {
-                    prefix_0 = start_s;
+                    prefix_at_index_0 = start_s;
                     this.append_segment(null);
                 } else {
-                    this.append_segment(AdornmentSegmentFormatter.conjure(z, start_s));
+                    this.append_segment(z.conjure__AdornmentSegmentFormatter(start_s));
                 }
             } else {
                 if (has_prefix) {
                     final String        previous = builder.finish_AND_keep();
 
                     if (this.segment_total == 0) {
-                        prefix_0 = previous;
+                        prefix_at_index_0 = previous;
                         this.append_segment(null);
                     } else {
-                        this.append_segment(AdornmentSegmentFormatter.conjure(z, previous));
+                        this.append_segment(z.conjure__AdornmentSegmentFormatter(previous));
                     }
 
                     has_prefix = false;
@@ -445,13 +445,13 @@ public class   ParseFormat
             if (has_prefix) {
                 builder.append(end_s);
 
-                this.append_segment(AdornmentSegmentFormatter.conjure(z, builder.finish_AND_keep()));
+                this.append_segment(z.conjure__AdornmentSegmentFormatter(builder.finish_AND_keep()));
             } else {
-                this.append_segment(AdornmentSegmentFormatter.conjure(z, end_s));
+                this.append_segment(z.conjure__AdornmentSegmentFormatter(end_s));
             }
         } else {
             if (has_prefix) {
-                this.append_segment(AdornmentSegmentFormatter.conjure(z, builder.finish_AND_keep()));
+                this.append_segment(z.conjure__AdornmentSegmentFormatter(builder.finish_AND_keep()));
             }
         }
 
@@ -479,23 +479,23 @@ public class   ParseFormat
         final int                       expected = this.used_index_total;
 
         if (segment_total == 1) {
-            assert fact_null(prefix_0, "prefix_0");
+            assert fact_null(prefix_at_index_0, "prefix_at_index_0");
 
             return segment_many[0];
         }
 
-        if (prefix_0 != null) {
+        if (prefix_at_index_0 != null) {
             assert fact_null(segment_many[0], "segment_many[0]");
 
             if (segment_total == 2) {
                 final SegmentFormattable    b = segment_many[1];
 
                 if (b.inspect().is_portray_segment_formatter) {
-                    return MessageFormatter_1__Prefix.create(z, prefix_0);
+                    return MessageFormatter_1__Prefix.create(z, prefix_at_index_0);
                 }
             }
 
-            segment_many[0] = AdornmentSegmentFormatter.conjure(z, prefix_0);
+            segment_many[0] = z.conjure__AdornmentSegmentFormatter(prefix_at_index_0);
         } else {
             assert fact_pointer(segment_many[0], "segment_many[0]");
         }

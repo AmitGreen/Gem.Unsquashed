@@ -9,9 +9,12 @@ import java.lang.Thread;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.ParseFormat;
+import link.crystal.Gem.Format.AdornmentSegmentFormatter;
 import link.crystal.Gem.Format.Map__String__ArgumentSegmentFormatter_Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
+import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.World.Inspection;
@@ -46,8 +49,8 @@ public class    Zone
     private final Gem_StringBuilder[]   string_builder_many;
     private       int                   string_builder_total;
 
-    private       Storehouse_String     storehouse_string;
-
+    private       Storehouse_AdornmentSegmentFormatter              storehouse_adornment_segment_formatter;
+    private       Storehouse_String                                 storehouse_string;
     private       Map__String__ArgumentSegmentFormatter_Inspection  format_map;
 
 
@@ -72,20 +75,27 @@ public class    Zone
 
         //
         //  NOTE:
-        //      To avoid class initialization loops both `storehouse_string` and `format_map` CANNOT be initialized
-        //      here.
+        //      To avoid class initialization loops all the following CANNOT be initialized here.
+        //
+        //      Each of the following must be initializated when first used
+        //      (i.e.: after other class initializations have run)
         //
         //  HENCE:
-        //      Neither can be `final` either ...
+        //      None of the following can be declared as `final` either ...
         //
-        this.storehouse_string = null;
-
-        this.format_map = null;
+        this.storehouse_adornment_segment_formatter = null;
+        this.storehouse_string                      = null;
+        this.format_map                             = null;
     }
 
 
     public static Zone                  create(Thread zone_thread)
     {
+        //
+        //  NOTE:
+        //      See comment in `.current_zone` that says these two calls are apparently "safe" & ok to do during class
+        //      initialization.
+        //
         final ParseFormat[]             parse_format_many   = new ParseFormat      [Zone.parse_format_allocated];
         final Gem_StringBuilder[]       string_builder_many = new Gem_StringBuilder[Zone.string_builder_allocated];
 
@@ -193,7 +203,47 @@ public class    Zone
 
 
     //
-    //  Public (other)
+    //  Public (debug)
+    //
+    public void                         dump()
+    {
+        final Gem_StringBuilder[]       string_builder_many  = this.string_builder_many;
+        final int                       string_builder_total = this.string_builder_total;
+
+        line("Dump of Zone: {}", this);
+        line("          zone_thread: {}", this.zone_thread);
+        line("         parse_format: {}", this.parse_format);
+        line("---");
+        line("     string_builder_many: {}", string_builder_many);
+        line("    string_builder_total: {}", string_builder_total);
+
+        for (int                        i = 0; i < string_builder_total; i ++) {
+            line("  string_builder_many[{}]: {}", i, string_builder_many[i]);
+        }
+
+        line("---");
+        line("           format_map: {}", this.format_map);
+
+        this.format_map.dump("Zone.format_map");
+
+        line("End of dump of Zone");
+    }
+
+
+    //
+    //  Public (current_zone)
+    //
+    //  NOTE:
+    //      Since this is called during class initializatoin, this routine must be very careful not to do much
+    //      (in particular, this routiine & the routines it calls `.create` & the constructor) must not do much.
+    //
+    //  NOTE:
+    //      "not do much" includes ... not even looking at another class, as it might cause that class to call
+    //      it's class initialization functions, leading to loops ...
+    //
+    //  NOTE:
+    //      Apparently the calls to `new ParseFormat[]` & `new Gem_StringBuilder` in the `.create` function
+    //      are safe -- and do not cause loops.
     //
     public static Zone                  current_zone()
     {
@@ -223,28 +273,33 @@ public class    Zone
     }
 
 
-    public void                         dump()
+    //
+    //  Public (other)
+    //
+    public AdornmentSegmentFormatter    conjure__AdornmentSegmentFormatter(String s)
     {
-        final Gem_StringBuilder[]       string_builder_many  = this.string_builder_many;
-        final int                       string_builder_total = this.string_builder_total;
+        Storehouse_AdornmentSegmentFormatter    storehouse_adornment_segment_formatter = (
+                this.storehouse_adornment_segment_formatter
+            );
 
-        line("Dump of Zone: {}", this);
-        line("          zone_thread: {}", this.zone_thread);
-        line("         parse_format: {}", this.parse_format);
-        line("---");
-        line("     string_builder_many: {}", string_builder_many);
-        line("    string_builder_total: {}", string_builder_total);
-
-        for (int                        i = 0; i < string_builder_total; i ++) {
-            line("  string_builder_many[{}]: {}", i, string_builder_many[i]);
+        if (storehouse_adornment_segment_formatter == null) {
+            storehouse_adornment_segment_formatter =
+                this.storehouse_adornment_segment_formatter = (
+                        Storehouse_AdornmentSegmentFormatter.create__ALLY__Zone(this)
+                    );
         }
 
-        line("---");
-        line("           format_map: {}", this.format_map);
+        final AdornmentSegmentFormatter     previous = storehouse_adornment_segment_formatter.lookup(this, s);
 
-        this.format_map.dump("Zone.format_map");
+        if (previous != null) {
+            return previous;
+        }
 
-        line("End of dump of Zone");
+        final AdornmentSegmentFormatter     r = AdornmentSegmentFormatter.create__ALLY__Zone(this, s);
+
+        storehouse_adornment_segment_formatter.insert(this, r.s, r);
+
+        return r;
     }
 
 

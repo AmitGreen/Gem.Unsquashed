@@ -26,8 +26,7 @@ public class    Storehouse_AdornmentSegmentFormatter
     //
     //  Static members
     //
-    public static Storehouse_AdornmentSegmentFormatter  singleton = Storehouse_AdornmentSegmentFormatter.create(101);
-
+    private static final int            initial_capacity = 1009;
 
 
     //
@@ -39,11 +38,9 @@ public class    Storehouse_AdornmentSegmentFormatter
     }
 
 
-    private static Storehouse_AdornmentSegmentFormatter     create(int initial_capacity)
+    public static Storehouse_AdornmentSegmentFormatter  create__ALLY__Zone(Zone z)
     {
-        final Zone                      z = Zone.current_zone();
-
-        return new Storehouse_AdornmentSegmentFormatter(z, initial_capacity);
+        return new Storehouse_AdornmentSegmentFormatter(z, Storehouse_AdornmentSegmentFormatter.initial_capacity);
     }
 
 
