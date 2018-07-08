@@ -14,10 +14,10 @@ import link.crystal.Gem.World.Inspection;
 
 public class    Comparable_Inspection
     extends     Inspection
-//  extends     Gem_Object <World_Inspection>
+//  extends     Gem_Object    <World_Inspection>
 //  extends     Object
-    implements  Gem_Comparable,
-                Inspectable<World_Inspection>//,                        //  Via Gem_Object
+    implements  Gem_Comparable<World_Inspection>,
+                Inspectable   <World_Inspection>//,                     //  Via Gem_Object
 {
     private static final World_Inspection   inspection = World_Inspection.create("Comparable_Inspection", 6);
 
@@ -60,17 +60,6 @@ public class    Comparable_Inspection
 
 
     //
-    //  Interface Gem_Comparable
-    //
-    public int                          compareTo(Gem_Comparable that)
-    {
-        INVALID_ROUTINE();
-
-        return 0;
-    }
-
-
-    //
     //  Interface Inspectable
     //
     public World_Inspection             inspect()
@@ -83,7 +72,13 @@ public class    Comparable_Inspection
     {
         final World_Inspection          meta_inspection = this.inspect();
 
-        builder.append("<", meta_inspection.simple_class_name, " ", this.simple_class_name, " ", this.class_order, ">");
+        builder.append("<", meta_inspection.simple_class_name, " ", this.simple_class_name, " ", this.class_order);
+
+        if (this.is_world_inspection) {
+            builder.append("; is_world_inspection");
+        }
+
+        builder.append(">");
     }
 }
 

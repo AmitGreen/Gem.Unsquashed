@@ -5,6 +5,9 @@ package link.crystal.Gem.Support;
 
 
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringMap;
 import link.crystal.Gem.Core.Zone;
@@ -101,6 +104,31 @@ public class    Map_String_Inspection
     //
     //  Public
     //
+    public void                         dump(String name)
+    {
+        final Inspection                inspection = this.inspect();
+
+        final String                    simple_class_name = inspection.simple_class_name;
+
+        final ArrayList<Inspection>     values = new ArrayList<Inspection>(this.values());
+
+        Collections.sort(values);
+
+        final int                       total = values.size();
+
+        line("Dump of {}", simple_class_name + " " + name);
+        line("  size: {}", total);
+
+        for (int                        i = 0; i < total; i ++) {
+            final Inspection            v = values.get(i);
+
+            line("  {}", v);
+        }
+
+        line("End of dump of {}", simple_class_name + " " + name);
+    }
+
+
     public static void                  insert_or_cache(Inspection v)
     {
         final Map_String_Inspection     singleton = Map_String_Inspection.singleton;
@@ -128,7 +156,7 @@ public class    Map_String_Inspection
 
         assert fact(cache_index < cache_allocated, "cache_index < cache_allocated");
 
-        output("Caching: " + v.simple_class_name);
+        //output("Caching: " + v.simple_class_name);
 
         cache[cache_index] = v;
 

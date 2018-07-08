@@ -408,7 +408,7 @@ public class   ParseFormat
                 }
 
                 final ArgumentSegmentFormatter_Inspection   argument_inspection = (
-                        z.format_map.find(braces_matcher.group(5))
+                        z.format_map().find(braces_matcher.group(5))
                     );
 
                 this.append_segment(argument_inspection.conjure_argument_segment(z, argument_index));

@@ -297,7 +297,7 @@ clean:
 	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
 	rm -f ef.java ef.py en.py ex.py
 	rm -f files fo.py fs.py
-	rm -f gc.java gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
+	rm -f gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
 	rm -f   gi.py gi.java gl.py go.java gm.java gq.py gr.py gsb.java gse.py gsm.java gsq.py gss.java gz.java
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
@@ -309,7 +309,7 @@ clean:
 	rm -f   hk.py hkc.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpr.py hpt.py hs.py
 	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
-	rm -f ii.java in.py im.py isf.java imf.java io.py iv.py
+	rm -f ig.java ii.java in.py im.py isf.java imf.java io.py iv.py
 	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1.java m1c.py m1m.py m1p.java m1s.java
@@ -389,7 +389,6 @@ links:
 	ln -s ../Gem/Exception.py                                                   ex.py
 	ln -s ../Gem/FileOutput.py                                                  fo.py
 	ln -s ../Gem/FileStatus.py                                                  fs.py
-	ln -s $J/Gem/Interface/Gem_Comparable.java                                  gc.java
 	ln -s ../Gem/ContextManager.py                                              gcm.py
 	ln -s ../Gem/DumpCache.py                                                   gdc.py
 	ln -s ../Gem/DroveMany.py                                                   gdm.py
@@ -495,6 +494,7 @@ links:
 	ln -s ../Sapphire/Whitespace.py                                             hw.py
 	ln -s ../Sapphire/PostfixExpression.py                                      hx.py
 	ln -s ../Sapphire/SymbolTable.py                                            hy.py
+	ln -s $J/Gem/Interface/Gem_Comparable.java                                  ig.java
 	ln -s $J/Gem/Interface/Inspectable.java                                     ii.java
 	ln -s ../Gem/__init__.py                                                    in.py
 	ln -s ../Gem/Import.py                                                      im.py

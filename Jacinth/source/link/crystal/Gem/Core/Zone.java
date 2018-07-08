@@ -42,7 +42,7 @@ public class    Zone
     private final Gem_StringBuilder[]   gem_builder_many;
     private       int                   gem_builder_total;
 
-    public  final Map__String__ArgumentSegmentFormatter_Inspection  format_map;
+    private       Map__String__ArgumentSegmentFormatter_Inspection  format_map;
 
 
     //
@@ -56,7 +56,7 @@ public class    Zone
         this.gem_builder_many  = gem_builder_many;
         this.gem_builder_total = 0;
 
-        this.format_map = Map__String__ArgumentSegmentFormatter_Inspection.CREATE_AND_POPULATE(this);
+        this.format_map = null;
     }
 
 
@@ -65,6 +65,28 @@ public class    Zone
         final Gem_StringBuilder[]       gem_builder_many = new Gem_StringBuilder[Zone.gem_builder_allocated];
 
         return new Zone(zone_thread, gem_builder_many);
+    }
+
+
+    //
+    //  NOTE:
+    //      Must do this after initialization -- trying this during class initialization causes nasty loops
+    //
+    public Map__String__ArgumentSegmentFormatter_Inspection     format_map()
+    {
+        final Map__String__ArgumentSegmentFormatter_Inspection  previous = this.format_map;
+
+        if (format_map != null) {
+            return format_map;
+        }
+
+        final Map__String__ArgumentSegmentFormatter_Inspection  format_map = (
+                Map__String__ArgumentSegmentFormatter_Inspection.CREATE_AND_POPULATE(this)
+            );
+
+        this.format_map = format_map;
+
+        return format_map;
     }
 
 
