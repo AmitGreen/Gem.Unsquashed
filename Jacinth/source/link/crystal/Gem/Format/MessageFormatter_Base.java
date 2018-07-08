@@ -23,7 +23,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
     //  Interface MessageFormattable
     //
     @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth)
+    public void                         augment(Gem_StringBuilder builder, int depth)
     {
         final INSPECTION                inspection = this.inspect();
 
@@ -32,7 +32,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
 
     @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
+    public void                         augment(Gem_StringBuilder builder, int depth, Object v)
     {
         final INSPECTION                inspection = this.inspect();
 
@@ -41,21 +41,21 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
 
     @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w)
+    public void                         augment(Gem_StringBuilder builder, int depth, Object v, Object w)
     {
         INVALID_ROUTINE();
     }
 
 
     @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
+    public void                         augment(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
     {
         INVALID_ROUTINE();
     }
 
 
     @Override
-    public void                         arrange(
+    public void                         augment(
             Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
@@ -69,7 +69,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
 
     @Override
-    public void                         arrange(
+    public void                         augment(
             Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
@@ -84,7 +84,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
 
     @Override
-    public void                         arrange(
+    public void                         augment(
             Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,
@@ -100,7 +100,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
 
     @Override
-    public void                         arrange(
+    public void                         augment(
             Gem_StringBuilder                   builder,
             int                                 depth,
             Object                              v,

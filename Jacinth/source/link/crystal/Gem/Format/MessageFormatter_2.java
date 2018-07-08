@@ -62,7 +62,7 @@ public class    MessageFormatter_2
     //  Interface MessageFormattable
     //
     @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth)
+    public void                         augment(Gem_StringBuilder builder, int depth)
     {
         if (this.expected != 0) {
             RUNTIME("0 arguments given (expected {})", this.expected);
@@ -76,7 +76,7 @@ public class    MessageFormatter_2
 
 
     @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
+    public void                         augment(Gem_StringBuilder builder, int depth, Object v)
     {
         if (this.expected != 1) {
             RUNTIME("1 argument given (expected {})", this.expected);
@@ -90,7 +90,7 @@ public class    MessageFormatter_2
 
 
     @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth, Object v, Object w)
+    public void                         augment(Gem_StringBuilder builder, int depth, Object v, Object w)
     {
         if (this.expected != 2) {
             RUNTIME("2 arguments given (expected {})", this.expected);

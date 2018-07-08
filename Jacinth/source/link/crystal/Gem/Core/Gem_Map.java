@@ -125,7 +125,7 @@ public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
-        formattable.arrange(builder, 2);
+        formattable.augment(builder, 2);
 
         standard_output.println(builder.finish_AND_recycle());
     }
@@ -139,7 +139,7 @@ public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
-        formattable.arrange(builder, 2, v);
+        formattable.augment(builder, 2, v);
 
         standard_output.println(builder.finish_AND_recycle());
     }
@@ -153,7 +153,7 @@ public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
-        formattable.arrange(builder, 2, v, w);
+        formattable.augment(builder, 2, v, w);
 
         standard_output.println(builder.finish_AND_recycle());
     }
@@ -167,7 +167,7 @@ public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
-        formattable.arrange(builder, 2, v, w, x);
+        formattable.augment(builder, 2, v, w, x);
 
         standard_output.println(builder.finish_AND_recycle());
     }
@@ -181,7 +181,7 @@ public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
-        formattable.arrange(builder, 2, v, w, x, y);
+        formattable.augment(builder, 2, v, w, x, y);
 
         standard_output.println(builder.finish_AND_recycle());
     }
@@ -195,7 +195,7 @@ public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
-        formattable.arrange(builder, 2, v, w, x, y4, y5);
+        formattable.augment(builder, 2, v, w, x, y4, y5);
 
         standard_output.println(builder.finish_AND_recycle());
     }
@@ -217,7 +217,7 @@ public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
-        formattable.arrange(builder, 2, v, w, x, y4, y5, y6);
+        formattable.augment(builder, 2, v, w, x, y4, y5, y6);
 
         standard_output.println(builder.finish_AND_recycle());
     }
@@ -241,7 +241,7 @@ public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
-        formattable.arrange(builder, 2, v, w, x, y4, y5, y6, y7, other_arguments);
+        formattable.augment(builder, 2, v, w, x, y4, y5, y6, y7, other_arguments);
 
         standard_output.println(builder.finish_AND_recycle());
     }

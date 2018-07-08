@@ -5,6 +5,7 @@ package link.crystal.Gem.Core;
 
 
 import java.lang.StringBuilder;
+import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Exception.ExceptionFunctions;
@@ -15,20 +16,11 @@ import link.crystal.Gem.World.Inspection;
 
 
 public class    Gem_StringBuilder
-//  extends     Gem_Object <Inspection>
+    extends     Gem_Object <Inspection>
 //  extends     Object
     implements  Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Gem_StringBuilder");
-
-
-    //
-    //  Static types
-    //
-    public static final Class<Gem_StringBuilder[]>  Gem_StringBuilder$array$class = Gem_StringBuilder[].class;
-    public static final Class<Integer>              Integer$class                 = Integer.class;
-    public static final Class<String>               String$class                  = String.class;
-    public static final Class<Thread>               Thread$class                  = Thread.class;
 
 
     //
@@ -88,41 +80,12 @@ public class    Gem_StringBuilder
             //  NOTE:
             //      Special case, we are using this Gem_StringBuilder to show itself ...
             //
-            builder.arrange("<GemStringBuilder builder<{} of {}>; MYSELF>", client.length(), client.capacity());
+            builder.augment("<GemStringBuilder builder<{} of {}>; MYSELF>", client.length(), client.capacity());
             return;
         }
 
-        builder.arrange("<GemStringBuilder builder<{} of {}; {p}>>", client.length(), client.capacity(), client.toString());
+        builder.augment("<GemStringBuilder builder<{} of {}; {p}>>", client.length(), client.capacity(), client.toString());
     }
-
-
-    //
-    //  private (ASSERT)
-    //
-    private static boolean              fact(boolean condition, String format)
-    {
-        if (condition) {
-            return true;
-        }
-
-        ExceptionFunctions.ASSERTION_FAILED(2, "assertion failed: {}", format);
-
-        return false;
-    }
-
-
-    private static boolean              fact_pointer(Object p, String name)
-    {
-        if (p != null) {
-            return true;
-        }
-
-        ExceptionFunctions.ASSERT(2, "`{}` is null", name);
-
-        return false;
-    }
-
-
 
 
     //
@@ -201,49 +164,49 @@ public class    Gem_StringBuilder
 
 
     //
-    //  Public (arrange)
+    //  Public (augment)
     //
-    public void                         arrange(String format)
+    public void                         augment(String format)
     {
         final Zone                      z = this.z;
 
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
-        formattable.arrange(this, 2);
+        formattable.augment(this, 2);
     }
 
 
-    public void                         arrange(String format, Object v)
+    public void                         augment(String format, Object v)
     {
         final Zone                      z = this.z;
 
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
-        formattable.arrange(this, 2, v);
+        formattable.augment(this, 2, v);
     }
 
 
-    public void                         arrange(String format, Object v, Object w)
+    public void                         augment(String format, Object v, Object w)
     {
         final Zone                      z = this.z;
 
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
-        formattable.arrange(this, 2, v, w);
+        formattable.augment(this, 2, v, w);
     }
 
 
-    public void                         arrange(String format, Object v, Object w, Object x)
+    public void                         augment(String format, Object v, Object w, Object x)
     {
         final Zone                      z = this.z;
 
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
-        formattable.arrange(this, 2, v, w, x);
+        formattable.augment(this, 2, v, w, x);
     }
 
 
-    public void                         arrange(
+    public void                         augment(
             String                              format,
             Object                              v,
             Object                              w,
@@ -255,11 +218,11 @@ public class    Gem_StringBuilder
 
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
-        formattable.arrange(this, 2, v, w, x, y);
+        formattable.augment(this, 2, v, w, x, y);
     }
 
 
-    public void                         arrange(
+    public void                         augment(
             String                              format,
             Object                              v,
             Object                              w,
@@ -272,11 +235,11 @@ public class    Gem_StringBuilder
 
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
-        formattable.arrange(this, 2, v, w, x, y4, y5);
+        formattable.augment(this, 2, v, w, x, y4, y5);
     }
 
 
-    public void                         arrange(
+    public void                         augment(
             String                              format,
             Object                              v,
             Object                              w,
@@ -290,11 +253,11 @@ public class    Gem_StringBuilder
 
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
-        formattable.arrange(this, 2, v, w, x, y4, y5, y6);
+        formattable.augment(this, 2, v, w, x, y4, y5, y6);
     }
 
 
-    public void                         arrange(
+    public void                         augment(
             String                              format,
             Object                              v,
             Object                              w,
@@ -310,7 +273,7 @@ public class    Gem_StringBuilder
 
         final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
 
-        formattable.arrange(this, 2, v, w, x, y4, y5, y6, y7, other_arguments);
+        formattable.augment(this, 2, v, w, x, y4, y5, y6, y7, other_arguments);
     }
 
 
@@ -353,26 +316,26 @@ public class    Gem_StringBuilder
 
         final Class<?>                  v_class = v.getClass();
 
-        if (v_class == Integer$class) {
+        if (v_class == Gem.Integer$class) {
             this.builder.append((Integer) v);
             return;
         }
 
-        if (v_class == String$class) {
+        if (v_class == Gem.String$class) {
             this.builder.append((String) v);
             return;
         }
 
-        if (v_class == Thread$class) {
+        if (v_class == Gem.Thread$class) {
             this.builder.append("<").append(v.toString()).append(">");
             return;
         }
 
-        if (v_class == Gem_StringBuilder$array$class)
+        if (v_class == Gem.Gem_StringBuilder$array$class)
         {
             final Gem_StringBuilder[]   v2 = (Gem_StringBuilder[]) v;
 
-            this.arrange("<Gem_StringBuilder size{p}>", v2.length);
+            this.augment("<Gem_StringBuilder size{p}>", v2.length);
             return;
         }
 
@@ -394,26 +357,26 @@ public class    Gem_StringBuilder
 
         final Class<?>                  v_class = v.getClass();
 
-        if (v_class == Integer$class) {
+        if (v_class == Gem.Integer$class) {
             this.builder.append("<int ").append((Integer) v).append(">");
             return;
         }
 
-        if (v_class == String$class) {
+        if (v_class == Gem.String$class) {
             this.quote((String) v);
             return;
         }
 
-        if (v_class == Thread$class) {
+        if (v_class == Gem.Thread$class) {
             this.builder.append("<").append(v.toString()).append(">");
             return;
         }
 
-        if (v_class == Gem_StringBuilder$array$class)
+        if (v_class == Gem.Gem_StringBuilder$array$class)
         {
             final Gem_StringBuilder[]   v2 = (Gem_StringBuilder[]) v;
 
-            this.arrange("<Gem_StringBuilder size{p}>", v2.length);
+            this.augment("<Gem_StringBuilder size{p}>", v2.length);
             return;
         }
 

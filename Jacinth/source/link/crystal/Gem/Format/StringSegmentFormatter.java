@@ -73,7 +73,7 @@ public class    StringSegmentFormatter
     //  Interface MessageFormattable
     //
     @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
+    public void                         augment(Gem_StringBuilder builder, int depth, Object v)
     {
         builder.append(v.toString());
     }

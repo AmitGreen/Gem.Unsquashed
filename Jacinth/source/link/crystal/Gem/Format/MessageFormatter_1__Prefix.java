@@ -59,7 +59,7 @@ public class    MessageFormatter_1__Prefix
     //  Interface MessageFormattable
     //
     @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
+    public void                         augment(Gem_StringBuilder builder, int depth, Object v)
     {
         builder.append(this.prefix);
         builder.portray(v);

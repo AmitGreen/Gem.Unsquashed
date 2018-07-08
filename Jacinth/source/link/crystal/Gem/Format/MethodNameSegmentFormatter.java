@@ -71,7 +71,7 @@ public class    MethodNameSegmentFormatter
     //  Interface MessageFormattable
     //
     @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth)
+    public void                         augment(Gem_StringBuilder builder, int depth)
     {
         this.method_name(builder, depth + 1);
     }

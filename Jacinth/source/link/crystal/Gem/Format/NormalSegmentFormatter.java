@@ -74,7 +74,7 @@ public class    NormalSegmentFormatter
     //  Interface MessageFormattable
     //
     @Override
-    public void                         arrange(Gem_StringBuilder builder, int depth, Object v)
+    public void                         augment(Gem_StringBuilder builder, int depth, Object v)
     {
         builder.format(v);
     }

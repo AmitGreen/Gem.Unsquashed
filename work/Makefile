@@ -72,6 +72,7 @@ J = ../Jacinth/source/link/crystal
 JACINTH_FILES = \
     ../Jacinth/pom.xml \
     $J/Gem/Core/ArrayFunctions.java \
+    $J/Gem/Core/Gem.java \
     $J/Gem/Core/Gem_Map.java \
     $J/Gem/Core/Gem_Object.java \
     $J/Gem/Core/Gem_StringBuilder.java \
@@ -299,7 +300,7 @@ clean:
 	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
 	rm -f ef.java ef.py en.py ex.py
 	rm -f files fo.py fs.py
-	rm -f gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
+	rm -f gcm.py gdc.py gdm.py gdo.py ge.java gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
 	rm -f   gi.py gi.java gl.py go.java gm.java gq.py gr.py gsb.java gse.py gsm.java gsq.py gss.java gz.java
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
@@ -395,6 +396,7 @@ links:
 	ln -s ../Gem/DumpCache.py                                                   gdc.py
 	ln -s ../Gem/DroveMany.py                                                   gdm.py
 	ln -s ../Gem/Codec.py                                                       gdo.py
+	ln -s $J/Gem/Core/Gem.java                                                  ge.java
 	ln -s ../Gem/Gaggle.py                                                      gga.py
 	ln -s ../Gem/GarbageCollection.py                                           ggc.py
 	ln -s ../Gem/GeneratedConjureQuadruple.py                                   gg4.py

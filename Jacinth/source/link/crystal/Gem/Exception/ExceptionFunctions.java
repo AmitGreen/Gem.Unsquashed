@@ -24,7 +24,7 @@ public abstract class   ExceptionFunctions
     //
     //  Private
     //
-    private static String               method_name__arrange(
+    private static String               method_name(
             Zone                                z,
             int                                 depth,
             String                              extra,
@@ -49,7 +49,7 @@ public abstract class   ExceptionFunctions
         final int                       arguments_total = arguments.length;
 
         if (arguments_total == 0) {
-            formattable.arrange(builder, depth);
+            formattable.augment(builder, depth);
 
             return builder.finish_AND_recycle();
         }
@@ -57,7 +57,7 @@ public abstract class   ExceptionFunctions
         final Object                    v = arguments[0];
 
         if (arguments_total == 1) {
-            formattable.arrange(builder, depth, v);
+            formattable.augment(builder, depth, v);
 
             return builder.finish_AND_recycle();
         }
@@ -65,7 +65,7 @@ public abstract class   ExceptionFunctions
         final Object                    w = arguments[1];
 
         if (arguments_total == 2) {
-            formattable.arrange(builder, depth, v, w);
+            formattable.augment(builder, depth, v, w);
 
             return builder.finish_AND_recycle();
         }
@@ -73,7 +73,7 @@ public abstract class   ExceptionFunctions
         final Object                    x = arguments[2];
 
         if (arguments_total == 3) {
-            formattable.arrange(builder, depth, v, w, x);
+            formattable.augment(builder, depth, v, w, x);
 
             return builder.finish_AND_recycle();
         }
@@ -81,7 +81,7 @@ public abstract class   ExceptionFunctions
         final Object                    y4 = arguments[3];
 
         if (arguments_total == 4) {
-            formattable.arrange(builder, depth, v, w, x, y4);
+            formattable.augment(builder, depth, v, w, x, y4);
 
             return builder.finish_AND_recycle();
         }
@@ -89,7 +89,7 @@ public abstract class   ExceptionFunctions
         final Object                    y5 = arguments[4];
 
         if (arguments_total == 5) {
-            formattable.arrange(builder, depth, v, w, x, y4, y5);
+            formattable.augment(builder, depth, v, w, x, y4, y5);
 
             return builder.finish_AND_recycle();
         }
@@ -97,7 +97,7 @@ public abstract class   ExceptionFunctions
         final Object                    y6 = arguments[5];
 
         if (arguments_total == 6) {
-            formattable.arrange(builder, depth, v, w, x, y4, y5, y6);
+            formattable.augment(builder, depth, v, w, x, y4, y5, y6);
 
             return builder.finish_AND_recycle();
         }
@@ -114,7 +114,7 @@ public abstract class   ExceptionFunctions
             }
         }
 
-        formattable.arrange(builder, depth, v, w, x, y4, y5, y6, y7, adjusted);
+        formattable.augment(builder, depth, v, w, x, y4, y5, y6, y7, adjusted);
 
         return builder.finish_AND_recycle();
     }
@@ -128,7 +128,7 @@ public abstract class   ExceptionFunctions
         final Zone                      z = Zone.current_zone();
 
         final String                    error_message = (
-                ExceptionFunctions.method_name__arrange(z, depth + 1, null, format, arguments)
+                ExceptionFunctions.method_name(z, depth + 1, null, format, arguments)
             );
 
         final AssertionError            assertion_error = AssertionError.create(z, error_message);
@@ -142,7 +142,7 @@ public abstract class   ExceptionFunctions
         final Zone                      z = Zone.current_zone();
 
         final String                    error_message = (
-                ExceptionFunctions.method_name__arrange(z, depth + 1, "assertion failed: ", format, arguments)
+                ExceptionFunctions.method_name(z, depth + 1, "assertion failed: ", format, arguments)
             );
 
         final AssertionError            assertion_error = AssertionError.create(z, error_message);
@@ -156,7 +156,7 @@ public abstract class   ExceptionFunctions
         final Zone                      z = Zone.current_zone();
 
         final String                    error_message = (
-                ExceptionFunctions.method_name__arrange(z, depth + 1, null, format, arguments)
+                ExceptionFunctions.method_name(z, depth + 1, null, format, arguments)
             );
 
         final RuntimeException          runtime_exception = new RuntimeException(error_message);

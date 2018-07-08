@@ -91,7 +91,7 @@ public class    Zone
 
     public void                         portray(Gem_StringBuilder builder)
     {
-        builder.arrange("<Zone zone_thread{p} ... string_builder_total{p} ...>",
+        builder.augment("<Zone zone_thread{p} ... string_builder_total{p} ...>",
                         this.zone_thread,
                         this.string_builder_total);
     }

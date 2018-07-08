@@ -46,7 +46,7 @@ public abstract class   ArgumentSegmentFormatter<INSPECTION extends ArgumentSegm
     //
     //  Interface MessageFormattable
     //
-    public abstract void                arrange(Gem_StringBuilder builder, int depth, Object v);
+    public abstract void                augment(Gem_StringBuilder builder, int depth, Object v);
 
 
     //

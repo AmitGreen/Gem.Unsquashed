@@ -4,21 +4,12 @@
 package link.crystal.Gem.Core;
 
 
-import java.io.PrintStream;
-import java.lang.Class;
-import java.lang.Integer;
 import java.lang.Object;
-import java.lang.String;
 import java.lang.System;
-import java.lang.System;
-import java.lang.Thread;
+import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.Support.Storehouse_MessageFormattable;
-import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.World.Inspection;
 
 
@@ -26,12 +17,6 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     extends             Object
     implements          Inspectable<INSPECTION>//,
 {
-    //
-    //  Public static
-    //
-    public static final PrintStream     standard_output = System.out;
-
-
     //
     //  Interface Inspectable
     //
@@ -100,13 +85,13 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     //
     //  Public (ERRORS)
     //
-    public void                         INVALID_ROUTINE()
+    public static void                  INVALID_ROUTINE()
     {
         ExceptionFunctions.RUNTIME(2, "invalid routine");
     }
 
 
-    public void                         RUNTIME(String error_message, Object ... arguments)
+    public static void                  RUNTIME(String error_message, Object ... arguments)
     {
         ExceptionFunctions.RUNTIME(2, error_message, arguments);
     }
@@ -115,63 +100,31 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     //
     //  Public (arrange)
     //
-    public String                       arrange(String format)
+    public static String                arrange(String format)
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2);
-
-        return builder.finish_AND_recycle();
+        return Gem.arrange(2, format);
     }
 
 
-    public String                       arrange(String format, Object v)
+    public static String                arrange(String format, Object v)
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v);
-
-        return builder.finish_AND_recycle();
+        return Gem.arrange(2, format, v);
     }
 
 
-    public String                       arrange(String format, Object v, Object w)
+    public static String                arrange(String format, Object v, Object w)
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v, w);
-
-        return builder.finish_AND_recycle();
+        return Gem.arrange(2, format, v, w);
     }
 
 
-    public String                       arrange(String format, Object v, Object w, Object x)
+    public static String                arrange(String format, Object v, Object w, Object x)
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v, w, x);
-
-        return builder.finish_AND_recycle();
+        return Gem.arrange(2, format, v, w, x);
     }
 
 
-    public String                       arrange(
+    public static String                arrange(
             String                              format,
             Object                              v,
             Object                              w,
@@ -179,19 +132,11 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
             Object                              y//
         )
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v, w, x, y);
-
-        return builder.finish_AND_recycle();
+        return Gem.arrange(2, format, v, w, x, y);
     }
 
 
-    public String                       arrange(
+    public static String                arrange(
             String                              format,
             Object                              v,
             Object                              w,
@@ -200,19 +145,11 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
             Object                              y5//,
         )
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v, w, x, y4, y5);
-
-        return builder.finish_AND_recycle();
+        return Gem.arrange(2, format, v, w, x, y4, y5);
     }
 
 
-    public String                       arrange(
+    public static String                arrange(
             String                              format,
             Object                              v,
             Object                              w,
@@ -222,19 +159,11 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
             Object                              y6//,
         )
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v, w, x, y4, y5, y6);
-
-        return builder.finish_AND_recycle();
+        return Gem.arrange(2, format, v, w, x, y4, y5, y6);
     }
 
 
-    public String                       arrange(
+    public static String                arrange(
             String                              format,
             Object                              v,
             Object                              w,
@@ -246,112 +175,56 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
             Object ...                          other_arguments//,
         )
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v, w, x, y4, y5, y6, y7, other_arguments);
-
-        return builder.finish_AND_recycle();
+        return Gem.arrange(2, format, v, w, x, y4, y5, y6, y7, other_arguments);
     }
 
 
     //
     //  Public (line)
     //
-    public void                         line()
+    public static void                  line()
     {
-        standard_output.println();
+        Gem.line();
     }
 
 
-    public void                         line(String format)
+    public static void                  line(String format)
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2);
-
-        standard_output.println(builder.finish_AND_recycle());
+        Gem.line(2, format);
     }
 
 
-    public void                         line(String format, Object v)
+    public static void                  line(String format, Object v)
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v);
-
-        standard_output.println(builder.finish_AND_recycle());
+        Gem.line(2, format, v);
     }
 
 
-    public void                         line(String format, Object v, Object w)
+    public static void                  line(String format, Object v, Object w)
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v, w);
-
-        standard_output.println(builder.finish_AND_recycle());
+        Gem.line(2, format, v, w);
     }
 
 
-    public void                         line(String format, Object v, Object w, Object x)
+    public static void                  line(String format, Object v, Object w, Object x)
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v, w, x);
-
-        standard_output.println(builder.finish_AND_recycle());
+        Gem.line(2, format, v, w, x);
     }
 
 
-    public void                         line(String format, Object v, Object w, Object x, Object y)
+    public static void                  line(String format, Object v, Object w, Object x, Object y)
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        Gem_StringBuilder               builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v, w, x, y);
-
-        standard_output.println(builder.finish_AND_recycle());
+        Gem.line(2, format, v, w, x, y);
     }
 
 
-    public void                         line(String format, Object v, Object w, Object x, Object y4, Object y5)
+    public static void                  line(String format, Object v, Object w, Object x, Object y4, Object y5)
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v, w, x, y4, y5);
-
-        standard_output.println(builder.finish_AND_recycle());
+        Gem.line(2, format, v, w, x, y4, y5);
     }
 
 
-    public void                         line(
+    public static void                  line(
             String                              format,
             Object                              v,
             Object                              w,
@@ -361,19 +234,11 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
             Object                              y6//,
         )
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v, w, x, y4, y5, y6);
-
-        standard_output.println(builder.finish_AND_recycle());
+        Gem.line(2, format, v, w, x, y4, y5, y6);
     }
 
 
-    public void                         line(
+    public static void                  line(
             String                              format,
             Object                              v,
             Object                              w,
@@ -385,15 +250,7 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
             Object ...                          other_arguments//,
         )
     {
-        final Zone                      z = Zone.current_zone();
-
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
-
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.arrange(builder, 2, v, w, x, y4, y5, y6, y7, other_arguments);
-
-        standard_output.println(builder.finish_AND_recycle());
+        Gem.line(2, format, v, w, x, y4, y5, y6, y7, other_arguments);
     }
 
 
@@ -402,20 +259,12 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     //
     public static int                   limit_to_between(int minimum, int v, int maximum)
     {
-        if (v < minimum) {
-            return minimum;
-        }
-
-        if (v > maximum) {
-            return maximum;
-        }
-
-        return v;
+        return Gem.limit_to_between(minimum, v, maximum);
     }
 
 
     public static void                  output(String s)
     {
-        standard_output.println(s);
+        Gem.output(s);
     }
 }
