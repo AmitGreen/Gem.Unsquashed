@@ -23,6 +23,32 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
     //  Interface MessageFormattable
     //
     @Override
+    public String                       augment(int depth)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final Gem_StringBuilder         builder = z.summon_StringBuilder();
+
+        this.augment(builder, depth + 1);
+
+        return builder.finish_AND_recycle();
+    }
+
+
+    @Override
+    public String                       augment(int depth, Object v)
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final Gem_StringBuilder         builder = z.summon_StringBuilder();
+
+        this.augment(builder, depth + 1, v);
+
+        return builder.finish_AND_recycle();
+    }
+
+
+    @Override
     public void                         augment(Gem_StringBuilder builder, int depth)
     {
         final INSPECTION                inspection = this.inspect();

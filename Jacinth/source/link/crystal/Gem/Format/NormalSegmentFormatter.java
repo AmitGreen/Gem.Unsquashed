@@ -72,6 +72,7 @@ public class    NormalSegmentFormatter
         INVALID_ROUTINE();
     }
 
+
     public void                         choose(Gem_StringBuilder builder, int depth, Object v)
     {
         final int                       argument_index = this.argument_index;

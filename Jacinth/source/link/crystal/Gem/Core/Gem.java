@@ -41,11 +41,7 @@ public abstract class   Gem
 
         final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.augment(builder, depth + 1);
-
-        return builder.finish_AND_recycle();
+        return formattable.augment(depth + 1);
     }
 
 
@@ -55,11 +51,7 @@ public abstract class   Gem
 
         final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.augment(builder, depth + 1, v);
-
-        return builder.finish_AND_recycle();
+        return formattable.augment(depth + 1, v);
     }
 
 
@@ -197,11 +189,7 @@ public abstract class   Gem
 
         final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.augment(builder, depth + 1);
-
-        standard_output.println(builder.finish_AND_recycle());
+        standard_output.println(formattable.augment(builder, depth + 1));
     }
 
 
@@ -211,11 +199,7 @@ public abstract class   Gem
 
         final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
-        final Gem_StringBuilder         builder = z.summon_StringBuilder();
-
-        formattable.augment(builder, depth + 1, v);
-
-        standard_output.println(builder.finish_AND_recycle());
+        standard_output.println(formattable.augment(builder, depth + 1, v));
     }
 
 

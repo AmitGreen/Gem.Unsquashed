@@ -11,6 +11,9 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 
 public interface   MessageFormattable
 {
+    String                              augment(int depth);
+    String                              augment(int depth, Object v);
+
     void                                augment(Gem_StringBuilder builder, int depth);
     void                                augment(Gem_StringBuilder builder, int depth, Object v);
     void                                augment(Gem_StringBuilder builder, int depth, Object v, Object w);

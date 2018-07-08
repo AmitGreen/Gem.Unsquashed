@@ -64,6 +64,13 @@ public class    AdornmentSegmentFormatter
     //  Interface MessageFormattable
     //
     @Override
+    public String                       augment(int depth)
+    {
+        return this.s;
+    }
+
+
+    @Override
     public void                         augment(Gem_StringBuilder builder, int depth)
     {
         builder.append(this.s);

@@ -57,6 +57,13 @@ public class    StringSegmentFormatter
     //  Interface MessageFormattable
     //
     @Override
+    public String                       augment(int depth, Object v)
+    {
+        return v.toString();
+    }
+
+
+    @Override
     public void                         augment(Gem_StringBuilder builder, int depth, Object v)
     {
         builder.append(v.toString());
