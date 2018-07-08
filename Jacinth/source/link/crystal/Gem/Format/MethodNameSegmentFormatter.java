@@ -29,13 +29,6 @@ public class    MethodNameSegmentFormatter
 
 
     //
-    //  Private static
-    //
-    private static MethodNameSegmentFormatter   singleton = null;
-
-
-
-    //
     //  Constructor & Factory
     //
     private                             MethodNameSegmentFormatter()
@@ -43,18 +36,9 @@ public class    MethodNameSegmentFormatter
     }
 
 
-    static public MethodNameSegmentFormatter    conjure(Zone z)
+    static public MethodNameSegmentFormatter    create__ALLY__Gem()
     {
-        MethodNameSegmentFormatter      singleton = MethodNameSegmentFormatter.singleton;
-
-        if (singleton != null) {
-            return singleton;
-        }
-
-        singleton =
-            MethodNameSegmentFormatter.singleton = new MethodNameSegmentFormatter();
-
-        return singleton;
+        return new MethodNameSegmentFormatter();
     }
 
 

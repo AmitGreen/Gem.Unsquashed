@@ -55,7 +55,7 @@ public class    UnitTest
         final World_Integer             seven = World_Integer.create(7);
         final World_Integer             eight = World_Integer.create(8);
 
-        line("{} .vs {}: {}", seven, eight, seven.compareTo(eight));
+        line("{+}: {} .vs {}: {}", seven, eight, seven.compareTo(eight));
 
         return true;
     }

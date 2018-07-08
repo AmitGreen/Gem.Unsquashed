@@ -8,6 +8,7 @@ import java.io.PrintStream;
 import java.lang.Object;
 import java.lang.System;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Format.MethodNameSegmentFormatter;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 
@@ -18,7 +19,8 @@ public abstract class   Gem
     //
     //  Public static
     //
-    public static final PrintStream     standard_output = System.out;
+    public static final PrintStream                 standard_output                = System.out;
+    public static       MethodNameSegmentFormatter  message_name_segment_formatter = null;
 
 
     //
@@ -324,6 +326,28 @@ public abstract class   Gem
     //
     //  Public (other)
     //
+    public static MethodNameSegmentFormatter    conjure_MethodNameSegmentFormatter()
+    {
+        final MethodNameSegmentFormatter        previous = Gem.message_name_segment_formatter;
+
+        if (previous != null) {
+            return previous;
+        }
+
+        //
+        //  NOTE:
+        //      Must allocate `message_name_segment_formatter` after initialization -- trying this during class
+        //      initialization causes nasty loops.
+        //
+        final MethodNameSegmentFormatter        message_name_segment_formatter = (
+                MethodNameSegmentFormatter.create__ALLY__Gem()
+            );
+
+        Gem.message_name_segment_formatter = message_name_segment_formatter;
+
+        return message_name_segment_formatter;
+    }
+
     public static int                   limit_to_between(int minimum, int v, int maximum)
     {
         if (v < minimum) {

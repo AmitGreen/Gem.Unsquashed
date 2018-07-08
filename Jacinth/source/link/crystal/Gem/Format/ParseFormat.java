@@ -8,6 +8,7 @@ import java.lang.String;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import link.crystal.Gem.Core.ArrayFunctions;
+import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
@@ -20,7 +21,6 @@ import link.crystal.Gem.Format.MessageFormatter_3;
 import link.crystal.Gem.Format.MessageFormatter_4;
 import link.crystal.Gem.Format.MessageFormatter_5;
 import link.crystal.Gem.Format.MessageFormatter_Many;
-import link.crystal.Gem.Format.MethodNameSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
@@ -402,7 +402,7 @@ public class   ParseFormat
             }
 
             if (braces_matcher.start(3) != -1) {
-                this.append_segment(MethodNameSegmentFormatter.conjure(z));
+                this.append_segment(Gem.conjure_MethodNameSegmentFormatter());
             } else {
                 final String            group_4 = braces_matcher.group(4);
 
