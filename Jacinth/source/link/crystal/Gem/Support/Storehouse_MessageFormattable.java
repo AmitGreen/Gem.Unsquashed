@@ -6,8 +6,8 @@ package link.crystal.Gem.Support;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringMap;
-import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Format.ParseFormat;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.World.Inspection;
@@ -27,8 +27,6 @@ public class    Storehouse_MessageFormattable
     //  Private static
     //
     private static final int                        initial_capacity = 1009;
-    private static Storehouse_MessageFormattable    singleton        = null;
-
 
 
     //
@@ -40,7 +38,7 @@ public class    Storehouse_MessageFormattable
     }
 
 
-    private static Storehouse_MessageFormattable    create(Zone z)
+    public static Storehouse_MessageFormattable     create__ALLY__Zone(Zone z)
     {
         return new Storehouse_MessageFormattable(z, Storehouse_MessageFormattable.initial_capacity);
     }
@@ -56,47 +54,13 @@ public class    Storehouse_MessageFormattable
 
 
     //
-    //  Private
-    //
-    private static Storehouse_MessageFormattable    singleton(Zone z)
-    {
-        Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
-
-        if (singleton != null) {
-            return singleton;
-        }
-
-        singleton =
-            Storehouse_MessageFormattable.singleton = Storehouse_MessageFormattable.create(z);
-
-        return singleton;
-    }
-
-
-    //
     //  Public
     //
-    public static void                  dump(Zone z)
-    {
-        Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
-
-        if (singleton == null) {
-            singleton = Storehouse_MessageFormattable.singleton(z);
-        }
-
-        singleton.dump("Storehouse_MessageFormattable.singleton");
-    }
-
-
     public static MessageFormattable    conjure(Zone z, String format)
     {
-        Storehouse_MessageFormattable   singleton = Storehouse_MessageFormattable.singleton;
+        final Storehouse_MessageFormattable     cache = z.conjure__Storehouse_MessageFormattable();
 
-        if (singleton == null) {
-            singleton = Storehouse_MessageFormattable.singleton(z);
-        }
-
-        final MessageFormattable        previous = singleton.get(format);
+        final MessageFormattable        previous = cache.get(format);
 
         if (previous != null) {
             return previous;
@@ -104,7 +68,7 @@ public class    Storehouse_MessageFormattable
 
         final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
-        singleton.insert(z, format, formattable);
+        cache.insert(z, format, formattable);
 
         return formattable;
     }

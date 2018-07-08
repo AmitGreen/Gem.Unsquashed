@@ -9,8 +9,8 @@ import java.lang.Object;
 import java.lang.System;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.MethodNameSegmentFormatter;
+import link.crystal.Gem.Format.ParseFormat;
 import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 
 
 public abstract class   Gem
@@ -39,7 +39,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -53,7 +53,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -67,7 +67,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -81,7 +81,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -102,7 +102,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -124,7 +124,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -147,7 +147,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -172,7 +172,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -195,7 +195,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -209,7 +209,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -223,7 +223,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -237,7 +237,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -251,7 +251,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         Gem_StringBuilder               builder = z.summon_StringBuilder();
 
@@ -265,7 +265,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -288,7 +288,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -313,7 +313,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -347,6 +347,7 @@ public abstract class   Gem
 
         return message_name_segment_formatter;
     }
+
 
     public static int                   limit_to_between(int minimum, int v, int maximum)
     {

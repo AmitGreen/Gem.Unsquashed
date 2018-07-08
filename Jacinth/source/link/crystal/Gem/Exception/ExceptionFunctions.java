@@ -9,12 +9,11 @@ import java.lang.RuntimeException;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Exception.AssertionError;
 import link.crystal.Gem.Format.MethodNameSegmentFormatter;
+import link.crystal.Gem.Format.ParseFormat;
 import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 
 
 public abstract class   ExceptionFunctions
@@ -32,7 +31,7 @@ public abstract class   ExceptionFunctions
             Object ...                          arguments//,
         )
     {
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         depth += 1;
 

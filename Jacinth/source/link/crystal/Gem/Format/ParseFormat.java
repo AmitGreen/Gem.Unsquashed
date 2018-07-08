@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Gem.Core;
+package link.crystal.Gem.Format;
 
 
 import java.lang.String;
@@ -24,6 +24,7 @@ import link.crystal.Gem.Format.MessageFormatter_Many;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
+import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.World.Inspection;
 
 
@@ -31,7 +32,7 @@ public class   ParseFormat
     extends    Gem_Object <Inspection>
     implements Inspectable<Inspection>//,                               //  Via Gem_Object
 {
-    private static final Inspection     inspection = Inspection.create("Gem.Core.ParseFormat");
+    private static final Inspection     inspection = Inspection.create("ParseFormat");
 
 
     //
@@ -618,13 +619,23 @@ public class   ParseFormat
     //
     public static MessageFormattable    parse_format(Zone z, String format)
     {
+        final Storehouse_MessageFormattable     cache = z.conjure__Storehouse_MessageFormattable();
+
+        final MessageFormattable        previous = cache.get(format);
+
+        if (previous != null) {
+            return previous;
+        }
+
         ParseFormat                     parse_format = z.summon_ParseFormat__ALLY__ParseFormat(format);
 
-        final MessageFormattable        r = parse_format.parse_format__work();
+        final MessageFormattable        formattable = parse_format.parse_format__work();
 
         parse_format.scrub();
         z.recycle__ParseFormat__ALLY__ParseFormat(parse_format);
 
-        return r;
+        cache.insert(z, format, formattable);
+
+        return formattable;
     }
 }

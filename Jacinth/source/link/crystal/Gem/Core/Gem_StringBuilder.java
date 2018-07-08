@@ -9,9 +9,9 @@ import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Exception.ExceptionFunctions;
+import link.crystal.Gem.Format.ParseFormat;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.World.Inspection;
 
 
@@ -170,7 +170,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         formattable.augment(this, 2);
     }
@@ -180,7 +180,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         formattable.augment(this, 2, v);
     }
@@ -190,7 +190,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         formattable.augment(this, 2, v, w);
     }
@@ -200,7 +200,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         formattable.augment(this, 2, v, w, x);
     }
@@ -216,7 +216,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         formattable.augment(this, 2, v, w, x, y);
     }
@@ -233,7 +233,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         formattable.augment(this, 2, v, w, x, y4, y5);
     }
@@ -251,7 +251,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         formattable.augment(this, 2, v, w, x, y4, y5, y6);
     }
@@ -271,7 +271,7 @@ public class    Gem_StringBuilder
     {
         final Zone                      z = this.z;
 
-        final MessageFormattable        formattable = Storehouse_MessageFormattable.conjure(z, format);
+        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
         formattable.augment(this, 2, v, w, x, y4, y5, y6, y7, other_arguments);
     }

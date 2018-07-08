@@ -8,10 +8,10 @@ import java.lang.RuntimeException;
 import java.lang.Thread;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Core.ParseFormat;
 import link.crystal.Gem.Format.AdornmentSegmentFormatter;
 import link.crystal.Gem.Format.Map__String__ArgumentSegmentFormatter_Inspection;
 import link.crystal.Gem.Format.NormalSegmentFormatter;
+import link.crystal.Gem.Format.ParseFormat;
 import link.crystal.Gem.Format.PortraySegmentFormatter;
 import link.crystal.Gem.Format.StringSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
@@ -56,6 +56,7 @@ public class    Zone
 
     private       Map__String__ArgumentSegmentFormatter_Inspection  format_map;
     private       Storehouse_AdornmentSegmentFormatter              storehouse_adornment_segment_formatter;
+    private       Storehouse_MessageFormattable                     storehouse_message_formattable;
     private       Storehouse_NormalSegmentFormatter                 storehouse_normal_segment_formatter;
     private       Storehouse_PortraySegmentFormatter                storehouse_portray_segment_formatter;
     private       Storehouse_StringSegmentFormatter                 storehouse_string_segment_formatter;
@@ -93,6 +94,7 @@ public class    Zone
         //
         this.format_map                             = null;
         this.storehouse_adornment_segment_formatter = null;
+        this.storehouse_message_formattable         = null;
         this.storehouse_normal_segment_formatter    = null;
         this.storehouse_portray_segment_formatter   = null;
         this.storehouse_string                      = null;
@@ -365,6 +367,21 @@ public class    Zone
         storehouse_portray_segment_formatter.insert(this, argument_index, r);
 
         return r;
+    }
+
+
+    public Storehouse_MessageFormattable    conjure__Storehouse_MessageFormattable()
+    {
+        Storehouse_MessageFormattable   previous = this.storehouse_message_formattable;
+
+        if (previous != null) {
+            return previous;
+        }
+
+        storehouse_message_formattable =
+            this.storehouse_message_formattable = Storehouse_MessageFormattable.create__ALLY__Zone(this);
+
+        return storehouse_message_formattable;
     }
 
 
