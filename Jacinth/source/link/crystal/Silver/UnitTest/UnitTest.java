@@ -55,6 +55,7 @@ public class    UnitTest
         final World_Integer             seven = World_Integer.create(7);
 
         line("{+}: created: {}", seven);
+        line("hi: {{ and {{ yes {p} then }}", "hmm");
 
         return true;
     }
@@ -72,7 +73,6 @@ public class    UnitTest
         //assert Gem_Object.fact_between(7, 6, 77);
 
         //line("{+}");
-        line("hi: {{ and {{ yes {p} then }}", "hmm");
         //line("{+}: test {}", 7);
         //line("that: {+}");
         //line("that: {}", "hi");
@@ -126,13 +126,13 @@ public class    UnitTest
         unit_test.run_test(arguments);
 
         if (true) {
-            Map_String_Inspection.singleton().dump("Inspections");
+            //Map_String_Inspection               .singleton().dump("Inspections");
+            //Storehouse_MessageFormattable                   .dump(z);
+            //Storehouse_PortraySegmentFormatter  .singleton  .dump(z);
+            //Storehouse_String                               .dump(z);
+            //Storehouse_AdornmentSegmentFormatter.singleton  .dump("Storehouse_AdornmentSegmentFormatter.singleton");
 
-            //Storehouse_MessageFormattable       .dump(z);
-            //Storehouse_PortraySegmentFormatter  .singleton.dump(z);
-            //Storehouse_String                   .dump(z);
-            //Storehouse_AdornmentSegmentFormatter.singleton.dump("Storehouse_AdornmentSegmentFormatter.singleton");
-            //z.dump(z);
+            z.dump();
         }
     }
 }

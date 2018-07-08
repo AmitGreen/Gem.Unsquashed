@@ -28,9 +28,10 @@ public class    Zone
     //
     //  Static members
     //
-    private static Thread               first_thread          = null;
-    private static Zone                 first_zone            = null;
-    private static final int            gem_builder_allocated = 10;
+    private static Thread               first_thread             = null;
+    private static Zone                 first_zone               = null;
+    private static final int            parse_format_allocated   = 10;
+    private static final int            string_builder_allocated = 10;
 
 
     //
@@ -39,8 +40,11 @@ public class    Zone
     public  final Thread                zone_thread;
     private       ParseFormat           parse_format;
 
-    private final Gem_StringBuilder[]   gem_builder_many;
-    private       int                   gem_builder_total;
+    private final ParseFormat[]         parse_format_many;
+    private       int                   parse_format_total;
+
+    private final Gem_StringBuilder[]   string_builder_many;
+    private       int                   string_builder_total;
 
     private       Map__String__ArgumentSegmentFormatter_Inspection  format_map;
 
@@ -48,13 +52,20 @@ public class    Zone
     //
     //  Constructor & Factory
     //
-    private                             Zone(Thread zone_thread, Gem_StringBuilder[] gem_builder_many)
+    private                             Zone(
+            Thread                              zone_thread,
+            ParseFormat[]                       parse_format_many,
+            Gem_StringBuilder[]                 string_builder_many//,
+        )
     {
         this.zone_thread       = zone_thread;
         this.parse_format      = null;
 
-        this.gem_builder_many  = gem_builder_many;
-        this.gem_builder_total = 0;
+        this.parse_format_many  = parse_format_many;
+        this.parse_format_total = 0;
+
+        this.string_builder_many  = string_builder_many;
+        this.string_builder_total = 0;
 
         this.format_map = null;
     }
@@ -62,31 +73,10 @@ public class    Zone
 
     public static Zone                  create(Thread zone_thread)
     {
-        final Gem_StringBuilder[]       gem_builder_many = new Gem_StringBuilder[Zone.gem_builder_allocated];
+        final ParseFormat[]             parse_format_many   = new ParseFormat      [Zone.parse_format_allocated];
+        final Gem_StringBuilder[]       string_builder_many = new Gem_StringBuilder[Zone.string_builder_allocated];
 
-        return new Zone(zone_thread, gem_builder_many);
-    }
-
-
-    //
-    //  NOTE:
-    //      Must do this after initialization -- trying this during class initialization causes nasty loops
-    //
-    public Map__String__ArgumentSegmentFormatter_Inspection     format_map()
-    {
-        final Map__String__ArgumentSegmentFormatter_Inspection  previous = this.format_map;
-
-        if (format_map != null) {
-            return format_map;
-        }
-
-        final Map__String__ArgumentSegmentFormatter_Inspection  format_map = (
-                Map__String__ArgumentSegmentFormatter_Inspection.CREATE_AND_POPULATE(this)
-            );
-
-        this.format_map = format_map;
-
-        return format_map;
+        return new Zone(zone_thread, parse_format_many, string_builder_many);
     }
 
 
@@ -101,70 +91,14 @@ public class    Zone
 
     public void                         portray(Gem_StringBuilder builder)
     {
-        builder.arrange("<Zone zone_thread{p} ... gem_builder_total{p} ...>",
+        builder.arrange("<Zone zone_thread{p} ... string_builder_total{p} ...>",
                         this.zone_thread,
-                        this.gem_builder_total);
+                        this.string_builder_total);
     }
 
 
     //
-    //  Public (gem_builder)
-    //
-    public Gem_StringBuilder            summon_StringBuilder()
-    {
-        int                             gem_builder_total = this.gem_builder_total;
-
-        if (gem_builder_total > 0) {
-            gem_builder_total -= 1;
-
-            this.gem_builder_total = gem_builder_total;
-
-            return this.gem_builder_many[gem_builder_total].recycle();
-        }
-
-        return Gem_StringBuilder.create__ALLY__Gem_Zone(this);
-    }
-
-
-    public void                         recycle__StringBuilder__ALLY__Gem_StringBuilder(Gem_StringBuilder builder)
-    {
-        final int                       gem_builder_total = this.gem_builder_total;
-
-        if (gem_builder_total < Zone.gem_builder_allocated) {
-            this.gem_builder_many[gem_builder_total] = builder;
-
-            this.gem_builder_total = gem_builder_total + 1;
-        }
-    }
-
-
-    //
-    //  Public (parse_format)
-    //
-    //  NOTE:
-    //      Due to possible nested called in a single thread, we might need multiple copies of the 'parse_format'.
-    //
-    //      The `store_parse_format` routine *ONLY* saves the last version of `pares_format`; any previous
-    //      version is discarded, as we only bother to "cache" a single value per thread.
-    //
-    public ParseFormat                  pop__parse_format__OR__null()
-    {
-        final ParseFormat               parse_format = this.parse_format;
-
-        this.parse_format = null;
-
-        return parse_format;
-    }
-
-
-    public void                         store_parse_format(ParseFormat parse_format)
-    {
-        this.parse_format = parse_format;                       //  Overwrite any previously saved copy of parse_format
-    }
-
-
-    //
-    //  Public
+    //  Public (arrange)
     //
     public String                       arrange(String format)
     {
@@ -293,6 +227,90 @@ public class    Zone
     }
 
 
+    //
+    //  Public (parse_format)
+    //
+    //  NOTE:
+    //      Due to possible nested called in a single thread, we might need multiple copies of the 'parse_format'.
+    //
+    //      The `store_parse_format` routine *ONLY* saves the last version of `pares_format`; any previous
+    //      version is discarded, as we only bother to "cache" a single value per thread.
+    //
+    public ParseFormat                  summon_ParseFormat__ALLY__ParseFormat(String format)
+    {
+        int                             parse_format_total = this.parse_format_total;
+
+        if (parse_format_total > 0) {
+            parse_format_total -= 1;
+
+            this.parse_format_total = parse_format_total;
+
+            return this.parse_format_many[parse_format_total].recycle(format);
+        }
+
+
+        //
+        //  NOTE:
+        //      Must allocate `format_map` after initialization -- trying this during class initialization causes nasty loops
+        //
+        Map__String__ArgumentSegmentFormatter_Inspection    format_map = this.format_map;
+
+        if (format_map == null) {
+            format_map = 
+                this.format_map = Map__String__ArgumentSegmentFormatter_Inspection.CREATE_AND_POPULATE(this);
+        }
+
+
+        return ParseFormat.create__ALLY__Zone(this, format, format_map);
+    }
+
+
+    public void                         recycle__ParseFormat__ALLY__ParseFormat(ParseFormat parse_format)
+    {
+        final int                       parse_format_total = this.parse_format_total;
+
+        if (parse_format_total < Zone.parse_format_allocated) {
+            this.parse_format_many[parse_format_total] = parse_format;
+
+            this.parse_format_total = parse_format_total + 1;
+        }
+    }
+
+
+    //
+    //  Public (string_builder)
+    //
+    public Gem_StringBuilder            summon_StringBuilder()
+    {
+        int                             string_builder_total = this.string_builder_total;
+
+        if (string_builder_total > 0) {
+            string_builder_total -= 1;
+
+            this.string_builder_total = string_builder_total;
+
+            return this.string_builder_many[string_builder_total].recycle();
+        }
+
+        return Gem_StringBuilder.create__ALLY__Zone(this);
+    }
+
+
+    public void                         recycle__StringBuilder__ALLY__Gem_StringBuilder(Gem_StringBuilder builder)
+    {
+        final int                       string_builder_total = this.string_builder_total;
+
+        if (string_builder_total < Zone.string_builder_allocated) {
+            this.string_builder_many[string_builder_total] = builder;
+
+            this.string_builder_total = string_builder_total + 1;
+        }
+    }
+
+
+    //
+    //  Public (other)
+    //
     public static Zone                  current_zone()
     {
         final Thread                    thread = Thread.currentThread();
@@ -323,26 +341,26 @@ public class    Zone
 
     public void                         dump()
     {
-        final Gem_StringBuilder[]       gem_builder_many  = this.gem_builder_many;
-        final int                       gem_builder_total = this.gem_builder_total;
+        final Gem_StringBuilder[]       string_builder_many  = this.string_builder_many;
+        final int                       string_builder_total = this.string_builder_total;
 
-        line("Dump of Gem_Zone: {}", this);
+        line("Dump of Zone: {}", this);
         line("          zone_thread: {}", this.zone_thread);
         line("         parse_format: {}", this.parse_format);
         line("---");
-        line("     gem_builder_many: {}", gem_builder_many);
-        line("    gem_builder_total: {}", gem_builder_total);
+        line("     string_builder_many: {}", string_builder_many);
+        line("    string_builder_total: {}", string_builder_total);
 
-        for (int                        i = 0; i < gem_builder_total; i ++) {
-            line("  gem_builder_many[{}]: {}", i, gem_builder_many[i]);
+        for (int                        i = 0; i < string_builder_total; i ++) {
+            line("  string_builder_many[{}]: {}", i, string_builder_many[i]);
         }
 
         line("---");
         line("           format_map: {}", this.format_map);
 
-        this.format_map.dump("Gem_Zone.format_map");
+        this.format_map.dump("Zone.format_map");
 
-        line("End of dump of GemZone");
+        line("End of dump of Zone");
     }
 
 

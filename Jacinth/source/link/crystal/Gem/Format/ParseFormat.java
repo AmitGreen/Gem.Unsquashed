@@ -12,6 +12,8 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.AdornmentSegmentFormatter;
+import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
+import link.crystal.Gem.Format.Map__String__ArgumentSegmentFormatter_Inspection;
 import link.crystal.Gem.Format.MessageFormatter_1__Prefix;
 import link.crystal.Gem.Format.MessageFormatter_2;
 import link.crystal.Gem.Format.MessageFormatter_3;
@@ -22,7 +24,6 @@ import link.crystal.Gem.Format.MethodNameSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
 import link.crystal.Gem.World.Inspection;
 
 
@@ -62,8 +63,9 @@ public class   ParseFormat
     //
     private final Zone                  z;
 
-    private       String                format;
-    private final Matcher               braces_matcher;
+    private       String                                            format;
+    private final Matcher                                           braces_matcher;
+    private final Map__String__ArgumentSegmentFormatter_Inspection  format_map;
 
     private       Gem_StringBuilder     builder;
 
@@ -83,12 +85,18 @@ public class   ParseFormat
     //
     //  Constructor, Factory, & Recycle
     //
-    private                             ParseFormat(Zone z, String format, Matcher braces_matcher)
+    private                             ParseFormat(
+            Zone                                                z,
+            String                                              format,
+            Matcher                                             braces_matcher,
+            Map__String__ArgumentSegmentFormatter_Inspection    format_map//,
+        )
     {
         this.z = z;
 
         this.format         = format;
         this.braces_matcher = braces_matcher;
+        this.format_map     = format_map;
 
         this.builder = null;
 
@@ -106,15 +114,19 @@ public class   ParseFormat
     }
 
 
-    public static ParseFormat           create(Zone z, String format)
+    public static ParseFormat           create__ALLY__Zone(
+            Zone                                                z,
+            String                                              format,
+            Map__String__ArgumentSegmentFormatter_Inspection    format_map//,
+        )
     {
         final Matcher                   braces_matcher = ParseFormat.braces_pattern.matcher(format);
 
-        return new ParseFormat(z, format, braces_matcher);
+        return new ParseFormat(z, format, braces_matcher, format_map);
     }
 
 
-    public void                         recycle(String format)
+    public ParseFormat                  recycle(String format)
     {
         this.format = format;
         this.braces_matcher.reset(format);
@@ -124,6 +136,8 @@ public class   ParseFormat
         this.used_index_total = 0;
 
         this.missing_total = 0;
+
+        return this;
     }
 
 
@@ -408,7 +422,7 @@ public class   ParseFormat
                 }
 
                 final ArgumentSegmentFormatter_Inspection   argument_inspection = (
-                        z.format_map().find(braces_matcher.group(5))
+                        this.format_map.find(braces_matcher.group(5))
                     );
 
                 this.append_segment(argument_inspection.conjure_argument_segment(z, argument_index));
@@ -604,18 +618,12 @@ public class   ParseFormat
     //
     public static MessageFormattable    parse_format(Zone z, String format)
     {
-        ParseFormat                     parse_format = z.pop__parse_format__OR__null();
-
-        if (parse_format == null) {
-            parse_format = ParseFormat.create(z, format);
-        } else {
-            parse_format.recycle(format);
-        }
+        ParseFormat                     parse_format = z.summon_ParseFormat__ALLY__ParseFormat(format);
 
         final MessageFormattable        r = parse_format.parse_format__work();
 
         parse_format.scrub();
-        z.store_parse_format(parse_format);
+        z.recycle__ParseFormat__ALLY__ParseFormat(parse_format);
 
         return r;
     }

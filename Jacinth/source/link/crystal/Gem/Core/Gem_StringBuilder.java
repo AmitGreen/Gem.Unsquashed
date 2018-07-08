@@ -40,7 +40,7 @@ public class    Gem_StringBuilder
     }
 
 
-    public static Gem_StringBuilder     create__ALLY__Gem_Zone(Zone z)
+    public static Gem_StringBuilder     create__ALLY__Zone(Zone z)
     {
         final StringBuilder             builder = new StringBuilder();
 
