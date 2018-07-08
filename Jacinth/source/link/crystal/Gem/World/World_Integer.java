@@ -8,14 +8,16 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Interface.WeakReferenceable;
 import link.crystal.Gem.World.Comparable_Inspection;
 
 
 public class    World_Integer
     extends     Gem_Object    <Comparable_Inspection>
 //  extends     Object
-    implements  Gem_Comparable<Comparable_Inspection>,
-                Inspectable   <Comparable_Inspection>//,                //  Via Gem_Object
+    implements  Gem_Comparable   <Comparable_Inspection>,
+                WeakReferenceable<Comparable_Inspection>,
+                Inspectable      <Comparable_Inspection>//,             //  Via Gem_Object
 {
     private static final Comparable_Inspection  inspection = Comparable_Inspection.create("World_Integer", 8);
 

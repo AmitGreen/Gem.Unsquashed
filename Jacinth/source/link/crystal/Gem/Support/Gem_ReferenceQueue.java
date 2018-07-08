@@ -4,41 +4,53 @@
 package link.crystal.Gem.Support;
 
 
-import java.lang.ref.WeakReference;
+import java.lang.ref.Reference;
+import java.lang.ref.ReferenceQueue;
+import java.lang.System;
 import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.WeakReferenceable;
-import link.crystal.Gem.Support.Gem_ReferenceQueue;
+import link.crystal.Gem.Support.Gem_WeakReference;
 import link.crystal.Gem.World.Inspection;
 
 
-public abstract class   Gem_WeakReference<INSPECTION extends Inspection, CLIENT extends WeakReferenceable>
-    extends             WeakReference  <CLIENT>
-//  extends             Reference      <CLIENT>
-//  extends             Object
-    implements          Inspectable<INSPECTION>//,
+public class    Gem_ReferenceQueue
+    extends     ReferenceQueue <WeakReferenceable>
+//  extends     Object
+    implements  Inspectable<Inspection>//,
 {
+    private static final Inspection     inspection = Inspection.create("Gem_ReferenceQueue");
+
+
     //
-    //  Constructor
+    //  Constructor & Factory
     //
-    protected                           Gem_WeakReference(CLIENT client, Gem_ReferenceQueue reference_queue)
+    private                             Gem_ReferenceQueue()
     {
-        super(client, reference_queue);
+        super();
+    }
+
+
+    public static Gem_ReferenceQueue    create__ALLY__Gem()
+    {
+        return new Gem_ReferenceQueue();
     }
 
 
     //
     //  Interface Inspectable
     //
-    public abstract INSPECTION          inspect();
-    public abstract void                portray(Gem_StringBuilder builder);
+    public Inspection                   inspect()
+    {
+        return /*static*/ this.inspection;
+    }
 
 
-    //
-    //  Abstract
-    //
-    public abstract void                reap();
+    public void                         portray(Gem_StringBuilder builder)
+    {
+        builder.append("<Gem_ReferenceQueue>");
+    }
 
 
     //
@@ -113,5 +125,37 @@ public abstract class   Gem_WeakReference<INSPECTION extends Inspection, CLIENT 
         )
     {
         Gem.line(2, format, v, w, x, y4, y5, y6, y7, other_arguments);
+    }
+
+
+    //
+    //  Public
+    //
+    public int                          cleanup()
+    {
+        int                             total = 0;
+
+        for (;;)
+        {
+            Reference<? extends WeakReferenceable>  referent = this.poll();
+
+            if (referent == null) {
+                return total;
+            }
+
+            Gem_WeakReference                       weak_reference = (Gem_WeakReference) referent;
+
+            weak_reference.reap();
+
+            total += 1;
+        }
+    }
+
+
+    public int                          garbage_collect()
+    {
+        System.gc();
+
+        return this.cleanup();
     }
 }

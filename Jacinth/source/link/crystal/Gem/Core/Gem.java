@@ -7,20 +7,36 @@ package link.crystal.Gem.Core;
 import java.io.PrintStream;
 import java.lang.Object;
 import java.lang.System;
+import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.MethodNameSegmentFormatter;
 import link.crystal.Gem.Format.ParseFormat;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Support.Gem_ReferenceQueue;
 
 
 public abstract class   Gem
-    extends             Object
+    extends             Gem_Object//<Inspection>
+//  extends             Object
 {
     //
     //  Public static
     //
-    public static final PrintStream                 standard_output                = System.out;
+    public static final PrintStream                 standard_output = System.out;
+
+
+    //
+    //  NOTE:
+    //      To avoid class initialization loops all the following CANNOT be initialized here.
+    //
+    //      Each of the following must be initializated when first used
+    //      (i.e.: after other class initializations have run)
+    //
+    //  HENCE:
+    //      None of the following can be declared as `final` either ...
+    //
     public static       MethodNameSegmentFormatter  message_name_segment_formatter = null;
+    public static       Gem_ReferenceQueue          reference_queue                = null;
 
 
     //
@@ -189,7 +205,7 @@ public abstract class   Gem
 
         final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
-        standard_output.println(formattable.augment(builder, depth + 1));
+        standard_output.println(formattable.augment(depth + 1));
     }
 
 
@@ -199,7 +215,7 @@ public abstract class   Gem
 
         final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
 
-        standard_output.println(formattable.augment(builder, depth + 1, v));
+        standard_output.println(formattable.augment(depth + 1, v));
     }
 
 
@@ -308,6 +324,25 @@ public abstract class   Gem
 
 
     //
+    //  Public (dump)
+    //
+    public static void                  dump()
+    {
+        final PrintStream                   standard_output                = Gem.standard_output;
+
+        final MethodNameSegmentFormatter    message_name_segment_formatter = Gem.message_name_segment_formatter;
+        final Gem_ReferenceQueue            reference_queue                = Gem.reference_queue;
+
+        line("Dump of Gem");
+        line("  standard_output: {p}", standard_output);
+        line("---");
+        line("  message_name_segment_formatter: {p}", message_name_segment_formatter);
+        line("                 reference_queue: {p}", reference_queue);
+        line("End of dump of Gem");
+    }
+
+
+    //
     //  Public (other)
     //
     public static MethodNameSegmentFormatter    conjure_MethodNameSegmentFormatter()
@@ -330,6 +365,27 @@ public abstract class   Gem
         Gem.message_name_segment_formatter = message_name_segment_formatter;
 
         return message_name_segment_formatter;
+    }
+
+
+    public static Gem_ReferenceQueue    conjure__Gem_ReferenceQueue()
+    {
+        final Gem_ReferenceQueue        previous = Gem.reference_queue;
+
+        if (previous != null) {
+            return previous;
+        }
+
+        //
+        //  NOTE:
+        //      Must allocate `reference_queue` after initialization -- trying this during class
+        //      initialization causes nasty loops.
+        //
+        final Gem_ReferenceQueue        reference_queue = Gem_ReferenceQueue.create__ALLY__Gem();
+
+        Gem.reference_queue = reference_queue;
+
+        return reference_queue;
     }
 
 

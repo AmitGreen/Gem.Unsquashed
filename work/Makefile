@@ -103,6 +103,7 @@ JACINTH_FILES = \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
     $J/Gem/Interface/WeakReferenceable.java \
+    $J/Gem/Support/Gem_ReferenceQueue.java \
     $J/Gem/Support/Gem_WeakReference.java \
     $J/Gem/Support/Map_String_Inspection.java \
     $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java \
@@ -116,6 +117,7 @@ JACINTH_FILES = \
     $J/Gem/World/Inspection.java \
     $J/Gem/World/World_Inspection.java \
     $J/Gem/World/World_Integer.java \
+    $J/Gem/World/World_Integer_WeakReference.java \
     $J/Jacinth/Main.java \
     $J/Jacinth/Shape.java \
     $J/Mirror/Shape.java \
@@ -323,14 +325,14 @@ clean:
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py
 	rm -f   pel.py pf.py pf.java pj.py pk.py pkc.py pl.py pmo.py pn.py ps.java ps.py psc.java ps3.py px.java
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
-	rm -f rm.py rx.py
+	rm -f rm.py rq.java rx.py
 	rm -f sha.java shl.java shm.java shn.java shp.java shs.java shsf.java sfi.java sl.py so.py ss.java ssio.py sy.py
 	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
 	rm -f ut.java
 	rm -f xb.py xf.py
 	rm -f vm.java vm.py vp.java
-	rm -f wi.java win.java wr.java
+	rm -f wi.java win.java wir.java wr.java
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
@@ -576,6 +578,7 @@ links:
 	ln -s ../Quartz/Match.py                                                    qmc.py
 	ln -s ../Quartz/Pattern.py                                                  qp.py
 	ln -s ../Agate/RUNME.py                                                     rm.py
+	ln -s $J/Gem/Support/Gem_ReferenceQueue.java                                rq.java
 	ln -s ../Gem/RegularExpression.py                                           rx.py
 	ln -s $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java              sha.java
 	ln -s $J/Gem/Support/Storehouse_SmallList.java                              shl.java
@@ -617,6 +620,7 @@ links:
 	ln -s $J/Silver/SilverProxy.java                                            vp.java
 	ln -s $J/Gem/World/World_Integer.java                                       wi.java
 	ln -s $J/Gem/World/World_Inspection.java                                    win.java
+	ln -s $J/Gem/World/World_Integer_WeakReference.java                         wir.java
 	ln -s $J/Gem/Support/Gem_WeakReference.java                                 wr.java
 	ln -s ../Sardonyx/Boot.py                                                   xb.py
 	ln -s ../Sapphire/Transform.py                                              xf.py

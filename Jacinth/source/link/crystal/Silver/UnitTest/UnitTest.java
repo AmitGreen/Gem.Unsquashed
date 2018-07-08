@@ -4,10 +4,12 @@
 package link.crystal.Silver.UnitTest;
 
 
+import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Map_String_Inspection;
 import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
@@ -15,6 +17,7 @@ import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.World.Inspection;
 import link.crystal.Gem.World.World_Integer;
+import link.crystal.Gem.World.World_Integer_WeakReference;
 import link.crystal.Mirror.Shape;
 
 
@@ -52,10 +55,22 @@ public class    UnitTest
     //
     private boolean                     test_development()
     {
-        final World_Integer             seven = World_Integer.create(7);
+        World_Integer                   seven = World_Integer.create(7);
         final World_Integer             eight = World_Integer.create(8);
 
         line("{+}: {} .vs {}: {}", seven, eight, seven.compareTo(eight));
+
+        final World_Integer_WeakReference   weak_seven = World_Integer_WeakReference.create(seven);
+
+        line("weak_seven: {}", weak_seven);
+
+        seven = null;
+
+        final Gem_ReferenceQueue        reference_queue = Gem.conjure__Gem_ReferenceQueue();
+
+        reference_queue.garbage_collect();
+
+        line("weak_seven: {}", weak_seven);
 
         return true;
     }
@@ -129,6 +144,7 @@ public class    UnitTest
         unit_test.run_test(arguments);
 
         if (true) {
+            Gem.dump();
             //Map_String_Inspection               .singleton().dump("Inspections");
             //Storehouse_MessageFormattable                   .dump(z);
             //Storehouse_PortraySegmentFormatter  .singleton  .dump(z);
