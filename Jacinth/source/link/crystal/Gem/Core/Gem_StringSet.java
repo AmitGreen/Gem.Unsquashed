@@ -66,9 +66,7 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
     //
     public void                         dump(String name)
     {
-        final INSPECTION                inspection = this.inspect();
-
-        final String                    simple_class_name = inspection.simple_class_name;
+        final String                    simple_class_name = this.inspect().simple_class_name;
 
         List<String>                    keys = new ArrayList<String>(this.keySet());
 

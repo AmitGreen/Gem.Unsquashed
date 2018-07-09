@@ -13,12 +13,22 @@ import link.crystal.Gem.Format.MethodNameSegmentFormatter;
 import link.crystal.Gem.Format.ParseFormat;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
+import link.crystal.Gem.Support.World_Integer_Cache;
 
 
 public abstract class   Gem
     extends             Gem_Object//<Inspection>
 //  extends             Object
 {
+    //
+    //  Static types
+    //
+    public static final Class<Gem_StringBuilder[]>  Gem_StringBuilder$array$class = Gem_StringBuilder[].class;
+    public static final Class<Integer>              Integer$class                 = Integer.class;
+    public static final Class<String>               String$class                  = String.class;
+    public static final Class<Thread>               Thread$class                  = Thread.class;
+
+
     //
     //  Public static
     //
@@ -35,17 +45,9 @@ public abstract class   Gem
     //  HENCE:
     //      None of the following can be declared as `final` either ...
     //
+    public static       World_Integer_Cache         integer_cache                  = null;
     public static       MethodNameSegmentFormatter  message_name_segment_formatter = null;
     public static       Gem_ReferenceQueue          reference_queue                = null;
-
-
-    //
-    //  Static types
-    //
-    public static final Class<Gem_StringBuilder[]>  Gem_StringBuilder$array$class = Gem_StringBuilder[].class;
-    public static final Class<Integer>              Integer$class                 = Integer.class;
-    public static final Class<String>               String$class                  = String.class;
-    public static final Class<Thread>               Thread$class                  = Thread.class;
 
 
     //

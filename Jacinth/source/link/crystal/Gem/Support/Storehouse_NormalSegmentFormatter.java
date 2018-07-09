@@ -5,9 +5,9 @@ package link.crystal.Gem.Support;
 
 
 import java.lang.String;
-import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.NormalSegmentFormatter;
+import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Storehouse_SmallList;
 import link.crystal.Gem.World.Inspection;
 

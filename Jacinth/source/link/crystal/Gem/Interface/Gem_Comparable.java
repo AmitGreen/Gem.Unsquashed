@@ -11,7 +11,7 @@ import link.crystal.Gem.World.Comparable_Inspection;
 
 
 public interface    Gem_Comparable<INSPECTION extends Comparable_Inspection>
-    extends         Comparable<Gem_Comparable>,
+    extends         Comparable<Gem_Comparable<INSPECTION>>,
                     Inspectable   <INSPECTION>//,                       //  Via Gem_Object
 {
     //

@@ -13,7 +13,7 @@ import link.crystal.Gem.World.Comparable_Inspection;
 
 
 public class    World_Integer
-    extends     Gem_Object    <Comparable_Inspection>
+    extends     Gem_Object       <Comparable_Inspection>
 //  extends     Object
     implements  Gem_Comparable   <Comparable_Inspection>,
                 WeakReferenceable<Comparable_Inspection>,

@@ -15,9 +15,9 @@ import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_String;
+import link.crystal.Gem.Support.World_Integer_WeakReference;
 import link.crystal.Gem.World.Inspection;
 import link.crystal.Gem.World.World_Integer;
-import link.crystal.Gem.World.World_Integer_WeakReference;
 import link.crystal.Mirror.Shape;
 
 

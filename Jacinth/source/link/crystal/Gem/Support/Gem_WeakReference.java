@@ -7,17 +7,19 @@ package link.crystal.Gem.Support;
 import java.lang.ref.WeakReference;
 import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
+import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.WeakReferenceable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.World.Comparable_Inspection;
 
 
-public abstract class   Gem_WeakReference<INSPECTION extends Inspection, CLIENT extends WeakReferenceable>
-    extends             WeakReference  <CLIENT>
-//  extends             Reference      <CLIENT>
+public abstract class   Gem_WeakReference<INSPECTION extends Comparable_Inspection, CLIENT extends WeakReferenceable>
+    extends             WeakReference                                              <CLIENT>
+//  extends             Reference                                                  <CLIENT>
 //  extends             Object
-    implements          Inspectable<INSPECTION>//,
+    implements          Gem_Comparable   <INSPECTION>,
+                        Inspectable      <INSPECTION>//,
 {
     //
     //  Constructor

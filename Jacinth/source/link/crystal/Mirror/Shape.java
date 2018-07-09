@@ -6,8 +6,8 @@ package link.crystal.Mirror;
 
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Silver.SilverProxy;
 import link.crystal.Gem.World.Inspection;
+import link.crystal.Silver.SilverProxy;
 
 
 public class    Shape

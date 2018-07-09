@@ -93,6 +93,12 @@ public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
     //
     //  Public (ERRORS)
     //
+    public static void                  INVALID_ROUTINE()
+    {
+        ExceptionFunctions.RUNTIME(2, "invalid routine");
+    }
+
+
     public void                         RUNTIME(String error_message, Object ... arguments)
     {
         ExceptionFunctions.RUNTIME(2, error_message, arguments);
@@ -195,10 +201,4 @@ public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
             RUNTIME("previous value for {} already exists: {}", k, v);
         }
     }
-
-
-//  public static void                  output(String s)
-//  {
-//      Gem.output(s);
-//  }
 }

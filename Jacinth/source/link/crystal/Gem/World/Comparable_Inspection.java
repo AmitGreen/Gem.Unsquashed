@@ -93,4 +93,5 @@ public class    Comparable_Inspection
 //      Comparable_Inspection               6
 //      World_Inspection                    7
 //      World_Integer                       8
+//      World_Integer_WeakReference         9
 //

@@ -163,7 +163,7 @@ public class    Zone
         Map__String__ArgumentSegmentFormatter_Inspection    format_map = this.format_map;
 
         if (format_map == null) {
-            format_map = 
+            format_map =
                 this.format_map = Map__String__ArgumentSegmentFormatter_Inspection.CREATE_AND_POPULATE(this);
         }
 
