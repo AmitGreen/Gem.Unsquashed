@@ -426,7 +426,7 @@ public abstract class   Gem
                 return client;
             }
 
-
+            previous.enqueue();
             reference_queue.cleanup();
 
             assert fact(integer_cache.get(key) == null, "world_integer_cache.get({}) == null", key);

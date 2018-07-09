@@ -104,6 +104,7 @@ JACINTH_FILES = \
     $J/Gem/Interface/SegmentFormattable.java \
     $J/Gem/Interface/WeakReferenceable.java \
     $J/Gem/Support/Gem_ReferenceQueue.java \
+    $J/Gem/Support/Gem_TimeUnit.java \
     $J/Gem/Support/Gem_WeakReference.java \
     $J/Gem/Support/Map_String_Inspection.java \
     $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java \
@@ -306,7 +307,7 @@ clean:
 	rm -f ef.java ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gcm.py gdc.py gdm.py gdo.py ge.java gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
-	rm -f   gi.py gi.java gl.py go.java gm.java gq.py gr.py gsb.java gse.py gsm.java gsq.py gss.java gz.java
+	rm -f   gi.py gi.java gl.py go.java gm.java gq.py gr.py gsb.java gse.py gsm.java gsq.py gss.java gtu.java gz.java
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -423,6 +424,7 @@ links:
 	ln -s $J/Gem/Core/Gem_StringMap.java                                        gsm.java
 	ln -s ../Gem/Sequence.py                                                    gsq.py
 	ln -s $J/Gem/Core/Gem_StringSet.java                                        gss.java
+	ln -s $J/Gem/Support/Gem_TimeUnit.java                                      gtu.java
 	ln -s $J/Gem/Core/Zone.java                                                 gz.java
 	ln -s ../Sapphire/Parse.py                                                  h0p.py
 	ln -s ../Sapphire/Parse1.py                                                 h1p.py

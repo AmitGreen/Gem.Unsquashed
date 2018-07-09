@@ -18,6 +18,7 @@ import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.Support.World_Integer_WeakReference;
 import link.crystal.Gem.World.Inspection;
 import link.crystal.Gem.World.World_Integer;
+import link.crystal.Gem.Support.Gem_TimeUnit;
 import link.crystal.Mirror.Shape;
 
 
@@ -55,6 +56,14 @@ public class    UnitTest
     //
     private boolean                     test_development()
     {
+        Gem_TimeUnit.test();
+
+        return true;
+    }
+
+
+    private boolean                     test_integer()
+    {
         World_Integer                   seven = Gem.conjure__World_Integer(7);
         final World_Integer             eight = Gem.conjure__World_Integer(8);
 
@@ -71,7 +80,7 @@ public class    UnitTest
 
         final Gem_ReferenceQueue        reference_queue = Gem.conjure__Gem_ReferenceQueue();
 
-        reference_queue.garbage_collect();
+        reference_queue.garbage_collect__AND__possible_sleep();
 
         Gem.integer_cache.dump("integer cache - after");
 

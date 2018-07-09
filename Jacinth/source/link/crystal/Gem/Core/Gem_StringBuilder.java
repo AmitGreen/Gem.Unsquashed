@@ -339,7 +339,13 @@ public class    Gem_StringBuilder
             return;
         }
 
-        this.builder.append("<").append(v_class.getSimpleName()).append(": ").append(v.toString()).append(">");
+        String                      class_name = v_class.getSimpleName();
+
+        if (class_name.equals("")) {
+            class_name = v_class.getName();
+        }
+
+        this.builder.append("<").append(class_name).append(": ").append(v.toString()).append(">");
     }
 
 
@@ -380,7 +386,13 @@ public class    Gem_StringBuilder
             return;
         }
 
-        this.builder.append("<").append(v_class.getSimpleName()).append(": ").append(v.toString()).append(">");
+        String                      class_name = v_class.getSimpleName();
+
+        if (class_name.equals("")) {
+            class_name = v_class.getName();
+        }
+
+        this.builder.append("<").append(class_name).append(": ").append(v.toString()).append(">");
     }
 
 
