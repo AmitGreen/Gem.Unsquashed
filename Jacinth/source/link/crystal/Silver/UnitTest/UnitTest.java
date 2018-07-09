@@ -163,13 +163,13 @@ public class    UnitTest
         unit_test.run_test(arguments);
 
         if (true) {
-            Gem.dump();
-            //Map_String_Inspection               .singleton().dump("Inspections");
+            //Gem.dump();
+            Gem.map_string_inspection                         .dump("Inspections");
             //Storehouse_MessageFormattable                   .dump(z);
             //Storehouse_PortraySegmentFormatter  .singleton  .dump(z);
             //Storehouse_String                               .dump(z);
             //Storehouse_AdornmentSegmentFormatter.singleton  .dump("Storehouse_AdornmentSegmentFormatter.singleton");
-            z.dump();
+            //z.dump();
         }
     }
 }

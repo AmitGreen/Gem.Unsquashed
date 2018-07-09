@@ -8,6 +8,7 @@ import java.lang.String;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringMap;
 import link.crystal.Gem.Core.Zone;
@@ -23,13 +24,7 @@ public class    Map_String_Inspection
 //  extends     Object
     implements  Inspectable<Inspection>//,                              //  Via Gem_StringMap<?>
 {
-    private static final Inspection         inspection = Inspection.create("Map_String_Inspection");
-
-
-    //
-    //  Initialization
-    //
-    private static /*boot-final*/ Map_String_Inspection singleton /* = Map_String_Inspection.boot()*/ ;
+    private static final Inspection     inspection = Inspection.create("Map_String_Inspection");
 
 
     //
@@ -56,6 +51,12 @@ public class    Map_String_Inspection
     }
 
 
+    public static Map_String_Inspection     create__ALLY__Gem(Zone z)
+    {
+        return new Map_String_Inspection(z, Map_String_Inspection.initial_capacity);
+    }
+
+
     //
     //  Interface Inspectable
     //
@@ -68,19 +69,8 @@ public class    Map_String_Inspection
     //
     //  Ally
     //
-    public static void                  boot__ALLY__Zone(Zone z)
+    public void                         boot__ALLY__Zone(Zone z)
     {
-        assert fact_null(Map_String_Inspection.singleton, "Map_String_Inspection.singleton");
-
-        final Map_String_Inspection     singleton = Map_String_Inspection.create(z);
-
-        //
-        //  NOTE:
-        //      In case of loops, that a routine we call, then calls `.cache_or_insert`, we want to make sure
-        //      that `.singleton` is set when `.cache_or_insert` is called.
-        //
-        Map_String_Inspection.singleton = singleton;
-
         //
         //  Clear the cache ...
         //
@@ -90,7 +80,7 @@ public class    Map_String_Inspection
         for (int                        i        = 0; i < cache_index; i ++) {
             final Inspection            previous = cache[i];
 
-            singleton.insert(z, previous.simple_class_name, previous);
+            this.insert(z, previous.simple_class_name, previous);
         }
 
         Map_String_Inspection.cache       = null;
@@ -128,19 +118,19 @@ public class    Map_String_Inspection
 
     public static void                  insert_or_cache(Inspection v)
     {
-        final Map_String_Inspection     singleton = Map_String_Inspection.singleton;
+        final Map_String_Inspection     map_string_inspection = Gem.map_string_inspection;
 
-        if (singleton != null) {
-            final Zone                  z = singleton.z;
+        if (map_string_inspection != null) {
+            final Zone                  z = map_string_inspection.z;
 
-            singleton.insert(z, v.simple_class_name, v);
+            map_string_inspection.insert(z, v.simple_class_name, v);
 
             return;
         }
 
         //
         //  NOTE:
-        //      `singleton` has not yet been initialized ... so temporarily cache `v`
+        //      `Gem.map_string_inspection` has not yet been initialized ... so temporarily cache `v`
         //
         Inspection[]                    cache           = Map_String_Inspection.cache;
         final int                       cache_allocated = Map_String_Inspection.cache_allocated;

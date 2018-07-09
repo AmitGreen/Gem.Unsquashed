@@ -160,8 +160,7 @@ public class    Zone
         this.storehouse_portray_segment_formatter   = Storehouse_PortraySegmentFormatter  .create__ALLY__Zone(z);
         this.storehouse_string_segment_formatter    = Storehouse_StringSegmentFormatter   .create__ALLY__Zone(z);
 
-        Map_String_Inspection.boot__ALLY__Zone(z);
-        Gem                  .boot__ALLY__Zone();
+        Gem.boot__ALLY__Zone(z);
 
         //temporary_storehouse_string.dump("temporary_storehouse_string");
     }
