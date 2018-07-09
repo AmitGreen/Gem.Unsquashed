@@ -14,6 +14,9 @@ import link.crystal.Gem.Format.ParseFormat;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.World_Integer_Cache;
+import link.crystal.Gem.Support.World_Integer_Key;
+import link.crystal.Gem.World.World_Integer;
+import link.crystal.Gem.Support.World_Integer_WeakReference;
 
 
 public abstract class   Gem
@@ -46,6 +49,7 @@ public abstract class   Gem
     //      None of the following can be declared as `final` either ...
     //
     public static       World_Integer_Cache         integer_cache                  = null;
+    public static       World_Integer_Key           integer_key                    = null;
     public static       MethodNameSegmentFormatter  message_name_segment_formatter = null;
     public static       Gem_ReferenceQueue          reference_queue                = null;
 
@@ -389,6 +393,78 @@ public abstract class   Gem
 
         return reference_queue;
     }
+
+
+    public static World_Integer                 conjure__World_Integer(int value)
+    {
+        final World_Integer_Cache               integer_cache = Gem.conjure__World_Integer_Cache();
+
+        World_Integer_Key                       key = Gem.integer_key;
+
+        if (key == null) {
+            //
+            //  NOTE:
+            //      Must allocate `integer_key` after initialization -- trying this during class
+            //      initialization causes nasty loops.
+            //
+            key =
+                Gem.integer_key = World_Integer_Key.create(value);
+        } else {
+            key.recycle(value);
+        }
+
+        final Gem_ReferenceQueue                reference_queue = Gem.conjure__Gem_ReferenceQueue();
+
+        World_Integer_WeakReference             previous = integer_cache.get(key);
+
+        if (previous != null) {
+            World_Integer                       client = previous.get();
+
+            if (client != null) {
+                assert value == client.value;
+
+                return client;
+            }
+
+
+            reference_queue.cleanup();
+
+            assert fact(integer_cache.get(key) == null, "world_integer_cache.get({}) == null", key);
+        }
+
+        final World_Integer                     r = World_Integer.create__ALLY__Gem(value);
+
+        final World_Integer_WeakReference       weak_reference = (
+                World_Integer_WeakReference.create__ALLY__Gem(r, reference_queue)
+            );
+
+        integer_cache.put(weak_reference, weak_reference);
+
+        return r;
+    }
+
+
+    public static World_Integer_Cache           conjure__World_Integer_Cache()
+    {
+        World_Integer_Cache                     previous = Gem.integer_cache;
+
+        if (previous != null) {
+            return previous;
+        }
+
+
+        //
+        //  NOTE:
+        //      Must allocate `integer_cache` after initialization -- trying this during class
+        //      initialization causes nasty loops.
+        //
+        World_Integer_Cache                     integer_cache = World_Integer_Cache.create__ALLY__Gem();
+
+        Gem.integer_cache = integer_cache;
+
+        return integer_cache;
+    }
+
 
 
     public static int                   limit_to_between(int minimum, int v, int maximum)

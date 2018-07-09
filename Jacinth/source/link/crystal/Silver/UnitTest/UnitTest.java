@@ -55,22 +55,27 @@ public class    UnitTest
     //
     private boolean                     test_development()
     {
-        World_Integer                   seven = World_Integer.create(7);
-        final World_Integer             eight = World_Integer.create(8);
+        World_Integer                   seven = Gem.conjure__World_Integer(7);
+        final World_Integer             eight = Gem.conjure__World_Integer(8);
 
         line("{+}: {} .vs {}: {}", seven, eight, seven.compareTo(eight));
 
-        final World_Integer_WeakReference   weak_seven = World_Integer_WeakReference.create(seven);
+        World_Integer                   seven_2 = Gem.conjure__World_Integer(7);
 
-        line("weak_seven: {}", weak_seven);
+        assert fact(seven == seven_2, "seven == seven_2");
 
-        seven = null;
+        Gem.integer_cache.dump("integer cache - before");
+
+        seven =
+            seven_2 = null;
 
         final Gem_ReferenceQueue        reference_queue = Gem.conjure__Gem_ReferenceQueue();
 
         reference_queue.garbage_collect();
 
-        line("weak_seven: {}", weak_seven);
+        Gem.integer_cache.dump("integer cache - after");
+
+        World_Integer                   seven_3 = Gem.conjure__World_Integer(7);
 
         return true;
     }

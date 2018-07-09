@@ -7,6 +7,7 @@ package link.crystal.Gem.Support;
 import java.lang.ref.WeakReference;
 import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
+import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.WeakReferenceable;
@@ -41,6 +42,21 @@ public abstract class   Gem_WeakReference<INSPECTION extends Comparable_Inspecti
     //  Abstract
     //
     public abstract void                reap();
+
+
+    //
+    //  Public (ERRORS)
+    //
+    public static void                  INVALID_ROUTINE()
+    {
+        ExceptionFunctions.RUNTIME(2, "invalid routine");
+    }
+
+
+    public static void                  RUNTIME(String error_message, Object ... arguments)
+    {
+        ExceptionFunctions.RUNTIME(2, error_message, arguments);
+    }
 
 
     //

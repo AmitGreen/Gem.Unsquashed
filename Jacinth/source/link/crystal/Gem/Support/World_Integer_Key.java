@@ -39,11 +39,11 @@ public class    World_Integer_Key
 
     public static World_Integer_Key     create(int value)
     {
-        return new World_Integer(value);
+        return new World_Integer_Key(value);
     }
 
 
-    public World_Integer_Key            recycle(int value)
+    public void                         recycle(int value)
     {
         this.value = value;
     }
@@ -59,7 +59,8 @@ public class    World_Integer_Key
     }
 
 
-    public int                          equals(Object that)
+    @Override
+    public boolean                      equals(Object that)
     {
         if ( ! (that instanceof World_Integer_WeakReference)) {
             return false;

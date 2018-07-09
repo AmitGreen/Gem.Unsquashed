@@ -39,7 +39,7 @@ public class    World_Integer
     }
 
 
-    public static World_Integer         create(int value)
+    public static World_Integer         create__ALLY__Gem(int value)
     {
         return new World_Integer(value);
     }

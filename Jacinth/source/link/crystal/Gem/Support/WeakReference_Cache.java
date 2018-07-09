@@ -74,6 +74,6 @@ public abstract class   WeakReference_Cache<
             line("  {}", k);
         }
 
-        line("End of dump of {} {}", simple_class_name + name);
+        line("End of dump of {} {}", simple_class_name, name);
     }
 }

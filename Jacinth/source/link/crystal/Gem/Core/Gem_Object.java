@@ -40,7 +40,19 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
             return true;
         }
 
-        ExceptionFunctions.ASSERTION_FAILED(2, "assertion failed: {}", format);
+        ExceptionFunctions.ASSERTION_FAILED(2, format);
+
+        return false;
+    }
+
+
+    public static boolean               fact(boolean condition, String format, Object v)
+    {
+        if (condition) {
+            return true;
+        }
+
+        ExceptionFunctions.ASSERTION_FAILED(2, format, v);
 
         return false;
     }

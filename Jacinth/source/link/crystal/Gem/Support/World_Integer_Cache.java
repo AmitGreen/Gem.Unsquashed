@@ -40,7 +40,7 @@ public class    World_Integer_Cache
     }
 
 
-    public World_Integer_Cache          create__ALLY__Gem()
+    public static World_Integer_Cache   create__ALLY__Gem()
     {
         final Zone                      z = Zone.current_zone();
 

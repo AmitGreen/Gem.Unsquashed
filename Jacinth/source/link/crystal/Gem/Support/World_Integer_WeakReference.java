@@ -50,10 +50,12 @@ public class    World_Integer_WeakReference
     }
 
 
-    public static World_Integer_WeakReference   create(World_Integer client)
+    public static World_Integer_WeakReference   create__ALLY__Gem(
+            World_Integer                       client,
+            Gem_ReferenceQueue                  reference_queue//,
+        )
     {
-        final Gem_ReferenceQueue        reference_queue = Gem.conjure__Gem_ReferenceQueue();
-        final int                       value           = client.value;
+        final int                       value = client.value;
 
         return new World_Integer_WeakReference(client, reference_queue, value);
     }
@@ -119,6 +121,12 @@ public class    World_Integer_WeakReference
     //
     public void                         reap()
     {
-        line("REAP: {}", this);
+        final World_Integer_Cache       integer_cache = Gem.conjure__World_Integer_Cache();
+
+        final World_Integer_WeakReference   previous = integer_cache.remove(this);
+
+        if (previous != this) {
+            RUNTIME("failed to remove {}", this);
+        }
     }
 }
