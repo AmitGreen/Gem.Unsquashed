@@ -29,7 +29,7 @@ public class    Map_String_Inspection
     //
     //  Initialization
     //
-    private static       Map_String_Inspection  singleton = Map_String_Inspection.singleton();
+    private static /*boot-final*/ Map_String_Inspection singleton /* = Map_String_Inspection.boot()*/ ;
 
 
     //
@@ -50,17 +50,29 @@ public class    Map_String_Inspection
     }
 
 
-    public static Map_String_Inspection     singleton()
+    private static Map_String_Inspection    create(Zone z)
     {
-        Map_String_Inspection               singleton = Map_String_Inspection.singleton;
+        return new Map_String_Inspection(z, Map_String_Inspection.initial_capacity);
+    }
 
-        if (singleton != null) {
-            return singleton;
-        }
 
-        final Zone                      z = Zone.current_zone();
+    //
+    //  Interface Inspectable
+    //
+    public Inspection                   inspect()
+    {
+        return /*static*/ this.inspection;
+    }
 
-        singleton = new Map_String_Inspection(z, Map_String_Inspection.initial_capacity);
+
+    //
+    //  Ally
+    //
+    public static void                  boot__ALLY__Zone(Zone z)
+    {
+        assert fact_null(Map_String_Inspection.singleton, "Map_String_Inspection.singleton");
+
+        final Map_String_Inspection     singleton = Map_String_Inspection.create(z);
 
         //
         //  NOTE:
@@ -83,21 +95,6 @@ public class    Map_String_Inspection
 
         Map_String_Inspection.cache       = null;
         Map_String_Inspection.cache_index = 0;
-
-
-        //
-        //  Overwrite `.singleton` with the [same] value.
-        //
-        return singleton;
-    }
-
-
-    //
-    //  Interface Inspectable
-    //
-    public Inspection                   inspect()
-    {
-        return /*static*/ this.inspection;
     }
 
 

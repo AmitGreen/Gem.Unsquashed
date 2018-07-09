@@ -16,6 +16,7 @@ import link.crystal.Gem.Format.PortraySegmentFormatter;
 import link.crystal.Gem.Format.StringSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
+import link.crystal.Gem.Support.Map_String_Inspection;
 import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_NormalSegmentFormatter;
@@ -36,8 +37,9 @@ public class    Zone
     //
     //  Static members
     //
-    private static Thread               first_thread             = null;
-    private static Zone                 first_zone               = null;
+    private static /*boot-final*/ Thread    first_thread /* = null */ ;
+    private static /*boot-final*/ Zone      first_zone   /* = null */ ;
+
     private static final int            parse_format_allocated   = 10;
     private static final int            string_builder_allocated = 10;
 
@@ -281,6 +283,8 @@ public class    Zone
 
         Zone.first_thread = thread;
         Zone.first_zone   = first_zone;
+
+        Map_String_Inspection.boot__ALLY__Zone(first_zone);
 
         return first_zone;
     }
