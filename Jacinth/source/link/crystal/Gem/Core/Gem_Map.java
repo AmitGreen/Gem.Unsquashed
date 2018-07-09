@@ -185,7 +185,8 @@ public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
     //
     public V                            lookup(Zone z, K k)
     {
-        assert fact(this.z == z, "this.z == z");
+        assert fact        (this.z == z, "this.z == z");
+        assert fact_pointer(k, "k");
 
         return this.get(k);
     }
@@ -193,7 +194,9 @@ public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
 
     public void                         insert(Zone z, K k, V v)
     {
-        assert fact(this.z == z, "this.z == z");
+        assert fact        (this.z == z, "this.z == z");
+        assert fact_pointer(k, "k");
+        assert fact_pointer(v, "v");
 
         final V                         previous = this.putIfAbsent(k, v);
 

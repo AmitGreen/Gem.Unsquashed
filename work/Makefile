@@ -100,6 +100,7 @@ JACINTH_FILES = \
     $J/Gem/Format/StringSegmentFormatter.java \
     $J/Gem/Interface/Gem_Comparable.java \
     $J/Gem/Interface/Inspectable.java \
+    $J/Gem/Interface/Interface__Storehouse_String.java \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
     $J/Gem/Interface/WeakReferenceable.java \
@@ -114,6 +115,7 @@ JACINTH_FILES = \
     $J/Gem/Support/Storehouse_SmallList.java \
     $J/Gem/Support/Storehouse_String.java \
     $J/Gem/Support/Storehouse_StringSegmentFormatter.java \
+    $J/Gem/Support/Temporary_Storehouse_String.java \
     $J/Gem/Support/WeakReference_Cache.java \
     $J/Gem/Support/World_Integer_Cache.java \
     $J/Gem/Support/World_Integer_Key.java \
@@ -318,7 +320,7 @@ clean:
 	rm -f   hk.py hkc.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpr.py hpt.py hs.py
 	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
-	rm -f ig.java ii.java in.py im.py isf.java imf.java io.py iv.py iwr.java
+	rm -f ig.java ii.java in.py im.py ishs.java isf.java imf.java io.py iv.py iwr.java
 	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1.java m1c.py m1m.py m1p.java m1s.java
@@ -332,7 +334,7 @@ clean:
 	rm -f rm.py rq.java rx.py
 	rm -f sha.java shl.java shm.java shn.java shp.java shs.java shsf.java sfi.java sl.py so.py ss.java ssio.py sy.py
 	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
-	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
+	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tshs.java tu.py tw.py tx.py
 	rm -f ut.java
 	rm -f xb.py xf.py
 	rm -f vm.java vm.py vp.java
@@ -510,6 +512,7 @@ links:
 	ln -s ../Gem/__init__.py                                                    in.py
 	ln -s ../Gem/Import.py                                                      im.py
 	ln -s $J/Gem/Interface/MessageFormattable.java                              imf.java
+	ln -s $J/Gem/Interface/Interface__Storehouse_String.java                    ishs.java
 	ln -s $J/Gem/Interface/SegmentFormattable.java                              isf.java
 	ln -s ../Ivory/Main.py                                                      iv.py
 	ln -s $J/Gem/Interface/WeakReferenceable.java                               iwr.java
@@ -616,6 +619,7 @@ links:
 	ln -s ../Tremolite/Name.py                                                  tn.py
 	ln -s ../Tremolite_2/Pattern.py                                             tp.py
 	ln -s ../Tremolite/Parse.py                                                 tp1.py
+	ln -s $J/Gem/Support/Temporary_Storehouse_String.java                       tshs.java
 	ln -s ../Tremolite/Build.py                                                 tu.py
 	ln -s ../Tremolite/PatternWrapper.py                                        tw.py
 	ln -s ../Tremolite/Compile.py                                               tx.py
