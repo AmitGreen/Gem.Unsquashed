@@ -117,6 +117,9 @@ JACINTH_FILES = \
     $J/Gem/Support/Storehouse_StringSegmentFormatter.java \
     $J/Gem/Support/Temporary_Storehouse_String.java \
     $J/Gem/Support/WeakReference_Cache.java \
+    $J/Gem/Support/World_String_Cache.java \
+    $J/Gem/Support/World_String_Key.java \
+    $J/Gem/Support/World_String_WeakReference.java \
     $J/Gem/Support/World_Integer_Cache.java \
     $J/Gem/Support/World_Integer_Key.java \
     $J/Gem/Support/World_Integer_WeakReference.java \
@@ -124,6 +127,7 @@ JACINTH_FILES = \
     $J/Gem/World/Inspection.java \
     $J/Gem/World/World_Inspection.java \
     $J/Gem/World/World_Integer.java \
+    $J/Gem/World/World_String.java \
     $J/Jacinth/Main.java \
     $J/Jacinth/Shape.java \
     $J/Mirror/Shape.java \
@@ -338,7 +342,7 @@ clean:
 	rm -f ut.java
 	rm -f xb.py xf.py
 	rm -f vm.java vm.py vp.java
-	rm -f wi.java wic.java wik.java win.java wir.java wr.java wrc.java
+	rm -f wi.java wic.java wik.java win.java wir.java wr.java wrc.java ws.java wsc.java wsk.java wsr.java
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
@@ -634,6 +638,10 @@ links:
 	ln -s $J/Gem/Support/World_Integer_WeakReference.java                       wir.java
 	ln -s $J/Gem/Support/Gem_WeakReference.java                                 wr.java
 	ln -s $J/Gem/Support/WeakReference_Cache.java                               wrc.java
+	ln -s $J/Gem/World/World_String.java                                        ws.java
+	ln -s $J/Gem/Support/World_String_Cache.java                                wsc.java
+	ln -s $J/Gem/Support/World_String_Key.java                                  wsk.java
+	ln -s $J/Gem/Support/World_String_WeakReference.java                        wsr.java
 	ln -s ../Sardonyx/Boot.py                                                   xb.py
 	ln -s ../Sapphire/Transform.py                                              xf.py
 	ln -s ../Crystal/Board.py                                                   ybd.py

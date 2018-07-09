@@ -85,13 +85,15 @@ public class    Comparable_Inspection
 
 //
 //  class_order
-//      Inspection                          1
-//      NormalSegmentFormatter_Inspection   2
-//      PortraySegmentFormatter_Inspection  3
-//      SegmentFormatter_Inspection         4
-//      StringSegmentFormatter_Inspection   5
-//      Comparable_Inspection               6
-//      World_Inspection                    7
-//      World_Integer                       8
-//      World_Integer_WeakReference         9
+//      Inspection                           1
+//      NormalSegmentFormatter_Inspection    2
+//      PortraySegmentFormatter_Inspection   3
+//      SegmentFormatter_Inspection          4
+//      StringSegmentFormatter_Inspection    5
+//      Comparable_Inspection                6
+//      World_Inspection                     7
+//      World_Integer                        8
+//      World_Integer_WeakReference          9
+//      World_String                        10
+//      World_String_WeakReference          11
 //

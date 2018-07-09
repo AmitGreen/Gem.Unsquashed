@@ -10,15 +10,15 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
+import link.crystal.Gem.Support.Gem_TimeUnit;
 import link.crystal.Gem.Support.Map_String_Inspection;
 import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_String;
-import link.crystal.Gem.Support.World_Integer_WeakReference;
 import link.crystal.Gem.World.Inspection;
 import link.crystal.Gem.World.World_Integer;
-import link.crystal.Gem.Support.Gem_TimeUnit;
+import link.crystal.Gem.World.World_String;
 import link.crystal.Mirror.Shape;
 
 
@@ -81,7 +81,7 @@ public class    UnitTest
 
     private boolean                     test_development()
     {
-        return test_integer();
+        return test_string();
     }
 
 
@@ -107,6 +107,33 @@ public class    UnitTest
         Gem.integer_cache.dump("integer cache - after");
 
         World_Integer                   seven_3 = Gem.conjure__World_Integer(7);
+
+        return true;
+    }
+
+
+    private boolean                     test_string()
+    {
+        World_String                    seven = Gem.conjure__World_String("seven");
+        final World_String              eight = Gem.conjure__World_String("eight");
+
+        line("{+}: {} .vs {}: {}", seven, eight, seven.compareTo(eight));
+
+        World_String                   seven_2 = Gem.conjure__World_String("seven");
+
+        assert fact(seven == seven_2, "seven == seven_2");
+
+        Gem.string_cache.dump("string cache - before");
+
+        seven =
+            seven_2 = null;
+
+        Gem.reference_queue.garbage_collect__AND__possible_sleep();
+        //Gem.reference_queue.garbage_collect();
+
+        Gem.string_cache.dump("string cache - after");
+
+        World_String                    seven_3 = Gem.conjure__World_String("seven");
 
         return true;
     }
@@ -162,14 +189,14 @@ public class    UnitTest
 
         unit_test.run_test(arguments);
 
-        if (true) {
+        if (false) {
             //Gem.dump();
-            Gem.map_string_inspection                         .dump("Inspections");
+            //Gem.map_string_inspection                         .dump("Inspections");
             //Storehouse_MessageFormattable                   .dump(z);
             //Storehouse_PortraySegmentFormatter  .singleton  .dump(z);
             //Storehouse_String                               .dump(z);
             //Storehouse_AdornmentSegmentFormatter.singleton  .dump("Storehouse_AdornmentSegmentFormatter.singleton");
-            //z.dump();
+            z.dump();
         }
     }
 }

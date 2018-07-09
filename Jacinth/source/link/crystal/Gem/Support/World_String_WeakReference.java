@@ -14,18 +14,18 @@ import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Gem_WeakReference;
 import link.crystal.Gem.World.Comparable_Inspection;
 import link.crystal.Gem.World.Inspection;
-import link.crystal.Gem.World.World_Integer;
+import link.crystal.Gem.World.World_String;
 
 
-public class    World_Integer_WeakReference
-    extends     Gem_WeakReference<Comparable_Inspection, World_Integer>
-//  extends     WeakReference                <World_Integer>
-//  extends     Reference                    <World_Integer>
+public class    World_String_WeakReference
+    extends     Gem_WeakReference<Comparable_Inspection, World_String>
+//  extends     WeakReference                <World_String>
+//  extends     Reference                    <World_String>
 //  extends     Object
     implements  Inspectable      <Comparable_Inspection>//,             //  Via Gem_WeakReference<?, ?>
 {
     private static final Comparable_Inspection  inspection = (
-            Comparable_Inspection.create("World_Integer_WeakReference", 9)
+            Comparable_Inspection.create("World_String_WeakReference", 11)
         );
 
 
@@ -33,33 +33,37 @@ public class    World_Integer_WeakReference
     //  Members
     //
     private       String                world_name;
-    public  final int                   value;
+    public  final int                   pulp;
+    public  final String                s;
 
 
     //
     //  Constructor
     //
-    private                             World_Integer_WeakReference(
-            World_Integer                       client,
+    private                             World_String_WeakReference(
+            World_String                        client,
             Gem_ReferenceQueue                  reference_queue,
-            int                                 value//,
+            String                              s,
+            int                                 pulp//,
         )
     {
         super(client, reference_queue);
 
         this.world_name = null;
-        this.value      = value;
+        this.s          = s;
+        this.pulp       = pulp;
     }
 
 
-    public static World_Integer_WeakReference   create__ALLY__Gem(
-            World_Integer                       client,
+    public static World_String_WeakReference    create__ALLY__Gem(
+            World_String                        client,
             Gem_ReferenceQueue                  reference_queue//,
         )
     {
-        final int                       value = client.value;
+        final String                    s    = client.s;
+        final int                       pulp = s.hashCode();
 
-        return new World_Integer_WeakReference(client, reference_queue, value);
+        return new World_String_WeakReference(client, reference_queue, s, pulp);
     }
 
 
@@ -67,13 +71,13 @@ public class    World_Integer_WeakReference
     //  Ancestor Object
     //
     //  NOTE:
-    //      Do not need to override `.equals` -- as World_Integer_WeakReference are unique (and thus can use
+    //      Do not need to override `.equals` -- as World_String_WeakReference are unique (and thus can use
     //      `Object.equals` which uses identity as the equal test).
     //
     @Override
     public int                          hashCode()
     {
-        return this.value;
+        return this.pulp;
     }
 
 
@@ -82,15 +86,15 @@ public class    World_Integer_WeakReference
     //
     public int                          compareTo(Gem_Comparable that)
     {
-        final int                       class_compare = 9 - that.inspect().class_order;
+        final int                       class_compare = 11 - that.inspect().class_order;
 
         if (class_compare != 0) {
             return class_compare;
         }
 
-        final World_Integer_WeakReference   that_2 = (World_Integer_WeakReference) that;
+        final World_String_WeakReference    that_2 = (World_String_WeakReference) that;
 
-        return this.value - that_2.value;
+        return this.s.compareTo(that_2.s);
     }
 
 
@@ -105,14 +109,14 @@ public class    World_Integer_WeakReference
 
     public void                         portray(Gem_StringBuilder builder)
     {
-        World_Integer                   client = this.get();
+        World_String                    client = this.get();
 
         if (client == null) {
-            builder.append("<World_Integer_WeakReference exhausted; ", this.value, ">");
+            builder.append("<World_String_WeakReference exhausted; ", this.s, ">");
             return;
         }
 
-        builder.append("<World_Integer_WeakReference ");
+        builder.append("<World_String_WeakReference ");
         builder.portray(client);
         builder.append(">");
     }
@@ -123,7 +127,7 @@ public class    World_Integer_WeakReference
     //
     public void                         reap()
     {
-        final World_Integer_WeakReference   previous = Gem.integer_cache.remove(this);
+        final World_String_WeakReference    previous = Gem.string_cache.remove(this);
 
         if (previous != this) {
             RUNTIME("failed to remove {}", this);

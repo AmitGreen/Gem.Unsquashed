@@ -26,6 +26,7 @@ import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
 import link.crystal.Gem.Support.Temporary_Storehouse_String;
 import link.crystal.Gem.Support.World_Integer_Key;
+import link.crystal.Gem.Support.World_String_Key;
 import link.crystal.Gem.World.Inspection;
 
 
@@ -68,6 +69,7 @@ public class    Zone
     private /*boot-final*/ Storehouse_PortraySegmentFormatter   storehouse_portray_segment_formatter    /* = null */ ;
     private /*boot-final*/ Storehouse_StringSegmentFormatter    storehouse_string_segment_formatter     /* = null */ ;
     private /*boot-final*/ Interface__Storehouse_String         storehouse_string                       /* = null */ ;
+    public  /*boot-final*/ World_String_Key                     string_key                              /* = null */ ;
 
 
     //
@@ -147,6 +149,15 @@ public class    Zone
     {
         final Zone                      z = this;
 
+        assert fact_null(this.integer_key,                            "this.integer_key");
+        assert fact_null(this.storehouse_adornment_segment_formatter, "this.storehouse_adornment_segment_formatter");
+        assert fact_null(this.storehouse_message_formattable,         "this.storehouse_message_formattable");
+        assert fact_null(this.storehouse_normal_segment_formatter,    "this.storehouse_normal_segment_formatter");
+        assert fact_null(this.storehouse_portray_segment_formatter,   "this.storehouse_portray_segment_formatter");
+        assert fact_null(this.storehouse_string_segment_formatter,    "this.storehouse_string_segment_formatter");
+        assert fact_null(this.storehouse_string,                      "this.storehouse_string");
+        assert fact_null(this.string_key,                             "this.string_key");
+
         //
         //  NOTE:
         //      `this.storehouse_string` must be initiliazed first, as the others depend on it.
@@ -159,6 +170,7 @@ public class    Zone
         this.storehouse_normal_segment_formatter    = Storehouse_NormalSegmentFormatter   .create__ALLY__Zone(z);
         this.storehouse_portray_segment_formatter   = Storehouse_PortraySegmentFormatter  .create__ALLY__Zone(z);
         this.storehouse_string_segment_formatter    = Storehouse_StringSegmentFormatter   .create__ALLY__Zone(z);
+        this.string_key                             = World_String_Key                    .create__ALLY__Zone(z);
 
         Gem.boot__ALLY__Zone(z);
 
@@ -312,14 +324,15 @@ public class    Zone
         }
 
         line("---");
-        line("                            integer_key: {}", this.integer_key);
         line("                             format_map: {}", this.format_map);
+        line("                            integer_key: {}", this.integer_key);
         line(" storehouse_adornment_segment_formatter: {}", this.storehouse_adornment_segment_formatter);
         line("         storehouse_message_formattable: {}", this.storehouse_message_formattable);
         line("    storehouse_normal_segment_formatter: {}", this.storehouse_normal_segment_formatter);
         line("   storehouse_portray_segment_formatter: {}", this.storehouse_portray_segment_formatter);
         line("    storehouse_string_segment_formatter: {}", this.storehouse_string_segment_formatter);
         line("                      storehouse_string: {}", this.storehouse_string);
+        line("                             string_key: {}", this.string_key);
 
         //this.storehouse_string.dump("Zone.storehouse_string");
         this.format_map       .dump("Zone.format_map");

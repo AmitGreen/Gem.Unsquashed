@@ -17,7 +17,11 @@ import link.crystal.Gem.Support.Map_String_Inspection;
 import link.crystal.Gem.Support.World_Integer_Cache;
 import link.crystal.Gem.Support.World_Integer_Key;
 import link.crystal.Gem.Support.World_Integer_WeakReference;
+import link.crystal.Gem.Support.World_String_Cache;
+import link.crystal.Gem.Support.World_String_Key;
+import link.crystal.Gem.Support.World_String_WeakReference;
 import link.crystal.Gem.World.World_Integer;
+import link.crystal.Gem.World.World_String;
 
 
 public abstract class   Gem
@@ -50,6 +54,7 @@ public abstract class   Gem
     //      None of the following can be declared as `final` either ...
     //
     public static /*boot-final*/    World_Integer_Cache         integer_cache                  /* = null */ ;
+    public static /*boot-final*/    World_String_Cache          string_cache                   /* = null */ ;
     public static /*boot-final*/    Map_String_Inspection       map_string_inspection          /* = null */ ;
     public static /*boot-final*/    MethodNameSegmentFormatter  message_name_segment_formatter /* = null */ ;
     public static /*boot-final*/    Gem_ReferenceQueue          reference_queue                /* = null */ ;
@@ -61,6 +66,7 @@ public abstract class   Gem
     public static void                  boot__ALLY__Zone(Zone z)
     {
         assert fact_null(Gem.integer_cache,                  "Gem.integer_cache");
+        assert fact_null(Gem.string_cache,                   "Gem.string_cache");
         assert fact_null(Gem.map_string_inspection,          "Gem.map_string_inspection");
         assert fact_null(Gem.message_name_segment_formatter, "Gem.message_name_segment_formatter");
         assert fact_null(Gem.reference_queue,                "Gem.reference_queue");
@@ -68,6 +74,7 @@ public abstract class   Gem
         final Map_String_Inspection         map_string_inspection = Map_String_Inspection.create__ALLY__Gem(z);
 
         Gem.integer_cache                  = World_Integer_Cache.create__ALLY__Gem();
+        Gem.string_cache                   = World_String_Cache .create__ALLY__Gem();
         Gem.map_string_inspection          = map_string_inspection;
         Gem.message_name_segment_formatter = MethodNameSegmentFormatter.create__ALLY__Gem();
         Gem.reference_queue                = Gem_ReferenceQueue        .create__ALLY__Gem();
@@ -360,6 +367,7 @@ public abstract class   Gem
         line("  standard_output: {p}", Gem.standard_output);
         line("---");
         line("                   integer_cache: {p}", Gem.integer_cache);
+        line("                    string_cache: {p}", Gem.string_cache);
         line("           map_string_inspection: {p}", Gem.map_string_inspection);
         line("  message_name_segment_formatter: {p}", Gem.message_name_segment_formatter);
         line("                 reference_queue: {p}", Gem.reference_queue);
@@ -397,7 +405,7 @@ public abstract class   Gem
             World_Integer                       client = previous.get();
 
             if (client != null) {
-                assert value == client.value;
+                assert fact(value == client.value, "value == client.value");
 
                 return client;
             }
@@ -415,6 +423,46 @@ public abstract class   Gem
             );
 
         integer_cache.put(weak_reference, weak_reference);
+
+        return r;
+    }
+
+
+    public static World_String                  conjure__World_String(String s)
+    {
+        final Zone                              z = Zone.current_zone();
+
+        final World_String_Cache                string_cache    = Gem.string_cache;
+        final Gem_ReferenceQueue                reference_queue = Gem.reference_queue;
+
+        final World_String_Key                  key = z.string_key;
+
+        key.recycle(s);
+
+        World_String_WeakReference              previous = string_cache.get(key);
+
+        if (previous != null) {
+            World_String                        client = previous.get();
+
+            if (client != null) {
+                assert fact(s.equals(client.s), "s.equals(client.s)");
+
+                return client;
+            }
+
+            previous.enqueue();
+            reference_queue.cleanup();
+
+            assert fact(string_cache.get(key) == null, "world_string_cache.get({}) == null", key);
+        }
+
+        final World_String                      r = World_String.create__ALLY__Gem(s);
+
+        final World_String_WeakReference        weak_reference = (
+                World_String_WeakReference.create__ALLY__Gem(r, reference_queue)
+            );
+
+        string_cache.put(weak_reference, weak_reference);
 
         return r;
     }
