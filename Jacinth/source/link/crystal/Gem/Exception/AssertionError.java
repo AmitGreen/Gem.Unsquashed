@@ -49,6 +49,8 @@ public class        AssertionError
         return /*static*/ this.inspection;
     }
 
+
+    @Override
     public void                         portray(Gem_StringBuilder builder)
     {
         builder.append("<AssertionError ");

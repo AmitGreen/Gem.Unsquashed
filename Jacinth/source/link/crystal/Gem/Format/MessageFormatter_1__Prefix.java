@@ -55,6 +55,15 @@ public class    MessageFormatter_1__Prefix
     }
 
 
+    @Override
+    public void                         portray(Gem_StringBuilder builder)
+    {
+        builder.append("<MessageFormatter_1__Prefix ");
+        builder.quote(this.prefix);
+        builder.append(">");
+    }
+
+
     //
     //  Interface MessageFormattable
     //
@@ -63,13 +72,5 @@ public class    MessageFormatter_1__Prefix
     {
         builder.append(this.prefix);
         builder.portray(v);
-    }
-
-
-    public void                         portray(Gem_StringBuilder builder)
-    {
-        builder.append("<MessageFormatter_1__Prefix ");
-        builder.quote(this.prefix);
-        builder.append(">");
     }
 }

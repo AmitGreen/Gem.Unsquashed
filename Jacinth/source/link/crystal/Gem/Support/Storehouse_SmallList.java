@@ -34,6 +34,16 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
 
 
     //
+    //  Interface Inspectable
+    //
+    @Override
+    public void                         portray(Gem_StringBuilder builder)
+    {
+        builder.append("<", this.inspect().simple_class_name, " size<", this.segment_many.length, ">>");
+    }
+
+
+    //
     //  Public
     //
     public void                         insert(Zone z, int argument_index, ELEMENT segment)

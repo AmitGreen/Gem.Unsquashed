@@ -54,43 +54,7 @@ public class    UnitTest
     //
     //  Private (tests)
     //
-    private boolean                     test_development()
-    {
-        Gem_TimeUnit.test();
-
-        return true;
-    }
-
-
-    private boolean                     test_integer()
-    {
-        World_Integer                   seven = Gem.conjure__World_Integer(7);
-        final World_Integer             eight = Gem.conjure__World_Integer(8);
-
-        line("{+}: {} .vs {}: {}", seven, eight, seven.compareTo(eight));
-
-        World_Integer                   seven_2 = Gem.conjure__World_Integer(7);
-
-        assert fact(seven == seven_2, "seven == seven_2");
-
-        Gem.integer_cache.dump("integer cache - before");
-
-        seven =
-            seven_2 = null;
-
-        final Gem_ReferenceQueue        reference_queue = Gem.conjure__Gem_ReferenceQueue();
-
-        reference_queue.garbage_collect__AND__possible_sleep();
-
-        Gem.integer_cache.dump("integer cache - after");
-
-        World_Integer                   seven_3 = Gem.conjure__World_Integer(7);
-
-        return true;
-    }
-
-
-    private boolean                     test_old()
+    private boolean                     test_arrange()
     {
         final Zone                      z = Zone.current_zone();
 
@@ -115,6 +79,47 @@ public class    UnitTest
     }
 
 
+    private boolean                     test_development()
+    {
+        return test_integer();
+    }
+
+
+    private boolean                     test_integer()
+    {
+        World_Integer                   seven = Gem.conjure__World_Integer(7);
+        final World_Integer             eight = Gem.conjure__World_Integer(8);
+
+        line("{+}: {} .vs {}: {}", seven, eight, seven.compareTo(eight));
+
+        World_Integer                   seven_2 = Gem.conjure__World_Integer(7);
+
+        assert fact(seven == seven_2, "seven == seven_2");
+
+        Gem.integer_cache.dump("integer cache - before");
+
+        seven =
+            seven_2 = null;
+
+        //Gem.reference_queue.garbage_collect__AND__possible_sleep();
+        Gem.reference_queue.garbage_collect();
+
+        Gem.integer_cache.dump("integer cache - after");
+
+        World_Integer                   seven_3 = Gem.conjure__World_Integer(7);
+
+        return true;
+    }
+
+
+    private boolean                     test_time_unit()
+    {
+        Gem_TimeUnit.test();
+
+        return true;
+    }
+
+
     //
     //  Private
     //
@@ -129,7 +134,7 @@ public class    UnitTest
         final String                    name = (arguments_total == 0 ? "development" : arguments[0]);
 
         if (name.equals("development")) {       return this.test_development();     }
-        if (name.equals("old"))         {       return this.test_old();             }
+        if (name.equals("old"))         {       return this.test_arrange();         }
 
         RUNTIME("unknown unit test: {p}", name);
 
@@ -164,7 +169,7 @@ public class    UnitTest
             //Storehouse_PortraySegmentFormatter  .singleton  .dump(z);
             //Storehouse_String                               .dump(z);
             //Storehouse_AdornmentSegmentFormatter.singleton  .dump("Storehouse_AdornmentSegmentFormatter.singleton");
-            //z.dump();
+            z.dump();
         }
     }
 }

@@ -33,31 +33,10 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
     //
     //  Interface Inspectable
     //
+    @Override
     public void                         portray(Gem_StringBuilder builder)
     {
-        final INSPECTION                inspection = this.inspect();
-
-        final List<String>              keys = new ArrayList<String>(this.keySet());
-
-        Collections.sort(keys);
-
-        final int                       keys_total = keys.size();
-
-        builder.append("<", inspection.simple_class_name, " size<", keys_total, ">");
-
-        for (int                        i = 0; i < keys_total; i ++) {
-            final String                k = keys.get(i);
-
-            if (i == 0) {
-                builder.append("; ");
-            } else {
-                builder.append(", ");
-            }
-
-            builder.quote(k);
-        }
-
-        builder.append(">");
+        builder.append("<", this.inspect().simple_class_name, " size<", this.size(), ">>");
     }
 
 
@@ -74,15 +53,15 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
 
         final int                       total = keys.size();
 
-        line("Dump of {}", simple_class_name + " " + name);
-        line("      size: " + Integer.toString(total));
+        line("Dump of {} {}", simple_class_name, name);
+        line("      size: {}", total);
 
         for (int                        i = 0; i < total; i ++) {
             final String                k = keys.get(i);
 
-            line("  {}", k);
+            line("  {p}", k);
         }
 
-        line("End of dump of {}", simple_class_name + " " + name);
+        line("End of dump of {} {}", simple_class_name, name);
     }
 }

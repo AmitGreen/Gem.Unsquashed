@@ -6,6 +6,7 @@ package link.crystal.Gem.Support;
 
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
+import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.WeakReferenceable;
@@ -25,21 +26,23 @@ public class    World_Integer_Key
     //
     //  Members
     //
+    private final Zone                  z;
     public int                          value;
 
 
     //
     //  Constructor, Factory, & Recycle
     //
-    protected                           World_Integer_Key(int value)
+    protected                           World_Integer_Key(Zone z)
     {
-        this.value = value;
+        this.z     = z;
+        this.value = 0;
     }
 
 
-    public static World_Integer_Key     create(int value)
+    public static World_Integer_Key     create__ALLY__Zone(Zone z)
     {
-        return new World_Integer_Key(value);
+        return new World_Integer_Key(z);
     }
 
 

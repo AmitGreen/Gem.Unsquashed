@@ -48,10 +48,24 @@ public abstract class   Gem
     //  HENCE:
     //      None of the following can be declared as `final` either ...
     //
-    public static       World_Integer_Cache         integer_cache                  = null;
-    public static       World_Integer_Key           integer_key                    = null;
-    public static       MethodNameSegmentFormatter  message_name_segment_formatter = null;
-    public static       Gem_ReferenceQueue          reference_queue                = null;
+    public static /*boot-final*/    World_Integer_Cache         integer_cache                  /* = null */ ;
+    public static /*boot-final*/    MethodNameSegmentFormatter  message_name_segment_formatter /* = null */ ;
+    public static /*boot-final*/    Gem_ReferenceQueue          reference_queue                /* = null */ ;
+
+
+    //
+    //  Ally
+    //
+    public static void                  boot__ALLY__Zone()
+    {
+        assert fact_null(Gem.integer_cache,                  "Gem.integer_cache");
+        assert fact_null(Gem.message_name_segment_formatter, "Gem.message_name_segment_formatter");
+        assert fact_null(Gem.reference_queue,                "Gem.reference_queue");
+
+        Gem.integer_cache                  = World_Integer_Cache       .create__ALLY__Gem();
+        Gem.message_name_segment_formatter = MethodNameSegmentFormatter.create__ALLY__Gem();
+        Gem.reference_queue                = Gem_ReferenceQueue        .create__ALLY__Gem();
+    }
 
 
     //
@@ -334,16 +348,12 @@ public abstract class   Gem
     //
     public static void                  dump()
     {
-        final PrintStream                   standard_output                = Gem.standard_output;
-
-        final MethodNameSegmentFormatter    message_name_segment_formatter = Gem.message_name_segment_formatter;
-        final Gem_ReferenceQueue            reference_queue                = Gem.reference_queue;
-
         line("Dump of Gem");
-        line("  standard_output: {p}", standard_output);
+        line("  standard_output: {p}", Gem.standard_output);
         line("---");
-        line("  message_name_segment_formatter: {p}", message_name_segment_formatter);
-        line("                 reference_queue: {p}", reference_queue);
+        line("                   integer_cache: {p}", Gem.integer_cache);
+        line("  message_name_segment_formatter: {p}", Gem.message_name_segment_formatter);
+        line("                 reference_queue: {p}", Gem.reference_queue);
         line("End of dump of Gem");
     }
 
@@ -353,67 +363,24 @@ public abstract class   Gem
     //
     public static MethodNameSegmentFormatter    conjure_MethodNameSegmentFormatter()
     {
-        final MethodNameSegmentFormatter        previous = Gem.message_name_segment_formatter;
+        final MethodNameSegmentFormatter        message_name_segment_formatter = Gem.message_name_segment_formatter;
 
-        if (previous != null) {
-            return previous;
-        }
-
-        //
-        //  NOTE:
-        //      Must allocate `message_name_segment_formatter` after initialization -- trying this during class
-        //      initialization causes nasty loops.
-        //
-        final MethodNameSegmentFormatter        message_name_segment_formatter = (
-                MethodNameSegmentFormatter.create__ALLY__Gem()
-            );
-
-        Gem.message_name_segment_formatter = message_name_segment_formatter;
+        assert fact_pointer(message_name_segment_formatter, "message_name_segment_formatter");
 
         return message_name_segment_formatter;
     }
 
 
-    public static Gem_ReferenceQueue    conjure__Gem_ReferenceQueue()
-    {
-        final Gem_ReferenceQueue        previous = Gem.reference_queue;
-
-        if (previous != null) {
-            return previous;
-        }
-
-        //
-        //  NOTE:
-        //      Must allocate `reference_queue` after initialization -- trying this during class
-        //      initialization causes nasty loops.
-        //
-        final Gem_ReferenceQueue        reference_queue = Gem_ReferenceQueue.create__ALLY__Gem();
-
-        Gem.reference_queue = reference_queue;
-
-        return reference_queue;
-    }
-
-
     public static World_Integer                 conjure__World_Integer(int value)
     {
-        final World_Integer_Cache               integer_cache = Gem.conjure__World_Integer_Cache();
+        final Zone                              z = Zone.current_zone();
 
-        World_Integer_Key                       key = Gem.integer_key;
+        final World_Integer_Cache               integer_cache   = Gem.integer_cache;
+        final Gem_ReferenceQueue                reference_queue = Gem.reference_queue;
 
-        if (key == null) {
-            //
-            //  NOTE:
-            //      Must allocate `integer_key` after initialization -- trying this during class
-            //      initialization causes nasty loops.
-            //
-            key =
-                Gem.integer_key = World_Integer_Key.create(value);
-        } else {
-            key.recycle(value);
-        }
+        final World_Integer_Key                 key = z.integer_key;
 
-        final Gem_ReferenceQueue                reference_queue = Gem.conjure__Gem_ReferenceQueue();
+        key.recycle(value);
 
         World_Integer_WeakReference             previous = integer_cache.get(key);
 
@@ -442,29 +409,6 @@ public abstract class   Gem
 
         return r;
     }
-
-
-    public static World_Integer_Cache           conjure__World_Integer_Cache()
-    {
-        World_Integer_Cache                     previous = Gem.integer_cache;
-
-        if (previous != null) {
-            return previous;
-        }
-
-
-        //
-        //  NOTE:
-        //      Must allocate `integer_cache` after initialization -- trying this during class
-        //      initialization causes nasty loops.
-        //
-        World_Integer_Cache                     integer_cache = World_Integer_Cache.create__ALLY__Gem();
-
-        Gem.integer_cache = integer_cache;
-
-        return integer_cache;
-    }
-
 
 
     public static int                   limit_to_between(int minimum, int v, int maximum)

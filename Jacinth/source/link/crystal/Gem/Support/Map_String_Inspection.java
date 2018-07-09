@@ -153,7 +153,7 @@ public class    Map_String_Inspection
 
         assert fact(cache_index < cache_allocated, "cache_index < cache_allocated");
 
-        //output("Caching: " + v.simple_class_name);
+        output("Caching: " + v.simple_class_name);
 
         cache[cache_index] = v;
 

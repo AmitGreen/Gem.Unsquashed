@@ -5,7 +5,11 @@ package link.crystal.Gem.Support;
 
 
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringSet;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Exception.ExceptionFunctions;
@@ -74,10 +78,40 @@ public class    Temporary_Storehouse_String
         return false;
     }
 
-   
+
+    //
+    //  Public (line)
+    //
+    public static void                  line(String format, Object v)
+    {
+        Gem.line(2, format, v);
+    }
+
+
     //
     //  Interface Interface__Storehouse_String
     //
+    public void                         dump(String name)
+    {
+        List<String>                    keys = new ArrayList<String>(this.keySet());
+
+        Collections.sort(keys);
+
+        final int                       total = keys.size();
+
+        line("Dump of Temporary_Storehouse_String {}", name);
+        line("      size: {}", total);
+
+        for (int                        i = 0; i < total; i ++) {
+            final String                k = keys.get(i);
+
+            line("  {p}", k);
+        }
+
+        line("End of dump of Temporary_Storehouse_String {}", name);
+    }
+
+    
     public String                       intern_permenant_string(Zone z, String s)
     {
         assert fact        (this.z == z, "this.z == z");

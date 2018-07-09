@@ -10,5 +10,6 @@ import link.crystal.Gem.Core.Zone;
 
 public interface    Interface__Storehouse_String
 {
+    public void                         dump                   (String name);
     public String                       intern_permenant_string(Zone z, String s);
 }

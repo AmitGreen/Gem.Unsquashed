@@ -106,8 +106,9 @@ public abstract class   ArgumentSegmentFormatter<INSPECTION extends ArgumentSegm
 
 
     //
-    //  Public
+    //  Interface Inspectable
     //
+    @Override
     public void                         portray(Gem_StringBuilder builder)
     {
         INSPECTION                      inspection = this.inspect();

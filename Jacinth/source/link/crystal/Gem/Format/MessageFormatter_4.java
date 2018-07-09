@@ -75,6 +75,21 @@ public class    MessageFormatter_4
     }
 
 
+    @Override
+    public void                         portray(Gem_StringBuilder builder)
+    {
+        builder.append("<MessageFormatter_4 ");
+        builder.portray(this.a);
+        builder.append(" ");
+        builder.portray(this.b);
+        builder.append(" ");
+        builder.portray(this.c);
+        builder.append(" ");
+        builder.portray(this.d);
+        builder.append(">");
+    }
+
+
     //
     //  Interface MessageFormattable
     //
@@ -162,20 +177,5 @@ public class    MessageFormatter_4
         this.b.choose(builder, depth, v, w, x, y);
         this.c.choose(builder, depth, v, w, x, y);
         this.d.choose(builder, depth, v, w, x, y);
-    }
-
-
-    @Override
-    public void                         portray(Gem_StringBuilder builder)
-    {
-        builder.append("<MessageFormatter_4 ");
-        builder.portray(this.a);
-        builder.append(" ");
-        builder.portray(this.b);
-        builder.append(" ");
-        builder.portray(this.c);
-        builder.append(" ");
-        builder.portray(this.d);
-        builder.append(">");
     }
 }

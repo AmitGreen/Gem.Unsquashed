@@ -51,25 +51,4 @@ public class    Storehouse_MessageFormattable
     {
         return /*static*/ this.inspection;
     }
-
-
-    //
-    //  Public
-    //
-    public static MessageFormattable    conjure(Zone z, String format)
-    {
-        final Storehouse_MessageFormattable     cache = z.conjure__Storehouse_MessageFormattable();
-
-        final MessageFormattable        previous = cache.get(format);
-
-        if (previous != null) {
-            return previous;
-        }
-
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
-
-        cache.insert(z, format, formattable);
-
-        return formattable;
-    }
 }

@@ -121,9 +121,7 @@ public class    World_Integer_WeakReference
     //
     public void                         reap()
     {
-        final World_Integer_Cache       integer_cache = Gem.conjure__World_Integer_Cache();
-
-        final World_Integer_WeakReference   previous = integer_cache.remove(this);
+        final World_Integer_WeakReference   previous = Gem.integer_cache.remove(this);
 
         if (previous != this) {
             RUNTIME("failed to remove {}", this);

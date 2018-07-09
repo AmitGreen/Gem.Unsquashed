@@ -204,4 +204,10 @@ public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>
             RUNTIME("previous value for {} already exists: {}", k, v);
         }
     }
+
+
+    public static void                  output(String s)
+    {
+        Gem.output(s);
+    }
 }

@@ -34,20 +34,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     //
     //  Interface Inspectable
     //
-    public V                            find(String k)
-    {
-        assert fact_pointer(k, "k");
-
-        final V                         r = this.get(k);
-
-        if (r == null) {
-            RUNTIME("cannot find key {}", k);
-        }
-
-        return r;
-    }
-
-
+    @Override
     public void                         portray(Gem_StringBuilder builder)
     {
         final Inspection                inspection = this.inspect();
@@ -71,7 +58,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
 
         final int                       total = keys.size();
 
-        line("Dump of {}", simple_class_name + " " + name);
+        line("Dump of {} {}", simple_class_name, name);
         line("  size: {}", total);
 
         for (int                        i = 0; i < total; i ++) {
@@ -81,6 +68,20 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
             line("  {}: {}", String.format("%40s", z.quote_string(k)), v);
         }
 
-        line("End of dump of {}", simple_class_name + " " + name);
+        line("End of dump of {} {}", simple_class_name, name);
+    }
+
+
+    public V                            find(String k)
+    {
+        assert fact_pointer(k, "k");
+
+        final V                         r = this.get(k);
+
+        if (r == null) {
+            RUNTIME("cannot find key {}", k);
+        }
+
+        return r;
     }
 }

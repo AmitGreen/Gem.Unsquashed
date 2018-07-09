@@ -25,6 +25,7 @@ import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
 import link.crystal.Gem.Support.Temporary_Storehouse_String;
+import link.crystal.Gem.Support.World_Integer_Key;
 import link.crystal.Gem.World.Inspection;
 
 
@@ -58,14 +59,15 @@ public class    Zone
     private final Gem_StringBuilder[]   string_builder_many;
     private       int                   string_builder_total;
 
-    private /*boot-final*/ Map__String__ArgumentSegmentFormatter_Inspection     format_map;
-    private /*boot-final*/ Storehouse_AdornmentSegmentFormatter                 storehouse_adornment_segment_formatter;
-    private /*boot-final*/ Storehouse_MessageFormattable                        storehouse_message_formattable;
-    private /*boot-final*/ Storehouse_NormalSegmentFormatter                    storehouse_normal_segment_formatter;
-    private /*boot-final*/ Storehouse_PortraySegmentFormatter                   storehouse_portray_segment_formatter;
-    private /*boot-final*/ Storehouse_StringSegmentFormatter                    storehouse_string_segment_formatter;
-    private /*boot-final*/ Interface__Storehouse_String                         storehouse_string;
+    private /*boot-final*/ Map__String__ArgumentSegmentFormatter_Inspection     format_map /* = null */ ;
 
+    public  /*boot-final*/ World_Integer_Key                    integer_key                             /* = null */ ;
+    private /*boot-final*/ Storehouse_AdornmentSegmentFormatter storehouse_adornment_segment_formatter  /* = null */ ;
+    private /*boot-final*/ Storehouse_MessageFormattable        storehouse_message_formattable          /* = null */ ;
+    private /*boot-final*/ Storehouse_NormalSegmentFormatter    storehouse_normal_segment_formatter     /* = null */ ;
+    private /*boot-final*/ Storehouse_PortraySegmentFormatter   storehouse_portray_segment_formatter    /* = null */ ;
+    private /*boot-final*/ Storehouse_StringSegmentFormatter    storehouse_string_segment_formatter     /* = null */ ;
+    private /*boot-final*/ Interface__Storehouse_String         storehouse_string                       /* = null */ ;
 
 
     //
@@ -129,6 +131,7 @@ public class    Zone
     }
 
 
+    @Override
     public void                         portray(Gem_StringBuilder builder)
     {
         builder.augment("<Zone zone_thread{p} ... string_builder_total{p} ...>",
@@ -141,6 +144,30 @@ public class    Zone
     //  Private
     //
     private void                        boot()
+    {
+        final Zone                      z = this;
+
+        //
+        //  NOTE:
+        //      `this.storehouse_string` must be initiliazed first, as the others depend on it.
+        //
+        final Temporary_Storehouse_String   temporary_storehouse_string = this.boot__storehouse_string();
+
+        this.integer_key                            = World_Integer_Key                   .create__ALLY__Zone(z);
+        this.storehouse_adornment_segment_formatter = Storehouse_AdornmentSegmentFormatter.create__ALLY__Zone(z);
+        this.storehouse_message_formattable         = Storehouse_MessageFormattable       .create__ALLY__Zone(z);
+        this.storehouse_normal_segment_formatter    = Storehouse_NormalSegmentFormatter   .create__ALLY__Zone(z);
+        this.storehouse_portray_segment_formatter   = Storehouse_PortraySegmentFormatter  .create__ALLY__Zone(z);
+        this.storehouse_string_segment_formatter    = Storehouse_StringSegmentFormatter   .create__ALLY__Zone(z);
+
+        Map_String_Inspection.boot__ALLY__Zone(z);
+        Gem                  .boot__ALLY__Zone();
+
+        //temporary_storehouse_string.dump("temporary_storehouse_string");
+    }
+
+
+    private Temporary_Storehouse_String     boot__storehouse_string()
     {
         final Zone                      z = this;
 
@@ -176,7 +203,7 @@ public class    Zone
             storehouse_string.insert_permenant_string(z, k);
         }
 
-        Map_String_Inspection.boot__ALLY__Zone(first_zone);
+        return temporary_storehouse_string;
     }
 
 
@@ -286,9 +313,17 @@ public class    Zone
         }
 
         line("---");
-        line("           format_map: {}", this.format_map);
+        line("                            integer_key: {}", this.integer_key);
+        line("                             format_map: {}", this.format_map);
+        line(" storehouse_adornment_segment_formatter: {}", this.storehouse_adornment_segment_formatter);
+        line("         storehouse_message_formattable: {}", this.storehouse_message_formattable);
+        line("    storehouse_normal_segment_formatter: {}", this.storehouse_normal_segment_formatter);
+        line("   storehouse_portray_segment_formatter: {}", this.storehouse_portray_segment_formatter);
+        line("    storehouse_string_segment_formatter: {}", this.storehouse_string_segment_formatter);
+        line("                      storehouse_string: {}", this.storehouse_string);
 
-        this.format_map.dump("Zone.format_map");
+        //this.storehouse_string.dump("Zone.storehouse_string");
+        this.format_map       .dump("Zone.format_map");
 
         line("End of dump of Zone");
     }
@@ -350,12 +385,7 @@ public class    Zone
                 this.storehouse_adornment_segment_formatter
             );
 
-        if (storehouse_adornment_segment_formatter == null) {
-            storehouse_adornment_segment_formatter =
-                this.storehouse_adornment_segment_formatter = (
-                        Storehouse_AdornmentSegmentFormatter.create__ALLY__Zone(z)
-                    );
-        }
+        assert fact_pointer(storehouse_adornment_segment_formatter, "storehouse_adornment_segment_formatter");
 
         final AdornmentSegmentFormatter     previous = storehouse_adornment_segment_formatter.lookup(z, s);
 
@@ -375,16 +405,11 @@ public class    Zone
     {
         final Zone                      z = this;
 
-        Storehouse_NormalSegmentFormatter   storehouse_normal_segment_formatter = (
+        final Storehouse_NormalSegmentFormatter     storehouse_normal_segment_formatter = (
                 this.storehouse_normal_segment_formatter
             );
 
-        if (storehouse_normal_segment_formatter == null) {
-            storehouse_normal_segment_formatter =
-                this.storehouse_normal_segment_formatter = (
-                        Storehouse_NormalSegmentFormatter.create__ALLY__Zone(z)
-                    );
-        }
+        assert fact_pointer(storehouse_normal_segment_formatter, "storehouse_normal_segment_formatter");
 
         final NormalSegmentFormatter    previous = storehouse_normal_segment_formatter.lookup(z, argument_index);
 
@@ -404,16 +429,11 @@ public class    Zone
     {
         final Zone                      z = this;
 
-        Storehouse_PortraySegmentFormatter  storehouse_portray_segment_formatter = (
+        final Storehouse_PortraySegmentFormatter    storehouse_portray_segment_formatter = (
                 this.storehouse_portray_segment_formatter
             );
 
-        if (storehouse_portray_segment_formatter == null) {
-            storehouse_portray_segment_formatter =
-                this.storehouse_portray_segment_formatter = (
-                        Storehouse_PortraySegmentFormatter.create__ALLY__Zone(z)
-                    );
-        }
+        assert fact_pointer(storehouse_portray_segment_formatter, "storehouse_portray_segment_formatter");
 
         final PortraySegmentFormatter   previous = storehouse_portray_segment_formatter.lookup(z, argument_index);
 
@@ -431,16 +451,9 @@ public class    Zone
 
     public Storehouse_MessageFormattable    conjure__Storehouse_MessageFormattable()
     {
-        Storehouse_MessageFormattable   previous = this.storehouse_message_formattable;
+        final Storehouse_MessageFormattable   storehouse_message_formattable = this.storehouse_message_formattable;
 
-        if (previous != null) {
-            return previous;
-        }
-
-        final Zone                      z = this;
-
-        storehouse_message_formattable =
-            this.storehouse_message_formattable = Storehouse_MessageFormattable.create__ALLY__Zone(z);
+        assert fact_pointer(storehouse_message_formattable, "storehouse_message_formattable");
 
         return storehouse_message_formattable;
     }
@@ -450,16 +463,11 @@ public class    Zone
     {
         final Zone                      z = this;
 
-        Storehouse_StringSegmentFormatter   storehouse_string_segment_formatter = (
+        final Storehouse_StringSegmentFormatter     storehouse_string_segment_formatter = (
                 this.storehouse_string_segment_formatter
             );
 
-        if (storehouse_string_segment_formatter == null) {
-            storehouse_string_segment_formatter =
-                this.storehouse_string_segment_formatter = (
-                        Storehouse_StringSegmentFormatter.create__ALLY__Zone(z)
-                    );
-        }
+        assert fact_pointer(storehouse_string_segment_formatter, "storehouse_string_segment_formatter");
 
         final StringSegmentFormatter    previous = storehouse_string_segment_formatter.lookup(z, argument_index);
 
@@ -479,23 +487,7 @@ public class    Zone
     {
         final Zone                      z = this;
 
-        if (false) {
-            assert fact_pointer(this.storehouse_string, "this.storehouse_string");
-        }
-
-        //
-        //  NOTE:
-        //      Must allocate `storehouse_string` after initialization -- trying this during class initialization
-        //      causes nasty loops.
-        //
-        Interface__Storehouse_String    storehouse_string = this.storehouse_string;
-
-        if (storehouse_string == null) {
-            storehouse_string =
-                this.storehouse_string = Storehouse_String.create__ALLY__Zone(z);
-        }
-
-        return storehouse_string.intern_permenant_string(z, s);
+        return this.storehouse_string.intern_permenant_string(z, s);
     }
 
 

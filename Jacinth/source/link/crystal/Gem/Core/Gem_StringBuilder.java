@@ -71,6 +71,7 @@ public class    Gem_StringBuilder
     }
 
 
+    @Override
     public void                         portray(Gem_StringBuilder builder)
     {
         final StringBuilder             client = builder.builder;

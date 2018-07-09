@@ -23,6 +23,7 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     public abstract INSPECTION          inspect();
 
 
+    @Override
     public void                         portray(Gem_StringBuilder builder)
     {
         final INSPECTION                inspection = this.inspect();
