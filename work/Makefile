@@ -101,6 +101,7 @@ JACINTH_FILES = \
     $J/Gem/Format/StringSegmentFormatter.java \
     $J/Gem/Interface/Gem_Comparable.java \
     $J/Gem/Interface/Inspectable.java \
+    $J/Gem/Interface/Interface__Gem_Reference.java \
     $J/Gem/Interface/Interface__Storehouse_String.java \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
@@ -328,7 +329,7 @@ clean:
 	rm -f   hk.py hkc.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpr.py hpt.py hs.py
 	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
-	rm -f ig.java ii.java in.py im.py ishs.java isf.java imf.java io.py iv.py iwr.java
+	rm -f igc.java igr.java ii.java in.py im.py ishs.java isf.java imf.java io.py iv.py iwr.java
 	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1.java m1c.py m1m.py m1p.java m1s.java
@@ -516,7 +517,8 @@ links:
 	ln -s ../Sapphire/Whitespace.py                                             hw.py
 	ln -s ../Sapphire/PostfixExpression.py                                      hx.py
 	ln -s ../Sapphire/SymbolTable.py                                            hy.py
-	ln -s $J/Gem/Interface/Gem_Comparable.java                                  ig.java
+	ln -s $J/Gem/Interface/Gem_Comparable.java                                  igc.java
+	ln -s $J/Gem/Interface/Interface__Gem_Reference.java                        igr.java
 	ln -s $J/Gem/Interface/Inspectable.java                                     ii.java
 	ln -s ../Gem/__init__.py                                                    in.py
 	ln -s ../Gem/Import.py                                                      im.py

@@ -17,12 +17,21 @@ public interface    SegmentFormattable<INSPECTION extends SegmentFormatter_Inspe
     //
     //  Interface Inspectable
     //
+    @Override
     public INSPECTION                   inspect();                      //  NOTE: Different `INSPECTION`
+
     public void                         portray(Gem_StringBuilder builder);
 
 
     //
-    //  Interface
+    //  Interface MessageFormattable
+    //
+    //
+    //  TODO: Copy versions here
+    //
+
+    //
+    //  Interface <me>
     //
     void                                choose(Gem_StringBuilder builder, int depth);
     void                                choose(Gem_StringBuilder builder, int depth, Object v);

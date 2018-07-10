@@ -11,6 +11,9 @@ import link.crystal.Gem.World.Inspection;
 
 public interface    Inspectable<INSPECTION extends Inspection>
 {
+    //
+    //  Interface <me>
+    //
     public INSPECTION                   inspect();
     public void                         portray(Gem_StringBuilder builder);
 }

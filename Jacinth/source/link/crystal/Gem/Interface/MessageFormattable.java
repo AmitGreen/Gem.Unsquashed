@@ -9,8 +9,14 @@ import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 
 
+//
+//  TODO: Make this extends Inspectable
+//
 public interface   MessageFormattable
 {
+    //
+    //  Interface <me>
+    //
     String                              augment(int depth);
     String                              augment(int depth, Object v);
 
