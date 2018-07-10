@@ -16,6 +16,7 @@ import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_String;
+import link.crystal.Gem.Support.UniqueName;
 import link.crystal.Gem.World.Inspection;
 import link.crystal.Gem.World.World_Integer;
 import link.crystal.Gem.World.World_String;
@@ -81,7 +82,7 @@ public class    UnitTest
 
     private boolean                     test_development()
     {
-        return test_string();
+        return test_unique_name();
     }
 
 
@@ -142,6 +143,37 @@ public class    UnitTest
     private boolean                     test_time_unit()
     {
         Gem_TimeUnit.test();
+
+        return true;
+    }
+
+
+
+    private boolean                     test_unique_name()
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final UniqueName                apple = UniqueName.create__ALLY__Gem(z, "apple");
+
+        line("apple: {}", apple);
+
+        for (;;) {
+            int                         v = apple.value__ALLY__UnitTest();
+
+            String                      s = apple.next();
+
+            if (v < 10 || (v % 1000000 == 0) || v >= 0x7FFFFFF0) {
+                line("{p}", s);
+            }
+
+            if (v == 7777777) {
+                apple.skip_value__ALLY__UnitTest(0x7FFFFF00);
+            }
+
+            if (v == 0x7FFFFFFF) {
+                break;
+            }
+        }
 
         return true;
     }

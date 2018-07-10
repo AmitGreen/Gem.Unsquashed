@@ -96,4 +96,5 @@ public class    Comparable_Inspection
 //      World_Integer_WeakReference          9
 //      World_String                        10
 //      World_String_WeakReference          11
+//      Silver_String                       12
 //
