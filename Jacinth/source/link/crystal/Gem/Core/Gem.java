@@ -90,7 +90,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         return formattable.augment(depth + 1);
     }
@@ -100,7 +100,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         return formattable.augment(depth + 1, v);
     }
@@ -110,7 +110,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -124,7 +124,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -145,7 +145,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -167,7 +167,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -190,7 +190,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -215,7 +215,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -238,7 +238,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         standard_output.println(formattable.augment(depth + 1));
     }
@@ -248,7 +248,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         standard_output.println(formattable.augment(depth + 1, v));
     }
@@ -258,7 +258,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -272,7 +272,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -286,7 +286,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         Gem_StringBuilder               builder = z.summon_StringBuilder();
 
@@ -300,7 +300,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -323,7 +323,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 
@@ -348,7 +348,7 @@ public abstract class   Gem
     {
         final Zone                      z = Zone.current_zone();
 
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         final Gem_StringBuilder         builder = z.summon_StringBuilder();
 

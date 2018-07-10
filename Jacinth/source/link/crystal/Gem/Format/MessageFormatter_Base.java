@@ -16,8 +16,8 @@ import link.crystal.Gem.World.Inspection;
 public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
     extends             Gem_Object           <INSPECTION>
 //  extends             Object
-    implements          MessageFormattable,
-                        Inspectable          <INSPECTION>//,            //  Via Gem_Object
+    implements          MessageFormattable   <INSPECTION>,
+                        Inspectable          <INSPECTION>//,            //  Via MessageFormattable
 {
     //
     //  Interface MessageFormattable

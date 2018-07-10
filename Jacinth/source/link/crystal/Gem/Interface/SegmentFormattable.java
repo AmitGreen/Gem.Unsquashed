@@ -11,8 +11,8 @@ import link.crystal.Gem.Interface.Inspectable;
 
 
 public interface    SegmentFormattable<INSPECTION extends SegmentFormatter_Inspection>
-    extends         MessageFormattable,
-                    Inspectable       <INSPECTION>//,
+    extends         MessageFormattable<INSPECTION>,
+                    Inspectable       <INSPECTION>//,                   //  Via MessageFormattable
 {
     //
     //  Interface Inspectable
@@ -26,9 +26,57 @@ public interface    SegmentFormattable<INSPECTION extends SegmentFormatter_Inspe
     //
     //  Interface MessageFormattable
     //
-    //
-    //  TODO: Copy versions here
-    //
+    String                              augment(int depth);
+    String                              augment(int depth, Object v);
+
+    void                                augment(Gem_StringBuilder builder, int depth);
+    void                                augment(Gem_StringBuilder builder, int depth, Object v);
+    void                                augment(Gem_StringBuilder builder, int depth, Object v, Object w);
+    void                                augment(Gem_StringBuilder builder, int depth, Object v, Object w, Object x);
+
+    void                                augment(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y//,
+        );
+
+    void                                augment(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5//,
+        );
+
+    void                                augment(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6//,
+        );
+
+    void                                augment(
+            Gem_StringBuilder                   builder,
+            int                                 depth,
+            Object                              v,
+            Object                              w,
+            Object                              x,
+            Object                              y4,
+            Object                              y5,
+            Object                              y6,
+            Object                              y7,
+            Object ...                          other_arguments//,
+        );
+
 
     //
     //  Interface <me>

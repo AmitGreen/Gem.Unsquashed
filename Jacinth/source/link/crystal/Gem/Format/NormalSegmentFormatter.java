@@ -21,9 +21,9 @@ public class    NormalSegmentFormatter
 //  extends     MessageFormatter_Base   <ArgumentSegmentFormatter_Inspection>
 //  extends     Gem_Object              <ArgumentSegmentFormatter_Inspection>
 //  extends     Object
-    implements  MessageFormattable,
+    implements  MessageFormattable      <ArgumentSegmentFormatter_Inspection>,
                 SegmentFormattable      <ArgumentSegmentFormatter_Inspection>,
-                Inspectable             <ArgumentSegmentFormatter_Inspection>//,    //  Via Gem_Object
+                Inspectable             <ArgumentSegmentFormatter_Inspection>//,    //  Via MessageFormattable
 {
     public static final NormalSegmentFormatter_Inspection   inspection = (
             NormalSegmentFormatter_Inspection.create("NormalSegmentFormatter")

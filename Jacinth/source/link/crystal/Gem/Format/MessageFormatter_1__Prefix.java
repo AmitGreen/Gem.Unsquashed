@@ -17,8 +17,8 @@ public class    MessageFormatter_1__Prefix
     extends     MessageFormatter_Base<Inspection>
 //  extends     Gem_Object           <Inspection>
 //  extends     Object
-    implements  MessageFormattable,
-                Inspectable          <Inspection>//,                    //  Via Gem_Object
+    implements  MessageFormattable   <Inspection>,
+                Inspectable          <Inspection>//,                    //  Via MessageFormattable
 {
     private static final Inspection     inspection = Inspection.create("MessageFormatter_1__Prefix");
 

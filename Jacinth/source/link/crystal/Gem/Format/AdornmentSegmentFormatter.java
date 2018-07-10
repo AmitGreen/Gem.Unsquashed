@@ -19,7 +19,7 @@ public class    AdornmentSegmentFormatter
     extends     MessageFormatter_Base<SegmentFormatter_Inspection>
 //  extends     Gem_Object           <SegmentFormatter_Inspection>
 //  extends     Object
-    implements  MessageFormattable,
+    implements  MessageFormattable   <SegmentFormatter_Inspection>,
                 SegmentFormattable   <SegmentFormatter_Inspection>,
                 Inspectable          <SegmentFormatter_Inspection>//,   //  Via Gem_Object
 {

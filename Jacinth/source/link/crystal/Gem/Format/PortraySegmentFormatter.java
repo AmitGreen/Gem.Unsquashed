@@ -21,9 +21,9 @@ public class    PortraySegmentFormatter
 //  extends     MessageFormatter_Base   <PortraySegmentFormatter_Inspection>
 //  extends     Gem_Object              <PortraySegmentFormatter_Inspection>
 //  extends     Object
-    implements  MessageFormattable,
+    implements  MessageFormattable      <PortraySegmentFormatter_Inspection>,
                 SegmentFormattable      <PortraySegmentFormatter_Inspection>,
-                Inspectable             <PortraySegmentFormatter_Inspection>//, //  Via Gem_Object
+                Inspectable             <PortraySegmentFormatter_Inspection>//, //  Via MessageFormattable
 {
     public static final PortraySegmentFormatter_Inspection  inspection = (
             PortraySegmentFormatter_Inspection.create("PortraySegmentFormatter")

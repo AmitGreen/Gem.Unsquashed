@@ -20,9 +20,9 @@ public class    StringSegmentFormatter
 //  extends     MessageFormatter_Base   <StringSegmentFormatter_Inspection>
 //  extends     Gem_Object              <StringSegmentFormatter_Inspection>
 //  extends     Object
-    implements  MessageFormattable,
+    implements  MessageFormattable      <StringSegmentFormatter_Inspection>,
                 SegmentFormattable      <StringSegmentFormatter_Inspection>,
-                Inspectable             <StringSegmentFormatter_Inspection>//,  //  Via Gem_Object
+                Inspectable             <StringSegmentFormatter_Inspection>//,  //  Via MessageFormattable
 {
     public static final StringSegmentFormatter_Inspection   inspection = (
             StringSegmentFormatter_Inspection.create("StringSegmentFormatter")

@@ -19,9 +19,9 @@ public class    MethodNameSegmentFormatter
     extends     MessageFormatter_Base<SegmentFormatter_Inspection>
 //  extends     Gem_Object           <SegmentFormatter_Inspection>
 //  extends     Object
-    implements  MessageFormattable,
+    implements  MessageFormattable   <SegmentFormatter_Inspection>,
                 SegmentFormattable   <SegmentFormatter_Inspection>,
-                Inspectable          <SegmentFormatter_Inspection>//,   //  Via Gem_Object
+                Inspectable          <SegmentFormatter_Inspection>//,   //  Via MessageFormattable
 {
     private static final SegmentFormatter_Inspection    inspection = (
             SegmentFormatter_Inspection.create("MethodNameSegmentFormatter")

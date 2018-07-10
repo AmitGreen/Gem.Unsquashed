@@ -298,7 +298,7 @@ public class   ParseFormat
     }
 
 
-    private MessageFormattable          parse_format__work()
+    private MessageFormattable<?>       parse_format__work()
     {
         final Zone                      z              = this.z;
         final String                    format         = this.format;
@@ -617,11 +617,11 @@ public class   ParseFormat
     //
     //  Public static
     //
-    public static MessageFormattable    parse_format(Zone z, String format)
+    public static MessageFormattable<?>     parse_format(Zone z, String format)
     {
         final Storehouse_MessageFormattable     cache = z.conjure__Storehouse_MessageFormattable();
 
-        final MessageFormattable        previous = cache.get(format);
+        final MessageFormattable<?>     previous = cache.get(format);
 
         if (previous != null) {
             return previous;
@@ -629,7 +629,7 @@ public class   ParseFormat
 
         ParseFormat                     parse_format = z.summon_ParseFormat__ALLY__ParseFormat(format);
 
-        final MessageFormattable        formattable = parse_format.parse_format__work();
+        final MessageFormattable<?>     formattable = parse_format.parse_format__work();
 
         parse_format.scrub();
         z.recycle__ParseFormat__ALLY__ParseFormat(parse_format);

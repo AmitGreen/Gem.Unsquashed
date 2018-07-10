@@ -31,7 +31,7 @@ public abstract class   ExceptionFunctions
             Object ...                          arguments//,
         )
     {
-        final MessageFormattable        formattable = ParseFormat.parse_format(z, format);
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
 
         depth += 1;
 

@@ -7,13 +7,23 @@ package link.crystal.Gem.Interface;
 import java.lang.Object;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringBuilder;
+import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.World.Inspection;
 
 
 //
 //  TODO: Make this extends Inspectable
 //
-public interface   MessageFormattable
+public interface    MessageFormattable<INSPECTION extends Inspection>
+    extends         Inspectable       <INSPECTION>//,
 {
+    //
+    //  Interface Inspectable
+    //
+    public INSPECTION                   inspect();
+    public void                         portray(Gem_StringBuilder builder);
+
+
     //
     //  Interface <me>
     //
@@ -67,6 +77,4 @@ public interface   MessageFormattable
             Object                              y7,
             Object ...                          other_arguments//,
         );
-
-    void                                portray(Gem_StringBuilder builder);
 }

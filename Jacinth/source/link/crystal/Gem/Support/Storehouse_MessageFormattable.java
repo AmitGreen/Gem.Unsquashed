@@ -14,9 +14,9 @@ import link.crystal.Gem.World.Inspection;
 
 
 public class    Storehouse_MessageFormattable
-    extends     Gem_StringMap<Inspection,         MessageFormattable>
-//  extends     HashMap                  <String, MessageFormattable>
-//  extends     AbstractHashMap          <String, MessageFormattable>
+    extends     Gem_StringMap<Inspection,         MessageFormattable<?>>
+//  extends     HashMap                  <String, MessageFormattable<?>>
+//  extends     AbstractHashMap          <String, MessageFormattable<?>>
 //  extends     Object
     implements  Inspectable  <Inspection>//,                            //  Via Gem_Map<?, ?, ?>
 {
