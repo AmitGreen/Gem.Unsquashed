@@ -10,6 +10,7 @@ import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.World.Comparable_Inspection;
 import link.crystal.Gem.World.Inspection;
 
 
@@ -18,8 +19,8 @@ public class    Comparable_Inspection
 //  extends     Gem_Object    <World_Inspection>
 //  extends     Object
     implements  Gem_Comparable<World_Inspection>,
-                Comparable<Gem_Comparable<? extends Comparable_Inspection>>,      //  Via Gem_Comparable
-                Inspectable   <World_Inspection>//,                     //  Via Gem_Object
+                Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
+                Inspectable   <World_Inspection>//,                             //  Via Gem_Object
 {
     private static final World_Inspection   inspection = World_Inspection.create("Comparable_Inspection", 6);
 

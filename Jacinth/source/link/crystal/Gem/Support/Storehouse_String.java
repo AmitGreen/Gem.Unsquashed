@@ -8,7 +8,7 @@ import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringSet;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Interface.Interface__Storehouse_String;
+import link.crystal.Gem.Interface.Storehouse_String__Interface;
 import link.crystal.Gem.World.Inspection;
 
 
@@ -18,7 +18,7 @@ public class    Storehouse_String
 //  extends     HashMap                  <String, String>
 //  extends     AbstractHashMap          <String, String>
 //  extends     Object
-    implements  Interface__Storehouse_String,
+    implements  Storehouse_String__Interface,
                 Inspectable<Inspection>//,                              //  Via Gem_StringSet
 {
     private static final Inspection     inspection = Inspection.create("Storehouse_String");
@@ -56,7 +56,7 @@ public class    Storehouse_String
 
 
     //
-    //  Interface Interface__Storehouse_String
+    //  Interface Storehouse_String__Interface
     //
     public String                       intern_permenant_string(Zone z, String s)
     {

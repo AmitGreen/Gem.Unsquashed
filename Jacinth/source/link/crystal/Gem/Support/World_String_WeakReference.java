@@ -10,7 +10,7 @@ import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Interface.Reference_Interface;
+import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Gem_WeakReference;
 import link.crystal.Gem.World.Comparable_Inspection;
@@ -23,10 +23,10 @@ public class    World_String_WeakReference
 //  extends     WeakReference                           <World_String>
 //  extends     Reference                               <World_String>
 //  extends     Object
-    implements  Reference_Interface      <Comparable_Inspection>,
-                Gem_Comparable           <Comparable_Inspection>,
-                Comparable<Gem_Comparable<? extends Comparable_Inspection>>,      //  Via Gem_Comparable
-                Inspectable              <Comparable_Inspection>//,     //  Via Gem_Comparable
+    implements  Gem_Reference_Interface<Comparable_Inspection>,
+                Gem_Comparable         <Comparable_Inspection>,
+                Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
+                Inspectable            <Comparable_Inspection>//,                //  Via Gem_Comparable
 {
     private static final Comparable_Inspection  inspection = (
             Comparable_Inspection.create("World_String_WeakReference", 11)
@@ -127,7 +127,7 @@ public class    World_String_WeakReference
 
 
     //
-    //  Interface Reference_Interface
+    //  Interface Gem_Reference_Interface
     //
     //<empty>
 

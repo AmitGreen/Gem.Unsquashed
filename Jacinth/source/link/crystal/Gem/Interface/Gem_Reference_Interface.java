@@ -11,10 +11,10 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.World.Comparable_Inspection;
 
 
-public interface    Reference_Interface      <INSPECTION extends Comparable_Inspection>
-    extends         Gem_Comparable           <INSPECTION>,
-                    Comparable<Gem_Comparable<? extends Comparable_Inspection>>,             //  Via Gem_Comparable
-                    Inspectable              <INSPECTION>//,            //  Via Gem_Object
+public interface    Gem_Reference_Interface<INSPECTION extends Comparable_Inspection>
+    extends         Gem_Comparable         <INSPECTION>,
+                    Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
+                    Inspectable            <INSPECTION>//,                          //  Via Gem_Comparable
 {
     //
     //  Interface Gem_Comparable (and java.lang.Comparable)

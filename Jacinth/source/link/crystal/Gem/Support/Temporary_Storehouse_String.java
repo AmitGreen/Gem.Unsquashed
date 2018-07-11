@@ -13,14 +13,14 @@ import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringSet;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Exception.ExceptionFunctions;
-import link.crystal.Gem.Interface.Interface__Storehouse_String;
+import link.crystal.Gem.Interface.Storehouse_String__Interface;
 
 
 public class    Temporary_Storehouse_String
     extends     HashMap        <String, String>
 //  extends     AbstractHashMap<String, String>
 //  extends     Object
-    implements  Interface__Storehouse_String
+    implements  Storehouse_String__Interface
 {
     //
     //  Private static
@@ -89,7 +89,7 @@ public class    Temporary_Storehouse_String
 
 
     //
-    //  Interface Interface__Storehouse_String
+    //  Interface Storehouse_String__Interface
     //
     public void                         dump(String name)
     {

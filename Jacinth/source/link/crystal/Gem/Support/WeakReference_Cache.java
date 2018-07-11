@@ -11,7 +11,7 @@ import link.crystal.Gem.Core.Gem_Map;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Interface.WeakReferenceable_Interface;
+import link.crystal.Gem.Interface.Gem_WeakReferenceable_Interface;
 import link.crystal.Gem.Support.Gem_WeakReference;
 import link.crystal.Gem.World.Comparable_Inspection;
 import link.crystal.Gem.World.Inspection;
@@ -19,7 +19,7 @@ import link.crystal.Gem.World.Inspection;
 
 public abstract class   WeakReference_Cache<
                             INSPECTION                extends Inspection,
-                            CLIENT                    extends WeakReferenceable_Interface<CLIENT_INSPECTION>,
+                            CLIENT                    extends Gem_WeakReferenceable_Interface<CLIENT_INSPECTION>,
                             CLIENT_INSPECTION         extends Comparable_Inspection,
                             WEAK_REFERENCE            extends Gem_WeakReference<
                                                                   WEAK_REFERENCE_INSPECTION,

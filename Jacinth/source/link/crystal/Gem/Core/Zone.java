@@ -15,7 +15,7 @@ import link.crystal.Gem.Format.ParseFormat;
 import link.crystal.Gem.Format.PortraySegmentFormatter;
 import link.crystal.Gem.Format.StringSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Interface.Interface__Storehouse_String;
+import link.crystal.Gem.Interface.Storehouse_String__Interface;
 import link.crystal.Gem.Support.Map_String_Inspection;
 import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
@@ -67,7 +67,7 @@ public class    Zone
     private /*boot-final*/ Storehouse_NormalSegmentFormatter    storehouse_normal_segment_formatter     /* = null */ ;
     private /*boot-final*/ Storehouse_PortraySegmentFormatter   storehouse_portray_segment_formatter    /* = null */ ;
     private /*boot-final*/ Storehouse_StringSegmentFormatter    storehouse_string_segment_formatter     /* = null */ ;
-    private /*boot-final*/ Interface__Storehouse_String         storehouse_string                       /* = null */ ;
+    private /*boot-final*/ Storehouse_String__Interface         storehouse_string                       /* = null */ ;
     public  /*boot-final*/ World_String_Key                     string_key                              /* = null */ ;
 
 

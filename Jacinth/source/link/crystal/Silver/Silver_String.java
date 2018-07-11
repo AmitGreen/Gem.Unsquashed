@@ -4,6 +4,7 @@
 package link.crystal.Gem.Silver;
 
 
+import java.lang.Comparable;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Gem_Comparable;
@@ -16,7 +17,8 @@ public class    Silver_String
     extends     Gem_Object    <Comparable_Inspection>
 //  extends     Object
     implements  Gem_Comparable<Comparable_Inspection>,
-                Inspectable   <Comparable_Inspection>//,                //  Via Gem_Object
+                Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
+                Inspectable   <Comparable_Inspection>//,                        //  Via Gem_Object
 {
     private static final Comparable_Inspection  inspection = Comparable_Inspection.create("Silver_String", 12);
 
