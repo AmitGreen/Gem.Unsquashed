@@ -21,7 +21,7 @@ import link.crystal.Gem.Support.World_Integer_WeakReference;
 import link.crystal.Gem.Support.World_String_Cache;
 import link.crystal.Gem.Support.World_String_Key;
 import link.crystal.Gem.Support.World_String_WeakReference;
-import link.crystal.Gem.World.Comparable_Inspection;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.World.World_Integer;
 import link.crystal.Gem.World.World_String;
 
@@ -408,7 +408,7 @@ public abstract class   Gem
         >                                       previous = integer_cache.get(key);
 
         if (previous != null) {
-            World_Integer                       client = previous.client();
+            World_Integer                       client = previous.client_OR_enqueue();
 
             if (client != null) {
                 assert fact(value == client.value, "value == client.value");
@@ -416,7 +416,6 @@ public abstract class   Gem
                 return client;
             }
 
-            previous.enqueue();
             reference_queue.cleanup();
 
             assert fact(integer_cache.get(key) == null, "world_integer_cache.get({}) == null", key);
@@ -452,7 +451,7 @@ public abstract class   Gem
         >                                       previous = string_cache.get(key);
 
         if (previous != null) {
-            World_String                        client = previous.client();
+            World_String                        client = previous.client_OR_enqueue();
 
             if (client != null) {
                 assert fact(s.equals(client.s), "s.equals(client.s)");
@@ -460,7 +459,6 @@ public abstract class   Gem
                 return client;
             }
 
-            previous.enqueue();
             reference_queue.cleanup();
 
             assert fact(string_cache.get(key) == null, "world_string_cache.get({}) == null", key);

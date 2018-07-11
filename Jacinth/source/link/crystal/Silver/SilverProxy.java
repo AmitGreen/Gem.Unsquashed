@@ -7,7 +7,7 @@ package link.crystal.Silver;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 
 
 public abstract class   SilverProxy<PROXY extends SilverProxy, CLIENT extends Object>

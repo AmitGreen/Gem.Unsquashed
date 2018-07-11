@@ -10,7 +10,7 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 
 
 public abstract class   Gem_Map     <INSPECTION extends Inspection, K, V>

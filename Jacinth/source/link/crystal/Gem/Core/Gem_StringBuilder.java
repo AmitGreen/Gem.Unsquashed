@@ -12,7 +12,7 @@ import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Format.ParseFormat;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 
 
 public class    Gem_StringBuilder

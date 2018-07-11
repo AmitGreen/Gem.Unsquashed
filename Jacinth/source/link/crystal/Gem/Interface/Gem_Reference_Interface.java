@@ -8,7 +8,7 @@ import java.lang.Comparable;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.World.Comparable_Inspection;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
 
 
 public interface    Gem_Reference_Interface<
@@ -38,6 +38,5 @@ public interface    Gem_Reference_Interface<
     //
     //  Interface <me>
     //
-    public CLIENT                       client();
-    public boolean                      enqueue();
+    public CLIENT                       client_OR_enqueue();
 }

@@ -6,7 +6,7 @@ package link.crystal.Gem.Interface;
 
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 
 
 public interface    Inspectable<INSPECTION extends Inspection>

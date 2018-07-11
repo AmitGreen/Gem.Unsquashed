@@ -11,7 +11,7 @@ import link.crystal.Gem.Format.MessageFormatter_Base;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 
 
 public class    MessageFormatter_3

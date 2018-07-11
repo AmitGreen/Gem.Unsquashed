@@ -7,7 +7,7 @@ package link.crystal.Gem.Interface;
 import java.lang.Comparable;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.World.Comparable_Inspection;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
 
 
 public interface    Gem_Comparable<INSPECTION extends Comparable_Inspection>

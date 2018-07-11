@@ -9,7 +9,7 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.World.Comparable_Inspection;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.World.World_String;
 
 

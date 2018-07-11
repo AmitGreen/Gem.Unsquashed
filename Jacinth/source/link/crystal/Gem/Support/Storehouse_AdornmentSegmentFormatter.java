@@ -9,7 +9,7 @@ import link.crystal.Gem.Core.Gem_StringMap;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.AdornmentSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 
 
 public class    Storehouse_AdornmentSegmentFormatter

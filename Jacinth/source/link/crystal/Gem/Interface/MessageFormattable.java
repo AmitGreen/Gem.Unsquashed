@@ -8,7 +8,7 @@ import java.lang.Object;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 
 
 //

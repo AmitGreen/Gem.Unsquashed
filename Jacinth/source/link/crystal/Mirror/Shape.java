@@ -6,7 +6,7 @@ package link.crystal.Mirror;
 
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Silver.SilverProxy;
 
 

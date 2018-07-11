@@ -9,7 +9,7 @@ import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.NormalSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Storehouse_SmallList;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 
 
 public class    Storehouse_NormalSegmentFormatter

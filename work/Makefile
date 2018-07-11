@@ -83,8 +83,8 @@ JACINTH_FILES = \
     $J/Gem/Exception/AssertionError.java \
     $J/Gem/Exception/ExceptionFunctions.java \
     $J/Gem/Format/AdornmentSegmentFormatter.java \
-    $J/Gem/Format/ArgumentSegmentFormatter_Inspection.java \
     $J/Gem/Format/ArgumentSegmentFormatter.java \
+    $J/Gem/Format/ArgumentSegmentFormatter_Inspection.java \
     $J/Gem/Format/Map__String__ArgumentSegmentFormatter_Inspection.java \
     $J/Gem/Format/MessageFormatter_1__Prefix.java \
     $J/Gem/Format/MessageFormatter_2.java \
@@ -99,6 +99,10 @@ JACINTH_FILES = \
     $J/Gem/Format/PortraySegmentFormatter.java \
     $J/Gem/Format/SegmentFormatter_Inspection.java \
     $J/Gem/Format/StringSegmentFormatter.java \
+    $J/Gem/Inspection/Comparable_Inspection.java \
+    $J/Gem/Inspection/Gem_Reference_Inspection.java \
+    $J/Gem/Inspection/Inspection.java \
+    $J/Gem/Inspection/World_Inspection.java \
     $J/Gem/Interface/Gem_Comparable.java \
     $J/Gem/Interface/Gem_Reference_Interface.java \
     $J/Gem/Interface/Gem_WeakReferenceable_Interface.java \
@@ -128,9 +132,6 @@ JACINTH_FILES = \
     $J/Gem/Support/World_String_EnduringReference.java \
     $J/Gem/Support/World_String_Key.java \
     $J/Gem/Support/World_String_WeakReference.java \
-    $J/Gem/World/Comparable_Inspection.java \
-    $J/Gem/World/Inspection.java \
-    $J/Gem/World/World_Inspection.java \
     $J/Gem/World/World_Integer.java \
     $J/Gem/World/World_String.java \
     $J/Jacinth/Main.java \
@@ -319,8 +320,8 @@ clean:
 	rm -f ef.java ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gcm.py gdc.py gdm.py gdo.py ge.java gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
-	rm -f   gi.py gi.java gl.py gl.java go.java gm.java gq.py gr.py
-	rm -f   gsb.java gse.py gsm.java gsq.py gss.java gtu.java gz.java
+	rm -f   gi.py gi.java gl.py gl.java go.java gm.java gq.py gr.py grc.java gri.java grq.java
+	rm -f   gsb.java gse.py gsm.java gsq.py gss.java gtu.java gwr.java gz.java
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -342,7 +343,7 @@ clean:
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py
 	rm -f   pel.py pf.py pf.java pj.py pk.py pkc.py pl.py pmo.py pn.py ps.java ps.py psc.java ps3.py px.java
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qn.java qp.py
-	rm -f rc.java rm.py rq.java rx.py
+	rm -f rm.py rx.py
 	rm -f sha.java shl.java shm.java shn.java shp.java shs.java shsf.java sfi.java sl.py so.py ss.java ssio.py sy.py
 	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tshs.java tu.py tw.py tx.py
@@ -350,7 +351,7 @@ clean:
 	rm -f xb.py xf.py
 	rm -f vm.java vm.py vp.java vs.java
 	rm -f wi.java wic.java wie.java wik.java win.java wiw.java
-	rm -f   wr.java ws.java wsc.java wse.java wsk.java wsw.java
+	rm -f   ws.java wsc.java wse.java wsk.java wsw.java
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
@@ -391,7 +392,7 @@ links:
 	ln -s ../Gem/Cache2.py                                                      ca2.py
 	ln -s ../Gem/Cadence.py                                                     cd.py
 	ln -s ../Gem/CatchException.py                                              ce.py
-	ln -s $J/Gem/World/Comparable_Inspection.java                               ci.java
+	ln -s $J/Gem/Inspection/Comparable_Inspection.java                          ci.java
 	ln -s ../Gem/Core.py                                                        cr.py
 	ln -s ../Diamond/Development.py                                             d.py
 	ln -s ../Diamond/Core.py                                                    dc.py
@@ -427,19 +428,23 @@ links:
 	ln -s ../Gem/HerdMany.py                                                    ghm.py
 	ln -s ../Gem/Horde.py                                                       gho.py
 	ln -s ../Gem/Hailstone.py                                                   gi.py
-	ln -s $J/Gem/World/Inspection.java                                          gi.java
+	ln -s $J/Gem/Inspection/Inspection.java                                     gi.java
 	ln -s ../Gem/Global.py                                                      gl.py
 	ln -s $J/Gem/Core/Gem_List.java                                             gl.java
 	ln -s $J/Gem/Core/Gem_Map.java                                              gm.java
 	ln -s $J/Gem/Core/Gem_Object.java                                           go.java
 	ln -s ../Gem/LiquidMap.py                                                   gq.py
 	ln -s ../Gem/Rabble.py                                                      gr.py
+	ln -s $J/Gem/Support/Gem_Reference_Cache.java                               grc.java
+	ln -s $J/Gem/Inspection/Gem_Reference_Inspection.java                       gri.java
+	ln -s $J/Gem/Support/Gem_ReferenceQueue.java                                grq.java
 	ln -s $J/Gem/Core/Gem_StringBuilder.java                                    gsb.java
 	ln -s ../Gem/Series.py                                                      gse.py
 	ln -s $J/Gem/Core/Gem_StringMap.java                                        gsm.java
 	ln -s ../Gem/Sequence.py                                                    gsq.py
 	ln -s $J/Gem/Core/Gem_StringSet.java                                        gss.java
 	ln -s $J/Gem/Support/Gem_TimeUnit.java                                      gtu.java
+	ln -s $J/Gem/Support/Gem_WeakReference.java                                 gwr.java
 	ln -s $J/Gem/Core/Zone.java                                                 gz.java
 	ln -s ../Sapphire/Parse.py                                                  h0p.py
 	ln -s ../Sapphire/Parse1.py                                                 h1p.py
@@ -600,9 +605,7 @@ links:
 	ln -s ../Quartz/Match.py                                                    qmc.py
 	ln -s $J/Gem/Support/UniqueName.java                                        qn.java
 	ln -s ../Quartz/Pattern.py                                                  qp.py
-	ln -s $J/Gem/Support/Gem_Reference_Cache.java                               rc.java
 	ln -s ../Agate/RUNME.py                                                     rm.py
-	ln -s $J/Gem/Support/Gem_ReferenceQueue.java                                rq.java
 	ln -s ../Gem/RegularExpression.py                                           rx.py
 	ln -s $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java              sha.java
 	ln -s $J/Gem/Support/Storehouse_SmallList.java                              shl.java
@@ -648,9 +651,8 @@ links:
 	ln -s $J/Gem/Support/World_Integer_Cache.java                               wic.java
 	ln -s $J/Gem/Support/World_Integer_EnduringReference.java                   wie.java
 	ln -s $J/Gem/Support/World_Integer_Key.java                                 wik.java
-	ln -s $J/Gem/World/World_Inspection.java                                    win.java
+	ln -s $J/Gem/Inspection/World_Inspection.java                               win.java
 	ln -s $J/Gem/Support/World_Integer_WeakReference.java                       wiw.java
-	ln -s $J/Gem/Support/Gem_WeakReference.java                                 wr.java
 	ln -s $J/Gem/World/World_String.java                                        ws.java
 	ln -s $J/Gem/Support/World_String_Cache.java                                wsc.java
 	ln -s $J/Gem/Support/World_String_EnduringReference.java                    wse.java

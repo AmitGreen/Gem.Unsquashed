@@ -1,17 +1,17 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Gem.World;
+package link.crystal.Gem.Inspection;
 
 
 import java.lang.Comparable;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
+import link.crystal.Gem.Inspection.World_Inspection;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.World.Comparable_Inspection;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 
 
 public class    Comparable_Inspection
@@ -71,22 +71,28 @@ public class    Comparable_Inspection
     //
     //  Interface Inspectable
     //
+    //  NOTE:
+    //      Includes extra helper function `portray_prefix` which is *NOT* part of `Interface Inspectable`
+    //
     public World_Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    public void                         portray_prefix(Gem_StringBuilder builder)
     {
-        final World_Inspection          meta_inspection = this.inspect();
-
-        builder.append("<", meta_inspection.simple_class_name, " ", this.simple_class_name, " ", this.class_order);
+        builder.append("<", this.inspect().simple_class_name, " ", this.simple_class_name, " ", this.class_order);
 
         if (this.is_world_inspection) {
             builder.append("; is_world_inspection");
         }
+    }
 
+
+    public void                         portray(Gem_StringBuilder builder)
+    {
+        this.portray_prefix(builder);
         builder.append(">");
     }
 }
@@ -107,4 +113,6 @@ public class    Comparable_Inspection
 //      World_String_WeakReference          11
 //      Silver_String                       12
 //      World_Integer_EnduringReference     13
+//      Gem_Reference_Inspection            14
+//      World_String_EnduringReference      15
 //

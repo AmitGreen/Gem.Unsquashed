@@ -111,7 +111,7 @@ public class    Temporary_Storehouse_String
         line("End of dump of Temporary_Storehouse_String {}", name);
     }
 
-    
+
     public String                       intern_permenant_string(Zone z, String s)
     {
         assert fact        (this.z == z, "this.z == z");

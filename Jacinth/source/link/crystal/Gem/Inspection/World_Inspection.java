@@ -1,7 +1,7 @@
 //  Copyright (c) 2018 Amit Green.  All rights reserved.
 
 
-package link.crystal.Gem.World;
+package link.crystal.Gem.Inspection;
 
 
 import java.lang.Comparable;
@@ -10,8 +10,7 @@ import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.World.Comparable_Inspection;
-import link.crystal.Gem.World.World_Inspection;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
 
 
 public class    World_Inspection

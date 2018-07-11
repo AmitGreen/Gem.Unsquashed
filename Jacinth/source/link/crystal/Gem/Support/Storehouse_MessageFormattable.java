@@ -10,7 +10,7 @@ import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ParseFormat;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 
 
 public class    Storehouse_MessageFormattable

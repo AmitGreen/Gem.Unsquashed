@@ -26,7 +26,7 @@ import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
 import link.crystal.Gem.Support.Temporary_Storehouse_String;
 import link.crystal.Gem.Support.World_Integer_Key;
 import link.crystal.Gem.Support.World_String_Key;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 
 
 public class    Zone

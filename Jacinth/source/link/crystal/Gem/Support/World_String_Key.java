@@ -9,7 +9,7 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.World_String_WeakReference;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.World.World_String;
 
 

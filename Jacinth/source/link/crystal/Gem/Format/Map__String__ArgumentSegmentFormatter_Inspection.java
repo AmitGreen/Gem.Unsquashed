@@ -12,7 +12,7 @@ import link.crystal.Gem.Format.NormalSegmentFormatter;
 import link.crystal.Gem.Format.PortraySegmentFormatter;
 import link.crystal.Gem.Format.StringSegmentFormatter;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.World.Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 
 
 public class    Map__String__ArgumentSegmentFormatter_Inspection

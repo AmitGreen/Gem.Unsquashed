@@ -13,7 +13,7 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Gem_WeakReference;
-import link.crystal.Gem.World.Comparable_Inspection;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.World.World_String;
 
 

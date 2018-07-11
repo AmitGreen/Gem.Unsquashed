@@ -14,7 +14,7 @@ import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.Gem_WeakReferenceable_Interface;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
-import link.crystal.Gem.World.Comparable_Inspection;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
 
 
 public abstract class   Gem_WeakReference<
@@ -56,9 +56,16 @@ public abstract class   Gem_WeakReference<
     //  Interface Gem_Reference_Interface
     //
     @Override
-    public CLIENT                       client()
+    public CLIENT                       client_OR_enqueue()
     {
-        return this.get();
+        final CLIENT                    r = this.get();
+
+        if (r != null) {
+            return r;
+        }
+
+        this.enqueue();
+        return null;
     }
 
 
