@@ -4,23 +4,31 @@
 package link.crystal.Gem.Support;
 
 
+import java.lang.Comparable;
 import java.lang.ref.WeakReference;
 import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Interface.Interface__Gem_Reference;
 import link.crystal.Gem.Interface.WeakReferenceable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.World.Comparable_Inspection;
 
 
-public abstract class   Gem_WeakReference<INSPECTION extends Comparable_Inspection, CLIENT extends WeakReferenceable>
-    extends             WeakReference                                              <CLIENT>
-//  extends             Reference                                                  <CLIENT>
+public abstract class   Gem_WeakReference<
+                            INSPECTION        extends Comparable_Inspection,
+                            CLIENT            extends WeakReferenceable<CLIENT_INSPECTION>,
+                            CLIENT_INSPECTION extends Comparable_Inspection//,
+                        >
+    extends             WeakReference<CLIENT>
+//  extends             Reference    <CLIENT>
 //  extends             Object
-    implements          Gem_Comparable   <INSPECTION>,
-                        Inspectable      <INSPECTION>//,
+    implements          Interface__Gem_Reference <INSPECTION>,
+                        Gem_Comparable           <INSPECTION>,          //  Via Interface__Gem_Reference
+                        Comparable<Gem_Comparable<INSPECTION>>,         //  Via Gem_Comparable
+                        Inspectable              <INSPECTION>//,        //  Via Gem_Comparable
 {
     //
     //  Constructor
@@ -29,6 +37,24 @@ public abstract class   Gem_WeakReference<INSPECTION extends Comparable_Inspecti
     {
         super(client, reference_queue);
     }
+
+
+    //
+    //  Interface java.lang.Comparable
+    //
+    public abstract int                 compareTo(Gem_Comparable<INSPECTION> that);
+
+
+    //
+    //  Interface Interface__Gem_Reference
+    //
+    //<empty>
+
+
+    //
+    //  Interface Gem_Comparable
+    //
+    //<empty>
 
 
     //

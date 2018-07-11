@@ -18,7 +18,7 @@ import link.crystal.Gem.World.Inspection;
 
 
 public class    Gem_ReferenceQueue
-    extends     ReferenceQueue <WeakReferenceable>
+    extends     ReferenceQueue<WeakReferenceable<?>>
 //  extends     Object
     implements  Inspectable<Inspection>//,
 {
@@ -139,13 +139,13 @@ public class    Gem_ReferenceQueue
 
         for (;;)
         {
-            Reference<? extends WeakReferenceable>  referent = this.poll();
+            Reference<? extends WeakReferenceable<?>>   referent = this.poll();
 
             if (referent == null) {
                 return total;
             }
 
-            Gem_WeakReference                       weak_reference = (Gem_WeakReference) referent;
+            Gem_WeakReference<?, ?, ?>              weak_reference = (Gem_WeakReference<?, ?, ?>) referent;
 
             weak_reference.reap();
 

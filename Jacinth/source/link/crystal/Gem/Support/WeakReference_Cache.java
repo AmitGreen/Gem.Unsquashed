@@ -18,15 +18,21 @@ import link.crystal.Gem.World.Inspection;
 
 
 public abstract class   WeakReference_Cache<
-                            K                    extends Gem_WeakReference<REFERENCE_INSPECTION, REFERENCE_CLIENT>,
-                            REFERENCE_INSPECTION extends Comparable_Inspection,
-                            REFERENCE_CLIENT     extends WeakReferenceable//,
+                            INSPECTION                extends Inspection,
+                            CLIENT                    extends WeakReferenceable<CLIENT_INSPECTION>,
+                            CLIENT_INSPECTION         extends Comparable_Inspection,
+                            WEAK_REFERENCE            extends Gem_WeakReference<
+                                                                  WEAK_REFERENCE_INSPECTION,
+                                                                  CLIENT,
+                                                                  CLIENT_INSPECTION//,
+                                                              >,
+                            WEAK_REFERENCE_INSPECTION extends Comparable_Inspection//,
                         >
-    extends             Gem_Map         <Inspection, K, K>
-//  extends             HashMap                     <K, K>
-//  extends             AbstractHashMap             <K, K>
+    extends             Gem_Map        <INSPECTION, WEAK_REFERENCE, WEAK_REFERENCE>
+//  extends             HashMap                    <WEAK_REFERENCE, WEAK_REFERENCE>
+//  extends             AbstractHashMap            <WEAK_REFERENCE, WEAK_REFERENCE>
 //  extends             Object
-    implements          Inspectable<Inspection>//,                      //  Via Gem_Map<?, ?, ?>
+    implements          Inspectable    <INSPECTION>//,                  //  Via Gem_Map<?, ?, ?>
 {
     //
     //  Constructor
@@ -41,14 +47,12 @@ public abstract class   WeakReference_Cache<
     //  Interface Inspectable
     //
     //
-    public abstract Inspection          inspect();
+    public abstract INSPECTION          inspect();
 
 
     public void                         portray(Gem_StringBuilder builder)
     {
-        final Inspection                inspection = this.inspect();
-
-        builder.append("<", inspection.simple_class_name, " total<", this.size(), ">>");
+        builder.append("<", this.inspect().simple_class_name, " total<", this.size(), ">>");
     }
 
 
@@ -59,7 +63,7 @@ public abstract class   WeakReference_Cache<
     {
         final String                    simple_class_name = this.inspect().simple_class_name;
 
-        List<K>                         keys = new ArrayList<K>(this.keySet());
+        List<WEAK_REFERENCE>            keys = new ArrayList<WEAK_REFERENCE>(this.keySet());
 
         Collections.sort(keys);
 
@@ -69,7 +73,7 @@ public abstract class   WeakReference_Cache<
         line("      size: " + Integer.toString(total));
 
         for (int                        i = 0; i < total; i ++) {
-            final K                     k = keys.get(i);
+            final WEAK_REFERENCE        k = keys.get(i);
 
             line("  {}", k);
         }
