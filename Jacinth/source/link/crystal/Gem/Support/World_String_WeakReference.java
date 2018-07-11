@@ -4,11 +4,13 @@
 package link.crystal.Gem.Support;
 
 
+import java.lang.Comparable;
 import java.lang.ref.WeakReference;
 import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Interface.Reference_Interface;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Gem_WeakReference;
 import link.crystal.Gem.World.Comparable_Inspection;
@@ -18,10 +20,13 @@ import link.crystal.Gem.World.World_String;
 
 public class    World_String_WeakReference
     extends     Gem_WeakReference<Comparable_Inspection, World_String, Comparable_Inspection>
-//  extends     WeakReference                <World_String>
-//  extends     Reference                    <World_String>
+//  extends     WeakReference                           <World_String>
+//  extends     Reference                               <World_String>
 //  extends     Object
-    implements  Inspectable      <Comparable_Inspection>//,             //  Via Gem_WeakReference
+    implements  Reference_Interface      <Comparable_Inspection>,
+                Gem_Comparable           <Comparable_Inspection>,
+                Comparable<Gem_Comparable<? extends Comparable_Inspection>>,      //  Via Gem_Comparable
+                Inspectable              <Comparable_Inspection>//,     //  Via Gem_Comparable
 {
     private static final Comparable_Inspection  inspection = (
             Comparable_Inspection.create("World_String_WeakReference", 11)
@@ -81,9 +86,9 @@ public class    World_String_WeakReference
 
 
     //
-    //  Interface Gem_Comparable
+    //  Interface Gem_Comparable (and java.lang.Comparable)
     //
-    public int                          compareTo(Gem_Comparable that)
+    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
     {
         final int                       class_compare = 11 - that.inspect().class_order;
 
@@ -119,6 +124,12 @@ public class    World_String_WeakReference
         builder.portray(client);
         builder.append(">");
     }
+
+
+    //
+    //  Interface Reference_Interface
+    //
+    //<empty>
 
 
     //

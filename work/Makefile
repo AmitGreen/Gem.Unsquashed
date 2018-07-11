@@ -101,11 +101,11 @@ JACINTH_FILES = \
     $J/Gem/Format/StringSegmentFormatter.java \
     $J/Gem/Interface/Gem_Comparable.java \
     $J/Gem/Interface/Inspectable.java \
-    $J/Gem/Interface/Interface__Gem_Reference.java \
+    $J/Gem/Interface/Reference_Interface.java \
     $J/Gem/Interface/Interface__Storehouse_String.java \
+    $J/Gem/Interface/WeakReferenceable_Interface.java \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
-    $J/Gem/Interface/WeakReferenceable.java \
     $J/Gem/Support/Gem_ReferenceQueue.java \
     $J/Gem/Support/Gem_TimeUnit.java \
     $J/Gem/Support/Gem_WeakReference.java \
@@ -329,7 +329,7 @@ clean:
 	rm -f   hk.py hkc.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpr.py hpt.py hs.py
 	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
-	rm -f igc.java igr.java ii.java in.py im.py ishs.java isf.java imf.java io.py iv.py iwr.java
+	rm -f igc.java ii.java in.py im.py ishs.java isf.java imf.java io.py ir.java iv.py iwr.java
 	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1.java m1c.py m1m.py m1p.java m1s.java
@@ -518,15 +518,15 @@ links:
 	ln -s ../Sapphire/PostfixExpression.py                                      hx.py
 	ln -s ../Sapphire/SymbolTable.py                                            hy.py
 	ln -s $J/Gem/Interface/Gem_Comparable.java                                  igc.java
-	ln -s $J/Gem/Interface/Interface__Gem_Reference.java                        igr.java
 	ln -s $J/Gem/Interface/Inspectable.java                                     ii.java
 	ln -s ../Gem/__init__.py                                                    in.py
 	ln -s ../Gem/Import.py                                                      im.py
 	ln -s $J/Gem/Interface/MessageFormattable.java                              imf.java
+	ln -s $J/Gem/Interface/Reference_Interface.java                             ir.java
 	ln -s $J/Gem/Interface/Interface__Storehouse_String.java                    ishs.java
 	ln -s $J/Gem/Interface/SegmentFormattable.java                              isf.java
 	ln -s ../Ivory/Main.py                                                      iv.py
-	ln -s $J/Gem/Interface/WeakReferenceable.java                               iwr.java
+	ln -s $J/Gem/Interface/WeakReferenceable_Interface.java                     iwr.java
 	ln -s ../Gem/IO.py                                                          io.py
 	ln -s ../Jasper/Parse.py                                                    j0p.py
 	ln -s ../Jasper/Parse1.py                                                   j1p.py

@@ -8,18 +8,18 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Interface.Interface__Gem_Reference;
-import link.crystal.Gem.Interface.WeakReferenceable;
+import link.crystal.Gem.Interface.Reference_Interface;
+import link.crystal.Gem.Interface.WeakReferenceable_Interface;
 import link.crystal.Gem.World.Comparable_Inspection;
 
 
 public class    World_Integer
-    extends     Gem_Object              <Comparable_Inspection>
+    extends     Gem_Object                 <Comparable_Inspection>
 //  extends     Object
-    implements  WeakReferenceable       <Comparable_Inspection>,
-                Interface__Gem_Reference<Comparable_Inspection>,        //  Via WeakReferenceable
-                Gem_Comparable          <Comparable_Inspection>,        //  Via Interface__Gem_Reference
-                Inspectable             <Comparable_Inspection>//,      //  Via Gem_Comparable
+    implements  WeakReferenceable_Interface<Comparable_Inspection>,
+                Reference_Interface        <Comparable_Inspection>,     //  Via WeakReferenceable_Interface
+                Gem_Comparable             <Comparable_Inspection>,     //  Via Reference_Interface
+                Inspectable                <Comparable_Inspection>//,   //  Via Gem_Comparable
 {
     private static final Comparable_Inspection  inspection = Comparable_Inspection.create("World_Integer", 8);
 
@@ -50,7 +50,7 @@ public class    World_Integer
     //
     //  Interface Gem_Comparable
     //
-    public int                          compareTo(Gem_Comparable that)
+    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
     {
         final int                       class_compare = 8 - that.inspect().class_order;
 

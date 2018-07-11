@@ -53,7 +53,7 @@ public class    Inspection
     //
     //  Interface Gem_Comparable
     //
-    public int                          compareTo(Gem_Comparable that)
+    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
     {
         if (this == that) {
             return 0;

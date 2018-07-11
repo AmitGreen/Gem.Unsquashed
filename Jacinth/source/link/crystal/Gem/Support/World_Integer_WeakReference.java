@@ -10,7 +10,7 @@ import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Interface.Interface__Gem_Reference;
+import link.crystal.Gem.Interface.Reference_Interface;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Gem_WeakReference;
 import link.crystal.Gem.World.Comparable_Inspection;
@@ -20,12 +20,12 @@ import link.crystal.Gem.World.World_Integer;
 
 public class    World_Integer_WeakReference
     extends     Gem_WeakReference<Comparable_Inspection, World_Integer, Comparable_Inspection>
-//  extends     WeakReference                <World_Integer>
-//  extends     Reference                    <World_Integer>
+//  extends     WeakReference                           <World_Integer>
+//  extends     Reference                               <World_Integer>
 //  extends     Object
-    implements  Interface__Gem_Reference <Comparable_Inspection>,
+    implements  Reference_Interface      <Comparable_Inspection>,
                 Gem_Comparable           <Comparable_Inspection>,
-                Comparable<Gem_Comparable<Comparable_Inspection>>,      //  Via Gem_Comparable
+                Comparable<Gem_Comparable<? extends Comparable_Inspection>>,      //  Via Gem_Comparable
                 Inspectable              <Comparable_Inspection>//,     //  Via Gem_Comparable
 {
     private static final Comparable_Inspection  inspection = (
@@ -82,9 +82,9 @@ public class    World_Integer_WeakReference
 
 
     //
-    //  Interface Gem_Comparable
+    //  Interface Gem_Comparable (and java.lang.Comparable)
     //
-    public int                          compareTo(Gem_Comparable that)
+    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
     {
         final int                       class_compare = 9 - that.inspect().class_order;
 
@@ -120,6 +120,12 @@ public class    World_Integer_WeakReference
         builder.portray(client);
         builder.append(">");
     }
+
+
+    //
+    //  Interface Reference_Interface
+    //
+    //<empty>
 
 
     //

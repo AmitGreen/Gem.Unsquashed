@@ -11,23 +11,23 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Interface.Interface__Gem_Reference;
-import link.crystal.Gem.Interface.WeakReferenceable;
+import link.crystal.Gem.Interface.Reference_Interface;
+import link.crystal.Gem.Interface.WeakReferenceable_Interface;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.World.Comparable_Inspection;
 
 
 public abstract class   Gem_WeakReference<
                             INSPECTION        extends Comparable_Inspection,
-                            CLIENT            extends WeakReferenceable<CLIENT_INSPECTION>,
+                            CLIENT            extends WeakReferenceable_Interface<CLIENT_INSPECTION>,
                             CLIENT_INSPECTION extends Comparable_Inspection//,
                         >
     extends             WeakReference<CLIENT>
 //  extends             Reference    <CLIENT>
 //  extends             Object
-    implements          Interface__Gem_Reference <INSPECTION>,
-                        Gem_Comparable           <INSPECTION>,          //  Via Interface__Gem_Reference
-                        Comparable<Gem_Comparable<INSPECTION>>,         //  Via Gem_Comparable
+    implements          Reference_Interface      <INSPECTION>,
+                        Gem_Comparable           <INSPECTION>,          //  Via Reference_Interface
+                        Comparable<Gem_Comparable<? extends Comparable_Inspection>>,         //  Via Gem_Comparable
                         Inspectable              <INSPECTION>//,        //  Via Gem_Comparable
 {
     //
@@ -40,21 +40,9 @@ public abstract class   Gem_WeakReference<
 
 
     //
-    //  Interface java.lang.Comparable
+    //  Interface Gem_Comparable (and java.lang.Comparable)
     //
-    public abstract int                 compareTo(Gem_Comparable<INSPECTION> that);
-
-
-    //
-    //  Interface Interface__Gem_Reference
-    //
-    //<empty>
-
-
-    //
-    //  Interface Gem_Comparable
-    //
-    //<empty>
+    public abstract int                 compareTo(Gem_Comparable<? extends Comparable_Inspection> that);
 
 
     //
@@ -62,6 +50,12 @@ public abstract class   Gem_WeakReference<
     //
     public abstract INSPECTION          inspect();
     public abstract void                portray(Gem_StringBuilder builder);
+
+
+    //
+    //  Interface Reference_Interface
+    //
+    //<empty>
 
 
     //

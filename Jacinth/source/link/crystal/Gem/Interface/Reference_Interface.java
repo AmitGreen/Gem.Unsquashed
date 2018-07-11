@@ -11,16 +11,15 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.World.Comparable_Inspection;
 
 
-public interface    Interface__Gem_Reference <INSPECTION extends Comparable_Inspection>
+public interface    Reference_Interface      <INSPECTION extends Comparable_Inspection>
     extends         Gem_Comparable           <INSPECTION>,
-                    Comparable<Gem_Comparable<INSPECTION>>,             //  Via Gem_Comparable
+                    Comparable<Gem_Comparable<? extends Comparable_Inspection>>,             //  Via Gem_Comparable
                     Inspectable              <INSPECTION>//,            //  Via Gem_Object
 {
     //
-    //  Interface java.lang.Comparable
+    //  Interface Gem_Comparable (and java.lang.Comparable)
     //
-    @Override
-    public int                          compareTo(Gem_Comparable<INSPECTION> that);
+    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that);
 
 
     //
@@ -30,16 +29,6 @@ public interface    Interface__Gem_Reference <INSPECTION extends Comparable_Insp
     public INSPECTION                   inspect();                      //  NOTE: Different `INSPECTION`
 
     public void                         portray(Gem_StringBuilder builder);
-
-
-    //
-    //  Interface Gem_Comparable
-    //
-    //  NOTE:
-    //      None -- This interface is only used for clarity to indicate something is a "Gem Comparable";
-    //      and the type of the first argument to `compareTo` is `Gem_Comparable<INSPECTION>`
-    //      (See decleration above in `Interface java.lang.Comparable` for `compareTo`)
-    //
 
 
     //

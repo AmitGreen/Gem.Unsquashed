@@ -49,7 +49,7 @@ public class    Silver_String
     //
     //  Interface Gem_Comparable
     //
-    public int                          compareTo(Gem_Comparable that)
+    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
     {
         final int                       class_compare = 11 - that.inspect().class_order;
 
