@@ -11,6 +11,7 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.MethodNameSegmentFormatter;
 import link.crystal.Gem.Format.ParseFormat;
+import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Map_String_Inspection;
@@ -20,6 +21,7 @@ import link.crystal.Gem.Support.World_Integer_WeakReference;
 import link.crystal.Gem.Support.World_String_Cache;
 import link.crystal.Gem.Support.World_String_Key;
 import link.crystal.Gem.Support.World_String_WeakReference;
+import link.crystal.Gem.World.Comparable_Inspection;
 import link.crystal.Gem.World.World_Integer;
 import link.crystal.Gem.World.World_String;
 
@@ -399,10 +401,14 @@ public abstract class   Gem
 
         key.recycle(value);
 
-        World_Integer_WeakReference             previous = integer_cache.get(key);
+        Gem_Reference_Interface<
+            ? extends Comparable_Inspection,
+            World_Integer,
+            Comparable_Inspection
+        >                                       previous = integer_cache.get(key);
 
         if (previous != null) {
-            World_Integer                       client = previous.get();
+            World_Integer                       client = previous.client();
 
             if (client != null) {
                 assert fact(value == client.value, "value == client.value");
@@ -439,10 +445,14 @@ public abstract class   Gem
 
         key.recycle(s);
 
-        World_String_WeakReference              previous = string_cache.get(key);
+        Gem_Reference_Interface<
+            ? extends Comparable_Inspection,
+            World_String,
+            Comparable_Inspection
+        >                                       previous = string_cache.get(key);
 
         if (previous != null) {
-            World_String                        client = previous.get();
+            World_String                        client = previous.client();
 
             if (client != null) {
                 assert fact(s.equals(client.s), "s.equals(client.s)");

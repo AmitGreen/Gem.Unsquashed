@@ -11,12 +11,15 @@ import link.crystal.Gem.Support.World_Integer_WeakReference;
 import link.crystal.Gem.World.Comparable_Inspection;
 import link.crystal.Gem.World.Inspection;
 import link.crystal.Gem.World.World_Integer;
+import link.crystal.Gem.Interface.Gem_Reference_Interface;
+import link.crystal.Gem.Support.Gem_Reference_Cache;
 
 
 public class    World_Integer_Cache
-    extends     WeakReference_Cache<
+    extends     Gem_Reference_Cache<
                     Inspection,
                     World_Integer,               Comparable_Inspection,
+                    Gem_Reference_Interface<? extends Comparable_Inspection, World_Integer, Comparable_Inspection>,
                     World_Integer_WeakReference, Comparable_Inspection//,
                 >
 //  extends     Gem_Map            <Inspection, World_Integer_WeakReference, World_Integer_WeakReference>

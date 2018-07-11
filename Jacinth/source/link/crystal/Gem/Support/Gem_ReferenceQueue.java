@@ -11,14 +11,15 @@ import java.lang.System;
 import java.util.concurrent.TimeUnit;
 import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.Gem_WeakReferenceable_Interface;
+import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Gem_WeakReference;
+import link.crystal.Gem.World.Comparable_Inspection;
 import link.crystal.Gem.World.Inspection;
 
 
 public class    Gem_ReferenceQueue
-    extends     ReferenceQueue<Gem_WeakReferenceable_Interface<?>>
+    extends     ReferenceQueue<Gem_WeakReferenceable_Interface<? extends Comparable_Inspection>>
 //  extends     Object
     implements  Inspectable<Inspection>//,
 {
@@ -139,7 +140,9 @@ public class    Gem_ReferenceQueue
 
         for (;;)
         {
-            Reference<? extends Gem_WeakReferenceable_Interface<?>>     referent = this.poll();
+            Reference<
+                ? extends Gem_WeakReferenceable_Interface<? extends Comparable_Inspection>
+            >                           referent = this.poll();
 
             if (referent == null) {
                 return total;

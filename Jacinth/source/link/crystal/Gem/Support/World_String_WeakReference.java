@@ -14,19 +14,18 @@ import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Gem_WeakReference;
 import link.crystal.Gem.World.Comparable_Inspection;
-import link.crystal.Gem.World.Inspection;
 import link.crystal.Gem.World.World_String;
 
 
 public class    World_String_WeakReference
-    extends     Gem_WeakReference<Comparable_Inspection, World_String, Comparable_Inspection>
-//  extends     WeakReference                           <World_String>
-//  extends     Reference                               <World_String>
+    extends     Gem_WeakReference      <Comparable_Inspection, World_String, Comparable_Inspection>
+//  extends     WeakReference                                 <World_String>
+//  extends     Reference                                     <World_String>
 //  extends     Object
-    implements  Gem_Reference_Interface<Comparable_Inspection>,
-                Gem_Comparable         <Comparable_Inspection>,
+    implements  Gem_Reference_Interface<Comparable_Inspection, World_String, Comparable_Inspection>,
+                Gem_Comparable         <Comparable_Inspection>,                 //  Via Gem_Reference_Interface
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable            <Comparable_Inspection>//,                //  Via Gem_Comparable
+                Inspectable            <Comparable_Inspection>//,               //  Via Gem_Comparable
 {
     private static final Comparable_Inspection  inspection = (
             Comparable_Inspection.create("World_String_WeakReference", 11)
@@ -137,7 +136,11 @@ public class    World_String_WeakReference
     //
     public void                         reap()
     {
-        final World_String_WeakReference    previous = Gem.string_cache.remove(this);
+        final Gem_Reference_Interface<
+                  ? extends Comparable_Inspection,
+                  World_String,
+                  Comparable_Inspection
+              >                         previous = Gem.string_cache.remove(this);
 
         if (previous != this) {
             RUNTIME("failed to remove {}", this);

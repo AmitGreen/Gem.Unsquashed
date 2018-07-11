@@ -6,7 +6,9 @@ package link.crystal.Gem.Support;
 
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Support.Gem_Reference_Cache;
 import link.crystal.Gem.Support.World_String_WeakReference;
 import link.crystal.Gem.World.Comparable_Inspection;
 import link.crystal.Gem.World.Inspection;
@@ -14,9 +16,10 @@ import link.crystal.Gem.World.World_String;
 
 
 public class    World_String_Cache
-    extends     WeakReference_Cache<
+    extends     Gem_Reference_Cache<
                     Inspection,
                     World_String,               Comparable_Inspection,
+                    Gem_Reference_Interface<? extends Comparable_Inspection, World_String, Comparable_Inspection>,
                     World_String_WeakReference, Comparable_Inspection//,
                 >
 //  extends     Gem_Map            <Inspection,               World_String_WeakReference, World_String_WeakReference>

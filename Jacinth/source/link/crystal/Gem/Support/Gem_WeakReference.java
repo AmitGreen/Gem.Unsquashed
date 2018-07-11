@@ -10,9 +10,9 @@ import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Interface.Gem_Comparable;
-import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.Gem_WeakReferenceable_Interface;
+import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.World.Comparable_Inspection;
 
@@ -25,7 +25,7 @@ public abstract class   Gem_WeakReference<
     extends             WeakReference<CLIENT>
 //  extends             Reference    <CLIENT>
 //  extends             Object
-    implements          Gem_Reference_Interface<INSPECTION>,
+    implements          Gem_Reference_Interface<INSPECTION, CLIENT, CLIENT_INSPECTION>,
                         Gem_Comparable         <INSPECTION>,                            //  Via Gem_Reference_Interface
                         Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
                         Inspectable            <INSPECTION>//,                          //  Via Gem_Comparable
@@ -55,7 +55,11 @@ public abstract class   Gem_WeakReference<
     //
     //  Interface Gem_Reference_Interface
     //
-    //<empty>
+    @Override
+    public CLIENT                       client()
+    {
+        return this.get();
+    }
 
 
     //

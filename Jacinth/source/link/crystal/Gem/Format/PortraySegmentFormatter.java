@@ -12,7 +12,6 @@ import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.World.Inspection;
 import link.crystal.Gem.World.World_Inspection;
 
 

@@ -14,17 +14,16 @@ import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Gem_WeakReference;
 import link.crystal.Gem.World.Comparable_Inspection;
-import link.crystal.Gem.World.Inspection;
 import link.crystal.Gem.World.World_Integer;
 
 
 public class    World_Integer_WeakReference
-    extends     Gem_WeakReference<Comparable_Inspection, World_Integer, Comparable_Inspection>
-//  extends     WeakReference                           <World_Integer>
-//  extends     Reference                               <World_Integer>
+    extends     Gem_WeakReference      <Comparable_Inspection, World_Integer, Comparable_Inspection>
+//  extends     WeakReference                                 <World_Integer>
+//  extends     Reference                                     <World_Integer>
 //  extends     Object
-    implements  Gem_Reference_Interface<Comparable_Inspection>,
-                Gem_Comparable         <Comparable_Inspection>,
+    implements  Gem_Reference_Interface<Comparable_Inspection, World_Integer, Comparable_Inspection>,
+                Gem_Comparable         <Comparable_Inspection>,                 //  Via Gem_Reference_Interface
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
                 Inspectable            <Comparable_Inspection>//,               //  Via Gem_Comparable
 {
@@ -133,7 +132,11 @@ public class    World_Integer_WeakReference
     //
     public void                         reap()
     {
-        final World_Integer_WeakReference   previous = Gem.integer_cache.remove(this);
+        final Gem_Reference_Interface<
+                  ? extends Comparable_Inspection,
+                  World_Integer,
+                  Comparable_Inspection
+              >                         previous = Gem.integer_cache.remove(this);
 
         if (previous != this) {
             RUNTIME("failed to remove {}", this);

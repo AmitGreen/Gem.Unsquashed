@@ -9,7 +9,6 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.Gem_WeakReferenceable_Interface;
 import link.crystal.Gem.World.Comparable_Inspection;
 
@@ -18,8 +17,7 @@ public class    World_Integer
     extends     Gem_Object                     <Comparable_Inspection>
 //  extends     Object
     implements  Gem_WeakReferenceable_Interface<Comparable_Inspection>,
-                Gem_Reference_Interface        <Comparable_Inspection>,         //  Via Gem_WeakReferenceable_Interface
-                Gem_Comparable                 <Comparable_Inspection>,         //  Via Gem_Reference_Interface
+                Gem_Comparable                 <Comparable_Inspection>,         //  Via Gem_WeakReferenceable_Interface
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
                 Inspectable                    <Comparable_Inspection>//,       //  Via Gem_Comparable
 {

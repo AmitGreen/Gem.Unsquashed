@@ -82,7 +82,7 @@ public class    UnitTest
 
     private boolean                     test_development()
     {
-        return test_unique_name();
+        return test_string();
     }
 
 

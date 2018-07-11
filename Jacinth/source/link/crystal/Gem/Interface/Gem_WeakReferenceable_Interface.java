@@ -8,13 +8,11 @@ import java.lang.Comparable;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.World.Comparable_Inspection;
 
 
 public interface    Gem_WeakReferenceable_Interface<INSPECTION extends Comparable_Inspection>
-    extends         Gem_Reference_Interface        <INSPECTION>,
-                    Gem_Comparable                 <INSPECTION>,                    //  Via Gem_Reference_Interface
+    extends         Gem_Comparable                 <INSPECTION>,
                     Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
                     Inspectable                    <INSPECTION>//,                  //  Via Gem_Comparable
 {
