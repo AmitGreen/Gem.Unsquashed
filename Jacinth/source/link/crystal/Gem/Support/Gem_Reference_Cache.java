@@ -10,12 +10,13 @@ import java.util.List;
 import link.crystal.Gem.Core.Gem_Map;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
+import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.Gem_WeakReferenceable_Interface;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Gem_WeakReference;
-import link.crystal.Gem.Inspection.Comparable_Inspection;
-import link.crystal.Gem.Inspection.Inspection;
 
 
 public abstract class   Gem_Reference_Cache<
@@ -23,16 +24,10 @@ public abstract class   Gem_Reference_Cache<
                             CLIENT                    extends Gem_WeakReferenceable_Interface<CLIENT_INSPECTION>,
                             CLIENT_INSPECTION         extends Comparable_Inspection,
                             REFERENCE                 extends Gem_Reference_Interface<
-                                                                  ? extends Comparable_Inspection,
+                                                                  ? extends Gem_Reference_Inspection,
                                                                   CLIENT,
                                                                   CLIENT_INSPECTION//,
-                                                              >,
-                            WEAK_REFERENCE            extends Gem_WeakReference<
-                                                                  WEAK_REFERENCE_INSPECTION,
-                                                                  CLIENT,
-                                                                  CLIENT_INSPECTION//,
-                                                              >,
-                            WEAK_REFERENCE_INSPECTION extends Comparable_Inspection//,
+                                                              >//,
                         >
     extends             Gem_Map<INSPECTION, REFERENCE, REFERENCE>
 //  extends             HashMap            <REFERENCE, REFERENCE>

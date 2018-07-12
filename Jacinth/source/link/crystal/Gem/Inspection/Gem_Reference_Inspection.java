@@ -8,10 +8,10 @@ import java.lang.Comparable;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
-import link.crystal.Gem.Interface.Gem_Comparable;
-import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.Inspection.World_Inspection;
+import link.crystal.Gem.Interface.Gem_Comparable;
+import link.crystal.Gem.Interface.Inspectable;
 
 
 public final class  Gem_Reference_Inspection
@@ -23,7 +23,7 @@ public final class  Gem_Reference_Inspection
                     Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
                     Inspectable   <World_Inspection>//,                             //  Via Gem_Object
 {
-    private static final World_Inspection   inspection = World_Inspection.create("Gem_Reference_Inspection", 14);
+    private static final World_Inspection   inspection = World_Inspection.create("Gem_Reference_Inspection");
 
 
     //
@@ -55,10 +55,12 @@ public final class  Gem_Reference_Inspection
             final String                        simple_class_name,
             final int                           class_order,
         /*  final boolean                       is_world_inspection = false,  */
-            final boolean                       is_enduring_reference,
-            final boolean                       is_weak_reference//,
+            final String                        reference_type//,
         )
     {
+        final boolean                           is_enduring_reference = reference_type.equals("enduring");
+        final boolean                           is_weak_reference     = reference_type.equals("weak");
+
         assert fact ((is_enduring_reference ? 1 : 0) + (is_weak_reference ? 1 : 0) == 1,
                      "one & exactly one of is_{enduring,weak}_reference must be set");
 

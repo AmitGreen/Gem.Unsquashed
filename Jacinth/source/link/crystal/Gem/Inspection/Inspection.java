@@ -8,13 +8,17 @@ import java.lang.Comparable;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
+import link.crystal.Gem.Inspection.World_Inspection;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Map_String_Inspection;
-import link.crystal.Gem.Inspection.Comparable_Inspection;
-import link.crystal.Gem.Inspection.World_Inspection;
 
 
+//
+//  NOTE:
+//      The "meta" class of `Inspection` is `World_Inspection`
+//
 public class    Inspection
     extends     Gem_Object    <World_Inspection>
 //  extends     Object
@@ -22,7 +26,7 @@ public class    Inspection
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
                 Inspectable   <World_Inspection>//,                             //  Via Gem_Object
 {
-    private static final World_Inspection   inspection = World_Inspection.create("Inspection", 1);
+    private static final World_Inspection   inspection = World_Inspection.create("Inspection");
 
 
     //
@@ -55,22 +59,15 @@ public class    Inspection
     //
     //  Interface Gem_Comparable
     //
+    @Override
     public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
     {
-        if (this == that) {
-            return 0;
-        }
+        final int                       class_compare = (
+                Comparable_Inspection.CLASS_ORDER__INSPECTION - that.inspect().class_order
+            );
 
-        final Comparable_Inspection     that_inspection = that.inspect();
-
-        if ( ! that_inspection.is_world_inspection) {
-            final World_Inspection      this_inspection = this.inspect();
-
-            final int                   r = this_inspection.class_order - that_inspection.class_order;
-
-            assert fact(r != 0, "r != 0");
-
-            return r;
+        if (class_compare != 0) {
+            return class_compare;
         }
 
         final Inspection                that_2 = (Inspection) that;

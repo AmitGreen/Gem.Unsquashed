@@ -320,7 +320,7 @@ clean:
 	rm -f ef.java ef.py en.py ex.py
 	rm -f files fo.py fs.py
 	rm -f gcm.py gdc.py gdm.py gdo.py ge.java gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
-	rm -f   gi.py gi.java gl.py gl.java go.java gm.java gq.py gr.py grc.java gri.java grq.java
+	rm -f   gi.py gl.py gl.java go.java gm.java gq.py gr.py grc.java gri.java grq.java
 	rm -f   gsb.java gse.py gsm.java gsq.py gss.java gtu.java gwr.java gz.java
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
@@ -332,7 +332,7 @@ clean:
 	rm -f   hk.py hkc.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpr.py hpt.py hs.py
 	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
-	rm -f igc.java igr.java igwr.java ii.java in.py im.py ishs.java isf.java imf.java io.py iv.py
+	rm -f igc.java igr.java igwr.java ii.java in.py in.java im.py ishs.java isf.java imf.java io.py iv.py
 	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1.java m1c.py m1m.py m1p.java m1s.java
@@ -428,7 +428,6 @@ links:
 	ln -s ../Gem/HerdMany.py                                                    ghm.py
 	ln -s ../Gem/Horde.py                                                       gho.py
 	ln -s ../Gem/Hailstone.py                                                   gi.py
-	ln -s $J/Gem/Inspection/Inspection.java                                     gi.java
 	ln -s ../Gem/Global.py                                                      gl.py
 	ln -s $J/Gem/Core/Gem_List.java                                             gl.java
 	ln -s $J/Gem/Core/Gem_Map.java                                              gm.java
@@ -530,6 +529,7 @@ links:
 	ln -s $J/Gem/Interface/Gem_WeakReferenceable_Interface.java                 igwr.java
 	ln -s $J/Gem/Interface/Inspectable.java                                     ii.java
 	ln -s ../Gem/__init__.py                                                    in.py
+	ln -s $J/Gem/Inspection/Inspection.java                                     in.java
 	ln -s ../Gem/Import.py                                                      im.py
 	ln -s $J/Gem/Interface/MessageFormattable.java                              imf.java
 	ln -s $J/Gem/Interface/Storehouse_String__Interface.java                    ishs.java

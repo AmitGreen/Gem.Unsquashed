@@ -21,7 +21,10 @@ public class    World_Integer
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
                 Inspectable                    <Comparable_Inspection>//,       //  Via Gem_Comparable
 {
-    private static final Comparable_Inspection  inspection = Comparable_Inspection.create("World_Integer", 8);
+    private static final Comparable_Inspection  inspection = Comparable_Inspection.create(
+            "World_Integer",
+            Comparable_Inspection.CLASS_ORDER__World_Integer//,
+        );
 
 
     //
@@ -48,11 +51,19 @@ public class    World_Integer
 
 
     //
+    //  Interface java.lang.Comparable (see `Interface Gem_Comparable`)
+    //
+
+
+    //
     //  Interface Gem_Comparable
     //
+    @Override
     public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
     {
-        final int                       class_compare = 8 - that.inspect().class_order;
+        final int                       class_compare = (
+                Comparable_Inspection.CLASS_ORDER__World_Integer - that.inspect().class_order
+            );
 
         if (class_compare != 0) {
             return class_compare;

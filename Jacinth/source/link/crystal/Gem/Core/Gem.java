@@ -11,6 +11,8 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.MethodNameSegmentFormatter;
 import link.crystal.Gem.Format.ParseFormat;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
+import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
@@ -19,9 +21,9 @@ import link.crystal.Gem.Support.World_Integer_Cache;
 import link.crystal.Gem.Support.World_Integer_Key;
 import link.crystal.Gem.Support.World_Integer_WeakReference;
 import link.crystal.Gem.Support.World_String_Cache;
+import link.crystal.Gem.Support.World_String_EnduringReference;
 import link.crystal.Gem.Support.World_String_Key;
 import link.crystal.Gem.Support.World_String_WeakReference;
-import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.World.World_Integer;
 import link.crystal.Gem.World.World_String;
 
@@ -380,17 +382,69 @@ public abstract class   Gem
     //
     //  Public (other)
     //
-    public static MethodNameSegmentFormatter    conjure_MethodNameSegmentFormatter()
+    public static World_String                  conjure_enduring_string(String s)
     {
-        final MethodNameSegmentFormatter        message_name_segment_formatter = Gem.message_name_segment_formatter;
+        final Zone                              z = Zone.current_zone();
 
-        assert fact_pointer(message_name_segment_formatter, "message_name_segment_formatter");
+        final World_String_Cache                string_cache    = Gem.string_cache;
+        final Gem_ReferenceQueue                reference_queue = Gem.reference_queue;
 
-        return message_name_segment_formatter;
+        final World_String_Key                  key = z.string_key;
+
+        key.recycle(s);
+
+        final Gem_Reference_Interface<
+                  ? extends Gem_Reference_Inspection,
+                  World_String,
+                  Comparable_Inspection
+              >                                 previous = string_cache.get(key);
+
+        World_String                            client;
+
+        if (previous == null) {
+            client = World_String.create__ALLY__Gem(s);
+        } else {
+            client = previous.client_OR_enqueue();
+
+            if (client == null) {
+                reference_queue.cleanup();
+
+                assert fact(string_cache.get(key) == null, "world_string_cache.get({}) == null", key);
+
+                client = World_String.create__ALLY__Gem(s);
+            } else {
+                assert fact(s.equals(client.s), "s.equals(client.s)");
+
+                if (previous.inspect().is_enduring_reference) {
+                    return client;
+                }
+
+                //
+                //  NOTE:
+                //      Have to remove the 'previous' key (the weak reference), so that a new key (and new value) can
+                //      be `put`.
+                //
+                //      Be default `put` *ONLY* replaces the value, and not the key; hence the need to remove the key
+                //      first.
+                //
+                string_cache.remove(previous);
+            }
+        }
+
+        final World_String_EnduringReference    enduring_reference = (
+                World_String_EnduringReference.create__ALLY__Gem(client)
+            );
+
+        string_cache.put(enduring_reference, enduring_reference);
+
+        line("enduring_reference: {}", enduring_reference);
+        line("get: {}", string_cache.get(key));
+
+        return client;
     }
 
 
-    public static World_Integer                 conjure__World_Integer(int value)
+    public static World_Integer                 conjure_integer(int value)
     {
         final Zone                              z = Zone.current_zone();
 
@@ -402,7 +456,7 @@ public abstract class   Gem
         key.recycle(value);
 
         Gem_Reference_Interface<
-            ? extends Comparable_Inspection,
+            ? extends Gem_Reference_Inspection,
             World_Integer,
             Comparable_Inspection
         >                                       previous = integer_cache.get(key);
@@ -433,7 +487,17 @@ public abstract class   Gem
     }
 
 
-    public static World_String                  conjure__World_String(String s)
+    public static MethodNameSegmentFormatter    conjure_MethodNameSegmentFormatter()
+    {
+        final MethodNameSegmentFormatter        message_name_segment_formatter = Gem.message_name_segment_formatter;
+
+        assert fact_pointer(message_name_segment_formatter, "message_name_segment_formatter");
+
+        return message_name_segment_formatter;
+    }
+
+
+    public static World_String                  conjure_string(String s)
     {
         final Zone                              z = Zone.current_zone();
 
@@ -445,7 +509,7 @@ public abstract class   Gem
         key.recycle(s);
 
         Gem_Reference_Interface<
-            ? extends Comparable_Inspection,
+            ? extends Gem_Reference_Inspection,
             World_String,
             Comparable_Inspection
         >                                       previous = string_cache.get(key);

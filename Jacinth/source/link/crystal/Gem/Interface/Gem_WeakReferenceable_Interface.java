@@ -17,10 +17,8 @@ public interface    Gem_WeakReferenceable_Interface<INSPECTION extends Comparabl
                     Inspectable                    <INSPECTION>//,                  //  Via Gem_Comparable
 {
     //
-    //  Interface java.lang.Comparable
+    //  Interface java.lang.Comparable (see `Interface Gem_Comparable`)
     //
-    @Override
-    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that);
 
 
     //
@@ -38,6 +36,7 @@ public interface    Gem_WeakReferenceable_Interface<INSPECTION extends Comparabl
     //      and the type of the first argument to `compareTo` is `Gem_Comparable<INSPECTION>`
     //      (See decleration above in `Interface java.lang.Comparable` for `compareTo`)
     //
+    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that);
 
 
     //

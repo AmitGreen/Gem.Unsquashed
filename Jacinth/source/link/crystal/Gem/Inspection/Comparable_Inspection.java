@@ -22,14 +22,30 @@ public class    Comparable_Inspection
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
                 Inspectable   <World_Inspection>//,                             //  Via Gem_Object
 {
-    private static final World_Inspection   inspection = World_Inspection.create("Comparable_Inspection", 6);
+    //
+    //  Class Order magic values
+    //
+    public static final int CLASS_ORDER__INSPECTION              = 1;
+    public static final int CLASS_ORDER__Silver_String           = 2;
+    public static final int CLASS_ORDER__World_Integer           = 3;
+    public static final int CLASS_ORDER__WORLD_INTEGER_REFERENCE = 4;
+    public static final int CLASS_ORDER__World_String            = 5;
+    public static final int CLASS_ORDER__WORLD_STRING_REFERENCE  = 6;
+
+    public static final int CLASS_ORDER__Maximum                 = 6;
+
+
+    //
+    //  Static inspection
+    //
+    private static final World_Inspection   inspection = World_Inspection.create("Comparable_Inspection");
 
 
     //
     //  Members
     //
     public final int                    class_order;
-    public final boolean                is_world_inspection;
+    public final boolean                is_world_inspection;        //  NOTE: Not currently used
 
 
     //
@@ -50,6 +66,8 @@ public class    Comparable_Inspection
 
     public static Comparable_Inspection     create(String simple_class_name, int class_order)
     {
+        assert fact_between(1, class_order, Comparable_Inspection.CLASS_ORDER__Maximum);
+
         final Zone                      z = Zone.current_zone();
 
         final String                    interned__simple_class_name = z.intern_permenant_string(simple_class_name);
@@ -96,23 +114,3 @@ public class    Comparable_Inspection
         builder.append(">");
     }
 }
-
-
-//
-//  class_order
-//      Inspection                           1
-//      NormalSegmentFormatter_Inspection    2
-//      PortraySegmentFormatter_Inspection   3
-//      SegmentFormatter_Inspection          4
-//      StringSegmentFormatter_Inspection    5
-//      Comparable_Inspection                6
-//      World_Inspection                     7
-//      World_Integer                        8
-//      World_Integer_WeakReference          9
-//      World_String                        10
-//      World_String_WeakReference          11
-//      Silver_String                       12
-//      World_Integer_EnduringReference     13
-//      Gem_Reference_Inspection            14
-//      World_String_EnduringReference      15
-//

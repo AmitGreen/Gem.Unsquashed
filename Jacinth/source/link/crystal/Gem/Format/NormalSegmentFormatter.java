@@ -9,10 +9,10 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter;
 import link.crystal.Gem.Format.ArgumentSegmentFormatter_Inspection;
+import link.crystal.Gem.Inspection.World_Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
-import link.crystal.Gem.Inspection.World_Inspection;
 
 
 public class    NormalSegmentFormatter
@@ -304,9 +304,7 @@ class           NormalSegmentFormatter_Inspection
 //  extends     Object
     implements  Inspectable<World_Inspection>//,                        //  Via Gem_Object
 {
-    private static final World_Inspection   inspection = (
-            World_Inspection.create("NormalSegmentFormatter_Inspection", 2)
-        );
+    private static final World_Inspection   inspection = World_Inspection.create("NormalSegmentFormatter_Inspection");
 
 
     //

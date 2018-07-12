@@ -7,23 +7,26 @@ package link.crystal.Gem.Support;
 import java.lang.Comparable;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
+import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.World.World_Integer;
 
 
 public class    World_Integer_EnduringReference
-    extends     Gem_Object             <Comparable_Inspection>
+    extends     Gem_Object             <Gem_Reference_Inspection>
 //  extends     Object
-    implements  Gem_Reference_Interface<Comparable_Inspection, World_Integer, Comparable_Inspection>,
-                Gem_Comparable         <Comparable_Inspection>,                 //  Via Gem_WeakReferenceable_Interface
+    implements  Gem_Reference_Interface<Gem_Reference_Inspection, World_Integer, Comparable_Inspection>,
+                Gem_Comparable         <Gem_Reference_Inspection>,              //  Via Gem_WeakReferenceable_Interface
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable            <Comparable_Inspection>//,               //  Via Gem_Comparable
+                Inspectable            <Gem_Reference_Inspection>//,            //  Via Gem_Comparable
 {
-    private static final Comparable_Inspection  inspection = (
-            Comparable_Inspection.create("World_Integer_EnduringReference", 13)
+    private static final Gem_Reference_Inspection   inspection = Gem_Reference_Inspection.create(
+            "World_Integer_EnduringReference",
+            Comparable_Inspection.CLASS_ORDER__WORLD_INTEGER_REFERENCE,
+            "enduring"//,
         );
 
 
@@ -51,10 +54,6 @@ public class    World_Integer_EnduringReference
     //
     //  Ancestor Object
     //
-    //  NOTE:
-    //      Do not need to override `.equals` -- as `World_Integer_EnduringReference` are unique (and thus can use
-    //      `Object.equals` which uses identity as the equal test).
-    //
     @Override
     public int                          hashCode()
     {
@@ -63,34 +62,77 @@ public class    World_Integer_EnduringReference
 
 
     //
-    //  Interface Gem_Comparable (and java.lang.Comparable)
+    //  NOTE:
+    //      Only need to compare to another `World_Integer_EnduringReference`, by using the identity test `==`` as
+    //      `World_Integer_EnduringReference` instances are unique.
     //
-    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
+    //  HOWEVER:
+    //      Do need to compare to a `World_Integer_WeakReference` (since might be replacing it in the cache).
+    //
+    public boolean                      equals(Object that)
     {
-        final int                       that__class_order = that.inspect().class_order;
-
-        if (that__class_order == 9) {                                   //  9 = World_Integer_WeakReference
-            final World_Integer_WeakReference   that_2 = (World_Integer_WeakReference) that;
-
-            return this.client.value - that_2.value;
+        if (this == that) {
+            return true;
         }
 
-        final int                       class_compare = 13 - that__class_order;
+        if ( ! (that instanceof World_Integer_WeakReference)) {
+            return false;
+        }
+
+        World_Integer_WeakReference     that_2 = (World_Integer_WeakReference) that;
+
+        return this.client.value == that_2.value;
+    }
+
+
+    //
+    //  Interface java.lang.Comparable (see `Interface Gem_Comparable`)
+    //
+
+
+    //
+    //  Interface Gem_Comparable
+    //
+    @Override
+    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
+    {
+        final Comparable_Inspection     that_inspection = that.inspect();
+
+        final int                       class_compare = (
+                Comparable_Inspection.CLASS_ORDER__WORLD_INTEGER_REFERENCE - that_inspection.class_order
+            );
 
         if (class_compare != 0) {
             return class_compare;
         }
 
-        final World_Integer_EnduringReference   that_2 = (World_Integer_EnduringReference) that;
+        //
+        //  SINCE:
+        //      `that` has a class order of `Comparable_Inspection.CLASS_ORDER__WORLD_INTEGER_REFERENCE`
+        //
+        //  THEREFORE:
+        //      `that_inspection` is of type `Gem_Reference_Inspection`
+        //
+        final Gem_Reference_Inspection  that__reference_inspection = (Gem_Reference_Inspection) that_inspection;
 
-        return this.client.value - that_2.client.value;
+        if (that__reference_inspection.is_enduring_reference) {
+            final World_Integer_EnduringReference   that_2 = (World_Integer_EnduringReference) that;
+
+            return this.client.value - that_2.client.value;
+        }
+
+        assert fact(that__reference_inspection.is_weak_reference, "fact(that__reference_inspection.is_weak_reference)");
+
+        final World_Integer_WeakReference   that_2 = (World_Integer_WeakReference) that;
+
+        return this.client.value - that_2.value;
     }
 
 
     //
     //  Interface Inspectable
     //
-    public Comparable_Inspection        inspect()
+    public Gem_Reference_Inspection     inspect()
     {
         return /*static*/ this.inspection;
     }

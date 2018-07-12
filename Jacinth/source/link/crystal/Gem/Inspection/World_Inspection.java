@@ -22,29 +22,29 @@ public class    World_Inspection
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
                 Inspectable   <World_Inspection>//,                             //  Via Gem_Comparable
 {
-    private static final World_Inspection   inspection = World_Inspection.create("World_Inspection", 7);
+    private static final World_Inspection   inspection = World_Inspection.create("World_Inspection");
 
 
     //
     //  Constructor & Factory
     //
-    private                             World_Inspection(String simple_class_name, int class_order)
+    private                             World_Inspection(String simple_class_name)
     {
         super(
                 simple_class_name,
-                class_order,
+                Comparable_Inspection.CLASS_ORDER__INSPECTION,
                 /*is_world_inspection=*/ true//,
             );
     }
 
 
-    public static World_Inspection      create(String simple_class_name, int class_order)
+    public static World_Inspection      create(String simple_class_name)
     {
         final Zone                      z = Zone.current_zone();
 
         final String                    interned__simple_class_name = z.intern_permenant_string(simple_class_name);
 
-        return new World_Inspection(interned__simple_class_name, class_order);
+        return new World_Inspection(interned__simple_class_name);
     }
 
 

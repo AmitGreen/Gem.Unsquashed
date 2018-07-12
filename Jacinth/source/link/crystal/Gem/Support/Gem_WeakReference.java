@@ -9,16 +9,17 @@ import java.lang.ref.WeakReference;
 import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Exception.ExceptionFunctions;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
+import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.Gem_WeakReferenceable_Interface;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
-import link.crystal.Gem.Inspection.Comparable_Inspection;
 
 
 public abstract class   Gem_WeakReference<
-                            INSPECTION        extends Comparable_Inspection,
+                            INSPECTION        extends Gem_Reference_Inspection,
                             CLIENT            extends Gem_WeakReferenceable_Interface<CLIENT_INSPECTION>,
                             CLIENT_INSPECTION extends Comparable_Inspection//,
                         >
@@ -40,7 +41,12 @@ public abstract class   Gem_WeakReference<
 
 
     //
-    //  Interface Gem_Comparable (and java.lang.Comparable)
+    //  Interface java.lang.Comparable (see `Interface Gem_Comparable`)
+    //
+
+
+    //
+    //  Interface Gem_Comparable
     //
     public abstract int                 compareTo(Gem_Comparable<? extends Comparable_Inspection> that);
 
@@ -73,6 +79,21 @@ public abstract class   Gem_WeakReference<
     //  Abstract
     //
     public abstract void                reap();
+
+
+    //
+    //  Public (ASSERT)
+    //
+    public static boolean               fact(boolean condition, String format)
+    {
+        if (condition) {
+            return true;
+        }
+
+        ExceptionFunctions.ASSERTION_FAILED(2, format);
+
+        return false;
+    }
 
 
     //

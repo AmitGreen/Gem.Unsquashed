@@ -6,27 +6,27 @@ package link.crystal.Gem.Support;
 
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
-import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Support.World_Integer_WeakReference;
 import link.crystal.Gem.Inspection.Comparable_Inspection;
+import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
 import link.crystal.Gem.Inspection.Inspection;
-import link.crystal.Gem.World.World_Integer;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
+import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Gem_Reference_Cache;
+import link.crystal.Gem.Support.World_Integer_WeakReference;
+import link.crystal.Gem.World.World_Integer;
 
 
 public class    World_Integer_Cache
     extends     Gem_Reference_Cache<
                     Inspection,
-                    World_Integer,               Comparable_Inspection,
-                    Gem_Reference_Interface<? extends Comparable_Inspection, World_Integer, Comparable_Inspection>,
-                    World_Integer_WeakReference, Comparable_Inspection//,
+                    World_Integer, Comparable_Inspection,
+                    Gem_Reference_Interface<? extends Gem_Reference_Inspection, World_Integer, Comparable_Inspection>//,
                 >
-//  extends     Gem_Map            <Inspection, World_Integer_WeakReference, World_Integer_WeakReference>
-//  extends     HashMap            <Inspection, World_Integer_WeakReference, World_Integer_WeakReference>
-//  extends     AbstractHashMap    <Inspection, World_Integer_WeakReference, World_Integer_WeakReference>
+//  extends     Gem_Map        <Inspection, Gem_Reference_Interface<?, ?, ?>, Gem_Reference_Interface<?, ?, ?>>
+//  extends     HashMap        <Inspection, Gem_Reference_Interface<?, ?, ?>, Gem_Reference_Interface<?, ?, ?>>
+//  extends     AbstractHashMap<Inspection, Gem_Reference_Interface<?, ?, ?>, Gem_Reference_Interface<?, ?, ?>>
 //  extends     Object
-    implements  Inspectable        <Inspection>//,                      //  Via Gem_Map<?, ?, ?>
+    implements  Inspectable    <Inspection>//,                          //  Via Gem_Map<?, ?, ?>
 {
     private static final Inspection     inspection = Inspection.create("World_Integer_Cache");
 

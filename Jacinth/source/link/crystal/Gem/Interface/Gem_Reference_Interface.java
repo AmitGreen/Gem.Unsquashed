@@ -6,13 +6,14 @@ package link.crystal.Gem.Interface;
 
 import java.lang.Comparable;
 import link.crystal.Gem.Core.Gem_StringBuilder;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
+import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Inspection.Comparable_Inspection;
 
 
 public interface    Gem_Reference_Interface<
-                        INSPECTION        extends Comparable_Inspection,
+                        INSPECTION        extends Gem_Reference_Inspection,
                         CLIENT            extends Gem_WeakReferenceable_Interface<CLIENT_INSPECTION>,
                         CLIENT_INSPECTION extends Comparable_Inspection//,
                     >
@@ -29,8 +30,8 @@ public interface    Gem_Reference_Interface<
     //
     //  Interface Inspectable
     //
-    @Override
-    public INSPECTION                   inspect();                      //  NOTE: Different `INSPECTION`
+    @Override                           //  NOTE: Different `INSPECTION`
+    public INSPECTION                   inspect();
 
     public void                         portray(Gem_StringBuilder builder);
 

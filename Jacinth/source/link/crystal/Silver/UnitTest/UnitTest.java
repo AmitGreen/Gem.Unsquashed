@@ -88,12 +88,13 @@ public class    UnitTest
 
     private boolean                     test_integer()
     {
-        World_Integer                   seven = Gem.conjure__World_Integer(7);
-        final World_Integer             eight = Gem.conjure__World_Integer(8);
+        World_Integer                   seven = Gem.conjure_integer(7);
+        World_Integer                   eight = Gem.conjure_integer(8);
+        World_Integer                   nine  = Gem.conjure_integer(9);
 
         line("{+}: {} .vs {}: {}", seven, eight, seven.compareTo(eight));
 
-        World_Integer                   seven_2 = Gem.conjure__World_Integer(7);
+        World_Integer                   seven_2 = Gem.conjure_integer(7);
 
         assert fact(seven == seven_2, "seven == seven_2");
 
@@ -102,12 +103,15 @@ public class    UnitTest
         seven =
             seven_2 = null;
 
-        //Gem.reference_queue.garbage_collect__AND__possible_sleep();
-        Gem.reference_queue.garbage_collect();
+        eight = null;
+        nine = null;
+
+        Gem.reference_queue.garbage_collect__AND__possible_sleep();
+        //Gem.reference_queue.garbage_collect();
 
         Gem.integer_cache.dump("integer cache - after");
 
-        World_Integer                   seven_3 = Gem.conjure__World_Integer(7);
+        World_Integer                   seven_3 = Gem.conjure_integer(7);
 
         return true;
     }
@@ -115,26 +119,32 @@ public class    UnitTest
 
     private boolean                     test_string()
     {
-        World_String                    seven = Gem.conjure__World_String("seven");
-        final World_String              eight = Gem.conjure__World_String("eight");
+        World_String                    seven = Gem.conjure_string("seven");
+        World_String                    eight = Gem.conjure_string("eight");
+        World_String                    nine  = Gem.conjure_string("nine");
 
         line("{+}: {} .vs {}: {}", seven, eight, seven.compareTo(eight));
 
-        World_String                   seven_2 = Gem.conjure__World_String("seven");
+        World_String                   seven_2 = Gem.conjure_string("seven");
+        World_String                   eight_2 = Gem.conjure_enduring_string("eight");
 
         assert fact(seven == seven_2, "seven == seven_2");
+        assert fact(eight == eight_2, "eight == eight_2");
 
         Gem.string_cache.dump("string cache - before");
 
         seven =
             seven_2 = null;
 
+        eight = null;
+        nine  = null;
+
         Gem.reference_queue.garbage_collect__AND__possible_sleep();
         //Gem.reference_queue.garbage_collect();
 
         Gem.string_cache.dump("string cache - after");
 
-        World_String                    seven_3 = Gem.conjure__World_String("seven");
+        World_String                    seven_3 = Gem.conjure_string("seven");
 
         return true;
     }
@@ -221,14 +231,14 @@ public class    UnitTest
 
         unit_test.run_test(arguments);
 
-        if (false) {
+        if (true) {
             //Gem.dump();
-            //Gem.map_string_inspection                         .dump("Inspections");
+            //Gem.map_string_inspection                       .dump("Inspections");
             //Storehouse_MessageFormattable                   .dump(z);
             //Storehouse_PortraySegmentFormatter  .singleton  .dump(z);
             //Storehouse_String                               .dump(z);
             //Storehouse_AdornmentSegmentFormatter.singleton  .dump("Storehouse_AdornmentSegmentFormatter.singleton");
-            z.dump();
+            //z.dump();
         }
     }
 }

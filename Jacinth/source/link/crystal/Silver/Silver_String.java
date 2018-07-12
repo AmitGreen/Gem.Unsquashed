@@ -20,7 +20,10 @@ public class    Silver_String
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
                 Inspectable   <Comparable_Inspection>//,                        //  Via Gem_Object
 {
-    private static final Comparable_Inspection  inspection = Comparable_Inspection.create("Silver_String", 12);
+    private static final Comparable_Inspection  inspection = Comparable_Inspection.create(
+            "Silver_String",
+            Comparable_Inspection.CLASS_ORDER__Silver_String//,
+        );
 
 
     //
@@ -49,11 +52,20 @@ public class    Silver_String
 
 
     //
+    //  Interface java.lang.Comparable (see `Interface Gem_Comparable`)
+    //
+
+
+    //
     //  Interface Gem_Comparable
     //
+    @Override
     public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
     {
-        final int                       class_compare = 11 - that.inspect().class_order;
+        final int                       class_compare = (
+                  Comparable_Inspection.CLASS_ORDER__Silver_String
+                - that.inspect().class_order
+            );
 
         if (class_compare != 0) {
             return class_compare;
