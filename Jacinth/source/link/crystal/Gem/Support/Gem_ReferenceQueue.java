@@ -11,15 +11,85 @@ import java.lang.System;
 import java.util.concurrent.TimeUnit;
 import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
-import link.crystal.Gem.Interface.Gem_WeakReferenceable_Interface;
+import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
+import link.crystal.Gem.Inspection.Inspection;
+import link.crystal.Gem.Interface.Gem_Referenceable_Interface;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Gem_WeakReference;
-import link.crystal.Gem.Inspection.Comparable_Inspection;
-import link.crystal.Gem.Inspection.Inspection;
 
 
+//
+//  NOTE:
+//      The generics used with `ReferenceQueue` *ARE* wrong.
+//
+//      The main reason for this is that `Reference` is *INCORRECTLY* a class, instead of an interface.
+//
+//  INCORRECT WAY:
+//
+//      class Reference
+//      {
+//          ...
+//      };
+//
+//      class ReferenceQueue<T>
+//      {
+//          Reference<? extends T>      poll();
+//          ...
+//      }
+//
+//  CORRECT WAY:
+//
+//      [NOTE:
+//          Here in the *CORRECT* WAY, we properly declare `Reference` to be an interface, this allows us now
+//          to pass in a second parameter to `ReferenceQueue` that properly extends `Reference`.
+//
+//          For simple cases, you could still do the second paramter to `ReferenceQueue` without actually
+//          changing `Reference` from a class to an interface; however, this would break even more horribly
+//          [than it currently does] for the complicated cases.
+//
+//          Thus given the deficiency of the decleration of `Reference` as a class, the declaration of
+//          `ReferenceQueue` as given `java.lang.ref.ReferenceQueue`, is a reasonable [wrong] solution.]
+//
+//      interface Reference<T>
+//      {
+//          ...
+//          T                           get();
+//          ...
+//      }
+//
+//      class ReferenceQueue<ELEMENT, REFERENCE extends Reference<ELEMENT>>
+//      {
+//          REFERENCE                   poll();
+//          ...
+//      }
+//          
+//  SINCE:
+//      ... it was done incorrectly, then we cannot control the return paramter of `.poll()`
+//      properly, and it always returns a `Reference` class instead of (what we want) a class that
+//      extends `Reference` that we pass in.
+//
+//  IF:
+//      ... it was done the correct way, then we could get the return type of `.poll()` to be correct by
+//      passing in the correct generic as the second parameter to ReferenceQueue, in particular the
+//      second parameter would be:
+//
+//                  Gem_QueueableReference<? extends Gem_Referenceable_Interface<? extends Inspection>>
+//
+//      This would be a valid type as it would "extend" the second generic of `ReferenceQueue` which is declared as
+//
+//                  `REFERENCE extends Reference<ELEMENT>`
+//
+//      (However, as mentioned above this does not work since `Reference` is a class and `Gem_QueueableReference` is
+//      an interface, and an interface is not allowed to "extend" as class).
+//
+//  THEREFORE:
+//      We coerce the return type of `super.poll()` to be the proper type (as explained above).
+//
 public class    Gem_ReferenceQueue
-    extends     ReferenceQueue<Gem_WeakReferenceable_Interface<? extends Comparable_Inspection>>
+    extends     ReferenceQueue<
+                    Gem_Referenceable_Interface<? extends Inspection>//,
+//                  Gem_QueueableReference<? extends Gem_Referenceable_Interface<? extends Inspection>>//,
+                >
 //  extends     Object
     implements  Inspectable<Inspection>//,
 {
@@ -140,15 +210,30 @@ public class    Gem_ReferenceQueue
 
         for (;;)
         {
-            Reference<
-                ? extends Gem_WeakReferenceable_Interface<? extends Comparable_Inspection>
-            >                           referent = this.poll();
+            Reference<? extends Gem_Referenceable_Interface<? extends Inspection>>  referent = this.poll();
 
             if (referent == null) {
                 return total;
             }
 
-            Gem_WeakReference<?, ?, ?>              weak_reference = (Gem_WeakReference<?, ?, ?>) referent;
+
+            //
+            //  NOTE:
+            //      See explanation above, at start of this class, as to why this coercion is needed here.
+            //
+            Gem_WeakReference<
+                ? extends Gem_Reference_Inspection,
+                ? extends Gem_Referenceable_Interface<? extends Inspection>,
+                ? extends Inspection//,
+            >                           weak_reference = (
+                    (
+                        Gem_WeakReference<
+                            ? extends Gem_Reference_Inspection,
+                            ? extends Gem_Referenceable_Interface<? extends Inspection>,
+                            ? extends Inspection//,
+                        >
+                    ) referent
+                );
 
             weak_reference.reap();
 

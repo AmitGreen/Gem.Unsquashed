@@ -9,17 +9,17 @@ import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Interface.Gem_WeakReferenceable_Interface;
+import link.crystal.Gem.Interface.Gem_Referenceable_Interface;
 import link.crystal.Gem.Inspection.Comparable_Inspection;
 
 
 public class    World_Integer
-    extends     Gem_Object                     <Comparable_Inspection>
+    extends     Gem_Object                 <Comparable_Inspection>
 //  extends     Object
-    implements  Gem_WeakReferenceable_Interface<Comparable_Inspection>,
-                Gem_Comparable                 <Comparable_Inspection>,         //  Via Gem_WeakReferenceable_Interface
+    implements  Gem_Referenceable_Interface<Comparable_Inspection>,
+                Gem_Comparable             <Comparable_Inspection>,
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable                    <Comparable_Inspection>//,       //  Via Gem_Comparable
+                Inspectable                <Comparable_Inspection>//,           //  Via Gem_Comparable
 {
     private static final Comparable_Inspection  inspection = Comparable_Inspection.create(
             "World_Integer",
@@ -51,12 +51,7 @@ public class    World_Integer
 
 
     //
-    //  Interface java.lang.Comparable (see `Interface Gem_Comparable`)
-    //
-
-
-    //
-    //  Interface Gem_Comparable
+    //  Interface java.lang.Comparable
     //
     @Override
     public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
@@ -73,6 +68,12 @@ public class    World_Integer
 
         return this.value - that_2.value;
     }
+
+
+    //
+    //  Interface Gem_Comparable
+    //
+    //<empty>
 
 
     //

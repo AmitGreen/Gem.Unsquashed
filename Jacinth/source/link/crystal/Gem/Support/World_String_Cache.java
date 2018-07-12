@@ -9,22 +9,27 @@ import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
 import link.crystal.Gem.Inspection.Inspection;
-import link.crystal.Gem.Interface.Gem_Reference_Interface;
+import link.crystal.Gem.Interface.Gem_ComparableReference_Interface;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Support.Gem_Reference_Cache;
+import link.crystal.Gem.Support.Gem_ComparableReference_Cache;
 import link.crystal.Gem.Support.World_String_WeakReference;
 import link.crystal.Gem.World.World_String;
 
 
 public class    World_String_Cache
-    extends     Gem_Reference_Cache<
+    extends     Gem_ComparableReference_Cache<
                     Inspection,
-                    World_String, Comparable_Inspection,
-                    Gem_Reference_Interface<? extends Gem_Reference_Inspection, World_String, Comparable_Inspection>//,
+                    World_String,
+                    Comparable_Inspection,
+                    Gem_ComparableReference_Interface<
+                        ? extends Gem_Reference_Inspection,
+                        World_String,
+                        Comparable_Inspection//,
+                    >//,
                 >
-//  extends     Gem_Map        <Inspection, Gem_Reference_Interface<?, ?, ?>, Gem_Reference_Interface<?, ?, ?>>
-//  extends     HashMap        <Inspection, Gem_Reference_Interface<?, ?, ?>, Gem_Reference_Interface<?, ?, ?>>
-//  extends     AbstractHashMap<Inspection, Gem_Reference_Interface<?, ?, ?>, Gem_Reference_Interface<?, ?, ?>>
+//  extends     Gem_Map        <Inspection, Gem_ComparableReference_Interface<?, ?, ?>, ...>
+//  extends     HashMap        <Inspection, Gem_ComparableReference_Interface<?, ?, ?>, ...>
+//  extends     AbstractHashMap<Inspection, Gem_ComparableReference_Interface<?, ?, ?>, ...>
 //  extends     Object
     implements  Inspectable    <Inspection>//,                          //  Via Gem_Map<?, ?, ?>
 {

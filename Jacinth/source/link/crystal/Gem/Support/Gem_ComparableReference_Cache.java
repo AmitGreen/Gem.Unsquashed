@@ -10,24 +10,22 @@ import java.util.List;
 import link.crystal.Gem.Core.Gem_Map;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
-import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
 import link.crystal.Gem.Inspection.Inspection;
-import link.crystal.Gem.Interface.Gem_Reference_Interface;
-import link.crystal.Gem.Interface.Gem_WeakReferenceable_Interface;
+import link.crystal.Gem.Interface.Gem_ComparableReference_Interface;
+import link.crystal.Gem.Interface.Gem_Referenceable_Interface;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Support.Gem_WeakReference;
 
 
-public abstract class   Gem_Reference_Cache<
-                            INSPECTION                extends Inspection,
-                            CLIENT                    extends Gem_WeakReferenceable_Interface<CLIENT_INSPECTION>,
-                            CLIENT_INSPECTION         extends Comparable_Inspection,
-                            REFERENCE                 extends Gem_Reference_Interface<
-                                                                  ? extends Gem_Reference_Inspection,
-                                                                  CLIENT,
-                                                                  CLIENT_INSPECTION//,
-                                                              >//,
+public abstract class   Gem_ComparableReference_Cache<
+                            INSPECTION        extends Inspection,
+                            CLIENT            extends Gem_Referenceable_Interface<CLIENT_INSPECTION>,
+                            CLIENT_INSPECTION extends Inspection,
+                            REFERENCE         extends Gem_ComparableReference_Interface<
+                                                          ? extends Gem_Reference_Inspection,
+                                                          CLIENT,
+                                                          CLIENT_INSPECTION//,
+                                                      >//,
                         >
     extends             Gem_Map<INSPECTION, REFERENCE, REFERENCE>
 //  extends             HashMap            <REFERENCE, REFERENCE>
@@ -38,7 +36,7 @@ public abstract class   Gem_Reference_Cache<
     //
     //  Constructor
     //
-    protected                           Gem_Reference_Cache(Zone z, int initial_capacity)
+    protected                           Gem_ComparableReference_Cache(Zone z, int initial_capacity)
     {
         super(z, initial_capacity);
     }

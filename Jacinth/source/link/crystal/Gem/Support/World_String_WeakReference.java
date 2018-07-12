@@ -11,6 +11,7 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
 import link.crystal.Gem.Interface.Gem_Comparable;
+import link.crystal.Gem.Interface.Gem_ComparableReference_Interface;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
@@ -19,14 +20,15 @@ import link.crystal.Gem.World.World_String;
 
 
 public class    World_String_WeakReference
-    extends     Gem_WeakReference      <Gem_Reference_Inspection, World_String, Comparable_Inspection>
-//  extends     WeakReference                                 <World_String>
-//  extends     Reference                                     <World_String>
+    extends     Gem_WeakReference                 <Gem_Reference_Inspection, World_String, Comparable_Inspection>
+//  extends     WeakReference                                               <World_String>
+//  extends     Reference                                                   <World_String>
 //  extends     Object
-    implements  Gem_Reference_Interface<Gem_Reference_Inspection, World_String, Comparable_Inspection>,
-                Gem_Comparable         <Gem_Reference_Inspection>,              //  Via Gem_Reference_Interface
+    implements  Gem_ComparableReference_Interface<Gem_Reference_Inspection, World_String, Comparable_Inspection>,
+                Gem_Reference_Interface          <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
+                Gem_Comparable                   <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable            <Gem_Reference_Inspection>//,            //  Via Gem_Comparable
+                Inspectable                      <Gem_Reference_Inspection>//,  //  Via Gem_Comparable
 {
     private static final Gem_Reference_Inspection   inspection = Gem_Reference_Inspection.create(
             "World_String_WeakReference",
@@ -114,12 +116,7 @@ public class    World_String_WeakReference
 
 
     //
-    //  Interface java.lang.Comparable (see `Interface Gem_Comparable`)
-    //
-
-
-    //
-    //  Interface Gem_Comparable
+    //  Interface java.lang.Comparable
     //
     @Override
     public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
@@ -158,6 +155,35 @@ public class    World_String_WeakReference
 
 
     //
+    //  Interface Gem_Comparable
+    //
+    //<empty>
+
+
+    //
+    //  Interface Gem_ComparableReference_Interface
+    //
+    public void                         reap()
+    {
+        final Gem_ComparableReference_Interface<
+                  ? extends Comparable_Inspection,
+                  World_String,
+                  Comparable_Inspection
+              >                         previous = Gem.string_cache.remove(this);
+
+        if (previous != this) {
+            RUNTIME("failed to remove {}", this);
+        }
+    }
+
+
+    //
+    //  Interface Gem_Reference_Interface
+    //
+    //<empty>
+
+
+    //
     //  Interface Inspectable
     //
     public Gem_Reference_Inspection     inspect()
@@ -178,28 +204,5 @@ public class    World_String_WeakReference
         builder.append("<World_String_WeakReference ");
         builder.portray(client);
         builder.append(">");
-    }
-
-
-    //
-    //  Interface Gem_Reference_Interface
-    //
-    //<empty>
-
-
-    //
-    //  Interface WeakReference
-    //
-    public void                         reap()
-    {
-        final Gem_Reference_Interface<
-                  ? extends Comparable_Inspection,
-                  World_String,
-                  Comparable_Inspection
-              >                         previous = Gem.string_cache.remove(this);
-
-        if (previous != this) {
-            RUNTIME("failed to remove {}", this);
-        }
     }
 }

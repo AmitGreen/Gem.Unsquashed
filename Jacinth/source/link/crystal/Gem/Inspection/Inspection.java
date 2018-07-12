@@ -57,7 +57,7 @@ public class    Inspection
 
 
     //
-    //  Interface Gem_Comparable
+    //  Interface java.lang.Comparable
     //
     @Override
     public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
@@ -78,6 +78,12 @@ public class    Inspection
 
         return r;
     }
+
+
+    //
+    //  Interface Gem_Comparable
+    //
+    //<empty>
 
 
     //

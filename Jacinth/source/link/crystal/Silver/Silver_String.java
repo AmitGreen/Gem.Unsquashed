@@ -52,12 +52,7 @@ public class    Silver_String
 
 
     //
-    //  Interface java.lang.Comparable (see `Interface Gem_Comparable`)
-    //
-
-
-    //
-    //  Interface Gem_Comparable
+    //  Interface java.lang.Comparable
     //
     @Override
     public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
@@ -75,6 +70,12 @@ public class    Silver_String
 
         return this.world_s.compareTo(that_2.world_s);
     }
+
+
+    //
+    //  Interface Gem_Comparable
+    //
+    //<empty>
 
 
     //

@@ -11,25 +11,28 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
+import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Gem_Comparable;
+import link.crystal.Gem.Interface.Gem_ComparableReference_Interface;
+import link.crystal.Gem.Interface.Gem_Referenceable_Interface;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
-import link.crystal.Gem.Interface.Gem_WeakReferenceable_Interface;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 
 
 public abstract class   Gem_WeakReference<
                             INSPECTION        extends Gem_Reference_Inspection,
-                            CLIENT            extends Gem_WeakReferenceable_Interface<CLIENT_INSPECTION>,
-                            CLIENT_INSPECTION extends Comparable_Inspection//,
+                            CLIENT            extends Gem_Referenceable_Interface<CLIENT_INSPECTION>,
+                            CLIENT_INSPECTION extends Inspection//,
                         >
     extends             WeakReference<CLIENT>
 //  extends             Reference    <CLIENT>
 //  extends             Object
-    implements          Gem_Reference_Interface<INSPECTION, CLIENT, CLIENT_INSPECTION>,
-                        Gem_Comparable         <INSPECTION>,                            //  Via Gem_Reference_Interface
+    implements          Gem_ComparableReference_Interface<INSPECTION, CLIENT, CLIENT_INSPECTION>,
+                        Gem_Reference_Interface          <INSPECTION>,      //  Via Gem_ComparableReference_Interface
+                        Gem_Comparable                   <INSPECTION>,      //  Via Gem_ComparableReference_Interface
                         Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                        Inspectable            <INSPECTION>//,                          //  Via Gem_Comparable
+                        Inspectable                      <INSPECTION>//,                //  Via Gem_Comparable
 {
     //
     //  Constructor
@@ -41,14 +44,15 @@ public abstract class   Gem_WeakReference<
 
 
     //
-    //  Interface java.lang.Comparable (see `Interface Gem_Comparable`)
+    //  Interface java.lang.Comparable
     //
+    public abstract int                 compareTo(Gem_Comparable<? extends Comparable_Inspection> that);
 
 
     //
     //  Interface Gem_Comparable
     //
-    public abstract int                 compareTo(Gem_Comparable<? extends Comparable_Inspection> that);
+    //<empty>
 
 
     //
@@ -59,7 +63,7 @@ public abstract class   Gem_WeakReference<
 
 
     //
-    //  Interface Gem_Reference_Interface
+    //  Interface Gem_ComparableReference_Interface
     //
     @Override
     public CLIENT                       client_OR_enqueue()
@@ -73,6 +77,12 @@ public abstract class   Gem_WeakReference<
         this.enqueue();
         return null;
     }
+
+
+    //
+    //  Interface Gem_Reference_Interface
+    //
+    //<empty>
 
 
     //

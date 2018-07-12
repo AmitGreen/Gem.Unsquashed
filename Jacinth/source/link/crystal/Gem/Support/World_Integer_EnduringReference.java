@@ -10,6 +10,7 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
 import link.crystal.Gem.Interface.Gem_Comparable;
+import link.crystal.Gem.Interface.Gem_ComparableReference_Interface;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.World.World_Integer;
@@ -18,10 +19,11 @@ import link.crystal.Gem.World.World_Integer;
 public class    World_Integer_EnduringReference
     extends     Gem_Object             <Gem_Reference_Inspection>
 //  extends     Object
-    implements  Gem_Reference_Interface<Gem_Reference_Inspection, World_Integer, Comparable_Inspection>,
-                Gem_Comparable         <Gem_Reference_Inspection>,              //  Via Gem_WeakReferenceable_Interface
+    implements  Gem_ComparableReference_Interface<Gem_Reference_Inspection, World_Integer, Comparable_Inspection>,
+                Gem_Reference_Interface          <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
+                Gem_Comparable                   <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable            <Gem_Reference_Inspection>//,            //  Via Gem_Comparable
+                Inspectable                      <Gem_Reference_Inspection>//,  //  Via Gem_Comparable
 {
     private static final Gem_Reference_Inspection   inspection = Gem_Reference_Inspection.create(
             "World_Integer_EnduringReference",
@@ -86,12 +88,7 @@ public class    World_Integer_EnduringReference
 
 
     //
-    //  Interface java.lang.Comparable (see `Interface Gem_Comparable`)
-    //
-
-
-    //
-    //  Interface Gem_Comparable
+    //  Interface java.lang.Comparable
     //
     @Override
     public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
@@ -130,6 +127,12 @@ public class    World_Integer_EnduringReference
 
 
     //
+    //  Interface Gem_Comparable
+    //
+    //<empty>
+
+
+    //
     //  Interface Inspectable
     //
     public Gem_Reference_Inspection     inspect()
@@ -147,11 +150,17 @@ public class    World_Integer_EnduringReference
 
 
     //
-    //  Interface Gem_Reference_Interface
+    //  Interface Gem_ComparableReference_Interface
     //
     @Override
     public World_Integer                client_OR_enqueue()
     {
         return this.client;
     }
+
+
+    //
+    //  Interface Gem_Reference_Interface
+    //
+    //<empty>
 }

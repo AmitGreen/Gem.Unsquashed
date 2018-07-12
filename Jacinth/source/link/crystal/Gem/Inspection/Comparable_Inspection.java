@@ -81,9 +81,15 @@ public class    Comparable_Inspection
 
 
     //
-    //  Interface Gem_Comparable (and java.lang.Comparable)
+    //  Interface java.lang.Comparable
     //
     //<inherited public int         compareTo(Gem_Comparable<? extends Comparable_Inspection> that);>
+
+
+    //
+    //  Interface Gem_Comparable (and java.lang.Comparable)
+    //
+    //<empty>
 
 
     //

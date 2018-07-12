@@ -11,6 +11,7 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
 import link.crystal.Gem.Interface.Gem_Comparable;
+import link.crystal.Gem.Interface.Gem_ComparableReference_Interface;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
@@ -23,10 +24,11 @@ public class    World_Integer_WeakReference
 //  extends     WeakReference                                 <World_Integer>
 //  extends     Reference                                     <World_Integer>
 //  extends     Object
-    implements  Gem_Reference_Interface<Gem_Reference_Inspection, World_Integer, Comparable_Inspection>,
-                Gem_Comparable         <Gem_Reference_Inspection>,              //  Via Gem_Reference_Interface
+    implements  Gem_ComparableReference_Interface<Gem_Reference_Inspection, World_Integer, Comparable_Inspection>,
+                Gem_Reference_Interface          <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
+                Gem_Comparable                   <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable            <Gem_Reference_Inspection>//,            //  Via Gem_Comparable
+                Inspectable                      <Gem_Reference_Inspection>//,  //  Via Gem_Comparable
 {
     private static final Gem_Reference_Inspection   inspection = Gem_Reference_Inspection.create(
             "World_Integer_WeakReference",
@@ -105,12 +107,7 @@ public class    World_Integer_WeakReference
 
 
     //
-    //  Interface java.lang.Comparable (see `Interface Gem_Comparable`)
-    //
-
-
-    //
-    //  Interface Gem_Comparable
+    //  Interface java.lang.Comparable
     //
     @Override
     public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
@@ -149,6 +146,12 @@ public class    World_Integer_WeakReference
 
 
     //
+    //  Interface Gem_Comparable
+    //
+    //<empty>
+
+
+    //
     //  Interface Inspectable
     //
     public Gem_Reference_Inspection     inspect()
@@ -173,17 +176,11 @@ public class    World_Integer_WeakReference
 
 
     //
-    //  Interface Gem_Reference_Interface
-    //
-    //<empty>
-
-
-    //
-    //  Interface WeakReference
+    //  Interface Gem_ComparableReference_Interface
     //
     public void                         reap()
     {
-        final Gem_Reference_Interface<
+        final Gem_ComparableReference_Interface<
                   ? extends Comparable_Inspection,
                   World_Integer,
                   Comparable_Inspection
@@ -193,4 +190,10 @@ public class    World_Integer_WeakReference
             RUNTIME("failed to remove {}", this);
         }
     }
+
+
+    //
+    //  Interface Gem_Reference_Interface
+    //
+    //<empty>
 }

@@ -13,7 +13,7 @@ import link.crystal.Gem.Format.MethodNameSegmentFormatter;
 import link.crystal.Gem.Format.ParseFormat;
 import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
-import link.crystal.Gem.Interface.Gem_Reference_Interface;
+import link.crystal.Gem.Interface.Gem_ComparableReference_Interface;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Map_String_Inspection;
@@ -393,7 +393,7 @@ public abstract class   Gem
 
         key.recycle(s);
 
-        final Gem_Reference_Interface<
+        final Gem_ComparableReference_Interface<
                   ? extends Gem_Reference_Inspection,
                   World_String,
                   Comparable_Inspection
@@ -455,7 +455,7 @@ public abstract class   Gem
 
         key.recycle(value);
 
-        Gem_Reference_Interface<
+        Gem_ComparableReference_Interface<
             ? extends Gem_Reference_Inspection,
             World_Integer,
             Comparable_Inspection
@@ -508,7 +508,7 @@ public abstract class   Gem
 
         key.recycle(s);
 
-        Gem_Reference_Interface<
+        Gem_ComparableReference_Interface<
             ? extends Gem_Reference_Inspection,
             World_String,
             Comparable_Inspection

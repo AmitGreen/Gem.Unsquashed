@@ -5,7 +5,8 @@ package link.crystal.Gem.Support;
 
 
 import java.lang.Comparable;
-import link.crystal.Gem.Core.Gem_Object;
+import java.lang.ref.WeakReference;
+import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
@@ -13,11 +14,15 @@ import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Gem_ComparableReference_Interface;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Support.Gem_ReferenceQueue;
+import link.crystal.Gem.Support.Gem_WeakReference;
 import link.crystal.Gem.World.World_String;
 
 
-public class    World_String_EnduringReference
-    extends     Gem_Object                       <Gem_Reference_Inspection>
+public class    World_String_WeakReference_WeakReference
+    extends     Gem_WeakReference                <Gem_Reference_Inspection, World_String, Comparable_Inspection>
+//  extends     WeakReference                                              <World_String>
+//  extends     Reference                                                  <World_String>
 //  extends     Object
     implements  Gem_ComparableReference_Interface<Gem_Reference_Inspection, World_String, Comparable_Inspection>,
                 Gem_Reference_Interface          <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
@@ -26,30 +31,48 @@ public class    World_String_EnduringReference
                 Inspectable                      <Gem_Reference_Inspection>//,  //  Via Gem_Comparable
 {
     private static final Gem_Reference_Inspection   inspection = Gem_Reference_Inspection.create(
-            "World_String_EnduringReference",
+            "World_String_WeakReference_WeakReference",
             Comparable_Inspection.CLASS_ORDER__WORLD_STRING_REFERENCE,
-            "enduring"//,
+            "weak"//,
         );
 
 
     //
     //  Members
     //
-    public final World_String           client;
+    private       String                world_name;
+    public  final int                   pulp;
+    public  final String                s;
 
 
     //
     //  Constructor
     //
-    private                             World_String_EnduringReference(World_String client)
+    private                             World_String_WeakReference_WeakReference(
+            World_String                        client,
+            Gem_ReferenceQueue                  reference_queue,
+            int                                 pulp,
+            String                              s//,
+        )
     {
-        this.client = client;
+        super(client, reference_queue);
+
+        this.world_name = null;
+        this.pulp       = pulp;
+        this.s          = s;
     }
 
 
-    public static World_String_EnduringReference    create__ALLY__Gem(World_String client)
+    public static World_String_WeakReference_WeakReference  create__ALLY__Gem(
+            World_String                        client,
+            Gem_ReferenceQueue                  reference_queue//,
+        )
     {
-        return new World_String_EnduringReference(client);
+        final String                    s = client.s;
+
+        final int                       pulp = s.hashCode();
+
+        return new World_String_WeakReference_WeakReference(client, reference_queue, pulp, s);
     }
 
 
@@ -57,37 +80,13 @@ public class    World_String_EnduringReference
     //  Ancestor Object
     //
     //  NOTE:
-    //      Do not need to override `.equals` -- as `World_String_EnduringReference` are unique (and thus can use
+    //      Do not need to override `.equals` -- as World_String_WeakReference_WeakReference are unique (and thus can use
     //      `Object.equals` which uses identity as the equal test).
     //
     @Override
     public int                          hashCode()
     {
-        return this.client.s.hashCode();
-    }
-
-
-    //
-    //  NOTE:
-    //      Only need to compare to another `World_String_EnduringReference`, by using the identity test `==`` as
-    //      `World_String_EnduringReference` instances are unique.
-    //
-    //  HOWEVER:
-    //      Do need to compare to a `World_String_WeakReference` (since might be replacing it in the cache).
-    //
-    public boolean                      equals(Object that)
-    {
-        if (this == that) {
-            return true;
-        }
-
-        if ( ! (that instanceof World_String_WeakReference)) {
-            return false;
-        }
-
-        World_String_WeakReference      that_2 = (World_String_WeakReference) that;
-
-        return this.client.s.equals(that_2.s);
+        return this.pulp;
     }
 
 
@@ -119,14 +118,14 @@ public class    World_String_EnduringReference
         if (that__reference_inspection.is_enduring_reference) {
             final World_String_EnduringReference    that_2 = (World_String_EnduringReference) that;
 
-            return this.client.s.compareTo(that_2.client.s);
+            return this.s.compareTo(that_2.client.s);
         }
 
         assert fact(that__reference_inspection.is_weak_reference, "fact(that__reference_inspection.is_weak_reference)");
 
         final World_String_WeakReference    that_2 = (World_String_WeakReference) that;
 
-        return this.client.s.compareTo(that_2.s);
+        return this.s.compareTo(that_2.s);
     }
 
 
@@ -139,10 +138,17 @@ public class    World_String_EnduringReference
     //
     //  Interface Gem_ComparableReference_Interface
     //
-    @Override
-    public World_String                 client_OR_enqueue()
+    public void                         reap()
     {
-        return this.client;
+        final Gem_ComparableReference_Interface<
+                  ? extends Comparable_Inspection,
+                  World_String,
+                  Comparable_Inspection
+              >                         previous = Gem.string_cache.remove(this);
+
+        if (previous != this) {
+            RUNTIME("failed to remove {}", this);
+        }
     }
 
 
@@ -163,7 +169,14 @@ public class    World_String_EnduringReference
 
     public void                         portray(Gem_StringBuilder builder)
     {
-        builder.append("<World_String_EnduringReference ");
+        World_String                    client = this.get();
+
+        if (client == null) {
+            builder.append("<World_String_WeakReference_WeakReference exhausted; ", this.s, ">");
+            return;
+        }
+
+        builder.append("<World_String_WeakReference_WeakReference ");
         builder.portray(client);
         builder.append(">");
     }
