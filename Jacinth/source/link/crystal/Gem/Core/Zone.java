@@ -55,6 +55,7 @@ public class    Zone
     private static /*boot-final*/ Thread    first_thread /* = null */ ;
     private static /*boot-final*/ Zone      first_zone   /* = null */ ;
 
+    private static final int            analyze_string_allocated = 5;
     private static final int            parse_format_allocated   = 10;
     private static final int            string_builder_allocated = 10;
 
@@ -63,7 +64,9 @@ public class    Zone
     //  Members
     //
     public  final Thread                zone_thread;
-    private       ParseFormat           parse_format;
+
+    private final AnalyzeString[]       analyze_string_many;
+    private       int                   analyze_string_total;
 
     private final ParseFormat[]         parse_format_many;
     private       int                   parse_format_total;
@@ -73,7 +76,6 @@ public class    Zone
 
     private /*boot-final*/ Map__String__ArgumentSegmentFormatter_Inspection     format_map /* = null */ ;
 
-    public  /*boot-final*/ AnalyzeString                        analyze_string                          /* = null */ ;
     public  /*boot-final*/ World_Integer_Key                    integer_key                             /* = null */ ;
     private /*boot-final*/ Storehouse_AdornmentSegmentFormatter storehouse_adornment_segment_formatter  /* = null */ ;
     private /*boot-final*/ Storehouse_MessageFormattable        storehouse_message_formattable          /* = null */ ;
@@ -89,12 +91,15 @@ public class    Zone
     //
     private                             Zone(
             Thread                              zone_thread,
+            AnalyzeString[]                     analyze_string_many,
             ParseFormat[]                       parse_format_many,
             Gem_StringBuilder[]                 string_builder_many//,
         )
     {
         this.zone_thread       = zone_thread;
-        this.parse_format      = null;
+
+        this.analyze_string_many  = analyze_string_many;
+        this.analyze_string_total = 0;
 
         this.parse_format_many  = parse_format_many;
         this.parse_format_total = 0;
@@ -112,7 +117,6 @@ public class    Zone
         //  HENCE:
         //      None of the following can be declared as `final` either ...
         //
-        this.analyze_string                         = null;
         this.integer_key                            = null;
         this.format_map                             = null;
         this.storehouse_adornment_segment_formatter = null;
@@ -132,10 +136,11 @@ public class    Zone
         //      See comment in `.current_zone` that says these two calls are apparently "safe" & ok to do during class
         //      initialization.
         //
+        final AnalyzeString[]           analyze_string_many = new AnalyzeString    [Zone.analyze_string_allocated];
         final ParseFormat[]             parse_format_many   = new ParseFormat      [Zone.parse_format_allocated];
         final Gem_StringBuilder[]       string_builder_many = new Gem_StringBuilder[Zone.string_builder_allocated];
 
-        return new Zone(zone_thread, parse_format_many, string_builder_many);
+        return new Zone(zone_thread, analyze_string_many, parse_format_many, string_builder_many);
     }
 
 
@@ -164,7 +169,6 @@ public class    Zone
     {
         final Zone                      z = this;
 
-        assert fact_null(this.analyze_string,                         "this.analyze_string");
         assert fact_null(this.integer_key,                            "this.integer_key");
         assert fact_null(this.storehouse_adornment_segment_formatter, "this.storehouse_adornment_segment_formatter");
         assert fact_null(this.storehouse_message_formattable,         "this.storehouse_message_formattable");
@@ -180,7 +184,6 @@ public class    Zone
         //
         final Temporary_Storehouse_String   temporary_storehouse_string = this.boot__storehouse_string();
 
-        this.analyze_string                         = AnalyzeString                       .create__ALLY__Zone(z);
         this.integer_key                            = World_Integer_Key                   .create__ALLY__Zone(z);
         this.storehouse_adornment_segment_formatter = Storehouse_AdornmentSegmentFormatter.create__ALLY__Zone(z);
         this.storehouse_message_formattable         = Storehouse_MessageFormattable       .create__ALLY__Zone(z);
@@ -244,8 +247,24 @@ public class    Zone
         final int                       string_builder_total = this.string_builder_total;
 
         line("Dump of Zone: {}", this);
-        line("          zone_thread: {}", this.zone_thread);
-        line("         parse_format: {}", this.parse_format);
+        line("  zone_thread: {}", this.zone_thread);
+
+        line("---");
+        line("      analyze_string_many: {}", analyze_string_many);
+        line("     analyze_string_total: {}", analyze_string_total);
+
+        for (int                        i = 0; i < analyze_string_total; i ++) {
+            line("  analyze_string_many[{}]: {}", i, analyze_string_many[i]);
+        }
+
+        line("---");
+        line("      parse_format_many: {}", parse_format_many);
+        line("     parse_format_total: {}", parse_format_total);
+
+        for (int                        i = 0; i < parse_format_total; i ++) {
+            line("  parse_format_many[{}]: {}", i, parse_format_many[i]);
+        }
+
         line("---");
         line("     string_builder_many: {}", string_builder_many);
         line("    string_builder_total: {}", string_builder_total);
@@ -273,13 +292,47 @@ public class    Zone
 
 
     //
+    //  Public (analyze_string)
+    //
+    //  NOTE:
+    //      Due to possible nested called in a single thread, we might need multiple copies of `analyze_string`.
+    //
+    public AnalyzeString                summon_AnalyzeString__ALLY__AnalyzeString(String s)
+    {
+        int                             analyze_string_total = this.analyze_string_total;
+
+        if (analyze_string_total > 0) {
+            analyze_string_total -= 1;
+
+            this.analyze_string_total = analyze_string_total;
+
+            return this.analyze_string_many[analyze_string_total].recycle(s);
+        }
+
+
+        final Zone                      z = this;
+
+        return AnalyzeString.create__ALLY__Zone(z, s);
+    }
+
+
+    public void                         recycle__AnalyzeString__ALLY__AnalyzeString(AnalyzeString analyze_string)
+    {
+        final int                       analyze_string_total = this.analyze_string_total;
+
+        if (analyze_string_total < Zone.analyze_string_allocated) {
+            this.analyze_string_many[analyze_string_total] = analyze_string;
+
+            this.analyze_string_total = analyze_string_total + 1;
+        }
+    }
+
+
+    //
     //  Public (parse_format)
     //
     //  NOTE:
-    //      Due to possible nested called in a single thread, we might need multiple copies of the 'parse_format'.
-    //
-    //      The `store_parse_format` routine *ONLY* saves the last version of `pares_format`; any previous
-    //      version is discarded, as we only bother to "cache" a single value per thread.
+    //      See note above in "analyze_string" section.
     //
     public ParseFormat                  summon_ParseFormat__ALLY__ParseFormat(String format)
     {
@@ -327,6 +380,9 @@ public class    Zone
 
     //
     //  Public (string_builder)
+    //
+    //  NOTE:
+    //      See note above in "analyze_string" section.
     //
     public Gem_StringBuilder            summon_StringBuilder()
     {

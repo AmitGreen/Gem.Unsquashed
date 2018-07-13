@@ -20,23 +20,51 @@ public final class  AnalyzeString
 
 
     //
+    //  Static members
+    //
+    //      Matching rules:
+    //          Most likely match:          group 1                     //  Example: First.Middle77.Last@gmail.com
+    //          Second most likely match:   group 2                     //  Example: Can't!
+    //
+    private static final Pattern        string_pattern = Pattern.compile(
+                "([-$%+,./0-9:@A-Z_a-z~]+)?"                            //  Example: First.Middle77.Last@gmail.com
+              + "([^\"'\\\\]+)?"                                        //  Example: Can't!
+        );
+        
+
+    //
     //  Members
     //
-    public final Zone                   z;
+    public  final Zone                  z;
+    private       String                s;
+    public  final Matcher               matcher;
 
 
     //
-    //  Constructor & Factory
+    //  Constructor, Factory, & Recycle
     //
-    private                             AnalyzeString(Zone z)
+    private                             AnalyzeString(final Zone z, final String s, final Matcher matcher)
     {
-        this.z = z;
+        this.z       = z;
+        this.s       = s;
+        this.matcher = matcher;
     }
 
 
-    static public AnalyzeString         create__ALLY__Zone(Zone z)
+    static public AnalyzeString         create__ALLY__Zone(Zone z, String s)
     {
-        return new AnalyzeString(z);
+        final Matcher                   matcher = AnalyzeString.string_pattern.matcher(s);
+
+        return new AnalyzeString(z, s, matcher);
+    }
+
+
+    public AnalyzeString                recycle(String s)
+    {
+        this.s = s;
+        this.matcher.reset(s);
+
+        return this;
     }
 
 
@@ -53,10 +81,45 @@ public final class  AnalyzeString
 
 
     //
+    //  Private
+    //
+    private final void                  analyze_string__work()
+    {
+        final String                    s       = this.s;
+        final Matcher                   matcher = this.matcher;
+
+        if ( ! matcher.matches()) {
+            line("analyze_string: {p} - no match", s);
+            return;
+        }
+
+        final int                       start_2 = matcher.start(2);
+
+        if (start_2 != -1) {
+            line("analyze_string: {p} - sentence", s);
+            return;
+        }
+
+        final int                   start_1 = matcher.start(1);
+
+        if (start_1 != -1) {
+            line("analyze_string: {p} - word", s);
+            return;
+        }
+
+        line("analyze_string: {p} - empty", s);
+    }
+
+
+    //
     //  Public
     //
-    public final void                   analyze_string(final String s)
+    public static final void            analyze_string(final Zone z, final String s)
     {
-        line("analyze_string: {p}", s);
+        final AnalyzeString             analyze_string = z.summon_AnalyzeString__ALLY__AnalyzeString(s);
+
+        analyze_string.analyze_string__work();
+
+        z.recycle__AnalyzeString__ALLY__AnalyzeString(analyze_string);
     }
 }

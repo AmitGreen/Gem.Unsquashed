@@ -64,7 +64,7 @@ public class    UnitTest
     {
         final Zone                      z = this.z;
 
-        z.analyze_string.analyze_string("hello");
+        AnalyzeString.analyze_string(z, "Can't!");
 
         return true;
     }
