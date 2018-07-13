@@ -62,9 +62,7 @@ public class    UnitTest
     //
     private boolean                     test_analyze_string()
     {
-        final Zone                      z = this.z;
-
-        AnalyzeString.analyze_string(z, "Can't!");
+        AnalyzeString.analyze_string("Can't!");
 
         return true;
     }

@@ -20,7 +20,6 @@ import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Gem_ComparableReference_Interface;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.Storehouse_String__Interface;
-import link.crystal.Gem.Support.AnalyzeString;
 import link.crystal.Gem.Support.Map_String_Inspection;
 import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
@@ -55,7 +54,6 @@ public class    Zone
     private static /*boot-final*/ Thread    first_thread /* = null */ ;
     private static /*boot-final*/ Zone      first_zone   /* = null */ ;
 
-    private static final int            analyze_string_allocated = 5;
     private static final int            parse_format_allocated   = 10;
     private static final int            string_builder_allocated = 10;
 
@@ -64,9 +62,6 @@ public class    Zone
     //  Members
     //
     public  final Thread                zone_thread;
-
-    private final AnalyzeString[]       analyze_string_many;
-    private       int                   analyze_string_total;
 
     private final ParseFormat[]         parse_format_many;
     private       int                   parse_format_total;
@@ -91,15 +86,11 @@ public class    Zone
     //
     private                             Zone(
             Thread                              zone_thread,
-            AnalyzeString[]                     analyze_string_many,
             ParseFormat[]                       parse_format_many,
             Gem_StringBuilder[]                 string_builder_many//,
         )
     {
         this.zone_thread       = zone_thread;
-
-        this.analyze_string_many  = analyze_string_many;
-        this.analyze_string_total = 0;
 
         this.parse_format_many  = parse_format_many;
         this.parse_format_total = 0;
@@ -136,11 +127,10 @@ public class    Zone
         //      See comment in `.current_zone` that says these two calls are apparently "safe" & ok to do during class
         //      initialization.
         //
-        final AnalyzeString[]           analyze_string_many = new AnalyzeString    [Zone.analyze_string_allocated];
         final ParseFormat[]             parse_format_many   = new ParseFormat      [Zone.parse_format_allocated];
         final Gem_StringBuilder[]       string_builder_many = new Gem_StringBuilder[Zone.string_builder_allocated];
 
-        return new Zone(zone_thread, analyze_string_many, parse_format_many, string_builder_many);
+        return new Zone(zone_thread, parse_format_many, string_builder_many);
     }
 
 
@@ -250,14 +240,6 @@ public class    Zone
         line("  zone_thread: {}", this.zone_thread);
 
         line("---");
-        line("      analyze_string_many: {}", analyze_string_many);
-        line("     analyze_string_total: {}", analyze_string_total);
-
-        for (int                        i = 0; i < analyze_string_total; i ++) {
-            line("  analyze_string_many[{}]: {}", i, analyze_string_many[i]);
-        }
-
-        line("---");
         line("      parse_format_many: {}", parse_format_many);
         line("     parse_format_total: {}", parse_format_total);
 
@@ -292,47 +274,10 @@ public class    Zone
 
 
     //
-    //  Public (analyze_string)
-    //
-    //  NOTE:
-    //      Due to possible nested called in a single thread, we might need multiple copies of `analyze_string`.
-    //
-    public AnalyzeString                summon_AnalyzeString__ALLY__AnalyzeString(String s)
-    {
-        int                             analyze_string_total = this.analyze_string_total;
-
-        if (analyze_string_total > 0) {
-            analyze_string_total -= 1;
-
-            this.analyze_string_total = analyze_string_total;
-
-            return this.analyze_string_many[analyze_string_total].recycle(s);
-        }
-
-
-        final Zone                      z = this;
-
-        return AnalyzeString.create__ALLY__Zone(z, s);
-    }
-
-
-    public void                         recycle__AnalyzeString__ALLY__AnalyzeString(AnalyzeString analyze_string)
-    {
-        final int                       analyze_string_total = this.analyze_string_total;
-
-        if (analyze_string_total < Zone.analyze_string_allocated) {
-            this.analyze_string_many[analyze_string_total] = analyze_string;
-
-            this.analyze_string_total = analyze_string_total + 1;
-        }
-    }
-
-
-    //
     //  Public (parse_format)
     //
     //  NOTE:
-    //      See note above in "analyze_string" section.
+    //      Due to possible nested called in a single thread, we might need multiple copies of `parse_format`.
     //
     public ParseFormat                  summon_ParseFormat__ALLY__ParseFormat(String format)
     {
@@ -379,10 +324,10 @@ public class    Zone
 
 
     //
-    //  Public (string_builder)
+    //  Public (string builder)
     //
     //  NOTE:
-    //      See note above in "analyze_string" section.
+    //      See note above in "parse_format" section.
     //
     public Gem_StringBuilder            summon_StringBuilder()
     {

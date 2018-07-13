@@ -26,5 +26,33 @@ def gem():
 
 
     @share
+    def command_generate_ascii():
+        require_gem("Marble.GenerateAscii");
+
+        generate_ascii();
+
+
+    @share
     def main(arguments):
-        create_nested_conjure('2017-2018', 'Amit Green')
+        try:
+            total = length(arguments)
+
+            if total is 0:
+                return create_nested_conjure('2017-2018', 'Amit Green')
+
+            if total is not 1:
+                raise_runtime_error('must have zero or one argument')
+
+            option = arguments[0]
+
+            if option == 'ascii':
+                return command_generate_ascii()
+
+            if option == 'dev':
+                return command_generate_ascii()
+
+            raise_runtime_error('unknown option: %r', option)
+        except:
+            with except_any_clause() as e:
+                print_exception_chain(e)
+                program_exit(1)

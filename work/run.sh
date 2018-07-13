@@ -40,12 +40,12 @@ Main_py=../Quartz/Main.py
 Main_py=../Dravite/Main.py
 Main_py=../Crystal/Main.py
 Main_py=../Topaz/Main.py
-Main_py=../Marble/Main.py
 Main_py=../Onyx/Main.py
 Main_py=../Diamond/Main.py
 Main_py=../Jasper/Main.py
 Main_py=../Sapphire/Main.py
 Main_py=../Melanite/Main.py
+Main_py=../Marble/Main.py
 
 show=j
 all=false
@@ -80,7 +80,10 @@ fi
 while :
 do
     if [ $show = 2 -o $all = true ]; then
-        $command $option <$tmp1 >&$tmp2
+        if $command $option <$tmp1 >&$tmp2; then
+            :
+        fi
+
         #diff ../Topaz/GeneratedConjureDual.gpy ../Topaz/GeneratedConjureDual.py >>$tmp2
         #diff ../Topaz/GeneratedNew.gpy ../Topaz/GeneratedNew.py >>$tmp2
         if cmp -s $tmp2 2; then
@@ -95,9 +98,12 @@ do
         fi
     fi
 
-    if [ $show = 2 -o $all = true ]; then
-       $commandO $option <$tmp1 >&$tmp3
-       mv $tmp3 2o
+    if [ $show = 2o -o $all = true ]; then
+        if $commandO $option <$tmp1 >&$tmp3; then
+            :
+        fi
+
+        mv $tmp3 2o
     fi
    
     if [ $show = 3 -o $all = true ]; then
@@ -114,7 +120,7 @@ do
         fi
     fi
    
-    if [ $show = 3 -o $all = true ]; then
+    if [ $show = 3o -o $all = true ]; then
        $command3O $option <$tmp1 >&$tmp3
        mv $tmp3 3o
     fi
