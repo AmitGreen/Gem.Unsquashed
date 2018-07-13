@@ -79,7 +79,7 @@ public class    UnitTest
         //assert Gem_Object.fact_between(7, 6, 77);
 
         line("{+}: created: {}", 7);
-        line("hi: {{ and {{ yes {p} then }}", arrange("arrange {}", 7));
+        line("hi: {{ and {{ yes {p} then }}", arrange("\"arrange {}", 7));
 
         //line("{+}");
         //line("{+}: test {}", 7);
@@ -261,7 +261,8 @@ public class    UnitTest
         Gem.store_unit_test__ALLY__UnitTest(unit_test);
 
         if (arguments.length == 0) {
-            unit_test.test_analyze_string();
+            //unit_test.test_analyze_string();
+            unit_test.test_arrange();
         } else {
             unit_test.run_test(arguments);
         }

@@ -20,7 +20,7 @@ public final class  AsciiTable
     //
     //  Static members
     //
-    static final AsciiTable[]       ascii_list = new AsciiTable[] {
+    public static final AsciiTable[]    table = new AsciiTable[] {
         AsciiTable.create("\\x00", 0x00),
         AsciiTable.create("\\x01", 0x00),
         AsciiTable.create("\\x02", 0x00),
@@ -55,7 +55,7 @@ public final class  AsciiTable
         AsciiTable.create("\\x1f", 0x00),
         AsciiTable.create(    " ", 0x03),  //  boring_printable
         AsciiTable.create(    "!", 0x03),  //  boring_printable
-        AsciiTable.create(   "\"", 0x02),  //  printable, quotation_mark
+        AsciiTable.create( "\\\"", 0x02),  //  printable, quotation_mark
         AsciiTable.create(    "#", 0x03),  //  boring_printable
         AsciiTable.create(    "$", 0x03),  //  boring_printable
         AsciiTable.create(    "%", 0x03),  //  boring_printable
@@ -155,9 +155,9 @@ public final class  AsciiTable
     //
     //  Members
     //
-    private final String                portray;
-    private final boolean               is_boring;
-    private final boolean               is_printable;
+    public final String                 portray;
+    public final boolean                is_boring_printable;
+    public final boolean                is_printable;
 
 
     //
@@ -165,22 +165,22 @@ public final class  AsciiTable
     //
     private                             AsciiTable(
             final String                        portray,
-            final boolean                       is_boring,
+            final boolean                       is_boring_printable,
             final boolean                       is_printable//,
         )
     {
         this.portray      = portray;
-        this.is_boring    = is_boring;
+        this.is_boring_printable    = is_boring_printable;
         this.is_printable = is_printable;
     }
 
 
     private static final AsciiTable     create(final String s, final int bits)
     {
-        final boolean                   is_boring    = ((bits & 0x01) != 0 ? true : false);
-        final boolean                   is_printable = ((bits & 0x02) != 0 ? true : false);
+        final boolean                   is_boring_printable = ((bits & 0x01) != 0 ? true : false);
+        final boolean                   is_printable        = ((bits & 0x02) != 0 ? true : false);
 
-        return new AsciiTable(s, is_boring, is_printable);
+        return new AsciiTable(s, is_boring_printable, is_printable);
     }
 
 

@@ -4,15 +4,17 @@
 package link.crystal.Gem.Core;
 
 
+import java.lang.Character;
 import java.lang.StringBuilder;
 import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Format.ParseFormat;
+import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
-import link.crystal.Gem.Inspection.Inspection;
+import link.crystal.Gem.Support.AsciiTable;
 
 
 public class    Gem_StringBuilder
@@ -401,29 +403,38 @@ public class    Gem_StringBuilder
     {
         assert fact_pointer(s, "s");
 
+        final AsciiTable[]              table = AsciiTable.table;
+
         builder.append("\"");
 
         int                             start = 0;
         final int                       total = s.length();
 
-        for (int                        i = 0; i < total; i ++) {
+        for (int                        i = 0; i < total; /*  i += {1|2} done in loop  */) {
             final int                   code_point = s.codePointAt(i);
 
-            if (code_point == 34) {
-                if (start < i) {
-                    builder.append(s.substring(start, i)).append("\\\"");
-                    start = i + 1;
+            if (code_point < 128) {
+                AsciiTable              ascii = table[code_point];
+
+                if (ascii.is_boring_printable) {
+                    i ++;
                     continue;
                 }
+
+                if (start < i) {
+                    builder.append(s.substring(start, i));
+                }
+
+                builder.append(ascii.portray);
+
+                i ++;
+
+                start = i;
+
+                continue;
             }
 
-            if (code_point == 92) {
-                if (start < i) {
-                    builder.append(s.substring(start, i)).append("\\\\");
-                    start = i + 1;
-                    continue;
-                }
-            }
+            i += Character.charCount(code_point);
         }
 
         if (start < total) {

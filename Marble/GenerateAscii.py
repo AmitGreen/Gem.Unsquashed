@@ -92,7 +92,7 @@ def gem():
 
     def java_portray(s):
         if s == '"':
-            return r'"\""';
+            return r'"\\\""';
 
         return '"' + portray(s)[1:-1] + '"'
 
@@ -129,7 +129,7 @@ def gem():
         zap_comment    = Method(comment.__delitem__, slice_all)
         length_comment = comment.__len__
 
-        line('    static final AsciiTable[]       ascii_list = new AsciiTable[] {');
+        line('    public static final AsciiTable[]    table = new AsciiTable[] {');
 
         for [i, v] in enumerate(ascii_list):
             if v is 0:
