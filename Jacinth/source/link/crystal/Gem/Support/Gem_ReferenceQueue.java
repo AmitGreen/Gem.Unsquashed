@@ -213,7 +213,7 @@ public class    Gem_ReferenceQueue
             Reference<? extends Gem_Referenceable_Interface<? extends Inspection>>  referent = this.poll();
 
             if (referent == null) {
-                return total;
+                break;
             }
 
 
@@ -230,6 +230,8 @@ public class    Gem_ReferenceQueue
 
             total += 1;
         }
+
+        return total;
     }
 
 
@@ -243,30 +245,40 @@ public class    Gem_ReferenceQueue
 
     public int                          garbage_collect__AND__possible_sleep()
     {
-        System.gc();
+        int                             total_trash = 0;
+        int                             zeros = 0;
 
-        final int                       total_1 = this.cleanup();
+        while (zeros < 3) {
+            System.gc();
 
-        if (total_1 > 0) {
-            line("garbage collected: {} ... no need to sleep", total_1);
+            final int                   current_trash = this.cleanup();
 
-            return total_1;
+            total_trash += current_trash;
+
+            if (zeros == 3) {
+                line("garbage collected: {}", current_trash);
+                break;
+            }
+
+            if (current_trash == 0) {
+                zeros += 1;
+
+                line("no garbage collected ... sleeping for 0.007 seconds ...");
+            } else {
+                zeros = 0;
+                
+                line("garbage collected: {} ... sleeping for 0.007 seconds ...", total_trash);
+            }
+
+            try {
+                TimeUnit.MILLISECONDS.sleep(7);
+            } catch (InterruptedException e) {
+                line(" ... Sleep interrupted: {}", e);
+            }
         }
 
-        line("No garbage collected ... sleeping for 1 second ...");
+        line("total garbage collected: {}", total_trash);
 
-        try {
-            TimeUnit.SECONDS.sleep(1);
-        } catch (InterruptedException e) {
-            line(" ... Sleep interrupted: {}", e);
-        }
-
-        System.gc();
-
-        final int                       total_2 = this.cleanup();
-
-        line("... after sleep ... garbage collected: {}", total_2);
-
-        return total_2;
+        return total_trash;
     }
 }

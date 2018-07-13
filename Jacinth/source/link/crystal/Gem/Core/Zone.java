@@ -14,6 +14,10 @@ import link.crystal.Gem.Format.NormalSegmentFormatter;
 import link.crystal.Gem.Format.ParseFormat;
 import link.crystal.Gem.Format.PortraySegmentFormatter;
 import link.crystal.Gem.Format.StringSegmentFormatter;
+import link.crystal.Gem.Inspection.Comparable_Inspection;
+import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
+import link.crystal.Gem.Inspection.Inspection;
+import link.crystal.Gem.Interface.Gem_ComparableReference_Interface;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.Storehouse_String__Interface;
 import link.crystal.Gem.Support.Map_String_Inspection;
@@ -24,9 +28,16 @@ import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.Support.Storehouse_StringSegmentFormatter;
 import link.crystal.Gem.Support.Temporary_Storehouse_String;
+import link.crystal.Gem.Support.World_Integer_Cache;
 import link.crystal.Gem.Support.World_Integer_Key;
+import link.crystal.Gem.Support.World_Integer_WeakReference;
+import link.crystal.Gem.Support.World_String_Cache;
+import link.crystal.Gem.Support.World_String_EnduringReference;
 import link.crystal.Gem.Support.World_String_Key;
-import link.crystal.Gem.Inspection.Inspection;
+import link.crystal.Gem.Support.World_String_WeakReference;
+import link.crystal.Gem.World.World_Integer;
+import link.crystal.Gem.World.World_String;
+import link.crystal.Silver.UnitTest.UnitTest;
 
 
 public class    Zone
@@ -218,6 +229,43 @@ public class    Zone
 
 
     //
+    //  Public (debug)
+    //
+    public void                         dump()
+    {
+        final Gem_StringBuilder[]       string_builder_many  = this.string_builder_many;
+        final int                       string_builder_total = this.string_builder_total;
+
+        line("Dump of Zone: {}", this);
+        line("          zone_thread: {}", this.zone_thread);
+        line("         parse_format: {}", this.parse_format);
+        line("---");
+        line("     string_builder_many: {}", string_builder_many);
+        line("    string_builder_total: {}", string_builder_total);
+
+        for (int                        i = 0; i < string_builder_total; i ++) {
+            line("  string_builder_many[{}]: {}", i, string_builder_many[i]);
+        }
+
+        line("---");
+        line("                             format_map: {}", this.format_map);
+        line("                            integer_key: {}", this.integer_key);
+        line(" storehouse_adornment_segment_formatter: {}", this.storehouse_adornment_segment_formatter);
+        line("         storehouse_message_formattable: {}", this.storehouse_message_formattable);
+        line("    storehouse_normal_segment_formatter: {}", this.storehouse_normal_segment_formatter);
+        line("   storehouse_portray_segment_formatter: {}", this.storehouse_portray_segment_formatter);
+        line("    storehouse_string_segment_formatter: {}", this.storehouse_string_segment_formatter);
+        line("                      storehouse_string: {}", this.storehouse_string);
+        line("                             string_key: {}", this.string_key);
+
+        //this.storehouse_string.dump("Zone.storehouse_string");
+        this.format_map.dump("Zone.format_map");
+
+        line("End of dump of Zone");
+    }
+
+
+    //
     //  Public (parse_format)
     //
     //  NOTE:
@@ -304,43 +352,6 @@ public class    Zone
 
 
     //
-    //  Public (debug)
-    //
-    public void                         dump()
-    {
-        final Gem_StringBuilder[]       string_builder_many  = this.string_builder_many;
-        final int                       string_builder_total = this.string_builder_total;
-
-        line("Dump of Zone: {}", this);
-        line("          zone_thread: {}", this.zone_thread);
-        line("         parse_format: {}", this.parse_format);
-        line("---");
-        line("     string_builder_many: {}", string_builder_many);
-        line("    string_builder_total: {}", string_builder_total);
-
-        for (int                        i = 0; i < string_builder_total; i ++) {
-            line("  string_builder_many[{}]: {}", i, string_builder_many[i]);
-        }
-
-        line("---");
-        line("                             format_map: {}", this.format_map);
-        line("                            integer_key: {}", this.integer_key);
-        line(" storehouse_adornment_segment_formatter: {}", this.storehouse_adornment_segment_formatter);
-        line("         storehouse_message_formattable: {}", this.storehouse_message_formattable);
-        line("    storehouse_normal_segment_formatter: {}", this.storehouse_normal_segment_formatter);
-        line("   storehouse_portray_segment_formatter: {}", this.storehouse_portray_segment_formatter);
-        line("    storehouse_string_segment_formatter: {}", this.storehouse_string_segment_formatter);
-        line("                      storehouse_string: {}", this.storehouse_string);
-        line("                             string_key: {}", this.string_key);
-
-        //this.storehouse_string.dump("Zone.storehouse_string");
-        this.format_map       .dump("Zone.format_map");
-
-        line("End of dump of Zone");
-    }
-
-
-    //
     //  Public (current_zone)
     //
     //  NOTE:
@@ -386,7 +397,153 @@ public class    Zone
 
 
     //
-    //  Public (other)
+    //  Public (conjure: integer)
+    //
+    public World_String                  conjure_enduring_string(String s)
+    {
+        final World_String_Cache         string_cache = Gem.string_cache;
+
+        final World_String_Key           key = this.string_key;
+
+        key.recycle(s);
+
+        final Gem_ComparableReference_Interface<
+                  ? extends Gem_Reference_Inspection,
+                  World_String,
+                  Comparable_Inspection
+              >                          previous = string_cache.get(key);
+
+        World_String                     client;
+
+        if (previous == null) {
+            client = World_String.create__ALLY__Gem(s);
+        } else {
+            client = previous.client_OR_enqueue();
+
+            if (client == null) {
+                Gem.reference_queue.cleanup();
+
+                assert fact(string_cache.get(key) == null, "world_string_cache.get({}) == null", key);
+
+                client = World_String.create__ALLY__Gem(s);
+            } else {
+                assert fact(s.equals(client.s), "s.equals(client.s)");
+
+                if (previous.inspect().is_enduring_reference) {
+                    return client;
+                }
+
+                final UnitTest          unit_test = Gem.unit_test;
+
+                if (unit_test != null) {
+                    unit_test.discarding__World_String_WeakReference((World_String_WeakReference) previous);
+                }
+
+
+                //
+                //  NOTE:
+                //      Have to remove the 'previous' key (the weak reference), so that a new key (and new value) can
+                //      be `put`.
+                //
+                //      Be default `put` *ONLY* replaces the value, and not the key; hence the need to remove the key
+                //      first.
+                //
+                string_cache.remove(previous);
+            }
+        }
+
+        final World_String_EnduringReference    enduring_reference = (
+                World_String_EnduringReference.create__ALLY__Gem(client)
+            );
+
+        string_cache.put(enduring_reference, enduring_reference);
+
+        return client;
+    }
+
+
+    public World_Integer                conjure_integer(int value)
+    {
+        final World_Integer_Cache       integer_cache = Gem.integer_cache;
+
+        final World_Integer_Key         key = this.integer_key;
+
+        key.recycle(value);
+
+        Gem_ComparableReference_Interface<
+            ? extends Gem_Reference_Inspection,
+            World_Integer,
+            Comparable_Inspection
+        >                               previous = integer_cache.get(key);
+
+        if (previous != null) {
+            World_Integer               client = previous.client_OR_enqueue();
+
+            if (client != null) {
+                assert fact(value == client.value, "value == client.value");
+
+                return client;
+            }
+
+            Gem.reference_queue.cleanup();
+
+            assert fact(integer_cache.get(key) == null, "world_integer_cache.get({}) == null", key);
+        }
+
+        final World_Integer             r = World_Integer.create__ALLY__Gem(value);
+
+        final World_Integer_WeakReference   weak_reference = (
+                World_Integer_WeakReference.create__ALLY__Gem(r, Gem.reference_queue)
+            );
+
+        integer_cache.put(weak_reference, weak_reference);
+
+        return r;
+    }
+
+
+    public World_String                 conjure_string(String s)
+    {
+        final World_String_Cache        string_cache    = Gem.string_cache;
+
+        final World_String_Key          key = this.string_key;
+
+        key.recycle(s);
+
+        Gem_ComparableReference_Interface<
+            ? extends Gem_Reference_Inspection,
+            World_String,
+            Comparable_Inspection
+        >                               previous = string_cache.get(key);
+
+        if (previous != null) {
+            World_String                client = previous.client_OR_enqueue();
+
+            if (client != null) {
+                assert fact(s.equals(client.s), "s.equals(client.s)");
+
+                return client;
+            }
+
+            Gem.reference_queue.cleanup();
+
+            assert fact(string_cache.get(key) == null, "world_string_cache.get({}) == null", key);
+        }
+
+        final World_String              r = World_String.create__ALLY__Gem(s);
+
+        final World_String_WeakReference    weak_reference = (
+                World_String_WeakReference.create__ALLY__Gem(r, Gem.reference_queue)
+            );
+
+        string_cache.put(weak_reference, weak_reference);
+
+        return r;
+    }
+
+
+    //
+    //  Public (conjure: formatting)
     //
     public AdornmentSegmentFormatter    conjure_AdornmentSegmentFormatter(String s)
     {
@@ -494,6 +651,9 @@ public class    Zone
     }
 
 
+    //
+    //  Public (other)
+    //
     public String                       intern_permenant_string(String s)
     {
         final Zone                      z = this;

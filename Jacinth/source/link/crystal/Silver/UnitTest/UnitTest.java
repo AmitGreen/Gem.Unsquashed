@@ -18,6 +18,7 @@ import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.Support.UniqueName;
+import link.crystal.Gem.Support.World_String_WeakReference;
 import link.crystal.Gem.UnitTest.World_String_WeakReference_PhantomReference;
 import link.crystal.Gem.World.World_Integer;
 import link.crystal.Gem.World.World_String;
@@ -91,13 +92,15 @@ public class    UnitTest
 
     private boolean                     test_integer()
     {
-        World_Integer                   seven = Gem.conjure_integer(7);
-        World_Integer                   eight = Gem.conjure_integer(8);
-        World_Integer                   nine  = Gem.conjure_integer(9);
+        final Zone                      z = this.z;
+
+        World_Integer                   seven = z.conjure_integer(7);
+        World_Integer                   eight = z.conjure_integer(8);
+        World_Integer                   nine  = z.conjure_integer(9);
 
         line("{+}: {} .vs {}: {}", seven, eight, seven.compareTo(eight));
 
-        World_Integer                   seven_2 = Gem.conjure_integer(7);
+        World_Integer                   seven_2 = z.conjure_integer(7);
 
         assert fact(seven == seven_2, "seven == seven_2");
 
@@ -114,7 +117,7 @@ public class    UnitTest
 
         Gem.integer_cache.dump("integer cache - after");
 
-        World_Integer                   seven_3 = Gem.conjure_integer(7);
+        World_Integer                   seven_3 = z.conjure_integer(7);
 
         return true;
     }
@@ -122,14 +125,14 @@ public class    UnitTest
 
     private boolean                     test_string()
     {
-        World_String                    seven = Gem.conjure_string("seven");
-        World_String                    eight = Gem.conjure_string("eight");
-        World_String                    nine  = Gem.conjure_string("nine");
+        World_String                    seven = z.conjure_string("seven");
+        World_String                    eight = z.conjure_string("eight");
+        World_String                    nine  = z.conjure_string("nine");
 
         line("{+}: {} .vs {}: {}", seven, eight, seven.compareTo(eight));
 
-        World_String                   seven_2 = Gem.conjure_string("seven");
-        World_String                   eight_2 = Gem.conjure_enduring_string("eight");
+        World_String                   seven_2 = z.conjure_string("seven");
+        World_String                   eight_2 = z.conjure_enduring_string("eight");
 
         assert fact(seven == seven_2, "seven == seven_2");
         assert fact(eight == eight_2, "eight == eight_2");
@@ -147,7 +150,7 @@ public class    UnitTest
 
         Gem.string_cache.dump("string cache - after");
 
-        World_String                    seven_3 = Gem.conjure_string("seven");
+        World_String                    seven_3 = z.conjure_string("seven");
 
         return true;
     }
@@ -226,14 +229,18 @@ public class    UnitTest
     //
     //  Public
     //
-    public final void                   store_phantom(World_String_WeakReference_PhantomReference phantom)
+    public final void                   discarding__World_String_WeakReference(
+            World_String_WeakReference          weak_reference//,
+        )
     {
-        assert fact_null   (this.phantom, "this.phantom");
-        assert fact_pointer(phantom,      "phantom");
+        assert fact_null(this.phantom, "this.phantom");
 
-        this.phantom = phantom;
+        this.phantom = World_String_WeakReference_PhantomReference.create__ALLY__Gem(
+                weak_reference,
+                Gem.reference_queue//,
+            );
 
-        line("store phantom: {}", phantom);
+        line("discarding__World_String_WeakReference({}): phantom{}", weak_reference, phantom);
     }
 
 

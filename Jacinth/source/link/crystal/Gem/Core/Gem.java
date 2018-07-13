@@ -18,16 +18,8 @@ import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Map_String_Inspection;
 import link.crystal.Gem.Support.World_Integer_Cache;
-import link.crystal.Gem.Support.World_Integer_Key;
-import link.crystal.Gem.Support.World_Integer_WeakReference;
 import link.crystal.Gem.Support.World_String_Cache;
-import link.crystal.Gem.Support.World_String_EnduringReference;
-import link.crystal.Gem.Support.World_String_Key;
-import link.crystal.Gem.Support.World_String_WeakReference;
-import link.crystal.Gem.World.World_Integer;
-import link.crystal.Gem.World.World_String;
 import link.crystal.Silver.UnitTest.UnitTest;
-import link.crystal.Gem.UnitTest.World_String_WeakReference_PhantomReference;
 
 
 public abstract class   Gem
@@ -59,17 +51,17 @@ public abstract class   Gem
     //  HENCE:
     //      None of the following can be declared as `final` either ...
     //
-    public static /*boot-final*/    World_Integer_Cache         integer_cache                  /* = null */ ;
-    public static /*boot-final*/    World_String_Cache          string_cache                   /* = null */ ;
-    public static /*boot-final*/    Map_String_Inspection       map_string_inspection          /* = null */ ;
-    public static /*boot-final*/    MethodNameSegmentFormatter  message_name_segment_formatter /* = null */ ;
-    public static /*boot-final*/    Gem_ReferenceQueue          reference_queue                /* = null */ ;
+    public static /*boot-final*/        World_Integer_Cache         integer_cache                  /* = null */ ;
+    public static /*boot-final*/        World_String_Cache          string_cache                   /* = null */ ;
+    public static /*boot-final*/        Map_String_Inspection       map_string_inspection          /* = null */ ;
+    public static /*boot-final*/        MethodNameSegmentFormatter  message_name_segment_formatter /* = null */ ;
+    public static /*boot-final*/        Gem_ReferenceQueue          reference_queue                /* = null */ ;
 
 
     //
     //  Public Statis (Unit Test)
     //
-    private static UnitTest             unit_test = null;
+    public static UnitTest              unit_test = null;
 
 
     //
@@ -399,121 +391,6 @@ public abstract class   Gem
     //
     //  Public (other)
     //
-    public static World_String                  conjure_enduring_string(String s)
-    {
-        final Zone                              z = Zone.current_zone();
-
-        final World_String_Cache                string_cache    = Gem.string_cache;
-
-        final World_String_Key                  key = z.string_key;
-
-        key.recycle(s);
-
-        final Gem_ComparableReference_Interface<
-                  ? extends Gem_Reference_Inspection,
-                  World_String,
-                  Comparable_Inspection
-              >                                 previous = string_cache.get(key);
-
-        World_String                            client;
-
-        if (previous == null) {
-            client = World_String.create__ALLY__Gem(s);
-        } else {
-            client = previous.client_OR_enqueue();
-
-            if (client == null) {
-                Gem.reference_queue.cleanup();
-
-                assert fact(string_cache.get(key) == null, "world_string_cache.get({}) == null", key);
-
-                client = World_String.create__ALLY__Gem(s);
-            } else {
-                assert fact(s.equals(client.s), "s.equals(client.s)");
-
-                if (previous.inspect().is_enduring_reference) {
-                    return client;
-                }
-
-
-                final UnitTest          unit_test = Gem.unit_test;
-
-                if (unit_test != null) {
-                    final World_String_WeakReference_PhantomReference   phantom_reference = (
-                            World_String_WeakReference_PhantomReference.create__ALLY__Gem(
-                                (World_String_WeakReference) previous,
-                                Gem.reference_queue//,
-                            )
-                        );
-
-                    unit_test.store_phantom(phantom_reference);
-                }
-
-                //
-                //  NOTE:
-                //      Have to remove the 'previous' key (the weak reference), so that a new key (and new value) can
-                //      be `put`.
-                //
-                //      Be default `put` *ONLY* replaces the value, and not the key; hence the need to remove the key
-                //      first.
-                //
-                string_cache.remove(previous);
-            }
-        }
-
-        final World_String_EnduringReference    enduring_reference = (
-                World_String_EnduringReference.create__ALLY__Gem(client)
-            );
-
-        string_cache.put(enduring_reference, enduring_reference);
-
-        return client;
-    }
-
-
-    public static World_Integer                 conjure_integer(int value)
-    {
-        final Zone                              z = Zone.current_zone();
-
-        final World_Integer_Cache               integer_cache   = Gem.integer_cache;
-        final Gem_ReferenceQueue                reference_queue = Gem.reference_queue;
-
-        final World_Integer_Key                 key = z.integer_key;
-
-        key.recycle(value);
-
-        Gem_ComparableReference_Interface<
-            ? extends Gem_Reference_Inspection,
-            World_Integer,
-            Comparable_Inspection
-        >                                       previous = integer_cache.get(key);
-
-        if (previous != null) {
-            World_Integer                       client = previous.client_OR_enqueue();
-
-            if (client != null) {
-                assert fact(value == client.value, "value == client.value");
-
-                return client;
-            }
-
-            reference_queue.cleanup();
-
-            assert fact(integer_cache.get(key) == null, "world_integer_cache.get({}) == null", key);
-        }
-
-        final World_Integer                     r = World_Integer.create__ALLY__Gem(value);
-
-        final World_Integer_WeakReference       weak_reference = (
-                World_Integer_WeakReference.create__ALLY__Gem(r, reference_queue)
-            );
-
-        integer_cache.put(weak_reference, weak_reference);
-
-        return r;
-    }
-
-
     public static MethodNameSegmentFormatter    conjure_MethodNameSegmentFormatter()
     {
         final MethodNameSegmentFormatter        message_name_segment_formatter = Gem.message_name_segment_formatter;
@@ -521,49 +398,6 @@ public abstract class   Gem
         assert fact_pointer(message_name_segment_formatter, "message_name_segment_formatter");
 
         return message_name_segment_formatter;
-    }
-
-
-    public static World_String                  conjure_string(String s)
-    {
-        final Zone                              z = Zone.current_zone();
-
-        final World_String_Cache                string_cache    = Gem.string_cache;
-        final Gem_ReferenceQueue                reference_queue = Gem.reference_queue;
-
-        final World_String_Key                  key = z.string_key;
-
-        key.recycle(s);
-
-        Gem_ComparableReference_Interface<
-            ? extends Gem_Reference_Inspection,
-            World_String,
-            Comparable_Inspection
-        >                                       previous = string_cache.get(key);
-
-        if (previous != null) {
-            World_String                        client = previous.client_OR_enqueue();
-
-            if (client != null) {
-                assert fact(s.equals(client.s), "s.equals(client.s)");
-
-                return client;
-            }
-
-            reference_queue.cleanup();
-
-            assert fact(string_cache.get(key) == null, "world_string_cache.get({}) == null", key);
-        }
-
-        final World_String                      r = World_String.create__ALLY__Gem(s);
-
-        final World_String_WeakReference        weak_reference = (
-                World_String_WeakReference.create__ALLY__Gem(r, reference_queue)
-            );
-
-        string_cache.put(weak_reference, weak_reference);
-
-        return r;
     }
 
 
