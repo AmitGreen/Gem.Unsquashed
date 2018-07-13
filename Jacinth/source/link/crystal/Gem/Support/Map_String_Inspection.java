@@ -32,7 +32,7 @@ public class    Map_String_Inspection
     //
     private static final int            initial_capacity = 101;
     private static       Inspection[]   cache            = null;
-    private static final int            cache_allocated  = 10;
+    private static final int            cache_allocated  = 20;
     private static       int            cache_index      = 0;
 
 

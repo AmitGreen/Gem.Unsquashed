@@ -151,6 +151,9 @@ public class   ParseFormat
     }
 
 
+    //inherited public void             Portray(String_Builder builder);
+
+
     //
     //  Private
     //

@@ -10,6 +10,7 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Support.AnalyzeString;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Gem_TimeUnit;
 import link.crystal.Gem.Support.Map_String_Inspection;
@@ -59,6 +60,15 @@ public class    UnitTest
     //
     //  Private (tests)
     //
+    private boolean                     test_analyze_string()
+    {
+        final Zone                      z = this.z;
+
+        z.analyze_string.analyze_string("hello");
+
+        return true;
+    }
+
     private boolean                     test_arrange()
     {
         final Zone                      z = Zone.current_zone();
@@ -86,7 +96,7 @@ public class    UnitTest
 
     private boolean                     test_development()
     {
-        return test_string();
+        return true;
     }
 
 
@@ -252,7 +262,11 @@ public class    UnitTest
 
         Gem.store_unit_test__ALLY__UnitTest(unit_test);
 
-        unit_test.run_test(arguments);
+        if (arguments.length == 0) {
+            unit_test.test_analyze_string();
+        } else {
+            unit_test.run_test(arguments);
+        }
 
         if (true) {
             //Gem.dump();

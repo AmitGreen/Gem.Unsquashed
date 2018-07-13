@@ -112,6 +112,7 @@ JACINTH_FILES = \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
     $J/Gem/Interface/Storehouse_String__Interface.java \
+    $J/Gem/Support/AnalyzeString.java \
     $J/Gem/Support/Gem_ComparableReference_Cache.java \
     $J/Gem/Support/Gem_ReferenceQueue.java \
     $J/Gem/Support/Gem_TimeUnit.java \
@@ -358,7 +359,7 @@ clean:
 	rm -f   ws.java wsc.java wse.java wsk.java wsw.java wswp.java
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
-	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
+	rm -f za.java zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
 	rm -f   zgn.gpy zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
 	rm -f   zm.py zo4.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
 
@@ -684,6 +685,7 @@ links:
 	ln -s ../Crystal/ChessPawn.py                                               yw.py
 	ln -s ../Crystal/FrozenChessCard.py                                         yzc.py
 	ln -s ../Crystal/FrozenCardRoot.py                                          yzr.py
+	ln -s $J/Gem/Support/AnalyzeString.java                                     za.java
 	ln -s ../Topaz/Core.py                                                      zcr.py
 	ln -s ../Topaz/CacheSupport.py                                              zcs.py
 	ln -s ../Topaz/Drove.py                                                     zd.py

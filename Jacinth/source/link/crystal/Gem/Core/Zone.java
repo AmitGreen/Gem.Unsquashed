@@ -20,6 +20,7 @@ import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Gem_ComparableReference_Interface;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.Storehouse_String__Interface;
+import link.crystal.Gem.Support.AnalyzeString;
 import link.crystal.Gem.Support.Map_String_Inspection;
 import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
@@ -72,6 +73,7 @@ public class    Zone
 
     private /*boot-final*/ Map__String__ArgumentSegmentFormatter_Inspection     format_map /* = null */ ;
 
+    public  /*boot-final*/ AnalyzeString                        analyze_string                          /* = null */ ;
     public  /*boot-final*/ World_Integer_Key                    integer_key                             /* = null */ ;
     private /*boot-final*/ Storehouse_AdornmentSegmentFormatter storehouse_adornment_segment_formatter  /* = null */ ;
     private /*boot-final*/ Storehouse_MessageFormattable        storehouse_message_formattable          /* = null */ ;
@@ -110,13 +112,16 @@ public class    Zone
         //  HENCE:
         //      None of the following can be declared as `final` either ...
         //
+        this.analyze_string                         = null;
+        this.integer_key                            = null;
         this.format_map                             = null;
         this.storehouse_adornment_segment_formatter = null;
         this.storehouse_message_formattable         = null;
         this.storehouse_normal_segment_formatter    = null;
         this.storehouse_portray_segment_formatter   = null;
-        this.storehouse_string                      = null;
         this.storehouse_string_segment_formatter    = null;
+        this.storehouse_string                      = null;
+        this.string_key                             = null;
     }
 
 
@@ -159,6 +164,7 @@ public class    Zone
     {
         final Zone                      z = this;
 
+        assert fact_null(this.analyze_string,                         "this.analyze_string");
         assert fact_null(this.integer_key,                            "this.integer_key");
         assert fact_null(this.storehouse_adornment_segment_formatter, "this.storehouse_adornment_segment_formatter");
         assert fact_null(this.storehouse_message_formattable,         "this.storehouse_message_formattable");
@@ -174,6 +180,7 @@ public class    Zone
         //
         final Temporary_Storehouse_String   temporary_storehouse_string = this.boot__storehouse_string();
 
+        this.analyze_string                         = AnalyzeString                       .create__ALLY__Zone(z);
         this.integer_key                            = World_Integer_Key                   .create__ALLY__Zone(z);
         this.storehouse_adornment_segment_formatter = Storehouse_AdornmentSegmentFormatter.create__ALLY__Zone(z);
         this.storehouse_message_formattable         = Storehouse_MessageFormattable       .create__ALLY__Zone(z);
