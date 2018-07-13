@@ -18,7 +18,7 @@ public class    Storehouse_MessageFormattable
 //  extends     HashMap                  <String, MessageFormattable<?>>
 //  extends     AbstractHashMap          <String, MessageFormattable<?>>
 //  extends     Object
-    implements  Inspectable  <Inspection>//,                            //  Via Gem_Map<?, ?, ?>
+    implements  Inspectable  <Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Storehouse_MessageFormattable");
 

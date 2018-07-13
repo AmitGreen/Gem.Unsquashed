@@ -16,7 +16,7 @@ public abstract class   ArgumentSegmentFormatter_Inspection<ARGUMENT_SEGMENT ext
 //  extends             Inspection
 //  extends             Gem_Object <World_Inspection>
 //  extends             Object
-    implements          Inspectable<World_Inspection>//,                //  Via Gem_Object
+    implements          Inspectable<World_Inspection>//,
 {
     //
     //  Constructor & Factory

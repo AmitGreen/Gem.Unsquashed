@@ -13,9 +13,9 @@ import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
 import link.crystal.Gem.Inspection.Inspection;
+import link.crystal.Gem.Interface.Gem_QueueableReference_Interface;
 import link.crystal.Gem.Interface.Gem_Referenceable_Interface;
 import link.crystal.Gem.Interface.Inspectable;
-import link.crystal.Gem.Support.Gem_WeakReference;
 
 
 //
@@ -73,14 +73,14 @@ import link.crystal.Gem.Support.Gem_WeakReference;
 //      passing in the correct generic as the second parameter to ReferenceQueue, in particular the
 //      second parameter would be:
 //
-//                  Gem_QueueableReference<? extends Gem_Referenceable_Interface<? extends Inspection>>
+//                  Gem_QueueableReference_Interface<? extends Inspection>>
 //
 //      This would be a valid type as it would "extend" the second generic of `ReferenceQueue` which is declared as
 //
 //                  `REFERENCE extends Reference<ELEMENT>`
 //
-//      (However, as mentioned above this does not work since `Reference` is a class and `Gem_QueueableReference` is
-//      an interface, and an interface is not allowed to "extend" as class).
+//      (However, as mentioned above this does not work since `Reference` is a class and
+//      `Gem_QueueableReference_Interface` is an interface, and an interface is not allowed to "extend" as class).
 //
 //  THEREFORE:
 //      We coerce the return type of `super.poll()` to be the proper type (as explained above).
@@ -88,7 +88,7 @@ import link.crystal.Gem.Support.Gem_WeakReference;
 public class    Gem_ReferenceQueue
     extends     ReferenceQueue<
                     Gem_Referenceable_Interface<? extends Inspection>//,
-//                  Gem_QueueableReference<? extends Gem_Referenceable_Interface<? extends Inspection>>//,
+                //  Gem_QueueableReference_Interface<? extends Inspection>>//,
                 >
 //  extends     Object
     implements  Inspectable<Inspection>//,
@@ -221,21 +221,12 @@ public class    Gem_ReferenceQueue
             //  NOTE:
             //      See explanation above, at start of this class, as to why this coercion is needed here.
             //
-            Gem_WeakReference<
-                ? extends Gem_Reference_Inspection,
-                ? extends Gem_Referenceable_Interface<? extends Inspection>,
-                ? extends Inspection//,
-            >                           weak_reference = (
-                    (
-                        Gem_WeakReference<
-                            ? extends Gem_Reference_Inspection,
-                            ? extends Gem_Referenceable_Interface<? extends Inspection>,
-                            ? extends Inspection//,
-                        >
-                    ) referent
+            @SuppressWarnings("unchecked")
+            Gem_QueueableReference_Interface<? extends Inspection>   queueable_reference = (
+                    (Gem_QueueableReference_Interface<? extends Inspection>) referent
                 );
 
-            weak_reference.reap();
+            queueable_reference.reap();
 
             total += 1;
         }

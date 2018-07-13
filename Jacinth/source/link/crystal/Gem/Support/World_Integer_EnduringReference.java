@@ -23,7 +23,7 @@ public class    World_Integer_EnduringReference
                 Gem_Reference_Interface          <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
                 Gem_Comparable                   <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable                      <Gem_Reference_Inspection>//,  //  Via Gem_Comparable
+                Inspectable                      <Gem_Reference_Inspection>//,
 {
     private static final Gem_Reference_Inspection   inspection = Gem_Reference_Inspection.create(
             "World_Integer_EnduringReference",

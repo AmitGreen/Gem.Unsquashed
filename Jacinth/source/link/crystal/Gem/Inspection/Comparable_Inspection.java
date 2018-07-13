@@ -20,11 +20,12 @@ public class    Comparable_Inspection
 //  extends     Object
     implements  Gem_Comparable<World_Inspection>,
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable   <World_Inspection>//,                             //  Via Gem_Object
+                Inspectable   <World_Inspection>//,
 {
     //
     //  Class Order magic values
     //
+    public static final int CLASS_ORDER__NONE                    = 0;
     public static final int CLASS_ORDER__INSPECTION              = 1;
     public static final int CLASS_ORDER__Silver_String           = 2;
     public static final int CLASS_ORDER__World_Integer           = 3;
@@ -66,7 +67,7 @@ public class    Comparable_Inspection
 
     public static Comparable_Inspection     create(String simple_class_name, int class_order)
     {
-        assert fact_between(1, class_order, Comparable_Inspection.CLASS_ORDER__Maximum);
+        assert fact_between(0, class_order, Comparable_Inspection.CLASS_ORDER__Maximum);
 
         final Zone                      z = Zone.current_zone();
 

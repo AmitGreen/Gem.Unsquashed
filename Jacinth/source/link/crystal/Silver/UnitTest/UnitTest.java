@@ -8,6 +8,7 @@ import link.crystal.Gem.Core.Gem;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
+import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Gem_TimeUnit;
@@ -17,7 +18,7 @@ import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.Support.UniqueName;
-import link.crystal.Gem.Inspection.Inspection;
+import link.crystal.Gem.UnitTest.World_String_WeakReference_PhantomReference;
 import link.crystal.Gem.World.World_Integer;
 import link.crystal.Gem.World.World_String;
 import link.crystal.Mirror.Shape;
@@ -26,7 +27,7 @@ import link.crystal.Mirror.Shape;
 public class    UnitTest
     extends     Gem_Object <Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
+    implements  Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("UnitTest");
 
@@ -34,7 +35,8 @@ public class    UnitTest
     //
     //  Members
     //
-    public final Zone                   z;
+    public  final Zone                                          z;
+    private       World_String_WeakReference_PhantomReference   phantom;
 
 
     //
@@ -42,7 +44,8 @@ public class    UnitTest
     //
     protected                           UnitTest(Zone z)
     {
-        this.z = z;
+        this.z       = z;
+        this.phantom = null;
     }
 
 
@@ -223,11 +226,24 @@ public class    UnitTest
     //
     //  Public
     //
+    public final void                   store_phantom(World_String_WeakReference_PhantomReference phantom)
+    {
+        assert fact_null   (this.phantom, "this.phantom");
+        assert fact_pointer(phantom,      "phantom");
+
+        this.phantom = phantom;
+
+        line("store phantom: {}", phantom);
+    }
+
+
     public static void                  unit_test(String ... arguments)
     {
         final Zone                      z = Zone.current_zone();
 
         final UnitTest                  unit_test = UnitTest.create(z);
+
+        Gem.store_unit_test__ALLY__UnitTest(unit_test);
 
         unit_test.run_test(arguments);
 

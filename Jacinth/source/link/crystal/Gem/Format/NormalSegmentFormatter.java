@@ -22,7 +22,7 @@ public class    NormalSegmentFormatter
 //  extends     Object
     implements  MessageFormattable      <ArgumentSegmentFormatter_Inspection>,
                 SegmentFormattable      <ArgumentSegmentFormatter_Inspection>,
-                Inspectable             <ArgumentSegmentFormatter_Inspection>//,    //  Via MessageFormattable
+                Inspectable             <ArgumentSegmentFormatter_Inspection>//,
 {
     public static final NormalSegmentFormatter_Inspection   inspection = (
             NormalSegmentFormatter_Inspection.create("NormalSegmentFormatter")
@@ -302,7 +302,7 @@ class           NormalSegmentFormatter_Inspection
 //  extends     Inspection
 //  extends     Gem_Object <World_Inspection>
 //  extends     Object
-    implements  Inspectable<World_Inspection>//,                        //  Via Gem_Object
+    implements  Inspectable<World_Inspection>//,
 {
     private static final World_Inspection   inspection = World_Inspection.create("NormalSegmentFormatter_Inspection");
 

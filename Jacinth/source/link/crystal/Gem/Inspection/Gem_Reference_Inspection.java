@@ -21,7 +21,7 @@ public final class  Gem_Reference_Inspection
 //  extends         Object
     implements      Gem_Comparable<World_Inspection>,
                     Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                    Inspectable   <World_Inspection>//,                             //  Via Gem_Object
+                    Inspectable   <World_Inspection>//,
 {
     private static final World_Inspection   inspection = World_Inspection.create("Gem_Reference_Inspection");
 
@@ -30,6 +30,7 @@ public final class  Gem_Reference_Inspection
     //  Members
     //
     public final boolean                is_enduring_reference;
+    public final boolean                is_phantom_reference;
     public final boolean                is_weak_reference;
 
 
@@ -41,12 +42,14 @@ public final class  Gem_Reference_Inspection
             final int                           class_order,
         /*  final boolean                       is_world_inspection = false,  */
             final boolean                       is_enduring_reference,
+            final boolean                       is_phantom_reference,
             final boolean                       is_weak_reference//,
         )
     {
         super(simple_class_name, class_order, false);
 
         this.is_enduring_reference = is_enduring_reference;
+        this.is_phantom_reference  = is_phantom_reference;
         this.is_weak_reference     = is_weak_reference;
     }
 
@@ -58,11 +61,21 @@ public final class  Gem_Reference_Inspection
             final String                        reference_type//,
         )
     {
-        final boolean                           is_enduring_reference = reference_type.equals("enduring");
-        final boolean                           is_weak_reference     = reference_type.equals("weak");
+        final boolean                   is_enduring_reference = reference_type.equals("enduring");
+        final boolean                   is_phantom_reference  = reference_type.equals("phantom");
+        final boolean                   is_weak_reference     = reference_type.equals("weak");
 
-        assert fact ((is_enduring_reference ? 1 : 0) + (is_weak_reference ? 1 : 0) == 1,
-                     "one & exactly one of is_{enduring,weak}_reference must be set");
+        assert fact (
+                (
+                        (
+                              (is_enduring_reference ? 1 : 0)
+                            + (is_phantom_reference  ? 1 : 0)
+                            + (is_weak_reference     ? 1 : 0)
+                        )
+                    == 1
+                ),
+                "one & exactly one of is_{enduring,phantom,weak}_reference must be set"//,
+            );
 
         final Zone                      z = Zone.current_zone();
 
@@ -73,6 +86,7 @@ public final class  Gem_Reference_Inspection
                    class_order,
                /*  is_world_inspection = false,  */
                    is_enduring_reference,
+                   is_phantom_reference,
                    is_weak_reference//,
                );
     }
@@ -99,7 +113,7 @@ public final class  Gem_Reference_Inspection
     }
 
 
-    public final void                   portray(Gem_StringBuilder builder)
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         this.portray_prefix(builder);
 

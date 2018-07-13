@@ -16,7 +16,7 @@ public class    Storehouse_PortraySegmentFormatter
     extends     Storehouse_SmallList<Storehouse_PortraySegmentFormatter, PortraySegmentFormatter>
 //  extends     Gem_Object <Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
+    implements  Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Storehouse_PortraySegmentFormatter");
 

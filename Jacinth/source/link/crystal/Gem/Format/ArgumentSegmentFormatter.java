@@ -20,7 +20,7 @@ public abstract class   ArgumentSegmentFormatter<INSPECTION extends ArgumentSegm
 //  extends             Object
     implements          MessageFormattable      <INSPECTION>,
                         SegmentFormattable      <INSPECTION>,
-                        Inspectable             <INSPECTION>//,         //  Via Gem_Object
+                        Inspectable             <INSPECTION>//,
 {
     //
     //  Members

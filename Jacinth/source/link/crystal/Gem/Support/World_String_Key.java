@@ -16,7 +16,7 @@ import link.crystal.Gem.World.World_String;
 public class    World_String_Key
     extends     Gem_Object <Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
+    implements  Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("World_String_Key");
 

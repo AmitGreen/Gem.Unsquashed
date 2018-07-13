@@ -12,6 +12,7 @@ import link.crystal.Gem.Inspection.Comparable_Inspection;
 import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Gem_ComparableReference_Interface;
+import link.crystal.Gem.Interface.Gem_Referenceable_Interface;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
@@ -19,16 +20,25 @@ import link.crystal.Gem.Support.Gem_WeakReference;
 import link.crystal.Gem.World.World_String;
 
 
+//
+//  NOTE:
+//      The *ONLY* reason that `World_String_WeakReference` implements interface `Gem_Referenceable_Interface` is
+//      for debugging.
+//
+//      This allows the creation of `World_String_WeakReference_PhantomReference` (which needs a
+//      `Gem_Referenceable_Interface` [for use with `Gem_ReferenceQueue`]) for debugging purposes.
+//
 public class    World_String_WeakReference
     extends     Gem_WeakReference                 <Gem_Reference_Inspection, World_String, Comparable_Inspection>
 //  extends     WeakReference                                               <World_String>
 //  extends     Reference                                                   <World_String>
 //  extends     Object
     implements  Gem_ComparableReference_Interface<Gem_Reference_Inspection, World_String, Comparable_Inspection>,
+                Gem_Referenceable_Interface      <Gem_Reference_Inspection>,
                 Gem_Reference_Interface          <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
                 Gem_Comparable                   <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable                      <Gem_Reference_Inspection>//,  //  Via Gem_Comparable
+                Inspectable                      <Gem_Reference_Inspection>//,
 {
     private static final Gem_Reference_Inspection   inspection = Gem_Reference_Inspection.create(
             "World_String_WeakReference",
@@ -161,7 +171,7 @@ public class    World_String_WeakReference
 
 
     //
-    //  Interface Gem_ComparableReference_Interface
+    //  Interface Gem_QueueableReference_Interface
     //
     public void                         reap()
     {

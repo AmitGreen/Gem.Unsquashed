@@ -15,7 +15,7 @@ import link.crystal.Gem.Inspection.Inspection;
 public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_SmallList, ELEMENT extends Gem_Object>
     extends             Gem_Object <Inspection>
 //  extends             Object
-    implements          Inspectable<Inspection>//,                      //  Via Gem_Object
+    implements          Inspectable<Inspection>//,
 {
     //
     //  Members

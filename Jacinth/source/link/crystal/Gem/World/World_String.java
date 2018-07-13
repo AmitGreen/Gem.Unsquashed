@@ -16,10 +16,10 @@ import link.crystal.Gem.Inspection.Comparable_Inspection;
 public class    World_String
     extends     Gem_Object                 <Comparable_Inspection>
 //  extends     Object
-    implements  Gem_Referenceable_Interface<Comparable_Inspection>,
-                Gem_Comparable             <Comparable_Inspection>,
+    implements  Gem_Comparable             <Comparable_Inspection>,
+                Gem_Referenceable_Interface<Comparable_Inspection>,
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable                <Comparable_Inspection>//,           //  Via Gem_Comparable
+                Inspectable                <Comparable_Inspection>//,
 {
     private static final Comparable_Inspection  inspection = Comparable_Inspection.create(
             "World_String",

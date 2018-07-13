@@ -30,7 +30,7 @@ import link.crystal.Gem.Inspection.Inspection;
 
 public class   ParseFormat
     extends    Gem_Object <Inspection>
-    implements Inspectable<Inspection>//,                               //  Via Gem_Object
+    implements Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("ParseFormat");
 

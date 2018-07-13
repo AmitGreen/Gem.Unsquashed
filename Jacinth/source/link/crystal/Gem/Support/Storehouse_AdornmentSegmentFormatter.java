@@ -18,7 +18,7 @@ public class    Storehouse_AdornmentSegmentFormatter
 //  extends     HashMap                    <String, AdornmentSegmentFormatter>
 //  extends     AbstractHashMap            <String, AdornmentSegmentFormatter>
 //  extends     Object
-    implements  Inspectable    <Inspection>//,                          //  Via Gem_StringMap<?>
+    implements  Inspectable    <Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Storehouse_AdornmentSegmentFormatter");
 

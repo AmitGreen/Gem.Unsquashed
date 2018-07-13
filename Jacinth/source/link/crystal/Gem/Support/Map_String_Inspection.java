@@ -22,7 +22,7 @@ public class    Map_String_Inspection
 //  extends     HashMap                    <String, Inspection>
 //  extends     AbstractHashMap            <String, Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_StringMap<?>
+    implements  Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Map_String_Inspection");
 

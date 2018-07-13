@@ -31,7 +31,7 @@ public class    World_String_Cache
 //  extends     HashMap        <Inspection, Gem_ComparableReference_Interface<?, ?, ?>, ...>
 //  extends     AbstractHashMap<Inspection, Gem_ComparableReference_Interface<?, ?, ?>, ...>
 //  extends     Object
-    implements  Inspectable    <Inspection>//,                          //  Via Gem_Map<?, ?, ?>
+    implements  Inspectable    <Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("World_String_Cache");
 

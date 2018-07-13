@@ -21,7 +21,7 @@ public class    SegmentFormatter_Inspection
     extends     Inspection
 //  extends     Gem_Object <World_Inspection>
 //  extends     Object
-    implements  Inspectable<World_Inspection>//,                        //  Via Gem_Object
+    implements  Inspectable<World_Inspection>//,
 {
     private static final World_Inspection   inspection = World_Inspection.create("SegmentFormatter_Inspection");
 

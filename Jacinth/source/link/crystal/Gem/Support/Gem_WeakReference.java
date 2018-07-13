@@ -14,6 +14,7 @@ import link.crystal.Gem.Inspection.Gem_Reference_Inspection;
 import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Gem_Comparable;
 import link.crystal.Gem.Interface.Gem_ComparableReference_Interface;
+import link.crystal.Gem.Interface.Gem_QueueableReference_Interface;
 import link.crystal.Gem.Interface.Gem_Referenceable_Interface;
 import link.crystal.Gem.Interface.Gem_Reference_Interface;
 import link.crystal.Gem.Interface.Inspectable;
@@ -29,10 +30,11 @@ public abstract class   Gem_WeakReference<
 //  extends             Reference    <CLIENT>
 //  extends             Object
     implements          Gem_ComparableReference_Interface<INSPECTION, CLIENT, CLIENT_INSPECTION>,
-                        Gem_Reference_Interface          <INSPECTION>,      //  Via Gem_ComparableReference_Interface
+                        Gem_QueueableReference_Interface <INSPECTION>,
+                        Gem_Reference_Interface          <INSPECTION>,      //  Via Gem_*Reference_Interface
                         Gem_Comparable                   <INSPECTION>,      //  Via Gem_ComparableReference_Interface
                         Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                        Inspectable                      <INSPECTION>//,                //  Via Gem_Comparable
+                        Inspectable                      <INSPECTION>//,
 {
     //
     //  Constructor
@@ -80,15 +82,15 @@ public abstract class   Gem_WeakReference<
 
 
     //
+    //  Interface Gem_QueueableReference_Interface
+    //
+    public abstract void                reap();
+
+
+    //
     //  Interface Gem_Reference_Interface
     //
     //<empty>
-
-
-    //
-    //  Abstract
-    //
-    public abstract void                reap();
 
 
     //

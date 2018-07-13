@@ -19,7 +19,7 @@ public class    Storehouse_String
 //  extends     AbstractHashMap          <String, String>
 //  extends     Object
     implements  Storehouse_String__Interface,
-                Inspectable<Inspection>//,                              //  Via Gem_StringSet
+                Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Storehouse_String");
 

@@ -21,7 +21,7 @@ public class    Map__String__ArgumentSegmentFormatter_Inspection
 //  extends     HashMap                    <String, ArgumentSegmentFormatter_Inspection>
 //  extends     AbstractHashMap            <String, ArgumentSegmentFormatter_Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_StringMap<?>
+    implements  Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = (
             Inspection.create("Map__String__ArgumentSegmentFormatter_Inspection")

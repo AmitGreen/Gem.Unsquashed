@@ -17,7 +17,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
     extends             Gem_Object           <INSPECTION>
 //  extends             Object
     implements          MessageFormattable   <INSPECTION>,
-                        Inspectable          <INSPECTION>//,            //  Via MessageFormattable
+                        Inspectable          <INSPECTION>//,
 {
     //
     //  Interface MessageFormattable

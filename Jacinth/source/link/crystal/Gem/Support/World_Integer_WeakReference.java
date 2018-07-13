@@ -28,7 +28,7 @@ public class    World_Integer_WeakReference
                 Gem_Reference_Interface          <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
                 Gem_Comparable                   <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable                      <Gem_Reference_Inspection>//,  //  Via Gem_Comparable
+                Inspectable                      <Gem_Reference_Inspection>//,
 {
     private static final Gem_Reference_Inspection   inspection = Gem_Reference_Inspection.create(
             "World_Integer_WeakReference",
@@ -152,6 +152,29 @@ public class    World_Integer_WeakReference
 
 
     //
+    //  Interface Gem_QueueableReference_Interface
+    //
+    public void                         reap()
+    {
+        final Gem_ComparableReference_Interface<
+                  ? extends Comparable_Inspection,
+                  World_Integer,
+                  Comparable_Inspection
+              >                         previous = Gem.integer_cache.remove(this);
+
+        if (previous != this) {
+            RUNTIME("failed to remove {}", this);
+        }
+    }
+
+
+    //
+    //  Interface Gem_Reference_Interface
+    //
+    //<empty>
+
+
+    //
     //  Interface Inspectable
     //
     public Gem_Reference_Inspection     inspect()
@@ -173,27 +196,4 @@ public class    World_Integer_WeakReference
         builder.portray(client);
         builder.append(">");
     }
-
-
-    //
-    //  Interface Gem_ComparableReference_Interface
-    //
-    public void                         reap()
-    {
-        final Gem_ComparableReference_Interface<
-                  ? extends Comparable_Inspection,
-                  World_Integer,
-                  Comparable_Inspection
-              >                         previous = Gem.integer_cache.remove(this);
-
-        if (previous != this) {
-            RUNTIME("failed to remove {}", this);
-        }
-    }
-
-
-    //
-    //  Interface Gem_Reference_Interface
-    //
-    //<empty>
 }

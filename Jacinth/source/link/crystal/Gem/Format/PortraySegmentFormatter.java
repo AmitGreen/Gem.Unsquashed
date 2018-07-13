@@ -22,7 +22,7 @@ public class    PortraySegmentFormatter
 //  extends     Object
     implements  MessageFormattable      <PortraySegmentFormatter_Inspection>,
                 SegmentFormattable      <PortraySegmentFormatter_Inspection>,
-                Inspectable             <PortraySegmentFormatter_Inspection>//, //  Via MessageFormattable
+                Inspectable             <PortraySegmentFormatter_Inspection>//,
 {
     public static final PortraySegmentFormatter_Inspection  inspection = (
             PortraySegmentFormatter_Inspection.create("PortraySegmentFormatter")
@@ -301,7 +301,7 @@ class           PortraySegmentFormatter_Inspection
 //  extends     Inspection
 //  extends     Gem_Object <World_Inspection>
 //  extends     Object
-    implements  Inspectable<World_Inspection>//,                        //  Via Gem_Object
+    implements  Inspectable<World_Inspection>//,
 {
     private static final World_Inspection   inspection = World_Inspection.create("PortraySegmentFormatter_Inspection");
 

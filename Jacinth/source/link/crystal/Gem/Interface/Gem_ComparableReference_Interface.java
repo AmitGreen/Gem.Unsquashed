@@ -30,7 +30,7 @@ public interface    Gem_ComparableReference_Interface<
     extends         Gem_Reference_Interface<INSPECTION>,
                     Gem_Comparable         <INSPECTION>,
                     Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                    Inspectable            <INSPECTION>//,                          //  Via Gem_Comparable
+                    Inspectable            <INSPECTION>//,
 {
     //
     //  Interface java.lang.Comparable

@@ -32,7 +32,7 @@ import link.crystal.Gem.Inspection.Inspection;
 public class    Zone
     extends     Gem_Object <Inspection>
 //  extends     Object
-    implements  Inspectable<Inspection>//,                              //  Via Gem_Object
+    implements  Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Zone");
 

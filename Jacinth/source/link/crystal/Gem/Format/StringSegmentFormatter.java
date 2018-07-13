@@ -22,7 +22,7 @@ public class    StringSegmentFormatter
 //  extends     Object
     implements  MessageFormattable      <StringSegmentFormatter_Inspection>,
                 SegmentFormattable      <StringSegmentFormatter_Inspection>,
-                Inspectable             <StringSegmentFormatter_Inspection>//,  //  Via MessageFormattable
+                Inspectable             <StringSegmentFormatter_Inspection>//,
 {
     public static final StringSegmentFormatter_Inspection   inspection = (
             StringSegmentFormatter_Inspection.create("StringSegmentFormatter")
@@ -308,7 +308,7 @@ class           StringSegmentFormatter_Inspection
 //  extends     Inspection
 //  extends     Gem_Object <World_Inspection>
 //  extends     Object
-    implements  Inspectable<World_Inspection>//,                        //  Via Gem_Object
+    implements  Inspectable<World_Inspection>//,
 {
     private static final World_Inspection   inspection = World_Inspection.create("StringSegmentFormatter_Inspection");
 

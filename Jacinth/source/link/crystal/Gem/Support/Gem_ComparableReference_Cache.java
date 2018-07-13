@@ -31,7 +31,7 @@ public abstract class   Gem_ComparableReference_Cache<
 //  extends             HashMap            <REFERENCE, REFERENCE>
 //  extends             AbstractHashMap    <REFERENCE, REFERENCE>
 //  extends             Object
-    implements          Inspectable    <INSPECTION>//,                  //  Via Gem_Map<?, ?, ?>
+    implements          Inspectable    <INSPECTION>//,
 {
     //
     //  Constructor

@@ -12,7 +12,7 @@ import link.crystal.Gem.Interface.Inspectable;
 
 public interface    SegmentFormattable<INSPECTION extends SegmentFormatter_Inspection>
     extends         MessageFormattable<INSPECTION>,
-                    Inspectable       <INSPECTION>//,                   //  Via MessageFormattable
+                    Inspectable       <INSPECTION>//,
 {
     //
     //  Interface Inspectable

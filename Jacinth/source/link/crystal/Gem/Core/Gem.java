@@ -26,6 +26,8 @@ import link.crystal.Gem.Support.World_String_Key;
 import link.crystal.Gem.Support.World_String_WeakReference;
 import link.crystal.Gem.World.World_Integer;
 import link.crystal.Gem.World.World_String;
+import link.crystal.Silver.UnitTest.UnitTest;
+import link.crystal.Gem.UnitTest.World_String_WeakReference_PhantomReference;
 
 
 public abstract class   Gem
@@ -65,6 +67,12 @@ public abstract class   Gem
 
 
     //
+    //  Public Statis (Unit Test)
+    //
+    private static UnitTest             unit_test = null;
+
+
+    //
     //  Ally
     //
     public static void                  boot__ALLY__Zone(Zone z)
@@ -84,6 +92,15 @@ public abstract class   Gem
         Gem.reference_queue                = Gem_ReferenceQueue        .create__ALLY__Gem();
 
         map_string_inspection.boot__ALLY__Zone(z);
+    }
+
+
+    public static final void                store_unit_test__ALLY__UnitTest(UnitTest unit_test)
+    {
+        assert fact_null   (Gem.unit_test, "Gem.unit_test");
+        assert fact_pointer(unit_test,     "unit_test");
+
+        Gem.unit_test = unit_test;
     }
 
 
@@ -387,7 +404,6 @@ public abstract class   Gem
         final Zone                              z = Zone.current_zone();
 
         final World_String_Cache                string_cache    = Gem.string_cache;
-        final Gem_ReferenceQueue                reference_queue = Gem.reference_queue;
 
         final World_String_Key                  key = z.string_key;
 
@@ -407,7 +423,7 @@ public abstract class   Gem
             client = previous.client_OR_enqueue();
 
             if (client == null) {
-                reference_queue.cleanup();
+                Gem.reference_queue.cleanup();
 
                 assert fact(string_cache.get(key) == null, "world_string_cache.get({}) == null", key);
 
@@ -417,6 +433,20 @@ public abstract class   Gem
 
                 if (previous.inspect().is_enduring_reference) {
                     return client;
+                }
+
+
+                final UnitTest          unit_test = Gem.unit_test;
+
+                if (unit_test != null) {
+                    final World_String_WeakReference_PhantomReference   phantom_reference = (
+                            World_String_WeakReference_PhantomReference.create__ALLY__Gem(
+                                (World_String_WeakReference) previous,
+                                Gem.reference_queue//,
+                            )
+                        );
+
+                    unit_test.store_phantom(phantom_reference);
                 }
 
                 //
@@ -436,9 +466,6 @@ public abstract class   Gem
             );
 
         string_cache.put(enduring_reference, enduring_reference);
-
-        line("enduring_reference: {}", enduring_reference);
-        line("get: {}", string_cache.get(key));
 
         return client;
     }

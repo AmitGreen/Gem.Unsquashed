@@ -24,7 +24,7 @@ public class    Inspection
 //  extends     Object
     implements  Gem_Comparable<World_Inspection>,
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable   <World_Inspection>//,                             //  Via Gem_Object
+                Inspectable   <World_Inspection>//,
 {
     private static final World_Inspection   inspection = World_Inspection.create("Inspection");
 

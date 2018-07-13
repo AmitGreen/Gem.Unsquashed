@@ -18,7 +18,7 @@ public class    Silver_String
 //  extends     Object
     implements  Gem_Comparable<Comparable_Inspection>,
                 Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable   <Comparable_Inspection>//,                        //  Via Gem_Object
+                Inspectable   <Comparable_Inspection>//,
 {
     private static final Comparable_Inspection  inspection = Comparable_Inspection.create(
             "Silver_String",

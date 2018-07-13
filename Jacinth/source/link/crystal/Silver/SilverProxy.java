@@ -13,7 +13,7 @@ import link.crystal.Gem.Inspection.Inspection;
 public abstract class   SilverProxy<PROXY extends SilverProxy, CLIENT extends Object>
     extends             Gem_Object <Inspection>
 //  extends             Object
-    implements          Inspectable<Inspection>//,                      //  Via Gem_Object
+    implements          Inspectable<Inspection>//,
 {
     //
     //  Members

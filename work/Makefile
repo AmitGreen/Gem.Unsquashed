@@ -134,7 +134,7 @@ JACINTH_FILES = \
     $J/Gem/Support/World_String_EnduringReference.java \
     $J/Gem/Support/World_String_Key.java \
     $J/Gem/Support/World_String_WeakReference.java \
-    $J/Gem/Support/World_String_WeakReference_WeakReference.java \
+    $J/Gem/UnitTest/World_String_WeakReference_PhantomReference.java \
     $J/Gem/World/World_Integer.java \
     $J/Gem/World/World_String.java \
     $J/Jacinth/Main.java \
@@ -355,7 +355,7 @@ clean:
 	rm -f xb.py xf.py
 	rm -f vm.java vm.py vp.java vs.java
 	rm -f wi.java wic.java wie.java wik.java win.java wiw.java
-	rm -f   ws.java wsc.java wse.java wsk.java wsw.java wsww.java
+	rm -f   ws.java wsc.java wse.java wsk.java wsw.java wswp.java
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
@@ -664,7 +664,7 @@ links:
 	ln -s $J/Gem/Support/World_String_EnduringReference.java                    wse.java
 	ln -s $J/Gem/Support/World_String_Key.java                                  wsk.java
 	ln -s $J/Gem/Support/World_String_WeakReference.java                        wsw.java
-	ln -s $J/Gem/Support/World_String_WeakReference_WeakReference.java          wsww.java
+	ln -s $J/Gem/UnitTest/World_String_WeakReference_PhantomReference.java      wswp.java
 	ln -s ../Sardonyx/Boot.py                                                   xb.py
 	ln -s ../Sapphire/Transform.py                                              xf.py
 	ln -s ../Crystal/Board.py                                                   ybd.py

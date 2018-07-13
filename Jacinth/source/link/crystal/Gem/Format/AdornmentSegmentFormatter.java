@@ -21,7 +21,7 @@ public class    AdornmentSegmentFormatter
 //  extends     Object
     implements  MessageFormattable   <SegmentFormatter_Inspection>,
                 SegmentFormattable   <SegmentFormatter_Inspection>,
-                Inspectable          <SegmentFormatter_Inspection>//,   //  Via Gem_Object
+                Inspectable          <SegmentFormatter_Inspection>//,
 {
     private static SegmentFormatter_Inspection  inspection = (
             SegmentFormatter_Inspection.create("AdornmentSegmentFormatter")
