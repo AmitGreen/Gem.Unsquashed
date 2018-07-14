@@ -5,7 +5,11 @@ package link.crystal.Gem.Support;
 
 
 import java.lang.Character;
+import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
+import link.crystal.Gem.Inspection.Inspection;
+import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.AsciiTable;
 
 
@@ -13,94 +17,150 @@ public abstract class   AnalyzeString
     extends             Gem_Object//<Inspection>
 {
     //
-    //  Class Order magic values
+    //   States (overall)
     //
-    public static final int ANALYZE_STRING__EMPTY            = 0;
-    public static final int ANALYZE_STRING__WORD             = 1;
-    public static final int ANALYZE_STRING__BORING_PRINTABLE = 2;
-    public static final int ANALYZE_STRING__PRINTABLE        = 3;
-    public static final int ANALYZE_STRING__UNPRINTABLE      = 4;
+    //       E = Empty
+    //       K = Backslash
+    //       L = Lemon
+    //       N = Normal
+    //       T = Starts with "
+    //       U = Starts with '
+    //
+    private static final OverallStringState     E  = OverallStringState.create("E");
+    private static final OverallStringState     K  = OverallStringState.create("K");
+    private static final OverallStringState     L  = OverallStringState.create("L");
+    private static final OverallStringState     N  = OverallStringState.create("N");
+    private static final OverallStringState     TK = OverallStringState.create("TK");
+    private static final OverallStringState     TL = OverallStringState.create("TL");
+    private static final OverallStringState     T  = OverallStringState.create("T");
+    private static final OverallStringState     UK = OverallStringState.create("UK");
+    private static final OverallStringState     UL = OverallStringState.create("UL");
+    private static final OverallStringState     U  = OverallStringState.create("U");
 
-    public static final String          analysis_name[] = new String[] {
-            "empty",
-            "word",
-            "boring-printable",
-            "printable",
-            "unprintable",
-        };
+
+    private static boolean              finish()
+    {
+        final OverallStringState        _ = null;
+
+        E .overall (U,  K,  L,  T);
+        K .overall (_,  K,  L,  _);
+        L .overall (_,  L,  L,  _);
+        N .overall (N,  K,  L,  N);
+        TK.overall (_,  TK, TL, _);
+        TL.overall (_,  TL, TL, _);
+        T .overall (_,  TK, TL, _);
+        UK.overall (_,  UK, UL, _);
+        UL.overall (_,  UL, TL, _);
+        U .overall (_,  UK, UL, _);
+
+        return true;
+    }
+
+
+    private static final boolean        finished = finish();
 
 
     //
     //  Public (debug)
     //
-    public static final void            show_analyze_string(final String s)
+    public static final void            dump()
     {
-        final int                       analysis = AnalyzeString.analyze_string(s);
-
-        line("analysis of {p}: {}", s, AnalyzeString.analysis_name[analysis]);
+        line("Dump of AnalyzeString");
+        line("   E:  {p}", AnalyzeString.E);
+        line("   K:  {p}", AnalyzeString.K);
+        line("   L:  {p}", AnalyzeString.L);
+        line("   N:  {p}", AnalyzeString.N);
+        line("  TK:  {p}", AnalyzeString.TK);
+        line("  TL:  {p}", AnalyzeString.TL);
+        line("   T:  {p}", AnalyzeString.T);
+        line("  UK:  {p}", AnalyzeString.UK);
+        line("  UL:  {p}", AnalyzeString.UL);
+        line("   U:  {p}", AnalyzeString.U);
+        line("End of dump of AnalyzeString");
     }
 
 
     //
-    //  Public
+    //  Public (Unit Test)
     //
-    public static final int             analyze_string(final String s)
+    public static final void            show_analyze_string(final String s)
     {
-        final AsciiTable[]              table = AsciiTable.table;
+        line("analysis of {p}: ...", s);
+    }
+}
 
-        final int                       total = s.length();
 
-        boolean                         is_word             = true;
-        boolean                         is_boring_printable = true;
-        AsciiTable                      glyph               = null;
+final class             OverallStringState
+    extends             Gem_Object <Inspection>
+    implements          Inspectable<Inspection>//,
+{
+    private static final Inspection     inspection = Inspection.create("OverallStringState");
 
-        int                             code_point;
 
-        for (int                        i = 0; i < total; /*  i is incremented in the loop by 1 or 2  */) {
-            code_point = s.codePointAt(i);
+    //
+    //  Members
+    //
+    public final String                 debug_name;
+    public       OverallStringState     A;
+    public       OverallStringState     K;
+    public       OverallStringState     N;
+    public       OverallStringState     Q;
 
-            if (code_point < 128) {
-                glyph = table[code_point];
 
-                if (glyph.is_word) {
-                    continue;
-                }
+    //
+    //  Constructor, Factory, & Overall initialization
+    //
+    private                             OverallStringState(final String debug_name)
+    {
+        this.debug_name = debug_name;
+    //  this.A          = null;
+    //  this.K          = null;
+    //  this.N          = null;
+    //  this.Q          = null;
+    }
 
-                is_word = false;
 
-                if (glyph.is_boring_printable) {
-                    continue;
-                }
+    public static final OverallStringState  create(final String debug_name)
+    {
+        return new OverallStringState(debug_name);
+    }
 
-                break;
-            }
+   
+    public void                         overall(
+            final OverallStringState            A,
+            final OverallStringState            K,
+            final OverallStringState            N,
+            final OverallStringState            Q//,
+        )
+    {
+        this.A = A;
+        this.K = K;
+        this.N = N;
+        this.Q = Q;
+    }
 
-            glyph = AsciiTable.unknown;
 
-            i += Character.charCount(code_point);
+    //
+    //  Interface Inspectable
+    //
+    public Inspection                   inspect()
+    {
+        return /*static*/ this.inspection;
+    }
 
-            is_boring_printable =
-                is_printable =
-                is_word = false;
-        }
 
-        if (length == total) {
-            if (is_word) {
-                if (total == 0) {
-                    return AnalyzeString.ANALYZE_STRING__EMPTY;
-                }
+    public void                         portray(final Gem_StringBuilder builder)
+    {
+        final OverallStringState        A = this.A;
+        final OverallStringState        K = this.K;
+        final OverallStringState        N = this.N;
+        final OverallStringState        Q = this.Q;
 
-                return AnalyzeString.ANALYZE_STRING__WORD;
-            }
-
-            return AnalyzeString.ANALYZE_STRING__BORING_PRINTABLE;
-        }
-
-        boolean                         is_printable;
-
-        if (glyph.is_printable) {
-        }
-
-        return AnalyzeString.ANALYZE_STRING__UNPRINTABLE;
+        builder.augment("<OverallStringState {}; {} {} {} {}>",
+                        String.format("%2s", this.debug_name),
+                        String.format("%2s", (A == null ? "." : A.debug_name)),
+                        String.format("%2s", (K == null ? "." : K.debug_name)),
+                        String.format("%2s", (N == null ? "." : N.debug_name)),
+                        String.format("%2s", (Q == null ? "." : Q.debug_name)));
     }
 }

@@ -271,6 +271,7 @@ public class    UnitTest
 
         if (true) {
             //AsciiTable.dump();
+            AnalyzeString.dump();
             //Gem.dump();
             //Gem.map_string_inspection                       .dump("Inspections");
             //Storehouse_MessageFormattable                   .dump(z);

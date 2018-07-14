@@ -231,7 +231,7 @@ public class    Zone
     //
     //  Public (debug)
     //
-    public void                         dump()
+    public final void                   dump()
     {
         final Gem_StringBuilder[]       string_builder_many  = this.string_builder_many;
         final int                       string_builder_total = this.string_builder_total;
