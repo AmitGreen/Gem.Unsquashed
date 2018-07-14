@@ -22,6 +22,7 @@ def gem():
             'is_boring_printable',      #   Boolean
             'is_printable',             #   Boolean
             'is_quotation_mark',        #   Boolean
+            'is_word',                  #   Boolean
         ))
 
 
@@ -32,6 +33,7 @@ def gem():
                 is_backslash      = false,
                 is_printable      = false,
                 is_quotation_mark = false,
+                is_word           = false,
         ):
             t.c       = c
             t.ordinal = ordinal
@@ -42,12 +44,14 @@ def gem():
 
             t.is_boring_printable = not (
                                                is_backslash
+                                            or is_apostrophe
                                             or is_quotation_mark
                                             or not is_printable
                                         )
 
             t.is_printable      = is_printable
             t.is_quotation_mark = is_quotation_mark
+            t.is_word           = is_word
 
 
         def __repr__(t):
@@ -64,6 +68,7 @@ def gem():
                 other += '; is_printable'
 
             if t.is_quotation_mark:    other += '; is_quotation_mark'
+            if t.is_word:              other += '; is_word'
 
             return arrange('<Ascii %r %d %r%s>', t.c, t.ordinal, t.portray, other)
 
@@ -75,6 +80,7 @@ def gem():
             is_backslash      = false,
             is_printable      = false,
             is_quotation_mark = false,
+            is_word           = false,
     ):
         c = character(ordinal)
 
@@ -85,6 +91,7 @@ def gem():
                 is_backslash      = is_backslash,
                 is_printable      = is_printable,
                 is_quotation_mark = is_quotation_mark,
+                is_word           = is_word,
             )
 
         store_ascii(ordinal, ascii)
@@ -99,6 +106,8 @@ def gem():
 
     @execute
     def populate_ascii_list():
+        word_special = '-$%+,./:@_'
+
         for i in iterate_range(0, 128):
             c = character(i)
 
@@ -112,13 +121,19 @@ def gem():
                 create_ascii(c, i, c, is_quotation_mark = true, is_printable = true)
                 continue
 
+            if c == "'":
+                create_ascii(c, i, c, is_apostrophe = true, is_printable = true)
+                continue
+
             if c == '\\':
                 portay_backslash = intern_string(r'\\')
 
                 create_ascii(c, i, portay_backslash, is_backslash = true, is_printable = true)
                 continue
 
-            create_ascii(c, i, c, is_printable = true)
+            is_word = (c.isalnum() or (c in word_special));
+
+            create_ascii(c, i, c, is_printable = true, is_word = is_word)
 
 
     @share
@@ -146,12 +161,14 @@ def gem():
                 append_comment('printable')
 
             if v.is_quotation_mark:    append_comment('quotation_mark')
+            if v.is_word:              append_comment('word')
 
             line('        AsciiTable.create(%7s, %#04x),%s',
                  java_portray(v.portray),
                  (
                       (0x01   if v.is_boring_printable  else   0)
                     | (0x02   if v.is_printable         else   0)
+                    | (0x04   if v.is_word              else   0)
                  ),
                  (('  //  ' + ', '.join(comment))   if comment else   ''));
 

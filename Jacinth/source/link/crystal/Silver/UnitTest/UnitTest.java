@@ -11,6 +11,7 @@ import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.AnalyzeString;
+import link.crystal.Gem.Support.AsciiTable;
 import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Gem_TimeUnit;
 import link.crystal.Gem.Support.Map_String_Inspection;
@@ -62,10 +63,11 @@ public class    UnitTest
     //
     private boolean                     test_analyze_string()
     {
-        AnalyzeString.analyze_string("Can't!");
+        AnalyzeString.show_analyze_string("Can't!");
 
         return true;
     }
+
 
     private boolean                     test_arrange()
     {
@@ -261,13 +263,14 @@ public class    UnitTest
         Gem.store_unit_test__ALLY__UnitTest(unit_test);
 
         if (arguments.length == 0) {
-            //unit_test.test_analyze_string();
-            unit_test.test_arrange();
+            unit_test.test_analyze_string();
+            //unit_test.test_arrange();
         } else {
             unit_test.run_test(arguments);
         }
 
         if (true) {
+            //AsciiTable.dump();
             //Gem.dump();
             //Gem.map_string_inspection                       .dump("Inspections");
             //Storehouse_MessageFormattable                   .dump(z);

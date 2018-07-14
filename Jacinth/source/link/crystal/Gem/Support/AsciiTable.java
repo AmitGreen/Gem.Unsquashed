@@ -6,6 +6,7 @@ package link.crystal.Gem.Support;
 
 import java.lang.Character;
 import link.crystal.Gem.Core.Gem_Object;
+import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 
@@ -57,93 +58,93 @@ public final class  AsciiTable
         AsciiTable.create(    "!", 0x03),  //  boring_printable
         AsciiTable.create( "\\\"", 0x02),  //  printable, quotation_mark
         AsciiTable.create(    "#", 0x03),  //  boring_printable
-        AsciiTable.create(    "$", 0x03),  //  boring_printable
-        AsciiTable.create(    "%", 0x03),  //  boring_printable
+        AsciiTable.create(    "$", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "%", 0x07),  //  boring_printable, word
         AsciiTable.create(    "&", 0x03),  //  boring_printable
-        AsciiTable.create(    "'", 0x03),  //  boring_printable
+        AsciiTable.create(    "'", 0x02),  //  apostrophe, printable
         AsciiTable.create(    "(", 0x03),  //  boring_printable
         AsciiTable.create(    ")", 0x03),  //  boring_printable
         AsciiTable.create(    "*", 0x03),  //  boring_printable
-        AsciiTable.create(    "+", 0x03),  //  boring_printable
-        AsciiTable.create(    ",", 0x03),  //  boring_printable
-        AsciiTable.create(    "-", 0x03),  //  boring_printable
-        AsciiTable.create(    ".", 0x03),  //  boring_printable
-        AsciiTable.create(    "/", 0x03),  //  boring_printable
-        AsciiTable.create(    "0", 0x03),  //  boring_printable
-        AsciiTable.create(    "1", 0x03),  //  boring_printable
-        AsciiTable.create(    "2", 0x03),  //  boring_printable
-        AsciiTable.create(    "3", 0x03),  //  boring_printable
-        AsciiTable.create(    "4", 0x03),  //  boring_printable
-        AsciiTable.create(    "5", 0x03),  //  boring_printable
-        AsciiTable.create(    "6", 0x03),  //  boring_printable
-        AsciiTable.create(    "7", 0x03),  //  boring_printable
-        AsciiTable.create(    "8", 0x03),  //  boring_printable
-        AsciiTable.create(    "9", 0x03),  //  boring_printable
-        AsciiTable.create(    ":", 0x03),  //  boring_printable
+        AsciiTable.create(    "+", 0x07),  //  boring_printable, word
+        AsciiTable.create(    ",", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "-", 0x07),  //  boring_printable, word
+        AsciiTable.create(    ".", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "/", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "0", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "1", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "2", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "3", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "4", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "5", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "6", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "7", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "8", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "9", 0x07),  //  boring_printable, word
+        AsciiTable.create(    ":", 0x07),  //  boring_printable, word
         AsciiTable.create(    ";", 0x03),  //  boring_printable
         AsciiTable.create(    "<", 0x03),  //  boring_printable
         AsciiTable.create(    "=", 0x03),  //  boring_printable
         AsciiTable.create(    ">", 0x03),  //  boring_printable
         AsciiTable.create(    "?", 0x03),  //  boring_printable
-        AsciiTable.create(    "@", 0x03),  //  boring_printable
-        AsciiTable.create(    "A", 0x03),  //  boring_printable
-        AsciiTable.create(    "B", 0x03),  //  boring_printable
-        AsciiTable.create(    "C", 0x03),  //  boring_printable
-        AsciiTable.create(    "D", 0x03),  //  boring_printable
-        AsciiTable.create(    "E", 0x03),  //  boring_printable
-        AsciiTable.create(    "F", 0x03),  //  boring_printable
-        AsciiTable.create(    "G", 0x03),  //  boring_printable
-        AsciiTable.create(    "H", 0x03),  //  boring_printable
-        AsciiTable.create(    "I", 0x03),  //  boring_printable
-        AsciiTable.create(    "J", 0x03),  //  boring_printable
-        AsciiTable.create(    "K", 0x03),  //  boring_printable
-        AsciiTable.create(    "L", 0x03),  //  boring_printable
-        AsciiTable.create(    "M", 0x03),  //  boring_printable
-        AsciiTable.create(    "N", 0x03),  //  boring_printable
-        AsciiTable.create(    "O", 0x03),  //  boring_printable
-        AsciiTable.create(    "P", 0x03),  //  boring_printable
-        AsciiTable.create(    "Q", 0x03),  //  boring_printable
-        AsciiTable.create(    "R", 0x03),  //  boring_printable
-        AsciiTable.create(    "S", 0x03),  //  boring_printable
-        AsciiTable.create(    "T", 0x03),  //  boring_printable
-        AsciiTable.create(    "U", 0x03),  //  boring_printable
-        AsciiTable.create(    "V", 0x03),  //  boring_printable
-        AsciiTable.create(    "W", 0x03),  //  boring_printable
-        AsciiTable.create(    "X", 0x03),  //  boring_printable
-        AsciiTable.create(    "Y", 0x03),  //  boring_printable
-        AsciiTable.create(    "Z", 0x03),  //  boring_printable
+        AsciiTable.create(    "@", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "A", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "B", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "C", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "D", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "E", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "F", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "G", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "H", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "I", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "J", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "K", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "L", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "M", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "N", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "O", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "P", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "Q", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "R", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "S", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "T", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "U", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "V", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "W", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "X", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "Y", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "Z", 0x07),  //  boring_printable, word
         AsciiTable.create(    "[", 0x03),  //  boring_printable
         AsciiTable.create( "\\\\", 0x02),  //  backslash, printable
         AsciiTable.create(    "]", 0x03),  //  boring_printable
         AsciiTable.create(    "^", 0x03),  //  boring_printable
-        AsciiTable.create(    "_", 0x03),  //  boring_printable
+        AsciiTable.create(    "_", 0x07),  //  boring_printable, word
         AsciiTable.create(    "`", 0x03),  //  boring_printable
-        AsciiTable.create(    "a", 0x03),  //  boring_printable
-        AsciiTable.create(    "b", 0x03),  //  boring_printable
-        AsciiTable.create(    "c", 0x03),  //  boring_printable
-        AsciiTable.create(    "d", 0x03),  //  boring_printable
-        AsciiTable.create(    "e", 0x03),  //  boring_printable
-        AsciiTable.create(    "f", 0x03),  //  boring_printable
-        AsciiTable.create(    "g", 0x03),  //  boring_printable
-        AsciiTable.create(    "h", 0x03),  //  boring_printable
-        AsciiTable.create(    "i", 0x03),  //  boring_printable
-        AsciiTable.create(    "j", 0x03),  //  boring_printable
-        AsciiTable.create(    "k", 0x03),  //  boring_printable
-        AsciiTable.create(    "l", 0x03),  //  boring_printable
-        AsciiTable.create(    "m", 0x03),  //  boring_printable
-        AsciiTable.create(    "n", 0x03),  //  boring_printable
-        AsciiTable.create(    "o", 0x03),  //  boring_printable
-        AsciiTable.create(    "p", 0x03),  //  boring_printable
-        AsciiTable.create(    "q", 0x03),  //  boring_printable
-        AsciiTable.create(    "r", 0x03),  //  boring_printable
-        AsciiTable.create(    "s", 0x03),  //  boring_printable
-        AsciiTable.create(    "t", 0x03),  //  boring_printable
-        AsciiTable.create(    "u", 0x03),  //  boring_printable
-        AsciiTable.create(    "v", 0x03),  //  boring_printable
-        AsciiTable.create(    "w", 0x03),  //  boring_printable
-        AsciiTable.create(    "x", 0x03),  //  boring_printable
-        AsciiTable.create(    "y", 0x03),  //  boring_printable
-        AsciiTable.create(    "z", 0x03),  //  boring_printable
+        AsciiTable.create(    "a", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "b", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "c", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "d", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "e", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "f", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "g", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "h", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "i", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "j", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "k", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "l", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "m", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "n", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "o", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "p", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "q", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "r", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "s", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "t", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "u", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "v", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "w", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "x", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "y", 0x07),  //  boring_printable, word
+        AsciiTable.create(    "z", 0x07),  //  boring_printable, word
         AsciiTable.create(    "{", 0x03),  //  boring_printable
         AsciiTable.create(    "|", 0x03),  //  boring_printable
         AsciiTable.create(    "}", 0x03),  //  boring_printable
@@ -152,35 +153,33 @@ public final class  AsciiTable
     };
 
 
+    public static final AsciiTable      unknown = AsciiTable.create(null, 0);
+
+
     //
     //  Members
     //
-    public final String                 portray;
+    public final String                 portray_0;
     public final boolean                is_boring_printable;
     public final boolean                is_printable;
+    public final boolean                is_word;
 
 
     //
     //  Constructor & Factory
     //
-    private                             AsciiTable(
-            final String                        portray,
-            final boolean                       is_boring_printable,
-            final boolean                       is_printable//,
-        )
+    private                             AsciiTable(final String portray_0, final int bits)
     {
-        this.portray      = portray;
-        this.is_boring_printable    = is_boring_printable;
-        this.is_printable = is_printable;
+        this.portray_0            = portray_0;
+        this.is_boring_printable = ((bits & 0x01) != 0 ? true : false);
+        this.is_printable        = ((bits & 0x02) != 0 ? true : false);
+        this.is_word             = ((bits & 0x04) != 0 ? true : false);
     }
 
 
-    private static final AsciiTable     create(final String s, final int bits)
+    private static final AsciiTable     create(final String portray_0, final int bits)
     {
-        final boolean                   is_boring_printable = ((bits & 0x01) != 0 ? true : false);
-        final boolean                   is_printable        = ((bits & 0x02) != 0 ? true : false);
-
-        return new AsciiTable(s, is_boring_printable, is_printable);
+        return new AsciiTable(portray_0, bits);
     }
 
 
@@ -193,5 +192,51 @@ public final class  AsciiTable
     }
 
 
-    //inherited public void             portray(Gem_StringBuilder builder)
+    public final void                   portray(Gem_StringBuilder builder)
+    {
+        String                          portray_0 = this.portray_0;
+
+        builder.append("<AsciiTable ");
+
+        if (portray_0 == null) {
+            builder.append("<null>");
+        } else {
+            builder.quote(portray_0);
+        }
+
+        if (this.is_boring_printable) {
+            assert fact(this.is_printable, "this.is_printable");
+
+            builder.append("; is_boring_printable");
+        } else if (this.is_printable) {
+            builder.append("; is_printable");
+        }
+
+        if (this.is_word) {
+            builder.append("; is_word");
+        }
+
+        builder.append(">");
+    }
+
+
+    //
+    //  Public (debug)
+    //
+    public static final void            dump()
+    {
+        final AsciiTable[]              table = AsciiTable.table;
+
+        final int                       total = table.length;
+
+        line("Dump of AsciiTable");
+
+        for (int                        i = 0; i < total; i ++) {
+            line("  table[{}]: {}", i, table[i]);
+        }
+
+        line("    unknown: {}", AsciiTable.unknown);
+
+        line("Dump of AsciiTable");
+    }
 }

@@ -410,7 +410,7 @@ public class    Gem_StringBuilder
         int                             start = 0;
         final int                       total = s.length();
 
-        for (int                        i = 0; i < total; /*  i += {1|2} done in loop  */) {
+        for (int                        i = 0; i < total; /*  i is incremented in the loop by 1 or 2  */) {
             final int                   code_point = s.codePointAt(i);
 
             if (code_point < 128) {
@@ -425,7 +425,7 @@ public class    Gem_StringBuilder
                     builder.append(s.substring(start, i));
                 }
 
-                builder.append(ascii.portray);
+                builder.append(ascii.portray_0);
 
                 i ++;
 
