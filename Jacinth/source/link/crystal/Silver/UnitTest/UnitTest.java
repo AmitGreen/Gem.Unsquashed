@@ -17,6 +17,7 @@ import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.UnitTest.UnitTest_Gem;
+import link.crystal.Silver.UnitTest.UnitTest_Java;
 import link.crystal.Silver.UnitTest.UnitTest_Silver;
 
 
@@ -37,7 +38,7 @@ public final class  UnitTest
     //
     //  Constructor & Factory
     //
-    protected                           UnitTest(final Zone z)
+    private                             UnitTest(final Zone z)
     {
         this.z = z;
     }
@@ -54,7 +55,9 @@ public final class  UnitTest
     //
     private final boolean               test_development()
     {
-        return true;
+        final Zone                      z = this.z;
+
+        return UnitTest_Java.create(z).test_overload();
     }
 
 
@@ -78,7 +81,10 @@ public final class  UnitTest
         if (arguments.length == 0) {
             //unit_test.test_analyze_string();
             //UnitTest_Gem.create(z).test_arrange();
-            UnitTest_Gem.create(z).test_string();
+            //UnitTest_Gem.create(z).test_string();
+            //UnitTest_Silver.create(z).test_shape();
+
+            UnitTest.create(z).test_development();
         } else {
             final int                   arguments_total = arguments.length;
 
@@ -90,6 +96,8 @@ public final class  UnitTest
 
             if (name.equals("development")) {
                 UnitTest.create(z).test_development();
+            } else if (name.equals("shape")) {
+                UnitTest_Silver.create(z).test_shape();
             } else {
                 RUNTIME("unknown unit test: {p}", name);
             }

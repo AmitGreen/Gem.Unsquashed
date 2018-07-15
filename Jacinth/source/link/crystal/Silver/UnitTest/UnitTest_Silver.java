@@ -9,6 +9,7 @@ import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Mirror.Shape;
 
 
 public final class  UnitTest_Silver
@@ -22,19 +23,19 @@ public final class  UnitTest_Silver
     //
     //  Members
     //
-    public  final Zone                  z;
+    public final Zone                   z;
 
 
     //
     //  Constructor & Factory
     //
-    protected                           UnitTest_Silver(final Zone z)
+    private                             UnitTest_Silver(final Zone z)
     {
         this.z = z;
     }
 
 
-    private static final UnitTest_Silver    create(final Zone z)
+    public static final UnitTest_Silver     create(final Zone z)
     {
         return new UnitTest_Silver(z);
     }
@@ -47,5 +48,18 @@ public final class  UnitTest_Silver
     public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
+    }
+
+
+    //
+    //  Public (Unit tests)
+    //
+    public final boolean                test_shape()
+    {
+        final Shape                     circle = Shape.create(z, "circle");
+
+        circle.skew();
+
+        return true;
     }
 }

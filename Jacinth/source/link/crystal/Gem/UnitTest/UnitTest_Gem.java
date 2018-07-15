@@ -43,7 +43,7 @@ public final class  UnitTest_Gem
     //
     //  Constructor & Factory
     //
-    protected                           UnitTest_Gem(final Zone z)
+    private                             UnitTest_Gem(final Zone z)
     {
         this.z       = z;
         this.phantom = null;
@@ -57,7 +57,7 @@ public final class  UnitTest_Gem
 
 
     //
-    //  Public (tests)
+    //  Public (Unit tests)
     //
     public final boolean                test_analyze_string()
     {
