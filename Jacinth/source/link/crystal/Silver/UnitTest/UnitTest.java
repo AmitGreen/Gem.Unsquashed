@@ -63,7 +63,7 @@ public class    UnitTest
     //
     private boolean                     test_analyze_string()
     {
-        AnalyzeString.show_analyze_string("Can't!");
+        AnalyzeString.show_analyze_string("Can't");
 
         return true;
     }

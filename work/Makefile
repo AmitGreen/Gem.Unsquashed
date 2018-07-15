@@ -83,8 +83,8 @@ JACINTH_FILES = \
     $J/Gem/Exception/AssertionError.java \
     $J/Gem/Exception/ExceptionFunctions.java \
     $J/Gem/Format/AdornmentSegmentFormatter.java \
-    $J/Gem/Format/ArgumentSegmentFormatter.java \
     $J/Gem/Format/ArgumentSegmentFormatter_Inspection.java \
+    $J/Gem/Format/ArgumentSegmentFormatter.java \
     $J/Gem/Format/Map__String__ArgumentSegmentFormatter_Inspection.java \
     $J/Gem/Format/MessageFormatter_1__Prefix.java \
     $J/Gem/Format/MessageFormatter_2.java \
@@ -112,13 +112,15 @@ JACINTH_FILES = \
     $J/Gem/Interface/MessageFormattable.java \
     $J/Gem/Interface/SegmentFormattable.java \
     $J/Gem/Interface/Storehouse_String__Interface.java \
-    $J/Gem/Support/AsciiTable.java \
     $J/Gem/Support/AnalyzeString.java \
+    $J/Gem/Support/AsciiTable.java \
+    $J/Gem/Support/EphemeralStringState.java \
     $J/Gem/Support/Gem_ComparableReference_Cache.java \
     $J/Gem/Support/Gem_ReferenceQueue.java \
     $J/Gem/Support/Gem_TimeUnit.java \
     $J/Gem/Support/Gem_WeakReference.java \
     $J/Gem/Support/Map_String_Inspection.java \
+    $J/Gem/Support/OverallStringState.java \
     $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java \
     $J/Gem/Support/Storehouse_MessageFormattable.java \
     $J/Gem/Support/Storehouse_NormalSegmentFormatter.java \
@@ -323,7 +325,7 @@ clean:
 	rm -f ba.py bi.py bk.py bm.py bo.py
 	rm -f ca.py ca2.py cd.py ce.py ci.java cr.py
 	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
-	rm -f ef.java ef.py en.py ex.py
+	rm -f ef.java ef.py en.py ess.java ex.py
 	rm -f files fo.py fs.py
 	rm -f gcm.py gcrc.java gdc.py gdm.py gdo.py ge.java gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
 	rm -f   gi.py gl.py gl.java go.java gm.java gq.py gr.py gri.java grq.java
@@ -346,7 +348,7 @@ clean:
 	rm -f   m2.java m2c.py m3.java m2m.py m3m.py m4.java m5.java
 	rm -f   map.py mb.java mc.py md.py me.py mm.java mm.py mn.java msa.java msi.java
 	rm -f ns.java
-	rm -f o.py oc.py od.py oe.py om.py
+	rm -f o.py oc.py od.py oe.py om.py oss.java
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py
 	rm -f   pel.py pf.py pf.java pj.py pk.py pkc.py pl.py pmo.py pn.py ps.java ps.py psc.java ps3.py px.java
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qn.java qp.py
@@ -418,6 +420,7 @@ links:
 	ln -s $J/Gem/Exception/ExceptionFunctions.java                              ef.java
 	ln -s ../Gem/ExecuteFile.py                                                 ef.py
 	ln -s ../Gem/ErrorNumber.py                                                 en.py
+	ln -s $J/Gem/Support/EphemeralStringState.java                              ess.java
 	ln -s ../Gem/Exception.py                                                   ex.py
 	ln -s ../Gem/FileOutput.py                                                  fo.py
 	ln -s ../Gem/FileStatus.py                                                  fs.py
@@ -588,6 +591,7 @@ links:
 	ln -s ../Onyx/Development.py                                                od.py
 	ln -s ../Onyx/ElasticSearch.py                                              oe.py
 	ln -s ../Onyx/Main.py                                                       om.py
+	ln -s $J/Gem/Support/OverallStringState.java                                oss.java
 	ln -s ../Gem/Path2.py                                                       pa2.py
 	ln -s ../Pearl/Atom.py                                                      pat.py
 	ln -s ../Gem/Path.py                                                        path.py

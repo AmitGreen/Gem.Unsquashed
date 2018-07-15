@@ -165,7 +165,7 @@ def gem():
     #
     #       A = '
     #       B = ''
-    #       C = ''
+    #       C = '''
     #
     #       K = \
     #       N = normal
@@ -661,7 +661,6 @@ def gem():
             if a.is_backslash:
                 #line('  %r: backslash: %s => %s, %s => %s', c, raw_state.name, raw_state.K.name, state.name, state.N.name)
 
-                backslash = 7
                 overall   = overall.K
                 raw_state = raw_state.K
                 state     = state.N

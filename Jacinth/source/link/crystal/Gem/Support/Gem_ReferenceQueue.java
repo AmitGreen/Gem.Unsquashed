@@ -62,7 +62,7 @@ import link.crystal.Gem.Interface.Inspectable;
 //          REFERENCE                   poll();
 //          ...
 //      }
-//          
+//
 //  SINCE:
 //      ... it was done incorrectly, then we cannot control the return paramter of `.poll()`
 //      properly, and it always returns a `Reference` class instead of (what we want) a class that
@@ -266,7 +266,7 @@ public class    Gem_ReferenceQueue
                 line("no garbage collected ... sleeping for 0.007 seconds ...");
             } else {
                 zeros = 0;
-                
+
                 line("garbage collected: {} ... sleeping for 0.007 seconds ...", total_trash);
             }
 
