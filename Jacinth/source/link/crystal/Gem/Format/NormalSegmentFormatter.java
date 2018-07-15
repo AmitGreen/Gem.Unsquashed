@@ -47,7 +47,8 @@ public final class  NormalSegmentFormatter
     //
     //  Interface Inspectable
     //
-    public NormalSegmentFormatter_Inspection    inspect()
+    @Override
+    public final NormalSegmentFormatter_Inspection  inspect()
     {
         return /*static*/ this.inspection;
     }
@@ -63,15 +64,35 @@ public final class  NormalSegmentFormatter
     }
 
 
+    @Override
+    public final void                   augment_1_plus(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object ...                    other_arguments//,
+        )
+    {
+        if (other_arguments.length != 0) {
+            RUNTIME("{p} argument{} given (expected 0)",
+                    other_arguments.length,
+                    (other_arguments.length == 1 ? "" : "s"));
+        }
+
+        builder.format(v);
+    }
+
+
     //
     //  Interface SegmentFormattable
     //
+    @Override
     public final void                   choose(final Gem_StringBuilder builder, int depth)
     {
         INVALID_ROUTINE();
     }
 
 
+    @Override
     public final void                   choose(final Gem_StringBuilder builder, int depth, final Object v)
     {
         final int                       argument_index = this.argument_index;
@@ -85,6 +106,7 @@ public final class  NormalSegmentFormatter
     }
 
 
+    @Override
     public final void                   choose(
             final Gem_StringBuilder             builder,
             final int                           depth,
@@ -108,6 +130,7 @@ public final class  NormalSegmentFormatter
     }
 
 
+    @Override
     public final void                   choose(
             final Gem_StringBuilder             builder,
             final int                           depth,
@@ -137,6 +160,7 @@ public final class  NormalSegmentFormatter
     }
 
 
+    @Override
     public final void                   choose(
             final Gem_StringBuilder             builder,
             final int                           depth,
@@ -172,6 +196,7 @@ public final class  NormalSegmentFormatter
     }
 
 
+    @Override
     public final void                   choose(
             final Gem_StringBuilder             builder,
             final int                           depth,
@@ -213,6 +238,7 @@ public final class  NormalSegmentFormatter
     }
 
 
+    @Override
     public final void                   choose(
             final Gem_StringBuilder             builder,
             final int                           depth,
@@ -260,6 +286,7 @@ public final class  NormalSegmentFormatter
     }
 
 
+    @Override
     public final void                   choose(
             final Gem_StringBuilder             builder,
             final int                           depth,

@@ -398,6 +398,25 @@ public abstract class   Gem
     }
 
 
+    public static final void            line_1_plus(
+            final int                           depth,
+            final String                        format,
+            final Object                        v,
+            final Object ...                    other_arguments//,
+        )
+    {
+        final Zone                      z = Zone.current_zone();
+
+        final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
+
+        final Gem_StringBuilder         builder = z.summon_StringBuilder();
+
+        formattable.augment_1_plus(builder, depth + 1, v, other_arguments);
+
+        standard_output.println(builder.finish_AND_recycle());
+    }
+
+
     //
     //  Public (dump)
     //

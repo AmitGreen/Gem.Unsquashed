@@ -286,6 +286,127 @@ public final class  MessageFormatter_Many
 
 
     @Override
+    public final void                   augment_1_plus(
+            final Gem_StringBuilder             builder,
+            /*:*/ int                           depth,
+            final Object                        v,
+            final Object ...                    other_arguments//,
+        )
+    {
+        final int                       total_other_arguments = other_arguments.length;
+
+        final int                       actual = 1 + total_other_arguments;
+
+        if (this.expected != actual) {
+            RUNTIME("{} argument{} given (expected {})",
+                    actual,
+                    (actual == 1 ? "" : "s"),
+                    this.expected);
+        }
+
+        final SegmentFormattable[]      segment_many = this.segment_many;
+
+        final int                       segment_total = segment_many.length;
+
+        depth += 1;
+
+        if (actual == 1) {
+            for (/*:*/ int              i = 0; i < segment_total; i ++) {
+                final SegmentFormattable    segment = segment_many[i];
+
+                segment.choose(builder, depth, v);
+            }
+
+            return;
+        }
+
+        final Object                    w = other_arguments[0];
+
+        if (actual == 2) {
+            for (/*:*/ int              i = 0; i < segment_total; i ++) {
+                final SegmentFormattable    segment = segment_many[i];
+
+                segment.choose(builder, depth, v, w);
+            }
+
+            return;
+        }
+
+        final Object                    x = other_arguments[1];
+
+        if (actual == 3) {
+            for (/*:*/ int              i = 0; i < segment_total; i ++) {
+                final SegmentFormattable    segment = segment_many[i];
+
+                segment.choose(builder, depth, v, w, x);
+            }
+
+            return;
+        }
+
+        final Object                    y4 = other_arguments[2];
+
+        if (actual == 4) {
+            for (/*:*/ int              i = 0; i < segment_total; i ++) {
+                final SegmentFormattable    segment = segment_many[i];
+
+                segment.choose(builder, depth, v, w, x, y4);
+            }
+
+            return;
+        }
+
+        final Object                    y5 = other_arguments[3];
+
+        if (actual == 5) {
+            for (/*:*/ int              i = 0; i < segment_total; i ++) {
+                final SegmentFormattable    segment = segment_many[i];
+
+                segment.choose(builder, depth, v, w, x, y4, y5);
+            }
+
+            return;
+        }
+
+        final Object                    y6 = other_arguments[4];
+
+        if (actual == 6) {
+            for (/*:*/ int              i = 0; i < segment_total; i ++) {
+                final SegmentFormattable    segment = segment_many[i];
+
+                segment.choose(builder, depth, v, w, x, y4, y5, y6);
+            }
+
+            return;
+        }
+
+        final Object                    y7 = other_arguments[5];
+
+        if (actual == 7) {
+            for (/*:*/ int              i = 0; i < segment_total; i ++) {
+                final SegmentFormattable    segment = segment_many[i];
+
+                segment.choose(builder, depth, v, w, x, y4, y5, y6, y7);
+            }
+
+            return;
+        }
+
+        final Object[]                  adjusted_arguments = new Object[total_other_arguments - 6];
+
+        for (/*:*/ int                  i = 6; i < total_other_arguments; i ++) {
+            adjusted_arguments[i - 6] = other_arguments[i];
+        }
+
+        for (/*:*/ int              i = 0; i < segment_total; i ++) {
+            final SegmentFormattable    segment = segment_many[i];
+
+            segment.choose(builder, depth, v, w, x, y4, y5, y6, y7, adjusted_arguments);
+        }
+    }
+
+
+    @Override
     public final void                   portray(final Gem_StringBuilder builder)
     {
         final int                       expected     = this.expected;

@@ -87,4 +87,11 @@ public interface    MessageFormattable<INSPECTION extends Inspection>
             final Object                        y7,
             final Object ...                    other_arguments//,
         );
+
+    void                                augment_1_plus(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object ...                    other_arguments//,
+        );
 }

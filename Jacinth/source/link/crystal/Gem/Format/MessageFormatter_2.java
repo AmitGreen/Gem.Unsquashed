@@ -127,4 +127,38 @@ public final class  MessageFormatter_2
         this.a.choose(builder, depth, v, w);
         this.b.choose(builder, depth, v, w);
     }
+
+
+    @Override
+    public final void                   augment_1_plus(
+            final Gem_StringBuilder             builder,
+            /*:*/ int                           depth,
+            final Object                        v,
+            final Object ...                    other_arguments//,
+        )
+    {
+        final int                       actual = 1 + other_arguments.length;
+
+        if (this.expected != actual) {
+            RUNTIME("{} argument{} given (expected {})",
+                    actual,
+                    (actual == 1 ? "" : "s"),
+                    this.expected);
+        }
+
+        depth += 1;
+
+        if (actual == 1) {
+            this.a.choose(builder, depth, v);
+            this.b.choose(builder, depth, v);
+            return;
+        }
+
+        assert fact(actual == 2, "actual == 2");
+
+        final Object                    w = other_arguments[0];
+        
+        this.a.choose(builder, depth, v, w);
+        this.b.choose(builder, depth, v, w);
+    }
 }

@@ -80,6 +80,23 @@ public final class  MessageFormatter_5
     }
 
 
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
+    {
+        builder.append("<MessageFormatter_5 ");
+        builder.portray(this.a);
+        builder.append(" ");
+        builder.portray(this.b);
+        builder.append(" ");
+        builder.portray(this.c);
+        builder.append(" ");
+        builder.portray(this.d);
+        builder.append(" ");
+        builder.portray(this.e);
+        builder.append(">");
+    }
+
+
     //
     //  Interface MessageFormattable
     //
@@ -212,18 +229,74 @@ public final class  MessageFormatter_5
 
 
     @Override
-    public final void                   portray(final Gem_StringBuilder builder)
+    public final void                   augment_1_plus(
+            final Gem_StringBuilder             builder,
+            /*:*/ int                           depth,
+            final Object                        v,
+            final Object ...                    other_arguments//,
+        )
     {
-        builder.append("<MessageFormatter_5 ");
-        builder.portray(this.a);
-        builder.append(" ");
-        builder.portray(this.b);
-        builder.append(" ");
-        builder.portray(this.c);
-        builder.append(" ");
-        builder.portray(this.d);
-        builder.append(" ");
-        builder.portray(this.e);
-        builder.append(">");
+        final int                       actual = 1 + other_arguments.length;
+
+        if (this.expected != actual) {
+            RUNTIME("{} argument{} given (expected {})",
+                    actual,
+                    (actual == 1 ? "" : "s"),
+                    this.expected);
+        }
+
+        depth += 1;
+
+        if (actual == 1) {
+            this.a.choose(builder, depth, v);
+            this.b.choose(builder, depth, v);
+            this.c.choose(builder, depth, v);
+            this.d.choose(builder, depth, v);
+            this.e.choose(builder, depth, v);
+            return;
+        }
+
+        final Object                    w = other_arguments[0];
+
+        if (actual == 2) {
+            this.a.choose(builder, depth, v, w);
+            this.b.choose(builder, depth, v, w);
+            this.c.choose(builder, depth, v, w);
+            this.d.choose(builder, depth, v, w);
+            this.e.choose(builder, depth, v, w);
+            return;
+        }
+
+        final Object                    x = other_arguments[1];
+
+        if (actual == 3) {
+            this.a.choose(builder, depth, v, w, x);
+            this.b.choose(builder, depth, v, w, x);
+            this.c.choose(builder, depth, v, w, x);
+            this.d.choose(builder, depth, v, w, x);
+            this.e.choose(builder, depth, v, w, x);
+            return;
+        }
+
+        final Object                    y4 = other_arguments[2];
+
+        if (actual == 4) {
+            this.a.choose(builder, depth, v, w, x, y4);
+            this.b.choose(builder, depth, v, w, x, y4);
+            this.c.choose(builder, depth, v, w, x, y4);
+            this.d.choose(builder, depth, v, w, x, y4);
+            this.e.choose(builder, depth, v, w, x, y4);
+            return;
+        }
+
+        assert fact(actual == 5, "actual == 5");
+
+        final Object                    y5 = other_arguments[2];
+        
+        this.a.choose(builder, depth, v, w, x, y4, y5);
+        this.b.choose(builder, depth, v, w, x, y4, y5);
+        this.c.choose(builder, depth, v, w, x, y4, y5);
+        this.d.choose(builder, depth, v, w, x, y4, y5);
+        this.e.choose(builder, depth, v, w, x, y4, y5);
     }
 }

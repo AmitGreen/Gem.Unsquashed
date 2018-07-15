@@ -48,6 +48,13 @@ public abstract class   ArgumentSegmentFormatter<INSPECTION extends ArgumentSegm
     //
     public abstract void                augment(final Gem_StringBuilder builder, int depth, final Object v);
 
+    public abstract void                augment_1_plus(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object ...                    other_arguments//,
+        );
+
 
     //
     //  Interface SegmentFormattable

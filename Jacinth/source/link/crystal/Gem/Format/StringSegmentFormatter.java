@@ -71,6 +71,24 @@ public final class  StringSegmentFormatter
     }
 
 
+    @Override
+    public final void                   augment_1_plus(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object ...                    other_arguments//,
+        )
+    {
+        if (other_arguments.length != 0) {
+            RUNTIME("{p} argument{} given (expected 0)",
+                    other_arguments.length,
+                    (other_arguments.length == 1 ? "" : "s"));
+        }
+
+        builder.append(v.toString());
+    }
+
+
     //
     //  Interface SegmentFormattable
     //

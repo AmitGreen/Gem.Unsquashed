@@ -127,70 +127,9 @@ public abstract class   Gem_List    <INSPECTION extends Inspection, ELEMENT>
     }
 
 
-    public static final void            line(final String format, final Object v, final Object w)
+    public static final void            line(final String format, final Object v, final Object ... other_arguments)
     {
-        Gem.line(2, format, v, w);
-    }
-
-
-    public static final void            line(final String format, final Object v, final Object w, final Object x)
-    {
-        Gem.line(2, format, v, w, x);
-    }
-
-
-    public static final void            line(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y//,
-        )
-    {
-        Gem.line(2, format, v, w, x, y);
-    }
-
-
-    public static final void            line(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
-        )
-    {
-        Gem.line(2, format, v, w, x, y4, y5);
-    }
-
-
-    public static final void            line(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
-        )
-    {
-        Gem.line(2, format, v, w, x, y4, y5, y6);
-    }
-
-
-    public static final void            line(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
-        )
-    {
-        Gem.line(2, format, v, w, x, y4, y5, y6, y7, other_arguments);
+        Gem.line_1_plus(2, format, v, other_arguments);
     }
 
 

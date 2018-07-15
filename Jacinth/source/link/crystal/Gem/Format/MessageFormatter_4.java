@@ -190,4 +190,62 @@ public final class  MessageFormatter_4
         this.c.choose(builder, depth, v, w, x, y);
         this.d.choose(builder, depth, v, w, x, y);
     }
+
+
+    @Override
+    public final void                   augment_1_plus(
+            final Gem_StringBuilder             builder,
+            /*:*/ int                           depth,
+            final Object                        v,
+            final Object ...                    other_arguments//,
+        )
+    {
+        final int                       actual = 1 + other_arguments.length;
+
+        if (this.expected != actual) {
+            RUNTIME("{} argument{} given (expected {})",
+                    actual,
+                    (actual == 1 ? "" : "s"),
+                    this.expected);
+        }
+
+        depth += 1;
+
+        if (actual == 1) {
+            this.a.choose(builder, depth, v);
+            this.b.choose(builder, depth, v);
+            this.c.choose(builder, depth, v);
+            this.d.choose(builder, depth, v);
+            return;
+        }
+
+        final Object                    w = other_arguments[0];
+
+        if (actual == 2) {
+            this.a.choose(builder, depth, v, w);
+            this.b.choose(builder, depth, v, w);
+            this.c.choose(builder, depth, v, w);
+            this.d.choose(builder, depth, v, w);
+            return;
+        }
+
+        final Object                    x = other_arguments[1];
+
+        if (actual == 3) {
+            this.a.choose(builder, depth, v, w, x);
+            this.b.choose(builder, depth, v, w, x);
+            this.c.choose(builder, depth, v, w, x);
+            this.d.choose(builder, depth, v, w, x);
+            return;
+        }
+
+        assert fact(actual == 4, "actual == 4");
+
+        final Object                    y = other_arguments[2];
+        
+        this.a.choose(builder, depth, v, w, x, y);
+        this.b.choose(builder, depth, v, w, x, y);
+        this.c.choose(builder, depth, v, w, x, y);
+        this.d.choose(builder, depth, v, w, x, y);
+    }
 }

@@ -152,4 +152,16 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
     {
         INVALID_ROUTINE();
     }
+
+
+    @Override
+    public /*overrideable*/ void        augment_1_plus(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object ...                    other_arguments//,
+        )
+    {
+        INVALID_ROUTINE();
+    }
 }
