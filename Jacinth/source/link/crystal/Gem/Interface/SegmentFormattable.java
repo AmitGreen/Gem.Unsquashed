@@ -20,112 +20,138 @@ public interface    SegmentFormattable<INSPECTION extends SegmentFormatter_Inspe
     @Override
     public INSPECTION                   inspect();                      //  NOTE: Different `INSPECTION`
 
-    public void                         portray(Gem_StringBuilder builder);
+    public void                         portray(final Gem_StringBuilder builder);
 
 
     //
     //  Interface MessageFormattable
     //
-    String                              augment(int depth);
-    String                              augment(int depth, Object v);
+    String                              augment(final int depth);
+    String                              augment(final int depth, final Object v);
 
-    void                                augment(Gem_StringBuilder builder, int depth);
-    void                                augment(Gem_StringBuilder builder, int depth, Object v);
-    void                                augment(Gem_StringBuilder builder, int depth, Object v, Object w);
-    void                                augment(Gem_StringBuilder builder, int depth, Object v, Object w, Object x);
+    void                                augment(final Gem_StringBuilder builder, final int depth);
+    void                                augment(final Gem_StringBuilder builder, final int depth, final Object v);
 
     void                                augment(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y//,
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w//,
         );
 
     void                                augment(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x//,
         );
 
     void                                augment(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
         );
 
     void                                augment(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
+        );
+
+    void                                augment(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
+        );
+
+    void                                augment(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         );
 
 
     //
     //  Interface <me>
     //
-    void                                choose(Gem_StringBuilder builder, int depth);
-    void                                choose(Gem_StringBuilder builder, int depth, Object v);
-    void                                choose(Gem_StringBuilder builder, int depth, Object v, Object w);
-    void                                choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x);
+    void                                choose(final Gem_StringBuilder builder, final int depth);
+    void                                choose(final Gem_StringBuilder builder, final int depth, final Object v);
 
     void                                choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y//,
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w//,
         );
 
     void                                choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x//,
         );
 
     void                                choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
         );
 
     void                                choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
+        );
+
+    void                                choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
+        );
+
+    void                                choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         );
 }

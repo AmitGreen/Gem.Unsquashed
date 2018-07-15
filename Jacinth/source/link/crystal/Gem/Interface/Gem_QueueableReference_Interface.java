@@ -21,7 +21,7 @@ public interface    Gem_QueueableReference_Interface<INSPECTION extends Gem_Refe
     @Override                           //  NOTE: Different `INSPECTION`
     public INSPECTION                   inspect();
 
-    public void                         portray(Gem_StringBuilder builder);
+    public void                         portray(final Gem_StringBuilder builder);
 
 
     //

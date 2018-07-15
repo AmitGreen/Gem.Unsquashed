@@ -18,6 +18,6 @@ public interface    Storehouse_String__Interface
     //
     //  Interface <me>
     //
-    public void                         dump                   (String name);
-    public String                       intern_permenant_string(Zone z, String s);
+    public void                         dump                   (final String name);
+    public String                       intern_permenant_string(final Zone z, final String s);
 }

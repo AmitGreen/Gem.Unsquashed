@@ -16,11 +16,11 @@ import link.crystal.Gem.Exception.ExceptionFunctions;
 import link.crystal.Gem.Interface.Storehouse_String__Interface;
 
 
-public class    Temporary_Storehouse_String
-    extends     HashMap        <String, String>
-//  extends     AbstractHashMap<String, String>
-//  extends     Object
-    implements  Storehouse_String__Interface
+public final class  Temporary_Storehouse_String
+    extends         HashMap        <String, String>
+//  extends         AbstractHashMap<String, String>
+//  extends         Object
+    implements      Storehouse_String__Interface
 {
     //
     //  Private static
@@ -38,7 +38,7 @@ public class    Temporary_Storehouse_String
     //
     //  Constructor & Factory
     //
-    private                             Temporary_Storehouse_String(Zone z, int initial_capacity)
+    private                             Temporary_Storehouse_String(final Zone z, final int initial_capacity)
     {
         super(initial_capacity);
 
@@ -46,7 +46,7 @@ public class    Temporary_Storehouse_String
     }
 
 
-    public static Temporary_Storehouse_String   create__ALLY__Zone(Zone z)
+    public static final Temporary_Storehouse_String     create__ALLY__Zone(final Zone z)
     {
         return new Temporary_Storehouse_String(z, Temporary_Storehouse_String.initial_capacity);
     }
@@ -55,7 +55,7 @@ public class    Temporary_Storehouse_String
     //
     //  Private (ASSERT)
     //
-    public static boolean               fact(boolean condition, String format)
+    public static final boolean         fact(boolean condition, final String format)
     {
         if (condition) {
             return true;
@@ -67,7 +67,7 @@ public class    Temporary_Storehouse_String
     }
 
 
-    public static boolean               fact_pointer(Object p, String name)
+    public static final boolean         fact_pointer(final Object p, final String name)
     {
         if (p != null) {
             return true;
@@ -82,7 +82,7 @@ public class    Temporary_Storehouse_String
     //
     //  Public (line)
     //
-    public static void                  line(String format, Object v)
+    public static final void            line(final String format, final Object v)
     {
         Gem.line(2, format, v);
     }
@@ -91,7 +91,7 @@ public class    Temporary_Storehouse_String
     //
     //  Interface Storehouse_String__Interface
     //
-    public void                         dump(String name)
+    public final void                   dump(final String name)
     {
         List<String>                    keys = new ArrayList<String>(this.keySet());
 
@@ -102,7 +102,7 @@ public class    Temporary_Storehouse_String
         line("Dump of Temporary_Storehouse_String {}", name);
         line("      size: {}", total);
 
-        for (int                        i = 0; i < total; i ++) {
+        for (/*:*/ int                  i = 0; i < total; i ++) {
             final String                k = keys.get(i);
 
             line("  {p}", k);
@@ -112,7 +112,7 @@ public class    Temporary_Storehouse_String
     }
 
 
-    public String                       intern_permenant_string(Zone z, String s)
+    public final String                 intern_permenant_string(final Zone z, final String s)
     {
         assert fact        (this.z == z, "this.z == z");
         assert fact_pointer(s, "s");

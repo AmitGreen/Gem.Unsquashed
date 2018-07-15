@@ -39,7 +39,10 @@ public abstract class   Gem_WeakReference<
     //
     //  Constructor
     //
-    protected                           Gem_WeakReference(CLIENT client, Gem_ReferenceQueue reference_queue)
+    protected                           Gem_WeakReference(
+            final CLIENT                        client,
+            final Gem_ReferenceQueue            reference_queue//,
+        )
     {
         super(client, reference_queue);
     }
@@ -61,14 +64,14 @@ public abstract class   Gem_WeakReference<
     //  Interface Inspectable
     //
     public abstract INSPECTION          inspect();
-    public abstract void                portray(Gem_StringBuilder builder);
+    public abstract void                portray(final Gem_StringBuilder builder);
 
 
     //
     //  Interface Gem_ComparableReference_Interface
     //
     @Override
-    public CLIENT                       client_OR_enqueue()
+    public final CLIENT                 client_OR_enqueue()
     {
         final CLIENT                    r = this.get();
 
@@ -96,7 +99,7 @@ public abstract class   Gem_WeakReference<
     //
     //  Public (ASSERT)
     //
-    public static boolean               fact(boolean condition, String format)
+    public static final boolean         fact(boolean condition, final String format)
     {
         if (condition) {
             return true;
@@ -111,13 +114,13 @@ public abstract class   Gem_WeakReference<
     //
     //  Public (ERRORS)
     //
-    public static void                  INVALID_ROUTINE()
+    public static final void            INVALID_ROUTINE()
     {
         ExceptionFunctions.RUNTIME(2, "invalid routine");
     }
 
 
-    public static void                  RUNTIME(String error_message, Object ... arguments)
+    public static final void            RUNTIME(final String error_message, final Object ... arguments)
     {
         ExceptionFunctions.RUNTIME(2, error_message, arguments);
     }
@@ -126,72 +129,85 @@ public abstract class   Gem_WeakReference<
     //
     //  Public (line)
     //
-    public static void                  line()
+    public static final void            line()
     {
         Gem.line();
     }
 
 
-    public static void                  line(String format)
+    public static final void            line(final String format)
     {
         Gem.line(2, format);
     }
 
 
-    public static void                  line(String format, Object v)
+    public static final void            line(final String format, final Object v)
     {
         Gem.line(2, format, v);
     }
 
 
-    public static void                  line(String format, Object v, Object w)
+    public static final void            line(final String format, final Object v, final Object w)
     {
         Gem.line(2, format, v, w);
     }
 
 
-    public static void                  line(String format, Object v, Object w, Object x)
+    public static final void            line(final String format, final Object v, final Object w, final Object x)
     {
         Gem.line(2, format, v, w, x);
     }
 
 
-    public static void                  line(String format, Object v, Object w, Object x, Object y)
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
+        )
     {
         Gem.line(2, format, v, w, x, y);
     }
 
 
-    public static void                  line(String format, Object v, Object w, Object x, Object y4, Object y5)
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
+        )
     {
         Gem.line(2, format, v, w, x, y4, y5);
     }
 
 
-    public static void                  line(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
         )
     {
         Gem.line(2, format, v, w, x, y4, y5, y6);
     }
 
 
-    public static void                  line(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         Gem.line(2, format, v, w, x, y4, y5, y6, y7, other_arguments);

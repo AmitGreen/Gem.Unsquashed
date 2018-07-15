@@ -18,13 +18,13 @@ import link.crystal.Gem.Support.World_String_WeakReference;
 import link.crystal.Gem.World.World_String;
 
 
-public class    World_String_WeakReference_PhantomReference
-    extends     PhantomReference<World_String_WeakReference>
-//  extends     Reference       <World_String_WeakReference>
-//  extends     Object
-    implements  Gem_QueueableReference_Interface<Gem_Reference_Inspection>,
-                Gem_Reference_Interface         <Gem_Reference_Inspection>,    //  Via Gem_QueueableReference_Interface
-                Inspectable                     <Gem_Reference_Inspection>//,
+public final class  World_String_WeakReference_PhantomReference
+    extends         PhantomReference<World_String_WeakReference>
+//  extends         Reference       <World_String_WeakReference>
+//  extends         Object
+    implements      Gem_QueueableReference_Interface<Gem_Reference_Inspection>,
+                    Gem_Reference_Interface         <Gem_Reference_Inspection>,    //  Via Gem_QueueableReference_Interface
+                    Inspectable                     <Gem_Reference_Inspection>//,
 {
     private static final Gem_Reference_Inspection   inspection = Gem_Reference_Inspection.create(
             "World_String_WeakReference_PhantomReference",
@@ -43,9 +43,9 @@ public class    World_String_WeakReference_PhantomReference
     //  Constructor
     //
     private                             World_String_WeakReference_PhantomReference(
-            World_String_WeakReference          client,
-            Gem_ReferenceQueue                  reference_queue,
-            String                              s//,
+            final World_String_WeakReference    client,
+            final Gem_ReferenceQueue            reference_queue,
+            final String                        s//,
         )
     {
         super(client, reference_queue);
@@ -54,9 +54,9 @@ public class    World_String_WeakReference_PhantomReference
     }
 
 
-    public static World_String_WeakReference_PhantomReference   create__ALLY__Gem(
-            World_String_WeakReference          client,
-            Gem_ReferenceQueue                  reference_queue//,
+    public static final World_String_WeakReference_PhantomReference     create__ALLY__Gem(
+            final World_String_WeakReference    client,
+            final Gem_ReferenceQueue            reference_queue//,
         )
     {
         final String                    s = client.s;
@@ -68,7 +68,8 @@ public class    World_String_WeakReference_PhantomReference
     //
     //  Interface Gem_QueueableReference_Interface
     //
-    public void                         reap()
+    @Override
+    public final void                   reap()
     {
         line("=== REAP ===: {}", this);
     }
@@ -83,13 +84,15 @@ public class    World_String_WeakReference_PhantomReference
     //
     //  Interface Inspectable
     //
+    @Override
     public Gem_Reference_Inspection     inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<World_String_WeakReference_PhantomReference ");
         builder.quote(this.s);
@@ -100,72 +103,85 @@ public class    World_String_WeakReference_PhantomReference
     //
     //  Public (line)
     //
-    public static void                  line()
+    public static final void            line()
     {
         Gem.line();
     }
 
 
-    public static void                  line(String format)
+    public static final void            line(final String format)
     {
         Gem.line(2, format);
     }
 
 
-    public static void                  line(String format, Object v)
+    public static final void            line(final String format, final Object v)
     {
         Gem.line(2, format, v);
     }
 
 
-    public static void                  line(String format, Object v, Object w)
+    public static final void            line(final String format, final Object v, final Object w)
     {
         Gem.line(2, format, v, w);
     }
 
 
-    public static void                  line(String format, Object v, Object w, Object x)
+    public static final void            line(final String format, final Object v, final Object w, final Object x)
     {
         Gem.line(2, format, v, w, x);
     }
 
 
-    public static void                  line(String format, Object v, Object w, Object x, Object y)
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
+        )
     {
         Gem.line(2, format, v, w, x, y);
     }
 
 
-    public static void                  line(String format, Object v, Object w, Object x, Object y4, Object y5)
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
+        )
     {
         Gem.line(2, format, v, w, x, y4, y5);
     }
 
 
-    public static void                  line(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
         )
     {
         Gem.line(2, format, v, w, x, y4, y5, y6);
     }
 
 
-    public static void                  line(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         Gem.line(2, format, v, w, x, y4, y5, y6, y7, other_arguments);

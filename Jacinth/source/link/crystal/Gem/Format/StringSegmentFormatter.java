@@ -15,14 +15,14 @@ import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 
 
-public class    StringSegmentFormatter
-    extends     ArgumentSegmentFormatter<StringSegmentFormatter_Inspection>
-//  extends     MessageFormatter_Base   <StringSegmentFormatter_Inspection>
-//  extends     Gem_Object              <StringSegmentFormatter_Inspection>
-//  extends     Object
-    implements  MessageFormattable      <StringSegmentFormatter_Inspection>,
-                SegmentFormattable      <StringSegmentFormatter_Inspection>,
-                Inspectable             <StringSegmentFormatter_Inspection>//,
+public final class  StringSegmentFormatter
+    extends         ArgumentSegmentFormatter<StringSegmentFormatter_Inspection>
+//  extends         MessageFormatter_Base   <StringSegmentFormatter_Inspection>
+//  extends         Gem_Object              <StringSegmentFormatter_Inspection>
+//  extends         Object
+    implements      MessageFormattable      <StringSegmentFormatter_Inspection>,
+                    SegmentFormattable      <StringSegmentFormatter_Inspection>,
+                    Inspectable             <StringSegmentFormatter_Inspection>//,
 {
     public static final StringSegmentFormatter_Inspection   inspection = (
             StringSegmentFormatter_Inspection.create("StringSegmentFormatter")
@@ -32,13 +32,13 @@ public class    StringSegmentFormatter
     //
     //  Constructor & Factory
     //
-    private                             StringSegmentFormatter(int argument_index)
+    private                             StringSegmentFormatter(final int argument_index)
     {
         super(argument_index);
     }
 
 
-    static public StringSegmentFormatter    create__ALLY__Zone(Zone z, int argument_index)
+    public static final StringSegmentFormatter    create__ALLY__Zone(final Zone z, final int argument_index)
     {
         return new StringSegmentFormatter(argument_index);
     }
@@ -47,7 +47,8 @@ public class    StringSegmentFormatter
     //
     //  Interface Inspectable
     //
-    public StringSegmentFormatter_Inspection    inspect()
+    @Override
+    public final StringSegmentFormatter_Inspection  inspect()
     {
         return /*static*/ this.inspection;
     }
@@ -57,14 +58,14 @@ public class    StringSegmentFormatter
     //  Interface MessageFormattable
     //
     @Override
-    public String                       augment(int depth, Object v)
+    public final String                 augment(final int depth, final Object v)
     {
         return v.toString();
     }
 
 
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v)
+    public final void                   augment(final Gem_StringBuilder builder, int depth, final Object v)
     {
         builder.append(v.toString());
     }
@@ -73,12 +74,15 @@ public class    StringSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public void                         choose(Gem_StringBuilder builder, int depth)
+    @Override
+    public final void                   choose(final Gem_StringBuilder builder, int depth)
     {
         INVALID_ROUTINE();
     }
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v)
+
+    @Override
+    public final void                   choose(final Gem_StringBuilder builder, int depth, final Object v)
     {
         final int                       argument_index = this.argument_index;
 
@@ -91,7 +95,13 @@ public class    StringSegmentFormatter
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w)
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w//,
+        )
     {
         final int                       argument_index = this.argument_index;
 
@@ -109,7 +119,14 @@ public class    StringSegmentFormatter
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x//,
+        )
     {
         final int                       argument_index = this.argument_index;
 
@@ -132,7 +149,15 @@ public class    StringSegmentFormatter
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x, Object y)
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
+        )
     {
         final int                       argument_index = this.argument_index;
 
@@ -160,14 +185,15 @@ public class    StringSegmentFormatter
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
         )
     {
         final int                       argument_index = this.argument_index;
@@ -201,15 +227,16 @@ public class    StringSegmentFormatter
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
         )
     {
         final int                       argument_index = this.argument_index;
@@ -248,17 +275,18 @@ public class    StringSegmentFormatter
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         final int                       argument_index = this.argument_index;
@@ -316,13 +344,13 @@ class           StringSegmentFormatter_Inspection
     //
     //  Constructor & Factory
     //
-    protected                           StringSegmentFormatter_Inspection(String simple_class_name)
+    protected                           StringSegmentFormatter_Inspection(final String simple_class_name)
     {
         super(simple_class_name);
     }
 
 
-    public static StringSegmentFormatter_Inspection     create(String simple_class_name)
+    public static final StringSegmentFormatter_Inspection   create(final String simple_class_name)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -335,7 +363,8 @@ class           StringSegmentFormatter_Inspection
     //
     //  Abstract ArgumentSegmentFormatter_Inspection
     //
-    public StringSegmentFormatter   conjure_argument_segment(Zone z, int argument_index)
+    @Override
+    public StringSegmentFormatter   conjure_argument_segment(final Zone z, final int argument_index)
     {
         return z.conjure_StringSegmentFormatter(argument_index);
     }
@@ -344,7 +373,8 @@ class           StringSegmentFormatter_Inspection
     //
     //  Interface Inspectable
     //
-    public World_Inspection             inspect()
+    @Override
+    public final World_Inspection       inspect()
     {
         return /*static*/ this.inspection;
     }

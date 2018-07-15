@@ -14,12 +14,12 @@ import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class    MessageFormatter_3
-    extends     MessageFormatter_Base<Inspection>
-//  extends     Gem_Object           <Inspection>
-//  extends     Object
-    implements  MessageFormattable   <Inspection>,
-                Inspectable          <Inspection>//,
+public final class  MessageFormatter_3
+    extends         MessageFormatter_Base<Inspection>
+//  extends         Gem_Object           <Inspection>
+//  extends         Object
+    implements      MessageFormattable   <Inspection>,
+                    Inspectable          <Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("MessageFormatter_3");
 
@@ -37,10 +37,10 @@ public class    MessageFormatter_3
     //  Constructor & Factory
     //
     private                             MessageFormatter_3(
-            int                             expected,
-            SegmentFormattable              a,
-            SegmentFormattable              b,
-            SegmentFormattable              c//,
+            final int                       expected,
+            final SegmentFormattable        a,
+            final SegmentFormattable        b,
+            final SegmentFormattable        c//,
         )
     {
         this.expected = expected;
@@ -50,12 +50,12 @@ public class    MessageFormatter_3
     }
 
 
-    static public MessageFormatter_3    create(
-            Zone                            z,
-            int                             expected,
-            SegmentFormattable              a,
-            SegmentFormattable              b,
-            SegmentFormattable              c//,
+    public static final MessageFormatter_3  create(
+            final Zone                      z,
+            final int                       expected,
+            final SegmentFormattable        a,
+            final SegmentFormattable        b,
+            final SegmentFormattable        c//,
         )
     {
         return new MessageFormatter_3(expected, a, b, c);
@@ -65,14 +65,15 @@ public class    MessageFormatter_3
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
     @Override
-    public void                         portray(Gem_StringBuilder builder)
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<MessageFormatter_3 ");
         builder.portray(this.a);
@@ -88,7 +89,7 @@ public class    MessageFormatter_3
     //  Interface MessageFormattable
     //
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth)
+    public final void                   augment(final Gem_StringBuilder builder, int depth)
     {
         if (this.expected != 0) {
             RUNTIME("0 arguments given (expected {})", this.expected);
@@ -103,7 +104,7 @@ public class    MessageFormatter_3
 
 
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v)
+    public final void                   augment(final Gem_StringBuilder builder, /*:*/ int depth, final Object v)
     {
         if (this.expected != 1) {
             RUNTIME("1 argument given (expected {})", this.expected);
@@ -118,7 +119,12 @@ public class    MessageFormatter_3
 
 
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v, Object w)
+    public final void                   augment(
+            final Gem_StringBuilder             builder,
+            /*:*/ int                           depth,
+            final Object                        v,
+            final Object                        w//,
+        )
     {
         if (this.expected != 2) {
             RUNTIME("2 arguments given (expected {})", this.expected);
@@ -133,7 +139,13 @@ public class    MessageFormatter_3
 
 
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
+    public final void                   augment(
+            final Gem_StringBuilder             builder,
+            /*:*/ int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x//,
+        )
     {
         if (this.expected != 3) {
             RUNTIME("3 arguments given (expected {})", this.expected);

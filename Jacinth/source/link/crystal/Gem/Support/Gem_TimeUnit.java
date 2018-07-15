@@ -13,7 +13,7 @@ public abstract class   Gem_TimeUnit
     extends             Gem_Object//<Inspection>
 //  extends             Object
 {
-    public static void  test()
+    public static final void            test()
     {
         line("TimeUnit: {}", TimeUnit.class);
         line("TimeUnit.SECONDS: {}", TimeUnit.SECONDS);

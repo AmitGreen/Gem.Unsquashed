@@ -26,7 +26,7 @@ public interface    Gem_Referenceable_Interface<INSPECTION extends Inspection>
     //  Interface Inspectable
     //
     public INSPECTION                   inspect();
-    public void                         portray(Gem_StringBuilder builder);
+    public void                         portray(final Gem_StringBuilder builder);
 
 
     //

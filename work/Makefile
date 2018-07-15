@@ -113,6 +113,7 @@ JACINTH_FILES = \
     $J/Gem/Interface/SegmentFormattable.java \
     $J/Gem/Interface/Storehouse_String__Interface.java \
     $J/Gem/Support/AnalyzeString.java \
+    $J/Gem/Support/PortrayString.java \
     $J/Gem/Support/AsciiTable.java \
     $J/Gem/Support/EphemeralStringState.java \
     $J/Gem/Support/Gem_ComparableReference_Cache.java \
@@ -138,6 +139,7 @@ JACINTH_FILES = \
     $J/Gem/Support/World_String_EnduringReference.java \
     $J/Gem/Support/World_String_Key.java \
     $J/Gem/Support/World_String_WeakReference.java \
+    $J/Gem/UnitTest/UnitTest_Gem.java \
     $J/Gem/UnitTest/World_String_WeakReference_PhantomReference.java \
     $J/Gem/World/World_Integer.java \
     $J/Gem/World/World_String.java \
@@ -147,7 +149,8 @@ JACINTH_FILES = \
     $J/Silver/SilverModule.java \
     $J/Silver/SilverProxy.java \
     $J/Silver/Silver_String.java \
-    $J/Silver/UnitTest/UnitTest.java
+    $J/Silver/UnitTest/UnitTest.java \
+    $J/Silver/UnitTest/UnitTest_Silver.java
 
 JASPER_FILES = \
     ../Jasper/Core.py \
@@ -350,19 +353,19 @@ clean:
 	rm -f ns.java
 	rm -f o.py oc.py od.py oe.py om.py oss.java
 	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py
-	rm -f   pel.py pf.py pf.java pj.py pk.py pkc.py pl.py pmo.py pn.py ps.java ps.py psc.java ps3.py px.java
+	rm -f   pel.py pf.py pf.java pj.py pk.py pkc.py pl.py pmo.py pn.py ps.java psc.java ps3.py px.java
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qn.java qp.py
 	rm -f rm.py rx.py
 	rm -f sha.java shl.java shm.java shn.java shp.java shs.java shsf.java sfi.java sl.py so.py ss.java ssio.py sy.py
 	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tshs.java tu.py tw.py tx.py
-	rm -f ut.java
+	rm -f ut.java utg.java uts.java
 	rm -f xb.py xf.py
 	rm -f vm.java vm.py vp.java vs.java
 	rm -f wi.java wic.java wie.java wik.java win.java wiw.java
 	rm -f   ws.java wsc.java wse.java wsk.java wsw.java wswp.java
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
-	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
+	rm -f   ym.py yp.py yq.py yr.py ys.java ys.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f za.java zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
 	rm -f   zgn.gpy zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
 	rm -f   zm.py zo4.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
@@ -611,7 +614,6 @@ links:
 	ln -s ../Pearl/Method.py                                                    pmo.py
 	ln -s ../Pearl/Nub.py                                                       pn.py
 	ln -s $J/Gem/Format/PortraySegmentFormatter.java                            ps.java
-	ln -s ../Gem/PortrayString.py                                               ps.py
 	ln -s ../Junk/PortrayString_3.py                                            ps3.py
 	ln -s ../Quartz/Parse1.py                                                   q1p.py
 	ln -s ../Quartz/Core.py                                                     qc.py
@@ -658,6 +660,8 @@ links:
 	ln -s ../Tremolite/PatternWrapper.py                                        tw.py
 	ln -s ../Tremolite/Compile.py                                               tx.py
 	ln -s $J/Silver/UnitTest/UnitTest.java                                      ut.java
+	ln -s $J/Gem/UnitTest/UnitTest_Gem.java                                     utg.java
+	ln -s $J/Silver/UnitTest/UnitTest_Silver.java                               uts.java
 	ln -s ../Dravite/Main.py                                                    vm.py
 	ln -s $J/Silver/SilverModule.java                                           vm.java
 	ln -s $J/Silver/SilverProxy.java                                            vp.java
@@ -689,6 +693,8 @@ links:
 	ln -s ../Crystal/Player.py                                                  yp.py
 	ln -s ../Crystal/Square.py                                                  yq.py
 	ln -s ../Crystal/ChessRook.py                                               yr.py
+	ln -s $J/Gem/Support/PortrayString.java                                     ys.java
+	ln -s ../Gem/PortrayString.py                                               ys.py
 	ln -s ../Crystal/VoidSquare.py                                              yv.py
 	ln -s ../Crystal/ChessPawn.py                                               yw.py
 	ln -s ../Crystal/FrozenChessCard.py                                         yzc.py

@@ -16,22 +16,22 @@ import link.crystal.Gem.Support.World_Integer_WeakReference;
 import link.crystal.Gem.World.World_Integer;
 
 
-public class    World_Integer_Cache
-    extends     Gem_ComparableReference_Cache<
-                    Inspection,
-                    World_Integer,
-                    Comparable_Inspection,
-                    Gem_ComparableReference_Interface<
-                        ? extends Gem_Reference_Inspection,
+public final class  World_Integer_Cache
+    extends         Gem_ComparableReference_Cache<
+                        Inspection,
                         World_Integer,
-                        Comparable_Inspection//,
-                    >//,
-                >
-//  extends     Gem_Map        <Inspection, Gem_ComparableReference_Interface<?, ?, ?>, ...>
-//  extends     HashMap        <Inspection, Gem_ComparableReference_Interface<?, ?, ?>, ...>
-//  extends     AbstractHashMap<Inspection, Gem_ComparableReference_Interface<?, ?, ?>, ...>
-//  extends     Object
-    implements  Inspectable    <Inspection>//,
+                        Comparable_Inspection,
+                        Gem_ComparableReference_Interface<
+                            ? extends Gem_Reference_Inspection,
+                            World_Integer,
+                            Comparable_Inspection//,
+                        >//,
+                    >
+//  extends         Gem_Map        <Inspection, Gem_ComparableReference_Interface<?, ?, ?>, ...>
+//  extends         HashMap        <Inspection, Gem_ComparableReference_Interface<?, ?, ?>, ...>
+//  extends         AbstractHashMap<Inspection, Gem_ComparableReference_Interface<?, ?, ?>, ...>
+//  extends         Object
+    implements      Inspectable    <Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("World_Integer_Cache");
 
@@ -45,13 +45,13 @@ public class    World_Integer_Cache
     //
     //  Constructor
     //
-    private                             World_Integer_Cache(Zone z, int initial_capacity)
+    private                             World_Integer_Cache(final Zone z, final int initial_capacity)
     {
         super(z, initial_capacity);
     }
 
 
-    public static World_Integer_Cache   create__ALLY__Gem()
+    public static final World_Integer_Cache     create__ALLY__Gem()
     {
         final Zone                      z = Zone.current_zone();
 
@@ -62,7 +62,8 @@ public class    World_Integer_Cache
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }

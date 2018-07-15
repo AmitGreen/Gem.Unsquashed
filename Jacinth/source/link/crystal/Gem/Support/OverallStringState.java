@@ -22,15 +22,15 @@ public final class      OverallStringState
     //  Members
     //
     public final String                 debug_name;
-    public       OverallStringState     A;
-    public       OverallStringState     K;
-    public       OverallStringState     L;
-    public       OverallStringState     Q;
-    public       int                    ra;
-    public       int                    rq;
-    public       int                    pc;
-    public       int                    ps;
-    public       boolean                is_K;
+    public /*:*/ OverallStringState     A;
+    public /*:*/ OverallStringState     K;
+    public /*:*/ OverallStringState     L;
+    public /*:*/ OverallStringState     Q;
+    public /*:*/ int                    ra;
+    public /*:*/ int                    rq;
+    public /*:*/ int                    pc;
+    public /*:*/ int                    ps;
+    public /*:*/ boolean                is_K;
 
 
     //
@@ -57,7 +57,7 @@ public final class      OverallStringState
     }
 
 
-    public void                         overall(
+    public final void                   overall(
             final OverallStringState            A,
             final OverallStringState            K,
             final OverallStringState            L,
@@ -112,13 +112,15 @@ public final class      OverallStringState
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(final Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         final OverallStringState        A  = this.A;
         final OverallStringState        K  = this.K;

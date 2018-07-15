@@ -13,10 +13,10 @@ import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.World.World_String;
 
 
-public class    World_String_Key
-    extends     Gem_Object <Inspection>
-//  extends     Object
-    implements  Inspectable<Inspection>//,
+public final class  World_String_Key
+    extends         Gem_Object <Inspection>
+//  extends         Object
+    implements      Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("World_String_Key");
 
@@ -25,27 +25,27 @@ public class    World_String_Key
     //  Members
     //
     private final Zone                  z;
-    private int                         pulp;
-    public String                       s;
+    private /*:*/ int                   pulp;
+    public  /*:*/ String                s;
 
 
     //
     //  Constructor, Factory, & Recycle
     //
-    protected                           World_String_Key(Zone z)
+    protected                           World_String_Key(final Zone z)
     {
         this.z = z;
         this.s = null;
     }
 
 
-    public static World_String_Key      create__ALLY__Zone(Zone z)
+    public static final World_String_Key    create__ALLY__Zone(final Zone z)
     {
         return new World_String_Key(z);
     }
 
 
-    public void                         recycle(String s)
+    public final void                   recycle(final String s)
     {
         this.pulp = s.hashCode();
         this.s    = s;
@@ -56,14 +56,14 @@ public class    World_String_Key
     //  Abstract object
     //
     @Override
-    public int                          hashCode()
+    public final int                    hashCode()
     {
         return this.pulp;
     }
 
 
     @Override
-    public boolean                      equals(Object that)
+    public final boolean                equals(final Object that)
     {
         if ( ! (that instanceof World_String_WeakReference)) {
             return false;
@@ -78,13 +78,15 @@ public class    World_String_Key
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<World_String_Key ");
         builder.quote(this.s);

@@ -23,7 +23,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
     //  Interface MessageFormattable
     //
     @Override
-    public String                       augment(int depth)
+    public /*overrideable*/ String      augment(final int depth)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -36,7 +36,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
 
     @Override
-    public String                       augment(int depth, Object v)
+    public /*overrideable*/ String      augment(final int depth, final Object v)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -49,7 +49,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
 
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth)
+    public /*overrideable*/ void        augment(final Gem_StringBuilder builder, int depth)
     {
         final INSPECTION                inspection = this.inspect();
 
@@ -58,7 +58,7 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
 
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v)
+    public /*overrideable*/ void        augment(final Gem_StringBuilder builder, int depth, final Object v)
     {
         final INSPECTION                inspection = this.inspect();
 
@@ -67,27 +67,11 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
 
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v, Object w)
-    {
-        INVALID_ROUTINE();
-    }
-
-
-    @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
-    {
-        INVALID_ROUTINE();
-    }
-
-
-    @Override
-    public void                         augment(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y//,
+    public /*overrideable*/ void        augment(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w//,
         )
     {
         INVALID_ROUTINE();
@@ -95,14 +79,12 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
 
     @Override
-    public void                         augment(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
+    public /*overrideable*/ void        augment(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x//,
         )
     {
         INVALID_ROUTINE();
@@ -110,15 +92,13 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
 
     @Override
-    public void                         augment(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    public /*overrideable*/ void        augment(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
         )
     {
         INVALID_ROUTINE();
@@ -126,17 +106,48 @@ public abstract class   MessageFormatter_Base<INSPECTION extends Inspection>
 
 
     @Override
-    public void                         augment(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    public /*overrideable*/ void        augment(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
+        )
+    {
+        INVALID_ROUTINE();
+    }
+
+
+    @Override
+    public /*overrideable*/ void        augment(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
+        )
+    {
+        INVALID_ROUTINE();
+    }
+
+
+    @Override
+    public /*overrideable*/ void        augment(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         INVALID_ROUTINE();

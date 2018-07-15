@@ -15,14 +15,14 @@ import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 
 
-public class    PortraySegmentFormatter
-    extends     ArgumentSegmentFormatter<PortraySegmentFormatter_Inspection>
-//  extends     MessageFormatter_Base   <PortraySegmentFormatter_Inspection>
-//  extends     Gem_Object              <PortraySegmentFormatter_Inspection>
-//  extends     Object
-    implements  MessageFormattable      <PortraySegmentFormatter_Inspection>,
-                SegmentFormattable      <PortraySegmentFormatter_Inspection>,
-                Inspectable             <PortraySegmentFormatter_Inspection>//,
+public final class  PortraySegmentFormatter
+    extends         ArgumentSegmentFormatter<PortraySegmentFormatter_Inspection>
+//  extends         MessageFormatter_Base   <PortraySegmentFormatter_Inspection>
+//  extends         Gem_Object              <PortraySegmentFormatter_Inspection>
+//  extends         Object
+    implements      MessageFormattable      <PortraySegmentFormatter_Inspection>,
+                    SegmentFormattable      <PortraySegmentFormatter_Inspection>,
+                    Inspectable             <PortraySegmentFormatter_Inspection>//,
 {
     public static final PortraySegmentFormatter_Inspection  inspection = (
             PortraySegmentFormatter_Inspection.create("PortraySegmentFormatter")
@@ -32,13 +32,13 @@ public class    PortraySegmentFormatter
     //
     //  Constructor & Factory
     //
-    private                             PortraySegmentFormatter(int argument_index)
+    private                             PortraySegmentFormatter(final int argument_index)
     {
         super(argument_index);
     }
 
 
-    static public PortraySegmentFormatter   create__ALLY__Zone(Zone z, int argument_index)
+    public static final PortraySegmentFormatter     create__ALLY__Zone(final Zone z, final int argument_index)
     {
         return new PortraySegmentFormatter(argument_index);
     }
@@ -47,6 +47,7 @@ public class    PortraySegmentFormatter
     //
     //  Interface Inspectable
     //
+    @Override
     public PortraySegmentFormatter_Inspection   inspect()
     {
         return /*static*/ this.inspection;
@@ -57,7 +58,7 @@ public class    PortraySegmentFormatter
     //  Interface MessageFormattable
     //
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v)
+    public final void                   augment(final Gem_StringBuilder builder, int depth, final Object v)
     {
         builder.portray(v);
     }
@@ -66,12 +67,15 @@ public class    PortraySegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public void                         choose(Gem_StringBuilder builder, int depth)
+    @Override
+    public final void                   choose(final Gem_StringBuilder builder, int depth)
     {
         INVALID_ROUTINE();
     }
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v)
+
+    @Override
+    public final void                   choose(final Gem_StringBuilder builder, int depth, final Object v)
     {
         final int                       argument_index = this.argument_index;
 
@@ -84,7 +88,13 @@ public class    PortraySegmentFormatter
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w)
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w//,
+        )
     {
         final int                       argument_index = this.argument_index;
 
@@ -102,7 +112,14 @@ public class    PortraySegmentFormatter
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x//,
+        )
     {
         final int                       argument_index = this.argument_index;
 
@@ -125,7 +142,15 @@ public class    PortraySegmentFormatter
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x, Object y)
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
+        )
     {
         final int                       argument_index = this.argument_index;
 
@@ -153,14 +178,15 @@ public class    PortraySegmentFormatter
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
         )
     {
         final int                       argument_index = this.argument_index;
@@ -194,15 +220,16 @@ public class    PortraySegmentFormatter
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
         )
     {
         final int                       argument_index = this.argument_index;
@@ -241,17 +268,18 @@ public class    PortraySegmentFormatter
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         final int                       argument_index = this.argument_index;
@@ -309,13 +337,13 @@ class           PortraySegmentFormatter_Inspection
     //
     //  Constructor & Factory
     //
-    protected                           PortraySegmentFormatter_Inspection(String simple_class_name)
+    protected                           PortraySegmentFormatter_Inspection(final String simple_class_name)
     {
         super(simple_class_name);
     }
 
 
-    public static PortraySegmentFormatter_Inspection    create(String simple_class_name)
+    public static final PortraySegmentFormatter_Inspection  create(final String simple_class_name)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -328,7 +356,8 @@ class           PortraySegmentFormatter_Inspection
     //
     //  Abstract ArgumentSegmentFormatter_Inspection
     //
-    public PortraySegmentFormatter     conjure_argument_segment(Zone z, int argument_index)
+    @Override
+    public PortraySegmentFormatter     conjure_argument_segment(final Zone z, final int argument_index)
     {
         return z.conjure_PortraySegmentFormatter(argument_index);
     }
@@ -337,7 +366,8 @@ class           PortraySegmentFormatter_Inspection
     //
     //  Interface Inspectable
     //
-    public World_Inspection             inspect()
+    @Override
+    public final World_Inspection       inspect()
     {
         return /*static*/ this.inspection;
     }

@@ -7,19 +7,19 @@ package link.crystal.Silver;
 import java.lang.Object;
 
 
-public class    SilverModule
-    extends     Object
+public final class  SilverModule
+    extends         Object
 {
     //
     //  Public Static members
     //
-    public static boolean               startup = true;
+    public static /*:*/ boolean         startup = true;
 
 
     //
     //  Public
     //
-    public static void                  initialize()
+    public static final void            initialize()
     {
         SilverModule.startup = false;
 

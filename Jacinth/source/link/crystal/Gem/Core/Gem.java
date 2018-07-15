@@ -19,7 +19,7 @@ import link.crystal.Gem.Support.Gem_ReferenceQueue;
 import link.crystal.Gem.Support.Map_String_Inspection;
 import link.crystal.Gem.Support.World_Integer_Cache;
 import link.crystal.Gem.Support.World_String_Cache;
-import link.crystal.Silver.UnitTest.UnitTest;
+import link.crystal.Gem.UnitTest.UnitTest_Gem;
 
 
 public abstract class   Gem
@@ -61,13 +61,13 @@ public abstract class   Gem
     //
     //  Public Statis (Unit Test)
     //
-    public static UnitTest              unit_test = null;
+    public static UnitTest_Gem          unit_test = null;
 
 
     //
     //  Ally
     //
-    public static void                  boot__ALLY__Zone(Zone z)
+    public static final void            boot__ALLY__Zone(final Zone z)
     {
         assert fact_null(Gem.integer_cache,                  "Gem.integer_cache");
         assert fact_null(Gem.string_cache,                   "Gem.string_cache");
@@ -87,7 +87,7 @@ public abstract class   Gem
     }
 
 
-    public static final void                store_unit_test__ALLY__UnitTest(UnitTest unit_test)
+    public static final void                store_unit_test__ALLY__UnitTest(final UnitTest_Gem unit_test)
     {
         assert fact_null   (Gem.unit_test, "Gem.unit_test");
         assert fact_pointer(unit_test,     "unit_test");
@@ -99,7 +99,7 @@ public abstract class   Gem
     //
     //  Public (arrange)
     //
-    public static String                arrange(int depth, String format)
+    public static final String          arrange(final int depth, final String format)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -109,7 +109,7 @@ public abstract class   Gem
     }
 
 
-    public static String                arrange(int depth, String format, Object v)
+    public static final String          arrange(final int depth, final String format, final Object v)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -119,7 +119,7 @@ public abstract class   Gem
     }
 
 
-    public static String                arrange(int depth, String format, Object v, Object w)
+    public static final String          arrange(final int depth, final String format, final Object v, final Object w)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -133,7 +133,13 @@ public abstract class   Gem
     }
 
 
-    public static String                arrange(int depth, String format, Object v, Object w, Object x)
+    public static final String          arrange(
+            final int                           depth,
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x//,
+        )
     {
         final Zone                      z = Zone.current_zone();
 
@@ -147,13 +153,13 @@ public abstract class   Gem
     }
 
 
-    public static String                arrange(
-            int                                 depth,
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y//
+    public static final String          arrange(
+            final int                           depth,
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//
         )
     {
         final Zone                      z = Zone.current_zone();
@@ -168,14 +174,14 @@ public abstract class   Gem
     }
 
 
-    public static String                arrange(
-            int                                 depth,
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
+    public static final String          arrange(
+            final int                           depth,
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
         )
     {
         final Zone                      z = Zone.current_zone();
@@ -190,15 +196,15 @@ public abstract class   Gem
     }
 
 
-    public static String                arrange(
-            int                                 depth,
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    public static final String          arrange(
+            final int                           depth,
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
         )
     {
         final Zone                      z = Zone.current_zone();
@@ -213,17 +219,17 @@ public abstract class   Gem
     }
 
 
-    public static String                arrange(
-            int                                 depth,
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    public static final String          arrange(
+            final int                           depth,
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         final Zone                      z = Zone.current_zone();
@@ -241,13 +247,13 @@ public abstract class   Gem
     //
     //  Public (line)
     //
-    public static void                  line()
+    public static final void            line()
     {
         standard_output.println();
     }
 
 
-    public static void                  line(int depth, String format)
+    public static final void            line(final int depth, final String format)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -257,7 +263,7 @@ public abstract class   Gem
     }
 
 
-    public static void                  line(int depth, String format, Object v)
+    public static final void            line(final int depth, final String format, final Object v)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -267,7 +273,7 @@ public abstract class   Gem
     }
 
 
-    public static void                  line(int depth, String format, Object v, Object w)
+    public static final void            line(final int depth, final String format, final Object v, final Object w)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -281,7 +287,13 @@ public abstract class   Gem
     }
 
 
-    public static void                  line(int depth, String format, Object v, Object w, Object x)
+    public static final void            line(
+            final int                           depth,
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x//,
+        )
     {
         final Zone                      z = Zone.current_zone();
 
@@ -295,7 +307,14 @@ public abstract class   Gem
     }
 
 
-    public static void                  line(int depth, String format, Object v, Object w, Object x, Object y)
+    public static final void            line(
+            final int                           depth,
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
+        )
     {
         final Zone                      z = Zone.current_zone();
 
@@ -309,7 +328,15 @@ public abstract class   Gem
     }
 
 
-    public static void                  line(int depth, String format, Object v, Object w, Object x, Object y4, Object y5)
+    public static final void            line(
+            final int                           depth,
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
+        )
     {
         final Zone                      z = Zone.current_zone();
 
@@ -323,15 +350,15 @@ public abstract class   Gem
     }
 
 
-    public static void                  line(
-            int                                 depth,
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    public static final void            line(
+            final int                           depth,
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
         )
     {
         final Zone                      z = Zone.current_zone();
@@ -346,17 +373,17 @@ public abstract class   Gem
     }
 
 
-    public static void                  line(
-            int                                 depth,
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    public static final void            line(
+            final int                           depth,
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         final Zone                      z = Zone.current_zone();
@@ -374,7 +401,7 @@ public abstract class   Gem
     //
     //  Public (dump)
     //
-    public static void                  dump()
+    public static final void            dump()
     {
         line("Dump of Gem");
         line("  standard_output: {p}", Gem.standard_output);
@@ -391,7 +418,7 @@ public abstract class   Gem
     //
     //  Public (other)
     //
-    public static MethodNameSegmentFormatter    conjure_MethodNameSegmentFormatter()
+    public static final MethodNameSegmentFormatter  conjure_MethodNameSegmentFormatter()
     {
         final MethodNameSegmentFormatter        message_name_segment_formatter = Gem.message_name_segment_formatter;
 
@@ -401,7 +428,7 @@ public abstract class   Gem
     }
 
 
-    public static int                   limit_to_between(int minimum, int v, int maximum)
+    public static final int             limit_to_between(final int minimum, final int v, final int maximum)
     {
         if (v < minimum) {
             return minimum;
@@ -415,7 +442,7 @@ public abstract class   Gem
     }
 
 
-    public static void                  output(String s)
+    public static final void            output(final String s)
     {
         standard_output.println(s);
     }

@@ -13,12 +13,12 @@ import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class    Storehouse_MessageFormattable
-    extends     Gem_StringMap<Inspection,         MessageFormattable<?>>
-//  extends     HashMap                  <String, MessageFormattable<?>>
-//  extends     AbstractHashMap          <String, MessageFormattable<?>>
-//  extends     Object
-    implements  Inspectable  <Inspection>//,
+public final class  Storehouse_MessageFormattable
+    extends         Gem_StringMap<Inspection,         MessageFormattable<?>>
+//  extends         HashMap                  <String, MessageFormattable<?>>
+//  extends         AbstractHashMap          <String, MessageFormattable<?>>
+//  extends         Object
+    implements      Inspectable  <Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Storehouse_MessageFormattable");
 
@@ -32,13 +32,13 @@ public class    Storehouse_MessageFormattable
     //
     //  Constructor & Factory
     //
-    private                             Storehouse_MessageFormattable(Zone z, int initial_capacity)
+    private                             Storehouse_MessageFormattable(final Zone z, final int initial_capacity)
     {
         super(z, initial_capacity);
     }
 
 
-    public static Storehouse_MessageFormattable     create__ALLY__Zone(Zone z)
+    public static final Storehouse_MessageFormattable   create__ALLY__Zone(final Zone z)
     {
         return new Storehouse_MessageFormattable(z, Storehouse_MessageFormattable.initial_capacity);
     }
@@ -47,7 +47,8 @@ public class    Storehouse_MessageFormattable
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }

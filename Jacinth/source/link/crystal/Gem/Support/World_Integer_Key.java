@@ -13,10 +13,10 @@ import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.World.World_Integer;
 
 
-public class    World_Integer_Key
-    extends     Gem_Object <Inspection>
-//  extends     Object
-    implements  Inspectable<Inspection>//,
+public final class  World_Integer_Key
+    extends         Gem_Object <Inspection>
+//  extends         Object
+    implements      Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("World_Integer_Key");
 
@@ -25,26 +25,26 @@ public class    World_Integer_Key
     //  Members
     //
     private final Zone                  z;
-    public int                          value;
+    public  /*:*/ int                   value;
 
 
     //
     //  Constructor, Factory, & Recycle
     //
-    protected                           World_Integer_Key(Zone z)
+    protected                           World_Integer_Key(final Zone z)
     {
         this.z     = z;
         this.value = 0;
     }
 
 
-    public static World_Integer_Key     create__ALLY__Zone(Zone z)
+    public static final World_Integer_Key   create__ALLY__Zone(final Zone z)
     {
         return new World_Integer_Key(z);
     }
 
 
-    public void                         recycle(int value)
+    public final void                   recycle(final int value)
     {
         this.value = value;
     }
@@ -54,14 +54,14 @@ public class    World_Integer_Key
     //  Abstract object
     //
     @Override
-    public int                          hashCode()
+    public final int                    hashCode()
     {
         return this.value;
     }
 
 
     @Override
-    public boolean                      equals(Object that)
+    public final boolean                equals(final Object that)
     {
         if ( ! (that instanceof World_Integer_WeakReference)) {
             return false;
@@ -76,13 +76,14 @@ public class    World_Integer_Key
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<World_Integer_Key ", this.value, ">");
     }

@@ -139,7 +139,7 @@ public abstract class   AnalyzeString
     private static final EphemeralStringState   S_S  = state("S_S");    //  Has """; ends in """
 
 
-    private static boolean              finish()
+    private static final boolean        finish()
     {
         final OverallStringState        _ = null;
 

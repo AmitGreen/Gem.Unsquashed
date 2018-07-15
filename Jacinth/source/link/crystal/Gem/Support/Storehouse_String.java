@@ -12,14 +12,14 @@ import link.crystal.Gem.Interface.Storehouse_String__Interface;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class    Storehouse_String
-    extends     Gem_StringSet<Inspection>
-//  extends     Gem_Map      <Inspection, String, String>
-//  extends     HashMap                  <String, String>
-//  extends     AbstractHashMap          <String, String>
-//  extends     Object
-    implements  Storehouse_String__Interface,
-                Inspectable<Inspection>//,
+public final class  Storehouse_String
+    extends         Gem_StringSet<Inspection>
+//  extends         Gem_Map      <Inspection, String, String>
+//  extends         HashMap                  <String, String>
+//  extends         AbstractHashMap          <String, String>
+//  extends         Object
+    implements      Storehouse_String__Interface,
+                    Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Storehouse_String");
 
@@ -27,20 +27,20 @@ public class    Storehouse_String
     //
     //  Private static
     //
-    private static final int                initial_capacity = 1009;
+    private static final int            initial_capacity = 1009;
 
 
 
     //
     //  Constructor & Factory
     //
-    private                             Storehouse_String(Zone z, int initial_capacity)
+    private                             Storehouse_String(final Zone z, final int initial_capacity)
     {
         super(z, initial_capacity);
     }
 
 
-    public static Storehouse_String     create__ALLY__Zone(Zone z)
+    public static final Storehouse_String   create__ALLY__Zone(final Zone z)
     {
         return new Storehouse_String(z, Storehouse_String.initial_capacity);
     }
@@ -49,7 +49,8 @@ public class    Storehouse_String
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
@@ -58,7 +59,7 @@ public class    Storehouse_String
     //
     //  Interface Storehouse_String__Interface
     //
-    public String                       intern_permenant_string(Zone z, String s)
+    public final String                 intern_permenant_string(final Zone z, final String s)
     {
         assert fact        (this.z == z, "this.z == z");
         assert fact_pointer(s, "s");
@@ -73,7 +74,7 @@ public class    Storehouse_String
     }
 
 
-    public void                         insert_permenant_string(Zone z, String s)
+    public final void                   insert_permenant_string(final Zone z, final String s)
     {
         this.insert(z, s, s);
     }

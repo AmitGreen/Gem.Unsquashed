@@ -17,10 +17,10 @@ import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.AsciiTable;
 
 
-public class    Gem_StringBuilder
-    extends     Gem_Object <Inspection>
-//  extends     Object
-    implements  Inspectable<Inspection>//,
+public final class  Gem_StringBuilder
+    extends         Gem_Object <Inspection>
+//  extends         Object
+    implements      Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Gem_StringBuilder");
 
@@ -30,13 +30,13 @@ public class    Gem_StringBuilder
     //
     public  final Zone                  z;
     private final StringBuilder         builder;
-    private       boolean               finished;
+    private /*:*/ boolean               finished;
 
 
     //
     //  Constructor, Factory, & Recycle
     //
-    private                             Gem_StringBuilder(Zone z, StringBuilder builder)
+    private                             Gem_StringBuilder(final Zone z, final StringBuilder builder)
     {
         this.z        = z;
         this.builder  = builder;
@@ -44,7 +44,7 @@ public class    Gem_StringBuilder
     }
 
 
-    public static Gem_StringBuilder     create__ALLY__Zone(Zone z)
+    public static final Gem_StringBuilder   create__ALLY__Zone(final Zone z)
     {
         final StringBuilder             builder = new StringBuilder();
 
@@ -52,7 +52,7 @@ public class    Gem_StringBuilder
     }
 
 
-    public Gem_StringBuilder            recycle()
+    public final Gem_StringBuilder      recycle()
     {
         final StringBuilder             builder = this.builder;
 
@@ -67,14 +67,15 @@ public class    Gem_StringBuilder
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
     @Override
-    public void                         portray(Gem_StringBuilder builder)
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         final StringBuilder             client = builder.builder;
 
@@ -94,82 +95,135 @@ public class    Gem_StringBuilder
     //
     //  Public (append)
     //
-    public void                         append(int v)
+    public final void                   append(final int v)
     {
         this.builder.append(v);
     }
 
 
-    public void                         append(String s)
+    public final void                   append(final String s)
     {
         this.builder.append(s);
     }
 
 
-    public void                         append(int a, String b)
+    public final void                   append(final int a, final String b)
     {
         this.builder.append(a).append(b);
     }
 
 
-    public void                         append(String a, String b)
+    public final void                   append(final String a, final String b)
     {
         this.builder.append(a).append(b);
     }
 
 
-    public void                         append(String a, int b, String c)
+    public final void                   append(final char a, final String b, final char c)
     {
         this.builder.append(a).append(b).append(c);
     }
 
 
-    public void                         append(String a, String b, String c)
+    public final void                   append(final String a, final int b, final String c)
     {
         this.builder.append(a).append(b).append(c);
     }
 
 
-    public void                         append(String a, String b, String c, String d)
+    public final void                   append(final String a, final String b, final String c)
+    {
+        this.builder.append(a).append(b).append(c);
+    }
+
+
+    public final void                   append(final String a, final String b, final String c, final String d)
     {
         this.builder.append(a).append(b).append(c).append(d);
     }
 
 
-    public void                         append(String a, int b, String c, int d, String e)
+    public final void                   append(final String a, final int b, final String c, final int d, final String e)
     {
         this.builder.append(a).append(b).append(c).append(d).append(e);
     }
 
 
-    public void                         append(String a, String b, String c, int d, String e)
+    public final void                   append(
+            final String                        a,
+            final String                        b,
+            final String                        c,
+            final int                           d,
+            final String                        e//,
+        )
     {
         this.builder.append(a).append(b).append(c).append(d).append(e);
     }
 
 
-    public void                         append(String a, String b, String c, String d, int e)
+    public final void                   append(
+            final String                        a,
+            final String                        b,
+            final String                        c,
+            final String                        d,
+            final int                           e//,
+        )
     {
         this.builder.append(a).append(b).append(c).append(d).append(e);
     }
 
 
-    public void                         append(String a, String b, String c, String d, String e)
+    public final void                   append(
+            final String                        a,
+            final String                        b,
+            final String                        c,
+            final String                        d,
+            final String                        e//,
+        )
     {
         this.builder.append(a).append(b).append(c).append(d).append(e);
     }
 
 
-    public void                         append(String a, String b, String c, String d, String e, int f)
+    public final void                   append(
+            final String                        a,
+            final String                        b,
+            final String                        c,
+            final String                        d,
+            final String                        e,
+            final int                           f//,
+        )
     {
         this.builder.append(a).append(b).append(c).append(d).append(e).append(f);
     }
 
 
     //
+    //  Public (append sub-string)
+    //
+    //      NOT used yet & thus not tested ...
+    //
+//  public final void                   append_sub_string(final String s, final int offset)
+//  {
+//      assert fact_between(0, offset, s.length() - 1);
+//
+//      this.builder.append(s, offset, s.length());
+//  }
+//
+//
+//  public final void                   append_sub_string(final String s, final int offset, final int end)
+//  {
+//      assert fact_between(0, offset, end);
+//      assert fact_between(0, end, s.length() - 1);
+//
+//      this.builder.append(s, offset, end);
+//  }
+
+
+    //
     //  Public (augment)
     //
-    public void                         augment(String format)
+    public final void                   augment(final String format)
     {
         final Zone                      z = this.z;
 
@@ -179,7 +233,7 @@ public class    Gem_StringBuilder
     }
 
 
-    public void                         augment(String format, Object v)
+    public final void                   augment(final String format, final Object v)
     {
         final Zone                      z = this.z;
 
@@ -189,7 +243,7 @@ public class    Gem_StringBuilder
     }
 
 
-    public void                         augment(String format, Object v, Object w)
+    public final void                   augment(final String format, final Object v, final Object w)
     {
         final Zone                      z = this.z;
 
@@ -199,7 +253,7 @@ public class    Gem_StringBuilder
     }
 
 
-    public void                         augment(String format, Object v, Object w, Object x)
+    public final void                   augment(final String format, final Object v, final Object w, final Object x)
     {
         final Zone                      z = this.z;
 
@@ -209,12 +263,12 @@ public class    Gem_StringBuilder
     }
 
 
-    public void                         augment(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y//
+    public final void                   augment(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//
         )
     {
         final Zone                      z = this.z;
@@ -225,13 +279,13 @@ public class    Gem_StringBuilder
     }
 
 
-    public void                         augment(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
+    public final void                   augment(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
         )
     {
         final Zone                      z = this.z;
@@ -242,14 +296,14 @@ public class    Gem_StringBuilder
     }
 
 
-    public void                         augment(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    public final void                   augment(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
         )
     {
         final Zone                      z = this.z;
@@ -260,16 +314,16 @@ public class    Gem_StringBuilder
     }
 
 
-    public void                         augment(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    public final void                   augment(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         final Zone                      z = this.z;
@@ -283,7 +337,7 @@ public class    Gem_StringBuilder
     //
     //  Public (others)
     //
-    public String                       finish_AND_keep()
+    public final String                 finish_AND_keep()
     {
         assert fact( ! this.finished, "! this.finished");
 
@@ -293,7 +347,7 @@ public class    Gem_StringBuilder
     }
 
 
-    public String                       finish_AND_recycle()
+    public final String                 finish_AND_recycle()
     {
         assert fact( ! this.finished, "! this.finished");
 
@@ -305,7 +359,7 @@ public class    Gem_StringBuilder
     }
 
 
-    public void                         format(Object v)
+    public final void                   format(final Object v)
     {
         if (v == null) {
             this.builder.append("<null>");
@@ -342,7 +396,7 @@ public class    Gem_StringBuilder
             return;
         }
 
-        String                      class_name = v_class.getSimpleName();
+        /*:*/ String                class_name = v_class.getSimpleName();
 
         if (class_name.equals("")) {
             class_name = v_class.getName();
@@ -352,7 +406,7 @@ public class    Gem_StringBuilder
     }
 
 
-    public void                         portray(Object v)
+    public final void                   portray(final Object v)
     {
         if (v == null) {
             this.builder.append("<null>");
@@ -389,7 +443,7 @@ public class    Gem_StringBuilder
             return;
         }
 
-        String                      class_name = v_class.getSimpleName();
+        /*:*/ String                class_name = v_class.getSimpleName();
 
         if (class_name.equals("")) {
             class_name = v_class.getName();
@@ -399,18 +453,20 @@ public class    Gem_StringBuilder
     }
 
 
-    public void                         quote(String s)
+    public final void                   quote(final String s)
     {
         assert fact_pointer(s, "s");
+
+        final StringBuilder             builder = this.builder;
 
         final AsciiTable[]              table = AsciiTable.table;
 
         builder.append("\"");
 
-        int                             start = 0;
+        /*:*/ int                       start = 0;
         final int                       total = s.length();
 
-        for (int                        i = 0; i < total; /*  i is incremented in the loop by 1 or 2  */) {
+        for (/*:*/ int                  i = 0; i < total; /*  i is incremented in the loop by 1 or 2  */) {
             final int                   code_point = s.codePointAt(i);
 
             if (code_point < 128) {
@@ -422,7 +478,7 @@ public class    Gem_StringBuilder
                 }
 
                 if (start < i) {
-                    builder.append(s.substring(start, i));
+                    builder.append(s, start, i);                        //  append sub-string
                 }
 
                 builder.append(ascii.portray_0);
@@ -438,7 +494,7 @@ public class    Gem_StringBuilder
         }
 
         if (start < total) {
-            builder.append(s.substring(start));
+            builder.append(s, start, total);                            //  append sub-string
         }
 
         builder.append("\"");

@@ -15,13 +15,13 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class    Map__String__ArgumentSegmentFormatter_Inspection
-    extends     Gem_StringMap  <Inspection,         ArgumentSegmentFormatter_Inspection>
-//  extends     Gem_Map        <Inspection, String, ArgumentSegmentFormatter_Inspection>
-//  extends     HashMap                    <String, ArgumentSegmentFormatter_Inspection>
-//  extends     AbstractHashMap            <String, ArgumentSegmentFormatter_Inspection>
-//  extends     Object
-    implements  Inspectable<Inspection>//,
+public final class  Map__String__ArgumentSegmentFormatter_Inspection
+    extends         Gem_StringMap  <Inspection,         ArgumentSegmentFormatter_Inspection>
+//  extends         Gem_Map        <Inspection, String, ArgumentSegmentFormatter_Inspection>
+//  extends         HashMap                    <String, ArgumentSegmentFormatter_Inspection>
+//  extends         AbstractHashMap            <String, ArgumentSegmentFormatter_Inspection>
+//  extends         Object
+    implements      Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = (
             Inspection.create("Map__String__ArgumentSegmentFormatter_Inspection")
@@ -38,13 +38,16 @@ public class    Map__String__ArgumentSegmentFormatter_Inspection
     //
     //  Constructor & Factory
     //
-    private                             Map__String__ArgumentSegmentFormatter_Inspection(Zone z, int initial_capacity)
+    private                             Map__String__ArgumentSegmentFormatter_Inspection(
+            final Zone                          z,
+            final int                           initial_capacity//,
+        )
     {
         super(z, initial_capacity);
     }
 
 
-    public static Map__String__ArgumentSegmentFormatter_Inspection  CREATE_AND_POPULATE(Zone z)
+    public static final Map__String__ArgumentSegmentFormatter_Inspection    CREATE_AND_POPULATE(final Zone z)
     {
         Map__String__ArgumentSegmentFormatter_Inspection    r = (
                 new Map__String__ArgumentSegmentFormatter_Inspection(
@@ -64,7 +67,8 @@ public class    Map__String__ArgumentSegmentFormatter_Inspection
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }

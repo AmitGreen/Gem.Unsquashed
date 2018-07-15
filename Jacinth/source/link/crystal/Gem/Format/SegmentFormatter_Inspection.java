@@ -17,11 +17,11 @@ import link.crystal.Gem.Interface.Inspectable;
 //      This is not an extension of `Comparable_Inspection` because, at present, SegmentFormatters are not comparable
 //      (They might become comparable in the future).
 //
-public class    SegmentFormatter_Inspection
-    extends     Inspection
-//  extends     Gem_Object <World_Inspection>
-//  extends     Object
-    implements  Inspectable<World_Inspection>//,
+public /*:*/ class  SegmentFormatter_Inspection
+    extends         Inspection
+//  extends         Gem_Object <World_Inspection>
+//  extends         Object
+    implements      Inspectable<World_Inspection>//,
 {
     private static final World_Inspection   inspection = World_Inspection.create("SegmentFormatter_Inspection");
 
@@ -36,7 +36,7 @@ public class    SegmentFormatter_Inspection
     //
     //  Constructor & Factory
     //
-    protected                           SegmentFormatter_Inspection(String simple_class_name)
+    protected                           SegmentFormatter_Inspection(final String simple_class_name)
     {
         super(simple_class_name);
 
@@ -45,7 +45,7 @@ public class    SegmentFormatter_Inspection
     }
 
 
-    public static SegmentFormatter_Inspection   create(String simple_class_name)
+    public static /*overrideable*/ SegmentFormatter_Inspection  create(final String simple_class_name)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -58,13 +58,15 @@ public class    SegmentFormatter_Inspection
     //
     //  Interface Inspectable
     //
-    public World_Inspection             inspect()
+    @Override
+    public /*overrideable*/ World_Inspection   inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         final World_Inspection          meta_inspection = this.inspect();
 

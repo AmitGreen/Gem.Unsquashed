@@ -107,12 +107,14 @@ public final class  Gem_Reference_Inspection
     //
     //  Interface Inspectable
     //
+    @Override
     public final World_Inspection       inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
+    @Override
     public final void                   portray(final Gem_StringBuilder builder)
     {
         this.portray_prefix(builder);

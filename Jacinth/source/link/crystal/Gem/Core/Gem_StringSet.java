@@ -24,7 +24,7 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
     //
     //  Constructor
     //
-    protected                           Gem_StringSet(Zone z, int initial_capacity)
+    protected                           Gem_StringSet(final Zone z, final int initial_capacity)
     {
         super(z, initial_capacity);
     }
@@ -34,7 +34,7 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
     //  Interface Inspectable
     //
     @Override
-    public void                         portray(Gem_StringBuilder builder)
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<", this.inspect().simple_class_name, " size<", this.size(), ">>");
     }
@@ -43,11 +43,11 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
     //
     //  Public
     //
-    public void                         dump(String name)
+    public final void                   dump(final String name)
     {
         final String                    simple_class_name = this.inspect().simple_class_name;
 
-        List<String>                    keys = new ArrayList<String>(this.keySet());
+        final List<String>              keys = new ArrayList<String>(this.keySet());
 
         Collections.sort(keys);
 
@@ -56,7 +56,7 @@ public abstract class   Gem_StringSet<INSPECTION extends Inspection>
         line("Dump of {} {}", simple_class_name, name);
         line("      size: {}", total);
 
-        for (int                        i = 0; i < total; i ++) {
+        for (/*:*/ int                  i = 0; i < total; i ++) {
             final String                k = keys.get(i);
 
             line("  {p}", k);

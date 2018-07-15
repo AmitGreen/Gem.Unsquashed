@@ -14,13 +14,13 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class    Comparable_Inspection
-    extends     Inspection
-//  extends     Gem_Object    <World_Inspection>
-//  extends     Object
-    implements  Gem_Comparable<World_Inspection>,
-                Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable   <World_Inspection>//,
+public /*:*/ class  Comparable_Inspection
+    extends         Inspection
+//  extends         Gem_Object    <World_Inspection>
+//  extends         Object
+    implements      Gem_Comparable<World_Inspection>,
+                    Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
+                    Inspectable   <World_Inspection>//,
 {
     //
     //  Class Order magic values
@@ -53,9 +53,9 @@ public class    Comparable_Inspection
     //  Constructor & Factory
     //
     protected                           Comparable_Inspection(
-            String                          simple_class_name,
-            int                             class_order,
-            boolean                         is_world_inspection//,
+            final String                    simple_class_name,
+            final int                       class_order,
+            final boolean                   is_world_inspection//,
         )
     {
         super(simple_class_name);
@@ -65,7 +65,7 @@ public class    Comparable_Inspection
     }
 
 
-    public static Comparable_Inspection     create(String simple_class_name, int class_order)
+    public static final Comparable_Inspection   create(final String simple_class_name, final int class_order)
     {
         assert fact_between(0, class_order, Comparable_Inspection.CLASS_ORDER__Maximum);
 
@@ -99,13 +99,14 @@ public class    Comparable_Inspection
     //  NOTE:
     //      Includes extra helper function `portray_prefix` which is *NOT* part of `Interface Inspectable`
     //
-    public World_Inspection             inspect()
+    @Override
+    public /*overrideable*/ World_Inspection    inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray_prefix(Gem_StringBuilder builder)
+    public final void                   portray_prefix(final Gem_StringBuilder builder)
     {
         builder.append("<", this.inspect().simple_class_name, " ", this.simple_class_name, " ", this.class_order);
 
@@ -115,7 +116,8 @@ public class    Comparable_Inspection
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    @Override
+    public /*overrideable*/ void        portray(final Gem_StringBuilder builder)
     {
         this.portray_prefix(builder);
         builder.append(">");

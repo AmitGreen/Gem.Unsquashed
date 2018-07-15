@@ -28,17 +28,17 @@ import link.crystal.Gem.World.World_String;
 //      This allows the creation of `World_String_WeakReference_PhantomReference` (which needs a
 //      `Gem_Referenceable_Interface` [for use with `Gem_ReferenceQueue`]) for debugging purposes.
 //
-public class    World_String_WeakReference
-    extends     Gem_WeakReference                 <Gem_Reference_Inspection, World_String, Comparable_Inspection>
-//  extends     WeakReference                                               <World_String>
-//  extends     Reference                                                   <World_String>
-//  extends     Object
-    implements  Gem_ComparableReference_Interface<Gem_Reference_Inspection, World_String, Comparable_Inspection>,
-                Gem_Referenceable_Interface      <Gem_Reference_Inspection>,
-                Gem_Reference_Interface          <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
-                Gem_Comparable                   <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
-                Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable                      <Gem_Reference_Inspection>//,
+public final class  World_String_WeakReference
+    extends         Gem_WeakReference                 <Gem_Reference_Inspection, World_String, Comparable_Inspection>
+//  extends         WeakReference                                               <World_String>
+//  extends         Reference                                                   <World_String>
+//  extends         Object
+    implements      Gem_ComparableReference_Interface<Gem_Reference_Inspection, World_String, Comparable_Inspection>,
+                    Gem_Referenceable_Interface      <Gem_Reference_Inspection>,
+                    Gem_Reference_Interface          <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
+                    Gem_Comparable                   <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
+                    Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
+                    Inspectable                      <Gem_Reference_Inspection>//,
 {
     private static final Gem_Reference_Inspection   inspection = Gem_Reference_Inspection.create(
             "World_String_WeakReference",
@@ -50,7 +50,7 @@ public class    World_String_WeakReference
     //
     //  Members
     //
-    private       String                world_name;
+    private /*:*/ String                world_name;
     public  final int                   pulp;
     public  final String                s;
 
@@ -59,10 +59,10 @@ public class    World_String_WeakReference
     //  Constructor
     //
     private                             World_String_WeakReference(
-            World_String                        client,
-            Gem_ReferenceQueue                  reference_queue,
-            int                                 pulp,
-            String                              s//,
+            final World_String                  client,
+            final Gem_ReferenceQueue            reference_queue,
+            final int                           pulp,
+            final String                        s//,
         )
     {
         super(client, reference_queue);
@@ -73,9 +73,9 @@ public class    World_String_WeakReference
     }
 
 
-    public static World_String_WeakReference    create__ALLY__Gem(
-            World_String                        client,
-            Gem_ReferenceQueue                  reference_queue//,
+    public static final World_String_WeakReference  create__ALLY__Gem(
+            final World_String                  client,
+            final Gem_ReferenceQueue            reference_queue//,
         )
     {
         final String                    s = client.s;
@@ -94,7 +94,7 @@ public class    World_String_WeakReference
     //      `Object.equals` which uses identity as the equal test).
     //
     @Override
-    public int                          hashCode()
+    public final int                    hashCode()
     {
         return this.pulp;
     }
@@ -109,7 +109,7 @@ public class    World_String_WeakReference
     //      Do need to compare to a `World_String_WeakReference` (since might be replaced by it in the cache).
     //
     @Override
-    public boolean                      equals(Object that)
+    public final boolean                equals(final Object that)
     {
         if (this == that) {
             return true;
@@ -129,7 +129,7 @@ public class    World_String_WeakReference
     //  Interface java.lang.Comparable
     //
     @Override
-    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
+    public final int                    compareTo(final Gem_Comparable<? extends Comparable_Inspection> that)
     {
         final Comparable_Inspection     that_inspection = that.inspect();
 
@@ -173,7 +173,8 @@ public class    World_String_WeakReference
     //
     //  Interface Gem_QueueableReference_Interface
     //
-    public void                         reap()
+    @Override
+    public final void                   reap()
     {
         final Gem_ComparableReference_Interface<
                   ? extends Comparable_Inspection,
@@ -196,13 +197,15 @@ public class    World_String_WeakReference
     //
     //  Interface Inspectable
     //
+    @Override
     public Gem_Reference_Inspection     inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         World_String                    client = this.get();
 

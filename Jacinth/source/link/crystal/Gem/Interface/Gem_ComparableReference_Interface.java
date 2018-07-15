@@ -35,7 +35,7 @@ public interface    Gem_ComparableReference_Interface<
     //
     //  Interface java.lang.Comparable
     //
-    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that);
+    public int                          compareTo(final Gem_Comparable<? extends Comparable_Inspection> that);
 
 
     //
@@ -50,7 +50,7 @@ public interface    Gem_ComparableReference_Interface<
     @Override                           //  NOTE: Different `INSPECTION`
     public INSPECTION                   inspect();
 
-    public void                         portray(Gem_StringBuilder builder);
+    public void                         portray(final Gem_StringBuilder builder);
 
 
     //

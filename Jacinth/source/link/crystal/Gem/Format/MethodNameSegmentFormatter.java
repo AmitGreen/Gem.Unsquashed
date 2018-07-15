@@ -15,13 +15,13 @@ import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 
 
-public class    MethodNameSegmentFormatter
-    extends     MessageFormatter_Base<SegmentFormatter_Inspection>
-//  extends     Gem_Object           <SegmentFormatter_Inspection>
-//  extends     Object
-    implements  MessageFormattable   <SegmentFormatter_Inspection>,
-                SegmentFormattable   <SegmentFormatter_Inspection>,
-                Inspectable          <SegmentFormatter_Inspection>//,
+public final class  MethodNameSegmentFormatter
+    extends         MessageFormatter_Base<SegmentFormatter_Inspection>
+//  extends         Gem_Object           <SegmentFormatter_Inspection>
+//  extends         Object
+    implements      MessageFormattable   <SegmentFormatter_Inspection>,
+                    SegmentFormattable   <SegmentFormatter_Inspection>,
+                    Inspectable          <SegmentFormatter_Inspection>//,
 {
     private static final SegmentFormatter_Inspection    inspection = (
             SegmentFormatter_Inspection.create("MethodNameSegmentFormatter")
@@ -36,7 +36,7 @@ public class    MethodNameSegmentFormatter
     }
 
 
-    static public MethodNameSegmentFormatter    create__ALLY__Gem()
+    public static final MethodNameSegmentFormatter  create__ALLY__Gem()
     {
         return new MethodNameSegmentFormatter();
     }
@@ -45,7 +45,8 @@ public class    MethodNameSegmentFormatter
     //
     //  Interface Inspectable
     //
-    public SegmentFormatter_Inspection  inspect()
+    @Override
+    public final SegmentFormatter_Inspection    inspect()
     {
         return /*static*/ this.inspection;
     }
@@ -55,7 +56,7 @@ public class    MethodNameSegmentFormatter
     //  Interface MessageFormattable
     //
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth)
+    public final void                   augment(final Gem_StringBuilder builder, int depth)
     {
         this.method_name(builder, depth + 1);
     }
@@ -64,83 +65,94 @@ public class    MethodNameSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public void                         choose(Gem_StringBuilder builder, int depth)
+    public final void                   choose(final Gem_StringBuilder builder, int depth)
     {
         this.method_name(builder, depth + 1);
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v)
+    public final void                   choose(final Gem_StringBuilder builder, int depth, final Object v)
     {
         this.method_name(builder, depth + 1);
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w)
-    {
-        this.method_name(builder, depth + 1);
-    }
-
-
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
-    {
-        this.method_name(builder, depth + 1);
-    }
-
-
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y//,
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w//,
         )
     {
         this.method_name(builder, depth + 1);
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x//,
         )
     {
         this.method_name(builder, depth + 1);
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
         )
     {
         this.method_name(builder, depth + 1);
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
+        )
+    {
+        this.method_name(builder, depth + 1);
+    }
+
+
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
+        )
+    {
+        this.method_name(builder, depth + 1);
+    }
+
+
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         this.method_name(builder, depth + 1);
@@ -150,7 +162,7 @@ public class    MethodNameSegmentFormatter
     //
     //  public
     //
-    public static void                  method_name(Gem_StringBuilder builder, int depth)
+    public static final void            method_name(final Gem_StringBuilder builder, int depth)
     {
         final Zone                      z = builder.z;
 
@@ -161,9 +173,9 @@ public class    MethodNameSegmentFormatter
         if (false) {
             output("MethodNameSegmentFormatter.method_name: total<" + Integer.toString(total) + ">");
 
-            for (int                    i = 0; i < total; i ++) {
+            for (/*:*/ int              i = 0; i < total; i ++) {
                 final StackTraceElement     stack_trace = stack_trace_many[i];
-                String                      class_name  = stack_trace.getClassName();
+                /*:*/ String                class_name  = stack_trace.getClassName();
                 final int                   dot_index   = class_name.lastIndexOf(46);   //  46 = '.'
 
                 if (dot_index != -1) {
@@ -193,7 +205,7 @@ public class    MethodNameSegmentFormatter
 
         if (depth < total) {
             final StackTraceElement     stack_trace = stack_trace_many[depth];
-            String                      class_name  = stack_trace.getClassName();
+            /*:*/ String                class_name  = stack_trace.getClassName();
             final int                   dot_index   = class_name.lastIndexOf(46);       //  46 = '.'
 
             if (dot_index != -1) {

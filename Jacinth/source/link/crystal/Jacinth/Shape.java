@@ -11,10 +11,10 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class    Shape
-    extends     Gem_Object <Inspection>
-//  extends     Object
-    implements  Inspectable<Inspection>//,
+public final class  Shape
+    extends         Gem_Object <Inspection>
+//  extends         Object
+    implements      Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Shape");
 
@@ -28,13 +28,13 @@ public class    Shape
     //
     //  Constructor & Factory
     //
-    private                             Shape(String shape_name)
+    private                             Shape(final String shape_name)
     {
         this.shape_name = shape_name;
     }
 
 
-    public static Shape                 create(Zone z, String shape_name)
+    public static final Shape           create(final Zone z, final String shape_name)
     {
         return new Shape(shape_name);
     }
@@ -43,13 +43,15 @@ public class    Shape
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<Shape ", this.shape_name, ">");
     }
@@ -58,7 +60,7 @@ public class    Shape
     //
     //  Public
     //
-    public void                         skew()
+    public final void                   skew()
     {
         line("Shape.skew: " + this.shape_name);
     }

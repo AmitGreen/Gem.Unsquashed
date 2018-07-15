@@ -13,13 +13,13 @@ import link.crystal.Gem.Interface.Gem_Referenceable_Interface;
 import link.crystal.Gem.Inspection.Comparable_Inspection;
 
 
-public class    World_String
-    extends     Gem_Object                 <Comparable_Inspection>
-//  extends     Object
-    implements  Gem_Comparable             <Comparable_Inspection>,
-                Gem_Referenceable_Interface<Comparable_Inspection>,
-                Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable                <Comparable_Inspection>//,
+public final class  World_String
+    extends         Gem_Object                 <Comparable_Inspection>
+//  extends         Object
+    implements      Gem_Comparable             <Comparable_Inspection>,
+                    Gem_Referenceable_Interface<Comparable_Inspection>,
+                    Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
+                    Inspectable                <Comparable_Inspection>//,
 {
     private static final Comparable_Inspection  inspection = Comparable_Inspection.create(
             "World_String",
@@ -30,21 +30,21 @@ public class    World_String
     //
     //  Members
     //
-    private       String                world_name;
+    private /*:*/ String                world_name;
     public  final String                s;
 
 
     //
     //  Constructor & Factory
     //
-    protected                           World_String(String s)
+    protected                           World_String(final String s)
     {
         this.world_name = null;
         this.s          = s;
     }
 
 
-    public static World_String          create__ALLY__Gem(String s)
+    public static final World_String    create__ALLY__Gem(final String s)
     {
         return new World_String(s);
     }
@@ -54,7 +54,7 @@ public class    World_String
     //  Interface java.lang.Comparable
     //
     @Override
-    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
+    public final int                    compareTo(final Gem_Comparable<? extends Comparable_Inspection> that)
     {
         final int                       class_compare = (
                 Comparable_Inspection.CLASS_ORDER__World_String - that.inspect().class_order
@@ -79,13 +79,15 @@ public class    World_String
     //
     //  Interface Inspectable
     //
-    public Comparable_Inspection        inspect()
+    @Override
+    public final Comparable_Inspection  inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<");
         builder.quote(this.s);

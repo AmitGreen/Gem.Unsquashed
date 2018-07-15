@@ -21,7 +21,7 @@ public abstract class   ArgumentSegmentFormatter_Inspection<ARGUMENT_SEGMENT ext
     //
     //  Constructor & Factory
     //
-    protected                           ArgumentSegmentFormatter_Inspection(String simple_class_name)
+    protected                           ArgumentSegmentFormatter_Inspection(final String simple_class_name)
     {
         super(simple_class_name);
     }
@@ -30,5 +30,5 @@ public abstract class   ArgumentSegmentFormatter_Inspection<ARGUMENT_SEGMENT ext
     //
     //  Abstract
     //
-    public abstract ARGUMENT_SEGMENT    conjure_argument_segment(Zone z, int argument_index);
+    public abstract ARGUMENT_SEGMENT    conjure_argument_segment(final Zone z, final int argument_index);
 }

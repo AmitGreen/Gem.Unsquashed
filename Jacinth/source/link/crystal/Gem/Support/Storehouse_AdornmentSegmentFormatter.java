@@ -12,13 +12,13 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class    Storehouse_AdornmentSegmentFormatter
-    extends     Gem_StringMap  <Inspection,         AdornmentSegmentFormatter>
-//  extends     Gem_Map        <Inspection, String, AdornmentSegmentFormatter>
-//  extends     HashMap                    <String, AdornmentSegmentFormatter>
-//  extends     AbstractHashMap            <String, AdornmentSegmentFormatter>
-//  extends     Object
-    implements  Inspectable    <Inspection>//,
+public final class  Storehouse_AdornmentSegmentFormatter
+    extends         Gem_StringMap  <Inspection,         AdornmentSegmentFormatter>
+//  extends         Gem_Map        <Inspection, String, AdornmentSegmentFormatter>
+//  extends         HashMap                    <String, AdornmentSegmentFormatter>
+//  extends         AbstractHashMap            <String, AdornmentSegmentFormatter>
+//  extends         Object
+    implements      Inspectable    <Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Storehouse_AdornmentSegmentFormatter");
 
@@ -32,13 +32,13 @@ public class    Storehouse_AdornmentSegmentFormatter
     //
     //  Constructor & Factory
     //
-    private                             Storehouse_AdornmentSegmentFormatter(Zone z, int initial_capacity)
+    private                             Storehouse_AdornmentSegmentFormatter(final Zone z, final int initial_capacity)
     {
         super(z, initial_capacity);
     }
 
 
-    public static Storehouse_AdornmentSegmentFormatter  create__ALLY__Zone(Zone z)
+    public static final Storehouse_AdornmentSegmentFormatter    create__ALLY__Zone(final Zone z)
     {
         return new Storehouse_AdornmentSegmentFormatter(z, Storehouse_AdornmentSegmentFormatter.initial_capacity);
     }
@@ -47,7 +47,8 @@ public class    Storehouse_AdornmentSegmentFormatter
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }

@@ -11,7 +11,7 @@ import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 
 
-final class             EphemeralStringState
+public final class      EphemeralStringState
     extends             Gem_Object <Inspection>
     implements          Inspectable<Inspection>//,
 {
@@ -22,27 +22,27 @@ final class             EphemeralStringState
     //  Members
     //
     public final String                 debug_name;
-    public       EphemeralStringState   A;
-    public       EphemeralStringState   K;
-    public       EphemeralStringState   N;
-    public       EphemeralStringState   Q;
+    public /*:*/ EphemeralStringState   A;
+    public /*:*/ EphemeralStringState   K;
+    public /*:*/ EphemeralStringState   N;
+    public /*:*/ EphemeralStringState   Q;
 
-    public       int                    ra;
-    public       int                    rq;
+    public /*:*/ int                    ra;
+    public /*:*/ int                    rq;
 
-    public       int                    kc;
-    public       int                    ks;
+    public /*:*/ int                    kc;
+    public /*:*/ int                    ks;
 
-    public       int                    pc;
-    public       int                    ps;
+    public /*:*/ int                    pc;
+    public /*:*/ int                    ps;
 
 
     //
     //  Tracking ''' & """ for normal portray
     //
-    public       int                    favorite_3;
-    public       boolean                end_C;
-    public       boolean                end_S;
+    public /*:*/ int                    favorite_3;
+    public /*:*/ boolean                end_C;
+    public /*:*/ boolean                end_S;
 
 
     //
@@ -153,13 +153,15 @@ final class             EphemeralStringState
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(final Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         final EphemeralStringState      A  = this.A;
         final EphemeralStringState      K  = this.K;

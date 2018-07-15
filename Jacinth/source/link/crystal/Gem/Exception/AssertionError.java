@@ -11,9 +11,9 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class        AssertionError
-    extends         RuntimeException
-    implements      Inspectable<Inspection>//,
+public final class      AssertionError
+    extends             RuntimeException
+    implements          Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("AssertionError");
 
@@ -27,7 +27,7 @@ public class        AssertionError
     //
     //  Constructor & Factory
     //
-    private                             AssertionError(Zone z, String error_message)
+    private                             AssertionError(final Zone z, final String error_message)
     {
         super(error_message);
 
@@ -35,7 +35,7 @@ public class        AssertionError
     }
 
 
-    static public AssertionError        create(Zone z, String error_message)
+    public static final AssertionError  create(final Zone z, final String error_message)
     {
         return new AssertionError(z, error_message);
     }
@@ -44,14 +44,15 @@ public class        AssertionError
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
     @Override
-    public void                         portray(Gem_StringBuilder builder)
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<AssertionError ");
         builder.quote(this.getMessage());

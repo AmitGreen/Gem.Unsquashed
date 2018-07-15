@@ -15,5 +15,5 @@ public interface    Inspectable<INSPECTION extends Inspection>
     //  Interface <me>
     //
     public INSPECTION                   inspect();
-    public void                         portray(Gem_StringBuilder builder);
+    public void                         portray(final Gem_StringBuilder builder);
 }

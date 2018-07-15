@@ -28,9 +28,9 @@ import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class   ParseFormat
-    extends    Gem_Object <Inspection>
-    implements Inspectable<Inspection>//,
+public final class  ParseFormat
+    extends         Gem_Object <Inspection>
+    implements      Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("ParseFormat");
 
@@ -64,33 +64,33 @@ public class   ParseFormat
     //
     private final Zone                  z;
 
-    private       String                                            format;
+    private /*:*/ String                                            format;
     private final Matcher                                           braces_matcher;
     private final Map__String__ArgumentSegmentFormatter_Inspection  format_map;
 
-    private       Gem_StringBuilder     builder;
+    private /*:*/ Gem_StringBuilder     builder;
 
-    private       SegmentFormattable[]  segment_many;
-    private       int                   segment_total;
-    private       int                   segment_allocated;
+    private /*:*/ SegmentFormattable[]  segment_many;
+    private /*:*/ int                   segment_total;
+    private /*:*/ int                   segment_allocated;
 
-    private       int[]                 used_index_many;
-    private       int                   used_index_total;
-    private       int                   used_index_allocated;
+    private /*:*/ int[]                 used_index_many;
+    private /*:*/ int                   used_index_total;
+    private /*:*/ int                   used_index_allocated;
 
-    private       int[]                 missing_many;
-    private       int                   missing_total;
-    private       int                   missing_allocated;
+    private /*:*/ int[]                 missing_many;
+    private /*:*/ int                   missing_total;
+    private /*:*/ int                   missing_allocated;
 
 
     //
     //  Constructor, Factory, & Recycle
     //
     private                             ParseFormat(
-            Zone                                                z,
-            String                                              format,
-            Matcher                                             braces_matcher,
-            Map__String__ArgumentSegmentFormatter_Inspection    format_map//,
+            final Zone                                              z,
+            final String                                            format,
+            final Matcher                                           braces_matcher,
+            final Map__String__ArgumentSegmentFormatter_Inspection  format_map//,
         )
     {
         this.z = z;
@@ -115,10 +115,10 @@ public class   ParseFormat
     }
 
 
-    public static ParseFormat           create__ALLY__Zone(
-            Zone                                                z,
-            String                                              format,
-            Map__String__ArgumentSegmentFormatter_Inspection    format_map//,
+    public static final ParseFormat     create__ALLY__Zone(
+            final Zone                                              z,
+            final String                                            format,
+            final Map__String__ArgumentSegmentFormatter_Inspection  format_map//,
         )
     {
         final Matcher                   braces_matcher = ParseFormat.braces_pattern.matcher(format);
@@ -127,7 +127,7 @@ public class   ParseFormat
     }
 
 
-    public ParseFormat                  recycle(String format)
+    public final ParseFormat            recycle(final String format)
     {
         this.format = format;
         this.braces_matcher.reset(format);
@@ -145,25 +145,26 @@ public class   ParseFormat
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    //inherited public void             Portray(String_Builder builder);
+    //inherited public void             portray(String_Builder builder);
 
 
     //
     //  Private
     //
-    private void                        add_used_index(int argument_index)
+    private final void                  add_used_index(final int argument_index)
     {
         if (false) {
             output("add_used_index(" + Integer.toString(argument_index) + ")");
         }
 
-        int[]                           used_index_many      = this.used_index_many;
+        /*:*/ int[]                     used_index_many      = this.used_index_many;
         final int                       used_index_total     = this.used_index_total;
         final int                       used_index_allocated = this.used_index_allocated;
         final int                       needed               = argument_index + 1;
@@ -183,7 +184,7 @@ public class   ParseFormat
             this.used_index_allocated = new_allocated;
         }
 
-        for (int                    i = used_index_total; i <= argument_index; i ++) {
+        for (/*:*/ int              i = used_index_total; i <= argument_index; i ++) {
             used_index_many[i] = 0;
         }
 
@@ -195,9 +196,9 @@ public class   ParseFormat
     }
 
 
-    private void                        append_missing(int missing)
+    private final void                  append_missing(final int missing)
     {
-        int[]                           missing_many      = this.missing_many;
+        /*:*/ int[]                     missing_many      = this.missing_many;
         final int                       missing_total     = this.missing_total;
         final int                       missing_allocated = this.missing_allocated;
         final int                       needed            = missing_total + 1;
@@ -223,9 +224,9 @@ public class   ParseFormat
     }
 
 
-    private void                        append_segment(SegmentFormattable segment)
+    private final void                  append_segment(SegmentFormattable segment)
     {
-        SegmentFormattable[]            segment_many      = this.segment_many;
+        /*:*/ SegmentFormattable[]      segment_many      = this.segment_many;
         final int                       segment_total     = this.segment_total;
         final int                       segment_allocated = this.segment_allocated;
         final int                       needed            = segment_total + 1;
@@ -257,13 +258,13 @@ public class   ParseFormat
     }
 
 
-    private void                        examine_missing()
+    private final void                  examine_missing()
     {
         final Zone                      z                = this.z;
         final int[]                     used_index_many  = this.used_index_many;
         final int                       used_index_total = this.used_index_total;
 
-        for (int                        i = 0; i < used_index_total; i ++) {
+        for (/*:*/ int                  i = 0; i < used_index_total; i ++) {
             if (used_index_many[i] == 0) {
                 this.append_missing(i);
             }
@@ -287,7 +288,7 @@ public class   ParseFormat
 
         final Gem_StringBuilder         builder = this.summon_builder();
 
-        for (int                        i = 0; i < missing_total; i ++) {
+        for (/*:*/ int                  i = 0; i < missing_total; i ++) {
             if (i == missing_total - 1) {
                 builder.append(", and ");
             } else if (i > 0) {
@@ -301,7 +302,7 @@ public class   ParseFormat
     }
 
 
-    private MessageFormattable<?>       parse_format__work()
+    private final MessageFormattable<?>     parse_format__work()
     {
         final Zone                      z              = this.z;
         final String                    format         = this.format;
@@ -311,13 +312,13 @@ public class   ParseFormat
             return z.conjure_AdornmentSegmentFormatter(format);
         }
 
-        int                             argument_index    = -1;
-        int                             automatic_index   = -1;
-        Gem_StringBuilder               builder           = null;
-        boolean                         has_prefix        = false;
-        int                             format_total      = format.length();
-        int                             start             = 0;
-        String                          prefix_at_index_0 = null;
+        /*:*/ int                       argument_index    = -1;
+        /*:*/ int                       automatic_index   = -1;
+        /*:*/ Gem_StringBuilder         builder           = null;
+        /*:*/ boolean                   has_prefix        = false;
+        /*:*/ int                       format_total      = format.length();
+        /*:*/ int                       start             = 0;
+        /*:*/ String                    prefix_at_index_0 = null;
 
         for (;;) {
             //
@@ -331,7 +332,7 @@ public class   ParseFormat
             final int                   end_6 = braces_matcher.end(6);
 
             if (end_6 == -1) {
-                int                     start_brace_pair = braces_matcher.start(2);
+                /*:*/ int               start_brace_pair = braces_matcher.start(2);
 
                 if (start_brace_pair == -1) {
                     start_brace_pair = braces_matcher.start(7);
@@ -374,7 +375,7 @@ public class   ParseFormat
             final int                   start_1 = braces_matcher.start(1);
 
             if (start < start_1) {
-                String                  start_s = format.substring(start, start_1);
+                /*:*/ String            start_s = format.substring(start, start_1);
 
                 if (has_prefix) {
                     builder.append(start_s);
@@ -469,7 +470,7 @@ public class   ParseFormat
 
             output(b2.finish_AND_recycle());
 
-            for (int                    i = 0; i < segment_total; i ++) {
+            for (/*:*/ int              i = 0; i < segment_total; i ++) {
                 final SegmentFormattable    segment = segment_many[i];
                 final Gem_StringBuilder     b3      = z.summon_StringBuilder();
 
@@ -535,7 +536,7 @@ public class   ParseFormat
                 );
         }
 
-        SegmentFormattable[]        shrunk_many;
+        /*:*/ SegmentFormattable[]  shrunk_many;
         final int                   shrunk_total = segment_total;
 
         if (segment_total < segment_allocated) {
@@ -554,7 +555,7 @@ public class   ParseFormat
     }
 
 
-    private void                        raise_both_automatic_and_manual_field_number()
+    private final void                  raise_both_automatic_and_manual_field_number()
     {
         RUNTIME("format string has both automatic & manual field numbering: {p}", this.format);
     }
@@ -567,7 +568,7 @@ public class   ParseFormat
     //      Not really useful, since all the same data is saved elsewhere, and will never be garbage collectd ...
     //      ...  However, doing this just on principle anyway ...
     //
-    private void                        scrub()
+    private final void                  scrub()
     {
         final int                       segment_total = this.segment_total;
 
@@ -575,9 +576,9 @@ public class   ParseFormat
         this.braces_matcher.reset();
 
         if (segment_total > 0) {
-            SegmentFormattable[]        segment_many = this.segment_many;
+            final SegmentFormattable[]  segment_many = this.segment_many;
 
-            for (int                    i = 0; i < segment_total; i ++) {
+            for (/*:*/ int              i = 0; i < segment_total; i ++) {
                 segment_many[i] = null;
             }
 
@@ -586,7 +587,7 @@ public class   ParseFormat
     }
 
 
-    private SegmentFormattable[]        steal_segments()
+    private final SegmentFormattable[]  steal_segments()
     {
         final SegmentFormattable[]      segment_many = this.segment_many;
 
@@ -602,9 +603,9 @@ public class   ParseFormat
     }
 
 
-    private Gem_StringBuilder           summon_builder()
+    private final Gem_StringBuilder     summon_builder()
     {
-        Gem_StringBuilder               builder = this.builder;
+        /*:*/ Gem_StringBuilder         builder = this.builder;
 
         if (builder != null) {
             return builder.recycle();
@@ -620,7 +621,7 @@ public class   ParseFormat
     //
     //  Public static
     //
-    public static MessageFormattable<?>     parse_format(Zone z, String format)
+    public static final MessageFormattable<?>   parse_format(final Zone z, final String format)
     {
         final Storehouse_MessageFormattable     cache = z.conjure__Storehouse_MessageFormattable();
 
@@ -630,7 +631,7 @@ public class   ParseFormat
             return previous;
         }
 
-        ParseFormat                     parse_format = z.summon_ParseFormat__ALLY__ParseFormat(format);
+        final ParseFormat               parse_format = z.summon_ParseFormat__ALLY__ParseFormat(format);
 
         final MessageFormattable<?>     formattable = parse_format.parse_format__work();
 

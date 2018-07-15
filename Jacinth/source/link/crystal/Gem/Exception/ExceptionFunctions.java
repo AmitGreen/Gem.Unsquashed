@@ -23,12 +23,12 @@ public abstract class   ExceptionFunctions
     //
     //  Private
     //
-    private static String               method_name(
-            Zone                                z,
-            int                                 depth,
-            String                              extra,
-            String                              format,
-            Object ...                          arguments//,
+    private static final String         method_name(
+            final Zone                          z,
+            /*:*/ int                           depth,
+            final String                        extra,
+            final String                        format,
+            final Object ...                    arguments//,
         )
     {
         final MessageFormattable<?>     formattable = ParseFormat.parse_format(z, format);
@@ -108,7 +108,7 @@ public abstract class   ExceptionFunctions
         if (adjusted_total > 0) {
             adjusted = new Object[adjusted_total];
 
-            for (int                    i = 0; i < adjusted_total; i ++) {
+            for (/*:*/ int              i = 0; i < adjusted_total; i ++) {
                 adjusted[i] = arguments[i + 6];
             }
         }
@@ -122,7 +122,7 @@ public abstract class   ExceptionFunctions
     //
     //  Public
     //
-    public static void                  ASSERT(int depth, String format, Object ... arguments)
+    public static final void            ASSERT(final int depth, final String format, final Object ... arguments)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -136,7 +136,11 @@ public abstract class   ExceptionFunctions
     }
 
 
-    public static void                  ASSERTION_FAILED(int depth, String format, Object ... arguments)
+    public static final void            ASSERTION_FAILED(
+            final int                           depth,
+            final String                        format,
+            final Object ...                    arguments//,
+        )
     {
         final Zone                      z = Zone.current_zone();
 
@@ -150,7 +154,11 @@ public abstract class   ExceptionFunctions
     }
 
 
-    public static void                  RUNTIME(int depth, String format, Object ... arguments)
+    public static final void            RUNTIME(
+            final int                           depth,
+            final String                        format,
+            final Object ...                    arguments//,
+        )
     {
         final Zone                      z = Zone.current_zone();
 

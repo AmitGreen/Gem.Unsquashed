@@ -16,14 +16,14 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.World.World_String;
 
 
-public class    World_String_EnduringReference
-    extends     Gem_Object                       <Gem_Reference_Inspection>
-//  extends     Object
-    implements  Gem_ComparableReference_Interface<Gem_Reference_Inspection, World_String, Comparable_Inspection>,
-                Gem_Reference_Interface          <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
-                Gem_Comparable                   <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
-                Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable                      <Gem_Reference_Inspection>//,
+public final class  World_String_EnduringReference
+    extends         Gem_Object                       <Gem_Reference_Inspection>
+//  extends         Object
+    implements      Gem_ComparableReference_Interface<Gem_Reference_Inspection, World_String, Comparable_Inspection>,
+                    Gem_Reference_Interface          <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
+                    Gem_Comparable                   <Gem_Reference_Inspection>,    //  Via Gem_ComparableReference_Interface
+                    Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
+                    Inspectable                      <Gem_Reference_Inspection>//,
 {
     private static final Gem_Reference_Inspection   inspection = Gem_Reference_Inspection.create(
             "World_String_EnduringReference",
@@ -41,13 +41,13 @@ public class    World_String_EnduringReference
     //
     //  Constructor
     //
-    private                             World_String_EnduringReference(World_String client)
+    private                             World_String_EnduringReference(final World_String client)
     {
         this.client = client;
     }
 
 
-    public static World_String_EnduringReference    create__ALLY__Gem(World_String client)
+    public static final World_String_EnduringReference  create__ALLY__Gem(final World_String client)
     {
         return new World_String_EnduringReference(client);
     }
@@ -61,7 +61,7 @@ public class    World_String_EnduringReference
     //      `Object.equals` which uses identity as the equal test).
     //
     @Override
-    public int                          hashCode()
+    public final int                    hashCode()
     {
         return this.client.s.hashCode();
     }
@@ -75,7 +75,8 @@ public class    World_String_EnduringReference
     //  HOWEVER:
     //      Do need to compare to a `World_String_WeakReference` (since might be replacing it in the cache).
     //
-    public boolean                      equals(Object that)
+    @Override
+    public final boolean                equals(final Object that)
     {
         if (this == that) {
             return true;
@@ -95,7 +96,7 @@ public class    World_String_EnduringReference
     //  Interface java.lang.Comparable
     //
     @Override
-    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
+    public final int                    compareTo(final Gem_Comparable<? extends Comparable_Inspection> that)
     {
         final Comparable_Inspection     that_inspection = that.inspect();
 
@@ -161,7 +162,8 @@ public class    World_String_EnduringReference
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<World_String_EnduringReference ");
         builder.portray(client);

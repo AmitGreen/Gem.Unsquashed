@@ -35,15 +35,15 @@ import link.crystal.Gem.Support.World_String_Cache;
 import link.crystal.Gem.Support.World_String_EnduringReference;
 import link.crystal.Gem.Support.World_String_Key;
 import link.crystal.Gem.Support.World_String_WeakReference;
+import link.crystal.Gem.UnitTest.UnitTest_Gem;
 import link.crystal.Gem.World.World_Integer;
 import link.crystal.Gem.World.World_String;
-import link.crystal.Silver.UnitTest.UnitTest;
 
 
-public class    Zone
-    extends     Gem_Object <Inspection>
-//  extends     Object
-    implements  Inspectable<Inspection>//,
+public final class  Zone
+    extends         Gem_Object <Inspection>
+//  extends         Object
+    implements      Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Zone");
 
@@ -64,10 +64,10 @@ public class    Zone
     public  final Thread                zone_thread;
 
     private final ParseFormat[]         parse_format_many;
-    private       int                   parse_format_total;
+    private /*:*/ int                   parse_format_total;
 
     private final Gem_StringBuilder[]   string_builder_many;
-    private       int                   string_builder_total;
+    private /*:*/ int                   string_builder_total;
 
     private /*boot-final*/ Map__String__ArgumentSegmentFormatter_Inspection     format_map /* = null */ ;
 
@@ -85,12 +85,12 @@ public class    Zone
     //  Constructor & Factory
     //
     private                             Zone(
-            Thread                              zone_thread,
-            ParseFormat[]                       parse_format_many,
-            Gem_StringBuilder[]                 string_builder_many//,
+            final Thread                        zone_thread,
+            final ParseFormat[]                 parse_format_many,
+            final Gem_StringBuilder[]           string_builder_many//,
         )
     {
-        this.zone_thread       = zone_thread;
+        this.zone_thread = zone_thread;
 
         this.parse_format_many  = parse_format_many;
         this.parse_format_total = 0;
@@ -120,7 +120,7 @@ public class    Zone
     }
 
 
-    public static Zone                  create(Thread zone_thread)
+    public static final Zone            create(Thread zone_thread)
     {
         //
         //  NOTE:
@@ -137,14 +137,15 @@ public class    Zone
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
     @Override
-    public void                         portray(Gem_StringBuilder builder)
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.augment("<Zone zone_thread{p} ... string_builder_total{p} ...>",
                         this.zone_thread,
@@ -155,7 +156,7 @@ public class    Zone
     //
     //  Private
     //
-    private void                        boot()
+    private final void                  boot()
     {
         final Zone                      z = this;
 
@@ -188,7 +189,7 @@ public class    Zone
     }
 
 
-    private Temporary_Storehouse_String     boot__storehouse_string()
+    private final Temporary_Storehouse_String   boot__storehouse_string()
     {
         final Zone                      z = this;
 
@@ -243,7 +244,7 @@ public class    Zone
         line("      parse_format_many: {}", parse_format_many);
         line("     parse_format_total: {}", parse_format_total);
 
-        for (int                        i = 0; i < parse_format_total; i ++) {
+        for (/*:*/ int                  i = 0; i < parse_format_total; i ++) {
             line("  parse_format_many[{}]: {}", i, parse_format_many[i]);
         }
 
@@ -251,7 +252,7 @@ public class    Zone
         line("     string_builder_many: {}", string_builder_many);
         line("    string_builder_total: {}", string_builder_total);
 
-        for (int                        i = 0; i < string_builder_total; i ++) {
+        for (/*:*/ int                  i = 0; i < string_builder_total; i ++) {
             line("  string_builder_many[{}]: {}", i, string_builder_many[i]);
         }
 
@@ -279,9 +280,9 @@ public class    Zone
     //  NOTE:
     //      Due to possible nested called in a single thread, we might need multiple copies of `parse_format`.
     //
-    public ParseFormat                  summon_ParseFormat__ALLY__ParseFormat(String format)
+    public final ParseFormat            summon_ParseFormat__ALLY__ParseFormat(final String format)
     {
-        int                             parse_format_total = this.parse_format_total;
+        /*:*/ int                       parse_format_total = this.parse_format_total;
 
         if (parse_format_total > 0) {
             parse_format_total -= 1;
@@ -311,7 +312,7 @@ public class    Zone
     }
 
 
-    public void                         recycle__ParseFormat__ALLY__ParseFormat(ParseFormat parse_format)
+    public final void                   recycle__ParseFormat__ALLY__ParseFormat(ParseFormat parse_format)
     {
         final int                       parse_format_total = this.parse_format_total;
 
@@ -329,9 +330,9 @@ public class    Zone
     //  NOTE:
     //      See note above in "parse_format" section.
     //
-    public Gem_StringBuilder            summon_StringBuilder()
+    public final Gem_StringBuilder      summon_StringBuilder()
     {
-        int                             string_builder_total = this.string_builder_total;
+        /*:*/ int                       string_builder_total = this.string_builder_total;
 
         if (string_builder_total > 0) {
             string_builder_total -= 1;
@@ -347,7 +348,9 @@ public class    Zone
     }
 
 
-    public void                         recycle__StringBuilder__ALLY__Gem_StringBuilder(Gem_StringBuilder builder)
+    public final void                   recycle__StringBuilder__ALLY__Gem_StringBuilder(
+            final Gem_StringBuilder             builder//,
+        )
     {
         final int                       string_builder_total = this.string_builder_total;
 
@@ -374,7 +377,7 @@ public class    Zone
     //      Apparently the calls to `new ParseFormat[]` & `new Gem_StringBuilder` in the `.create` function
     //      are safe -- and do not cause loops.
     //
-    public static Zone                  current_zone()
+    public static final Zone            current_zone()
     {
         final Thread                    thread = Thread.currentThread();
 
@@ -407,7 +410,7 @@ public class    Zone
     //
     //  Public (conjure: integer)
     //
-    public World_String                  conjure_enduring_string(String s)
+    public final World_String            conjure_enduring_string(final String s)
     {
         final World_String_Cache         string_cache = Gem.string_cache;
 
@@ -421,7 +424,7 @@ public class    Zone
                   Comparable_Inspection
               >                          previous = string_cache.get(key);
 
-        World_String                     client;
+        /*final*/ World_String          client;
 
         if (previous == null) {
             client = World_String.create__ALLY__Gem(s);
@@ -441,7 +444,7 @@ public class    Zone
                     return client;
                 }
 
-                final UnitTest          unit_test = Gem.unit_test;
+                final UnitTest_Gem      unit_test = Gem.unit_test;
 
                 if (unit_test != null) {
                     unit_test.discarding__World_String_WeakReference((World_String_WeakReference) previous);
@@ -470,7 +473,7 @@ public class    Zone
     }
 
 
-    public World_Integer                conjure_integer(int value)
+    public final World_Integer          conjure_integer(final int value)
     {
         final World_Integer_Cache       integer_cache = Gem.integer_cache;
 
@@ -478,14 +481,14 @@ public class    Zone
 
         key.recycle(value);
 
-        Gem_ComparableReference_Interface<
-            ? extends Gem_Reference_Inspection,
-            World_Integer,
-            Comparable_Inspection
-        >                               previous = integer_cache.get(key);
+        final Gem_ComparableReference_Interface<
+                  ? extends Gem_Reference_Inspection,
+                  World_Integer,
+                  Comparable_Inspection
+              >                         previous = integer_cache.get(key);
 
         if (previous != null) {
-            World_Integer               client = previous.client_OR_enqueue();
+            final World_Integer         client = previous.client_OR_enqueue();
 
             if (client != null) {
                 assert fact(value == client.value, "value == client.value");
@@ -510,22 +513,22 @@ public class    Zone
     }
 
 
-    public World_String                 conjure_string(String s)
+    public final World_String           conjure_string(final String s)
     {
-        final World_String_Cache        string_cache    = Gem.string_cache;
+        final World_String_Cache        string_cache = Gem.string_cache;
 
         final World_String_Key          key = this.string_key;
 
         key.recycle(s);
 
-        Gem_ComparableReference_Interface<
-            ? extends Gem_Reference_Inspection,
-            World_String,
-            Comparable_Inspection
-        >                               previous = string_cache.get(key);
+        final Gem_ComparableReference_Interface<
+                  ? extends Gem_Reference_Inspection,
+                  World_String,
+                  Comparable_Inspection
+              >                         previous = string_cache.get(key);
 
         if (previous != null) {
-            World_String                client = previous.client_OR_enqueue();
+            final World_String          client = previous.client_OR_enqueue();
 
             if (client != null) {
                 assert fact(s.equals(client.s), "s.equals(client.s)");
@@ -553,7 +556,7 @@ public class    Zone
     //
     //  Public (conjure: formatting)
     //
-    public AdornmentSegmentFormatter    conjure_AdornmentSegmentFormatter(String s)
+    public final AdornmentSegmentFormatter  conjure_AdornmentSegmentFormatter(final String s)
     {
         final Zone                      z = this;
 
@@ -577,7 +580,7 @@ public class    Zone
     }
 
 
-    public NormalSegmentFormatter       conjure_NormalSegmentFormatter(int argument_index)
+    public final NormalSegmentFormatter     conjure_NormalSegmentFormatter(final int argument_index)
     {
         final Zone                      z = this;
 
@@ -601,7 +604,7 @@ public class    Zone
     }
 
 
-    public PortraySegmentFormatter      conjure_PortraySegmentFormatter(int argument_index)
+    public final PortraySegmentFormatter    conjure_PortraySegmentFormatter(final int argument_index)
     {
         final Zone                      z = this;
 
@@ -625,7 +628,7 @@ public class    Zone
     }
 
 
-    public Storehouse_MessageFormattable    conjure__Storehouse_MessageFormattable()
+    public final Storehouse_MessageFormattable  conjure__Storehouse_MessageFormattable()
     {
         final Storehouse_MessageFormattable   storehouse_message_formattable = this.storehouse_message_formattable;
 
@@ -635,7 +638,7 @@ public class    Zone
     }
 
 
-    public StringSegmentFormatter       conjure_StringSegmentFormatter(int argument_index)
+    public final StringSegmentFormatter     conjure_StringSegmentFormatter(final int argument_index)
     {
         final Zone                      z = this;
 
@@ -662,7 +665,7 @@ public class    Zone
     //
     //  Public (other)
     //
-    public String                       intern_permenant_string(String s)
+    public final String                 intern_permenant_string(final String s)
     {
         final Zone                      z = this;
 
@@ -670,7 +673,7 @@ public class    Zone
     }
 
 
-    public String                       quote_string(String s)
+    public final String                 quote_string(final String s)
     {
         final Gem_StringBuilder         builder = this.summon_StringBuilder();
 

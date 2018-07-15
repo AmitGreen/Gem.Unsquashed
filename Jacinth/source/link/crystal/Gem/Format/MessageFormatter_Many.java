@@ -14,12 +14,12 @@ import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class    MessageFormatter_Many
-    extends     MessageFormatter_Base<Inspection>
-//  extends     Gem_Object           <Inspection>
-//  extends     Object
-    implements  MessageFormattable   <Inspection>,
-                Inspectable          <Inspection>//,
+public final class  MessageFormatter_Many
+    extends         MessageFormatter_Base<Inspection>
+//  extends         Gem_Object           <Inspection>
+//  extends         Object
+    implements      MessageFormattable   <Inspection>,
+                    Inspectable          <Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("MessageFormatter_Many");
 
@@ -34,14 +34,21 @@ public class    MessageFormatter_Many
     //
     //  Constructor & Factory
     //
-    private                             MessageFormatter_Many(int expected, SegmentFormattable[] segment_many)
+    private                             MessageFormatter_Many(
+            final int                           expected,
+            final SegmentFormattable[]          segment_many//,
+        )
     {
         this.expected     = expected;
         this.segment_many = segment_many;
     }
 
 
-    static public MessageFormatter_Many     create(Zone z, int expected, SegmentFormattable[] segment_many)
+    public static final MessageFormatter_Many   create(
+            final Zone                          z,
+            final int                           expected,
+            final SegmentFormattable[]          segment_many//,
+        )
     {
         assert fact_between(2, expected, segment_many.length);
 
@@ -52,7 +59,8 @@ public class    MessageFormatter_Many
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
@@ -62,7 +70,7 @@ public class    MessageFormatter_Many
     //  Interface MessageFormattable
     //
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth)
+    public final void                   augment(final Gem_StringBuilder builder, int depth)
     {
         if (this.expected != 0) {
             RUNTIME("0 arguments given (expected {})", this.expected);
@@ -74,7 +82,7 @@ public class    MessageFormatter_Many
 
         depth += 1;
 
-        for (int                        i       = 0; i < segment_total; i ++) {
+        for (/*:*/ int                  i       = 0; i < segment_total; i ++) {
             final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth);
@@ -83,7 +91,7 @@ public class    MessageFormatter_Many
 
 
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v)
+    public final void                   augment(final Gem_StringBuilder builder, int depth, final Object v)
     {
         if (this.expected != 1) {
             RUNTIME("1 argument given (expected {})", this.expected);
@@ -95,7 +103,7 @@ public class    MessageFormatter_Many
 
         depth += 1;
 
-        for (int                        i       = 0; i < segment_total; i ++) {
+        for (/*:*/ int                  i       = 0; i < segment_total; i ++) {
             final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v);
@@ -104,7 +112,12 @@ public class    MessageFormatter_Many
 
 
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v, Object w)
+    public final void                   augment(
+            final Gem_StringBuilder             builder,
+            /*:*/ int                           depth,
+            final Object                        v,
+            final Object                        w//,
+        )
     {
         if (this.expected != 2) {
             RUNTIME("2 arguments given (expected {})", this.expected);
@@ -116,7 +129,7 @@ public class    MessageFormatter_Many
 
         depth += 1;
 
-        for (int                        i       = 0; i < segment_total; i ++) {
+        for (/*:*/ int                  i       = 0; i < segment_total; i ++) {
             final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v, w);
@@ -125,7 +138,13 @@ public class    MessageFormatter_Many
 
 
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
+    public final void                   augment(
+            final Gem_StringBuilder             builder,
+            /*:*/ int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x//,
+        )
     {
         if (this.expected != 3) {
             RUNTIME("3 arguments given (expected {})", this.expected);
@@ -137,7 +156,7 @@ public class    MessageFormatter_Many
 
         depth += 1;
 
-        for (int                        i       = 0; i < segment_total; i ++) {
+        for (/*:*/ int                  i       = 0; i < segment_total; i ++) {
             final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v, w, x);
@@ -146,13 +165,13 @@ public class    MessageFormatter_Many
 
 
     @Override
-    public void                         augment(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y//,
+    public final void                   augment(
+            final Gem_StringBuilder             builder,
+            /*:*/ int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
         )
     {
         if (this.expected != 4) {
@@ -165,7 +184,7 @@ public class    MessageFormatter_Many
 
         depth += 1;
 
-        for (int                        i       = 0; i < segment_total; i ++) {
+        for (/*:*/ int                  i       = 0; i < segment_total; i ++) {
             final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v, w, x, y);
@@ -174,14 +193,14 @@ public class    MessageFormatter_Many
 
 
     @Override
-    public void                         augment(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
+    public final void                   augment(
+            final Gem_StringBuilder             builder,
+            /*:*/ int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
         )
     {
         if (this.expected != 5) {
@@ -194,7 +213,7 @@ public class    MessageFormatter_Many
 
         depth += 1;
 
-        for (int                        i       = 0; i < segment_total; i ++) {
+        for (/*:*/ int                  i       = 0; i < segment_total; i ++) {
             final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v, w, x, y4, y5);
@@ -203,15 +222,15 @@ public class    MessageFormatter_Many
 
 
     @Override
-    public void                         augment(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    public final void                   augment(
+            final Gem_StringBuilder             builder,
+            /*:*/ int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
         )
     {
         if (this.expected != 6) {
@@ -224,7 +243,7 @@ public class    MessageFormatter_Many
 
         depth += 1;
 
-        for (int                        i       = 0; i < segment_total; i ++) {
+        for (/*:*/ int                  i       = 0; i < segment_total; i ++) {
             final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v, w, x, y4, y5, y6);
@@ -233,17 +252,17 @@ public class    MessageFormatter_Many
 
 
     @Override
-    public void                         augment(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    public final void                   augment(
+            final Gem_StringBuilder             builder,
+            /*:*/ int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         final int                       actual = 7 + other_arguments.length;
@@ -258,7 +277,7 @@ public class    MessageFormatter_Many
 
         depth += 1;
 
-        for (int                        i       = 0; i < segment_total; i ++) {
+        for (/*:*/ int                  i       = 0; i < segment_total; i ++) {
             final SegmentFormattable    segment = segment_many[i];
 
             segment.choose(builder, depth, v, w, x, y4, y5, y6, y7, other_arguments);
@@ -267,7 +286,7 @@ public class    MessageFormatter_Many
 
 
     @Override
-    public void                         portray(Gem_StringBuilder builder)
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         final int                       expected     = this.expected;
         final SegmentFormattable[]      segment_many = this.segment_many;
@@ -276,7 +295,7 @@ public class    MessageFormatter_Many
 
         builder.append("<MessageFormatter_Many expected<", expected, "> total<", segment_total, ">;");
 
-        for (int                        i = 0; i < segment_total; i ++) {
+        for (/*:*/ int                  i       = 0; i < segment_total; i ++) {
             final SegmentFormattable    segment = segment_many[i];
 
             builder.append(" ");

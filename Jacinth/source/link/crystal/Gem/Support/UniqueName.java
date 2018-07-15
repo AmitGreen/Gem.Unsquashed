@@ -12,10 +12,10 @@ import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class    UniqueName
-    extends     Gem_Object <Inspection>
-//  extends     Object
-    implements  Inspectable<Inspection>//,
+public final class  UniqueName
+    extends         Gem_Object <Inspection>
+//  extends         Object
+    implements      Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("UniqueName");
 
@@ -24,20 +24,20 @@ public class    UniqueName
     //  Members
     //
     private final String                prefix;
-    private       int                   value;
+    private /*:*/ int                   value;
 
 
     //
     //  Constructor & Factory
     //
-    protected                           UniqueName(String prefix)
+    protected                           UniqueName(final String prefix)
     {
         this.prefix = prefix;
         this.value  = 0;
     }
 
 
-    public static UniqueName            create__ALLY__Gem(Zone z, String prefix)
+    public static final UniqueName      create__ALLY__Gem(final Zone z, final String prefix)
     {
         final String                    interned_prefix = z.intern_permenant_string(prefix);
 
@@ -48,13 +48,15 @@ public class    UniqueName
     //
     //  Interface Inspectable
     //
-    public Inspection               inspect()
+    @Override
+    public final Inspection         inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<UniqueName ");
         builder.quote(this.prefix);
@@ -65,7 +67,7 @@ public class    UniqueName
     //
     //  Ally
     //
-    public void                         skip_value__ALLY__UnitTest(int value)
+    public final void                   skip_value__ALLY__UnitTest(final int value)
     {
         assert fact(this.value < value, "this.value < value");;
 
@@ -73,7 +75,7 @@ public class    UniqueName
     }
 
 
-    public int                          value__ALLY__UnitTest()
+    public final int                    value__ALLY__UnitTest()
     {
         return this.value;
     }
@@ -82,7 +84,7 @@ public class    UniqueName
     //
     //  Public
     //
-    public String                       next()
+    public final String                 next()
     {
         final int                       value = this.value;
 

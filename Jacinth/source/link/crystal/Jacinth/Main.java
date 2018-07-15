@@ -7,9 +7,9 @@ package link.crystal.Jacinth;
 import link.crystal.Silver.UnitTest.UnitTest;
 
 
-public class    Main
+public final class  Main
 {
-    public static void                  main(String[] arguments)
+    public static final void            main(final String[] arguments)
     {
         UnitTest.unit_test(arguments);
     }

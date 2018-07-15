@@ -19,12 +19,12 @@ import link.crystal.Gem.Support.Map_String_Inspection;
 //  NOTE:
 //      The "meta" class of `Inspection` is `World_Inspection`
 //
-public class    Inspection
-    extends     Gem_Object    <World_Inspection>
-//  extends     Object
-    implements  Gem_Comparable<World_Inspection>,
-                Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
-                Inspectable   <World_Inspection>//,
+public /*:*/ class  Inspection
+    extends         Gem_Object    <World_Inspection>
+//  extends         Object
+    implements      Gem_Comparable<World_Inspection>,
+                    Comparable<Gem_Comparable<? extends Comparable_Inspection>>,    //  Via Gem_Comparable
+                    Inspectable   <World_Inspection>//,
 {
     private static final World_Inspection   inspection = World_Inspection.create("Inspection");
 
@@ -38,7 +38,7 @@ public class    Inspection
     //
     //  Constructor & Factory
     //
-    protected                           Inspection(String simple_class_name)
+    protected                           Inspection(final String simple_class_name)
     {
         this.simple_class_name = simple_class_name;
 
@@ -46,7 +46,7 @@ public class    Inspection
     }
 
 
-    public static Inspection            create(String simple_class_name)
+    public static /*overrideable*/ Inspection   create(final String simple_class_name)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -60,7 +60,7 @@ public class    Inspection
     //  Interface java.lang.Comparable
     //
     @Override
-    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
+    public final int                    compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
     {
         final int                       class_compare = (
                 Comparable_Inspection.CLASS_ORDER__INSPECTION - that.inspect().class_order
@@ -89,13 +89,15 @@ public class    Inspection
     //
     //  Interface Inspectable
     //
-    public World_Inspection             inspect()
+    @Override
+    public /*overrideable*/ World_Inspection    inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    @Override
+    public /*overrideable*/ void        portray(final Gem_StringBuilder builder)
     {
         assert fact_pointer(this,    "this");
         assert fact_pointer(builder, "builder");

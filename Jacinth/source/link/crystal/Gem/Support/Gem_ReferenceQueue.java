@@ -85,13 +85,13 @@ import link.crystal.Gem.Interface.Inspectable;
 //  THEREFORE:
 //      We coerce the return type of `super.poll()` to be the proper type (as explained above).
 //
-public class    Gem_ReferenceQueue
-    extends     ReferenceQueue<
-                    Gem_Referenceable_Interface<? extends Inspection>//,
-                //  Gem_QueueableReference_Interface<? extends Inspection>>//,
-                >
-//  extends     Object
-    implements  Inspectable<Inspection>//,
+public final class  Gem_ReferenceQueue
+    extends         ReferenceQueue<
+                        Gem_Referenceable_Interface<? extends Inspection>//,
+                    //  Gem_QueueableReference_Interface<? extends Inspection>>//,
+                    >
+//  extends         Object
+    implements      Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Gem_ReferenceQueue");
 
@@ -105,7 +105,7 @@ public class    Gem_ReferenceQueue
     }
 
 
-    public static Gem_ReferenceQueue    create__ALLY__Gem()
+    public static final Gem_ReferenceQueue  create__ALLY__Gem()
     {
         return new Gem_ReferenceQueue();
     }
@@ -114,13 +114,15 @@ public class    Gem_ReferenceQueue
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<Gem_ReferenceQueue>");
     }
@@ -129,72 +131,85 @@ public class    Gem_ReferenceQueue
     //
     //  Public (line)
     //
-    public static void                  line()
+    public static final void            line()
     {
         Gem.line();
     }
 
 
-    public static void                  line(String format)
+    public static final void            line(final String format)
     {
         Gem.line(2, format);
     }
 
 
-    public static void                  line(String format, Object v)
+    public static final void            line(final String format, final Object v)
     {
         Gem.line(2, format, v);
     }
 
 
-    public static void                  line(String format, Object v, Object w)
+    public static final void            line(final String format, final Object v, final Object w)
     {
         Gem.line(2, format, v, w);
     }
 
 
-    public static void                  line(String format, Object v, Object w, Object x)
+    public static final void            line(final String format, final Object v, final Object w, final Object x)
     {
         Gem.line(2, format, v, w, x);
     }
 
 
-    public static void                  line(String format, Object v, Object w, Object x, Object y)
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
+        )
     {
         Gem.line(2, format, v, w, x, y);
     }
 
 
-    public static void                  line(String format, Object v, Object w, Object x, Object y4, Object y5)
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
+        )
     {
         Gem.line(2, format, v, w, x, y4, y5);
     }
 
 
-    public static void                  line(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
         )
     {
         Gem.line(2, format, v, w, x, y4, y5, y6);
     }
 
 
-    public static void                  line(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         Gem.line(2, format, v, w, x, y4, y5, y6, y7, other_arguments);
@@ -204,9 +219,9 @@ public class    Gem_ReferenceQueue
     //
     //  Public
     //
-    public int                          cleanup()
+    public final int                    cleanup()
     {
-        int                             total = 0;
+        /*:*/ int                       total = 0;
 
         for (;;)
         {
@@ -235,7 +250,7 @@ public class    Gem_ReferenceQueue
     }
 
 
-    public int                          garbage_collect()
+    public final int                    garbage_collect()
     {
         System.gc();
 
@@ -243,10 +258,10 @@ public class    Gem_ReferenceQueue
     }
 
 
-    public int                          garbage_collect__AND__possible_sleep()
+    public final int                    garbage_collect__AND__possible_sleep()
     {
-        int                             total_trash = 0;
-        int                             zeros = 0;
+        /*:*/ int                       total_trash = 0;
+        /*:*/ int                       zeros = 0;
 
         while (zeros < 3) {
             System.gc();

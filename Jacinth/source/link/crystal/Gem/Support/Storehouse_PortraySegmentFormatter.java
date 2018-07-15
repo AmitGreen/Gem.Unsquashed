@@ -12,11 +12,11 @@ import link.crystal.Gem.Support.Storehouse_SmallList;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class    Storehouse_PortraySegmentFormatter
-    extends     Storehouse_SmallList<Storehouse_PortraySegmentFormatter, PortraySegmentFormatter>
-//  extends     Gem_Object <Inspection>
-//  extends     Object
-    implements  Inspectable<Inspection>//,
+public final class  Storehouse_PortraySegmentFormatter
+    extends         Storehouse_SmallList<Storehouse_PortraySegmentFormatter, PortraySegmentFormatter>
+//  extends         Gem_Object <Inspection>
+//  extends         Object
+    implements      Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Storehouse_PortraySegmentFormatter");
 
@@ -31,15 +31,15 @@ public class    Storehouse_PortraySegmentFormatter
     //  Constructor & Factory
     //
     private                             Storehouse_PortraySegmentFormatter(
-            Zone                                z,
-            PortraySegmentFormatter[]           segment_many//,
+            final Zone                          z,
+            final PortraySegmentFormatter[]     segment_many//,
         )
     {
         super(z, segment_many);
     }
 
 
-    public static Storehouse_PortraySegmentFormatter    create__ALLY__Zone(Zone z)
+    public static final Storehouse_PortraySegmentFormatter  create__ALLY__Zone(final Zone z)
     {
         final PortraySegmentFormatter[]     segment_many = (
                 new PortraySegmentFormatter[Storehouse_PortraySegmentFormatter.initial_capacity]
@@ -52,7 +52,8 @@ public class    Storehouse_PortraySegmentFormatter
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }

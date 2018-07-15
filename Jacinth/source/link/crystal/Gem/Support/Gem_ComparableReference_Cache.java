@@ -36,7 +36,7 @@ public abstract class   Gem_ComparableReference_Cache<
     //
     //  Constructor
     //
-    protected                           Gem_ComparableReference_Cache(Zone z, int initial_capacity)
+    protected                           Gem_ComparableReference_Cache(final Zone z, final int initial_capacity)
     {
         super(z, initial_capacity);
     }
@@ -49,7 +49,8 @@ public abstract class   Gem_ComparableReference_Cache<
     public abstract INSPECTION          inspect();
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<", this.inspect().simple_class_name, " total<", this.size(), ">>");
     }
@@ -58,11 +59,11 @@ public abstract class   Gem_ComparableReference_Cache<
     //
     //  Abstract Gem_Map
     //
-    public void                         dump(String name)
+    public final void                   dump(final String name)
     {
         final String                    simple_class_name = this.inspect().simple_class_name;
 
-        List<REFERENCE>                 keys = new ArrayList<REFERENCE>(this.keySet());
+        /*:*/ List<REFERENCE>           keys = new ArrayList<REFERENCE>(this.keySet());
 
         Collections.sort(keys);
 
@@ -71,7 +72,7 @@ public abstract class   Gem_ComparableReference_Cache<
         line("Dump of {} {}", simple_class_name, name);
         line("      size: " + Integer.toString(total));
 
-        for (int                        i = 0; i < total; i ++) {
+        for (/*:*/ int                  i = 0; i < total; i ++) {
             final REFERENCE             k = keys.get(i);
 
             line("  {}", k);

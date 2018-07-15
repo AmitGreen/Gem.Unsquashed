@@ -14,12 +14,12 @@ import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class    MessageFormatter_2
-    extends     MessageFormatter_Base<Inspection>
-//  extends     Gem_Object           <Inspection>
-//  extends     Object
-    implements  MessageFormattable   <Inspection>,
-                Inspectable          <Inspection>//,
+public final class  MessageFormatter_2
+    extends         MessageFormatter_Base<Inspection>
+//  extends         Gem_Object           <Inspection>
+//  extends         Object
+    implements      MessageFormattable   <Inspection>,
+                    Inspectable          <Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("MessageFormatter_2");
 
@@ -35,7 +35,11 @@ public class    MessageFormatter_2
     //
     //  Constructor & Factory
     //
-    private                             MessageFormatter_2(int expected, SegmentFormattable a, SegmentFormattable b)
+    private                             MessageFormatter_2(
+            final int                           expected,
+            final SegmentFormattable            a,
+            final SegmentFormattable            b//,
+        )
     {
         this.expected = expected;
         this.a        = a;
@@ -43,7 +47,12 @@ public class    MessageFormatter_2
     }
 
 
-    static public MessageFormatter_2    create(Zone z, int expected, SegmentFormattable a, SegmentFormattable b)
+    public static final MessageFormatter_2  create(
+            final Zone                          z,
+            final int                           expected,
+            final SegmentFormattable            a,
+            final SegmentFormattable            b//,
+        )
     {
         return new MessageFormatter_2(expected, a, b);
     }
@@ -52,14 +61,15 @@ public class    MessageFormatter_2
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
     @Override
-    public void                         portray(Gem_StringBuilder builder)
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<MessageFormatter_2 ");
         builder.portray(this.a);
@@ -73,7 +83,7 @@ public class    MessageFormatter_2
     //  Interface MessageFormattable
     //
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth)
+    public final void                   augment(final Gem_StringBuilder builder, int depth)
     {
         if (this.expected != 0) {
             RUNTIME("0 arguments given (expected {})", this.expected);
@@ -87,7 +97,7 @@ public class    MessageFormatter_2
 
 
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v)
+    public final void                   augment(final Gem_StringBuilder builder, /*:*/ int depth, final Object v)
     {
         if (this.expected != 1) {
             RUNTIME("1 argument given (expected {})", this.expected);
@@ -101,7 +111,12 @@ public class    MessageFormatter_2
 
 
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v, Object w)
+    public final void                   augment(
+            final Gem_StringBuilder             builder,
+            /*:*/ int                           depth,
+            final Object                        v,
+            final Object                        w//,
+        )
     {
         if (this.expected != 2) {
             RUNTIME("2 arguments given (expected {})", this.expected);

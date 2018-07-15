@@ -27,7 +27,7 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
     //
     //  Constructor & Factory
     //
-    protected                           Storehouse_SmallList(Zone z, ELEMENT[] segment_many)
+    protected                           Storehouse_SmallList(final Zone z, final ELEMENT[] segment_many)
     {
         this.z            = z;
         this.segment_many = segment_many;
@@ -38,7 +38,7 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
     //  Interface Inspectable
     //
     @Override
-    public void                         portray(Gem_StringBuilder builder)
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<", this.inspect().simple_class_name, " size<", this.segment_many.length, ">>");
     }
@@ -47,7 +47,7 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
     //
     //  Public
     //
-    public void                         insert(Zone z, int argument_index, ELEMENT segment)
+    public final void                   insert(final Zone z, final int argument_index, final ELEMENT segment)
     {
         assert fact(this.z == z, "this.z == z");
 
@@ -62,7 +62,7 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
     }
 
 
-    public ELEMENT                      lookup(Zone Z, int argument_index)
+    public final ELEMENT                lookup(final Zone Z, final int argument_index)
     {
         assert fact(this.z == z, "this.z == z");
 
@@ -76,7 +76,7 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
     }
 
 
-    public void                         dump()
+    public final void                   dump()
     {
         final Inspection                inspection = this.inspect();
 
@@ -89,7 +89,7 @@ public abstract class   Storehouse_SmallList<STOREHOUSE extends Storehouse_Small
         line("Dump of {}", simple_class_name);
         line("  size:  {}", segment_allocated);
 
-        for (int                        i       = 0; i < segment_allocated; i ++) {
+        for (/*:*/ int                  i       = 0; i < segment_allocated; i ++) {
             final ELEMENT               segment = segment_many[i];
 
             if (segment == null) {

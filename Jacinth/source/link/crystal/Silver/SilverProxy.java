@@ -25,7 +25,7 @@ public abstract class   SilverProxy<PROXY extends SilverProxy, CLIENT extends Ob
     //
     //  Constructor
     //
-    protected                           SilverProxy(Zone z, CLIENT client)
+    protected                           SilverProxy(final Zone z, final CLIENT client)
     {
         this.z      = z;
         this.client = client;

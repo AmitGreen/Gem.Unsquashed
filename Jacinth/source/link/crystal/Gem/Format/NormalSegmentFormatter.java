@@ -15,14 +15,14 @@ import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Interface.SegmentFormattable;
 
 
-public class    NormalSegmentFormatter
-    extends     ArgumentSegmentFormatter<ArgumentSegmentFormatter_Inspection>
-//  extends     MessageFormatter_Base   <ArgumentSegmentFormatter_Inspection>
-//  extends     Gem_Object              <ArgumentSegmentFormatter_Inspection>
-//  extends     Object
-    implements  MessageFormattable      <ArgumentSegmentFormatter_Inspection>,
-                SegmentFormattable      <ArgumentSegmentFormatter_Inspection>,
-                Inspectable             <ArgumentSegmentFormatter_Inspection>//,
+public final class  NormalSegmentFormatter
+    extends         ArgumentSegmentFormatter<ArgumentSegmentFormatter_Inspection>
+//  extends         MessageFormatter_Base   <ArgumentSegmentFormatter_Inspection>
+//  extends         Gem_Object              <ArgumentSegmentFormatter_Inspection>
+//  extends         Object
+    implements      MessageFormattable      <ArgumentSegmentFormatter_Inspection>,
+                    SegmentFormattable      <ArgumentSegmentFormatter_Inspection>,
+                    Inspectable             <ArgumentSegmentFormatter_Inspection>//,
 {
     public static final NormalSegmentFormatter_Inspection   inspection = (
             NormalSegmentFormatter_Inspection.create("NormalSegmentFormatter")
@@ -32,13 +32,13 @@ public class    NormalSegmentFormatter
     //
     //  Constructor & Factory
     //
-    private                             NormalSegmentFormatter(int argument_index)
+    private                             NormalSegmentFormatter(final int argument_index)
     {
         super(argument_index);
     }
 
 
-    static public NormalSegmentFormatter    create__ALLY__Zone(Zone z, int argument_index)
+    public static final NormalSegmentFormatter  create__ALLY__Zone(final Zone z, final int argument_index)
     {
         return new NormalSegmentFormatter(argument_index);
     }
@@ -57,7 +57,7 @@ public class    NormalSegmentFormatter
     //  Interface MessageFormattable
     //
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v)
+    public final void                   augment(final Gem_StringBuilder builder, int depth, final Object v)
     {
         builder.format(v);
     }
@@ -66,13 +66,13 @@ public class    NormalSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public void                         choose(Gem_StringBuilder builder, int depth)
+    public final void                   choose(final Gem_StringBuilder builder, int depth)
     {
         INVALID_ROUTINE();
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v)
+    public final void                   choose(final Gem_StringBuilder builder, int depth, final Object v)
     {
         final int                       argument_index = this.argument_index;
 
@@ -85,7 +85,12 @@ public class    NormalSegmentFormatter
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w)
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w//,
+        )
     {
         final int                       argument_index = this.argument_index;
 
@@ -103,7 +108,13 @@ public class    NormalSegmentFormatter
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x//,
+        )
     {
         final int                       argument_index = this.argument_index;
 
@@ -126,7 +137,14 @@ public class    NormalSegmentFormatter
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x, Object y)
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
+        )
     {
         final int                       argument_index = this.argument_index;
 
@@ -154,14 +172,14 @@ public class    NormalSegmentFormatter
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
         )
     {
         final int                       argument_index = this.argument_index;
@@ -195,15 +213,15 @@ public class    NormalSegmentFormatter
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
         )
     {
         final int                       argument_index = this.argument_index;
@@ -242,17 +260,17 @@ public class    NormalSegmentFormatter
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         final int                       argument_index = this.argument_index;
@@ -310,13 +328,13 @@ class           NormalSegmentFormatter_Inspection
     //
     //  Constructor & Factory
     //
-    protected                           NormalSegmentFormatter_Inspection(String simple_class_name)
+    protected                           NormalSegmentFormatter_Inspection(final String simple_class_name)
     {
         super(simple_class_name);
     }
 
 
-    public static NormalSegmentFormatter_Inspection     create(String simple_class_name)
+    public static NormalSegmentFormatter_Inspection     create(final String simple_class_name)
     {
         final Zone                      z = Zone.current_zone();
 
@@ -329,7 +347,8 @@ class           NormalSegmentFormatter_Inspection
     //
     //  Abstract ArgumentSegmentFormatter_Inspection
     //
-    public NormalSegmentFormatter       conjure_argument_segment(Zone z, int argument_index)
+    @Override
+    public final NormalSegmentFormatter     conjure_argument_segment(final Zone z, final int argument_index)
     {
         return z.conjure_NormalSegmentFormatter(argument_index);
     }
@@ -338,7 +357,8 @@ class           NormalSegmentFormatter_Inspection
     //
     //  Interface Inspectable
     //
-    public World_Inspection             inspect()
+    @Override
+    public final World_Inspection       inspect()
     {
         return /*static*/ this.inspection;
     }

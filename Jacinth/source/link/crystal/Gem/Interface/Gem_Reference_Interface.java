@@ -18,7 +18,7 @@ public interface    Gem_Reference_Interface<INSPECTION extends Gem_Reference_Ins
     @Override                           //  NOTE: Different `INSPECTION`
     public INSPECTION                   inspect();
 
-    public void                         portray(Gem_StringBuilder builder);
+    public void                         portray(final Gem_StringBuilder builder);
 
 
     //

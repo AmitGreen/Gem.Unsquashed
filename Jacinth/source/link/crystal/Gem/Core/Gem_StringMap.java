@@ -25,7 +25,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     //
     //  Constructor
     //
-    protected                           Gem_StringMap(Zone z, int initial_capacity)
+    protected                           Gem_StringMap(final Zone z, final int initial_capacity)
     {
         super(z, initial_capacity);
     }
@@ -35,7 +35,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     //  Interface Inspectable
     //
     @Override
-    public void                         portray(Gem_StringBuilder builder)
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         final Inspection                inspection = this.inspect();
 
@@ -46,7 +46,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     //
     //  Public
     //
-    public void                         dump(String name)
+    public /*overrideable*/ void        dump(final String name)
     {
         final Inspection                inspection = this.inspect();
 
@@ -61,7 +61,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
         line("Dump of {} {}", simple_class_name, name);
         line("  size: {}", total);
 
-        for (int                        i = 0; i < total; i ++) {
+        for (/*:*/ int                  i = 0; i < total; i ++) {
             final String                k = keys.get(i);
             final V                     v = this.get(k);
 
@@ -72,7 +72,7 @@ public abstract class   Gem_StringMap<INSPECTION extends Inspection, V>
     }
 
 
-    public V                            find(String k)
+    public final V                      find(final String k)
     {
         assert fact_pointer(k, "k");
 

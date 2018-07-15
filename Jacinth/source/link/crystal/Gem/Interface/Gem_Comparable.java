@@ -18,7 +18,7 @@ public interface    Gem_Comparable<INSPECTION extends Comparable_Inspection>
     //  Interface java.lang.Comparable
     //
     @Override                           //  NOTE: Different `that`
-    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that);
+    public int                          compareTo(final Gem_Comparable<? extends Comparable_Inspection> that);
 
 
     //
@@ -27,7 +27,7 @@ public interface    Gem_Comparable<INSPECTION extends Comparable_Inspection>
     @Override
     public INSPECTION                   inspect();                      //  NOTE: Different `INSPECTION`
 
-    public void                         portray(Gem_StringBuilder builder);
+    public void                         portray(final Gem_StringBuilder builder);
 
 
     //

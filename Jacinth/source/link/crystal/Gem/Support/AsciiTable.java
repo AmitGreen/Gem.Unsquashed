@@ -186,15 +186,17 @@ public final class  AsciiTable
     //
     //  Interface Inspectable
     //
+    @Override
     public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public final void                   portray(Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
-        String                          portray_0 = this.portray_0;
+        final String                    portray_0 = this.portray_0;
 
         builder.append("<AsciiTable ");
 
@@ -231,7 +233,7 @@ public final class  AsciiTable
 
         line("Dump of AsciiTable");
 
-        for (int                        i = 0; i < total; i ++) {
+        for (/*:*/ int                  i = 0; i < total; i ++) {
             line("  table[{}]: {}", i, table[i]);
         }
 

@@ -15,13 +15,13 @@ import link.crystal.Gem.Interface.SegmentFormattable;
 import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 
 
-public class    AdornmentSegmentFormatter
-    extends     MessageFormatter_Base<SegmentFormatter_Inspection>
-//  extends     Gem_Object           <SegmentFormatter_Inspection>
-//  extends     Object
-    implements  MessageFormattable   <SegmentFormatter_Inspection>,
-                SegmentFormattable   <SegmentFormatter_Inspection>,
-                Inspectable          <SegmentFormatter_Inspection>//,
+public final class  AdornmentSegmentFormatter
+    extends         MessageFormatter_Base<SegmentFormatter_Inspection>
+//  extends         Gem_Object           <SegmentFormatter_Inspection>
+//  extends         Object
+    implements      MessageFormattable   <SegmentFormatter_Inspection>,
+                    SegmentFormattable   <SegmentFormatter_Inspection>,
+                    Inspectable          <SegmentFormatter_Inspection>//,
 {
     private static SegmentFormatter_Inspection  inspection = (
             SegmentFormatter_Inspection.create("AdornmentSegmentFormatter")
@@ -37,13 +37,13 @@ public class    AdornmentSegmentFormatter
     //
     //  Constructor & Factory
     //
-    private                             AdornmentSegmentFormatter(String s)
+    private                             AdornmentSegmentFormatter(final String s)
     {
         this.s = s;
     }
 
 
-    static public AdornmentSegmentFormatter     create__ALLY__Zone(Zone z, String s)
+    public static final AdornmentSegmentFormatter   create__ALLY__Zone(final Zone z, final String s)
     {
         final String                    interned_s = z.intern_permenant_string(s);
 
@@ -54,7 +54,8 @@ public class    AdornmentSegmentFormatter
     //
     //  Interface Inspectable
     //
-    public SegmentFormatter_Inspection  inspect()
+    @Override
+    public final SegmentFormatter_Inspection    inspect()
     {
         return /*static*/ this.inspection;
     }
@@ -64,14 +65,14 @@ public class    AdornmentSegmentFormatter
     //  Interface MessageFormattable
     //
     @Override
-    public String                       augment(int depth)
+    public final String                 augment(final int depth)
     {
         return this.s;
     }
 
 
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth)
+    public final void                   augment(final Gem_StringBuilder builder, final int depth)
     {
         builder.append(this.s);
     }
@@ -80,90 +81,109 @@ public class    AdornmentSegmentFormatter
     //
     //  Interface SegmentFormattable
     //
-    public void                         choose(Gem_StringBuilder builder, int depth)
+    @Override
+    public final void                   choose(final Gem_StringBuilder builder, final int depth)
     {
         builder.append(this.s);
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v)
+    @Override
+    public final void                   choose(final Gem_StringBuilder builder, final int depth, final Object v)
     {
         builder.append(this.s);
     }
 
 
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w)
-    {
-        builder.append(this.s);
-    }
-
-
-    public void                         choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x)
-    {
-        builder.append(this.s);
-    }
-
-
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y//,
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w//,
         )
     {
         builder.append(this.s);
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x//,
         )
     {
         builder.append(this.s);
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
         )
     {
         builder.append(this.s);
     }
 
 
-    public void                         choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
         )
     {
         builder.append(this.s);
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
+        )
+    {
+        builder.append(this.s);
+    }
+
+
+    @Override
+    public final void                   choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
+        )
+    {
+        builder.append(this.s);
+    }
+
+
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<AdornmentSegmentFormatter ");
         builder.quote(this.s);
@@ -171,7 +191,10 @@ public class    AdornmentSegmentFormatter
     }
 
 
-    public String                       s()
+    //
+    //  Public
+    //
+    public final String                 s()
     {
         return this.s;
     }

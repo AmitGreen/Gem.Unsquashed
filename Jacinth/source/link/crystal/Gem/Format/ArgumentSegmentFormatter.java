@@ -31,7 +31,7 @@ public abstract class   ArgumentSegmentFormatter<INSPECTION extends ArgumentSegm
     //
     //  Constructor
     //
-    protected                           ArgumentSegmentFormatter(int argument_index)
+    protected                           ArgumentSegmentFormatter(final int argument_index)
     {
         this.argument_index = argument_index;
     }
@@ -46,62 +46,71 @@ public abstract class   ArgumentSegmentFormatter<INSPECTION extends ArgumentSegm
     //
     //  Interface MessageFormattable
     //
-    public abstract void                augment(Gem_StringBuilder builder, int depth, Object v);
+    public abstract void                augment(final Gem_StringBuilder builder, int depth, final Object v);
 
 
     //
     //  Interface SegmentFormattable
     //
-    public abstract void                choose(Gem_StringBuilder builder, int depth);
-    public abstract void                choose(Gem_StringBuilder builder, int depth, Object v);
-    public abstract void                choose(Gem_StringBuilder builder, int depth, Object v, Object w);
-    public abstract void                choose(Gem_StringBuilder builder, int depth, Object v, Object w, Object x);
-
+    public abstract void                choose(final Gem_StringBuilder builder, final int depth);
+    public abstract void                choose(final Gem_StringBuilder builder, final int depth, final Object v);
 
     public abstract void                choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y//,
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w//,
         );
 
-
     public abstract void                choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x//,
         );
 
-
     public abstract void                choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
         );
 
+    public abstract void                choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
+        );
 
     public abstract void                choose(
-            Gem_StringBuilder                   builder,
-            int                                 depth,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+            Gem_StringBuilder             builder,
+            int                           depth,
+            Object                        v,
+            Object                        w,
+            Object                        x,
+            Object                        y4,
+            Object                        y5,
+            Object                        y6//,
+        );
+
+    public abstract void                choose(
+            final Gem_StringBuilder             builder,
+            final int                           depth,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         );
 
 
@@ -109,10 +118,8 @@ public abstract class   ArgumentSegmentFormatter<INSPECTION extends ArgumentSegm
     //  Interface Inspectable
     //
     @Override
-    public void                         portray(Gem_StringBuilder builder)
+    public final void                   portray(final Gem_StringBuilder builder)
     {
-        INSPECTION                      inspection = this.inspect();
-
-        builder.append("<", inspection.simple_class_name, " ", this.argument_index, ">");
+        builder.append("<", this.inspect().simple_class_name, " ", this.argument_index, ">");
     }
 }

@@ -10,11 +10,11 @@ import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Silver.SilverProxy;
 
 
-public class    Shape
-    extends     SilverProxy<Shape, link.crystal.Jacinth.Shape>
-//  extends     Gem_Object <Inspection>
-//  extends     Object
-    implements  Inspectable<Inspection>//,
+public final class  Shape
+    extends         SilverProxy<Shape, link.crystal.Jacinth.Shape>
+//  extends         Gem_Object <Inspection>
+//  extends         Object
+    implements      Inspectable<Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("Mirror.Shape");
 
@@ -22,13 +22,13 @@ public class    Shape
     //
     //  Constructor & Factory
     //
-    private                             Shape(Zone z, link.crystal.Jacinth.Shape client)
+    private                             Shape(final Zone z, final link.crystal.Jacinth.Shape client)
     {
         super(z, client);
     }
 
 
-    public static Shape                 create(Zone z, String shape_name)
+    public static final Shape           create(final Zone z, final String shape_name)
     {
         final Class<link.crystal.Jacinth.Shape>     meta = link.crystal.Jacinth.Shape.class;
 
@@ -41,7 +41,8 @@ public class    Shape
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
@@ -50,7 +51,7 @@ public class    Shape
     //
     //  Public
     //
-    public void                         skew()
+    public final void                   skew()
     {
         final link.crystal.Jacinth.Shape    client = this.client;
 

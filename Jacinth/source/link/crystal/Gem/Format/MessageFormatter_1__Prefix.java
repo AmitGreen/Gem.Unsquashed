@@ -13,12 +13,12 @@ import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Inspection.Inspection;
 
 
-public class    MessageFormatter_1__Prefix
-    extends     MessageFormatter_Base<Inspection>
-//  extends     Gem_Object           <Inspection>
-//  extends     Object
-    implements  MessageFormattable   <Inspection>,
-                Inspectable          <Inspection>//,
+public final class  MessageFormatter_1__Prefix
+    extends         MessageFormatter_Base<Inspection>
+//  extends         Gem_Object           <Inspection>
+//  extends         Object
+    implements      MessageFormattable   <Inspection>,
+                    Inspectable          <Inspection>//,
 {
     private static final Inspection     inspection = Inspection.create("MessageFormatter_1__Prefix");
 
@@ -32,13 +32,13 @@ public class    MessageFormatter_1__Prefix
     //
     //  Constructor & Factory
     //
-    private                             MessageFormatter_1__Prefix(String prefix)
+    private                             MessageFormatter_1__Prefix(final String prefix)
     {
         this.prefix = prefix;
     }
 
 
-    static public MessageFormatter_1__Prefix    create(Zone z, String prefix)
+    public static final MessageFormatter_1__Prefix  create(final Zone z, final String prefix)
     {
         final String                    interned__prefix = z.intern_permenant_string(prefix);
 
@@ -49,14 +49,15 @@ public class    MessageFormatter_1__Prefix
     //
     //  Interface Inspectable
     //
-    public Inspection                   inspect()
+    @Override
+    public final Inspection             inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
     @Override
-    public void                         portray(Gem_StringBuilder builder)
+    public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<MessageFormatter_1__Prefix ");
         builder.quote(this.prefix);
@@ -68,7 +69,7 @@ public class    MessageFormatter_1__Prefix
     //  Interface MessageFormattable
     //
     @Override
-    public void                         augment(Gem_StringBuilder builder, int depth, Object v)
+    public final void                   augment(final Gem_StringBuilder builder, int depth, final Object v)
     {
         builder.append(this.prefix);
         builder.portray(v);

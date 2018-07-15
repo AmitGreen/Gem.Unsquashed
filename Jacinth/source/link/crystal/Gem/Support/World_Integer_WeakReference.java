@@ -19,7 +19,7 @@ import link.crystal.Gem.Support.Gem_WeakReference;
 import link.crystal.Gem.World.World_Integer;
 
 
-public class    World_Integer_WeakReference
+public final class  World_Integer_WeakReference
     extends     Gem_WeakReference      <Gem_Reference_Inspection, World_Integer, Comparable_Inspection>
 //  extends     WeakReference                                 <World_Integer>
 //  extends     Reference                                     <World_Integer>
@@ -48,9 +48,9 @@ public class    World_Integer_WeakReference
     //  Constructor
     //
     private                             World_Integer_WeakReference(
-            World_Integer                       client,
-            Gem_ReferenceQueue                  reference_queue,
-            int                                 value//,
+            final World_Integer                 client,
+            final Gem_ReferenceQueue            reference_queue,
+            final int                           value//,
         )
     {
         super(client, reference_queue);
@@ -60,9 +60,9 @@ public class    World_Integer_WeakReference
     }
 
 
-    public static World_Integer_WeakReference   create__ALLY__Gem(
-            World_Integer                       client,
-            Gem_ReferenceQueue                  reference_queue//,
+    public static final World_Integer_WeakReference     create__ALLY__Gem(
+            final World_Integer                 client,
+            final Gem_ReferenceQueue            reference_queue//,
         )
     {
         final int                       value = client.value;
@@ -75,7 +75,7 @@ public class    World_Integer_WeakReference
     //  Ancestor Object
     //
     @Override
-    public int                          hashCode()
+    public final int                    hashCode()
     {
         return this.value;
     }
@@ -90,7 +90,7 @@ public class    World_Integer_WeakReference
     //      Do need to compare to a `World_Integer_WeakReference` (since might be replaced by it in the cache).
     //
     @Override
-    public boolean                      equals(Object that)
+    public final boolean                equals(final Object that)
     {
         if (this == that) {
             return true;
@@ -110,7 +110,7 @@ public class    World_Integer_WeakReference
     //  Interface java.lang.Comparable
     //
     @Override
-    public int                          compareTo(Gem_Comparable<? extends Comparable_Inspection> that)
+    public final int                    compareTo(final Gem_Comparable<? extends Comparable_Inspection> that)
     {
         final Comparable_Inspection     that_inspection = that.inspect();
 
@@ -154,7 +154,8 @@ public class    World_Integer_WeakReference
     //
     //  Interface Gem_QueueableReference_Interface
     //
-    public void                         reap()
+    @Override
+    public final void                   reap()
     {
         final Gem_ComparableReference_Interface<
                   ? extends Comparable_Inspection,
@@ -177,15 +178,17 @@ public class    World_Integer_WeakReference
     //
     //  Interface Inspectable
     //
+    @Override
     public Gem_Reference_Inspection     inspect()
     {
         return /*static*/ this.inspection;
     }
 
 
-    public void                         portray(Gem_StringBuilder builder)
+    @Override
+    public final void                   portray(final Gem_StringBuilder builder)
     {
-        World_Integer                   client = this.get();
+        final World_Integer             client = this.get();
 
         if (client == null) {
             builder.append("<World_Integer_WeakReference exhausted; ", this.value, ">");

@@ -24,7 +24,7 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
 
 
     @Override
-    public void                         portray(Gem_StringBuilder builder)
+    public /*overrideable*/ void        portray(final Gem_StringBuilder builder)
     {
         final INSPECTION                inspection = this.inspect();
 
@@ -35,7 +35,7 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     //
     //  Public (ASSERT)
     //
-    public static boolean               fact(boolean condition, String format)
+    public static final boolean         fact(boolean condition, final String format)
     {
         if (condition) {
             return true;
@@ -47,7 +47,7 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     }
 
 
-    public static boolean               fact(boolean condition, String format, Object v)
+    public static final boolean         fact(boolean condition, final String format, final Object v)
     {
         if (condition) {
             return true;
@@ -59,7 +59,7 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     }
 
 
-    public static boolean               fact_between(int start, int v, int end)
+    public static final boolean         fact_between(final int start, final int v, final int end)
     {
         if (start <= v && v <= end) {
             return true;
@@ -71,7 +71,7 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     }
 
 
-    public static boolean               fact_null(Object p, String name)
+    public static final boolean         fact_null(final Object p, final String name)
     {
         if (p == null) {
             return true;
@@ -83,7 +83,7 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     }
 
 
-    public static boolean               fact_pointer(Object p, String name)
+    public static final boolean         fact_pointer(final Object p, final String name)
     {
         if (p != null) {
             return true;
@@ -98,13 +98,13 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     //
     //  Public (ERRORS)
     //
-    public static void                  INVALID_ROUTINE()
+    public static final void            INVALID_ROUTINE()
     {
         ExceptionFunctions.RUNTIME(2, "invalid routine");
     }
 
 
-    public static void                  RUNTIME(String error_message, Object ... arguments)
+    public static final void            RUNTIME(final String error_message, final Object ... arguments)
     {
         ExceptionFunctions.RUNTIME(2, error_message, arguments);
     }
@@ -113,79 +113,79 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     //
     //  Public (arrange)
     //
-    public static String                arrange(String format)
+    public static final String          arrange(final String format)
     {
         return Gem.arrange(2, format);
     }
 
 
-    public static String                arrange(String format, Object v)
+    public static final String          arrange(final String format, final Object v)
     {
         return Gem.arrange(2, format, v);
     }
 
 
-    public static String                arrange(String format, Object v, Object w)
+    public static final String          arrange(final String format, final Object v, final Object w)
     {
         return Gem.arrange(2, format, v, w);
     }
 
 
-    public static String                arrange(String format, Object v, Object w, Object x)
+    public static final String          arrange(final String format, final Object v, final Object w, final Object x)
     {
         return Gem.arrange(2, format, v, w, x);
     }
 
 
-    public static String                arrange(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y//
+    public static final String          arrange(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//
         )
     {
         return Gem.arrange(2, format, v, w, x, y);
     }
 
 
-    public static String                arrange(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5//,
+    public static final String          arrange(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
         )
     {
         return Gem.arrange(2, format, v, w, x, y4, y5);
     }
 
 
-    public static String                arrange(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    public static final String          arrange(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
         )
     {
         return Gem.arrange(2, format, v, w, x, y4, y5, y6);
     }
 
 
-    public static String                arrange(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    public static final String          arrange(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         return Gem.arrange(2, format, v, w, x, y4, y5, y6, y7, other_arguments);
@@ -195,72 +195,85 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     //
     //  Public (line)
     //
-    public static void                  line()
+    public static /*overrideable*/ void     line()
     {
         Gem.line();
     }
 
 
-    public static void                  line(String format)
+    public static final void            line(final String format)
     {
         Gem.line(2, format);
     }
 
 
-    public static void                  line(String format, Object v)
+    public static final void            line(final String format, final Object v)
     {
         Gem.line(2, format, v);
     }
 
 
-    public static void                  line(String format, Object v, Object w)
+    public static final void            line(final String format, final Object v, final Object w)
     {
         Gem.line(2, format, v, w);
     }
 
 
-    public static void                  line(String format, Object v, Object w, Object x)
+    public static final void            line(final String format, final Object v, final Object w, final Object x)
     {
         Gem.line(2, format, v, w, x);
     }
 
 
-    public static void                  line(String format, Object v, Object w, Object x, Object y)
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y//,
+        )
     {
         Gem.line(2, format, v, w, x, y);
     }
 
 
-    public static void                  line(String format, Object v, Object w, Object x, Object y4, Object y5)
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5//,
+        )
     {
         Gem.line(2, format, v, w, x, y4, y5);
     }
 
 
-    public static void                  line(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6//,
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6//,
         )
     {
         Gem.line(2, format, v, w, x, y4, y5, y6);
     }
 
 
-    public static void                  line(
-            String                              format,
-            Object                              v,
-            Object                              w,
-            Object                              x,
-            Object                              y4,
-            Object                              y5,
-            Object                              y6,
-            Object                              y7,
-            Object ...                          other_arguments//,
+    public static final void            line(
+            final String                        format,
+            final Object                        v,
+            final Object                        w,
+            final Object                        x,
+            final Object                        y4,
+            final Object                        y5,
+            final Object                        y6,
+            final Object                        y7,
+            final Object ...                    other_arguments//,
         )
     {
         Gem.line(2, format, v, w, x, y4, y5, y6, y7, other_arguments);
@@ -270,13 +283,13 @@ public abstract class   Gem_Object <INSPECTION extends Inspection>
     //
     //  Public (other)
     //
-    public static int                   limit_to_between(int minimum, int v, int maximum)
+    public static /*overrideable*/ int  limit_to_between(final int minimum, final int v, final int maximum)
     {
         return Gem.limit_to_between(minimum, v, maximum);
     }
 
 
-    public static void                  output(String s)
+    public static /*overrideable*/ void     output(final String s)
     {
         Gem.output(s);
     }
