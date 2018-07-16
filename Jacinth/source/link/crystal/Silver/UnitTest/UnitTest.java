@@ -11,6 +11,7 @@ import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Support.AnalyzeString;
 import link.crystal.Gem.Support.AsciiTable;
+import link.crystal.Gem.Support.BuildStringState;
 import link.crystal.Gem.Support.Map_String_Inspection;
 import link.crystal.Gem.Support.Storehouse_AdornmentSegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_MessageFormattable;
@@ -106,6 +107,7 @@ public final class  UnitTest
         if (true) {
             //AsciiTable.dump();
             //AnalyzeString.dump();
+            BuildStringState.dump();;
             //Gem.dump();
             //Gem.map_string_inspection                       .dump("Inspections");
             //Storehouse_AdornmentSegmentFormatter.singleton  .dump("Storehouse_AdornmentSegmentFormatter.singleton");

@@ -328,7 +328,7 @@ final class             PortrayString_TripleWithBackslash
     {
         builder.append("<PortrayString_TripleWithBackslash ", (this.apostrophe ? "apostrope" : "quotation_mark"));
         builder.quote(this.prefix);
-        builder.append(" ", this.first_state.name, " ", this.second_state.name, ">");
+        builder.append(" ", this.first_state.debug_name, " ", this.second_state.debug_name, ">");
     }
 
 
@@ -345,15 +345,15 @@ final class             PortrayString_TripleWithBackslash
 
         /*:*/ int                       start = 0;
         final int                       total = s.length();
-        final EphemeralStringState      state = first_state;
+        /*:*/ EphemeralStringState      state = first_state;
 
         for (/*:*/ int                  i = 0; i < total; /*  i is incremented in the loop by 1 or 2  */) {
             final int                   code_point = s.codePointAt(i);
 
             if (code_point < 128) {
-                AsciiTable              ascii = table[code_point];
+                AsciiTable              ascii = /*table[code_point]*/null;
 
-                if (ascii.is_boring_printable || code_point == quote_code_point) {
+                if (ascii.is_boring_printable /*|| code_point == quote_code_point*/) {
                     i ++;
                     continue;
                 }
@@ -366,9 +366,9 @@ final class             PortrayString_TripleWithBackslash
 
                 start = i;
 
-                if (apostrope) {
+                if (apostrophe) {
                     if (code_point == 39) {                             //  39 = ordinal("'")
-                        previous = portray_inside_triple.get(state);
+                        String previous = /*portray_inside_triple.get(state)*/null;
 
                         if (previous != null) {
                             builder.append(previous);
@@ -379,7 +379,7 @@ final class             PortrayString_TripleWithBackslash
                     }
                 } else {
                     if (code_point == 34) {                             //  34 = ordinal('"')
-                        previous = portray_inside_triple.get(state);
+                        String previous = /*portray_inside_triple.get(state)*/null;
 
                         if (previous != null) {
                             builder.append(previous);
@@ -402,8 +402,8 @@ final class             PortrayString_TripleWithBackslash
             i += Character.charCount(code_point);
 
             if (state != second_state) {
-                if (state != third_state) {
-                    build.append(portray_inside_tripe.get(state));
+                if (state != null) {
+                    builder.append(/*portray_inside_tripe.get(state)*/"?");
                 }
 
                 state = second_state;
@@ -414,6 +414,6 @@ final class             PortrayString_TripleWithBackslash
             builder.append_sub_string(s, start);
         }
 
-        builder.append(this.suffix);
+        builder.append(/*this.suffix*/null);
     }
 }

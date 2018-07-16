@@ -76,6 +76,7 @@ JACINTH_FILES = \
     $J/Gem/Core/Gem_List.java \
     $J/Gem/Core/Gem_Map.java \
     $J/Gem/Core/Gem_Object.java \
+    $J/Gem/Support/BuildStringState.java \
     $J/Gem/Core/Gem_StringBuilder.java \
     $J/Gem/Core/Gem_StringMap.java \
     $J/Gem/Core/Gem_StringSet.java \
@@ -326,7 +327,7 @@ clean:
 	rm -f 2re.py 2sf.py 2sp.py 2sc.py
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
 	rm -f a.py ab.py ae.java af.java ac.py ads.java ag.py ags.java agsi.java at.java
-	rm -f ba.py bi.py bk.py bm.py bo.py
+	rm -f ba.py bi.py bk.py bm.py bo.py bss.java
 	rm -f ca.py ca2.py cd.py ce.py ci.java cr.py
 	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
 	rm -f ef.java ef.py en.py ess.java ex.py
@@ -402,6 +403,7 @@ links:
 	ln -s ../Beryl/Ask.py                                                       bk.py
 	ln -s ../Beryl/Main.py                                                      bm.py
 	ln -s ../Gem/Boot.py                                                        bo.py
+	ln -s $J/Gem/Support/BuildStringState.java                                  bss.java
 	ln -s ../Gem/Cache.py                                                       ca.py
 	ln -s ../Gem/Cache2.py                                                      ca2.py
 	ln -s ../Gem/Cadence.py                                                     cd.py
