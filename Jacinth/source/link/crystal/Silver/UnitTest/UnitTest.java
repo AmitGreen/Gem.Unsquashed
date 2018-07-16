@@ -79,9 +79,9 @@ public final class  UnitTest
         final Zone                      z = Zone.current_zone();
 
         if (arguments.length == 0) {
-            //unit_test.test_analyze_string();
+            UnitTest_Gem.create(z).test_analyze_string();
             //UnitTest_Gem.create(z).test_arrange();
-            UnitTest_Gem.create(z).test_string();
+            //UnitTest_Gem.create(z).test_string();
             //UnitTest_Silver.create(z).test_shape();
 
             //UnitTest.create(z).test_development();

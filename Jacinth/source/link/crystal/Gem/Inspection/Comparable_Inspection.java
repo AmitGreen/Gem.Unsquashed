@@ -84,7 +84,7 @@ public /*:*/ class  Comparable_Inspection
     //
     //  Interface java.lang.Comparable
     //
-    //<inherited public int         compareTo(Gem_Comparable<? extends Comparable_Inspection> that);>
+    //<public inherited int         compareTo(Gem_Comparable<? extends Comparable_Inspection> that);>
 
 
     //

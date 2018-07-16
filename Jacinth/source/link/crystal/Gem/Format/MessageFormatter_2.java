@@ -157,7 +157,7 @@ public final class  MessageFormatter_2
         assert fact(actual == 2, "actual == 2");
 
         final Object                    w = other_arguments[0];
-        
+
         this.a.choose(builder, depth, v, w);
         this.b.choose(builder, depth, v, w);
     }

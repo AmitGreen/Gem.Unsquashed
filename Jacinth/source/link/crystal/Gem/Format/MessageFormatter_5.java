@@ -292,7 +292,7 @@ public final class  MessageFormatter_5
         assert fact(actual == 5, "actual == 5");
 
         final Object                    y5 = other_arguments[2];
-        
+
         this.a.choose(builder, depth, v, w, x, y4, y5);
         this.b.choose(builder, depth, v, w, x, y4, y5);
         this.c.choose(builder, depth, v, w, x, y4, y5);

@@ -152,7 +152,7 @@ public final class  ParseFormat
     }
 
 
-    //inherited public void             portray(String_Builder builder);
+    //<public inherited void            portray(String_Builder builder);>
 
 
     //

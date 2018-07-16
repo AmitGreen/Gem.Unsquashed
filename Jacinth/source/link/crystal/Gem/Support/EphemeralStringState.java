@@ -149,7 +149,7 @@ public final class      EphemeralStringState
         this.end_S      = (F3_value ==  1);
     }
 
-    
+
     //
     //  Interface Inspectable
     //

@@ -201,23 +201,21 @@ public final class  Gem_StringBuilder
     //
     //  Public (append sub-string)
     //
-    //      NOT used yet & thus not tested ...
-    //
-//  public final void                   append_sub_string(final String s, final int offset)
-//  {
-//      assert fact_between(0, offset, s.length() - 1);
-//
-//      this.builder.append(s, offset, s.length());
-//  }
-//
-//
-//  public final void                   append_sub_string(final String s, final int offset, final int end)
-//  {
-//      assert fact_between(0, offset, end);
-//      assert fact_between(0, end, s.length() - 1);
-//
-//      this.builder.append(s, offset, end);
-//  }
+    public final void                   append_sub_string(final String s, final int offset)
+    {
+        assert fact_between(0, offset, s.length() - 1);
+
+        this.builder.append(s, offset, s.length());
+    }
+
+
+    public final void                   append_sub_string(final String s, final int offset, final int end)
+    {
+        assert fact_between(0, offset, end);
+        assert fact_between(0, end, s.length() - 1);
+ 
+        this.builder.append(s, offset, end);
+    }
 
 
     //
