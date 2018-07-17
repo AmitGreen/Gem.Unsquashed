@@ -15,29 +15,104 @@ import link.crystal.Gem.Support.EphemeralStringState;
 import link.crystal.Gem.Support.OverallStringState;
 
 
+//
+//  How to combine OverallStringState with EphemeralStringState.
+//
+//      1.  Do we want a raw string?  (And can we do a raw string?)
+//
+//          1A. Do we prefer Apostrophe?
+//
+//                  Then use the `OverallStringState.RA` to choose either:
+//
+//                      `EphemeralStringState.RA` OR
+//                      `EphemeralStringState.RQ`
+//
+//                  Normally it will pick the `.RA` member;
+//
+//                      Only Exception:
+//
+//                          When the string starts with an apostrophe `'`, then it will pick the `.RQ` member
+//                          (so the string is quoted with `"` if possible).
+//
+//          1B.  Do we prefer quotation marks?
+//
+//                  Then use the `OverallStringState.RQ` to choose either:
+//
+//                      `EphemeralStringState.RA` OR
+//                      `EphemeralStringState.RQ`
+//
+//                  Normally it will pick the `.RA` member;
+//
+//                      Only Exception:
+//
+//                          When the string starts with a quotation mark `"`, then it will pick the `.RA` member
+//                          (so the string is quoted with `'` if possible).
+//                              
+//      2.  Are we going to do a normal string?
+//
+//          2A. Do we prefer Apostrophe?
+//
+//                  Then use `OverallStringState.PA` to choose either:
+//
+//                      `EphemeralStringState.PC` OR
+//                      `EphemeralStringState.PS` OR
+//
+//                          -- OR -- (if there is a backslash in the string)
+//
+//                      `EphemeralStringState.KC` OR
+//                      `EphemeralStringState.KS` OR
+//
+//                  Normally it will pick the `.PC` or `.KC` member;
+//
+//                      Only Exception:
+//
+//                          When the string starts with an apostrophe `'`, then it will pick the `.PS` or `.KS` member
+//                          (so the string is quoted with `"` if possible).
+//
+//          2A. Do we prefer Quotation Mark?
+//
+//                  Then use `OverallStringState.PQ` to choose either:
+//
+//                      `EphemeralStringState.PC` OR
+//                      `EphemeralStringState.PS` OR
+//
+//                          -- OR -- (if there is a backslash in the string)
+//
+//                      `EphemeralStringState.KC` OR
+//                      `EphemeralStringState.KS` OR
+//
+//                  Normally it will pick the `.PS` or `.KS` member;
+//
+//                      Only Exception:
+//
+//                          When the string starts with a quotation mark `"`, then it will pick the `.PC` or `.KC` member
+//                          (so the string is quoted with `'` if possible).
+//
 public abstract class   AnalyzeString
     extends             Gem_Object//<Inspection>
 {
     //
     //  Array indexes
     //
-    public static final int                     KC = 1;         //  Backslash & '''
-    public static final int                     KS = 2;         //  Backslash & """
-    public static final int                     PC = 3;         //  Normal & (' | ''')
-    public static final int                     PS = 4;         //  Normal & (" | """)
-    public static final int                     RA = 5;         //  Raw String with '
-    public static final int                     RQ = 6;         //  Raw String with "
+    public static final int                     KC =  1;        //  Backslash & '''
+    public static final int                     KS =  2;        //  Backslash & """
+    public static final int                     PC =  3;        //  Normal & '''
+    public static final int                     PS =  4;        //  Normal & """
+    public static final int                     RA =  5;        //  Raw String with '
+    public static final int                     RQ =  6;        //  Raw String with "
 
-    public static final int                     RC = 7;         //  Raw String with '''
-    public static final int                     RS = 8;         //  Raw String with """
-    public static final int                     P  = 9;         //  String.portray
+    public static final int                     KA =  7;        //  Backslash & '
+    public static final int                     KQ =  8;        //  Backslash & "
+    public static final int                     PA =  9;        //  Normal & '
+    public static final int                     PQ = 10;        //  Normal & "
+    public static final int                     RC = 11;        //  Raw String with '''
+    public static final int                     RS = 12;        //  Raw String with """
 
     public static final String[]                index_names = new String[] {
             "0",
             "KC", "KS", "PC", "PS", "RA", "RQ",
-            "RC", "RS", "P"
+            "KA", "KQ", "PA", "PQ", "RC", "RS",
         };
-
 
 
     //
@@ -45,7 +120,7 @@ public abstract class   AnalyzeString
     //
     //       E = Empty
     //       K = Backslash
-    //       L = Lemon
+    //       L = Lemon (Unprintable)
     //       N = Normal
     //       T = Starts with "
     //       U = Starts with '
@@ -56,10 +131,10 @@ public abstract class   AnalyzeString
     private static final OverallStringState     N  = OverallStringState.create("N");
     private static final OverallStringState     TK = OverallStringState.create("TK");
     private static final OverallStringState     TL = OverallStringState.create("TL");
-    private static final OverallStringState     T  = OverallStringState.create("T");
+    private static final OverallStringState     T  = OverallStringState.create("T");        //  Means: TN
     private static final OverallStringState     UK = OverallStringState.create("UK");
     private static final OverallStringState     UL = OverallStringState.create("UL");
-    private static final OverallStringState     U  = OverallStringState.create("U");
+    private static final OverallStringState     U  = OverallStringState.create("U");        //  Means: UN
 
 
     //
@@ -156,40 +231,40 @@ public abstract class   AnalyzeString
         U .overall (_,  UK, UL, _, RQ,  _, PS,  _, _);
 
         //          '     \     N     "     ra  rq  kc  ks  pc  ps, F3
-        A_A  .setup(A_B,  A_K,  A_N,  AQ_Q, RQ,  _,  _,  _,  _,  _,  _);    //  Has '; ends in '
-        A_B  .setup(C_C,  A_K,  A_N,  AQ_Q, RQ,  _,  _,  _,  _,  _,  _);    //  Has '; ends in ''
-        A_K  .setup(A_N,  A_N,  A_N,  A_N,   _,  _,  _,  _,  _,  _,  _);    //  Has '; ends in \
-        A_N  .setup(A_A,  A_K,  A_N,  AQ_Q, RQ,  _,  _,  _,  _,  _,  _);    //  Has '
+        A_A  .setup(A_B,  A_K,  A_N,  AQ_Q, RQ,  _, KQ,  _, PQ,  _,  _);    //  Has '; ends in '
+        A_B  .setup(C_C,  A_K,  A_N,  AQ_Q, RQ,  _, KQ,  _, PQ,  _,  _);    //  Has '; ends in ''
+        A_K  .setup(A_N,  A_N,  A_N,  A_N,   0,  _, KQ,  _,  0,  _,  _);    //  Has '; ends in \
+        A_N  .setup(A_A,  A_K,  A_N,  AQ_Q, RQ,  _, KQ,  _, PQ,  _,  _);    //  Has '
 
         //          '     \     N     "     ra  rq  kc  ks  pc  ps, F3
-        AQ_A .setup(AQ_B, AQ_K, AQ_N, AQ_Q, RS,  _, KS, _,  KS, _,   _);    //  Has ' & "; ends in '
-        AQ_B .setup(CQ_C, AQ_K, AQ_N, AQ_Q, RS,  _, KS, _,  KS, _,   _);    //  Has ' & "; ends in ''
-        AQ_K .setup(AQ_N, AQ_N, AQ_N, AQ_N,  0,  _, KC, KS, PC, PS,  _);    //  Has ' & "; ends in \
+        AQ_A .setup(AQ_B, AQ_K, AQ_N, AQ_Q, RS,  _, KS,  _, KS,  _,  _);    //  Has ' & "; ends in '
+        AQ_B .setup(CQ_C, AQ_K, AQ_N, AQ_Q, RS,  _, KS,  _, KS,  _,  _);    //  Has ' & "; ends in ''
+        AQ_K .setup(AQ_N, AQ_N, AQ_N, AQ_N,  0,  _, KC, KS,  0,  _,  _);    //  Has ' & "; ends in \
         AQ_N .setup(AQ_A, AQ_K, AQ_N, AQ_Q, RC, RS, KC, KS, PC, PS,  _);    //  Has ' & "
-        AQ_Q .setup(AQ_A, AQ_K, AQ_N, AQ_R, RC,  _, KC, _,  KC, _,   _);    //  Has ' & "; ends in "
-        AQ_R .setup(AQ_A, AQ_K, AQ_N, AS_S, RC,  _, KC, _,  KC, _,   _);    //  Has ' & "; ends in ""
+        AQ_Q .setup(AQ_A, AQ_K, AQ_N, AQ_R, RC,  _, KC,  _, KC,  _,  _);    //  Has ' & "; ends in "
+        AQ_R .setup(AQ_A, AQ_K, AQ_N, AS_S, RC,  _, KC,  _, KC,  _,  _);    //  Has ' & "; ends in ""
 
         //          '     \     N     "     ra  rq  kc  ks  pc  ps, F3
-        AS_A .setup(AS_B, AS_K, AS_N, AS_Q,  0,  _, KS, _,  KS, _,   _);    //  Has ' & """; ends in '
-        AS_B .setup(CS_C, AS_K, AS_N, AS_Q,  0,  _, KS, _,  KS, _,   _);    //  Has ' & """; ends in ''
-        AS_K .setup(AS_N, AS_N, AS_N, AS_N,  0,  _, KC, _,  PC, _,   _);    //  Has ' & """; ends in \
-        AS_N .setup(AS_A, AS_K, AS_N, AS_Q, RC,  _, KC, _,  PC, _,   _);    //  Has ' & """
-        AS_Q .setup(AS_A, AS_K, AS_N, AS_R, RC,  _, KC, _,  KC, _,   _);    //  Has ' & """; ends in "
-        AS_R .setup(AS_A, AS_K, AS_N, AS_S, RC,  _, KC, _,  KC, _,   _);    //  Has ' & """; ends in ""
-        AS_S .setup(AS_A, AS_K, AS_N, AS_R, RC,  _, KC, _,  KC, _,   1);    //  Has ' & """; ends in """
+        AS_A .setup(AS_B, AS_K, AS_N, AS_Q,  0,  _, KS,  _, KS,  _,  _);    //  Has ' & """; ends in '
+        AS_B .setup(CS_C, AS_K, AS_N, AS_Q,  0,  _, KS,  _, KS,  _,  _);    //  Has ' & """; ends in ''
+        AS_K .setup(AS_N, AS_N, AS_N, AS_N,  0,  _, KC,  _,  0,  _,  _);    //  Has ' & """; ends in \
+        AS_N .setup(AS_A, AS_K, AS_N, AS_Q, RC,  _, KC,  _, PC,  _,  _);    //  Has ' & """
+        AS_Q .setup(AS_A, AS_K, AS_N, AS_R, RC,  _, KC,  _, KC,  _,  _);    //  Has ' & """; ends in "
+        AS_R .setup(AS_A, AS_K, AS_N, AS_S, RC,  _, KC,  _, KC,  _,  _);    //  Has ' & """; ends in ""
+        AS_S .setup(AS_A, AS_K, AS_N, AS_R, RC,  _, KC,  _, KC,  _,  1);    //  Has ' & """; ends in """
 
         //          '     \     N     "     ra  rq  kc  ks  pc  ps, F3
-        C_A  .setup(C_B,  C_K,  C_N,  CQ_Q, RQ,  _,  _,  _,  _,  _,  _);    //  Has '''; ends in '
-        C_B  .setup(C_C,  C_K,  C_N,  CQ_Q, RQ,  _,  _,  _,  _,  _,  _);    //  Has '''; ends in ''
-        C_C  .setup(C_B,  C_K,  C_N,  CQ_Q, RQ,  _,  _,  _,  _,  _, -1);    //  Has '''; ends in '''
-        C_K  .setup(C_N,  C_N,  C_N,  C_N,   _,  _,  _,  _,  _,  _,  _);    //  Has '''; ends in \
-        C_N  .setup(C_A,  C_K,  C_N,  CQ_Q, RQ,  _,  _,  _,  _,  _,  _);    //  Has '''
+        C_A  .setup(C_B,  C_K,  C_N,  CQ_Q, RQ,  _, KQ,  _, PQ,  _,  _);    //  Has '''; ends in '
+        C_B  .setup(C_C,  C_K,  C_N,  CQ_Q, RQ,  _, KQ,  _, PQ,  _,  _);    //  Has '''; ends in ''
+        C_C  .setup(C_B,  C_K,  C_N,  CQ_Q, RQ,  _, KQ,  _, PQ,  _, -1);    //  Has '''; ends in '''
+        C_K  .setup(C_N,  C_N,  C_N,  C_N,   0,  _, KQ,  _,  0,  _,  _);    //  Has '''; ends in \
+        C_N  .setup(C_A,  C_K,  C_N,  CQ_Q, RQ,  _, KQ,  _, PQ,  _,  _);    //  Has '''
 
         //          '     \     N     "     ra  rq  kc  ks  pc  ps, F3
         CQ_A .setup(CQ_B, CQ_K, CQ_N, CQ_Q, RS,  _, KS,  _, PS,  _,  _);    //  Has ''' & "; ends in '
         CQ_B .setup(CQ_C, CQ_K, CQ_N, CQ_Q, RS,  _, KS,  _, PS,  _,  _);    //  Has ''' & "; ends in ''
         CQ_C .setup(CQ_B, CQ_K, CQ_N, CQ_Q, RS,  _, KS,  _, PS,  _, -1);    //  Has ''' & "; ends in '''
-        CQ_K .setup(CQ_N, CQ_N, CQ_N, CQ_N,  0,  _, KS,  _, PS,  _,  _);    //  Has ''' & "; ends in \
+        CQ_K .setup(CQ_N, CQ_N, CQ_N, CQ_N,  0,  _, KS,  _,  0,  _,  _);    //  Has ''' & "; ends in \
         CQ_N .setup(CQ_A, CQ_K, CQ_N, CQ_Q, RS,  _, KS,  _, PS,  _,  _);    //  Has ''' & "
         CQ_Q .setup(CQ_A, CQ_K, CQ_N, CQ_R,  0,  _, KC,  _, KC,  _,  _);    //  Has ''' & "; ends in "
         CQ_R .setup(CQ_A, CQ_K, CQ_N, CS_S,  0,  _, KC,  _, KC,  _,  _);    //  Has ''' & "; ends in ""
@@ -204,21 +279,23 @@ public abstract class   AnalyzeString
         CS_S .setup(CS_A, CS_N, CS_N, CS_R,  0,  _, KC, _,  KC,  _,  1);    //  Has ''' & """; ends in """
 
         //          '     \     N     "     ra  rq  kc  ks  pc  ps, F3
-        N_K  .setup(N_N,  N_N,  N_N,  N_N,   _,  _,  _,  _,  _,  _,  _);    //  normal; ends in \
-        N_N  .setup(A_A,  N_K,  N_N,  Q_Q,  RA, RQ,  _,  _,  _,  _,  _);    //  normal
+        N_K  .setup(N_N,  N_N,  N_N,  N_N,   0,  _, KA, KS,  0,  _,  _);    //  normal; ends in \
+        N_N  .setup(A_A,  N_K,  N_N,  Q_Q,  RA, RQ, KA, KS, PC, PS,  _);    //  normal
 
         //          '     \     N     "     ra  rq  kc  ks  pc  ps, F3
-        Q_K  .setup(Q_N,  Q_N,  Q_N,  Q_N,   _,  _,  _,  _,  _,  _,  _);    //  Has "; ends in \
-        Q_N  .setup(AQ_A, Q_K,  Q_N,  Q_Q,  RA,  _,  _,  _,  _,  _,  _);    //  Has "
-        Q_Q  .setup(AQ_A, Q_K,  Q_N,  Q_R,  RA,  _,  _,  _,  _,  _,  _);    //  Has "; ends in "
-        Q_R  .setup(AQ_A, Q_K,  Q_N,  S_S,  RA,  _,  _,  _,  _,  _,  _);    //  Has "; ends in ""
+        Q_K  .setup(Q_N,  Q_N,  Q_N,  Q_N,   0,  _, KA,  _,  0,  _,  _);    //  Has "; ends in \
+        Q_N  .setup(AQ_A, Q_K,  Q_N,  Q_Q,  RA,  _, KA,  _, PA,  _,  _);    //  Has "
+        Q_Q  .setup(AQ_A, Q_K,  Q_N,  Q_R,  RA,  _, KA,  _, PA,  _,  _);    //  Has "; ends in "
+        Q_R  .setup(AQ_A, Q_K,  Q_N,  S_S,  RA,  _, KA,  _, PA,  _,  _);    //  Has "; ends in ""
 
         //          '     \     N     "     ra  rq  kc  ks  pc  ps, F3
-        S_K  .setup(S_N,  S_N,  S_N,  S_N,   _,  _,  _,  _,  _,  _,  _);    //   Has """: ends in \
-        S_N  .setup(AS_A, S_K,  S_N,  S_Q,  RA,  _,  _,  _,  _,  _,  _);    //   Has """
-        S_Q  .setup(AS_A, S_K,  S_N,  S_R,  RA,  _,  _,  _,  _,  _,  _);    //   Has """; ends in "
-        S_R  .setup(AS_A, S_K,  S_N,  S_S,  RA,  _,  _,  _,  _,  _,  _);    //   Has """; ends in ""
-        S_S  .setup(AS_A, S_K,  S_N,  S_R,  RA,  _,  _,  _,  _,  _,  1);    //   Has """; ends in """
+        S_K  .setup(S_N,  S_N,  S_N,  S_N,   0,  _, KA,  _,  0,  _,  _);    //   Has """: ends in \
+        S_N  .setup(AS_A, S_K,  S_N,  S_Q,  RA,  _, KA,  _, PA,  _,  _);    //   Has """
+        S_Q  .setup(AS_A, S_K,  S_N,  S_R,  RA,  _, KA,  _, PA,  _,  _);    //   Has """; ends in "
+        S_R  .setup(AS_A, S_K,  S_N,  S_S,  RA,  _, KA,  _, PA,  _,  _);    //   Has """; ends in ""
+        S_S  .setup(AS_A, S_K,  S_N,  S_R,  RA,  _, KA,  _, PA,  _,  1);    //   Has """; ends in """
+
+        EphemeralStringState.remove_cache__ALLY__AnalyzeString();
 
         return true;
     }
@@ -351,14 +428,14 @@ public abstract class   AnalyzeString
         line("        C:  {p}", C);
         line("        S:  {p}", S);
 
-        if (overall.is_K && raw_state.ra >= 0) {
+        if (overall.is_K && raw_state.portray_functions[0].is_valid) {
             line("#1");
         }
 
         line("  {p}: overall{}; state{}", s, overall, state);
-        line("  overall.ps: {p}", overall.ps);
+        line("  overall.pq: {p}", overall.pq);
 
-        //return overall.ps(state)(s)
+        //return overall.pq(state)(s)
     }
 
 
@@ -368,6 +445,7 @@ public abstract class   AnalyzeString
     public static final void            dump()
     {
         line("Dump of AnalyzeString");
+        OverallStringState.portray_header("member ");
         line("   E:  {p}", AnalyzeString.E);
         line("   K:  {p}", AnalyzeString.K);
         line("   L:  {p}", AnalyzeString.L);
@@ -380,6 +458,7 @@ public abstract class   AnalyzeString
         line("   U:  {p}", AnalyzeString.U);
 
         line("---");
+        EphemeralStringState.portray_header(" member  ");
         line("   A_A:  {p}", AnalyzeString.A_A);
         line("   A_B:  {p}", AnalyzeString.A_B);
         line("   A_K:  {p}", AnalyzeString.A_K);

@@ -4,14 +4,35 @@
 package link.crystal.Gem.Support;
 
 
+import java.lang.Character;
 import java.lang.String;
 import link.crystal.Gem.Core.Gem_Object;
 import link.crystal.Gem.Core.Gem_StringBuilder;
 import link.crystal.Gem.Core.Zone;
 import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
+import link.crystal.Gem.Support.BuildStringState;
 
 
+//
+//   KA = backslash_with_apostrophe         (can use python `String.__repr__` for optimization)
+//   KQ = backslash_with_quotation_mark     (can use python `String.__repr__` for optimization)
+//
+//   KC = backslash_with_triple_apostrophe
+//   KS = backslash_with_triple_quotation_mark
+//
+//   PA = normal_with_apostrophe            (can use python `String.__repr__` for optimization)
+//   PQ = normal_with_quotation_mark        (can use python `String.__repr__` for optimization)
+//
+//   PC = normal_with_triple_apostrophe
+//   PS = normal_with_triple_quotation_mark
+//
+//   RA = raw_with_apostrophe
+//   RQ = raw_with_quotation_mark
+//
+//   RC = raw_with_triple_apostrophe
+//   RS = raw_with_triple_quotation_mark
+//
 public abstract class   PortrayString
     extends             Gem_Object <Inspection>
     implements          Inspectable<Inspection>//,
@@ -19,45 +40,90 @@ public abstract class   PortrayString
     //
     //  Static members
     //
+    public static final PortrayString   portray_string__invalid = (
+            PortrayString_Backslash.create__ALLY__PortrayString("0", "invalid'", "'", 39)   //  39 = ordinal("'")
+        );
+
     public static final PortrayString   backslash_with_apostrophe = (
-            PortrayString_Backslash.create__ALLY__PortrayString("'", "'", 39)   //  39 = ordinal("'")
+            PortrayString_Backslash.create__ALLY__PortrayString("KA", "'", "'", 39)   //  39 = ordinal("'")
         );
 
     public static final PortrayString   backslash_with_quotation_mark = (
-            PortrayString_Backslash.create__ALLY__PortrayString("'", "'", 34)   //  34 = ordinal('"')
+            PortrayString_Backslash.create__ALLY__PortrayString("KQ", "'", "'", 34)   //  34 = ordinal('"')
+        );
+
+    public static final PortrayString   backslash_with_triple_apostrophe = (
+            PortrayString_TripleWithBackslash.create__ALLY__PortrayString(
+                "KC",
+                "'''",
+                AsciiTable.table_with_boring_quotation_mark,
+                39,                                                             //  39 = ordinal("'")
+                BuildStringState.A_Start,
+                BuildStringState.A_Normal//,
+            )
+        );
+
+    public static final PortrayString   backslash_with_triple_quotation_mark = (
+            PortrayString_TripleWithBackslash.create__ALLY__PortrayString(
+                "KS",
+                "\"\"\"",
+                AsciiTable.table_with_boring_apostrophe,
+                34,                                                             //  34 = ordinal('"')
+                BuildStringState.Q_Start,
+                BuildStringState.Q_Normal//,
+            )
         );
 
     public static final PortrayString   normal_with_apostrophe = (
-            PortrayString_Normal.create__ALLY__PortrayString("'", "'")
+            PortrayString_Normal.create__ALLY__PortrayString("PA", "'", "'")
         );
 
     public static final PortrayString   normal_with_quotation_mark = (
-            PortrayString_Normal.create__ALLY__PortrayString("\"", "\"")
+            PortrayString_Normal.create__ALLY__PortrayString("PQ", "\"", "\"")
         );
 
     public static final PortrayString   normal_with_triple_apostrophe = (
-            PortrayString_Normal.create__ALLY__PortrayString("'''", "'''")
+            PortrayString_Normal.create__ALLY__PortrayString("PC", "'''", "'''")
         );
 
     public static final PortrayString   normal_with_triple_quotation_mark = (
-            PortrayString_Normal.create__ALLY__PortrayString("\"\"\"", "\"\"\"")
+            PortrayString_Normal.create__ALLY__PortrayString("PS", "\"\"\"", "\"\"\"")
         );
 
     public static final PortrayString   raw_with_apostrophe = (
-            PortrayString_Normal.create__ALLY__PortrayString("r'", "'")
+            PortrayString_Normal.create__ALLY__PortrayString("RA", "r'", "'")
         );
 
     public static final PortrayString   raw_with_quotation_mark = (
-            PortrayString_Normal.create__ALLY__PortrayString("r\"", "\"")
+            PortrayString_Normal.create__ALLY__PortrayString("RQ", "r\"", "\"")
         );
 
     public static final PortrayString   raw_with_triple_apostrophe = (
-            PortrayString_Normal.create__ALLY__PortrayString("r'''", "'''")
+            PortrayString_Normal.create__ALLY__PortrayString("RC", "r'''", "'''")
         );
 
     public static final PortrayString   raw_with_triple_quotation_mark = (
-            PortrayString_Normal.create__ALLY__PortrayString("r\"\"\"", "\"\"\"")
+            PortrayString_Normal.create__ALLY__PortrayString("RS", "r\"\"\"", "\"\"\"")
         );
+
+
+    //
+    //  Members
+    //
+    protected final String              abbreviation;
+    protected final boolean             is_valid;
+
+
+    //
+    //  Constructor
+    //
+    protected                           PortrayString(final String abbreviation)
+    {
+        final boolean                   is_valid = ( ! abbreviation.equals("0"));
+
+        this.abbreviation = abbreviation;
+        this.is_valid     = is_valid;
+    }
 
 
     //
@@ -102,11 +168,14 @@ final class             PortrayString_Backslash
     //  Constructor & Factory
     //
     private                             PortrayString_Backslash(
+            final String                        abbreviation,
             final String                        prefix,
             final String                        suffix,
             final int                           quote_code_point//,
         )
     {
+        super(abbreviation);
+
         this.prefix           = prefix;
         this.suffix           = suffix;
         this.quote_code_point = quote_code_point;
@@ -114,12 +183,13 @@ final class             PortrayString_Backslash
 
 
     public static final PortrayString_Backslash     create__ALLY__PortrayString(
+            final String                        abbreviation,
             final String                        prefix,
             final String                        suffix,
             final int                           quote_code_point//,
         )
     {
-        return new PortrayString_Backslash(prefix, suffix, quote_code_point);
+        return new PortrayString_Backslash(abbreviation, prefix, suffix, quote_code_point);
     }
 
 
@@ -135,7 +205,7 @@ final class             PortrayString_Backslash
 
     public final void                   portray(final Gem_StringBuilder builder)
     {
-        builder.append("<PortrayString_Backslash ");
+        builder.append("<PortrayString_Backslash ", this.abbreviation, " ");
         builder.quote(this.prefix);
         builder.append(" ");
         builder.quote(this.suffix);
@@ -154,7 +224,7 @@ final class             PortrayString_Backslash
 
         builder.append(this.prefix);
 
-        /*:*/ int                       start = 0;
+        /*:*/ int                       begin = 0;
         final int                       total = s.length();
 
         for (/*:*/ int                  i = 0; i < total; /*  i is incremented in the loop by 1 or 2  */) {
@@ -168,8 +238,8 @@ final class             PortrayString_Backslash
                     continue;
                 }
 
-                if (start < i) {
-                    builder.append_sub_string(s, start, i);
+                if (begin < i) {
+                    builder.append_slice(s, begin, i);
                 }
 
                 assert fact_pointer(ascii.portray_0, "ascii.portray_0");
@@ -178,7 +248,7 @@ final class             PortrayString_Backslash
 
                 i ++;
 
-                start = i;
+                begin = i;
 
                 continue;
             }
@@ -186,8 +256,8 @@ final class             PortrayString_Backslash
             i += Character.charCount(code_point);
         }
 
-        if (start < total) {
-            builder.append_sub_string(s, start);
+        if (begin < total) {
+            builder.append_slice(s, begin);
         }
 
         builder.append(this.suffix);
@@ -213,16 +283,26 @@ final class             PortrayString_Normal
     //
     //  Constructor & Factory
     //
-    protected                           PortrayString_Normal(final String prefix, final String suffix)
+    protected                           PortrayString_Normal(
+            final String                        abbreviation,
+            final String                        prefix,
+            final String                        suffix//,
+        )
     {
+        super(abbreviation);
+
         this.prefix = prefix;
         this.suffix = suffix;
     }
 
 
-    public static final PortrayString_Normal    create__ALLY__PortrayString(final String prefix, final String suffix)
+    public static final PortrayString_Normal    create__ALLY__PortrayString(
+            final String                        abbreviation,
+            final String                        prefix,
+            final String                        suffix//,
+        )
     {
-        return new PortrayString_Normal(prefix, suffix);
+        return new PortrayString_Normal(abbreviation, prefix, suffix);
     }
 
 
@@ -239,7 +319,7 @@ final class             PortrayString_Normal
     @Override
     public final void                   portray(final Gem_StringBuilder builder)
     {
-        builder.append("<PortrayString_Normal ");
+        builder.append("<PortrayString_Normal ", this.abbreviation, " ");
         builder.quote(this.prefix);
         builder.append(" ");
         builder.quote(this.suffix);
@@ -268,7 +348,6 @@ final class             PortrayString_Normal
 
 }
 
-
 final class             PortrayString_TripleWithBackslash
     extends             PortrayString
 //  extends             Gem_Object <Inspection>
@@ -280,37 +359,52 @@ final class             PortrayString_TripleWithBackslash
     //
     //  Members
     //
-    private final boolean               apostrophe;
     private final String                prefix;
-    private final EphemeralStringState  first_state;
-    private final EphemeralStringState  second_state;
+    private final AsciiTable[]          table;
+    private final int                   quote_code_point;
+    private final BuildStringState      first_state;
+    private final BuildStringState      normal_state;
 
 
     //
     //  Constructor & Factory
     //
     private                             PortrayString_TripleWithBackslash(
-            final boolean                       apostrophe,
+            final String                        abbreviation,
             final String                        prefix,
-            final EphemeralStringState          first_state,
-            final EphemeralStringState          second_state//,
+            final AsciiTable[]                  table,
+            final int                           quote_code_point,
+            final BuildStringState              first_state,
+            final BuildStringState              normal_state//
         )
     {
-        this.apostrophe   = apostrophe;
-        this.prefix       = prefix;
-        this.first_state  = first_state;
-        this.second_state = second_state;
+        super(abbreviation);
+
+        this.prefix           = prefix;
+        this.table            = table;
+        this.quote_code_point = quote_code_point;
+        this.first_state      = first_state;
+        this.normal_state     = normal_state;
     }
 
 
     public static final PortrayString_TripleWithBackslash   create__ALLY__PortrayString(
-            final boolean                       apostrophe,
+            final String                        abbreviation,
             final String                        prefix,
-            final EphemeralStringState          first_state,
-            final EphemeralStringState          second_state//,
+            final AsciiTable[]                  table,
+            final int                           quote_code_point,
+            final BuildStringState              first_state,
+            final BuildStringState              normal_state//
         )
     {
-        return new PortrayString_TripleWithBackslash(apostrophe, prefix, first_state, second_state);
+        return new PortrayString_TripleWithBackslash(
+                abbreviation,
+                prefix,
+                table,
+                quote_code_point,
+                first_state,
+                normal_state//,
+            );
     }
 
 
@@ -326,9 +420,28 @@ final class             PortrayString_TripleWithBackslash
 
     public final void                   portray(final Gem_StringBuilder builder)
     {
-        builder.append("<PortrayString_TripleWithBackslash ", (this.apostrophe ? "apostrope" : "quotation_mark"));
+        String                          table_name = "?";
+
+        if (this.table == AsciiTable.table_with_boring_apostrophe) {
+            table_name = "table_with_boring_apostrophe";
+        } else {
+            assert fact( this.table == AsciiTable.table_with_boring_quotation_mark,
+                        "this.table == AsciiTable.table_with_boring_quotation_mark");
+
+            table_name = "table_with_boring_quotation_mark";
+        }
+
+        String                          quote_code_point_name = "?";
+
+        if (this.quote_code_point == 34) {
+            quote_code_point_name = "'\"'";
+        } else {
+            quote_code_point_name = "\"'\"";
+        }
+
+        builder.append("<PortrayString_TripleWithBackslash ", this.abbreviation, " ");
         builder.quote(this.prefix);
-        builder.append(" ", this.first_state.debug_name, " ", this.second_state.debug_name, ">");
+        builder.append(" ", table_name, " ", quote_code_point_name, " ", this.first_state.name, " ", this.normal_state.name, ">");
     }
 
 
@@ -339,81 +452,88 @@ final class             PortrayString_TripleWithBackslash
     {
         builder.append(this.prefix);
 
-        final boolean                   apostrophe   = this.apostrophe;
-        final EphemeralStringState      first_state  = this.first_state;
-        final EphemeralStringState      second_state = this.second_state;
+        final BuildStringState          normal_state     = this.normal_state;
+        final int                       quote_code_point = this.quote_code_point;
+        final AsciiTable[]              table            = this.table;
 
-        /*:*/ int                       start = 0;
-        final int                       total = s.length();
-        /*:*/ EphemeralStringState      state = first_state;
+        final BuildStringState          state_1 = normal_state.add;
+
+        /*:*/ int                       begin       = 0;
+        /*:*/ BuildStringState          state       = this.first_state;
+        /*:*/ int                       state_begin = 0;                    //  Only used when `state != normal_state`
+        final int                       total       = s.length();
 
         for (/*:*/ int                  i = 0; i < total; /*  i is incremented in the loop by 1 or 2  */) {
             final int                   code_point = s.codePointAt(i);
 
-            if (code_point < 128) {
-                AsciiTable              ascii = /*table[code_point]*/null;
-
-                if (ascii.is_boring_printable /*|| code_point == quote_code_point*/) {
-                    i ++;
-                    continue;
-                }
-
-                if (start < i) {
-                    builder.append_sub_string(s, start, i);
-                }
-
-                i ++;
-
-                start = i;
-
-                if (apostrophe) {
-                    if (code_point == 39) {                             //  39 = ordinal("'")
-                        String previous = /*portray_inside_triple.get(state)*/null;
-
-                        if (previous != null) {
-                            builder.append(previous);
-                        }
-
-                        state = state.A;
-                        continue;
-                    }
-                } else {
-                    if (code_point == 34) {                             //  34 = ordinal('"')
-                        String previous = /*portray_inside_triple.get(state)*/null;
-
-                        if (previous != null) {
-                            builder.append(previous);
-                        }
-
-                        state = state.Q;
-                        continue;
-                    }
-                }
-
-                assert fact_pointer(ascii.portray_0, "ascii.portray_0");
-
-                builder.append(ascii.portray_0);
-
-                start = i;
+            if (code_point >= 128) {
+                i += Character.charCount(code_point);
+                state = normal_state;
 
                 continue;
             }
 
-            i += Character.charCount(code_point);
+            final AsciiTable            ascii = table[code_point];
 
-            if (state != second_state) {
-                if (state != null) {
-                    builder.append(/*portray_inside_tripe.get(state)*/"?");
+            if (ascii.is_boring_printable) {
+                i ++;
+                state = normal_state;
+
+                continue;
+            }
+
+            if (code_point == quote_code_point) {
+                i ++;
+
+                if (state == normal_state) {
+                    state       = state_1;
+                    state_begin = i;
+                    continue;
                 }
 
-                state = second_state;
+                final String        add_flush_0 = state.add_flush_0;
+
+                if (add_flush_0 != null) {
+                    if (begin < state_begin) {
+                        builder.append_slice(s, begin, state_begin);
+                    }
+
+                    builder.append(add_flush_0);
+
+                    begin =
+                        state_begin = i;
+                }
+
+                state = state.add;
+                continue;
             }
+
+            if (begin < i) {
+                builder.append_slice(s, begin, i);
+            }
+
+            i ++;
+
+            assert fact_pointer(ascii.portray_0, "ascii.portray_0");
+
+            builder.append(ascii.portray_0);
+
+            state = normal_state;
+            begin = i;
         }
 
-        if (start < total) {
-            builder.append_sub_string(s, start);
+        if (state == normal_state) {
+            if (begin < total) {
+                builder.append_slice(s, begin);
+            }
+
+            return;
         }
 
-        builder.append(/*this.suffix*/null);
+        if (begin < state_begin) {
+            builder.append_slice(s, begin, state_begin);
+        }
+
+        builder.append(state.finish);
     }
 }

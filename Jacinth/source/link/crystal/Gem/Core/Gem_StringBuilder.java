@@ -198,23 +198,76 @@ public final class  Gem_StringBuilder
     }
 
 
-    //
-    //  Public (append sub-string)
-    //
-    public final void                   append_sub_string(final String s, final int offset)
+    public final void                   append(
+            final String                        a,
+            final String                        b,
+            final String                        c,
+            final String                        d,
+            final String                        e,
+            final String                        f,
+            final String                        g//,
+        )
     {
-        assert fact_between(0, offset, s.length() - 1);
-
-        this.builder.append(s, offset, s.length());
+        this.builder.append(a).append(b).append(c).append(d).append(e).append(f).append(g);
     }
 
 
-    public final void                   append_sub_string(final String s, final int offset, final int end)
+    public final void                   append(
+            final String                        a,
+            final String                        b,
+            final String                        c,
+            final String                        d,
+            final String                        e,
+            final String                        f,
+            final String                        g,
+            final String                        h//,
+        )
     {
-        assert fact_between(0, offset, end);
-        assert fact_between(0, end, s.length() - 1);
- 
-        this.builder.append(s, offset, end);
+        this.builder.append(a).append(b).append(c).append(d).append(e).append(f).append(g).append(h);
+    }
+
+
+    public final void                   append(
+            final String                        a,
+            final String                        b,
+            final String                        c,
+            final String                        d,
+            final String                        e,
+            final String                        f,
+            final String                        g,
+            final String                        h8,
+            final String                        h9//,
+        )
+    {
+        this.builder.append(a).append(b).append(c).append(d).append(e).append(f).append(g).append(h8).append(h9);
+    }
+
+
+    //
+    //  Public (append sub-string)
+    //
+    public final void                   append_slice(final String s, final int offset)
+    {
+        assert fact_between(0, offset, s.length());
+
+        final int                       total = s.length() - offset;
+
+        if (total > 0) {
+            this.builder.append(s, offset, total);
+        }
+    }
+
+
+    public final void                   append_slice(final String s, final int offset, final int end_plus_1)
+    {
+        assert fact_between(0, offset, end_plus_1);
+        assert fact_between(0, end_plus_1, s.length());
+
+        final int                       total = end_plus_1 - offset;
+
+        if (total > 0) {
+            this.builder.append(s, offset, total);
+        }
     }
 
 

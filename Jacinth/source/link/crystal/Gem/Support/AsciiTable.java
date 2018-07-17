@@ -156,6 +156,22 @@ public final class  AsciiTable
     public static final AsciiTable      unknown = AsciiTable.create(null, 0);
 
 
+    private static final AsciiTable[]   create_boring_table(final int code_point)
+    {
+        assert fact(code_point == 34 || code_point == 39, "code point must be 34 or 39");
+
+        final AsciiTable[]              copy = AsciiTable.table.clone();
+
+        copy[code_point] = AsciiTable.create(copy[code_point].portray_0, 0x03);
+
+        return copy;
+    }
+
+
+    public static final AsciiTable[]    table_with_boring_apostrophe     = create_boring_table(39);
+    public static final AsciiTable[]    table_with_boring_quotation_mark = create_boring_table(34);
+
+
     //
     //  Members
     //

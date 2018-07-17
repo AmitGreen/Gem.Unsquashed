@@ -28,8 +28,8 @@ public final class      OverallStringState
     public /*:*/ OverallStringState     Q;
     public /*:*/ int                    ra;
     public /*:*/ int                    rq;
-    public /*:*/ int                    pc;
-    public /*:*/ int                    ps;
+    public /*:*/ int                    pa;
+    public /*:*/ int                    pq;
     public /*:*/ boolean                is_K;
 
 
@@ -45,8 +45,8 @@ public final class      OverallStringState
     //  this.Q          = null;
     //  this.ra         = 0;
     //  this.rq         = 0;
-    //  this.pc         = 0;
-    //  this.ps         = 0;
+    //  this.pa         = 0;
+    //  this.pq         = 0;
     //  this.is_K       = false;
     }
 
@@ -64,8 +64,8 @@ public final class      OverallStringState
             final OverallStringState            Q,
             final Object                        ra,
             final Object                        rq,
-            final Object                        pc,
-            final Object                        ps,
+            final Object                        pa,
+            final Object                        pq,
             final Object                        is_K//,
         )
     {
@@ -84,18 +84,18 @@ public final class      OverallStringState
             assert fact_between(0, (Integer) ra, 6);
         }
 
-        if (pc != null) {
-            assert fact_between(0, (Integer) pc, 6);
+        if (pa != null) {
+            assert fact_between(0, (Integer) pa, 6);
         }
 
-        if (ps != null) {
-            assert fact_between(0, (Integer) ps, 6);
+        if (pq != null) {
+            assert fact_between(0, (Integer) pq, 6);
         }
 
         final int                       ra_value = (ra == null ? -1       : (Integer) ra);
         final int                       rq_value = (rq == null ? ra_value : (Integer) rq);
-        final int                       pc_value = (pc == null ? -1       : (Integer) pc);
-        final int                       ps_value = (ps == null ? pc_value : (Integer) ps);
+        final int                       pa_value = (pa == null ? -1       : (Integer) pa);
+        final int                       pq_value = (pq == null ? pa_value : (Integer) pq);
 
         this.A    = A;
         this.K    = K;
@@ -103,14 +103,17 @@ public final class      OverallStringState
         this.Q    = Q;
         this.ra   = ra_value - 1;
         this.rq   = rq_value - 1;
-        this.pc   = pc_value - 1;
-        this.ps   = ps_value - 1;
+        this.pa   = pa_value - 1;
+        this.pq   = pq_value - 1;
         this.is_K = (is_K != null);
     }
 
 
     //
     //  Interface Inspectable
+    //
+    //  NOTE:
+    //      Also includes helper function `portray_header` which is not part of `Interface Inspectable`.
     //
     @Override
     public final Inspection             inspect()
@@ -128,8 +131,8 @@ public final class      OverallStringState
         final OverallStringState        Q  = this.Q;
         final int                       ra = this.ra + 1;
         final int                       rq = this.rq + 1;
-        final int                       pc = this.pc + 1;
-        final int                       ps = this.ps + 1;
+        final int                       pa = this.pa + 1;
+        final int                       pq = this.pq + 1;
 
         final String[]                  index_names = AnalyzeString.index_names;
 
@@ -141,13 +144,19 @@ public final class      OverallStringState
                         String.format("%2s", (Q  == null ? "." : Q.debug_name)),
                         String.format("%2s", (ra == -1   ? "." : index_names[ra])),
                         String.format("%2s", (rq == -1   ? "." : index_names[rq])),
-                        String.format("%2s", (pc == -1   ? "." : index_names[pc])),
-                        String.format("%2s", (ps == -1   ? "." : index_names[ps])));
+                        String.format("%2s", (pa == -1   ? "." : index_names[pa])),
+                        String.format("%2s", (pq == -1   ? "." : index_names[pq])));
 
         if (this.is_K) {
             builder.append("; is_K");
         }
 
         builder.append(">");
+    }
+
+
+    static public final void            portray_header(final String prefix)
+    {
+        line("{} ---------------- name;  A  K  L  Q; ra rq pa pq; is_K", prefix);
     }
 }
