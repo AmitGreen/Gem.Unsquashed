@@ -248,11 +248,12 @@ public final class  Gem_StringBuilder
     //
     public final void                   append_slice(final String s, final int offset)
     {
-        assert fact_between(0, offset, s.length());
+        final int                       total = s.length();
 
-        final int                       total = s.length() - offset;
+        assert fact_pointer(s, "s");
+        assert fact_between(0, offset, total);
 
-        if (total > 0) {
+        if (offset < total) {
             this.builder.append(s, offset, total);
         }
     }
@@ -260,13 +261,12 @@ public final class  Gem_StringBuilder
 
     public final void                   append_slice(final String s, final int offset, final int end_plus_1)
     {
+        assert fact_pointer(s, "s");
         assert fact_between(0, offset, end_plus_1);
         assert fact_between(0, end_plus_1, s.length());
 
-        final int                       total = end_plus_1 - offset;
-
-        if (total > 0) {
-            this.builder.append(s, offset, total);
+        if (offset < end_plus_1) {
+            this.builder.append(s, offset, end_plus_1);
         }
     }
 

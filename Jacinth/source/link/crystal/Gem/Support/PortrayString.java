@@ -41,15 +41,30 @@ public abstract class   PortrayString
     //  Static members
     //
     public static final PortrayString   portray_string__invalid = (
-            PortrayString_Backslash.create__ALLY__PortrayString("0", "invalid'", "'", 39)   //  39 = ordinal("'")
+            PortrayString_Backslash.create__ALLY__PortrayString(
+                "0", 
+                "'",
+                "'",
+                AsciiTable.table_with_boring_quotation_mark//,
+            )
         );
 
     public static final PortrayString   backslash_with_apostrophe = (
-            PortrayString_Backslash.create__ALLY__PortrayString("KA", "'", "'", 39)   //  39 = ordinal("'")
+            PortrayString_Backslash.create__ALLY__PortrayString(
+                "KA",
+                "'",
+                "'",
+                AsciiTable.table_with_boring_quotation_mark//,
+            )
         );
 
     public static final PortrayString   backslash_with_quotation_mark = (
-            PortrayString_Backslash.create__ALLY__PortrayString("KQ", "'", "'", 34)   //  34 = ordinal('"')
+            PortrayString_Backslash.create__ALLY__PortrayString(
+                "KQ",
+                "\"",
+                "\"",
+                AsciiTable.table_with_boring_apostrophe//,
+            )
         );
 
     public static final PortrayString   backslash_with_triple_apostrophe = (
@@ -161,7 +176,7 @@ final class             PortrayString_Backslash
     //
     private final String                prefix;
     private final String                suffix;
-    private final int                   quote_code_point;
+    private final AsciiTable[]          table;
 
 
     //
@@ -171,14 +186,14 @@ final class             PortrayString_Backslash
             final String                        abbreviation,
             final String                        prefix,
             final String                        suffix,
-            final int                           quote_code_point//,
+            final AsciiTable[]                  table//,
         )
     {
         super(abbreviation);
 
-        this.prefix           = prefix;
-        this.suffix           = suffix;
-        this.quote_code_point = quote_code_point;
+        this.prefix = prefix;
+        this.suffix = suffix;
+        this.table  = table;
     }
 
 
@@ -186,10 +201,10 @@ final class             PortrayString_Backslash
             final String                        abbreviation,
             final String                        prefix,
             final String                        suffix,
-            final int                           quote_code_point//,
+            final AsciiTable[]                  table//,
         )
     {
-        return new PortrayString_Backslash(abbreviation, prefix, suffix, quote_code_point);
+        return new PortrayString_Backslash(abbreviation, prefix, suffix, table);
     }
 
 
@@ -218,9 +233,7 @@ final class             PortrayString_Backslash
     //
     public final void                   portray_string(final Gem_StringBuilder builder, final String s)
     {
-        final int                       quote_code_point = this.quote_code_point;
-
-        final AsciiTable[]              table = AsciiTable.table;
+        final AsciiTable[]              table = this.table;
 
         builder.append(this.prefix);
 
@@ -230,30 +243,27 @@ final class             PortrayString_Backslash
         for (/*:*/ int                  i = 0; i < total; /*  i is incremented in the loop by 1 or 2  */) {
             final int                   code_point = s.codePointAt(i);
 
-            if (code_point < 128) {
-                AsciiTable              ascii = table[code_point];
-
-                if (ascii.is_boring_printable || code_point == quote_code_point) {
-                    i ++;
-                    continue;
-                }
-
-                if (begin < i) {
-                    builder.append_slice(s, begin, i);
-                }
-
-                assert fact_pointer(ascii.portray_0, "ascii.portray_0");
-
-                builder.append(ascii.portray_0);
-
-                i ++;
-
-                begin = i;
-
+            if (code_point > 128) {
+                i += Character.charCount(code_point);
                 continue;
             }
 
-            i += Character.charCount(code_point);
+            i ++;
+
+            AsciiTable              ascii = table[code_point];
+
+            if (ascii.is_boring_printable) {
+                continue;
+            }
+
+            if (begin < i) {
+                builder.append_slice(s, begin, i);
+                begin = i;
+            }
+
+            assert fact_pointer(ascii.portray_0, "ascii.portray_0");
+
+            builder.append(ascii.portray_0);
         }
 
         if (begin < total) {
@@ -460,7 +470,7 @@ final class             PortrayString_TripleWithBackslash
 
         /*:*/ int                       begin       = 0;
         /*:*/ BuildStringState          state       = this.first_state;
-        /*:*/ int                       state_begin = 0;                    //  Only used when `state != normal_state`
+        /*:*/ int                       state_begin = -7;                   //  Only used when `state != normal_state`
         final int                       total       = s.length();
 
         for (/*:*/ int                  i = 0; i < total; /*  i is incremented in the loop by 1 or 2  */) {
@@ -473,18 +483,17 @@ final class             PortrayString_TripleWithBackslash
                 continue;
             }
 
+            i ++;
+
             final AsciiTable            ascii = table[code_point];
 
             if (ascii.is_boring_printable) {
-                i ++;
                 state = normal_state;
 
                 continue;
             }
 
             if (code_point == quote_code_point) {
-                i ++;
-
                 if (state == normal_state) {
                     state       = state_1;
                     state_begin = i;
@@ -510,16 +519,14 @@ final class             PortrayString_TripleWithBackslash
 
             if (begin < i) {
                 builder.append_slice(s, begin, i);
+                begin = i;
             }
-
-            i ++;
 
             assert fact_pointer(ascii.portray_0, "ascii.portray_0");
 
             builder.append(ascii.portray_0);
 
             state = normal_state;
-            begin = i;
         }
 
         if (state == normal_state) {
@@ -527,6 +534,7 @@ final class             PortrayString_TripleWithBackslash
                 builder.append_slice(s, begin);
             }
 
+            builder.append(state.finish);
             return;
         }
 

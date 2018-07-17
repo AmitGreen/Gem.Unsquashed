@@ -94,12 +94,12 @@ public abstract class   AnalyzeString
     //
     //  Array indexes
     //
-    public static final int                     KC =  1;        //  Backslash & '''
-    public static final int                     KS =  2;        //  Backslash & """
-    public static final int                     PC =  3;        //  Normal & '''
-    public static final int                     PS =  4;        //  Normal & """
-    public static final int                     RA =  5;        //  Raw String with '
-    public static final int                     RQ =  6;        //  Raw String with "
+    public static final int                     RA =  1;        //  Raw String with '
+    public static final int                     RQ =  2;        //  Raw String with "
+    public static final int                     KC =  3;        //  Backslash & '''
+    public static final int                     KS =  4;        //  Backslash & """
+    public static final int                     PC =  5;        //  Normal & '''
+    public static final int                     PS =  6;        //  Normal & """
 
     public static final int                     KA =  7;        //  Backslash & '
     public static final int                     KQ =  8;        //  Backslash & "
@@ -304,7 +304,7 @@ public abstract class   AnalyzeString
     private static final boolean        finished = finish();
 
 
-    private static void                 analyze_string(final String s)
+    private static String               analyze_string(final String s)
     {
         /*:*/ OverallStringState        overall = AnalyzeString.E;
         final AsciiTable[]              table   = AsciiTable.table;
@@ -318,7 +318,7 @@ public abstract class   AnalyzeString
         for (;;) {
             if (i == total) {
                 line("Completed: {}", overall);
-                return;
+                return null;
             }
 
             code_point = s.codePointAt(i);
@@ -421,21 +421,35 @@ public abstract class   AnalyzeString
             state     = state.N;
         }
 
-        line("  overall:  {p}", overall);
-        line(" favorite:  {p}", favorite);
-        line("    state:  {p}", state);
-        line("raw_state:  {p}", raw_state);
-        line("        C:  {p}", C);
-        line("        S:  {p}", S);
-
-        if (overall.is_K && raw_state.portray_functions[0].is_valid) {
-            line("#1");
+        if (true) {
+            line("  overall:  {p}", overall);
+            line(" favorite:  {p}", favorite);
+            line("    state:  {p}", state);
+            line("raw_state:  {p}", raw_state);
+            line("        C:  {p}", C);
+            line("        S:  {p}", S);
         }
 
-        line("  {p}: overall{}; state{}", s, overall, state);
-        line("  overall.pq: {p}", overall.pq);
+        if (overall.is_K) {
+            line("#1");
+            return null;
+        }
 
-        //return overall.pq(state)(s)
+        if ( ( (S == C) && (favorite >= 0) ) || (S > C) ) {
+            line("#2");
+            return null;
+        }
+
+        line("#3");
+
+        if (false) {
+            line("  {p}: overall{}; state{}", s, overall, state);
+            line("  overall.pq: {p}", overall.pq);
+        }
+
+        line("Going to call: {}", state.portray_functions[overall.pq].abbreviation);
+
+        return state.portray_functions[overall.pq].portray_string(s);
     }
 
 
@@ -524,8 +538,6 @@ public abstract class   AnalyzeString
     //
     public static final void            show_analyze_string(final String s)
     {
-        line("analysis of {p}: ...", s);
-
-        analyze_string(s);
+        line("analysis of {p}: {}", s, analyze_string(s));
     }
 }
