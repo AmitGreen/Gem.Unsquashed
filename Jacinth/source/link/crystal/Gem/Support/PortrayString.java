@@ -248,20 +248,19 @@ final class             PortrayString_Backslash
                 continue;
             }
 
-            i ++;
-
-            AsciiTable              ascii = table[code_point];
+            final AsciiTable            ascii = table[code_point];
 
             if (ascii.is_boring_printable) {
+                i ++;
                 continue;
             }
 
             if (begin < i) {
                 builder.append_slice(s, begin, i);
-                begin = i;
             }
 
-            assert fact_pointer(ascii.portray_0, "ascii.portray_0");
+            i ++;
+            begin = i;
 
             builder.append(ascii.portray_0);
         }
@@ -483,11 +482,10 @@ final class             PortrayString_TripleWithBackslash
                 continue;
             }
 
-            i ++;
-
             final AsciiTable            ascii = table[code_point];
 
             if (ascii.is_boring_printable) {
+                i ++;
                 state = normal_state;
 
                 continue;
@@ -497,8 +495,11 @@ final class             PortrayString_TripleWithBackslash
                 if (state == normal_state) {
                     state       = state_1;
                     state_begin = i;
+                    i ++;
                     continue;
                 }
+
+                i ++;
 
                 final String        add_flush_0 = state.add_flush_0;
 
@@ -514,18 +515,18 @@ final class             PortrayString_TripleWithBackslash
                 }
 
                 state = state.add;
+
                 continue;
             }
 
             if (begin < i) {
                 builder.append_slice(s, begin, i);
-                begin = i;
             }
 
-            assert fact_pointer(ascii.portray_0, "ascii.portray_0");
+            i ++;
+            begin = i;
 
             builder.append(ascii.portray_0);
-
             state = normal_state;
         }
 
@@ -533,13 +534,10 @@ final class             PortrayString_TripleWithBackslash
             if (begin < total) {
                 builder.append_slice(s, begin);
             }
-
-            builder.append(state.finish);
-            return;
-        }
-
-        if (begin < state_begin) {
-            builder.append_slice(s, begin, state_begin);
+        } else {
+            if (begin < state_begin) {
+                builder.append_slice(s, begin, state_begin);
+            }
         }
 
         builder.append(state.finish);

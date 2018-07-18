@@ -15,6 +15,7 @@ import link.crystal.Gem.Inspection.Inspection;
 import link.crystal.Gem.Interface.Inspectable;
 import link.crystal.Gem.Interface.MessageFormattable;
 import link.crystal.Gem.Support.AsciiTable;
+import link.crystal.Gem.Support.PortrayString;
 
 
 public final class  Gem_StringBuilder
@@ -103,12 +104,16 @@ public final class  Gem_StringBuilder
 
     public final void                   append(final String s)
     {
+        assert fact_pointer(s, "s");
+
         this.builder.append(s);
     }
 
 
     public final void                   append(final int a, final String b)
     {
+        assert fact_pointer(b, "b");
+
         this.builder.append(a).append(b);
     }
 
@@ -121,30 +126,48 @@ public final class  Gem_StringBuilder
 
     public final void                   append(final char a, final String b, final char c)
     {
+        assert fact_pointer(b, "b");
+
         this.builder.append(a).append(b).append(c);
     }
 
 
     public final void                   append(final String a, final int b, final String c)
     {
+        assert fact_pointer(a, "a");
+        assert fact_pointer(c, "c");
+
         this.builder.append(a).append(b).append(c);
     }
 
 
     public final void                   append(final String a, final String b, final String c)
     {
+        assert fact_pointer(a, "a");
+        assert fact_pointer(b, "b");
+        assert fact_pointer(c, "c");
+
         this.builder.append(a).append(b).append(c);
     }
 
 
     public final void                   append(final String a, final String b, final String c, final String d)
     {
+        assert fact_pointer(a, "a");
+        assert fact_pointer(b, "b");
+        assert fact_pointer(c, "c");
+        assert fact_pointer(d, "d");
+
         this.builder.append(a).append(b).append(c).append(d);
     }
 
 
     public final void                   append(final String a, final int b, final String c, final int d, final String e)
     {
+        assert fact_pointer(a, "a");
+        assert fact_pointer(c, "c");
+        assert fact_pointer(e, "e");
+
         this.builder.append(a).append(b).append(c).append(d).append(e);
     }
 
@@ -181,6 +204,11 @@ public final class  Gem_StringBuilder
             final String                        e//,
         )
     {
+        assert fact_pointer(a, "a");
+        assert fact_pointer(b, "b");
+        assert fact_pointer(c, "c");
+        assert fact_pointer(d, "d");
+
         this.builder.append(a).append(b).append(c).append(d).append(e);
     }
 
@@ -194,6 +222,12 @@ public final class  Gem_StringBuilder
             final int                           f//,
         )
     {
+        assert fact_pointer(a, "a");
+        assert fact_pointer(b, "b");
+        assert fact_pointer(c, "c");
+        assert fact_pointer(d, "d");
+        assert fact_pointer(e, "e");
+
         this.builder.append(a).append(b).append(c).append(d).append(e).append(f);
     }
 
@@ -208,6 +242,14 @@ public final class  Gem_StringBuilder
             final String                        g//,
         )
     {
+        assert fact_pointer(a, "a");
+        assert fact_pointer(b, "b");
+        assert fact_pointer(c, "c");
+        assert fact_pointer(d, "d");
+        assert fact_pointer(e, "e");
+        assert fact_pointer(f, "f");
+        assert fact_pointer(g, "g");
+
         this.builder.append(a).append(b).append(c).append(d).append(e).append(f).append(g);
     }
 
@@ -223,6 +265,15 @@ public final class  Gem_StringBuilder
             final String                        h//,
         )
     {
+        assert fact_pointer(a, "a");
+        assert fact_pointer(b, "b");
+        assert fact_pointer(c, "c");
+        assert fact_pointer(d, "d");
+        assert fact_pointer(e, "e");
+        assert fact_pointer(f, "f");
+        assert fact_pointer(g, "g");
+        assert fact_pointer(h, "h");
+
         this.builder.append(a).append(b).append(c).append(d).append(e).append(f).append(g).append(h);
     }
 
@@ -239,6 +290,16 @@ public final class  Gem_StringBuilder
             final String                        h9//,
         )
     {
+        assert fact_pointer(a,  "a");
+        assert fact_pointer(b,  "b");
+        assert fact_pointer(c,  "c");
+        assert fact_pointer(d,  "d");
+        assert fact_pointer(e,  "e");
+        assert fact_pointer(f,  "f");
+        assert fact_pointer(g,  "g");
+        assert fact_pointer(h8, "h8");
+        assert fact_pointer(h9, "h9");
+
         this.builder.append(a).append(b).append(c).append(d).append(e).append(f).append(g).append(h8).append(h9);
     }
 
@@ -459,46 +520,7 @@ public final class  Gem_StringBuilder
 
     public final void                   java_quote(final String s)
     {
-        assert fact_pointer(s, "s");
-
-        final StringBuilder             builder = this.builder;
-
-        final AsciiTable[]              table = AsciiTable.table_with_boring_apostrophe;
-
-        builder.append("\"");
-
-        /*:*/ int                       begin = 0;
-        final int                       total = s.length();
-
-        for (/*:*/ int                  i = 0; i < total; /*  i is incremented in the loop by 1 or 2  */) {
-            final int                   code_point = s.codePointAt(i);
-
-            if (code_point >= 128) {
-                i += Character.charCount(code_point);
-                continue;
-            }
-
-            i ++;
-
-            AsciiTable              ascii = table[code_point];
-
-            if (ascii.is_boring_printable) {
-                continue;
-            }
-
-            if (begin < i) {
-                builder.append(s, begin, i);                            //  append sub-string
-                begin = i;
-            }
-
-            builder.append(ascii.portray_0);
-        }
-
-        if (begin < total) {
-            builder.append(s, begin, total);                            //  append sub-string
-        }
-
-        builder.append("\"");
+        PortrayString.backslash_with_quotation_mark.portray_string(this, s);
     }
 
 
@@ -522,7 +544,7 @@ public final class  Gem_StringBuilder
         }
 
         if (v_class == Gem.String$class) {
-            this.java_quote((String) v);
+            PortrayString.backslash_with_quotation_mark.portray_string(this, (String) v);
             return;
         }
 

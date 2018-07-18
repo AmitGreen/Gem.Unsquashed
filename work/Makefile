@@ -170,6 +170,7 @@ LICENSE_FILES = \
 MARBLE_FILES = \
     ../Marble/Core.py \
     ../Marble/GenerateAscii.py \
+    ../Marble/GenerateTestPortrayString.py \
     ../Marble/NestedConjure.py \
     ../Marble/Main.py
 
@@ -350,7 +351,7 @@ clean:
 	rm -f   in.py in.java im.py ishs.java isf.java imf.java io.py iv.py
 	rm -f j0p.py j1p.py jb.py jcr.py jm.java jm.xml jma.py jmc.py jms.java jp.py js.java
 	rm -f l.txt lr.txt
-	rm -f m m.txt m1.java m1c.py m1ga.py m1m.py m1n.py m1p.java m1s.java
+	rm -f m m.txt m1.java m1c.py m1ga.py m1gt.py m1m.py m1n.py m1p.java m1s.java
 	rm -f   m2.java m2c.py m3.java m2m.py m3m.py m4.java m5.java
 	rm -f   map.py mb.java mc.py md.py me.py mm.java mm.py mn.java msa.java msi.java
 	rm -f ns.java
@@ -573,6 +574,7 @@ links:
 	ln -s mine.txt                                                              m.txt
 	ln -s ../Marble/Core.py                                                     m1c.py
 	ln -s ../Marble/GenerateAscii.py                                            m1ga.py
+	ln -s ../Marble/GenerateTestPortrayString.py                                m1gt.py
 	ln -s ../Marble/Main.py                                                     m1m.py
 	ln -s ../Marble/NestedConjure.py                                            m1n.py
 	ln -s $J/Gem/Format/MessageFormatter_1__Prefix.java                         m1p.java

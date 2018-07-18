@@ -33,6 +33,17 @@ def gem():
 
 
     @share
+    def command_generate_test_portray_string():
+        require_gem("Marble.GenerateTestPortrayString");
+
+        generate_test_portray_string();
+
+
+    def command_development():
+        command_generate_test_portray_string()
+
+
+    @share
     def main(arguments):
         try:
             total = length(arguments)
@@ -49,7 +60,7 @@ def gem():
                 return command_generate_ascii()
 
             if option == 'dev':
-                return command_generate_ascii()
+                return command_development()
 
             raise_runtime_error('unknown option: %r', option)
         except:

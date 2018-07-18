@@ -108,7 +108,7 @@ public final class  UnitTest
 
         if (true) {
             //AsciiTable.dump();
-            AnalyzeString.dump();
+            //AnalyzeString.dump();
             //BuildStringState.dump();;
             //Gem.dump();
             //Gem.map_string_inspection                       .dump("Inspections");

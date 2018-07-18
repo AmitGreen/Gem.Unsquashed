@@ -317,8 +317,11 @@ public abstract class   AnalyzeString
 
         for (;;) {
             if (i == total) {
-                line("{+}: completed: {}", overall);
-                return null;
+//              line("{+}: completed: {} -- going to call {}",
+//                   overall,
+//                   PortrayString.normal_with_apostrophe.abbreviation);
+
+                return PortrayString.normal_with_apostrophe.portray_string(s);
             }
 
             code_point = s.codePointAt(i);
@@ -421,7 +424,7 @@ public abstract class   AnalyzeString
             state     = state.N;
         }
 
-        if (true) {
+        if (false) {
             line("{+}:  overall:  {p}", overall);
             line("{+}: favorite:  {p}", favorite);
             line("{+}:    state:  {p}", state);
@@ -429,7 +432,6 @@ public abstract class   AnalyzeString
             line("{+}:        C:  {p}", C);
             line("{+}:        S:  {p}", S);
         }
-
 
         if ( ( (S == C) && (favorite >= 0) ) || (S > C) ) {
             //
@@ -439,7 +441,7 @@ public abstract class   AnalyzeString
                 final PortrayString     raw = raw_state.portray_functions[overall.ra];      //  ra * raw
 
                 if (raw.is_valid) {
-                    line("{+}: Going to call: {}", raw.abbreviation);
+//                  line("{+}: Going to call: {}", raw.abbreviation);
 
                     return raw.portray_string(s);
                 }
@@ -447,7 +449,7 @@ public abstract class   AnalyzeString
 
             final PortrayString         normal = state.portray_functions[overall.pa];       //  pa * normal
 
-            line("{+}: Going to call: {}", normal.abbreviation);
+//          line("{+}: Going to call: {}", normal.abbreviation);
 
             return normal.portray_string(s);
         }
@@ -459,7 +461,7 @@ public abstract class   AnalyzeString
             final PortrayString     raw = raw_state.portray_functions[overall.rq];          //  rq * raw
 
             if (raw.is_valid) {
-                line("{+}: Going to call: {}", raw.abbreviation);
+//              line("{+}: Going to call: {}", raw.abbreviation);
 
                 return raw.portray_string(s);
             }
@@ -467,7 +469,7 @@ public abstract class   AnalyzeString
 
         final PortrayString         normal = state.portray_functions[overall.pq];           //  pq * normal
 
-        line("{+}: Going to call: {}", normal.abbreviation);
+//      line("{+}: Going to call: {}", normal.abbreviation);
 
         return normal.portray_string(s);
     }
@@ -486,8 +488,10 @@ public abstract class   AnalyzeString
 
         for (;;) {
             if (i == total) {
-                line("{+}: completed: {}", overall);
-                return null;
+//              line("{+}: completed: {} -- going to call {}",
+//                   overall, PortrayString.raw_with_apostrophe.abbreviation);
+
+                return PortrayString.raw_with_apostrophe.portray_string(s);
             }
 
             code_point = s.codePointAt(i);
@@ -590,7 +594,8 @@ public abstract class   AnalyzeString
             state     = state.N;
         }
 
-        if (true) {
+        if (false) {
+            line("{+}:         s:  {p}", s);
             line("{+}:   overall:  {p}", overall);
             line("{+}:  favorite:  {p}", favorite);
             line("{+}:     state:  {p}", state);
@@ -609,7 +614,7 @@ public abstract class   AnalyzeString
                 final PortrayString     raw = raw_state.portray_functions[raw_index];       //  ra * raw
 
                 if (raw.is_valid) {
-                    line("{+}: Going to call: {}", raw.abbreviation);
+//                  line("{+}: Going to call: {}", raw.abbreviation);
 
                     return raw.portray_string(s);
                 }
@@ -617,7 +622,7 @@ public abstract class   AnalyzeString
 
             final PortrayString         normal = state.portray_functions[overall.pa];       //  pa * normal
 
-            line("{+}: Going to call: {}", normal.abbreviation);
+//          line("{+}: Going to call: {}", normal.abbreviation);
 
             return normal.portray_string(s);
         }
@@ -631,7 +636,7 @@ public abstract class   AnalyzeString
             final PortrayString     raw = raw_state.portray_functions[raw_index];           //  rq * raw
 
             if (raw.is_valid) {
-                line("{+}: Going to call: {}", raw.abbreviation);
+//              line("{+}: Going to call: {}", raw.abbreviation);
 
                 return raw.portray_string(s);
             }
@@ -639,7 +644,7 @@ public abstract class   AnalyzeString
 
         final PortrayString         normal = state.portray_functions[overall.pq];           //  pq * normal
 
-        line("{+}: Going to call: {}", normal.abbreviation);
+//      line("{+}: Going to call: {}", normal.abbreviation);
 
         return normal.portray_string(s);
     }
