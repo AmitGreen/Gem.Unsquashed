@@ -136,14 +136,25 @@ public final class  UnitTest_PortrayString
             final String                s            = portray_string_data.s;
             final String                raw_expected = portray_string_data.raw_expected;
 
-            final String                actual = AnalyzeString.analyze_raw_string(s);
+            final String                raw_actual = AnalyzeString.analyze_raw_string(s);
 
-            if ( ! actual.equals(raw_expected)) {
+            if ( ! raw_actual.equals(raw_expected)) {
                 line("portray_raw_string({p})", s);
-                line("  actual:   {}", actual);
+                line("  actual:   {}", raw_actual);
                 line("  expected: {}", raw_expected);
 
             //  RUNTIME("portray_raw_string({p}) failed", s);
+            }
+
+            final String                python_expected = raw_expected;
+            final String                python_actual   = AnalyzeString.analyze_python_string(s);
+
+            if ( ! python_actual.equals(python_expected)) {
+                line("portray_python_string({p})", s);
+                line("  actual:   {}", python_actual);
+                line("  expected: {}", python_expected);
+
+            //  RUNTIME("portray_python_string({p}) failed", s);
             }
         }
 

@@ -304,7 +304,7 @@ public abstract class   AnalyzeString
     private static final boolean        finished = finish();
 
 
-    private static String               analyze_string(final String s)
+    public static String                analyze_python_string(final String s)
     {
         /*:*/ OverallStringState        overall = AnalyzeString.E;
         final AsciiTable[]              table   = AsciiTable.table;
@@ -430,26 +430,46 @@ public abstract class   AnalyzeString
             line("{+}:        S:  {p}", S);
         }
 
-        if (overall.is_K) {
-            line("{+}:#1");
-            return null;
-        }
 
         if ( ( (S == C) && (favorite >= 0) ) || (S > C) ) {
-            line("{+}:#2");
-            return null;
+            //
+            //  Prefer apostrophe `'`
+            //
+            if (overall.is_K) {
+                final PortrayString     raw = raw_state.portray_functions[overall.ra];      //  ra * raw
+
+                if (raw.is_valid) {
+                    line("{+}: Going to call: {}", raw.abbreviation);
+
+                    return raw.portray_string(s);
+                }
+            }
+
+            final PortrayString         normal = state.portray_functions[overall.pa];       //  pa * normal
+
+            line("{+}: Going to call: {}", normal.abbreviation);
+
+            return normal.portray_string(s);
         }
 
-        line("{+}:#3");
+        //
+        //  Prefer apostrophe `"`
+        //
+        if (overall.is_K) {
+            final PortrayString     raw = raw_state.portray_functions[overall.rq];          //  rq * raw
 
-        if (false) {
-            line("{+}:  {p}: overall{}; state{}", s, overall, state);
-            line("{+}:  overall.pq: {p}", overall.pq);
+            if (raw.is_valid) {
+                line("{+}: Going to call: {}", raw.abbreviation);
+
+                return raw.portray_string(s);
+            }
         }
 
-        line("{+}: Going to call: {}", state.portray_functions[overall.pq].abbreviation);
+        final PortrayString         normal = state.portray_functions[overall.pq];           //  pq * normal
 
-        return state.portray_functions[overall.pq].portray_string(s);
+        line("{+}: Going to call: {}", normal.abbreviation);
+
+        return normal.portray_string(s);
     }
 
 
@@ -710,6 +730,6 @@ public abstract class   AnalyzeString
     //
     public static final void            show_analyze_string(final String s)
     {
-        line("analysis of {p}: {}", s, analyze_string(s));
+        line("analysis of {p}: {}", s, analyze_python_string(s));
     }
 }
