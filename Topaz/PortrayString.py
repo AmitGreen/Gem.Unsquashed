@@ -1029,6 +1029,7 @@ def gem():
                 break
 
             if row is 2:
+                assert 0
                 saw_2 = true
                 continue
 

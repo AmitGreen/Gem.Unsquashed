@@ -55,7 +55,7 @@ public final class      AssertionError
     public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<AssertionError ");
-        builder.quote(this.getMessage());
-        builder.quote(">");
+        builder.java_quote(this.getMessage());
+        builder.append(">");
     }
 }

@@ -110,7 +110,7 @@ public abstract class   AnalyzeString
 
     public static final String[]                index_names = new String[] {
             "0",
-            "KC", "KS", "PC", "PS", "RA", "RQ",
+            "RA", "RQ", "KC", "KS", "PC", "PS",
             "KA", "KQ", "PA", "PQ", "RC", "RS",
         };
 
@@ -218,17 +218,17 @@ public abstract class   AnalyzeString
     {
         final OverallStringState        _ = null;
 
-        //          '   \   L   "  ra  rq  pc  ps, is_K
-        E .overall (U,  K,  L,  T,  0,  _,  _,  _, _);
-        K .overall (_,  K,  L,  _, RA, RQ, KC, KS, 7);
-        L .overall (_,  L,  L,  _,  0,  _, KC, KS, _);
-        N .overall (N,  K,  L,  N, RA, RQ, PC, PS, _);
-        TK.overall (_,  TK, TL, _, RA,  _, KC,  _, 7);
-        TL.overall (_,  TL, TL, _,  0,  _, KC,  _, _);
-        T .overall (_,  TK, TL, _, RA,  _, PC,  _, _);
-        UK.overall (_,  UK, UL, _, RQ,  _, KS,  _, 7);
-        UL.overall (_,  UL, TL, _,  0,  _, KS,  _, _);
-        U .overall (_,  UK, UL, _, RQ,  _, PS,  _, _);
+        //          '   \   L   "  ra  rq  pc  ps, K  L
+        E .overall (U,  K,  L,  T, RA, RQ, PC, PS, _, _);
+        K .overall (_,  K,  L,  _, RA, RQ, KC, KS, 7, _);
+        L .overall (_,  L,  L,  _,  0,  _, KC, KS, _, 7);
+        N .overall (N,  K,  L,  N, RA, RQ, PC, PS, _, _);
+        TK.overall (_,  TK, TL, _, RA,  _, KC,  _, 7, _);
+        TL.overall (_,  TL, TL, _,  0,  _, KC,  _, _, 7);
+        T .overall (_,  TK, TL, _, RA,  _, PC,  _, _, _);
+        UK.overall (_,  UK, UL, _, RQ,  _, KS,  _, 7, _);
+        UL.overall (_,  UL, TL, _,  0,  _, KS,  _, _, 7);
+        U .overall (_,  UK, UL, _, RQ,  _, PS,  _, _, _);
 
         //          '     \     N     "     ra  rq  kc  ks  pc  ps, F3
         A_A  .setup(A_B,  A_K,  A_N,  AQ_Q, RQ,  _, KQ,  _, PQ,  _,  _);    //  Has '; ends in '
@@ -317,7 +317,7 @@ public abstract class   AnalyzeString
 
         for (;;) {
             if (i == total) {
-                line("Completed: {}", overall);
+                line("{+}: completed: {}", overall);
                 return null;
             }
 
@@ -422,34 +422,206 @@ public abstract class   AnalyzeString
         }
 
         if (true) {
-            line("  overall:  {p}", overall);
-            line(" favorite:  {p}", favorite);
-            line("    state:  {p}", state);
-            line("raw_state:  {p}", raw_state);
-            line("        C:  {p}", C);
-            line("        S:  {p}", S);
+            line("{+}:  overall:  {p}", overall);
+            line("{+}: favorite:  {p}", favorite);
+            line("{+}:    state:  {p}", state);
+            line("{+}:raw_state:  {p}", raw_state);
+            line("{+}:        C:  {p}", C);
+            line("{+}:        S:  {p}", S);
         }
 
         if (overall.is_K) {
-            line("#1");
+            line("{+}:#1");
             return null;
         }
 
         if ( ( (S == C) && (favorite >= 0) ) || (S > C) ) {
-            line("#2");
+            line("{+}:#2");
             return null;
         }
 
-        line("#3");
+        line("{+}:#3");
 
         if (false) {
-            line("  {p}: overall{}; state{}", s, overall, state);
-            line("  overall.pq: {p}", overall.pq);
+            line("{+}:  {p}: overall{}; state{}", s, overall, state);
+            line("{+}:  overall.pq: {p}", overall.pq);
         }
 
-        line("Going to call: {}", state.portray_functions[overall.pq].abbreviation);
+        line("{+}: Going to call: {}", state.portray_functions[overall.pq].abbreviation);
 
         return state.portray_functions[overall.pq].portray_string(s);
+    }
+
+
+    public static String                analyze_raw_string(final String s)
+    {
+        /*:*/ OverallStringState        overall = AnalyzeString.E;
+        final AsciiTable[]              table   = AsciiTable.table;
+
+        final int                       total = s.length();
+
+        /*:*/ int                       code_point = 0;
+        /*:*/ int                       i          = 0;
+        /*:*/ AsciiTable                glyph      = null;
+
+        for (;;) {
+            if (i == total) {
+                line("{+}: completed: {}", overall);
+                return null;
+            }
+
+            code_point = s.codePointAt(i);
+
+            if (code_point >= 128) {
+                i += Character.charCount(code_point);
+                break;
+            }
+
+            i ++;
+
+            glyph = table[code_point];
+
+            if ( ! glyph.is_boring_printable) {
+                break;
+            }
+
+            overall = AnalyzeString.N;
+        }
+
+        /*:*/ int                   favorite;
+        /*:*/ EphemeralStringState  state;
+        /*:*/ EphemeralStringState  raw_state;
+
+        if (code_point == 34) {                                         //  34 = ordinal('"')
+            overall  = overall.Q;
+            favorite = 1;
+
+            raw_state =
+                state = AnalyzeString.Q_Q;
+        } else if (code_point == 39) {                                  //  39 = ordinal("'")
+            overall   = overall.A;
+            favorite  = -1;
+
+            raw_state =
+                state = AnalyzeString.A_A;
+        } else if (code_point == 92) {                                  //  92 = ordinal('\\')
+            overall   = AnalyzeString.K;
+            favorite  = 0;
+            raw_state = AnalyzeString.N_K;
+            state     = AnalyzeString.N_N;
+        } else {
+            overall   = AnalyzeString.L;
+            favorite  = 0;
+
+            raw_state =
+                state = AnalyzeString.N_N;
+        }
+
+        /*:*/ int                   C = 0;
+        /*:*/ int                   S = 0;
+
+        while (i < total) {
+            code_point = s.codePointAt(i);
+
+            if (code_point >= 128) {
+                overall   = AnalyzeString.L;
+                state     = state.N;
+                raw_state = raw_state.N;
+
+                i += Character.charCount(code_point);
+                continue;
+            }
+
+            i ++;
+
+            glyph = table[code_point];
+
+            if (glyph.is_boring_printable) {
+                state     = state.N;
+                raw_state = raw_state.N;
+                continue;
+            }
+
+            if (code_point == 34) {                                     //  34 = ordinal('"')
+                state     = state.Q;
+                raw_state = raw_state.Q;
+                favorite += 1;
+                S        -= state.favorite_3;
+                continue;
+            }
+
+            if (code_point == 39) {                                     //  39 = ordinal("'")
+                state     = state.A;
+                raw_state = raw_state.A;
+                favorite -= 1;
+                C        += state.favorite_3;
+                continue;
+            }
+
+            if (code_point == 92) {                                     //  92 = ordinal('\\')
+                overall   = overall.K;
+                raw_state = raw_state.K;
+                state     = state.N;
+                continue;
+            }
+
+            overall   = overall.L;
+            raw_state = raw_state.N;
+            state     = state.N;
+        }
+
+        if (true) {
+            line("{+}:   overall:  {p}", overall);
+            line("{+}:  favorite:  {p}", favorite);
+            line("{+}:     state:  {p}", state);
+            line("{+}: raw_state:  {p}", raw_state);
+            line("{+}:         C:  {p}", C);
+            line("{+}:         S:  {p}", S);
+        }
+
+        if ( ( (S == C) && (favorite >= 0) ) || (S > C) ) {
+            //
+            //  Prefer apostrophe `'`
+            //
+            final int           raw_index = overall.ra;
+
+            if (raw_index >= 0) {
+                final PortrayString     raw = raw_state.portray_functions[raw_index];       //  ra * raw
+
+                if (raw.is_valid) {
+                    line("{+}: Going to call: {}", raw.abbreviation);
+
+                    return raw.portray_string(s);
+                }
+            }
+
+            final PortrayString         normal = state.portray_functions[overall.pa];       //  pa * normal
+
+            line("{+}: Going to call: {}", normal.abbreviation);
+
+            return normal.portray_string(s);
+        }
+
+        //
+        //  Prefer apostrophe `"`
+        //
+        final int           raw_index = overall.rq;
+
+        if (raw_index >= 0) {
+            final PortrayString     raw = raw_state.portray_functions[raw_index];           //  rq * raw
+
+            if (raw.is_valid) {
+                line("{+}: Going to call: {}", raw.abbreviation);
+
+                return raw.portray_string(s);
+            }
+        }
+
+        final PortrayString         normal = state.portray_functions[overall.pq];           //  pq * normal
+
+        line("{+}: Going to call: {}", normal.abbreviation);
+
+        return normal.portray_string(s);
     }
 
 

@@ -60,7 +60,7 @@ public final class  MessageFormatter_1__Prefix
     public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<MessageFormatter_1__Prefix ");
-        builder.quote(this.prefix);
+        builder.java_quote(this.prefix);
         builder.append(">");
     }
 

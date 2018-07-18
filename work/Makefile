@@ -76,7 +76,6 @@ JACINTH_FILES = \
     $J/Gem/Core/Gem_List.java \
     $J/Gem/Core/Gem_Map.java \
     $J/Gem/Core/Gem_Object.java \
-    $J/Gem/Support/BuildStringState.java \
     $J/Gem/Core/Gem_StringBuilder.java \
     $J/Gem/Core/Gem_StringMap.java \
     $J/Gem/Core/Gem_StringSet.java \
@@ -114,8 +113,8 @@ JACINTH_FILES = \
     $J/Gem/Interface/SegmentFormattable.java \
     $J/Gem/Interface/Storehouse_String__Interface.java \
     $J/Gem/Support/AnalyzeString.java \
-    $J/Gem/Support/PortrayString.java \
     $J/Gem/Support/AsciiTable.java \
+    $J/Gem/Support/BuildStringState.java \
     $J/Gem/Support/EphemeralStringState.java \
     $J/Gem/Support/Gem_ComparableReference_Cache.java \
     $J/Gem/Support/Gem_ReferenceQueue.java \
@@ -123,6 +122,7 @@ JACINTH_FILES = \
     $J/Gem/Support/Gem_WeakReference.java \
     $J/Gem/Support/Map_String_Inspection.java \
     $J/Gem/Support/OverallStringState.java \
+    $J/Gem/Support/PortrayString.java \
     $J/Gem/Support/Storehouse_AdornmentSegmentFormatter.java \
     $J/Gem/Support/Storehouse_MessageFormattable.java \
     $J/Gem/Support/Storehouse_NormalSegmentFormatter.java \
@@ -141,6 +141,7 @@ JACINTH_FILES = \
     $J/Gem/Support/World_String_Key.java \
     $J/Gem/Support/World_String_WeakReference.java \
     $J/Gem/UnitTest/UnitTest_Gem.java \
+    $J/Gem/UnitTest/UnitTest_PortrayString.java \
     $J/Gem/UnitTest/World_String_WeakReference_PhantomReference.java \
     $J/Gem/World/World_Integer.java \
     $J/Gem/World/World_String.java \
@@ -361,7 +362,7 @@ clean:
 	rm -f sha.java shl.java shm.java shn.java shp.java shs.java shsf.java sfi.java sl.py so.py ss.java ssio.py sy.py
 	rm -f t.java t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tshs.java tu.py tw.py tx.py
-	rm -f ut.java utg.java utj.java uts.java
+	rm -f ut.java utg.java utj.java uts.java uty.java
 	rm -f xb.py xf.py
 	rm -f vm.java vm.py vp.java vs.java
 	rm -f wi.java wic.java wie.java wik.java win.java wiw.java
@@ -666,6 +667,7 @@ links:
 	ln -s $J/Gem/UnitTest/UnitTest_Gem.java                                     utg.java
 	ln -s $J/Silver/UnitTest/UnitTest_Java.java                                 utj.java
 	ln -s $J/Silver/UnitTest/UnitTest_Silver.java                               uts.java
+	ln -s $J/Gem/UnitTest/UnitTest_PortrayString.java                           uty.java
 	ln -s ../Dravite/Main.py                                                    vm.py
 	ln -s $J/Silver/SilverModule.java                                           vm.java
 	ln -s $J/Silver/SilverProxy.java                                            vp.java

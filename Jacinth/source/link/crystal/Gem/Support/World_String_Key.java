@@ -89,7 +89,7 @@ public final class  World_String_Key
     public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<World_String_Key ");
-        builder.quote(this.s);
+        builder.java_quote(this.s);
         builder.append(">");
     }
 }

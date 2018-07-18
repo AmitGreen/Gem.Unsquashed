@@ -59,7 +59,7 @@ public final class  UniqueName
     public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<UniqueName ");
-        builder.quote(this.prefix);
+        builder.java_quote(this.prefix);
         builder.append(" ", this.value,">");
     }
 

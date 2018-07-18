@@ -677,7 +677,7 @@ public final class  Zone
     {
         final Gem_StringBuilder         builder = this.summon_StringBuilder();
 
-        builder.quote(s);
+        builder.java_quote(s);
 
         return builder.finish_AND_recycle();
     }

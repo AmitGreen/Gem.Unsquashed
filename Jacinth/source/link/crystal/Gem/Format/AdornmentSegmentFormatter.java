@@ -186,7 +186,7 @@ public final class  AdornmentSegmentFormatter
     public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<AdornmentSegmentFormatter ");
-        builder.quote(this.s);
+        builder.java_quote(this.s);
         builder.append(">");
     }
 

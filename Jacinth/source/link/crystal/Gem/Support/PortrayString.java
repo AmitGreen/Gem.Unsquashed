@@ -221,9 +221,9 @@ final class             PortrayString_Backslash
     public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<PortrayString_Backslash ", this.abbreviation, " ");
-        builder.quote(this.prefix);
+        builder.java_quote(this.prefix);
         builder.append(" ");
-        builder.quote(this.suffix);
+        builder.java_quote(this.suffix);
         builder.append(">");
     }
 
@@ -330,9 +330,9 @@ final class             PortrayString_Normal
     public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<PortrayString_Normal ", this.abbreviation, " ");
-        builder.quote(this.prefix);
+        builder.java_quote(this.prefix);
         builder.append(" ");
-        builder.quote(this.suffix);
+        builder.java_quote(this.suffix);
         builder.append(">");
     }
 
@@ -450,7 +450,7 @@ final class             PortrayString_TripleWithBackslash
         }
 
         builder.append("<PortrayString_TripleWithBackslash ", this.abbreviation, " ");
-        builder.quote(this.prefix);
+        builder.java_quote(this.prefix);
         builder.append(" ", table_name, " ", quote_code_point_name, " ", this.first_state.name, " ", this.normal_state.name, ">");
     }
 

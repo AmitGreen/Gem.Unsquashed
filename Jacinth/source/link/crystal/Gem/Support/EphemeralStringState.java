@@ -25,16 +25,22 @@ public final class      EphemeralStringState
     //
     private static final PortrayString[]    portray_table = new PortrayString[] {
             PortrayString.portray_string__invalid,              //  0
-            PortrayString.backslash_with_triple_apostrophe,     //  KC
-            PortrayString.backslash_with_triple_quotation_mark, //  KS
-            PortrayString.normal_with_triple_apostrophe,        //  PC
-            PortrayString.normal_with_triple_quotation_mark,    //  PS
+
             PortrayString.raw_with_apostrophe,                  //  RA
             PortrayString.raw_with_quotation_mark,              //  RQ
+
+            PortrayString.backslash_with_triple_apostrophe,     //  KC
+            PortrayString.backslash_with_triple_quotation_mark, //  KS
+
+            PortrayString.normal_with_triple_apostrophe,        //  PC
+            PortrayString.normal_with_triple_quotation_mark,    //  PS
+
             PortrayString.backslash_with_apostrophe,            //  KA
             PortrayString.backslash_with_quotation_mark,        //  KQ
+
             PortrayString.normal_with_apostrophe,               //  PA
             PortrayString.normal_with_quotation_mark,           //  PQ
+
             PortrayString.raw_with_triple_apostrophe,           //  RC
             PortrayString.raw_with_triple_quotation_mark,       //  RQ
         };
@@ -54,6 +60,7 @@ public final class      EphemeralStringState
     public /*:*/ EphemeralStringState   N;
     public /*:*/ EphemeralStringState   Q;
 
+    public /*:*/ boolean                rawable;
     public /*:*/ PortrayString[]        portray_functions;
 
     //
@@ -76,6 +83,7 @@ public final class      EphemeralStringState
     //  this.N                 = vacant
     //  this.Q                 = vacant
 
+    //  this.rawable           = vacant
     //  this.portray_functions = vacant
 
     //  this.favorite_3 = vacant
@@ -104,22 +112,30 @@ public final class      EphemeralStringState
             final Object                        F3//,
         )
     {
-        assert fact_between(0, ra, 12);
+        if (ra == 0) {
+            assert fact_null(rq, "rq");
+        } else {
+            assert fact_between(1, ra, 12);
 
-        if (rq != null) {
-            assert fact_between(0, (Integer) ra, 12);
+            if (rq != null) {
+                assert fact_between(0, (Integer) ra, 12);
+            }
         }
 
-        assert fact_between(0, kc, 12);
+        assert fact_between(1, kc, 12);
 
         if (ks != null) {
-            assert fact_between(0, (Integer) ks, 12);
+            assert fact_between(1, (Integer) ks, 12);
         }
 
-        assert fact_between(0, (Integer) pc, 12);
+        if (pc == 0) {
+            assert fact_null(ps, "ps");
+        } else {
+            assert fact_between(1, (Integer) pc, 12);
 
-        if (ps != null) {
-            assert fact_between(0, (Integer) ps, 12);
+            if (ps != null) {
+                assert fact_between(0, (Integer) ps, 12);
+            }
         }
 
         if (F3 != null) {
@@ -164,6 +180,7 @@ public final class      EphemeralStringState
         this.N = N;
         this.Q = Q;
 
+        this.rawable           = (ra != 0);
         this.portray_functions = portray_functions;
 
         this.favorite_3 = F3_value;
@@ -196,12 +213,13 @@ public final class      EphemeralStringState
         final PortrayString[]           portray_functions = this.portray_functions;
         final int                       F3                = this.favorite_3;
 
-        builder.augment("<EphemeralStringState {}; {} {} {} {}; {} {} {} {} {} {}; {} {} {}>",
+        builder.augment("<EphemeralStringState {}; {} {} {} {}; {}; {} {} {} {} {} {}; {} {} {}>",
                         String.format("%5s", this.debug_name),
                         String.format("%5s", (A  == null ? "." : A.debug_name)),
                         String.format("%5s", (K  == null ? "." : K.debug_name)),
                         String.format("%5s", (N  == null ? "." : N.debug_name)),
                         String.format("%5s", (Q  == null ? "." : Q.debug_name)),
+                        (this.rawable ? "R" : "."),
                         String.format("%2s", portray_functions[0].abbreviation),
                         String.format("%2s", portray_functions[1].abbreviation),
                         String.format("%2s", portray_functions[2].abbreviation),
@@ -216,7 +234,7 @@ public final class      EphemeralStringState
 
     static public final void            portray_header(final String prefix)
     {
-        line("{} --------------------- name;     A     K     N     Q; ra rq kc ks pc ps; F3 EC ES", prefix);
+        line("{} --------------------- name;     A     K     N     Q; R; ra rq kc ks pc ps; F3 C S", prefix);
     }
 
 

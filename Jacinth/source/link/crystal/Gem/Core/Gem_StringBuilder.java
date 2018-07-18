@@ -457,6 +457,51 @@ public final class  Gem_StringBuilder
     }
 
 
+    public final void                   java_quote(final String s)
+    {
+        assert fact_pointer(s, "s");
+
+        final StringBuilder             builder = this.builder;
+
+        final AsciiTable[]              table = AsciiTable.table_with_boring_apostrophe;
+
+        builder.append("\"");
+
+        /*:*/ int                       begin = 0;
+        final int                       total = s.length();
+
+        for (/*:*/ int                  i = 0; i < total; /*  i is incremented in the loop by 1 or 2  */) {
+            final int                   code_point = s.codePointAt(i);
+
+            if (code_point >= 128) {
+                i += Character.charCount(code_point);
+                continue;
+            }
+
+            i ++;
+
+            AsciiTable              ascii = table[code_point];
+
+            if (ascii.is_boring_printable) {
+                continue;
+            }
+
+            if (begin < i) {
+                builder.append(s, begin, i);                            //  append sub-string
+                begin = i;
+            }
+
+            builder.append(ascii.portray_0);
+        }
+
+        if (begin < total) {
+            builder.append(s, begin, total);                            //  append sub-string
+        }
+
+        builder.append("\"");
+    }
+
+
     public final void                   portray(final Object v)
     {
         if (v == null) {
@@ -477,7 +522,7 @@ public final class  Gem_StringBuilder
         }
 
         if (v_class == Gem.String$class) {
-            this.quote((String) v);
+            this.java_quote((String) v);
             return;
         }
 
@@ -501,53 +546,5 @@ public final class  Gem_StringBuilder
         }
 
         this.builder.append("<").append(class_name).append(": ").append(v.toString()).append(">");
-    }
-
-
-    public final void                   quote(final String s)
-    {
-        assert fact_pointer(s, "s");
-
-        final StringBuilder             builder = this.builder;
-
-        final AsciiTable[]              table = AsciiTable.table;
-
-        builder.append("\"");
-
-        /*:*/ int                       start = 0;
-        final int                       total = s.length();
-
-        for (/*:*/ int                  i = 0; i < total; /*  i is incremented in the loop by 1 or 2  */) {
-            final int                   code_point = s.codePointAt(i);
-
-            if (code_point < 128) {
-                AsciiTable              ascii = table[code_point];
-
-                if (ascii.is_boring_printable) {
-                    i ++;
-                    continue;
-                }
-
-                if (start < i) {
-                    builder.append(s, start, i);                        //  append sub-string
-                }
-
-                builder.append(ascii.portray_0);
-
-                i ++;
-
-                start = i;
-
-                continue;
-            }
-
-            i += Character.charCount(code_point);
-        }
-
-        if (start < total) {
-            builder.append(s, start, total);                            //  append sub-string
-        }
-
-        builder.append("\"");
     }
 }

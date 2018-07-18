@@ -219,7 +219,7 @@ public final class  AsciiTable
         if (portray_0 == null) {
             builder.append("<null>");
         } else {
-            builder.quote(portray_0);
+            builder.java_quote(portray_0);
         }
 
         if (this.is_boring_printable) {

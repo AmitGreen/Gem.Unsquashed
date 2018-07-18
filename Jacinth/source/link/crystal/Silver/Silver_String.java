@@ -92,7 +92,7 @@ public final class  Silver_String
     public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<");
-        builder.quote(this.world_s.s);
+        builder.java_quote(this.world_s.s);
         builder.append(">");
     }
 }

@@ -30,7 +30,9 @@ public final class      OverallStringState
     public /*:*/ int                    rq;
     public /*:*/ int                    pa;
     public /*:*/ int                    pq;
+    public /*:*/ boolean                rawable;
     public /*:*/ boolean                is_K;
+    public /*:*/ boolean                is_L;
 
 
     //
@@ -39,15 +41,18 @@ public final class      OverallStringState
     private                             OverallStringState(final String debug_name)
     {
         this.debug_name = debug_name;
-    //  this.A          = null;
-    //  this.K          = null;
-    //  this.L          = null;
-    //  this.Q          = null;
-    //  this.ra         = 0;
-    //  this.rq         = 0;
-    //  this.pa         = 0;
-    //  this.pq         = 0;
-    //  this.is_K       = false;
+
+    //  this.A          = vacant
+    //  this.K          = vacant
+    //  this.L          = vacant
+    //  this.Q          = vacant
+    //  this.ra         = vacant
+    //  this.rq         = vacant
+    //  this.pa         = vacant
+    //  this.pq         = vacant
+    //  this.is_K       = vacant
+    //  this.is_L       = vacant
+    //  this.rawable    = vacant
     }
 
 
@@ -66,16 +71,10 @@ public final class      OverallStringState
             final Object                        rq,
             final Object                        pa,
             final Object                        pq,
-            final Object                        is_K//,
+            final Object                        is_K,
+            final Object                        is_L//,
         )
     {
-        if (is_K == null) {
-            assert fact( ! this.debug_name.endsWith("K"), "this.debug_name does NOT end with a 'K'");
-        } else {
-            assert fact(((Integer) is_K) == 7,            "((Integer) is_K) == 7");
-            assert fact(this.debug_name.endsWith("K"),    "this.debug_name ends with a 'K'");
-        }
-
         if (ra != null) {
             assert fact_between(0, (Integer) ra, 6);
         }
@@ -92,20 +91,39 @@ public final class      OverallStringState
             assert fact_between(0, (Integer) pq, 6);
         }
 
-        final int                       ra_value = (ra == null ? -1       : (Integer) ra);
-        final int                       rq_value = (rq == null ? ra_value : (Integer) rq);
-        final int                       pa_value = (pa == null ? -1       : (Integer) pa);
-        final int                       pq_value = (pq == null ? pa_value : (Integer) pq);
+        if (is_K == null) {
+            assert fact( ! this.debug_name.endsWith("K"), "this.debug_name does NOT end with a 'K'");
+        } else {
+            assert fact(((Integer) is_K) == 7,            "((Integer) is_K) == 7");
+            assert fact(this.debug_name.endsWith("K"),    "this.debug_name ends with a 'K'");
+        }
 
-        this.A    = A;
-        this.K    = K;
-        this.L    = L;
-        this.Q    = Q;
-        this.ra   = ra_value - 1;
-        this.rq   = rq_value - 1;
-        this.pa   = pa_value - 1;
-        this.pq   = pq_value - 1;
-        this.is_K = (is_K != null);
+        if (is_L == null) {
+            assert fact( ! this.debug_name.endsWith("L"), "this.debug_name does NOT end with a 'L'");
+        } else {
+            assert fact(((Integer) is_L) == 7,            "((Integer) is_L) == 7");
+            assert fact(this.debug_name.endsWith("L"),    "this.debug_name ends with a 'L'");
+        }
+
+
+        final int                       ra_value    = (ra == null ? -1       : (Integer) ra);
+        final int                       rq_value    = (rq == null ? ra_value : (Integer) rq);
+        final int                       pa_value    = (pa == null ? -1       : (Integer) pa);
+        final int                       pq_value    = (pq == null ? pa_value : (Integer) pq);
+        final boolean                   is_K__value = (is_K != null);
+        final boolean                   is_L__value = (is_L != null);
+
+        this.A       = A;
+        this.K       = K;
+        this.L       = L;
+        this.Q       = Q;
+        this.ra      = ra_value - 1;
+        this.rq      = rq_value - 1;
+        this.pa      = pa_value - 1;
+        this.pq      = pq_value - 1;
+        this.rawable = ( ! is_L__value);
+        this.is_K    = is_K__value;
+        this.is_L    = is_L__value;
     }
 
 
@@ -136,7 +154,7 @@ public final class      OverallStringState
 
         final String[]                  index_names = AnalyzeString.index_names;
 
-        builder.augment("<OverallStringState {}; {} {} {} {}; {} {} {} {}",
+        builder.augment("<OverallStringState {}; {} {} {} {}; {} {} {} {}; {} {} {}>",
                         String.format("%2s", this.debug_name),
                         String.format("%2s", (A  == null ? "." : A.debug_name)),
                         String.format("%2s", (K  == null ? "." : K.debug_name)),
@@ -145,18 +163,15 @@ public final class      OverallStringState
                         String.format("%2s", (ra == -1   ? "." : index_names[ra])),
                         String.format("%2s", (rq == -1   ? "." : index_names[rq])),
                         String.format("%2s", (pa == -1   ? "." : index_names[pa])),
-                        String.format("%2s", (pq == -1   ? "." : index_names[pq])));
-
-        if (this.is_K) {
-            builder.append("; is_K");
-        }
-
-        builder.append(">");
+                        String.format("%2s", (pq == -1   ? "." : index_names[pq])),
+                        (this.rawable ? "R" : "."),
+                        (this.is_K    ? "K" : "."),
+                        (this.is_L    ? "L" : "."));
     }
 
 
     static public final void            portray_header(final String prefix)
     {
-        line("{} ---------------- name;  A  K  L  Q; ra rq pa pq; is_K", prefix);
+        line("{} ---------------- name;  A  K  L  Q; ra rq pa pq; R K L", prefix);
     }
 }

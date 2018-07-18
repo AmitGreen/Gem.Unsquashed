@@ -18,6 +18,7 @@ import link.crystal.Gem.Support.Storehouse_MessageFormattable;
 import link.crystal.Gem.Support.Storehouse_PortraySegmentFormatter;
 import link.crystal.Gem.Support.Storehouse_String;
 import link.crystal.Gem.UnitTest.UnitTest_Gem;
+import link.crystal.Gem.UnitTest.UnitTest_PortrayString;
 import link.crystal.Silver.UnitTest.UnitTest_Java;
 import link.crystal.Silver.UnitTest.UnitTest_Silver;
 
@@ -80,7 +81,8 @@ public final class  UnitTest
         final Zone                      z = Zone.current_zone();
 
         if (arguments.length == 0) {
-            UnitTest_Gem.create(z).test_analyze_string();
+            UnitTest_PortrayString.create(z).test_portray_string();
+            //UnitTest_Gem.create(z).test_analyze_string();
             //UnitTest_Gem.create(z).test_arrange();
             //UnitTest_Gem.create(z).test_string();
             //UnitTest_Silver.create(z).test_shape();

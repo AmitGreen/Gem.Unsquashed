@@ -148,7 +148,7 @@ def gem():
     _  = 7
 
     #           '   \   L   "   ra  rq  pc  ps
-    E .overall (U,  K,  L,  T,  0)
+    E .overall (U,  K,  L,  T,  RA, RQ, PC, PS)
     K .overall (_,  K,  L,  _,  RA, RQ, KC, KS, is_K = 7)
     L .overall (_,  L,  L,  _,  0,  _,  KC, KS)
     N .overall (N,  K,  L,  N,  RA, RQ, PC, PS)
@@ -475,7 +475,7 @@ def gem():
             if not a.is_portray_boring:
                 break
 
-            overall  = N
+            overall = N
         else:
             #line('portray_raw_string(%r): simple', s)
 
@@ -529,16 +529,15 @@ def gem():
             if a.is_apostrophe:
                 #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.A.name, state.name, state.A.name)
 
-                raw_state   = raw_state.A
-                state       = state.A
-                favorite   -= 1
-                C          += state.favorite_3
+                raw_state = raw_state.A
+                state     = state.A
+                favorite -= 1
+                C        += state.favorite_3
                 continue
 
             if a.is_backslash:
                 #line('  %r: backslash: %s => %s, %s => %s', c, raw_state.name, raw_state.K.name, state.name, state.N.name)
 
-                backslash = 7
                 overall   = overall.K
                 raw_state = raw_state.K
                 state     = state.N
@@ -547,10 +546,10 @@ def gem():
             if a.is_quotation_mark:
                 #line('  %r: %s => %s, %s => %s', c, raw_state.name, raw_state.Q.name, state.name, state.Q.name)
 
-                raw_state   = raw_state.Q
-                state       = state.Q
-                favorite   += 1
-                S          -= state.favorite_3
+                raw_state = raw_state.Q
+                state     = state.Q
+                favorite += 1
+                S        -= state.favorite_3
                 continue
 
             assert not a.is_printable

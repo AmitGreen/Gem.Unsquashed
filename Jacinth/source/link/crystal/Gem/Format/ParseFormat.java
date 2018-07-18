@@ -466,7 +466,7 @@ public final class  ParseFormat
             final Gem_StringBuilder     b2 = z.summon_StringBuilder();
 
             b2.append("format: ");
-            b2.quote(format);
+            b2.java_quote(format);
 
             output(b2.finish_AND_recycle());
 

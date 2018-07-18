@@ -95,7 +95,7 @@ public final class  World_String_WeakReference_PhantomReference
     public final void                   portray(final Gem_StringBuilder builder)
     {
         builder.append("<World_String_WeakReference_PhantomReference ");
-        builder.quote(this.s);
+        builder.java_quote(this.s);
         builder.append(">");
     }
 
