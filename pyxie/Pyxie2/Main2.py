@@ -1,3 +1,6 @@
+#
+#   Copyright (c) 2017-2018 Joy Diamond.  All rights reserved.
+#
 __import__('Boot').boot()
 
 def line(format, *args):
