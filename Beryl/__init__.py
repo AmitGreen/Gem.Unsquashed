@@ -1,3 +1,3 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017 Joy Diamond.  All rights reserved.
 #

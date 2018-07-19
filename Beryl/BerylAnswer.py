@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green & Mike Zhukovskiy.  All rights reserved.
+#   Copyright (c) 2017 Joy Diamond & Mike Zhukovskiy.  All rights reserved.
 #
 @gem('Beryl.BerylAnswer')
 def gem():
