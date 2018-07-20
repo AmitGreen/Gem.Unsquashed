@@ -86,24 +86,6 @@ QUARTZ_FILES = \
     #       ../Quartz/Match.py
     #
 
-TOPAZ_FILES = \
-    ../Topaz/CacheSupport.py ../Topaz/ConjureDual.py ../Topaz/ConjureSingle.py ../Topaz/ConjureQuadruple.py \
-        ../Topaz/ConjureTriple.py ../Topaz/ConjureTreeComment.py ../Topaz/Core.py \
-    ../Topaz/Drove.py \
-    ../Topaz/ExceptionChain.py \
-    ../Topaz/Herd.py \
-    ../Topaz/Main.py \
-    ../Topaz/Path.py ../Topaz/Pattern.py ../Topaz/PortrayString.py \
-    ../Topaz/Sequence.py ../Topaz/Series.py ../Topaz/StringOutput.py
-    #
-    #   Excludes:
-    #       ../Topaz/GeneratedConjureDual.py
-    #       ../Topaz/GeneratedConjureQuadruple.py
-    #       ../Topaz/GeneratedConjureTriple.py
-    #       ../Topaz/GeneratedNew.py
-    #       ../Topaz/OldConjureQuadruple.py
-    #
-
 SARDONYX_FILES = \
     ../Sardonyx/Boot.py
 
@@ -124,7 +106,6 @@ FILES = \
     $(ONYX_FILES) \
     $(QUARTZ_FILES) \
     $(SARDONYX_FILES) \
-    $(TOPAZ_FILES) \
     $(WORK_FILES)
 
 
@@ -156,9 +137,6 @@ clean:
 	rm -f vm.py
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
 	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
-	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
-	rm -f   zgn.gpy zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
-	rm -f   zm.py zo4.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
 
 
 files:
@@ -250,32 +228,6 @@ links:
 	ln -s ../Crystal/ChessPawn.py                                               yw.py
 	ln -s ../Crystal/FrozenChessCard.py                                         yzc.py
 	ln -s ../Crystal/FrozenCardRoot.py                                          yzr.py
-	ln -s ../Topaz/Core.py                                                      zcr.py
-	ln -s ../Topaz/CacheSupport.py                                              zcs.py
-	ln -s ../Topaz/Drove.py                                                     zd.py
-	ln -s ../Topaz/ExceptionChain.py                                            ze.py
-	ln -s ../Topaz/GeneratedConjureDual.gpy                                     zg2.gpy
-	ln -s ../Topaz/GeneratedConjureDual.py                                      zg2.py
-	ln -s ../Topaz/GeneratedConjureTriple.gpy                                   zg3.gpy
-	ln -s ../Topaz/GeneratedConjureTriple.py                                    zg3.py
-	ln -s ../Topaz/GeneratedConjureQuadruple.gpy                                zg4.gpy
-	ln -s ../Topaz/GeneratedConjureQuadruple.py                                 zg4.py
-	ln -s ../Topaz/GeneratedNew.gpy                                             zgn.gpy
-	ln -s ../Topaz/GeneratedNew.py                                              zgn.py
-	ln -s ../Topaz/Herd.py                                                      zh.py
-	ln -s ../Topaz/ConjureSingle.py                                             zj1.py
-	ln -s ../Topaz/ConjureDual.py                                               zj2.py
-	ln -s ../Topaz/ConjureTriple.py                                             zj3.py
-	ln -s ../Topaz/ConjureQuadruple.py                                          zj4.py
-	ln -s ../Topaz/ConjureTreeComment.py                                        zjtc.py
-	ln -s ../Topaz/Main.py                                                      zm.py
-	ln -s ../Topaz/OldConjureQuadruple.py                                       zo4.py
-	ln -s ../Topaz/Path.py                                                      zpa.py
-	ln -s ../Topaz/PortrayString.py                                             zps.py
-	ln -s ../Topaz/Pattern.py                                                   zpt.py
-	ln -s ../Topaz/Series.py                                                    zse.py
-	ln -s ../Topaz/StringOutput.py                                              zso.py
-	ln -s ../Topaz/Sequence.py                                                  zsq.py
 
 
 wc:
@@ -295,7 +247,6 @@ wc:
         $(ONYX_FILES) \
         $(QUARTZ_FILES) \
         $(SARDONYX_FILES) \
-        $(TOPAZ_FILES) \
         $(WORK_FILES)
 
 test:
@@ -310,6 +261,5 @@ test:
         $(ONYX_FILES) \
         $(QUARTZ_FILES) \
         $(SARDONYX_FILES) \
-        $(TOPAZ_FILES) \
             >test.py
 	bash run.sh
