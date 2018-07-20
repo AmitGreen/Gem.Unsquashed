@@ -9,15 +9,6 @@ BERYL_FILES = \
     ../Beryl/BerylAnswer.py \
     ../Beryl/Main.py
 
-JASPER_FILES = \
-    ../Jasper/Core.py \
-    ../Jasper/Main.py \
-    ../Jasper/Parse.py ../Jasper/Parse1.py \
-        ../Jasper/Pattern.py
-    #
-    #   Excludes:
-    #       ../Jasper/Match.py
-
 LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
@@ -62,7 +53,6 @@ WORK_FILES = \
 FILES = \
     $(AGATE_FILES) \
     $(BERYL_FILES) \
-    $(JASPER_FILES) \
     $(LICENSE_FILES) \
     $(MARBLE_FILES) \
     $(MELANITE_FILES) \
@@ -84,7 +74,7 @@ clean:
 	rm -f ba.py bi.py bk.py bm.py
 	rm -f files
 	rm -f hma1.py hma2.py
-	rm -f j0p.py j1p.py jb.py jcr.py jma.py jmc.py jp.py
+	rm -f j1p.py jb.py
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1c.py m1ga.py m1gt.py m1m.py m1n.py
 	rm -f   m2c.py m2m.py m3m.py
@@ -119,13 +109,7 @@ links:
 	ln -s ../Beryl/Main.py                                                      bm.py
 	ln -s ../bin/.pyxie/hma.py                                                  hma1.py
 	ln -s ../bin/.pyxie/hma2.py                                                 hma2.py
-	ln -s ../Jasper/Parse.py                                                    j0p.py
-	ln -s ../Jasper/Parse1.py                                                   j1p.py
 	ln -s ../Junk/Boot.py                                                       jb.py
-	ln -s ../Jasper/Core.py                                                     jcr.py
-	ln -s ../Jasper/Main.py                                                     jma.py
-	ln -s ../Jasper/Match.py                                                    jmc.py
-	ln -s ../Jasper/Pattern.py                                                  jp.py
 	ln -s log.txt                                                               l.txt
 	ln -s ../OtherLicenses/README.txt                                           lr.txt
 	ln -s Makefile                                                              m
@@ -163,7 +147,6 @@ wc:
 	#
 	wc -l \
         $(BERYL_FILES) \
-        $(JASPER_FILES) \
         $(LICENSE_FILES) \
         $(MARBLE_FILES) \
         $(MELANITE_FILES) \
@@ -175,7 +158,6 @@ wc:
 test:
 	cat \
         $(BERYL_FILES) \
-        $(JASPER_FILES) \
         $(MELANITE_FILES) \
         $(ONYX_FILES) \
         $(QUARTZ_FILES) \
