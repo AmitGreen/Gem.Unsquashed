@@ -12,13 +12,6 @@ BERYL_FILES = \
 LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
-MARBLE_FILES = \
-    ../Marble/Core.py \
-    ../Marble/GenerateAscii.py \
-    ../Marble/GenerateTestPortrayString.py \
-    ../Marble/NestedConjure.py \
-    ../Marble/Main.py
-
 MELANITE_FILES = \
     ../Melanite/Child.py \
     ../Melanite/Core.py \
@@ -54,7 +47,6 @@ FILES = \
     $(AGATE_FILES) \
     $(BERYL_FILES) \
     $(LICENSE_FILES) \
-    $(MARBLE_FILES) \
     $(MELANITE_FILES) \
     $(ONYX_FILES) \
     $(QUARTZ_FILES) \
@@ -76,9 +68,7 @@ clean:
 	rm -f hma1.py hma2.py
 	rm -f j1p.py jb.py
 	rm -f l.txt lr.txt
-	rm -f m m.txt m1c.py m1ga.py m1gt.py m1m.py m1n.py
-	rm -f   m2c.py m2m.py m3m.py
-	rm -f   mc.py md.py mm.py
+	rm -f m m.txt m2c.py m2m.py m3m.py mc.py md.py mm.py
 	rm -f oc.py od.py oe.py om.py
 	rm -f ps3.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
@@ -114,11 +104,6 @@ links:
 	ln -s ../OtherLicenses/README.txt                                           lr.txt
 	ln -s Makefile                                                              m
 	ln -s mine.txt                                                              m.txt
-	ln -s ../Marble/Core.py                                                     m1c.py
-	ln -s ../Marble/GenerateAscii.py                                            m1ga.py
-	ln -s ../Marble/GenerateTestPortrayString.py                                m1gt.py
-	ln -s ../Marble/Main.py                                                     m1m.py
-	ln -s ../Marble/NestedConjure.py                                            m1n.py
 	ln -s ../Melanite/Core.py                                                   m2c.py
 	ln -s ../Melanite/Main.py                                                   m2m.py
 	ln -s ../Melanite/Child.py                                                  mc.py
@@ -148,7 +133,6 @@ wc:
 	wc -l \
         $(BERYL_FILES) \
         $(LICENSE_FILES) \
-        $(MARBLE_FILES) \
         $(MELANITE_FILES) \
         $(ONYX_FILES) \
         $(QUARTZ_FILES) \
