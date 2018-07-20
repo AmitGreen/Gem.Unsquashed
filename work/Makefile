@@ -9,9 +9,6 @@ BERYL_FILES = \
     ../Beryl/BerylAnswer.py \
     ../Beryl/Main.py
 
-LICENSE_FILES = \
-    ../OtherLicenses/README.txt
-
 QUARTZ_FILES = \
     ../Quartz/Parse1.py \
     ../Quartz/Core.py \
@@ -32,7 +29,6 @@ WORK_FILES = \
 FILES = \
     $(AGATE_FILES) \
     $(BERYL_FILES) \
-    $(LICENSE_FILES) \
     $(QUARTZ_FILES) \
     $(SARDONYX_FILES) \
     $(WORK_FILES)
@@ -49,7 +45,7 @@ clean:
 	rm -f files
 	rm -f hma1.py hma2.py
 	rm -f j1p.py jb.py
-	rm -f l.txt lr.txt
+	rm -f l.txt
 	rm -f m
 	rm -f ps3.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
@@ -74,7 +70,6 @@ links:
 	ln -s ../bin/.pyxie/hma2.py                                                 hma2.py
 	ln -s ../Junk/Boot.py                                                       jb.py
 	ln -s log.txt                                                               l.txt
-	ln -s ../OtherLicenses/README.txt                                           lr.txt
 	ln -s Makefile                                                              m
 	ln -s ../Junk/PortrayString_3.py                                            ps3.py
 	ln -s ../Quartz/Parse1.py                                                   q1p.py
@@ -95,7 +90,6 @@ wc:
 	#
 	wc -l \
         $(BERYL_FILES) \
-        $(LICENSE_FILES) \
         $(QUARTZ_FILES) \
         $(SARDONYX_FILES) \
         $(WORK_FILES)
