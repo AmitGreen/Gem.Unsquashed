@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Joy Diamond.  All rights reserved.
 #
 def boot(module_name):
     def execute(f):
@@ -14,6 +14,7 @@ def boot():
     from os.path import abspath as path_absolute, join as path_join
 
     module_path.insert(1, path_absolute(path_join(module_path[0], '..')))
+    module_path.insert(2, path_absolute(path_join(module_path[0], '../../Gem-py')))
 
 
     import Gem

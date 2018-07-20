@@ -1,3 +1,0 @@
-Pearl           - Common tokenizing code
-    Jasper      - Java Parser
-    Sapphire    - Python parser

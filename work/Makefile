@@ -1,5 +1,5 @@
 #
-#   Copyright (c) 2017-2018 Amit Green.  All rights reserved.
+#   Copyright (c) 2017-2018 Joy Diamond.  All rights reserved.
 #
 AGATE_FILES = ../Agate/RUNME.py
 
@@ -32,31 +32,6 @@ DIAMOND_FILES = \
     ../Diamond/Main.py \
     ../Diamond/Shared.py ../Diamond/Status.py \
     ../Diamond/Thread.py
-
-GEM_FILES = \
-    ../Gem/__init__.py \
-    ../Gem/Absent.py ../Gem/All.py ../Gem/Ascii.py \
-    ../Gem/Boot.py \
-    ../Gem/Cache.py ../Gem/Cache2.py ../Gem/Cadence.py ../Gem/Codec.py ../Gem/ContextManager.py ../Gem/Core.py \
-        ../Gem/CatchException.py \
-    ../Gem/DelayedFileOutput.py ../Gem/DroveMany.py ../Gem/DumpCache.py \
-    ../Gem/ErrorNumber.py ../Gem/Exception.py ../Gem/ExecuteFile.py \
-    ../Gem/FileOutput.py ../Gem/FileStatus.py \
-    ../Gem/Gaggle.py ../Gem/GarbageCollection.py ../Gem/Global.py \
-    ../Gem/Hailstone.py ../Gem/Herd.py ../Gem/Herd_2.py ../Gem/Herd_3.py ../Gem/Herd_4567.py ../Gem/HerdMany.py \
-        ../Gem/Horde.py \
-    ../Gem/Import.py ../Gem/IO.py \
-    ../Gem/LiquidMap.py \
-    ../Gem/Map.py ../Gem/Method.py \
-    ../Gem/Output.py \
-    ../Gem/Path.py ../Gem/PortrayString.py \
-    ../Gem/Rabble.py ../Gem/RegularExpression.py \
-    ../Gem/Series.py ../Gem/Sequence.py ../Gem/SimpleStringIO.py ../Gem/Sleep.py ../Gem/StringOutput.py ../Gem/System.py \
-    ../Gem/Traceback.py ../Gem/Thread.py
-    #
-    #   Excludes:
-    #       ../Gem/GeneratedConjureQuadruple.py
-    #
 
 DRAVITE_FILES = \
     ../Dravite/Euclid.py \
@@ -213,7 +188,6 @@ FILES = \
     $(CRYSTAL_FILES) \
     $(DIAMOND_FILES) \
     $(DRAVITE_FILES) \
-    $(GEM_FILES) \
     $(IVORY_FILES) \
     $(JASPER_FILES) \
     $(LICENSE_FILES) \
@@ -238,14 +212,10 @@ clean:
 	rm -f *.old *.new *.pyc
 	rm -f 2re.py 2sf.py 2sp.py 2sc.py
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
-	rm -f a.py ab.py ac.py ag.py
-	rm -f ba.py bi.py bk.py bm.py bo.py
-	rm -f ca.py ca2.py cd.py ce.py cr.py
-	rm -f d.py dc.py de.py df.py dfo.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
-	rm -f ef.py en.py ex.py
-	rm -f files fo.py fs.py
-	rm -f gcm.py gdc.py gdm.py gdo.py gga.py ggc.py gg4.py gh2.py gh3.py gh4.py ghe.py ghm.py gho.py
-	rm -f   gi.py gl.py gq.py gr.py gse.py gsq.py
+	rm -f ag.py
+	rm -f ba.py bi.py bk.py bm.py
+	rm -f d.py dc.py de.py df.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
+	rm -f files
 	rm -f h0p.py
 	rm -f   h1p.py h1pa.py h1pc.py h1pe.py h1pes.py h1pf.py h1pi.py h1pm.py h1ps.py h1px.py
 	rm -f     h1za.py h1zh.py h1zn.py h1zo.py
@@ -256,24 +226,23 @@ clean:
 	rm -f   hk.py hkc.py hkd.py hkds.py hkf.py hkk.py hkkd.py hkm.py hkms.py hks.py hkt.py hi.py hl.py
 	rm -f   hma.py hma1.py hma2.py hmc.py hmd.py hme.py hmf.py hmo.py hmx.py hmy.py hpr.py hpt.py hs.py
 	rm -f   hto.py htr.py htt.py hu.py hv.py hw.py hx.py hy.py
-	rm -f in.py im.py io.py iv.py
+	rm -f iv.py
 	rm -f j0p.py j1p.py jb.py jcr.py jma.py jmc.py jp.py
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1c.py m1ga.py m1gt.py m1m.py m1n.py
 	rm -f   m2c.py m2m.py m3m.py
-	rm -f   map.py mc.py md.py me.py mm.py
-	rm -f o.py oc.py od.py oe.py om.py
-	rm -f pa2.py pat.py path.py paw.py pca.py pcc.py pco.py pcr.py pcm.py
+	rm -f   mc.py md.py mm.py
+	rm -f oc.py od.py oe.py om.py
+	rm -f pat.py paw.py pca.py pcc.py pco.py pcr.py pcm.py
 	rm -f   pel.py pf.py pj.py pk.py pkc.py pl.py pmo.py pn.py ps3.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
-	rm -f rm.py rx.py
-	rm -f sl.py so.py ssio.py sy.py
-	rm -f t0p.py t1.py t1p.py t2.py tb.py tcm.py th.py tcr.py tcr1.py tlp.txt
+	rm -f rm.py
+	rm -f t.java t0p.py t1.py t1p.py t2.py tcm.py tcr.py tcr1.py tlp.txt
 	rm -f   tma.py tma1.py tmc.py tmc1.py tn.py tp.py tp1.py tu.py tw.py tx.py
 	rm -f xb.py xf.py
 	rm -f vm.py
 	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
-	rm -f   ym.py yp.py yq.py yr.py ys.py yv.py yw.py yzc.py yzk.py yzr.py
+	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 	rm -f zcr.py zcs.py zd.py ze.py zg2.gpy zg2.py zg3.gpy zg3.py zg4.gpy zg4.py
 	rm -f   zgn.gpy zgn.py zh.py zj1.py zj2.py zj3.py zj4.py zjtc.py
 	rm -f   zm.py zo4.py zpa.py zps.py zpt.py zse.py zso.py zsq.py
@@ -294,25 +263,15 @@ links:
 	ln -s /usr/lib/python3.5/sre_compile.py                                     3sc.py
 	ln -s /usr/lib/python3.5/sre_constants.py                                   3sf.py
 	ln -s /usr/lib/python3.5/sre_parse.py                                       3sp.py
-	ln -s ../Gem/All.py                                                         a.py
-	ln -s ../Gem/Absent.py                                                      ab.py
-	ln -s ../Gem/Ascii.py                                                       ac.py
 	ln -s ../Agate/RUNME.py                                                     ag.py
 	ln -s ../Beryl/BerylAnswer.py                                               ba.py
 	ln -s ../Beryl/__init__.py                                                  bi.py
 	ln -s ../Beryl/Ask.py                                                       bk.py
 	ln -s ../Beryl/Main.py                                                      bm.py
-	ln -s ../Gem/Boot.py                                                        bo.py
-	ln -s ../Gem/Cache.py                                                       ca.py
-	ln -s ../Gem/Cache2.py                                                      ca2.py
-	ln -s ../Gem/Cadence.py                                                     cd.py
-	ln -s ../Gem/CatchException.py                                              ce.py
-	ln -s ../Gem/Core.py                                                        cr.py
 	ln -s ../Diamond/Development.py                                             d.py
 	ln -s ../Diamond/Core.py                                                    dc.py
 	ln -s ../Dravite/Euclid.py                                                  de.py
 	ln -s ../Diamond/Fibonacci.py                                               df.py
-	ln -s ../Gem/DelayedFileOutput.py                                           dfo.py
 	ln -s ../Diamond/Interval.py                                                di.py
 	ln -s ../Diamond/Main.py                                                    dm.py
 	ln -s ../Dravite/RSA_Example.py                                             dr.py
@@ -321,30 +280,6 @@ links:
 	ln -s ../Diamond/Thread.py                                                  dt.py
 	ln -s ../Diamond/Chore.py                                                   dw.py
 	ln -s ../Diamond/LifeCycle.py                                               dy.py
-	ln -s ../Gem/ExecuteFile.py                                                 ef.py
-	ln -s ../Gem/ErrorNumber.py                                                 en.py
-	ln -s ../Gem/Exception.py                                                   ex.py
-	ln -s ../Gem/FileOutput.py                                                  fo.py
-	ln -s ../Gem/FileStatus.py                                                  fs.py
-	ln -s ../Gem/ContextManager.py                                              gcm.py
-	ln -s ../Gem/DumpCache.py                                                   gdc.py
-	ln -s ../Gem/DroveMany.py                                                   gdm.py
-	ln -s ../Gem/Codec.py                                                       gdo.py
-	ln -s ../Gem/Gaggle.py                                                      gga.py
-	ln -s ../Gem/GarbageCollection.py                                           ggc.py
-	ln -s ../Gem/GeneratedConjureQuadruple.py                                   gg4.py
-	ln -s ../Gem/Herd_2.py                                                      gh2.py
-	ln -s ../Gem/Herd_3.py                                                      gh3.py
-	ln -s ../Gem/Herd_4567.py                                                   gh4.py
-	ln -s ../Gem/Herd.py                                                        ghe.py
-	ln -s ../Gem/HerdMany.py                                                    ghm.py
-	ln -s ../Gem/Horde.py                                                       gho.py
-	ln -s ../Gem/Hailstone.py                                                   gi.py
-	ln -s ../Gem/Global.py                                                      gl.py
-	ln -s ../Gem/LiquidMap.py                                                   gq.py
-	ln -s ../Gem/Rabble.py                                                      gr.py
-	ln -s ../Gem/Series.py                                                      gse.py
-	ln -s ../Gem/Sequence.py                                                    gsq.py
 	ln -s ../Sapphire/Parse.py                                                  h0p.py
 	ln -s ../Sapphire/Parse1.py                                                 h1p.py
 	ln -s ../Sapphire/Parse1Atom.py                                             h1pa.py
@@ -424,10 +359,7 @@ links:
 	ln -s ../Sapphire/Whitespace.py                                             hw.py
 	ln -s ../Sapphire/PostfixExpression.py                                      hx.py
 	ln -s ../Sapphire/SymbolTable.py                                            hy.py
-	ln -s ../Gem/__init__.py                                                    in.py
-	ln -s ../Gem/Import.py                                                      im.py
 	ln -s ../Ivory/Main.py                                                      iv.py
-	ln -s ../Gem/IO.py                                                          io.py
 	ln -s ../Jasper/Parse.py                                                    j0p.py
 	ln -s ../Jasper/Parse1.py                                                   j1p.py
 	ln -s ../Junk/Boot.py                                                       jb.py
@@ -446,19 +378,14 @@ links:
 	ln -s ../Marble/NestedConjure.py                                            m1n.py
 	ln -s ../Melanite/Core.py                                                   m2c.py
 	ln -s ../Melanite/Main.py                                                   m2m.py
-	ln -s ../Gem/Map.py                                                         map.py
 	ln -s ../Melanite/Child.py                                                  mc.py
 	ln -s ../Melanite/Development.py                                            md.py
-	ln -s ../Gem/Method.py                                                      me.py
 	ln -s ../Melanite/Multiprocessing.py                                        mm.py
-	ln -s ../Gem/Output.py                                                      o.py
 	ln -s ../Onyx/Core.py                                                       oc.py
 	ln -s ../Onyx/Development.py                                                od.py
 	ln -s ../Onyx/ElasticSearch.py                                              oe.py
 	ln -s ../Onyx/Main.py                                                       om.py
-	ln -s ../Gem/Path2.py                                                       pa2.py
 	ln -s ../Pearl/Atom.py                                                      pat.py
-	ln -s ../Gem/Path.py                                                        path.py
 	ln -s ../Pearl/ActionWord.py                                                paw.py
 	ln -s ../Pearl/Cache.py                                                     pca.py
 	ln -s ../Pearl/CreateMeta.py                                                pcc.py
@@ -481,21 +408,14 @@ links:
 	ln -s ../Quartz/Match.py                                                    qmc.py
 	ln -s ../Quartz/Pattern.py                                                  qp.py
 	ln -s ../Agate/RUNME.py                                                     rm.py
-	ln -s ../Gem/RegularExpression.py                                           rx.py
-	ln -s ../Gem/Sleep.py                                                       sl.py
-	ln -s ../Gem/StringOutput.py                                                so.py
-	ln -s ../Gem/SimpleStringIO.py                                              ssio.py
-	ln -s ../Gem/System.py                                                      sy.py
 	ln -s test.java                                                             t.java
 	ln -s ../Tremolite_2/Parse.py                                               t0p.py
 	ln -s test.py                                                               t1.py
 	ln -s ../Tremolite_2/Parse1.py                                              t1p.py
 	ln -s test2.py                                                              t2.py
-	ln -s ../Gem/Traceback.py                                                   tb.py
 	ln -s ../Tremolite/CreateMatch.py                                           tcm.py
 	ln -s ../Tremolite/Core.py                                                  tcr.py
 	ln -s ../Tremolite_2/Core.py                                                tcr1.py
-	ln -s ../Gem/Thread.py                                                      th.py
 	ln -s ../Tremolite/LicenseTemplate.txt                                      tlp.txt
 	ln -s ../Tremolite_2/Main.py                                                tma.py
 	ln -s ../Tremolite/Main.py                                                  tma1.py
@@ -523,7 +443,6 @@ links:
 	ln -s ../Crystal/Player.py                                                  yp.py
 	ln -s ../Crystal/Square.py                                                  yq.py
 	ln -s ../Crystal/ChessRook.py                                               yr.py
-	ln -s ../Gem/PortrayString.py                                               ys.py
 	ln -s ../Crystal/VoidSquare.py                                              yv.py
 	ln -s ../Crystal/ChessPawn.py                                               yw.py
 	ln -s ../Crystal/FrozenChessCard.py                                         yzc.py
@@ -565,7 +484,6 @@ wc:
         $(CRYSTAL_FILES) \
         $(DIAMOND_FILES) \
         $(DRAVITE_FILES) \
-        $(GEM_FILES) \
         $(IVORY_FILES) \
         $(JASPER_FILES) \
         $(LICENSE_FILES) \
@@ -586,7 +504,6 @@ test:
         $(CRYSTAL_FILES) \
         $(DIAMOND_FILES) \
         $(DRAVITE_FILES) \
-        $(GEM_FILES) \
         $(IVORY_FILES) \
         $(JASPER_FILES) \
         $(MELANITE_FILES) \
