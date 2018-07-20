@@ -9,17 +9,6 @@ BERYL_FILES = \
     ../Beryl/BerylAnswer.py \
     ../Beryl/Main.py
 
-DIAMOND_FILES = \
-    ../Diamond/__init__.py \
-    ../Diamond/Chore.py ../Diamond/Core.py \
-    ../Diamond/Development.py \
-    ../Diamond/Fibonacci.py \
-    ../Diamond/Interval.py \
-    ../Diamond/LifeCycle.py \
-    ../Diamond/Main.py \
-    ../Diamond/Shared.py ../Diamond/Status.py \
-    ../Diamond/Thread.py
-
 DRAVITE_FILES = \
     ../Dravite/Euclid.py \
     ../Dravite/__init__.py \
@@ -79,7 +68,6 @@ WORK_FILES = \
 FILES = \
     $(AGATE_FILES) \
     $(BERYL_FILES) \
-    $(DIAMOND_FILES) \
     $(DRAVITE_FILES) \
     $(JASPER_FILES) \
     $(LICENSE_FILES) \
@@ -101,7 +89,6 @@ clean:
 	rm -f 3re.py 3sf.py 3sp.py 3sc.py
 	rm -f ag.py
 	rm -f ba.py bi.py bk.py bm.py
-	rm -f d.py dc.py de.py df.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
 	rm -f files
 	rm -f hma1.py hma2.py
 	rm -f j0p.py j1p.py jb.py jcr.py jma.py jmc.py jp.py
@@ -138,18 +125,6 @@ links:
 	ln -s ../Beryl/__init__.py                                                  bi.py
 	ln -s ../Beryl/Ask.py                                                       bk.py
 	ln -s ../Beryl/Main.py                                                      bm.py
-	ln -s ../Diamond/Development.py                                             d.py
-	ln -s ../Diamond/Core.py                                                    dc.py
-	ln -s ../Dravite/Euclid.py                                                  de.py
-	ln -s ../Diamond/Fibonacci.py                                               df.py
-	ln -s ../Diamond/Interval.py                                                di.py
-	ln -s ../Diamond/Main.py                                                    dm.py
-	ln -s ../Dravite/RSA_Example.py                                             dr.py
-	ln -s ../Diamond/Shared.py                                                  dsh.py
-	ln -s ../Diamond/Status.py                                                  dst.py
-	ln -s ../Diamond/Thread.py                                                  dt.py
-	ln -s ../Diamond/Chore.py                                                   dw.py
-	ln -s ../Diamond/LifeCycle.py                                               dy.py
 	ln -s ../bin/.pyxie/hma.py                                                  hma1.py
 	ln -s ../bin/.pyxie/hma2.py                                                 hma2.py
 	ln -s ../Jasper/Parse.py                                                    j0p.py
@@ -197,7 +172,6 @@ wc:
 	#
 	wc -l \
         $(BERYL_FILES) \
-        $(DIAMOND_FILES) \
         $(DRAVITE_FILES) \
         $(JASPER_FILES) \
         $(LICENSE_FILES) \
@@ -211,7 +185,6 @@ wc:
 test:
 	cat \
         $(BERYL_FILES) \
-        $(DIAMOND_FILES) \
         $(DRAVITE_FILES) \
         $(JASPER_FILES) \
         $(MELANITE_FILES) \
