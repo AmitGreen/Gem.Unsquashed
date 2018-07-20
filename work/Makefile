@@ -9,19 +9,6 @@ BERYL_FILES = \
     ../Beryl/BerylAnswer.py \
     ../Beryl/Main.py
 
-CRYSTAL_FILES = \
-    ../Crystal/__init__.py \
-    ../Crystal/Board.py ../Crystal/BlankSquare.py \
-    ../Crystal/CardRoot.py ../Crystal/ChessBishop.py ../Crystal/ChessKing.py ../Crystal/ChessKnight.py \
-        ../Crystal/ChessPawn.py ../Crystal/ChessRook.py ../Crystal/Core.py \
-    ../Crystal/Deck_7.py \
-    ../Crystal/FrozenChessCard.py ../Crystal/FrozenCardRoot.py \
-    ../Crystal/Game.py \
-    ../Crystal/Main.py \
-    ../Crystal/Player.py \
-    ../Crystal/Square.py \
-    ../Crystal/VoidSquare.py
-
 DIAMOND_FILES = \
     ../Diamond/__init__.py \
     ../Diamond/Chore.py ../Diamond/Core.py \
@@ -38,9 +25,6 @@ DRAVITE_FILES = \
     ../Dravite/__init__.py \
     ../Dravite/Main.py \
     ../Dravite/RSA_Example.py
-
-IVORY_FILES = \
-    ../Ivory/Main.py
 
 JASPER_FILES = \
     ../Jasper/Core.py \
@@ -95,10 +79,8 @@ WORK_FILES = \
 FILES = \
     $(AGATE_FILES) \
     $(BERYL_FILES) \
-    $(CRYSTAL_FILES) \
     $(DIAMOND_FILES) \
     $(DRAVITE_FILES) \
-    $(IVORY_FILES) \
     $(JASPER_FILES) \
     $(LICENSE_FILES) \
     $(MARBLE_FILES) \
@@ -122,7 +104,6 @@ clean:
 	rm -f d.py dc.py de.py df.py di.py dm.py dr.py dsh.py dst.py dt.py dw.py dy.py
 	rm -f files
 	rm -f hma1.py hma2.py
-	rm -f iv.py
 	rm -f j0p.py j1p.py jb.py jcr.py jma.py jmc.py jp.py
 	rm -f l.txt lr.txt
 	rm -f m m.txt m1c.py m1ga.py m1gt.py m1m.py m1n.py
@@ -135,8 +116,6 @@ clean:
 	rm -f t.java t1.py
 	rm -f xb.py
 	rm -f vm.py
-	rm -f ybd.py ybi.py ybq.py ycb.py ycr.py yd7.py yg.py yki.py ykn.py
-	rm -f   ym.py yp.py yq.py yr.py yv.py yw.py yzc.py yzk.py yzr.py
 
 
 files:
@@ -173,7 +152,6 @@ links:
 	ln -s ../Diamond/LifeCycle.py                                               dy.py
 	ln -s ../bin/.pyxie/hma.py                                                  hma1.py
 	ln -s ../bin/.pyxie/hma2.py                                                 hma2.py
-	ln -s ../Ivory/Main.py                                                      iv.py
 	ln -s ../Jasper/Parse.py                                                    j0p.py
 	ln -s ../Jasper/Parse1.py                                                   j1p.py
 	ln -s ../Junk/Boot.py                                                       jb.py
@@ -211,23 +189,6 @@ links:
 	ln -s test.py                                                               t1.py
 	ln -s ../Dravite/Main.py                                                    vm.py
 	ln -s ../Sardonyx/Boot.py                                                   xb.py
-	ln -s ../Crystal/Board.py                                                   ybd.py
-	ln -s ../Crystal/ChessBishop.py                                             ybi.py
-	ln -s ../Crystal/BlankSquare.py                                             ybq.py
-	ln -s ../Crystal/CardRoot.py                                                ycb.py
-	ln -s ../Crystal/Core.py                                                    ycr.py
-	ln -s ../Crystal/Deck_7.py                                                  yd7.py
-	ln -s ../Crystal/Game.py                                                    yg.py
-	ln -s ../Crystal/ChessKing.py                                               yki.py
-	ln -s ../Crystal/ChessKnight.py                                             ykn.py
-	ln -s ../Crystal/Main.py                                                    ym.py
-	ln -s ../Crystal/Player.py                                                  yp.py
-	ln -s ../Crystal/Square.py                                                  yq.py
-	ln -s ../Crystal/ChessRook.py                                               yr.py
-	ln -s ../Crystal/VoidSquare.py                                              yv.py
-	ln -s ../Crystal/ChessPawn.py                                               yw.py
-	ln -s ../Crystal/FrozenChessCard.py                                         yzc.py
-	ln -s ../Crystal/FrozenCardRoot.py                                          yzr.py
 
 
 wc:
@@ -236,10 +197,8 @@ wc:
 	#
 	wc -l \
         $(BERYL_FILES) \
-        $(CRYSTAL_FILES) \
         $(DIAMOND_FILES) \
         $(DRAVITE_FILES) \
-        $(IVORY_FILES) \
         $(JASPER_FILES) \
         $(LICENSE_FILES) \
         $(MARBLE_FILES) \
@@ -252,10 +211,8 @@ wc:
 test:
 	cat \
         $(BERYL_FILES) \
-        $(CRYSTAL_FILES) \
         $(DIAMOND_FILES) \
         $(DRAVITE_FILES) \
-        $(IVORY_FILES) \
         $(JASPER_FILES) \
         $(MELANITE_FILES) \
         $(ONYX_FILES) \
