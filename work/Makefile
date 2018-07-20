@@ -9,12 +9,6 @@ BERYL_FILES = \
     ../Beryl/BerylAnswer.py \
     ../Beryl/Main.py
 
-DRAVITE_FILES = \
-    ../Dravite/Euclid.py \
-    ../Dravite/__init__.py \
-    ../Dravite/Main.py \
-    ../Dravite/RSA_Example.py
-
 JASPER_FILES = \
     ../Jasper/Core.py \
     ../Jasper/Main.py \
@@ -68,7 +62,6 @@ WORK_FILES = \
 FILES = \
     $(AGATE_FILES) \
     $(BERYL_FILES) \
-    $(DRAVITE_FILES) \
     $(JASPER_FILES) \
     $(LICENSE_FILES) \
     $(MARBLE_FILES) \
@@ -102,7 +95,6 @@ clean:
 	rm -f rm.py
 	rm -f t.java t1.py
 	rm -f xb.py
-	rm -f vm.py
 
 
 files:
@@ -162,7 +154,6 @@ links:
 	ln -s ../Agate/RUNME.py                                                     rm.py
 	ln -s test.java                                                             t.java
 	ln -s test.py                                                               t1.py
-	ln -s ../Dravite/Main.py                                                    vm.py
 	ln -s ../Sardonyx/Boot.py                                                   xb.py
 
 
@@ -172,7 +163,6 @@ wc:
 	#
 	wc -l \
         $(BERYL_FILES) \
-        $(DRAVITE_FILES) \
         $(JASPER_FILES) \
         $(LICENSE_FILES) \
         $(MARBLE_FILES) \
@@ -185,7 +175,6 @@ wc:
 test:
 	cat \
         $(BERYL_FILES) \
-        $(DRAVITE_FILES) \
         $(JASPER_FILES) \
         $(MELANITE_FILES) \
         $(ONYX_FILES) \
