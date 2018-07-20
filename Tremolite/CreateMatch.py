@@ -19,7 +19,7 @@ def gem():
             debug |= v.debug
 
 
-        for s in read_text_from_path('../Tremolite/LicenseTemplate.txt').splitlines():
+        for s in read_text_from_path('../Other-py/Tremolite/LicenseTemplate.txt').splitlines():
             if s == '#':
                 found = 1
             elif s == '<generated-output-goes-here />':
