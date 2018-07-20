@@ -12,13 +12,6 @@ BERYL_FILES = \
 LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
-ONYX_FILES = \
-    ../Onyx/__init__.py \
-    ../Onyx/Core.py \
-    ../Onyx/Development.py \
-    ../Onyx/ElasticSearch.py \
-    ../Onyx/Main.py \
-
 QUARTZ_FILES = \
     ../Quartz/Parse1.py \
     ../Quartz/Core.py \
@@ -40,7 +33,6 @@ FILES = \
     $(AGATE_FILES) \
     $(BERYL_FILES) \
     $(LICENSE_FILES) \
-    $(ONYX_FILES) \
     $(QUARTZ_FILES) \
     $(SARDONYX_FILES) \
     $(WORK_FILES)
@@ -59,7 +51,6 @@ clean:
 	rm -f j1p.py jb.py
 	rm -f l.txt lr.txt
 	rm -f m
-	rm -f oc.py od.py oe.py om.py
 	rm -f ps3.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py
@@ -85,10 +76,6 @@ links:
 	ln -s log.txt                                                               l.txt
 	ln -s ../OtherLicenses/README.txt                                           lr.txt
 	ln -s Makefile                                                              m
-	ln -s ../Onyx/Core.py                                                       oc.py
-	ln -s ../Onyx/Development.py                                                od.py
-	ln -s ../Onyx/ElasticSearch.py                                              oe.py
-	ln -s ../Onyx/Main.py                                                       om.py
 	ln -s ../Junk/PortrayString_3.py                                            ps3.py
 	ln -s ../Quartz/Parse1.py                                                   q1p.py
 	ln -s ../Quartz/Core.py                                                     qc.py
@@ -109,7 +96,6 @@ wc:
 	wc -l \
         $(BERYL_FILES) \
         $(LICENSE_FILES) \
-        $(ONYX_FILES) \
         $(QUARTZ_FILES) \
         $(SARDONYX_FILES) \
         $(WORK_FILES)
@@ -117,7 +103,6 @@ wc:
 test:
 	cat \
         $(BERYL_FILES) \
-        $(ONYX_FILES) \
         $(QUARTZ_FILES) \
         $(SARDONYX_FILES) \
             >test.py
