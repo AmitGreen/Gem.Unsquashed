@@ -12,13 +12,6 @@ BERYL_FILES = \
 LICENSE_FILES = \
     ../OtherLicenses/README.txt
 
-MELANITE_FILES = \
-    ../Melanite/Child.py \
-    ../Melanite/Core.py \
-    ../Melanite/Development.py \
-    ../Melanite/Main.py \
-    ../Melanite/Multiprocessing.py \
-
 ONYX_FILES = \
     ../Onyx/__init__.py \
     ../Onyx/Core.py \
@@ -47,7 +40,6 @@ FILES = \
     $(AGATE_FILES) \
     $(BERYL_FILES) \
     $(LICENSE_FILES) \
-    $(MELANITE_FILES) \
     $(ONYX_FILES) \
     $(QUARTZ_FILES) \
     $(SARDONYX_FILES) \
@@ -60,15 +52,13 @@ all: clean files links
 clean:
 	rm -rf __pycache__
 	rm -f *.old *.new *.pyc
-	rm -f 2re.py 2sf.py 2sp.py 2sc.py
-	rm -f 3re.py 3sf.py 3sp.py 3sc.py
 	rm -f ag.py
 	rm -f ba.py bi.py bk.py bm.py
 	rm -f files
 	rm -f hma1.py hma2.py
 	rm -f j1p.py jb.py
 	rm -f l.txt lr.txt
-	rm -f m m.txt m2c.py m2m.py m3m.py mc.py md.py mm.py
+	rm -f m
 	rm -f oc.py od.py oe.py om.py
 	rm -f ps3.py
 	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
@@ -84,14 +74,6 @@ files:
 
 
 links:
-	ln -s /usr/lib/python2.7/re.py                                              2re.py
-	ln -s /usr/lib/python2.7/sre_compile.py                                     2sc.py
-	ln -s /usr/lib/python2.7/sre_constants.py                                   2sf.py
-	ln -s /usr/lib/python2.7/sre_parse.py                                       2sp.py
-	ln -s /usr/lib/python3.5/re.py                                              3re.py
-	ln -s /usr/lib/python3.5/sre_compile.py                                     3sc.py
-	ln -s /usr/lib/python3.5/sre_constants.py                                   3sf.py
-	ln -s /usr/lib/python3.5/sre_parse.py                                       3sp.py
 	ln -s ../Agate/RUNME.py                                                     ag.py
 	ln -s ../Beryl/BerylAnswer.py                                               ba.py
 	ln -s ../Beryl/__init__.py                                                  bi.py
@@ -103,12 +85,6 @@ links:
 	ln -s log.txt                                                               l.txt
 	ln -s ../OtherLicenses/README.txt                                           lr.txt
 	ln -s Makefile                                                              m
-	ln -s mine.txt                                                              m.txt
-	ln -s ../Melanite/Core.py                                                   m2c.py
-	ln -s ../Melanite/Main.py                                                   m2m.py
-	ln -s ../Melanite/Child.py                                                  mc.py
-	ln -s ../Melanite/Development.py                                            md.py
-	ln -s ../Melanite/Multiprocessing.py                                        mm.py
 	ln -s ../Onyx/Core.py                                                       oc.py
 	ln -s ../Onyx/Development.py                                                od.py
 	ln -s ../Onyx/ElasticSearch.py                                              oe.py
@@ -133,7 +109,6 @@ wc:
 	wc -l \
         $(BERYL_FILES) \
         $(LICENSE_FILES) \
-        $(MELANITE_FILES) \
         $(ONYX_FILES) \
         $(QUARTZ_FILES) \
         $(SARDONYX_FILES) \
@@ -142,7 +117,6 @@ wc:
 test:
 	cat \
         $(BERYL_FILES) \
-        $(MELANITE_FILES) \
         $(ONYX_FILES) \
         $(QUARTZ_FILES) \
         $(SARDONYX_FILES) \
