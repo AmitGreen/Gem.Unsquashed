@@ -1,0 +1,40 @@
+How to generate a key:
+
+    Here we generate a key for `first.last`
+
+    It will create two files:
+        ~/.ssh/first.last (private key)
+        ~/.ssh/first.last.pub (public key)
+
+    You need to enter three things:
+
+        1. cd ~/.ssh
+        2. ssh-keygen -t rsa -b 7777 -C first.last@gmail.com
+        3. first.last
+
+    Here is a copy of the three command, intermixed with ssh-keygen output:
+
+        1.  cd ~/.ssh
+        2.  ssh-keygen -t rsa -b 7777 -C first.last@gmail.com
+        3.  Generating public/private rsa key pair.
+            Enter file in which to save the key (/home/joy/.ssh/id_rsa): first.last
+            Enter passphrase (empty for no passphrase):
+            Enter same passphrase again:
+            Your identification has been saved in first.last.
+            Your public key has been saved in first.last.pub.
+            The key fingerprint is:
+            SHA256:P8wRaBMltMX1GWf/JmSHXpl1gRXyyFL4clLdbKlLIAc first.last@gmail.com
+
+    Upload the 'first.last.pub' file to your gitlab or github
+
+Next you need to modify your ~/.ssh/config file
+
+    Host gem
+        HostName github.com
+        User git
+        IdentityFile ~/.ssh/first.last
+
+You can now test it as follows:
+
+    ssh -T gem
+    Hi Rhodollite! You've successfully authenticated, but GitHub does not provide shell access.
