@@ -9,28 +9,12 @@ BERYL_FILES = \
     ../Beryl/BerylAnswer.py \
     ../Beryl/Main.py
 
-QUARTZ_FILES = \
-    ../Quartz/Parse1.py \
-    ../Quartz/Core.py \
-    ../Quartz/Main.py \
-    ../Quartz/Line.py \
-    ../Quartz/Pattern.py \
-    #
-    #   Excludes:
-    #       ../Quartz/Match.py
-    #
-
-SARDONYX_FILES = \
-    ../Sardonyx/Boot.py
-
 WORK_FILES = \
     Makefile
 
 FILES = \
     $(AGATE_FILES) \
     $(BERYL_FILES) \
-    $(QUARTZ_FILES) \
-    $(SARDONYX_FILES) \
     $(WORK_FILES)
 
 
@@ -48,10 +32,8 @@ clean:
 	rm -f l.txt
 	rm -f m
 	rm -f ps3.py
-	rm -f q1p.py qc.py ql.py qma.py qmc.py qp.py
 	rm -f rm.py
 	rm -f t.java t1.py
-	rm -f xb.py
 
 
 files:
@@ -72,16 +54,9 @@ links:
 	ln -s log.txt                                                               l.txt
 	ln -s Makefile                                                              m
 	ln -s ../Junk/PortrayString_3.py                                            ps3.py
-	ln -s ../Quartz/Parse1.py                                                   q1p.py
-	ln -s ../Quartz/Core.py                                                     qc.py
-	ln -s ../Quartz/Line.py                                                     ql.py
-	ln -s ../Quartz/Main.py                                                     qma.py
-	ln -s ../Quartz/Match.py                                                    qmc.py
-	ln -s ../Quartz/Pattern.py                                                  qp.py
 	ln -s ../Agate/RUNME.py                                                     rm.py
 	ln -s test.java                                                             t.java
 	ln -s test.py                                                               t1.py
-	ln -s ../Sardonyx/Boot.py                                                   xb.py
 
 
 wc:
@@ -90,14 +65,10 @@ wc:
 	#
 	wc -l \
         $(BERYL_FILES) \
-        $(QUARTZ_FILES) \
-        $(SARDONYX_FILES) \
         $(WORK_FILES)
 
 test:
 	cat \
         $(BERYL_FILES) \
-        $(QUARTZ_FILES) \
-        $(SARDONYX_FILES) \
             >test.py
 	bash run.sh
